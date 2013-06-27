@@ -1,0 +1,150 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    margin: 0px 0 50px 0;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    /*background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
+    */
+
+}
+
+div{
+background-color: #fff;
+opacity:0.98;
+}
+
+#outer {
+    width: 1020px;
+    /*margin: 0 auto;  */
+    padding-left: 20px;   
+}
+
+#login {
+    position: absolute;
+    right: 2px;
+    top: 5px;
+}
+.course {
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.course .name {
+    display: inline-block;
+    width: 350px;
+}
+
+.course .score {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: #777;
+}
+
+.course.selected {
+    background-color: yellow;
+}
+
+.course.hovered {
+    font-weight: bold;
+}
+
+.course.selected .score {
+    color: black;
+}
+
+
+
+.courselist{
+    float: left;
+    width: 415px;
+}
+
+#details {
+    margin: 0px 10px 50px 50px;
+    padding: 0px 0px;
+    float: left;
+    width: 540px;
+}
+
+#details a.tags {
+    font-size: 12px;
+    color: #440066;
+}
+
+
+
+h2{
+padding-top:20px;
+}
+
+form h3{
+    border-top: 4px dashed gray;
+    padding-top:20px;
+    font-size: 1.5em;
+}
+form th{
+    font-size: 1.2em;
+    font-weight:normal;
+}
+
+
+.details .name {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.details .descr {http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif
+    font-size: 1em;
+
+}
+
+.none {
+    color: #777;
+}
+
+.inc {
+  cursor: pointer;
+}
+
+#chat{
+    width:300px;
+    font-size: 0.7em;
+  border: gray solid 1px;
+  position:fixed;
+  top: 40px;
+  right:0;
+  padding: 10px;
+  background:white;
+ box-shadow: 10px 10px 5px #888888;
+}
+
+#chat h2{
+  padding-top:0;
+}
+
+#chat ul{
+  list-style:none;
+  padding:0;
+}
+
+#chat th{
+    max-width: 80px;
+    overflow: hidden;
+}
+
+#hide{
+    float:right;
+}
+
+th{
+    text-align: left;
+    vertical-align:top;
+}

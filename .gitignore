@@ -1,0 +1,12 @@
+npm-debug.log
+*.scssc
+.sass-cache/*
+.DS_Store
+*-ck.js
+providers_secret.js
+*.sublime-project
+
+*.sublime-workspace
+codekit-config.json
+
+config.rb

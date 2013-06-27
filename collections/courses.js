@@ -1,0 +1,122 @@
+
+
+Courses = new Meteor.Collection("Courses");
+
+Courses.allow({
+   update: function (userId, doc, fieldNames, modifier) {
+    return userId && true;   // allow only if UserId is present
+   },
+   insert: function (userId, doc) {
+    return userId && true;   // allow only if UserId is present
+    },
+   remove: function (userId, doc) {
+    return userId && true;   // allow only if UserId is present
+    },
+
+    
+//    set:  function (userId, doc, a, b) {
+//    return userId && true;   // allow only if UserId is present
+//    }
+
+});
+
+/*
+Session = new Meteor.Collection("Session");
+
+Session.allow({
+		set: function (a, b) {
+			return userId && true;   // allow only if UserId is present
+		}
+		
+});		
+
+
+*/
+
+
+
+		
+//Meteor.methods({
+//  createCourse: function (options) {
+//    //return "jalla";
+//    //throw new Meteor.Error(403, "You must be logged in");
+//       
+//
+//    /*options = options || {};
+//    if (! (typeof options.title === "string" && options.title.length &&
+//           typeof options.description === "string" &&
+//           options.description.length &&
+//           typeof options.x === "number" && options.x >= 0 && options.x <= 1 &&
+//           typeof options.y === "number" && options.y >= 0 && options.y <= 1))
+//      throw new Meteor.Error(400, "Required parameter missing");
+//    if (options.title.length > 100)
+//      throw new Meteor.Error(413, "Title too long");
+//    if (options.description.length > 1000)
+//      throw new Meteor.Error(413, "Description too long");
+//    if (! this.userId)
+//      throw new Meteor.Error(403, "You must be logged in");
+//      */
+//  
+//    return Courses.insert({
+//        name: "myname",//options.name, 
+//        description: "my description", //options.description, 
+//        score: 0//options.score
+//    });
+//
+//  },
+//
+//  createCoursesIfNone: function () {
+//    // erstelle ein String-Array f�r die Namen der Kurse
+//    var names = ["ASZ Geek-Noob-Nerd Treffen",
+//                 "Deutschkurs",
+//                 "Photoshop für Fortgeschrittene",
+//                 "Onanie",
+//                 "Nikola Tesla - Ein Leben in Einsamkeit",
+//                 "Unbenannter Kurs"];
+//
+//    //erstelle ein String-Array f�r die Kursbeschreibungen
+//    var description = ["ein treffen für alle die sich für technologie und so interessieren",
+//                 "German: Ja, Nein, Vielleicht, Gut gut.",
+//                 "How to put the Bling-Effect.",
+//                 "DIY or DIE!",
+//                 "Wir werden einen Text über Nikola Teslas Kindheit lesen, anhand dessen wir sein Werk in in einen Historischen Kontext zu stellen versuchen.",
+//                 "Bitte hier Kursbeschreibung eintragen"];
+//
+//    // erstelle so viele Kurse, wie der Namens-Array lang ist
+//    for (var i = 0; i < names.length; i++)
+//      Courses.insert({name: names[i], description: description[i], score: Math.floor(Random.fraction()*10)*5});
+//
+//  }
+//  
+//  
+//  /*
+//  // options should include: title, description, x, y, public
+//  createParty: function (options) {
+//    options = options || {};
+//    if (! (typeof options.title === "string" && options.title.length &&
+//           typeof options.description === "string" &&
+//           options.description.length &&
+//           typeof options.x === "number" && options.x >= 0 && options.x <= 1 &&
+//           typeof options.y === "number" && options.y >= 0 && options.y <= 1))
+//      throw new Meteor.Error(400, "Required parameter missing");
+//    if (options.title.length > 100)
+//      throw new Meteor.Error(413, "Title too long");
+//    if (options.description.length > 1000)
+//      throw new Meteor.Error(413, "Description too long");
+//    if (! this.userId)
+//      throw new Meteor.Error(403, "You must be logged in");
+//
+//    return Parties.insert({
+//      owner: this.userId,
+//      x: options.x,
+//      y: options.y,
+//      title: options.title,
+//      description: options.description,
+//      public: !! options.public,
+//      invited: [],
+//      rsvps: []
+//    });
+//  }
+//  */
+//
+//});
