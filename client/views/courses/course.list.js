@@ -29,6 +29,7 @@
     'click': function () {
       // speichere in sesssetion, welcher kurs angeklickt wurde
       // um ihn per class "selected" im css gelb zu hinterlegen
+      alert(this._id);
       Session.set("selected_course", this._id);
     },
     'mouseenter': function () {
