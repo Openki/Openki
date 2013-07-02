@@ -1,25 +1,51 @@
-
-
 var URLliste = Backbone.Router.extend({
+		// URLS auslesen ---------
 		routes: {
-			":parameter": "main",
+			"": "home",
 			
-			"kurs/:parameter2": "kurs",
-			"kurs/:parameter2/:parameter3": "kurs"
-		},
-		main: function (huhu){
-		alert("Hoi " + huhu);
+			"page/:page_id": "pages",
+			
+			"courselist/": "courselist",
+			
+			"course/:course_id": "coursedetails",
+			"course/:course_id/:comment": "coursedetails"
 		},
 		
-		kurs: function (kurs_id, kommentar){
-			alert("Wilkommen beim Kurs  " + kurs_id + " - Dein Kommentar: " +kommentar);
+		home: function (){	
+			Session.set("page_id", "home");
+		},
+
+		courselist: function (){
+			Session.set("page_id", "courselist");
+		},
+		
+		coursedetails: function (course_id, comment){	
+			Session.set("selected_course", course_id);
+			Session.set("page_id", "coursedetails");
+		},
+		
+		pages: function (page_id){
+			Session.set("page_id", page_id);
+		},
+		
+		// URLS setzen ---------
+		setCourse: function (course_id) {
+		  	this.navigate("course/"+course_id, true);
 		}
 });
 
-//alert("Hoi");
 Router = new URLliste;
 
  Meteor.startup(function () {
 		Backbone.history.start({pushState: true});
  });
  
+ 
+Template.maincontent.route_is = function (data,options) {
+// strube funktion, die irgendwas macht, aber es tut
+// macht, dass das routing im template "maincontent" funtkioniert
+  if ( Session.equals( 'page_id', data ) ) {
+			return options.fn( this );
+		}
+		return options.inverse( this );
+    };

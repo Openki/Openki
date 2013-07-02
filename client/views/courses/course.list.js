@@ -29,7 +29,8 @@
     'click': function () {
       // speichere in sesssetion, welcher kurs angeklickt wurde
       // um ihn per class "selected" im css gelb zu hinterlegen
-      Session.set("selected_course", this._id);
+      Router.setCourse( this._id);
+
     },
     'mouseenter': function () {
       // speichere in session, �ber welchem kurs der maus-cursor war

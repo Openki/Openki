@@ -3,13 +3,64 @@
 </head>
 
 <body>
-  <div id="outer">
-    {{> courselist}}
+
+  <div id="mainmenu">
+    {{> mainmenu}}
   </div>
-  <div id="login">
+  <div id="outer">
+    {{> maincontent}}
+  </div>
+  <div id="login">            
     {{loginButtons align="right"}}
   </div>
 </body>
+
+
+<template name="mainmenu">
+
+<a href="/">Home</a>
+<a href="/courselist/">Kursliste</a>
+<a href="/page/warum">Warum</a>
+<a href="/page/darum">Darum</a>
+<a href="/page/links">Funny Links</a>
+</template>
+
+
+<template name="maincontent">
+
+  <div id="maincontent">
+
+{{#route_is "home"}}
+    home boy
+{{/route_is}}
+
+{{#route_is "courselist"}}
+	{{> courselist}}
+{{/route_is}}
+
+{{#route_is "coursedetails"}}
+	{{> coursedetails}}
+{{/route_is}}
+     
+{{#route_is "about"}}
+         aboutttt
+{{/route_is}}
+
+{{#route_is "warum"}}
+         waruum
+{{/route_is}}
+
+{{#route_is "darum"}}
+         daruum
+{{/route_is}}
+
+
+{{#route_is "links"}}
+         yaaaah
+{{/route_is}}
+  </div>
+
+  </template>
 
 <template name="courselist">
   <div class="courselist">
@@ -22,15 +73,8 @@
     {{> form}}
     
   </div>
-  <div id="content">
-
-    {{> details}}
-    
-    {{> chat}}
-  </div>
-
 </template>
-
+  
 <template name="course">
   <div class="course {{selected}} {{hoveredString}}">
     <span class="name">{{name}}</span>
@@ -38,9 +82,9 @@
   </div>
 </template>
 
-<template name="details">
+<template name="coursedetails">
 
-  <div id="details">
+  <div id="coursedetails">
   {{#if selected_name}}
     <h2 class="name">{{selected_name.name}}</h2>
 
@@ -56,6 +100,7 @@
     {{#unless isEditing}}
         <p class="descr">{{selected_name.desc}}</p>
         <p class="tags"> Tags: <a href="#">{{selected_name.tags}}</a></p>
+         <p class="score"> Score: <a href="#">{{selected_name.score}}</a></p>
         <input type="button" class="edit" value="Edit" />
     {{/unless}}
 
@@ -69,9 +114,12 @@
     <p>Click a Course to select</p>
   {{/unless}}
   
+
+
   </div>
   
 </template>
+
 
 
 <template name="form">
@@ -93,6 +141,13 @@
     </form>
 </template>
 
+<template name="jokes">
+
+  <div id="jokes">
+this is joke pagesdfsdf
+  </div>
+  
+</template>
 
 <template name="chat">
   <div id="chat">
