@@ -37,6 +37,7 @@
     'click': function () {
       // speichere in sesssetion, welcher kurs angeklickt wurde
       // um ihn per class "selected" im css gelb zu hinterlegen
+
       Router.setCourse( this._id);
 
     },
