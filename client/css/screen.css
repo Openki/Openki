@@ -19,11 +19,14 @@ background-color: #fff;
 opacity:0.98;
 }
 
+
 #outer {
     width: 1020px;
     /*margin: 0 auto;  */
     padding-left: 20px;   
 }
+
+
 
 #login {
     position: absolute;
