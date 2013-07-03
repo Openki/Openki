@@ -54,7 +54,7 @@
     },
     'click input.save': function () {
       // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-      Courses.update(Session.get("selected_course"), {$set: {description: document.getElementById('editform_description').value, tags: document.getElementById('editform_tags').value}});
+      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val()}});
       Session.set("isEditing", false);
     }
   });

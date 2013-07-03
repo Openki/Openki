@@ -133,18 +133,27 @@
 
     <input type="button" class="del" value="Zensur! Delete this Course" />
 
-
+   {{>comment_list}}
+    
   {{/if}}
   
   
   {{#unless selected_name}}
     <p>Click a Course to select</p>
   {{/unless}}
-  
-
-
   </div>
-  
+</template>
+
+<template name="comment_list">
+  <div class="comment_list">
+    <h3>Comments</h3>
+
+    {{#each comment}}
+      {{> comment}}
+    {{/each}}
+    {{> comment_form}}
+   
+  </div>
 </template>
 
 <template name="profile">
@@ -176,6 +185,20 @@
 
   </div>
   
+</template>
+
+
+<template name="comment">
+  <div class="comment">
+    <span class="user">{{user}}</span>
+    <span class="comment_text">{{comment_text}}</span>
+  </div>
+</template>
+
+<template name="comment_form">
+ </br>
+<textarea cols="70" rows="10" id="addcomment_text">schreibe hier deinen Kommentar hin</textarea>
+    <input type="button" class="save" value="Send" />
 </template>
 
 
