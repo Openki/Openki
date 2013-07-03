@@ -37,14 +37,9 @@
     'click': function () {
       // speichere in sesssetion, welcher kurs angeklickt wurde
       // um ihn per class "selected" im css gelb zu hinterlegen
-<<<<<<< HEAD
-
-      Router.setCourse( this._id);
-=======
 
       Router.setCourse( this._id);
 
->>>>>>> 8d9490d0d58fcc18c3507d7f0bbec145d7e03b27
     },
     'mouseenter': function () {
       // speichere in session, �ber welchem kurs der maus-cursor war
