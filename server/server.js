@@ -2,7 +2,6 @@
 
 Meteor.startup(function () {
  createCoursesIfNone();
- 
 
 });
 

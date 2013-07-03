@@ -8,7 +8,7 @@ CourseSubscriptions.allow({
     },
    remove: function (userId, doc) {
     return userId && true;   // allow only if UserId is present
-    },
+    }
 
     
 });
