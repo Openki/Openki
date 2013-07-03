@@ -23,6 +23,7 @@
 <a href="/page/warum">Warum</a>
 <a href="/page/darum">Darum</a>
 <a href="/page/links">Funny Links</a>
+<a href="/profile/">Mein Profil</a>
 </template>
 
 
@@ -58,6 +59,12 @@
 {{#route_is "links"}}
          yaaaah
 {{/route_is}}
+
+
+{{#route_is "profile"}}
+
+	{{> profile}}
+{{/route_is}}
   </div>
 
   </template>
@@ -79,6 +86,9 @@
   <div class="course {{selected}} {{hoveredString}}">
     <span class="name">{{name}}</span>
     <span class="score">{{score}}</span>
+    <span class="small">{{time_created}}</span>
+    <span class="small">{{time_changed}}</span>
+    <span class="small">{{createdby}}</span>
   </div>
 </template>
 
@@ -99,6 +109,9 @@
     
     {{#unless isEditing}}
         <p class="descr">{{selected_name.desc}}</p>
+        <p class="tags"> Created: {{selected_name.time_created}}</p>
+        <p class="tags"> Created by: {{selected_name.createdby}}</p>
+       
         <p class="tags"> Tags: <a href="#">{{selected_name.tags}}</a></p>
          <p class="score"> Score: <a href="#">{{selected_name.score}}</a></p>
         <input type="button" class="edit" value="Edit" />
@@ -129,6 +142,36 @@
   </div>
 </template>
 
+<template name="profile">
+
+  <div id="profile">
+    <h2 class="name">mein profil</h2>
+
+    
+    
+    {{#if isEditing}}
+
+        <p class="descr">ID: {{userdata.id}}</p>
+        <p>Username: <input type="text" id="editform_username" value="{{userdata.username}}"/></p>
+        <p> Email: <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
+        <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
+      <input type="button" class="save" value="Save" />
+    {{/if}}
+    
+    {{#unless isEditing}}
+        <p class="descr">ID: {{userdata.id}}</p>
+        <p class="descr">Username: {{userdata.username}}</p>
+        <p class="descr">Email: {{userdata.email}}</p>
+        
+         
+         <input type="button" class="edit" value="Edit" />
+    {{/unless}}
+
+    
+
+  </div>
+  
+</template>
 
 
 <template name="comment">

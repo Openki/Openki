@@ -2,6 +2,27 @@
 
 Meteor.startup(function () {
  createCoursesIfNone();
+ 
+
+});
+
+ 
+Meteor.methods({
+    
+    update_userdata: function(username,email) {
+        Meteor.users.update(Meteor.userId(), {
+            $set: {
+                username: username,
+                 emails: [{
+                    address: email,
+                    verified: false
+                }]
+            }
+        });
+     },
+         update_userpassword: function(new_password) {
+        Accounts.setPassword(Meteor.userId(), new_password)
+     }
 });
 
 
@@ -17,14 +38,14 @@ Meteor.publish("parties", function () {
 
 */
 
-
-
 function createCoursesIfNone(){
     // erstelle neue Kurse, wenns keine in der DB hat
-    if (Courses.find().count() === 0) {
+ if (Courses.find().count() === 0) {
         createCourses();
-    }
+  }
 }
+
+
 
 
 function createCourses(){
@@ -46,6 +67,6 @@ function createCourses(){
 
     // erstelle so viele Kurse, wie der Namens-Array lang ist
     for (var i = 0; i < names.length; i++)
-      Courses.insert({name: names[i], description: description[i], score: Math.floor(Random.fraction()*10)*5});
+      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, description: description[i], score: Math.floor(Random.fraction()*10)*5});
 }
 
