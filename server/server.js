@@ -36,6 +36,11 @@ Meteor.publish("parties", function () {
     {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
 });
 
+
+
+Meteor.publish("Subscriptions", function(){
+return Subscriptions.find({});		
+});
 */
 
 function createCoursesIfNone(){
@@ -44,7 +49,6 @@ function createCoursesIfNone(){
         createCourses();
   }
 }
-
 
 
 

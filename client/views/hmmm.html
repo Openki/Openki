@@ -98,9 +98,21 @@
   {{#if selected_name}}
     <h2 class="name">{{selected_name.name}}</h2>
 
+    Subscribers:
+        {{#each subscribers}}
+      	
+   {{user_id}}
+    {{/each}}
+      
+    {{#if isSubscribed}}
+  <p> du bist angemeldet!!!  <input type="button" class="unsubscribe" value="Abmelden!!!!" />
+     </p>
+    {{/if}}
     
-    <input type="button" class="inc" value="Add one interest" />
-    
+    {{#unless isSubscribed}}
+           <input type="button" class="subscribe" value="Ich melde mich an" />
+     {{/unless}}
+     
     {{#if isEditing}}
       <textarea cols="70" rows="10" id="editform_description" name="editform_description">{{selected_name.desc}}</textarea>
       Tags: <input type="text" id="editform_tags" value="{{selected_name.tags}}"/>
@@ -113,7 +125,9 @@
         <p class="tags"> Created by: {{selected_name.createdby}}</p>
        
         <p class="tags"> Tags: <a href="#">{{selected_name.tags}}</a></p>
-         <p class="score"> Score: <a href="#">{{selected_name.score}}</a></p>
+        <input type="button" class="inc" value="Add one interest" />
+  
+        <p class="score"> Score: <a href="#">{{selected_name.score}}</a></p>
         <input type="button" class="edit" value="Edit" />
     {{/unless}}
 
