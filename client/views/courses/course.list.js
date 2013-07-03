@@ -5,10 +5,18 @@
     // gib alle kurse zur�ck, zuerst umgekehrt nach score sortiert und
     // dann nach name sortiert.
     
-    var results=Courses.find({}, {sort: {score: -1, name: 1}});
+    var results=Courses.find({}, {sort: {time_created: -1, name: 1}});
     for(m = 0; m < results.count(); m++){
-     results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 
-     results.db_objects[m].time_created=format_date(results.db_objects[m].time_created);	    
+   //  results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 
+    results.db_objects[m].time_created=format_date(results.db_objects[m].time_created);	    
+   results.db_objects[m].subscriber_count=CourseSubscriptions.find({course_id: results.db_objects[m]._id}).count();	    
+   //console.error(results.db_objects[m].organisator);
+    if(results.db_objects[m].organisator){
+    results.db_objects[m].has_organisator=1;	    
+    	}else{
+    results.db_objects[m].has_organisator=0;	   
+   }
+   
     }
     return results;
  //alert (results.toSource());
@@ -38,7 +46,7 @@
       // speichere in sesssetion, welcher kurs angeklickt wurde
       // um ihn per class "selected" im css gelb zu hinterlegen
 
-      Router.setCourse( this._id);
+      Router.setCourse( this._id, this.name);
 
     },
     'mouseenter': function () {

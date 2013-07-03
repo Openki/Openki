@@ -8,7 +8,7 @@ var URLliste = Backbone.Router.extend({
 			"courselist/": "courselist",
 			
 			"course/:course_id": "coursedetails",
-			"course/:course_id/:comment": "coursedetails",
+			"course/:course_id/:course_title": "coursedetails",
 
 			"profile/": "profile"
 			
@@ -22,7 +22,7 @@ var URLliste = Backbone.Router.extend({
 			Session.set("page_id", "courselist");
 		},
 		
-		coursedetails: function (course_id, comment){	
+		coursedetails: function (course_id, course_title){	
 			Session.set("selected_course", course_id);
 			Session.set("page_id", "coursedetails");
 		},
@@ -36,8 +36,8 @@ var URLliste = Backbone.Router.extend({
 		},
 		
 		// URLS setzen ---------
-		setCourse: function (course_id) {
-		  	this.navigate("course/"+course_id, true);
+		setCourse: function (course_id,course_title) {
+		  	this.navigate("course/"+course_id+"/"+course_title.replace(/ /g,"_"), true);
 		}
 });
 

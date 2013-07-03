@@ -18,7 +18,10 @@ div{
 background-color: #fff;
 opacity:0.98;
 }
-
+ 
+p{
+margin: 15px;	
+}
 
 #outer {
     width: 1020px;
@@ -54,7 +57,7 @@ opacity:0.98;
 .course .small {
 	font-size: 9px;
     display: inline-block;
-    width: 80px;
+   
     text-align: right;
     font-weight: bold;
     color: #777;
@@ -79,22 +82,87 @@ opacity:0.98;
     width: 415px;
 }
 
-#details {
+#coursedetails {
     margin: 0px 10px 50px 50px;
     padding: 0px 0px;
     float: left;
     width: 540px;
 }
 
-#details a.tags {
+#coursedetails .tags {
     font-size: 12px;
-    color: #440066;
+    color: #333;
+}
+
+#coursedetails .small {
+    font-size: 11px;
+    color: grey;
 }
 
 
 
+
+
+#coursedetails .course_main {
+background-color: #EEE;
+padding: 15px;
+margin: 50px 0 20px 0;
+}
+
+
+
+
+#coursedetails .course_edit {
+background-color: #CCFFFF;
+padding: 15px;
+margin: 50px 0 20px 0;
+}
+
+
+#coursedetails .participators {
+background-color: #EEE;
+padding: 15px;
+margin: 20px 0 20px 0;
+}
+
+#coursedetails .participators p{
+	padding-bottom: 5px;
+	border-bottom: 1px solid grey;
+
+}
+
+#coursedetails .participators span input{
+	float: right;
+
+}
+
+#coursedetails .usernames{
+    font-size: 12px;
+    color: grey;
+     list-style-type: none;
+     display: inline;
+}
+
+#coursedetails .subscribed{
+    font-size: 20px;
+    color: green;
+     display: block;
+     margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 h2{
-padding-top:20px;
+	margin: 0;
 }
 
 form h3{
@@ -116,6 +184,11 @@ form th{
 .details .descr {http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif
     font-size: 1em;
 
+}
+
+.descr{
+
+font-size: 18px ;
 }
 
 .none {

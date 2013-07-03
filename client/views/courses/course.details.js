@@ -4,17 +4,7 @@
   Template.coursedetails.isEditing = function () {
     return Session.get("isEditing");
   };
-
- Template.coursedetails.isSubscribed = function () {
- 	 var my_sub = CourseSubscriptions.findOne({user_id: Meteor.userId(), course_id: Session.get("selected_course")});
- 	  if (my_sub){
- 	  
- 	  	  
- 	 return  true;
- 	  }else{
- 	  	return false; 
- 	  }
-  };
+  
 
   Template.coursedetails.events({
     'click input.inc': function () {
@@ -23,19 +13,31 @@
       Courses.update(Session.get("selected_course"), {$inc: {score: 1}});
     },
     
-    'click input.subscribe': function () {
+    'click input.get_subscriber': function () {
     	// für Kurs anmelden
      	     CourseSubscriptions.insert({user_id: Meteor.userId(), course_id: Session.get("selected_course")});
     	 
     },
     
-    'click input.unsubscribe': function () {
+    'click input.remove_subscriber': function () {
     	// von Kurs abmelden
-    	// ist so komisch verschachtelt weil nur über userid gelöscht werden darf
-
+    	// ist so lustig verschachtelt weil nur über userid gelöscht werden darf
     	    CourseSubscriptions.remove({_id: CourseSubscriptions.findOne({user_id: Meteor.userId(), course_id: Session.get("selected_course")})._id});
-    	 
     },
+    
+    'click input.get_organisator': function () {
+    	// Orga werden
+    	Courses.update(Session.get("selected_course"), {$set:{organisator: Meteor.userId()}});
+    },
+    
+        
+    'click input.remove_organisator': function () {
+    	// Orga künden
+    	// ist so lustig verschachtelt weil nur über userid gelöscht werden darf
+    	    Courses.update(Session.get("selected_course"), {$set:{organisator: ""}});
+      },
+    
+    
     'click input.del': function () {
       // bei click auf das input-element mit der class "del"
       // l�sche den ausgew�hlten kurs
@@ -54,7 +56,7 @@
     },
     'click input.save': function () {
       // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val()}});
+      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), name: $('#editform_name').val()}});
       Session.set("isEditing", false);
     }
   });
@@ -63,6 +65,29 @@
   	
   	 return CourseSubscriptions.find({course_id: Session.get("selected_course")}, {sort: {score: -1, name: 1}});
   }
+
+     Template.coursedetails.isSubscribed = function () {
+ 	 var my_sub = CourseSubscriptions.findOne({user_id: Meteor.userId(), course_id: Session.get("selected_course")});
+ 	  if (my_sub){
+ 	  	  return  true;
+ 	  }else{
+ 	  	return false; 
+ 	  }
+  };
+
+
+   Template.coursedetails.organisator = function() {
+  	 return Courses.findOne(Session.get("selected_course")).organisator;
+  }
+  
+   Template.coursedetails.isOrganisator = function () {
+ 	  if (Courses.findOne(Session.get("selected_course")).organisator==Meteor.userId()){
+ 	  	  return  true;
+ 	  }else{
+ 	  	return false; 
+ 	  }
+  };
+  
 
   Template.coursedetails.selected_name = function () {
     // gib den name und die description des ausgew�hlten kurses zur�ck
