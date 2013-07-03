@@ -1,0 +1,33 @@
+
+  Template.profile.user = function () {
+  	//  alert(Meteor.users.findOne({_id:Meteor.userId()})._id);
+  	// alert(Meteor.user()._id);
+  	    //     Meteor.call('update_userdata', "nana","nena");
+
+//alert(Meteor.user().toSource());
+  // return {id:Meteor.userId(),username:Meteor.user().username,email:Meteor.user().emails[0].address};
+return {id:Meteor.userId(),username:"id",email:"sdf"};
+ 
+  }
+  
+          
+  Template.profile.isEditing = function () {
+    return Session.get("isEditing");
+  };
+
+   Template.profile.events({
+    'click input.edit': function () {
+      // gehe in den edit-mode, siehe html
+    Session.set("isEditing", true);
+    },
+    'click input.save': function () {
+      // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
+     //alert(document.getElementById('editform_username').value);
+    
+         Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value);
+         if(document.getElementById('editform_newpassword').value!=""){
+         Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
+         }
+         Session.set("isEditing", false);
+    }
+  });

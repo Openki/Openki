@@ -1,3 +1,7 @@
+// Timestamp, das muss man eigentlich auf der Serverseite machen,
+// damit mans nicht faken kann?? Noch anschauen.
+
+
 /* ------------------------- Details ------------------------- */
 
   Template.coursedetails.isEditing = function () {
@@ -38,7 +42,8 @@
     // gib den name und die description des ausgew�hlten kurses zur�ck
     // wird aufgerufen, sobald "selected_course" ändert (z.B. routing)
     var course = Courses.findOne(Session.get("selected_course"));
-    return course && {name: course.name, desc: course.description, tags: course.tags, score: course.score};
+ 
+    return course && {name: course.name, desc: course.description, tags: course.tags, score: course.score,  createdby: display_username(course.createdby), time_created: format_date(course.time_created)};
   };
   
   

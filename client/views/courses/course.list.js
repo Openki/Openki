@@ -1,11 +1,19 @@
 
-
 /* ------------------------- Course-list ------------------------- */
 
   Template.courselist.courses = function () {
     // gib alle kurse zur�ck, zuerst umgekehrt nach score sortiert und
     // dann nach name sortiert.
-    return Courses.find({}, {sort: {score: -1, name: 1}});
+    
+    var results=Courses.find({}, {sort: {score: -1, name: 1}});
+    for(m = 0; m < results.count(); m++){
+     results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 
+     results.db_objects[m].time_created=format_date(results.db_objects[m].time_created);	    
+    }
+    return results;
+ //alert (results.toSource());
+  //  return Courses.find({}, {sort: {score: -1, name: 1}});
+ 
   };
 
 
