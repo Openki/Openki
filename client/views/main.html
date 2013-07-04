@@ -3,7 +3,9 @@
 </head>
 
 <body>
-
+  <div id="userspace">
+    {{>userspace}}
+  </div>
   <div id="mainmenu">
     {{> mainmenu}}
   </div>
@@ -15,6 +17,9 @@
   </div>
 </body>
 
+<template name="userspace">
+  <form id="login-form" action="action"><input type="email" id="login-email" /><input type="password" id="login-password" /><input type="submit" id="login-button" value="Sign in" /></form> 
+</template>
 
 <template name="mainmenu">
 	<span><a href="/">Home</a>  </span>
