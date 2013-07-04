@@ -1,0 +1,32 @@
+<template name="courselist">
+  <div class="courselist">
+    <h1>Kurse</h1>
+
+    {{#each courses}}
+      {{> course}}	
+    {{/each}}
+    
+    {{> form}}
+    
+  </div>
+</template>
+  
+<template name="course">
+  <div class="course {{selected}} {{hoveredString}}">
+    <span class="name">{{name}}</span>
+     {{#if is_subscribed}}
+    <span class="subscribed">Teilnehmer</span>
+    {{/if}}
+    {{#if is_organisator}}
+    <span class="organisator">Organisator</span>
+    {{/if}}
+    <span class="score">{{score}}</span>
+    <p class="smalldesc">
+	    <span class="small">{{time_created}}</span>
+	    <span class="small">{{time_changed}}</span>
+	    <span class="small">{{createdby}}</span>
+	    <span class="small">Subscribers:{{subscriber_count}}</span>
+	    <span class="small">Orga:{{has_organisator}}</span>
+	   </p>
+    </div>
+</template>

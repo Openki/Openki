@@ -1,0 +1,33 @@
+<template name="comment">
+  <div class="comment">
+    <span class="user">{{user}}</span>
+    <span class="comment_text">{{comment_text}}</span>
+  </div>
+</template>
+
+<template name="comment_form">
+ </br>
+<textarea cols="70" rows="10" id="addcomment_text">schreibe hier deinen Kommentar hin</textarea>
+    <input type="button" class="save" value="Send" />
+</template>
+
+
+<template name="form">
+    
+    <form>
+    <h3>Add new</h3>
+    <table>
+        <tr>
+            <th>Name: </th><td><input type="text" name="addform_name"/> </td>
+        </tr>
+        <tr>
+            <th>Description: </th><td><textarea cols="30" rows="10" name="addform_description"></textarea> </td>
+        </tr>
+        <tr>
+            <th></th><td><input type="button" class="add" value="Add new" /> </td>
+        </tr>
+
+    </table>
+    </form>
+</template>
+
