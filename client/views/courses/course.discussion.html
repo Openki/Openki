@@ -1,10 +1,10 @@
 <template name="postDialog">
       {{#if showPostDialog}}
-	{{> write_post}}
+	{{> writePostDialog}}
       {{/if}}
 </template>
     
-<template name="write_post">
+<template name="writePostDialog">
   <div class="popup">
     <h3>write comment</h3>
       <form name="form_post">
@@ -17,22 +17,20 @@
 
 <template name="discussion">
   <h3>discussion</h3>
-  <input type ="button" class="showDialog" value="write Comment" />
+  <input type ="button" class="write" value="write Comment" />
   {{#each post}}
       {{#if parent_ID}}
-	    <div class="answer">
+	    <div class="comment">
 		  <h4>{{title}}</h4>
 		  <p>{{text}}</p>
 		  <p>Zeit: {{time_created}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
 	    </div>
-      {{else}}
-	    <div class="message">
+     {{else}}
+	    <div class="post">
 		  <h4>{{title}}</h4>
 		  <p>{{text}}</p>
 		  <p>Zeit: {{time_created}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
-		  <form>
 		  <input type="button" class="answer" value="answer this!" />
-		  </form>
 	    </div>
       {{/if}}
   {{/each}}
