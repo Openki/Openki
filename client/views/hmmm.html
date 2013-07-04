@@ -96,7 +96,7 @@
 	    <span class="small">{{createdby}}</span>
 	    <span class="small">Subscribers:{{subscriber_count}}</span>
 	    <span class="small">Orga:{{has_organisator}}</span>
-	    <span class="small">Category: {{category}}</span>
+	    <span class="small">Category: {{categories}}</span>
 	   </p>
     </div>
 </template>
@@ -106,14 +106,18 @@
   <div id="coursedetails">
      
     {{#if isEditing}}
-    <div class="course_edit">
+    <div class="popup">
     <h2>Kurs Editieren</h2>
      <p> Titel: <input type="text" id="editform_name" value="{{selected_name.name}}" size="40"/></p>
     
     <p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{selected_name.desc}}</textarea></p>
      <p>  Tags: <input type="text" id="editform_tags" value="{{selected_name.tags}}" size="40"/></p>
-     <p>  Category: <input type="text" id="editform_category" value="{{selected_name.category}}" size="30"/></p>
+
+     <p>  Category: <input type="text" id="editform_category" value="{{selected_name.categories}}" size="30"/></p>
      <p> <input type="button" class="save" value="Save" /></p>
+
+     <p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
+
       </div>
     {{/if}}
 
