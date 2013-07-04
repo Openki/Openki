@@ -1,0 +1,53 @@
+<template name="chat">
+  <div id="chat">
+    
+      {{#if isShowingChat}}
+        <input id="hide" type="button" value="Hide chat" />
+        <input id="deleteChat" type="button" value="Clear chat" />
+
+
+        <h2>Chat</h2>
+        <table>
+        <tr><th>Name: </th>
+        <td>
+        {{#if chatName}}
+        
+                {{#if isEditingChatName}}
+                    <input id="chatName" value="{{chatName}}" />
+                {{/if}}
+                {{#unless isEditingChatName}}
+                    <span id="editName">{{chatName}}</span>
+                {{/unless}}
+        {{/if}}
+        
+        {{#unless chatName}}
+            <input id="chatName" />
+        {{/unless}}
+        </td>
+        
+        <tr>
+            <th>Message: </th>
+            <td><input id="message" /></td>
+        </tr>
+        <tr><th></th>
+            <td><input id="send" type="button" value="Send" /></td>
+        </tr>
+        </table>
+    
+        <table>
+        {{#each messages}}
+          {{> message }}
+        {{/each}}
+        </table>
+      {{/if}}
+      
+      {{#unless isShowingChat}}
+          <input id="hide" type="button" value="Show chat" />
+      {{/unless}}
+      
+  </div>
+</template>
+
+<template name="message">
+  <tr><th title="{{sent}}">{{name}}:</th> <td>{{text}}</td></tr>
+</template>

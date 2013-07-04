@@ -1,0 +1,68 @@
+<head>
+  <title>Course Board (restructured)</title>
+</head>
+
+<body>
+
+  <div id="mainmenu">
+    {{> mainmenu}}
+  </div>
+  <div id="outer">
+    {{> maincontent}}
+  </div>
+  <div id="login">            
+    {{loginButtons align="right"}}
+  </div>
+</body>
+
+
+<template name="mainmenu">
+	<span><a href="/">Home</a>  </span>
+	<span><a href="/courselist/">Kursliste</a>  </span>
+	<span><a href="/page/warum">Warum</a>  </span>      
+	<span><a href="/page/darum">Darum</a>  </span>
+	<span><a href="/page/links">Funny Links</a>  </span>
+	<span><a href="/profile/">Mein Profil</a>  </span>
+</template>
+
+
+<template name="maincontent">
+
+  <div id="maincontent">
+
+{{#route_is "home"}}
+    home boy
+{{/route_is}}
+
+{{#route_is "courselist"}}
+	{{> courselist}}
+{{/route_is}}
+
+{{#route_is "coursedetails"}}
+	{{> coursedetails}}
+{{/route_is}}
+     
+{{#route_is "about"}}
+         aboutttt
+{{/route_is}}
+
+{{#route_is "warum"}}
+         waruum
+{{/route_is}}
+
+{{#route_is "darum"}}
+         daruum
+{{/route_is}}
+
+
+{{#route_is "links"}}
+         yaaaah
+{{/route_is}}
+
+
+{{#route_is "profile"}}
+	{{> profile}}
+{{/route_is}}
+  </div>
+
+  </template>
