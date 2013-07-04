@@ -6,6 +6,6 @@
 preserve-inputs
 random
 accounts-password
-accounts-ui
 backbone
+accounts-ui
 autopublish
