@@ -58,6 +58,9 @@
       // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
       Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), name: $('#editform_name').val()}});
       Session.set("isEditing", false);
+    },
+    'click input.cancel': function() {
+      Session.set("isEditing", false);
     }
   });
   
