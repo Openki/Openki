@@ -107,11 +107,13 @@ get_courselist=function(listparameters){
    };
 
    Template.course.is_organisator = function () {
+   	   if(Meteor.userId()){
  	  if (this.organisator==Meteor.userId()){
  	  	  return  true;
  	  }else{
  	  	return false; 
  	  }
+ 	   }
    };
 
 
