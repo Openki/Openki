@@ -1,4 +1,4 @@
-  Template.profile.userdata = function () {
+ Template.profile.userdata = function () {
   	if(Meteor.user()){
   		return {id:Meteor.userId(),username:Meteor.user().username,email:Meteor.user().emails[0].address};
   	}
@@ -6,11 +6,11 @@
   }
   
           
-  Template.profile.isEditing = function () {
+ Template.profile.isEditing = function () {
     return Session.get("isEditing");
   };
 
-   Template.profile.events({
+ Template.profile.events({
     'click input.edit': function () {
       // gehe in den edit-mode, siehe html
     Session.set("isEditing", true);
@@ -26,3 +26,8 @@
          Session.set("isEditing", false);
     }
   });
+   
+
+ Template.profile.courses = function () {  
+      return get_courselist({courses_from_userid: Meteor.userId()});
+  };
