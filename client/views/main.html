@@ -31,11 +31,11 @@
   <div id="maincontent">
 
 {{#route_is "home"}}
-    home boy
+    {{> home}}
 {{/route_is}}
 
 {{#route_is "courselist"}}
-	{{> courselist}}
+	{{> coursepage}}
 {{/route_is}}
 
 {{#route_is "coursedetails"}}
@@ -66,3 +66,12 @@
   </div>
 
   </template>
+  
+  
+<template name="home">
+<h1>Hoi zäme</h1>
+<div class="list_small"><h3>Kurse ohne Organisatoren</h3>
+	{{> courselist missing_organisator}}</div>
+<div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
+	{{> courselist missing_subscribers}}</div>
+</template>

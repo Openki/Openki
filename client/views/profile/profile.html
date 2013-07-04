@@ -1,7 +1,7 @@
 <template name="profile">
 
   <div id="profile">
-    <h2 class="name">mein profil</h2>
+    <h1 class="name">mein profil</h1>
 
     
     
@@ -22,12 +22,10 @@
          
          <input type="button" class="edit" value="Edit" />
     {{/unless}}
-
+<div class="list_small">
     <h3>Meine Kurse:</h3>
-    {{#each courses}}
-      {{> course}}	
-    {{/each}}
-
+  {{> courselist courses_from_userid}}
+</div>
   </div>
   
 </template>
