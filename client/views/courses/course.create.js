@@ -23,7 +23,7 @@
       	
           // sonst poste in db und cleare die inputfelder
           var description = form.elements["addform_description"].value;
-          Courses.insert({name: name, description: description, score: 0, time_created: get_timestamp(), time_changed: get_timestamp(), createdby:Meteor.userId()});
+          Courses.insert({name: name, description: description, score: 0, time_created: get_timestamp(), time_changed: get_timestamp(), createdby:Meteor.userId(), subscribers_min:1, subscribers_max:12});
           form.elements["addform_name"].value = "";
           form.elements["addform_description"].value = "";
       }

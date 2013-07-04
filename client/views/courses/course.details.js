@@ -62,6 +62,8 @@
     }
   });
   
+  
+  
   Template.coursedetails.subscribers = function() {
   	  //Anmeldungen auslesen
   	  	  return Courses.findOne(Session.get("selected_course")).subscribers;
@@ -105,8 +107,14 @@
  	  }
   };
   
-  
-  
+ 
+ /*
+  Template.coursedetails.helpers({
+  subscribers: function () {
+     return Courses.findOne(Session.get("selected_course")).subscribers;
+  	  }
+  });
+ */
 
   Template.coursedetails.selected_name = function () {
     // gib den name und die description des ausgew�hlten kurses zur�ck

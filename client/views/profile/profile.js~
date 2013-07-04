@@ -1,21 +1,16 @@
+ Template.profile.userdata = function () {
+  	if(Meteor.user()){
+  		return {id:Meteor.userId(),username:Meteor.user().username,email:Meteor.user().emails[0].address};
+  	}
 
-  Template.profile.user = function () {
-  	//  alert(Meteor.users.findOne({_id:Meteor.userId()})._id);
-  	// alert(Meteor.user()._id);
-  	    //     Meteor.call('update_userdata', "nana","nena");
-
-//alert(Meteor.user().toSource());
-  // return {id:Meteor.userId(),username:Meteor.user().username,email:Meteor.user().emails[0].address};
-return {id:Meteor.userId(),username:"id",email:"sdf"};
- 
   }
   
           
-  Template.profile.isEditing = function () {
+ Template.profile.isEditing = function () {
     return Session.get("isEditing");
   };
 
-   Template.profile.events({
+ Template.profile.events({
     'click input.edit': function () {
       // gehe in den edit-mode, siehe html
     Session.set("isEditing", true);
@@ -31,3 +26,8 @@ return {id:Meteor.userId(),username:"id",email:"sdf"};
          Session.set("isEditing", false);
     }
   });
+   
+
+ Template.profile.courses = function () {  
+      return get_courselist({courses_from_userid: Meteor.userId()});
+  };
