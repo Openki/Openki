@@ -1,10 +1,15 @@
 get_courselist=function(listparameters){
-
-	if(listparameters.courses_from_userid){
-		var results=Courses.find({ $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]}, {sort: {time_created: -1, name: 1}});
-	}else{
-		var results=Courses.find({}, {sort: {time_created: -1, name: 1}});
-	}
+	var find ={};
+	
+	if(listparameters.courses_from_userid)
+		find = _.extend(find, { $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]});
+	
+	//if(listparameters.limit)
+		//var limit = {limit: 3};
+		//var options = [];
+		//options
+	
+	var results=Courses.find(find, {sort: {time_created: -1, name: 1}});
 	
      for(m = 0; m < results.count(); m++){
 	   //  results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 

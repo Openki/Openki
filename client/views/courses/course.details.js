@@ -47,25 +47,39 @@
      },
     'click input.edit': function () {
       // gehe in den edit-mode, siehe html
- // if(Meteor.userId())
-    Session.set("isEditing", true);
-  //else
-    //alert("Security robot say: sign in");
+      if(Meteor.userId())
+      	      Session.set("isEditing", true);
+      else
+      	      alert("Security robot say: sign in");
     },
     'click input.save': function () {
       // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), categories: $('#editform_category').val(), name: $('#editform_name').val()}});
+      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), categories: $('#editform_category').val(), name: $('#editform_name').val(), subscribers_min: $('#editform_subscr_min').val(), subscribers_max: $('#editform_subscr_max').val()}});
       Session.set("isEditing", false);
     },
     'click input.cancel': function() {
       Session.set("isEditing", false);
     }
   });
-  
+ 
   Template.coursedetails.subscribers = function() {
   	  //Anmeldungen auslesen
-  	 return Courses.findOne(Session.get("selected_course")).subscribers;
- }
+
+  	//  if(Session.get("selected_course")){
+  	  	  return Courses.findOne(Session.get("selected_course")).subscribers;
+  	 // }
+  	  }
+  	  
+  Template.coursedetails.subscribers_status = function() {
+  	  //CSS status: genug anmeldungen? "ok" "notyet"
+  	  var course=Courses.findOne(Session.get("selected_course"));
+  	//  alert(course.subscribers.length+"  " +course.subscribers_min);
+  	  if(course.subscribers.length>=course.subscribers_min){
+  	  	  return "ok";
+  	  }else{
+  	  	  return "notyet";
+  	  }
+  }
 
      Template.coursedetails.isSubscribed = function () {
      	//ist User im subscribers-Array?
@@ -77,7 +91,6 @@
  	    }
  	  }
      };
-
 
    Template.coursedetails.organisator = function() {
   	 return Courses.findOne(Session.get("selected_course")).organisator;
@@ -99,11 +112,17 @@
     if(course){
     	    
     	    //Strub: es lädt die daten nicht neu, wenn man von der liste her kommt???
- //var createdby=display_username(course.createdby);
- var createdby=course.createdby;
-// var time_created= format_date(course.time_created);
- var time_created= course.time_created;
-    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created};
+    	    //var createdby=display_username(course.createdby);
+    	    var createdby=course.createdby;
+    	    // var time_created= format_date(course.time_created);
+    	    var time_created= course.time_created;
+ 
+   if(course.subscribers)
+   	   var subscriber_count=  course.subscribers.length*1;	    
+   else
+   	   var subscriber_count= 0;
+
+    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count};
   }};
   
   

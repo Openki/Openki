@@ -193,7 +193,19 @@ margin: 20px 0 20px 0;
      margin-top: 5px;
 }
 
+#coursedetails .subscribers_count{
 
+     display: block;
+    }
+    
+#coursedetails .subscribers_count .notyet{
+
+    	    color: red;
+    }  
+#coursedetails .subscribers_count .ok{
+
+    	    color: green;
+    }  
 
 
 

@@ -4,7 +4,7 @@
 
 
 /*------------------------- Form_ Neue Kategorie erstellen ------------*/
-
+/*
   Template.form.events({
     'click input.add': function () {
 
@@ -30,5 +30,5 @@
     }
 
   });
-
+*/
 
