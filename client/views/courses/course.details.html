@@ -49,7 +49,8 @@
    
   </p>
    <p> Mentor:</p>
-    <p>Teilnehmer: <span class="subscribers_count"> (
+     <p>Teilnehmer:
+     <span class="subscribers_count"> (
     min: {{selected_name.subscribers_min}} 
     max: {{selected_name.subscribers_max}} 
     <span class="{{subscribers_status}} ">current: {{selected_name.subscriber_count}} </span>
@@ -61,10 +62,7 @@
         Noch niemand
         {{/if}}
         </span>
-        
-        
-          
-        
+
      {{#if isSubscribed}}
   <span class="subscribed"> 
   du bist angemeldet!!!  
@@ -75,6 +73,8 @@
            </span>
      {{/unless}}
     </p>
+  
+    
     </div>
     <p class="score"> Score: <a href="#">{{selected_name.score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
   

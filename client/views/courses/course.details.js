@@ -61,23 +61,21 @@
       Session.set("isEditing", false);
     }
   });
- 
+  
   Template.coursedetails.subscribers = function() {
   	  //Anmeldungen auslesen
-
-  	//  if(Session.get("selected_course")){
   	  	  return Courses.findOne(Session.get("selected_course")).subscribers;
-  	 // }
   	  }
-  	  
+  	 
   Template.coursedetails.subscribers_status = function() {
   	  //CSS status: genug anmeldungen? "ok" "notyet"
-  	  var course=Courses.findOne(Session.get("selected_course"));
-  	//  alert(course.subscribers.length+"  " +course.subscribers_min);
-  	  if(course.subscribers.length>=course.subscribers_min){
-  	  	  return "ok";
-  	  }else{
-  	  	  return "notyet";
+  	var course=Courses.findOne(Session.get("selected_course"));
+  	  if(course.subscribers){
+  	  	  if(course.subscribers.length>=course.subscribers_min){
+			  return "ok";
+		  }else{
+			  return "notyet";
+		  }
   	  }
   }
 
@@ -93,9 +91,12 @@
      };
 
    Template.coursedetails.organisator = function() {
-  	 return Courses.findOne(Session.get("selected_course")).organisator;
-  }
+
+	 return Courses.findOne(Session.get("selected_course")).organisator;
   
+   }
+   
+   
    Template.coursedetails.isOrganisator = function () {
  	  if (Courses.findOne(Session.get("selected_course")).organisator==Meteor.userId()){
  	  	  return  true;
@@ -103,6 +104,8 @@
  	  	return false; 
  	  }
   };
+  
+  
   
 
   Template.coursedetails.selected_name = function () {
