@@ -38,6 +38,32 @@ margin: 15px;
     top: 5px;
 }
 
+
+#mainmenu {
+	position:relative;
+	top: 10px;
+	left:22px;
+	height:30px;
+	background-color:#fff;
+	text-transform: uppercase;
+}
+
+#mainmenu span {
+	padding-right:16px;
+}
+
+#mainmenu span a, a:visited {
+	color:#000;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+#mainmenu span a:hover {
+	color:#444;
+	text-decoration:none;
+	font-weight:bold;
+}
+
 .courselist{
     float: left;
     width: 650px;
