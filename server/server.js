@@ -2,7 +2,7 @@
 
 Meteor.startup(function () {
  createCoursesIfNone();
-
+ createCategoriesIfNone();
 });
 
  
@@ -49,6 +49,13 @@ function createCoursesIfNone(){
   }
 }
 
+function createCategoriesIfNone(){
+    // das gleiche für Kategorien
+ if (Categories.find().count() === 0) {
+        createCategories();
+  }
+}
+
 
 
 function createCourses(){
@@ -67,9 +74,25 @@ function createCourses(){
                  "DIY or DIE!",
                  "Wir werden einen Text über Nikola Teslas Kindheit lesen, anhand dessen wir sein Werk in in einen Historischen Kontext zu stellen versuchen.",
                  "Bitte hier Kursbeschreibung eintragen"];
+                 
+    var categories = ["Nerdy Courses",
+    	    "Walter",
+    	    "Nerdy Courses",
+    	    "Nerdy Courses",
+    	    "Tesla Shit",
+    		"Walter"];
 
     // erstelle so viele Kurse, wie der Namens-Array lang ist
     for (var i = 0; i < names.length; i++)
-      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, description: description[i], score: Math.floor(Random.fraction()*10)*5});
+      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, categories: categories[i], description: description[i], score: Math.floor(Random.fraction()*10)*5});
 }
 
+
+function createCategories() {
+	var names = ["Nerdy Courses",
+		"Tesla Shit",
+		"Walter"];
+	
+	for (var i = 0; i < names.length; i++)
+		Categories.insert({name: names[i]});
+}

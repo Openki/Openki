@@ -9,7 +9,11 @@
     
     <p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{selected_name.desc}}</textarea></p>
      <p>  Tags: <input type="text" id="editform_tags" value="{{selected_name.tags}}" size="40"/></p>
+
+     <p>  Category: <input type="text" id="editform_category" value="{{selected_name.categories}}" size="30"/></p>
+
      <p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
+
       </div>
     {{/if}}
 
@@ -18,7 +22,6 @@
      <h2 class="name">{{selected_name.name}}</h2>
      <p class="small"> Time Created: {{selected_name.time_created}},  Created by: {{selected_name.createdby}}</p>
      <p class="descr">{{selected_name.desc}}</p>
-     <p class="tags"> Tags: <a href="#" class="tags">{{selected_name.tags}}</a></p>
   
      <input type="button" class="edit" value="Edit" />     
      <input type="button" class="del" value="Delete" />

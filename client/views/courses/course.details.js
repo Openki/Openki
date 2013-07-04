@@ -54,7 +54,7 @@
     },
     'click input.save': function () {
       // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), name: $('#editform_name').val()}});
+      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), categories: $('#editform_category').val(), name: $('#editform_name').val()}});
       Session.set("isEditing", false);
     },
     'click input.cancel': function() {
@@ -103,7 +103,7 @@
  var createdby=course.createdby;
 // var time_created= format_date(course.time_created);
  var time_created= course.time_created;
-    return course && {name: course.name, desc: course.description, tags: course.tags, score: course.score,  createdby: createdby, time_created: time_created};
+    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created};
   }};
   
   

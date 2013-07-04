@@ -2,8 +2,7 @@
 
 Meteor.startup(function () {
  createCoursesIfNone();
- 
-
+ createCategoriesIfNone();
 });
 
  
@@ -36,6 +35,11 @@ Meteor.publish("parties", function () {
     {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
 });
 
+
+
+Meteor.publish("Subscriptions", function(){
+return Subscriptions.find({});		
+});
 */
 
 function createCoursesIfNone(){
@@ -45,6 +49,12 @@ function createCoursesIfNone(){
   }
 }
 
+function createCategoriesIfNone(){
+    // das gleiche für Kategorien
+ if (Categories.find().count() === 0) {
+        createCategories();
+  }
+}
 
 
 
@@ -70,3 +80,12 @@ function createCourses(){
       Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, description: description[i], score: Math.floor(Random.fraction()*10)*5});
 }
 
+
+function createCategories() {
+	var names = ["Nerdy Courses",
+		"Tesla Shit",
+		"Walter"];
+	
+	for (var i = 0; i < names.length; i++)
+		Categories.insert({name: names[i]});
+}

@@ -1,10 +1,6 @@
-CourseDiscussions = new Meteor.Collection("CourseDiscussions");
+Categories = new Meteor.Collection("Categories");
 
-// Meteor.publish("CourseDiscussions", function(){
-//      return CourseDiscussions.find({});
-//   });
-
-CourseDiscussions.allow({
+Categories.allow({
    update: function (userId, doc, fieldNames, modifier) {
     return userId && true;   // allow only if UserId is present
    },
@@ -12,7 +8,6 @@ CourseDiscussions.allow({
     return userId && true;   // allow only if UserId is present
     },
    remove: function (userId, doc) {
-    return 
-    userId && true;   // allow only if UserId is present
+    return userId && true;   // allow only if UserId is present
     }
 });

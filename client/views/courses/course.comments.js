@@ -1,4 +1,4 @@
-
+/*
 
   Template.comment_list.comment = function () {
       return CourseComments.find({});
@@ -12,3 +12,5 @@
 
     }
   })
+  
+  */
