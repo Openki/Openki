@@ -1,5 +1,6 @@
 Template.messages.message = function() {
-    return CourseDiscussions.find({course_ID:Session.get("selected_course")}, {sort: {message_updated: -1, message_time: -1, 'answers.message_time': -1}});
+    return CourseDiscussions.find({course_ID:Session.get("selected_course")},
+                                  {sort: {message_updated: -1, message_time: -1, answers:{message_time: -1}}});
   };
   
 Template.write_message.events({
