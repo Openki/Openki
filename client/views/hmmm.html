@@ -84,20 +84,26 @@
 <template name="course">
   <div class="course {{selected}} {{hoveredString}}">
     <span class="name">{{name}}</span>
+     {{#if is_subscribed}}
+    <span class="subscribed">Teilnehmer</span>
+    {{/if}}
+    {{#if is_organisator}}
+    <span class="organisator">Organisator</span>
+    {{/if}}
     <span class="score">{{score}}</span>
-    <span class="small">{{time_created}}</span>
-    <span class="small">{{time_changed}}</span>
-    <span class="small">{{createdby}}</span>
-    <span class="small">Subscribers:{{subscriber_count}}</span>
-    <span class="small">Orga:{{has_organisator}}</span>
-  </div>
+    <p class="smalldesc">
+	    <span class="small">{{time_created}}</span>
+	    <span class="small">{{time_changed}}</span>
+	    <span class="small">{{createdby}}</span>
+	    <span class="small">Subscribers:{{subscriber_count}}</span>
+	    <span class="small">Orga:{{has_organisator}}</span>
+	   </p>
+    </div>
 </template>
 
 <template name="coursedetails">
 
   <div id="coursedetails">
-  {{#if selected_name}}
-     
      
     {{#if isEditing}}
     <div class="course_edit">
@@ -109,9 +115,8 @@
      <p> <input type="button" class="save" value="Save" /></p>
       </div>
     {{/if}}
-    
+
     {{#unless isEditing}}
-    
     <div class="course_main">
      <h2 class="name">{{selected_name.name}}</h2>
      <p class="small"> Time Created: {{selected_name.time_created}},  Created by: {{selected_name.createdby}}</p>
@@ -122,13 +127,12 @@
      <input type="button" class="del" value="Delete" />
      </div>
     {{/unless}}
-    
       
     <div class="participators">
     <h3>Participators</h3>
     
-   <p> Organisator:  
-   
+   <p> 
+   Organisator:  
   {{#if organisator}}
    <span class="usernames">{{organisator}}</span>
 	   {{#if isOrganisator}}
@@ -145,39 +149,29 @@
   </p>
    <p> Mentor:</p>
     <p>Teilnehmer: <span class="usernames">
-        {{#each subscribers}}
-        {{user_id}}
+        {{#if subscribers}}
+        {{subscribers}}
         {{else}} 
         Noch niemand
-        {{/each}}
+        {{/if}}
         </span>
         
-        {{#if isSubscribed}}
+     {{#if isSubscribed}}
   <span class="subscribed"> 
   du bist angemeldet!!!  
   <input type="button" class="remove_subscriber" value="Abmelden!!!!" /></span>
     {{/if}}
-    
     {{#unless isSubscribed}}
           <span><input type="button" class="get_subscriber" value="Ich melde mich an" />
            </span>
      {{/unless}}
     </p>
-        
     </div>
-      
-
-    
-      <p class="score"> Score: <a href="#">{{selected_name.score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
+    <p class="score"> Score: <a href="#">{{selected_name.score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
   
     {{> commentDialog}}
     {{> messages}}
-  {{/if}}
   
-  
-  {{#unless selected_name}}
-    <p>Click a Course to select</p>
-  {{/unless}}
   </div>
 </template>
 
@@ -247,7 +241,10 @@
          <input type="button" class="edit" value="Edit" />
     {{/unless}}
 
-    
+    <h3>Meine Kurse:</h3>
+    {{#each courses}}
+      {{> course}}	
+    {{/each}}
 
   </div>
   

@@ -1,5 +1,5 @@
 body {;
-    background-color: #E77EC4;
+    background-color: #FFF;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
     margin: 0px 0 50px 0;
@@ -37,14 +37,24 @@ margin: 15px;
     right: 2px;
     top: 5px;
 }
+
+.courselist{
+    float: left;
+    width: 650px;
+}
+
+
 .course {
     cursor: pointer;
     font-size: 1.2em;
+    border-bottom: 1px solid black;
+    margin: 10px 0;
 }
+
 
 .course .name {
     display: inline-block;
-    width: 350px;
+    width: 450px;
 }
 
 .course .score {
@@ -55,13 +65,24 @@ margin: 15px;
     color: #777;
 }
 
-.course .small {
-	font-size: 9px;
-    display: inline-block;
-   
-    text-align: right;
+.course p.smalldesc{
+    margin:5px 0;
+    font-size: 9px;
     font-weight: bold;
     color: #777;
+}
+
+
+.course .subscribed {
+	font-size: 12px;
+    font-weight: bold;
+    color: green;
+}
+
+.course .organisator {
+	font-size: 12px;
+    font-weight: bold;
+    color: orange;
 }
 
 .course.selected {
@@ -77,11 +98,6 @@ margin: 15px;
 }
 
 
-
-.courselist{
-    float: left;
-    width: 415px;
-}
 
 #coursedetails {
     margin: 0px 10px 50px 50px;

@@ -1,29 +1,40 @@
+get_courselist=function(listparameters){
+
+	if(listparameters.courses_from_userid){
+		var results=Courses.find({ $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]}, {sort: {time_created: -1, name: 1}});
+	}else{
+		var results=Courses.find({}, {sort: {time_created: -1, name: 1}});
+	}
+	
+     for(m = 0; m < results.count(); m++){
+	   //  results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 
+	    results.db_objects[m].time_created=format_date(results.db_objects[m].time_created);	    
+	
+	    if(results.db_objects[m].subscribers){
+		    results.db_objects[m].subscriber_count=  results.db_objects[m].subscribers.length;	    
+	    }
+	    if(results.db_objects[m].organisator){
+		    results.db_objects[m].has_organisator=1;	    
+	    }else{
+		    results.db_objects[m].has_organisator=0;	   
+	    }
+	   
+     }
+    return results;
+  
+}
+
 
 /* ------------------------- Course-list ------------------------- */
 
   Template.courselist.courses = function () {
+
     // gib alle kurse zur�ck, zuerst umgekehrt nach score sortiert und
     // dann nach name sortiert.
-    
-    var results=Courses.find({}, {sort: {time_created: -1, name: 1}});
-    for(m = 0; m < results.count(); m++){
-   //  results.db_objects[m].createdby=display_username(results.db_objects[m].createdby);	 
-    results.db_objects[m].time_created=format_date(results.db_objects[m].time_created);	    
-   results.db_objects[m].subscriber_count=CourseSubscriptions.find({course_id: results.db_objects[m]._id}).count();	    
-   //console.error(results.db_objects[m].organisator);
-    if(results.db_objects[m].organisator){
-    results.db_objects[m].has_organisator=1;	    
-    	}else{
-    results.db_objects[m].has_organisator=0;	   
-   }
-   
-    }
-    return results;
- //alert (results.toSource());
-  //  return Courses.find({}, {sort: {score: -1, name: 1}});
- 
+   return get_courselist({});
   };
 
+  
 
 
 /* ------------------------- Course ------------------------- */
@@ -37,6 +48,28 @@
     // bin ich der "hovered_course", dann gib mir im html die class "hovered"
     return Session.equals("hovered_course", this._id) ? "hovered" : '';
   };
+  
+   
+  Template.course.is_subscribed = function () {
+   	   if(Meteor.userId()){
+        	 if(this.subscribers){
+     	    if(this.subscribers.indexOf(Meteor.userId())!=-1){
+ 	  	  return  true;
+ 	    }else{
+ 	  	return false; 
+ 	    }
+ 	  }   
+   }
+   };
+
+   Template.course.is_organisator = function () {
+ 	  if (this.organisator==Meteor.userId()){
+ 	  	  return  true;
+ 	  }else{
+ 	  	return false; 
+ 	  }
+   };
+
 
 
 
