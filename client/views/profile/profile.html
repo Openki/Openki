@@ -1,0 +1,33 @@
+<template name="profile">
+
+  <div id="profile">
+    <h2 class="name">mein profil</h2>
+
+    
+    
+    {{#if isEditing}}
+
+        <p class="descr">ID: {{userdata.id}}</p>
+        <p>Username: <input type="text" id="editform_username" value="{{userdata.username}}"/></p>
+        <p> Email: <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
+        <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
+      <input type="button" class="save" value="Save" />
+    {{/if}}
+    
+    {{#unless isEditing}}
+        <p class="descr">ID: {{userdata.id}}</p>
+        <p class="descr">Username: {{userdata.username}}</p>
+        <p class="descr">Email: {{userdata.email}}</p>
+        
+         
+         <input type="button" class="edit" value="Edit" />
+    {{/unless}}
+
+    <h3>Meine Kurse:</h3>
+    {{#each courses}}
+      {{> course}}	
+    {{/each}}
+
+  </div>
+  
+</template>
