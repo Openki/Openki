@@ -1,40 +1,37 @@
-<template name="commentDialog">
-      {{#if showCommentDialog}}
-	{{> write_message}}
+<template name="postDialog">
+      {{#if showPostDialog}}
+	{{> writePostDialog}}
       {{/if}}
-    </template>
+</template>
     
-<template name="write_message">
+<template name="writePostDialog">
   <div class="popup">
     <h3>write comment</h3>
-      <form name="messageform">
-        <input type="text" name="message_titel" /><br />
-        <textarea cols="70" rows="5" name="message_text" /></textarea><br /><br />
-        <input type="button" class="write" value="write!" /><input type="button" class="cancel" value="cancel" />
+      <form name="form_post">
+        <input type="text" id="post_title" /><br />
+        <textarea cols="70" rows="5" id="post_text" /></textarea><br /><br />
+        <input type="button" class="add" value="write!" /><input type="button" class="cancel" value="cancel" />
       </form>
   </div>
 </template>
 
-<template name="messages">
+<template name="discussion">
   <h3>discussion</h3>
-  <input type ="button" class="showDialog" value="write Comment" />
-  {{#each message}}
-    <div class="message">
-      <h4>{{message_title}}</h4>
-      <p>{{message_text}}</p>
-      <p>Zeit: {{message_time}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
-      <form>
-        <input type="button" class="answerbutton" value="answer this!" />
-      </form>
-    </div>
-    {{#if answers}}
-      {{#each this.answers}}
-        <div class="answer">
-          <h4>{{message_title}}</h4>
-          <p>{{message_text}}</p>
-	  <p>Zeit: {{message_time}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
-        </div>
-      {{/each}}
-    {{/if}}
+  <input type ="button" class="write" value="write Comment" />
+  {{#each post}}
+      {{#if parent_ID}}
+	    <div class="comment">
+		  <h4>{{title}}</h4>
+		  <p>{{text}}</p>
+		  <p>Zeit: {{time_created}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
+	    </div>
+     {{else}}
+	    <div class="post">
+		  <h4>{{title}}</h4>
+		  <p>{{text}}</p>
+		  <p>Zeit: {{time_created}}, User: {{user_ID}}, Kurs: {{course_ID}}</p>
+		  <input type="button" class="answer" value="answer this!" />
+	    </div>
+      {{/if}}
   {{/each}}
 </template>

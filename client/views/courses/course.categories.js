@@ -1,5 +1,5 @@
 
-/* ------------------------- Course-list ------------------------- */
+/* ------------------------- Course-list ------------------------- 
 
   Template.categories.courses = function () {
     
@@ -18,7 +18,7 @@
 
 
 
-/* ------------------------- Course ------------------------- */
+/* ------------------------- Course ------------------------- 
 
   Template.category.selected = function () {
     // bin ich der "selected_course", dann gib mir im html die class "selected"
@@ -32,7 +32,7 @@
 
 
 
-/* ------------------------- Course anwählen-------------------------*/
+/* ------------------------- Course anwählen-------------------------
   Template.category.events({
     'click': function () {
       // speichere in sesssetion, welcher kurs angeklickt wurde
@@ -48,5 +48,7 @@
     }
   });
 
+  
+  */
 
 
