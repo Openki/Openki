@@ -38,3 +38,4 @@ Template.register.events({
         return false;
     }
 });
+*/

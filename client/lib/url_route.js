@@ -5,6 +5,9 @@ var URLliste = Backbone.Router.extend({
 			
 			"page/:page_id": "pages",
 			
+			"locations/": "locationlist",
+			"location/": "locationdetails",
+			
 			"courselist/": "courselist",
 			
 			"course/:course_id": "coursedetails",
@@ -16,6 +19,10 @@ var URLliste = Backbone.Router.extend({
 		
 		home: function (){	
 			Session.set("page_id", "home");
+		},	
+		
+		pages: function (page_id){
+			Session.set("page_id", page_id);
 		},
 
 		courselist: function (){
@@ -27,9 +34,15 @@ var URLliste = Backbone.Router.extend({
 			Session.set("page_id", "coursedetails");
 		},
 		
-		pages: function (page_id){
-			Session.set("page_id", page_id);
+		locationlist: function (){
+			Session.set("page_id", "locationlist");
 		},
+		
+		locationdetails: function (course_id, course_title){	
+			Session.set("selected_location", course_id);
+			Session.set("page_id", "locationdetails");
+		},
+
 		
 		profile: function (){
 			Session.set("page_id", "profile");

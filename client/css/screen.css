@@ -146,6 +146,36 @@ margin:0 0 8px 0;
 }
 
 
+.locationlist_location{
+margin: 10px 0;	
+}
+
+.locationlist_location p{
+margin: 0;	
+}
+
+.locationlist_location .description{
+font-size: 12px;
+color: grey;
+}
+
+.locationlist_location .name{
+font-size: 15px;
+color: grey;
+}
+
+
+.locationlist_location .mylocation{
+display: none;
+}
+
+.locationlist_location .is_mylocation{
+font-weight: bold;
+color: orange;
+display: inline !important;
+padding-left: 20px;
+}
+
 
 
 .list_small{

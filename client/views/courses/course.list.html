@@ -2,9 +2,9 @@
   <div class="coursepage">
     <h1>Alle Kurse</h1>
 
-	{{> courselist all_courses}}
+{{> courselist all_courses}}
     
-	{{> form}}
+{{> course_create}}
   </div>
 </template>
 
@@ -12,10 +12,10 @@
   <div class="courselist">
 
     {{#each courses}}
-      {{> course}}
-         {{else}}
-         keine Kurse
-         {{/each}}
+        {{> course}}
+    {{else}}
+        keine Kurse
+    {{/each}}
     
   </div>
 </template>
@@ -35,12 +35,13 @@
      </p>
       
 <p class="my_subscriptions">
-     {{#if is_subscribed}}
+{{#if is_subscribed}}
     <span class="subscribed">Du bist Teilnehmer</span>
-    {{/if}}
-    {{#if is_organisator}}
+{{/if}}
+
+{{#if is_organisator}}
     <span class="organisator">Du bist Organisator</span>
-    {{/if}}
+{{/if}}
     </p>
     </div>
 </template>

@@ -1,27 +1,29 @@
+
+/* ------------------------- Query / List ------------------------- */
 get_courselist=function(listparameters){
-	//alert(listparameters.toSource());
+	//return a course list
 	var find ={};
-	
+	// modify query --------------------
 	if(listparameters.courses_from_userid)
+		// show courses that have something to do with userid
 		find = _.extend(find, { $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]});
 	if(listparameters.missing=="organisator")
+		// show courses with no organisator
 		find = _.extend(find, {$or : [ { "organisator" : undefined}, {"organisator":""} ]});
 	if(listparameters.missing=="subscribers")
-		// weniger subscribers.length als subscribers_min
+		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "(this.subscribers && this.subscribers.length < this.subscribers_min) || (!this.subscribers)"} );
 	
-	//if(listparameters.limit)
-		//var limit = {limit: 3};
-		//var options = [];
-		//options
+	var results=Courses.find(find, {sort: {time_created: -1}});
 	
-	var results=Courses.find(find, {sort: {time_created: -1, name: 1}});
-	
+	// modify/format result list -----------------
      for(m = 0; m < results.count(); m++){
+     	     
      	     course=results.db_objects[m];
 	   //  course.createdby=display_username(course.createdby);	 
-	    course.time_created=format_date(course.time_created);	    
-	
+	    course.time_created=format_date(course.time_created);	
+	    
+	    // modify subscribers result
 	    if(course.subscribers){
 		    course.subscriber_count=  course.subscribers.length;	    
 		 if(course.subscriber_count>=course.subscribers_min){
@@ -29,13 +31,13 @@ get_courselist=function(listparameters){
 		 }else{
 		 	 course.subscribers_status="notyet";
 		 }
-		
 	    }else{
 	    	    course.subscriber_count=0;
 	    	    course.subscribers_status="notyet";
 	    }
+	    
+	    // modify organisator result
 	    if(course.organisator){
-		    
 	    	    course.organisator_status="ok";
 	    }else{   
 	    	    
@@ -51,23 +53,21 @@ get_courselist=function(listparameters){
 }
 
 
-/* ------------------------- Course-list ------------------------- */
+/* ------------------------- List types / Templates ------------------------- */
 
   Template.courselist.courses = function () {
-  // macht, dass es die courses tatsächlich aktualisiert
+  // needed to actualize courses
    return this.courses;
   };
-
   
+  // Template handlers ---------------
+
   Template.coursepage.all_courses = function () {
   	  var return_object={};
   	  return_object.courses= get_courselist({});
   	  return return_object;
   };
-
-  
-  
-  
+ 
   Template.home.missing_organisator = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({missing: "organisator"});
@@ -87,47 +87,39 @@ get_courselist=function(listparameters){
   }
 
 
+/* ------------------------- User Helpers ------------------------- */
 
 
-/* ------------------------- Course ------------------------- */
-
-
-  
-   
   Template.course.is_subscribed = function () {
+  	  // is current user subscriber
    	   if(Meteor.userId()){
-        	 if(this.subscribers){
-     	    if(this.subscribers.indexOf(Meteor.userId())!=-1){
- 	  	  return  true;
- 	    }else{
- 	  	return false; 
- 	    }
- 	  }   
-   }
-   };
-
-   Template.course.is_organisator = function () {
-   	   if(Meteor.userId()){
- 	  if (this.organisator==Meteor.userId()){
- 	  	  return  true;
- 	  }else{
- 	  	return false; 
- 	  }
+   	   	   if(this.subscribers){
+		    if(this.subscribers.indexOf(Meteor.userId())!=-1){
+			  return  true;
+		    }else{
+			return false; 
+		    }
+		   }   
  	   }
    };
 
+   Template.course.is_organisator = function () {
+  	  // is current user organisator
+   	   if(Meteor.userId()){
+ 	  if (this.organisator==Meteor.userId()){
+ 	  	  	return  true;
+ 	  	}else{
+ 	  		return false; 
+ 	  	}
+ 	  }
+   };
 
 
-
-/* ------------------------- Course anwählen-------------------------*/
+/* -------------------------  Events-------------------------*/
   Template.course.events({
     'click': function () {
-      // speichere in sesssetion, welcher kurs angeklickt wurde
-      // um ihn per class "selected" im css gelb zu hinterlegen
-
+    	   
       Router.setCourse( this._id, this.name);
 
     }
   });
-
-
