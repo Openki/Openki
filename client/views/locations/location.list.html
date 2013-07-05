@@ -1,0 +1,53 @@
+<template name="locationlist">
+<h1>Räume</h1>
+ Öffentlich sichtbare Räume 
+ <div class="locationlist">
+
+    {{#each locations}}
+      {{> location}}
+    {{else}}
+         keine Räume
+    {{/each}}
+         
+    {{> location_create}}
+    
+  </div>
+</template>
+
+
+<template name="locationdetails">
+<h1>Raumdetails</h1>
+
+</template>
+
+  
+<template name="location">
+  <div class="locationlist_location">
+    <p class="name">{{name}} <span class="mylocation {{mylocation}}" style="display:none">Mein Raum!</span></p>
+    <p class="description">{{description}} </p>
+    
+    </div>
+</template>
+
+<template name="location_create">
+    <div class="location_create">
+    <form>
+    <h3>Eigenen Raum hinzufügen</h3>
+    <table>
+        <tr>
+            <th>Name: </th><td><input type="text" id="addlocation_name"/> </td>
+        </tr>
+        <tr>
+            <th>Description: </th><td><textarea cols="30" rows="4" id="addlocation_description"></textarea> </td>
+        </tr>
+        <tr>
+            <th>Öffentlich sichtbar: </th><td><input type="checkbox" id="addlocation_public" checked></textarea> </td>
+        </tr>
+        <tr>
+            <th></th><td><input type="button" class="add" value="Add new" /> </td>
+        </tr>
+
+    </table>
+    </form>
+    </div>
+</template>

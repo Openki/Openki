@@ -4,7 +4,7 @@
 
 <body>
   <div id="userspace">
-    {{>userspace}}
+    
   </div>
   <div id="mainmenu">
     {{> mainmenu}}
@@ -17,13 +17,10 @@
   </div>
 </body>
 
-<template name="userspace">
-  <form id="login-form" action="action"><input type="email" id="login-email" /><input type="password" id="login-password" /><input type="submit" id="login-button" value="Sign in" /></form> 
-</template>
-
 <template name="mainmenu">
 	<span><a href="/">Home</a>  </span>
 	<span><a href="/courselist/">Kursliste</a>  </span>
+	<span><a href="/locations/">Räume</a>  </span>
 	<span><a href="/page/warum">Warum</a>  </span>      
 	<span><a href="/page/darum">Darum</a>  </span>
 	<span><a href="/page/links">Funny Links</a>  </span>
@@ -45,6 +42,15 @@
 
 {{#route_is "coursedetails"}}
 	{{> coursedetails}}
+{{/route_is}}
+
+
+{{#route_is "locationlist"}}
+	{{> locationlist}}
+{{/route_is}}
+
+{{#route_is "locationdetails"}}
+	{{> locationdetails}}
 {{/route_is}}
      
 {{#route_is "about"}}
@@ -80,3 +86,4 @@
 <div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
 	{{> courselist missing_subscribers}}</div>
 </template>
+

@@ -1,11 +1,6 @@
-// Timestamp, das muss man eigentlich auf der Serverseite machen,
-// damit mans nicht faken kann?? Noch anschauen.
-// an einen besseren ort knallen
-
-
 /*------------------------- Form_ Neuer Kurs erstellen ------------*/
 
-  Template.form.events({
+  Template.course_create.events({
     'click input.add': function () {
 
       // add new course to db
