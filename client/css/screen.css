@@ -50,6 +50,9 @@ margin: 15px;
 	background-color:black;
 	color: #fff;
 }
+#form_login {
+    float:left;
+}
 
 #mainmenu {
 	position:relative;

@@ -4,7 +4,7 @@
 
 <body>
   <div id="userspace">
-    {{>userspace}}
+    {{> log_in}}
   </div>
   <div id="mainmenu">
     {{> mainmenu}}
@@ -17,9 +17,12 @@
   </div>
 </body>
 
-<template name="userspace">
+<template name="log_in">
   <form id="form_login" action="action"><input type="email" id="email" /><input type="password" id="password" /><input type="submit" id="signin" value="Sign in" /></form> 
 </template>
+<template name="register">
+  <form id="form_register" action="action"><input type="text" id="register_username" /><input type="email" id="register_email" /><input type="password" id="register_password" /><input type="submit" id="regist" value="register" /></form> 
+</tempate>
 
 <template name="mainmenu">
 	<span><a href="/">Home</a>  </span>
