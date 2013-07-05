@@ -16,8 +16,8 @@ Template.maincontent.route_is = function (data,options) {
     };
 /*
 Template.userspace.events({
-    'submit #login-form':function (){
-        Meteor.loginWithPassword($("#login-email").val(), $("#login-password").val(), function (error){
+    'submit #form_login':function (){
+        Meteor.loginWithPassword($("#email").val(), $("#password").val(), function (error){
             alert("ups, falsch.. "+error);
         });
     }
