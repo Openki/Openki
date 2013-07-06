@@ -3,8 +3,8 @@
 </head>
 
 <body>
-  <div id="userspace">
-    {{> log_in}}
+  <div id="login_info">
+    {{> login_info}}
   </div>
   <div id="mainmenu">
     {{> mainmenu}}
@@ -16,13 +16,32 @@
     {{loginButtons align="right"}}
   </div>
 </body>
-<template name="log_in">
-  <form id="form_login" action="action"><input type="email" id="email" /><input type="password" id="password" /><input type="submit" id="signin" value="Sign in" /></form> 
-</template>
-<template name="register">
-  <form id="form_register" action="action"><input type="text" id="register_username" /><input type="email" id="register_email" /><input type="password" id="register_password" /><input type="submit" id="regist" value="register" /></form> 
-</tempate>
 
+<template name="login_info">
+  {{#if currentUser}}
+    {{#userdata}}
+    {{/userdata}}
+    <input type="button" class="logout" value="Logout" />
+  {{else}}
+    {{#if login}} 
+      <form id="form_login" action="action">
+        <input type="email" id="email" placeholder="email"/>
+        <input type="password" id="password" />
+        <input type="submit" id="signin" value="Login" />
+      </form> / 
+      <input type="button" class="show_register" value="Register" />
+    {{/if}}
+    {{#if register}}
+      <form id="form_register" action="action">
+        <input type="text" id="register_username" />
+        <input type="email" id="register_email" />
+        <input type="password" id="register_password" />
+        <input type="submit" id="regist" value="register" />
+      </form> / 
+      <input type="button" class="show_login" value="Login" />
+    {{/if}}
+  {{/if}} 
+</template>
 
 <template name="mainmenu">
 	<span><a href="/">Home</a>  </span>
@@ -36,61 +55,59 @@
 
 
 <template name="maincontent">
-
   <div id="maincontent">
 
-{{#route_is "home"}}
-    {{> home}}
-{{/route_is}}
+    {{#route_is "home"}}
+        {{> home}}
+    {{/route_is}}
 
-{{#route_is "courselist"}}
-	{{> coursepage}}
-{{/route_is}}
+    {{#route_is "courselist"}}
+    	{{> coursepage}}
+    {{/route_is}}
 
-{{#route_is "coursedetails"}}
-	{{> coursedetails}}
-{{/route_is}}
-
-
-{{#route_is "locationlist"}}
-	{{> locationlist}}
-{{/route_is}}
-
-{{#route_is "locationdetails"}}
-	{{> locationdetails}}
-{{/route_is}}
-     
-{{#route_is "about"}}
-         aboutttt
-{{/route_is}}
-
-{{#route_is "warum"}}
-         waruum
-{{/route_is}}
-
-{{#route_is "darum"}}
-         daruum
-{{/route_is}}
+    {{#route_is "coursedetails"}}
+    	{{> coursedetails}}
+    {{/route_is}}
 
 
-{{#route_is "links"}}
-         yaaaah
-{{/route_is}}
+    {{#route_is "locationlist"}}
+    	{{> locationlist}}
+    {{/route_is}}
+
+    {{#route_is "locationdetails"}}
+    	{{> locationdetails}}
+    {{/route_is}}
+         
+    {{#route_is "about"}}
+             aboutttt
+    {{/route_is}}
+
+    {{#route_is "warum"}}
+             waruum
+    {{/route_is}}
+
+    {{#route_is "darum"}}
+             daruum
+    {{/route_is}}
 
 
-{{#route_is "profile"}}
-	{{> profile}}
-{{/route_is}}
+    {{#route_is "links"}}
+             yaaaah
+    {{/route_is}}
+
+
+    {{#route_is "profile"}}
+    	{{> profile}}
+    {{/route_is}}
   </div>
-
-  </template>
+</template>
   
   
 <template name="home">
-<h1>Hoi zäme</h1>
-<div class="list_small"><h3>Kurse ohne Organisatoren</h3>
-	{{> courselist missing_organisator}}</div>
-<div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
-	{{> courselist missing_subscribers}}</div>
+  <h1>Hoi zäme</h1>
+  <div class="list_small"><h3>Kurse ohne Organisatoren</h3>
+    {{> courselist missing_organisator}}</div>
+  <div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
+    {{> courselist missing_subscribers}}</div>
 </template>
 

@@ -39,7 +39,7 @@ margin: 15px;
     top: 5px;
 }
 
-#userspace {
+#login_info {
 	position: absolute;
 	top: -35px;
 	left: 0px;
@@ -51,6 +51,9 @@ margin: 15px;
 	color: #fff;
 }
 #form_login {
+    float:left;
+}
+#form_register {
     float:left;
 }
 

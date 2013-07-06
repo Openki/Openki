@@ -24,6 +24,8 @@ display_username= function (userid){
   }
 }
 
-
+var trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+  }
 
 
