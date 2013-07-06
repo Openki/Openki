@@ -1,7 +1,7 @@
 
 
 Template.votelists.votings=function(){
-	
+	/*
 	votings=Votings.find({course_id: Session.get("selected_course")});
 	
 	course=Courses.findOne(Session.get("selected_course"));
@@ -36,7 +36,7 @@ Template.votelists.votings=function(){
 	}
 
 //	return {votings:votings_array, subscribers:subscribers_votings};
-	}
+	}*/
 	
 }
 

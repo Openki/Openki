@@ -132,10 +132,11 @@
     	    // var time_created= format_date(course.time_created);
     	    var time_created= course.time_created;
 
-   if(course.subscribers)
+   if(course.subscribers){
    	   var subscriber_count=  course.subscribers.length*1;
-   else
+   }else{
    	   var subscriber_count= 0;
+   }
 
     return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:course.subscribers};
   }};
