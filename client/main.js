@@ -15,7 +15,7 @@ Template.maincontent.route_is = function (data,options) {
 		return options.inverse( this );
     };
 
-Template.login.events({
+Template.log_in.events({
     'submit #form_login':function (){
         //alert("mail: "+$("#email").val()+" passwd: "+$("#password").val());
         Meteor.loginWithPassword($("#email").val(), $("#password").val(), function(error){
@@ -38,4 +38,4 @@ Template.register.events({
         return false;
     }
 });
-*/
+
