@@ -22,7 +22,7 @@ Template.login_info.userdata = function(){
     }
 };
 
-Template.log_in.events({
+Template.login_info.events({
     'submit #form_login':function (){
         //alert("mail: "+$("#email").val()+" passwd: "+$("#password").val());
         Meteor.loginWithPassword($("#email").val(), $("#password").val(), function(error){
@@ -34,11 +34,10 @@ Template.log_in.events({
         return false;
     },
     'submit #form_register':function (){
-        //alert("mail: "+$("#register_email").val()+" passwd: "+$("#register_password").val());
-        var email = trimInput($("#register_email").val());
+        alert("mail: "+$("#register_email").val()+" passwd: "+$("#register_password").val());
+        //var email = trimInput($("#register_email").val());
 
-
-            Accounts.createUser({username:$("#register_username").val(),email:email, password:$("#register_password").val()} , function(error){
+            Accounts.createUser({username:$("#register_username").val(),email:$("#register_email").val(), password:$("#register_password").val()} , function(error){
                 if(error){
                     alert(error);
                 }
