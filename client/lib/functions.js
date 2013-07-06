@@ -17,13 +17,44 @@ format_date= function (date){
 
 display_username= function (userid){
   var user= Meteor.users.findOne({_id:userid});
-  if(user.username){
+  if(user){
   	  return user.username;	  
   }else{
-  	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
+        return "no_username";
+  	  //return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
   }
 }
 
+var trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+  }
 
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            break;
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            break;
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            break;
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            break;
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            break;
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            break;
+        default:
+            return options.inverse(this)
+            break;
+    }
+    //return options.inverse(this);
+});
 
 

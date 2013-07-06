@@ -4,7 +4,7 @@
   Template.coursedetails.isEditing = function () {
     return Session.get("isEditing");
   };
-  
+
 
   Template.coursedetails.events({
     'click input.inc': function () {
@@ -12,30 +12,30 @@
       // erh�he den score dieses Kurses um eins
       Courses.update(Session.get("selected_course"), {$inc: {score: 1}});
     },
-    
+
     'click input.get_subscriber': function () {
     	// für Kurs anmelden (array: subscribers)
      	  Courses.update(Session.get("selected_course"), {$addToSet:{subscribers: Meteor.userId()}});
-    	 
+
     },
-    
+
     'click input.remove_subscriber': function () {
     	// von Kurs abmelden
     	Courses.update(Session.get("selected_course"), {$pull:{subscribers: Meteor.userId()}});
        },
-    
+
     'click input.get_organisator': function () {
-    	// Orga werden 
+    	// Orga werden
     	Courses.update(Session.get("selected_course"), {$set:{organisator: Meteor.userId()}});
     },
-    
-        
+
+
     'click input.remove_organisator': function () {
     	// Orga künden
       	Courses.update(Session.get("selected_course"), {$set:{organisator: ""}});
       },
-    
-    
+
+
     'click input.del': function () {
       // bei click auf das input-element mit der class "del"
       // l�sche den ausgew�hlten kurs
@@ -61,17 +61,15 @@
       Session.set("isEditing", false);
     }
   });
-  
-  
-  
-  Template.coursedetails.subscribers = function() {
-  	  //Anmeldungen auslesen
-  	  	  return Courses.findOne(Session.get("selected_course")).subscribers;
-  	  }
-  	 
+
+
+
+
+
   Template.coursedetails.subscribers_status = function() {
   	  //CSS status: genug anmeldungen? "ok" "notyet"
   	var course=Courses.findOne(Session.get("selected_course"));
+  	if(course){
   	  if(course.subscribers){
   	  	  if(course.subscribers.length>=course.subscribers_min){
 			  return "ok";
@@ -79,35 +77,44 @@
 			  return "notyet";
 		  }
   	  }
+  	}
   }
-
      Template.coursedetails.isSubscribed = function () {
      	//ist User im subscribers-Array?
-     	 if(Courses.findOne(Session.get("selected_course")).subscribers){
+     	course=Courses.findOne(Session.get("selected_course"));
+     	 if(course){
      	    if(Courses.findOne(Session.get("selected_course")).subscribers.indexOf(Meteor.userId())!=-1){
  	  	  return  true;
  	    }else{
- 	  	return false; 
+ 	  	return false;
  	    }
  	  }
-     };
+     }
+
 
    Template.coursedetails.organisator = function() {
-
-	 return Courses.findOne(Session.get("selected_course")).organisator;
+       course=Courses.findOne(Session.get("selected_course"));
+       if(course)
+           return course.organisator;
+           //return display_username(course.organisator);
+           
   
    }
-   
-   
+
+
    Template.coursedetails.isOrganisator = function () {
- 	  if (Courses.findOne(Session.get("selected_course")).organisator==Meteor.userId()){
- 	  	  return  true;
- 	  }else{
- 	  	return false; 
- 	  }
+       course=Courses.findOne(Session.get("selected_course"));
+       if(course){
+          if (course.organisator==Meteor.userId()){
+              return  true;
+            }else{
+                return false;
+            }
+        }
   };
+
   
- 
+
  /*
   Template.coursedetails.helpers({
   subscribers: function () {
@@ -121,19 +128,23 @@
     // wird aufgerufen, sobald "selected_course" ändert (z.B. routing)
     var course = Courses.findOne(Session.get("selected_course"));
     if(course){
-    	    
+
     	    //Strub: es lädt die daten nicht neu, wenn man von der liste her kommt???
     	    //var createdby=display_username(course.createdby);
     	    var createdby=course.createdby;
     	    // var time_created= format_date(course.time_created);
     	    var time_created= course.time_created;
- 
-   if(course.subscribers)
-   	   var subscriber_count=  course.subscribers.length*1;	    
-   else
-   	   var subscriber_count= 0;
 
-    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count};
+   if(course.subscribers){
+       var subscribers_usernames=[];
+       course.subscribers.forEach(function(userid){
+          subscribers_usernames.push(display_username(userid));
+       });
+   	   var subscriber_count=  course.subscribers.length*1;
+   }else{
+   	   var subscriber_count= 0;
+   }
+    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:subscribers_usernames};
   }};
-  
-  
+
+

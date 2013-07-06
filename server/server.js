@@ -84,7 +84,7 @@ function createCourses(){
 
     // erstelle so viele Kurse, wie der Namens-Array lang ist
     for (var i = 0; i < names.length; i++)
-      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, categories: categories[i], description: description[i], score: Math.floor(Random.fraction()*10)*5, subscribers_min: 2, subscribers_max: 8});
+      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, categories: categories[i], description: description[i], score: Math.floor(Random.fraction()*10)*5, subscribers_min: 2, subscribers_max: 8, subscribers:[]});
 }
 
 

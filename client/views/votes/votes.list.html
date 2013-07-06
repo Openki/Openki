@@ -1,0 +1,96 @@
+<template name="votelists">
+    <div id="votelists">
+    <h3>Abstimmungen</h3>
+        {{#each votings.votings}}
+            <div class="voting">
+                <h4>{{question}}</h4>   
+                 <table class="votelist_table">
+                     <tr>
+                         <td></td>
+                         {{#each options}}
+                             <td>
+                             {{this.option}}
+                             </td>
+                         {{else}}
+                            <td>keine Optionen </td>
+                         {{/each}}
+                 </tr>
+                 {{#each this.subscribers}}
+                  <tr class="{{this.is_current}}">
+                         <td>{{this.name}}</td>
+                         
+                           {{#each this.options}}
+                             <td class="option {{this.vote_status}}" name= "{{this.option_index}}">
+                            &nbsp;&nbsp;
+                             </td>
+                         {{else}}
+                            <td>keine Optionen </td>
+                         {{/each}}
+                 </tr>
+                 {{/each}}
+                   <tr>
+                         <td><b>Total</b></td>
+                         
+                           {{#each this.total}}
+                             <td >
+                            &nbsp;&nbsp;{{this}}
+                             </td>
+                         {{else}}
+                            <td> </td>
+                         {{/each}}
+                 </tr>
+                 </table>
+            </div>
+        {{else}}
+            <p>keine Abstimmungen </p>
+        {{/each}}
+
+    <input type="button" class="show_add_vote" value="Neue Textabstimmung" />   
+   
+    <form id="add_vote_form" style="display:none">
+        <h4>Neue Textabstimmung</h4>
+        <p>Frage: <input type="text" id="add_vote_question" size="30"></p>
+            <div id="add_vote_options">
+            <p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+            <p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+        </div>
+        <p><input type="button" class="add_vote_add_option" value="+ Option"></p>
+        <input type="button" class="create_votelist" value="Abstimmung erstellen">
+    </form>
+  </div>
+</template>
+
+<template name="votelist">
+<h3>Abstimmung</h3>
+ <div class="votelist">
+
+{{>vote_add_option}}
+  </div>
+</template>
+
+
+<template name="vote_add">
+
+	Typ: <select name="option_type">
+		<option>Text</option>
+		<option>Datum</option>
+		<option>Wochentag</option>
+	</select>
+</template>
+
+
+
+<template name="vote_add_option">
+<h4>Option hinzufügen</h4>
+<form>
+	<select name="option_type">
+		<option>Text</option>
+		<option>Datum</option>
+		<option>Wochentag</option>
+	</select>
+	<input type="text" name="vote_add_text" size="30">
+	<input type="submit" value="ok">
+</form>
+</template>
+
+  
