@@ -17,10 +17,11 @@ format_date= function (date){
 
 display_username= function (userid){
   var user= Meteor.users.findOne({_id:userid});
-  if(user.username){
+  if(user){
   	  return user.username;	  
   }else{
-  	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
+        return "no_username";
+  	  //return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
   }
 }
 

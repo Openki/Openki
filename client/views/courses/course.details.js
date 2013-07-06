@@ -96,18 +96,21 @@
        course=Courses.findOne(Session.get("selected_course"));
        if(course)
            return course.organisator;
+           //return display_username(course.organisator);
+           
+  
    }
 
 
    Template.coursedetails.isOrganisator = function () {
        course=Courses.findOne(Session.get("selected_course"));
        if(course){
- 	  if (course.organisator==Meteor.userId()){
- 	  	  return  true;
- 	  }else{
- 	  	return false;
- 	  }
- 	   }
+          if (course.organisator==Meteor.userId()){
+              return  true;
+            }else{
+                return false;
+            }
+        }
   };
 
   
@@ -133,12 +136,15 @@
     	    var time_created= course.time_created;
 
    if(course.subscribers){
+       var subscribers_usernames=[];
+       course.subscribers.forEach(function(userid){
+          subscribers_usernames.push(display_username(userid));
+       });
    	   var subscriber_count=  course.subscribers.length*1;
    }else{
    	   var subscriber_count= 0;
    }
-
-    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:course.subscribers};
+    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:subscribers_usernames};
   }};
 
 
