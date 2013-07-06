@@ -20,7 +20,7 @@ Template.discussion.post = function() {
 
 Template.postDialog.showPostDialog = function () {
     return Session.get("showPostDialog");
-};  
+};
 
 Template.writePostDialog.events({
     'click input.add': function () {

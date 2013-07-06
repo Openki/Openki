@@ -24,7 +24,9 @@ display_username= function (userid){
   }
 }
 
-
+var trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+  }
 
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
