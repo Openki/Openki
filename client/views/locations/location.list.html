@@ -23,8 +23,13 @@
   
 <template name="location">
   <div class="locationlist_location">
-    <p class="name">{{name}} <span class="mylocation {{mylocation}}" style="display:none">Mein Raum!</span></p>
+    <p class="name">{{name}} </p>
     <p class="description">{{description}} </p>
+    
+    {{#if ismylocation "==" "true"}}
+    <p class="mylocation">Mein Raum!</p>
+    <input type="button" class="edit_location" value="editieren">
+    {{/if}}
     
     </div>
 </template>

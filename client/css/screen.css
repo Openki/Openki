@@ -144,11 +144,13 @@ margin:0 0 8px 0;
 
 
 .locationlist_location{
-margin: 10px 0;	
+margin: 10px 0;
+border-bottom: 1px solid black;
 }
 
 .locationlist_location p{
-margin: 0;	
+margin: 0;
+width: 200px;
 }
 
 .locationlist_location .description{
@@ -162,15 +164,10 @@ color: grey;
 }
 
 
-.locationlist_location .mylocation{
-display: none;
-}
 
-.locationlist_location .is_mylocation{
+.locationlist_location .mylocation{
 font-weight: bold;
 color: orange;
-display: inline !important;
-padding-left: 20px;
 }
 
 
@@ -280,9 +277,21 @@ margin: 20px 0 20px 0;
     	    color: green;
     }  
 
+#votelists{
+	background-color: #EEE;
+}
+
+#votelists tr.is_current{
+	background-color: orange;
+	cursor: pointer;
+
+}
 
 
-
+#add_vote_form *p{
+border: none;	
+	background-color: #EEE
+}
 
 
 
