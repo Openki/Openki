@@ -21,8 +21,8 @@ Template.login_info.userdata = function(){
         return Meteor.user().username;
     }
 };
-    
-Template.login_info.events({
+
+Template.log_in.events({
     'submit #form_login':function (){
         //alert("mail: "+$("#email").val()+" passwd: "+$("#password").val());
         Meteor.loginWithPassword($("#email").val(), $("#password").val(), function(error){
@@ -64,9 +64,11 @@ Template.login_info.events({
 
     },
 });
+
 Template.login_info.register = function () {
     return Session.get("showRegisterDialog");
 };
 Template.login_info.login = function () {
     return Session.get("showLoginDialog");
 };    
+
