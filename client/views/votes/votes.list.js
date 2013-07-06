@@ -1,3 +1,5 @@
+
+
 Template.votelists.votings=function(){
 	
 	votings=Votings.find({course_id: Session.get("selected_course")});
@@ -9,8 +11,8 @@ Template.votelists.votings=function(){
 	    
 	var votings_array = [];
 	for(m = 0; m < votings.count(); m++){  	     
-	    voting = votings.db_objects[m];
-     	//voting.vote_options = voting.options;     
+	    
+	    voting = votings.db_objects[m];  
      	subscribers_votings=[];
      	
      	for(s = 0; s < subscribers.length; s++){ 
@@ -18,7 +20,7 @@ Template.votelists.votings=function(){
      	    
      	for(o = 0; o < voting.options.length; o++){ 
      	    subscriber_options.push("x");
-     	   // if(voting_options
+     	    
      	}
      //	alert(subscribers[s]+" --- "+Meteor.userId());
        
@@ -33,9 +35,11 @@ Template.votelists.votings=function(){
 
 	}
 
-	return {votings:votings_array, subscribers:subscribers_votings};
+//	return {votings:votings_array, subscribers:subscribers_votings};
 	}
+	
 }
+
 
  Template.votelists.events({
     'click .is_current .option': function () {
