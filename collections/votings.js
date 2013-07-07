@@ -1,4 +1,11 @@
-
+// ======== DB-Model: ========
+// "_id" -> ID
+// "question" -> string
+// "type" -> string
+// "course_id" -> ID_Courses
+// "options" -> ["option" -> string,
+//               "votes" -> int]
+// ===========================
 
 Votings = new Meteor.Collection("Votings");
 

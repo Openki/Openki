@@ -1,3 +1,9 @@
+// ======== DB-Model: ========
+// "_id" -> ID
+// "name" -> string
+// ===========================
+
+
 Categories = new Meteor.Collection("Categories");
 
 Categories.allow({

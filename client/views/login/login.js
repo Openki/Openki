@@ -19,7 +19,7 @@ Template.login_info.events({
         return false;
     },
     'submit #form_register':function (){
-        alert("mail: "+$("#register_email").val()+" passwd: "+$("#register_password").val());
+        //alert("mail: "+$("#register_email").val()+" passwd: "+$("#register_password").val());
         //var email = trimInput($("#register_email").val());
             //Meteor.call('insert_userdata');
         Accounts.createUser({username:$("#register_username").val(),email:$("#register_email").val(), password:$("#register_password").val()} , function(error){
