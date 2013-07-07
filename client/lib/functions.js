@@ -14,7 +14,7 @@ format_date= function (date){
 	var date_string=curr_date + "." + curr_month + "." + curr_year;
 	return date_string;	
 }
-
+/*
 display_username= function (userid){
   var user= Meteor.users.findOne({_id:userid});
   if(user){
@@ -24,11 +24,9 @@ display_username= function (userid){
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
-      return "serverscript";
-  }
-  
+      return "serverscript";	  
 }
-
+*/
 //checks categories database for each course!
 //better would be: fetch categories database first and only once..
 //TO DO!

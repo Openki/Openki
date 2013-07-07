@@ -10,6 +10,8 @@ body {
     -o-user-select: none;
     user-select: none;
 
+    background-image: url(http://news.schuel.ch/wp-content/uploads/2013/07/AchtungTestseite_01.gif);
+    
     /*background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
     */
 
@@ -287,9 +289,41 @@ margin: 20px 0 20px 0;
 	background-color: #EEE;
 }
 
+#votelists h4{
+    margin: 0;
+}
+
+#votelists .voting{
+	background-color: #DDD !important;
+}
+
+.votelist_table {
+        border-collapse: separate;
+        border-spacing: 2px 2px;
+      }
+      
 #votelists tr.is_current{
-	background-color: orange;
+	background-color: #99FF99;
 	cursor: pointer;
+
+}
+
+
+#votelists td.option{
+	background-color: #EEE;
+	padding: 0 15px;
+
+
+}
+#votelists td.v0{
+	background-color: green !important;
+
+
+}
+
+#votelists td.v1{
+	background-color: red !important;
+
 
 }
 

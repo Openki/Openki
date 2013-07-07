@@ -1,7 +1,7 @@
 
 
 Template.votelists.votings=function(){
-	/*
+var pseudo=Session.get("aktualisierungs_hack");
 	votings=Votings.find({course_id: Session.get("selected_course")});
 	
 	course=Courses.findOne(Session.get("selected_course"));
@@ -13,30 +13,47 @@ Template.votelists.votings=function(){
 	for(m = 0; m < votings.count(); m++){  	     
 	    
 	    voting = votings.db_objects[m];  
-     	subscribers_votings=[];
+     	subscribers_votings=[]; 
+     	voting_total=[];
+     	for(o = 0; o < voting.options.length; o++){ 
+     	    voting_total.push(voting.options[o].votes_0.length);
+     	}
      	
      	for(s = 0; s < subscribers.length; s++){ 
      	    subscriber_options=[];
      	    
      	for(o = 0; o < voting.options.length; o++){ 
-     	    subscriber_options.push("x");
-     	    
+     	    if(voting.options[o].votes_0.indexOf(subscribers[s])!=-1){
+     	     vote_status="v0";   
+     	    }else if(voting.options[o].votes_1.indexOf(subscribers[s])!=-1){
+     	     vote_status="v1";   
+     	    }else{
+     	    vote_status="";   
+     	    }
+     	    subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});	    
      	}
+     	
      //	alert(subscribers[s]+" --- "+Meteor.userId());
+     //	alert(typeof subscribers[s]+" --- "+ typeof Meteor.userId());
        
-     	//if(subscribers[s] == Meteor.userId()){
+     if(subscribers[s] == Meteor.userId()){
      	 is_current="is_current";   
-     	//}
+     }else{
+         is_current=""; 
+     }
      	 
-     	    subscribers_votings.push({name:subscribers[s], is_current: is_current, options:subscriber_options});
+     	    subscribers_votings.push({is_current:is_current, name:display_username(subscribers[s]), is_current: is_current, options:subscriber_options});
      	     //voting.user_count = voting.users.count()
      	}
+     	
+     	voting.total=voting_total;
+     	voting.subscribers=subscribers_votings;
      	votings_array.push(voting);
-
 	}
 
-//	return {votings:votings_array, subscribers:subscribers_votings};
-	}*/
+//return {votings:votings_array, subscribers:subscribers_votings};
+return {votings:votings_array};
+	}
 	
 }
 
@@ -45,8 +62,36 @@ Template.votelists.votings=function(){
     'click .is_current .option': function () {
       // bei click auf das input-element mit der class "inc",
       // erh�he den score dieses Kurses um 
-      
-	        alert("Handler for .click() called."+$(this));
+	     aktuell=Votings.findOne(this.voting_id);
+	     if(aktuell.options[this.option_index].votes_0.indexOf(Meteor.userId())!=-1){
+
+	         	setModifier = { $pull: {} };    
+	        setModifier.$pull['options.'+this.option_index+'.votes_0'] = Meteor.userId();
+	       Votings.update(this.voting_id,setModifier);
+	         
+	             setModifier = { $addToSet: {} };    
+	        setModifier.$addToSet['options.'+this.option_index+'.votes_1'] = Meteor.userId();
+	        Votings.update(this.voting_id,setModifier);
+	        
+	        
+
+	     }else if(aktuell.options[this.option_index].votes_1.indexOf(Meteor.userId())!=-1){
+	         	setModifier = { $pull: {} };    
+	        setModifier.$pull['options.'+this.option_index+'.votes_1'] = Meteor.userId();
+	       Votings.update(this.voting_id,setModifier);
+	         
+	             setModifier = { $addToSet: {} };    
+	        setModifier.$addToSet['options.'+this.option_index+'.votes_0'] = Meteor.userId();
+	        Votings.update(this.voting_id,setModifier);
+	     }else{
+	    
+	             setModifier = { $addToSet: {} };    
+	        setModifier.$addToSet['options.'+this.option_index+'.votes_0'] = Meteor.userId();
+	        Votings.update(this.voting_id,setModifier);
+	        
+	     }
+	        //gruusig, aber sonst aktualisiert es nicht momentan
+	        Session.set("aktualisierungs_hack", Math.random());
 	}
  });
 
@@ -74,7 +119,7 @@ return_object.vote_options=["asf","sfsf"];
 
 	 for(var i in option_array) {
 	  if(option_array[i] !== undefined) 
-	      option_object[i]={option:option_array[i],user_votes:""};
+	      option_object[i]={option:option_array[i],votes_0:[],votes_1:[],votes_2:[]};
 	     }
     	 Votings.insert({type: "text", course_id: Session.get("selected_course"), question:$("#add_vote_question").val(), options: option_object});
     	 $('#add_vote_form')[0].reset();
@@ -84,6 +129,8 @@ return_object.vote_options=["asf","sfsf"];
     	$("#add_vote_options").append(
     	    $(".add_vote_option").last().clone()
     	);
+    	
+    	   $(".add_vote_option > input").last().val("");
     }
   });
  

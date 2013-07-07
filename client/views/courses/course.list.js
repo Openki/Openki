@@ -21,8 +21,8 @@ get_courselist=function(listparameters){
      	     
      	     course=results.db_objects[m];
 	   //
-	   course.createdby_username=display_username(course.createdby);	 
-	    course.time_created=format_date(course.time_created);	
+	   //course.createdby_username=display_username(course.createdby);	 
+	   course.time_created=format_date(course.time_created);	
 	    
 	    // modify subscribers result
 	    if(course.subscribers){
