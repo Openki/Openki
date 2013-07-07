@@ -7,6 +7,18 @@
             <th>Name: </th><td><input type="text" id="addform_name"/> </td>
         </tr>
         <tr>
+            <th>Category: </th><td>
+                <select id="addform_category">
+
+                    {{#each categories}}
+                        <option value="{{_id}}">{{name}}</option>
+                    {{else}}
+                        Keine Kategorien definiert!
+                    {{/each}}
+                </select> 
+            </td>
+        </tr>
+        <tr>
             <th>Description: </th><td><textarea cols="30" rows="10" id="addform_description"></textarea> </td>
         </tr>
         <tr>

@@ -15,7 +15,7 @@
           alert("Please add at least a name!");      }else{
      
           // sonst poste in db und cleare die inputfelder
-          Courses.insert({name: $("#addform_name").val(), description: $("#addform_description").val(), score: 0, time_created: get_timestamp(), time_changed: get_timestamp(), createdby:Meteor.userId(), subscribers_min:1, subscribers_max:12, subscribers:[]});
+          Courses.insert({name: $("#addform_name").val(), description: $("#addform_description").val(), score: 0, time_created: get_timestamp(), time_changed: get_timestamp(), createdby:Meteor.userId(), subscribers_min:1, subscribers_max:12, subscribers:[], categories: $("#addform_category").val()});
           $("#addform_name").val(""); 
           $("#addform_description").val("");
       }

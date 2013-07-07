@@ -14,14 +14,32 @@ format_date= function (date){
 	var date_string=curr_date + "." + curr_month + "." + curr_year;
 	return date_string;	
 }
-
+/*
 display_username= function (userid){
   var user= Meteor.users.findOne({_id:userid});
-  if(user.username){
-  	  return user.username;	  
+  if(user){
+    if(user.username){
+    	  return user.username;	  
+    }else{
+    	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
+    }
   }else{
-  	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
-  }
+      return "serverscript";	  
+}
+*/
+//checks categories database for each course!
+//better would be: fetch categories database first and only once..
+//TO DO!
+
+display_categoryname= function (categoryid){
+  var categoryname= Categories.findOne(categoryid).name;
+      return categoryname;
+}
+
+
+display_category= function (id){
+  var category= Categories.findOne({_id:id});
+    return category.name;
 }
 
 var trimInput = function(val) {

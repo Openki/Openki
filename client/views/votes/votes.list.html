@@ -2,7 +2,7 @@
     <div id="votelists">
     <h3>Abstimmungen</h3>
         {{#each votings.votings}}
-            <div>
+            <div class="voting">
                 <h4>{{question}}</h4>   
                  <table class="votelist_table">
                      <tr>
@@ -15,19 +15,30 @@
                             <td>keine Optionen </td>
                          {{/each}}
                  </tr>
-                 {{#each votings.subscribers}}
-                  <tr class="{{is_current}}">
+                 {{#each this.subscribers}}
+                  <tr class="{{this.is_current}}">
                          <td>{{this.name}}</td>
                          
                            {{#each this.options}}
-                             <td class="option">
-                             {{this}}
+                             <td class="option {{this.vote_status}}" name= "{{this.option_index}}">
+                            &nbsp;&nbsp;
                              </td>
                          {{else}}
                             <td>keine Optionen </td>
                          {{/each}}
                  </tr>
                  {{/each}}
+                   <tr>
+                         <td><b>Total</b></td>
+                         
+                           {{#each this.total}}
+                             <td >
+                            &nbsp;&nbsp;{{this}}
+                             </td>
+                         {{else}}
+                            <td> </td>
+                         {{/each}}
+                 </tr>
                  </table>
             </div>
         {{else}}
