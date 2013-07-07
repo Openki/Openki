@@ -9,6 +9,11 @@
     return categories;
 };
 
+  Template.coursedetails.categories = function () {
+      var categories = Categories.find();
+    return categories;
+};
+
   Template.category.courses_by_category = function () {
       
       var courses_by_category = Courses.find({categories: this._id});

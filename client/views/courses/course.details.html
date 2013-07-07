@@ -11,7 +11,17 @@
 
      <p>  Teinehmer Min:  <input type="text" id="editform_subscr_min" value="{{selected_name.subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{selected_name.subscribers_max}}" size="2"/></p>
 
-     <p>  Category: <input type="text" id="editform_category" value="{{selected_name.categories}}" size="30"/></p>
+     <!-- problem: when editing the default category chosen should be the one already attached to the course - how??
+      <option selected> instead of <option>
+   -->
+     <p>  Category: <select id="addform_category">
+
+                    {{#each categories}}
+                        <option value="{{_id}}">{{name}}</option>
+                    {{else}}
+                        Keine Kategorien definiert!
+                    {{/each}}
+                </select></p>
 
      <p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
 
