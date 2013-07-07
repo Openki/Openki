@@ -20,7 +20,8 @@ get_courselist=function(listparameters){
      for(m = 0; m < results.count(); m++){
      	     
      	     course=results.db_objects[m];
-	   //  course.createdby=display_username(course.createdby);	 
+	   //
+	   course.createdby_username=display_username(course.createdby);	 
 	    course.time_created=format_date(course.time_created);	
 	    
 	    // modify subscribers result
@@ -44,13 +45,16 @@ get_courselist=function(listparameters){
 	    	    course.organisator_status="notyet";
 	    }
 	    
-	  
+	  course.categoryname=display_categoryname(course.categories);
   	  
 	   
      }
     return results;
   
 }
+
+
+
 
 
 /* ------------------------- List types / Templates ------------------------- */
@@ -116,6 +120,7 @@ get_courselist=function(listparameters){
 
 
 /* -------------------------  Events-------------------------*/
+
   Template.course.events({
     'click': function () {
     	   

@@ -1,0 +1,48 @@
+<template name="categorylist">
+
+  <div class="courselist">
+  	<h1>Kategorien</h1>
+    {{#each categories}}
+        {{> category}}
+    {{else}}
+        keine Kategorien definiert!
+    {{/each}}
+
+    {{> course_category}}
+
+  </div>
+</template>
+
+<template name="category">
+  <div class="courselist_course">
+    <p class="name">{{name}} </p>
+      <p class="smalldesc">
+
+      	
+	        <span class="small">Courses: {{#each courses_by_category}}{{name}} {{else}}
+	        keine Kurse in dieser Kategorie definiert!
+	    {{/each}}</span>
+	    
+
+     </p>
+    </div>
+</template>
+
+
+
+<template name="course_category">
+    <div class="create_category">
+    <form>
+    <h3>Neue Kategorie</h3>
+    <table>
+        <tr>
+            <th>Name: </th><td><input type="text" id="addform_name"/> </td>
+        </tr>
+        <tr>
+            <th></th><td><input type="button" class="add" value="Add new" /> </td>
+        </tr>
+
+    </table>
+    </form>
+    </div>
+</template>
