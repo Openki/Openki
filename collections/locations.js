@@ -1,4 +1,9 @@
-
+// ======== DB-Model: ========
+// "_id" -> ID
+// "name" -> string
+// "description" -> string
+// "users" -> [ID_users]
+// ===========================
 
 Locations = new Meteor.Collection("Locations");
 

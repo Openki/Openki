@@ -10,19 +10,30 @@ body {
     -o-user-select: none;
     user-select: none;
 
+    background-image: url(http://news.schuel.ch/wp-content/uploads/2013/07/AchtungTestseite_01.gif);
+    
     /*background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
     */
 
 }
 
 div{
-background-color: #fff;
+
 margin-top: 35px;
-opacity:0.98;
 }
  
 p{
 margin: 15px;	
+}
+
+#container{
+    background-color:rgba(255, 255, 255, 0.95);
+    position:absolute;
+    top:0px;
+    left: 30px;
+    right: 30px;
+    bottom:50px;
+
 }
 
 #outer {

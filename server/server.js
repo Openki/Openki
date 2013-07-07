@@ -1,13 +1,15 @@
 
 
 Meteor.startup(function () {
- createCoursesIfNone();
  createCategoriesIfNone();
+ createCoursesIfNone();
 });
 
  
 Meteor.methods({
-    
+    insert_userdata: function(username, email, password){
+        Accounts.createUser({username:username, email:email, password:password});
+    },
     update_userdata: function(username,email) {
         Meteor.users.update(Meteor.userId(), {
             $set: {
@@ -19,7 +21,7 @@ Meteor.methods({
             }
         });
      },
-         update_userpassword: function(new_password) {
+    update_userpassword: function(new_password) {
         Accounts.setPassword(Meteor.userId(), new_password)
      }
 });
@@ -57,6 +59,20 @@ function createCategoriesIfNone(){
 }
 
 
+function createCategories() {
+    var names = ["Nerdy Courses",
+        "Tesla Shit",
+        "Walter",
+        "Standard"];
+    
+    for (var i = 0; i < names.length; i++)
+        Categories.insert({name: names[i]});
+}
+
+function get_category_id(index) {
+        var category_by_name = Categories.find().fetch();
+        return category_by_name[index]._id;
+    }
 
 function createCourses(){
     // erstelle ein String-Array f�r die Namen der Kurse
@@ -74,13 +90,15 @@ function createCourses(){
                  "DIY or DIE!",
                  "Wir werden einen Text über Nikola Teslas Kindheit lesen, anhand dessen wir sein Werk in in einen Historischen Kontext zu stellen versuchen.",
                  "Bitte hier Kursbeschreibung eintragen"];
-                 
-    var categories = ["Nerdy Courses",
-    	    "Walter",
-    	    "Nerdy Courses",
-    	    "Nerdy Courses",
-    	    "Tesla Shit",
-    		"Walter"];
+    
+    
+
+    var categories = [get_category_id(0),
+                get_category_id(3),
+                get_category_id(2),
+                get_category_id(2),
+                get_category_id(1),
+                get_category_id(0)]; 
 
     // erstelle so viele Kurse, wie der Namens-Array lang ist
     for (var i = 0; i < names.length; i++)
@@ -88,11 +106,4 @@ function createCourses(){
 }
 
 
-function createCategories() {
-	var names = ["Nerdy Courses",
-		"Tesla Shit",
-		"Walter"];
-	
-	for (var i = 0; i < names.length; i++)
-		Categories.insert({name: names[i]});
-}
+
