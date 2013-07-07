@@ -65,6 +65,10 @@ return {votings:votings_array};
 	     aktuell=Votings.findOne(this.voting_id);
 	     if(aktuell.options[this.option_index].votes_0.indexOf(Meteor.userId())!=-1){
 
+	         //zuerst muss angelegt werden, dann gefüllt   Objekt auf linker seite setzen vom : para
+	         //{}  options ist ein array  Options
+	         // vielleicht mit stringformating - Java-script kann das einfach nicht 
+	         
 	         	setModifier = { $pull: {} };    
 	        setModifier.$pull['options.'+this.option_index+'.votes_0'] = Meteor.userId();
 	       Votings.update(this.voting_id,setModifier);
@@ -90,7 +94,9 @@ return {votings:votings_array};
 	        Votings.update(this.voting_id,setModifier);
 	        
 	     }
-	        //gruusig, aber sonst aktualisiert es nicht momentan
+	        // gruusig, aber sonst aktualisiert es nicht momentan  
+	        // (AktualisierungsHack, damit sich was ändert, könnte man schöner machen- 
+	        // man sieht dann nicht direkt wenn andere person was macht, erst, wenn andere person was macht.
 	        Session.set("aktualisierungs_hack", Math.random());
 	}
  });

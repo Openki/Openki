@@ -1,5 +1,7 @@
 
 /* ------------------------- Query / List ------------------------- */
+//querry anpassung
+
 get_courselist=function(listparameters){
 	//return a course list
 	var find ={};
@@ -16,7 +18,17 @@ get_courselist=function(listparameters){
 	
 	var results=Courses.find(find, {sort: {time_created: -1}});
 	
-	// modify/format result list -----------------
+	// modify/format result list -----------------datenbank aufruf anpassen sollte man vielleicht anders machen 
+	// should be done differntly 
+	// modul ist pur dictionarry, controller ... eigentlich neue methode mitgeben, modell hat keine funktionalität
+	// wenn status von erfundenem wert funktionniert auto-update nichtmehr
+	// fraglich ob
+	// ist wie ein find() oben abgefragt unten abgeändert
+    // fx:	müsste eigentlich in taplate controllers gemacht werden
+    // nicht als wert nehmen sondern controller machen
+    //könte es in ---user ahndlers
+    //so machen wie bei userhelpers bei subscriptions (unten in diesem file)
+    
      for(m = 0; m < results.count(); m++){
      	     
      	     course=results.db_objects[m];
@@ -62,6 +74,12 @@ get_courselist=function(listparameters){
   
   // Template handlers ---------------
 
+  
+  //marcel: nur damit funktion nomals aufgerufen wird
+  // gibt datenbankeintrag zurück courses zuweisen.
+  // schön währe wenn parameter gibts zurück in courselist
+  // kann von vier verschiedenen orten aufgerufen werden und macht vier mal ein bisschen was anderes
+  
   Template.coursepage.all_courses = function () {
   	  var return_object={};
   	  return_object.courses= get_courselist({});

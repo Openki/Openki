@@ -64,7 +64,7 @@
 
 
 
-
+// nur für css
 
   Template.coursedetails.subscribers_status = function() {
   	  //CSS status: genug anmeldungen? "ok" "notyet"
@@ -79,6 +79,15 @@
   	  }
   	}
   }
+  
+// muss zuert aufruf abfragen , obs couses existiertfunktionniert hat  indexOf
+// zuerst genereller aufruf machen weil courses muss ready sein
+// dann könte man direkt machen
+// wenn man fetch macht würds funktionnieren  -- oder auch nicht.
+// datenbank abfrage muss man nicht zweimal machen, (erster Hinweis)
+// find one gibt nicht Course sondern Curser zurück (asynchron data loader xyz)
+// gibt nichts zurück, weis asynchon ist
+
      Template.coursedetails.isSubscribed = function () {
      	//ist User im subscribers-Array?
      	course=Courses.findOne(Session.get("selected_course"));
@@ -123,6 +132,9 @@
   });
  */
 
+// müsste eigentlich zuobrst hin (HauptFunktion) 
+ 
+ 
   Template.coursedetails.selected_name = function () {
     // gib den name und die description des ausgew�hlten kurses zur�ck
     // wird aufgerufen, sobald "selected_course" ändert (z.B. routing)
@@ -137,7 +149,7 @@
 
    if(course.subscribers){
        var subscribers_usernames=[];
-       course.subscribers.forEach(function(userid){
+       course.subscribers.forEach(function(userid){  //könnte wie oben gelöst werden als vorabfrage
           subscribers_usernames.push(display_username(userid));
        });
    	   var subscriber_count=  course.subscribers.length*1;

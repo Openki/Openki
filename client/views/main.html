@@ -13,7 +13,7 @@
     {{> maincontent}}
   </div>
   <div id="login">            
-    {{loginButtons align="right"}}
+    {{loginButtons align="right"}}   // altes Login Teil
   </div>
 </body>
 
@@ -30,7 +30,12 @@
 
 <template name="maincontent">
   <div id="maincontent">
-
+<!--
+  eigentlich kann man route is wegnehmen und einmal methode aufrufen
+  anstatt jede methode hier unten nacheinander durchzuführen
+  felix erklährts
+  -->
+  
     {{#route_is "home"}}
         {{> home}}
     {{/route_is}}
@@ -76,7 +81,10 @@
   </div>
 </template>
   
-  
+
+<!-- // folgendes gehört zum home eigenes file... -->
+
+
 <template name="home">
   <h1>Hoi zäme</h1>
   <div class="list_small"><h3>Kurse ohne Organisatoren</h3>

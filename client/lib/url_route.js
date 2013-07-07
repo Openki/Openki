@@ -17,6 +17,15 @@ var URLliste = Backbone.Router.extend({
 			
 			},
 		
+
+// URLs Setzen
+// fx: wieso navigate und nicht locations?
+//mat navigat macht er pushstate (browser)
+// funktionniert auch für bots- kann serverseitig rendern (suchmaschinen)
+// routet über URL (funktion:klick) in course.lists.js
+
+
+
 		home: function (){	
 			Session.set("page_id", "home");
 		},	
