@@ -20,12 +20,12 @@ Course-Organization-Platform built with [Meteor.js](http://meteor.com)
 
 # Installation
 - Install [Meteor](http://meteor.com) and components
-- '$ curl https://install.meteor.com | sh'
-- '$ sudo apt-get install npm nodejs'
-- '$ sudo npm install -g n'
-- '$ sudo n 0.10.12'
-- '$ sudo npm install -g meteorite'
+'$ curl https://install.meteor.com | sh'
+'$ sudo apt-get install npm nodejs'
+'$ sudo npm install -g n'
+'$ sudo n 0.10.12'
+'$ sudo npm install -g meteorite'
 - Download or clone Hmmm into /some/path
 - cd /some/path
 - Run `mrt`
-Browse to http://localhost:3000/
+- Browse to http://localhost:3000/
