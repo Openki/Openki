@@ -7,7 +7,9 @@ Meteor.startup(function () {
 
  
 Meteor.methods({
-    
+    insert_userdata: function(username, email, password){
+        Accounts.createUser({username:username, email:email, password:password});
+    },
     update_userdata: function(username,email) {
         Meteor.users.update(Meteor.userId(), {
             $set: {
@@ -19,7 +21,7 @@ Meteor.methods({
             }
         });
      },
-         update_userpassword: function(new_password) {
+    update_userpassword: function(new_password) {
         Accounts.setPassword(Meteor.userId(), new_password)
      }
 });
