@@ -1,3 +1,5 @@
+/***** BODY ******/
+
 body {
     background-color: #FFF;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -42,7 +44,7 @@ margin: 15px;
     padding-left: 20px;   
 }
 
-
+/***** LOGIN ******/
 
 #login {
     position: absolute;
@@ -67,6 +69,8 @@ margin: 15px;
 #form_register {
     float:left;
 }
+
+/***** MAIN MENU ******/
 
 #mainmenu {
 	position:relative;
@@ -93,6 +97,7 @@ margin: 15px;
 	font-weight:bold;
 }
 
+/****** COURSE LIST ******/
 
 .courselist{
     float: left;
@@ -160,35 +165,6 @@ margin:0 0 8px 0;
 }
 
 
-.locationlist_location{
-margin: 10px 0;
-border-bottom: 1px solid black;
-}
-
-.locationlist_location p{
-margin: 0;
-width: 200px;
-}
-
-.locationlist_location .description{
-font-size: 12px;
-color: grey;
-}
-
-.locationlist_location .name{
-font-size: 15px;
-color: grey;
-}
-
-
-
-.locationlist_location .mylocation{
-font-weight: bold;
-color: orange;
-}
-
-
-
 .list_small{
     float: left;
 }
@@ -204,9 +180,12 @@ display:none;
 }
 
 
+/***** COURSE DETAILS ******/
+
+
 
 .create_course{
-clear: left;	
+clear: left;    
 }
 
 
@@ -256,13 +235,13 @@ margin: 20px 0 20px 0;
 }
 
 #coursedetails .participators p{
-	padding-bottom: 5px;
-	border-bottom: 1px solid grey;
+    padding-bottom: 5px;
+    border-bottom: 1px solid grey;
 
 }
 
 #coursedetails .participators span input{
-	float: right;
+    float: right;
 
 }
 
@@ -287,12 +266,69 @@ margin: 20px 0 20px 0;
     
 #coursedetails .subscribers_count .notyet{
 
-    	    color: red;
+            color: red;
     }  
 #coursedetails .subscribers_count .ok{
 
-    	    color: green;
+            color: green;
     }  
+
+
+/****** CATEGORY LIST ******/
+
+
+.categorylist {
+    font-size: 1.2em;
+    border-bottom: 1px solid black;
+    margin: 10px 0;
+}
+
+
+.categorylist .name {
+    margin: 15px 0;
+    font-weight: normal;
+    color: #333;
+}
+
+.categorylist p.smalldesc{
+    margin:5px 10px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+}
+
+
+/****** LOCATION ******/
+
+.locationlist_location{
+margin: 10px 0;
+border-bottom: 1px solid black;
+}
+
+.locationlist_location p{
+margin: 0;
+width: 200px;
+}
+
+.locationlist_location .description{
+font-size: 12px;
+color: grey;
+}
+
+.locationlist_location .name{
+font-size: 15px;
+color: grey;
+}
+
+
+
+.locationlist_location .mylocation{
+font-weight: bold;
+color: orange;
+}
+
+/****** VOTING ******/
 
 #votelists{
 	background-color: #EEE;
@@ -344,7 +380,7 @@ border: none;
 
 
 
-
+/****** OTHER ELEMENTS ******/
 
 
 h2{

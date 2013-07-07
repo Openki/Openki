@@ -147,6 +147,8 @@
     	    // var time_created= format_date(course.time_created);
     	    var time_created= course.time_created;
 
+          var categories = display_categoryname(course.categories);
+
    if(course.subscribers){
        var subscribers_usernames=[];
        course.subscribers.forEach(function(userid){  //könnte wie oben gelöst werden als vorabfrage
@@ -156,7 +158,7 @@
    }else{
    	   var subscriber_count= 0;
    }
-    return course && {name: course.name, desc: course.description, tags: course.tags, category: course.category, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:subscribers_usernames};
+    return course && {name: course.name, desc: course.description, tags: course.tags, categories: categories, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:subscribers_usernames};
   }};
 
 

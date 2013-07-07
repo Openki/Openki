@@ -14,12 +14,12 @@
 </template>
 
 <template name="category">
-  <div class="courselist_course">
-    <p class="name">{{name}} </p>
+  <div class="categorylist">
+    <p class="name">{{name}}:</p>
       <p class="smalldesc">
 
-      	
-	        <span class="small">Courses: {{#each courses_by_category}}{{name}} {{else}}
+      	 
+	        <span class="small">{{#each courses_by_category}}{{> course_by_category}}{{else}}
 	        keine Kurse in dieser Kategorie definiert!
 	    {{/each}}</span>
 	    
@@ -28,7 +28,9 @@
     </div>
 </template>
 
-
+<template name="course_by_category">
+      {{name}}<br />
+</template>
 
 <template name="course_category">
     <div class="create_category">

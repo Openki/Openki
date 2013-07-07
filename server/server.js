@@ -94,11 +94,11 @@ function createCourses(){
     
 
     var categories = [get_category_id(0),
-                get_category_id(3),
                 get_category_id(2),
-                get_category_id(2),
+                get_category_id(0),
+                get_category_id(0),
                 get_category_id(1),
-                get_category_id(0)]; 
+                get_category_id(2)]; 
 
     // erstelle so viele Kurse, wie der Namens-Array lang ist
     for (var i = 0; i < names.length; i++)

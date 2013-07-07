@@ -38,106 +38,11 @@ Template.course_category.events({
   });
 
 
-/*
-get_categorylist=function(){
-  //return a course list
-  var results=Categories.find({}, {sort: {name: 1}});
-  
-  // modify/format result list -----------------
-     for(m = 0; m < results.count(); m++){
-           
-           category=results.db_objects[m];
-    
-     }
-    return results;
-  
-}
 
-/*
-
-Template.course_create.categories = function () {
-  // needed to actualize courses
-   return get_categorylist();
-  };
-
-
-  Template.course_create.categories = function () {
-  // needed to actualize courses
-   return this.categories;
-  };
-
-*/
-
-  // Template handlers ---------------
-
-
-
-
-
-
-/* ------------------------- List types / Templates ------------------------- 
-
-  Template.courselist.courses = function () {
-  // needed to actualize courses
-   return this.courses;
-  };
-  
-  // Template handlers ---------------
-
-  Template.coursepage.all_courses = function () {
-      var return_object={};
-      return_object.courses= get_courselist({});
-      return return_object;
-  };
-
-
-
-
-/* ------------------------- Course-list ------------------------- 
-
-  Template.course_create.categories = function () {
-    
-    var results=Categories.find({}, {sort: {name: 1}});
-    for(m = 0; m < results.count(); m++){
-        category=results.db_objects[m];
-    }
-    return results;
- 
-  };
-
-
-
-/* ------------------------- Course ------------------------- 
-
-  Template.category.selected = function () {
-    // bin ich der "selected_course", dann gib mir im html die class "selected"
-    return Session.equals("selected_category", this._id) ? "selected" : '';
-  };
-
-  Template.category.hoveredString = function () {
-    // bin ich der "hovered_course", dann gib mir im html die class "hovered"
-    return Session.equals("hovered_category", this._id) ? "hovered" : '';
-  };
-
-
-
-/* ------------------------- Course anwählen-------------------------
-  Template.category.events({
+  Template.course_by_category.events({
     'click': function () {
-      // speichere in sesssetion, welcher kurs angeklickt wurde
-      // um ihn per class "selected" im css gelb zu hinterlegen
+         
+      Router.setCourse( this._id, this.name);
 
-      Router.setCategory( this._id, this.name);
-
-    },
-    'mouseenter': function () {
-      // speichere in session, �ber welchem kurs der maus-cursor war
-      // um ihn per class "hovered" im css fett zu machen
-      Session.set("hovered_category", this._id);
     }
   });
-
-  
-  */
-
-
