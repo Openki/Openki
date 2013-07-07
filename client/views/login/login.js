@@ -56,7 +56,8 @@ Template.login_info.login = function () {
     return Session.get("showLoginDialog");
 };
 
-
+//use Meteorite-package 'Mesosphere' for Form-creation & validation -> https://atmosphere.meteor.com/package/Mesosphere
+//Problem: function Accounts.createUser() doesn't work called from Meteor.methods.. why?
 
 Mesosphere({
     name:"registerForm",

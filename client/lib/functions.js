@@ -15,6 +15,15 @@ format_date= function (date){
 	return date_string;	
 }
 
+display_coursename = function (courseid){
+  var course = Courses.findOne({_id:courseid});
+  if(course){
+    return course.name;
+  }else{
+    return "dummdididumm.."
+  }
+}
+
 display_username= function (userid){
   var user= Meteor.users.findOne({_id:userid});
   if(user){
