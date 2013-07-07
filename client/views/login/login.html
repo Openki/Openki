@@ -13,18 +13,19 @@
       <input type="button" class="show_register" value="Register" />
     {{/if}}
     {{#if register}}
-      <form name="registerForm">
-        <input type="text" name="user" placeholder="Username"><span id="user-error" style="width:50px;"></span>
-        <input type="password" name="pwd" placeholder="password"><span id="pwd-error" style="width:50px;"></span>
+      <!-- <form name="registerForm">
+        <input type="text" name="user" placeholder="Username"><span id="user-error"></span>
+        <input type="email" name="email" placeholder="Email"><span id="email-error"></span>
+        <input type="password" name="pwd" placeholder="Password"><span id="pwd-error"></span>
         <input type="submit" value="Sign Up">
-      </form> / 
-      <!-- <form id="form_register" action="action">
+      </form> / --> 
+      <form id="form_register" action="action">
         <input type="text" id="register_username" />
         <input type="email" id="register_email" />
         <input type="password" id="register_password" />
         <input type="submit" id="regist" value="register" />
-      </form> / -->
+      </form> /
       <input type="button" class="show_login" value="Login" />
     {{/if}}
   {{/if}} 
-</template>
+</template> 
