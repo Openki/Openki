@@ -4,7 +4,6 @@
 
 // allgemeine praktische funktionen
 
- 
 Template.maincontent.route_is = function (data,options) {
 // strube funktion, die irgendwas macht, aber es tut
 // macht, dass das routing im template "maincontent" funtkioniert
@@ -13,6 +12,3 @@ Template.maincontent.route_is = function (data,options) {
     }
     return options.inverse( this );
 };
-
-
-
