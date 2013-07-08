@@ -37,6 +37,7 @@
   anstatt jede methode hier unten nacheinander durchzuführen
   felix erklährts
   -->
+	
   
     {{#route_is "home"}}
         {{> home}}
@@ -73,6 +74,7 @@
     {{#route_is "profile"}}
     	{{> profile}}
     {{/route_is}}
+    
   </div>
 </template>
   
@@ -86,5 +88,9 @@
     {{> courselist missing_organisator}}</div>
   <div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
     {{> courselist missing_subscribers}}</div>
+	<div class="list_small">
+		{{> search_form }}
+		{{> search_results }} 
+	</div>
 </template>
 
