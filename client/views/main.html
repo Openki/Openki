@@ -23,10 +23,9 @@
 	<span><a href="/">Home</a>  </span>
 	<span><a href="/courselist/">Kursliste</a>  </span>
 	<span><a href="/locations/">Räume</a>  </span>
-  <span><a href="/categorylist/">Kategorien</a>  </span>
-	<span><a href="/page/warum">Warum</a>  </span>      
+  <span><a href="/categorylist/">Kategorien</a>  </span>  
 	<span><a href="/page/about">About</a>  </span>
-	<span><a href="/page/links">Funny Links</a>  </span>
+	<span><a href="/page/FAQ">FAQ</a>  </span>
 	<span><a href="/profile/">Mein Profil</a>  </span>
 </template>
 
@@ -67,15 +66,10 @@
       {{> about}}
     {{/route_is}}
 
-    {{#route_is "warum"}}
-             waruum
+    {{#route_is "FAQ"}}
+      {{> FAQ}}
     {{/route_is}}
-
-    {{#route_is "links"}}
-             yaaaah
-    {{/route_is}}
-
-
+    
     {{#route_is "profile"}}
     	{{> profile}}
     {{/route_is}}

@@ -12,32 +12,49 @@ body {
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
-
-    background-image: url(http://news.schuel.ch/wp-content/uploads/2013/07/AchtungTestseite_01.gif);
-    
-    /*background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
-    */
-
+/*
+    background-image: url('/AchtungTestseite_01.gif');
+    background-position: -20px -20px;
+*/
 }
+    /*
+    background-image: url(http://news.schuel.ch/wp-content/uploads/2013/07/AchtungTestseite_01.gif);
+    background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
+    */
 
 b{font-weight: bold}
 
 div{
 
-margin-top: 35px;
+margin-top: 25px;
 }
  
 p{
 margin: 15px;	
 }
 
+.static_content {
+    clear: none;
+    position: relative;
+    left: 160px;
+    top: -20px;
+    width: 35em;
+    font-size: 0.95em;
+    
+    /*
+    font-family: Arial,Helvetica,sans-serif;
+    
+    line-height: 1em;
+    */
+  }
+
 #container{
     background-color:rgba(255, 255, 255, 0.95);
     position:absolute;
     top:0px;
     left: 30px;
-    right: 30px;
-    bottom:50px;
+    right: 50px;
+    bottom:40px;
 
 }
 
@@ -51,13 +68,13 @@ margin: 15px;
 
 #login {
     position: absolute;
-    right: 2px;
-    top: 5px;
+    right: 20px;
+    top: -25px;
 }
 
 #login_info {
 	position: absolute;
-	top: -35px;
+	top: -50px;
 	left: 0px;
 	right: 0px;
 	width:100%;
