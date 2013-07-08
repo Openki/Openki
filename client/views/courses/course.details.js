@@ -84,21 +84,14 @@
 // zuerst genereller aufruf machen weil courses muss ready sein
 // dann könte man direkt machen
 // wenn man fetch macht würds funktionnieren  -- oder auch nicht.
-// datenbank abfrage muss man nicht zweimal machen, (erster Hinweis)
 // find one gibt nicht Course sondern Curser zurück (asynchron data loader xyz)
 // gibt nichts zurück, weis asynchon ist
 
-     Template.coursedetails.isSubscribed = function () {
-     	//ist User im subscribers-Array?
-     	course=Courses.findOne(Session.get("selected_course"));
-     	 if(course){
-     	    if(Courses.findOne(Session.get("selected_course")).subscribers.indexOf(Meteor.userId())!=-1){
- 	  	  return  true;
- 	    }else{
- 	  	return false;
- 	    }
- 	  }
-     }
+	Template.coursedetails.isSubscribed = function () {
+		//ist User im subscribers-Array?
+		var course = Courses.findOne(Session.get("selected_course"));
+		return course && course.subscribers.indexOf(Meteor.userId()) > -1
+	}
 
 
    Template.coursedetails.organisator = function() {
