@@ -25,7 +25,7 @@
 	<span><a href="/locations/">Räume</a>  </span>
   <span><a href="/categorylist/">Kategorien</a>  </span>
 	<span><a href="/page/warum">Warum</a>  </span>      
-	<span><a href="/page/darum">Darum</a>  </span>
+	<span><a href="/page/about">About</a>  </span>
 	<span><a href="/page/links">Funny Links</a>  </span>
 	<span><a href="/profile/">Mein Profil</a>  </span>
 </template>
@@ -64,17 +64,12 @@
     {{/route_is}}
 
     {{#route_is "about"}}
-             aboutttt
+      {{> about}}
     {{/route_is}}
 
     {{#route_is "warum"}}
              waruum
     {{/route_is}}
-
-    {{#route_is "darum"}}
-             daruum
-    {{/route_is}}
-
 
     {{#route_is "links"}}
              yaaaah

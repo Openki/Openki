@@ -1,5 +1,6 @@
 /***** BODY ******/
 
+
 body {
     background-color: #FFF;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -18,6 +19,8 @@ body {
     */
 
 }
+
+b{font-weight: bold}
 
 div{
 
