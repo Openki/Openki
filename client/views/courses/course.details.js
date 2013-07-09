@@ -48,16 +48,8 @@ Template.coursedetails.events({
       	      Session.set("isEditing", true);
       else
       	      alert("Security robot say: sign in");
-    },
-    'click input.save': function () {
-      // wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-      Courses.update(Session.get("selected_course"), {$set: {description: $('#editform_description').val(), tags: $('#editform_tags').val(), categories: $('#editform_category').val(), name: $('#editform_name').val(), subscribers_min: $('#editform_subscr_min').val(), subscribers_max: $('#editform_subscr_max').val()}});
-      Session.set("isEditing", false);
-    },
-    'click input.cancel': function() {
-      Session.set("isEditing", false);
     }
-  });
+});
 
 
 

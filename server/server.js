@@ -183,8 +183,7 @@ function createCourses(){
 		course.subscribers_min= Math.floor(Random.fraction()*7)
 		course.subscribers_max= course.subscribers_min + Math.floor(Random.fraction()*20)
 		course.subscribers = []
-		course.time_created = 1372810780636
-		course.time_changed = 1372810780636
+		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*40000000000))
 		Courses.insert(course)
 	})
 }

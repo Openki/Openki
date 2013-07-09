@@ -502,6 +502,7 @@ th{
 	list-style-type: none;
 	display: inline;
 	border: none;
+	padding: 0;
 }
 
 .categorylist li {
