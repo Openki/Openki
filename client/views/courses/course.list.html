@@ -3,7 +3,7 @@
     <h1>Alle Kurse</h1>
 
 {{> courselist all_courses}}
-    
+
 {{> course_create}}
   </div>
 </template>
@@ -16,13 +16,13 @@
     {{else}}
         keine Kurse
     {{/each}}
-    
+
   </div>
 </template>
-  
+
 <template name="course">
   <div class="courselist_course">
-    <p class="name">{{name}} 
+    <p class="name">{{name}}
     <span class="course_status">
     <span class="{{subscribers_status}}">Tn({{subscriber_count}} / {{subscribers_min}})</span>
     <span class="{{organisator_status}}"> Org </span>
@@ -33,7 +33,7 @@
 	    <span class="small">{{createdby_username}}</span>
 	    <span class="small">Category: {{categoryname}}</span>
      </p>
-      
+
 <p class="my_subscriptions">
 {{#if is_subscribed}}
     <span class="subscribed">Du bist Teilnehmer</span>
