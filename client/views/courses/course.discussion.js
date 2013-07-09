@@ -2,6 +2,7 @@
 Template.discussion.post = function() {
     //get all first-level posts 
     var posts = CourseDiscussions.find(
+		{course_ID: Session.get('selected_course')},
         {parent_ID: null},
         {sort: {time_updated: -1, time_created: -1}}
     );
@@ -25,8 +26,7 @@ Template.postDialog.showPostDialog = function () {
 
 Template.writePostDialog.events({
     'click input.add': function () {
-        var now = new Date();
-        var timestamp = now.getTime();
+        var timestamp = new Date();
         var user = Meteor.userId();
         var course = Session.get("selected_course");
         
