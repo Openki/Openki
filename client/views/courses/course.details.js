@@ -42,8 +42,6 @@
       Courses.remove(Session.get("selected_course"));
       // select new cours:
       Session.set("selected_course", Courses.find().fetch()[0]._id); //select first of db
-      // erstelle neue, wenns keine mehr gibt:
-      createCoursesIfNone();
      },
     'click input.edit': function () {
       // gehe in den edit-mode, siehe html
