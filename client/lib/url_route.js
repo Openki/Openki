@@ -1,7 +1,6 @@
 var URLliste = Backbone.Router.extend({
 		// URLS auslesen ---------
 		routes: {
-			"": "home",
 			
 			"page/:page_id": "pages",
 			
@@ -15,8 +14,9 @@ var URLliste = Backbone.Router.extend({
 			"course/:course_id": "coursedetails",
 			"course/:course_id/:course_title": "coursedetails",
 
-			"profile/": "profile"
+			"profile/": "profile",
 			
+			"": "home"
 			},
 		
 

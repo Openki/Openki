@@ -24,7 +24,7 @@ display_coursename = function (courseid){
   }
 }
 
-display_username= function (userid){
+Handlebars.registerHelper('username', function (userid){
   var user= Meteor.users.findOne({_id:userid});
   if(user){
     if(user.username){
@@ -35,7 +35,7 @@ display_username= function (userid){
   }else{
       return "serverscript";
   }	  
-}
+})
 
 //checks categories database for each course!
 //better would be: fetch categories database first and only once..

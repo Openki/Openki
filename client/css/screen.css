@@ -496,3 +496,21 @@ th{
     background-color: rgba(255, 255, 255, 0.75);
     padding:10px;
 }
+
+
+.categorylist {
+	list-style-type: none;
+	display: inline;
+	border: none;
+}
+
+.categorylist li {
+	display: inline;
+}
+
+.categorylist li:after {
+	content: ', '
+}
+.categorylist li:last-child:after {
+	content: ''
+}

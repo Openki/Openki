@@ -115,43 +115,5 @@
         }
   };
 
-  
-
- /*
-  Template.coursedetails.helpers({
-  subscribers: function () {
-     return Courses.findOne(Session.get("selected_course")).subscribers;
-  	  }
-  });
- */
-
-// müsste eigentlich zuobrst hin (HauptFunktion) 
- 
- 
-  Template.coursedetails.selected_name = function () {
-    // gib den name und die description des ausgew�hlten kurses zur�ck
-    // wird aufgerufen, sobald "selected_course" ändert (z.B. routing)
-    var course = Courses.findOne(Session.get("selected_course"));
-    if(course){
-
-    	    //Strub: es lädt die daten nicht neu, wenn man von der liste her kommt???
-    	    //var createdby=display_username(course.createdby);
-    	    var createdby=course.createdby;
-    	    // var time_created= format_date(course.time_created);
-    	    var time_created= course.time_created;
-
-          var categories = display_categoryname(course.categories);
-
-   if(course.subscribers){
-       var subscribers_usernames=[];
-       course.subscribers.forEach(function(userid){  //könnte wie oben gelöst werden als vorabfrage
-          subscribers_usernames.push(display_username(userid));
-       });
-   	   var subscriber_count=  course.subscribers.length*1;
-   }else{
-   	   var subscriber_count= 0;
-   }
-    return course && {name: course.name, desc: course.description, tags: course.tags, categories: categories, score: course.score,  createdby: createdby, time_created: time_created, subscribers_min: course.subscribers_min, subscribers_max: course.subscribers_max, subscriber_count:subscriber_count, subscribers:subscribers_usernames};
-  }};
 
 

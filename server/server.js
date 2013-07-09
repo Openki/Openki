@@ -58,7 +58,7 @@ function ensureCategory(name) {
 function createCourses(){
 	var testcourses = [{
 			'name':        'Meditation & Yoga/Qi-Gong',
-			'categories': ['Sport', 'Gspürschmi'],
+			'categories': ['Sport', 'Gspürschmi', 'TuetGuet'],
 			'createdby':   'FeeLing',
 			'description': 'Es wäre toll, regelmässig an einem Morgen zusammen zu Meditieren und Yoga/Qi-Gong zu machen. Mir selber fehlt die Selbstdisziplin und für Yoga/Qi-Gong auch das Knowhow, darum wäre eine kleine Gruppe toll. Ein extra Raum wäre toll, geht aber eigentlich überall.'
 		},{

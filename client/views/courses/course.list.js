@@ -36,7 +36,6 @@ get_courselist=function(listparameters){
 	   course.createdby_username=display_username(course.createdby);	 
 	   course.time_created=format_date(course.time_created);
 	    
-	  course.categoryname=display_categoryname(course.categories);
   	  
 	   
      }
@@ -97,6 +96,11 @@ Template.course.subscribers_status = function() {
 Template.course.subscribers_status = function() {
 	return this.organisator ? 'ok' : 'notyet'
 }    
+
+
+Template.course.categorynames = function() {
+	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
+}
 
   Template.course.is_subscribed = function () {
   	  // is current user subscriber

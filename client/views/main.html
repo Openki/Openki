@@ -52,7 +52,9 @@
     {{/route_is}}
 
     {{#route_is "coursedetails"}}
-      {{> coursedetails}}
+      {{#with loadcourse}}{{! This is so wrong, do you know how to do it right? }}}
+		{{> coursedetails}}
+      {{/with}}
     {{/route_is}}
 
     {{#route_is "locationlist"}}
