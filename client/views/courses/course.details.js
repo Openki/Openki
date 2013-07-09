@@ -6,7 +6,7 @@
   };
 
 
-  Template.coursedetails.events({
+Template.coursedetails.events({
     'click input.inc': function () {
       // bei click auf das input-element mit der class "inc",
       // erh�he den score dieses Kurses um eins
@@ -36,13 +36,12 @@
       },
 
 
-    'click input.del': function () {
-      // bei click auf das input-element mit der class "del"
-      // l�sche den ausgew�hlten kurs
-      Courses.remove(Session.get("selected_course"));
-      // select new cours:
-      Session.set("selected_course", Courses.find().fetch()[0]._id); //select first of db
-     },
+	'click input.del': function () {
+		if (confirm("wirklich?")) Courses.remove(Session.get("selected_course"));
+
+		Router.navigate('/', true);
+	},
+
     'click input.edit': function () {
       // gehe in den edit-mode, siehe html
       if(Meteor.userId())
