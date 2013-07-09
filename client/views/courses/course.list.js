@@ -16,31 +16,7 @@ get_courselist=function(listparameters){
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "(this.subscribers && this.subscribers.length < this.subscribers_min) || (!this.subscribers)"} );
 	
-	var results=Courses.find(find, {sort: {time_created: -1}});
-	
-	// modify/format result list -----------------datenbank aufruf anpassen sollte man vielleicht anders machen 
-	// should be done differntly 
-	// modul ist pur dictionarry, controller ... eigentlich neue methode mitgeben, modell hat keine funktionalität
-	// wenn status von erfundenem wert funktionniert auto-update nichtmehr
-	// fraglich ob
-	// ist wie ein find() oben abgefragt unten abgeändert
-    // fx:	müsste eigentlich in taplate controllers gemacht werden
-    // nicht als wert nehmen sondern controller machen
-    //könte es in ---user ahndlers
-    //so machen wie bei userhelpers bei subscriptions (unten in diesem file)
-    
-     for(m = 0; m < results.count(); m++){
-     	     
-     	     course=results.db_objects[m];
-	   //
-	   course.createdby_username=display_username(course.createdby);	 
-	   course.time_created=format_date(course.time_created);
-	    
-  	  
-	   
-     }
-    return results;
-  
+	return Courses.find(find, {sort: {time_created: -1}});
 }
 
 
