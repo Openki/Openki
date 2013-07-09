@@ -34,28 +34,7 @@ get_courselist=function(listparameters){
      	     course=results.db_objects[m];
 	   //
 	   course.createdby_username=display_username(course.createdby);	 
-	   course.time_created=format_date(course.time_created);	
-	    
-	    // modify subscribers result
-	    if(course.subscribers){
-		    course.subscriber_count=  course.subscribers.length;	    
-		 if(course.subscriber_count>=course.subscribers_min){
-		 	 course.subscribers_status="ok";
-		 }else{
-		 	 course.subscribers_status="notyet";
-		 }
-	    }else{
-	    	    course.subscriber_count=0;
-	    	    course.subscribers_status="notyet";
-	    }
-	    
-	    // modify organisator result
-	    if(course.organisator){
-	    	    course.organisator_status="ok";
-	    }else{   
-	    	    
-	    	    course.organisator_status="notyet";
-	    }
+	   course.time_created=format_date(course.time_created);
 	    
 	  course.categoryname=display_categoryname(course.categories);
   	  
@@ -111,6 +90,13 @@ get_courselist=function(listparameters){
 
 /* ------------------------- User Helpers ------------------------- */
 
+Template.course.subscribers_status = function() {
+	return this.subscribers.count >= this.subscribers.min ? 'ok' : 'notyet'
+}
+	
+Template.course.subscribers_status = function() {
+	return this.organisator ? 'ok' : 'notyet'
+}    
 
   Template.course.is_subscribed = function () {
   	  // is current user subscriber

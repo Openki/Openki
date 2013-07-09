@@ -27,23 +27,6 @@ Meteor.methods({
 });
 
 
-/*
-Meteor.publish("directory", function () {
-  return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
-});
-
-Meteor.publish("parties", function () {
-  return Parties.find(
-    {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
-});
-
-
-
-Meteor.publish("Subscriptions", function(){
-return Subscriptions.find({});		
-});
-*/
-
 function createCoursesIfNone(){
     // erstelle neue Kurse, wenns keine in der DB hat
  if (Courses.find().count() === 0) {
