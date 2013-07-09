@@ -9,17 +9,14 @@
 
     <p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{description}}</textarea></p>
 
-     <p>  Teinehmer Min:  <input type="text" id="editform_subscr_min" value="{{subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{subscribers_max}}" size="2"/></p>
+     <p>  Teilnehmer Min:  <input type="text" id="editform_subscr_min" value="{{subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{subscribers_max}}" size="2"/></p>
 
      <!-- problem: when editing the default category chosen should be the one already attached to the course - how??
       <option selected> instead of <option>
    -->
-     <p>  Category: <select id="addform_category">
-
+     <p id='editform_categories'>  Categories: 
                     {{#each categories}}
-                        <option value="{{_id}}">{{name}}</option>
-                    {{else}}
-                        Keine Kategorien definiert!
+                        <label><input type='checkbox' name='{{_id}}' value="1">&nbsp;{{name}}</option></label>
                     {{/each}}
                 </select></p>
 
