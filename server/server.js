@@ -175,13 +175,20 @@ function createCourses(){
 
 	_.each(testcourses, function(course) {
 		if (!course.createdby) return; // Don't create courses that don't have an creator name
+		
+		// allways use same id for same course to avoid broken urls while testing
+		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+		m5.update(course.name);
+		m5.update(course.description);
+		course._id = m5.digest('hex').substring(0, 8)
+		
 		for (var i=0; i < course.categories.length; i++) {
 			course.categories[i] = ensureCategory(course.categories[i])._id
 		}
 		course.createdby = ensureUser(course.createdby)._id
-		course.score = Math.floor(Random.fraction()*20)
-		course.subscribers_min= Math.floor(Random.fraction()*7)
-		course.subscribers_max= course.subscribers_min + Math.floor(Random.fraction()*20)
+		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
+		course.subscribers_min = Math.floor(Random.fraction()*Random.fraction()*30)
+		course.subscribers_max = course.subscribers_min + Math.floor(Random.fraction()*20)
 		course.subscribers = []
 		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*40000000000))
 		Courses.insert(course)
