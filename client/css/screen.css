@@ -28,11 +28,16 @@ div{
 
 margin-top: 25px;
 }
- 
-p{
-margin: 15px;	
-}
 
+p{
+margin: 15px;
+}
+.static_content_top {
+    clear: none;
+    position: relative;
+    top: -20px;
+    font-size: 0.95em;
+}
 .static_content {
     clear: none;
     position: relative;
@@ -40,11 +45,9 @@ margin: 15px;
     top: -20px;
     width: 35em;
     font-size: 0.95em;
-    
+
     /*
     font-family: Arial,Helvetica,sans-serif;
-    
-    line-height: 1em;
     */
   }
 
@@ -61,7 +64,7 @@ margin: 15px;
 #outer {
     width: 1020px;
     /*margin: 0 auto;  */
-    padding-left: 20px;   
+    padding-left: 20px;
 }
 
 /***** LOGIN ******/
@@ -172,12 +175,12 @@ margin:0 0 8px 0;
 
 .courselist_course  .ok{
     	    color: green;
-    }  
+    }
 
 
 .courselist_course .notyet{
     	    color: red;
-    }  
+    }
 
 
 .courselist_course:hover {
@@ -205,7 +208,7 @@ display:none;
 
 
 .create_course{
-clear: left;    
+clear: left;
 }
 
 
@@ -283,15 +286,15 @@ margin: 20px 0 20px 0;
 
      display: block;
     }
-    
+
 #coursedetails .subscribers_count .notyet{
 
             color: red;
-    }  
+    }
 #coursedetails .subscribers_count .ok{
 
             color: green;
-    }  
+    }
 
 
 /****** CATEGORY LIST ******/
@@ -366,7 +369,7 @@ color: orange;
         border-collapse: separate;
         border-spacing: 2px 2px;
       }
-      
+
 #votelists tr.is_current{
 	background-color: #99FF99;
 	cursor: pointer;
@@ -394,7 +397,7 @@ color: orange;
 
 
 #add_vote_form *p{
-border: none;	
+border: none;
 	background-color: #EEE
 }
 
