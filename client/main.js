@@ -12,3 +12,7 @@ Template.maincontent.route_is = function (data,options) {
     }
     return options.inverse( this );
 };
+
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+});

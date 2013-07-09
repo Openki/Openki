@@ -58,7 +58,7 @@
     {{/route_is}}
 
     {{#route_is "locationlist"}}
-      {{> locationlist}}
+      {{> locationlist}}   {{! Nei, also ich weiss au noed wie mes chönti besser mache}}
     {{/route_is}}
 
     {{#route_is "locationdetails"}}
@@ -87,7 +87,6 @@
 
 <!-- // folgendes gehört zum home eigenes file... -->
 
-
 <template name="home">
   <h1>Hoi zäme</h1>
   <div class="list_small"><h3>Kurse ohne Organisatoren</h3>
@@ -103,4 +102,3 @@
     {{> course_create}}
   </div>
 </template>
-
