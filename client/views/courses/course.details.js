@@ -87,7 +87,6 @@ Template.coursedetails.events({
        course=Courses.findOne(Session.get("selected_course"));
        if(course)
            return course.organisator;
-           //return display_username(course.organisator);
            
   
    }

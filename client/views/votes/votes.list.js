@@ -42,7 +42,7 @@ var pseudo=Session.get("aktualisierungs_hack");
          is_current=""; 
      }
      	 
-     	    subscribers_votings.push({is_current:is_current, name:display_username(subscribers[s]), is_current: is_current, options:subscriber_options});
+     	    subscribers_votings.push({is_current:is_current, name:subscribers[s], is_current: is_current, options:subscriber_options});
      	     //voting.user_count = voting.users.count()
      	}
      	
