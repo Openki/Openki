@@ -163,7 +163,7 @@ function createCourses(){
 			'categories': ['Sprache'],
 			'tags':       ['Sprachen', 'Austausch', 'Treff'],
 			'createdby':   'IvanZ',
-			'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen    Weekly meeting and wiledly exchange language and different Culture       Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles   una réunione par semana per excambiare la lingua et cultura      Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural'
+			'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  '
 		},{
 			'name':        'Jodeln',
 			'categories': ['Musik'],
