@@ -45,7 +45,7 @@
      <p>Teilnehmer:
      <span class="subscribers_count"> (
     min: {{subscribers_min}}
-    max: {{subscribers_max}}
+    {{#if subscribers_max}}max: {{subscribers_max}}{{/if}}
     <span class="{{subscribers_status}} ">current: {{subscribers.length}} </span>
     )</span>
   <span class="usernames">

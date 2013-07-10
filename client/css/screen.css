@@ -268,6 +268,11 @@ padding: 15px;
 margin: 50px 0 20px 0;
 }
 
+.course_edit ul {
+	list-style-type: none;
+	display: block
+}
+
 
 #coursedetails .participators {
 background-color: #EEE;

@@ -15,6 +15,8 @@ format_date= function (date){
 	return date_string;	
 }
 
+
+
 display_coursename = function (courseid){
   var course = Courses.findOne({_id:courseid});
   if(course){
@@ -36,6 +38,12 @@ Handlebars.registerHelper('username', function (userid){
       return "serverscript";
   }	  
 })
+
+
+Handlebars.registerHelper('dateformat', function(date) {
+	/* We'll need a date formatter at some point */
+	if (date) return date.toDateString();
+}); 
 
 //checks categories database for each course!
 //better would be: fetch categories database first and only once..

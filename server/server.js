@@ -61,37 +61,63 @@ function createCourses(){
 			'categories': ['Sport_Bewegung'],
 			'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 			'createdby':   'FeeLing',
-			'description': 'Es wäre toll, regelmässig an einem Morgen zusammen zu Meditieren und Yoga/Qi-Gong zu machen. Mir selber fehlt die Selbstdisziplin und für Yoga/Qi-Gong auch das Knowhow, darum wäre eine kleine Gruppe toll. Ein extra Raum wäre toll, geht aber eigentlich überall.'
+			'description': 'Es wäre toll, regelmässig an einem Morgen zusammen zu Meditieren und Yoga/Qi-Gong zu machen. Mir selber fehlt die Selbstdisziplin und für Yoga/Qi-Gong auch das Knowhow, darum wäre eine kleine Gruppe toll. Ein extra Raum wäre toll, geht aber eigentlich überall.',
+			'roles': {
+				'participant': { subscribed: [ 'FeeLing', 'Chrosle' ] },
+				'host':        { optional: true, subscribed: [] }
+			}
 		},{
 			'name':        'Aikido',
 			'categories': ['Kampfkunst'],
 			'tags':       ['Kampfsport', 'Gschpürschmi'],
 			'createdby':   'Kampfhippie',
-			'description': 'Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören. Youtube-Video Wikipedia-link'
+			'description': 'Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören. Youtube-Video Wikipedia-link',
+			'roles': {
+				'participant': { subscribed: [ 'Kampfhippie', 'Seee', 'Chnöde' ] },
+				'mentor':      { optional: true, subscribed: [] },
+				'host':        { optional: true, subscribed: [] },
+			}
 		},{
 			'name':        'Garten',
 			'categories': ['Garten_Landwirtschaft', 'Biologie'],
 			'tags':       ['Garten', 'Pflanzen'],
 			'createdby':   'Greendampf',
-			'description': 'Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Planzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.'
+			'description': 'Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Planzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.',
+			'roles': {
+				'participant': { subscribed: [ 'Greendampf', 'Schufi', 'Kampfhippie', 'Sandro', 'LeOnI', 'IvanZ' ] },
+				'host':        { subscribed: [ 'Greendampf' ] },
+			}
 		},{
 			'name':        'Game Design mit Unity',
 			'categories': ['Programmieren'],
 			'tags':       ['Design', 'Computer'],
 			'createdby':   'Seee',
-			'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: * Spieltheorie * Spielidee * Spielmechanik * Storytelling * Concept Art * Charakterentwicklung * Zeichnen und Bildbearbeitung mit Photoshop * Usability * Prototyping und Gamedesign mit Unity Gameengine * Leveldesign * 3D-Modelling und -Animation mit Blender * Programmieren mit JavaScript und C-Sharp * Sound-Design mit Audacity * Polishing '
+			'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: * Spieltheorie * Spielidee * Spielmechanik * Storytelling * Concept Art * Charakterentwicklung * Zeichnen und Bildbearbeitung mit Photoshop * Usability * Prototyping und Gamedesign mit Unity Gameengine * Leveldesign * 3D-Modelling und -Animation mit Blender * Programmieren mit JavaScript und C-Sharp * Sound-Design mit Audacity * Polishing ',
+			'roles': {
+				'participant': { subscribed: [] },
+				'mentor':      { subscribed: [ 'Seee' ] },
+				'host':        { subscribed: [] },
+			}
 		},{
 			'name':        'unkommerzielle Commons-based peer production',
 			'categories': ['Garten_Landwirtschaft'],
 			'tags':       ['Theorie', 'Projekt'],
 			'createdby':   'Greendampf',
-			'description': '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen" [[http://commonsblog.wordpress.com/was-sind-commons/|Was sind Commons?]] Fände es interessant, das Thema der unkommerziellen //Commons-based peer production// zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)'
+			'description': '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen" [[http://commonsblog.wordpress.com/was-sind-commons/|Was sind Commons?]] Fände es interessant, das Thema der unkommerziellen //Commons-based peer production// zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)',
+			'roles': {
+				'participant': { subscribed: [ 'Greendampf' ] },
+				'host':        { subscribed: [] },
+			}
 		},{
 			'name':        'Web Design mit HTML und Phyton/PHP',
 			'categories': ['Programmieren','Internet'],
 			'tags':       ['Design', 'Computer'],
 			'createdby':   'Seee',
-			'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. * Konzeption / Idee  * Usability  * Gestaltung mit Photoshop  * Clientseitige Programmierung mit HTML, CSS und JavaScript  * Serverseitige Programmierung mit PHP / Phyton  * Datenbank mit mySQL'
+			'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. * Konzeption / Idee  * Usability  * Gestaltung mit Photoshop  * Clientseitige Programmierung mit HTML, CSS und JavaScript  * Serverseitige Programmierung mit PHP / Phyton  * Datenbank mit mySQL',
+			'roles': {
+				'participant': { subscribed: [ 'Greendampf', 'Sandro', 'IvanZ' ] },
+				'host':        { subscribed: [ 'greg' ] },
+			}
 		},{
 			'name':        'Elektronik',
 			'categories': ['Elektronik'],
@@ -103,19 +129,33 @@ function createCourses(){
 			'categories': ['Kunst'],
 			'tags':       ['Kunst'],
 			'createdby':   'greg',
-			'description': 'hab einiges an super-8-ghizzle das ich gar nicht brauch: kamera, projektor und so n fancy screen (siehe foto). falls jemand was deichseln will: ich, 25, gross, schlank, blond, schön, thurgauer dialekt, freu mich auf dein interesse!'
+			'description': 'hab einiges an super-8-ghizzle das ich gar nicht brauch: kamera, projektor und so n fancy screen (siehe foto). falls jemand was deichseln will: ich, 25, gross, schlank, blond, schön, thurgauer dialekt, freu mich auf dein interesse!',
+			'roles': {
+				'participant': { subscribed: [ 'LeOnI', 'IvanZ' ] },
+				'host':        { subscribed: [ 'greg' ] },
+			}
 		},{
 			'name':        'Ubuntu auf Mac (dual-Boot)',
 			'categories': ['Softwarebedienung'],
 			'tags':       [],
 			'createdby':   'greg',
-			'description': 'Ich will ubuntu auf meinem mac ohne auf os zu verzichten. habs probiert abr s hat nicht geklappt und die technik-kacke interessiert mich nicht soooooo derart unglaublich. gibts wer, der mir und andern mit dem selben problem frontalunterrichtsmässig hilft? so im allgemeinen welt-rettungsplan? ich rett die welt dafür n ander mal. von mir aus morgen abend, in meiner küche hats platz für 4 people (wenn sie cool sind, sonst für 5).      --> Wieso gibts keine Komputer-Kategorie?????'
+			'description': 'Ich will ubuntu auf meinem mac ohne auf os zu verzichten. habs probiert abr s hat nicht geklappt und die technik-kacke interessiert mich nicht soooooo derart unglaublich. gibts wer, der mir und andern mit dem selben problem frontalunterrichtsmässig hilft? so im allgemeinen welt-rettungsplan? ich rett die welt dafür n ander mal. von mir aus morgen abend, in meiner küche hats platz für 4 people (wenn sie cool sind, sonst für 5).      --> Wieso gibts keine Komputer-Kategorie?????',
+			'roles': {
+				'participant': { subscribed: [ 'greg', 'Mike_85', 'IvanZ' ] },
+				'mentor':      { subscribed: [] },
+				'host':        { subscribed: [ 'greg' ] },
+			}
 		},{
 			'name':        'Kleiderflick Nachmittag',
 			'categories': ['Design','Handwerk'],
 			'tags':       ['DIY', 'Kleider', 'Handwerk'],
 			'createdby':   'Sandro',
-			'description': ' Habe eine Kiste voll mit Kleider, an denen ich (bei den meisten schon seit längerem) etwas flicken müsste: Reisverschlüsse grosse Risse, Löcher und so.   Zusammen macht das irrgendwie mehr Spass und eine fachkundige Hilfe währe natürlich auch nicht schlecht, wenn man bedenkt das die Flicke auch ein bisschen halten sollen. '
+			'description': ' Habe eine Kiste voll mit Kleider, an denen ich (bei den meisten schon seit längerem) etwas flicken müsste: Reisverschlüsse grosse Risse, Löcher und so.   Zusammen macht das irrgendwie mehr Spass und eine fachkundige Hilfe währe natürlich auch nicht schlecht, wenn man bedenkt das die Flicke auch ein bisschen halten sollen. ',
+			'roles': {
+				'participant': { subscribed: [] },
+				'mentor':      { optional: true, subscribed: [] },
+				'host':        { subscribed: [ 'Sandro' ] },
+			}
 		},{
 			'name':        'Walliserdütsch lernen',
 			'categories': ['Sprache'],
@@ -163,7 +203,7 @@ function createCourses(){
 			'categories': ['Sprache'],
 			'tags':       ['Sprachen', 'Austausch', 'Treff'],
 			'createdby':   'IvanZ',
-			'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen    Weekly meeting and wiledly exchange language and different Culture       Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles   una réunione par semana per excambiare la lingua et cultura      Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural'
+			'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  '
 		},{
 			'name':        'Jodeln',
 			'categories': ['Musik'],
@@ -196,6 +236,12 @@ function createCourses(){
 			'description': ''
 	}]
 
+	/* Make a number that looks like a human chose it, favouring 2 and 5 */
+	function humandistrib() {
+		var factors = [0,0,0,1,2,2,3,5,5]
+		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
+	}
+	
 	_.each(testcourses, function(course) {
 		if (!course.createdby) return; // Don't create courses that don't have an creator name
 
@@ -213,10 +259,10 @@ function createCourses(){
 		}
 		course.createdby = ensureUser(course.createdby)._id
 		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
-		course.subscribers_min = Math.floor(Random.fraction()*Random.fraction()*30)
-		course.subscribers_max = course.subscribers_min + Math.floor(Random.fraction()*20)
+		course.subscribers_min = humandistrib()
+		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
 		course.subscribers = []
-		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*40000000000))
+		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*80000000000))
 		Courses.insert(course)
 	})
 }
