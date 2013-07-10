@@ -217,6 +217,7 @@ function createCourses(){
 		course.subscribers_max = course.subscribers_min + Math.floor(Random.fraction()*20)
 		course.subscribers = []
 		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*40000000000))
+		course.region = Random.fraction() > 0.85 ? 'Testistan' : 'Spilistan'
 		Courses.insert(course)
 	})
 }
