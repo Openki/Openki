@@ -1,0 +1,20 @@
+sendEmail = function(to, subject, text, html){
+
+
+  var from = getSetting('defaultEmail') || 'noreply@example.com'
+  var siteName = getSetting('title')
+  var subject = '['+siteName+'] '+subject
+
+  var email = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: text,
+    html: html
+  }
+
+  console.log('sending mail…')
+  console.log(email)
+
+  Email.send(email)
+};

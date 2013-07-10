@@ -3,6 +3,7 @@
 // "name" -> string
 // future:
 // "Parent" -> string
+// "name_de" "name_en" 	etc
 // ===========================
 
 

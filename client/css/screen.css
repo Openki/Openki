@@ -426,7 +426,7 @@ form th{
     font-size: 2em;
 }
 
-.details .descr {http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif
+.details .descr {
     font-size: 1em;
 
 }
@@ -434,6 +434,11 @@ form th{
 .descr{
 
 font-size: 18px ;
+}
+
+.descr_small{
+    font-size: 0.75em;
+    color: grey;
 }
 
 .none {

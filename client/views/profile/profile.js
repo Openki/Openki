@@ -4,6 +4,10 @@
   		var userdata = {id:Meteor.userId(),username:Meteor.user().username}
       if(user.emails) {
         userdata.email = user.emails[0].address
+        if(user.emails[0].verified){
+          userdata.verifiedEmail = 'verified'
+        }
+        else userdata.verifiedEmail = 'not verified'
       }
       return userdata
     }
