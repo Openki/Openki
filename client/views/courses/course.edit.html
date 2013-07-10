@@ -5,17 +5,22 @@
 
     <p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{description}}</textarea></p>
 
-     <p>  Teilnehmer Min:  <input type="text" id="editform_subscr_min" value="{{subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{subscribers_max}}" size="2"/></p>
+     <p>  Teilnehmer Min:  <input type="text" id="editform_subscr_min" value="{{subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{#if subscribers_max}}{{subscribers_max}}{{/if}}" size="2"/></p>
 
-     <!-- problem: when editing the default category chosen should be the one already attached to the course - how??
-      <option selected> instead of <option>
-   -->
-     <p id='editform_categories'>  Categories: 
-                    {{#each available_categories}}
-                        <label><input type='checkbox' name='{{_id}}' value="1" {{checked ../categories}}>&nbsp;{{name}}</option></label>
-                    {{/each}}
-                </select></p>
-
+     <div id='editform_categories'>  Categories:
+		<ul>
+			{{#each available_categories}}
+				<li><label><input type='checkbox' name='{{_id}}' value="1" {{checked _id ../categories}}>&nbsp;{{name}}</option></label></li>
+			{{/each}}
+		</ul>
+     </div>
+     <div> Needs people who
+		<ul>
+			{{#each available_roles}}
+				<li><label><input type="checkbox" name='{{type}}' {{checked type ../roles}}>&nbsp;{{description}}</label></li>
+			{{/each}}
+		</ul>
+	</div>
      <p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
 
       </div>
