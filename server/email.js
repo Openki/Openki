@@ -1,5 +1,14 @@
-sendEmail = function(to, subject, text, html){
+Meteor.methods({
+  sendVerificationEmail: function(){Accounts.sendVerificationEmail(this.userId)}
+//  sendVerificationEmail: Accounts.sendVerificationEmail
+})
 
+
+
+
+/*
+
+sendEmail = function(to, subject, text, html){
 
   var from = getSetting('defaultEmail') || 'noreply@example.com'
   var siteName = getSetting('title')
@@ -18,3 +27,5 @@ sendEmail = function(to, subject, text, html){
 
   Email.send(email)
 };
+
+*/

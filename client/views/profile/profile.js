@@ -35,7 +35,11 @@
          Session.set("isEditing", false);
     }
   });
-
+  Template.profile.events({
+    'click input.verify': function () {
+      Meteor.call('sendVerificationEmail')
+    }
+  })
 
  Template.profile.courses = function () {
       return get_courselist({courses_from_userid: Meteor.userId()});
