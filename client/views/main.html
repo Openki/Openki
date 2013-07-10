@@ -4,12 +4,20 @@
 
 <body>
   <div id="container">
-    <div id="login_info">
-      {{> login_info}}
+    <div id="header_bar">
+      <div id="ticker">
+        {{> ticker}}
+      </div>
+
+      <div id="mainmenu">
+        {{> mainmenu}}
+      </div>
+      <div id="login_info">
+        {{> login_info}}
+      </div>
     </div>
-    <div id="mainmenu">
-      {{> mainmenu}}
-    </div>
+
+  
     <div id="outer">
       {{> maincontent}}
     </div>
@@ -86,6 +94,14 @@
 
 
 <!-- // folgendes gehört zum home eigenes file... -->
+<template name="ticker">
+<marquee  bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
+Achtung: Dies ist nur eine <b>Testseite</b>. <span style = "padding-left:10em"> </span>
+Eingegebene Daten werden regelmässig gelöscht.  <span style = "padding-left:30em"> </span>
+This is only a <b>Testpage</b>. <span style = "padding-left:10em"> </span>
+Entered Data will be erased regularly. <span style = "padding-left:10em"> </span>
+</marquee>
+</template>
 
 <template name="home">
   <h1>Hoi zäme</h1>

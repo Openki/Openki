@@ -2,7 +2,7 @@
 
 
 body {
-    background-color: #FFF;
+    background-color: #f6f6f6;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
     margin: 0px 0 50px 0;
@@ -26,11 +26,10 @@ b{font-weight: bold}
 
 div{
 
-margin-top: 25px;
 }
 
 p{
-margin: 15px;
+margin: 0;
 }
 .static_content_top {
     clear: none;
@@ -52,19 +51,27 @@ margin: 15px;
   }
 
 #container{
-    background-color:rgba(255, 255, 255, 0.95);
     position:absolute;
-    top:0px;
-    left: 30px;
-    right: 50px;
-    bottom:40px;
-
+    top: 0px;
 }
 
 #outer {
-    width: 1020px;
+    //width: 1020px;
     /*margin: 0 auto;  */
-    padding-left: 20px;
+}
+
+#maincontent{
+    margin-left: 50px;
+    margin-top: 70px;
+}
+
+
+/***** HEADER BAR ******/
+#header_bar{
+    background-color: #38829c;
+    height: 50px;
+    position: fixed;
+    z-index:100;
 }
 
 /***** LOGIN ******/
@@ -72,19 +79,15 @@ margin: 15px;
 #login {
     position: absolute;
     right: 20px;
-    top: -25px;
+    top: 50px;
 }
 
 #login_info {
-	position: absolute;
-	top: -50px;
-	left: 0px;
-	right: 0px;
-	width:100%;
-	height: 25px;
-	padding:5px;
-	background-color:black;
-	color: #fff;
+
+    padding-top: 5px;
+    float:right;
+    width:500px;
+	color: #DDD;
 }
 #form_login {
     float:left;
@@ -93,14 +96,22 @@ margin: 15px;
     float:left;
 }
 
+#outer{
+    position: relative;
+    margin-top: 50px;
+}
+
+#ticker{
+    height:20px;
+}
+
 /***** MAIN MENU ******/
 
 #mainmenu {
-	position:relative;
-	top: 30px;
-	left:22px;
-	height:30px;
-	background-color:#fff;
+    padding-top: 5px;
+    padding-left: 50px;
+    float:left;
+    width: 650px;
 	text-transform: uppercase;
 }
 
@@ -109,7 +120,7 @@ margin: 15px;
 }
 
 #mainmenu span a, a:visited {
-	color:green;
+	color:#f6f6f6;
 	text-decoration:none;
 	font-weight:bold;
 }
@@ -132,12 +143,15 @@ margin: 15px;
     cursor: pointer;
     font-size: 1.2em;
     border-bottom: 1px solid black;
-    margin: 10px 0;
+    margin: 10px;
+    float: left;
 }
 
 
 .courselist_course .name {
 	margin: 5px 0;
+    width: 280px;
+    float: left;
 }
 
 .courselist_course p.smalldesc{
@@ -168,9 +182,7 @@ margin:0 0 8px 0;
 	font-size: 15px;
     font-weight: bold;
     float: right;
-}
-.courselist_course .course_status span{
-    padding: 0 6px;
+    //width: 150px;
 }
 
 .courselist_course  .ok{
@@ -187,9 +199,15 @@ margin:0 0 8px 0;
     font-weight: bold;
 }
 
+.coursepage{
+    clear: left;
+    margin-top: 50px;
+}
+
 
 .list_small{
     float: left;
+    margin-bottom: 50px;
 }
 
 .list_small .smalldesc{
@@ -245,7 +263,7 @@ margin: 50px 0 20px 0;
 
 
 #coursedetails .course_edit {
-background-color: #CCFFFF;
+background-color: #CCDDDF;
 padding: 15px;
 margin: 50px 0 20px 0;
 }
