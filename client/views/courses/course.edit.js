@@ -2,8 +2,17 @@ Template.course_edit.available_categories = function() {
 	return Categories.find()
 }
 
-Template.course_edit.checked = function(cats) {
-	return cats.indexOf(this._id) >= 0 ? 'checked' : ''
+Template.course_edit.available_roles = function() {
+	return Roles.find({'preset': { $ne: true }})
+}
+
+/* Emit 'checked' string if id shows up as member or property of cats */
+Template.course_edit.checked = function(id, cats) {
+	if (cats.length) {
+		return cats.indexOf(id) >= 0 ? 'checked' : ''
+	} else {
+		return (id in cats) ? 'checked' : ''
+	}
 }
 
 
