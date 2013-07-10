@@ -22,24 +22,25 @@
 
 <template name="course">
   <div class="courselist_course">
-    <p class="name">{{name}}
-    <span class="course_status">
-    <span class="{{subscribers_status}}">Tn({{subscribers.length}} / {{subscribers_min}})</span>
-    <span class="{{organisator_status}}"> Org </span>
-    </span></p>
-      <p class="smalldesc">
-	    <span class="small">{{dateformat time_created}}</span>
+    <p class="name">{{name}}</p>
+    <p class="course_status">
+      <span class="{{subscribers_status}}">Tn({{subscribers.length}} / {{subscribers_min}})</span>
+      <span class="{{organisator_status}}"> Org </span>
+    </p>
+    <p class="smalldesc">
+      <span class="small">{{dateformat time_created}}</span>
+
 	    <span class="small">{{username createdby}}</span>
 	    <span class="small">{{> show_categories}}</span>
-     </p>
+    </p>
 
 <p class="my_subscriptions">
 {{#if is_subscribed}}
-    <span class="subscribed">Du bist Teilnehmer</span>
+    <span class="subscribed">Du bist Teilnehmer_in</span>
 {{/if}}
 
 {{#if is_organisator}}
-    <span class="organisator">Du bist Organisator</span>
+    <span class="organisator">Du bist Organisator_in</span>
 {{/if}}
     </p>
     </div>
