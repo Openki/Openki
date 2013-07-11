@@ -544,3 +544,40 @@ th{
 .categorylist li:last-child:after {
 	content: ''
 }
+
+.dropdown {
+  position: relative;
+  float: right}
+.dropdown > a:after {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    margin-left: 4px;
+    content: "▼";
+    font-size: 8px; }
+.dropdown .dropdown-menu {
+    display: none;
+    top: 10px;
+    left: 10px;
+    position: absolute;
+    padding-top: 20px; }
+.dropdown .dropdown-menu ul {
+      color: #3d8f32;
+      background: white;
+      padding: 10px;
+      width: 140px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
+.dropdown .dropdown-menu ul li a {
+        color: #3d8f32;
+        font-size: 14px; }
+.dropdown:hover .dropdown-menu {
+    display: block; }
+
+

@@ -5,6 +5,7 @@
 get_courselist=function(listparameters){
 	//return a course list
 	var find ={};
+  if(Session.get('region')) find.region=Session.get('region')
 	// modify query --------------------
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
@@ -15,7 +16,6 @@ get_courselist=function(listparameters){
 	if(listparameters.missing=="subscribers")
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "(this.subscribers && this.subscribers.length < this.subscribers_min) || (!this.subscribers)"} );
-
 	return Courses.find(find, {sort: {time_created: -1}});
 }
 

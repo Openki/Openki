@@ -1,8 +1,10 @@
 Template.search_results.results = function () {
+	var region = Session.get('region')
 	var query = Session.get('search')
-	var courses = Courses.find()
+	var find = {}
+	if (!!region) find.region = region
 	if (!!query) {
-		courses = Courses.find({
+		_.extend(find, {
 			$or: [
 				// FIXME: Runs unescaped as regex, absolutely not ok
 				// ALSO: Not user friendly, do we can have fulltext?
@@ -11,5 +13,6 @@ Template.search_results.results = function () {
 			]
 		})
 	}
+	var courses = Courses.find(find)
 	return { count: courses.count(), courses: courses }
 }

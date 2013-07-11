@@ -14,7 +14,9 @@
       <div id="mainmenu">
         {{> mainmenu}}
       </div>
-     
+      <div id="region_sel">
+        {{> region_sel}}
+      </div>
     </div>
 
 
@@ -42,6 +44,7 @@
   anstatt jede methode hier unten nacheinander durchzuführen
   felix erklärts
   -->
+
 
 
     {{#route_is "home"}}
@@ -85,22 +88,25 @@
     {{#route_is "profile"}}
       {{> profile}}
     {{/route_is}}
-{{!
-    {{#if hasRegions}}
-      <li class="dropdown">
+
+
+
+  </div>
+</template>
+
+<template name="region_sel">
+
+      <div class="dropdown">
         <a class="regions" href="/">Regions</a>
         <div class="dropdown-menu">
           <ul role="menu" aria-labelledby="dLabel">
             {{# each regions}}
-              <li><a class="pending" href="/c/{{slug}}">{{name}}</a></li>
+              <li><a class="regionselect" href="{{_id}}">{{name}}</a></li>
             {{/each}}
           </ul>
         </div>
-      </li>
-}}
-  </div>
+      </div>
 </template>
-
 
 <!-- ///////////// Demo-Page-Ticker ///////////// -->
 
