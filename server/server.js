@@ -59,7 +59,7 @@ function createCourses(){
 
 	/* Make a number that looks like a human chose it, favouring 2 and 5 */
 	function humandistrib() {
-		var factors = [0,0,0,1,2,2,3,5,5]
+		var factors = [0,0,1,2,2,3,5,5]
 		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
 	}
 
@@ -72,9 +72,6 @@ function createCourses(){
 		m5.update(course.description);
 		course._id = m5.digest('hex').substring(0, 8)
 
-/*		for (var i=0; i < course.tags.length; i++) {
-			course.tags[i] = ensureCategory(course.tags[i])._id
-		} */
 		for (var i=0; i < course.categories.length; i++) {
 			course.categories[i] = ensureCategory(course.categories[i])._id
 		}
@@ -88,9 +85,8 @@ function createCourses(){
 
 		course.createdby = ensureUser(course.createdby)._id
 		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
-		course.subscribers_min = Random.fraction() > 0.25 ? undefined : humandistrib()
+		course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
 		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
-		course.subscribers = []
 		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*80000000000))
 		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
 		Courses.insert(course)
