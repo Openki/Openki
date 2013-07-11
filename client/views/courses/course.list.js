@@ -65,20 +65,51 @@ get_courselist=function(listparameters){
 
 /* ------------------------- User Helpers ------------------------- */
 
+
+// Idee für CSS:
+// jede funktion_status returnt entweder
+// "yes", "no", "ontheway" oder "notexisting"
 Template.course.subscribers_status = function() {
-  if (this.subscribers_min === null) return 'maybe'
-	return this.subscribers_length >= this.subscribers_min ? 'ok' : 'notyet'
+  if (this.subscribers_min === null) return 'ontheway'
+	return this.subscribers_length >= this.subscribers_min ? 'yes' : 'no'
 }
 
 Template.course.organisator_status = function() {
-	return this.organisator ? 'ok' : 'notyet'
+	return this.organisator ? 'yes' : 'no'
+}
+
+Template.course.mentor_status = function() {
+  return "yes"
+}
+
+Template.course.host_status = function() {
+  return "yes"
+}
+
+
+// Idee für provisorische Darstellung:
+// Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
+Template.course.is_subscriber = function() {
+  return "*"
+}
+
+Template.course.is_host = function() {
+  return ""
+}
+
+Template.course.is_organisator = function() {
+  return "*"
+}
+
+Template.course.is_mentor = function() {
+  return ""
 }
 
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
-
+/*
   Template.course.is_subscribed = function () {
   	  // is current user subscriber
    	   if(Meteor.userId()){
@@ -102,7 +133,7 @@ Template.course.categorynames = function() {
  	  	}
  	  }
    };
-
+*/
 
 /* -------------------------  Events-------------------------*/
 

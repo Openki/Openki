@@ -21,27 +21,16 @@
 </template>
 
 <template name="course">
-  <div class="courselist_course">
-    <p class="name">{{name}}</p>
-    <p class="course_status">
-      <span class="{{subscribers_status}}">({{subscribers.length}}{{#unless isNull subscribers_min}} / {{subscribers_min}}{{/unless}})</span>
-      <span class="{{organisator_status}}"> Org </span>
-    </p>
-    <p class="smalldesc">
+  <p class="courselist_course">
+    <span class="course_name">{{name}}</span>
+    <span class="course_status">
+      <span class="status {{subscribers_status}}">T ({{subscribers.length}}{{#unless isNull subscribers_min}} / {{subscribers_min}}{{/unless}}){{is_subscriber}}</span><span class="organisator_status {{organisator_status}}">O{{is_organisator}}</span><span class="mentor_status {{mentor_status}}">M{{is_mentor}}</span><span class="host_status {{host_status}}">H{{is_host}}</span>
+    </span>
+    <span class="smalldesc">
       <span class="small">{{dateformat time_created}}</span>
+      <span class="small">{{username createdby}}</span>
+      <span class="small">{{> show_categories}}</span>
+    </span>
+  </p>
 
-	    <span class="small">{{username createdby}}</span>
-	    <span class="small">{{> show_categories}}</span>
-    </p>
-
-<p class="my_subscriptions">
-{{#if is_subscribed}}
-    <span class="subscribed">Du bist Teilnehmer_in</span>
-{{/if}}
-
-{{#if is_organisator}}
-    <span class="organisator">Du bist Organisator_in</span>
-{{/if}}
-    </p>
-    </div>
 </template>

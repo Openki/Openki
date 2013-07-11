@@ -1,6 +1,8 @@
 <template name="search_results">
 	{{results.count}} gefunden!
+	<div class="courselist_results">
 	{{#each results.courses}}
 		{{> course}}
 	{{/each}}
+	</div>
 </template>
