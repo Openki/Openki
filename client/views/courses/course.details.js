@@ -90,17 +90,17 @@ function scribe(course, role, add) {
   }
   
 Template.coursedetails.roleDetails = function(roles) {
-	return _.map(Roles.find().fetch(), function(roletype){
+	return _.reduce(Roles.find().fetch(), function(goodroles, roletype){
 		var role = roles[roletype.type]
 		if (role) {
-			var roledetails = {
+			goodroles.push({
 				roletype: roletype,
 				role: role,
 				subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0
-			}
-			return roledetails
+			})
 		}
-	})
+		return goodroles
+	}, [])
 }
 
 // muss zuert aufruf abfragen , obs couses existiertfunktionniert hat  indexOf
