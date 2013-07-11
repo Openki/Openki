@@ -96,6 +96,6 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     //return options.inverse(this);
 });
 
-Handlebars.registerHelper('isNotNull', function(val) {
-    return val !== null
+Handlebars.registerHelper('isNull', function(val) {
+    return val === null
 });

@@ -192,12 +192,11 @@ margin:0 0 8px 0;
 
 .courselist_course .notyet{
     	    color: red;
+    }
 
 .courselist_course .maybe{
             color: gray;
-    }
-
-
+     }
 
 .courselist_course:hover {
     font-weight: bold;

@@ -24,7 +24,7 @@
   <div class="courselist_course">
     <p class="name">{{name}}</p>
     <p class="course_status">
-      <span class="{{subscribers_status}}">Tn({{subscribers.length}} / {{subscribers_min}})</span>
+      <span class="{{subscribers_status}}">({{subscribers.length}}{{#unless isNull subscribers_min}} / {{subscribers_min}}{{/unless}})</span>
       <span class="{{organisator_status}}"> Org </span>
     </p>
     <p class="smalldesc">
