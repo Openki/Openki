@@ -53,6 +53,7 @@ margin: 0;
 #container{
     position:absolute;
     top: 0px;
+    min-width: 2000px;
 }
 
 #outer {
@@ -72,21 +73,15 @@ margin: 0;
     height: 50px;
     position: fixed;
     z-index:100;
+    min-width: 954px;
 }
 
 /***** LOGIN ******/
 
-#login {
-    position: absolute;
-    right: 20px;
-    top: 50px;
-}
-
-#login_info {
-
+ #login {
+    margin-right: 50px;
     padding-top: 5px;
     float:right;
-    width:500px;
 	color: #DDD;
 }
 #form_login {
