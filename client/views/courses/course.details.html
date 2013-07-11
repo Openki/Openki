@@ -28,48 +28,6 @@
 		{{> roleDetails}}
 	{{/each}}
 
-   <p>
-   Organisator:
-  {{#if organisator}}
-   <span class="usernames">{{organisator}}</span>
-	   {{#if isOrganisator}}
-	  <span class="subscribed">
-	  du bist Organisator!!!
-	  <input type="button" class="remove_organisator" value="Scheisse, Abmelden!!!!" /></span>
-	    {{/if}}
-
-         {{else}} <span class="usernames">Noch niemand</span>
-      <span><input type="button" class="get_organisator" value="Ich kann das machen" />
-           </span>
-        {{/if}}
-
-  </p>
-   <p> Mentor:</p>
-     <p>Teilnehmer:
-     <span class="subscribers_count"> (
-    min: {{subscribers_min}}
-    {{#if subscribers_max}}max: {{subscribers_max}}{{/if}}
-    <span class="{{subscribers_status}} ">current: {{subscribers.length}} </span>
-    )</span>
-  <span class="usernames">
-        {{#each subscribers}}
-        {{username this}}
-        {{else}}
-        Noch niemand
-        {{/each}}
-        </span>
-
-     {{#if isSubscribed}}
-  <span class="subscribed">
-  du bist angemeldet!!!
-  <input type="button" class="remove_subscriber" value="Abmelden!!!!" /></span>
-    {{/if}}
-    {{#unless isSubscribed}}
-          <span><input type="button" class="get_subscriber" value="Ich melde mich an" />
-           </span>
-     {{/unless}}
-    </p>
-
     </div>
     <p class="score"> Score: <a href="#">{{score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
 

@@ -13,33 +13,11 @@ Template.coursedetails.events({
       Courses.update(Session.get("selected_course"), {$inc: {score: 1}});
     },
 
-    'click input.get_subscriber': function () {
-    	// für Kurs anmelden (array: subscribers)
-     	  Courses.update(Session.get("selected_course"), {$addToSet:{subscribers: Meteor.userId()}});
-
-    },
-
-    'click input.remove_subscriber': function () {
-    	// von Kurs abmelden
-    	Courses.update(Session.get("selected_course"), {$pull:{subscribers: Meteor.userId()}});
-       },
-
-    'click input.get_organisator': function () {
-    	// Orga werden
-    	Courses.update(Session.get("selected_course"), {$set:{organisator: Meteor.userId()}});
-    },
-
-
-    'click input.remove_organisator': function () {
-    	// Orga künden
-      	Courses.update(Session.get("selected_course"), {$set:{organisator: ""}});
-      },
-
-
 	'click input.del': function () {
-		if (confirm("wirklich?")) Courses.remove(Session.get("selected_course"));
-
-		Router.navigate('/', true);
+		if (confirm("wirklich?")) {
+			Courses.remove(Session.get("selected_course"));
+			Router.navigate('/', true);
+		}
 	},
 
     'click input.edit': function () {
