@@ -192,7 +192,11 @@ margin:0 0 8px 0;
 
 .courselist_course .notyet{
     	    color: red;
+
+.courselist_course .maybe{
+            color: gray;
     }
+
 
 
 .courselist_course:hover {
@@ -246,7 +250,7 @@ clear: left;
 
 #coursedetails .small {
     font-size: 11px;
-    color: grey;
+    color: gray;
 }
 
 
@@ -282,7 +286,7 @@ margin: 20px 0 20px 0;
 
 #coursedetails .participators p{
     padding-bottom: 5px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid gray;
 
 }
 
@@ -293,7 +297,7 @@ margin: 20px 0 20px 0;
 
 #coursedetails .usernames{
     font-size: 12px;
-    color: grey;
+    color: gray;
      list-style-type: none;
      display: inline;
 }
@@ -359,12 +363,12 @@ width: 200px;
 
 .locationlist_location .description{
 font-size: 12px;
-color: grey;
+color: gray;
 }
 
 .locationlist_location .name{
 font-size: 15px;
-color: grey;
+color: gray;
 }
 
 
@@ -461,7 +465,7 @@ font-size: 18px ;
 
 .descr_small{
     font-size: 0.75em;
-    color: grey;
+    color: gray;
 }
 
 .none {
@@ -518,7 +522,7 @@ th{
     margin-left:30px;
 }
 .popup{
-    border:0px solid grey;
+    border:0px solid gray;
     border-radius: 5px;
     z-index: 1;
     position: fixed;
