@@ -616,4 +616,18 @@ th{
 .dropdown:hover .dropdown-menu {
     display: block; }
 
+.searchform{
+    font-size: 200%;
+}
 
+.search{
+    margin-top: 15px;
+    text-align: bottom;
+}
+.search_result{
+    font-size: 130%;
+}
+.propose_course{
+    font-size: 130%;
+
+}

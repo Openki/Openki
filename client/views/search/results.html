@@ -1,5 +1,9 @@
+
 <template name="search_results">
+		{{#unless results.count}}<a class="propose_course" href="CourseCreate">Propose it</a>{{/unless}}
+	<div>
 	{{results.count}} gefunden!
+	</div>
 	<div class="courselist_results">
 	{{#each results.courses}}
 		{{> course}}
