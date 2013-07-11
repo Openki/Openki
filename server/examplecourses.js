@@ -125,14 +125,25 @@ testcourses = [{
 		'host':        { subscribed: [ 'Sandro' ] },
 	}
 },{
+	'name':        'Bier brauen',
+	'categories': ['Bier'],
+	'createdby':   'Gähri',
+	'description': 'Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein!! Ein super Hobby dsa nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
+	'roles': {
+		'team':        { subscribed: [ 'Gähri' ] },
+		'participant': { subscribed: [ 'Lavenia Lastrapes', 'Greendampf', 'WAvegetarian', 'Lara' ] },
+		'mentor':      { subscribed: [ 'Gähri' ] },
+		'host':        { subscribed: [ 'Du' ] },
+	}
+},{
 	'name':        'Cyrypto Party',
 	'categories': ['Internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'createdby':   'Mike_85',
 	'description': 'Ein paar Leute veranstalten am Freitag 28.09. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi,                     Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die die können und wollen, werden sich gegenseitig und Allen Themen Vorstellen ',
 	'roles': {
-		'team':        { subscribed: [ '31337', '_', 'INYORBASE', '                ~                ' ] },
-		'host':        { subscribed: [ '                ~                ' ] },
+		'team':        { subscribed: [ '31337', '_', 'INYORBASE', '⧌','c⃠'] },
+		'host':        { subscribed: [ '!!!⃤' ] },
 	}
 },{
 	'name':        'Open Lab',
@@ -141,7 +152,7 @@ testcourses = [{
 	'createdby':   'Mike_85',
 	'description': ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…      link Openlab, link SGMK',
 	'roles': {
-		'participant': { subscribed: [ 'Felix', 'INYORBASE', 'Barbie92' ] },
+		'participant': { subscribed: [ 'Felix', 'INYORBASE', 'Barbie92', 'c⃠'] },
 		'host':        { subscribed: [ 'Felix' ] },
 	}
 },{
