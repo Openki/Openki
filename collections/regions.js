@@ -20,7 +20,6 @@ var regions = [{
 	},{
 		'name':        'Spilistan',
 		'_id': 		   'EZqQLGL4PtFCxCNrp'
-
     },{
 		'name':        'Bern',
 		'_id': 		   'Siifr2P7drkv66FNA'
