@@ -23,7 +23,10 @@
 <!-- eigenes File machen ab hier    -->
     
     <div class="participators">
-    <h3>Participators</h3>
+    <h3>Participants</h3>
+	{{#each roleDetails roles}}
+		{{> roleDetails}}
+	{{/each}}
 
    <p>
    Organisator:
@@ -67,8 +70,6 @@
      {{/unless}}
     </p>
 
-
-
     </div>
     <p class="score"> Score: <a href="#">{{score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
 
@@ -78,3 +79,20 @@
 
   </div>
 </template>
+
+<template name="roleDetails">
+	<div class="roleDetails role_{{roletype.type}}">
+	{{#if role.subscribed}}
+		{{roletype.description}}
+		<ul>
+			{{#each role.subscribed}}<li>{{username this}}</li>{{/each}}
+		</ul>
+	{{/if}}
+	{{#if subscribed}}
+		<input type="button" class="unsubscribe" name="{{roletype.type}}" value="Scheisse abmelden!!!" />
+	{{else}}
+		<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
+	{{/if}}
+	</div>
+</template>
+

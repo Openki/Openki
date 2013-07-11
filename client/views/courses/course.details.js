@@ -48,9 +48,29 @@ Template.coursedetails.events({
       	      Session.set("isEditing", true);
       else
       	      alert("Security robot say: sign in");
+    },
+    
+    'click input.subscribe': function () {
+		var course = Session.get("selected_course")
+		scribe(course, this.roletype.type, true)
+    },
+
+    'click input.unsubscribe': function () {
+		var course = Session.get("selected_course")
+		scribe(course, this.roletype.type, false)
     }
 });
 
+/* Subscribe or unsubscribe user to or from a role in a course */
+function scribe(course, role, add) {
+	var where = 'roles.'+role+'.subscribed'
+	var update = {}
+	update[where] = Meteor.userId()
+	var operation = {}
+	operation[add ? '$addToSet' : '$pull'] = update
+	console.log([course, operation])
+	Courses.update(course, operation);
+}
 
 
 // nur für css
@@ -69,6 +89,20 @@ Template.coursedetails.events({
   	}
   }
   
+Template.coursedetails.roleDetails = function(roles) {
+	return _.map(Roles.find().fetch(), function(roletype){
+		var role = roles[roletype.type]
+		if (role) {
+			var roledetails = {
+				roletype: roletype,
+				role: role,
+				subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0
+			}
+			return roledetails
+		}
+	})
+}
+
 // muss zuert aufruf abfragen , obs couses existiertfunktionniert hat  indexOf
 // zuerst genereller aufruf machen weil courses muss ready sein
 // dann könte man direkt machen
@@ -102,6 +136,12 @@ Template.coursedetails.events({
             }
         }
   };
+  
+  
+Template.coursedetails.role_description = function(role) {
+	console.log(role)
+	return Roles.findOne({type: role}).description
+}
 
 
 
