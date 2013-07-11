@@ -9,10 +9,6 @@
     return categories;
 };
 
-  Template.coursedetails.categories = function () {
-      var categories = Categories.find();
-    return categories;
-};
 
   Template.category.courses_by_category = function () {
       
