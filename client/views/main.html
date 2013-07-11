@@ -87,7 +87,19 @@
     {{#route_is "profile"}}
       {{> profile}}
     {{/route_is}}
-
+{{!
+    {{#if hasRegions}}
+      <li class="dropdown">
+        <a class="regions" href="/">Regions</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            {{# each regions}}
+              <li><a class="pending" href="/c/{{slug}}">{{name}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
+      </li>
+}}
   </div>
 </template>
 
