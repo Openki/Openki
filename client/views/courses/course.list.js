@@ -69,8 +69,8 @@ get_courselist=function(listparameters){
 // Idee für CSS:
 // jede funktion_status returnt entweder
 // "yes", "no", "ontheway" oder "notexisting"
-Template.course.subscribers_status = function() {
-  if (this.subscribers_min === null) return 'ontheway'
+Template.course.participant_status = function() {
+	if (this.subscribers_min === null) return 'ontheway'
 	return this.subscribers_length >= this.subscribers_min ? 'yes' : 'no'
 }
 
@@ -79,22 +79,22 @@ Template.course.organisator_status = function() {
 }
 
 Template.course.mentor_status = function() {
-  return "yes"
+	return this.roles.mentor.subscribed.length > 0 ? 'yes' : 'no'
 }
 
 Template.course.host_status = function() {
-  return "yes"
+	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
 }
 
 
 // Idee für provisorische Darstellung:
 // Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
 Template.course.is_subscriber = function() {
-  return "*"
+	return this.roles.participant.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 Template.course.is_host = function() {
-  return ""
+	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 Template.course.is_organisator = function() {
@@ -102,38 +102,13 @@ Template.course.is_organisator = function() {
 }
 
 Template.course.is_mentor = function() {
-  return ""
+	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
-/*
-  Template.course.is_subscribed = function () {
-  	  // is current user subscriber
-   	   if(Meteor.userId()){
-   	   	   if(this.subscribers){
-		    if(this.subscribers.indexOf(Meteor.userId())!=-1){
-			  return  true;
-		    }else{
-			return false;
-		    }
-		   }
- 	   }
-   };
-
-   Template.course.is_organisator = function () {
-  	  // is current user organisator
-   	   if(Meteor.userId()){
- 	  if (this.organisator==Meteor.userId()){
- 	  	  	return  true;
- 	  	}else{
- 	  		return false;
- 	  	}
- 	  }
-   };
-*/
 
 /* -------------------------  Events-------------------------*/
 

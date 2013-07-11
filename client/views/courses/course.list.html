@@ -24,7 +24,10 @@
   <p class="courselist_course">
     <span class="course_name">{{name}}</span>
     <span class="course_status">
-      <span class="status {{subscribers_status}}">T ({{subscribers.length}}{{#unless isNull subscribers_min}} / {{subscribers_min}}{{/unless}}){{is_subscriber}}</span><span class="organisator_status {{organisator_status}}">O{{is_organisator}}</span><span class="mentor_status {{mentor_status}}">M{{is_mentor}}</span><span class="host_status {{host_status}}">H{{is_host}}</span>
+      {{#if roles.participant}}<span class="status {{participant_status}}">T ({{subscribers.length}}{{#unless isNull subscribers_min}} / {{subscribers_min}}{{/unless}}){{is_subscriber}}</span
+      >{{/if}}<span class="organisator_status {{organisator_status}}">O{{is_organisator}}</span
+      >{{#if roles.mentor}}<span class="mentor_status {{mentor_status}}">M{{is_mentor}}</span
+      >{{/if}}{{#if roles.host}}<span class="host_status {{host_status}}">H{{is_host}}</span>{{/if}}
     </span>
     <span class="smalldesc">
       <span class="small">{{dateformat time_created}}</span>
