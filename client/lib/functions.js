@@ -26,6 +26,10 @@ display_coursename = function (courseid){
   }
 }
 
+Handlebars.registerHelper("log", function(context) {
+	if (window.console) return console.log(context);
+});
+
 Handlebars.registerHelper('username', function (userid){
   var user= Meteor.users.findOne({_id:userid});
   if(user){
