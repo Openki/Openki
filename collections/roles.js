@@ -1,9 +1,9 @@
 Roles = new Meteor.Collection("Roles");
 
 var roles = [{
-		'type':        'initiator',
-		'description': 'propose the course', 
-		'subscribe':   'I propose',
+		'type':        'team',
+		'description': 'look after the course', 
+		'subscribe':   'I help organize',
 		'preset':      true
 	},{
 		'type':        'interested',
