@@ -2,7 +2,7 @@
 // damit mans nicht faken kann?? Noch anschauen.
 get_timestamp = function (){
 	var now = new Date();
-	return now.getTime();		
+	return now.getTime();
 }
 
 
@@ -10,9 +10,9 @@ format_date= function (date){
 	var d= new Date(date);
 	var curr_date = d.getDate();
 	var curr_month = d.getMonth() + 1; //Months are zero based
-	var curr_year = d.getFullYear(); 
+	var curr_year = d.getFullYear();
 	var date_string=curr_date + "." + curr_month + "." + curr_year;
-	return date_string;	
+	return date_string;
 }
 
 
@@ -34,20 +34,20 @@ Handlebars.registerHelper('username', function (userid){
   var user= Meteor.users.findOne({_id:userid});
   if(user){
     if(user.username){
-    	  return user.username;	  
+    	  return user.username;
     }else{
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
       return "serverscript";
-  }	  
+  }
 })
 
 
 Handlebars.registerHelper('dateformat', function(date) {
 	/* We'll need a date formatter at some point */
 	if (date) return date.toDateString();
-}); 
+});
 
 //checks categories database for each course!
 //better would be: fetch categories database first and only once..
@@ -96,4 +96,6 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     //return options.inverse(this);
 });
 
-
+Handlebars.registerHelper('isNull', function(val) {
+    return val === null
+});

@@ -15,7 +15,7 @@ get_courselist=function(listparameters){
 	if(listparameters.missing=="subscribers")
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "(this.subscribers && this.subscribers.length < this.subscribers_min) || (!this.subscribers)"} );
-	
+
 	return Courses.find(find, {sort: {time_created: -1}});
 }
 
@@ -29,33 +29,33 @@ get_courselist=function(listparameters){
   // needed to actualize courses
    return this.courses;
   };
-  
+
   // Template handlers ---------------
 
-  
+
   //marcel: nur damit funktion nomals aufgerufen wird
   // gibt datenbankeintrag zurück courses zuweisen.
   // schön währe wenn parameter gibts zurück in courselist
   // kann von vier verschiedenen orten aufgerufen werden und macht vier mal ein bisschen was anderes
-  
+
   Template.coursepage.all_courses = function () {
   	  var return_object={};
   	  return_object.courses= get_courselist({});
   	  return return_object;
   };
- 
+
   Template.home.missing_organisator = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({missing: "organisator"});
   	  return return_object;
   }
-  
+
  Template.home.missing_subscribers = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({missing: "subscribers"});
   	  return return_object;
   }
-  
+
    Template.profile.courses_from_userid = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
@@ -66,12 +66,13 @@ get_courselist=function(listparameters){
 /* ------------------------- User Helpers ------------------------- */
 
 Template.course.subscribers_status = function() {
-	return this.subscribers.count >= this.subscribers.min ? 'ok' : 'notyet'
+  if (this.subscribers_min === null) return 'maybe'
+	return this.subscribers_length >= this.subscribers_min ? 'ok' : 'notyet'
 }
-	
-Template.course.subscribers_status = function() {
+
+Template.course.organisator_status = function() {
 	return this.organisator ? 'ok' : 'notyet'
-}    
+}
 
 
 Template.course.categorynames = function() {
@@ -85,9 +86,9 @@ Template.course.categorynames = function() {
 		    if(this.subscribers.indexOf(Meteor.userId())!=-1){
 			  return  true;
 		    }else{
-			return false; 
+			return false;
 		    }
-		   }   
+		   }
  	   }
    };
 
@@ -97,7 +98,7 @@ Template.course.categorynames = function() {
  	  if (this.organisator==Meteor.userId()){
  	  	  	return  true;
  	  	}else{
- 	  		return false; 
+ 	  		return false;
  	  	}
  	  }
    };
@@ -107,7 +108,7 @@ Template.course.categorynames = function() {
 
   Template.course.events({
     'click': function () {
-    	   
+
       Router.setCourse( this._id, this.name);
 
     }

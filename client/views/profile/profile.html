@@ -3,29 +3,30 @@
   <div id="profile">
     <h1 class="name">mein profil</h1>
 
-    
-    
+
+
     {{#if isEditing}}
 
-        <p class="descr">ID: {{userdata.id}}</p>
+        <p class="descr_small">UserID: {{userdata.id}}</p>
         <p>Username: <input type="text" id="editform_username" value="{{userdata.username}}"/></p>
-        <p> Email: <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
+        <p> Email (optional): <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
         <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
       <input type="button" class="save" value="Save" />
     {{/if}}
-    
+
     {{#unless isEditing}}
-        <p class="descr">ID: {{userdata.id}}</p>
+        <p class="descr_small">ID: {{userdata.id}}</p>
         <p class="descr">Username: {{userdata.username}}</p>
-        <p class="descr">Email: {{userdata.email}}</p>
-        
-         
+        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span></p>
+
+
          <input type="button" class="edit" value="Edit" />
+         <input type="button" class="verify" value="Verify my Email" />
     {{/unless}}
 <div class="list_small">
     <h3>Meine Kurse:</h3>
   {{> courselist courses_from_userid}}
 </div>
   </div>
-  
+
 </template>
