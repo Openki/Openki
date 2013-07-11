@@ -17,7 +17,7 @@
      <div> Needs people who
 		<ul>
 			{{#each available_roles}}
-				<li><label><input type="checkbox" name='{{type}}' {{checked type ../roles}}>&nbsp;{{description}}</label></li>
+				<li><label><input type="checkbox" id='role_{{type}}' {{checked type ../roles}}>&nbsp;{{description}}</label></li>
 			{{/each}}
 		</ul>
 	</div>

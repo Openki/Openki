@@ -18,15 +18,24 @@ Template.course_edit.checked = function(id, cats) {
 
 Template.course_edit.events({
 	'click input.save': function () {
-	// wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-	Courses.update(
-		 Session.get("selected_course"), {
+		var course = this
+		_.each(Roles.find().fetch(), function(roletype) {
+			var type = roletype.type
+			var should_have = roletype.preset || document.getElementById('role_'+type).checked;
+			var have = !!course.roles[type]
+			if (have && !should_have) delete course.roles[type];
+			if (!have && should_have) course.roles[type] = roletype.protorole
+		})
+	
+		Courses.update(
+			this._id, {
 			$set: {
 				description: $('#editform_description').val(),
-					categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
-					name: $('#editform_name').val(),
-					subscribers_min: $('#editform_subscr_min').val(),
-					subscribers_max: $('#editform_subscr_max').val()
+				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
+				name: $('#editform_name').val(),
+				subscribers_min: $('#editform_subscr_min').val(),
+				subscribers_max: $('#editform_subscr_max').val(),
+				roles: course.roles
 			}
 		});
 		Session.set("isEditing", false);
