@@ -257,6 +257,14 @@ function createCourses(){
 		for (var i=0; i < course.categories.length; i++) {
 			course.categories[i] = ensureCategory(course.categories[i])._id
 		}
+		
+		if (course.roles === undefined) course.roles = {}
+		_.each(course.roles, function(role) {
+			_.each(role.subscribed, function(subscriber, i) {
+				role.subscribed[i] = ensureUser(subscriber)._id
+			})
+		})
+		
 		course.createdby = ensureUser(course.createdby)._id
 		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
 		course.subscribers_min = humandistrib()
