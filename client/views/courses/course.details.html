@@ -11,24 +11,21 @@
     {{#unless isEditing}}
     <div class="course_main">
      <h2 class="name">{{name}}</h2>
-     <p class="small"> Time Created: {{time_created}},  Created by: {{username createdby}}, {{> show_categories}}</p>
+     <p class="small"> Time Created: {{dateformat time_created}},  Created by: {{username createdby}}, {{> show_categories}}</p>
      <p class="descr">{{description}}</p>
 
      <input type="button" class="edit" value="Edit" />
      <input type="button" class="del" value="Delete" />
      </div>
     {{/unless}}
-
     
-<!-- eigenes File machen ab hier    -->
-    
-    <div class="participators">
-    <h3>Participants</h3>
-	{{#each roleDetails roles}}
-		{{> roleDetails}}
-	{{/each}}
-
+    <div class="participants">
+		<h3>Participants</h3>
+		{{#each roleDetails roles}}
+			{{> roleDetails}}
+		{{/each}}
     </div>
+
     <p class="score"> Score: <a href="#">{{score}}</a>        <input type="button" class="inc" value="Hochzaehlen" /></p>
 
       {{> votelists}}
@@ -41,13 +38,20 @@
 <template name="roleDetails">
 	<div class="roleDetails role_{{roletype.type}}">
 	{{#if role.subscribed}}
-		{{roletype.description}}
-		<ul>
-			{{#each role.subscribed}}<li>{{username this}}</li>{{/each}}
-		</ul>
+		<div class="subscribers">
+		{{#if roletype.show_subscribers}}
+			<ul>
+				{{#each role.subscribed}}<li>{{username this}}</li> {{/each}}
+			</ul>
+			{{roletype.description}}
+		{{else}}
+			{{role.subscribed.length}} {{roletype.description}}
+		{{/if}}
+		</div>
 	{{/if}}
+	<div class="subscribe">
 	{{#if subscribed}}
-		<input type="button" class="unsubscribe" name="{{roletype.type}}" value="Scheisse abmelden!!!" />
+		<span class='subscribed'>you are subscribed <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
 	{{else}}
 		<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
 	{{/if}}

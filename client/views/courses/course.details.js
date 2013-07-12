@@ -46,8 +46,7 @@ function scribe(course, role, add) {
 	update[where] = Meteor.userId()
 	var operation = {}
 	operation[add ? '$addToSet' : '$pull'] = update
-	console.log([course, operation])
-	Courses.update(course, operation);
+	Courses.update(course, operation)
 }
 
 

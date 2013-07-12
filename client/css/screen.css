@@ -278,23 +278,17 @@ clear: left;
     color: gray;
 }
 
-
-
-
-
 #coursedetails .course_main {
-background-color: #EEE;
-padding: 15px;
-margin: 50px 0 20px 0;
+	background-color: #EEE;
+	padding: 1em;
+	margin: 50px 0 20px 0;
 }
 
-
-
-
-#coursedetails .course_edit {
-background-color: #CCDDDF;
-padding: 15px;
-margin: 50px 0 20px 0;
+.course_edit {
+	clear: both;
+	background-color: #CCDDDF;
+	padding: 15px;
+	margin: 50px 0 20px 0;
 }
 
 .course_edit ul {
@@ -302,23 +296,33 @@ margin: 50px 0 20px 0;
 	display: block
 }
 
-
-#coursedetails .participators {
-background-color: #EEE;
-padding: 15px;
-margin: 20px 0 20px 0;
+div.participants {
+	background-color: #EEE;
+	padding: 1em;
+	margin: 1em 0;
+	
 }
 
-#coursedetails .participators p{
-    padding-bottom: 5px;
-    border-bottom: 1px solid gray;
-
+div.roleDetails {
+	margin: 1em;
+	padding: 1em;
+	background-color: #DDD;
 }
 
-#coursedetails .participators span input{
-    float: right;
-
+div.roleDetails ul {
+	list-style: none;
+	display: inline;
+	padding: 0;
 }
+
+div.roleDetails li {
+	display: inline;
+	padding: 0 0.3em;
+	background-color: #BFB;
+	margin: 0 0.3em;
+}
+
+
 
 #coursedetails .usernames{
     font-size: 12px;
