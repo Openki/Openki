@@ -360,17 +360,33 @@ margin: 20px 0 20px 0;
 
 
 .categorylist .name {
-    margin: 15px 0;
+    margin: 2px 0;
     font-weight: normal;
     color: #333;
 }
 
 .smalldesc{
-    margin:5px 10px 0 0;
+    margin: 5px 30px 10px 10px;
     font-size: 10px;
     font-weight: normal;
     cursor: pointer;
+    color: #000;
+    display: block;
+    clear:left;
+}
+.smalldesc_no_course{
+    margin: -10px 0px 0 -10px;
+    font-size: 10px;
+    font-weight: normal;
     color: #666;
+    display: block;
+    clear:left;
+}
+.no_courses_cat{
+    margin:5px -20px 0 0;
+    font-weight: normal;
+    cursor: pointer;
+    color: #999 !important;
     display: block;
     clear:left;
 }

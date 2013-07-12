@@ -15,15 +15,12 @@
 
 <template name="category">
   <div class="categorylist">
-    <p class="name">{{name}}:</p>
-      <p class="smalldesc">
-
-      	 
-	        <span class="small">{{#each courses_by_category}}{{> course_by_category}}{{else}}
-	        keine Kurse in dieser Kategorie definiert!
-	    {{/each}}</span>
-	    
-
+    <p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}">{{name}}:</p>
+      <p>
+	        <span class="smalldesc">
+          {{#each courses_by_category}}{{> course_by_category}}</span>
+              {{else}} <span class='smalldesc_no_course'> keine Kurse in dieser Kategorie definiert! </span>
+          {{/each}}
      </p>
     </div>
 </template>
