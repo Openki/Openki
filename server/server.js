@@ -1,6 +1,7 @@
 
 
 Meteor.startup(function () {
+ createCategoriesIfNone();
  createCoursesIfNone();
 });
 
@@ -26,8 +27,19 @@ Meteor.methods({
 });
 
 
+// Create Categories if not all anymore
+
+function createCategoriesIfNone() {
+	if (Categories.find().count() === 0) {
+		_.each(categories, function(category){
+			Categories.insert(category)
+		})
+	}
+}
+
+// erstelle neue Kurse, wenns keine in der DB hat
+
 function createCoursesIfNone(){
-    // erstelle neue Kurse, wenns keine in der DB hat
  if (Courses.find().count() === 0) {
         createCourses();
   }

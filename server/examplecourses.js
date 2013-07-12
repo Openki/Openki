@@ -1,6 +1,6 @@
 testcourses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
-	'categories': ['Sport_Bewegung'],
+	'categories': ['Sport / Bewegung'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 	'createdby':   'FeeLing',
 	'description': 'Es wäre toll, regelmässig an einem Morgen zusammen zu Meditieren und Yoga/Qi-Gong zu machen. Mir selber fehlt die Selbstdisziplin und für Yoga/Qi-Gong auch das Knowhow, darum wäre eine kleine Gruppe toll. Ein extra Raum wäre toll, geht aber eigentlich überall.',
@@ -10,7 +10,7 @@ testcourses = [{
 	}
 },{
 	'name':        'Aikido',
-	'categories': ['Kampfkunst'],
+	'categories': ['Kampfsport/-kunst'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
 	'createdby':   'Kampfhippie',
 	'description': 'Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören. Youtube-Video Wikipedia-link',
@@ -21,7 +21,7 @@ testcourses = [{
 	}
 },{
 	'name':        'Garten',
-	'categories': ['Garten_Landwirtschaft', 'Biologie'],
+	'categories': ['Garten / Landwirtschaft', 'Biologie'],
 	'tags':       ['Garten', 'Pflanzen'],
 	'createdby':   'Greendampf',
 	'description': 'Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Planzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.',
@@ -42,7 +42,7 @@ testcourses = [{
 	}
 },{
 	'name':        'unkommerzielle Commons-based peer production',
-	'categories': ['Garten_Landwirtschaft'],
+	'categories': ['Garten / Landwirtschaft'],
 	'tags':       ['Theorie', 'Projekt'],
 	'createdby':   'Greendampf',
 	'description': '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen" [[http://commonsblog.wordpress.com/was-sind-commons/|Was sind Commons?]] Fände es interessant, das Thema der unkommerziellen //Commons-based peer production// zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)',
@@ -62,7 +62,7 @@ testcourses = [{
 	}
 },{
 	'name':        'Elektronik',
-	'categories': ['Elektronik'],
+	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
 	'description': ' hoi tsäme!   ich würd mal gerne ein grundlagen von elektronik lernen… so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;)   einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).   hat wer bock? c u '
@@ -112,7 +112,7 @@ testcourses = [{
 	'description': 'Ein paar Leute veranstalten am Freitag 28.09. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi,                     Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die die können und wollen, werden sich gegenseitig und Allen Themen Vorstellen '
 },{
 	'name':        'Open Lab',
-	'categories': ['Elektronik', 'Programmieren'],
+	'categories': ['Elektronik / Strom', 'Programmieren'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'createdby':   'Mike_85',
 	'description': ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…      link Openlab, link SGMK'

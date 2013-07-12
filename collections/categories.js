@@ -2,7 +2,7 @@
 // "_id" -> ID
 // "name" -> string
 // future:
-// "Parent" -> string
+// "Parent" -> ID
 // "name_de" "name_en" 	etc
 // ===========================
 
