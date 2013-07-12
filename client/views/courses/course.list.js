@@ -1,11 +1,12 @@
+"use strict";
 
 /* ------------------------- Query / List ------------------------- */
 //querry anpassung
 
-get_courselist=function(listparameters){
+var get_courselist=function(listparameters){
 	//return a course list
 	var find ={};
-  if(Session.get('region')) find.region=Session.get('region')
+	if(Session.get('region')) find.region=Session.get('region')
 	// modify query --------------------
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid

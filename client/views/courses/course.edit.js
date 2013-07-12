@@ -1,3 +1,5 @@
+"use strict";
+
 Template.course_edit.available_categories = function(parent) {
 	if (parent)return Categories.find({parent: parent})
 	return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
