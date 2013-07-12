@@ -20,6 +20,8 @@ Template.course_edit.checked = function(id, cats) {
 	}
 }
 
+// to be put on server ...........
+
 Template.course_edit.events({
 	'click input.save': function () {
 		var course = this._id ? this : { roles: {} }
@@ -43,7 +45,11 @@ Template.course_edit.events({
 		if (this._id) {
 			Courses.update(this._id, { $set: ofcourse })
 		} else {
-			Courses.insert(ofcourse)
+			ofcourse.time_created = new Date
+			ofcourse.region = Session.get('region')
+			ofcourse.createdby = Meteor.userId()
+			var id = Courses.insert(ofcourse)
+			Router.setCourse( id, ofcourse.name);
 		}
 
 		Session.set("isEditing", false);
