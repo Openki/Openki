@@ -53,11 +53,9 @@ margin: 0;
 #container{
     position:absolute;
     top: 0px;
-    min-width: 954px;
 }
 
 #outer {
-    //width: 1020px;
     /*margin: 0 auto;  */
 }
 
@@ -106,7 +104,6 @@ margin: 0;
     padding-top: 5px;
     padding-left: 50px;
     float:left;
-    width: 650px;
 	text-transform: uppercase;
 }
 
@@ -231,10 +228,8 @@ margin:0 0 8px 0;
 display:none;
 }
 
-.courselist_results{
-margin-top: 50px;
-width: 1100px;
-
+.courselist_results {
+	margin-top: 50px;
 }
 
 
