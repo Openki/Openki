@@ -629,5 +629,19 @@ th{
 }
 .propose_course{
     font-size: 130%;
-
+}
+ul.categories {
+    columns: 2;
+}
+.categories li {
+    clear: left;
+}
+.subcategories{
+    font-size: 65%;
+    color: #333333;
+}
+.subcategories li {
+    float: left;
+    clear: none;
+    padding-left: 1em;
 }

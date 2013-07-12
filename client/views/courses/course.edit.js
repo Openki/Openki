@@ -1,5 +1,9 @@
-Template.course_edit.available_categories = function() {
-	return Categories.find()
+Template.course_edit.available_categories = function(parent) {
+	if (parent)return Categories.find({parent: parent})
+	return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
+}
+Template.course_edit.available_subcategories = function() {
+	return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
 }
 
 Template.course_edit.available_roles = function() {
@@ -44,7 +48,7 @@ Template.course_edit.events({
 
 		Session.set("isEditing", false);
 	},
-	
+
 	'click input.cancel': function() {
 		Session.set("isEditing", false);
 	}

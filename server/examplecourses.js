@@ -126,7 +126,7 @@ testcourses = [{
 	}
 },{
 	'name':        'Bier brauen',
-	'categories': ['Bier'],
+	'tags': ['Bier'],
 	'createdby':   'Gähri',
 	'description': 'Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein!! Ein super Hobby dsa nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
 	'roles': {
@@ -152,7 +152,7 @@ testcourses = [{
 	'createdby':   'Mike_85',
 	'description': ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…      link Openlab, link SGMK',
 	'roles': {
-		'participant': { subscribed: [ 'Felix', 'INYORBASE', 'Barbie92', 'c⃠'] },
+		'participant': { subscribed: [ 'bert', 'Felix', 'INYORBASE', 'Barbie92', 'c⃠'] },
 		'host':        { subscribed: [ 'Felix' ] },
 	}
 },{

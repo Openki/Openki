@@ -8,10 +8,19 @@
      <p>  Teilnehmer Min:  <input type="text" id="editform_subscr_min" value="{{subscribers_min}}" size="2"/>  Max: <input type="text" id="editform_subscr_max" value="{{#if subscribers_max}}{{subscribers_max}}{{/if}}" size="2"/></p>
 
      <div id='editform_categories'>  Categories:
-		<ul>
-			{{#each available_categories}}
-				<li><label><input type='checkbox' name='{{_id}}' value="1" {{checked _id ../categories}}>&nbsp;{{name}}</option></label></li>
-			{{/each}}
+		<ul class='categories'>
+		{{#each available_categories false}}
+			<li>
+				<label><input type='checkbox' name='{{_id}}' value="1" {{checked _id ../categories}}>&nbsp;{{name}}</option></label>
+				<ul class='subcategories'>
+				{{#each available_categories _id}}
+					<li>
+						<label><input type='checkbox' name='{{_id}}' value="1" {{checked _id ../../categories}}>&nbsp;{{name}}</option></label>
+					</li>
+				{{/each}}
+				</ul>
+			</li>
+		{{/each}}
 		</ul>
      </div>
      <div> Needs people who
