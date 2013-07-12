@@ -49,20 +49,6 @@ Handlebars.registerHelper('dateformat', function(date) {
 	if (date) return date.toDateString();
 });
 
-//checks categories database for each course!
-//better would be: fetch categories database first and only once..
-//TO DO!
-
-display_categoryname= function (categoryid){
-  var categoryname= Categories.findOne(categoryid).name;
-      return categoryname;
-}
-
-
-display_category= function (id){
-  var category= Categories.findOne({_id:id});
-    return category.name;
-}
 
 var trimInput = function(val) {
     return val.replace(/^\s*|\s*$/g, "");

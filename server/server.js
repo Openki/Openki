@@ -84,7 +84,7 @@ function createCourses(){
 		m5.update(course.description);
 		course._id = m5.digest('hex').substring(0, 8)
 
-		for (var i=0; i < course.categories.length; i++) {
+		for (var i=0; course.categories && i < course.categories.length; i++) {
 			course.categories[i] = ensureCategory(course.categories[i])._id
 		}
 
