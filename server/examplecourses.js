@@ -127,8 +127,9 @@ testcourses = [{
 },{
 	'name':        'Bier brauen',
 	'tags': ['Bier'],
+	'categories': ['Kultur'],
 	'createdby':   'Gähri',
-	'description': 'Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein!! Ein super Hobby dsa nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
+	'description': 'Gutes Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne feines Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein zu nem Hopfigen!! Ein super Hobby dsa nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
 	'roles': {
 		'team':        { subscribed: [ 'Gähri' ] },
 		'participant': { subscribed: [ 'Lavenia Lastrapes', 'Greendampf', 'WAvegetarian', 'Lara' ] },
