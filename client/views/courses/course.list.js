@@ -12,10 +12,10 @@ get_courselist=function(listparameters){
 		find = _.extend(find, { $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]});
 	if(listparameters.missing=="organisator")
 		// show courses with no organisator
-		find = _.extend(find, {$or : [ { "organisator" : undefined}, {"organisator":""} ]});
+		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
 	if(listparameters.missing=="subscribers")
 		// show courses with not enough subscribers
-		find = _.extend(find, {$where: "(this.subscribers && this.subscribers.length < this.subscribers_min) || (!this.subscribers)"} );
+		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
 	return Courses.find(find, {sort: {time_created: -1}});
 }
 
@@ -69,71 +69,49 @@ get_courselist=function(listparameters){
 // Idee für CSS:
 // jede funktion_status returnt entweder
 // "yes", "no", "ontheway" oder "notexisting"
-Template.course.subscribers_status = function() {
-  if (this.subscribers_min === null) return 'ontheway'
-	return this.subscribers_length >= this.subscribers_min ? 'yes' : 'no'
+Template.course.participant_status = function() {
+	if (this.subscribers_min < 1) return 'ontheway'
+	var ratio = this.roles.participant.subscribed.length / this.subscribers_min
+	if (ratio < 0.5) return 'no'
+	if (ratio >= 1) return 'yes'
+	return 'ontheway'
 }
 
-Template.course.organisator_status = function() {
-	return this.organisator ? 'yes' : 'no'
+Template.course.team_status = function() {
+	return this.roles.team.subscribed.length > 0 ? 'yes' : 'no'
 }
 
 Template.course.mentor_status = function() {
-  return "yes"
+	return this.roles.mentor.subscribed.length > 0 ? 'yes' : 'no'
 }
 
 Template.course.host_status = function() {
-  return "yes"
+	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
 }
 
 
 // Idee für provisorische Darstellung:
 // Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
 Template.course.is_subscriber = function() {
-  return "*"
+	return this.roles.participant.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 Template.course.is_host = function() {
-  return ""
+	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
-Template.course.is_organisator = function() {
-  return "*"
+Template.course.is_team = function() {
+	return this.roles.team.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 Template.course.is_mentor = function() {
-  return ""
+	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
 }
 
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
-/*
-  Template.course.is_subscribed = function () {
-  	  // is current user subscriber
-   	   if(Meteor.userId()){
-   	   	   if(this.subscribers){
-		    if(this.subscribers.indexOf(Meteor.userId())!=-1){
-			  return  true;
-		    }else{
-			return false;
-		    }
-		   }
- 	   }
-   };
-
-   Template.course.is_organisator = function () {
-  	  // is current user organisator
-   	   if(Meteor.userId()){
- 	  if (this.organisator==Meteor.userId()){
- 	  	  	return  true;
- 	  	}else{
- 	  		return false;
- 	  	}
- 	  }
-   };
-*/
 
 /* -------------------------  Events-------------------------*/
 
