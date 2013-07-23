@@ -25,14 +25,21 @@ get_courselist=function(listparameters){
 
 /* ------------------------- List types / Templates ------------------------- */
 
+
+
   Template.courselist.courses = function () {
   // needed to actualize courses
    return this.courses;
   };
 
   // Template handlers ---------------
-
-
+  Template.courselist.coursesLoaded = function () {
+    return Session.get('coursesLoaded');
+  };
+  Template.coursepage.coursesLoaded = function () {
+    return Session.get('coursesLoaded');
+  };
+  
   //marcel: nur damit funktion nomals aufgerufen wird
   // gibt datenbankeintrag zurück courses zuweisen.
   // schön währe wenn parameter gibts zurück in courselist

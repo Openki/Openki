@@ -16,3 +16,7 @@ Template.search_results.results = function () {
 	var courses = Courses.find(find)
 	return { count: courses.count(), courses: courses }
 }
+
+  Template.search_results.coursesLoaded = function () {
+    return Session.get('coursesLoaded');
+  };
