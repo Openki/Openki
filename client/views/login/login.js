@@ -1,3 +1,4 @@
+/*
 Session.set("showRegisterDialog", false);
 Session.set("showLoginDialog", true);
 
@@ -127,3 +128,4 @@ Meteor.methods({
         }
     }
 });
+*/
