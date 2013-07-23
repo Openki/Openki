@@ -295,7 +295,7 @@ div.participants {
 	background-color: #EEE;
 	padding: 1em;
 	margin: 1em 0;
-	
+
 }
 
 div.roleDetails {
@@ -667,4 +667,8 @@ ul.categories {
     float: left;
     clear: none;
     padding-left: 1em;
+}
+.dev_doku {
+    width: 200%;
+    height: 390px;
 }
