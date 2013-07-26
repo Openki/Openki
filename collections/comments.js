@@ -10,3 +10,7 @@ CourseComments.allow({
     return userId && true;   // allow only if UserId is present
     }
 });
+
+Meteor.publish ('comments', function(){
+	return CourseComments.find();
+});

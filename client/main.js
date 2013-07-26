@@ -16,3 +16,7 @@ Template.maincontent.route_is = function (data,options) {
 Accounts.ui.config({
 	passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
 });
+
+Meteor.startup(function () {
+  Session.setDefault('coursesLoaded', false);
+});
