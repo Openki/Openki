@@ -10,7 +10,3 @@ Messages.allow({
     return userId && true;   // allow only if UserId is present
     }
 });
-
-Meteor.publish ('messages', function(){
-	return Messages.find();
-});

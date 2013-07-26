@@ -20,7 +20,3 @@ Categories.allow({
     return userId && true;   // allow only if UserId is present
     }
 });
-
-Meteor.publish ('categories', function(){
-	return Categories.find();
-});

@@ -23,11 +23,7 @@ CourseDiscussions.allow({
     return userId && true;   // allow only if UserId is present
     },
    remove: function (userId, doc) {
-    return 
+    return
     userId && true;   // allow only if UserId is present
     }
-});
-
-Meteor.publish ('discussions', function(){
-	return CourseDiscussions.find();
 });

@@ -21,7 +21,3 @@ Votings.allow({
     },
 
 });
-
-Meteor.publish ('votings', function(){
-	return Votings.find();
-});
