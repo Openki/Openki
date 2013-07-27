@@ -1,7 +1,4 @@
 
-/* ------------------------- Startseite -------------------*/
-//alert ("wilkommen auf der neuen fancy Schuel.ch Homepage");
-
 // allgemeine praktische funktionen
 
 Template.maincontent.route_is = function (data,options) {
@@ -13,10 +10,33 @@ Template.maincontent.route_is = function (data,options) {
     return options.inverse( this );
 };
 
+////////////// login stettings
 Accounts.ui.config({
 	passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
 });
 
+////////////// loading-indicator
 Meteor.startup(function () {
   Session.setDefault('coursesLoaded', false);
 });
+
+
+////////////// db-subscriptions:
+
+//Meteor.subscribe('courses', Session.get('region'))
+Meteor.subscribe('categories');
+Meteor.subscribe('comments');
+Meteor.subscribe('courses', function onComplete() {
+  Session.set('coursesLoaded', true);
+});
+Meteor.subscribe('discussions');
+Meteor.subscribe('locations');
+Meteor.subscribe('messages');
+Meteor.subscribe('regions');
+Meteor.subscribe('roles');
+Meteor.subscribe('votings');
+
+
+Template.maincontent.loadcourse = function() {
+	return Courses.findOne(Session.get('selected_course'))
+}
