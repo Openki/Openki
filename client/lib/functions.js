@@ -5,7 +5,6 @@ get_timestamp = function (){
 	return now.getTime();
 }
 
-
 format_date= function (date){
 	var d= new Date(date);
 	var curr_date = d.getDate();
@@ -15,8 +14,6 @@ format_date= function (date){
 	return date_string;
 }
 
-
-
 display_coursename = function (courseid){
   var course = Courses.findOne({_id:courseid});
   if(course){
@@ -25,6 +22,9 @@ display_coursename = function (courseid){
     return "dummdididumm.."
   }
 }
+
+
+/*************** HandleBars Helpers ***********************/
 
 Handlebars.registerHelper("log", function(context) {
 	if (window.console) return console.log(context);
@@ -39,10 +39,9 @@ Handlebars.registerHelper('username', function (userid){
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
-      return "serverscript";
+      return "No_User";
   }
 })
-
 
 Handlebars.registerHelper('dateformat', function(date) {
 	/* We'll need a date formatter at some point */

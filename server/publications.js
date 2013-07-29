@@ -32,8 +32,14 @@ Meteor.publish ('locations', function(){
 Meteor.publish ('discussions', function(){
 	return CourseDiscussions.find();
 });
+
 /*
 Meteor.publish ('comments', function(){
 	return CourseComments.find();
 });
 */
+
+//tried this, for publishing the users
+Meteor.publish ('users', function(){
+	return Meteor.users.find();
+});
