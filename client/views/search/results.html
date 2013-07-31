@@ -10,14 +10,15 @@
 
 	</div>
 	<div class="courselist_results">
-	
+
 	{{#if coursesLoaded}}
-	
+
         {{#each results.courses}}
             {{> course}}
-        {{/each}} 
+        {{/each}}
+
     {{else}}
-      <img src="http://viewvc.svn.mozilla.org/vc/addons/trunk/bandwagon/skin/images/spinner.gif?revision=18591&view=co&pathrev=18591">
+      <img src="/spinner.gif">
     {{/if}}
 
 	</div>
