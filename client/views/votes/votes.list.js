@@ -6,7 +6,10 @@ var pseudo=Session.get("aktualisierungs_hack");
 
 	course=Courses.findOne(Session.get("selected_course"));
 	if(course){
-	    subscribers=course.roles.participant.subscribed;
+        if(course.roles.participant.subscribed){
+            subscribers=course.roles.participant.subscribed;
+        }
+
 
 	var votings_array = [];
 	for(m = 0; m < votings.count(); m++){
@@ -102,17 +105,17 @@ return {votings:votings_array};
 
 
 
-
+/*
 Template.votelist.votelist=function(){
-	/*
+
 var return_object={};
 return_object.vote_options=["asf","sfsf"];
 
 	return return_object;
-*/
+
 
 }
-
+*/
  Template.votelists.events({
     'click input.show_add_vote': function () {
     	   $("#add_vote_form").show();
