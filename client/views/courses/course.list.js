@@ -16,7 +16,7 @@ get_courselist=function(listparameters){
 	if(listparameters.missing=="subscribers")
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
-	return Courses.find(find, {sort: {time_created: -1}});
+	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
 
@@ -39,7 +39,7 @@ get_courselist=function(listparameters){
   Template.coursepage.coursesLoaded = function () {
     return Session.get('coursesLoaded');
   };
-  
+
   //marcel: nur damit funktion nomals aufgerufen wird
   // gibt datenbankeintrag zurück courses zuweisen.
   // schön währe wenn parameter gibts zurück in courselist

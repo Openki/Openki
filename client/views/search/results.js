@@ -11,6 +11,7 @@ Template.search_results.results = function () {
 				{ name: { $regex: query, $options: 'i' } },
 				{ description: { $regex: query, $options: 'i' } }
 			]
+//{sort: {time_created: -1}} ??
 		})
 	}
 	var courses = Courses.find(find)

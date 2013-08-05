@@ -47,12 +47,14 @@ Template.course_edit.events({
 			name: $('#editform_name').val(),
 			subscribers_min: $('#editform_subscr_min').val(),
 			subscribers_max: $('#editform_subscr_max').val(),
-			roles: course.roles
+			roles: course.roles,
+			time_lastedit: new Date
 		}
 
 		if (this._id) {
 			Courses.update(this._id, { $set: ofcourse })
 		} else {
+			ofcourse.time_lastedit = new Date
 			ofcourse.time_created = new Date
 			ofcourse.region = Session.get('region')
 			ofcourse.createdby = Meteor.userId()
