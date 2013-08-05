@@ -31,6 +31,7 @@ Template.course_edit.checked = function(id, cats) {
 
 Template.course_edit.events({
 	'click input.save': function () {
+	if(Meteor.userId()){
 		var course = this._id ? this : { roles: {} }
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type
@@ -60,6 +61,9 @@ Template.course_edit.events({
 		}
 
 		Session.set("isEditing", false);
+	}
+    else
+  		alert("Security robot say: please sign in!");
 	},
 
 	'click input.cancel': function() {
