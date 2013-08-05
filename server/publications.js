@@ -41,5 +41,8 @@ Meteor.publish ('comments', function(){
 
 //tried this, for publishing the users
 Meteor.publish ('users', function(){
-	return Meteor.users.find();
+	return Meteor.users.find({}, {
+		fields: {username: 1}
+	});
+
 });
