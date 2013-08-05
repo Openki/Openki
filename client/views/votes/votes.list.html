@@ -3,7 +3,7 @@
     <h3>Abstimmungen</h3>
         {{#each votings.votings}}
             <div class="voting">
-                <h4>{{question}}</h4>   
+                <h4>{{question}}</h4>
                  <table class="votelist_table">
                      <tr>
                          <td></td>
@@ -17,8 +17,8 @@
                  </tr>
                  {{#each this.subscribers}}
                   <tr class="{{this.is_current}}">
-                         <td>{{this.name}}</td>
-                         
+                         <td>{{username this.subscribersId}}</td>
+
                            {{#each this.options}}
                              <td class="option {{this.vote_status}}" name= "{{this.option_index}}">
                             &nbsp;&nbsp;
@@ -30,7 +30,7 @@
                  {{/each}}
                    <tr>
                          <td><b>Total</b></td>
-                         
+
                            {{#each this.total}}
                              <td >
                             &nbsp;&nbsp;{{this}}
@@ -45,8 +45,8 @@
             <p>keine Abstimmungen </p>
         {{/each}}
 
-    <input type="button" class="show_add_vote" value="Neue Textabstimmung" />   
-   
+    <input type="button" class="show_add_vote" value="Neue Textabstimmung" />
+
     <form id="add_vote_form" style="display:none">
         <h4>Neue Textabstimmung</h4>
         <p>Frage: <input type="text" id="add_vote_question" size="30"></p>
@@ -93,4 +93,3 @@
 </form>
 </template>
 
-  

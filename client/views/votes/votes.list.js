@@ -8,7 +8,6 @@ var pseudo=Session.get("aktualisierungs_hack");
 	if(course){
 	    subscribers=course.roles.participant.subscribed;
 
-
 	var votings_array = [];
 	for(m = 0; m < votings.count(); m++){
 
@@ -42,7 +41,7 @@ var pseudo=Session.get("aktualisierungs_hack");
          is_current="";
      }
 
-     	    subscribers_votings.push({is_current:is_current, name:subscribers[s], is_current: is_current, options:subscriber_options});
+     	    subscribers_votings.push({is_current:is_current, subscribersId:subscribers[s], is_current: is_current, options:subscriber_options});
      	     //voting.user_count = voting.users.count()
      	}
 
