@@ -26,6 +26,15 @@ Template.course_edit.checked = function(id, cats) {
 		return (id in cats) ? 'checked' : ''
 	}
 }
+Template.course_edit.show_subcats = function(id, cats) {
+	if (cats === undefined) return;
+	if (cats.length) {
+		return cats.indexOf(id) >= 0 ? 'block' : 'none'
+	} else {
+		return (id in cats) ? 'block' : 'none'
+	}
+}
+
 
 // to be put on server ...........
 
@@ -64,5 +73,36 @@ Template.course_edit.events({
 
 	'click input.cancel': function() {
 		Session.set("isEditing", false);
+	},
+	
+	'click #show_categories_to_edit': function(event){
+	    $('#show_categories_to_edit').toggle();	    
+	    $('#edit_categories').toggle();
+	},
+	
+	'change .checkbox': function(){
+	    //$('#' + event.currentTarget.id +" .subcategories").toggle();
+	    $('#cat_' + this._id +" .subcategories").toggle();
+	    
+	    // todo: deselect all children
+	    var is_checked = $('#cat_' + this._id +" .checkbox").first().prop('checked');
+	    if(!is_checked)
+	        $('#cat_' + this._id +" .checkbox_sub").prop('checked', false);
+
+	    
+
+	},
+	
+	'change .checkbox_sub': function(event){
+	    
+	    //$('#' + event.currentTarget.id).parent().parent().parent().parent().find(".checkbox").prop('checked', false);
+	    
+
+	    // check parent
+	    
+	    //$('.myCheckbox').prop('checked', true);
+	    //$('.myCheckbox').prop('checked', false);
 	}
 });
+
+
