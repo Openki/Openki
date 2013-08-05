@@ -19,10 +19,6 @@ get_courselist=function(listparameters){
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-
-
-
-
 /* ------------------------- List types / Templates ------------------------- */
 
 
