@@ -9,8 +9,11 @@
 				
      <div id='editform_categories'>  
      
+         
          <div id="show_categories_to_edit">
-            Edit {{>show_categories}}
+            Edit {{#if categories}}{{>show_categories}}{{/if}}
+            {{#unless categories}}Categories{{/unless}}
+
          </div>
          
          <div id="edit_categories" style="display:none;">

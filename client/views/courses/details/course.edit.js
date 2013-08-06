@@ -26,6 +26,8 @@ Template.course_edit.checked = function(id, cats) {
 		return (id in cats) ? 'checked' : ''
 	}
 }
+
+
 Template.course_edit.show_subcats = function(id, cats) {
 	if (cats === undefined) return;
 	if (cats.length) {
@@ -89,19 +91,6 @@ Template.course_edit.events({
 	    if(!is_checked)
 	        $('#cat_' + this._id +" .checkbox_sub").prop('checked', false);
 
-	    
-
-	},
-	
-	'change .checkbox_sub': function(event){
-	    
-	    //$('#' + event.currentTarget.id).parent().parent().parent().parent().find(".checkbox").prop('checked', false);
-	    
-
-	    // check parent
-	    
-	    //$('.myCheckbox').prop('checked', true);
-	    //$('.myCheckbox').prop('checked', false);
 	}
 });
 

@@ -298,15 +298,19 @@ padding: 20px 0 0 0;
 }
 
 #show_categories_to_edit ul{
-    padding: 0 0 20px 0;
+    padding: 0 0 0 0;
     margin: 0 0 20px 0;
 }
 
-#show_categories_to_edit li{
+#show_categories_to_edit{
     float:left;
-    font-size:0.8em;
+    font-size:1em;
     cursor: pointer;
     text-decoration: underline;
+    padding-bottom: 20px;
+}
+#show_categories_to_edit li{
+    font-size:0.8em;
 }
 
 
