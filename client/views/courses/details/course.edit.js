@@ -29,7 +29,7 @@ Template.course_edit.checked = function(id, cats) {
 
 
 Template.course_edit.show_subcats = function(id, cats) {
-	if (cats === undefined) return;
+	if (cats === undefined) return 'none';
 	if (cats.length) {
 		return cats.indexOf(id) >= 0 ? 'block' : 'none'
 	} else {
