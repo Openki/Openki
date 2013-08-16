@@ -27,13 +27,15 @@
 </body>
 
 <template name="mainmenu">
-  <span><a href="/">Home</a>  </span>
-  <span><a href="/courselist/">Kurse</a>  </span>
-  <span><a href="/locations/">Räume</a>  </span>
-  <span><a href="/categorylist/">Kategorien</a>  </span>
+  <span><a href="/">Search</a>  </span>
+  <span><a href="/courselist/">Courses</a>  </span>
+  <span><a href="/locations/">Rooms</a>  </span>
+  <span><a href="/categorylist/">Categories</a>  </span>
+  <span><a href="/calendar/">Calendar</a>  </span>
+  <span><a href="/CreateCourse/">CreateCourse</a>  </span>
   <span><a href="/page/about">About</a>  </span>
   <span><a href="/page/FAQ">FAQ</a>  </span>
-  <span><a href="/profile/">Mein Profil</a>  </span>
+  <span><a href="/profile/">My Profile</a>  </span>
 </template>
 
 
@@ -75,6 +77,14 @@
 
     {{#route_is "categorylist"}}
       {{> categorylist}}
+    {{/route_is}}
+
+    {{#route_is "calendar"}}
+      {{> calendar}}
+    {{/route_is}}
+
+    {{#route_is "createcourse"}}
+      {{> createcourse}}
     {{/route_is}}
 
     {{#route_is "about"}}

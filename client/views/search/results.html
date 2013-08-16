@@ -1,6 +1,6 @@
 
 <template name="search_results">
-		{{#unless results.count}}<a class="propose_course" href="CourseCreate">Propose it</a>{{/unless}}
+		{{#unless results.count}}<a class="propose_course" href="createcourse/">Propose it</a>{{/unless}}
 	<div>
 	{{#if coursesLoaded}}
 	    {{results.count}} found!
