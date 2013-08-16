@@ -290,8 +290,29 @@ clear: left;
 
 .course_edit ul {
 	list-style-type: none;
-	display: block
+	display: block;
 }
+
+#editform_categories{
+padding: 20px 0 0 0;
+}
+
+#show_categories_to_edit ul{
+    padding: 0 0 0 0;
+    margin: 0 0 20px 0;
+}
+
+#show_categories_to_edit{
+    float:left;
+    font-size:1em;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-bottom: 20px;
+}
+#show_categories_to_edit li{
+    font-size:0.8em;
+}
+
 
 div.participants {
 	background-color: #EEE;
