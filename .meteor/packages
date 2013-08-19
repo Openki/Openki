@@ -11,3 +11,6 @@ accounts-ui
 accounts-base
 email
 spiderable
+standard-app-packages
+# underscore-string
+# Mesosphere
