@@ -1,35 +1,33 @@
 hmmm
 ====
 
-Course-Organization-Platform built with [Meteor.js](http://meteor.com)
+Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
 - Concept description: [news.schuel.ch](news.schuel.ch "our blog")
 - Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
 - Contact: [schueldev_ät_lists.xiala.net](mailto:schueldev_ät_lists.xiala.net "write us")
 
 ### Features
-- Voting system / fix-a-date schedule
-- Dicussion board
-- Hierarcical categories
-- Simple chat
-- Live search
-- Regions
-- Expandable participant roles
+- Voting/polling system, fix-a-date schedule
+- Discussion-board
+- Tags, categories and sub-categories
+- Fulltext-search with realtime-output
+- Regions- and room-system
+- Extendable participant roles
 
-### Coming sooner or later
+### Coming soon
 - Email notification
-- Progressindicator
+- Calendar
 - Privat messages
-- Privacy/security
+- Privacy and Security
 - File upload
 
 ### Installaion
-- Install [Meteor](http://meteor.com)
-    - ` curl https://install.meteor.com | sh`
-- Download or clone Hmmm into /some/path
+- Install Meteor: `curl https://install.meteor.com | sh`
+- [Download and unzip](https://github.com/schuel/hmmm/archive/master.zip) or clone Hmmm into /some/path
 - `cd /some/path`
 - Run `meteor`
 - Browse to http://localhost:3000/
 
 ### License
-- Not clear yet, WTFPL
+- Not clear yet. AGPL maybe. for the moment it is [WTFPL](http://www.wtfpl.net)
