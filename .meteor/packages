@@ -8,5 +8,9 @@ random
 accounts-password
 backbone
 accounts-ui
-autopublish
 accounts-base
+email
+spiderable
+standard-app-packages
+# underscore-string
+# Mesosphere

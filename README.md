@@ -1,31 +1,33 @@
 hmmm
 ====
 
-Course-Organization-Platform built with [Meteor.js](http://meteor.com) 
+Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
-- Concept description: [news.schuel.ch](news.schuel.ch)
-- Demo: [hmmm.schuel.ch](hmmm.schuel.ch)
-- Contact: schueldev_ät_lists.xiala.net
+- Concept description: [news.schuel.ch](news.schuel.ch "our blog")
+- Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
+- Contact: [schueldev_ät_lists.xiala.net](mailto:schueldev_ät_lists.xiala.net "write us")
 
-# Features
-- voting system
-- dicussion board
-- hierarcical categories
-- simple chat
+### Features
+- Voting/polling system, fix-a-date schedule
+- Discussion-board
+- Tags, categories and sub-categories
+- Fulltext-search with realtime-output
+- Regions- and room-system
+- Extendable participant roles
 
-# Coming sooner or later
-- email notification
-- advanced search autocompletion 
-- privat messages
+### Coming soon
+- Email notification
+- Calendar
+- Privat messages
+- Privacy and Security
+- File upload
 
-# Installation
-- Install [Meteor](http://meteor.com) and components
-- '$ curl https://install.meteor.com | sh'
-- '$ sudo apt-get install npm nodejs'
-- '$ sudo npm install -g n'
-- '$ sudo n 0.10.12'
-- '$ sudo npm install -g meteorite'
-- Download or clone Hmmm into /some/path
-- cd /some/path
-- Run `mrt`
-Browse to http://localhost:3000/
+### Installaion
+- Install Meteor: `curl https://install.meteor.com | sh`
+- [Download and unzip](https://github.com/schuel/hmmm/archive/master.zip) or clone Hmmm into /some/path
+- `cd /some/path`
+- Run `meteor`
+- Browse to http://localhost:3000/
+
+### License
+- Not clear yet. AGPL maybe. for the moment it is [WTFPL](http://www.wtfpl.net)

@@ -1,7 +1,8 @@
 /***** BODY ******/
 
+
 body {
-    background-color: #FFF;
+    background-color: #f6f6f6;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
     margin: 0px 0 50px 0;
@@ -11,57 +12,77 @@ body {
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
-
+/*
+    background-image: url('/AchtungTestseite_01.gif');
+    background-position: -20px -20px;
+*/
+}
+    /*
     background-image: url(http://news.schuel.ch/wp-content/uploads/2013/07/AchtungTestseite_01.gif);
-    
-    /*background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
+    background-image: url(http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif);
     */
 
-}
+b{font-weight: bold}
 
 div{
 
-margin-top: 35px;
 }
- 
+
 p{
-margin: 15px;	
+margin: 0;
+}
+.static_content_top {
+    clear: none;
+    position: relative;
+    top: 0px;
+    font-size: 0.95em;
+}
+.static_content {
+    clear: none;
+    position: relative;
+    left: 160px;
+    top: -20px;
+    width: 35em;
+    font-size: 0.95em;
+    /*  font-family: Arial,Helvetica,sans-serif; */
+  }
+.dev_doku {
+    width: 200%;
+    height: 390px;
+    border: 5px gray dashed;
 }
 
 #container{
-    background-color:rgba(255, 255, 255, 0.95);
     position:absolute;
-    top:0px;
-    left: 30px;
-    right: 30px;
-    bottom:50px;
-
+    top: 0px;
 }
 
 #outer {
-    width: 1020px;
     /*margin: 0 auto;  */
-    padding-left: 20px;   
+}
+
+#maincontent{
+    margin-left: 50px;
+    margin-top: 70px;
+}
+
+
+/***** HEADER BAR ******/
+#header_bar{
+    background-color: #38829c;
+    height: 50px;
+    position: fixed;
+    z-index:100;
+    min-width: 850px;
 }
 
 /***** LOGIN ******/
 
-#login {
-    position: absolute;
-    right: 2px;
-    top: 5px;
-}
-
-#login_info {
-	position: absolute;
-	top: -35px;
-	left: 0px;
-	right: 0px;
-	width:100%;
-	height: 25px;
-	padding:5px;
-	background-color:black;
-	color: #fff;
+ #login {
+    margin-right: 50px;
+    padding-top: 5px;
+    float:right;
+	color: #DDD;
 }
 #form_login {
     float:left;
@@ -70,14 +91,21 @@ margin: 15px;
     float:left;
 }
 
+#outer{
+    position: relative;
+    margin-top: 50px;
+}
+
+#ticker{
+    height:20px;
+}
+
 /***** MAIN MENU ******/
 
 #mainmenu {
-	position:relative;
-	top: 30px;
-	left:22px;
-	height:30px;
-	background-color:#fff;
+    padding-top: 5px;
+    padding-left: 50px;
+    float:left;
 	text-transform: uppercase;
 }
 
@@ -86,7 +114,7 @@ margin: 15px;
 }
 
 #mainmenu span a, a:visited {
-	color:green;
+	color:#f6f6f6;
 	text-decoration:none;
 	font-weight:bold;
 }
@@ -101,20 +129,27 @@ margin: 15px;
 
 .courselist{
     float: left;
-    width: 650px;
 }
 
 
 .courselist_course {
+    clear: both;
+    width: 100%;
+    margin: 10px 0;
     cursor: pointer;
     font-size: 1.2em;
-    border-bottom: 1px solid black;
-    margin: 10px 0;
+  //border-bottom: 1px solid black;
+    background-color: #E3E3E3;
+    overflow: auto;
+    padding: 5px;
 }
 
 
-.courselist_course .name {
-	margin: 5px 0;
+.courselist_course .course_name {
+
+    width: 150px;
+    display:block;
+    float: left;
 }
 
 .courselist_course p.smalldesc{
@@ -145,38 +180,70 @@ margin:0 0 8px 0;
 	font-size: 15px;
     font-weight: bold;
     float: right;
+    //width: 150px;
+    margin-top: 3px;
 }
+
 .courselist_course .course_status span{
-    padding: 0 6px;
+  padding: 0 5px;
+ //border-right: 1px solid black;
 }
 
-.courselist_course  .ok{
-    	    color: green;
-    }  
 
+.courselist_course  .yes{
+            color:#407d5c;
+    	    background-color: #C1F2AE;
+    }
 
-.courselist_course .notyet{
-    	    color: red;
-    }  
+.courselist_course .ontheway{
+            color: #CF6700;
+              background-color: #FDBA76;
+    }
 
+.courselist_course .no{
+        color: #751313;
+    	background-color: #EC6D6D;
+    }
+
+.courselist_course .notexisting{
+        display: none;
+     }
 
 .courselist_course:hover {
     font-weight: bold;
 }
 
+.coursepage{
+    clear: left;
+    margin-top: 50px;
+}
+
 
 .list_small{
     float: left;
+    margin-bottom: 50px;
+    margin: 0 40px 0 0;
+    width: 320px;
 }
 
 .list_small .smalldesc{
 display:none;
 }
 
-.list_small .courselist{
+.courselist_results {
+	margin-top: 50px;
+}
 
-    width: 450px;
-    margin: 0 40px 0 0;
+
+.courselist_results .courselist_course{
+float: left;
+width: 300px;
+clear: none;
+margin: 0 12px 12px 0;
+}
+
+.courselist_results .course_name{
+    width: 150px !important;
 }
 
 
@@ -185,7 +252,7 @@ display:none;
 
 
 .create_course{
-clear: left;    
+clear: left;
 }
 
 
@@ -205,49 +272,79 @@ clear: left;
 
 #coursedetails .small {
     font-size: 11px;
-    color: grey;
+    color: gray;
 }
-
-
-
-
 
 #coursedetails .course_main {
-background-color: #EEE;
-padding: 15px;
-margin: 50px 0 20px 0;
+	background-color: #EEE;
+	padding: 1em;
+	margin: 50px 0 20px 0;
+}
+
+.course_edit {
+	clear: both;
+	background-color: #CCDDDF;
+	padding: 15px;
+	margin: 50px 0 20px 0;
+}
+
+.course_edit ul {
+	list-style-type: none;
+	display: block;
+}
+
+#editform_categories{
+padding: 20px 0 0 0;
+}
+
+#show_categories_to_edit ul{
+    padding: 0 0 0 0;
+    margin: 0 0 20px 0;
+}
+
+#show_categories_to_edit{
+    float:left;
+    font-size:1em;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-bottom: 20px;
+}
+#show_categories_to_edit li{
+    font-size:0.8em;
 }
 
 
-
-
-#coursedetails .course_edit {
-background-color: #CCFFFF;
-padding: 15px;
-margin: 50px 0 20px 0;
-}
-
-
-#coursedetails .participators {
-background-color: #EEE;
-padding: 15px;
-margin: 20px 0 20px 0;
-}
-
-#coursedetails .participators p{
-    padding-bottom: 5px;
-    border-bottom: 1px solid grey;
+div.participants {
+	background-color: #EEE;
+	padding: 1em;
+	margin: 1em 0;
 
 }
 
-#coursedetails .participators span input{
-    float: right;
-
+div.roleDetails {
+	margin: 1em;
+	padding: 1em;
+	background-color: #DDD;
 }
+
+div.roleDetails ul {
+	list-style: none;
+	display: inline;
+	padding: 0;
+}
+
+div.roleDetails li {
+	display: inline;
+	padding: 0 0.3em;
+	background-color: #BFB;
+	margin: 0 0.3em;
+}
+
+
 
 #coursedetails .usernames{
     font-size: 12px;
-    color: grey;
+    color: gray;
      list-style-type: none;
      display: inline;
 }
@@ -263,15 +360,15 @@ margin: 20px 0 20px 0;
 
      display: block;
     }
-    
+
 #coursedetails .subscribers_count .notyet{
 
             color: red;
-    }  
+    }
 #coursedetails .subscribers_count .ok{
 
             color: green;
-    }  
+    }
 
 
 /****** CATEGORY LIST ******/
@@ -285,17 +382,35 @@ margin: 20px 0 20px 0;
 
 
 .categorylist .name {
-    margin: 15px 0;
+    margin: 2px 0;
     font-weight: normal;
     color: #333;
 }
 
-.categorylist p.smalldesc{
-    margin:5px 10px 0 0;
-    font-size: 14px;
-    font-weight: bold;
+.smalldesc{
+    margin: 5px 30px 10px 10px;
+    font-size: 10px;
+    font-weight: normal;
     cursor: pointer;
     color: #000;
+    display: block;
+    clear:left;
+}
+.smalldesc_no_course{
+    margin: -10px 0px 0 -10px;
+    font-size: 10px;
+    font-weight: normal;
+    color: #666;
+    display: block;
+    clear:left;
+}
+.no_courses_cat{
+    margin:5px -20px 0 0;
+    font-weight: normal;
+    cursor: pointer;
+    color: #999 !important;
+    display: block;
+    clear:left;
 }
 
 
@@ -313,12 +428,12 @@ width: 200px;
 
 .locationlist_location .description{
 font-size: 12px;
-color: grey;
+color: gray;
 }
 
 .locationlist_location .name{
 font-size: 15px;
-color: grey;
+color: gray;
 }
 
 
@@ -346,7 +461,7 @@ color: orange;
         border-collapse: separate;
         border-spacing: 2px 2px;
       }
-      
+
 #votelists tr.is_current{
 	background-color: #99FF99;
 	cursor: pointer;
@@ -374,7 +489,7 @@ color: orange;
 
 
 #add_vote_form *p{
-border: none;	
+border: none;
 	background-color: #EEE
 }
 
@@ -382,6 +497,9 @@ border: none;
 
 /****** OTHER ELEMENTS ******/
 
+h1{
+color: #38829c;
+}
 
 h2{
 	margin: 0;
@@ -403,7 +521,7 @@ form th{
     font-size: 2em;
 }
 
-.details .descr {http://www.changethethought.com/wp-content/tumblr_lad3eouzez1qzt4vjo1_500.gif
+.details .descr {
     font-size: 1em;
 
 }
@@ -411,6 +529,11 @@ form th{
 .descr{
 
 font-size: 18px ;
+}
+
+.descr_small{
+    font-size: 0.75em;
+    color: gray;
 }
 
 .none {
@@ -467,7 +590,7 @@ th{
     margin-left:30px;
 }
 .popup{
-    border:0px solid grey;
+    border:0px solid gray;
     border-radius: 5px;
     z-index: 1;
     position: fixed;
@@ -475,4 +598,96 @@ th{
     left:300px;
     background-color: rgba(255, 255, 255, 0.75);
     padding:10px;
+}
+
+
+.categorylist {
+	list-style-type: none;
+	display: inline;
+	border: none;
+	padding: 0;
+}
+
+.categorylist li {
+	display: inline;
+}
+
+.categorylist li:after {
+	content: ', '
+}
+.categorylist li:last-child:after {
+	content: ''
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold; }
+    a:link, a:visited, a:active {
+    color: #a4a9ab; }
+    a:hover {
+    color: #f36c3d; }
+
+.dropdown {
+  position: relative;
+  float: left}
+
+.dropdown > a:after {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    margin-left: 4px;
+    font-size: 8px; }
+.dropdown .dropdown-menu {
+    display: none;
+    top: 10px;
+    left: 10px;
+    position: absolute;
+    padding-top: 20px; }
+.dropdown .dropdown-menu ul {
+      color: #gray;
+      background: white;
+      padding: 10px;
+      width: 140px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
+.dropdown .dropdown-menu ul li a {
+        color: #black;
+        font-size: 14px; }
+.dropdown:hover .dropdown-menu {
+    display: block; }
+
+.searchform{
+    font-size: 200%;
+}
+
+.search{
+    margin-top: 15px;
+    text-align: bottom;
+}
+.search_result{
+    font-size: 130%;
+}
+.propose_course{
+    font-size: 130%;
+}
+ul.categories {
+    columns: 2;
+}
+.categories li {
+    clear: left;
+}
+.subcategories{
+    font-size: 65%;
+    color: #333333;
+}
+.subcategories li {
+    float: left;
+    clear: none;
+    padding-left: 1em;
 }

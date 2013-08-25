@@ -5,7 +5,7 @@ Meteor.startup(function () {
  createCoursesIfNone();
 });
 
- 
+
 Meteor.methods({
     insert_userdata: function(username, email, password){
         Accounts.createUser({username:username, email:email, password:password});
@@ -27,82 +27,84 @@ Meteor.methods({
 });
 
 
-/*
-Meteor.publish("directory", function () {
-  return Meteor.users.find({}, {fields: {emails: 1, profile: 1}});
-});
+// Create Categories if not all anymore
 
-Meteor.publish("parties", function () {
-  return Parties.find(
-    {$or: [{"public": true}, {invited: this.userId}, {owner: this.userId}]});
-});
+function createCategoriesIfNone() {
+	if (Categories.find().count() === 0) {
+		_.each(categories, function(category){
+			Categories.insert(category)
+		})
+	}
+}
 
-
-
-Meteor.publish("Subscriptions", function(){
-return Subscriptions.find({});		
-});
-*/
+// erstelle neue Kurse, wenns keine in der DB hat
 
 function createCoursesIfNone(){
-    // erstelle neue Kurse, wenns keine in der DB hat
  if (Courses.find().count() === 0) {
         createCourses();
   }
 }
 
-function createCategoriesIfNone(){
-    // das gleiche für Kategorien
- if (Categories.find().count() === 0) {
-        createCategories();
-  }
+
+/* TESTING: Get user object for name and create it if it doesn't exist */
+function ensureUser(name) {
+		var user_prototype = {username: name}
+		var user
+		while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
+			Accounts.createUser({username: name, email: (name+"@schuel.example").toLowerCase(), password: name});
+		}
+        return user;
 }
 
-
-function createCategories() {
-    var names = ["Nerdy Courses",
-        "Tesla Shit",
-        "Walter",
-        "Standard"];
-    
-    for (var i = 0; i < names.length; i++)
-        Categories.insert({name: names[i]});
+/* TESTING: Get category object for name and create it if it doesn't exist */
+function ensureCategory(name) {
+		var category_prototype = {name: name}
+		var category
+		while (!(category = Categories.findOne(category_prototype))) { // Legit
+			Categories.insert(category_prototype)
+		}
+        return category;
 }
 
-function get_category_id(index) {
-        var category_by_name = Categories.find().fetch();
-        return category_by_name[index]._id;
-    }
 
 function createCourses(){
-    // erstelle ein String-Array f�r die Namen der Kurse
-    var names = ["ASZ Geek-Noob-Nerd Treffen",
-                 "Deutschkurs",
-                 "Photoshop für Fortgeschrittene",
-                 "Onanie",
-                 "Nikola Tesla - Ein Leben in Einsamkeit",
-                 "Unbenannter Kurs"];
 
-    //erstelle ein String-Array f�r die Kursbeschreibungen
-    var description = ["ein treffen für alle die sich für technologie und so interessieren",
-                 "German: Ja, Nein, Vielleicht, Gut gut.",
-                 "How to put the Bling-Effect.",
-                 "DIY or DIE!",
-                 "Wir werden einen Text über Nikola Teslas Kindheit lesen, anhand dessen wir sein Werk in in einen Historischen Kontext zu stellen versuchen.",
-                 "Bitte hier Kursbeschreibung eintragen"];
-    
-    
+	/* Make a number that looks like a human chose it, favouring 2 and 5 */
+	function humandistrib() {
+		var factors = [0,0,1,2,2,3,5,5]
+		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
+	}
 
-    var categories = [get_category_id(0),
-                get_category_id(2),
-                get_category_id(0),
-                get_category_id(0),
-                get_category_id(1),
-                get_category_id(2)]; 
+	_.each(testcourses, function(course) {
+		if (!course.createdby) return; // Don't create courses that don't have an creator name
 
-    // erstelle so viele Kurse, wie der Namens-Array lang ist
-    for (var i = 0; i < names.length; i++)
-      Courses.insert({name: names[i], createdby: "ov8zqBLipEQma5DLy", time_created: 1372810780636, time_changed: 1372810780636, categories: categories[i], description: description[i], score: Math.floor(Random.fraction()*10)*5, subscribers_min: 2, subscribers_max: 8, subscribers:[]});
+		// allways use same id for same course to avoid broken urls while testing
+		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+		m5.update(course.name);
+		m5.update(course.description);
+		course._id = m5.digest('hex').substring(0, 8)
+
+		for (var i=0; course.categories && i < course.categories.length; i++) {
+			course.categories[i] = ensureCategory(course.categories[i])._id
+		}
+
+		if (course.roles === undefined) course.roles = {}
+		_.each(course.roles, function(role) {
+			_.each(role.subscribed, function(subscriber, i) {
+				role.subscribed[i] = ensureUser(subscriber)._id
+			})
+		})
+
+		course.createdby = ensureUser(course.createdby)._id
+		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
+		course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
+		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
+		var age = Math.floor(Random.fraction()*80000000000)
+		course.time_created = new Date(new Date().getTime()-age)
+		course.time_lastedit = new Date(new Date().getTime()-age*0.25)
+		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
+		Courses.insert(course)
+	})
 }
 
 

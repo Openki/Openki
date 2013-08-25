@@ -1,43 +1,47 @@
 <template name="locationlist">
-<h1>Räume</h1>
- Öffentlich sichtbare Räume 
- <div class="locationlist">
+<h1>Rooms</h1>
+    publically visible locations
+    <div class="locationlist">
+        {{#each locations}}
+            {{> location}}
+        {{else}}
+            no locations
+        {{/each}}
 
-    {{#each locations}}
-      {{> location}}
-    {{else}}
-         keine Räume
-    {{/each}}
-         
-    {{> location_create}}
-    
-  </div>
+        {{> location_create}}
+    </div>
 </template>
 
+<!--
+<template name="locationdetails">  //locationedit -> put in new file location-edit
+    <h1>Room details</h1>
 
-<template name="locationdetails">
-<h1>Raumdetails</h1>
+routing to /locations/location-id/LocationName  oder so
+better  to /room/location-id/LocationName/edit/  or so
+
+add other user to host in this location:
+
+{search user}->{add user} ?
 
 </template>
+-->
 
-  
 <template name="location">
-  <div class="locationlist_location">
-    <p class="name">{{name}} </p>
-    <p class="description">{{description}} </p>
-    
-    {{#if ismylocation "==" "true"}}
-    <p class="mylocation">Mein Raum!</p>
-    <input type="button" class="edit_location" value="editieren">
-    {{/if}}
-    
+    <div class="locationlist_location">
+        <p class="name">{{name}} </p>
+        <p class="description">{{description}} </p>
+
+        {{#if ismylocation}}
+        <p class="mylocation">You can host here</p>
+        <input type="button" class="edit_location" value="editieren">
+        {{/if}}
     </div>
 </template>
 
 <template name="location_create">
     <div class="location_create">
     <form>
-    <h3>Eigenen Raum hinzufügen</h3>
+    <h3>Add a own location</h3>
     <table>
         <tr>
             <th>Name: </th><td><input type="text" id="addlocation_name"/> </td>
@@ -46,7 +50,8 @@
             <th>Description: </th><td><textarea cols="30" rows="4" id="addlocation_description"></textarea> </td>
         </tr>
         <tr>
-            <th>Öffentlich sichtbar: </th><td><input type="checkbox" id="addlocation_public" checked></textarea> </td>
+            <th>Visible in list: </th><td><input type="checkbox" id="addlocation_public" checked></textarea> (I want to be contactable, </br>so that other users can ask me </br>if I want to be host for their event)</td></br>
+            <th>Public Space: </th><td><input type="checkbox" id="addlocation_public-space" checked></textarea> (everybody will be allowed </br>to host here)</td>
         </tr>
         <tr>
             <th></th><td><input type="button" class="add" value="Add new" /> </td>

@@ -1,6 +1,9 @@
 // ======== DB-Model: ========
 // "_id" -> ID
 // "name" -> string
+// future:
+// "Parent" -> ID
+// "name_de" "name_en" 	etc
 // ===========================
 
 

@@ -1,33 +1,41 @@
 <head>
-  <title>Course Board (restructured)</title>
+  <title>Hmmm - CourseOrganisationPlatform</title>
 </head>
 
 <body>
   <div id="container">
-    <div id="login_info">
-      {{> login_info}}
+    <div id="header_bar">
+      <div id="ticker">
+        {{> ticker}}
+      </div>
+      <div id="login">
+      {{loginButtons align="right"}}
+      </div>
+      <div id="mainmenu">
+        {{> mainmenu}}
+      </div>
+      <div id="region_sel">
+        {{> region_sel}}
+      </div>
     </div>
-    <div id="mainmenu">
-      {{> mainmenu}}
-    </div>
+
+
     <div id="outer">
       {{> maincontent}}
-    </div>
-    <div id="login">            
-      {{loginButtons align="right"}} 
     </div>
   </div>
 </body>
 
 <template name="mainmenu">
-	<span><a href="/">Home</a>  </span>
-	<span><a href="/courselist/">Kursliste</a>  </span>
-	<span><a href="/locations/">Räume</a>  </span>
-  <span><a href="/categorylist/">Kategorien</a>  </span>
-	<span><a href="/page/warum">Warum</a>  </span>      
-	<span><a href="/page/darum">Darum</a>  </span>
-	<span><a href="/page/links">Funny Links</a>  </span>
-	<span><a href="/profile/">Mein Profil</a>  </span>
+  <span><a href="/">Search</a>  </span>
+  <span><a href="/courselist/">Courses</a>  </span>
+  <span><a href="/locations/">Rooms</a>  </span>
+  <span><a href="/categorylist/">Categories</a>  </span>
+  <span><a href="/calendar/">Calendar</a>  </span>
+  <span><a href="/CreateCourse/">CreateCourse</a>  </span>
+  <span><a href="/page/about">About</a>  </span>
+  <span><a href="/page/FAQ">FAQ</a>  </span>
+  <span><a href="/profile/">My Profile</a>  </span>
 </template>
 
 
@@ -36,66 +44,89 @@
 <!--
   eigentlich kann man route is wegnehmen und einmal methode aufrufen
   anstatt jede methode hier unten nacheinander durchzuführen
-  felix erklährts
+  felix erklärts
   -->
-  
+
+
+
     {{#route_is "home"}}
-        {{> home}}
+        {{> start}}
     {{/route_is}}
 
     {{#route_is "courselist"}}
-    	{{> coursepage}}
+      {{> home}}
+    {{/route_is}}
+
+    {{#route_is "courselist"}}
+      {{> coursepage}}
     {{/route_is}}
 
     {{#route_is "coursedetails"}}
-    	{{> coursedetails}}
+      {{#with loadcourse}}{{! This is so wrong, do you know how to do it right? }}
+		{{> coursedetails}}
+      {{/with}}
     {{/route_is}}
 
     {{#route_is "locationlist"}}
-    	{{> locationlist}}
+      {{> locationlist}}   {{! Nei, also ich weiss au noed wie mes choenti besser mache}}
     {{/route_is}}
 
     {{#route_is "locationdetails"}}
-    	{{> locationdetails}}
+      {{> locationdetails}}
     {{/route_is}}
 
     {{#route_is "categorylist"}}
       {{> categorylist}}
     {{/route_is}}
 
+    {{#route_is "calendar"}}
+      {{> calendar}}
+    {{/route_is}}
+
+    {{#route_is "createcourse"}}
+      {{> createcourse}}
+    {{/route_is}}
+
     {{#route_is "about"}}
-             aboutttt
+      {{> about}}
     {{/route_is}}
 
-    {{#route_is "warum"}}
-             waruum
+    {{#route_is "FAQ"}}
+      {{> FAQ}}
     {{/route_is}}
-
-    {{#route_is "darum"}}
-             daruum
-    {{/route_is}}
-
-
-    {{#route_is "links"}}
-             yaaaah
-    {{/route_is}}
-
 
     {{#route_is "profile"}}
-    	{{> profile}}
+      {{> profile}}
     {{/route_is}}
+
+
+
   </div>
 </template>
-  
 
-<!-- // folgendes gehört zum home eigenes file... -->
+<template name="region_sel">
 
-
-<template name="home">
-  <h1>Hoi zäme</h1>
-  <div class="list_small"><h3>Kurse ohne Organisatoren</h3>
-    {{> courselist missing_organisator}}</div>
-  <div class="list_small"><h3>Kurse, die noch auf Teilnehmer warten</h3>
-    {{> courselist missing_subscribers}}</div>
+      <div class="dropdown">
+        <a class="regions" href="/">Region:</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/region/{{_id}}">All regions</a></li>
+            {{# each regions}}
+              <li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
+            {{/each}}
+          </ul>
+          </div>
+          {{region}}▼
+      </div>
 </template>
 
+<!-- ///////////// Demo-Page-Ticker ///////////// -->
+
+<template name="ticker">
+<marquee  bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
+Achtung: Dies ist nur eine <b>Testseite</b>. <span style = "padding-left:10em"> </span>
+alle Daten werden regelmässig gelöscht.  <span style = "padding-left:30em"> </span>
+This is only a <b>Testpage</b>. <span style = "padding-left:10em"> </span>
+All data will be erased regularly. <span style = "padding-left:10em"> </span>
+</marquee>
+</template>

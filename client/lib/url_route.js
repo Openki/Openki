@@ -1,7 +1,6 @@
 var URLliste = Backbone.Router.extend({
 		// URLS auslesen ---------
 		routes: {
-			"": "home",
 			
 			"page/:page_id": "pages",
 			
@@ -15,8 +14,9 @@ var URLliste = Backbone.Router.extend({
 			"course/:course_id": "coursedetails",
 			"course/:course_id/:course_title": "coursedetails",
 
-			"profile/": "profile"
+			"profile/": "profile",
 			
+			"": "home"
 			},
 		
 
@@ -65,7 +65,7 @@ var URLliste = Backbone.Router.extend({
 		
 		// URLS setzen ---------
 		setCourse: function (course_id,course_title) {
-		  	this.navigate("course/"+course_id+"/"+course_title.replace(/ /g,"_"), true);
+		  	this.navigate("course/"+course_id+"/"+course_title.replace(/ /g,"_").replace("/","_"), true);
 		}
 });
 
