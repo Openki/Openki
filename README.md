@@ -3,12 +3,12 @@ hmmm
 
 Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
-- Concept description: [news.schuel.ch](news.schuel.ch "our blog")
+- Concept: [news.schuel.ch](news.schuel.ch "our blog")
 - Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
-- Contact: [schueldev_ät_lists.xiala.net](mailto:schueldev_ät_lists.xiala.net "write us")
+- Contact: [schueldev[ät]lists.xiala.net](mailto:schueldev[ät]lists.xiala.net "write us")
 
 ### Features
-- Voting/polling system, fix-a-date schedule
+- Voting-/polling-system, fix-a-date schedules
 - Discussion-board
 - Tags, categories and sub-categories
 - Fulltext-search with realtime-output
