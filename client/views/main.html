@@ -9,10 +9,20 @@
         {{> ticker}}
       </div>
       <div id="login">
+      <span><a href="/profile/">My Profile</a>  </span>
       {{loginButtons align="right"}}
+      </div>
+      <div id="search">
+        {{> search_menue}}
+      </div>
+      <div id="create">
+        {{> create_menue}}
       </div>
       <div id="mainmenu">
         {{> mainmenu}}
+      </div>
+      <div id="about">
+        {{> about_menue}}
       </div>
       <div id="region_sel">
         {{> region_sel}}
@@ -27,15 +37,14 @@
 </body>
 
 <template name="mainmenu">
-  <span><a href="/">Search</a>  </span>
-  <span><a href="/courselist/">Courses</a>  </span>
-  <span><a href="/locations/">Rooms</a>  </span>
-  <span><a href="/categorylist/">Categories</a>  </span>
-  <span><a href="/calendar/">Calendar</a>  </span>
-  <span><a href="/CreateCourse/">CreateCourse</a>  </span>
-  <span><a href="/page/about">About</a>  </span>
-  <span><a href="/page/FAQ">FAQ</a>  </span>
-  <span><a href="/profile/">My Profile</a>  </span>
+<!--   <span><a href="/">Search</a>  </span>  -->
+<!--   <span><a href="/courselist/">(Course-List)</a>  </span>  -->
+<!--   <span><a href="/locations/">Rooms</a>  </span>  -->
+<!--   <span><a href="/categorylist/">Categories</a>  </span>  -->
+<!--   <span><a href="/calendar/">Calendar</a>  </span>  -->
+<!--   <span><a href="/CreateCourse/">Create New Course</a>  </span> -->
+<!--   <span><a href="/page/about">About</a>  </span> -->
+<!--   <span><a href="/page/FAQ">FAQ</a>  </span> -->
 </template>
 
 
@@ -105,6 +114,55 @@
 
   </div>
 </template>
+
+
+<template name="search_menue">
+      <div class="dropdown">
+        <a id="mainmenue" href="/">Search</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/">Courses</a></li>
+            <li><a class="regionselect" href="/locations/">Rooms</a></li>
+            <li><a class="regionselect" href="/categorylist/">Categories</a></li>
+            <li><a class="regionselect" href="/tags/">(Tags)</a></li>
+            <li><a class="regionselect" href="/calendar/">Calendar</a></li>
+            <li><a class="regionselect" href="/courselist/">Browse list</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+<template name="create_menue">
+      <div class="dropdown">
+        <a id="mainmenue" href="/CreateProposal/">Create Course</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/CreateProposal/">Proposal</a></li>
+            <li><a class="regionselect" href="/CreateCourse/">Arranged one</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+
+
+
+<template name="about_menue">
+      <div class="dropdown">
+        <a class="regions" href="/page/about">about</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/page/about">about</a></li>
+            <li><a class="regionselect" href="/page/FAQ">FAQ</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+
 
 <template name="region_sel">
 

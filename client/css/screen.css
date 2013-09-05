@@ -627,9 +627,29 @@ a {
     a:hover {
     color: #f36c3d; }
 
+
+
+/************ dropdown *************/
 .dropdown {
-  position: relative;
-  float: left}
+    position: relative;
+    padding-top: 5px;
+    padding-left: 50px;
+    float:left;
+    text-transform: uppercase;}
+
+.dropdown span a, {
+    color:#f6f6f6;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.dropdown span a:hover {
+    color:#444;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+
 
 .dropdown > a:after {
     display: inline-block;
@@ -662,6 +682,8 @@ a {
 .dropdown:hover .dropdown-menu {
     display: block; }
 
+
+/***********Search ***********/
 .searchform{
     font-size: 200%;
 }
