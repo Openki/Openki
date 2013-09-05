@@ -17,8 +17,9 @@ var URLliste = Backbone.Router.extend({
 			"profile/": "profile",
 
 			"": "home",
+
 //			"user/": "userprofile",
-//			"user/:user_id": "userprofile",
+			"user/:user_id": "userprofile",
 			"user/:user_id/:user_name": "userprofile"
 			},
 

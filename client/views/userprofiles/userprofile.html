@@ -1,0 +1,19 @@
+<template name="userprofile">
+
+<p>123</p>
+
+  <div id="profile">
+    <h1 class="name">{{username selected_user_ID}}'s Profile</h1>
+
+    {{#unless user_existent}}
+
+      <p>user not existent...</p>
+
+    {{else}}
+    	Message:
+		<p> <input type="text" id="emailmessage" value="Hoi"/></p>
+		<input type="button" class="sendmail" value="Send Email" />
+
+{{/unless}}
+
+</template>
