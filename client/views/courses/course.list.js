@@ -3,6 +3,7 @@
 //querry anpassung
 
 get_courselist=function(listparameters){
+   Session.set("isEditing", false);         //unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
 	if(listparameters.courses_from_userid)
