@@ -19,11 +19,11 @@
     {{else}}
         <p class="descr_small">ID: {{userdata.id}}</p>
         <p class="descr">Username: {{userdata.username}}</p>
-        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span></p>
-
+        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span>
+          {{#unless userdata.veryfiedEmailTrue}}<input type="button" class="verify" value="Verify my Email" />
+          {{/unless}} </p>
 
          <input type="button" class="edit" value="Edit" />
-         <input type="button" class="verify" value="Verify my Email" />
     {{/if}}
 
 <div class="list_small">
