@@ -1,7 +1,5 @@
 <template name="userprofile">
 
-<p>123</p>
-
   <div id="profile">
     <h1 class="name">{{username selected_user_ID}}'s Profile-Page</h1>
 
@@ -10,11 +8,20 @@
       <p>user not existent...</p>
 
     {{else}}
-    	Message:
-		<p> <input type="text" id="emailmessage" value="Hoi"/></p>
-		<input type="button" class="sendmail" value="Send Email" />
+    </br> </br> </br> </br> </br>
+    <p>---------------------------------------------------------</p>
+    <p>you can write an email to this user:</p>
+    </br>
+    	Your message:
+		<p> <input type="text" id="emailmessage" placeholder="Hi {{username selected_user_ID}}! ..."/></p>
 
-		<p>Options: attach my email adresse (var)</p>
+		<p>Options:    <!-- this is a proposition. doesn't work yet -->
+			<form>
+			<input type="checkbox" name="email1" value="send">attach my email adresse<br>
+			<input type="checkbox" name="email2" value="copy">send me a copy of this message<br>
+			</form>
+		</p>
+		<input type="button" class="sendmail" value="Send Email" />
 
 {{/unless}}
 
