@@ -6,11 +6,11 @@ Meteor.methods({
 
 
 
-/*
+
 
 sendEmail = function(to, subject, text, html){
 
-  var from = getSetting('defaultEmail') || 'noreply@example.com'
+  var from = 'hmmm@schuel.ch'
   var siteName = getSetting('title')
   var subject = '['+siteName+'] '+subject
 
@@ -25,7 +25,5 @@ sendEmail = function(to, subject, text, html){
   console.log('sending mail…')
   console.log(email)
 
-  Email.send(email)
+ // Email.send(email)
 };
-
-*/
