@@ -9,7 +9,7 @@ get_courselist=function(listparameters){
 	// modify query --------------------
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]});
+		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]});
 	if(listparameters.missing=="organisator")
 		// show courses with no organisator
 		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
@@ -53,13 +53,15 @@ get_courselist=function(listparameters){
   	  return return_object;
   }
 
- Template.home.missing_subscribers = function() {
+  Template.home.missing_subscribers = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({missing: "subscribers"});
   	  return return_object;
   }
 
-   Template.profile.courses_from_userid = function() {
+// alle regionen abfragen bei folgender funktion:
+
+  Template.profile.courses_from_userid = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
   	  return return_object;
