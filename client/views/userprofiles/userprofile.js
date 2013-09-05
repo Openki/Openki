@@ -13,22 +13,38 @@ Template.userprofile.selected_user_ID = function () {
 
 
 
-/*
-    var user = selected_user
-  	if(user) {
-  		var userdata = {id:Meteor.userId(),username:Meteor.user().username}
-  	}
-}
-*/
-
 Template.userprofile.events({
 'click input.sendmail': function () {
-  Meteor.call('sendEmail', '1', '2', '3',
-// 			'this.user.emails[0].address',
-//            'selected_user_ID.emails[0].adress',
-//            'Ping - Hello from Meteor!',
-            'emailmessage');
-}
+//	var rec_user = Session.get('selected_user')
+	var send_user = Meteor.user()
+	if(send_user) {
+			var send_userdata = {id:Meteor.userId(),username:Meteor.user().username}
+			if(send_user.emails) {
+				send_userdata.email = send_user.emails[0].address
+			}
+		var rec_user = Session.get('selected_user')
+
+/*
+		if(rec_user) {
+			var rec_userdata = {id:rec_user.userId(),username:rec_user().username}
+			if(rec_user.emails) {
+				rec_userdata.email = rec_user.emails[0].address
+			}
+		}
+		*/
+
+	//	var message = emailmessage
+		var message = document.getElementById('emailmessage').value
+		Meteor.call('sendEmail',
+		rec_user,
+		'from',
+		'privat-message from '+send_userdata.username,
+		'hello '+rec_user+',     '+send_userdata.username+' sends you the following message:    "'+message+'"       cheers!      his/hers direct contact is: '+send_userdata.email
+		);
+		alert ('email maybe sent')
+		}
+		else {alert ('login...')}
+	}
 })
 
 
