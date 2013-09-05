@@ -5,12 +5,11 @@
 get_courselist=function(listparameters){
 	//return a course list
 	var find ={};
-  if(Session.get('region') &! listparameters.courses_from_userid) find.region=Session.get('region')
-	// modify query --------------------
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
-    //find.region=undefined;
-		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]});
+		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
+  else if(Session.get('region')) find.region=Session.get('region');
+  // modify query --------------------
 	if(listparameters.missing=="organisator")
 		// show courses with no organisator
 		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
