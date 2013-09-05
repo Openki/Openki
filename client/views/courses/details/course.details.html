@@ -41,7 +41,7 @@
 		<div class="subscribers">
 		{{#if roletype.show_subscribers}}
 			<ul>
-				user {{#each role.subscribed}}<li><a href="/user/12345/{{username this}}">{{username this}}</li> {{/each}}
+				user {{#each role.subscribed}}<li><a href="/user/{{this}}/{{username this}}">{{username this}}</li> {{/each}}
 			</ul>
 			{{roletype.description}}
 		{{else}}

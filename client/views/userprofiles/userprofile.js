@@ -22,24 +22,24 @@ Template.userprofile.events({
 			if(send_user.emails) {
 				send_userdata.email = send_user.emails[0].address
 			}
-		var rec_user = Session.get('selected_user')
+		var rec_user_id = Session.get('selected_user')
 
-/*
-		if(rec_user) {
-			var rec_userdata = {id:rec_user.userId(),username:rec_user().username}
-			if(rec_user.emails) {
-				rec_userdata.email = rec_user.emails[0].address
-			}
-		}
-		*/
 
-	//	var message = emailmessage
+    var rec_user= Meteor.users.findOne({_id:rec_user_id});
+    if(rec_user){
+      if(rec_user.username){
+        var rec_user= rec_user.username;
+        alert (rec_user)
+      }
+    }
+
+
 		var message = document.getElementById('emailmessage').value
 		Meteor.call('sendEmail',
-		rec_user,
+		rec_user_id,
 		'from',
 		'privat-message from '+send_userdata.username,
-		'hello '+rec_user+',     '+send_userdata.username+' sends you the following message:    "'+message+'"       cheers!      his/hers direct contact is: '+send_userdata.email
+		'hello '+rec_user+',     '+send_userdata.username+' sends you the following message:    "'+message+'"   \n    cheers!      his/hers direct contact is: '+send_userdata.email
 		);
 		alert ('email maybe sent')
 		}
