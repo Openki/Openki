@@ -27,7 +27,7 @@ Template.coursedetails.events({
       else
       	      alert("Security robot say: sign in");
     },
-    
+
     'click input.subscribe': function () {
 		var course = Session.get("selected_course")
 		scribe(course, this.roletype.type, true)
@@ -41,12 +41,16 @@ Template.coursedetails.events({
 
 /* Subscribe or unsubscribe user to or from a role in a course */
 function scribe(course, role, add) {
-	var where = 'roles.'+role+'.subscribed'
-	var update = {}
-	update[where] = Meteor.userId()
-	var operation = {}
-	operation[add ? '$addToSet' : '$pull'] = update
-	Courses.update(course, operation)
+  if (Meteor.userId()){
+  	var where = 'roles.'+role+'.subscribed'
+  	var update = {}
+  	update[where] = Meteor.userId()
+  	var operation = {}
+  	operation[add ? '$addToSet' : '$pull'] = update
+  	Courses.update(course, operation)
+  }
+  else
+    alert ('please log in');
 }
 
 
@@ -65,7 +69,7 @@ function scribe(course, role, add) {
   	  }
   	}
   }
-  
+
 Template.coursedetails.roleDetails = function(roles) {
 	return _.reduce(Roles.find().fetch(), function(goodroles, roletype){
 		var role = roles[roletype.type]
@@ -98,8 +102,8 @@ Template.coursedetails.roleDetails = function(roles) {
        course=Courses.findOne(Session.get("selected_course"));
        if(course)
            return course.organisator;
-           
-  
+
+
    }
 
 
@@ -113,8 +117,8 @@ Template.coursedetails.roleDetails = function(roles) {
             }
         }
   };
-  
-  
+
+
 Template.coursedetails.role_description = function(role) {
 	console.log(role)
 	return Roles.findOne({type: role}).description
