@@ -48,6 +48,10 @@ function scribe(course, role, add) {
   	var operation = {}
   	operation[add ? '$addToSet' : '$pull'] = update
   	Courses.update(course, operation)
+// weiterer dB eintrag: letzte anmeldungsänderung:
+    var time = new Date
+    Courses.update(course, { $set: {time_lastenrol:time}})
+
   }
   else
     alert ('please log in');

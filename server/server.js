@@ -102,6 +102,7 @@ function createCourses(){
 		var age = Math.floor(Random.fraction()*80000000000)
 		course.time_created = new Date(new Date().getTime()-age)
 		course.time_lastedit = new Date(new Date().getTime()-age*0.25)
+		course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
 		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
 		Courses.insert(course)
 	})
