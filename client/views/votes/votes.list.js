@@ -6,8 +6,11 @@ var pseudo=Session.get("aktualisierungs_hack");
 
 	course=Courses.findOne(Session.get("selected_course"));
 	if(course){
-        if(course.roles.participant.subscribed){
+        if(course.roles.participant.subscribed){               //doesn't work! -> crashes if non, how to?
             subscribers=course.roles.participant.subscribed;
+        }
+        else{
+            subscribers=course.roles.team.subscribed;           // for testing purpose
         }
 
 

@@ -68,6 +68,11 @@ Template.course_edit.events({
 			ofcourse.time_created = new Date
 			ofcourse.region = Session.get('region')    //todo: please select a region if non is selected
 			ofcourse.createdby = Meteor.userId()
+			var I_want_to_be_responsible_for_the_course = 1;  // todo: html : set variable...
+			if (I_want_to_be_responsible_for_the_course === 1){
+				ofcourse.roles.team.subscribed = [Meteor.userId()]
+			}
+			ofcourse.roles.participant.subscribed = [Meteor.userId()]
 			var id = Courses.insert(ofcourse)
 			Router.setCourse( id, ofcourse.name);
 		}
