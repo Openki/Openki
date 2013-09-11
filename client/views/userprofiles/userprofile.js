@@ -1,3 +1,4 @@
+// If the user exists at all
 Template.userprofile.user_existent = function () {
 	if (Meteor.users.findOne({_id:(Session.get('selected_user'))})){
 		return("user_existent", true);
@@ -6,6 +7,23 @@ Template.userprofile.user_existent = function () {
 		return("user_existent", false);
 	}
 };
+
+// if userprofile is the same as the logged in user
+Template.userprofile.ownuser = function () {
+//	var user = Meteor.users.findOne({_id:(Session.get('selected_user'))})
+//  var message = Session.get('selected_user').valueOf()
+//	var message = Meteor.userId()
+//	alert ('1212'+message)
+	if (Session.get('selected_user') === Meteor.userId()){
+		return("ownuser", true);
+	}
+	else {
+		return("ownuser", false);
+	}
+};
+
+
+
 
 Template.userprofile.selected_user_ID = function () {
 	return Session.get('selected_user');
