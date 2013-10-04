@@ -170,13 +170,13 @@
         <a class="regions" href="/">Region:</a>
         <div class="dropdown-menu">
           <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="/region/{{_id}}">All regions</a></li>
+            <li><a class="regionselect" href="/region/{{_id}}">All</a></li>
             {{# each regions}}
               <li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
             {{/each}}
           </ul>
           </div>
-          {{region}}▼
+          <a class="regionselect" href="/region/{{_id}}">{{region}}▼ </a>
       </div>
 </template>
 
