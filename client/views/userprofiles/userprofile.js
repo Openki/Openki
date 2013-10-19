@@ -58,8 +58,8 @@ Template.userprofile.events({
 			'privat-message from '+send_userdata.username,
 			'hello '+rec_user+',     '+send_userdata.username+' sends you the following message:    "'+message+'"   \n    cheers!      his/hers direct contact is: '+send_userdata.email);
 
-			alert ('email could be sent')
-			//todo: reset the form.
+			alert ('email could have been sent')
+			//todo: reset clear the form.
 		}
 		else {alert ('longer text please')}
 	}
