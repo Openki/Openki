@@ -2,20 +2,30 @@
   <div class="coursepage">
     <h1>Alle Kurse</h1>
 
-{{> courselist all_courses}}
+    {{#if coursesLoaded}}
+      {{> courselist all_courses}}
+    {{else}}
+      <img src="/spinner.gif">
+    {{/if}}
 
-{{> course_create}}
+    {{> course_create}}
   </div>
 </template>
 
 <template name="courselist">
   <div class="courselist">
 
-    {{#each courses}}
-        {{> course}}
+    {{#if coursesLoaded}}
+        {{#each courses}}
+            {{> course}}
+        {{else}}
+            keine Kurse
+        {{/each}}
     {{else}}
-        keine Kurse
-    {{/each}}
+      <img src="/spinner.gif">
+    {{/if}}
+
+
 
   </div>
 </template>

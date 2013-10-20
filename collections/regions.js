@@ -29,7 +29,9 @@ var regions = [{
 	},{
 		'name':        'Biel',
 		'_id': 		   'Gkkr8Deb2ln4hGp7O'
-
+    },{
+		'name':        'Luzern',
+		'_id': 		   'h6ZeeIBfp72msnnp3'
     }
 ]
 

@@ -99,7 +99,10 @@ function createCourses(){
 		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
 		course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
 		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
-		course.time_created = new Date(new Date().getTime()-Math.floor(Random.fraction()*80000000000))
+		var age = Math.floor(Random.fraction()*80000000000)
+		course.time_created = new Date(new Date().getTime()-age)
+		course.time_lastedit = new Date(new Date().getTime()-age*0.25)
+		course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
 		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
 		Courses.insert(course)
 	})

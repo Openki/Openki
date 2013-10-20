@@ -4,27 +4,27 @@
 //querry anpassung
 
 var get_courselist=function(listparameters){
+   Session.set("isEditing", false);         //unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
-	if(Session.get('region')) find.region=Session.get('region')
-	// modify query --------------------
+	
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [ { "organisator" : listparameters.courses_from_userid}, {"subscribers":listparameters.courses_from_userid} ]});
+		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
+  else if(Session.get('region')) find.region=Session.get('region');
+  // modify query --------------------
 	if(listparameters.missing=="organisator")
 		// show courses with no organisator
 		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
 	if(listparameters.missing=="subscribers")
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
-	return Courses.find(find, {sort: {time_created: -1}});
+	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-
-
-
-
 /* ------------------------- List types / Templates ------------------------- */
+
+
 
   Template.courselist.courses = function () {
   // needed to actualize courses
@@ -32,7 +32,12 @@ var get_courselist=function(listparameters){
   };
 
   // Template handlers ---------------
-
+  Template.courselist.coursesLoaded = function () {
+    return Session.get('coursesLoaded');
+  };
+  Template.coursepage.coursesLoaded = function () {
+    return Session.get('coursesLoaded');
+  };
 
   //marcel: nur damit funktion nomals aufgerufen wird
   // gibt datenbankeintrag zurück courses zuweisen.
@@ -51,13 +56,15 @@ var get_courselist=function(listparameters){
   	  return return_object;
   }
 
- Template.home.missing_subscribers = function() {
+  Template.home.missing_subscribers = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({missing: "subscribers"});
   	  return return_object;
   }
 
-   Template.profile.courses_from_userid = function() {
+// alle regionen abfragen bei folgender funktion:
+
+  Template.profile.courses_from_userid = function() {
   	  var return_object={};
   	  return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
   	  return return_object;

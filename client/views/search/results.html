@@ -1,12 +1,25 @@
 
 <template name="search_results">
-		{{#unless results.count}}<a class="propose_course" href="CourseCreate">Propose it</a>{{/unless}}
+		{{#unless results.count}}<a class="propose_course" href="createcourse/">Propose it</a>{{/unless}}
 	<div>
-	{{results.count}} gefunden!
+	{{#if coursesLoaded}}
+	    {{results.count}} found!
+    {{else}}
+        loading...
+    {{/if}}
+
 	</div>
 	<div class="courselist_results">
-	{{#each results.courses}}
-		{{> course}}
-	{{/each}}
+
+	{{#if coursesLoaded}}
+
+        {{#each results.courses}}
+            {{> course}}
+        {{/each}}
+
+    {{else}}
+      <img src="/spinner.gif">
+    {{/if}}
+
 	</div>
 </template>

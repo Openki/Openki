@@ -6,6 +6,7 @@
         userdata.email = user.emails[0].address
         if(user.emails[0].verified){
           userdata.verifiedEmail = 'verified'
+          userdata.veryfiedEmailTrue = '1'
         }
         else userdata.verifiedEmail = 'not verified'
       }

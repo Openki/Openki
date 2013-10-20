@@ -1,24 +1,28 @@
 var URLliste = Backbone.Router.extend({
 		// URLS auslesen ---------
 		routes: {
-			
+
 			"page/:page_id": "pages",
-			
+
 			"locations/": "locationlist",
 			"location/": "locationdetails",
-			
+
 			"courselist/": "courselist",
 
 			"categorylist/": "categorylist",
-			
+
 			"course/:course_id": "coursedetails",
 			"course/:course_id/:course_title": "coursedetails",
 
 			"profile/": "profile",
-			
-			"": "home"
+
+			"": "home",
+
+//			"user/": "userprofile",
+			"user/:user_id": "userprofile",
+			"user/:user_id/:user_name": "userprofile"
 			},
-		
+
 
 // URLs Setzen
 // fx: wieso navigate und nicht locations?
@@ -28,10 +32,10 @@ var URLliste = Backbone.Router.extend({
 
 
 
-		home: function (){	
+		home: function (){
 			Session.set("page_id", "home");
-		},	
-		
+		},
+
 		pages: function (page_id){
 			Session.set("page_id", page_id);
 		},
@@ -43,26 +47,31 @@ var URLliste = Backbone.Router.extend({
 		categorylist: function (){
 			Session.set("page_id", "categorylist");
 		},
-		
-		coursedetails: function (course_id, course_title){	
+
+		coursedetails: function (course_id, course_title){
 			Session.set("selected_course", course_id);
 			Session.set("page_id", "coursedetails");
 		},
-		
+
 		locationlist: function (){
 			Session.set("page_id", "locationlist");
 		},
-		
-		locationdetails: function (course_id, course_title){	
+
+		locationdetails: function (location_id, location_title){
 			Session.set("selected_location", course_id);
 			Session.set("page_id", "locationdetails");
 		},
 
-		
 		profile: function (){
 			Session.set("page_id", "profile");
 		},
-		
+
+		userprofile: function (user_id, user_name){
+			Session.set("selected_user", user_id);
+			Session.set("page_id", "userprofile");
+		},
+
+
 		// URLS setzen ---------
 		setCourse: function (course_id,course_title) {
 		  	this.navigate("course/"+course_id+"/"+course_title.replace(/ /g,"_").replace("/","_"), true);
@@ -74,5 +83,5 @@ Router = new URLliste;
  Meteor.startup(function () {
 		Backbone.history.start({pushState: true});
  });
- 
+
 

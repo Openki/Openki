@@ -1,10 +1,12 @@
 <template name="profile">
 
   <div id="profile">
-    <h1 class="name">mein profil</h1>
+    <h1 class="name">My profile</h1>
 
+    {{#unless userdata.id}}
+      <p>you're not logged in...</p>
 
-
+    {{else}}
     {{#if isEditing}}
 
         <p class="descr_small">UserID: {{userdata.id}}</p>
@@ -12,21 +14,24 @@
         <p> Email (optional): <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
         <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
       <input type="button" class="save" value="Save" />
-    {{/if}}
 
-    {{#unless isEditing}}
+
+    {{else}}
         <p class="descr_small">ID: {{userdata.id}}</p>
         <p class="descr">Username: {{userdata.username}}</p>
-        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span></p>
-
+        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span>
+          {{#unless userdata.veryfiedEmailTrue}}<input type="button" class="verify" value="Verify my Email" />
+          {{/unless}} </p>
 
          <input type="button" class="edit" value="Edit" />
-         <input type="button" class="verify" value="Verify my Email" />
-    {{/unless}}
+    {{/if}}
+
 <div class="list_small">
     <h3>Meine Kurse:</h3>
   {{> courselist courses_from_userid}}
 </div>
+
+{{/unless}}
   </div>
 
 </template>

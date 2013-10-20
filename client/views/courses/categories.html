@@ -15,7 +15,7 @@
 
 <template name="category">
   <div class="categorylist">
-    <p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}">{{name}}:</p>
+    <p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}" id="{{_id}}">{{name}}:</p>
       <p>
 	        <span class="smalldesc">
           {{#each courses_by_category}}{{> course_by_category}}</span>
@@ -26,9 +26,11 @@
 </template>
 
 <template name="course_by_category">
-      <a href="#">{{name}}</a><br />
+      <a href="/course/{{_id}}/{{name}}"> {{name}}</a><br />
 </template>
 
+
+<!-- create categories, (admins only) -->
 <template name="course_category">
     <div class="create_category">
     <form>

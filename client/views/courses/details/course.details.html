@@ -11,14 +11,14 @@
     {{#unless isEditing}}
     <div class="course_main">
      <h2 class="name">{{name}}</h2>
-     <p class="small"> Time Created: {{dateformat time_created}},  Created by: {{username createdby}}, {{> show_categories}}</p>
+     <p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
      <p class="descr">{{description}}</p>
 
      <input type="button" class="edit" value="Edit" />
      <input type="button" class="del" value="Delete" />
      </div>
     {{/unless}}
-    
+
     <div class="participants">
 		<h3>Participants</h3>
 		{{#each roleDetails roles}}
@@ -41,7 +41,7 @@
 		<div class="subscribers">
 		{{#if roletype.show_subscribers}}
 			<ul>
-				{{#each role.subscribed}}<li>{{username this}}</li> {{/each}}
+				user {{#each role.subscribed}}<li><a href="/user/{{this}}/{{username this}}">{{username this}}</li> {{/each}}
 			</ul>
 			{{roletype.description}}
 		{{else}}

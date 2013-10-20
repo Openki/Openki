@@ -9,10 +9,20 @@
         {{> ticker}}
       </div>
       <div id="login">
+      <span><a href="/profile/">My Profile</a>  </span>
       {{loginButtons align="right"}}
+      </div>
+      <div id="search">
+        {{> search_menue}}
+      </div>
+      <div id="create">
+        {{> create_menue}}
       </div>
       <div id="mainmenu">
         {{> mainmenu}}
+      </div>
+      <div id="about">
+        {{> about_menue}}
       </div>
       <div id="region_sel">
         {{> region_sel}}
@@ -27,13 +37,14 @@
 </body>
 
 <template name="mainmenu">
-  <span><a href="/">Home</a>  </span>
-  <span><a href="/courselist/">Kurse</a>  </span>
-  <span><a href="/locations/">Räume</a>  </span>
-  <span><a href="/categorylist/">Kategorien</a>  </span>
-  <span><a href="/page/about">About</a>  </span>
-  <span><a href="/page/FAQ">FAQ</a>  </span>
-  <span><a href="/profile/">Mein Profil</a>  </span>
+<!--   <span><a href="/">Search</a>  </span>  -->
+<!--   <span><a href="/courselist/">(Course-List)</a>  </span>  -->
+<!--   <span><a href="/locations/">Rooms</a>  </span>  -->
+<!--   <span><a href="/categorylist/">Categories</a>  </span>  -->
+<!--   <span><a href="/calendar/">Calendar</a>  </span>  -->
+<!--   <span><a href="/CreateCourse/">Create New Course</a>  </span> -->
+<!--   <span><a href="/page/about">About</a>  </span> -->
+<!--   <span><a href="/page/FAQ">FAQ</a>  </span> -->
 </template>
 
 
@@ -66,7 +77,7 @@
     {{/route_is}}
 
     {{#route_is "locationlist"}}
-      {{> locationlist}}   {{! Nei, also ich weiss au noed wie mes chönti besser mache}}
+      {{> locationlist}}   {{! Nei, also ich weiss au noed wie mes choenti besser mache}}
     {{/route_is}}
 
     {{#route_is "locationdetails"}}
@@ -75,6 +86,14 @@
 
     {{#route_is "categorylist"}}
       {{> categorylist}}
+    {{/route_is}}
+
+    {{#route_is "calendar"}}
+      {{> calendar}}
+    {{/route_is}}
+
+    {{#route_is "createcourse"}}
+      {{> createcourse}}
     {{/route_is}}
 
     {{#route_is "about"}}
@@ -89,22 +108,75 @@
       {{> profile}}
     {{/route_is}}
 
-
+    {{#route_is "userprofile"}}
+      {{> userprofile}}
+    {{/route_is}}
 
   </div>
 </template>
 
+
+<template name="search_menue">
+      <div class="dropdown">
+        <a id="mainmenue" href="/">Search</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/">Courses</a></li>
+            <li><a class="regionselect" href="/locations/">Room List</a></li>
+            <li><a class="regionselect" href="/categorylist/">Category List</a></li>
+            <li><a class="regionselect" href="/tags/">(Tags)</a></li>
+            <li><a class="regionselect" href="/calendar/">Calendar</a></li>
+            <li><a class="regionselect" href="/courselist/">Browse list</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+<template name="create_menue">
+      <div class="dropdown">
+        <a id="mainmenue" href="/CreateProposal/">Create Course</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/CreateProposal/">Proposal</a></li>
+            <li><a class="regionselect" href="/CreateCourse/">Arranged one</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+
+
+
+<template name="about_menue">
+      <div class="dropdown">
+        <a class="regions" href="/page/about">about</a>
+        <div class="dropdown-menu">
+          <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/page/about">about</a></li>
+            <li><a class="regionselect" href="/page/FAQ">FAQ</a></li>
+          </ul>
+          </div>
+          {{about}}
+      </div>
+</template>
+
+
+
 <template name="region_sel">
 
       <div class="dropdown">
-        <a class="regions" href="/">Regions</a>
+        <a class="regions" href="/">Region:</a>
         <div class="dropdown-menu">
           <ul role="menu" aria-labelledby="dLabel">
+            <li><a class="regionselect" href="/region/{{_id}}">All regions</a></li>
             {{# each regions}}
-              <li><a class="regionselect" href="{{_id}}">{{name}}</a></li>
+              <li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
             {{/each}}
           </ul>
-        </div>
+          </div>
+          {{region}}▼
       </div>
 </template>
 

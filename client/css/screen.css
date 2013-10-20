@@ -34,7 +34,7 @@ margin: 0;
 .static_content_top {
     clear: none;
     position: relative;
-    top: -20px;
+    top: 0px;
     font-size: 0.95em;
 }
 .static_content {
@@ -44,11 +44,13 @@ margin: 0;
     top: -20px;
     width: 35em;
     font-size: 0.95em;
-
-    /*
-    font-family: Arial,Helvetica,sans-serif;
-    */
+    /*  font-family: Arial,Helvetica,sans-serif; */
   }
+.dev_doku {
+    width: 200%;
+    height: 390px;
+    border: 5px gray dashed;
+}
 
 #container{
     position:absolute;
@@ -288,14 +290,35 @@ clear: left;
 
 .course_edit ul {
 	list-style-type: none;
-	display: block
+	display: block;
 }
+
+#editform_categories{
+padding: 20px 0 0 0;
+}
+
+#show_categories_to_edit ul{
+    padding: 0 0 0 0;
+    margin: 0 0 20px 0;
+}
+
+#show_categories_to_edit{
+    float:left;
+    font-size:1em;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-bottom: 20px;
+}
+#show_categories_to_edit li{
+    font-size:0.8em;
+}
+
 
 div.participants {
 	background-color: #EEE;
 	padding: 1em;
 	margin: 1em 0;
-	
+
 }
 
 div.roleDetails {
@@ -596,15 +619,43 @@ th{
 	content: ''
 }
 
+a {
+    text-decoration: none;
+    font-weight: bold; }
+    a:link, a:visited, a:active {
+    color: #a4a9ab; }
+    a:hover {
+    color: #f36c3d; }
+
+
+
+/************ dropdown *************/
 .dropdown {
-  position: relative;
-  float: right}
+    position: relative;
+    padding-top: 5px;
+    padding-left: 50px;
+    float:left;
+    text-transform: uppercase;}
+
+.dropdown span a, {
+    color:#f6f6f6;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.dropdown span a:hover {
+    color:#444;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+
+
 .dropdown > a:after {
     display: inline-block;
     position: relative;
     top: -1px;
     margin-left: 4px;
-    content: "▼";
     font-size: 8px; }
 .dropdown .dropdown-menu {
     display: none;
@@ -613,7 +664,7 @@ th{
     position: absolute;
     padding-top: 20px; }
 .dropdown .dropdown-menu ul {
-      color: #3d8f32;
+      color: #gray;
       background: white;
       padding: 10px;
       width: 140px;
@@ -626,11 +677,13 @@ th{
       -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
 .dropdown .dropdown-menu ul li a {
-        color: #3d8f32;
+        color: #black;
         font-size: 14px; }
 .dropdown:hover .dropdown-menu {
     display: block; }
 
+
+/***********Search ***********/
 .searchform{
     font-size: 200%;
 }

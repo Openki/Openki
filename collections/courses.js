@@ -25,11 +25,3 @@ Courses.allow({
 		return userId && true;   // allow only if UserId is present
 	}
 });
-
-/*  use when autopublish removed: (regions)
-
-Meteor.publish ('courses', function(region){
-	if(!region) return Courses.find()
-	return Courses.find({region: region})
-})
- */

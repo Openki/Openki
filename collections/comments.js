@@ -1,5 +1,4 @@
-
-
+/*
 CourseComments = new Meteor.Collection("CourseComments");
 
 CourseComments.allow({
@@ -10,3 +9,4 @@ CourseComments.allow({
     return userId && true;   // allow only if UserId is present
     }
 });
+*/
