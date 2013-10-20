@@ -57,12 +57,9 @@ function ensureUser(name) {
 }
 
 /* TESTING: Get category object for name and create it if it doesn't exist */
-function ensureCategory(name) {
-		var category_prototype = {name: name}
-		var category
-		while (!(category = Categories.findOne(category_prototype))) { // Legit
-			Categories.insert(category_prototype)
-		}
+function categoryForName(name) {
+		var category = Categories.findOne({name: name})
+		if (!category) throw "No category "+name
         return category;
 }
 
@@ -84,8 +81,12 @@ function createCourses(){
 		m5.update(course.description);
 		course._id = m5.digest('hex').substring(0, 8)
 
-		for (var i=0; course.categories && i < course.categories.length; i++) {
-			course.categories[i] = ensureCategory(course.categories[i])._id
+		var category_names = course.categories
+		course.categories = []
+		for (var i=0; category_names && i < category_names.length; i++) {
+			cat = categoryForName(category_names[i])
+			course.categories.push(cat._id)
+			if (cat.parent) course.categories.push(cat.parent)
 		}
 
 		if (course.roles === undefined) course.roles = {}
