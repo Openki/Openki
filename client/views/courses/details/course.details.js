@@ -31,32 +31,14 @@ Template.coursedetails.events({
 
     'click input.subscribe': function () {
 		var course = Session.get("selected_course")
-		scribe(course, this.roletype.type, true)
+		Meteor.call("change_subscription", course, this.roletype.type, true)
     },
 
     'click input.unsubscribe': function () {
 		var course = Session.get("selected_course")
-		scribe(course, this.roletype.type, false)
+		Meteor.call("change_subscription", course, this.roletype.type, false)
     }
-});
-
-/* Subscribe or unsubscribe user to or from a role in a course */
-function scribe(course, role, add) {
-  if (Meteor.userId()){
-  	var where = 'roles.'+role+'.subscribed'
-  	var update = {}
-  	update[where] = Meteor.userId()
-  	var operation = {}
-  	operation[add ? '$addToSet' : '$pull'] = update
-  	Courses.update(course, operation)
-// weiterer dB eintrag: letzte anmeldungsänderung:
-    var time = new Date
-    Courses.update(course, { $set: {time_lastenrol:time}})
-
-  }
-  else
-    alert ('please log in');
-}
+})
 
 
 // nur für css
