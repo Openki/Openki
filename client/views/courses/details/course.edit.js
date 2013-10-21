@@ -1,9 +1,10 @@
+"use strict";
+
 //versuch:
 
 Template.course_edit.query = function() {
 	return Session.get('search')
 }
-
 
 Template.course_edit.available_categories = function(parent) {
 	if (parent)return Categories.find({parent: parent})
