@@ -1,5 +1,5 @@
-/*  use when autopublish removed: (regions)
-*/
+//  use when autopublish removed: (regions)
+
 Meteor.publish ('courses', function(region){
 	if(!region) return Courses.find();
 	return Courses.find({region: region});

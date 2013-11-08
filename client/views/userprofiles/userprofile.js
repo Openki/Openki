@@ -71,7 +71,7 @@ Template.userprofile.events({
 
 
 
-/*  global setzen für klicks auf usernamen
+/*  //global setzen für klicks auf usernamen
 
    Template.YXZYXZYX.events({
     'click': function () {

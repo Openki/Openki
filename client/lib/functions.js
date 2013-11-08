@@ -44,7 +44,7 @@ Handlebars.registerHelper('username', function (userid){
 })
 
 Handlebars.registerHelper('dateformat', function(date) {
-	/* We'll need a date formatter at some point */
+	// We'll need a date formatter at some point
 	if (date) return date.toDateString();
 });
 

@@ -37,7 +37,7 @@ function createCategoriesIfNone() {
 	}
 }
 
-// erstelle neue Kurse, wenns keine in der DB hat
+// TESTING: create new Courses if non in db
 
 function createCoursesIfNone(){
  if (Courses.find().count() === 0) {
@@ -46,7 +46,7 @@ function createCoursesIfNone(){
 }
 
 
-/* TESTING: Get user object for name and create it if it doesn't exist */
+// TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
 		var user_prototype = {username: name}
 		var user
@@ -56,7 +56,7 @@ function ensureUser(name) {
         return user;
 }
 
-/* TESTING: Get category object for name and create it if it doesn't exist */
+// TESTING: Get category object for name and create it if it doesn't exist
 function categoryForName(name) {
 		var category = Categories.findOne({name: name})
 		if (!category) throw "No category "+name
@@ -66,7 +66,7 @@ function categoryForName(name) {
 
 function createCourses(){
 
-	/* Make a number that looks like a human chose it, favouring 2 and 5 */
+	// Make a number that looks like a human chose it, favouring 2 and 5
 	function humandistrib() {
 		var factors = [0,0,1,2,2,3,5,5]
 		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)

@@ -18,7 +18,7 @@ Template.course_edit.available_roles = function() {
 	return Roles.find({'preset': { $ne: true }})
 }
 
-/* Emit 'checked' string if id shows up as member or property of cats */
+// Emit 'checked' string if id shows up as member or property of cats
 Template.course_edit.checked = function(id, cats) {
 	if (cats === undefined) return;
 	if (cats.length) {

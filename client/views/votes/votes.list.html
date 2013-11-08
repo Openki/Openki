@@ -17,7 +17,7 @@
                  </tr>
                  {{#each this.subscribers}}
                   <tr class="{{this.is_current}}">
-                         <td>{{username this.subscribersId}}</td>
+                         <td>{{>profilelink this.subscribersId}}</td>
 
                            {{#each this.options}}
                              <td class="option {{this.vote_status}}" name= "{{this.option_index}}">

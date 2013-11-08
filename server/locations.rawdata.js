@@ -11,8 +11,7 @@ locations = [{
 		'meetings':			'Kasama-VV: Jeden 1.Sonntag im Monat, 18:00-21:00',
 		'email': 			'info@kasama.ch',
 		'web': 				'http://kasama.ch',
-		'fon': 				'044 271 90 09'
-	},
+		'fon': 				'044 271 90 09'},
 	'picture': 			'zurich/locations/kasama.jpg',
 	'infra': 			{
 		'projectionScreen':	'1',
@@ -25,13 +24,11 @@ locations = [{
 		'drink': 			'1',
 		'kitchen': 			'1',
 		'stage': 			'0',
-		'specials': 		'two computers/workstations, big kitchen, bibliothek'
-	},
+		'specials': 		'two computers/workstations, big kitchen, bibliothek'},
 	'createdby': 		'FeeLing',
 	'hosts': 			{
 		'noContact':	['Kampfhippie'],
-		'contact':		['FeeLing', 'greg']  	// how to do it nicer?
-	}
+		'contact':		['FeeLing', 'greg']}  	// how to do it nicer?
 },
 {
 	'name':        		'SGMK MechArtLab',
@@ -72,17 +69,17 @@ locations = [{
 {
 	'name':        		'ABS',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		['squat', 'venue'],
+	'categories': 		['socialcenter', 'venue'],
 },
 {
 	'name':        		'ASZ-Badenerstrasse',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['school'],
 },
 {
 	'name':        		'ASZ-Rauti',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['school'],
 },
 {
 	'name':        		'Siebbdrucki1',
@@ -130,7 +127,7 @@ locations = [{
 	'categories': 		['workshop'],
 },
 {
-	'name':        		'A4',
+	'name':        		'A4 - Copyshop',
 	'region': 			'J6GDhEEvdmdSMzPPF',
 	'categories': 		['infoshop'],
 },
@@ -162,22 +159,22 @@ locations = [{
 {
 	'name':        		'Shedhalle',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['art'],
 },
 {
 	'name':        		'Kunstraum Walcheturm',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['art'],
 },
 {
 	'name':        		'Corner College',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['art'],
 },
 {
-	'name':        		'Meine Grosse Stube',
+	'name':        		'Mein gorsses Wohnzimmer',
 	'region': 			'J6GDhEEvdmdSMzPPF',
-	'categories': 		[''],
+	'categories': 		['home'],
 },
 {
 	'name':        		'Kaffee Zähringer',
