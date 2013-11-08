@@ -97,7 +97,6 @@ function createCourses(){
 		})
 
 		course.createdby = ensureUser(course.createdby)._id
-		course.score = Math.floor(Random.fraction()*Random.fraction()*30)
 		course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
 		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
 		var age = Math.floor(Random.fraction()*80000000000)

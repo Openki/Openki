@@ -6,7 +6,6 @@
 // "time_changed" -> timestamp
 // "categories" -> ID_categories
 // "description" -> string
-// "score" -> int
 // "subscribers_min" -> int
 // "subscribers_max" -> int
 // "subscribers" -> [ID_users]

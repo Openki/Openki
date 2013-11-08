@@ -65,8 +65,6 @@ return {votings:votings_array};
 
  Template.votelists.events({
     'click .is_current .option': function () {
-      // bei click auf das input-element mit der class "inc",
-      // erh�he den score dieses Kurses um
 	     aktuell=Votings.findOne(this.voting_id);
 	     if(aktuell.options[this.option_index].votes_0.indexOf(Meteor.userId())!=-1){
 
