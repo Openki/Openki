@@ -8,11 +8,6 @@
 
 
 Template.coursedetails.events({
-    'click input.inc': function () {
-      // bei click auf das input-element mit der class "inc",
-      // erh�he den score dieses Kurses um eins
-      Courses.update(Session.get("selected_course"), {$inc: {score: 1}});
-    },
 
 	'click input.del': function () {
 		if (confirm("wirklich?")) {
