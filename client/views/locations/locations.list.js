@@ -5,7 +5,7 @@ Template.locationlist.locations=function(){
 	     for(m = 0; m < locations.count(); m++){
 
      	     loc=locations.db_objects[m];
-     	   if(loc.users.indexOf(Meteor.userId())!=-1){
+     	   if(loc.hosts.contact.indexOf(Meteor.userId())!=-1){
 
      	   	   loc.ismylocation="true";
 	     }
