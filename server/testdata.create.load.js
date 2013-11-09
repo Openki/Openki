@@ -1,46 +1,6 @@
-
-
-Meteor.startup(function () {
- createCategoriesIfNone();
- createCoursesIfNone();        // TESTING...
- createLocationsIfNone();		// TESTING...
-});
-
-
-Meteor.methods({
-    insert_userdata: function(username, email, password){
-        Accounts.createUser({username:username, email:email, password:password});
-    },
-    update_userdata: function(username,email) {
-        Meteor.users.update(Meteor.userId(), {
-            $set: {
-                username: username,
-                 emails: [{
-                    address: email,
-                    verified: false
-                }]
-            }
-        });
-     },
-    update_userpassword: function(new_password) {
-        Accounts.setPassword(Meteor.userId(), new_password)
-     }
-});
-
-
-// Create Categories if not all anymore
-
-function createCategoriesIfNone() {
-	if (Categories.find().count() === 0) {
-		_.each(categories, function(category){
-			Categories.insert(category)
-		})
-	}
-}
-
 // TESTING: create new Courses if non in db
 
-function createCoursesIfNone(){
+createCoursesIfNone = function(){
  if (Courses.find().count() === 0) {
         createCourses();
   }
@@ -49,9 +9,7 @@ function createCoursesIfNone(){
 
 // TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
-	console.log(name)
 	if (!name) {name = 'Serverscriptttt'};
-	console.log(name)
 	var user_prototype = {username: name}
 	var user
 	while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
@@ -118,31 +76,13 @@ function createCourses(){
 /////////////////////////////// TESTING: Create Locations if non in db
 
 
-function createLocationsIfNone(){
+createLocationsIfNone = function(){
  if (Locations.find().count() === 0) {
         createLocations();
   }
 }
 
-/*
-// TODO: TESTING: Get user object for name and create it if it doesn't exist
-function ensureUser(name) {
-		var user_prototype = {username: name}
-		var user
-		while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
-			Accounts.createUser({username: name, email: (name+"@schuel.example").toLowerCase(), password: name});
-		}
-        return user;
-}
 
-// TESTING: Get category object for name and create it if it doesn't exist
-function categoryForName(name) {
-		var category = Categories.findOne({name: name})
-		if (!category) throw "No category "+name
-        return category;
-}
-[
-*/
 
 function ensureLocationCategory(name){
     var category_prototype = {name: name}
@@ -153,13 +93,10 @@ function ensureLocationCategory(name){
     return category
 }
 
-function createLocations(){
 
-	// Make a number that looks like a human chose it, favouring 2 and 5
-	function humandistrib() {
-		var factors = [0,0,1,2,2,3,5,5]
-		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
-	}
+// TESTING:
+
+function createLocations(){
 
 	_.each(testlocations, function(location) {
 		if (!location.name) return; // Don't create locations that don't have a name

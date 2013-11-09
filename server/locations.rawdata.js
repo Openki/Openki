@@ -95,7 +95,7 @@ testlocations = [{
 	'categories': 		[''],
 },
 {
-	'name':        		'Offene Nähstube Pomon',
+	'name':        		'Offene Nähstube Pompon',
 	'region': 			'J6GDhEEvdmdSMzPPF',
 	'categories': 		['workshop'],
 },

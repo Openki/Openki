@@ -9,6 +9,16 @@ testcourses = [{
 		'participant': { subscribed: [ 'FeeLing', 'Chrosle' ] },
 		'host':        { optional: true, subscribed: [] }
 	}
+
+/* should maybe become:
+
+	'roles':  ['team', 'participant', 'host']
+	'subscribed': [
+		{'user':'FeeLing', 'roles': ['team', 'participant']},
+		{'user':'Chrosle', 'roles': ['participant']}
+	]
+*/
+
 },{
 	'name':        'Aikido',
 	'categories': ['Kampfsport/-kunst'],

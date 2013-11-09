@@ -4,10 +4,10 @@
 //querry anpassung
 
 var get_courselist=function(listparameters){
-   Session.set("isEditing", false);         //unschöner temporaerer bugfix
+   Session.set("isEditing", false);         //FIXME: unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
-	
+
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
 		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
