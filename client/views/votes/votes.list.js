@@ -27,25 +27,22 @@ Template.votelists.votings=function() {
      	}
      	for(s = 0; s < subscribers.length; s++) {
      	    subscriber_options=[];
-     	for(o = 0; o < voting.options.length; o++){
-     	    if(voting.options[o].votes_0.indexOf(subscribers[s])!=-1){
-     	     vote_status="v0";
-     	    }else if(voting.options[o].votes_1.indexOf(subscribers[s])!=-1){
-     	     vote_status="v1";
-     	    }else{
-     	    vote_status="";
-     	    }
-     	    subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});
-     	}
+			for(o = 0; o < voting.options.length; o++){
+				if(voting.options[o].votes_0.indexOf(subscribers[s])!=-1){
+				vote_status="v0";
+				}else if(voting.options[o].votes_1.indexOf(subscribers[s])!=-1){
+				vote_status="v1";
+				}else{
+				vote_status="";
+				}
+				subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});
+			}
 
-     //	alert(subscribers[s]+" --- "+Meteor.userId());
-     //	alert(typeof subscribers[s]+" --- "+ typeof Meteor.userId());
-
-     if(subscribers[s] == Meteor.userId()){
-     	 is_current="is_current";
-     }else{
-         is_current="";
-     }
+			if(subscribers[s] == Meteor.userId()){
+				is_current="is_current";
+			}else{
+				is_current="";
+			}
 
      	    subscribers_votings.push({is_current:is_current, subscribersId:subscribers[s], is_current: is_current, options:subscriber_options});
      	     //voting.user_count = voting.users.count()
@@ -129,7 +126,7 @@ return_object.vote_options=["asf","sfsf"];
 	  if(option_array[i] !== undefined)
 	      option_object[i]={option:option_array[i],votes_0:[],votes_1:[],votes_2:[]};
 	     }
-    	 Votings.insert({type: "text", course_id: Session.get("selected_course"), question:$("#add_vote_question").val(), options: option_object});
+    	 Votings.insert({type: "text", course_id: this._id, question:$("#add_vote_question").val(), options: option_object});
     	 $('#add_vote_form')[0].reset();
     	 $('#add_vote_form').hide();
     },

@@ -11,7 +11,7 @@ Template.coursedetails.events({
 
 	'click input.del': function () {
 		if (confirm("wirklich?")) {
-			Courses.remove(Session.get("selected_course"));
+			Courses.remove(this._id);
 			Router.navigate('/', true);
 		}
 	},
