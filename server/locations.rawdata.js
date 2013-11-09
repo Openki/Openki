@@ -1,4 +1,7 @@
-locations = [{
+// Locations are rather organisations. they can have multiple rooms of couse bit they are not shown on this site.
+
+
+testlocations = [{
 	'name':        		'Kasama',
 	'region': 			'J6GDhEEvdmdSMzPPF',
 	'categories': 		['infoshop'],
@@ -27,8 +30,8 @@ locations = [{
 		'specials': 		'two computers/workstations, big kitchen, bibliothek'},
 	'createdby': 		'FeeLing',
 	'hosts': 			{
-		'noContact':	['Kampfhippie'],
-		'contact':		['FeeLing', 'greg']}  	// how to do it nicer?
+//		'noContact':	['Kampfhippie'],
+		'contact':		'FeeLing'}  	// how to do it nicer?
 },
 {
 	'name':        		'SGMK MechArtLab',
@@ -61,8 +64,8 @@ locations = [{
 	},
 	'createdby': 		'Sandra',
 	'hosts': 			{
-		'noContact':	[''],
-		'contact':		['Sandra']
+//		'noContact':	'bert',
+		'contact':		'Sandra'
 	}
 },
 
@@ -187,8 +190,7 @@ locations = [{
 	'categories': 		[''],
 },
 
-
-
+/*
 {
 	'name':        		'',
 	'region': 			'J6GDhEEvdmdSMzPPF',
@@ -219,9 +221,12 @@ locations = [{
 		'specials': 		''
 	},
 	'createdby': 		'',
-	'description': 		'',
 	'hosts': 			{
-		'noContact':	[''],
+//		'noContact':	[''],
 		'contact':		['']
 	}
-}]
+}
+*/
+
+]
+
