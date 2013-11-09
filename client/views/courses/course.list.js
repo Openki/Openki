@@ -3,52 +3,52 @@
 /* ------------------------- Query / List ------------------------- */
 //querry anpassung
 
-var get_courselist=function(listparameters){
-	
-console.log(listparameters)
+function get_courselist(listparameters){
    Session.set("isEditing", false);         //unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
 	
-	if(listparameters.courses_from_userid)
+	if(listparameters.courses_from_userid) {
 		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
-  else if(Session.get('region')) find.region=Session.get('region');
-  // modify query --------------------
-	if(listparameters.missing=="organisator")
+		find = _.extend(find, { $or : [ { "roles.team.subscribed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
+	} else if(Session.get('region')) {
+		find.region = Session.get('region')
+	}
+	if(listparameters.missing=="organisator") {
 		// show courses with no organisator
-		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
-	if(listparameters.missing=="subscribers")
+		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"})
+	}
+	if(listparameters.missing=="subscribers") {
 		// show courses with not enough subscribers
-		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
+		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} )
+	}
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-  Template.coursepage.all_courses = function () {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({});
-  	  return return_object;
-  };
 
-  Template.home.missing_organisator = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({missing: "organisator"});
-  	  return return_object;
-  }
+Router.map(function () {
+	this.route('courses', {
+		path: 'courses',
+		template: 'coursepage',
+		waitOn: function () {
+			return Meteor.subscribe('courses');
+		},
+		data: function () {
+			return {
+				missing_organisator: get_courselist({missing: "organisator"}).fetch(),
+				missing_subscribers: get_courselist({missing: "subscribers"}),
+				all_courses: get_courselist({courses_from_userid: Meteor.userId()})
+			};
+		}
+	})
+})
 
-  Template.home.missing_subscribers = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({missing: "subscribers"});
-  	  return return_object;
-  }
 
-// alle regionen abfragen bei folgender funktion:
-
-  Template.profile.courses_from_userid = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
-  	  return return_object;
-  }
+Template.profile.courses_from_userid = function() {
+	var return_object={};
+	return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
+	return return_object;
+}
 
 
 /* ------------------------- User Helpers ------------------------- */
