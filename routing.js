@@ -19,11 +19,20 @@ Router.map(function () {
 	this.route('categorylist')
 	
 	this.route('pages', {
-		path: 'page/:page_id',
+		path: 'page/:page_name',
 		action: function() {
-			this.render(this.params.page_id)
+			this.render(this.params.page_name)
 		}
 	})
 	
-	
+	this.route('profile')
+	this.route('userprofile', {
+		path: 'user/:_id',
+		waitOn: function () {
+			return Meteor.subscribe('users');
+		},
+		data: function () {
+			return Meteor.users.findOne({_id: this.params._id})
+		}
+	})
 })

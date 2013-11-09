@@ -1,20 +1,7 @@
-// If the user exists at all
-Template.userprofile.user_existent = function () {
-	if (Meteor.users.findOne({_id:(Session.get('selected_user'))})){
-		return("user_existent", true);
-	}
-	else {
-		return("user_existent", false);
-	}
-};
 
 // if userprofile is the same as the logged in user
 Template.userprofile.ownuser = function () {
-//	var user = Meteor.users.findOne({_id:(Session.get('selected_user'))})
-//  var message = Session.get('selected_user').valueOf()
-//	var message = Meteor.userId()
-//	alert ('1212'+message)
-	if (Session.get('selected_user') === Meteor.userId()){
+	if (this._id === Meteor.userId()){
 		return("ownuser", true);
 	}
 	else {
@@ -41,7 +28,7 @@ Template.userprofile.events({
 			send_userdata.email = send_user.emails[0].address
 		}
 
-		var rec_user_id = Session.get('selected_user')
+		var rec_user_id = this._id
 	    var rec_user = Meteor.users.findOne({_id:rec_user_id});
 	    if(rec_user){
 	      if(rec_user.username){
@@ -66,17 +53,3 @@ Template.userprofile.events({
 	else {alert ('login...')}
 }
 })
-
-
-
-
-
-/*  //global setzen für klicks auf usernamen
-
-   Template.YXZYXZYX.events({
-    'click': function () {
-      Router.setUser( this._id, this.name);
-    }
-  });
-
-*/
