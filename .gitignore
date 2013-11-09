@@ -14,3 +14,4 @@ config.rb
 *~
 
 packages/
+.meteor/release

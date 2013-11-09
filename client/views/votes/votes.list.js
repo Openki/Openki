@@ -6,12 +6,12 @@ var pseudo=Session.get("aktualisierungs_hack");
 
 	course=Courses.findOne(Session.get("selected_course"));
 	if(course){
-        if(course.roles.participant.subscribed){               //FIXME: doesn't work! -> crashes if non, how to?
-            subscribers=course.roles.participant.subscribed;
-        }
-        else{
-            subscribers=course.roles.team.subscribed;           //TESTING: for testing purpose
-        }
+            if(course.roles.participant.subscribed){               //FIXME: doesn't work! -> crashes if non, how to?
+                subscribers=course.roles.participant.subscribed;
+            }
+            else{
+                subscribers=course.roles.team.subscribed;           //TESTING: for testing purpose
+            }
 
 
 	var votings_array = [];
