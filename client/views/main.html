@@ -1,8 +1,7 @@
 <template name="layout">
 	<head>
-		<title>Hmmm - CourseOrganisationPlatform</title>
+		<title>hmmm {{yield 'title'}}</title>
 	</head>
-
 	<body>
 		<div id="container">
 			<div id="header_bar">
@@ -18,9 +17,6 @@
 			</div>
 			<div id="create">
 				{{> create_menue}}
-			</div>
-			<div id="mainmenu">
-				{{> mainmenu}}
 			</div>
 			<div id="about">
 				{{> about_menue}}
@@ -40,85 +36,6 @@
 	</body>
 </template>
 
-<template name="mainmenu">
-<!--   <span><a href="/">Search</a>  </span>  -->
-<!--   <span><a href="/courselist/">(Course-List)</a>  </span>  -->
-<!--   <span><a href="/locations/">Rooms</a>  </span>  -->
-<!--   <span><a href="/categorylist/">Categories</a>  </span>  -->
-<!--   <span><a href="/calendar/">Calendar</a>  </span>  -->
-<!--   <span><a href="/CreateCourse/">Create New Course</a>  </span> -->
-<!--   <span><a href="/page/about">About</a>  </span> -->
-<!--   <span><a href="/page/FAQ">FAQ</a>  </span> -->
-</template>
-
-
-<template name="maincontent">
-  <div id="maincontent">
-<!--
-  eigentlich kann man route is wegnehmen und einmal methode aufrufen
-  anstatt jede methode hier unten nacheinander durchzuführen
-  felix erklärts
-  -->
-
-
-
-    {{#route_is "home"}}
-        {{> start}}
-    {{/route_is}}
-
-    {{#route_is "courselist"}}
-      {{> home}}
-    {{/route_is}}
-
-    {{#route_is "courselist"}}
-      {{> coursepage}}
-    {{/route_is}}
-
-    {{#route_is "coursedetails"}}
-      {{#with loadcourse}}{{! This is so wrong, do you know how to do it right? }}
-		{{> coursedetails}}
-      {{/with}}
-    {{/route_is}}
-
-    {{#route_is "locationlist"}}
-      {{> locationlist}}   {{! Nei, also ich weiss au noed wie mes choenti besser mache}}
-    {{/route_is}}
-
-    {{#route_is "locationdetails"}}
-      {{> locationdetails}}
-    {{/route_is}}
-
-    {{#route_is "categorylist"}}
-      {{> categorylist}}
-    {{/route_is}}
-
-    {{#route_is "calendar"}}
-      {{> calendarr}}
-    {{/route_is}}
-
-    {{#route_is "createcourse"}}
-      {{> createcourse}}
-    {{/route_is}}
-
-    {{#route_is "about"}}
-      {{> about}}
-    {{/route_is}}
-
-    {{#route_is "FAQ"}}
-      {{> FAQ}}
-    {{/route_is}}
-
-    {{#route_is "profile"}}
-      {{> profile}}
-    {{/route_is}}
-
-    {{#route_is "userprofile"}}
-      {{> userprofile}}
-    {{/route_is}}
-
-  </div>
-</template>
-
 
 <template name="search_menue">
       <div class="dropdown">
@@ -130,7 +47,7 @@
             <li><a class="regionselect" href="/categorylist/">Category List</a></li>
             <li><a class="regionselect" href="/tags/">(Tags)</a></li>
             <li><a class="regionselect" href="/calendar/">Calendar</a></li>
-            <li><a class="regionselect" href="{{pathFor 'courselist'}}">Browse list</a></li>
+            <li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
           </ul>
           </div>
           {{about}}
