@@ -75,7 +75,7 @@ Template.course_edit.events({
 			}
 			ofcourse.roles.participant.subscribed = [Meteor.userId()]
 			var id = Courses.insert(ofcourse)
-			Router.setCourse( id, ofcourse.name);
+			Router.go('showCourse', {_id: id});
 		}
 
 		Session.set("isEditing", false);

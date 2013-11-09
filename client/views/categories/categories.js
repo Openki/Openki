@@ -37,11 +37,3 @@ Template.course_category.events({
       }
     }
   });
-
-
-
-Template.course_by_category.events({
-	'click': function () {
-		Router.setCourse( this._id, this.name);
-	}
-});

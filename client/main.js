@@ -1,16 +1,4 @@
-//alert ("This Webpage is only for testing purpose. It still leaks some essential features")
 
-
-// allgemeine praktische funktionen
-
-Template.maincontent.route_is = function (data,options) {
-// strube funktion, die irgendwas macht, aber es tut
-// macht, dass das routing im template "maincontent" funtkioniert
-    if ( Session.equals( 'page_id', data ) ) {
-	return options.fn( this );
-    }
-    return options.inverse( this );
-};
 
 ////////////// login stettings
 Accounts.ui.config({
@@ -38,9 +26,4 @@ Meteor.subscribe('regions');
 Meteor.subscribe('roles');
 Meteor.subscribe('votings');
 Meteor.subscribe('users');
-
-Template.maincontent.loadcourse = function() {
-	return Courses.findOne(Session.get('selected_course'))
-}
-
 

@@ -3,72 +3,52 @@
 /* ------------------------- Query / List ------------------------- */
 //querry anpassung
 
-var get_courselist=function(listparameters){
+function get_courselist(listparameters){
    Session.set("isEditing", false);         //FIXME: unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
 
 	if(listparameters.courses_from_userid)
 		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [ { "roles.team.subscibed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
-  else if(Session.get('region')) find.region=Session.get('region');
-  // modify query --------------------
-	if(listparameters.missing=="organisator")
+		find = _.extend(find, { $or : [ { "roles.team.subscribed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
+	} else if(Session.get('region')) {
+		find.region = Session.get('region')
+	}
+	if(listparameters.missing=="organisator") {
 		// show courses with no organisator
-		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"});
-	if(listparameters.missing=="subscribers")
+		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"})
+	}
+	if(listparameters.missing=="subscribers") {
 		// show courses with not enough subscribers
-		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
+		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} )
+	}
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-/* ------------------------- List types / Templates ------------------------- */
+
+Router.map(function () {
+	this.route('courses', {
+		path: 'courses',
+		template: 'coursepage',
+		waitOn: function () {
+			return Meteor.subscribe('courses');
+		},
+		data: function () {
+			return {
+				missing_organisator: get_courselist({missing: "organisator"}).fetch(),
+				missing_subscribers: get_courselist({missing: "subscribers"}),
+				all_courses: get_courselist({courses_from_userid: Meteor.userId()})
+			};
+		}
+	})
+})
 
 
-
-  Template.courselist.courses = function () {
-  // needed to actualize courses
-   return this.courses;
-  };
-
-  // Template handlers ---------------
-  Template.courselist.coursesLoaded = function () {
-    return Session.get('coursesLoaded');
-  };
-  Template.coursepage.coursesLoaded = function () {
-    return Session.get('coursesLoaded');
-  };
-
-  //marcel: nur damit funktion nomals aufgerufen wird
-  // gibt datenbankeintrag zurück courses zuweisen.
-  // schön währe wenn parameter gibts zurück in courselist
-  // kann von vier verschiedenen orten aufgerufen werden und macht vier mal ein bisschen was anderes
-
-  Template.coursepage.all_courses = function () {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({});
-  	  return return_object;
-  };
-
-  Template.home.missing_organisator = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({missing: "organisator"});
-  	  return return_object;
-  }
-
-  Template.home.missing_subscribers = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({missing: "subscribers"});
-  	  return return_object;
-  }
-
-// alle regionen abfragen bei folgender funktion:
-
-  Template.profile.courses_from_userid = function() {
-  	  var return_object={};
-  	  return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
-  	  return return_object;
-  }
+Template.profile.courses_from_userid = function() {
+	var return_object={};
+	return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
+	return return_object;
+}
 
 
 /* ------------------------- User Helpers ------------------------- */
@@ -120,13 +100,3 @@ Template.course.is_mentor = function() {
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
-
-/* -------------------------  Events-------------------------*/
-
-  Template.course.events({
-    'click': function () {
-
-      Router.setCourse( this._id, this.name);
-
-    }
-  });
