@@ -17,6 +17,14 @@ Router.map(function () {
 	})
 	
 	this.route('categorylist')
+	this.route('courselist', {
+		waitOn: function () {
+			return Meteor.subscribe('courses');
+		},
+		data: function () {
+			return Courses.find()
+		}
+	})
 	
 	this.route('pages', {
 		path: 'page/:page_name',

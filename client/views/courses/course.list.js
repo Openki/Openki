@@ -4,6 +4,8 @@
 //querry anpassung
 
 var get_courselist=function(listparameters){
+	
+console.log(listparameters)
    Session.set("isEditing", false);         //unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
@@ -21,28 +23,6 @@ var get_courselist=function(listparameters){
 		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} );
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
-
-/* ------------------------- List types / Templates ------------------------- */
-
-
-
-  Template.courselist.courses = function () {
-  // needed to actualize courses
-   return this.courses;
-  };
-
-  // Template handlers ---------------
-  Template.courselist.coursesLoaded = function () {
-    return Session.get('coursesLoaded');
-  };
-  Template.coursepage.coursesLoaded = function () {
-    return Session.get('coursesLoaded');
-  };
-
-  //marcel: nur damit funktion nomals aufgerufen wird
-  // gibt datenbankeintrag zurück courses zuweisen.
-  // schön währe wenn parameter gibts zurück in courselist
-  // kann von vier verschiedenen orten aufgerufen werden und macht vier mal ein bisschen was anderes
 
   Template.coursepage.all_courses = function () {
   	  var return_object={};

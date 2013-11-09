@@ -2,11 +2,8 @@
   <div class="coursepage">
     <h1>Alle Kurse</h1>
 
-    {{#if coursesLoaded}}
-      {{> courselist all_courses}}
-    {{else}}
-      <img src="/spinner.gif">
-    {{/if}}
+    {{> courselist all_courses}}
+
 
     {{> course_create}}
   </div>
@@ -15,15 +12,12 @@
 <template name="courselist">
   <div class="courselist">
 
-    {{#if coursesLoaded}}
-        {{#each courses}}
+        {{#each this}}
             {{> course}}
         {{else}}
             keine Kurse
         {{/each}}
-    {{else}}
-      <img src="/spinner.gif">
-    {{/if}}
+
 
 
 
