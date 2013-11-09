@@ -8,7 +8,7 @@ function get_courselist(listparameters){
 	//return a course list
 	var find ={};
 
-	if(listparameters.courses_from_userid)
+	if(listparameters.courses_from_userid) {
 		// show courses that have something to do with userid
 		find = _.extend(find, { $or : [ { "roles.team.subscribed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
 	} else if(Session.get('region')) {

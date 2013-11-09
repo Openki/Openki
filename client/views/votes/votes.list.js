@@ -1,32 +1,32 @@
 
 
-Template.votelists.votings=function(){
-var pseudo=Session.get("aktualisierungs_hack");
-	votings=Votings.find({course_id: Session.get("selected_course")});
-
-	course=Courses.findOne(Session.get("selected_course"));
-	if(course){
-            if(course.roles.participant.subscribed){               //FIXME: doesn't work! -> crashes if non, how to?
-                subscribers=course.roles.participant.subscribed;
+Template.votelists.votings=function() {
+    var pseudo=Session.get("aktualisierungs_hack");
+    var votings=Votings.find({course_id: this._id});
+	var course=this
+//    console.log(course)
+    var subscribers = []
+    var roles = course.roles
+    if (roles) {
+        for (role in roles) {
+            if (roles.hasOwnProperty(role)) {                               // javascript needs it
+                subscribers = subscribers.concat(roles[role].subscribed)  // add to list
             }
-            else{
-                subscribers=course.roles.team.subscribed;           //TESTING: for testing purpose
-            }
+        }
+    }
 
+    subscribers = _.uniq(subscribers)                                       //remove dublicates
 
 	var votings_array = [];
-	for(m = 0; m < votings.count(); m++){
-
+	for(m = 0; m < votings.count(); m++) {
 	    voting = votings.db_objects[m];
      	subscribers_votings=[];
-     	voting_total=[];
-     	for(o = 0; o < voting.options.length; o++){
+    	voting_total=[];
+     	for(o = 0; o < voting.options.length; o++) {
      	    voting_total.push(voting.options[o].votes_0.length);
      	}
-
-     	for(s = 0; s < subscribers.length; s++){
+     	for(s = 0; s < subscribers.length; s++) {
      	    subscriber_options=[];
-
      	for(o = 0; o < voting.options.length; o++){
      	    if(voting.options[o].votes_0.indexOf(subscribers[s])!=-1){
      	     vote_status="v0";
@@ -56,14 +56,13 @@ var pseudo=Session.get("aktualisierungs_hack");
      	votings_array.push(voting);
 	}
 
-//return {votings:votings_array, subscribers:subscribers_votings};
-return {votings:votings_array};
-	}
+    return {votings:votings_array};
+
 
 }
 
 
- Template.votelists.events({
+Template.votelists.events({
     'click .is_current .option': function () {
 	     aktuell=Votings.findOne(this.voting_id);
 	     if(aktuell.options[this.option_index].votes_0.indexOf(Meteor.userId())!=-1){
