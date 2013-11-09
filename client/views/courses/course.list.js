@@ -120,13 +120,3 @@ Template.course.is_mentor = function() {
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
-
-/* -------------------------  Events-------------------------*/
-
-  Template.course.events({
-    'click': function () {
-
-      Router.setCourse( this._id, this.name);
-
-    }
-  });

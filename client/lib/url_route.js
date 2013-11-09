@@ -1,8 +1,7 @@
+return;
 var URLliste = Backbone.Router.extend({
 		// URLS auslesen ---------
 		routes: {
-
-			"page/:page_id": "pages",
 
 			"locations/": "locationlist",
 			"location/": "locationdetails",
@@ -23,30 +22,6 @@ var URLliste = Backbone.Router.extend({
 			"user/:user_id/:user_name": "userprofile"
 			},
 
-
-// URLs Setzen
-// fx: wieso navigate und nicht locations?
-//mat navigat macht er pushstate (browser)
-// funktionniert auch für bots- kann serverseitig rendern (suchmaschinen)
-// routet über URL (funktion:klick) in course.lists.js
-
-
-
-		home: function (){
-			Session.set("page_id", "home");
-		},
-
-		pages: function (page_id){
-			Session.set("page_id", page_id);
-		},
-
-		courselist: function (){
-			Session.set("page_id", "courselist");
-		},
-
-		categorylist: function (){
-			Session.set("page_id", "categorylist");
-		},
 
 		coursedetails: function (course_id, course_title){
 			Session.set("selected_course", course_id);
@@ -69,19 +44,7 @@ var URLliste = Backbone.Router.extend({
 		userprofile: function (user_id, user_name){
 			Session.set("selected_user", user_id);
 			Session.set("page_id", "userprofile");
-		},
-
-
-		// URLS setzen ---------
-		setCourse: function (course_id,course_title) {
-		  	this.navigate("course/"+course_id+"/"+course_title.replace(/ /g,"_").replace("/","_"), true);
 		}
-});
 
-Router = new URLliste;
-
- Meteor.startup(function () {
-		Backbone.history.start({pushState: true});
- });
 
 

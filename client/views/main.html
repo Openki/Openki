@@ -1,40 +1,42 @@
-<head>
-  <title>Hmmm - CourseOrganisationPlatform</title>
-</head>
+<template name="layout">
+	<head>
+		<title>Hmmm - CourseOrganisationPlatform</title>
+	</head>
 
-<body>
-  <div id="container">
-    <div id="header_bar">
-      <div id="ticker">
-        {{> ticker}}
-      </div>
-      <div id="login">
-      <span><a href="/profile/">My Profile</a>  </span>
-      {{loginButtons align="right"}}
-      </div>
-      <div id="search">
-        {{> search_menue}}
-      </div>
-      <div id="create">
-        {{> create_menue}}
-      </div>
-      <div id="mainmenu">
-        {{> mainmenu}}
-      </div>
-      <div id="about">
-        {{> about_menue}}
-      </div>
-      <div id="region_sel">
-        {{> region_sel}}
-      </div>
-    </div>
+	<body>
+		<div id="container">
+			<div id="header_bar">
+			<div id="ticker">
+				{{> ticker}}
+			</div>
+			<div id="login">
+			<span><a href="/profile/">My Profile</a>  </span>
+			{{loginButtons align="right"}}
+			</div>
+			<div id="search">
+				{{> search_menue}}
+			</div>
+			<div id="create">
+				{{> create_menue}}
+			</div>
+			<div id="mainmenu">
+				{{> mainmenu}}
+			</div>
+			<div id="about">
+				{{> about_menue}}
+			</div>
+			<div id="region_sel">
+				{{> region_sel}}
+			</div>
+			</div>
 
 
-    <div id="outer">
-      {{> maincontent}}
-    </div>
-  </div>
-</body>
+			<div id="outer">
+			{{yield}}
+			</div>
+		</div>
+	</body>
+</template>
 
 <template name="mainmenu">
 <!--   <span><a href="/">Search</a>  </span>  -->

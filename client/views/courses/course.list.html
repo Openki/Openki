@@ -31,7 +31,7 @@
 </template>
 
 <template name="course">
-  <p class="courselist_course">
+  <a class="courselist_course" href="{{pathFor 'showCourse'}}">
     <span class="course_name">{{name}}</span>
     <span class="course_status">
       {{#if roles.participant}}<span class="status {{participant_status}}" title="Participant">P {{roles.participant.subscribed.length}}{{#unless isNull subscribers_min}}/{{subscribers_min}}{{/unless}}{{is_subscriber}}</span
@@ -44,6 +44,6 @@
       <span class="small">{{username createdby}}</span>
       <span class="small">{{> show_categories}}</span>
     </span>
-  </p>
+  </a>
 
 </template>
