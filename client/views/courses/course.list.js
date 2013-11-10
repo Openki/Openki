@@ -22,7 +22,6 @@ Router.map(function () {
 // TODO: convert to lirary function or method
 
 function get_courselist(listparameters){
-   Session.set("isEditing", false);         //FIXME: unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
 

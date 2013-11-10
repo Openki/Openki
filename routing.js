@@ -16,7 +16,10 @@ Router.map(function () {
 		},
 		data: function () {
 			return Courses.findOne({_id: this.params._id})
-		}
+		},
+		unload: function () {
+			Session.set("isEditing", false);
+    	}
 	})
 
 	this.route('locations')

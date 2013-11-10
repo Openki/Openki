@@ -6,7 +6,6 @@ Router.map(function () {
 		data: function () {
 			var user = Meteor.user()
 			if(user) {
-				console.log(user)
 				var userdata = user
 				if(user.emails) {
 					userdata.email = user.emails[0].address
