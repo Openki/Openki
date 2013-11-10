@@ -340,6 +340,26 @@ div.roleDetails li {
 	margin: 0 0.3em;
 }
 
+ul.subscribers {
+	float:left;
+}
+
+ul.subscribers > li {
+	float: left;
+	width: 100px;
+	list-style: none;
+}
+
+ul.subscribers ul.roles {
+	display: inline;
+}
+
+ul.subscribers ul.roles li {
+	float: left;
+	border: 1px solid blue;
+	list-style: none;
+}
+
 
 
 #coursedetails .usernames{

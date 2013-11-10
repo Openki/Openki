@@ -5,20 +5,16 @@
 	{{#with course}}
 		{{#if isEditing}}
 			{{>course_edit}}
+		{{else}}
+			<div class="course_main">
+			<h2 class="name">{{name}}</h2>
+			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
+			<p class="descr">{{description}}</p>
+
+			<input type="button" class="edit" value="Edit" />
+			<input type="button" class="del" value="Delete" />
+			</div>
 		{{/if}}
-
-	<!-- copied from example... could be set in tamplatecontroller write into this. nicht global in session ->variable in tamplate -->
-
-		{{#unless isEditing}}
-		<div class="course_main">
-		<h2 class="name">{{name}}</h2>
-		<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
-		<p class="descr">{{description}}</p>
-
-		<input type="button" class="edit" value="Edit" />
-		<input type="button" class="del" value="Delete" />
-		</div>
-		{{/unless}}
 
 		<div class="participants">
 			<h3>Participants</h3>
@@ -27,6 +23,7 @@
 			{{/each}}
 		</div>
     {{/with}}
+    
 	<ul class='subscribers'>
 	{{#each subscribers}}
 		<li>
@@ -37,34 +34,24 @@
 		</li>
 	{{/each}}
 	</ul>
-
-    {{> votelists}}
-    {{> postDialog}}
-    {{> discussion}}
-
+	
+	{{#with course}}
+		{{> votelists}}
+		{{> postDialog}}
+		{{> discussion}}
+	{{/with}}
   </div>
 </template>
 
 <template name="roleDetails">
 	<div class="roleDetails role_{{roletype.type}}">
-	{{#if role.subscribed}}
-		<div class="subscribers">
-		{{#if roletype.show_subscribers}}
-			<ul>
-				user {{#each role.subscribed}}<li>{{> profilelink}}</li> {{/each}}
-			</ul>
-			{{roletype.description}}
+		<div class="subscribe">
+		{{#if subscribed}}
+			<span class='subscribed'>you are subscribed <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
 		{{else}}
-			{{role.subscribed.length}} {{roletype.description}}
+			<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
 		{{/if}}
 		</div>
-	{{/if}}
-	<div class="subscribe">
-	{{#if subscribed}}
-		<span class='subscribed'>you are subscribed <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
-	{{else}}
-		<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
-	{{/if}}
 	</div>
 </template>
 
