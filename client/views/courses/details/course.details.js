@@ -1,10 +1,36 @@
 "use strict";
 
-/* ------------------------- Details ------------------------- */
+Router.map(function () {
+	this.route('showCourse', {
+		path: 'course/:_id',
+		template: 'coursedetails',
+		waitOn: function () {
+			return Meteor.subscribe('categories');
+			return Meteor.subscribe('courses');
+			return Meteor.subscribe('users');
+		},
+		data: function () {
+			var course = Courses.findOne({_id: this.params._id})
+			return {
+				course: course,
+				subscribers: prepare_subscribers(course)
+			};
+		},
+		after: function() {
+			var course = Courses.findOne({_id: this.params._id})
+			if (!course) return; // wtf
+			document.title = 'Course ' + course.name + '- hmmmm'
+		},
+		unload: function () {
+			Session.set("isEditing", false);
+		}
+	})
+})
 
-  Template.coursedetails.isEditing = function () {
-    return Session.get("isEditing");
-  };
+
+Template.coursedetails.isEditing = function () {
+	return Session.get("isEditing");
+};
 
 
 Template.coursedetails.events({
@@ -62,9 +88,33 @@ Template.coursedetails.roleDetails = function(roles) {
         		course: course
 			})
 		}
-		return goodroles
-	}, [])
+		return goodroles;
+	}, []);
 }
+
+
+function prepare_subscribers(course) {
+	if (!course) return; // Wa?
+	var subscribers = {}
+	var sublist = []
+	_.each(course.roles, function (role, type) {
+		_.each(role.subscribed, function (userid) {
+			var user = Meteor.users.findOne({_id: userid})
+			if (!user) return;
+			var userdata = subscribers[userid]
+			if (!userdata) {
+				userdata = {}
+				userdata.name = user.username
+				userdata.roles = []
+				subscribers[userid] = userdata
+				sublist.push(userdata)
+			}
+			userdata.roles.push(type)
+		})
+	})
+	return sublist;
+}
+
 
 Template.coursedetails.isSubscribed = function () {
 	//ist User im subscribers-Array?

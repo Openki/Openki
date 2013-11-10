@@ -13,7 +13,10 @@ Router.map(function () {
 				missing_subscribers: get_courselist({missing: "subscribers"}),
 				all_courses: get_courselist({})
 			};
-		}
+		},
+		after: function() {
+			document.title = 'Course list - hmmmm'
+		},
 	})
 })
 

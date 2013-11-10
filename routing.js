@@ -10,22 +10,6 @@ Router.map(function () {							///////// startpage /////////
 		template: 'start'
 	})
 
-	this.route('showCourse', {						///////// coursedetails /////////
-		path: 'course/:_id',
-		template: 'coursedetails',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('courses')
-			]
-		},
-		data: function () {
-			return Courses.findOne({_id: this.params._id})
-		},
-		unload: function () {
-			Session.set("isEditing", false);
-		}
-	})
-
 	this.route('locationDetails',{							///////// locationdetails /////////
 		path: 'locations/:_id',
 		template: 'locationdetails',
@@ -81,7 +65,7 @@ Router.map(function () {							///////// startpage /////////
 			return Meteor.users.findOne({_id: this.params._id})
 		}
 	})
-
 		this.route('calendar')
 
 })
+
