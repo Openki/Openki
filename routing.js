@@ -11,6 +11,9 @@ Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id',
 		template: 'coursedetails',
+		waitOn: function () {
+			return Meteor.subscribe('categories');
+		},
 		data: function () {
 			return Courses.findOne({_id: this.params._id})
 		}
