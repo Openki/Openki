@@ -1,5 +1,7 @@
 Router.configure({
-	layoutTemplate: 'layout'
+	layoutTemplate: 'layout',
+	notFoundTemplate: 'notFound'
+//	loadingTemplate: 'loading'
 });
 
 Router.map(function () {
@@ -47,4 +49,5 @@ Router.map(function () {
 			return Meteor.users.findOne({_id: this.params._id})
 		}
 	})
+
 })
