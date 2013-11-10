@@ -3,24 +3,24 @@
   <div id="profile">
     <h1 class="name">My profile</h1>
 
-    {{#unless userdata.id}}
+    {{#unless this}}
       <p>you're not logged in...</p>
 
     {{else}}
     {{#if isEditing}}
 
-        <p class="descr_small">UserID: {{userdata.id}}</p>
-        <p>Username: <input type="text" id="editform_username" value="{{userdata.username}}"/></p>
-        <p> Email (optional): <input type="text" id="editform_email" value="{{userdata.email}}"/></p>
+        <p class="descr_small">UserID: {{_id}}</p>
+        <p>Username: <input type="text" id="editform_username" value="{{this.username}}"/></p>
+        <p> Email (optional): <input type="text" id="editform_email" value="{{email}}"/></p>
         <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
       <input type="button" class="save" value="Save" />
 
 
     {{else}}
-        <p class="descr_small">ID: {{userdata.id}}</p>
-        <p class="descr">Username: {{userdata.username}}</p>
-        <p class="descr">Email: {{userdata.email}}  <span class="descr_small">  ({{userdata.verifiedEmail}}) </span>
-          {{#unless userdata.veryfiedEmailTrue}}<input type="button" class="verify" value="Verify my Email" />
+        <p class="descr_small">ID: {{_id}}</p>
+        <p class="descr">Username: {{this.username}}</p>
+        <p class="descr">Email: {{email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
+          {{#unless veryfiedEmailTrue}}<input type="button" class="verify" value="Verify my Email" />
           {{/unless}} </p>
 
          <input type="button" class="edit" value="Edit" />
@@ -28,7 +28,7 @@
 
 <div class="list_small">
     <h3>Meine Kurse:</h3>
-  {{> courselist courses_from_userid}}
+    {{> courselist courses_from_userid}}
 </div>
 
 {{/unless}}

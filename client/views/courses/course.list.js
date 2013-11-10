@@ -1,16 +1,41 @@
 "use strict";
 
+Router.map(function () {
+	this.route('courses', {
+		path: 'courses',
+		template: 'coursepage',
+		waitOn: function () {
+			return Meteor.subscribe('courses');
+		},
+		data: function () {
+			return {
+				missing_organisator: get_courselist({missing: "organisator"}).fetch(),
+				missing_subscribers: get_courselist({missing: "subscribers"}),
+				all_courses: get_courselist({})
+			};
+		}
+	})
+})
+
 /* ------------------------- Query / List ------------------------- */
-//querry anpassung
+
+// TODO: convert to lirary function or method
 
 function get_courselist(listparameters){
    Session.set("isEditing", false);         //FIXME: unschöner temporaerer bugfix
 	//return a course list
 	var find ={};
 
-	if(listparameters.courses_from_userid) {
-		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [ { "roles.team.subscribed" : listparameters.courses_from_userid}, {"roles.participant.subscribed":listparameters.courses_from_userid} ]})
+	if(listparameters.courses_from_userid) {		// show courses that have something to do with userid
+		find = _.extend(find, { $or : [
+			{ "roles.team.subscribed" : listparameters.courses_from_userid},
+			{ "roles.participant.subscribed" : listparameters.courses_from_userid},
+			{ "roles.mentor.subscribed" : listparameters.courses_from_userid},
+			{ "roles.host.subscribed" : listparameters.courses_from_userid},
+			{ "roles.interested.subscribed" : listparameters.courses_from_userid}
+		]
+	})
+
 	} else if(Session.get('region')) {
 		find.region = Session.get('region')
 	}
@@ -25,29 +50,10 @@ function get_courselist(listparameters){
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-
-Router.map(function () {
-	this.route('courses', {
-		path: 'courses',
-		template: 'coursepage',
-		waitOn: function () {
-			return Meteor.subscribe('courses');
-		},
-		data: function () {
-			return {
-				missing_organisator: get_courselist({missing: "organisator"}).fetch(),
-				missing_subscribers: get_courselist({missing: "subscribers"}),
-				all_courses: get_courselist({courses_from_userid: Meteor.userId()})
-			};
-		}
-	})
-})
-
+// FIXME : should be elsewhere (in profile)
 
 Template.profile.courses_from_userid = function() {
-	var return_object={};
-	return_object.courses= get_courselist({courses_from_userid: Meteor.userId()});
-	return return_object;
+	return get_courselist({courses_from_userid: Meteor.userId()});
 }
 
 

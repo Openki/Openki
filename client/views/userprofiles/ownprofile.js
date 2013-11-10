@@ -1,17 +1,30 @@
- Template.profile.userdata = function () {
-    var user = Meteor.user()
-  	if(user) {
-  		var userdata = {id:Meteor.userId(),username:Meteor.user().username}
-      if(user.emails) {
-        userdata.email = user.emails[0].address
-        if(user.emails[0].verified){
-          userdata.verifiedEmail = 'verified'
-          userdata.veryfiedEmailTrue = '1'
-        }
-        else userdata.verifiedEmail = 'not verified'
-      }
-      return userdata
-    }
+Router.map(function () {
+	this.route('profile', {
+		waitOn: function () {
+			return Meteor.subscribe('users');
+		},
+		data: function () {
+			var user = Meteor.user()
+			if(user) {
+				console.log(user)
+				var userdata = user
+				if(user.emails) {
+					userdata.email = user.emails[0].address
+					if(user.emails[0].verified){
+						userdata.verifiedEmail = 'verified'
+						userdata.veryfiedEmailTrue = '1'
+					}
+					else userdata.verifiedEmail = 'not verified'
+				}
+				return userdata
+			}
+		}
+	})
+})
+
+
+Template.profile.userdata = function () {
+
 
   }
 
@@ -41,7 +54,3 @@
       Meteor.call('sendVerificationEmail')
     }
   })
-
- Template.profile.courses = function () {
-      return get_courselist({courses_from_userid: Meteor.userId()});
-  };
