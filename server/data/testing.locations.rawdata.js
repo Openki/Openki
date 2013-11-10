@@ -15,7 +15,8 @@ testlocations = [{
 		'email': 			'info@kasama.ch',
 		'web': 				'http://kasama.ch',
 		'fon': 				'044 271 90 09'},
-	'picture': 			'zurich/locations/kasama.jpg',
+	'picture': 			'/zurich/locations/kasama.jpg',
+	'infra2': 			['abc', 'def', 'ghi', 'jkl'],
 	'infra': 			{
 		'projectionScreen':	'1',
 		'projector': 		'1',
@@ -40,7 +41,7 @@ testlocations = [{
 	'maxPeople': 		'20',
 	'maxWorkplaces':	'20',
 	'adress': 			'Hohlstrasse 52, 8004 Zürich',
-	'route':			'3 min von HelvetiaPlatz, (gleiches Gebäude wie Pusterla Elektronik)',
+	'route':			'3 min von HelvetiaPlatz, (gleiches Gebäude wie Pusterla-Elektronik)',
 	'description': 		'Das MechArtLab beinhaltet Werkstatt, Schulungsraum, Techn. Bibliothek und Lager und bietet Platz für selbstorganisierte Gruppentreffen, Workshops, Jugendelektronikwerkstatt, uvm.',
 	'contact':			{
 		'meetings':			'',
@@ -49,9 +50,10 @@ testlocations = [{
 		'fon': 				''
 	},
 	'picture': 			'http://www.sgmk-ssam.ch/files/images/mechartlab/180820101294.jpg',
-	'infra': 			{
+	'infra2': 			['abc', 'ghi', 'jkl']
+,	'infra': 			{
 		'projectionScreen':	'1',
-		'projector': 		'0',
+		'projector': 		'false',
 		'audio': 			'0',
 		'blackboard': 		'0',
 		'whiteboard': 		'1',

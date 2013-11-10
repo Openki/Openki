@@ -12,23 +12,11 @@
     </div>
 </template>
 
-<!--
-<template name="locationdetails">  //locationedit -> put in new file location-edit
-    <h1>Room details</h1>
 
-routing to /locations/location-id/LocationName  oder so
-better  to /room/location-id/LocationName/edit/  or so
-
-add other user to host in this location:
-
-{search user}->{add user} ?
-
-</template>
--->
 
 <template name="location">
     <div class="locationlist_location">
-        <p class="name">{{name}} </p>
+        <p class="name"> <a href="{{pathFor 'locationDetails'}}">{{name}}</a></p>
         <p class="description">{{description}} </p>
 
         {{#if ismylocation}}
@@ -37,6 +25,8 @@ add other user to host in this location:
         {{/if}}
     </div>
 </template>
+
+
 
 <template name="location_create">
     <div class="location_create">

@@ -26,9 +26,24 @@ Router.map(function () {							///////// startpage /////////
 		}
 	})
 
-	this.route('locations',{								///////// locations /////////
+	this.route('locationDetails',{							///////// locationdetails /////////
+		path: 'locations/:_id',
+		template: 'locationdetails',
+		waitOn: function () {
+			return Meteor.subscribe('locations');
+		},
+		data: function () {
+			return Locations.findOne({_id: this.params._id})
+		}
+	})
+
+
+	this.route('locations',{								///////// locationlist /////////
 		path: 'locations',
 		template: 'locationlist',
+		waitOn: function () {
+			return Meteor.subscribe('locations');
+		},
 	})
 
 	this.route('categorylist')								///////// categories /////////
