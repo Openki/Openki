@@ -16,6 +16,11 @@ Router.map(function () {
 				subscribers: prepare_subscribers(course)
 			};
 		},
+		after: function() {
+			var course = Courses.findOne({_id: this.params._id})
+			if (!course) return; // wtf
+			document.title = 'Course ' + course.name + '- hmmmm'
+		},
 		unload: function () {
 			Session.set("isEditing", false);
 		}
