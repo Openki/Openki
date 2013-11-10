@@ -52,7 +52,7 @@ Template.coursedetails.events({
 
 Template.coursedetails.roleDetails = function(roles) {
 	var course = this
-	return _.reduce(Roles.find().fetch(), function(goodroles, roletype){
+	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
 		var role = roles[roletype.type]
 		if (role) {
 			goodroles.push({
