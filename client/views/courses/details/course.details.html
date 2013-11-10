@@ -2,30 +2,42 @@
 
   <div id="coursedetails">
 
-    {{#if isEditing}}
-		{{>course_edit}}
-    {{/if}}
+	{{#with course}}
+		{{#if isEditing}}
+			{{>course_edit}}
+		{{/if}}
 
-<!-- copied from example... could be set in tamplatecontroller write into this. nicht global in session ->variable in tamplate -->
+	<!-- copied from example... could be set in tamplatecontroller write into this. nicht global in session ->variable in tamplate -->
 
-    {{#unless isEditing}}
-    <div class="course_main">
-     <h2 class="name">{{name}}</h2>
-     <p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
-     <p class="descr">{{description}}</p>
+		{{#unless isEditing}}
+		<div class="course_main">
+		<h2 class="name">{{name}}</h2>
+		<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
+		<p class="descr">{{description}}</p>
 
-     <input type="button" class="edit" value="Edit" />
-     <input type="button" class="del" value="Delete" />
-     </div>
-    {{/unless}}
+		<input type="button" class="edit" value="Edit" />
+		<input type="button" class="del" value="Delete" />
+		</div>
+		{{/unless}}
 
-    <div class="participants">
-		<h3>Participants</h3>
-		{{#each roleDetails roles}}
-			{{> roleDetails}}
-		{{/each}}
-    </div>
-    
+		<div class="participants">
+			<h3>Participants</h3>
+			{{#each roleDetails roles}}
+				{{> roleDetails}}
+			{{/each}}
+		</div>
+    {{/with}}
+	<ul class='subscribers'>
+	{{#each subscribers}}
+		<li>
+			{{name}} 
+			<ul class='roles'>
+				{{#each roles}}<li class='{{this}}'>{{this}}</li>{{/each}}
+			</ul>
+		</li>
+	{{/each}}
+	</ul>
+
     {{> votelists}}
     {{> postDialog}}
     {{> discussion}}

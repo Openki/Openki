@@ -8,19 +8,6 @@ Router.map(function () {
 		template: 'start'
 	})
 
-	this.route('showCourse', {
-		path: 'course/:_id',
-		template: 'coursedetails',
-		waitOn: function () {
-			return Meteor.subscribe('categories');
-		},
-		data: function () {
-			return Courses.findOne({_id: this.params._id})
-		},
-		unload: function () {
-			Session.set("isEditing", false);
-    	}
-	})
 
 	this.route('locations')
 
