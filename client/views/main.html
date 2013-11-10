@@ -45,7 +45,6 @@
             <li><a class="regionselect" href="/">Courses</a></li>
             <li><a class="regionselect" href="/locations/">Room List</a></li>
             <li><a class="regionselect" href="/categorylist/">Category List</a></li>
-            <li><a class="regionselect" href="/tags/">(Tags)</a></li>
             <li><a class="regionselect" href="/calendar/">Calendar</a></li>
             <li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
           </ul>
@@ -59,8 +58,8 @@
         <a id="mainmenue" href="/CreateProposal/">Create Course</a>
         <div class="dropdown-menu">
           <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="/CreateProposal/">Proposal</a></li>
-            <li><a class="regionselect" href="/CreateCourse/">Arranged one</a></li>
+            <li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Proposal</a></li>
+            <li><a class="regionselect" href="{{pathFor 'createCourse'}}">Arranged one</a></li>
           </ul>
           </div>
           {{about}}
