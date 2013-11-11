@@ -39,6 +39,7 @@ Handlebars.registerHelper('username', function (userid){
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
+      console.log(user)  //  <-------------------------------------------------------------<<<<<<<<<<<
       return "No_User";
   }
 })
@@ -46,6 +47,11 @@ Handlebars.registerHelper('username', function (userid){
 Handlebars.registerHelper('dateformat', function(date) {
 	// We'll need a date formatter at some point
 	if (date) return date.toDateString();
+});
+
+Handlebars.registerHelper('timeformat', function(date) {
+    // We'll need a time formatter at some point
+    if (date) return date.toTimeString();
 });
 
 

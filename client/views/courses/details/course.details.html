@@ -9,11 +9,17 @@
 			<div class="course_main">
 			<h2 class="name">{{name}}</h2>
 			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
+			<p class="descr">{{dateformat date}} {{timeformat date}}</p>
 			<p class="descr">{{description}}</p>
 
 			<input type="button" class="edit" value="Edit" />
 			<input type="button" class="del" value="Delete" />
 			</div>
+			{{#if isOrganisator}}
+			<input type="button" class="editDate" value="add a Date"/>
+			{{/if}}
+
+
 		{{/if}}
 
 		<div class="participants">
@@ -22,19 +28,21 @@
 				{{> roleDetails}}
 			{{/each}}
 		</div>
-    {{/with}}
-    
+	{{/with}}
+
 	<ul class='subscribers'>
 	{{#each subscribers}}
 		<li>
-			{{name}} 
+			 {{>profilelink id}}
 			<ul class='roles'>
-				{{#each roles}}<li class='{{this}}'>{{this}}</li>{{/each}}
+				{{#each roles}}
+					<li class='{{this}}'>{{this}}</li>
+				{{/each}}
 			</ul>
 		</li>
 	{{/each}}
 	</ul>
-	
+
 	{{#with course}}
 		{{> votelists}}
 		{{> postDialog}}
@@ -47,7 +55,7 @@
 	<div class="roleDetails role_{{roletype.type}}">
 		<div class="subscribe">
 		{{#if subscribed}}
-			<span class='subscribed'>you are subscribed <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
+			<span class='subscribed'>you are subscribed as {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
 		{{else}}
 			<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
 		{{/if}}

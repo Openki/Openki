@@ -1,13 +1,20 @@
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
-	loadingTemplate: 'loading'
+	loadingTemplate: 'loading',
 });
 
-Router.map(function () {							///////// startpage /////////
+webpagename = 'Hmmm - Course Organisation Platform - '  // global (document title init)
+
+
+Router.map(function () {									///////// startpage /////////
+
 	this.route('home', {
 		path: '/',
-		template: 'start'
+		template: 'start',
+		after: function() {
+			document.title = webpagename + 'Home'
+		}
 	})
 
 	this.route('locationDetails',{							///////// locationdetails /////////
@@ -18,6 +25,11 @@ Router.map(function () {							///////// startpage /////////
 		},
 		data: function () {
 			return Locations.findOne({_id: this.params._id})
+		},
+		after: function() {
+			var location = Locations.findOne({_id: this.params._id})
+			if (!location) return; // wtf
+			document.title = webpagename + 'Location: ' + location.name
 		}
 	})
 
@@ -28,15 +40,25 @@ Router.map(function () {							///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('locations');
 		},
+		after: function() {
+			document.title = webpagename + 'Location list'
+		}
 	})
 
-	this.route('categorylist')								///////// categories /////////
+	this.route('categorylist',{								///////// categories /////////
+		after: function() {
+			document.title = webpagename + 'Category-list'
+		}
+	})
 
 
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
 		action: function() {
 			this.render(this.params.page_name)
+		},
+		after: function() {
+			document.title = webpagename + '' + this.params.page_name
 		}
 	})
 
@@ -46,6 +68,9 @@ Router.map(function () {							///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');
 		},
+		after: function() {
+			document.title = webpagename + 'Propose new course'
+		}
 	})
 
 	this.route('createCourse', {							///////// create /////////
@@ -54,6 +79,9 @@ Router.map(function () {							///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');
 		},
+		after: function() {
+			document.title = webpagename + 'Create new course'
+		}
 	})
 
 	this.route('userprofile', {								///////// userprofile /////////
@@ -63,6 +91,11 @@ Router.map(function () {							///////// startpage /////////
 		},
 		data: function () {
 			return Meteor.users.findOne({_id: this.params._id})
+		},
+		after: function() {
+			var user = Meteor.users.findOne({_id: this.params._id})
+			if (!user) return; // wtf
+			document.title = webpagename + '' + user.username + "'s Profile"
 		}
 	})
 		this.route('calendar')

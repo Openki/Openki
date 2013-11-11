@@ -19,7 +19,7 @@ Router.map(function () {
 		after: function() {
 			var course = Courses.findOne({_id: this.params._id})
 			if (!course) return; // wtf
-			document.title = 'Course ' + course.name + '- hmmmm'
+			document.title = webpagename + 'Course: ' + course.name
 		},
 		unload: function () {
 			Session.set("isEditing", false);
@@ -56,7 +56,16 @@ Template.coursedetails.events({
 
     'click input.unsubscribe': function () {
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
-    }
+    },
+
+	'click input.editDate': function () {
+		Session.set("editingDate", true);
+	}
+
+
+
+
+
 })
 
 
@@ -105,6 +114,8 @@ function prepare_subscribers(course) {
 			if (!userdata) {
 				userdata = {}
 				userdata.name = user.username
+				userdata.id = user._id
+				console.log(userdata.id)
 				userdata.roles = []
 				subscribers[userid] = userdata
 				sublist.push(userdata)
@@ -124,7 +135,8 @@ Template.coursedetails.isSubscribed = function () {
 
 Template.coursedetails.isOrganisator = function () {
 	var course = this
-	return course.organisator==Meteor.userId()
+	if (!course.roles.team) return true;
+	return course.roles.team.subscribed.indexOf(Meteor.userId()) != -1
 }
 
 Template.coursedetails.role_description = function(role) {

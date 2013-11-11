@@ -15,7 +15,7 @@ Router.map(function () {
 			};
 		},
 		after: function() {
-			document.title = 'Course list - hmmmm'
+			document.title = webpagename + 'Courselist'
 		},
 	})
 })

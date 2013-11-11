@@ -1,9 +1,10 @@
 <template name="profilelink">
-    <a href="/user/{{this}}">{{username this}}</a>
+    <a class="profilelink" href="/user/{{this}}">{{username this}}</a>
 </template>
 
-<template name="userprofile">
 
+
+<template name="userprofile">
   <div id="profile">
     <h1 class="name">{{this.username}}'s Profile-Page</h1>
 
@@ -25,5 +26,4 @@
 			</p>
 			<input type="button" class="sendmail" value="Send Email" />
 	{{/if}}
-        
 </template>

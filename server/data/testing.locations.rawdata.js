@@ -18,8 +18,8 @@ testlocations = [{
 	'picture': 			'/zurich/locations/kasama.jpg',
 	'infra2': 			['abc', 'def', 'ghi', 'jkl'],
 	'infra': 			{
-		'projectionScreen':	'1',
-		'projector': 		'1',
+		'projectionScreen':	true,
+		'projector': 		true,
 		'audio': 			'0',
 		'blackboard': 		'0',
 		'whiteboard': 		'0',

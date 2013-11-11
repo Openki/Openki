@@ -36,7 +36,7 @@ testcourses = [{
 	'categories': ['Garten / Landwirtschaft', 'Biologie'],
 	'tags':       ['Garten', 'Pflanzen'],
 	'createdby':   'Greendampf',
-	'description': 'Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Planzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.',
+	'description': 'Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Pflanzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.',
 	'roles': {
 		'team':        { subscribed: [ 'Greendampf', 'Sandro' ] },
 		'participant': { subscribed: [ 'Greendampf', 'Schufi', 'Kampfhippie', 'Sandro', 'LeOnI', 'IvanZ', 'WAvegetarian' ] },
