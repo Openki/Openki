@@ -314,13 +314,6 @@ padding: 20px 0 0 0;
 }
 
 
-div.participants {
-	background-color: #EEE;
-	padding: 1em;
-	margin: 1em 0;
-
-}
-
 div.roleDetails {
 	margin: 1em;
 	padding: 1em;
@@ -340,23 +333,33 @@ div.roleDetails li {
 	margin: 0 0.3em;
 }
 
+div.participants {
+	background-color: #EEE;
+    padding: 1em;
+    margin: 1em 0;
+}
+
 ul.subscribers {
+	background-color: #EEE;
 	float:left;
 }
 
 ul.subscribers > li {
+	background-color: #EEE;
 	float: left;
 	width: 100px;
-	list-style: none;
+    list-style: none;
 }
 
 ul.subscribers ul.roles {
+	background-color: #EEE;
 	display: inline;
 }
 
 ul.subscribers ul.roles li {
+    background-color: #EEE;
 	float: left;
-	border: 1px solid blue;
+	border: 3px solid blue;
 	list-style: none;
 }
 

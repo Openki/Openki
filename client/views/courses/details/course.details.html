@@ -22,31 +22,39 @@
 
 		{{/if}}
 
-		<div class="participants">
-			<h3>Participants</h3>
+
+
+
+
 			{{#each roleDetails roles}}
 				{{> roleDetails}}
 			{{/each}}
-		</div>
+
 	{{/with}}
 
-	<ul class='subscribers'>
-	{{#each subscribers}}
-		<li>
-			 {{>profilelink id}}
-			<ul class='roles'>
-				{{#each roles}}
-					<li class='{{this}}'>{{this}}</li>
-				{{/each}}
-			</ul>
-		</li>
-	{{/each}}
-	</ul>
+	<div class="participants">
+		<h3>Participants</h3>
+		<ul class='subscribers'>
+		{{#each subscribers}}
+			<li>
+				{{>profilelink id}}
+				<ul class='roles'>
+					{{#each roles}}
+						<li class='{{this}}'>{{this}}</li>
+					{{/each}}
+				</ul>
+			</li>
+		{{/each}}
+		</ul>
+	</div>
 
 	{{#with course}}
+		<div class="discussion">
+		{{> discussion}}
+		</dif>
 		{{> votelists}}
 		{{> postDialog}}
-		{{> discussion}}
+
 	{{/with}}
   </div>
 </template>

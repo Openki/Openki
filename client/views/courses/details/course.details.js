@@ -23,6 +23,7 @@ Router.map(function () {
 		},
 		unload: function () {
 			Session.set("isEditing", false);
+			Session.set("isEditingDate", false);
 		}
 	})
 })
@@ -31,6 +32,11 @@ Router.map(function () {
 Template.coursedetails.isEditing = function () {
 	return Session.get("isEditing");
 };
+
+Template.coursedetails.isEditing = function () {
+	return Session.get("isEditingDate");
+};
+
 
 
 Template.coursedetails.events({
@@ -59,7 +65,7 @@ Template.coursedetails.events({
     },
 
 	'click input.editDate': function () {
-		Session.set("editingDate", true);
+		Session.set("isEditingDate", true);
 	}
 
 
