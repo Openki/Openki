@@ -1,20 +1,20 @@
 
 
 Template.votelists.votings=function() {
-	var pseudo=Session.get("aktualisierungs_hack");
+	var pseudo=Session.get("aktualisierungs_hack");						//FIXME
 	var votings=Votings.find({course_id: this._id});
 	var course=this
 	//	console.log(course)
 	var subscribers = []
 	var roles = course.roles
-	if (roles) {
+	if (roles) {											// find all roles and subscribers in it
 		for (role in roles) {
-			if (roles.hasOwnProperty(role)) {								// javascript needs it
-				subscribers = subscribers.concat(roles[role].subscribed)  // add to list
+			if (roles.hasOwnProperty(role)) {
+				subscribers = subscribers.concat(roles[role].subscribed)
 			}
 		}
 	}
-	subscribers = _.uniq(subscribers)									//remove dublicates
+	subscribers = _.uniq(subscribers)									// (remove dublicates)
 
 
 	var votings_array = [];
