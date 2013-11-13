@@ -2,7 +2,7 @@
 
 Router.map(function () {
 	this.route('showCourse', {
-		path: 'course/:_id',
+		path: 'course/:_id/:name',        //  TODO: remove bad caracters again in course-name to use here 'course/:_id/:name and then <a href="{{pathFor 'showCourse'}}"> in html
 		template: 'coursedetails',
 		waitOn: function () {
 			return Meteor.subscribe('categories');

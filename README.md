@@ -15,7 +15,7 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - Regions- and room-system
 - Extendable participant roles
 
-### intended
+### Intended features
 - Email notification
 - Calendar
 - Privat messages
