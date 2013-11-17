@@ -1,7 +1,17 @@
 Router.map(function () {
 	this.route('profile', {
+		path: 'profile',
 		waitOn: function () {
 			return Meteor.subscribe('users');
+		},
+		before: function () {
+			if (!Meteor.user()) {
+				// render the login template but keep the url in the browser the same
+				this.render('login');
+				// alert ('please sign in')
+				// stop the rest of the before hooks and the action function
+				this.stop();
+			}
 		},
 		data: function () {
 			var user = Meteor.user()
@@ -17,6 +27,11 @@ Router.map(function () {
 				}
 				return userdata
 			}
+		},
+		after: function() {
+			var user = Meteor.users.findOne()
+			if (!user) alert ("you're not logged in")
+			document.title = webpagename + 'My Profile_Settings - ' + user.username
 		}
 	})
 })

@@ -39,7 +39,7 @@ Handlebars.registerHelper('username', function (userid){
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
-      console.log(user)  //  <-------------------------------------------------------------<<<<<<<<<<<
+      console.log('username is: ' + user)  //  <--------------------------------------------------<<<<<<<<<<<
       return "No_User";
   }
 })

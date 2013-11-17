@@ -98,7 +98,17 @@ Router.map(function () {									///////// startpage /////////
 			document.title = webpagename + '' + user.username + "'s Profile"
 		}
 	})
-		this.route('calendar')
+
+	this.route('calendar', {								///////// calendar /////////
+		path: 'calendar',
+		template: 'calendar',
+		waitOn: function () {
+			return Meteor.subscribe('courses');
+		},
+		after: function() {
+			document.title = webpagename + 'Calendar'
+		}
+	})
 
 })
 
