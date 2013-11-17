@@ -85,7 +85,7 @@ Router.map(function () {									///////// startpage /////////
 	})
 
 	this.route('userprofile', {								///////// userprofile /////////
-		path: 'user/:_id/*',
+		path: 'user/:_id/:username?',
 		waitOn: function () {
 			return Meteor.subscribe('users');
 		},

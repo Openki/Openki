@@ -2,7 +2,7 @@
 
 Router.map(function () {
 	this.route('showCourse', {
-		path: 'course/:_id/:name',        //  TODO: remove bad caracters again in course-name to use here 'course/:_id/:name and then <a href="{{pathFor 'showCourse'}}"> in html
+		path: 'course/:_id/:name?',        //  TODO: remove bad caracters again in course-name to use here 'course/:_id/:name and then <a href="{{pathFor 'showCourse'}}"> in html
 		template: 'coursedetails',
 		waitOn: function () {
 			return Meteor.subscribe('categories');
@@ -11,9 +11,11 @@ Router.map(function () {
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
+			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
+			// console.log(course.nameY)
 			return {
 				course: course,
-				subscribers: prepare_subscribers(course)
+				subscribers: prepare_subscribers(course),
 			};
 		},
 		after: function() {
