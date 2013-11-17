@@ -7,7 +7,7 @@
 <template name="userprofile">
   <div id="profile">
     <h1 class="name">{{this.username}}'s Profile-Page</h1>
-
+	<p class="small">UserId: {{this._id}}</p>
         </br> </br> </br> </br> </br>
 	{{#if ownuser}}
 		it's you! <a href="/profile/" >here's your pref. site</a>
@@ -26,4 +26,10 @@
 			</p>
 			<input type="button" class="sendmail" value="Send Email" />
 	{{/if}}
+
+
+	<div class="list_small">
+    <h3>{{this.username}}'s Courses:</h3>
+    {{> courselist courses_from_userid}}
+</div>
 </template>

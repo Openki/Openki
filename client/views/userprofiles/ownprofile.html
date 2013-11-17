@@ -10,9 +10,9 @@
     {{#if isEditing}}
 
         <p class="descr_small">UserID: {{_id}}</p>
-        <p>Username: <input type="text" id="editform_username" value="{{this.username}}"/></p>
+        <p> Username: <input type="text" id="editform_username" value="{{this.username}}"/></p>
         <p> Email (optional): <input type="text" id="editform_email" value="{{email}}"/></p>
-        <p> Neues Passwort (optional):: <input type="password" id="editform_newpassword" value=""/></p>
+        <p> New password (optional):: <input type="password" id="editform_newpassword" value=""/></p>
       <input type="button" class="save" value="Save" />
 
 
@@ -27,7 +27,7 @@
     {{/if}}
 
 <div class="list_small">
-    <h3>Meine Kurse:</h3>
+    <h3>My Courses:</h3>
     {{> courselist courses_from_userid}}
 </div>
 

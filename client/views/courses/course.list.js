@@ -54,11 +54,13 @@ function get_courselist(listparameters){
 
 // FIXME : should be elsewhere (in profile)
 
+Template.userprofile.courses_from_userid = function() {
+	return get_courselist({courses_from_userid: this._id});
+}
+
 Template.profile.courses_from_userid = function() {
 	return get_courselist({courses_from_userid: Meteor.userId()});
 }
-
-
 /* ------------------------- User Helpers ------------------------- */
 
 

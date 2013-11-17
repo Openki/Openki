@@ -33,7 +33,7 @@ Template.coursedetails.isEditing = function () {
 	return Session.get("isEditing");
 };
 
-Template.coursedetails.isEditing = function () {
+Template.coursedetails.isEditingDate = function () {
 	return Session.get("isEditingDate");
 };
 
@@ -121,7 +121,6 @@ function prepare_subscribers(course) {
 				userdata = {}
 				userdata.name = user.username
 				userdata.id = user._id
-				console.log(userdata.id)
 				userdata.roles = []
 				subscribers[userid] = userdata
 				sublist.push(userdata)

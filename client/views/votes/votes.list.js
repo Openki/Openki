@@ -4,7 +4,6 @@ Template.votelists.votings=function() {
 	var pseudo=Session.get("aktualisierungs_hack");						//FIXME
 	var votings=Votings.find({course_id: this._id});
 	var course=this
-	//	console.log(course)
 	var subscribers = []
 	var roles = course.roles
 	if (roles) {											// find all roles and subscribers in it
