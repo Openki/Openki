@@ -19,30 +19,30 @@
 </template>
 
 <template name="courselist">
-  <div class="courselist">
+  <ul class="courselist-compact">
         {{#each this}}
             {{> course}}
         {{else}}
             keine Kurse
         {{/each}}
-  </div>
+  </ul>
 </template>
 
 <template name="course">
-  <div class="courselist_course" href="{{pathFor 'showCourse'}}">
-  <a href="{{pathFor 'showCourse'}}">
-    <span class="course_name">{{name}}</span>
-    <span class="course_status">
-      {{#if roles.participant}}<span class="status {{participant_status}}" title="Participant">P {{roles.participant.subscribed.length}}{{#unless isNull subscribers_min}}/{{subscribers_min}}{{/unless}}{{is_subscriber}}</span
-      >{{/if}}{{#if roles.team}}<span class="team_status {{team_status}}" title="Team">T{{is_team}}</span
-      >{{/if}}{{#if roles.mentor}}<span class="mentor_status {{mentor_status}}" title="Mentor">M{{is_mentor}}</span
-      >{{/if}}{{#if roles.host}}<span class="host_status {{host_status}}" title="Host">H{{is_host}}</span>{{/if}}
-    </span>
-    <span class="smalldesc">
-      <span class="small">{{dateformat time_created}}</span>
-      <span class="small">{{username createdby}}</span>
-      <span class="small">{{> show_categories}}</span>
-    </span>
-  </a>
-  </div>
+  <li class="course" href="{{pathFor 'showCourse'}}">
+    <a href="{{pathFor 'showCourse'}}">
+      <span class="course_name">{{name}}</span>
+      <span class="course_status">
+        {{#if roles.participant}}<span class="status {{participant_status}}" title="Participant">P {{roles.participant.subscribed.length}}{{#unless isNull subscribers_min}}/{{subscribers_min}}{{/unless}}{{is_subscriber}}</span
+        >{{/if}}{{#if roles.team}}<span class="team_status {{team_status}}" title="Team">T{{is_team}}</span
+        >{{/if}}{{#if roles.mentor}}<span class="mentor_status {{mentor_status}}" title="Mentor">M{{is_mentor}}</span
+        >{{/if}}{{#if roles.host}}<span class="host_status {{host_status}}" title="Host">H{{is_host}}</span>{{/if}}
+      </span>
+      <span class="smalldesc">
+        <span class="small">{{dateformat time_created}}</span>
+        <span class="small">{{username createdby}}</span>
+        <span class="small">{{> show_categories}}</span>
+      </span>
+    </a>
+  </li>
 </template>
