@@ -23,15 +23,15 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - File upload
 
 ### Installation
-- Install Meteor:
-    - ` curl https://install.meteor.com | sh`
-    - ` apt-get install npm nodejs`
-    - ` npm install -g n`
-    - ` n 0.10.12`
-    - ` npm install -g meteorite`
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip (or clone) Hmmm into /some/path
 - `cd /some/path`
-- meteor remove insecure autopublish
+- Install Meteor: Run
+    - ` curl https://install.meteor.com | sh`
+    - ` apt-get install npm nodejs`  (mac: install from [nodejs.org](nodejs.org)
+    - ` npm install -g n`  (if needed for node version)
+    - ` n 0.10.12`         (if needed)
+    - ` npm install -g meteorite`
+    - ` mrt add iron-router
 - Run `meteor`
 - Browse to http://localhost:3000/
 

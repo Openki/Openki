@@ -7,7 +7,7 @@ Router.map(function () {
 		before: function () {
 			if (!Meteor.user()) {
 				// render the login template but keep the url in the browser the same
-				this.render('login');
+				this.render('not_loggedin');
 				// alert ('please sign in')
 				// stop the rest of the before hooks and the action function
 				this.stop();
