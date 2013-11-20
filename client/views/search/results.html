@@ -3,7 +3,7 @@
 		{{#unless results.count}}<a class="propose_course" href="createcourse/">Propose it</a>{{/unless}}
 	<div>
 	{{#if coursesLoaded}}
-	    {{results.count}} found!
+	    {{results.count}} found! (in {{results.region}})
     {{else}}
         loading...
     {{/if}}

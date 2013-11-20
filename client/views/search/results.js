@@ -15,7 +15,9 @@ Template.search_results.results = function () {
 		})
 	}
 	var courses = Courses.find(find)
-	return { count: courses.count(), courses: courses }
+	var regionObj = Regions.findOne(region)
+	var regionName = regionObj ? regionObj.name : 'All regions'
+	return { count: courses.count(), courses: courses, region : regionName }
 }
 
   Template.search_results.coursesLoaded = function () {

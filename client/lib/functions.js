@@ -24,6 +24,7 @@ display_coursename = function (courseid){
 }
 
 
+
 /*************** HandleBars Helpers ***********************/
 
 Handlebars.registerHelper("log", function(context) {
@@ -133,3 +134,15 @@ Handlebars.registerHelper('unlessCond', function (v1, operator, v2, options) {
 Handlebars.registerHelper('isNull', function(val) {
     return val === null
 });
+
+Handlebars.registerHelper('courseURL', function(_id, name) {
+	var nameX = name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
+	var _idX = _id
+	return 'course/' + _idX + '/' + nameX;
+});
+
+
+showCourseURL = function (){
+	console.log('123');
+	return
+}
