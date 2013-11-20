@@ -136,9 +136,9 @@ Handlebars.registerHelper('isNull', function(val) {
 });
 
 Handlebars.registerHelper('courseURL', function(_id, name) {
-	var nameX = name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
-	var _idX = _id
-	return 'course/' + _idX + '/' + nameX;
+	var name = name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
+	var _id = _id
+	return 'course/' + _id + '/' + name;
 });
 
 
