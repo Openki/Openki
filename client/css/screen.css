@@ -682,15 +682,17 @@ a {
     font-size: 8px; }
 .dropdown .dropdown-menu {
     display: none;
-    top: 10px;
+    top: 25px;
     left: 10px;
     position: absolute;
-    padding-top: 20px; }
+}
 .dropdown .dropdown-menu ul {
       color: #gray;
       background: white;
-      padding: 10px;
+      padding: 5px;
       width: 140px;
+      margin: 0 0 0 34px;
+      list-style: none;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       -ms-border-radius: 3px;
