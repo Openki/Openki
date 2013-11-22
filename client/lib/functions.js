@@ -60,35 +60,14 @@ var trimInput = function(val) {
     return val.replace(/^\s*|\s*$/g, "");
   }
 
-Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+Handlebars.registerHelper('ifCond', function (v1, operator, v2) {
 
     switch (operator) {
         case '==':
-            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            return (v1 == v2) ? true : false;
             break;
         case '===':
-            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '<':
-            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '<=':
-            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '>':
-            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '>=':
-            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '||':
-            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-            break;
-        case '&&':
-            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-            break;
-        default:
-            return options.inverse(this)
+            return (v1 === v2) ? true : false;
             break;
     }
     //return options.inverse(this);
@@ -142,7 +121,10 @@ Handlebars.registerHelper('courseURL', function(_id, name) {
 });
 
 
-showCourseURL = function (){
-	console.log('123');
-	return
-}
+						//Html title attribute of participant-state-sybol in courselist
+Handlebars.registerHelper('isYes', function(val){
+ 	return val === 'yes'
+});
+Handlebars.registerHelper('isOntheway', function(val){
+ 	return val === 'ontheway'
+});

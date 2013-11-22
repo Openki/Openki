@@ -33,10 +33,18 @@
   <a href="{{courseURL _id name}}">
     <span class="course_name">{{name}}</span>
     <span class="course_status">
-      {{#if roles.participant}}<span class="status {{participant_status}}" title="has enough Participants: {{participant_status}}">P {{roles.participant.subscribed.length}}{{#unless isNull subscribers_min}}/{{subscribers_min}}{{/unless}}{{is_subscriber}}</span>{{/if}}
-      {{#if roles.team}}<span class="team_status {{team_status}}" title="has Team: {{team_status}}">T{{is_team}}</span>{{/if}}
-      {{#if roles.mentor}}<span class="mentor_status {{mentor_status}}" title="has Mentor: {{mentor_status}}">M{{is_mentor}}</span>{{/if}}
-      {{#if roles.host}}<span class="host_status {{host_status}}" title="has Host: {{host_status}}">H{{is_host}}</span>{{/if}}
+			{{#if roles.participant}}
+				<span class="status {{participant_status}}" title="{{#if isYes participant_status}}has enough Participants{{else}}{{#if isOntheway participant_status}}has some participants{{else}}doesn't have enough participants{{/if}}{{/if}}">P {{roles.participant.subscribed.length}} {{#unless isNull subscribers_min}}/{{subscribers_min}} {{/unless}}{{is_subscriber}}</span>
+			{{/if}}
+			{{#if roles.team}}
+				<span class="team_status {{team_status}}" title="{{#if isYes team_status}}has a organisator-team{{else}}needs an organisator{{/if}}">T{{is_team}}</span>
+			{{/if}}
+			{{#if roles.mentor}}
+				<span class="mentor_status {{mentor_status}}" title="{{#if isYes mentor_status}}has a mentor{{else}}still needs a mentor{{/if}}">M{{is_mentor}}</span>
+			{{/if}} 					<!-- TODO: looking for a mentor/host-->
+			{{#if roles.host}}
+				<span class="host_status {{host_status}}" title="{{#if isYes host_status}}has a host{{else}}still needs a host{{/if}}">H{{is_host}}</span>
+			{{/if}}
     </span>
     <span class="smalldesc">
       <span class="small">{{dateformat time_created}}</span>
