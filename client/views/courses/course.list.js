@@ -95,15 +95,15 @@ Template.course.is_subscriber = function() {
 }
 
 Template.course.is_host = function() {
-	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
+	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
 }
 
 Template.course.is_team = function() {
-	return this.roles.team.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
+	return this.roles.team.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
 }
 
 Template.course.is_mentor = function() {
-	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
+	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
 }
 
 

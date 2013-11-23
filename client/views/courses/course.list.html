@@ -37,13 +37,13 @@
 				<span class="status {{participant_status}}" title="{{#if isYes participant_status}}has enough Participants{{else}}{{#if isOntheway participant_status}}has some participants{{else}}doesn't have enough participants{{/if}}{{/if}}">P {{roles.participant.subscribed.length}} {{#unless isNull subscribers_min}}/{{subscribers_min}} {{/unless}}{{is_subscriber}}</span>
 			{{/if}}
 			{{#if roles.team}}
-				<span class="team_status {{team_status}}" title="{{#if isYes team_status}}has a organisator-team{{else}}needs an organisator{{/if}}">T{{is_team}}</span>
+				<span class="team_status {{team_status}}" title="{{#if isYes team_status}}{{#if is_team}} you are organisator{{else}}has a organisator-team{{/if}}{{else}}needs an organisator{{/if}}">T{{#if is_team}}*{{/if}}</span>
 			{{/if}}
 			{{#if roles.mentor}}
-				<span class="mentor_status {{mentor_status}}" title="{{#if isYes mentor_status}}has a mentor{{else}}still needs a mentor{{/if}}">M{{is_mentor}}</span>
+				<span class="mentor_status {{mentor_status}}" title="{{#if isYes mentor_status}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{else}}still needs a mentor{{/if}}">M{{#if is_mentor}}*{{/if}}</span>
 			{{/if}} 					<!-- TODO: looking for a mentor/host-->
 			{{#if roles.host}}
-				<span class="host_status {{host_status}}" title="{{#if isYes host_status}}has a host{{else}}still needs a host{{/if}}">H{{is_host}}</span>
+				<span class="host_status {{host_status}}" title="{{#if isYes host_status}}{{#if is_host}}you are host{{else}}has a host{{/if}}{{else}}still needs a host{{/if}}">H{{#if is_host}}*{{/if}}</span>
 			{{/if}}
     </span>
     <span class="smalldesc">
