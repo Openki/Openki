@@ -1,56 +1,55 @@
 <template name="coursepage">
-  <div class="coursepage">
-
-  <h1>Hoi zäme</h1>
-  <div class="list_small">
-	<h3>Kurse ohne Organisator_innen</h3>
-    {{> courselist missing_organisator}}
-  </div>
-  <div class="list_small">
-	<h3>Kurse, die noch auf Teilnehmer_innen warten</h3>
-    {{> courselist missing_subscribers}}
-  </div>
-    <h1>Alle Kurse</h1>
-
-    {{> courselist all_courses}}
-
-
-    {{> course_create}}
+	<div class="coursepage">
+		<h1>CourseList</h1>
+		<div class="list_small">
+			<h3>Courses missing organisator(-team)</h3>
+			{{> courselist missing_organisator}}
+		</div>
+		<div class="list_small">
+			<h3>Courses that are still looking for participants</h3>
+			{{> courselist missing_subscribers}}
+		</div>
+		<h1>All courses</h1>
+		{{> courselist all_courses}}
+	</div>
+	{{> course_create}}
 </template>
+
 
 <template name="courselist">
-  <div class="courselist">
-        {{#each this}}
-            {{> course}}
-        {{else}}
-            keine Kurse
-        {{/each}}
-  </div>
+	<div class="courselist">
+		{{#each this}}
+			{{> course}}
+		{{else}}
+			keine Kurse
+		{{/each}}
+	</div>
 </template>
 
+
 <template name="course">
-  <div class="courselist_course">
-  <a href="{{courseURL _id name}}">
-    <span class="course_name">{{name}}</span>
-    <span class="course_status">
-			{{#if roles.participant}}
-				<span class="status {{participant_status}}" title="{{#if isYes participant_status}}has enough Participants{{else}}{{#if isOntheway participant_status}}has some participants{{else}}doesn't have enough participants{{/if}}{{/if}}">P {{roles.participant.subscribed.length}} {{#unless isNull subscribers_min}}/{{subscribers_min}} {{/unless}}{{is_subscriber}}</span>
-			{{/if}}
-			{{#if roles.team}}
-				<span class="team_status {{team_status}}" title="{{#if isYes team_status}}{{#if is_team}} you are organisator{{else}}has a organisator-team{{/if}}{{else}}needs an organisator{{/if}}">T{{#if is_team}}*{{/if}}</span>
-			{{/if}}
-			{{#if roles.mentor}}
-				<span class="mentor_status {{mentor_status}}" title="{{#if isYes mentor_status}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{else}}still needs a mentor{{/if}}">M{{#if is_mentor}}*{{/if}}</span>
-			{{/if}} 					<!-- TODO: looking for a mentor/host-->
-			{{#if roles.host}}
-				<span class="host_status {{host_status}}" title="{{#if isYes host_status}}{{#if is_host}}you are host{{else}}has a host{{/if}}{{else}}still needs a host{{/if}}">H{{#if is_host}}*{{/if}}</span>
-			{{/if}}
-    </span>
-    <span class="smalldesc">
-      <span class="small">{{dateformat time_created}}</span>
-      <span class="small">{{username createdby}}</span>
-      <span class="small">{{> show_categories}}</span>
-    </span>
-  </a>
-  </div>
+	<div class="courselist_course">
+		<a href="{{courseURL _id name}}">
+			<span class="course_name">{{name}}</span>
+			<span class="course_status">
+				{{#if roles.participant}}
+					<span class="status {{participant_status}}" title="{{#if isYes participant_status}}has enough Participants{{else}}{{#if isOntheway participant_status}}has some participants{{else}}doesn't have enough participants{{/if}}{{/if}}">P {{roles.participant.subscribed.length}} {{#unless isNull subscribers_min}}/{{subscribers_min}} {{/unless}}{{is_subscriber}}</span>
+				{{/if}}
+				{{#if roles.team}}
+					<span class="team_status {{team_status}}" title="{{#if isYes team_status}}{{#if is_team}} you are organisator{{else}}has a organisator-team{{/if}}{{else}}needs an organisator{{/if}}">T{{#if is_team}}*{{/if}}</span>
+				{{/if}}
+				{{#if roles.mentor}}
+					<span class="mentor_status {{mentor_status}}" title="{{#if isYes mentor_status}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{else}}still needs a mentor{{/if}}">M{{#if is_mentor}}*{{/if}}</span>
+				{{/if}} 					<!-- TODO: looking for a mentor/host-->
+				{{#if roles.host}}
+					<span class="host_status {{host_status}}" title="{{#if isYes host_status}}{{#if is_host}}you are host{{else}}has a host{{/if}}{{else}}still needs a host{{/if}}">H{{#if is_host}}*{{/if}}</span>
+				{{/if}}
+			</span>
+			<span class="smalldesc">
+				<span class="small">{{dateformat time_created}}</span>
+				<span class="small">{{username createdby}}</span>
+				<span class="small">{{> show_categories}}</span>
+			</span>
+		</a>
+	</div>
 </template>

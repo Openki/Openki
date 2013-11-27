@@ -42,56 +42,49 @@ Template.coursedetails.isEditingDate = function () {
 
 
 Template.coursedetails.events({
-
 	'click input.del': function () {
 		if (confirm("wirklich?")) {
 			Courses.remove(this._id);
 			Router.navigate('/', true);
 		}
 	},
-
-    'click input.edit': function () {
-      	// gehe in den edit-mode, siehe html
-		if(Meteor.userId())
+	'click input.edit': function () {
+		// gehe in den edit-mode, siehe html
+		if(Meteor.userId()) {
 			Session.set("isEditing", true);
-		else
+		}
+		else {
 			alert("Security robot say: sign in");
-    },
-
-    'click input.subscribe': function () {
-    	Meteor.call("change_subscription", this.course._id, this.roletype.type, true)
-    },
-
-    'click input.unsubscribe': function () {
+		}
+	},
+	'click input.subscribe': function () {
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true)
+	},
+	'click input.unsubscribe': function () {
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
-    },
-
+	},
 	'click input.editDate': function () {
 		Session.set("isEditingDate", true);
 	}
-
-
-
-
-
 })
 
 
 // nur für css
 
-  Template.coursedetails.subscribers_status = function() {
-  	  //CSS status: genug anmeldungen? "ok" "notyet"
-  	var course = this
-  	if(course){
-  	  if(course.subscribers){
-  	  	  if(course.subscribers.length>=course.subscribers_min){
-			  return "ok";
-		  }else{
-			  return "notyet";
-		  }
-  	  }
-  	}
-  }
+Template.coursedetails.subscribers_status = function() {
+	//CSS status: genug anmeldungen? "ok" "notyet"
+	var course = this
+	if(course){
+		if(course.subscribers){
+			if(course.subscribers.length>=course.subscribers_min){
+				return "ok";
+			}else{
+				return "notyet";
+			}
+		}
+	}
+}
+
 
 Template.coursedetails.roleDetails = function(roles) {
 	var course = this
@@ -102,7 +95,7 @@ Template.coursedetails.roleDetails = function(roles) {
 				roletype: roletype,
 				role: role,
 				subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0,
-        		course: course
+				course: course
 			})
 		}
 		return goodroles;

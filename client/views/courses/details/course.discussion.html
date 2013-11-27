@@ -1,36 +1,37 @@
 <template name="postDialog">
-  {{#if showPostDialog}}
-    {{> writePostDialog}}
-  {{/if}}
+	{{#if showPostDialog}}
+		{{> writePostDialog}}
+	{{/if}}
 </template>
-    
+
 <template name="writePostDialog">
-  <div class="popup">
-    <h3>write comment</h3>
-      <form name="form_post">
-        <input type="text" id="post_title" /><br />
-        <textarea cols="70" rows="5" id="post_text" /></textarea><br /><br />
-        <input type="button" class="add" value="write!" /><input type="button" class="cancel" value="cancel" />
-      </form>
-  </div>
+	<div class="popup">
+		<h3>write comment</h3>
+		<form name="form_post">
+			<input type="text" id="post_title" /><br />
+			<textarea cols="70" rows="5" id="post_text" /></textarea><br /><br />
+			<input type="button" class="add" value="write!" /><input type="button" class="cancel" value="cancel" />
+		</form>
+	</div>
 </template>
+
 <template name="discussion">
-  <h3>discussion</h3>
-  <input type ="button" class="write" value="write Comment" />
-  {{#each post}}
-      {{#if parent_ID}}
-	    <div class="comment">
-		  <h4>{{title}}</h4>
-		  <p>{{text}}</p>
-		  <p>Zeit: {{time_created}}, User: {{username user_ID}}, Kurs: {{course_ID}}</p>
-	    </div>
-     {{else}}
-	    <div class="post">
-		  <h4>{{title}}</h4>
-		  <p>{{text}}</p>
-		  <p>Zeit: {{time_created}}, User: {{username user_ID}}, Kurs: {{course_ID}}</p>
-		  <input type="button" class="answer" value="answer this!" />
-	    </div>
-      {{/if}}
-  {{/each}}
+	<h3>discussion</h3>
+	<input type ="button" class="write" value="write Comment" />
+	{{#each post}}
+		{{#if parent_ID}}
+			<div class="comment">
+				<h4>{{title}}</h4>
+				<p>{{text}}</p>
+				<p>Zeit: {{time_created}}, User: {{username user_ID}}, Kurs: {{course_ID}}</p>
+			</div>
+		{{else}}
+			<div class="post">
+				<h4>{{title}}</h4>
+				<p>{{text}}</p>
+				<p>Zeit: {{time_created}}, User: {{username user_ID}}, Kurs: {{course_ID}}</p>
+				<input type="button" class="answer" value="answer this!" />
+			</div>
+		{{/if}}
+	{{/each}}
 </template>

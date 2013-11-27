@@ -1,63 +1,57 @@
 <template name="votelists">
-    <div id="votelists">
-    <h3>Votings</h3>
-        {{#each votings.votings}}
-            <div class="voting">
-                <h4>{{question}}</h4>
-                 <table class="votelist_table">
-                     <tr>
-                         <td></td>
-                         {{#each options}}
-                             <td>
-                             {{this.option}}
-                             </td>
-                         {{else}}
-                            <td>no options </td>
-                         {{/each}}
-                 </tr>
-                 {{#each this.subscribers}}
-                  <tr class="{{this.is_current}}">
-                         <td>{{>profilelink this.subscribersId}}</td>
+	<div id="votelists">
+		<h3>Votings</h3>
+		{{#each votings.votings}}
+		<div class="voting">
+			<h4>{{question}}</h4>
+			<table class="votelist_table">
+				<tr>
+					<td></td>
+					{{#each options}}
+						<td>
+							{{this.option}}
+						</td>
+						{{else}}
+							<td>no options </td>
+					{{/each}}
+				</tr>
+				{{#each this.subscribers}}
+					<tr class="{{this.is_current}}">
+						<td>{{>profilelink this.subscribersId}}</td>
+						{{#each this.options}}
+							<td class="option {{this.vote_status}}" name= "{{this.option_index}}"> &nbsp;&nbsp;</td>
+							{{else}}
+								<td>no options </td>
+						{{/each}}
+					</tr>
+				{{/each}}
+				<tr>
+					<td><b>total</b></td>
+					{{#each this.total}}
+						<td >&nbsp;&nbsp;{{this}}</td>
+						{{else}}
+							<td> </td>
+					{{/each}}
+				</tr>
+			</table>
+		</div>
 
-                           {{#each this.options}}
-                             <td class="option {{this.vote_status}}" name= "{{this.option_index}}">
-                            &nbsp;&nbsp;
-                             </td>
-                         {{else}}
-                            <td>no options </td>
-                         {{/each}}
-                 </tr>
-                 {{/each}}
-                   <tr>
-                         <td><b>total</b></td>
+		{{else}}
+			<p>no votings yet.. </p>
+		{{/each}}
 
-                           {{#each this.total}}
-                             <td >
-                            &nbsp;&nbsp;{{this}}
-                             </td>
-                         {{else}}
-                            <td> </td>
-                         {{/each}}
-                 </tr>
-                 </table>
-            </div>
-        {{else}}
-            <p>no votings yet.. </p>
-        {{/each}}
-
-    <input type="button" class="show_add_vote" value="create new voting:" />
-
-    <form id="add_vote_form" style="display:none">
-        <h4>New voting</h4>
-        <p>Frage: <input type="text" id="add_vote_question" size="30"></p>
-            <div id="add_vote_options">
-            <p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
-            <p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
-        </div>
-        <p><input type="button" class="add_vote_add_option" value="+ Option"></p>
-        <input type="button" class="create_votelist" value="create voting">
-    </form>
-  </div>
+		<input type="button" class="show_add_vote" value="create new voting:" />
+		<form id="add_vote_form" style="display:none">
+			<h4>New voting</h4>
+			<p>Frage: <input type="text" id="add_vote_question" size="30"></p>
+			<div id="add_vote_options">
+				<p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+				<p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+			</div>
+			<p><input type="button" class="add_vote_add_option" value="+ Option"></p>
+			<input type="button" class="create_votelist" value="create voting">
+		</form>
+	</div>
 </template>
 
 
