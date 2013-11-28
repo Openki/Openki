@@ -2,27 +2,25 @@
 	<body>
 		<div id="container">
 			<div id="header_bar">
-			<div id="ticker">
+				<div id="ticker">
 				{{> ticker}}
+				</div>
+				<div id="login">
+					{{loginButtons align="right"}}
+				</div>
+				<div id="search">
+					{{> search_menue}}
+				</div>
+				<div id="create">
+					{{> create_menue}}
+				</div>
+				<div id="about">
+					{{> about_menue}}
+				</div>
+				<div id="region_sel">
+					{{> region_sel}}
+				</div>
 			</div>
-			<div id="login">
-			{{loginButtons align="right"}}
-			</div>
-			<div id="search">
-				{{> search_menue}}
-			</div>
-			<div id="create">
-				{{> create_menue}}
-			</div>
-			<div id="about">
-				{{> about_menue}}
-			</div>
-			<div id="region_sel">
-				{{> region_sel}}
-			</div>
-			</div>
-
-
 			<div id="outer">
 				<div id="maincontent">
 					{{yield}}
@@ -34,75 +32,74 @@
 
 
 <template name="search_menue">
-      <div class="dropdown">
-        <a id="mainmenue" href="/">Search</a>
-        <div class="dropdown-menu">
-          <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="/">Courses</a></li>
-            <li><a class="regionselect" href="/locations/">Room List</a></li>
-            <li><a class="regionselect" href="/categorylist/">Category List</a></li>
-            <li><a class="regionselect" href="/calendar/">Calendar</a></li>
-            <li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
-          </ul>
-          </div>
-          {{about}}
-      </div>
+	<div class="dropdown">
+		<a id="mainmenue" href="/">Search</a>
+		<div class="dropdown-menu">
+			<ul role="menu" aria-labelledby="dLabel">
+				<li><a class="regionselect" href="/">Courses</a></li>
+				<li><a class="regionselect" href="/locations/">Room List</a></li>
+				<li><a class="regionselect" href="/categorylist/">Category List</a></li>
+				<li><a class="regionselect" href="/calendar/">Calendar</a></li>
+				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
+			</ul>
+		</div>
+		{{about}}
+	</div>
 </template>
 
 <template name="create_menue">
-      <div class="dropdown">
-        <a id="mainmenue" href="/CreateProposal/">Create Course</a>
-        <div class="dropdown-menu">
-          <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Proposal</a></li>
-            <li><a class="regionselect" href="{{pathFor 'createCourse'}}">Arranged one</a></li>
-          </ul>
-          </div>
-          {{about}}
-      </div>
+	<div class="dropdown">
+		<a id="mainmenue" href="/CreateProposal/">Create Course</a>
+		<div class="dropdown-menu">
+			<ul role="menu" aria-labelledby="dLabel">
+				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Proposal</a></li>
+				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Arranged one</a></li>
+			</ul>
+		</div>
+		{{about}}
+	</div>
 </template>
 
 
 
 
 <template name="about_menue">
-      <div class="dropdown">
-        <a class="regions" href="/page/about">about</a>
-        <div class="dropdown-menu">
-          <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="/page/about">about</a></li>
-            <li><a class="regionselect" href="/page/FAQ">FAQ</a></li>
-          </ul>
-          </div>
-          {{about}}
-      </div>
+	<div class="dropdown">
+		<a class="regions" href="/page/about">about</a>
+		<div class="dropdown-menu">
+			<ul role="menu" aria-labelledby="dLabel">
+				<li><a class="regionselect" href="/page/about">about</a></li>
+				<li><a class="regionselect" href="/page/FAQ">FAQ</a></li>
+			</ul>
+		</div>
+		{{about}}
+	</div>
 </template>
 
 
 
 <template name="region_sel">
-
-      <div class="dropdown">
-        <a class="regions" href="/">Region:</a>
-        <div class="dropdown-menu">
-          <ul role="menu" aria-labelledby="dLabel">
-            <li><a class="regionselect" href="/region/{{_id}}">All</a></li>
-            {{# each regions}}
-              <li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
-            {{/each}}
-          </ul>
-          </div>
-          <a class="regionselect" href="/region/{{_id}}">{{region}}▼ </a>
-      </div>
+	<div class="dropdown">
+		<a class="regions" href="/">Region:</a>
+		<div class="dropdown-menu">
+			<ul role="menu" aria-labelledby="dLabel">
+				<li><a class="regionselect" href="/region/{{_id}}">All</a></li>
+				{{# each regions}}
+					<li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
+				{{/each}}
+			</ul>
+		</div>
+		<a class="regionselect" href="/region/{{_id}}">{{region}}▼ </a>
+	</div>
 </template>
 
 <!-- ///////////// Demo-Page-Ticker ///////////// -->
 
 <template name="ticker">
-<marquee  bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
-Achtung: Dies ist nur eine <b>Testseite</b>. <span style = "padding-left:10em"> </span>
-alle Daten werden regelmässig gelöscht.  <span style = "padding-left:30em"> </span>
-This is only a <b>Testpage</b>. <span style = "padding-left:10em"> </span>
-All data will be erased regularly. <span style = "padding-left:10em"> </span>
-</marquee>
+	<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
+	Achtung: Dies ist nur eine <b>Testseite</b>. <span style = "padding-left:10em"> </span>
+	alle Daten werden regelmässig gelöscht.	<span style = "padding-left:30em"> </span>
+	This is only a <b>Testpage</b>. <span style = "padding-left:10em"> </span>
+	All data will be erased regularly. <span style = "padding-left:10em"> </span>
+	</marquee>
 </template>

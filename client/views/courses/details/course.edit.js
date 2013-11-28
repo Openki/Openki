@@ -67,7 +67,7 @@ Template.course_edit.events({
 			Courses.update(this._id, { $set: ofcourse })
 		} else {
 			ofcourse.time_created = new Date
-			ofcourse.region = Session.get('region')    //todo: please select a region if non is selected
+			ofcourse.region = Session.get('region')	//todo: please select a region if non is selected
 			ofcourse.createdby = Meteor.userId()
 			var I_want_to_be_responsible_for_the_course = 1;  // todo: html : set variable...
 			if (I_want_to_be_responsible_for_the_course === 1){
@@ -80,8 +80,8 @@ Template.course_edit.events({
 
 		Session.set("isEditing", false);
 	}
-    else
-  		alert("Security robot say: please sign in!");
+	else
+		alert("Security robot say: please sign in!");
 	},
 
 	'click input.cancel': function() {
@@ -89,18 +89,18 @@ Template.course_edit.events({
 	},
 
 	'click #show_categories_to_edit': function(event){
-	    $('#show_categories_to_edit').toggle();
-	    $('#edit_categories').toggle();
+		$('#show_categories_to_edit').toggle();
+		$('#edit_categories').toggle();
 	},
 
 	'change .checkbox': function(){
-	    //$('#' + event.currentTarget.id +" .subcategories").toggle();
-	    $('#cat_' + this._id +" .subcategories").toggle();
+		//$('#' + event.currentTarget.id +" .subcategories").toggle();
+		$('#cat_' + this._id +" .subcategories").toggle();
 
-	    // todo: deselect all children
-	    var is_checked = $('#cat_' + this._id +" .checkbox").first().prop('checked');
-	    if(!is_checked)
-	        $('#cat_' + this._id +" .checkbox_sub").prop('checked', false);
+		// todo: deselect all children
+		var is_checked = $('#cat_' + this._id +" .checkbox").first().prop('checked');
+		if(!is_checked)
+			$('#cat_' + this._id +" .checkbox_sub").prop('checked', false);
 
 	}
 });

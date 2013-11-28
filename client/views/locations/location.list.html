@@ -1,53 +1,52 @@
 <template name="locationlist">
 <h1>Rooms</h1>
-    publically visible locations
-    <div class="locationlist">
-        {{#each locations}}
-            {{> location}}
-        {{else}}
-            no locations
-        {{/each}}
+	publically visible locations
+	<div class="locationlist">
+		{{#each locations}}
+			{{> location}}
+		{{else}}
+			no locations
+		{{/each}}
 
-        {{> location_create}}
-    </div>
+		{{> location_create}}
+	</div>
 </template>
 
 
 
 <template name="location">
-    <div class="locationlist_location">
-        <p class="name"> <a href="{{pathFor 'locationDetails'}}">{{name}}</a></p>
-        <p class="description">{{description}} </p>
+	<div class="locationlist_location">
+		<p class="name"> <a href="{{pathFor 'locationDetails'}}">{{name}}</a></p>
+		<p class="description">{{description}} </p>
 
-        {{#if ismylocation}}
-        <p class="mylocation">You can host here</p>
-        <input type="button" class="edit_location" value="editieren">
-        {{/if}}
-    </div>
+		{{#if ismylocation}}
+		<p class="mylocation">You can host here</p>
+		<input type="button" class="edit_location" value="editieren">
+		{{/if}}
+	</div>
 </template>
 
 
 
 <template name="location_create">
-    <div class="location_create">
-    <form>
-    <h3>Add a own location</h3>
-    <table>
-        <tr>
-            <th>Name: </th><td><input type="text" id="addlocation_name"/> </td>
-        </tr>
-        <tr>
-            <th>Description: </th><td><textarea cols="30" rows="4" id="addlocation_description"></textarea> </td>
-        </tr>
-        <tr>
-            <th>Visible in list: </th><td><input type="checkbox" id="addlocation_public" checked></textarea> (I want to be contactable, </br>so that other users can ask me </br>if I want to be host for their event)</td></br>
-            <th>Public Space: </th><td><input type="checkbox" id="addlocation_public-space" checked></textarea> (everybody will be allowed </br>to host here)</td>
-        </tr>
-        <tr>
-            <th></th><td><input type="button" class="add" value="Add new" /> </td>
-        </tr>
-
-    </table>
-    </form>
-    </div>
+	<div class="location_create">
+		<form>
+			<h3>Add a own location</h3>
+			<table>
+				<tr>
+					<th>Name: </th><td><input type="text" id="addlocation_name"/> </td>
+				</tr>
+				<tr>
+					<th>Description: </th><td><textarea cols="30" rows="4" id="addlocation_description"></textarea> </td>
+				</tr>
+				<tr>
+					<th>Visible in list: </th><td><input type="checkbox" id="addlocation_public" checked></textarea> (I want to be contactable, </br>so that other users can ask me </br>if I want to be host for their event)</td></br>
+					<th>Public Space: </th><td><input type="checkbox" id="addlocation_public-space" checked></textarea> (everybody will be allowed </br>to host here)</td>
+				</tr>
+				<tr>
+					<th></th><td><input type="button" class="add" value="Add new" /> </td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </template>
