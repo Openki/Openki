@@ -1,35 +1,33 @@
 <template name="profilelink">
-    <a class="profilelink" href="/user/{{this}}/{{username this}}">{{username this}}</a>
+	<a class="profilelink" href="/user/{{this}}/{{username this}}">{{username this}}</a>
 </template>
 
 
 
 <template name="userprofile">
-  <div id="profile">
-    <h1 class="name">{{this.username}}'s Profile-Page</h1>
-	<p class="small">UserId: {{this._id}}</p>
-        </br> </br> </br> </br> </br>
-	{{#if ownuser}}
-		it's you! <a href="/profile/" >here's your pref. site</a>
-	{{else}}
-		<p>---------------------------------------------------------</p>
-		<p>you can write an email to this user:</p>
-		</br>
-			Your message:
-			<p> <input type="text" id="emailmessage" placeholder="Hi {{this.username}}! ..."/></p>
-
-			<p>Options:    <!-- this is a proposition. doesn't work yet -->
-				<form>
-				<input type="checkbox" name="email1" value="send">attach my email adresse<br>
-				<input type="checkbox" name="email2" value="copy">send me a copy of this message<br>
-				</form>
-			</p>
-			<input type="button" class="sendmail" value="Send Email" />
-	{{/if}}
-
-
-	<div class="list_small">
-    <h3>{{this.username}}'s Courses:</h3>       <!--(this because there is a helper called username) -->
-    {{> courselist courses_from_userid}}
-</div>
+	<div id="profile">
+		<h1 class="name">{{this.username}}'s Profile-Page</h1>
+		<p class="small">UserId: {{this._id}}</p>
+		</br> </br> </br> </br> </br>
+		{{#if ownuser}}
+			it's you! <a href="/profile/" >here's your pref. site</a>
+		{{else}}
+			<p>---------------------------------------------------------</p>
+			<p>you can write an email to this user:</p>
+			</br>
+				Your message:
+				<p> <input type="text" id="emailmessage" placeholder="Hi {{this.username}}! ..."/></p>
+				<p>Options:	<!-- this is a proposition. doesn't work yet -->
+					<form>
+						<input type="checkbox" name="email1" value="send">attach my email adresse<br>
+						<input type="checkbox" name="email2" value="copy">send me a copy of this message<br>
+					</form>
+				</p>
+				<input type="button" class="sendmail" value="Send Email" />
+		{{/if}}
+		<div class="list_small">
+			<h3>{{this.username}}'s Courses:</h3>	   <!--(this because there is a helper called username) -->
+			{{> courselist courses_from_userid}}
+		</div>
+	</div>
 </template>

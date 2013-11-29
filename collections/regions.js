@@ -16,24 +16,25 @@ Regions.allow({
 
 var regions = [{
 		'name':        'Testistan',
-		'_id': 		   '9JyFCoKWkxnf8LWPh'
+		'_id':         '9JyFCoKWkxnf8LWPh'
 	},{
 		'name':        'Spilistan',
-		'_id': 		   'EZqQLGL4PtFCxCNrp'
-    },{
+		'_id':         'EZqQLGL4PtFCxCNrp'
+	},{
 		'name':        'Bern',
-		'_id': 		   'Siifr2P7drkv66FNA'
+		'_id':         'Siifr2P7drkv66FNA'
 	},{
 		'name':        'Zürich',
-		'_id': 		   'J6GDhEEvdmdSMzPPF'
+		'_id':         'J6GDhEEvdmdSMzPPF'
 	},{
 		'name':        'Biel',
-		'_id': 		   'Gkkr8Deb2ln4hGp7O'
-    },{
+		'_id':         'Gkkr8Deb2ln4hGp7O'
+	},{
 		'name':        'Luzern',
-		'_id': 		   'h6ZeeIBfp72msnnp3'
-    }
+		'_id':         'h6ZeeIBfp72msnnp3'
+	}
 ]
+
 
 Meteor.startup(function () {
 	if (Meteor.isServer && Regions.find().count() == 0) {

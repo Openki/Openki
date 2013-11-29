@@ -14,14 +14,14 @@ var roles = [{
 		'preset':      true,
 		'show_subscribers': false,
 		'protorole': { 'subscribed': [] }
-    },{
+	},{
 		'type':        'follow',
 		'description': 'get informed',
 		'subscribe':   'I want to be notified about all changes' ,
 		'preset':      true,
 		'show_subscribers': false,
 		'protorole': { 'subscribed': [] }
-    },{
+	},{
 		'type':        'participant',
 		'description': 'take part',
 		'subscribe':   'I want to take part',
@@ -31,13 +31,13 @@ var roles = [{
 			'max': { 'type': 'int', 'description': 'maximal count of participants', 'optional': true },
 		},
 		'protorole': { 'subscribed': [] }
-    },{
+	},{
 		'type':        'mentor',
 		'description': 'are a mentor',
 		'subscribe':   'I can be a mentor',
 		'show_subscribers': true,
 		'protorole': { 'subscribed': [] }
-    },{
+	},{
 		'type':        'host',
 		'description': 'host the course',
 		'subscribe':   'I have a room to host this',
@@ -46,13 +46,13 @@ var roles = [{
 			'address': 'text'
 		},
 		'protorole': { 'subscribed': [] }
-    },{
+	},{
 		'type':        'cook',
 		'description': 'cook for gatherings',
 		'subscribe':   'I can bring food' ,
 		'show_subscribers': true,
 		'protorole': { 'subscribed': [] }
-    }
+	}
 ]
 
 Meteor.startup(function () {

@@ -1,25 +1,22 @@
-
 <template name="search_results">
-		{{#unless results.count}}<a class="propose_course" href="createcourse/">Propose it</a>{{/unless}}
+	{{#unless results.count}}
+		<a class="propose_course" href="createcourse/">Propose it</a>
+	{{/unless}}
 	<div>
-	{{#if coursesLoaded}}
-	    {{results.count}} found! (in {{results.region}})
-    {{else}}
-        loading...
-    {{/if}}
-
+		{{#if coursesLoaded}}
+			{{results.count}} found! (in {{results.region}})
+		{{else}}
+			loading...
+		{{/if}}
 	</div>
+
 	<div class="courselist_results">
-
-	{{#if coursesLoaded}}
-
-        {{#each results.courses}}
-            {{> course}}
-        {{/each}}
-
-    {{else}}
-      <img src="/spinner.gif">
-    {{/if}}
-
+		{{#if coursesLoaded}}
+			{{#each results.courses}}
+				{{> course}}
+			{{/each}}
+		{{else}}
+			<img src="/spinner.gif">
+		{{/if}}
 	</div>
 </template>

@@ -11,7 +11,7 @@ Template.search_results.results = function () {
 				{ name: { $regex: query, $options: 'i' } },
 				{ description: { $regex: query, $options: 'i' } }
 			]
-//{sort: {time_created: -1}} ??
+				//{sort: {time_created: -1}} ??
 		})
 	}
 	var courses = Courses.find(find)
@@ -20,6 +20,7 @@ Template.search_results.results = function () {
 	return { count: courses.count(), courses: courses, region : regionName }
 }
 
-  Template.search_results.coursesLoaded = function () {
-    return Session.get('coursesLoaded');
-  };
+Template.search_results.coursesLoaded = function () {
+	return Session.get('coursesLoaded');
+};
+
