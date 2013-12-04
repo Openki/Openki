@@ -25,13 +25,11 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 ### Installation
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip (or clone) Hmmm into /some/path
 - `cd /some/path`
-- Install Meteor: Run
+- To install Meteor, run:
     - ` curl https://install.meteor.com | sh`
-    - ` apt-get install npm nodejs`  (mac: install from [nodejs.org](nodejs.org)
-    - ` npm install -g n`  (if needed for node version)
-    - ` n 0.10.12`         (if needed)
+    - ` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
     - ` npm install -g meteorite`
-    - ` mrt add iron-router
+    - ` mrt add iron-router`
 - Run `meteor`
 - Browse to http://localhost:3000/
 
