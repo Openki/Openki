@@ -3,8 +3,8 @@
 
 body {
     background-color: #f6f6f6;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 200;
+    font-family: 'SourceSansProLight', Helvetica, Arial, sans-serif;
+   
     margin: 0px 0 50px 0;
     padding: 0;
     -webkit-user-select: none;
@@ -70,7 +70,7 @@ margin: 0;
 /***** HEADER BAR ******/
 #header_bar{
     background-color: #38829c;
-    height: 50px;
+    height: 70px;
     position: fixed;
     z-index:100;
     min-width: 850px;
@@ -142,9 +142,12 @@ margin: 0;
     background-color: #E3E3E3;
     overflow: auto;
     padding: 5px;
+
 }
-
-
+.course_name{
+        color: #000;
+        font-size:22px;
+}
 .courselist_course .course_name {
 
     width: 150px;
@@ -210,7 +213,7 @@ margin:0 0 8px 0;
      }
 
 .courselist_course:hover {
-    font-weight: bold;
+ 
 }
 
 .coursepage{
@@ -522,10 +525,12 @@ border: none;
 
 h1{
 color: #38829c;
+font-weight: normal;
 }
 
 h2{
 	margin: 0;
+    font-weight: normal;
 }
 
 form h3{
@@ -642,13 +647,25 @@ th{
 	content: ''
 }
 
-a {
+#header_bar a {
     text-decoration: none;
-    font-weight: bold; }
-    a:link, a:visited, a:active {
-    color: #a4a9ab; }
-    a:hover {
-    color: #f36c3d; }
+     color: #FFF;
+     font-size:31px;
+     }
+ #header_bar   a:link, a:visited, a:active {
+    color: #FFF; }
+ #header_bar   a:hover {
+    color: #DDD; }
+
+.dropdown-menu a, .dropdown-menu a:link, .dropdown-menu a:visited, .dropdown-menu a:active {
+color: #555 !important; 
+font-size: 15px !important;
+
+}
+.dropdown-menu a:hover {
+color: #000 !important; 
+
+}
 
 
 
@@ -658,7 +675,7 @@ a {
     padding-top: 5px;
     padding-left: 50px;
     float:left;
-    text-transform: uppercase;}
+  //  text-transform: uppercase;}
 
 .dropdown span a, {
     color:#f6f6f6;
@@ -682,7 +699,7 @@ a {
     font-size: 8px; }
 .dropdown .dropdown-menu {
     display: none;
-    top: 25px;
+    top: 45px;
     left: 10px;
     position: absolute;
 }
@@ -711,6 +728,11 @@ a {
 /**********   Search   **********/
 .searchform{
     font-size: 200%;
+    font-weight: normal;
+    font-family: 'SourceSansProLight', Helvetica, Arial, sans-serif;
+    color: #000;
+    border: 1px dotted #666;
+    padding-left: 5px;
 }
 
 .search{

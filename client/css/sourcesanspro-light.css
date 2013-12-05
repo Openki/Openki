@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'SourceSansProLight';
+    src: url('/fonts/sourcesanspro-light.eot');
+    src: url('/fonts/sourcesanspro-light.eot') format('embedded-opentype'),
+         url('/fonts/sourcesanspro-light.woff') format('woff'),
+         url('/fonts/sourcesanspro-light.ttf') format('truetype'),
+         url('/fonts/sourcesanspro-light.svg#SourceSansProLight') format('svg');
+}
