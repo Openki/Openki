@@ -12,6 +12,14 @@ Router.map(function () {									///////// startpage /////////
 	this.route('home', {
 		path: '/',
 		template: 'start',
+		data: function(){
+			console.log('data')
+			var oldSearch;
+			Deps.nonreactive(function(){
+				oldSearch = Session.get('search')
+			})
+			return {oldSearch: oldSearch}
+		},
 		after: function() {
 			document.title = webpagename + 'Home'
 		}

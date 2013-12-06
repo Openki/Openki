@@ -4,7 +4,7 @@
 body {
     background-color: #f6f6f6;
     font-family: 'SourceSansProLight', Helvetica, Arial, sans-serif;
-   
+
     margin: 0px 0 50px 0;
     padding: 0;
     -webkit-user-select: none;
@@ -213,7 +213,7 @@ margin:0 0 8px 0;
      }
 
 .courselist_course:hover {
- 
+
 }
 
 .coursepage{
@@ -702,12 +702,12 @@ th{
     color: #DDD; }
 
 .dropdown-menu a, .dropdown-menu a:link, .dropdown-menu a:visited, .dropdown-menu a:active {
-color: #555 !important; 
+color: #555 !important;
 font-size: 15px !important;
 
 }
 .dropdown-menu a:hover {
-color: #000 !important; 
+color: #000 !important;
 
 }
 
@@ -803,4 +803,8 @@ ul.categories {
     float: left;
     clear: none;
     padding-left: 1em;
+}
+
+form{
+    display: inline;
 }
