@@ -113,3 +113,10 @@ Template.course.is_mentor = function() {
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
 }
+
+
+Template.course.course_events = function() {
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+
+	return Events.find({course_id: this._id});
+}
