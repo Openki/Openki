@@ -7,6 +7,7 @@
 			{{>course_edit}}
 		{{else}}
 			<div class="course_main">
+			{{title name " - hmmm"}}
 			<h2 class="name">{{name}}</h2>
 			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
 			<p class="descr">{{dateformat date}} {{timeformat date}}</p>

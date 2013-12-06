@@ -28,7 +28,12 @@ display_coursename = function (courseid){
 /*************** HandleBars Helpers ***********************/
 
 Handlebars.registerHelper("log", function(context) {
-	if (window.console) return console.log(context);
+	if (window.console) console.log(context)
+});
+
+Handlebars.registerHelper("title", function() {
+	var les = Array.prototype.slice.call(arguments, 0, -1)
+	document.title = les.join("");
 });
 
 Handlebars.registerHelper('username', function (userid){
@@ -140,3 +145,4 @@ Handlebars.registerHelper('isAdmin', function() {
     var user = Meteor.user()
     return user && user.isAdmin
 });
+
