@@ -266,6 +266,16 @@ clear: left;
     padding: 0px 0px;
     float: left;
     width: 540px;
+    float:left;
+}
+
+.course_right_column{
+margin: 50px;
+width: 300px;
+    float:left;
+}
+h2.name{
+    font-size:40px
 }
 
 #coursedetails .tags {
@@ -291,9 +301,43 @@ clear: left;
 	margin: 50px 0 20px 0;
 }
 
+.course_event_edit{
+    background-color: #CCDDDF;
+    padding: 15px;
+    margin: 50px 0 20px 0;
+    float: none;
+    clear:left;
+}
+
 .course_edit ul {
 	list-style-type: none;
 	display: block;
+}
+.course_event{
+
+    float:left;
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+
+    background-color:#C1F2AE;
+}
+
+.course_event_desc{
+
+    font-size: 11px;
+}
+.course_event_date{
+
+    font-size: 30px;
+}
+
+.course_event_title{
+    font-size: 16px;
+}
+.course_event_mentors, .course_event_mentors li{
+    font-size: 12px;
+    display: inline;
 }
 
 #editform_categories{

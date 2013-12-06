@@ -14,6 +14,11 @@ Template.search_results.results = function () {
 				//{sort: {time_created: -1}} ??
 		})
 	}
+
+
+
+	
+
 	var courses = Courses.find(find)
 	var regionObj = Regions.findOne(region)
 	var regionName = regionObj ? regionObj.name : 'All regions'

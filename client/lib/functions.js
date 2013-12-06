@@ -47,12 +47,18 @@ Handlebars.registerHelper('username', function (userid){
 
 Handlebars.registerHelper('dateformat', function(date) {
 	// We'll need a date formatter at some point
-	if (date) return date.toDateString();
+	//if (date) return date.toDateString();
+    if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });
+
+
+
 
 Handlebars.registerHelper('timeformat', function(date) {
     // We'll need a time formatter at some point
-    if (date) return date.toTimeString();
+    //if (date) return date.toTimeString();
+
+    if (date) return ("0"+date.getHours()).slice(-2)+":"+("0"+date.getMinutes()).slice(-2);
 });
 
 

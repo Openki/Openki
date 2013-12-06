@@ -1,0 +1,44 @@
+<template name="course_events">
+	<div class="course_events">
+		<h3>Events</h3>
+		{{#each events_list}}
+
+			<div class="course_event">
+
+		{{#if isEditingEvent}}
+				{{>course_event_edit}}
+		{{else}}
+			{{#with event}}
+				<p class="course_event_date">{{dateformat startdate}}</p>
+				<p class="course_event_desc">Time: {{timeformat startdate}}</p>
+				<p class="course_event_title">{{title}}</p>
+				<p class="course_event_desc">{{description}}</p>
+				
+				{{#if this.mentors}}
+					<p class="course_event_mentors">
+						Mentors: 
+						<ul class="course_event_mentors">
+						{{#each this.mentors}}
+							<li>{{username this}}</li>
+						{{/each}}
+						</ul>
+					</p>
+				{{/if}}
+
+			{{/with}}
+			<input type="button" class="eventEdit" value="Edit" />
+		{{/if}}
+ <input type="button" class="eventDelete" value="Delete" />
+			</div>
+		{{else}}
+			no events 
+		{{/each}}
+	</div>
+	{{#if isAddingEvent}}
+		{{#with new_event}}
+			{{>course_event_edit}}
+		{{/with}}
+	{{else}}
+		<p><input type="button" class="addEvent" value="add a Date"/></p>
+	{{/if}}
+</template>

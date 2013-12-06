@@ -49,6 +49,9 @@ function get_courselist(listparameters){
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} )
 	}
+
+
+
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
