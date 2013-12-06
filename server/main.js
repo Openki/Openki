@@ -28,7 +28,7 @@ Meteor.methods({
 });
 
 
-// Create Categories if not all anymore
+// SETUP: Create Categories if not all anymore
 
 function createCategoriesIfNone() {
 	if (Categories.find().count() === 0) {

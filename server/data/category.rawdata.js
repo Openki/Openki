@@ -1,119 +1,119 @@
 categories = [{
-		'name':   'Sport / Bewegung',
+		'name':   'Sport / Bewegung',	// 'Sports / (Physical Training,Exercice,Practice,Workout)'
 		'_id':    '1'
 	},{
-		'name':   'Handwerk',
+		'name':   'Handwerk',			// 'craft'
 		'_id':    '2'
     },{
-		'name':   'Naturwissenschaft',
+		'name':   'Naturwissenschaft',	// 'Natural Science'
 		'_id':    '3'
     },{
-		'name':   'Geisteswissenschaft',
+		'name':   'Geisteswissenschaft',// '(Hunamities, Arts)'
 		'_id':    '4'
     },{
-		'name':   'Kultur',
+		'name':   'Kultur',				// 'Culture'
 		'_id':    '5'
     },{
-		'name':   'Computer',
+		'name':   'Computer',			// 'Computer'
 		'_id':    '6'
     },{
-		'name':   '♥Undefined♥',
+		'name':   '♥Undefined♥',		// '♥Undefined♥'
 		'_id':    '7'
     },{
-		'name':      'Kampfsport/-kunst',
+		'name':      'Kampfsport/-kunst',	// 'martial arts'
 		'parent':    '1'
 	},{
-		'name':      'Teamsport',
+		'name':      'Teamsport',			// 'Teamsport'
 		'parent':    '1'
 	},{
-		'name':      'Manege / Artistik',
+		'name':      'Manege / Artistik',	// 'artistry'
 		'parent':    '1'
 	},{
-		'name':      'Holz / Metall',
+		'name':      'Holz / Metall',		// 'Wood / Metall'
 		'parent':    '2'
 	},{
-		'name':      'Elektronik / Strom',
+		'name':      'Elektronik / Strom',	// 'Electronics / Electricity'
 		'parent':    '2'
 	},{
-		'name':      'Kunststoff / Stoff',
+		'name':      'Kunststoff / Stoff',	// 'Synthetic material / Fabric'
 		'parent':    '2'
 	},{
-		'name':      'Garten / Landwirtschaft',
+		'name':      'Garten / Landwirtschaft', // 'Gardening / Agriculture'
 		'parent':    '2'
 	},{
-		'name':      'Bau',
+		'name':      'Bau',					// 'Construction'
 		'parent':    '2'
 	},{
-		'name':      'Geographie',
+		'name':      'Geographie',			// 'Geography'
 		'parent':    '3'
 	},{
-		'name':      'Physik',
+		'name':      'Physik',				// 'Physics'
 		'parent':    '3'
 	},{
-		'name':      'Medizin',
+		'name':      'Medizin',				// 'Medicine'
 		'parent':    '3'
 	},{
-		'name':      'Mathematik',
+		'name':      'Mathematik',			// 'Mathematics'
 		'parent':    '3'
 	},{
-		'name':      'Chemie',
+		'name':      'Chemie',				// 'Chemistry'
 		'parent':    '3'
 	},{
-		'name':      'Biologie',
+		'name':      'Biologie',			// 'Biology'
 		'parent':    '3'
 	},{
-		'name':      'Sprache',
+		'name':      'Sprache',				// 'Languages'
 		'parent':    '4'
 	},{
-		'name':      'Geschichte',
+		'name':      'Geschichte',			// 'History'
 		'parent':    '4'
 	},{
-		'name':      'Soziologie',
+		'name':      'Soziologie',			// 'Sociology'
 		'parent':    '4'
 	},{
-		'name':      'Politik',
+		'name':      'Politik',				// 'Politics'
 		'parent':    '4'
 	},{
-		'name':      'Philosophie',
+		'name':      'Philosophie',			// 'Philosophy'
 		'parent':    '4'
 	},{
-		'name':      'Wirtschaft und Brecht',
+		'name':      'Wirtschaft und Brecht',// 'Business Studies Economics and Law'
 		'parent':    '4'
 	},{
-		'name':      'Literatur',
+		'name':      'Literatur',			// 'Literature'
 		'parent':    '5'
 	},{
-		'name':      'Theater',
+		'name':      'Theater',				// 'Theater'
 		'parent':    '5'
 	},{
-		'name':      'Musik',
+		'name':      'Musik',				// 'Music'
 		'parent':    '5'
 	},{
-		'name':      'Kunst',
+		'name':      'Kunst',				// 'Art'
 		'parent':    '5'
 	},{
-		'name':      'Design',
+		'name':      'Design',				// 'Design'
 		'parent':    '5'
 	},{
-		'name':      'Fotografie',
+		'name':      'Fotografie',			// 'Photography'
 		'parent':    '5'
 	},{
-		'name':      'Film',
+		'name':      'Film',				// 'Motion Picture'
 		'parent':    '5'
 	},{
-		'name':      'Kochen',
+		'name':      'Kochen',				// 'Cooking'
 		'parent':    '5'
 	},{
-		'name':      'Subkultur',
+		'name':      'Subkultur',			// 'Subculture'
 		'parent':    '5'
 	},{
-		'name':      'Internet',
+		'name':      'Internet',			// 'Internet'
 		'parent':    '6'
 	},{
-		'name':      'Programmieren',
+		'name':      'Programmieren',		// 'Programming'
 		'parent':    '6'
 	},{
-		'name':      'Softwarebedienung',
+		'name':      'Softwarebedienung',	// 'Software ??? '
 		'parent':    '6'
 	},
 ]

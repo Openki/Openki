@@ -47,7 +47,7 @@ Router.map(function () {									///////// startpage /////////
 
 	this.route('categorylist',{								///////// categories /////////
 		after: function() {
-			document.title = webpagename + 'Category-list'
+			document.title = webpagename + 'Category list'
 		}
 	})
 
