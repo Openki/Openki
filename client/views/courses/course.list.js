@@ -49,6 +49,9 @@ function get_courselist(listparameters){
 		// show courses with not enough subscribers
 		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} )
 	}
+
+
+
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
@@ -109,4 +112,11 @@ Template.course.is_mentor = function() {
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
+}
+
+
+Template.course.course_events = function() {
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+
+	return Events.find({course_id: this._id});
 }

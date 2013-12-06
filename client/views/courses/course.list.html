@@ -50,6 +50,19 @@
 				<span class="small">{{username createdby}}</span>
 				<span class="small">{{> show_categories}}</span>
 			</span>
+			<span class="smalldesc">
+				{{#if course_events}}
+				Events: 
+				<ul>
+					{{#each course_events}}
+						<li>
+						{{dateformat this.startdate}} -
+						{{timeformat this.startdate}}
+						</li>
+					{{/each}}
+				</ul>
+			</span>
+			{{/if}}
 		</a>
 	</div>
 </template>

@@ -8,6 +8,7 @@ Router.map(function () {
 			return Meteor.subscribe('categories');
 			return Meteor.subscribe('courses');
 			return Meteor.subscribe('users');
+			return Meteor.subscribe('events');
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
@@ -25,7 +26,7 @@ Router.map(function () {
 		},
 		unload: function () {
 			Session.set("isEditing", false);
-			Session.set("isEditingDate", false);
+			Session.set("isAddingEvent", false);
 		}
 	})
 })
@@ -35,9 +36,6 @@ Template.coursedetails.isEditing = function () {
 	return Session.get("isEditing");
 };
 
-Template.coursedetails.isEditingDate = function () {
-	return Session.get("isEditingDate");
-};
 
 
 
@@ -62,9 +60,6 @@ Template.coursedetails.events({
 	},
 	'click input.unsubscribe': function () {
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
-	},
-	'click input.editDate': function () {
-		Session.set("isEditingDate", true);
 	}
 })
 

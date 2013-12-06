@@ -15,9 +15,6 @@
 			<input type="button" class="edit" value="Edit" />
 			<input type="button" class="del" value="Delete" />
 			</div>
-			{{#if isOrganisator}}
-			<input type="button" class="editDate" value="add a Date"/>
-			{{/if}}
 
 
 		{{/if}}
@@ -31,6 +28,9 @@
 			{{/each}}
 
 	{{/with}}
+
+
+
 
 	<div class="participants">
 		<h3>Participants</h3>
@@ -56,6 +56,12 @@
 		{{> postDialog}}
 
 	{{/with}}
+
+  </div>
+<div class="course_right_column">
+	{{#with course}}
+			{{> course_events}}
+	{{/with}}
   </div>
 </template>
 
@@ -69,5 +75,6 @@
 		{{/if}}
 		</div>
 	</div>
+
 </template>
 
