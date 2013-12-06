@@ -12,8 +12,16 @@ function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
 	var user_prototype = {username: name}
 	var user
+	var age = Math.floor(Random.fraction()*100000000000)
 	while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
-		Accounts.createUser({username: name, email: (name+"@schuel.example").toLowerCase(), password: name});
+		Accounts.createUser({
+			username: name,
+			email: (name+"@schuel.example").toLowerCase(),
+			password: name,
+			createdAt: new Date(new Date().getTime()-age),
+			lastLogin: new Date(new Date().getTime()-age/30),
+			isAdmin: name === 'greg' || name === 'FeeLing' || name === 'IvanZ'
+		});
 	}
     return user;
 }

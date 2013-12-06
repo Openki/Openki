@@ -122,9 +122,15 @@ Handlebars.registerHelper('courseURL', function(_id, name) {
 
 
 						//Html title attribute of participant-state-sybol in courselist
-Handlebars.registerHelper('isYes', function(val){
+Handlebars.registerHelper('isYes', function(val) {
  	return val === 'yes'
 });
-Handlebars.registerHelper('isOntheway', function(val){
+Handlebars.registerHelper('isOntheway', function(val) {
  	return val === 'ontheway'
+});
+
+
+Handlebars.registerHelper('isAdmin', function() {
+    var user = Meteor.user()
+    return user && user.isAdmin
 });
