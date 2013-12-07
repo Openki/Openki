@@ -691,15 +691,24 @@ th{
 	content: ''
 }
 
+a:link, a:visited, a:active {
+    text-decoration: none;
+    color: #00F;
+}
+a:hover {
+    text-decoration: none;
+    color: #07F;
+}
+
 #header_bar a {
     text-decoration: none;
-     color: #FFF;
+     color: #888;
      font-size:31px;
-     }
- #header_bar   a:link, a:visited, a:active {
-    color: #FFF; }
- #header_bar   a:hover {
-    color: #DDD; }
+}
+
+#header_bar   a:hover {
+    color: #DDD;
+}
 
 .dropdown-menu a, .dropdown-menu a:link, .dropdown-menu a:visited, .dropdown-menu a:active {
 color: #555 !important;

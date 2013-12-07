@@ -13,9 +13,8 @@ Router.map(function () {									///////// startpage /////////
 		path: '/',
 		template: 'start',
 		data: function(){
-			console.log('data')
 			var oldSearch;
-			Deps.nonreactive(function(){
+			Deps.nonreactive(function(){	// to be updated only once
 				oldSearch = Session.get('search')
 			})
 			return {oldSearch: oldSearch}
