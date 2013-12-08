@@ -39,49 +39,40 @@ Template.course_edit.show_subcats = function(id, cats) {
 }
 
 
-// to be put on server ...........
-
 Template.course_edit.events({
-	'click input.save': function () {
-	if(Meteor.userId()){
-		var course = this._id ? this : { roles: {} }
-		_.each(Roles.find().fetch(), function(roletype) {
-			var type = roletype.type
-			var should_have = roletype.preset || document.getElementById('role_'+type).checked;
-			var have = !!course.roles[type]
-			if (have && !should_have) delete course.roles[type];
-			if (!have && should_have) course.roles[type] = roletype.protorole
-		})
+	'submit form.course_edit, click input.save': function (ev) {
+		ev.preventDefault()
+		
+		try {
+			if (!Meteor.userId()) throw "Security robot say: please sign in!"
+			
+			var courseId = this._id ? this._id : ''
+			var isNew = courseId === ''
 
-		var ofcourse = {
-			description: $('#editform_description').val(),
-			categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
-			name: $('#editform_name').val(),
-			subscribers_min: $('#editform_subscr_min').val(),
-			subscribers_max: $('#editform_subscr_max').val(),
-			roles: course.roles,
-			time_lastedit: new Date
-		}
+			var roles = {}
+			$('input.roleselection').each(function(_, rolecheck) {
+				roles[rolecheck.name] = rolecheck.checked;
+			})
 
-		if (this._id) {
-			Courses.update(this._id, { $set: ofcourse })
-		} else {
-			ofcourse.time_created = new Date
-			ofcourse.region = Session.get('region')	//todo: please select a region if non is selected
-			ofcourse.createdby = Meteor.userId()
-			var I_want_to_be_responsible_for_the_course = 1;  // todo: html : set variable...
-			if (I_want_to_be_responsible_for_the_course === 1){
-				ofcourse.roles.team.subscribed = [Meteor.userId()]
+			var changes = {
+				description: $('#editform_description').val(),
+				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
+				name: $('#editform_name').val(),
+				roles: roles
 			}
-			ofcourse.roles.participant.subscribed = [Meteor.userId()]
-			var id = Courses.insert(ofcourse)
-			Router.go('showCourse', {_id: id});
-		}
 
-		Session.set("isEditing", false);
-	}
-	else
-		alert("Security robot say: please sign in!");
+			if (isNew) {
+				changes.region = Session.get('region')
+				if (!changes.region) throw "Please select a region"
+			}
+			
+			var courseId = Meteor.call("save_course", this._id ? this._id : '', changes)
+			Session.set("isEditing", false);
+			if (isNew) Router.go('showCourse', {_id: courseId})
+		} catch(err) {
+			if (err instanceof String) alert(err)
+			else throw err
+		}
 	},
 
 	'click input.cancel': function() {
