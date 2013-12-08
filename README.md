@@ -27,9 +27,9 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - `cd /some/path`
 - To install Meteor, run:
     - ` curl https://install.meteor.com | sh`
-    - ` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
-    - ` npm install -g meteorite`
-    - ` mrt add iron-router`
+    - (sudo)` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
+    - (sudo)` npm install -g meteorite`
+    - ` mrt update`
 - Run `meteor`
 - Browse to http://localhost:3000/
 

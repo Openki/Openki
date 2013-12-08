@@ -135,8 +135,10 @@ Handlebars.registerHelper('isOntheway', function(val) {
  	return val === 'ontheway'
 });
 
-
+/*
 Handlebars.registerHelper('isAdmin', function() {
     var user = Meteor.user()
+    error.log(user.isAdmin)
     return user && user.isAdmin
 });
+*/

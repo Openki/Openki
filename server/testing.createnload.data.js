@@ -14,14 +14,17 @@ function ensureUser(name) {
 	var user
 	var age = Math.floor(Random.fraction()*100000000000)
 	while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
-		Accounts.createUser({
+		var id = Accounts.createUser({
 			username: name,
 			email: (name+"@schuel.example").toLowerCase(),
 			password: name,
+			profile: {name : name}
+		});
+		Meteor.users.update({ _id: id },{$set:{
 			createdAt: new Date(new Date().getTime()-age),
 			lastLogin: new Date(new Date().getTime()-age/30),
-			isAdmin: name === 'greg' || name === 'FeeLing' || name === 'IvanZ'
-		});
+			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
+		}})
 	}
     return user;
 }
