@@ -1,42 +1,46 @@
 "use strict";
 
-//versuch:
+Template.course_edit.helpers({
+	query: function() {
+		return Session.get('search')
+	},
 
-Template.course_edit.query = function() {
-	return Session.get('search')
-}
-
-Template.course_edit.available_categories = function(parent) {
-	if (parent)return Categories.find({parent: parent})
-	return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
-}
-Template.course_edit.available_subcategories = function() {
-	return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
-}
-
-Template.course_edit.available_roles = function() {
-	return Roles.find({'preset': { $ne: true }})
-}
-
-// Emit 'checked' string if id shows up as member or property of cats
-Template.course_edit.checked = function(id, cats) {
-	if (cats === undefined) return;
-	if (cats.length) {
-		return cats.indexOf(id) >= 0 ? 'checked' : ''
-	} else {
-		return (id in cats) ? 'checked' : ''
+	available_categories: function(parent) {
+		if (parent)return Categories.find({parent: parent})
+		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
+	},
+	
+	available_subcategories: function() {
+		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
+	},
+	
+	available_roles: function() {
+		return Roles.find({'preset': { $ne: true }})
+	},
+	
+	// Emit 'checked' string if id shows up as member or property of cats
+	checked: function(id, cats) {
+		if (cats === undefined) return;
+		if (cats.length) {
+			return cats.indexOf(id) >= 0 ? 'checked' : ''
+		} else {
+			return (id in cats) ? 'checked' : ''
+		}
+	},
+	
+	show_subcats: function(id, cats) {
+		if (cats === undefined) return 'none';
+		if (cats.length) {
+			return cats.indexOf(id) >= 0 ? 'block' : 'none'
+		} else {
+			return (id in cats) ? 'block' : 'none'
+		}
+	},
+	
+	regions: function(){
+	  return Regions.find();
 	}
-}
-
-
-Template.course_edit.show_subcats = function(id, cats) {
-	if (cats === undefined) return 'none';
-	if (cats.length) {
-		return cats.indexOf(id) >= 0 ? 'block' : 'none'
-	} else {
-		return (id in cats) ? 'block' : 'none'
-	}
-}
+});
 
 
 Template.course_edit.events({

@@ -47,6 +47,16 @@
 				{{/each}}
 			</ul>
 		</div>
-		<p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
+		
+		<p><select name='region'>
+			{{#each regions}}
+				<option value='{{_id}}'>{{name}}</option>
+			{{/each}}
+		</select></p>
+		
+		<p>
+			<input type="button" class="save" value="Save" />
+			<input type="button" class="cancel" value="Cancel" />
+		</p>
 	</form>
 </template>
