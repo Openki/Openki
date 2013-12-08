@@ -39,6 +39,11 @@ Template.course_edit.helpers({
 	
 	regions: function(){
 	  return Regions.find();
+	},
+	
+	currentRegion: function(region) {
+		var currentRegion = Session.get('region')
+		return currentRegion && region._id == currentRegion;
 	}
 });
 
@@ -66,13 +71,19 @@ Template.course_edit.events({
 			}
 
 			if (isNew) {
-				changes.region = Session.get('region')
-				if (!changes.region) throw "Please select a region"
+				console.log
+				changes.region = $('.region_select').val()
+				if (!changes.region) {
+					alert("Please select a region")
+					return;
+				}
 			}
 			
-			var courseId = Meteor.call("save_course", this._id ? this._id : '', changes)
-			Session.set("isEditing", false);
-			if (isNew) Router.go('showCourse', {_id: courseId})
+			courseId = Meteor.call("save_course", courseId, changes, function(err, courseId) {
+				Session.set("isEditing", false);
+				if (err) alert("Saving the course went terribly wrong: "+err)
+				if (isNew) Router.go('showCourse', {_id: courseId})
+			})
 		} catch(err) {
 			if (err instanceof String) alert(err)
 			else throw err
