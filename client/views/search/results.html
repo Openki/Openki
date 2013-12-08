@@ -9,8 +9,7 @@
 			loading...
 		{{/if}}
 	</div>
-
-	<div class="courselist_results">
+	<ul class="courselist_results">
 		{{#if coursesLoaded}}
 			{{#each results.courses}}
 				{{> course}}
@@ -18,5 +17,5 @@
 		{{else}}
 			<img src="/spinner.gif">
 		{{/if}}
-	</div>
+	</ul>
 </template>

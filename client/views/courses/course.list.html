@@ -17,18 +17,17 @@
 
 
 <template name="courselist">
-	<div class="courselist">
+	<ul class="courselist">
 		{{#each this}}
 			{{> course}}
 		{{else}}
 			keine Kurse
 		{{/each}}
-	</div>
+	</ul>
 </template>
 
-
 <template name="course">
-	<div class="courselist_course">
+	<li class="courselist_course">
 		<a href="{{courseURL _id name}}">
 			<span class="course_name">{{name}}</span>
 			<span class="course_status">{{!--FIXME: better use a helper that returns css class and text}}
@@ -52,7 +51,7 @@
 			</span>
 			<span class="smalldesc">
 				{{#if course_events}}
-				Events: 
+				Events:
 				<ul>
 					{{#each course_events}}
 						<li>
@@ -64,5 +63,5 @@
 			</span>
 			{{/if}}
 		</a>
-	</div>
+	</li>
 </template>

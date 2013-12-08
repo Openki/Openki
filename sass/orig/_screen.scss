@@ -558,8 +558,8 @@ color: orange;
 }
 
 
-#add_vote_form *p{
-border: none;
+#add_vote_form p {
+    border: none;
 	background-color: #EEE
 }
 
@@ -757,7 +757,7 @@ color: #000 !important;
     position: absolute;
 }
 .dropdown .dropdown-menu ul {
-      color: #gray;
+      color: gray;
       background: white;
       padding: 5px;
       width: 140px;
@@ -772,7 +772,7 @@ color: #000 !important;
       -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
 .dropdown .dropdown-menu ul li a {
-        color: #black;
+        color: black;
         font-size: 14px; }
 .dropdown:hover .dropdown-menu {
     display: block; }

@@ -1,0 +1,35 @@
+@function remCalc($pxWidth)
+    @return strip-unit($pxWidth) / 16 * 1rem
+
+@mixin respond-to($media)
+    @if $media == small
+        @media only screen and (max-width: $min-width-medium - 1)
+            /* assign some variables for this breakpoint */
+            +assign-bp-variables($media)
+            @content
+  
+    @else if $media == medium
+        @media only screen and (min-width: $min-width-medium) and (max-width: $min-width-large - 1)
+            /* assign some variables for this breakpoint */
+            +assign-bp-variables($media)
+            @content
+            /* reassign small breakpoint */
+            +assign-bp-variables(small)
+    
+  
+    @else if $media == large
+        @media only screen and (min-width: $min-width-large)
+            /* assign some variables for this breakpoint */
+            +assign-bp-variables($media)
+            @content
+            /* reassign small breakpoint */
+            +assign-bp-variables(small)
+    
+  
+    @else if $media == ml
+        @media only screen and (min-width: $min-width-medium)
+            /* assign some variables for this breakpoint */
+            +assign-bp-variables(large)
+            @content
+            /* reassign small breakpoint */
+            +assign-bp-variables(small)
