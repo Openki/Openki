@@ -51,7 +51,7 @@ Template.course_edit.helpers({
 Template.course_edit.events({
 	'submit form.course_edit, click input.save': function (ev) {
 		ev.preventDefault()
-		
+
 		try {
 			if (!Meteor.userId()) throw "Security robot say: please sign in!"
 			
@@ -71,7 +71,6 @@ Template.course_edit.events({
 			}
 
 			if (isNew) {
-				console.log
 				changes.region = $('.region_select').val()
 				if (!changes.region) {
 					alert("Please select a region")
