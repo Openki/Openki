@@ -129,14 +129,14 @@ p {
 
 /* line 116, ../../sass/orig/_screen.scss */
 #mainmenu span a, a:visited {
-  color: #f6f6f6;
+  color: #FFF;
   text-decoration: none;
   font-weight: bold;
 }
 
 /* line 122, ../../sass/orig/_screen.scss */
 #mainmenu span a:hover {
-  color: #444;
+  color: #000;
   text-decoration: none;
   font-weight: bold;
 }
@@ -735,13 +735,13 @@ a:hover {
 /* line 670, ../../sass/orig/_screen.scss */
 #header_bar a {
   text-decoration: none;
-  color: #888;
+  color: #FFF;
   font-size: 31px;
 }
 
 /* line 676, ../../sass/orig/_screen.scss */
 #header_bar a:hover {
-  color: #DDD;
+  color: #CCC;
 }
 
 /* line 680, ../../sass/orig/_screen.scss */
@@ -872,9 +872,4 @@ ul.categories {
   float: left;
   clear: none;
   padding-left: 1em;
-}
-
-/* line 785, ../../sass/orig/_screen.scss */
-form {
-  display: inline;
 }

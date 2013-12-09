@@ -14,9 +14,7 @@
 				<div id="create">
 					{{> create_menue}}
 				</div>
-				<div id="about">
-					{{> about_menue}}
-				</div>
+
 				<div id="region_sel">
 					{{> region_sel}}
 				</div>
@@ -33,7 +31,7 @@
 
 <template name="search_menue">
 	<div class="dropdown">
-		<a id="mainmenue" href="/">Search</a>
+		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> Courses</a>
 		<div class="dropdown-menu">
 			<ul role="menu" aria-labelledby="dLabel">
 				<li><a class="regionselect" href="/">Courses</a></li>
@@ -41,6 +39,8 @@
 				<li><a class="regionselect" href="/categorylist/">Category List</a></li>
 				<li><a class="regionselect" href="/calendar/">Calendar</a></li>
 				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
+				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Create Proposal</a></li>
+				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Create Arranged one</a></li>
 			</ul>
 		</div>
 		{{about}}
@@ -49,14 +49,9 @@
 
 <template name="create_menue">
 	<div class="dropdown">
-		<a id="mainmenue" href="/CreateProposal/">Create Course</a>
-		<div class="dropdown-menu">
-			<ul role="menu" aria-labelledby="dLabel">
-				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Proposal</a></li>
-				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Arranged one</a></li>
-			</ul>
-		</div>
-		{{about}}
+		<a id="mainmenue" href="/CreateProposal/"><span class="icon-nav_calendar"></span> Calendar</a>
+
+
 	</div>
 </template>
 
@@ -80,7 +75,7 @@
 
 <template name="region_sel">
 	<div class="dropdown">
-		<a class="regions" href="/">Region:</a>
+		<a class="regions" href="/"><span class="icon-nav_region"></span> Region:</a>
 		<div class="dropdown-menu">
 			<ul role="menu" aria-labelledby="dLabel">
 				<li><a class="regionselect" href="/region/{{_id}}">All</a></li>

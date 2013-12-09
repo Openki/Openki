@@ -114,13 +114,13 @@ margin: 0;
 }
 
 #mainmenu span a, a:visited {
-	color:#f6f6f6;
+	color:#FFF;
 	text-decoration:none;
 	font-weight:bold;
 }
 
 #mainmenu span a:hover {
-	color:#444;
+	color:#000;
 	text-decoration:none;
 	font-weight:bold;
 }
@@ -669,12 +669,12 @@ a:hover {
 
 #header_bar a {
     text-decoration: none;
-     color: #888;
+     color: #FFF;
      font-size:31px;
 }
 
 #header_bar   a:hover {
-    color: #DDD;
+    color: #CCC;
 }
 
 .dropdown-menu a, .dropdown-menu a:link, .dropdown-menu a:visited, .dropdown-menu a:active {
@@ -782,6 +782,3 @@ ul.categories {
     padding-left: 1em;
 }
 
-form{
-    display: inline;
-}

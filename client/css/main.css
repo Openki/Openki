@@ -459,20 +459,20 @@ meta.foundation-mq-large {
 
 /* line 12, ../../sass/modules/_course.sass */
 .takingplace {
-  border: 5px solid #d5e9ef;
+  border: 7px solid #d5e9ef;
   background-color: #d5e9ef;
 }
 
 /* line 17, ../../sass/modules/_course.sass */
 .proposal {
-  border: 5px dotted #d5e9ef;
+  border: 7px dotted #d5e9ef;
 }
 
 /* line 20, ../../sass/modules/_course.sass */
 .courselist_course_text {
   float: left;
-  width: 290px;
-  height: 130px;
+  width: 286px;
+  height: 126px;
   overflow: hidden;
 }
 
@@ -491,54 +491,65 @@ meta.foundation-mq-large {
 }
 
 /* line 37, ../../sass/modules/_course.sass */
+.courselist_course_info li {
+  text-align: center;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  width: 80px;
+}
+
+/* line 44, ../../sass/modules/_course.sass */
 .course_status {
   margin: 0;
   padding: 0;
 }
 
-/* line 41, ../../sass/modules/_course.sass */
+/* line 48, ../../sass/modules/_course.sass */
 .course_status li {
-  width: 80px;
   height: 20px;
   font-size: 15px;
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
   list-style-type: none;
-  text-align: center;
   color: black;
 }
 
-/* line 51, ../../sass/modules/_course.sass */
+/* line 54, ../../sass/modules/_course.sass */
 .course_eventlist {
   margin: 0;
   padding: 0;
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
   background-color: #c1f2ae;
 }
 
-/* line 58, ../../sass/modules/_course.sass */
+/* line 59, ../../sass/modules/_course.sass */
 .course_eventlist li {
   width: 80px;
   list-style-type: none;
   color: black;
-  padding: 2px 0 2px 0;
-  text-align: center;
 }
 
-/* line 65, ../../sass/modules/_course.sass */
+/* line 64, ../../sass/modules/_course.sass */
 .course_eventlist_date {
-  font-size: 18x;
+  font-size: 19px;
+  padding: 3px 0 0px 0;
 }
 
 /* line 68, ../../sass/modules/_course.sass */
 .course_eventlist_time {
   font-size: 9px;
+  font-family: Arial, sanss;
+  padding: 0 0 4px 0;
 }
 
-/* line 71, ../../sass/modules/_course.sass */
-.course_eventlist_hasmore {
-  font-size: 16px;
-  padding: 0 0 3px 0;
+/* line 73, ../../sass/modules/_course.sass */
+.course_eventlist_location {
+  font-size: 9px;
+  font-family: Arial, sans;
+  padding: 3px 0 4px 0;
+}
+
+/* line 78, ../../sass/modules/_course.sass */
+li.course_eventlist_hasmore {
+  font-size: 11px;
+  font-family: Arial, sans;
+  padding: 3px 0 5px 0;
   line-height: 12px;
 }

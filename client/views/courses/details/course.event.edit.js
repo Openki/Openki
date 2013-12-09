@@ -1,34 +1,3 @@
-Template.course_event_edit.possible_mentors = function() {
-	
-	var possible_mentors=[];
-	//var course = this.course
-		if(this.course.roles.mentor){
-			
-			var eventobj=this.event;
-				_.each(this.course.roles.mentor.subscribed, function (userid) {
-				var user = Meteor.users.findOne({_id: userid})
-				if (!user) return;
-				if(eventobj._id){
-
-					if(eventobj.mentors.indexOf(user._id)==-1){
-						var checked ="";
-					}else{
-						var checked ="checked";
-					};
-				}
-			//	alert($.inArray(user._id,eventobj.mentors));
-				//alert();
-				//alert(user._id)
-				//alert(eventobj.mentors)
-				//possible_mentors.push(user);
-				possible_mentors.push({"username": user.username, "id":user._id, "checked":checked})
-			});
-				
-
-	}
-	
-	return possible_mentors;
-}
 
 
 
@@ -77,3 +46,68 @@ Template.course_event_edit.events({
 		Session.set("isEditingEvent", false);
 	}
 });
+
+Template.course_event_edit.possible_mentors = function() {
+	
+	var possible_mentors=[];
+	//var course = this.course
+		if(this.course.roles.mentor){
+			
+			var eventobj=this.event;
+				_.each(this.course.roles.mentor.subscribed, function (userid) {
+				var user = Meteor.users.findOne({_id: userid})
+				if (!user) return;
+				if(eventobj._id){
+
+					if(eventobj.mentors.indexOf(user._id)==-1){
+						var checked ="";
+					}else{
+						var checked ="checked";
+					};
+				}
+			//	alert($.inArray(user._id,eventobj.mentors));
+				//alert();
+				//alert(user._id)
+				//alert(eventobj.mentors)
+				//possible_mentors.push(user);
+				possible_mentors.push({"username": user.username, "id":user._id, "checked":checked})
+			});
+				
+
+	}
+	
+	return possible_mentors;
+}
+
+
+Template.course_event_edit.possible_hosts = function() {
+	
+	var possible_hosts=[];
+	//var course = this.course
+		if(this.course.roles.mentor){
+			
+			var eventobj=this.event;
+				_.each(this.course.roles.host.subscribed, function (userid) {
+				var user = Meteor.users.findOne({_id: userid})
+				if (!user) return;
+				if(eventobj._id){
+
+					if(eventobj.mentors.indexOf(user._id)==-1){
+						var checked ="";
+					}else{
+						var checked ="checked";
+					};
+				}
+			//	alert($.inArray(user._id,eventobj.mentors));
+				//alert();
+				//alert(user._id)
+				//alert(eventobj.mentors)
+				//possible_mentors.push(user);
+				possible_hosts.push({"username": user.username, "id":user._id, "checked":checked})
+			});
+				
+
+	}
+	
+	return possible_hosts;
+}

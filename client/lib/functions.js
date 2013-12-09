@@ -44,9 +44,15 @@ Handlebars.registerHelper('username', function (userid){
 
 
 Handlebars.registerHelper('dateformat', function(date) {
-	// We'll need a date formatter at some point
-	//if (date) return date.toDateString();
+    // We'll need a date formatter at some point
+    //if (date) return date.toDateString();
     if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+});
+
+Handlebars.registerHelper('dateformat_mini', function(date) {
+    // We'll need a date formatter at some point
+    //if (date) return date.toDateString();
+    if (date) return date.getDate()+"."+(date.getMonth()+1)+".";
 });
 
 
