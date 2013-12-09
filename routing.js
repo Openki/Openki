@@ -118,10 +118,7 @@ Router.map(function () {									///////// startpage /////////
 	})
 
 	this.route('admin', {								///////// admin /////////
-		template: 'admin',
-		waitOn: function () {
-			return Meteor.subscribe('currentUser');
-		},
+		template: 'admin'
 	})
 })
 
