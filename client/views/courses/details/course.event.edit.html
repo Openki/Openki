@@ -5,10 +5,10 @@
 		<p> Event title: <input type="text" id="edit_event_title" size="30" value="{{#if event._id}}{{event.title}}{{else}}{{course.name}}{{/if}}"/></p>
 		<p>  Desc: <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
 
-		 <p>  Host 
+		 <p>  Host / Location
 			<ul>
 				{{#each possible_hosts}}
-					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}>{{this.username}}</li>
+					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location)) : by {{this.username}}</li>
 				{{else}}
 					<li>No Hosts available</li>
 				{{/each}}
@@ -17,7 +17,7 @@
 		<p>  Mentors 
 			<ul>
 				{{#each possible_mentors}}
-					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}>{{this.username}}</li>
+					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}> {{this.username}}</li>
 				{{else}}
 					<li>No Mentors available</li>
 				{{/each}}
@@ -26,8 +26,8 @@
 
 		<p>  Date start <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
 		<p>Time start <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
-		<p>  Date end (optional) </p>
-		<p>  Time end (optional) </p>
+		<p>  Date end ((optional)) </p>
+		<p>  Time end ((optional)) </p>
 		<p> <input type="button" class="saveEditEvent" value="Save" /> <input type="button" class="cancelEditEvent" value="Cancel" /></p>
 	</div>
 </template>

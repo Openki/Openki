@@ -58,4 +58,5 @@
 }
 .icon-mini_mentor:before {
 	content: "\e60a";
+	font-size: 8px;
 }

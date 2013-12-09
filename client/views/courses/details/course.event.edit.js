@@ -4,7 +4,6 @@
 Template.course_event_edit.events({
 	'click input.saveEditEvent': function () {
 		if(Meteor.userId()){
-
 			var dateParts =  $('#edit_event_startdate').val().split(".");
 			if($('#edit_event_starttime').val()!=""){
 				var timeParts =  $('#edit_event_starttime').val().split(":");
@@ -17,6 +16,7 @@ Template.course_event_edit.events({
 				title: $('#edit_event_title').val(),
 				description: $('#edit_event_description').val(),
 				mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
+				host: $('input:radio:checked.edit_event_host').val(),
 				startdate: startdate,
 				starttime: $('#edit_event_starttime').val(),
 				enddate: $('#edit_event_enddate').val(),
@@ -84,15 +84,14 @@ Template.course_event_edit.possible_hosts = function() {
 	
 	var possible_hosts=[];
 	//var course = this.course
-		if(this.course.roles.mentor){
-			
+		if(this.course.roles.host){
+		
 			var eventobj=this.event;
 				_.each(this.course.roles.host.subscribed, function (userid) {
 				var user = Meteor.users.findOne({_id: userid})
 				if (!user) return;
 				if(eventobj._id){
-
-					if(eventobj.mentors.indexOf(user._id)==-1){
+					if(eventobj.host!=user._id){
 						var checked ="";
 					}else{
 						var checked ="checked";
@@ -105,7 +104,6 @@ Template.course_event_edit.possible_hosts = function() {
 				//possible_mentors.push(user);
 				possible_hosts.push({"username": user.username, "id":user._id, "checked":checked})
 			});
-				
 
 	}
 	
