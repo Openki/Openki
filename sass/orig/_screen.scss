@@ -134,26 +134,11 @@ margin: 0;
 
 .courselist_course {
     clear: both;
-    width: 100%;
-    margin: 10px 0;
-    cursor: pointer;
-    font-size: 1.2em;
   //border-bottom: 1px solid black;
-    background-color: #E3E3E3;
     overflow: auto;
-    padding: 5px;
 
 }
-.course_name{
-        color: #000;
-        font-size:22px;
-}
-.courselist_course .course_name {
 
-    width: 150px;
-    display:block;
-    float: left;
-}
 
 .courselist_course p.smalldesc{
     margin:5px 0 0 0;
@@ -179,18 +164,6 @@ margin:0 0 8px 0;
 }
 
 
-.courselist_course .course_status {
-	font-size: 15px;
-    font-weight: bold;
-    float: right;
-    //width: 150px;
-    margin-top: 3px;
-}
-
-.courselist_course .course_status span{
-  padding: 0 5px;
- //border-right: 1px solid black;
-}
 
 
 .courselist_course  .yes{
@@ -238,12 +211,6 @@ display:none;
 }
 
 
-.courselist_results .courselist_course{
-float: left;
-width: 300px;
-clear: none;
-margin: 0 12px 12px 0;
-}
 
 .courselist_results .course_name{
     width: 150px !important;
@@ -516,7 +483,7 @@ color: orange;
 /****** VOTING ******/
 
 #votelists{
-	background-color: #EEE;
+    background-color: #EEE;
 }
 
 #votelists h4{
@@ -524,7 +491,7 @@ color: orange;
 }
 
 #votelists .voting{
-	background-color: #DDD !important;
+    background-color: #DDD !important;
 }
 
 .votelist_table {
@@ -533,26 +500,26 @@ color: orange;
       }
 
 #votelists tr.is_current{
-	background-color: #99FF99;
-	cursor: pointer;
+    background-color: #99FF99;
+    cursor: pointer;
 
 }
 
 
 #votelists td.option{
-	background-color: #EEE;
-	padding: 0 15px;
+    background-color: #EEE;
+    padding: 0 15px;
 
 
 }
 #votelists td.v0{
-	background-color: green !important;
+    background-color: green !important;
 
 
 }
 
 #votelists td.v1{
-	background-color: red !important;
+    background-color: red !important;
 
 
 }
@@ -560,7 +527,7 @@ color: orange;
 
 #add_vote_form p {
     border: none;
-	background-color: #EEE
+    background-color: #EEE
 }
 
 
@@ -573,7 +540,7 @@ font-weight: normal;
 }
 
 h2{
-	margin: 0;
+    margin: 0;
     font-weight: normal;
 }
 
@@ -674,21 +641,21 @@ th{
 
 
 .categorylist {
-	list-style-type: none;
-	display: inline;
-	border: none;
-	padding: 0;
+    list-style-type: none;
+    display: inline;
+    border: none;
+    padding: 0;
 }
 
 .categorylist li {
-	display: inline;
+    display: inline;
 }
 
 .categorylist li:after {
-	content: ', '
+    content: ', '
 }
 .categorylist li:last-child:after {
-	content: ''
+    content: ''
 }
 
 a:link, a:visited, a:active {
@@ -728,7 +695,8 @@ color: #000 !important;
     padding-top: 5px;
     padding-left: 50px;
     float:left;
-  //  text-transform: uppercase;}
+  //  text-transform: uppercase;
+}
 
 .dropdown span a, {
     color:#f6f6f6;
