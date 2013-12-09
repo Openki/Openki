@@ -62,6 +62,21 @@
 				{{/each}}
 			</ul>
 		</div>
-		<p> <input type="button" class="save" value="Save" /> <input type="button" class="cancel" value="Cancel" /></p>
+		
+		{{#unless _id}}
+		<p> Region: 
+			<select name='region' class="region_select">
+				<option value=''>Please select</option>
+			{{#each regions}}
+				<option value='{{_id}}' {{#if currentRegion this}}selected='selected'{{/if}}>{{name}}</option>
+			{{/each}}
+			</select>
+		</p>
+		{{/unless}}
+		
+		<p>
+			<input type="button" class="save" value="Save" />
+			<input type="button" class="cancel" value="Cancel" />
+		</p>
 	</form>
 </template>

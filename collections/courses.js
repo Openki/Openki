@@ -89,16 +89,15 @@ Meteor.methods({
 		if (changes.name) set.name = changes.name.substring(0, 1000)
 
 		set.time_lastedit = new Date
-		if (!isNew) {
-			Courses.update({ _id: courseId }, { $set: set, $unset: unset }, checkUpdateOne)
-		} else {
+		if (isNew) {
+			courseId = Courses.insert({}, checkInsert)
 			set.time_created = new Date
-			set.region = Regions.findOne({_id: regionId})
+			set.region = Regions.findOne({_id: changes.region})
 			if (!set.region) throw new Exception(404, 'region missing')
 			set.createdby = user._id
 			set['roles.team'].subscribed = [user._id]
-			courseId = Course.insert(set, checkInsert)
 		}
+		Courses.update({ _id: courseId }, { $set: set, $unset: unset }, checkUpdateOne)
 		return courseId
 	}
 })

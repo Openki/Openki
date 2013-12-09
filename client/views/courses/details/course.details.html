@@ -13,8 +13,10 @@
 			<p class="descr">{{dateformat date}} {{timeformat date}}</p>
 			<p class="descr">{{description}}</p>
 
+			{{#if mayEdit}}
 			<input type="button" class="edit" value="Edit" />
 			<input type="button" class="del" value="Delete" />
+			{{/if}}
 			</div>
 
 
