@@ -32,11 +32,46 @@ Router.map(function () {
 })
 
 
-Template.coursedetails.isEditing = function () {
-	return Session.get("isEditing");
-};
+Template.coursedetails.helpers({
+	isEditing: function () {
+		return Session.get("isEditing");
+	},
 
+	mayEdit: function() {
+		var user = Meteor.user()
+		return user && (user.isAdmin || this.roles.team.subscribed.indexOf(user._id) >= 0)
+	},
+	
+	subscribers_status: function() {
+		//CSS status: genug anmeldungen? "ok" "notyet"
+		var course = this
+		if(course){
+			if(course.subscribers){
+				if(course.subscribers.length>=course.subscribers_min){
+					return "ok";
+				}else{
+					return "notyet";
+				}
+			}
+		}
+	},
 
+    roleDetails: function(roles) {
+		var course = this
+		return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
+			var role = roles[roletype.type]
+			if (role) {
+				goodroles.push({
+					roletype: roletype,
+					role: role,
+					subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0,
+					course: course
+				})
+			}
+			return goodroles;
+		}, []);
+	}
+})
 
 
 Template.coursedetails.events({
@@ -62,40 +97,6 @@ Template.coursedetails.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
 	}
 })
-
-
-// nur für css
-
-Template.coursedetails.subscribers_status = function() {
-	//CSS status: genug anmeldungen? "ok" "notyet"
-	var course = this
-	if(course){
-		if(course.subscribers){
-			if(course.subscribers.length>=course.subscribers_min){
-				return "ok";
-			}else{
-				return "notyet";
-			}
-		}
-	}
-}
-
-
-Template.coursedetails.roleDetails = function(roles) {
-	var course = this
-	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
-		var role = roles[roletype.type]
-		if (role) {
-			goodroles.push({
-				roletype: roletype,
-				role: role,
-				subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0,
-				course: course
-			})
-		}
-		return goodroles;
-	}, []);
-}
 
 
 function prepare_subscribers(course) {
