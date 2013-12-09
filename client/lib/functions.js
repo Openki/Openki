@@ -80,6 +80,7 @@ Handlebars.registerHelper('isOntheway', function(val) {
 
 Handlebars.registerHelper('isAdmin', function() {
     var user = Meteor.user()
+    error.log(user.isAdmin)
     return user && user.isAdmin
 });
 

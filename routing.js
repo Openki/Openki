@@ -12,6 +12,13 @@ Router.map(function () {									///////// startpage /////////
 	this.route('home', {
 		path: '/',
 		template: 'start',
+		data: function(){
+			var oldSearch;
+			Deps.nonreactive(function(){	// to be updated only once
+				oldSearch = Session.get('search')
+			})
+			return {oldSearch: oldSearch}
+		},
 		after: function() {
 			document.title = webpagename + 'Home'
 		}
@@ -110,5 +117,11 @@ Router.map(function () {									///////// startpage /////////
 		}
 	})
 
+	this.route('admin', {								///////// admin /////////
+		template: 'admin',
+		waitOn: function () {
+			return Meteor.subscribe('currentUser');
+		},
+	})
 })
 

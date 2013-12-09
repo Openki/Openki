@@ -27,11 +27,19 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - `cd /some/path`
 - To install Meteor, run:
     - ` curl https://install.meteor.com | sh`
-    - ` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
-    - ` npm install -g meteorite`
-    - ` mrt add iron-router`
+    - (sudo)` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
+    - (sudo)` npm install -g meteorite`
+    - ` mrt update`
 - Run `meteor`
 - Browse to http://localhost:3000/
+
+### Compass or how to work on stylesheets
+- install ruby
+- `gem install compass`
+- `gem install zurb-foundation`
+- run `compass compile` in project root
+- scss/sass files go into sass folder
+- compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)
 
 ### License
 - Not clear yet. AGPL maybe. for the moment it is [WTFPL](http://www.wtfpl.net)

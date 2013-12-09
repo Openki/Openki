@@ -90,6 +90,13 @@ Template.course.host_status = function() {
 	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
 }
 
+Template.course.is_takingplace = function() {
+// status (proposal / takingplace) not yet implemented, until then: using event count instead
+
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+	return Events.find({course_id: this._id}).count() > 0 ? true : false
+
+}
 
 // Idee für provisorische Darstellung:
 // Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
@@ -115,8 +122,15 @@ Template.course.categorynames = function() {
 }
 
 
-Template.course.course_events = function() {
+Template.course.course_eventlist = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
-	return Events.find({course_id: this._id});
+	return Events.find({course_id: this._id}, {limit: 3});
+}
+
+
+Template.course.course_eventlist_hasmore = function() {
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+
+	return Events.find({course_id: this._id}, {limit: 4}).count()>3;
 }

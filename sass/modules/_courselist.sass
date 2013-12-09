@@ -1,0 +1,14 @@
+%courselist
+	background: white
+
+.courselist-compact
+	@extend %courselist
+	+block-grid(4, 20px)
+
+
+.courselist-expanded
+	@extend %courselist
+
+
+.courselist-results
+	@extend .courselist-compact
