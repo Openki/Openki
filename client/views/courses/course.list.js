@@ -125,12 +125,13 @@ Template.course.categorynames = function() {
 Template.course.course_eventlist = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
-	return Events.find({course_id: this._id}, {limit: 3});
+	return Events.find({course_id: this._id}, {limit: 1});
 }
 
 
 Template.course.course_eventlist_hasmore = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
-	return Events.find({course_id: this._id}, {limit: 4}).count()>3;
+	var eventcount = Events.find({course_id: this._id}).count(); 
+	return eventcount > 1 ? (eventcount-1)  : false
 }

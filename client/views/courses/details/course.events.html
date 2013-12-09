@@ -9,21 +9,25 @@
 				{{>course_event_edit}}
 		{{else}}
 			{{#with event}}
-				<p class="course_event_date">{{dateformat startdate}}</p>
-				<p class="course_event_desc">Time: {{timeformat startdate}}</p>
-				<p class="course_event_title">{{title}}</p>
+				<p class="course_event_date">
+					<span class="icon-mini_date"></span> {{dateformat startdate}} 
+				</p>
+				<p class="course_event_time">
+					<span class="icon-clock"></span> {{timeformat startdate}}
+				</p>
+				<p class="course_event_title">{{this.title}}</p>
 				<p class="course_event_desc">{{description}}</p>
 				
 				{{#if this.mentors}}
-					<p class="course_event_mentors">
-						Mentors: 
+				<p class="course_event_info">	
 						<ul class="course_event_mentors">
 						{{#each this.mentors}}
-							<li>{{username this}}</li>
+							<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
 						{{/each}}
 						</ul>
-					</p>
+				</p>
 				{{/if}}
+				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location)) : hosted by {{username host}} </p>
 
 			{{/with}}
 			<input type="button" class="eventEdit" value="Edit" />

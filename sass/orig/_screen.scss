@@ -114,13 +114,13 @@ margin: 0;
 }
 
 #mainmenu span a, a:visited {
-	color:#f6f6f6;
+	color:#FFF;
 	text-decoration:none;
 	font-weight:bold;
 }
 
 #mainmenu span a:hover {
-	color:#444;
+	color:#000;
 	text-decoration:none;
 	font-weight:bold;
 }
@@ -276,6 +276,14 @@ h2.name{
     clear:left;
 }
 
+.course_event_edit li{
+    list-style-type: none;
+}
+.course_event_edit ul{
+    padding: 0;
+    margin: 12px 0 12px 12px;
+}
+
 .course_edit ul {
 	list-style-type: none;
 	display: block;
@@ -283,28 +291,49 @@ h2.name{
 .course_event{
 
     float:left;
-    width: 200px;
+    width: 220px;
     margin: 10px;
-    padding: 10px;
 
     background-color:#C1F2AE;
 }
 
 .course_event_desc{
-
     font-size: 11px;
+    padding: 0 0 5px 10px;
+    border-bottom: 3px solid white;
+}
+
+.course_event_info{
+    font-size: 11px;
+    padding: 3px 10px;
 }
 .course_event_date{
+    font-size: 28px;
+    padding: 5px 0 0px 10px;
+}
 
-    font-size: 30px;
+.course_event_time{
+    font-size: 16px;
+    padding: 0 0 2px 10px;
+    border-bottom: 3px solid white;
 }
 
 .course_event_title{
-    font-size: 16px;
+    font-size: 18px;
+    padding: 8px 10px;
 }
-.course_event_mentors, .course_event_mentors li{
+
+
+.course_event_mentors{
+    padding:0 10px;
+    margin: 0;
+    }
+
+.course_event_mentors li{
     font-size: 12px;
     display: inline;
+    margin: 0;
+    padding: 0;
 }
 
 #editform_categories{
@@ -355,26 +384,31 @@ div.participants {
 
 ul.subscribers {
 	background-color: #EEE;
-	float:left;
+    padding: 0;
 }
 
 ul.subscribers > li {
 	background-color: #EEE;
-	float: left;
-	width: 100px;
+	
     list-style: none;
+    margin: 5px;
 }
 
 ul.subscribers ul.roles {
 	background-color: #EEE;
-	display: inline;
+    display: inline;
 }
 
 ul.subscribers ul.roles li {
     background-color: #EEE;
-	float: left;
-	border: 3px solid blue;
-	list-style: none;
+	//float: left;
+	background: #C1F2AE;
+	list-style-type: none;
+    font-size: 10px;
+    font-family: Arial, sans;
+    margin: 2px;
+    display: inline;
+    padding: 2px 5px;
 }
 
 
@@ -669,12 +703,12 @@ a:hover {
 
 #header_bar a {
     text-decoration: none;
-     color: #888;
+     color: #FFF;
      font-size:31px;
 }
 
 #header_bar   a:hover {
-    color: #DDD;
+    color: #CCC;
 }
 
 .dropdown-menu a, .dropdown-menu a:link, .dropdown-menu a:visited, .dropdown-menu a:active {
@@ -782,6 +816,3 @@ ul.categories {
     padding-left: 1em;
 }
 
-form{
-    display: inline;
-}

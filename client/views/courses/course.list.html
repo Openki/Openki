@@ -52,17 +52,21 @@
 						{{#each course_eventlist}}
 							<li>
 								<div class="course_eventlist_date">
-									{{dateformat this.startdate}}
+									<span class="icon-mini_date"></span> {{dateformat_mini this.startdate}}
 								</div>
 								<div class="course_eventlist_time">
 									{{timeformat this.startdate}}
 								</div>
+
+								<div class="course_eventlist_location">
+									<span class="icon-mini_location"></span> Ortsmuseum Luegis...
+								</div>
 							</li>
 						{{/each}}
 
-				{{#if course_eventlist_hasmore}}
-					<li class="course_eventlist_hasmore">+</li>
-				{{/if}}
+						{{#if course_eventlist_hasmore}}
+							<li class="course_eventlist_hasmore">+ {{course_eventlist_hasmore}} <span class="icon-mini_date"></span> </li>
+						{{/if}}
 					</ul>
 				{{else}}
 					<ul class="course_status">{{!--FIXME: better use a helper that returns css class and text}}
