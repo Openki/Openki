@@ -1,7 +1,17 @@
 <template name="calendar">
   <div class="calendar">
 
-  	Here will be the callendar, eventually.
+	<h1>Upcoming Events</h1>
+
+	<ul class="calendar_eventlist">
+		{{#if calendar_eventlist}}
+			{{#each calendar_eventlist}}
+				{{> calendar_event}}
+			{{/each}}
+		{{else}}
+			<img src="/spinner.gif">
+		{{/if}}
+	</ul>
 
   </div>
 </template>

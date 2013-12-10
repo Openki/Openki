@@ -1,7 +1,7 @@
 <template name="layout">
 	<body>
 		<div id="container">
-			<div id="header_bar">
+				<div id="header_bar">
 				<div id="ticker">
 				{{> ticker}}
 				</div>
@@ -19,6 +19,8 @@
 					{{> region_sel}}
 				</div>
 			</div>
+
+
 			<div id="outer">
 				<div id="maincontent">
 					{{yield}}
@@ -27,6 +29,7 @@
 		</div>
 	</body>
 </template>
+
 
 
 <template name="search_menue">
@@ -49,7 +52,7 @@
 
 <template name="create_menue">
 	<div class="dropdown">
-		<a id="mainmenue" href="/CreateProposal/"><span class="icon-nav_calendar"></span> Calendar</a>
+		<a id="mainmenue" href="/calendar/"><span class="icon-nav_calendar"></span> Calendar</a>
 	</div>
 </template>
 
@@ -82,7 +85,7 @@
 				{{/each}}
 			</ul>
 		</div>
-		<a class="regionselect" href="/region/{{_id}}">{{region}}▼ </a>
+		<a class="regionselect" href="/region/{{_id}}">{{region}} ▼ </a>
 	</div>
 </template>
 
