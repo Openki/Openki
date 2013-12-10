@@ -1,7 +1,14 @@
 // ======== DB-Model: ========
 // "_id" -> ID
 // "title" -> string
-// blablabla
+// "description" -> string
+// "mentors" -> [userIDs]   optional
+// "startdate" -> ISODate
+// "hosts" -> [userIDs]     optional
+// "createdby" -> userId
+// "time_created" -> timestamp
+// "time_lastedit" -> timestamp
+// "course_id" -> ID
 // ===========================
 
 Events = new Meteor.Collection("Events");

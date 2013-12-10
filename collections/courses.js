@@ -3,7 +3,7 @@
 // "name" -> string
 // "createdby" -> ID_users
 // "time_created" -> timestamp
-// "time_changed" -> timestamp
+// "time_lastedit" -> timestamp
 // "categories" -> ID_categories
 // "description" -> string
 // "subscribers" -> [ID_users]
@@ -60,7 +60,7 @@ Meteor.methods({
 		if (!user) {
 			throw new Meteor.Error(401, "please log in")
 		}
-		
+
 		var course;
 		var isNew = courseId.length == 0
 		if (isNew) {
@@ -69,13 +69,13 @@ Meteor.methods({
 			course = Courses.findOne({_id: courseId})
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
-		
+
 		var mayEdit = isNew || user.isAdmin || (course.roles.team && course.roles.team.subscribed.indexOf(user._id) !== -1)
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
 		var unset = {}
 		var set = {}
-		
+
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
@@ -83,7 +83,7 @@ Meteor.methods({
 			if (have && !should_have) unset['roles.'+type] = 1;
 			if (!have && should_have) set['roles.'+type] = roletype.protorole
 		})
-		
+
 		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
 		if (changes.name) set.name = changes.name.substring(0, 1000)

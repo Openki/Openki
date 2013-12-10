@@ -148,3 +148,26 @@ function createLocations(){
 	})
 }
 
+
+createEventsIfNone = function(){
+	if (Events.find().count() === 0) {
+		var event = {}
+		for (var n = 0; n < 35; n++){
+		 	var course_count= Courses.find().count()
+			var course = Courses.find({},{skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch()
+			event.course_id = course[0]._id
+			event.title = course[0].name + '-Kurs'
+			event.description = 'This is the event-description'
+			event.mentors = []
+			event.host = []
+			var timeToGo = Math.floor(Random.fraction()*5000000000)
+			var age = Math.floor(Random.fraction()*10000000000)
+			event.startdate = new Date(new Date().getTime()+timeToGo-4000000000)
+			event.createdby = 'ServerScript'
+			event.time_created = new Date(new Date().getTime()-age)
+			event.time_lastedit = new Date(new Date().getTime()-age*0.25)
+			Events.insert(event)
+		}
+	}
+}
+
