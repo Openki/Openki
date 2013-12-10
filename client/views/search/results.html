@@ -4,7 +4,7 @@
 	{{/unless}}
 	<div>
 		{{#if coursesLoaded}}
-			{{results.count}} found! (in {{results.region}})
+			<strong>{{results.count}}</strong> of <strong>{{results.countTotal}}</strong> courses in the region <strong>{{results.region}}</strong> match your search query.
 		{{else}}
 			loading...
 		{{/if}}

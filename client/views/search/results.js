@@ -22,7 +22,11 @@ Template.search_results.results = function () {
 	var courses = Courses.find(find)
 	var regionObj = Regions.findOne(region)
 	var regionName = regionObj ? regionObj.name : 'All regions'
-	return { count: courses.count(), courses: courses, region : regionName }
+    var coursesTotal = Courses.find().count();
+    if (regionName !== "All regions") {
+        coursesTotal = Courses.find({region: find.region}).count();
+    }
+	return { count: courses.count(), countTotal: coursesTotal, courses: courses, region : regionName }
 }
 
 Template.search_results.coursesLoaded = function () {
