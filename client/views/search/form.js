@@ -8,3 +8,8 @@ Template.search_form.events({
 		Router.go('proposeCourse')
 	}
 })
+
+Template.search_form.rendered = function () {
+ $(".searchform").focus();
+}
+

@@ -4,7 +4,16 @@
 Template.course_event_edit.events({
 	'click input.saveEditEvent': function () {
 		if(Meteor.userId()){
+
 			var dateParts =  $('#edit_event_startdate').val().split(".");
+			if (!dateParts[2]){
+				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)"); 
+				return;
+			}
+
+			if(dateParts[2].toString().length==2) dateParts[2]=2000+dateParts[2]*1;
+
+			
 			if($('#edit_event_starttime').val()!=""){
 				var timeParts =  $('#edit_event_starttime').val().split(":");
 			}else{
@@ -12,22 +21,24 @@ Template.course_event_edit.events({
 			}
 			var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1]);
 
+			var now= new Date();
+
 			var editevent = {
 				title: $('#edit_event_title').val(),
 				description: $('#edit_event_description').val(),
 				mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
 				host: $('input:radio:checked.edit_event_host').val(),
-				startdate: startdate,
-				starttime: $('#edit_event_starttime').val(),
-				enddate: $('#edit_event_enddate').val(),
-				endtime: $('#edit_event_endtime').val(),
+				startdate: startdate
 			}
 
-			if (this.event._id) {		
+			if (this.event._id) {	
+				editevent.time_lastedit= now	
 				Events.update(this.event._id, { $set: editevent })		
 			} else {
 				editevent.course_id= this.course._id
-				editevent.createdby = Meteor.userId()
+				editevent.createdBy = Meteor.userId()
+				editevent.time_created = now
+				editevent.time_lastedit= now	
 				Events.insert(editevent)
 			}
 

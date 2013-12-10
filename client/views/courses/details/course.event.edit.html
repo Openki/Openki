@@ -8,7 +8,7 @@
 		 <p>  Host / Location
 			<ul>
 				{{#each possible_hosts}}
-					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location)) : by {{this.username}}</li>
+					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location name)) : <br>by {{this.username}}</li>
 				{{else}}
 					<li>No Hosts available</li>
 				{{/each}}
@@ -28,6 +28,7 @@
 		<p>Time start <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
 		<p>  Date end ((optional)) </p>
 		<p>  Time end ((optional)) </p>
+		<p>  ((<input type="checkbox" class="edit_event_host" name="edit_event_email" {{#unless this.event._id}}checked{{/unless}}>  Send notification email to participants))</p>
 		<p> <input type="button" class="saveEditEvent" value="Save" /> <input type="button" class="cancelEditEvent" value="Cancel" /></p>
 	</div>
 </template>

@@ -5,12 +5,12 @@
 		<p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{description}}</textarea></p>
 
 		<div id='editform_categories'>
-			<div id="show_categories_to_edit">
+			<div id="show_categories_to_edit" {{#unless _id}}style="display:none;"{{/unless}}>
 				Edit {{#if categories}}{{>show_categories}}{{/if}}
 				{{#unless categories}}Categories{{/unless}}
 			</div>
 
-			<div id="edit_categories" style="display:none;">
+			<div id="edit_categories" {{#if _id}}style="display:none;"{{/if}}>
 				Edit Categories:
 				<ul class='categories'>
 					{{#each available_categories false}}
