@@ -24,12 +24,8 @@ Template.course_event_edit.events({
 			}
 
 			if (this.event._id) {		
-	
-				console.log("1")
 				Events.update(this.event._id, { $set: editevent })		
-				console.log("2")
 			} else {
-
 				editevent.course_id= this.course._id
 				editevent.createdby = Meteor.userId()
 				Events.insert(editevent)

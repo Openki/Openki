@@ -68,10 +68,11 @@ Handlebars.registerHelper('isNull', function(val) {
     return val === null
 });
 
-Handlebars.registerHelper('courseURL', function(_id, name) {
-	var name = name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
+Handlebars.registerHelper('courseURL', function(_id) {
+  var course=Courses.findOne(_id);
+	var name = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
 	var _id = _id
-	return 'course/' + _id + '/' + name;
+	return '/course/' + _id + '/' + name;
 });
 
 

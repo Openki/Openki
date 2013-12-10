@@ -296,6 +296,28 @@ h2.name{
 
     background-color:#C1F2AE;
 }
+.course_event_past{
+
+    float:left;
+    width: 220px;
+    margin: 10px;
+    background-color:#DDD;
+}
+
+.calendar_event{
+    
+    width: 400px;
+    margin: 10px;
+    background-color:#C1F2AE;
+}
+.calendar_event_past{
+    
+    width: 400px;
+    margin: 10px;
+    background-color:#DDD;
+}
+
+
 
 .course_event_desc{
     font-size: 11px;
@@ -694,7 +716,7 @@ th{
 
 a:link, a:visited, a:active {
     text-decoration: none;
-    color: #00F;
+    color: #000;
 }
 a:hover {
     text-decoration: none;
@@ -816,3 +838,9 @@ ul.categories {
     padding-left: 1em;
 }
 
+.regionselect{
+    border: 1px dotted white;
+    padding: 0 10px;
+    font-size: 26px !important;
+    margin-left: 5px;
+}
