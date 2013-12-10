@@ -11,7 +11,46 @@
 		{{else}}
 			<img src="/spinner.gif">
 		{{/if}}
+
+	<h1>Past Events</h1>
+		{{#if calendar_eventlist_past}}
+			{{#each calendar_eventlist_past}}
+				{{> calendar_event_past}}
+			{{/each}}
+		{{else}}
+			<img src="/spinner.gif">
+		{{/if}}
 	</ul>
 
   </div>
+</template>
+
+<template name="calendar_event">
+	<a href="{{courseURL course_id}}">
+	  <div class="calendar_event">
+		<p class="course_event_date">
+			<span class="icon-mini_date"></span> {{dateformat startdate}} 
+		</p>
+		<p class="course_event_time">
+			<span class="icon-clock"></span> {{timeformat startdate}}
+		</p>
+		<p class="course_event_title">{{this.title}}</p>
+		<p class="course_event_desc">{{description}}</p>
+	  </div>
+	</a>
+</template>
+
+<template name="calendar_event_past">
+	<a href="{{courseURL course_id}}">
+	  <div class="calendar_event_past">
+		<p class="course_event_date">
+			<span class="icon-mini_date"></span> {{dateformat startdate}} 
+		</p>
+		<p class="course_event_time">
+			<span class="icon-clock"></span> {{timeformat startdate}}
+		</p>
+		<p class="course_event_title">{{this.title}}</p>
+		<p class="course_event_desc">{{description}}</p>
+	  </div>
+	</a>
 </template>

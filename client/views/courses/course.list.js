@@ -90,13 +90,6 @@ Template.course.host_status = function() {
 	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
 }
 
-Template.course.is_takingplace = function() {
-// status (proposal / takingplace) not yet implemented, until then: using event count instead
-
-	Meteor.subscribe('events') //ugly here! ugly, ugly!
-	return Events.find({course_id: this._id}).count() > 0 ? true : false
-
-}
 
 // Idee für provisorische Darstellung:
 // Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
@@ -132,6 +125,15 @@ Template.course.course_eventlist = function() {
 Template.course.course_eventlist_hasmore = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
-	var eventcount = Events.find({course_id: this._id}).count(); 
+	var today= new Date();
+	var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count(); 
 	return eventcount > 1 ? (eventcount-1)  : false
+}
+
+Template.course.is_takingplace = function() {
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+
+	var today= new Date();
+	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0 ? true : false
+
 }

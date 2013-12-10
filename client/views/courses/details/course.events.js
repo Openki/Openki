@@ -1,10 +1,22 @@
 Template.course_events.events_list = function() {
 	Meteor.subscribe('events'); // should not be here
 	var course=this;
-	return Events.find({course_id:this._id}).map(function(event){
+	var today = new Date();
+	return Events.find({course_id:this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).map(function(event){
 		return {course: course, event: event}
 	});
 };
+
+
+Template.course_events.events_list_past = function() {
+	Meteor.subscribe('events'); // should not be here
+	var course=this;
+	var today = new Date();
+	return Events.find({course_id:this._id,startdate: {$lt:today}},{sort: {startdate: -1}}).map(function(event){
+		return {course: course, event: event}
+	});
+};
+
 
 Template.course_events.new_event = function() {
 	return {course: this, event: {}}
@@ -42,7 +54,7 @@ Template.course_events.isAddingEvent = function () {
 	return Session.get("isAddingEvent");
 };
 
-Template.course_events.isEditingEvent = function () {
+Template.course_event.isEditingEvent = function () {
 	if(Session.get("isEditingEvent")){
 		return Session.get("isEditingEvent")===this.event._id;
 	}

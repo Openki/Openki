@@ -1,9 +1,39 @@
 <template name="course_events">
 	<div class="course_events">
-		<h3>Events</h3>
+		<h3>Upcoming Events</h3>
 		{{#each events_list}}
-
 			<div class="course_event">
+				{{>course_event}}
+			</div>
+		{{else}}
+			no events 
+		{{/each}}
+
+	</div>
+
+	{{#if isAddingEvent}}
+		{{#with new_event}}
+			{{>course_event_edit}}
+		{{/with}}
+	{{else}}
+		<p><input type="button" class="addEvent" value="add a Date"/></p>
+	{{/if}}
+
+	<div class="course_events_past">
+		<h3>Past Events</h3>
+		{{#each events_list_past}}
+			<div class="course_event_past">
+				{{>course_event}}
+			</div>
+		{{else}}
+			no events 
+		{{/each}}
+		
+	</div>
+</template>
+
+
+<template name="course_event">
 
 		{{#if isEditingEvent}}
 				{{>course_event_edit}}
@@ -32,17 +62,7 @@
 			{{/with}}
 			<input type="button" class="eventEdit" value="Edit" />
 		{{/if}}
- <input type="button" class="eventDelete" value="Delete" />
-			</div>
-		{{else}}
-			no events 
-		{{/each}}
+		<input type="button" class="eventDelete" value="Delete" />
 	</div>
-	{{#if isAddingEvent}}
-		{{#with new_event}}
-			{{>course_event_edit}}
-		{{/with}}
-	{{else}}
-		<p><input type="button" class="addEvent" value="add a Date"/></p>
-	{{/if}}
 </template>
+
