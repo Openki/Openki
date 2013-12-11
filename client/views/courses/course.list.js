@@ -130,10 +130,29 @@ Template.course.course_eventlist_hasmore = function() {
 	return eventcount > 1 ? (eventcount-1)  : false
 }
 
-Template.course.is_takingplace = function() {
+Template.course.hasupcomingevents = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
 	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0 ? true : false
 
 }
+
+Template.course.coursestate = function() {
+	Meteor.subscribe('events') //ugly here! ugly, ugly!
+
+	var today = new Date();
+	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0 
+	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0 
+
+	if(upcoming || past){
+		if(upcoming){
+			return "hasupcomingevents"
+		}else{
+			return "haspastevents"
+		}
+	}else{
+		return "proposal"
+	}
+}
+

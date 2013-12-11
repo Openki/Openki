@@ -5,7 +5,9 @@ Template.course_event_edit.events({
 	'click input.saveEditEvent': function () {
 		if(Meteor.userId()){
 
+			// format startdate
 			var dateParts =  $('#edit_event_startdate').val().split(".");
+
 			if (!dateParts[2]){
 				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)"); 
 				return;
@@ -13,15 +15,21 @@ Template.course_event_edit.events({
 
 			if(dateParts[2].toString().length==2) dateParts[2]=2000+dateParts[2]*1;
 
-			
 			if($('#edit_event_starttime').val()!=""){
 				var timeParts =  $('#edit_event_starttime').val().split(":");
 			}else{
 				var timeParts =  [0,0];
 			}
-			var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1]);
 
+			var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1])
 			var now= new Date();
+
+
+			if (startdate<now){
+				alert("Date must be in future"); 
+				return;
+			}
+
 
 			var editevent = {
 				title: $('#edit_event_title').val(),
@@ -39,6 +47,7 @@ Template.course_event_edit.events({
 				editevent.createdBy = Meteor.userId()
 				editevent.time_created = now
 				editevent.time_lastedit= now	
+
 				Events.insert(editevent)
 			}
 

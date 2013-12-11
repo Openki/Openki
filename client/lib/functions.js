@@ -46,8 +46,18 @@ Handlebars.registerHelper('username', function (userid){
 Handlebars.registerHelper('dateformat', function(date) {
     // We'll need a date formatter at some point
     //if (date) return date.toDateString();
+
     if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });
+
+Handlebars.registerHelper('dateformat_withday', function(date) {
+    // We'll need a date formatter at some point
+    //if (date) return date.toDateString();
+    horrible_date_array=["Mo","Tue","Wed","Thu","Fr","Sat","So"]; //FIXME
+
+    if (date) return horrible_date_array[date.getDay()]+". "+date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+});
+
 
 Handlebars.registerHelper('dateformat_mini', function(date) {
     // We'll need a date formatter at some point

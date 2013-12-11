@@ -29,14 +29,12 @@
 <template name="course">
 	<li class="courselist_course">
 		<a href="{{courseURL _id}}">
-			<div class="courselist_course_text {{#if is_takingplace}}takingplace{{else}}proposal{{/if}}">
+			<div class="courselist_course_text {{coursestate}}">
 				<div class="course_name">{{name}}</div>
 			
-				<span class="smalldesc">
-					<span class="small">{{dateformat time_created}}</span>
-					<span class="small">{{username createdby}}</span>
-					<span class="small">{{> show_categories}}</span>
-				</span>
+				<div class="course_categories">{{> show_categories}}</div>
+
+	
 				<span class="smalldesc">
 					{{#if course_events}}
 					Events:
@@ -47,7 +45,7 @@
 			</div>
 
 			<div class="courselist_course_info">
-				{{#if is_takingplace}}
+				{{#if hasupcomingevents}}
 					<ul class="course_eventlist">
 						{{#each course_eventlist}}
 							<li>

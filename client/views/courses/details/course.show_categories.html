@@ -1,6 +1,5 @@
 <template name="show_categories">
-	Categories:
-		<ul class="categorylist">
+		<ul>
 			{{#each loadcategories categories}}
 				<li> <a href="/categorylist/#{{_id}}">{{name}}</li>
 			{{/each}}
