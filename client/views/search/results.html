@@ -1,13 +1,16 @@
 <template name="search_results">
-	{{#unless results.count}}
-		<a class="propose_course" href="courses/propose/">Propose it ↴</a>
-	{{/unless}}
-	<div>
-		{{#if coursesLoaded}}
-			<strong>{{results.count}}</strong> of <strong>{{results.countTotal}}</strong> courses in <strong>{{results.region}}</strong> match your search.
-		{{else}}
-			loading...
-		{{/if}}
+	<div class="search">
+		{{> search_form }}
+		{{#unless results.count}}
+			<a class="propose_course" href="courses/propose/">Propose it ↴</a>
+		{{/unless}}
+		<div>
+			{{#if coursesLoaded}}
+				Found <strong>{{results.count}}</strong> of <strong>{{results.countTotal}}</strong> courses in <strong>{{results.region}}</strong>.
+			{{else}}
+				loading...
+			{{/if}}
+		</div>
 	</div>
 	<ul class="courselist_results">
 		{{#if coursesLoaded}}

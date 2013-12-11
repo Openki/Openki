@@ -1,13 +1,14 @@
 <template name="layout">
 	<body>
 		<div id="container">
-				<div id="header_bar">
+			<div id="header_bar">
 				<div id="ticker">
 				{{> ticker}}
 				</div>
 				<div id="login">
 					{{loginButtons align="right"}}
 				</div>
+
 				<div id="search">
 					{{> search_menue}}
 				</div>
@@ -33,7 +34,9 @@
 
 
 <template name="search_menue">
-	<div class="dropdown">
+
+				
+	<div class="dropdown"><a id="ugly_logo" href="/"><img src="/logo.gif" style="height:30px; margin: 0 15px"> </a>
 		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> Courses</a>
 		<div class="dropdown-menu">
 			<ul role="menu">

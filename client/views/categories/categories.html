@@ -17,10 +17,10 @@
   <div class="categorylist">
     <p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}" id="{{_id}}">{{name}}:</p>
       <p>
-	        <ul class="smalldesc">
+	        <ul class="category">
           {{#each courses_by_category}}
 				<li><a href="{{pathFor 'showCourse'}}"> {{name}}</li>
-              {{else}} <li class='smalldesc_no_course'> keine Kurse in dieser Kategorie definiert! </li>
+              {{else}} <li class='category_no_course'> keine Kurse in dieser Kategorie definiert! </li>
           {{/each}}
           </ul>
      </p>
