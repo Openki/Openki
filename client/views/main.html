@@ -75,11 +75,12 @@
 
 
 <template name="region_sel">
+
 	<div class="dropdown">
-		<a class="regions" href="/"><span class="icon-nav_region"></span> Region:</a>
+		<a class="regions" href="/"><span class="icon-nav_region"></span></a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/region/{{_id}}">All</a></li>
+				<li><a class="regionselect" href="/region/{{_id}}">All regions</a></li>
 				{{# each regions}}
 					<li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
 				{{/each}}
