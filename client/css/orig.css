@@ -824,29 +824,30 @@ a:hover {
 }
 
 /************ dropdown *************/
-/* line 756, ../../sass/orig/_screen.scss */
+/* line 758, ../../sass/orig/_screen.scss */
 .dropdown {
   position: relative;
   padding-top: 5px;
-  padding-left: 50px;
+  padding-right: 50px;
   float: left;
+  display: inline;
 }
 
-/* line 764, ../../sass/orig/_screen.scss */
+/* line 767, ../../sass/orig/_screen.scss */
 .dropdown span a {
   color: #f6f6f6;
   text-decoration: none;
   font-weight: bold;
 }
 
-/* line 770, ../../sass/orig/_screen.scss */
+/* line 773, ../../sass/orig/_screen.scss */
 .dropdown span a:hover {
   color: #444;
   text-decoration: none;
   font-weight: bold;
 }
 
-/* line 778, ../../sass/orig/_screen.scss */
+/* line 781, ../../sass/orig/_screen.scss */
 .dropdown > a:after {
   display: inline-block;
   position: relative;
@@ -855,7 +856,7 @@ a:hover {
   font-size: 8px;
 }
 
-/* line 784, ../../sass/orig/_screen.scss */
+/* line 788, ../../sass/orig/_screen.scss */
 .dropdown .dropdown-menu {
   display: none;
   top: 45px;
@@ -863,7 +864,7 @@ a:hover {
   position: absolute;
 }
 
-/* line 790, ../../sass/orig/_screen.scss */
+/* line 794, ../../sass/orig/_screen.scss */
 .dropdown .dropdown-menu ul {
   color: gray;
   background: white;
@@ -881,19 +882,19 @@ a:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
-/* line 805, ../../sass/orig/_screen.scss */
+/* line 809, ../../sass/orig/_screen.scss */
 .dropdown .dropdown-menu ul li a {
   color: black;
   font-size: 14px;
 }
 
-/* line 808, ../../sass/orig/_screen.scss */
+/* line 813, ../../sass/orig/_screen.scss */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
 /**********   Search   **********/
-/* line 813, ../../sass/orig/_screen.scss */
+/* line 818, ../../sass/orig/_screen.scss */
 .searchform {
   font-size: 200%;
   font-weight: normal;
@@ -904,7 +905,13 @@ a:hover {
   margin-bottom: 10px;
 }
 
-/* line 823, ../../sass/orig/_screen.scss */
+/* line 829, ../../sass/orig/_screen.scss */
+#search_form {
+  display: inline;
+  margin-left: 20px;
+}
+
+/* line 833, ../../sass/orig/_screen.scss */
 .search {
   margin-top: 15px;
   text-align: bottom;
@@ -912,40 +919,40 @@ a:hover {
   padding: 10px 0 10px 50px;
 }
 
-/* line 830, ../../sass/orig/_screen.scss */
+/* line 840, ../../sass/orig/_screen.scss */
 .search_result {
   font-size: 130%;
 }
 
-/* line 833, ../../sass/orig/_screen.scss */
+/* line 843, ../../sass/orig/_screen.scss */
 .propose_course {
   font-size: 130%;
 }
 
-/* line 836, ../../sass/orig/_screen.scss */
+/* line 846, ../../sass/orig/_screen.scss */
 ul.categories {
   columns: 2;
 }
 
-/* line 839, ../../sass/orig/_screen.scss */
+/* line 849, ../../sass/orig/_screen.scss */
 .categories li {
   clear: left;
 }
 
-/* line 842, ../../sass/orig/_screen.scss */
+/* line 852, ../../sass/orig/_screen.scss */
 .subcategories {
   font-size: 65%;
   color: #333333;
 }
 
-/* line 846, ../../sass/orig/_screen.scss */
+/* line 856, ../../sass/orig/_screen.scss */
 .subcategories li {
   float: left;
   clear: none;
   padding-left: 1em;
 }
 
-/* line 852, ../../sass/orig/_screen.scss */
+/* line 862, ../../sass/orig/_screen.scss */
 .regionselect {
   border: 1px dotted white;
   padding: 0 10px;

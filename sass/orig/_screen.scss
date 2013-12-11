@@ -752,13 +752,16 @@ color: #444 !important;
 
 
 
+
+
 /************ dropdown *************/
 .dropdown {
     position: relative;
     padding-top: 5px;
-    padding-left: 50px;
+    padding-right: 50px;
     float:left;
   //  text-transform: uppercase;
+  display: inline;
 }
 
 .dropdown span a, {
@@ -781,6 +784,7 @@ color: #444 !important;
     top: -1px;
     margin-left: 4px;
     font-size: 8px; }
+
 .dropdown .dropdown-menu {
     display: none;
     top: 45px;
@@ -805,6 +809,7 @@ color: #444 !important;
 .dropdown .dropdown-menu ul li a {
         color: black;
         font-size: 14px; }
+
 .dropdown:hover .dropdown-menu {
     display: block; }
 
@@ -820,6 +825,11 @@ color: #444 !important;
     margin-bottom: 10px;
 }
 
+
+#search_form{
+display: inline;
+margin-left: 20px;
+}
 .search{
     margin-top: 15px;
     text-align: bottom;
