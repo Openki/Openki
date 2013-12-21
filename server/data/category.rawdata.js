@@ -1,14 +1,14 @@
 categories = [{
-		'name':   'Sport / Bewegung',	// 'Sports / (Physical Training,Exercice,Practice,Workout)'
+		'name':   'Sport / Bewegung',	// 'Sports / (Physical Training,Exercice,Practice,Workout, Movement)'
 		'_id':    '1'
 	},{
-		'name':   'Handwerk',			// 'craft'
+		'name':   'Handwerk',			// 'Craft, Handicraft'
 		'_id':    '2'
     },{
 		'name':   'Naturwissenschaft',	// 'Natural Science'
 		'_id':    '3'
     },{
-		'name':   'Geisteswissenschaft',// '(Hunamities, Arts)'
+		'name':   'Geisteswissenschaft',// '(Hunamities, Arts & Humanities)'
 		'_id':    '4'
     },{
 		'name':   'Kultur',				// 'Culture'
@@ -26,10 +26,10 @@ categories = [{
 		'name':      'Teamsport',			// 'Teamsport'
 		'parent':    '1'
 	},{
-		'name':      'Manege / Artistik',	// 'artistry'
+		'name':      'Manege / Artistik',	// 'artistry, handicraft'
 		'parent':    '1'
 	},{
-		'name':      'Holz / Metall',		// 'Wood / Metall'
+		'name':      'Holz / Metall',		// 'Woodwork / Metalwork'
 		'parent':    '2'
 	},{
 		'name':      'Elektronik / Strom',	// 'Electronics / Electricity'
@@ -77,7 +77,7 @@ categories = [{
 		'name':      'Philosophie',			// 'Philosophy'
 		'parent':    '4'
 	},{
-		'name':      'Wirtschaft und Brecht',// 'Business Studies Economics and Law'
+		'name':      'Wirtschaft und Recht',// 'Business Studies Economics and Law'
 		'parent':    '4'
 	},{
 		'name':      'Literatur',			// 'Literature'
@@ -89,7 +89,7 @@ categories = [{
 		'name':      'Musik',				// 'Music'
 		'parent':    '5'
 	},{
-		'name':      'Kunst',				// 'Art'
+		'name':      'Kunst',				// 'Fine Art'
 		'parent':    '5'
 	},{
 		'name':      'Design',				// 'Design'
@@ -98,7 +98,7 @@ categories = [{
 		'name':      'Fotografie',			// 'Photography'
 		'parent':    '5'
 	},{
-		'name':      'Film',				// 'Motion Picture'
+		'name':      'Film',				// 'Film'
 		'parent':    '5'
 	},{
 		'name':      'Kochen',				// 'Cooking'
@@ -113,7 +113,7 @@ categories = [{
 		'name':      'Programmieren',		// 'Programming'
 		'parent':    '6'
 	},{
-		'name':      'Softwarebedienung',	// 'Software ??? '
+		'name':      'Softwarebedienung',	// 'Software Operating '
 		'parent':    '6'
 	},
 ]
