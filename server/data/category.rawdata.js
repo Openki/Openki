@@ -1,119 +1,166 @@
 categories = [{
-		'name':   'Sport / Bewegung',	// 'Sports / (Physical Training,Exercice,Practice,Workout, Movement)'
+		'name':   'Sports / Movement',
+		'nameDE': 'Sport / Bewegung',	// 'Sports / (Physical Training,Exercice,Practice,Workout, Movement)'
 		'_id':    '1'
 	},{
-		'name':   'Handwerk',			// 'Craft, Handicraft'
+		'name':   'Handicraft',
+		'nameDE': 'Handwerk',			// 'Craft, Handicraft'
 		'_id':    '2'
     },{
-		'name':   'Naturwissenschaft',	// 'Natural Science'
+		'name':   'Natural Science',
+		'nameDE': 'Naturwissenschaft',	// 'Natural Science'
 		'_id':    '3'
     },{
-		'name':   'Geisteswissenschaft',// '(Hunamities, Arts & Humanities)'
+		'name':   'Arts & Humanities',
+		'nameDE': 'Geisteswissenschaft',// '(Hunamities, Arts & Humanities)'
 		'_id':    '4'
     },{
-		'name':   'Kultur',				// 'Culture'
+		'name':   'Culture',
+		'nameDE': 'Kultur',				// 'Culture'
 		'_id':    '5'
     },{
-		'name':   'Computer',			// 'Computer'
+		'name':   'Computer',
+		'nameDE': 'Computer',			// 'Computer'
 		'_id':    '6'
     },{
-		'name':   '♥Undefined♥',		// '♥Undefined♥'
+		'name':   '♥Undefined♥',
+		'nameDE': '♥Undefined♥',		// '♥Undefined♥'
 		'_id':    '7'
     },{
-		'name':      'Kampfsport/-kunst',	// 'martial arts'
+		'name':      'Martial arts',
+		'nameDE':    'Kampfsport/-kunst',	// 'martial arts'
 		'parent':    '1'
 	},{
-		'name':      'Teamsport',			// 'Teamsport'
+		'name':      'Team sport',
+		'nameDE':    'Teamsport',			// 'Teamsport'
 		'parent':    '1'
 	},{
-		'name':      'Manege / Artistik',	// 'artistry, handicraft'
+		'name':      'Artistry',
+		'nameDE':    'Manege / Artistik',	// 'artistry, handicraft'
 		'parent':    '1'
 	},{
-		'name':      'Holz / Metall',		// 'Woodwork / Metalwork'
+		'name':      'Woodwork / Metalwork',
+		'nameDE':    'Holz / Metall',		// 'Woodwork / Metalwork'
 		'parent':    '2'
 	},{
-		'name':      'Elektronik / Strom',	// 'Electronics / Electricity'
+		'name':      'Electronics / Electricity',
+		'nameDE':    'Elektronik / Strom',	// 'Electronics / Electricity'
 		'parent':    '2'
 	},{
-		'name':      'Kunststoff / Stoff',	// 'Synthetic material / Fabric'
+		'name':      'Synthetic material / Fabric',
+		'nameDE':    'Kunststoff / Stoff',	// 'Synthetic material / Fabric'
 		'parent':    '2'
 	},{
-		'name':      'Garten / Landwirtschaft', // 'Gardening / Agriculture'
+		'name':      'Gardening / Agriculture',
+		'nameDE':    'Garten / Landwirtschaft', // 'Gardening / Agriculture'
 		'parent':    '2'
 	},{
-		'name':      'Bau',					// 'Construction'
+		'name':      'Construction',
+		'nameDE':    'Bau',					// 'Construction'
 		'parent':    '2'
 	},{
-		'name':      'Geographie',			// 'Geography'
+		'name':      'Geography',
+		'nameDE':    'Geographie',			// 'Geography'
 		'parent':    '3'
 	},{
-		'name':      'Physik',				// 'Physics'
+		'name':      'Physics',
+		'nameDE':    'Physik',				// 'Physics'
 		'parent':    '3'
 	},{
-		'name':      'Medizin',				// 'Medicine'
+		'name':      'Medicine',
+		'nameDE':    'Medizin',				// 'Medicine'
 		'parent':    '3'
 	},{
-		'name':      'Mathematik',			// 'Mathematics'
+		'name':      'Mathematics',
+		'nameDE':    'Mathematik',			// 'Mathematics'
 		'parent':    '3'
 	},{
-		'name':      'Chemie',				// 'Chemistry'
+		'name':      'Chemistry',
+		'nameDE':    'Chemie',				// 'Chemistry'
 		'parent':    '3'
 	},{
-		'name':      'Biologie',			// 'Biology'
+		'name':      'Biology',
+		'nameDE':    'Biologie',			// 'Biology'
 		'parent':    '3'
 	},{
-		'name':      'Sprache',				// 'Languages'
+		'name':      'Languages',
+		'nameDE':    'Sprache',				// 'Languages'
 		'parent':    '4'
 	},{
-		'name':      'Geschichte',			// 'History'
+		'name':      'History',
+		'nameDE':    'Geschichte',			// 'History'
 		'parent':    '4'
 	},{
-		'name':      'Soziologie',			// 'Sociology'
+		'name':      'Sociology',
+		'nameDE':    'Soziologie',			// 'Sociology'
 		'parent':    '4'
 	},{
-		'name':      'Politik',				// 'Politics'
+		'name':      'Politics',
+		'nameDE':    'Politik',				// 'Politics'
 		'parent':    '4'
 	},{
-		'name':      'Philosophie',			// 'Philosophy'
+		'name':      'Philosophy',
+		'nameDE':    'Philosophie',			// 'Philosophy'
 		'parent':    '4'
 	},{
-		'name':      'Wirtschaft und Recht',// 'Business Studies Economics and Law'
+		'name':      'Business Studies Economics and Law',
+		'nameDE':    'Wirtschaft und Recht',// 'Business Studies Economics and Law'
 		'parent':    '4'
 	},{
-		'name':      'Literatur',			// 'Literature'
+		'name':      'Literature',
+		'nameDE':    'Literatur',			// 'Literature'
 		'parent':    '5'
 	},{
-		'name':      'Theater',				// 'Theater'
+		'name':      'Theater',
+		'nameDE':    'Theater',				// 'Theater'
 		'parent':    '5'
 	},{
-		'name':      'Musik',				// 'Music'
+		'name':      'Music',
+		'nameDE':    'Musik',				// 'Music'
 		'parent':    '5'
 	},{
-		'name':      'Kunst',				// 'Fine Art'
+		'name':      'Fine Art',
+		'nameDE':    'Kunst',				// 'Fine Art'
 		'parent':    '5'
 	},{
-		'name':      'Design',				// 'Design'
+		'name':      'Design',
+		'nameDE':    'Design',				// 'Design'
 		'parent':    '5'
 	},{
-		'name':      'Fotografie',			// 'Photography'
+		'name':      'Photography',
+		'nameDE':    'Fotografie',			// 'Photography'
 		'parent':    '5'
 	},{
-		'name':      'Film',				// 'Film'
+		'name':      'Film',
+		'nameDE':    'Film',				// 'Film'
 		'parent':    '5'
 	},{
-		'name':      'Kochen',				// 'Cooking'
+		'name':      'Cooking',
+		'nameDE':    'Kochen',				// 'Cooking'
 		'parent':    '5'
 	},{
-		'name':      'Subkultur',			// 'Subculture'
+		'name':      'Subculture',
+		'nameDE':    'Subkultur',			// 'Subculture'
 		'parent':    '5'
 	},{
-		'name':      'Internet',			// 'Internet'
+		'name':      'Internet',
+		'nameDE':    'Internet',			// 'Internet'
 		'parent':    '6'
 	},{
-		'name':      'Programmieren',		// 'Programming'
+		'name':      'Programming',
+		'nameDE':    'Programmieren',		// 'Programming'
 		'parent':    '6'
 	},{
-		'name':      'Softwarebedienung',	// 'Software Operating '
+		'name':      'Software Operating',
+		'nameDE':    'Softwarebedienung',	// 'Software Operating'
 		'parent':    '6'
-	},
+	},{
+		'name':      'Spirituality',
+		'nameDE':    'Spiritualität',
+		'parent':    '7'
+	},{
+		'name':      'Experimantal',
+		'nameDE':    'Experimantal',
+		'parent':    '7'
+	}
 ]
