@@ -31,7 +31,7 @@ function ensureUser(name) {
 
 // TESTING: Get category object for name and create it if it doesn't exist
 function categoryForName(name) {
-		var category = Categories.findOne({name: name})
+		var category = Categories.findOne({nameDE: name})
 		if (!category) throw "No category "+name
         return category;
 }
