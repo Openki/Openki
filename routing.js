@@ -53,6 +53,9 @@ Router.map(function () {									///////// startpage /////////
 	})
 
 	this.route('categorylist',{								///////// categories /////////
+		waitOn: function () {
+			return Meteor.subscribe('categories');     // TODO: Anchor tags don't work anyway
+		},
 		after: function() {
 			document.title = webpagename + 'Category list'
 		}
