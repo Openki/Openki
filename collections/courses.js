@@ -37,12 +37,9 @@ Meteor.methods({
 		}
 		if (!course.roles[role]) throw new Meteor.Error(404, "No role "+role)
 
-		var where = 'roles.'+role+'.subscribed'
-		var update = {}
-		update[where] = Meteor.userId()
 		var operation = {}
-		operation[add ? '$addToSet' : '$pull'] = update
-		Courses.update(course, operation)
+		operation[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
+		Courses.update({_id: course._id, 'participants.user': userId }, )
 		var time = new Date
 		Courses.update(course, { $set: {time_lastenrol:time}})
 	},
@@ -70,7 +67,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
 
-		var mayEdit = isNew || user.isAdmin || (course.roles.team && course.roles.team.subscribed.indexOf(user._id) !== -1)
+ 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
 		var unset = {}
@@ -90,12 +87,15 @@ Meteor.methods({
 
 		set.time_lastedit = new Date
 		if (isNew) {
-			courseId = Courses.insert({}, checkInsert)
-			set.time_created = new Date
+			/* region cannot be changed */
 			set.region = Regions.findOne({_id: changes.region})
 			if (!set.region) throw new Exception(404, 'region missing')
-			set.createdby = user._id
-			set['roles.team'].subscribed = [user._id]
+			
+			courseId = Courses.insert({
+				participants: [{ user: user._id, roles: ['team'] }],
+				createdby: user._id,
+				time_created: new Date
+			}, checkInsert)
 		}
 		Courses.update({ _id: courseId }, { $set: set, $unset: unset }, checkUpdateOne)
 		return courseId
