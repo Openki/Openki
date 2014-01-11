@@ -64,8 +64,8 @@ function createCourses(){
 		}
 
 		/* Replace user name with ID */
-		_.each(course.participants, function(participant) {
-			particpant.user = ensureUser(participant.user)
+		_.each(course.members, function(member) {
+			member.user = ensureUser(member.user)._id
 		})
 
 		course.createdby = ensureUser(course.createdby)._id
