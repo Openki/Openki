@@ -37,9 +37,9 @@ Meteor.methods({
 		}
 		if (!course.roles[role]) throw new Meteor.Error(404, "No role "+role)
 
-		var operation = {}
-		operation[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
-		Courses.update({_id: course._id, 'participants.user': userId }, )
+		var update = {}
+		update[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
+		Courses.update({_id: course._id, 'participants.user': userId }, update)
 		var time = new Date
 		Courses.update(course, { $set: {time_lastenrol:time}})
 	},
@@ -72,10 +72,10 @@ Meteor.methods({
 
 		/* Changes we want to perform */
 		var update = {
-			$set = {},
-			$unset = {},
-			$addToSet = { roles: [] },
-			$pull = { roles: [], participants: { roles: [] } }
+			$set: {},
+			$unset: {},
+			$addToSet: { roles: [] },
+			$pull: { roles: [], participants: { roles: [] } }
 		}
 
 		_.each(Roles.find().fetch(), function(roletype) {
