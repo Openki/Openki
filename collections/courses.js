@@ -1,4 +1,4 @@
-// ======== DB-Model: ========
+// ======== DB-Model: ========3
 // "_id" -> ID
 // "name" -> string
 // "createdby" -> ID_users
@@ -70,34 +70,42 @@ Meteor.methods({
  		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
-		var unset = {}
-		var set = {}
+		/* Changes we want to perform */
+		var update = {
+			$set = {},
+			$unset = {},
+			$addToSet = { roles: [] },
+			$pull = { roles: [], participants: { roles: [] } }
+		}
 
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
-			var have = !!course.roles[type]
-			if (have && !should_have) unset['roles.'+type] = 1;
-			if (!have && should_have) set['roles.'+type] = roletype.protorole
+			var have = course.roles.indexOf(type) !== -1
+			if (have && !should_have) {
+				update.$pull.roles.push(type)
+				update.$pull.participants.roles.push(type)
+			}
+			if (!have && should_have) update.$addToSet.roles.push(type)
 		})
 
-		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
-		if (changes.categories) set.categories = changes.categories.slice(0, 20)
-		if (changes.name) set.name = changes.name.substring(0, 1000)
+		if (changes.description) update.$set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
+		if (changes.categories) update.$set.categories = changes.categories.slice(0, 20)
+		if (changes.name) update.$set.name = changes.name.substring(0, 1000)
 
-		set.time_lastedit = new Date
+		update.$set.time_lastedit = new Date
 		if (isNew) {
 			/* region cannot be changed */
-			set.region = Regions.findOne({_id: changes.region})
-			if (!set.region) throw new Exception(404, 'region missing')
+			update.$set.region = Regions.findOne({_id: changes.region})
+			if (!update.$set.region) throw new Exception(404, 'region missing')
 			
 			courseId = Courses.insert({
-				participants: [{ user: user._id, roles: ['team'] }],
+				participants: [{ user: user._id, roles: [] }],
 				createdby: user._id,
 				time_created: new Date
 			}, checkInsert)
 		}
-		Courses.update({ _id: courseId }, { $set: set, $unset: unset }, checkUpdateOne)
+		Courses.update({ _id: courseId }, update, checkUpdateOne)
 		return courseId
 	}
 })
