@@ -25,6 +25,7 @@ function ensureUser(name) {
 			lastLogin: new Date(new Date().getTime()-age/30),
 			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
 		}})
+		console.log("Mongouser added: "+name)
 	}
     return user;
 }
@@ -62,11 +63,9 @@ function createCourses(){
 			if (cat.parent) course.categories.push(cat.parent)
 		}
 
-		if (course.roles === undefined) course.roles = {}
-		_.each(course.roles, function(role) {
-			_.each(role.subscribed, function(subscriber, i) {
-				role.subscribed[i] = ensureUser(subscriber)._id
-			})
+		/* Replace user name with ID */
+		_.each(course.participants, function(participant) {
+			particpant.user = ensureUser(participant.user)
 		})
 
 		course.createdby = ensureUser(course.createdby)._id
@@ -79,6 +78,7 @@ function createCourses(){
 		course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
 		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
 		Courses.insert(course)
+		console.log("Mongocourse added: "+course.name)
 	})
 }
 
