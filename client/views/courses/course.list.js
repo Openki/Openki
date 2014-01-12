@@ -117,8 +117,8 @@ Template.course.categorynames = function() {
 
 Template.course.course_eventlist = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
-
-	return Events.find({course_id: this._id}, {limit: 1});
+	var today= new Date();
+	return Events.find({course_id: this._id, startdate: {$gt:today}}, {sort: {startdate: 1}, limit: 1});
 }
 
 
@@ -126,7 +126,7 @@ Template.course.course_eventlist_hasmore = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
-	var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count(); 
+	var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count();
 	return eventcount > 1 ? (eventcount-1)  : false
 }
 
@@ -134,7 +134,7 @@ Template.course.hasupcomingevents = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
-	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0 ? true : false
+	return Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
 
 }
 
@@ -142,8 +142,8 @@ Template.course.coursestate = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today = new Date();
-	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0 
-	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0 
+	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
+	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
 
 	if(upcoming || past){
 		if(upcoming){
