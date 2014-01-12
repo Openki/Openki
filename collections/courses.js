@@ -18,6 +18,38 @@ Courses.allow({
 });
 
 
+function findCourses(params){
+	var find = {};
+
+	if (params.member) {
+		// courses where given user is member
+		find.members = { user: params.member }
+	}
+
+	if (Session.get('region')) {
+		find.region = Session.get('region')
+	}
+
+	if (params.missing=="organisator") {
+		// show courses with no organisator
+		find['members.roles'] = { $ne: 'team' }
+	}
+	
+	if (param.search) {
+		_.extend(find, {
+			$or: [
+				// FIXME: Runs unescaped as regex, absolutely not ok
+				// ALSO: Not user friendly, do we can have fulltext?
+				{ name: { $regex: param.search, $options: 'i' } },
+				{ description: { $regex: param.search, $options: 'i' } }
+			]
+		})
+	}
+
+	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
+}
+
+
 Meteor.methods({
 	change_subscription: function(courseId, role, add) {
 		check(role, String)
@@ -35,13 +67,15 @@ Meteor.methods({
 				throw new Meteor.Error(401, "please log in")
 			}
 		}
-		if (!course.roles[role]) throw new Meteor.Error(404, "No role "+role)
+		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
-		var update = {}
-		update[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
-		Courses.update({_id: course._id, 'participants.user': userId }, update)
+		if (!Meteor.isClient) { // Minimongo does not support $ field selector, so we'll wait for the server patching us
+			var update = {}
+			update[add ? '$addToSet' : '$pull'] = { 'members.$.roles': role }
+			Courses.update({_id: course._id, 'members.user': userId }, update, checkUpdateOne)
+		}
 		var time = new Date
-		Courses.update(course, { $set: {time_lastenrol:time}})
+		Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
 	},
 
 	save_course: function(courseId, changes) {

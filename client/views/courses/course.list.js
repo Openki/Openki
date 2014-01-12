@@ -69,34 +69,32 @@ Template.course.participant_status = function() {
 }
 
 Template.course.team_status = function() {
-	return this.roles.team.subscribed.length > 0 ? 'yes' : 'no'
+	return hasRole(this.members, 'team') ? 'yes' : 'no'
 }
 
 Template.course.mentor_status = function() {
-	return this.roles.mentor.subscribed.length > 0 ? 'yes' : 'no'
+	return hasRole(this.members, 'mentor') ? 'yes' : 'no'
 }
 
 Template.course.host_status = function() {
-	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
+	return hasRole(this.members, 'host') ? 'yes' : 'no'
 }
 
 
-// Idee für provisorische Darstellung:
-// Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
 Template.course.is_subscriber = function() {
-	return this.roles.participant.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
+	return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
 }
 
 Template.course.is_host = function() {
-	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'host', Meteor.userId())
 }
 
 Template.course.is_team = function() {
-	return this.roles.team.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'team', Meteor.userId())
 }
 
 Template.course.is_mentor = function() {
-	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'mentor', Meteor.userId())
 }
 
 
@@ -124,7 +122,7 @@ Template.course.hasupcomingevents = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
-	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0 ? true : false
+	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0
 
 }
 
