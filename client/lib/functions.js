@@ -16,6 +16,12 @@ hasRole = function(members, role) {
 	return false;
 }
 
+havingRole = function(members, role) {
+	return _.filter(members, function(member) {
+		return member.roles.indexOf(role) !== -1
+	})
+}
+
 getMemeber = function(members, user) {
 	var member = false;
 	members.forEach(function(member_candidate) {
