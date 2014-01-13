@@ -1,3 +1,6 @@
+// TESTING: in order to test scalebility
+ScaleFaktor = 10
+
 // TESTING: create new Courses if non in db
 
 createCoursesIfNone = function(){
@@ -45,14 +48,9 @@ function createCourses(){
 		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
 	}
 
+
 	_.each(testcourses, function(course) {
 		if (!course.createdby) return; // Don't create courses that don't have an creator name
-
-		// TESTING: allways use same id for same course to avoid broken urls while testing
-		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
-		m5.update(course.name);
-		m5.update(course.description);
-		course._id = m5.digest('hex').substring(0, 8)
 
 		var category_names = course.categories
 		course.categories = []
@@ -68,17 +66,27 @@ function createCourses(){
 				role.subscribed[i] = ensureUser(subscriber)._id
 			})
 		})
-
 		course.createdby = ensureUser(course.createdby)._id
-		course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
-		course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
-		course.date = Random.fraction() > 0.50 ? new Date(new Date().getTime()+((Random.fraction()-0.25)*8000000000)) : false
-		var age = Math.floor(Random.fraction()*80000000000)
-		course.time_created = new Date(new Date().getTime()-age)
-		course.time_lastedit = new Date(new Date().getTime()-age*0.25)
-		course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
-		course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
-		Courses.insert(course)
+		var name = course.name
+		for (var n = 0; n < ScaleFaktor; n++){  //asjdfhgaösodjfölasdkjföl
+			course.name = name + ' Kopie ' + n
+
+			// TESTING: allways use same id for same course to avoid broken urls while testing
+			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+			m5.update(course.name);
+			m5.update(course.description);
+			course._id = m5.digest('hex').substring(0, 8)
+
+			course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
+			course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
+			course.date = Random.fraction() > 0.50 ? new Date(new Date().getTime()+((Random.fraction()-0.25)*8000000000)) : false
+			var age = Math.floor(Random.fraction()*80000000000)
+			course.time_created = new Date(new Date().getTime()-age)
+			course.time_lastedit = new Date(new Date().getTime()-age*0.25)
+			course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
+			course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
+			Courses.insert(course)
+		}
 	})
 }
 
@@ -87,14 +95,11 @@ function createCourses(){
 
 /////////////////////////////// TESTING: Create Locations if non in db
 
-
 createLocationsIfNone = function(){
  if (Locations.find().count() === 0) {
         createLocations();
   }
 }
-
-
 
 function ensureLocationCategory(name){
     var category_prototype = {name: name}
@@ -105,9 +110,7 @@ function ensureLocationCategory(name){
     return category
 }
 
-
 // TESTING:
-
 function createLocations(){
 
 	_.each(testlocations, function(location) {
@@ -149,10 +152,15 @@ function createLocations(){
 }
 
 
+
+
+
+/////////////////////////////// TESTING: Create Events if non in db
+
 createEventsIfNone = function(){
 	if (Events.find().count() === 0) {
 		var event = {}
-		for (var n = 0; n < 35; n++){
+		for (var n = 0; n < (35*ScaleFaktor); n++){
 		 	var course_count= Courses.find().count()
 			var course = Courses.find({},{skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch()
 			event.course_id = course[0]._id
@@ -160,10 +168,15 @@ createEventsIfNone = function(){
 			event.description = 'This is the event-description'
 			event.mentors = []
 			event.host = []
-			var timeToGo = Math.floor(Random.fraction()*5000000000)
-			var age = Math.floor(Random.fraction()*10000000000)
-			event.startdate = new Date(new Date().getTime()+timeToGo-4000000000)
+			var spread = 1000*60*60*24*365*1.2						 //cause it's millis
+			var timeToGo = Random.fraction()-0.8
+			if (timeToGo >= 0.05) {
+				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponetial in order to decrease in time
+			}
+			timeToGo = Math.floor(timeToGo*spread)
+			event.startdate = new Date(new Date().getTime()+timeToGo)
 			event.createdby = 'ServerScript'
+			var age = Math.floor(Random.fraction()*10000000000)
 			event.time_created = new Date(new Date().getTime()-age)
 			event.time_lastedit = new Date(new Date().getTime()-age*0.25)
 			Events.insert(event)
