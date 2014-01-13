@@ -49,6 +49,42 @@ function findCourses(params){
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
+function addRole(course, role, user) {
+	// Add the user as member if she's not listed yet
+	Courses.update(
+		{ _id: course._id, 'members.user': { $ne: user } }, 
+		{ $addToSet: { 'members': { user: user, roles: [] } }}
+	)
+	
+	// Minimongo does not currently support the $ field selector
+	// Remove this guard once it does
+	if (!Meteor.isClient) {
+		Courses.update(
+			{ _id: course._id, 'members.user': user }, 
+			{ '$addToSet': { 'members.$.roles': role }}, 
+			checkUpdateOne
+		)
+	}
+}
+
+function removeRole(course, role, user) {
+	// Minimongo does not currently support the $ field selector
+	// Remove this guard once it does
+	if (!Meteor.isClient) {
+			Courses.update(
+				{ _id: course._id, 'members.user': user }, 
+				{ '$pull': { 'members.$.roles': role }}, 
+				checkUpdateOne
+			)
+	}
+	
+	// Housekeeping: Remove members that have no role left
+	// Note that we have a race condition here with the addRole() function, blissfully ignoring the unlikely case
+	Courses.update(
+		{ _id: course._id },
+		{ $pull: { members: { roles: { $size: 0 } }}}
+	)
+}
 
 Meteor.methods({
 	change_subscription: function(courseId, role, add) {
@@ -69,13 +105,13 @@ Meteor.methods({
 		}
 		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
-		if (!Meteor.isClient) { // Minimongo does not support $ field selector, so we'll wait for the server patching us
-			var update = {}
-			update[add ? '$addToSet' : '$pull'] = { 'members.$.roles': role }
-			Courses.update({_id: course._id, 'members.user': userId }, update, checkUpdateOne)
+		if (add) {
+			addRole(course, role, userId)
+			var time = new Date
+			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
+		} else {
+			removeRole(course, role, userId)
 		}
-		var time = new Date
-		Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
 	},
 
 	save_course: function(courseId, changes) {

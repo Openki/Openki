@@ -45,11 +45,12 @@ Template.coursedetails.helpers({
     roleDetails: function() {
 		var course = this
 		return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
-			if (course.roles.indexOf(roletype.type) !== -1) {
+			var role = roletype.type
+			if (course.roles.indexOf(role) !== -1) {
 				goodroles.push({
 					roletype: roletype,
-					role: roletype.type,
-					subscribed: hasRoleUser(course.members, roletype.type, Meteor.userId()),
+					role: role,
+					subscribed: hasRoleUser(course.members, role, Meteor.userId()),
 					course: course
 				})
 			}

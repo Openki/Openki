@@ -6,10 +6,25 @@ get_timestamp = function (){
 }
 
 hasRole = function(members, role) {
+	var has = false;
 	members.forEach(function(member) {
-		if (member.roles.indexOf(role) !== -1) return true;
+		if (member.roles.indexOf(role) !== -1) {
+			has = true;
+			return true;
+		}
 	})
 	return false;
+}
+
+getMemeber = function(members, user) {
+	var member = false;
+	members.forEach(function(member_candidate) {
+		if (member.user == user) {
+			member = member_candidate
+			return true; // break
+		}
+	})
+	return member;
 }
 
 hasRoleUser = function(members, role, user) {
