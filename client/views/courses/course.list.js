@@ -68,16 +68,24 @@ Template.course.participant_status = function() {
 	return 'ontheway'
 }
 
-Template.course.team_status = function() {
-	return hasRole(this.members, 'team') ? 'yes' : 'no'
+Template.course.requiresMentor = function() {
+	return this.roles.indexOf('mentor') != -1
 }
 
-Template.course.mentor_status = function() {
-	return hasRole(this.members, 'mentor') ? 'yes' : 'no'
+Template.course.requiresHost = function() {
+	return this.roles.indexOf('host') != -1
 }
 
-Template.course.host_status = function() {
-	return hasRole(this.members, 'host') ? 'yes' : 'no'
+Template.course.needsTeam = function() {
+	return !hasRole(this.members, 'team')
+}
+
+Template.course.needsMentor = function() {
+	return !hasRole(this.members, 'mentor')
+}
+
+Template.course.needsHost = function() {
+	return !hasRole(this.members, 'host')
 }
 
 

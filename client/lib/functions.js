@@ -13,7 +13,7 @@ hasRole = function(members, role) {
 			return true;
 		}
 	})
-	return false;
+	return has;
 }
 
 havingRole = function(members, role) {
