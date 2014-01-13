@@ -157,8 +157,15 @@ createEventsIfNone = function(){
 			event.course_id = course[0]._id
 			event.title = course[0].name + '-Kurs'
 			event.description = 'This is the event-description'
-			event.mentors = []
-			event.host = []
+		/*  														TODO:
+			if (course[0].roles.indexOf(mentor) != -1) {
+				event.mentors = ['Serverscript']
+			}
+			if (hasRole (course[0], host)){
+				course[0].members.   // function not jet here!
+			}
+			else event.host = ['Serverscript']
+		*/
 			var timeToGo = Math.floor(Random.fraction()*5000000000)
 			var age = Math.floor(Random.fraction()*10000000000)
 			event.startdate = new Date(new Date().getTime()+timeToGo-4000000000)
