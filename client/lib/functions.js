@@ -17,9 +17,10 @@ hasRole = function(members, role) {
 }
 
 havingRole = function(members, role) {
-	return _.filter(members, function(member) {
-		return member.roles.indexOf(role) !== -1
-	})
+	return _.reduce(members, function(ids, member) {
+		if (member.roles.indexOf(role) !== -1) ids.push(member.user)
+			return ids;
+	}, [])
 }
 
 getMemeber = function(members, user) {
