@@ -11,13 +11,7 @@ Router.map(function () {
 			return Meteor.subscribe('events');
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
-			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			// console.log(course.nameY)
-			return {
-				course: course,
-				subscribers: prepare_subscribers(course),
-			};
+			return Courses.findOne({_id: this.params._id})
 		},
 		after: function() {
 			var course = Courses.findOne({_id: this.params._id})
@@ -83,30 +77,6 @@ Template.coursedetails.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
 	}
 })
-
-
-function prepare_subscribers(course) {
-	if (!course) return; // Wa?
-	var subscribers = {}
-	var sublist = []
-	_.each(course.roles, function (role, type) {
-		_.each(role.subscribed, function (userid) {
-			var user = Meteor.users.findOne({_id: userid})
-			if (!user) return;
-			var userdata = subscribers[userid]
-			if (!userdata) {
-				userdata = {}
-				userdata.name = user.username
-				userdata.id = user._id
-				userdata.roles = []
-				subscribers[userid] = userdata
-				sublist.push(userdata)
-			}
-			userdata.roles.push(type)
-		})
-	})
-	return sublist;
-}
 
 
 Template.coursedetails.isSubscribed = function () {
