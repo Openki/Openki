@@ -1,6 +1,6 @@
 <template name="course_event_edit">
 	<div class="course_event_edit">
-		
+
 		<h2>{{#if this.event._id}}Edit event{{else}}Add event{{/if}}</h2>
 		<p> Event title: <input type="text" id="edit_event_title" size="30" value="{{#if event._id}}{{event.title}}{{else}}{{course.name}}{{/if}}"/></p>
 		<p>  Desc: <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
@@ -13,8 +13,9 @@
 					<li>No Hosts available</li>
 				{{/each}}
 			</ul>
-		 </p>
-		<p>  Mentors 
+		</p>
+		{{#if needsRole 'mentor'}}
+		<p>  Mentors
 			<ul>
 				{{#each possible_mentors}}
 					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}> {{this.username}}</li>
@@ -23,6 +24,7 @@
 				{{/each}}
 			</ul>
 		 </p>
+		 {{/if}}
 
 		<p>  Date start <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
 		<p>Time start <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
