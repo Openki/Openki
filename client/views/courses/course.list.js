@@ -30,7 +30,7 @@ function get_courselist(listparameters){
 
 	if (listparameters.courses_from_userid) {
 		// courses where given user is member
-		find.participants = { user: listparameters.courses_from_userid }
+		find['members.user'] = listparameters.courses_from_userid
 	}
 
 	if (Session.get('region')) {
@@ -122,7 +122,7 @@ Template.course.course_eventlist_hasmore = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
-	var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count(); 
+	var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count();
 	return eventcount > 1 ? (eventcount-1)  : false
 }
 
@@ -138,8 +138,8 @@ Template.course.coursestate = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today = new Date();
-	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0 
-	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0 
+	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
+	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
 
 	if(upcoming || past){
 		if(upcoming){
