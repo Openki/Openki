@@ -168,10 +168,10 @@ createEventsIfNone = function(){
 			event.description = 'This is the event-description'
 			event.mentors = []
 			event.host = []
-			var spread = 1000*60*60*24*365*1.2						 //cause it's millis
-			var timeToGo = Random.fraction()-0.8
-			if (timeToGo >= 0.05) {
-				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponetial in order to decrease in time
+			var spread = 1000*60*60*24*365*1.2					//cause it's millis  1.2 Jears
+			var timeToGo = Random.fraction()-0.8 				// put 80% in the past
+			if (timeToGo >= 0.05) {								// 75% of the remaining in future
+				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponetial. in order to decrease occurrence in time
 			}
 			timeToGo = Math.floor(timeToGo*spread)
 			event.startdate = new Date(new Date().getTime()+timeToGo)
