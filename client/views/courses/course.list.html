@@ -80,6 +80,12 @@
 						{{#if roles.host}}
 							<li class="host_status {{host_status}}" title="{{#if isYes host_status}}{{#if is_host}}you are host{{else}}has a host{{/if}}{{else}}still needs a host{{/if}}">H{{#if is_host}}*{{/if}}</li>
 						{{/if}}
+						{{#if roles.donator}}
+							<li class="donator_status {{donator_status}}" title="{{#if isYes donator_status}}{{#if is_donator}}you are donator{{else}}has a donator{{/if}}{{else}}still needs a donator{{/if}}">H{{#if is_donator}}*{{/if}}</li>
+						{{/if}}
+						{{#if roles.cook}}
+							<li class="cook_status {{cook_status}}" title="{{#if isYes cook_status}}{{#if is_cook}}you are cook{{else}}has a cook{{/if}}{{else}}still needs a cook{{/if}}">H{{#if is_cook}}*{{/if}}</li>
+						{{/if}}
 					</ul>
 				{{/if}}
 			</div>

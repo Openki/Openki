@@ -47,6 +47,12 @@ var roles = [{
 		},
 		'protorole': { 'subscribed': [] }
 	},{
+		'type':        'donator',
+		'description': 'donate to the course',
+		'subscribe':   'I want to donate',
+		'show_subscribers': true,
+		'protorole': { 'subscribed': [] }
+	},{
 		'type':        'cook',
 		'description': 'cook for gatherings',
 		'subscribe':   'I can bring food' ,

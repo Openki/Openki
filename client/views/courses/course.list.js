@@ -34,7 +34,9 @@ function get_courselist(listparameters){
 			{ "roles.participant.subscribed" : listparameters.courses_from_userid},
 			{ "roles.mentor.subscribed" : listparameters.courses_from_userid},
 			{ "roles.host.subscribed" : listparameters.courses_from_userid},
-			{ "roles.interested.subscribed" : listparameters.courses_from_userid}
+			{ "roles.interested.subscribed" : listparameters.courses_from_userid},
+			{ "roles.donator.subscribed" : listparameters.courses_from_userid},
+			{ "roles.cook.subscribed" : listparameters.courses_from_userid}
 		]
 	})
 
@@ -90,6 +92,13 @@ Template.course.host_status = function() {
 	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
 }
 
+Template.course.donator_status = function() {
+	return this.roles.donator.subscribed.length > 0 ? 'yes' : 'no'
+}
+
+Template.course.cook_status = function() {
+	return this.roles.cook.subscribed.length > 0 ? 'yes' : 'no'
+}
 
 // Idee für provisorische Darstellung:
 // Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
@@ -109,6 +118,13 @@ Template.course.is_mentor = function() {
 	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
 }
 
+Template.course.is_donator = function() {
+	return this.roles.donator.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+}
+
+Template.course.is_cook = function() {
+	return this.roles.cook.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+}
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
