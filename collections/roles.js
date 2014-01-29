@@ -51,6 +51,9 @@ var roles = [{
 		'description': 'donate to the course',
 		'subscribe':   'I want to donate',
 		'show_subscribers': true,
+		'fields': {
+			'what': 'text'
+		},
 		'protorole': { 'subscribed': [] }
 	},{
 		'type':        'cook',
@@ -62,6 +65,7 @@ var roles = [{
 ]
 
 Meteor.startup(function () {
+    //Roles.remove({});
 	if (Meteor.isServer && Roles.find().count() == 0) {
 		_.each(roles, function(role){
 			Roles.insert(role)
