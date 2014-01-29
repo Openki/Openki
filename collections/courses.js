@@ -39,7 +39,11 @@ Meteor.methods({
 
 		var operation = {}
 		operation[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
-		Courses.update({_id: course._id, 'participants.user': userId }, )
+		Courses.update({_id: course._id, 'participants.user': userId }) // here is a BUG, 
+		                                                                // i dont know what exactly it the code should be. 
+		                                                                // meteor couldnt start before 
+		                                                                // when the line was like that:
+		                                                                // Courses.update({_id: course._id, 'participants.user': userId },) 
 		var time = new Date
 		Courses.update(course, { $set: {time_lastenrol:time}})
 	},
