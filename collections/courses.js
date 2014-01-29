@@ -39,7 +39,8 @@ Meteor.methods({
 
 		var operation = {}
 		operation[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
-		Courses.update({_id: course._id, 'participants.user': userId }) // here is a BUG, 
+		alert('a bug is found: in file collections/courses.js on line 42')
+		Courses.update({_id: course._id, 'participants.user': userId }, operation) // here is a BUG, 
 		                                                                // i dont know what exactly it the code should be. 
 		                                                                // meteor couldnt start before 
 		                                                                // when the line was like that:
