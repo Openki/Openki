@@ -5,16 +5,45 @@ get_timestamp = function (){
 	return now.getTime();
 }
 
-
-display_coursename = function (courseid){
-  var course = Courses.findOne({_id:courseid});
-  if(course){
-    return course.name;
-  }else{
-    return "dummdididumm.."
-  }
+hasRole = function(members, role) {
+	var has = false;
+	members.forEach(function(member) {
+		if (member.roles.indexOf(role) !== -1) {
+			has = true;
+			return true;
+		}
+	})
+	return has;
 }
 
+havingRole = function(members, role) {
+	return _.reduce(members, function(ids, member) {
+		if (member.roles.indexOf(role) !== -1) ids.push(member.user)
+			return ids;
+	}, [])
+}
+
+getMemeber = function(members, user) {
+	var member = false;
+	members.forEach(function(member_candidate) {
+		if (member.user == user) {
+			member = member_candidate
+			return true; // break
+		}
+	})
+	return member;
+}
+
+hasRoleUser = function(members, role, user) {
+	var has = false;
+	members.forEach(function(member) {
+		if (member.user == user) {
+			has = member.roles.indexOf(role) !== -1
+			return true; // break
+		}
+	})
+	return has;
+}
 
 
 /*************** HandleBars Helpers ***********************/
@@ -37,7 +66,6 @@ Handlebars.registerHelper('username', function (userid){
     	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
     }
   }else{
-      console.log('username is: ' + user)  //  <--------------------------------------------------<<<<<<<<<<<
       return "No_User";
   }
 })
