@@ -8,25 +8,29 @@
 		{{else}}
 
 			<div class="course_main">
-			{{title name " - hmmm"}}
-			<h2 class="name">{{name}}</h2>
-			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
-			<p class="descr">{{dateformat date}} {{timeformat date}}</p>
-			
-		    <ul class="course_submenu">
-		        <li><a href="#">Events</a></li>
-		        <li><a href="#">Wiki</a></li>
-		        <li><a href="#">Docus</a></li>
-		        <li><a href="#">Similar Courses</a></li>
-		        <li><a href="#">...</a></li>
-		    </ul>
-
-			<p class="descr">{{description}}</p>
-
-			{{#if mayEdit}}
-			<input type="button" class="edit" value="Edit" />
-			<input type="button" class="del" value="Delete" />
-			{{/if}}
+                {{title name " - hmmm"}}
+                <h2 class="name">{{name}}</h2>
+                <p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}</p>
+                
+                <div class="categorylist small">
+                {{> show_categories}}
+                </div>
+                <br class="clear"/>
+                                
+                <ul class="course_submenu">
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Wiki</a></li>
+                    <li><a href="#">Docus</a></li>
+                    <li><a href="#">Similar Courses</a></li>
+                    <li><a href="#">...</a></li>
+                </ul>
+    
+                <p class="descr">{{description}}</p>
+    
+                {{#if mayEdit}}
+                <input type="button" class="edit" value="Edit" />
+                <input type="button" class="del" value="Delete" />
+                {{/if}}
 			</div>
 
 

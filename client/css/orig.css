@@ -30,6 +30,10 @@ p {
   margin: 0;
 }
 
+.clear{
+    clear:both;
+}
+
 /* line 34, ../../sass/orig/_screen.scss */
 .static_content_top {
   clear: none;
@@ -269,7 +273,17 @@ h2.name {
   margin: 50px 0 20px 0;
 }
 
+.course_main .categorylist ul{
+    padding-left: 0;
+}
+
+.course_main .categorylist li{
+    float:left;
+    padding-right: 5px;
+}
+
 .course_submenu{
+    
     height: 20px;
     border-top: #DDD solid 1px;
     border-bottom: #DDD solid 1px;
@@ -281,6 +295,7 @@ h2.name {
     float:left;
     list-style: none;
     padding-right: 25px;
+    font-weight: bold;
 }
 
 /* line 257, ../../sass/orig/_screen.scss */
