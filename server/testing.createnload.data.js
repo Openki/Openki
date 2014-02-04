@@ -158,6 +158,7 @@ function createLocations(){
 /////////////////////////////// TESTING: Create Events if non in db
 
 createEventsIfNone = function(){
+    //Events.remove({});
 	if (Events.find().count() === 0) {
 		var event = {}
 		for (var n = 0; n < (35*ScaleFaktor); n++){
@@ -165,7 +166,7 @@ createEventsIfNone = function(){
 			var course = Courses.find({},{skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch()
 			event.course_id = course[0]._id
 			event.title = course[0].name + '-Kurs'
-			event.description = 'This is the event-description'
+			event.description = 'Kursbeschreibung: ' + course[0].description            //'This is the event-description'
 			event.mentors = []
 			event.host = []
 			var spread = 1000*60*60*24*365*1.2					//cause it's millis  1.2 Jears
