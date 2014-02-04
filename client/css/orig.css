@@ -269,6 +269,20 @@ h2.name {
   margin: 50px 0 20px 0;
 }
 
+.course_submenu{
+    height: 20px;
+    border-top: #DDD solid 1px;
+    border-bottom: #DDD solid 1px;
+
+    padding:0;
+}
+
+.course_submenu li{
+    float:left;
+    list-style: none;
+    padding-right: 25px;
+}
+
 /* line 257, ../../sass/orig/_screen.scss */
 .course_edit {
   clear: both;
