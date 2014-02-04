@@ -69,6 +69,8 @@ function createCourses(){
 		var name = course.name
 		for (var n = 0; n < ScaleFaktor; n++){  //asjdfhgaösodjfölasdkjföl
 			course.name = name + ' Kopie ' + n
+			course.slug = getSlug(name + ' Kopie ' + n)
+
 
 			// TESTING: allways use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
@@ -88,8 +90,6 @@ function createCourses(){
 		}
 	})
 }
-
-
 
 
 /////////////////////////////// TESTING: Create Locations if non in db
@@ -166,15 +166,15 @@ createEventsIfNone = function(){
 			event.course_id = course[0]._id
 			event.title = course[0].name + '-Kurs'
 			event.description = 'This is the event-description'
-		/*  														TODO:
-			if (course[0].roles.indexOf(mentor) != -1) {
-				event.mentors = ['Serverscript']
-			}
-			if (hasRole (course[0], host)){
-				course[0].members.   // function not jet here!
-			}
-			else event.host = ['Serverscript']
-		*/
+			//														TODO:
+			//if (course[0].roles.indexOf(mentor) != -1) {
+			//	event.mentors = ['Serverscript']
+			//}
+			//if (hasRole (course[0], host)){
+			//	course[0].members.   // function not jet here!
+			//}
+			//else event.host = ['Serverscript']
+		
 			var timeToGo = Math.floor(Random.fraction()*5000000000)
 			var age = Math.floor(Random.fraction()*10000000000)
 			event.startdate = new Date(new Date().getTime()+timeToGo-4000000000)

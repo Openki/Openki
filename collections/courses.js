@@ -170,7 +170,7 @@ Meteor.methods({
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
 		if (changes.name) {
 		    set.name = changes.name.substring(0, 1000)
-		    set.slug = convertToSlug(set.name);
+		    set.slug = getSlug(set.name);
 		}
 
 		set.time_lastedit = new Date
@@ -191,15 +191,6 @@ Meteor.methods({
 	}
 })
 
-
-function convertToSlug(Text)
-{
-    return Text
-        .toLowerCase()
-        .replace(/[^\w ]+/g,'')
-        .replace(/ +/g,'-')
-        ;
-}
 
 /* Need to find a good place to make these available to all */
 

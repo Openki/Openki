@@ -67,6 +67,7 @@ Template.course_edit.events({
 				description: $('#editform_description').val(),
 				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
 				name: $('#editform_name').val(),
+				slug: getSlug($('#editform_name').val()),
 				roles: roles
 			}
 

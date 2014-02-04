@@ -24,21 +24,21 @@ Router.map(function () {
 		}
 	})
 	this.route('showCourseWiki', {
-		path: 'course/:_id/:slug?/wiki',
+		path: 'course/:_id/:slug/wiki',
 		template: 'coursewiki',
-		/*waitOn: function () {
+		waitOn: function () {
 			return Meteor.subscribe('categories');
 			return Meteor.subscribe('courses');
 			return Meteor.subscribe('users');
 			return Meteor.subscribe('events');
-		},*/
+		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
 			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			// console.log(course.nameY)
+			// console.log("course: "+course)
 			return {
 				course: course,
-				subscribers: prepare_subscribers(course),
+				//subscribers: prepare_subscribers(course),
 			};
 		}/*,
 		after: function() {
