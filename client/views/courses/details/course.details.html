@@ -17,13 +17,8 @@
                 </div>
                 <br class="clear"/>
                                 
-                <ul class="course_submenu">
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">Wiki</a></li>
-                    <li><a href="#">Docus</a></li>
-                    <li><a href="#">Similar Courses</a></li>
-                    <li><a href="#">...</a></li>
-                </ul>
+                {{> show_course_submenu}}
+
     
                 <p class="descr">{{description}}</p>
     
@@ -89,5 +84,17 @@
 		</div>
 	</div>
 
+</template>
+
+<template name="show_course_submenu">
+    <ul class="course_submenu">
+        <li><a href="{{pathFor 'showCourse'}}">Description</a></li>
+
+        <li><a href="#">Events</a></li>
+        <li><a href="{{pathFor 'showCourseWiki'}}">Wiki</a></li>
+        <li><a href="#">Docus</a></li>
+        <li><a href="#">Similar Courses</a></li>
+        <li><a href="#">...</a></li>
+    </ul>
 </template>
 

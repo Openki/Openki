@@ -1,0 +1,58 @@
+<template name="course_event_detail">
+	<div class="course_event_detail">
+	
+		{{#if isEditingEvent}}
+				{{>course_event_edit}}
+		{{else}}
+			{{#with event}}
+                <h2>Event-Title: {{this.title}}<h2>
+                <p><a href="{{courseURL course_id}}"> > Link zum Kurs</a></p>
+                <p>
+                {{description}}
+                </p>
+		
+				<p class="course_event_date">
+					<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
+				</p>
+				<p class="course_event_time">
+					<span class="icon-clock"></span> {{timeformat startdate}}
+				</p>
+				<!--<p class="course_event_title">{{this.title}}</p>
+				<p class="course_event_desc">{{description}}</p>-->
+				
+				{{#if this.mentors}}
+				<p class="course_event_info">	
+						<ul class="course_event_mentors">
+						{{#each this.mentors}}
+							<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
+						{{/each}}
+						</ul>
+				</p>
+				{{/if}}
+				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : hosted by {{username host}} </p>
+
+			{{/with}}
+			<!-- TODO -->
+			<!-- <input type="button" class="eventEdit" value="Edit" />-->
+		{{/if}}
+		<!-- TODO -->
+        <!-- <input type="button" class="eventDelete" value="Delete" />-->
+	</div>
+	
+	<div>
+	
+		{{#with event}}
+
+		    <div class="discussion">
+            {{> discussion}}
+            </div>
+            {{> votelists}}
+            {{> postDialog}}
+    
+        {{/with}}
+	
+	</div>
+	
+	
+    </div>
+</template>

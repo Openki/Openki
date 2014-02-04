@@ -18,6 +18,7 @@ Meteor.subscribe('comments');
 Meteor.subscribe('courses', function onComplete() {
   Session.set('coursesLoaded', true);
 });
+Meteor.subscribe('events');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
 Meteor.subscribe('messages');

@@ -2,7 +2,7 @@
 
 Router.map(function () {
 	this.route('showCourse', {
-		path: 'course/:_id/:name?',
+		path: 'course/:_id/:slug',
 		template: 'coursedetails',
 		waitOn: function () {
 			return Meteor.subscribe('categories');
@@ -13,7 +13,7 @@ Router.map(function () {
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
 			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			// console.log(course.nameY)
+			 console.log(course)
 			return {
 				course: course,
 				subscribers: prepare_subscribers(course),
@@ -29,6 +29,35 @@ Router.map(function () {
 			Session.set("isAddingEvent", false);
 		}
 	})
+	this.route('showCourseWiki', {
+		path: 'course/:_id/:slug?/wiki',
+		template: 'coursewiki',
+		/*waitOn: function () {
+			return Meteor.subscribe('categories');
+			return Meteor.subscribe('courses');
+			return Meteor.subscribe('users');
+			return Meteor.subscribe('events');
+		},*/
+		data: function () {
+			var course = Courses.findOne({_id: this.params._id})
+			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
+			// console.log(course.nameY)
+			return {
+				course: course,
+				subscribers: prepare_subscribers(course),
+			};
+		}/*,
+		after: function() {
+			var course = Courses.findOne({_id: this.params._id})
+			if (!course) return; // wtf
+			document.title = webpagename + 'Course: ' + course.name
+		},
+		unload: function () {
+			Session.set("isEditing", false);
+			Session.set("isAddingEvent", false);
+		}*/
+	})
+
 })
 
 

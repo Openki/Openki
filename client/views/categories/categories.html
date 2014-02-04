@@ -19,7 +19,7 @@
       <p>
 	        <ul class="category">
           {{#each courses_by_category}}
-				<li><a href="{{courseURL _id}}"> {{name}}</li>
+				<li><a href="{{pathFor 'showCourse'}}"> {{name}}</li>
               {{else}} <li class='category_no_course'> keine Kurse in dieser Kategorie definiert! </li>
           {{/each}}
           </ul>

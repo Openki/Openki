@@ -1,6 +1,8 @@
 // ======== DB-Model: ========
+// TODO: update!!
 // "_id" -> ID
 // "name" -> string
+// "slug" -> string
 // "createdby" -> ID_users
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
@@ -88,7 +90,10 @@ Meteor.methods({
 
 		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
-		if (changes.name) set.name = changes.name.substring(0, 1000)
+		if (changes.name) {
+		    set.name = changes.name.substring(0, 1000)
+		    set.slug = convertToSlug(set.name);
+		}
 
 		set.time_lastedit = new Date
 		if (isNew) {
@@ -107,6 +112,15 @@ Meteor.methods({
 	}
 })
 
+
+function convertToSlug(Text)
+{
+    return Text
+        .toLowerCase()
+        .replace(/[^\w ]+/g,'')
+        .replace(/ +/g,'-')
+        ;
+}
 
 /* Need to find a good place to make these available to all */
 
