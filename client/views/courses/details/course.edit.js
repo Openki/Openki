@@ -67,7 +67,6 @@ Template.course_edit.events({
 				description: $('#editform_description').val(),
 				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
 				name: $('#editform_name').val(),
-				slug: getSlug($('#editform_name').val()),
 				roles: roles
 			}
 
@@ -78,8 +77,8 @@ Template.course_edit.events({
 					return;
 				}
 			}
-			
-			courseId = Meteor.call("save_course", courseId, changes, function(err, courseId) {
+
+			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				Session.set("isEditing", false);
 				if (err) alert("Saving the course went terribly wrong: "+err)
 				if (isNew) Router.go('showCourse', {_id: courseId})

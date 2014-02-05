@@ -2,7 +2,7 @@
 
 Router.map(function () {
 	this.route('showCourse', {
-		path: 'course/:_id/:slug',
+		path: 'course/:_id/:slug?',
 		template: 'coursedetails',
 		waitOn: function () {
 			return Meteor.subscribe('categories');
