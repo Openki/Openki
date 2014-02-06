@@ -1,5 +1,5 @@
 // TESTING: in order to test scalebility
-ScaleFaktor = 10
+ScaleFaktor = 2
 
 // TESTING: create new Courses if non in db
 
@@ -174,7 +174,7 @@ createEventsIfNone = function(){
 			//	course[0].members.   // function not jet here!
 			//}
 			//else event.host = ['Serverscript']
-		
+
 			var timeToGo = Math.floor(Random.fraction()*5000000000)
 			var age = Math.floor(Random.fraction()*10000000000)
 			event.startdate = new Date(new Date().getTime()+timeToGo-4000000000)

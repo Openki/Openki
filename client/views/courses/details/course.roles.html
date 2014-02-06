@@ -1,0 +1,30 @@
+<template name="Members">
+	<div class="participants">
+		<h3>Participants</h3>
+		<ul class='subscribers'>
+		{{#each members}}
+			<li>
+				{{>profilelink user}}
+				<ul class='roles'>
+					{{#each roles}}
+						<li class='{{this}}'> {{this}} </li>
+					{{/each}}
+				</ul>
+			</li>
+		{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="roleDetails">
+	<div class="roleDetails role_{{roletype.type}}">
+		<div class="subscribe">
+		{{! The id= tags on the input fields are not referenced by our code. They were added to help the spark patcher figure out what to patch. I must assume there is a simple and proper solution to avoid this kludge, alas I have no knowledge of it. }}
+		{{#if subscribed}}
+			<span class='subscribed'>you are subscribed as {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" id="unsubscribe_{{roletype.type}}"/></span>
+		{{else}}
+			<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}"  id="unsubscribe_{{roletype.type}}"/>
+		{{/if}}
+		</div>
+	</div>
+</template>
