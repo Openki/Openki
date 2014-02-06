@@ -184,7 +184,6 @@ createEventsIfNone = function(){
 			}
 			else event.host = ['Serverscript']
 		*/
-
 			event.createdby = 'ServerScript'
 			var age = Math.floor(Random.fraction()*10000000000)
 			event.time_created = new Date(new Date().getTime()-age)
