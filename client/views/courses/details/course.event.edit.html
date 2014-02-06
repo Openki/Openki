@@ -3,7 +3,7 @@
 
 		<h2>{{#if this.event._id}}Edit event{{else}}Add event{{/if}}</h2>
 		<p> Event title: <input type="text" id="edit_event_title" size="30" value="{{#if event._id}}{{event.title}}{{else}}{{course.name}}{{/if}}"/></p>
-		<p>  Desc: <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
+		<p>  Desc: <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{#if event._id}}{{event.description}}{{else}}{{course.description}}{{/if}}</textarea></p>
 
 		 <p>  Host / Location
 			<ul>

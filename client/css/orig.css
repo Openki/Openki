@@ -30,6 +30,10 @@ p {
   margin: 0;
 }
 
+.clear{
+    clear:both;
+}
+
 /* line 34, ../../sass/orig/_screen.scss */
 .static_content_top {
   clear: none;
@@ -267,6 +271,31 @@ h2.name {
   background-color: #EEE;
   padding: 1em;
   margin: 50px 0 20px 0;
+}
+
+.course_main .categorylist ul{
+    padding-left: 0;
+}
+
+.course_main .categorylist li{
+    float:left;
+    padding-right: 5px;
+}
+
+.course_submenu{
+    
+    height: 20px;
+    border-top: #DDD solid 1px;
+    border-bottom: #DDD solid 1px;
+
+    padding:0;
+}
+
+.course_submenu li{
+    float:left;
+    list-style: none;
+    padding-right: 25px;
+    font-weight: bold;
 }
 
 /* line 257, ../../sass/orig/_screen.scss */
@@ -859,9 +888,11 @@ a:hover {
 /* line 788, ../../sass/orig/_screen.scss */
 .dropdown .dropdown-menu {
   display: none;
-  top: 45px;
+  top: 35px;
   left: 10px;
   position: absolute;
+  padding-top:10px;
+
 }
 
 /* line 794, ../../sass/orig/_screen.scss */
@@ -869,7 +900,7 @@ a:hover {
   color: gray;
   background: white;
   padding: 5px;
-  width: 140px;
+  width: 160px;
   margin: 0 0 0 34px;
   list-style: none;
   -webkit-border-radius: 3px;
@@ -886,6 +917,11 @@ a:hover {
 .dropdown .dropdown-menu ul li a {
   color: black;
   font-size: 14px;
+  display: block;
+}
+
+.dropdown-menu ul a:hover {
+  text-decoration: underline !important;
 }
 
 /* line 813, ../../sass/orig/_screen.scss */

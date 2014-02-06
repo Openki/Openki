@@ -28,7 +28,7 @@
 
 <template name="course">
 	<li class="courselist_course">
-		<a href="{{courseURL _id}}">
+		<a href="{{pathFor 'showCourse'}}">
 			<div class="courselist_course_text {{coursestate}}">
 				<div class="course_name">{{name}}</div>
 			
@@ -74,6 +74,12 @@
 						{{/if}}
 						{{#if requiresHost}}
 							<li class="host_status {{#if needsHost}}no{{else}}yes{{/if}}" title="{{#if needsHost}}still needs a host{{else}}{{#if is_host}}you are host{{else}}has a host{{/if}}{{/if}}">H{{#if is_host}}*{{/if}}</li>
+						{{/if}}
+						{{#if roles.donator}}
+							<li class="donator_status {{donator_status}}" title="{{#if isYes donator_status}}{{#if is_donator}}you are donator{{else}}has a donator{{/if}}{{else}}still needs a donator{{/if}}">H{{#if is_donator}}*{{/if}}</li>
+						{{/if}}
+						{{#if roles.cook}}
+							<li class="cook_status {{cook_status}}" title="{{#if isYes cook_status}}{{#if is_cook}}you are cook{{else}}has a cook{{/if}}{{else}}still needs a cook{{/if}}">H{{#if is_cook}}*{{/if}}</li>
 						{{/if}}
 					</ul>
 				{{/if}}

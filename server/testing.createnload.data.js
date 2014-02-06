@@ -69,6 +69,7 @@ function createCourses(){
 		var name = course.name
 		for (var n = 0; n < ScaleFaktor; n++){
 			if (n > 0) course.name = name + ' Kopie ' + n
+			course.slug = getSlug(name + ' Kopie ' + n)
 			// TESTING: allways use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 			m5.update(course.name);
@@ -88,8 +89,6 @@ function createCourses(){
 		}
 	})
 }
-
-
 
 
 /////////////////////////////// TESTING: Create Locations if non in db
@@ -157,6 +156,7 @@ function createLocations(){
 /////////////////////////////// TESTING: Create Events if non in db
 
 createEventsIfNone = function(){
+    //Events.remove({});
 	if (Events.find().count() === 0) {
 		var event = {}
 		for (var n = 0; n < (35*ScaleFaktor); n++){

@@ -77,8 +77,8 @@ Template.course_edit.events({
 					return;
 				}
 			}
-			
-			courseId = Meteor.call("save_course", courseId, changes, function(err, courseId) {
+
+			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				Session.set("isEditing", false);
 				if (err) alert("Saving the course went terribly wrong: "+err)
 				if (isNew) Router.go('showCourse', {_id: courseId})

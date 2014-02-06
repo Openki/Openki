@@ -1,6 +1,8 @@
-// ======== DB-Model: ========3
+// ======== DB-Model: ========
+// TODO: update!!
 // "_id" -> ID
 // "name" -> string
+// "slug" -> string
 // "createdby" -> ID_users
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
@@ -86,6 +88,7 @@ function removeRole(course, role, user) {
 	)
 }
 
+
 Meteor.methods({
 	change_subscription: function(courseId, role, add) {
 		check(role, String)
@@ -130,9 +133,7 @@ Meteor.methods({
 
 		var course;
 		var isNew = courseId.length == 0
-		if (isNew) {
-			course = { roles: {  } }
-		} else {
+		if (!isNew) {
 			course = Courses.findOne({_id: courseId})
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
@@ -141,10 +142,13 @@ Meteor.methods({
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
 
+		/* Changes we want to perform */
+		var set = {}
+		
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
-			var have = course.roles.indexOf(type) !== -1
+			var have = !isNew && course.roles.indexOf(type) !== -1
 			if (have && !should_have) {
 				Courses.update(
 					{ _id: courseId },
@@ -153,20 +157,25 @@ Meteor.methods({
 				)
 			}
 			if (!have && should_have) {
-				Courses.update(
-					{ _id: courseId },
-					{ $addToSet: { roles: type }},
-					checkUpdateOne
-				)
+				if (isNew) {
+					set.roles = set.roles || []
+					set.roles.push(type)
+				} else {
+					Courses.update(
+						{ _id: courseId },
+						{ $addToSet: { roles: type }},
+						checkUpdateOne
+					)
+				}
 			}
 		})
 
-		/* Changes we want to perform */
-		var set = {}
-
 		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
-		if (changes.name) set.name = changes.name.substring(0, 1000)
+		if (changes.name) {
+		    set.name = changes.name.substring(0, 1000)
+		    set.slug = getSlug(set.name);
+		}
 
 		set.time_lastedit = new Date
 		if (isNew) {
@@ -180,8 +189,9 @@ Meteor.methods({
 				time_created: new Date
 			}, checkInsert)
 		}
-		
+
 		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne)
+
 		return courseId
 	}
 })

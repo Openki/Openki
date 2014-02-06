@@ -107,14 +107,15 @@ Handlebars.registerHelper('isNull', function(val) {
 });
 
 Handlebars.registerHelper('courseURL', function(_id) {
-  var course=Courses.findOne(_id);
-	var name = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
+    var course=Courses.findOne(_id);
+    var name = getSlug(course.name);
+	//var name = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
 	var _id = _id
 	return '/course/' + _id + '/' + name;
 });
 
 
-						//Html title attribute of participant-state-sybol in courselist
+//Html title attribute of participant-state-sybol in courselist
 Handlebars.registerHelper('isYes', function(val) {
  	return val === 'yes'
 });

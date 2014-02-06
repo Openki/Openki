@@ -4,16 +4,27 @@
 		{{#if isEditing}}
 			{{>course_edit}}
 		{{else}}
-			<div class="course_main">
-			{{title name " - hmmm"}}
-			<h2 class="name">{{name}}</h2>
-			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
-			<p class="descr">{{description}}</p>
 
-			{{#if mayEdit}}
-			<input type="button" class="edit" value="Edit" />
-			<input type="button" class="del" value="Delete" />
-			{{/if}}
+			<div class="course_main">
+                {{title name " - hmmm"}}
+                <h2 class="name">{{name}}</h2>
+                <p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{>profilelink createdby}}</p>
+                
+                <div class="categorylist small">
+                {{> show_categories}}
+                </div>
+                <br class="clear"/>
+                                
+                {{> show_course_submenu}}
+
+    
+                <p class="descr">{{description}}</p>
+    
+                {{#if mayEdit}}
+                <input type="button" class="edit" value="Edit" />
+                <input type="button" class="del" value="Delete" />
+                {{/if}}
+
 			</div>
 		{{/if}}
 
@@ -51,13 +62,26 @@
 <template name="roleDetails">
 	<div class="roleDetails role_{{roletype.type}}">
 		<div class="subscribe">
+		{{! The id= tags on the input fields are not referenced by our code. They were added to help the spark patcher figure out what to patch. I must assume there is a simple and proper solution to avoid this kludge, alas I have no knowledge of it. }}
 		{{#if subscribed}}
-			<span class='subscribed'>you are subscribed as {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" /></span>
+			<span class='subscribed'>you are subscribed as {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" id="unsubscribe_{{roletype.type}}"/></span>
 		{{else}}
-			<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}" />
+			<input type="button" class="subscribe" name="participant" value="{{roletype.subscribe}}"  id="unsubscribe_{{roletype.type}}"/>
 		{{/if}}
 		</div>
 	</div>
 
+</template>
+
+<template name="show_course_submenu">
+    <ul class="course_submenu">
+        <li><a href="{{pathFor 'showCourse'}}">Description</a></li>
+
+        <li><a href="#">Events</a></li>
+        <li><a href="{{pathFor 'showCourseWiki'}}">Wiki</a></li>
+        <li><a href="#">Docus</a></li>
+        <li><a href="#">Similar Courses</a></li>
+        <li><a href="#">...</a></li>
+    </ul>
 </template>
 

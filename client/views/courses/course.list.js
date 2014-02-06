@@ -88,6 +88,13 @@ Template.course.needsHost = function() {
 	return !hasRole(this.members, 'host')
 }
 
+Template.course.donator_status = function() {
+	return this.roles.donator.subscribed.length > 0 ? 'yes' : 'no'
+}
+
+Template.course.cook_status = function() {
+	return this.roles.cook.subscribed.length > 0 ? 'yes' : 'no'
+}
 
 Template.course.is_subscriber = function() {
 	return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
@@ -105,6 +112,13 @@ Template.course.is_mentor = function() {
 	return hasRoleUser(this.members, 'mentor', Meteor.userId())
 }
 
+Template.course.is_donator = function() {
+	return this.roles.donator.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+}
+
+Template.course.is_cook = function() {
+	return this.roles.cook.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+}
 
 Template.course.categorynames = function() {
 	return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')

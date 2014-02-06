@@ -1,4 +1,13 @@
 <template name="course_events">
+
+	{{#if isAddingEvent}}
+		{{#with new_event}}
+			{{>course_event_edit}}
+		{{/with}}
+	{{else}}
+		<p><input type="button" class="addEvent" value="add a Date"/></p>
+	{{/if}}
+
 	<div class="course_events">
 		<h3>Upcoming Events</h3>
 		{{#each events_list}}
@@ -11,13 +20,7 @@
 
 	</div>
 
-	{{#if isAddingEvent}}
-		{{#with new_event}}
-			{{>course_event_edit}}
-		{{/with}}
-	{{else}}
-		<p><input type="button" class="addEvent" value="add a Date"/></p>
-	{{/if}}
+
 
 	<div class="course_events_past">
 		<h3>Past Events</h3>
@@ -34,18 +37,18 @@
 
 
 <template name="course_event">
-
+    <div>
 		{{#if isEditingEvent}}
 				{{>course_event_edit}}
 		{{else}}
 			{{#with event}}
 				<p class="course_event_date">
-					<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
+					<span class="icon-mini_date"></span> <a href="{{pathFor 'showEvent'}}">{{dateformat_withday startdate}}</a> 
 				</p>
 				<p class="course_event_time">
 					<span class="icon-clock"></span> {{timeformat startdate}}
 				</p>
-				<p class="course_event_title">{{this.title}}</p>
+				<p class="course_event_title"><a href="{{pathFor 'showEvent'}}">{{this.title}}</a></p>
 				<p class="course_event_desc">{{description}}</p>
 				
 				{{#if this.mentors}}
