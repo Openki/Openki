@@ -31,7 +31,7 @@ Template.course_events.events({
 			Session.set("isEditingEvent", false);
 		}
 		else {
-			alert("Security robot say: sign in");
+			alert("Please log in!");
 		}
 	},
 	'click input.cancelEditEvent': function () {

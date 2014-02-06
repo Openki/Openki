@@ -96,7 +96,7 @@ Template.coursedetails.events({
 			Session.set("isEditing", true);
 		}
 		else {
-			alert("Security robot say: sign in");
+			alert("Please log in!");
 		}
 	},
 	'click input.subscribe': function () {
