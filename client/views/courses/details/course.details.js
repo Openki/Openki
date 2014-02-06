@@ -11,7 +11,10 @@ Router.map(function () {
 			return Meteor.subscribe('events');
 		},
 		data: function () {
-			return Courses.findOne({_id: this.params._id})
+			var course = Courses.findOne({_id: this.params._id});
+			return {
+				course: course
+			};
 		},
 		after: function() {
 			var course = Courses.findOne({_id: this.params._id})

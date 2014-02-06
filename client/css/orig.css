@@ -249,6 +249,10 @@ p {
   float: left;
 }
 
+.course_events_past{
+	clear:both;
+}
+
 /* line 237, ../../sass/orig/_screen.scss */
 h2.name {
   font-size: 40px;
@@ -346,6 +350,14 @@ h2.name {
   width: 220px;
   margin: 10px;
   background-color: #DDD;
+}
+
+.current_event{
+  background-color: white;
+  border: #C1F2AE 4px solid;
+}
+.course_event_past .current_event{
+  border: #DDD 4px solid;
 }
 
 /* line 300, ../../sass/orig/_screen.scss */

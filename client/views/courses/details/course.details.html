@@ -1,4 +1,5 @@
 <template name="coursedetails">
+	{{#with course}}
 
 	<div id="coursedetails">
 		{{#if isEditing}}
@@ -52,6 +53,8 @@
 		</div>
 		{{> votelists}}
 		{{> postDialog}}
+		
+	{{/with}}
 	</div>
 	<div class="course_right_column">
 		{{> course_events}}
