@@ -1,5 +1,4 @@
 Template.course_events.events_list = function() {
-	Meteor.subscribe('events'); // should not be here
 	var course=this;
 	var today = new Date();
 	return Events.find({course_id:this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).map(function(event){
@@ -9,7 +8,6 @@ Template.course_events.events_list = function() {
 
 
 Template.course_events.events_list_past = function() {
-	Meteor.subscribe('events'); // should not be here
 	var course=this;
 	var today = new Date();
 	return Events.find({course_id:this._id,startdate: {$lt:today}},{sort: {startdate: -1}}).map(function(event){
