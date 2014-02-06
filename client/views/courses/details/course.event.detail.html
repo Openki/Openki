@@ -50,15 +50,15 @@
         <!-- <input type="button" class="eventDelete" value="Delete" />-->
 	
         
-        <!-- TODO-->
-        <div>
+        <div style="border:red solid 1px;">
+        TODO
             {{#with current_event}}
-    
+            
                 <div class="discussion">
-                {{!> discussion}}
+                {{> discussion}}
                 </div>
-                {{!> votelists}}
-                {{!> postDialog}}
+                {{> votelists}}
+                {{> postDialog}}
         
             {{/with}}
         </div>

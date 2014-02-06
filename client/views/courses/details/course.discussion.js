@@ -1,20 +1,24 @@
 //load template-content
 Template.discussion.post = function() {
 	//get all first-level posts
-	var posts = CourseDiscussions.find(
-		{course_ID: this._id},
-		{parent_ID: null},
+	var posts = CourseDiscussions.find({
+		course_ID: this._id,
+		parent_ID: { $exists: false },
+		},
 		{sort: {time_updated: -1, time_created: -1}}
 	);
+	console.log(posts.count());
 	var ordered_posts = [];
 	// loop over first-level post, search each post for comments, order by most recent
 	posts.forEach(function (post){
 		ordered_posts.push(post);
+		console.log("post: "+post.title+"/ parent_id: "+post.parent_ID);
 		var comments = CourseDiscussions.find({parent_ID: post._id}, {sort: {time_created: -1}});
 		comments.forEach(function (comment){
 			ordered_posts.push(comment);
 		});
 	});
+	console.log("len: "+ordered_posts.length)
 	//return array with proper order
 	return ordered_posts;
 };
