@@ -1,8 +1,6 @@
 <template name="coursedetails">
 
-  <div id="coursedetails">
-
-	{{#with course}}
+	<div id="coursedetails">
 		{{#if isEditing}}
 			{{>course_edit}}
 		{{else}}
@@ -10,7 +8,6 @@
 			{{title name " - hmmm"}}
 			<h2 class="name">{{name}}</h2>
 			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{> show_categories}}</p>
-			<p class="descr">{{dateformat date}} {{timeformat date}}</p>
 			<p class="descr">{{description}}</p>
 
 			{{#if mayEdit}}
@@ -18,50 +15,37 @@
 			<input type="button" class="del" value="Delete" />
 			{{/if}}
 			</div>
-
-
 		{{/if}}
 
-			{{#each roleDetails roles}}
-				{{> roleDetails}}
-			{{/each}}
-
-	{{/with}}
-
-
-
-
-	<div class="participants">
-		<h3>Participants</h3>
-		<ul class='subscribers'>
-		{{#each subscribers}}
-			<li>
-				{{>profilelink id}}
-				<ul class='roles'>
-					{{#each roles}}
-						<li class='{{this}}'> {{this}} </li>
-					{{/each}}
-				</ul>
-			</li>
+		{{#each roleDetails}}
+			{{> roleDetails}}
 		{{/each}}
-		</ul>
-	</div>
 
-	{{#with course}}
+		<div class="participants">
+			<h3>Participants</h3>
+			<ul class='subscribers'>
+			{{#each members}}
+				<li>
+					{{>profilelink user}}
+					<ul class='roles'>
+						{{#each roles}}
+							<li class='{{this}}'> {{this}} </li>
+						{{/each}}
+					</ul>
+				</li>
+			{{/each}}
+			</ul>
+		</div>
+
 		<div class="discussion">
 		{{> discussion}}
 		</div>
 		{{> votelists}}
 		{{> postDialog}}
-
-	{{/with}}
-
-  </div>
-<div class="course_right_column">
-	{{#with course}}
-			{{> course_events}}
-	{{/with}}
-  </div>
+	</div>
+	<div class="course_right_column">
+		{{> course_events}}
+	</div>
 </template>
 
 <template name="roleDetails">

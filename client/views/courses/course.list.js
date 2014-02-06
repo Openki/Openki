@@ -28,29 +28,19 @@ function get_courselist(listparameters){
 	//return a course list
 	var find ={};
 
-	if(listparameters.courses_from_userid) {		// show courses that have something to do with userid
-		find = _.extend(find, { $or : [
-			{ "roles.team.subscribed" : listparameters.courses_from_userid},
-			{ "roles.participant.subscribed" : listparameters.courses_from_userid},
-			{ "roles.mentor.subscribed" : listparameters.courses_from_userid},
-			{ "roles.host.subscribed" : listparameters.courses_from_userid},
-			{ "roles.interested.subscribed" : listparameters.courses_from_userid}
-		]
-	})
+	if (listparameters.courses_from_userid) {
+		// courses where given user is member
+		find['members.user'] = listparameters.courses_from_userid
+	}
 
-	} else if(Session.get('region')) {
+	if (Session.get('region')) {
 		find.region = Session.get('region')
 	}
-	if(listparameters.missing=="organisator") {
+
+	if (listparameters.missing=="organisator") {
 		// show courses with no organisator
-		find = _.extend(find, {$where: "this.roles.team && this.roles.team.subscribed.length == 0"})
+		find['members.roles'] = { $ne: 'team' }
 	}
-	if(listparameters.missing=="subscribers") {
-		// show courses with not enough subscribers
-		find = _.extend(find, {$where: "this.roles.participant && this.roles.participant.subscribed.length < this.subscribers_min"} )
-	}
-
-
 
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
@@ -78,35 +68,41 @@ Template.course.participant_status = function() {
 	return 'ontheway'
 }
 
-Template.course.team_status = function() {
-	return this.roles.team.subscribed.length > 0 ? 'yes' : 'no'
+Template.course.requiresMentor = function() {
+	return this.roles.indexOf('mentor') != -1
 }
 
-Template.course.mentor_status = function() {
-	return this.roles.mentor.subscribed.length > 0 ? 'yes' : 'no'
+Template.course.requiresHost = function() {
+	return this.roles.indexOf('host') != -1
 }
 
-Template.course.host_status = function() {
-	return this.roles.host.subscribed.length > 0 ? 'yes' : 'no'
+Template.course.needsTeam = function() {
+	return !hasRole(this.members, 'team')
+}
+
+Template.course.needsMentor = function() {
+	return !hasRole(this.members, 'mentor')
+}
+
+Template.course.needsHost = function() {
+	return !hasRole(this.members, 'host')
 }
 
 
-// Idee für provisorische Darstellung:
-// Wenn Teilnehmer / Mentor / etc: return "*", sonst nichts
 Template.course.is_subscriber = function() {
-	return this.roles.participant.subscribed.indexOf(Meteor.userId()) >= 0 ? '*' : ''
+	return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
 }
 
 Template.course.is_host = function() {
-	return this.roles.host.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'host', Meteor.userId())
 }
 
 Template.course.is_team = function() {
-	return this.roles.team.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'team', Meteor.userId())
 }
 
 Template.course.is_mentor = function() {
-	return this.roles.mentor.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
+	return hasRoleUser(this.members, 'mentor', Meteor.userId())
 }
 
 
@@ -134,8 +130,7 @@ Template.course.hasupcomingevents = function() {
 	Meteor.subscribe('events') //ugly here! ugly, ugly!
 
 	var today= new Date();
-	return Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
-
+	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0
 }
 
 Template.course.coursestate = function() {

@@ -11,13 +11,7 @@ Router.map(function () {
 			return Meteor.subscribe('events');
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
-			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			// console.log(course.nameY)
-			return {
-				course: course,
-				subscribers: prepare_subscribers(course),
-			};
+			return Courses.findOne({_id: this.params._id})
 		},
 		after: function() {
 			var course = Courses.findOne({_id: this.params._id})
@@ -39,32 +33,18 @@ Template.coursedetails.helpers({
 
 	mayEdit: function() {
 		var user = Meteor.user()
-		return user && (user.isAdmin || this.roles.team.subscribed.indexOf(user._id) >= 0)
-	},
-	
-	subscribers_status: function() {
-		//CSS status: genug anmeldungen? "ok" "notyet"
-		var course = this
-		if(course){
-			if(course.subscribers){
-				if(course.subscribers.length>=course.subscribers_min){
-					return "ok";
-				}else{
-					return "notyet";
-				}
-			}
-		}
+		return user && (user.isAdmin || hasRoleUser(this.members, 'team', user._id))
 	},
 
-    roleDetails: function(roles) {
+    roleDetails: function() {
 		var course = this
 		return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
-			var role = roles[roletype.type]
-			if (role) {
+			var role = roletype.type
+			if (course.roles.indexOf(role) !== -1) {
 				goodroles.push({
 					roletype: roletype,
 					role: role,
-					subscribed: role.subscribed.indexOf(Meteor.userId()) >= 0,
+					subscribed: hasRoleUser(course.members, role, Meteor.userId()),
 					course: course
 				})
 			}
@@ -97,30 +77,6 @@ Template.coursedetails.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
 	}
 })
-
-
-function prepare_subscribers(course) {
-	if (!course) return; // Wa?
-	var subscribers = {}
-	var sublist = []
-	_.each(course.roles, function (role, type) {
-		_.each(role.subscribed, function (userid) {
-			var user = Meteor.users.findOne({_id: userid})
-			if (!user) return;
-			var userdata = subscribers[userid]
-			if (!userdata) {
-				userdata = {}
-				userdata.name = user.username
-				userdata.id = user._id
-				userdata.roles = []
-				subscribers[userid] = userdata
-				sublist.push(userdata)
-			}
-			userdata.roles.push(type)
-		})
-	})
-	return sublist;
-}
 
 
 Template.coursedetails.isSubscribed = function () {

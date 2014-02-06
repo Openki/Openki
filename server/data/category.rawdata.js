@@ -162,5 +162,15 @@ categories = [{
 		'name':      'Experimantal',
 		'nameDE':    'Experimantal',
 		'parent':    '7'
-	}
-]
+	}]
+
+
+/* Propositions here:
+
+// 'Organisaions- Gesellschaftsstrukturen'    parent 7
+// 'Engagement, Movement, Empowerment....'    parent 7
+
+
+*/
+
+

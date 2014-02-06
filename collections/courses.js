@@ -1,4 +1,4 @@
-// ======== DB-Model: ========
+// ======== DB-Model: ========3
 // "_id" -> ID
 // "name" -> string
 // "createdby" -> ID_users
@@ -18,6 +18,74 @@ Courses.allow({
 });
 
 
+function findCourses(params){
+	var find = {};
+
+	if (params.member) {
+		// courses where given user is member
+		find.members = { user: params.member }
+	}
+
+	if (Session.get('region')) {
+		find.region = Session.get('region')
+	}
+
+	if (params.missing=="organisator") {
+		// show courses with no organisator
+		find['members.roles'] = { $ne: 'team' }
+	}
+	
+	if (param.search) {
+		_.extend(find, {
+			$or: [
+				// FIXME: Runs unescaped as regex, absolutely not ok
+				// ALSO: Not user friendly, do we can have fulltext?
+				{ name: { $regex: param.search, $options: 'i' } },
+				{ description: { $regex: param.search, $options: 'i' } }
+			]
+		})
+	}
+
+	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
+}
+
+function addRole(course, role, user) {
+	// Add the user as member if she's not listed yet
+	Courses.update(
+		{ _id: course._id, 'members.user': { $ne: user } }, 
+		{ $addToSet: { 'members': { user: user, roles: [] } }}
+	)
+	
+	// Minimongo does not currently support the $ field selector
+	// Remove this guard once it does
+	if (!Meteor.isClient) {
+		Courses.update(
+			{ _id: course._id, 'members.user': user }, 
+			{ '$addToSet': { 'members.$.roles': role }}, 
+			checkUpdateOne
+		)
+	}
+}
+
+function removeRole(course, role, user) {
+	// Minimongo does not currently support the $ field selector
+	// Remove this guard once it does
+	if (!Meteor.isClient) {
+			Courses.update(
+				{ _id: course._id, 'members.user': user }, 
+				{ '$pull': { 'members.$.roles': role }}, 
+				checkUpdateOne
+			)
+	}
+	
+	// Housekeeping: Remove members that have no role left
+	// Note that we have a race condition here with the addRole() function, blissfully ignoring the unlikely case
+	Courses.update(
+		{ _id: course._id },
+		{ $pull: { members: { roles: { $size: 0 } }}}
+	)
+}
+
 Meteor.methods({
 	change_subscription: function(courseId, role, add) {
 		check(role, String)
@@ -35,13 +103,15 @@ Meteor.methods({
 				throw new Meteor.Error(401, "please log in")
 			}
 		}
-		if (!course.roles[role]) throw new Meteor.Error(404, "No role "+role)
+		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
-		var operation = {}
-		operation[add ? '$addToSet' : '$pull'] = { 'participants.$.roles': role }
-		Courses.update({_id: course._id, 'participants.user': userId }, )
-		var time = new Date
-		Courses.update(course, { $set: {time_lastenrol:time}})
+		if (add) {
+			addRole(course, role, userId)
+			var time = new Date
+			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
+		} else {
+			removeRole(course, role, userId)
+		}
 	},
 
 	save_course: function(courseId, changes) {
@@ -70,16 +140,29 @@ Meteor.methods({
  		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
-		var unset = {}
-		var set = {}
 
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
-			var have = !!course.roles[type]
-			if (have && !should_have) unset['roles.'+type] = 1;
-			if (!have && should_have) set['roles.'+type] = roletype.protorole
+			var have = course.roles.indexOf(type) !== -1
+			if (have && !should_have) {
+				Courses.update(
+					{ _id: courseId },
+					{ $pull: { roles: type, 'members.roles': type }}, 
+					checkUpdateOne
+				)
+			}
+			if (!have && should_have) {
+				Courses.update(
+					{ _id: courseId },
+					{ $addToSet: { roles: type }},
+					checkUpdateOne
+				)
+			}
 		})
+
+		/* Changes we want to perform */
+		var set = {}
 
 		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
@@ -92,12 +175,13 @@ Meteor.methods({
 			if (!set.region) throw new Exception(404, 'region missing')
 			
 			courseId = Courses.insert({
-				participants: [{ user: user._id, roles: ['team'] }],
+				members: [{ user: user._id, roles: [] }],
 				createdby: user._id,
 				time_created: new Date
 			}, checkInsert)
 		}
-		Courses.update({ _id: courseId }, { $set: set, $unset: unset }, checkUpdateOne)
+		
+		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne)
 		return courseId
 	}
 })

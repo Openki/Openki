@@ -9,7 +9,7 @@ Template.course_event_edit.events({
 			var dateParts =  $('#edit_event_startdate').val().split(".");
 
 			if (!dateParts[2]){
-				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)"); 
+				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 				return;
 			}
 
@@ -26,7 +26,7 @@ Template.course_event_edit.events({
 
 
 			if (startdate<now){
-				alert("Date must be in future"); 
+				alert("Date must be in future");
 				return;
 			}
 
@@ -39,14 +39,14 @@ Template.course_event_edit.events({
 				startdate: startdate
 			}
 
-			if (this.event._id) {	
-				editevent.time_lastedit= now	
-				Events.update(this.event._id, { $set: editevent })		
+			if (this.event._id) {
+				editevent.time_lastedit= now
+				Events.update(this.event._id, { $set: editevent })
 			} else {
 				editevent.course_id= this.course._id
 				editevent.createdBy = Meteor.userId()
 				editevent.time_created = now
-				editevent.time_lastedit= now	
+				editevent.time_lastedit= now
 
 				Events.insert(editevent)
 			}
@@ -63,65 +63,63 @@ Template.course_event_edit.events({
 	}
 });
 
+Template.course_event_edit.needsRole = function(role) {
+	return this.course.roles.indexOf(role) != -1
+}
+
 Template.course_event_edit.possible_mentors = function() {
-	
+
 	var possible_mentors=[];
-	//var course = this.course
-		if(this.course.roles.mentor){
-			
-			var eventobj=this.event;
-				_.each(this.course.roles.mentor.subscribed, function (userid) {
-				var user = Meteor.users.findOne({_id: userid})
-				if (!user) return;
-				if(eventobj._id){
+	var mentorList = havingRole(this.course.members, 'mentor')
+	var eventobj=this.event;
+	_.each(mentorList, function (userid) {
+		var user = Meteor.users.findOne({_id: userid})
+		if (!user) return;
+		if(eventobj._id){
 
-					if(eventobj.mentors.indexOf(user._id)==-1){
-						var checked ="";
-					}else{
-						var checked ="checked";
-					};
-				}
-			//	alert($.inArray(user._id,eventobj.mentors));
-				//alert();
-				//alert(user._id)
-				//alert(eventobj.mentors)
-				//possible_mentors.push(user);
-				possible_mentors.push({"username": user.username, "id":user._id, "checked":checked})
-			});
-				
+			if(eventobj.mentors.indexOf(user._id)==-1){
+				var checked ="";
+			}else{
+				var checked ="checked";
+			};
+		}
+	//	alert($.inArray(user._id,eventobj.mentors));
+		//alert();
+		//alert(user._id)
+		//alert(eventobj.mentors)
+		//possible_mentors.push(user);
+		possible_mentors.push({"username": user.username, "id":user._id, "checked":checked})
+	});
 
-	}
-	
+
 	return possible_mentors;
 }
 
 
 Template.course_event_edit.possible_hosts = function() {
-	
-	var possible_hosts=[];
-	//var course = this.course
-		if(this.course.roles.host){
-		
-			var eventobj=this.event;
-				_.each(this.course.roles.host.subscribed, function (userid) {
-				var user = Meteor.users.findOne({_id: userid})
-				if (!user) return;
-				if(eventobj._id){
-					if(eventobj.host!=user._id){
-						var checked ="";
-					}else{
-						var checked ="checked";
-					};
-				}
-			//	alert($.inArray(user._id,eventobj.mentors));
-				//alert();
-				//alert(user._id)
-				//alert(eventobj.mentors)
-				//possible_mentors.push(user);
-				possible_hosts.push({"username": user.username, "id":user._id, "checked":checked})
-			});
 
-	}
-	
+	var possible_hosts=[]
+	var hostList = havingRole(this.course.members, 'host')
+	var eventobj=this.event;
+	_.each(hostList, function (userid) {
+		var user = Meteor.users.findOne({_id: userid})
+		if (!user) return;
+		if(eventobj._id){
+			if(eventobj.host!=user._id){
+				var checked ="";
+			}else{
+				var checked ="checked";
+			};
+		}
+	//	alert($.inArray(user._id,eventobj.mentors));
+		//alert();
+		//alert(user._id)
+		//alert(eventobj.mentors)
+		//possible_mentors.push(user);
+		possible_hosts.push({"username": user.username, "id":user._id, "checked":checked})
+	});
+
+//	}
+
 	return possible_hosts;
 }

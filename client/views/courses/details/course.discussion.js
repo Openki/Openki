@@ -9,7 +9,6 @@ Template.discussion.post = function() {
 	var ordered_posts = [];
 	// loop over first-level post, search each post for comments, order by most recent
 	posts.forEach(function (post){
-		post['course_ID']  = display_coursename(post['course_ID']);
 		ordered_posts.push(post);
 		var comments = CourseDiscussions.find({parent_ID: post._id}, {sort: {time_created: -1}});
 		comments.forEach(function (comment){
