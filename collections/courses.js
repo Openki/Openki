@@ -128,7 +128,12 @@ Meteor.methods({
 		})
 		var user = Meteor.user()
 		if (!user) {
-			throw new Meteor.Error(401, "please log in")
+		    if (Meteor.is_client) {
+				alert('please log in')
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in")
+			}
 		}
 
 		var course;

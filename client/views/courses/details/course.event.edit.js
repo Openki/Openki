@@ -54,7 +54,7 @@ Template.course_event_edit.events({
 			Session.set("isEditingEvent", false);
 			Session.set("isAddingEvent", false);
 		}else{
-			alert("Security robot say: please sign in!");
+			alert("Please log in!");
 		}
 	},
 

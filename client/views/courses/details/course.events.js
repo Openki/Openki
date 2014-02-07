@@ -1,25 +1,37 @@
 Template.course_events.events_list = function() {
-	Meteor.subscribe('events'); // should not be here
-	var course=this;
+    var course=this.course;
+    var current_event=this.current_event;
 	var today = new Date();
-	return Events.find({course_id:this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).map(function(event){
-		return {course: course, event: event}
+	return Events.find({course_id:course._id,startdate: {$gt:today}},{sort: {startdate: 1}}).map(function(event){
+		var isCurrent = false;
+		if(current_event && current_event._id==event._id) isCurrent=true;
+		return {
+			course: course, 
+			event: event, 
+			isCurrent: isCurrent
+		}
 	});
 };
 
 
 Template.course_events.events_list_past = function() {
-	Meteor.subscribe('events'); // should not be here
-	var course=this;
+    var course=this.course;
+    var current_event=this.current_event;
 	var today = new Date();
-	return Events.find({course_id:this._id,startdate: {$lt:today}},{sort: {startdate: -1}}).map(function(event){
-		return {course: course, event: event}
+	return Events.find({course_id:course._id,startdate: {$lt:today}},{sort: {startdate: -1}}).map(function(event){
+		var isCurrent = false;
+		if(current_event && current_event._id==event._id) isCurrent=true;
+		return {
+			course: course, 
+			event: event, 
+			isCurrent: isCurrent
+		}
 	});
 };
 
 
 Template.course_events.new_event = function() {
-	return {course: this, event: {}}
+	return {course: this.course, event: {}}
 }
 
 
@@ -31,7 +43,7 @@ Template.course_events.events({
 			Session.set("isEditingEvent", false);
 		}
 		else {
-			alert("Security robot say: sign in");
+			alert("Please log in!");
 		}
 	},
 	'click input.cancelEditEvent': function () {

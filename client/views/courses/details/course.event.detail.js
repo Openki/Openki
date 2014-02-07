@@ -24,10 +24,12 @@ Router.map(function () {
             */
 
 			var event = Events.findOne({_id: this.params._id});
+			var course = Courses.findOne({_id: event.course_id});
 			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			//console.log(event)
+			console.log("eventdetail.course: "+course);
 			return {
-				event: event,
+				current_event: event,
+				course: course,
 				//subscribers: prepare_subscribers(course),
 			};
 		}
