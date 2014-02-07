@@ -103,10 +103,14 @@ Template.votelist.votelist=function(){
 	return return_object;
 }
 */
+Template.votelists.addingVote = function () {
+		return Session.get('addingVote')
+}
+
 
 Template.votelists.events({
 	'click input.show_add_vote': function () {
-		$("#add_vote_form").show();
+		Session.set('addingVote', true)
 	},
 	'click input.create_votelist': function () {
 		var option_array=$(".add_vote_option_button").map(function(){return $(this).val();}).get();
@@ -116,14 +120,16 @@ Template.votelists.events({
 			option_object[i]={option:option_array[i],votes_0:[],votes_1:[],votes_2:[]};
 		}
 		Votings.insert({type: "text", course_id: this._id, question:$("#add_vote_question").val(), options: option_object});
-		$('#add_vote_form')[0].reset();
-		$('#add_vote_form').hide();
+		Session.set('addingVote', false)
 	},
 	'click input.add_vote_add_option': function () {
 		$("#add_vote_options").append(
 		$(".add_vote_option").last().clone()
 		);
 		$(".add_vote_option > input").last().val("");
+	},
+	'click input.cancel_votelist': function () {
+		Session.set('addingVote', false)
 	}
 });
 

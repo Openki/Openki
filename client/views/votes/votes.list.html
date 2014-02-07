@@ -37,11 +37,15 @@
 		</div>
 
 		{{else}}
+			{{#unless addingVote}}
 			<p>no votings yet.. </p>
+			{{/unless}}
 		{{/each}}
 
-		<input type="button" class="show_add_vote" value="create new voting:" />
-		<form id="add_vote_form" style="display:none">
+
+
+		{{#if addingVote}}
+		<form id="add_vote_form">
 			<h4>New voting</h4>
 			<p>Frage: <input type="text" id="add_vote_question" size="30"></p>
 			<div id="add_vote_options">
@@ -50,7 +54,15 @@
 			</div>
 			<p><input type="button" class="add_vote_add_option" value="+ Option"></p>
 			<input type="button" class="create_votelist" value="create voting">
+			<input type="button" class="cancel_votelist" value="cancel">
 		</form>
+		{{else}} <input type="button" class="show_add_vote" value="create new voting:" />
+
+
+
+
+
+		{{/if}}
 	</div>
 </template>
 
