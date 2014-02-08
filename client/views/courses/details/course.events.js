@@ -38,13 +38,12 @@ Template.course_events.new_event = function() {
 Template.course_events.events({
 
 	'click input.addEvent': function () {
-		if(Meteor.userId()) {
-			Session.set("isAddingEvent", true);
-			Session.set("isEditingEvent", false);
-		}
-		else {
+		if(!Meteor.userId()) {
 			alert("Please log in!");
+			return;
 		}
+		Session.set("isAddingEvent", true);
+		Session.set("isEditingEvent", false);
 	},
 	'click input.cancelEditEvent': function () {
 		Session.set("isEditingEvent", false);
@@ -52,11 +51,17 @@ Template.course_events.events({
 	},
 	
 	'click input.eventDelete': function () {
+			if(!Meteor.userId()) {
+				alert("Please log in!");
+				return;}
 		if (confirm("delete event "+"'"+this.event.title+"'"+"?")) {
 			Events.remove(this.event._id);
 		}
 	},
 	'click input.eventEdit': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
 		Session.set("isEditingEvent", this.event._id);
 		Session.set("isAddingEvent", false);
 	}

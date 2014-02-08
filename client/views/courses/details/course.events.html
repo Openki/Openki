@@ -1,11 +1,13 @@
 <template name="course_events">
 
-	{{#if isAddingEvent}}
-		{{#with new_event}}
-			{{>course_event_edit}}
-		{{/with}}
-	{{else}}
-		<p><input type="button" class="addEvent" value="add a Date"/></p>
+	{{# if currentUser}}
+		{{#if isAddingEvent}}
+			{{#with new_event}}
+				{{>course_event_edit}}
+			{{/with}}
+		{{else}}
+			<p><input type="button" class="addEvent" value="add a Date"/></p>
+		{{/if}}
 	{{/if}}
 
 	<div class="course_events">
@@ -64,9 +66,11 @@
 				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : hosted by {{username host}} </p>
             </a> 
 			{{/with}}
+			{{# if currentUser}}
 			<input type="button" class="eventEdit" value="Edit" />
+			<input type="button" class="eventDelete" value="Delete" />
+			{{/if}}
 		{{/if}}
-		<input type="button" class="eventDelete" value="Delete" />
 	</div>
 </template>
 
