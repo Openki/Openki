@@ -35,18 +35,17 @@
 
 <template name="search_menue">
 
-				
+
 	<div class="dropdown"><a id="ugly_logo" href="/"><img src="/logo.gif" style="height:30px; margin: 0 15px"> </a>
 		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> Courses</a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/">Courses</a></li>
-				<li><a class="regionselect" href="/locations/">Room List</a></li>
+				<li><a class="regionselect" href="/">Serarch</a></li>
+				<li><a class="regionselect" href="/locations/">Location List</a></li>
 				<li><a class="regionselect" href="/categorylist/">Category List</a></li>
-				<li><a class="regionselect" href="/calendar/">Calendar</a></li>
-				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse list</a></li>
-				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Create Proposal</a></li>
-				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Create Arranged one</a></li>
+				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse Courses</a></li>
+				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Propose Course</a></li>
+				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Create Event</a></li>
 			</ul>
 		</div>
 		{{about}}
