@@ -67,21 +67,27 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 
 Template.coursedetails.events({
 	'click input.del': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
+			
 		if (confirm("wirklich?")) {
 			Courses.remove(this._id);
 			Router.navigate('/', true);
 		}
 	},
 	'click input.edit': function () {
-		// gehe in den edit-mode, siehe html
-		if(Meteor.userId()) {
-			Session.set("isEditing", true);
-		}
-		else {
+		if(!Meteor.userId()) {
 			alert("Please log in!");
-		}
+			return;}
+		// gehe in den edit-mode, siehe html
+		Session.set("isEditing", true);
+
 	},
 	'click input.subscribe': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, true)
 	},
 	'click input.unsubscribe': function () {

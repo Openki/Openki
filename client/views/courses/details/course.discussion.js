@@ -27,6 +27,9 @@ Template.postDialog.showPostDialog = function () {
 
 Template.writePostDialog.events({
 	'click input.add': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
 		var timestamp = new Date();
 		var user = Meteor.userId();
 		var course = this._id;
@@ -68,11 +71,17 @@ Template.writePostDialog.events({
 Template.discussion.events({
 	//comment existing post
 	'click input.answer': function (template) {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
 		Session.set("postID", this._id);
 		Session.set("showPostDialog", true);
 	},
 	//write new post
 	'click input.write': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
 		Session.set("showPostDialog", true);
 	}
 });
