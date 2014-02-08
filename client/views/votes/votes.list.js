@@ -4,18 +4,9 @@ Template.votelists.votings=function() {
 	var pseudo=Session.get("aktualisierungs_hack");						//FIXME
 	var votings=Votings.find({course_id: this._id});
 	var course=this
-	var subscribers = []
 	var roles = course.roles
-	if (roles) {											// find all roles and subscribers in it
-		for (role in roles) {
-			if (roles.hasOwnProperty(role)) {
-				subscribers = subscribers.concat(roles[role].subscribed)
-			}
-		}
-	}
-	subscribers = _.uniq(subscribers)									// (remove dublicates)
-
-
+	var members = course.members
+	
 	var votings_array = [];
 	for(m = 0; m < votings.count(); m++) {
 		voting = votings.db_objects[m];
@@ -24,13 +15,14 @@ Template.votelists.votings=function() {
 		for(o = 0; o < voting.options.length; o++) {
 			voting_total.push(voting.options[o].votes_0.length);
 		}
-		for(s = 0; s < subscribers.length; s++) {
+		
+		members.forEach(function (member) {
 			subscriber_options=[];
 			for(o = 0; o < voting.options.length; o++) {
-				if(voting.options[o].votes_0.indexOf(subscribers[s])!=-1) {
+				if(voting.options[o].votes_0.indexOf(member.user)!=-1) {
 					vote_status="v0";
 				}
-				else if(voting.options[o].votes_1.indexOf(subscribers[s])!=-1) {
+				else if(voting.options[o].votes_1.indexOf(member.user)!=-1) {
 					vote_status="v1";
 				}
 				else {
@@ -38,23 +30,21 @@ Template.votelists.votings=function() {
 				}
 				subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});
 			}
-			if(subscribers[s] == Meteor.userId()){
+			if(member.user == Meteor.userId()){
 				is_current="is_current";
 			}
 			else {
 				is_current="";
 			}
-			subscribers_votings.push({is_current:is_current, subscribersId:subscribers[s], is_current: is_current, options:subscriber_options});
-			//voting.user_count = voting.users.count()
-		}
+			subscribers_votings.push({is_current:is_current, subscribersId:member.user, is_current: is_current, options:subscriber_options});
+		});
+		
 		voting.total=voting_total;
 		voting.subscribers=subscribers_votings;
 		votings_array.push(voting);
 	}
 
 	return {votings:votings_array};
-
-
 }
 
 
@@ -110,9 +100,16 @@ Template.votelists.addingVote = function () {
 
 Template.votelists.events({
 	'click input.show_add_vote': function () {
+		if(!Meteor.userId()){
+			alert("Please log in!"); 
+			return;}
+			
 		Session.set('addingVote', true)
 	},
 	'click input.create_votelist': function () {
+		if(!Meteor.userId()){
+			alert("Please log in!"); 
+			return;}
 		var option_array=$(".add_vote_option_button").map(function(){return $(this).val();}).get();
 		var option_object=[];
 		for(var i in option_array) {
@@ -123,6 +120,10 @@ Template.votelists.events({
 		Session.set('addingVote', false)
 	},
 	'click input.add_vote_add_option': function () {
+		if(!Meteor.userId()){
+			alert("Please log in!"); 
+			return;}
+			
 		$("#add_vote_options").append(
 		$(".add_vote_option").last().clone()
 		);
