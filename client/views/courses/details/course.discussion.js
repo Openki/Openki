@@ -7,7 +7,6 @@ Template.discussion.post = function() {
 		},
 		{sort: {time_updated: -1, time_created: -1}}
 	);
-	console.log(posts.count());
 	var ordered_posts = [];
 	// loop over first-level post, search each post for comments, order by most recent
 	posts.forEach(function (post){
@@ -18,7 +17,6 @@ Template.discussion.post = function() {
 			ordered_posts.push(comment);
 		});
 	});
-	console.log("len: "+ordered_posts.length)
 	//return array with proper order
 	return ordered_posts;
 };
