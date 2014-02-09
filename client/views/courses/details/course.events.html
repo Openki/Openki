@@ -17,7 +17,7 @@
 				{{>course_event}}
 			</div>
 		{{else}}
-			no events 
+			no events
 		{{/each}}
 
 	</div>
@@ -31,9 +31,9 @@
 				{{>course_event}}
 			</div>
 		{{else}}
-			no events 
+			no events
 		{{/each}}
-		
+
 	</div>
 </template>
 
@@ -53,9 +53,9 @@
 				</p>
 				<p class="course_event_title">{{this.title}}</p>
 				<p class="course_event_desc">{{description}}</p>
-				
+
 				{{#if this.mentors}}
-				<p class="course_event_info">	
+				<p class="course_event_info">
 						<ul class="course_event_mentors">
 						{{#each this.mentors}}
 							<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
@@ -63,8 +63,10 @@
 						</ul>
 				</p>
 				{{/if}}
+				{{#if this.hosts}}
 				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : hosted by {{username host}} </p>
-            </a> 
+				{{/if}}
+            </a>
 			{{/with}}
 			{{# if currentUser}}
 			<input type="button" class="eventEdit" value="Edit" />
