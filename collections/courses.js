@@ -90,11 +90,11 @@ function removeRole(course, role, user) {
 
 
 Meteor.methods({
-	change_subscription: function(courseId, role, add) {
+	change_subscription: function(userId, courseId, role, add) {
+		check(userId, String)
 		check(role, String)
 		check(courseId, String)
 		check(add, Boolean)
-		var userId = Meteor.userId()
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		if (!userId) {

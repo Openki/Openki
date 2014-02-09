@@ -34,6 +34,13 @@ getMemeber = function(members, user) {
 	return member;
 }
 
+
+mayEdit = function(user, course){
+	if(!user)
+		return false;
+	return user && (user.isAdmin || hasRoleUser(course.members, 'team', user._id))
+}
+
 hasRoleUser = function(members, role, user) {
 	var has = false;
 	members.forEach(function(member) {
