@@ -67,8 +67,7 @@ Handlebars.registerHelper('username', function (userid){
 			return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
 		}
 	}else{
-		if (1==1){
-			console.log( userid.substr(0, 5)  == 'Anon_')  //
+		if (userid.substr(0, 5)  == 'Anon_'){
 			return "Anonymous☔";
 		}else{
 			return "No_User";
