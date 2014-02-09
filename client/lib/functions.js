@@ -58,16 +58,23 @@ Handlebars.registerHelper("title", function() {
 });
 
 Handlebars.registerHelper('username', function (userid){
-  var user= Meteor.users.findOne({_id:userid});
-  if(user){
-    if(user.username){
-    	  return user.username;
-    }else{
-    	  return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
-    }
-  }else{
-      return "No_User";
-  }
+	console.log(userid)
+	var user= Meteor.users.findOne({_id:userid});
+	if(user){
+		if(user.username){
+			return user.username;
+		}else{
+			return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
+		}
+	}else{
+		if (1==1){
+			console.log( userid.substr(0, 5)  == 'Anon_')  //
+			return "Anonymous☔";
+		}else{
+			return "No_User";
+		}
+
+	}
 })
 
 

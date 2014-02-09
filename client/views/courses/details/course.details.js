@@ -70,7 +70,7 @@ Template.coursedetails.events({
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
-			
+
 		if (confirm("wirklich?")) {
 			Courses.remove(this._id);
 			Router.navigate('/', true);
@@ -88,10 +88,16 @@ Template.coursedetails.events({
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, true)
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, false)
+	},
+	'click input.subscribePrivat': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, true)
 	},
 	'click input.unsubscribe': function () {
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, false)
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false)
 	}
 })
 
