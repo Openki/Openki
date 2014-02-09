@@ -9,23 +9,30 @@ Meteor.startup(function () {
 
 
 Meteor.methods({
-    insert_userdata: function(username, email, password){
-        Accounts.createUser({username:username, email:email, password:password});
-    },
-    update_userdata: function(username,email) {
-        Meteor.users.update(Meteor.userId(), {
-            $set: {
-                username: username,
-                 emails: [{
-                    address: email,
-                    verified: false
-                }]
-            }
-        });
-     },
-    update_userpassword: function(new_password) {
-        Accounts.setPassword(Meteor.userId(), new_password)
-     }
+	insert_userdata: function(username, email, password){
+		Accounts.createUser({username:username, email:email, password:password});
+	},
+	update_userdata: function(username,email) {
+		Meteor.users.update(Meteor.userId(), {
+			$set: {
+				username: username,
+				 emails: [{
+					address: email,
+					verified: false
+				}]
+			}
+		});
+	},
+	update_userpassword: function(new_password) {
+		Accounts.setPassword(Meteor.userId(), new_password)
+	},
+	insert_anonId: function(anonId){
+		Meteor.users.update(Meteor.userId(), {
+			$set: {									//TODO: append it in string
+				anonId: anonId
+			}
+		});
+	}
 });
 
 

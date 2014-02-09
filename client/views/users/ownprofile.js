@@ -55,7 +55,7 @@ Template.profile.events({
 	'click input.save': function () {
 		// wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
 		//alert(document.getElementById('editform_username').value);
-		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value); //kann nur auf server ausgeführt werden (file:Server.js)
+		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value); //kann nur auf server ausgeführt werden (file:server/main.js)
 		if(document.getElementById('editform_newpassword').value!="") {
 			Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
 		}
