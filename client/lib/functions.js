@@ -58,7 +58,6 @@ Handlebars.registerHelper("title", function() {
 });
 
 Handlebars.registerHelper('username', function (userid){
-	console.log(userid)
 	var user= Meteor.users.findOne({_id:userid});
 	if(user){
 		if(user.username){
