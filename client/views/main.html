@@ -40,7 +40,7 @@
 		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> Courses</a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/">Serarch</a></li>
+				<li><a class="regionselect" href="/">Search</a></li>
 				<li><a class="regionselect" href="/locations/">Location List</a></li>
 				<li><a class="regionselect" href="/categorylist/">Category List</a></li>
 				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse Courses</a></li>
@@ -82,7 +82,7 @@
 		<a class="regions" href="/"><span class="icon-nav_region"></span></a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/region/{{_id}}">All regions</a></li>
+				<li><a class="regionselect" href="/region/">All regions</a></li>
 				{{# each regions}}
 					<li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
 				{{/each}}

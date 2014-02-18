@@ -90,6 +90,7 @@ function removeRole(course, role, user) {
 
 
 Meteor.methods({
+
 	change_subscription: function(courseId, role, add, privat) {
 		check(role, String)
 		check(courseId, String)

@@ -37,11 +37,8 @@ Router.map(function () {
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
-			// course.nameY = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_') //FIXME: doesn't work!
-			// console.log("course: "+course)
 			return {
-				course: course,
-				//subscribers: prepare_subscribers(course),
+				course: course
 			};
 		}/*,
 		after: function() {
@@ -58,8 +55,13 @@ Router.map(function () {
 })
 
 
+
 Template.coursedetails.helpers({    // more helpers in course.roles.js
-	isEditing: function () {
+	currentUserMayEdit: function() {
+		return mayEdit(Meteor.user(), this);
+	},
+
+   	isEditing: function () {
 		return Session.get("isEditing");
 	}
 })
@@ -88,6 +90,7 @@ Template.coursedetails.events({
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
+
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, false)
 	},
 	'click input.subscribePrivat': function () {
