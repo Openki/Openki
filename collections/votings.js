@@ -3,8 +3,9 @@
 // "question" -> string
 // "type" -> string
 // "course_id" -> ID_Courses
-// "options" -> ["option" -> string,
-//               "votes" -> int]
+// "options" -> [{"option" -> string,
+//               "votes" -> [ID_users]
+//				},]
 // ===========================
 
 Votings = new Meteor.Collection("Votings");

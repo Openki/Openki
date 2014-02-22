@@ -6,7 +6,7 @@
 // "course_ID" -> ID_Courses
 // "time_created" -> timestamp
 // "time_updated" -> timestamp
-// "parent_ID" -> ID_CourseDiscussions
+// "parent_ID" -> ID_CourseDiscussions  (optional)
 // ===========================
 
 CourseDiscussions = new Meteor.Collection("CourseDiscussions");
