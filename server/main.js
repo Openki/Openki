@@ -28,7 +28,7 @@ Meteor.methods({
 	},
 	insert_anonId: function(anonId){
 		Meteor.users.update(Meteor.userId(), {
-			$set: {									//TODO: append it in string
+			$push: {
 				anonId: anonId
 			}
 		});

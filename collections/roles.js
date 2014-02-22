@@ -1,3 +1,14 @@
+// ======== DB-Model: ========
+// "_id" -> ID
+// "type" -> string    (name of role)
+// "description" -> string
+// "subscribe" -> string  (decription for subscription)
+// "preset" -> boolean
+// "show_subscribers" -> boolean
+// "protorole" -> {"subscribed": []}
+// ===========================
+
+
 Roles = new Meteor.Collection("Roles");
 
 var roles = [{

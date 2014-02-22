@@ -1,3 +1,9 @@
+// ======== DB-Model: ========
+// "_id" -> ID
+// "name" -> string
+// "timeZone" -> string
+// ===========================Regions = new Meteor.Collection("Regions");
+
 Regions = new Meteor.Collection("Regions");
 
 

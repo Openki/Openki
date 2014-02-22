@@ -43,12 +43,22 @@ mayEdit = function(user, course){
 
 hasRoleUser = function(members, role, user) {
 	var has = false;
+	var loggeduser = Meteor.user()
+
 	members.forEach(function(member) {
-		if (member.user == user) {
-			has = member.roles.indexOf(role) !== -1
-			return true; // break
+		if (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
+			if(member.roles.indexOf(role) !== -1) has = 'anon'
 		}
 	})
+
+	members.forEach(function(member) {
+		if (member.user == user) {
+			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
+			return true;
+		}
+	})
+
+
 	return has;
 }
 
@@ -64,21 +74,24 @@ Handlebars.registerHelper("title", function() {
 	document.title = les.join("");
 });
 
-Handlebars.registerHelper('username', function (userid){
-	var user= Meteor.users.findOne({_id:userid});
+Handlebars.registerHelper('username', function (userId){
+	var user= Meteor.users.findOne({_id:userId});
 	if(user){
 		if(user.username){
 			return user.username;
 		}else{
-			return "userid: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
+			return "userId: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
 		}
-	}else{
-		if (userid.substr(0, 5)  == 'Anon_'){
+	}
+	else {
+		if (userId.substr(0, 5)  == 'Anon_'){
+			var loggeduser = Meteor.user()
+			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1){
+				return loggeduser.username + ' ☔'
+			}
 			return "Anonymous☔";
-		}else{
-			return "No_User";
 		}
-
+		return "No_User";
 	}
 })
 

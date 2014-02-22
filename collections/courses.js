@@ -1,14 +1,18 @@
 // ======== DB-Model: ========
-// TODO: update!!
 // "_id" -> ID
 // "name" -> string
+// "categories" -> [ID_categories]
+// "tags" -> list ID_categories
+// "description" -> string
 // "slug" -> string
+// "region" -> ID_region
+// "date" -> timestamp     what for?
 // "createdby" -> ID_users
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
-// "categories" -> ID_categories
-// "description" -> string
-// "subscribers" -> [ID_users]
+// "time_lastenrol" -> timestamp
+// "roles" -> [role-keys]
+// "members" -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
@@ -91,21 +95,34 @@ function removeRole(course, role, user) {
 
 Meteor.methods({
 
-	change_subscription: function(courseId, role, add, privat) {
+	change_subscription: function(courseId, role, add, anon) {
 		check(role, String)
 		check(courseId, String)
 		check(add, Boolean)
-		check(privat, Boolean)
-		if (privat) {
-			var userId = new Meteor.Collection.ObjectID()
+		check(anon, Boolean)
+		var course = Courses.findOne({_id: courseId})
+		if (!course) throw new Meteor.Error(404, "Course not found")
+		var userId = false
+		var user = Meteor.user();
+
+		var remove = !add
+		//See wheter to use an anonId
+		if (remove || anon){
+			_.each(course.members, function(member){
+				if (user.anonId && user.anonId.indexOf(member.user) != -1 && (add || member.roles.indexOf(role) != -1)){
+					userId=member.user
+				}
+			})
+		}
+		if (anon && !userId){
+			userId = new Meteor.Collection.ObjectID()
 			userId = 'Anon_' + userId._str
 			Meteor.call('insert_anonId', userId)
 		}
-		else {
-			var userId = Meteor.userId();
+		if (!anon && !userId){
+			userId = user._id
 		}
-		var course = Courses.findOne({_id: courseId})
-		if (!course) throw new Meteor.Error(404, "Course not found")
+
 		if (!userId) {
 			// Oops
 			if (Meteor.is_client) {
@@ -152,7 +169,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
 
- 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
+ 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
 

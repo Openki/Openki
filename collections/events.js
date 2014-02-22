@@ -5,10 +5,11 @@
 // "mentors" -> [userIDs]   optional
 // "startdate" -> ISODate
 // "hosts" -> [userIDs]     optional
+// "location" -> ...............
 // "createdby" -> userId
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
-// "course_id" -> ID
+// "course_id" -> ID_course          (maybe list in Future)
 // ===========================
 
 Events = new Meteor.Collection("Events");

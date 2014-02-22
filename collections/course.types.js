@@ -1,3 +1,11 @@
+// ======== DB-Model: ========
+// "_id" -> ID
+// "name" -> string
+// "NeedsMentor" -> boolean
+// ===========================
+
+
+
 CourseTypes = new Meteor.Collection("CourseTypes");
 
 CourseTypes.allow({
