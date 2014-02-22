@@ -5,10 +5,12 @@ Router.map(function () {
 		path: 'course/:_id/:slug?',
 		template: 'coursedetails',
 		waitOn: function () {
-			return Meteor.subscribe('categories');
-			return Meteor.subscribe('courses');
-			return Meteor.subscribe('users');
-			return Meteor.subscribe('events');
+			return [
+				Meteor.subscribe('categories'),
+				Meteor.subscribe('courses'),
+				Meteor.subscribe('users'),
+				Meteor.subscribe('events')
+			]
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id});
@@ -30,10 +32,12 @@ Router.map(function () {
 		path: 'course/:_id/:slug/wiki',
 		template: 'coursewiki',
 		waitOn: function () {
-			return Meteor.subscribe('categories');
-			return Meteor.subscribe('courses');
-			return Meteor.subscribe('users');
-			return Meteor.subscribe('events');
+			return [
+				Meteor.subscribe('categories'),
+				Meteor.subscribe('courses'),
+				Meteor.subscribe('users'),
+				Meteor.subscribe('events')
+			]
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})

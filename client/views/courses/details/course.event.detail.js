@@ -5,10 +5,12 @@ Router.map(function () {
 		path: 'event/:_id',
 		template: 'course_event_detail',
 		waitOn: function () {
-			return Meteor.subscribe('categories');
-			return Meteor.subscribe('courses');
-			return Meteor.subscribe('users');
-			return Meteor.subscribe('events');
+			return [
+				Meteor.subscribe('categories'),
+				Meteor.subscribe('courses'),
+				Meteor.subscribe('users'),
+				Meteor.subscribe('events')
+			]
 		},
 		data: function () {
 			var event = Events.findOne({_id: this.params._id});
