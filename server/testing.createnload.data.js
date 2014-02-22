@@ -136,8 +136,8 @@ function createLocations(){
 
 		location.createdby = ensureUser(location.createdby)._id
 //		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
-		if (!location.hosts) location.hosts = {}
-		location.hosts.contact = [ensureUser(location.hosts.contact)._id]
+		if (!location.hosts) location.hosts = []
+		location.hosts = [ensureUser(location.hosts[0])._id]
 
 //		location.maxWorkplaces = Random.fraction() > 0.3 ? undefined : humandistrib()
 //		location.maxPeople = Random.fraction() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Random.fraction())

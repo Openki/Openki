@@ -75,7 +75,7 @@ Template.coursedetails.events({
 
 		if (confirm("wirklich?")) {
 			Courses.remove(this._id);
-			Router.navigate('/', true);
+			Router.go('/');
 		}
 	},
 	'click input.edit': function () {

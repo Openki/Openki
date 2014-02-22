@@ -1,12 +1,25 @@
 Template.locationlist.locations=function(){
 	var region = Session.get('region')
-	var locations = Locations.find({region: region});
+	if (!!region) find.region = region
+	var regionObj = Regions.findOne(region)
+	var regionName = regionObj ? regionObj.name : 'All regions'
+	if (regionName !== "All regions") {
+		query={region: region};
+    }else{
+    	query={};
+    }
+	var locations = Locations.find(query);
 	for(m = 0; m < locations.count(); m++){
 		loc = locations.db_objects[m];
-		if(loc.hosts.contact.indexOf(Meteor.userId()) != -1){
+		if(loc.hosts.indexOf(Meteor.userId()) != -1){
 			loc.ismylocation = "true";
 		}
 	}
+
+	if(Meteor.userId()) { 
+		Session.set("locationHosts",[Meteor.userId()]) // Variable brauchts für das New-Location-Formular. Hier wohl nicht so logisch, wo hintun?
+	}
+
 	return locations;
 }
 
@@ -19,9 +32,3 @@ Template.locationlist.region=function(){
 
 
 
-Template.location.events({
-	'click input.edit_location': function () {
-		alert('Work in progress, comming soon...');    // TODO!
-		Session.set("edit_location", this._id);
-	}
-});

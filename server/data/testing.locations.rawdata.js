@@ -30,9 +30,7 @@ testlocations = [{
 		'stage': 			'0',
 		'specials': 		'two computers/workstations, big kitchen, bibliothek'},
 	'createdby': 		'FeeLing',
-	'hosts': 			{
-//		'noContact':	['Kampfhippie'],
-		'contact':		'FeeLing'}  	// how to do it nicer?
+	'hosts': 			['FeeLing']
 },
 {
 	'name':        		'SGMK MechArtLab',
@@ -65,10 +63,8 @@ testlocations = [{
 		'specials': 		'Lots of parts and tools, Ätzanlage, Oszis, Drucker'
 	},
 	'createdby': 		'Sandra',
-	'hosts': 			{
-//		'noContact':	'bert',
-		'contact':		'Sandra'
-	}
+
+	'hosts': 			['FeeLing']
 },
 
 {

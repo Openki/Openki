@@ -26,7 +26,7 @@ Router.map(function () {									///////// startpage /////////
 
 	this.route('locationDetails',{							///////// locationdetails /////////
 		path: 'locations/:_id',
-		template: 'locationdetails',
+		template: 'location_details',
 		waitOn: function () {
 			return Meteor.subscribe('locations');
 		},
