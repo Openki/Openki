@@ -44,12 +44,21 @@ mayEdit = function(user, course){
 hasRoleUser = function(members, role, user) {
 	var has = false;
 	var loggeduser = Meteor.user()
+
 	members.forEach(function(member) {
-		if (member.user == user || (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1)) {
-			has = member.roles.indexOf(role) !== -1
-			return true; // break
+		if (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
+			if(member.roles.indexOf(role) !== -1) has = 'anon'
 		}
 	})
+
+	members.forEach(function(member) {
+		if (member.user == user) {
+			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
+			return true;
+		}
+	})
+
+
 	return has;
 }
 

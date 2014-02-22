@@ -101,13 +101,15 @@ Meteor.methods({
 		var userId = false
 		var user = Meteor.user();
 
+		var remove = !add
 		//See wheter to use an anonId
-		_.each(course.members, function(member){
-			//console.log(user.anonId, member)
-			if (user.anonId.indexOf(member.user) != -1){
-				userId=member.user
-			}
-		})
+		if (remove || anon){
+			_.each(course.members, function(member){
+				if (user.anonId && user.anonId.indexOf(member.user) != -1 && (add || member.roles.indexOf(role) != -1)){
+					userId=member.user
+				}
+			})
+		}
 		if (anon && !userId){
 			userId = new Meteor.Collection.ObjectID()
 			userId = 'Anon_' + userId._str
@@ -163,7 +165,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
 
- 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
+ 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "get lost")
 
 
