@@ -93,7 +93,7 @@ Template.coursedetails.events({
 
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, false)
 	},
-	'click input.subscribePrivat': function () {
+	'click input.subscribeAnon': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
