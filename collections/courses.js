@@ -1,14 +1,18 @@
 // ======== DB-Model: ========
-// TODO: update!!
 // "_id" -> ID
 // "name" -> string
+// "categories" -> [ID_categories]
+// "tags" -> list ID_categories
+// "description" -> string
 // "slug" -> string
+// "region" -> ID_region
+// "date" -> timestamp     what for?
 // "createdby" -> ID_users
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
-// "categories" -> ID_categories
-// "description" -> string
-// "subscribers" -> [ID_users]
+// "time_lastenrol" -> timestamp
+// "roles" -> [role-keys]
+// "members" -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
