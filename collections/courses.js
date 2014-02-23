@@ -55,11 +55,11 @@ function findCourses(params){
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-function addRole(course, role, user) {
+function addRole(course, role, user, comment) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
 		{ _id: course._id, 'members.user': { $ne: user } },
-		{ $addToSet: { 'members': { user: user, roles: [] } }}
+		{ $addToSet: { 'members': { user: user, roles: []} }}
 	)
 
 	// Minimongo does not currently support the $ field selector
@@ -67,7 +67,7 @@ function addRole(course, role, user) {
 	if (!Meteor.isClient) {
 		Courses.update(
 			{ _id: course._id, 'members.user': user },
-			{ '$addToSet': { 'members.$.roles': role }},
+			{ '$addToSet': { 'members.$.roles': role }, $set:{'members.$.comment' : comment}},
 			checkUpdateOne
 		)
 	}
@@ -76,6 +76,7 @@ function addRole(course, role, user) {
 function removeRole(course, role, user) {
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
+	console.log(course, role, user, 'hallo')
 	if (!Meteor.isClient) {
 			Courses.update(
 				{ _id: course._id, 'members.user': user },
@@ -95,11 +96,12 @@ function removeRole(course, role, user) {
 
 Meteor.methods({
 
-	change_subscription: function(courseId, role, add, anon) {
+	change_subscription: function(courseId, role, add, anon, comment) {
 		check(role, String)
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
+		check(comment, Match.Optional(String))
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
@@ -135,7 +137,7 @@ Meteor.methods({
 		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
 		if (add) {
-			addRole(course, role, userId)
+			addRole(course, role, userId, comment)
 			var time = new Date
 			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
 		} else {
