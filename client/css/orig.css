@@ -30,10 +30,6 @@ p {
   margin: 0;
 }
 
-.clear{
-    clear:both;
-}
-
 /* line 34, ../../sass/orig/_screen.scss */
 .static_content_top {
   clear: none;
@@ -249,10 +245,6 @@ p {
   float: left;
 }
 
-.course_events_past{
-	clear:both;
-}
-
 /* line 237, ../../sass/orig/_screen.scss */
 h2.name {
   font-size: 40px;
@@ -277,33 +269,8 @@ h2.name {
   margin: 50px 0 20px 0;
 }
 
-.course_main .categorylist ul{
-    padding-left: 0;
-}
-
-.course_main .categorylist li{
-    float:left;
-    padding-right: 5px;
-}
-
-.course_submenu{
-    
-    height: 20px;
-    border-top: #DDD solid 1px;
-    border-bottom: #DDD solid 1px;
-
-    padding:0;
-}
-
-.course_submenu li{
-    float:left;
-    list-style: none;
-    padding-right: 25px;
-    font-weight: bold;
-}
-
 /* line 257, ../../sass/orig/_screen.scss */
-.course_edit {
+.course_edit, .location_edit {
   clear: both;
   background-color: #CCDDDF;
   padding: 15px;
@@ -350,14 +317,6 @@ h2.name {
   width: 220px;
   margin: 10px;
   background-color: #DDD;
-}
-
-.current_event{
-  background-color: white;
-  border: #C1F2AE 4px solid;
-}
-.course_event_past .current_event{
-  border: #DDD 4px solid;
 }
 
 /* line 300, ../../sass/orig/_screen.scss */
@@ -900,11 +859,9 @@ a:hover {
 /* line 788, ../../sass/orig/_screen.scss */
 .dropdown .dropdown-menu {
   display: none;
-  top: 35px;
+  top: 45px;
   left: 10px;
   position: absolute;
-  padding-top:10px;
-
 }
 
 /* line 794, ../../sass/orig/_screen.scss */
@@ -912,7 +869,7 @@ a:hover {
   color: gray;
   background: white;
   padding: 5px;
-  width: 160px;
+  width: 140px;
   margin: 0 0 0 34px;
   list-style: none;
   -webkit-border-radius: 3px;
@@ -929,11 +886,6 @@ a:hover {
 .dropdown .dropdown-menu ul li a {
   color: black;
   font-size: 14px;
-  display: block;
-}
-
-.dropdown-menu ul a:hover {
-  text-decoration: underline !important;
 }
 
 /* line 813, ../../sass/orig/_screen.scss */

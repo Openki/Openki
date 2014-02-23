@@ -1,9 +1,9 @@
 
-<template name="locationdetails">
+<template name="location_details">
 	<h1>Location details</h1>
 
 	{{#if isEditing}}
-		{{!-- >course_edit --}}
+			{{>location_edit}}
 	{{/if}}
 
 <!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
@@ -12,20 +12,29 @@
 		<div class="course_main">
 			<h2 class="name">{{name}}</h2>
 			<p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{username createdby}}, {{!--> show_locationcategories--}}</p>
+			
 			<img src="{{picture}}" height="137" align="top">
-			<p class="descr">{{description}}</p>
+			<p class="descr">Desc: {{description}}</p>
+			<p> Hosts/Admin:<ul class='hosts'>
+			{{#each hosts}}
+				<li>
+					{{>profilelink this}}
+				</li>
+			{{/each}}
+			</ul></p>
 			{{#if contact.web}} <p>Online: <a href="{{contact.web}}">{{contact.web}}</a></p> {{/if}}
-			<p>Adress: {{adress}}</p>
+			<p>Address: {{address}}</p>
 			{{#if route}} <p>How to go there: {{route}}</p> {{/if}}
-			{{#if maxPeople}} <p> Maximum People: {{maxPeople}} </p>  {{/if}}
-			{{#if maxWorkplaces}} <p> Maximum Workplaces: {{maxWorkplaces}} </p> {{/if}}
+			{{#if maxpeople}} <p> Maximum People: {{maxpeople}} </p>  {{/if}}
+			{{#if maxworkplaces}} <p> Maximum Workplaces: {{maxworkplaces}} </p> {{/if}}
 			{{#if infra2.def }} <p> Has a Projector! </p> {{/if}}
 			{{#if specials}} <p> Specials: {{specials}} </p> {{/if}}
 
-			<input type="button" class="contact" value="Contact" /> if registered user, and
-			<input type="button" class="edit" value="Edit" /> if in host-list or admin, and
-			<input type="button" class="del" value="Delete" /> if admin, (or only user?)
-
+			<input type="button" class="contact" value="Contact" /> <br><br>
+			{{#if canEditLocation}}
+			<input type="button" class="edit" value="Edit" />
+			<input type="button" class="del" value="Delete" />
+			{{/if}}
 		</div>
 	{{/unless}}
 
