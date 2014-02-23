@@ -62,6 +62,10 @@ hasRoleUser = function(members, role, user) {
 	return has;
 }
 
+/* Go to the same page removing query parameters */
+goBase = function() {
+	Router.go(Router.current().route.name, Router.current().params) // Shirely, you know of a better way?
+}
 
 /*************** HandleBars Helpers ***********************/
 
@@ -75,6 +79,7 @@ Handlebars.registerHelper("title", function() {
 });
 
 Handlebars.registerHelper('username', function (userId){
+	if (!userId) return '';
 	var user= Meteor.users.findOne({_id:userId});
 	if(user){
 		if(user.username){
