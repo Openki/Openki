@@ -17,3 +17,4 @@ standard-app-packages
 iron-router
 check
 messageformat
+underscore

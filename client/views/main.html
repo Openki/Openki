@@ -37,15 +37,15 @@
 
 
 	<div class="dropdown"><a id="ugly_logo" href="/"><img src="/logo.gif" style="height:30px; margin: 0 15px"> </a>
-		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> Courses</a>
+		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> {{mf 'menue.Courses' 'Courses'}}</a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/">Search</a></li>
-				<li><a class="regionselect" href="/locations/">Location List</a></li>
-				<li><a class="regionselect" href="/categorylist/">Category List</a></li>
-				<li><a class="regionselect" href="{{pathFor 'courses'}}">Browse Courses</a></li>
-				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">Propose Course</a></li>
-				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">Create Event</a></li>
+				<li><a class="regionselect" href="/">{{mf 'menue.Search' 'Search'}}</a></li>
+				<li><a class="regionselect" href="/locations/">{{mf 'menue.LocationList' 'Location List'}}</a></li>
+				<li><a class="regionselect" href="/categorylist/">{{mf 'menue.CategoryList' 'Category List'}}</a></li>
+				<li><a class="regionselect" href="{{pathFor 'courses'}}">{{mf 'menue.BrowseCourses' 'Browse Courses'}}</a></li>
+				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">{{mf 'menue.ProposeCourse' 'Propose Course'}}</a></li>
+				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">{{mf 'menue.CreateEvent' 'Create Event'}}</a></li>
 			</ul>
 		</div>
 		{{about}}
@@ -54,7 +54,7 @@
 
 <template name="create_menue">
 	<div class="dropdown">
-		<a id="mainmenue" href="/calendar/"><span class="icon-nav_calendar"></span> Calendar</a>
+		<a id="mainmenue" href="/calendar/"><span class="icon-nav_calendar"></span> {{mf 'menue.Calendar' 'Calendar'}}</a>
 	</div>
 </template>
 
@@ -63,11 +63,11 @@
 
 <template name="about_menue">
 	<div class="dropdown">
-		<a class="regions" href="/page/about">about</a>
+		<a class="regions" href="/page/about">{{mf 'menue.about' 'about'}}</a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/page/about">about</a></li>
-				<li><a class="regionselect" href="/page/FAQ">FAQ</a></li>
+				<li><a class="regionselect" href="/page/about">{{mf 'menue.about' 'about'}}</a></li>
+				<li><a class="regionselect" href="/page/FAQ">{{mf 'menue.FAQ' 'FAQ'}}</a></li>
 			</ul>
 		</div>
 		{{about}}
@@ -82,7 +82,7 @@
 		<a class="regions" href="/"><span class="icon-nav_region"></span></a>
 		<div class="dropdown-menu">
 			<ul role="menu">
-				<li><a class="regionselect" href="/region/">All regions</a></li>
+				<li><a class="regionselect" href="/region/">{{mf 'menue.All regions' 'All regions'}}</a></li>
 				{{# each regions}}
 					<li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
 				{{/each}}
@@ -92,13 +92,13 @@
 	</div>
 </template>
 
-<!-- ///////////// Demo-Page-Ticker ///////////// -->
 
+<!-- ///////////// Demo-Page-Ticker ///////////// -->
 <template name="ticker">
 	<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
 	Achtung: Dies ist nur eine <b>Testseite</b>. <span style = "padding-left:10em"> </span>
 	alle Daten werden regelmässig gelöscht.	<span style = "padding-left:30em"> </span>
-	This is only a <b>Testpage</b>. <span style = "padding-left:10em"> </span>
-	All data will be erased regularly. <span style = "padding-left:10em"> </span>
+	{{mf 'menue.Testpage' 'This is only a <b>Testpage</b>. '}}<span style = "padding-left:10em"> </span>
+	{{mf 'menue.Testpage2' 'All data will be erased regularly. '}}<span style = "padding-left:10em"> </span>
 	</marquee>
 </template>
