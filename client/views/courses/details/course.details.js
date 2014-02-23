@@ -52,9 +52,11 @@ Router.map(function () {
 })
 
 function loadroles(course, enroling) {
+	var userId = Meteor.userId()
+	var member = getMember(course.members, userId)
 	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
 		var role = roletype.type
-		var sub = hasRoleUser(course.members, role, Meteor.userId())
+		var sub = hasRoleUser(course.members, role, userId)
 		if (course.roles.indexOf(role) !== -1) {
 			goodroles.push({
 				roletype: roletype,
@@ -62,7 +64,8 @@ function loadroles(course, enroling) {
 				subscribed: !!sub,
 				anonsub: sub == 'anon',
 				course: course,
-				enroling: enroling == role
+				enroling: enroling == role,
+				comment: member.comment
 			})
 		}
 		return goodroles;

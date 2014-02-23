@@ -76,9 +76,8 @@ function addRole(course, role, user, comment) {
 function removeRole(course, role, user) {
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
-	console.log(course, role, user, 'hallo')
 	if (!Meteor.isClient) {
-			Courses.update(
+			var result = Courses.update(
 				{ _id: course._id, 'members.user': user },
 				{ '$pull': { 'members.$.roles': role }},
 				checkUpdateOne
@@ -101,12 +100,11 @@ Meteor.methods({
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
-		check(comment, Match.Optional(String))
+		check(comment, Match.OneOf(null, String))
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
 		var user = Meteor.user();
-
 		var remove = !add
 		//See wheter to use an anonId
 		if (remove || anon){
@@ -116,6 +114,7 @@ Meteor.methods({
 				}
 			})
 		}
+
 		if (anon && !userId){
 			userId = new Meteor.Collection.ObjectID()
 			userId = 'Anon_' + userId._str
@@ -127,13 +126,14 @@ Meteor.methods({
 
 		if (!userId) {
 			// Oops
-			if (Meteor.is_client) {
+			if (Meteor.isClient) {
 				alert('please log in')
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in")
 			}
 		}
+
 		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
 		if (add) {

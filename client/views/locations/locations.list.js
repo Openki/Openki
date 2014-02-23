@@ -11,12 +11,12 @@ Template.locationlist.locations=function(){
 	var locations = Locations.find(query);
 	for(m = 0; m < locations.count(); m++){
 		loc = locations.db_objects[m];
-		if(loc.hosts.indexOf(Meteor.userId()) != -1){
+		if(loc.hosts && loc.hosts.indexOf(Meteor.userId()) != -1){
 			loc.ismylocation = "true";
 		}
 	}
 
-	if(Meteor.userId()) { 
+	if(Meteor.userId()) {
 		Session.set("locationHosts",[Meteor.userId()]) // Variable brauchts für das New-Location-Formular. Hier wohl nicht so logisch, wo hintun?
 	}
 
