@@ -16,3 +16,4 @@ standard-app-packages
 # Mesosphere
 iron-router
 check
+messageformat
