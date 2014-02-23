@@ -13,9 +13,10 @@ Router.map(function () {
 			]
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id});
 			return {
-				course: course
+				edit: !!this.params.edit,
+				course: Courses.findOne({_id: this.params._id}),
+				subscribe: this.params.subscribe
 			};
 		},
 		after: function() {
@@ -24,7 +25,6 @@ Router.map(function () {
 			document.title = webpagename + 'Course: ' + course.name
 		},
 		unload: function () {
-			Session.set("isEditing", false);
 			Session.set("isAddingEvent", false);
 		}
 	})
@@ -44,16 +44,7 @@ Router.map(function () {
 			return {
 				course: course
 			};
-		}/*,
-		after: function() {
-			var course = Courses.findOne({_id: this.params._id})
-			if (!course) return; // wtf
-			document.title = webpagename + 'Course: ' + course.name
-		},
-		unload: function () {
-			Session.set("isEditing", false);
-			Session.set("isAddingEvent", false);
-		}*/
+		}
 	})
 
 })
@@ -63,10 +54,6 @@ Router.map(function () {
 Template.coursedetails.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
 		return mayEdit(Meteor.user(), this);
-	},
-
-   	isEditing: function () {
-		return Session.get("isEditing");
 	}
 })
 
@@ -85,9 +72,9 @@ Template.coursedetails.events({
 	'click input.edit': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
-			return;}
-		// gehe in den edit-mode, siehe html
-		Session.set("isEditing", true);
+			return;
+		}
+		Router.go('showCourse', this, { query: {edit: 'course'} })
 
 	},
 	'click input.subscribe': function () {

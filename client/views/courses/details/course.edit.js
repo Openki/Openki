@@ -82,18 +82,10 @@ Template.course_edit.events({
 				}
 			}
 
-			Meteor.call("save_course", courseId, changes, function(err, courseId) {
-				Session.set("isEditing", false);
+			Meteor.call("save_course", courseId, changes, function(err, course) {
 				Session.set('search', ''); // clear searchfield
 				if (err) alert("Saving the course went terribly wrong: "+err)
-				if (isNew){
-					Router.go('showCourse', {_id: courseId}) // TODO: Slug is not included in url
-					
-					// TODO: make creator to a teammember
-					//Meteor.call("change_subscription", Meteor.userId(), courseId, 'team', true, function(err, courseId) {
-					//	Router.go('showCourse', {_id: courseId})
-					//})
-				}
+				Router.go('showCourse', course)
 			})
 
 			
