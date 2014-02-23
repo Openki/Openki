@@ -50,17 +50,15 @@ Template.course_event_edit.events({
 
 				Events.insert(editevent)
 			}
-
-			Session.set("isEditingEvent", false);
-			Session.set("isAddingEvent", false);
+			goBase()
 		}else{
 			alert("Please log in!");
 		}
 	},
 
-	'click input.cancelEditEvent': function() {
-		Session.set("isEditingEvent", false);
-	}
+	'click input.cancelEditEvent': function () {
+		goBase()
+	},
 });
 
 Template.course_event_edit.needsRole = function(role) {

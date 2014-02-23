@@ -23,9 +23,6 @@ Router.map(function () {
 			var course = Courses.findOne({_id: this.params._id})
 			if (!course) return; // wtf
 			document.title = webpagename + 'Course: ' + course.name
-		},
-		unload: function () {
-			Session.set("isAddingEvent", false);
 		}
 	})
 	this.route('showCourseWiki', {
