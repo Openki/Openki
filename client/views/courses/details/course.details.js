@@ -92,19 +92,3 @@ Template.coursedetails.events({
 	}
 })
 
-
-Template.coursedetails.isSubscribed = function () {
-	//ist User im subscribers-Array?
-	var course = this
-	return course.subscribers.indexOf(Meteor.userId()) > -1
-}
-
-Template.coursedetails.isOrganisator = function () {
-	var course = this
-	if (!course.roles.team) return true;
-	return course.roles.team.subscribed.indexOf(Meteor.userId()) != -1
-}
-
-Template.coursedetails.role_description = function(role) {
-	return Roles.findOne({type: role}).description
-}
