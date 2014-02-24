@@ -3,24 +3,25 @@ hmmm
 
 Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
-- Concept: [news.schuel.ch](news.schuel.ch "our blog")
 - Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
+- Concept: [news.schuel.ch](news.schuel.ch "our blog")
 - Contact: [schueldev[at]lists.xiala.net](mailto:schueldev[_at_]lists.xiala.net "write us")
 
 ### Features
+- Propose and fulltext-search courses and events
+- Simple discussion-board
 - Voting-/polling-system, fix-a-date schedules
-- Discussion-board
-- Categories and sub-categories
-- Fulltext-search with realtime-output
+- Categories with sub-categories
 - Regions- and room-system
 - Extendable participant roles
+- Calendar
 
 ### Intended features
-- Email notification
-- Calendar
-- Privat messages
+- I18n
+- Email notifications
 - Privacy and Security
-- File upload
+- File upload for course-documentation
+- Privat messages
 
 ### Installation
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip (or clone) Hmmm into /some/path
@@ -28,12 +29,12 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - To install Meteor, run:
     - ` curl https://install.meteor.com | sh`
     - (sudo)` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
-    - (sudo)` npm install -g meteorite`
+    - (sudo)` npm install -g meteorite meteor-messageformat`
     - ` mrt update`
 - Run `meteor`
 - Browse to http://localhost:3000/
 
-### Compass or how to work on stylesheets
+### Compass, or how to work on stylesheets
 - install ruby
 - `gem install compass`
 - `gem install zurb-foundation`
@@ -42,4 +43,4 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)
 
 ### License
-- Not clear yet. AGPL maybe. for the moment it is [WTFPL](http://www.wtfpl.net)
+- Not clear yet. AGPL probably. for the moment it is [WTFPL](http://www.wtfpl.net)
