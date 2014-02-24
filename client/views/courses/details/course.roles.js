@@ -1,20 +1,37 @@
-Template.roleDetails.helpers({
 
-	roleDetails: function() {
-		var course = this
-		return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
-			var role = roletype.type
-			var sub = hasRoleUser(course.members, role, Meteor.userId())
-			if (course.roles.indexOf(role) !== -1) {
-				goodroles.push({
-					roletype: roletype,
-					role: role,
-					subscribed: !!sub,
-					anonsub: sub == 'anon',
-					course: course
-				})
-			}
-			return goodroles;
-		}, []);
+
+Template.roleDetails.events({
+	'click input.enrol': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
+		Router.go('showCourse', this.course, { query: {enrol: this.roletype.type} })
+	},
+
+	'click input.subscribe': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
+		var comment = $('#comment').val()
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, false, comment)
+		Router.go('showCourse', this.course)
+
+	},
+
+	'click input.subscribeAnon': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;}
+		var comment = $('#comment').val()
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, true, comment)
+		Router.go('showCourse', this.course)
+	},
+
+	'click input.cancel': function () {
+		Router.go('showCourse', this.course)
+	},
+
+	'click input.unsubscribe': function () {
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false, null)
 	}
 })
