@@ -17,7 +17,7 @@ Router.map(function () {
 			var course = Courses.findOne({_id: event.course_id});
 			return {
 				current_event: event,
-				course: course,
+				course: course
 			};
 		}
 	})

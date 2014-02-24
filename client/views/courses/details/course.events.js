@@ -42,12 +42,7 @@ Template.course_events.events({
 			alert("Please log in!");
 			return;
 		}
-		Session.set("isAddingEvent", true);
-		Session.set("isEditingEvent", false);
-	},
-	'click input.cancelEditEvent': function () {
-		Session.set("isEditingEvent", false);
-		Session.set("isAddingEvent", false);
+		Router.go(Router.current().route.name, Router.current().params, { query: { 'editEvent': 'new' } }) // Shirely, you know of a better way?
 	},
 	
 	'click input.eventDelete': function () {
@@ -57,23 +52,21 @@ Template.course_events.events({
 		if (confirm("delete event "+"'"+this.event.title+"'"+"?")) {
 			Events.remove(this.event._id);
 		}
+		goBase()
 	},
 	'click input.eventEdit': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
-			return;}
-		Session.set("isEditingEvent", this.event._id);
-		Session.set("isAddingEvent", false);
+			return;
+		}
+		Router.go(Router.current().route.name, Router.current().params, { query: { 'editEvent': this.event._id } }) // Shirely, you know of a better way?
 	}
 })
 
-Template.course_events.isAddingEvent = function () {
-	return Session.get("isAddingEvent");
+Template.course_event.editingEvent = function (event) {
+	return Router.current().params.editEvent === event
 };
-
-Template.course_event.isEditingEvent = function () {
-	if(Session.get("isEditingEvent")){
-		return Session.get("isEditingEvent")===this.event._id;
-	}
+Template.course_events.editingEvent = function (event) {
+	return Router.current().params.editEvent === event
 };
 

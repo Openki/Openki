@@ -25,9 +25,6 @@ Router.map(function () {
 			var course = Courses.findOne({_id: this.params._id})
 			if (!course) return; // wtf
 			document.title = webpagename + 'Course: ' + course.name
-		},
-		unload: function () {
-			Session.set("isAddingEvent", false);
 		}
 	})
 	this.route('showCourseWiki', {
@@ -101,19 +98,3 @@ Template.coursedetails.events({
 	}
 })
 
-
-Template.coursedetails.isSubscribed = function () {
-	//ist User im subscribers-Array?
-	var course = this
-	return course.subscribers.indexOf(Meteor.userId()) > -1
-}
-
-Template.coursedetails.isOrganisator = function () {
-	var course = this
-	if (!course.roles.team) return true;
-	return course.roles.team.subscribed.indexOf(Meteor.userId()) != -1
-}
-
-Template.coursedetails.role_description = function(role) {
-	return Roles.findOne({type: role}).description
-}

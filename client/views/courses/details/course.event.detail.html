@@ -1,7 +1,7 @@
 <template name="course_event_detail">
 	<div class="course_event_detail" id="coursedetails">
 	
-		{{#if isEditingEvent}}
+		{{#if editingEvent current_event._id}}
 				{{>course_event_edit}}
 		{{else}}
             <div class="course_main">
@@ -14,7 +14,6 @@
 
 			{{#with current_event}}
 
-				
                 <p class="course_event_date">
 					<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
 				</p>
