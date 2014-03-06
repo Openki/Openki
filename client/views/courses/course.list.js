@@ -1,5 +1,6 @@
 "use strict";
 
+
 Router.map(function () {
 	this.route('courses', {
 		path: 'courses',
