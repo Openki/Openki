@@ -1,5 +1,5 @@
 // TESTING: in order to test scalebility
-ScaleFaktor = 2
+ScaleFaktor = 0
 
 // TESTING: create new Courses if non in db
 

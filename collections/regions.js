@@ -21,6 +21,10 @@ Regions.allow({
 
 
 var regions = [{
+		'name':        'Yogyakarta',
+		'_id':         '4Je2iee208aLHS1Km',
+		'timeZone':    'UTC+08:00'
+	},{
 		'name':        'Testistan',
 		'_id':         '9JyFCoKWkxnf8LWPh',
 		'timeZone':    'UTC+01:00'
