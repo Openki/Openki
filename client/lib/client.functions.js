@@ -111,7 +111,7 @@ Handlebars.registerHelper('dateformat', function(date) {
 Handlebars.registerHelper('dateformat_withday', function(date) {
     // We'll need a date formatter at some point
     //if (date) return date.toDateString();
-    horrible_date_array=["Mo","Tue","Wed","Thu","Fr","Sat","So"]; //FIXME
+    horrible_date_array=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]; //FIXME
 
     if (date) return horrible_date_array[date.getDay()]+". "+date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });

@@ -9,8 +9,8 @@
     "packages": {
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.3",
-        "commit": "79861385df5d2b667630ec82abe4de3efa3166e3"
+        "tag": "v0.7.1",
+        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
       },
       "i18n": {
         "git": "https://github.com/jerico-dev/meteor-i18n.git",
@@ -19,13 +19,23 @@
       },
       "messageformat": {
         "git": "https://github.com/gadicohen/meteor-messageformat.git",
-        "tag": "v0.0.21",
-        "commit": "253117ea018d9b5f5fef3b81bac8465c803fb0db"
+        "tag": "v0.0.33",
+        "commit": "9152409d83d402bf796df812f63af5ee0977ae2b"
+      },
+      "blaze-layout": {
+        "git": "https://github.com/EventedMind/blaze-layout.git",
+        "tag": "v0.2.4",
+        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
       },
       "headers": {
         "git": "https://github.com/gadicohen/meteor-headers.git",
-        "tag": "v0.0.15",
-        "commit": "0852ea4df6b1314914c4355160d0b0fd61675aea"
+        "tag": "v0.0.24",
+        "commit": "3c09e682895e13c71ca0114baf3c09ee9c507709"
+      },
+      "inject-initial": {
+        "git": "https://github.com/gadicc/meteor-inject-initial.git",
+        "tag": "v0.0.8",
+        "commit": "90f2fbcc5b4bc17fa4d4535f47813e31d86033b4"
       }
     }
   }
