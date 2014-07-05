@@ -1,5 +1,4 @@
 <template name="coursedetails">
-LOLWTF: TEH SUBSCRIBE {{subscribe}}
 	{{#with course}}
 
 	<div id="coursedetails">
@@ -17,7 +16,7 @@ LOLWTF: TEH SUBSCRIBE {{subscribe}}
                 </div>
                 <br class="clear"/>
 
-                {{!> show_course_submenu}}
+                {{> show_course_submenu}}
 
                 <p class="descr">{{description}}</p>
 
@@ -30,7 +29,7 @@ LOLWTF: TEH SUBSCRIBE {{subscribe}}
 		{{/if}}
 
 
-		{{> roleDetails}}
+		{{> roleDetails ../roleDetails}}
 
 
 		{{> Members}}
@@ -40,9 +39,8 @@ LOLWTF: TEH SUBSCRIBE {{subscribe}}
 		</div>
 		{{> votelists}}
 		{{> postDialog}}
-
-	{{/with}}
 	</div>
+    {{/with}}
 	<div class="course_right_column">
 		{{> course_events}}
 	</div>

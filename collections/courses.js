@@ -55,11 +55,11 @@ function findCourses(params){
 	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
 }
 
-function addRole(course, role, user) {
+function addRole(course, role, user, comment) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
 		{ _id: course._id, 'members.user': { $ne: user } },
-		{ $addToSet: { 'members': { user: user, roles: [] } }}
+		{ $addToSet: { 'members': { user: user, roles: []} }}
 	)
 
 	// Minimongo does not currently support the $ field selector
@@ -67,7 +67,7 @@ function addRole(course, role, user) {
 	if (!Meteor.isClient) {
 		Courses.update(
 			{ _id: course._id, 'members.user': user },
-			{ '$addToSet': { 'members.$.roles': role }},
+			{ '$addToSet': { 'members.$.roles': role }, $set:{'members.$.comment' : comment}},
 			checkUpdateOne
 		)
 	}
@@ -77,7 +77,7 @@ function removeRole(course, role, user) {
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
 	if (!Meteor.isClient) {
-			Courses.update(
+			var result = Courses.update(
 				{ _id: course._id, 'members.user': user },
 				{ '$pull': { 'members.$.roles': role }},
 				checkUpdateOne
@@ -95,16 +95,16 @@ function removeRole(course, role, user) {
 
 Meteor.methods({
 
-	change_subscription: function(courseId, role, add, anon) {
+	change_subscription: function(courseId, role, add, anon, comment) {
 		check(role, String)
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
+		check(comment, Match.OneOf(null, String))
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
 		var user = Meteor.user();
-
 		var remove = !add
 		//See wheter to use an anonId
 		if (remove || anon){
@@ -114,6 +114,7 @@ Meteor.methods({
 				}
 			})
 		}
+
 		if (anon && !userId){
 			userId = new Meteor.Collection.ObjectID()
 			userId = 'Anon_' + userId._str
@@ -125,17 +126,18 @@ Meteor.methods({
 
 		if (!userId) {
 			// Oops
-			if (Meteor.is_client) {
+			if (Meteor.isClient) {
 				alert('please log in')
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in")
 			}
 		}
+
 		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
 		if (add) {
-			addRole(course, role, userId)
+			addRole(course, role, userId, comment)
 			var time = new Date
 			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
 		} else {

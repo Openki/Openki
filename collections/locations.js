@@ -48,7 +48,7 @@ Meteor.methods({
 			maxpeople:   Match.Optional(String),
 			maxworkplaces:   Match.Optional(String)
 		})
-		
+
 		var user = Meteor.user()
 		if (!user) {
 		    if (Meteor.is_client) {
@@ -100,18 +100,9 @@ Meteor.methods({
 		}
 
 		Locations.update({ _id: locationId }, { $set: set }, checkUpdateOne)
-		
+
 		return locationId
 	}
 });
 
-/* Need to find a good place to make these available to all */
 
-function checkInsert(err, id) {
-	if (err) throw err
-}
-
-function checkUpdateOne(err, aff) {
-	if (err) throw err;
-	if (aff != 1) throw "Query affected "+aff+" docs, expected 1"
-}

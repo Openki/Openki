@@ -23,10 +23,10 @@ havingRole = function(members, role) {
 	}, [])
 }
 
-getMemeber = function(members, user) {
+getMember = function(members, user) {
 	var member = false;
 	members.forEach(function(member_candidate) {
-		if (member.user == user) {
+		if (member_candidate.user == user) {
 			member = member_candidate
 			return true; // break
 		}
