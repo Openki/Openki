@@ -5,12 +5,12 @@
 		<p>  Desc: <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{description}}</textarea></p>
 
 		<div id='editform_categories'>
-			<div id="show_categories_to_edit" {{#unless _id}}style="display:none;"{{/unless}}>
+			<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
 				Edit {{#if categories}}{{>show_categories}}{{/if}}
 				{{#unless categories}}Categories{{/unless}}
 			</div>
 
-			<div id="edit_categories" {{#if _id}}style="display:none;"{{/if}}>
+			<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
 				Edit Categories:
 				<ul class='categories'>
 					{{#each available_categories false}}
@@ -68,7 +68,7 @@
 			<select name='region' class="region_select">
 				<option value=''>Please select</option>
 			{{#each regions}}
-				<option value='{{_id}}' {{#if currentRegion this}}selected='selected'{{/if}}>{{name}}</option>
+				<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
 			{{/each}}
 			</select>
 		</p>
