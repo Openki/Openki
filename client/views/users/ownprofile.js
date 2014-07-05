@@ -28,7 +28,7 @@ Router.map(function () {
 				return userdata
 			}
 		},
-		after: function() {
+		onAfterAction: function() {
 			var user = Meteor.users.findOne()
 			if (!user) alert ("you're not logged in")
 			document.title = webpagename + 'My Profile_Settings - ' + user.username

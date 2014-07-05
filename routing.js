@@ -19,7 +19,7 @@ Router.map(function () {									///////// startpage /////////
 			})
 			return {oldSearch: oldSearch}
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Home'
 		}
 	})
@@ -33,7 +33,7 @@ Router.map(function () {									///////// startpage /////////
 		data: function () {
 			return Locations.findOne({_id: this.params._id})
 		},
-		after: function() {
+		onAfterAction: function() {
 			var location = Locations.findOne({_id: this.params._id})
 			if (!location) return; // wtf
 			document.title = webpagename + 'Location: ' + location.name
@@ -47,7 +47,7 @@ Router.map(function () {									///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('locations');
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Location list'
 		}
 	})
@@ -56,7 +56,7 @@ Router.map(function () {									///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');     // TODO: Anchor tags don't work anyway
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Category list'
 		}
 	})
@@ -67,7 +67,7 @@ Router.map(function () {									///////// startpage /////////
 		action: function() {
 			this.render(this.params.page_name)
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + '' + this.params.page_name
 		}
 	})
@@ -78,7 +78,7 @@ Router.map(function () {									///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Propose new course'
 		}
 	})
@@ -89,7 +89,7 @@ Router.map(function () {									///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Create new course'
 		}
 	})
@@ -102,7 +102,7 @@ Router.map(function () {									///////// startpage /////////
 		data: function () {
 			return Meteor.users.findOne({_id: this.params._id})
 		},
-		after: function() {
+		onAfterAction: function() {
 			var user = Meteor.users.findOne({_id: this.params._id})
 			if (!user) return; // wtf
 			document.title = webpagename + '' + user.username + "'s Profile"
@@ -115,7 +115,7 @@ Router.map(function () {									///////// startpage /////////
 		waitOn: function () {
 			return Meteor.subscribe('courses');
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Calendar'
 		}
 	})
