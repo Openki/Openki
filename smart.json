@@ -1,7 +1,6 @@
 {
   "packages": {
     "iron-router": {},
-    "i18n": {},
     "messageformat": {}
   }
 }

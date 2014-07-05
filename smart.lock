@@ -3,7 +3,6 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {},
-      "i18n": {},
       "messageformat": {}
     },
     "packages": {
@@ -11,11 +10,6 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.7.1",
         "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
-      },
-      "i18n": {
-        "git": "https://github.com/jerico-dev/meteor-i18n.git",
-        "tag": "v0.1.2",
-        "commit": "e24f4ad9242741984dfa3985be4ed2c3bc34f9d5"
       },
       "messageformat": {
         "git": "https://github.com/gadicohen/meteor-messageformat.git",
