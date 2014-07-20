@@ -83,7 +83,7 @@ Template.coursedetails.events({
 			alert("Please log in!");
 			return;}
 
-		if (confirm("wirklich?")) {
+		if (confirm("really?")) {
 			Courses.remove(this._id);
 			Router.go('/');
 		}
