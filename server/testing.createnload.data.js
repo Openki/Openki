@@ -1,5 +1,5 @@
 // TESTING: in order to test scalebility
-ScaleFaktor = 0
+ScaleFaktor = 1
 
 // TESTING: create new Courses if non in db
 
@@ -67,7 +67,7 @@ function createCourses(){
 		})
 		course.createdby = ensureUser(course.createdby)._id
 		var name = course.name
-		for (var n = 0; n < ScaleFaktor; n++){  //asjdfhgaösodjfölasdkjföl
+		for (var n = 0; n < ScaleFaktor; n++) {
 			course.name = name + ' Kopie ' + n
 			course.slug = getSlug(name + ' Kopie ' + n)
 
