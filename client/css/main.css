@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ==========================================================================
  * HTML5 display definitions
@@ -148,8 +149,8 @@ hr {
  * Address styling not present in IE 8/9. */
 /* line 139, ../../sass/_normalize.sass */
 mark {
-  background: yellow;
-  color: black;
+  background: #ff0;
+  color: #000;
 }
 
 /*
@@ -174,7 +175,7 @@ pre {
  * Set consistent quote types. */
 /* line 162, ../../sass/_normalize.sass */
 q {
-  quotes: "\201C" "\201D" "\2018" "\2019";
+  quotes: "“" "”" "‘" "’";
 }
 
 /*
@@ -239,7 +240,7 @@ figure {
  * Define consistent border, margin, and padding. */
 /* line 220, ../../sass/_normalize.sass */
 fieldset {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
@@ -383,26 +384,6 @@ table {
   border-spacing: 0;
 }
 
-/* line 264, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-meta.foundation-mq-small {
-  font-family: "only screen and (min-width: 768px)";
-  width: 768px;
-}
-
-/* line 269, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-meta.foundation-mq-medium {
-  font-family: "only screen and (min-width:1280px)";
-  width: 1280px;
-}
-
-/* line 274, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
-meta.foundation-mq-large {
-  font-family: "only screen and (min-width:1440px)";
-  width: 1440px;
-}
-
-/* medium breakpoint */
-/*large breakpoint */
 /* line 1, ../../sass/modules/_courselist.sass */
 .courselist-compact, .courselist-results, .courselist-expanded {
   background: white;
@@ -413,34 +394,34 @@ meta.foundation-mq-large {
   display: block;
   padding: 0;
   margin: 0 -10px;
-  *zoom: 1;
 }
-/* line 121, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 168, ../../.bower_components/foundation/scss/foundation/components/_global.scss */
 .courselist-compact:before, .courselist-results:before, .courselist-compact:after, .courselist-results:after {
   content: " ";
   display: table;
 }
-/* line 122, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_global.scss */
+/* line 169, ../../.bower_components/foundation/scss/foundation/components/_global.scss */
 .courselist-compact:after, .courselist-results:after {
   clear: both;
 }
-/* line 27, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_block-grid.scss */
+/* line 50, ../../.bower_components/foundation/scss/foundation/components/_block-grid.scss */
 .courselist-compact > li, .courselist-results > li {
-  display: inline;
+  display: block;
   height: auto;
   float: left;
   padding: 0 10px 20px;
 }
-/* line 36, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_block-grid.scss */
+/* line 61, ../../.bower_components/foundation/scss/foundation/components/_block-grid.scss */
 .courselist-compact > li, .courselist-results > li {
   width: 25%;
   padding: 0 10px 20px;
+  list-style: none;
 }
-/* line 40, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_block-grid.scss */
-.courselist-compact > li:nth-of-type(n), .courselist-results > li:nth-of-type(n) {
+/* line 68, ../../.bower_components/foundation/scss/foundation/components/_block-grid.scss */
+.courselist-compact > li:nth-of-type(1n), .courselist-results > li:nth-of-type(1n) {
   clear: none;
 }
-/* line 41, ../../../../../../var/lib/gems/1.9.1/gems/zurb-foundation-4.3.2/scss/foundation/components/_block-grid.scss */
+/* line 69, ../../.bower_components/foundation/scss/foundation/components/_block-grid.scss */
 .courselist-compact > li:nth-of-type(4n+1), .courselist-results > li:nth-of-type(4n+1) {
   clear: both;
 }
@@ -458,18 +439,18 @@ meta.foundation-mq-large {
 
 /* line 11, ../../sass/modules/_course.sass */
 .hasupcomingevents {
-  border: 7px solid #eeeeee;
-  background-color: #eeeeee;
+  border: 7px solid #EEE;
+  background-color: #EEE;
 }
 
 /* line 16, ../../sass/modules/_course.sass */
 .haspastevents {
-  border: 7px solid #eaeaea;
+  border: 7px solid #EAEAEA;
 }
 
 /* line 20, ../../sass/modules/_course.sass */
 .proposal {
-  border: 7px dotted #dddddd;
+  border: 7px dotted #DDD;
 }
 
 /* line 24, ../../sass/modules/_course.sass */
@@ -482,7 +463,7 @@ meta.foundation-mq-large {
 
 /* line 31, ../../sass/modules/_course.sass */
 .course_name {
-  color: black;
+  color: #000000;
   font-size: 22px;
   margin: 5px 0 0 10px;
 }
@@ -505,7 +486,7 @@ meta.foundation-mq-large {
 .course_categories li {
   display: inline;
   padding: 0 5px;
-  background-color: #dddddd;
+  background-color: #DDD;
 }
 
 /* line 52, ../../sass/modules/_course.sass */
@@ -524,8 +505,8 @@ meta.foundation-mq-large {
 /* line 61, ../../sass/modules/_course.sass */
 .courselist_course_info li {
   text-align: center;
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
+  border-left: 3px solid #FFF;
+  border-bottom: 3px solid #FFF;
   width: 80px;
 }
 
@@ -547,7 +528,7 @@ meta.foundation-mq-large {
 .course_eventlist {
   margin: 0;
   padding: 0;
-  background-color: #c1f2ae;
+  background-color: #C1F2AE;
 }
 
 /* line 83, ../../sass/modules/_course.sass */

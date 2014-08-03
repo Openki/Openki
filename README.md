@@ -37,7 +37,8 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 ### Compass, or how to work on stylesheets
 - install ruby
 - `gem install compass`
-- `gem install zurb-foundation`
+- install bower `npm install -g bower`
+- run `bower install` in project root
 - run `compass compile` in project root
 - scss/sass files go into sass folder
 - compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)
