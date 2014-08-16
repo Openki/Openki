@@ -4,10 +4,14 @@ Router.map(function () {
 		path: '/find/:query?',
 		template: 'find',
 		waitOn: function () {
-			return Meteor.subscribe('coursesFind', this.params.query);
+			var region = Session.get('region')
+			var filter = {}
+			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true
+			return Meteor.subscribe('coursesFind', region, this.params.query, filter);
 		},
 		data: function() {
 			return {
+				hasUpcomingEvent: this.params.hasUpcomingEvent,
 				query: this.params.query,
 				results: Courses.find()
 			}
@@ -20,10 +24,14 @@ Router.map(function () {
 
 
 Template.find.events({
-	'submit': function(event) {
-		Router.go('find', { query: $('#find').val() })
+	'submit': function() {
+		Router.go('find', { query: $('#find').val()})
 		event.preventDefault();
 		event.stopPropagation();
 		return false; 
 	}
 });
+
+Template.find.hasUpcomingEventsChecked = function() {
+	if (this.hasUpcomingEvent) return "checked";
+}
