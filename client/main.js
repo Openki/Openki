@@ -16,9 +16,6 @@ Meteor.startup(function () {
 //Meteor.subscribe('courses', Session.get('region'))
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
-Meteor.subscribe('courses', function onComplete() {
-  Session.set('coursesLoaded', true);
-});
 Meteor.subscribe('events');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
