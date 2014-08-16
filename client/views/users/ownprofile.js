@@ -4,7 +4,7 @@ Router.map(function () {
 		waitOn: function () {
 			return Meteor.subscribe('users');
 		},
-		before: function () {
+		onBeforeAction: function () {
 			if (!Meteor.user()) {
 				// render the login template but keep the url in the browser the same
 				this.render('not_loggedin');
