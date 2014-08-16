@@ -7,7 +7,9 @@ Accounts.ui.config({
 ////////////// loading-indicator
 Meteor.startup(function () {
   Session.setDefault('coursesLoaded', false);
-  Session.set("region", localStorage.getItem("region"));
+  var region = localStorage.getItem("region")
+  if (!region) region = 'all';
+  Session.set("region", region);
 });
 
 
