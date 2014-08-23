@@ -1,4 +1,3 @@
-
 Router.map(function () {
 	this.route('find', {
 		path: '/find/:query?',
@@ -22,14 +21,21 @@ Router.map(function () {
 	})
 })
 
+var submitForm = function() {
+	options = {}
+	if ($("#hasUpcomingEvent")[0].checked) {
+		options.query = "hasUpcomingEvent";
+	}
+
+	Router.go('find', { query: $('#find').val().replace("/", " ")}, options )
+	event.preventDefault();
+	event.stopPropagation();
+	return false; 
+}
 
 Template.find.events({
-	'submit': function() {
-		Router.go('find', { query: $('#find').val()})
-		event.preventDefault();
-		event.stopPropagation();
-		return false; 
-	}
+	'submit': submitForm,
+	'change': submitForm
 });
 
 Template.find.hasUpcomingEventsChecked = function() {
