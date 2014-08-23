@@ -10,7 +10,8 @@
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			No entries found.
+			No entries found. Do you want to propose a new course?
+			{{> course_edit}}
 		{{/each}}
 	</ul>
 </template>
