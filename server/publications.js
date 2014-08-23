@@ -12,14 +12,15 @@ Meteor.publish ('coursesFind', function(region, query, filter){
 		find._id = { $in: _.uniq(course_ids_with_future_events) }
 	}
 	if (query) {
-		_.extend(find, {
-			$or: [
-				// FIXME: Runs unescaped as regex, absolutely not ok
-				// ALSO: Not user friendly, do we can have fulltext?
-				{ name: { $regex: query, $options: 'i' } },
-				{ description: { $regex: query, $options: 'i' } }
-			]
-		})
+		searchTerms = query.split(/\s+/);
+		searchQueries = _.map(searchTerms, function(searchTerm) {
+			return { $or: [
+				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+			] }
+		});
+
+		find.$and = searchQueries;
 	}
 	return Courses.find(find);
 });
