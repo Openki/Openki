@@ -43,7 +43,8 @@ template:
 		{'user':'Kampfhippie', 'roles': ['participant']},
 		{'user':'Seee', 'roles': ['participant']},
 		{'user':'Chnöde', 'roles': ['participant']}
-]
+	],
+	region: 'Testistan',
 
 },{
 	'name':        'Garten',

@@ -13,24 +13,44 @@ createCoursesIfNone = function(){
 // TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
-	var user_prototype = {username: name}
-	var user
-	var age = Math.floor(Random.fraction()*100000000000)
-	while (!(user = Meteor.users.findOne(user_prototype))) { // Legit
+	var email = (name+"@schuel.example").toLowerCase()
+	
+	while (true) {
+		var user = Meteor.users.findOne({email: email})
+		if (user) return user;
+		
+		user = Meteor.users.findOne({username: name})
+		if (user) return user;
+		
+		console.log("Adding user "+name)
 		var id = Accounts.createUser({
 			username: name,
-			email: (name+"@schuel.example").toLowerCase(),
+			email: email,
 			password: name,
 			profile: {name : name}
 		});
+		var age = Math.floor(Random.fraction()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
 			createdAt: new Date(new Date().getTime()-age),
 			lastLogin: new Date(new Date().getTime()-age/30),
 			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
 		}})
-		console.log("Mongouser added: "+name)
 	}
-    return user;
+}
+
+function ensureRegion(name) {
+	while (true) {
+		var region = Regions.findOne({name: name})
+		if (region) return region._id;
+		
+		
+		var id = Regions.insert({
+			name: name,
+			timezone: "UTC+"+Math.floor(Random.fraction()*12)+":00"
+		});
+		
+		console.log("Added region "+name+" "+id)
+	}
 }
 
 // TESTING: Get category object for name and create it if it doesn't exist
@@ -68,7 +88,7 @@ function createCourses(){
 		course.createdby = ensureUser(course.createdby)._id
 		var name = course.name
 		for (var n = 0; n < ScaleFaktor; n++) {
-			course.name = name + ' Kopie ' + n
+			course.name = name + (n > 0 ? ' Kopie ' + n : '')
 			course.slug = getSlug(name + ' Kopie ' + n)
 
 
@@ -85,8 +105,14 @@ function createCourses(){
 			course.time_created = new Date(new Date().getTime()-age)
 			course.time_lastedit = new Date(new Date().getTime()-age*0.25)
 			course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
-			course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
-			Courses.insert(course)
+			if (course.region) {
+				course.region = ensureRegion(course.region)
+			} else {
+				/* pplace in random test region */
+				course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
+			}
+			var id = Courses.insert(course)
+			console.log("Added course "+course.name+" "+id)
 		}
 	})
 }
