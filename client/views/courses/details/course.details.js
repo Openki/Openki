@@ -21,7 +21,7 @@ Router.map(function () {
 				subscribe: this.params.subscribe
 			};
 		},
-		after: function() {
+		onAfterAction: function() {
 			var course = Courses.findOne({_id: this.params._id})
 			if (!course) return; // wtf
 			document.title = webpagename + 'Course: ' + course.name
@@ -83,7 +83,7 @@ Template.coursedetails.events({
 			alert("Please log in!");
 			return;}
 
-		if (confirm("wirklich?")) {
+		if (confirm("really?")) {
 			Courses.remove(this._id);
 			Router.go('/');
 		}

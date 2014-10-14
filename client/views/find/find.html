@@ -1,0 +1,17 @@
+<template name="find">
+	<div class="search">
+		<h1>What do you want to learn?</h1>
+		<form id='search_form'>
+			<input id="find" class="searchform" value="{{query}}" placeholder="everything">
+			<label><input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}> only with events</label>
+		</form>
+	</div>
+	<ul class="courselist_results">
+		{{#each results}}
+			{{> course}}
+		{{else}}
+			No entries found. Do you want to propose a new course?
+			{{> course_edit}}
+		{{/each}}
+	</ul>
+</template>

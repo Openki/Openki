@@ -7,7 +7,9 @@ Accounts.ui.config({
 ////////////// loading-indicator
 Meteor.startup(function () {
   Session.setDefault('coursesLoaded', false);
-  Session.set("region", localStorage.getItem("region"));
+  var region = localStorage.getItem("region")
+  if (!region) region = 'all';
+  Session.set("region", region);
 });
 
 
@@ -16,9 +18,6 @@ Meteor.startup(function () {
 //Meteor.subscribe('courses', Session.get('region'))
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
-Meteor.subscribe('courses', function onComplete() {
-  Session.set('coursesLoaded', true);
-});
 Meteor.subscribe('events');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');

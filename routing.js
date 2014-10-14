@@ -12,12 +12,14 @@ Router.map(function () {									///////// startpage /////////
 	this.route('home', {
 		path: '/',
 		template: 'start',
-		data: function(){
-			var oldSearch;
-			Deps.nonreactive(function(){	// to be updated only once
-				oldSearch = Session.get('search')
-			})
-			return {oldSearch: oldSearch}
+		waitOn: function () {
+			var region = Session.get('region')
+			return Meteor.subscribe('coursesFind', region, false, {});
+		},
+		data: function() {
+			return {
+				results: Courses.find()
+			}
 		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Home'

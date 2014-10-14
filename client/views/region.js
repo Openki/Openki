@@ -11,8 +11,9 @@ Template.region_sel.helpers({
 
 Template.region_sel.events({
 	'click a.regionselect': function(){
-		localStorage.setItem("region", this._id); // to survive page reload
-		Session.set('region', this._id)
+		var region_id = this._id ? this._id : 'all'
+		localStorage.setItem("region", region_id); // to survive page reload
+		Session.set('region', region_id)
 		return false
 	}
 })

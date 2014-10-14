@@ -13,3 +13,5 @@ codekit-config.json
 
 packages/
 .meteor/release
+
+.bower_components

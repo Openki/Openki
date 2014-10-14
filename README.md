@@ -3,8 +3,8 @@ hmmm
 
 Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
-- Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
-- Concept: [news.schuel.ch](news.schuel.ch "our blog")
+- Demo: [hmmm.schuel.ch](http://hmmm.schuel.ch "runing here")
+- Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
 - Contact: [schueldev[at]lists.xiala.net](mailto:schueldev[_at_]lists.xiala.net "write us")
 
 ### Features
@@ -37,7 +37,8 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 ### Compass, or how to work on stylesheets
 - install ruby
 - `gem install compass`
-- `gem install zurb-foundation`
+- install bower `npm install -g bower`
+- run `bower install` in project root
 - run `compass compile` in project root
 - scss/sass files go into sass folder
 - compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)

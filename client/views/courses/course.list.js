@@ -15,7 +15,7 @@ Router.map(function () {
 				all_courses: get_courselist({})
 			};
 		},
-		after: function() {
+		onAfterAction: function() {
 			document.title = webpagename + 'Courselist'
 		},
 	})
