@@ -2,14 +2,14 @@
 	<div class="coursepage">
 		<h1>CourseList</h1>
 		<div class="list_small">
-			<h3>Courses missing organisator(-team)</h3>
+			<h3>{{mf 'courses.missingorg' 'Courses missing organisator(-team)'}}</h3>
 			{{> courselist missing_organisator}}
 		</div>
 		<div class="list_small">
-			<h3>Courses that are still looking for participants</h3>
+			<h3>{{mf 'courses.missingsubs' 'Courses that are still looking for participants'}}</h3>
 			{{> courselist missing_subscribers}}
 		</div>
-		<h1>All courses</h1>
+		<h1>{{mf 'courses.all' 'All courses'}}</h1>
 		{{> courselist all_courses}}
 	</div>
 	{{> course_create}}
@@ -21,7 +21,7 @@
 		{{#each this}}
 			{{> course}}
 		{{else}}
-			keine Kurse
+			{{mf 'courses.none' 'no courses found'}}
 		{{/each}}
 	</ul>
 </template>
@@ -33,14 +33,6 @@
 				<div class="course_name">{{name}}</div>
 			
 				<div class="course_categories">{{> show_categories}}</div>
-
-	
-				<span class="smalldesc">
-					{{#if course_events}}
-					Events:
-
-					{{/if}}
-				</span>
 				
 			</div>
 

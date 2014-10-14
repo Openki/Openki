@@ -103,7 +103,7 @@ mfPkg.addNative(
     "key": "menue.Testpage",
     "text": "This is only a <b>Testpage</b>. ",
     "file": "./client/views/main.html",
-    "line": 118,
+    "line": 116,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -112,13 +112,49 @@ mfPkg.addNative(
     "key": "menue.Testpage2",
     "text": "All data will be erased regularly. ",
     "file": "./client/views/main.html",
-    "line": 119,
+    "line": 117,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
+  },
+  "courses.missingorg": {
+    "key": "courses.missingorg",
+    "text": "Courses missing organisator(-team)",
+    "file": "./client/views/courses/course.list.html",
+    "line": 5,
+    "template": "coursepage",
+    "mtime": 1413307437297,
+    "ctime": 1413307437297
+  },
+  "courses.missingsubs": {
+    "key": "courses.missingsubs",
+    "text": "Courses that are still looking for participants",
+    "file": "./client/views/courses/course.list.html",
+    "line": 9,
+    "template": "coursepage",
+    "mtime": 1413307437297,
+    "ctime": 1413307437297
+  },
+  "courses.all": {
+    "key": "courses.all",
+    "text": "All courses",
+    "file": "./client/views/courses/course.list.html",
+    "line": 12,
+    "template": "coursepage",
+    "mtime": 1413307437297,
+    "ctime": 1413307437297
+  },
+  "courses.none": {
+    "key": "courses.none",
+    "text": "no courses found",
+    "file": "./client/views/courses/course.list.html",
+    "line": 24,
+    "template": "coursepage",
+    "mtime": 1413307437297,
+    "ctime": 1413307437297
   }
 }, 
 {
-  "extractedAt": 1413305835297,
-  "updatedAt": 1404604221980
+  "extractedAt": 1413307437297,
+  "updatedAt": 1413307437297
 });
