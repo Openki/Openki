@@ -3,8 +3,8 @@ hmmm
 
 Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 
-- Demo: [hmmm.schuel.ch](hmmm.schuel.ch "runing here")
-- Concept: [news.schuel.ch](news.schuel.ch "our blog")
+- Demo: [http://hmmm.schuel.ch](hmmm.schuel.ch "runing here")
+- Concept: [http://news.schuel.ch](news.schuel.ch "our blog")
 - Contact: [schueldev[at]lists.xiala.net](mailto:schueldev[_at_]lists.xiala.net "write us")
 
 ### Features
