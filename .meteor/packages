@@ -11,8 +11,7 @@ accounts-base
 email
 spiderable
 standard-app-packages
-# underscore-string
-# Mesosphere
-iron-router
 check
-messageformat
+iron:router
+gadicohen:messageformat
+
