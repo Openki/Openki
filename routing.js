@@ -7,25 +7,7 @@ Router.configure({
 webpagename = 'Hmmm - Course Organisation Platform - '  // global (document title init)
 
 
-Router.map(function () {									///////// startpage /////////
-
-	this.route('home', {
-		path: '/',
-		template: 'start',
-		waitOn: function () {
-			var region = Session.get('region')
-			return Meteor.subscribe('coursesFind', region, false, {});
-		},
-		data: function() {
-			return {
-				results: Courses.find()
-			}
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Home'
-		}
-	})
-
+Router.map(function () {
 	this.route('locationDetails',{							///////// locationdetails /////////
 		path: 'locations/:_id',
 		template: 'location_details',
