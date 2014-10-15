@@ -383,7 +383,7 @@ template:
 },
 */{
 	'name':        'Mobiles Soundsystem bauen',
-	'categories': ['handwerk', 'elektronik/strom', 'Musik'],
+	'categories': ['Handwerk', 'Musik'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanal',
 	'description': 'Mein Traum ist es ein mobiles Soundsystem zu haben damit ich spontane soca Paraden und illegale outdoorpartys veranstalten kann. Es gibt doch sicher a) Leute die auch ein mobiles Soundsystem haben wollen und b) Leute die wissen wie man eines baut. Wir sollten uns zusammentun uns bei meinem Vater in der Werkstatt unsere indivuellen Soundsysteme bauen. Mehr Lärm in der Schweiz!',
@@ -396,7 +396,7 @@ template:
 	]
 },{
 	'name':        'Internationaler Kochkurs',
-	'categories': ['kochen'],
+	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmamma',
 	'description': 'Grüezi Mitterand, Ich dune uu gern choche und chan au ganz gute choche, aber leider nume traditionelle schwiizerchuchi und die klassische Italienische Gricht. Wie wärs wemer eus eimal ide Wuche am Samstag morge treffet und immer duet öppert anderst es Gricht wo er/sie bsunders guet cha choche de andere biibringe. Indisch, Chinesisch, Nigerianisch, Vegan, was-au-immer hauptsach fein! Mir chöntet ide schuelchuchi vom nägelimoos sekundarschuelhuus üebe.',
@@ -633,7 +633,7 @@ template:
 	],
 	'region':      'Englistan'
 },{
-	'name':        'German Class',
+	'name':        'German Class for everybody',
 	'categories': ['Sprache'],
 	'tags':       ['Sprache'],
 	'createdby':   'ASZ - Bildung für alle',
@@ -710,7 +710,7 @@ template:
 	],
 	'region':      'Englistan'
 },{
-	'name':        'German',
+	'name':        'German workshop',
 	'categories': ['Sprache'],
 	'tags':       ['Langage', 'Switzerland'],
 	'createdby':   'IvanZ',
@@ -813,7 +813,7 @@ template:
 },*/
 {
 	'name':        'Mobiles Soundsystem bauen',
-	'categories': ['handwerk', 'elektronik/strom', 'Musik'],
+	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanal',
 	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. a) I think there are more people who really need a mobile Soundsystem b)Im sure there are people out there who know how to construct one. We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
