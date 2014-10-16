@@ -69,25 +69,56 @@ Template.course.participant_status = function() {
 	return 'ontheway'
 }
 
-Template.course.requiresMentor = function() {
-	return this.roles.indexOf('mentor') != -1
-}
+Template.course.helpers({
+	requiresMentor: function() {
+		return this.roles.indexOf('mentor') != -1
+	},
 
-Template.course.requiresHost = function() {
-	return this.roles.indexOf('host') != -1
-}
+	requiresHost: function() {
+		return this.roles.indexOf('host') != -1
+	},
 
-Template.course.needsTeam = function() {
-	return !hasRole(this.members, 'team')
-}
+	needsTeam: function() {
+		return !hasRole(this.members, 'team')
+	},
 
-Template.course.needsMentor = function() {
-	return !hasRole(this.members, 'mentor')
-}
+	needsMentor: function() {
+		return !hasRole(this.members, 'mentor')
+	},
 
-Template.course.needsHost = function() {
-	return !hasRole(this.members, 'host')
-}
+	TneedsHost: function() {
+		return !hasRole(this.members, 'host')
+	},
+
+	is_host: function() {
+		return hasRoleUser(this.members, 'host', Meteor.userId())
+	},
+
+	is_team: function() {
+		return hasRoleUser(this.members, 'team', Meteor.userId())
+	},
+
+	is_mentor: function() {
+		return hasRoleUser(this.members, 'mentor', Meteor.userId())
+	},
+
+	coursestate: function() {
+
+		var today = new Date();
+		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
+		var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
+
+		if(upcoming || past){
+			if(upcoming){
+				return "hasupcomingevents"
+			}else{
+				return "haspastevents"
+			}
+		}else{
+			return "proposal"
+		}
+	},
+})
 
 Template.course.donator_status = function() {
 	return this.roles.donator.subscribed.length > 0 ? 'yes' : 'no'
@@ -99,18 +130,6 @@ Template.course.cook_status = function() {
 
 Template.course.is_subscriber = function() {
 	return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
-}
-
-Template.course.is_host = function() {
-	return hasRoleUser(this.members, 'host', Meteor.userId())
-}
-
-Template.course.is_team = function() {
-	return hasRoleUser(this.members, 'team', Meteor.userId())
-}
-
-Template.course.is_mentor = function() {
-	return hasRoleUser(this.members, 'mentor', Meteor.userId())
 }
 
 Template.course.is_donator = function() {
@@ -144,22 +163,5 @@ Template.course.hasupcomingevents = function() {
 	var today= new Date();
 	return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0
 
-}
-
-Template.course.coursestate = function() {
-
-	var today = new Date();
-	var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
-	var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
-
-	if(upcoming || past){
-		if(upcoming){
-			return "hasupcomingevents"
-		}else{
-			return "haspastevents"
-		}
-	}else{
-		return "proposal"
-	}
 }
 

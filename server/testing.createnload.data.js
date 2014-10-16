@@ -13,22 +13,23 @@ createCoursesIfNone = function(){
 // TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
-	var email = (name+"@schuel.example").toLowerCase()
+	var email = (name.replace(' ', '')+"@schuel.example").toLowerCase()
 	
 	while (true) {
-		var user = Meteor.users.findOne({email: email})
+		var user = Meteor.users.findOne({ "emails.address": email})
 		if (user) return user;
 		
 		user = Meteor.users.findOne({username: name})
 		if (user) return user;
 		
-		console.log("Adding user "+name)
+		console.log("Adding user "+name+' '+email)
 		var id = Accounts.createUser({
 			username: name,
 			email: email,
 			password: name,
 			profile: {name : name}
 		});
+		
 		var age = Math.floor(Random.fraction()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
 			createdAt: new Date(new Date().getTime()-age),
@@ -53,7 +54,7 @@ function ensureRegion(name) {
 	}
 }
 
-// TESTING: Get category object for name and create it if it doesn't exist
+// TESTING: Get category object for name
 function categoryForName(name) {
 		var category = Categories.findOne({nameDE: name})
 		if (!category) throw "No category "+name
