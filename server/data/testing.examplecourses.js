@@ -90,7 +90,7 @@ template:
 	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. * Konzeption / Idee  * Usability  * Gestaltung mit Photoshop  * Clientseitige Programmierung mit HTML, CSS und JavaScript  * Serverseitige Programmierung mit PHP / Phyton  * Datenbank mit mySQL',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'Seee', 'roles': ['team']},
+		{'user':'Seee', 'roles': ['team', 'mentor']},
 		{'user':'Greendampf', 'roles': ['participant']},
 		{'user':'Sandro', 'roles': ['participant']},
 		{'user':'IvanZ', 'roles': ['participant']},
@@ -521,14 +521,14 @@ template:
 	],
 	'region':      'Englistan'
 },{
-	'name':        'Web Design mit HTML und Phyton/PHP',
+	'name':        'Web-Design with HTML und Phyton/PHP',
 	'categories': ['Programmieren','Internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
 	'description': 'I could give you a substantial introduction to conception, shaping and technical realization of a website. *conception/ideas *usability *photoshop *HTML, CSS and JavaScript *PHP/ phyton *Database with mySQL',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Seee', 'roles': ['team']},
+		{'user':'en_Seee', 'roles': ['team','mentor']},
 		{'user':'en_Dr Greenthumb', 'roles': ['participant']},
 		{'user':'en_Sandro', 'roles': ['participant']},
 		{'user':'en_IvanZ', 'roles': ['participant']},
@@ -540,7 +540,7 @@ template:
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
-	'description': ' Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so Im open so learn anything.... I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help by the organization of the course. I have time from now till end of summer somewhen ( after that I will not be around for a while. ) So who is up for that? CU ',
+	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'en_greg', 'roles': ['host','team']},
@@ -554,7 +554,7 @@ template:
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
 	'createdby':   'greg',
-	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not reaaaaaaaaally interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. Tomorrow for example, in my kitchen there is space for like 4 people (if they are cool, otherwise for 5).',
+	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not reaaaaaally interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. With food for example, in my kitchen there is space for like 4 people.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'en_greg', 'roles': ['participant','team','host']},
@@ -567,18 +567,18 @@ template:
 	'categories': ['Design','Handwerk'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
 	'createdby':   'Sandro',
-	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think together would be more fun and maybe there is some expert around who helps us out. the patching should be done good so its not gonna bust again so soon.',
+	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. the patching should be done good so its not gonna bust again so soon.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'en_Sandro', 'roles': ['team','host']},
 	],
 	'region':      'Englistan'
 },{
-	'name':        'learning valais-german',
+	'name':        'Different accents',
 	'categories': ['Sprache'],
 	'tags':       ['Dialekt','Wallis'],
 	'createdby':   'LeOnI',
-	'description': 'Is there a true Valais Expert who could teach me how to speak and understand the german from the habitants of the Valais? The sounds, the special intonations, the weird endings and wendings and not to forgett the special valais phrases is what I want to learn. Stuff like: “Di zwee schönschte schwarznaase nou!...” or “chüm üeli”. Audio-dramas or movies are very welcome and a good basis.  https://www.youtube.com/watch?v=p7WCJ-A2C58',
+	'description': 'Watch this video: http://youtu.be/dABo_DCIdpM - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis. Share some links',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'en_LeOnI', 'roles': ['team']},
@@ -607,7 +607,7 @@ template:
 	'categories': ['Internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'createdby':   'Mike_85',
-	'description': 'Some people are organizing a crypto-party on friday the 28th of Septembre. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.',
+	'description': 'Some people are organizing a crypto-party on friday the 28th of September. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.',
 	'roles':      ['team','host'],
 	'members': [
 		{'user':'en_31337', 'roles': ['team']},
@@ -622,7 +622,7 @@ template:
 	'categories': ['Elektronik / Strom', 'Programmieren'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'createdby':   'Mike_85',
-	'description': ' Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... Link Openlab, Link SGMK',
+	'description': 'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... Link Openlab, Link SGMK',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'en_bert', 'roles': ['participant']},
@@ -667,7 +667,7 @@ template:
 	],
 	'region':      'Englistan'
 },{
-	'name':        'German Class',
+	'name':        'Deutsch Kurs',
 	'categories': ['Sprache'],
 	'tags':       ['Deutsch', 'Aussländer_in', 'Immigrant_in'],
 	'createdby':   'Ylmaz Z.',
@@ -720,7 +720,7 @@ template:
 		{'user':'en_Sandro', 'roles': ['host']},
 	]
 },{
-	'name':        'Sprachaustasch',
+	'name':        'Language Exchange',
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'Ylmaz Z.',
@@ -734,11 +734,11 @@ template:
 	],
 	'region':      'Englistan'
 },{
-	'name':        'yodeling',
+	'name':        'Yodeling!',
 	'categories': ['Musik'],
 	'tags':       ['Singen', 'Jodeln'],
 	'createdby':   'Sandra',
-	'description': 'Who else wants to learn yodelling? Not like in a suburban yodel association... If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs? :-)',
+	'description': 'Who else wants to learn swiss yodeling? Not like in a suburban yodel association... If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  https://en.wikipedia.org/wiki/Yodeling ',
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
 		{'user':'en_Sandra', 'roles': ['participant']},
@@ -812,7 +812,7 @@ template:
 	'region':      'Englistan'
 },*/
 {
-	'name':        'Mobiles Soundsystem bauen',
+	'name':        'Build your mobile Soundsystem',
 	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanal',
