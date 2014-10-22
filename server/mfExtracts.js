@@ -144,14 +144,14 @@ mfPkg.addNative(
     "ctime": 1414007096861,
     "mtime": 1414007096861
   },
-  "voting.option_input": {
-    "key": "voting.option_input",
+  "voting.input.option": {
+    "key": "voting.input.option",
     "text": "Option:",
     "file": "./client/views/votes/votes.list.html",
     "line": 53,
     "template": "votelists",
-    "ctime": 1414007096861,
-    "mtime": 1414007096861
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
   },
   "profile.my_profile": {
     "key": "profile.my_profile",
@@ -174,9 +174,9 @@ mfPkg.addNative(
   "profile.userid": {
     "key": "profile.userid",
     "text": "UserID:",
-    "file": "./client/views/users/ownprofile.html",
-    "line": 9,
-    "template": "profile",
+    "file": "./client/views/users/userprofile.html",
+    "line": 10,
+    "template": "profilelink",
     "ctime": 1414017460607,
     "mtime": 1414017460607
   },
@@ -242,6 +242,87 @@ mfPkg.addNative(
     "template": "profile",
     "ctime": 1414017460607,
     "mtime": 1414017460607
+  },
+  "profile.profile_page": {
+    "key": "profile.profile_page",
+    "text": "Profile-Page",
+    "file": "./client/views/users/userprofile.html",
+    "line": 9,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.recognize": {
+    "key": "profile.recognize",
+    "text": "it's you!",
+    "file": "./client/views/users/userprofile.html",
+    "line": 13,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.pref_site": {
+    "key": "profile.pref_site",
+    "text": "here's your pref. site",
+    "file": "./client/views/users/userprofile.html",
+    "line": 13,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.mail.to_user": {
+    "key": "profile.mail.to_user",
+    "text": "you can write an email to this user:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 16,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.mail.content": {
+    "key": "profile.mail.content",
+    "text": "Your message:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 18,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.mail.options": {
+    "key": "profile.mail.options",
+    "text": "Options:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 20,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.mail.attachmail": {
+    "key": "profile.mail.attachmail",
+    "text": "attach my email address",
+    "file": "./client/views/users/userprofile.html",
+    "line": 22,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.mail.copy": {
+    "key": "profile.mail.copy",
+    "text": "send me a copy of this message",
+    "file": "./client/views/users/userprofile.html",
+    "line": 23,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
+  },
+  "profile.courses": {
+    "key": "profile.courses",
+    "text": "Courses:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 29,
+    "template": "profilelink",
+    "mtime": 1414019114300,
+    "ctime": 1414019114300
   },
   "find.WhatLearn?": {
     "key": "find.WhatLearn?",
@@ -368,9 +449,19 @@ mfPkg.addNative(
     "template": "categorylist",
     "ctime": 1414002480587,
     "mtime": 1414002480587
+  },
+  "voting.option_input": {
+    "key": "voting.option_input",
+    "text": "Option:",
+    "file": "./client/views/votes/votes.list.html",
+    "line": 53,
+    "template": "votelists",
+    "ctime": 1414007096861,
+    "mtime": 1414019114300,
+    "removed": true
   }
 }, 
 {
-  "extractedAt": 1414017928624,
-  "updatedAt": 1414017928623
+  "extractedAt": 1414019114300,
+  "updatedAt": 1414019114300
 });
