@@ -4,7 +4,7 @@ mfPkg.addNative(
     "key": "menue.Courses",
     "text": "Courses",
     "file": "./client/views/main.html",
-    "line": 44,
+    "line": 41,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -13,7 +13,7 @@ mfPkg.addNative(
     "key": "menue.Search",
     "text": "Search",
     "file": "./client/views/main.html",
-    "line": 47,
+    "line": 44,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -22,7 +22,7 @@ mfPkg.addNative(
     "key": "menue.LocationList",
     "text": "Location List",
     "file": "./client/views/main.html",
-    "line": 48,
+    "line": 45,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -31,7 +31,7 @@ mfPkg.addNative(
     "key": "menue.CategoryList",
     "text": "Category List",
     "file": "./client/views/main.html",
-    "line": 49,
+    "line": 46,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -40,7 +40,7 @@ mfPkg.addNative(
     "key": "menue.BrowseCourses",
     "text": "Browse Courses",
     "file": "./client/views/main.html",
-    "line": 50,
+    "line": 47,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -49,7 +49,7 @@ mfPkg.addNative(
     "key": "menue.ProposeCourse",
     "text": "Propose Course",
     "file": "./client/views/main.html",
-    "line": 51,
+    "line": 48,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -58,7 +58,7 @@ mfPkg.addNative(
     "key": "menue.CreateEvent",
     "text": "Create Event",
     "file": "./client/views/main.html",
-    "line": 52,
+    "line": 49,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -67,7 +67,7 @@ mfPkg.addNative(
     "key": "menue.Calendar",
     "text": "Calendar",
     "file": "./client/views/main.html",
-    "line": 61,
+    "line": 59,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -76,7 +76,7 @@ mfPkg.addNative(
     "key": "menue.about",
     "text": "about",
     "file": "./client/views/main.html",
-    "line": 73,
+    "line": 69,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -85,7 +85,7 @@ mfPkg.addNative(
     "key": "menue.FAQ",
     "text": "FAQ",
     "file": "./client/views/main.html",
-    "line": 74,
+    "line": 70,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -94,7 +94,7 @@ mfPkg.addNative(
     "key": "menue.All regions",
     "text": "All regions",
     "file": "./client/views/main.html",
-    "line": 88,
+    "line": 83,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -103,7 +103,7 @@ mfPkg.addNative(
     "key": "menue.Testpage",
     "text": "This is only a <b>Testpage</b>. ",
     "file": "./client/views/main.html",
-    "line": 116,
+    "line": 112,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -112,10 +112,46 @@ mfPkg.addNative(
     "key": "menue.Testpage2",
     "text": "All data will be erased regularly. ",
     "file": "./client/views/main.html",
-    "line": 117,
+    "line": 113,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
+  },
+  "find.WhatLearn?": {
+    "key": "find.WhatLearn?",
+    "text": "What do you want to learn?",
+    "file": "./client/views/find/find.html",
+    "line": 3,
+    "template": "find",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "find.only with events_checkbox": {
+    "key": "find.only with events_checkbox",
+    "text": "only with events",
+    "file": "./client/views/find/find.html",
+    "line": 6,
+    "template": "find",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "find.no entries found. propose new course?": {
+    "key": "find.no entries found. propose new course?",
+    "text": "No entries found. Do you want to propose a new course?",
+    "file": "./client/views/find/find.html",
+    "line": 13,
+    "template": "find",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "find.form.Header.What do you want to learn?": {
+    "key": "find.form.Header.What do you want to learn?",
+    "text": "What do you want to learn?",
+    "file": "./client/views/find/form.html",
+    "line": 3,
+    "template": "search_form",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
   },
   "courses.missingorg": {
     "key": "courses.missingorg",
@@ -123,8 +159,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/course.list.html",
     "line": 5,
     "template": "coursepage",
-    "mtime": 1413307437297,
-    "ctime": 1413307437297
+    "ctime": 1413307437297,
+    "mtime": 1413307437297
   },
   "courses.missingsubs": {
     "key": "courses.missingsubs",
@@ -132,8 +168,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/course.list.html",
     "line": 9,
     "template": "coursepage",
-    "mtime": 1413307437297,
-    "ctime": 1413307437297
+    "ctime": 1413307437297,
+    "mtime": 1413307437297
   },
   "courses.all": {
     "key": "courses.all",
@@ -141,8 +177,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/course.list.html",
     "line": 12,
     "template": "coursepage",
-    "mtime": 1413307437297,
-    "ctime": 1413307437297
+    "ctime": 1413307437297,
+    "mtime": 1413307437297
   },
   "courses.none": {
     "key": "courses.none",
@@ -150,11 +186,65 @@ mfPkg.addNative(
     "file": "./client/views/courses/course.list.html",
     "line": 24,
     "template": "coursepage",
-    "mtime": 1413307437297,
-    "ctime": 1413307437297
+    "ctime": 1413307437297,
+    "mtime": 1413307437297
+  },
+  "course.title.Upcoming events": {
+    "key": "course.title.Upcoming events",
+    "text": "Upcoming events",
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 12,
+    "template": "course_events",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "course.title.Past events": {
+    "key": "course.title.Past events",
+    "text": "Past events",
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 26,
+    "template": "course_events",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "course.title.Discussion": {
+    "key": "course.title.Discussion",
+    "text": "Discussion",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 19,
+    "template": "postDialog",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "course.title.Participants": {
+    "key": "course.title.Participants",
+    "text": "Participants",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 3,
+    "template": "Members",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "categories.title.categories": {
+    "key": "categories.title.categories",
+    "text": "Categories",
+    "file": "./client/views/categories/categories.html",
+    "line": 4,
+    "template": "categorylist",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
+  },
+  "categories.no_categories": {
+    "key": "categories.no_categories",
+    "text": "No categories defined!",
+    "file": "./client/views/categories/categories.html",
+    "line": 8,
+    "template": "categorylist",
+    "mtime": 1414002480587,
+    "ctime": 1414002480587
   }
 }, 
 {
-  "extractedAt": 1413307437297,
-  "updatedAt": 1413307437297
+  "extractedAt": 1414002480587,
+  "updatedAt": 1414002480587
 });
