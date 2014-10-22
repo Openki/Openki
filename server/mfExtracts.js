@@ -117,14 +117,41 @@ mfPkg.addNative(
     "ctime": 1404604221980,
     "mtime": 1404604221980
   },
+  "voting.no_options": {
+    "key": "voting.no_options",
+    "text": "no options",
+    "file": "./client/views/votes/votes.list.html",
+    "line": 24,
+    "template": "votelists",
+    "mtime": 1414007096861,
+    "ctime": 1414007096861
+  },
+  "voting.new_voting": {
+    "key": "voting.new_voting",
+    "text": "New voting",
+    "file": "./client/views/votes/votes.list.html",
+    "line": 49,
+    "template": "votelists",
+    "mtime": 1414007096861,
+    "ctime": 1414007096861
+  },
+  "voting.option_input": {
+    "key": "voting.option_input",
+    "text": "Option:",
+    "file": "./client/views/votes/votes.list.html",
+    "line": 53,
+    "template": "votelists",
+    "mtime": 1414007096861,
+    "ctime": 1414007096861
+  },
   "find.WhatLearn?": {
     "key": "find.WhatLearn?",
     "text": "What do you want to learn?",
     "file": "./client/views/find/find.html",
     "line": 3,
     "template": "find",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "find.only with events_checkbox": {
     "key": "find.only with events_checkbox",
@@ -132,8 +159,8 @@ mfPkg.addNative(
     "file": "./client/views/find/find.html",
     "line": 6,
     "template": "find",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "find.no entries found. propose new course?": {
     "key": "find.no entries found. propose new course?",
@@ -141,8 +168,8 @@ mfPkg.addNative(
     "file": "./client/views/find/find.html",
     "line": 13,
     "template": "find",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "find.form.Header.What do you want to learn?": {
     "key": "find.form.Header.What do you want to learn?",
@@ -150,8 +177,8 @@ mfPkg.addNative(
     "file": "./client/views/find/form.html",
     "line": 3,
     "template": "search_form",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "courses.missingorg": {
     "key": "courses.missingorg",
@@ -195,8 +222,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/events/course.events.html",
     "line": 12,
     "template": "course_events",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "course.title.Past events": {
     "key": "course.title.Past events",
@@ -204,8 +231,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/events/course.events.html",
     "line": 26,
     "template": "course_events",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "course.title.Discussion": {
     "key": "course.title.Discussion",
@@ -213,8 +240,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.discussion.html",
     "line": 19,
     "template": "postDialog",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "course.title.Participants": {
     "key": "course.title.Participants",
@@ -222,8 +249,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.roles.html",
     "line": 3,
     "template": "Members",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "categories.title.categories": {
     "key": "categories.title.categories",
@@ -231,8 +258,8 @@ mfPkg.addNative(
     "file": "./client/views/categories/categories.html",
     "line": 4,
     "template": "categorylist",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   },
   "categories.no_categories": {
     "key": "categories.no_categories",
@@ -240,11 +267,11 @@ mfPkg.addNative(
     "file": "./client/views/categories/categories.html",
     "line": 8,
     "template": "categorylist",
-    "mtime": 1414002480587,
-    "ctime": 1414002480587
+    "ctime": 1414002480587,
+    "mtime": 1414002480587
   }
 }, 
 {
-  "extractedAt": 1414002480587,
-  "updatedAt": 1414002480587
+  "extractedAt": 1414007096861,
+  "updatedAt": 1414007096861
 });
