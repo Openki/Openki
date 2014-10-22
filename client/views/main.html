@@ -77,7 +77,7 @@
 
 <template name="region_sel">
 	<div class="dropdown">
-		<a class="regions" href="/"><span class="icon-nav_region"></span></a>
+		<a class="regions" href="#"><span class="icon-nav_region"></span></a>
 		<div class="dropdown-menu">
 			<ul role="menu">
 				<li><a class="regionselect" href="/region/">{{mf 'menue.All regions' 'All regions'}}</a></li>
@@ -86,14 +86,14 @@
 				{{/each}}
 			</ul>
 		</div>
-		<a class="regionselect" href="/region/{{_id}}">{{region}} ▼ </a>
+		<a class="regionselect" href="#">{{region}} ▼ </a>
 	</div>
 </template>
 
 
 <template name="lang_sel">
 	<div class="dropdown">
-		<a class="regions" href="/"><span class="icon-nav_lang"></span></a>
+		<a class="regions" href="#"><span class="icon-nav_lang"></span></a>
 		<div class="dropdown-menu">
 			<ul role="menu">
 				{{#each lgs}}
@@ -101,7 +101,7 @@
 				{{/each}}
 			</ul>
 		</div>
-		<a class="regionselect" href="/lang/{{lg}}">{{lg}} ▼ </a>
+		<a class="regionselect" href="#">{{lg}} ▼ </a>
 	</div>
 </template>
 
