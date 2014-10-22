@@ -9,7 +9,7 @@
 	{{/if}}
 
 	<div class="course_events">
-		<h3>Upcoming Events</h3>
+		<h3>{{mf 'course.title.Upcoming events' 'Upcoming events'}}</h3>
 		{{#each events_list}}
 			<div class="course_event">
 				{{>course_event}}
@@ -23,7 +23,7 @@
 
 
 	<div class="course_events_past">
-		<h3>Past Events</h3>
+		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
 		{{#each events_list_past}}
 			<div class="course_event_past">
 				{{>course_event}}
