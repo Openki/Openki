@@ -132,8 +132,8 @@ mfPkg.addNative(
     "file": "./client/views/votes/votes.list.html",
     "line": 41,
     "template": "votelists",
-    "mtime": 1414016261881,
-    "ctime": 1414016261881
+    "ctime": 1414016261881,
+    "mtime": 1414016261881
   },
   "voting.new_voting": {
     "key": "voting.new_voting",
@@ -152,6 +152,96 @@ mfPkg.addNative(
     "template": "votelists",
     "ctime": 1414007096861,
     "mtime": 1414007096861
+  },
+  "profile.my_profile": {
+    "key": "profile.my_profile",
+    "text": "My profile",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 4,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.not_logged_in": {
+    "key": "profile.not_logged_in",
+    "text": "you&apos;re not logged in...",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 6,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.userid": {
+    "key": "profile.userid",
+    "text": "UserID:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 9,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.input.username": {
+    "key": "profile.input.username",
+    "text": "Username:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 10,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.input.email": {
+    "key": "profile.input.email",
+    "text": "Email (optional):",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 11,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.input.new_pswd": {
+    "key": "profile.input.new_pswd",
+    "text": "New password (optional):",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 12,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.id": {
+    "key": "profile.id",
+    "text": "ID:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 15,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.username": {
+    "key": "profile.username",
+    "text": "Username:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 16,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.email": {
+    "key": "profile.email",
+    "text": "Email:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 17,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
+  },
+  "profile.my_courses": {
+    "key": "profile.my_courses",
+    "text": "My Courses:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 25,
+    "template": "profile",
+    "mtime": 1414017460607,
+    "ctime": 1414017460607
   },
   "find.WhatLearn?": {
     "key": "find.WhatLearn?",
@@ -281,6 +371,6 @@ mfPkg.addNative(
   }
 }, 
 {
-  "extractedAt": 1414016261881,
-  "updatedAt": 1414016261881
+  "extractedAt": 1414017460607,
+  "updatedAt": 1414017460607
 });
