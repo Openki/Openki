@@ -6,6 +6,10 @@ Router.configure({
 
 webpagename = 'Hmmm - Course Organisation Platform - '  // global (document title init)
 
+// Skip to top on page change
+Router.onBeforeAction(function() {
+	$('body,html').scrollTop(0);
+})
 
 Router.map(function () {
 	this.route('locationDetails',{							///////// locationdetails /////////
