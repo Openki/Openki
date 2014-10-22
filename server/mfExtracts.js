@@ -123,8 +123,17 @@ mfPkg.addNative(
     "file": "./client/views/votes/votes.list.html",
     "line": 24,
     "template": "votelists",
-    "mtime": 1414007096861,
-    "ctime": 1414007096861
+    "ctime": 1414007096861,
+    "mtime": 1414007096861
+  },
+  "voting.no_votings_yet": {
+    "key": "voting.no_votings_yet",
+    "text": "no votings yet..",
+    "file": "./client/views/votes/votes.list.html",
+    "line": 41,
+    "template": "votelists",
+    "mtime": 1414016261881,
+    "ctime": 1414016261881
   },
   "voting.new_voting": {
     "key": "voting.new_voting",
@@ -132,8 +141,8 @@ mfPkg.addNative(
     "file": "./client/views/votes/votes.list.html",
     "line": 49,
     "template": "votelists",
-    "mtime": 1414007096861,
-    "ctime": 1414007096861
+    "ctime": 1414007096861,
+    "mtime": 1414007096861
   },
   "voting.option_input": {
     "key": "voting.option_input",
@@ -141,8 +150,8 @@ mfPkg.addNative(
     "file": "./client/views/votes/votes.list.html",
     "line": 53,
     "template": "votelists",
-    "mtime": 1414007096861,
-    "ctime": 1414007096861
+    "ctime": 1414007096861,
+    "mtime": 1414007096861
   },
   "find.WhatLearn?": {
     "key": "find.WhatLearn?",
@@ -272,6 +281,6 @@ mfPkg.addNative(
   }
 }, 
 {
-  "extractedAt": 1414007096861,
-  "updatedAt": 1414007096861
+  "extractedAt": 1414016261881,
+  "updatedAt": 1414016261881
 });
