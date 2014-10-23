@@ -8,6 +8,11 @@ Template.loginFrame.helpers({
 Template.loginFrame.events({
 	'click .loginClose': function() {
 		Session.set('showLogin', false);
+	},
+	'click .loginLogout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		Session.set('showLogin', false);
 	}
 })
 
@@ -21,6 +26,8 @@ Template.loginRegister.events({
 			email: emailVar,
 			password: passwordVar
 		});
+		
+		Session.set('showLogin', false);
 	}
 });
 
@@ -31,5 +38,7 @@ Template.loginLogin.events({
 		var emailVar = template.find('#login-email').value;
 		var passwordVar = template.find('#login-password').value;
 		Meteor.loginWithPassword(emailVar, passwordVar);
+		
+		Session.set('showLogin', false);
 	}
 });

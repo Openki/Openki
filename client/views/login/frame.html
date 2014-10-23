@@ -3,12 +3,14 @@
 	<div id="loginFrame">
 		<a href="#" class="loginClose">{{mf 'login.close' 'close'}}</a>
 		{{#if currentUser}}
-			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.name}}
+			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 			<nav>
 				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					{{mf 'login.frame.profile' 'Visit my profile'}}
 				</a>
-				<a href="#" class="loginLogout">{{mf 'login.logout' 'Logout'}}</a>
+				<a href="#" class="loginLogout">
+					{{mf 'login.logout' 'Logout'}}
+				</a>
 			</nav>
 		{{else}}
 			{{> loginRegister}}
@@ -21,7 +23,7 @@
 
 <template name="loginRegister">
 	<form>
-		<input type="email" id="register-email">
+		<input type="text" id="register-email">
 		<input type="password" id="register-password">
 		<input type="submit" value="{{mf 'login.register.submit' 'Register'}}">
 	</form>
@@ -30,7 +32,7 @@
 
 <template name="loginLogin">
 	<form>
-		<input type="email" id="login-email">
+		<input type="text" id="login-email">
 		<input type="password" id="login-password">
 		<input type="submit" value="{{mf 'login.login.submit' 'Login'}}">
 	</form>
