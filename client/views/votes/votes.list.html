@@ -12,7 +12,7 @@
 							{{this.option}}
 						</td>
 						{{else}}
-							<td>no options </td>
+							<td>{{mf 'voting.no_options' 'no options'}}</td>
 					{{/each}}
 				</tr>
 				{{#each this.subscribers}}
@@ -21,7 +21,7 @@
 						{{#each this.options}}
 							<td class="option {{this.vote_status}}" name= "{{this.option_index}}"> &nbsp;&nbsp;</td>
 							{{else}}
-								<td>no options </td>
+								<td>{{mf 'voting.no_options' 'no options'}}</td>
 						{{/each}}
 					</tr>
 				{{/each}}
@@ -38,7 +38,7 @@
 
 		{{else}}
 			{{#unless addingVote}}
-			<p>no votings yet.. </p>
+			<p>{{mf 'voting.no_votings_yet' 'no votings yet..'}}</p>
 			{{/unless}}
 		{{/each}}
 
@@ -46,11 +46,11 @@
 
 		{{#if addingVote}}
 		<form id="add_vote_form">
-			<h4>New voting</h4>
+			<h4>{{mf 'voting.new_voting' 'New voting'}}</h4>
 			<p>Frage: <input type="text" id="add_vote_question" size="30"></p>
 			<div id="add_vote_options">
-				<p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
-				<p class="add_vote_option">Option: <input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+				<p class="add_vote_option">{{mf 'voting.input.option' 'Option:'}}<input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
+				<p class="add_vote_option">{{mf 'voting.input.option' 'Option:'}}<input type="text" class="add_vote_option_button" name="vote_option[]" size="30"></p>
 			</div>
 			<p><input type="button" class="add_vote_add_option" value="+ Option"></p>
 			<input type="button" class="create_votelist" value="create voting">

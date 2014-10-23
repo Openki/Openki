@@ -1,11 +1,11 @@
 <template name="categorylist">
 
   <div class="courselist">
-  	<h1>Kategorien</h1>
+  	<h1>{{mf 'categories.title.categories' 'Categories'}}</h1>
     {{#each categories}}
         {{> category}}
     {{else}}
-        keine Kategorien definiert!
+        {{mf 'categories.no_categories' 'No categories defined!'}}
     {{/each}}
 
     {{> course_category}}
