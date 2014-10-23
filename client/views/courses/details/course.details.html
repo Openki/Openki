@@ -9,7 +9,7 @@
 			<div class="course_main">
                 {{title name " - hmmm"}}
                 <h2 class="name">{{name}}</h2>
-                <p class="small"> Time created: {{dateformat time_created}}, Last edited: {{dateformat time_lastedit}} Created by: {{>profilelink createdby}}</p>
+                <p class="small">{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}</p>
 
                 <div class="categorylist small">
                 {{> show_categories}}

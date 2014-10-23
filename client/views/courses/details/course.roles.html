@@ -22,12 +22,12 @@
 		<div class="roleDetails role_{{roletype.type}}">
 		{{#if enroling}}
 			<div class="popup" >
-				<h3>enrol as {{role}}</h3>
+				<h3>{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}</h3>
 				<form name="form_post">
 					<input type="button" class="subscribe" value="Ok" />
 					<input type="button" class="cancel" value="cancel" />
 					<input type="button" class="subscribeAnon" value="anonymously ☔" />
-					<br> leave a message/wish/interest here:<br>
+					<br>{{mf 'course.roles.leave_msg_wish_interest' 'leave a message/wish/interest here:'}}<br>
 					<textarea cols="70" rows="3" id="comment">{{comment}}</textarea><br /><br />
 				</form>
 			</div>
@@ -36,7 +36,7 @@
 		<div class="subscribe">
 		{{! The id= tags on the input fields are not referenced by our code. They were added to help the spark patcher figure out what to patch. I must assume there is a simple and proper solution to avoid this kludge, alas I have no knowledge of it. }}
 		{{#if subscribed}}
-			<span class='subscribed'>you are {{#if anonsub}}anonymously {{/if}}subscribed as {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" id="unsubscribe_{{roletype.type}}"/></span>
+			<span class='subscribed'>{{mf 'course.roles.you_are' 'you are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" id="unsubscribe_{{roletype.type}}"/></span>
 		{{else}}
 			<input type="button" class="enrol" name="participant" value="{{roletype.subscribe}}"  id="subscribe_{{roletype.type}}"/>
 		{{/if}}
