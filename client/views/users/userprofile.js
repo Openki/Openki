@@ -1,3 +1,20 @@
+Router.map(function() {
+	this.route('userprofile', {
+		path: 'user/:_id/:username?',
+		waitOn: function () {
+			return Meteor.subscribe('users');
+		},
+		data: function () {
+			return Meteor.users.findOne({_id: this.params._id})
+		},
+		onAfterAction: function() {
+			var user = Meteor.users.findOne({_id: this.params._id})
+			if (!user) return; // wtf
+			document.title = webpagename + '' + user.username + "'s Profile"
+		}
+	})
+})
+
 
 // if userprofile is the same as the logged in user
 Template.userprofile.ownuser = function () {
