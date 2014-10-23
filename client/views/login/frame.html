@@ -8,6 +8,7 @@
 				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					{{mf 'login.frame.profile' 'Visit my profile'}}
 				</a>
+				<a href="#" class="loginLogout">{{mf 'login.logout' 'Logout'}}</a>
 			</nav>
 		{{else}}
 			{{> loginRegister}}

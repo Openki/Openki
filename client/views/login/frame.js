@@ -4,8 +4,32 @@ Template.loginFrame.helpers({
 	}
 })
 
+
 Template.loginFrame.events({
 	'click .loginClose': function() {
 		Session.set('showLogin', false);
 	}
 })
+
+
+Template.loginRegister.events({
+	'submit form': function(event, template){
+		event.preventDefault();
+		var emailVar = template.find('#register-email').value;
+		var passwordVar = template.find('#register-password').value;
+		Accounts.createUser({
+			email: emailVar,
+			password: passwordVar
+		});
+	}
+});
+
+ 
+Template.loginLogin.events({
+	'submit form': function(event, template){
+		event.preventDefault();
+		var emailVar = template.find('#login-email').value;
+		var passwordVar = template.find('#login-password').value;
+		Meteor.loginWithPassword(emailVar, passwordVar);
+	}
+});
