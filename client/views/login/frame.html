@@ -1,0 +1,36 @@
+<template name='loginFrame'>
+{{#if showLoginFrame}}
+	<div id="loginFrame">
+		<a href="#" class="loginClose">{{mf 'login.close' 'close'}}</a>
+		{{#if currentUser}}
+			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.name}}
+			<nav>
+				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
+					{{mf 'login.frame.profile' 'Visit my profile'}}
+				</a>
+			</nav>
+		{{else}}
+			{{> loginRegister}}
+			{{> loginLogin}}
+		{{/if}}
+	</div>
+{{/if}}
+</template>
+
+
+<template name="loginRegister">
+	<form>
+		<input type="email" id="register-email">
+		<input type="password" id="register-password">
+		<input type="submit" value="{{mf 'login.register.submit' 'Register'}}">
+	</form>
+</template>
+
+
+<template name="loginLogin">
+	<form>
+		<input type="email" id="login-email">
+		<input type="password" id="login-password">
+		<input type="submit" value="{{mf 'login.login.submit' 'Login'}}">
+	</form>
+</template>
