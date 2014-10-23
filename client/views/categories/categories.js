@@ -1,19 +1,23 @@
 "use strict";
 
-Template.course_create.categories = function () {
-	var categories = Categories.find();
-	return categories;
-};
+var categories_helper = function () {
+	return Categories.find();
+}
 
-Template.categorylist.categories = function () {
-	var categories = Categories.find();
-	return categories;
-};
+Template.course_create.helpers({
+	categories: categories_helper
+})
 
-Template.category.courses_by_category = function () {
-	var courses_by_category = Courses.find({categories: this._id});
-	return courses_by_category;
-};
+Template.categorylist.helpers({
+	categories: categories_helper
+})
+
+Template.category.helpers({
+	courses_by_category: function () {
+		var courses_by_category = Courses.find({categories: this._id});
+		return courses_by_category;
+	}
+})
 
 
 Template.course_category.events({
