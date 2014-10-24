@@ -37,10 +37,11 @@ Router.map(function () {
 })
 
 
-Template.profile.userdata = function () {
-
-
-}
+Template.profile.helpers({
+	'courses_from_userid': function() {
+		return get_courselist({courses_from_userid: Meteor.userId()});
+	}
+})
 
 
 Template.profile.isEditing = function () {

@@ -6,7 +6,7 @@
 
 <template name="writePostDialog">
 	<div class="popup">
-		<h3>write comment</h3>
+		<h3>{{mf 'course.discussion.write_comment' 'write comment'}}</h3>
 		<form name="form_post">
 			<input type="text" id="post_title" /><br />
 			<textarea cols="70" rows="5" id="post_text"></textarea><br><br>
@@ -23,13 +23,13 @@
 			<div class="comment">
 				<h4>{{this.title}}</h4>
 				<p>{{text}}</p>
-				<p>Zeit: {{time_created}}, User: {{username user_ID}}</p>
+				<p>{{mf 'course.discussion.time_created' 'Time:'}} {{time_created}}, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
 			</div>
 		{{else}}
 			<div class="post">
 				<h4>{{this.title}}</h4>
 				<p>{{text}}</p>
-				<p>Zeit: {{time_created}}, User: {{username user_ID}}</p>
+				<p>Zeit: {{time_created}}, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
 				<input type="button" class="answer" value="answer this!" />
 			</div>
 		{{/if}}

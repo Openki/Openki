@@ -1,37 +1,37 @@
 <template name="course_event_edit">
 	<div class="course_event_edit">
 
-		<h2>{{#if this.event._id}}Edit event{{else}}Add event{{/if}}</h2>
-		<p>  Date start <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
-		<p>Time start <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
-		<p>  Date end ((optional)) </p>
-		<p>  Time end ((optional)) </p>
-		<p> Event title: <input type="text" id="edit_event_title" size="30" value="{{#if event._id}}{{event.title}}{{else}}{{course.name}}{{/if}}"/></p>
-		<p>  Desc: <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{#if event._id}}{{event.description}}{{else}}{{course.description}}{{/if}}</textarea></p>
+		<h2>{{#if this.event._id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
+		<p>  {{mf 'course.event.edit.date_start' 'Date start'}} <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
+		<p>{{mf 'course.event.edit.time_start' 'Time start'}} <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
+		<p>  {{mf 'course.event.edit.date_end' 'Date end'}} ((optional)) </p>
+		<p>  {{mf 'course.event.edit.time_end' 'Time end'}} ((optional)) </p>
+		<p> {{mf 'course.event.edit.title' 'Event title:'}} <input type="text" id="edit_event_title" size="30" value="{{#if event._id}}{{event.title}}{{else}}{{course.name}}{{/if}}"/></p>
+		<p>  {{mf 'course.event.edit.desc' 'Desc:'}} <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{#if event._id}}{{event.description}}{{else}}{{course.description}}{{/if}}</textarea></p>
 
-		 <p>  Host / Location
+		 <p>  {{mf 'course.event.edit.host_location' 'Host / Location'}}
 			<ul>
 				{{#each possible_hosts}}
-					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location name)) : <br>by {{this.username}}</li>
+					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location name)) : <br>{{mf 'course.event.edit.by' 'by'}}{{this.username}}</li>
 				{{else}}
-					<li>No Hosts available</li>
+					<li>{{mf 'course.event.edit.no_hosts' 'No Hosts available'}}</li>
 				{{/each}}
 			</ul>
 		</p>
 		{{#if needsRole 'mentor'}}
-		<p>  Mentors
+		<p>  {{mf 'course.event.edit.mentors' 'Mentors'}}
 			<ul>
 				{{#each possible_mentors}}
 					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}> {{this.username}}</li>
 				{{else}}
-					<li>No Mentors available</li>
+					<li>{{mf 'course.event.edit.no_mentors' 'No Mentors available'}}</li>
 				{{/each}}
 			</ul>
 		 </p>
 		 {{/if}}
 
 
-		<p>  ((<input type="checkbox" class="edit_event_host" name="edit_event_email">  Send notification email to participants))</p>
+		<p>  ((<input type="checkbox" class="edit_event_host" name="edit_event_email">  {{mf 'course.event.edit.send_mail_participants' 'Send notification email to participants'}}))</p>
 		<p> <input type="button" class="saveEditEvent" value="Save" /> <input type="button" class="cancelEditEvent" value="Cancel" /></p>
 	</div>
 </template>

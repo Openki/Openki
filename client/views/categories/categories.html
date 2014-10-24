@@ -20,7 +20,7 @@
 	        <ul class="category">
           {{#each courses_by_category}}
 				<li><a href="{{pathFor 'showCourse'}}"> {{name}}</a></li>
-              {{else}} <li class='category_no_course'> keine Kurse in dieser Kategorie definiert! </li>
+              {{else}} <li class='category_no_course'>{{mf 'categories.no_courses' 'no courses defined in this category!'}} </li>
           {{/each}}
           </ul>
      </p>
@@ -36,10 +36,10 @@
 <template name="course_category">
     <div class="create_category">
     <form>
-    <h3>Neue Kategorie</h3>
+    <h3>{{mf 'categories.new' 'New category'}}</h3>
     <table>
         <tr>
-            <th>Name: </th><td><input type="text" id="addform_name"/> </td>
+            <th>{{mf 'categories.new.name' 'Name:'}} </th><td><input type="text" id="addform_name"/> </td>
         </tr>
         <tr>
             <th></th><td><input type="button" class="add" value="Add new" /> </td>

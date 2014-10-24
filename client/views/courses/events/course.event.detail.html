@@ -8,7 +8,7 @@
 			
                 {{#with course}}
 			    <p>
-                    <a href="{{pathFor 'showCourse'}}">Back to course "{{name}}"</a>
+                    <a href="{{pathFor 'showCourse'}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{name}}"</a>
                 </p>
                 {{/with}}
 
@@ -21,7 +21,7 @@
 					<span class="icon-clock"></span> {{timeformat startdate}}
 				</p>
 
-                <h3 class="name">Event: {{this.title}}</h3>
+                <h3 class="name">{{mf 'course.event.detail.event' 'Event:'}}' {{this.title}}</h3>
 
                 
                 <p>
@@ -38,7 +38,7 @@
 						</ul>
 				</p>
 				{{/if}}
-				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : hosted by {{username host}} </p>
+				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.event.detail.hosted_by' 'hosted by'}} {{username host}} </p>
 
 			{{/with}}
 			<!-- TODO -->
@@ -50,7 +50,7 @@
 	
         
         <div style="border:red solid 1px;">
-        TODO
+        {{mf 'course.event.detail.todo' 'TODO'}}
             {{#with current_event}}
             
                 <div class="discussion">

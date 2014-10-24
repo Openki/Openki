@@ -1,7 +1,7 @@
 <template name="createcourse">
 	<div class="newcourse">
 
-		Put here a course that is allready arranged with date etc.
+		{{mf 'course.create.enter_arranged_course' 'Put here a course that is allready arranged with date etc.'}}
 		{{> course_edit}}  <!-- TODO: 	change it to {{> course_event_edit}} -->
 
 	</div>
@@ -12,7 +12,7 @@
 <template name="proposecourse">
 	<div class="newcourse">
 
-		your proposal for a course:
+		{{mf 'course.create.proposal' 'your proposal for a course:'}}
 		{{> course_edit}}
 
 	</div>
