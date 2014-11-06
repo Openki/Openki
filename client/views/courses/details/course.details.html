@@ -14,10 +14,9 @@
                 <div class="categorylist small">
                 {{> show_categories}}
                 </div>
-                <br class="clear"/>
 
                 {{> show_course_submenu}}
-
+                <br class="clear"/>
                 <p class="descr">{{description}}</p>
 
                 {{#if currentUserMayEdit}}
@@ -51,13 +50,10 @@
 
 <template name="show_course_submenu">
     <ul class="course_submenu">
-        <li><a href="{{pathFor 'showCourse'}}">Description</a></li>
-
-        <li><a href="#">Events</a></li>
+        <li class='active'><a href="{{pathFor 'showCourse'}}">Description</a></li>
         <li><a href="{{pathFor 'showCourseWiki'}}">Wiki</a></li>
-        <li><a href="#">Docus</a></li>
-        <li><a href="#">Similar Courses</a></li>
-        <li><a href="#">...</a></li>
+        <li><a href="#">Docs</a></li>
+        <li><a href="#">History</a></li>
     </ul>
 </template>
 
