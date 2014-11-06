@@ -1,52 +1,57 @@
 
 
-Template.votelists.votings=function() {
-	var pseudo=Session.get("aktualisierungs_hack");						//FIXME
-	var votings=Votings.find({course_id: this._id});
-	var course=this
-	var roles = course.roles
-	var members = course.members
-	
-	var votings_array = [];
-	for(m = 0; m < votings.count(); m++) {
-		voting = votings.db_objects[m];
-		subscribers_votings=[];
-		voting_total=[];
-		for(o = 0; o < voting.options.length; o++) {
-			voting_total.push(voting.options[o].votes_0.length);
-		}
+Template.votelists.helpers({
+	votings: function() {
+		var pseudo=Session.get("aktualisierungs_hack");						//FIXME
+		var votings=Votings.find({course_id: this._id});
+		var course=this
+		var roles = course.roles
+		var members = course.members
 		
-		members.forEach(function (member) {
-			subscriber_options=[];
+		var votings_array = [];
+		for(m = 0; m < votings.count(); m++) {
+			voting = votings.db_objects[m];
+			subscribers_votings=[];
+			voting_total=[];
 			for(o = 0; o < voting.options.length; o++) {
-				if(voting.options[o].votes_0.indexOf(member.user)!=-1) {
-					vote_status="v0";
+				voting_total.push(voting.options[o].votes_0.length);
+			}
+			
+			members.forEach(function (member) {
+				subscriber_options=[];
+				for(o = 0; o < voting.options.length; o++) {
+					if(voting.options[o].votes_0.indexOf(member.user)!=-1) {
+						vote_status="v0";
+					}
+					else if(voting.options[o].votes_1.indexOf(member.user)!=-1) {
+						vote_status="v1";
+					}
+					else {
+						vote_status="";
+					}
+					subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});
 				}
-				else if(voting.options[o].votes_1.indexOf(member.user)!=-1) {
-					vote_status="v1";
+				if(member.user == Meteor.userId()){
+					is_current="is_current";
 				}
 				else {
-					vote_status="";
+					is_current="";
 				}
-				subscriber_options.push({option_index:o, vote_status:vote_status,  voting_id:voting._id});
-			}
-			if(member.user == Meteor.userId()){
-				is_current="is_current";
-			}
-			else {
-				is_current="";
-			}
-			subscribers_votings.push({is_current:is_current, subscribersId:member.user, is_current: is_current, options:subscriber_options});
-		});
-		
-		voting.total=voting_total;
-		voting.subscribers=subscribers_votings;
-		votings_array.push(voting);
+				subscribers_votings.push({is_current:is_current, subscribersId:member.user, is_current: is_current, options:subscriber_options});
+			});
+			
+			voting.total=voting_total;
+			voting.subscribers=subscribers_votings;
+			votings_array.push(voting);
+		}
+
+		return {votings:votings_array};
+	},
+
+	addingVote: function () {
+		return Session.get('addingVote')
 	}
-
-	return {votings:votings_array};
-}
-
+});
 
 Template.votelists.events({
 	'click .is_current .option': function () {
@@ -86,16 +91,6 @@ Template.votelists.events({
 	}
  });
 
-/*
-Template.votelist.votelist=function(){
-	var return_object={};
-	return_object.vote_options=["asf","sfsf"];
-	return return_object;
-}
-*/
-Template.votelists.addingVote = function () {
-		return Session.get('addingVote')
-}
 
 
 Template.votelists.events({
