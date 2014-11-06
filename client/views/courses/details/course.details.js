@@ -14,6 +14,7 @@ Router.map(function () {
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
+			if (!course) return null;
 			return {
 				edit: !!this.params.edit,
 				roleDetails: loadroles(course, this.params.enrol),
