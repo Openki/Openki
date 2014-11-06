@@ -24,37 +24,6 @@ Courses.allow({
 });
 
 
-function findCourses(params){
-	var find = {};
-
-	if (params.member) {
-		// courses where given user is member
-		find.members = { user: params.member }
-	}
-
-	if (Session.get('region')) {
-		find.region = Session.get('region')
-	}
-
-	if (params.missing=="organisator") {
-		// show courses with no organisator
-		find['members.roles'] = { $ne: 'team' }
-	}
-
-	if (param.search) {
-		_.extend(find, {
-			$or: [
-				// FIXME: Runs unescaped as regex, absolutely not ok
-				// ALSO: Not user friendly, do we can have fulltext?
-				{ name: { $regex: param.search, $options: 'i' } },
-				{ description: { $regex: param.search, $options: 'i' } }
-			]
-		})
-	}
-
-	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
-}
-
 function addRole(course, role, user, comment) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
