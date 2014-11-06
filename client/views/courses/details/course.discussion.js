@@ -56,6 +56,9 @@ Template.writePostDialog.events({
 				"title":$("#post_title").val(),
 				"text":$("#post_text").val()
 			});
+			
+			// HACK update course so time_lastchange is updated
+			Meteor.call("save_course", course, {})
 		}
 		//reset session variables, hide dialog
 		Session.set("showPostDialog", false);
