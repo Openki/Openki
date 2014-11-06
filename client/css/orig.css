@@ -892,6 +892,7 @@ a:hover {
 
 /* line 813, ../../sass/orig/_screen.scss */
 .dropdown:hover .dropdown-menu {
+  margin-top: -5px;
   display: block;
 }
 
