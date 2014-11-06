@@ -80,6 +80,8 @@ p {
   position: fixed;
   z-index: 100;
   min-width: 850px;
+  
+  width: 100%;
 }
 
 /***** LOGIN ******/
