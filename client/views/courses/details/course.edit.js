@@ -97,7 +97,7 @@ Template.course_edit.events({
 	},
 
 	'click input.cancel': function() {
-		Session.set("isEditing", false);
+		Router.go('showCourse', this);
 	},
 
 	'click #show_categories_to_edit': function(event){
