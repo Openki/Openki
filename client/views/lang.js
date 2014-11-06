@@ -1,6 +1,6 @@
 Template.lang_sel.helpers({
 	lgs: function() {
-		return [{ lg: 'en'}, { lg: 'de'}];
+		return [{ lg: 'en'}, { lg: 'de'}, { lg: 'fr'}, { lg: 'it'}];
 	},
 	
 	lg: function() {
