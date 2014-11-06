@@ -13,8 +13,15 @@ Template.location_edit.helpers({
 	},
 	addHostSearch: function(){
 		return search_user($('#search_username').val());
+	},
+	regionSel: function() {
+		var attr = {};
+		var selected = Session.get('region');
+		if (selected && selected === this._id) {
+			attr.selected = 'selected';
+		}
+		return attr;
 	}
-
 });
 
 
