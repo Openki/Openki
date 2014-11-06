@@ -6,7 +6,7 @@ Template.course_edit.helpers({
 	},
 
 	available_categories: function(parent) {
-		if (parent)return Categories.find({parent: parent})
+		if (parent) return Categories.find({parent: parent})
 		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
 	},
 	
@@ -100,7 +100,7 @@ Template.course_edit.events({
 		$('#edit_categories').toggle();
 	},
 
-	'change .checkbox': function(){
+	'change .categories .checkbox': function(){
 		//$('#' + event.currentTarget.id +" .subcategories").toggle();
 		$('#cat_' + this._id +" .subcategories").toggle();
 
