@@ -827,7 +827,7 @@ template:
 	'region':        'Englistan'
 },{
 	'name':        'International Cookin Course',
-	'categories': ['kochen'],
+	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmamma',
 	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! We can use the school kitchen of the secondary school Nägelimoos in kloten',
