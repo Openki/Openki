@@ -13,7 +13,6 @@ Router.map(function () {
 
 Template.locationlist.locations=function(){
 	var region = Session.get('region')
-	if (!!region) find.region = region
 	var regionObj = Regions.findOne(region)
 	var regionName = regionObj ? regionObj.name : 'All regions'
 	if (regionName !== "All regions") {
