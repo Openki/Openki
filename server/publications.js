@@ -48,8 +48,10 @@ Meteor.publish ('messages', function(){
 	return Messages.find();
 });
 
-Meteor.publish ('locations', function(){
-	return Locations.find();
+Meteor.publish ('locations', function(region) {
+	var find = {}
+	if (region != 'all') find.region = region
+	return Locations.find(find);
 });
 
 Meteor.publish ('discussions', function(){

@@ -8,8 +8,7 @@ Template.location_details.helpers({
 	},
 
 	canEditLocation: function () {
-
-		return this.hosts.indexOf(Meteor.userId())!=-1;
+		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
 	}
 });
 
