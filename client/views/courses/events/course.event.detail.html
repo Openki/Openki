@@ -38,8 +38,9 @@
 						</ul>
 				</p>
 				{{/if}}
+				{{#if host}}
 				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.event.detail.hosted_by' 'hosted by'}} {{username host}} </p>
-
+				{{/if}}
 			{{/with}}
 			<!-- TODO -->
 			<!-- <input type="button" class="eventEdit" value="Edit" />-->
