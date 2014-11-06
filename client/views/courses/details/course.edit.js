@@ -6,8 +6,13 @@ Template.course_edit.helpers({
 	},
 
 	available_categories: function(parent) {
-		if (parent) return Categories.find({parent: parent})
-		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
+		var query = {}
+		if (parent) {
+			query.parent = parent;
+		} else {
+			query.parent = { $exists: false };
+		}
+		return Categories.find(query);
 	},
 	
 	available_roles: function() {
