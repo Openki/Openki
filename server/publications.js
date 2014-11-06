@@ -24,7 +24,7 @@ Meteor.publish ('coursesFind', function(region, query, filter){
 
 		find.$and = searchQueries;
 	}
-	var options = { limit: 40 };
+	var options = { limit: 40, sort: {time_lastedit: -1, time_created: -1} };
 	return Courses.find(find, options);
 });
 

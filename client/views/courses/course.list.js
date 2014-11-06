@@ -43,7 +43,7 @@ function get_courselist(listparameters){
 		find['members.roles'] = { $ne: 'team' }
 	}
 
-	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
+	return Courses.find(find, {sort: {time_lastedit: -1}});
 }
 
 
