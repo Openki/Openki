@@ -10,10 +10,6 @@ Template.course_edit.helpers({
 		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
 	},
 	
-	available_subcategories: function() {
-		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
-	},
-	
 	available_roles: function() {
 		return Roles.find({'preset': { $ne: true }})
 	},
