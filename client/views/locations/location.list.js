@@ -1,3 +1,16 @@
+Router.map(function () {
+	this.route('locations',{
+		path: 'locations',
+		template: 'locationlist',
+		waitOn: function () {
+			return Meteor.subscribe('locations');
+		},
+		onAfterAction: function() {
+			document.title = webpagename + 'Location list'
+		}
+	})
+});
+
 Template.locationlist.locations=function(){
 	var region = Session.get('region')
 	if (!!region) find.region = region
