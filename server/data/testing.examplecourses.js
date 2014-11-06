@@ -460,7 +460,7 @@ template:
 	'name':        'Meditation & Yoga/Qi-Gong',
 	'categories': ['Sport / Bewegung'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
-	'createdby':   'FeeLing',
+	'createdby':   'en_FeeLing',
 	'description': 'Wouldn`t it be awesome to practice some meditation, yoga and Qi-Gong every morning? I have not enough self-discipline and my yoga/Qi-Gong knowledge is not that good, thats why a small group of people would be perfect. We also need a place to practice, in Summertime we could do it outside, by the lake for example.',
 	'roles':      ['team', 'participant', 'host'],
 	'members':    [
@@ -472,7 +472,7 @@ template:
 	'name':        'Aikido',
 	'categories': ['Kampfsport/-kunst'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
-	'createdby':   'Kampfhippie',
+	'createdby':   'en_Kampfhippie',
 	'description': 'I would love to have some regular Aikido trainings. If we manage to get a small group of people I could organize a real Trainer and a Dojo. For me aikido is one of the most beautiful Fight Sports because it trys to respond your opposite and to solve the conflict without destroying the other human. https://www.youtube.com/watch?v=qAc-gQIeAaI   http://en.wikipedia.org/wiki/Main_Page',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -485,7 +485,7 @@ template:
 	'name':        'Garden',
 	'categories': ['Garten / Landwirtschaft', 'Biologie'],
 	'tags':       ['Garden', 'Plants'],
-	'createdby':   'Dr Greenthumb',
+	'createdby':   'en_Dr Greenthumb',
 	'description': 'Once in a while meet to do some gardening, exchange know-How, infrastructure, relations, seeds and plants. Support different free garden projects to grow vegetables, herbs, for food and medication. I have access to 2-3 gardens, with capacity for some motivated gardeners.',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
@@ -502,7 +502,7 @@ template:
 	'name':        'Game Design with Unity',
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
-	'createdby':   'Seee',
+	'createdby':   'en_Seee',
 	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: * game theory  * game idea * game mechanic * Storytelling * Concept Art * game character developing * draw and image editing with photoshop * Usability * Prototyping and Gamedesign with Unity Gameengine * Leveldesign * 3D-Modelling and -Animation with Blender * Programming with JavaScript and C-Sharp * Sound-Design with Audacity * Polishing ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -513,7 +513,7 @@ template:
 	'name':        'noncommercial Commons-based peer production',
 	'categories': ['Garten / Landwirtschaft'],
 	'tags':       ['Theorie', 'Projekt'],
-	'createdby':   'Dr Greenthumb',
+	'createdby':   'en_Dr Greenthumb',
 	'description': '"commons are collaborative formal or informal Governance-Systems, to use as a collective, resources." [[http://en.wikipedia.org/wiki/Commons|what are commons?]] Would be interesting to talk about noncommercial //Commons-based peer production// and even better try to realize in practice a bigger project (for example a vegetable garden) (That would be on a long-term basis, with a lot of responsibility)',
 	'roles':      ['team', 'participant'],
 	'members': [
@@ -539,7 +539,7 @@ template:
 	'name':        'Elektronics',
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
-	'createdby':   'greg',
+	'createdby':   'en_greg',
 	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -553,7 +553,7 @@ template:
 	'name':        'Ubuntu for Mac (dual-Boot)',
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
-	'createdby':   'greg',
+	'createdby':   'en_greg',
 	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not reaaaaaally interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. With food for example, in my kitchen there is space for like 4 people.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -566,7 +566,7 @@ template:
 	'name':        'Patching up Clothes-Afternoon',
 	'categories': ['Design','Handwerk'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
-	'createdby':   'Sandro',
+	'createdby':   'en_Sandro',
 	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. the patching should be done good so its not gonna bust again so soon.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -577,7 +577,7 @@ template:
 	'name':        'Different accents',
 	'categories': ['Sprache'],
 	'tags':       ['Dialekt','Wallis'],
-	'createdby':   'LeOnI',
+	'createdby':   'en_LeOnI',
 	'description': 'Watch this video: http://youtu.be/dABo_DCIdpM - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis. Share some links',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -590,7 +590,7 @@ template:
 	'name':        'to brew beer',
 	'tags': ['Bier'],
 	'categories': ['Kultur'],
-	'createdby':   'Gähri Weber',
+	'createdby':   'en_Gähri Weber',
 	'description': 'It is really easy to brew beer! I show you how to brew your own tasty beer in your bathtub. We just need some ingredients and it will ferment by itself. Its a very cool hobby, it brings you some diversity in your beer consolation and it is very healthy. ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -606,7 +606,7 @@ template:
 	'name':        'Crypto Party',
 	'categories': ['Internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
-	'createdby':   'Mike_85',
+	'createdby':   'en_Mike_85',
 	'description': 'Some people are organizing a crypto-party on friday the 28th of September. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.',
 	'roles':      ['team','host'],
 	'members': [
@@ -621,7 +621,7 @@ template:
 	'name':        'Open Lab',
 	'categories': ['Elektronik / Strom', 'Programmieren'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
-	'createdby':   'Mike_85',
+	'createdby':   'en_Mike_85',
 	'description': 'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... Link Openlab, Link SGMK',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -636,7 +636,7 @@ template:
 	'name':        'German Class for everybody',
 	'categories': ['Sprache'],
 	'tags':       ['Sprache'],
-	'createdby':   'ASZ - Bildung für alle',
+	'createdby':   'en_ASZ - Bildung für alle',
 	'description': 'jerman now and for effrybody',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -670,7 +670,7 @@ template:
 	'name':        'Deutsch Kurs',
 	'categories': ['Sprache'],
 	'tags':       ['Deutsch', 'Aussländer_in', 'Immigrant_in'],
-	'createdby':   'Ylmaz Z.',
+	'createdby':   'en_Ylmaz Z.',
 	'description': 'I want to learn german, thats great!',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -713,7 +713,7 @@ template:
 	'name':        'German workshop',
 	'categories': ['Sprache'],
 	'tags':       ['Langage', 'Switzerland'],
-	'createdby':   'IvanZ',
+	'createdby':   'en_IvanZ',
 	'description': 'Who else would be interested in an independent workshop, with no mentor. Just lerning a language and all arround it',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -723,7 +723,7 @@ template:
 	'name':        'Language Exchange',
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
-	'createdby':   'Ylmaz Z.',
+	'createdby':   'en_Ylmaz Z.',
 	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -737,7 +737,7 @@ template:
 	'name':        'Yodeling!',
 	'categories': ['Musik'],
 	'tags':       ['Singen', 'Jodeln'],
-	'createdby':   'Sandra',
+	'createdby':   'en_Sandra',
 	'description': 'Who else wants to learn swiss yodeling? Not like in a suburban yodel association... If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  https://en.wikipedia.org/wiki/Yodeling ',
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
@@ -749,7 +749,7 @@ template:
 	'name':        'First-Aid Course',
 	'categories': ['Medizin'],
 	'tags':       ['Medizin', 'Nothelfer'],
-	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->',
+	'createdby':   'en_OliviaTheMan!!!Yeah <!-- Hack -->',
 	'description': 'First Aid is something so important that we all should renew every year. My last class was five years ago and I forgott almost everything......',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -761,7 +761,7 @@ template:
 	'name':        'Meteor.js Workshop',
 	'categories': ['Programmieren'],
 	'tags':       ['Meteor.js', 'Coden'],
-	'createdby':   'HackerOne',
+	'createdby':   'en_HackerOne',
 	'description': 'Who is in??',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -775,7 +775,7 @@ template:
 	'name':        'graffiti',
 	'categories': ['Subkultur'],
 	'tags':       ['Graffiti', 'Writing your name'],
-	'createdby':   'Fuck The Police',
+	'createdby':   'en_Fuck The Police',
 	'description': 'Lets get mad. I show you how it works. Make sure you bring some cans.',
 	'roles':      ['participant'],
 	'members': [
@@ -798,7 +798,7 @@ template:
 	'name':        'Feministic Twerking workshop'
 	'categories': ['Dance', 'politics'],
 	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
-	'createdby':   'sexyanarchogirl',
+	'createdby':   'en_sexyanarchogirl',
 	'description': 'I love to twerk, wiggle, jiggle and wine up my bumper. But Im still a radical feminist. Is that even possible or not? I would love to organize a Twerking Workshop with a discussion about "queeranarchistic twerking" afterwards. This workshop is for all women*interested in feminism and/or queer, no matter how much they are engaged in queer_feminism and anti-sexism already. With women* we understand  all persons that identify as women*.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -815,7 +815,7 @@ template:
 	'name':        'Build your mobile Soundsystem',
 	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
 	'tags':       ['1', '2'],
-	'createdby':   'OhBacchanal',
+	'createdby':   'en_OhBacchanal',
 	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. a) I think there are more people who really need a mobile Soundsystem b)Im sure there are people out there who know how to construct one. We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
@@ -829,7 +829,7 @@ template:
 	'name':        'International Cookin Course',
 	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
-	'createdby':   'Hotelmamma',
+	'createdby':   'en_Hotelmamma',
 	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! We can use the school kitchen of the secondary school Nägelimoos in kloten',
 	'roles':      ['team', 'participant', 'host', 'mentor'],
 	'members': [
