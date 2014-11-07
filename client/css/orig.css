@@ -225,6 +225,21 @@ p {
   width: 150px !important;
 }
 
+.course_submenu{
+  list-style-type: none;
+}
+
+.course_submenu li {
+  display: inline;
+  border: 1px solid black;
+  padding: 0.3em 1.5em;
+}
+
+.course_submenu li.active {
+  background-color: #ddddff;
+  border: 1.5px solid black;
+}
+
 /***** COURSE DETAILS ******/
 /* line 217, ../../sass/orig/_screen.scss */
 .create_course {
