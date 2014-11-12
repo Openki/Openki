@@ -11,7 +11,7 @@ The web-platform schuel.ch (working title) is a simple open-source tool for loca
 education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of 
 knowledge.
 
-![cloud](http://raw.github.com/schuel/hmmm/cloud.png]
+![cloud](http://raw.github.com/schuel/hmmm/cloud.png)
 
 ### Features
 - Propose and fulltext-search courses and events
