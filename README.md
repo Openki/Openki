@@ -7,6 +7,12 @@ Is a **Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
 - Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
 - Contact: [schueldev[at]lists.xiala.net](mailto:schueldev[_at_]lists.xiala.net "write us")
 
+The web-platform schuel.ch (working title) is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial 
+education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of 
+knowledge.
+
+![cloud](http://raw.github.com/schuel/hmmm/cloud.png]
+
 ### Features
 - Propose and fulltext-search courses and events
 - Simple discussion-board
