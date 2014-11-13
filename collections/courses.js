@@ -182,11 +182,13 @@ Meteor.methods({
 		set.time_lastedit = new Date
 		if (isNew) {
 			/* region cannot be changed */
-			set.region = Regions.findOne({_id: changes.region})
+			var region = Regions.findOne({_id: changes.region})
 			if (!set.region) throw new Exception(404, 'region missing')
+			set.region = region._id
 
+			/* When a course is created, the creator is automatically added as sole member of the team */
 			courseId = Courses.insert({
-				members: [{ user: user._id, roles: [] }],
+				members: [{ user: user._id, roles: ['team'] }],
 				createdby: user._id,
 				time_created: new Date
 			}, checkInsert)
