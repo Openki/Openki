@@ -12,6 +12,7 @@ Router.map(function () {
 				// stop the rest of the before hooks and the action function
 				this.stop();
 			}
+			this.next();
 		},
 		data: function () {
 			var user = Meteor.user()
