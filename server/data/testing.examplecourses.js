@@ -7,31 +7,8 @@ testcourses = [{
 	'roles':      ['team', 'participant', 'host'],
 	'members':    [
 		{'user':'FeeLing', 'roles': ['team','participant']},
-		{'user':'Crosle', 'roles': ['participant']}
+		{'user':'Crosle', 'roles': ['participant'], 'comment': 'Da währ ich sofort dabei'},
 	]
-
-/* should maybe become:
-
-	'roles':      ['team', 'participant', 'host']
-	'subscribed': [
-		{'user':'FeeLing', 'roles': ['team', 'participant']},
-		{'user':'Chrosle', 'roles': ['participant']}
-	]
-
-template:
-
-	'roles':      ['team', 'participant', 'mentor', 'host'],
-	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
-	]
-
-*/
-
 },{
 	'name':        'Aikido',
 	'categories': ['Kampfsport/-kunst'],
@@ -40,12 +17,11 @@ template:
 	'description': 'Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören. Youtube-Video Wikipedia-link',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'Kampfhippie', 'roles': ['participant']},
+		{'user':'Kampfhippie', 'roles': ['participant'], 'comment':'ich hab das vor ca.8 Jahren mal eine Weile gemacht, aber alles vergessen'},
 		{'user':'Seee', 'roles': ['participant']},
 		{'user':'Chnöde', 'roles': ['participant']}
 	],
 	region: 'Testistan',
-
 },{
 	'name':        'Garten',
 	'categories': ['Garten / Landwirtschaft', 'Biologie'],
@@ -61,7 +37,7 @@ template:
 		{'user':'LeOnI', 'roles': ['participant']},
 		{'user':'IvanZ', 'roles': ['participant']},
 		{'user':'WAvegetarian', 'roles': ['participant']}
-]
+	]
 },{
 	'name':        'Game Design mit Unity',
 	'categories': ['Programmieren'],
@@ -71,7 +47,7 @@ template:
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seee', 'roles': ['team','mentor']}
-]
+	]
 },{
 	'name':        'unkommerzielle Commons-based peer production',
 	'categories': ['Garten / Landwirtschaft'],
@@ -228,7 +204,7 @@ template:
 		{'user':'Raymundo Rowland', 'roles': ['participant']},
 		{'user':'Beatrice Bernett', 'roles': ['participant']},
 		{'user':'Lisa', 'roles': ['mentor']},
-		{'user':'Robi', 'roles': ['mentor']},
+		{'user':'Robi', 'roles': ['mentor'], 'comment': 'Ich war mal Turnlehrer'},
 		{'user':'KGut', 'roles': ['mentor']},
 		{'user':'ASZ - Bildung für alle', 'roles': ['host']}
 	]
@@ -389,10 +365,10 @@ template:
 	'description': 'Mein Traum ist es ein mobiles Soundsystem zu haben damit ich spontane soca Paraden und illegale outdoorpartys veranstalten kann. Es gibt doch sicher a) Leute die auch ein mobiles Soundsystem haben wollen und b) Leute die wissen wie man eines baut. Wir sollten uns zusammentun uns bei meinem Vater in der Werkstatt unsere indivuellen Soundsysteme bauen. Mehr Lärm in der Schweiz!',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'en_MachelMontano', 'roles': ['mentor']},
-		{'user':'en_Shaggy', 'roles': ['participant']},
-		{'user':'en_Babaroots', 'roles': ['participant']},
-		{'user':'en_sexyanarchgirl', 'roles': ['participant']}
+		{'user':'MachelMontano', 'roles': ['mentor']},
+		{'user':'Shaggy', 'roles': ['participant']},
+		{'user':'Babaroots', 'roles': ['participant']},
+		{'user':'Seee', 'roles': ['participant']}
 	]
 },{
 	'name':        'Internationaler Kochkurs',
@@ -402,11 +378,11 @@ template:
 	'description': 'Grüezi Mitterand, Ich dune uu gern choche und chan au ganz gute choche, aber leider nume traditionelle schwiizerchuchi und die klassische Italienische Gricht. Wie wärs wemer eus eimal ide Wuche am Samstag morge treffet und immer duet öppert anderst es Gricht wo er/sie bsunders guet cha choche de andere biibringe. Indisch, Chinesisch, Nigerianisch, Vegan, was-au-immer hauptsach fein! Mir chöntet ide schuelchuchi vom nägelimoos sekundarschuelhuus üebe.',
 	'roles':      ['team', 'participant', 'host', 'mentor'],
 	'members': [
-		{'user':'en_Ylmaz Z.', 'roles': ['mentor', 'participant']},
-		{'user':'en_Shaggy', 'roles': ['participant', 'mentor']},
-		{'user':'en_gähri W.', 'roles': ['participant']},
-		{'user':'en_sexyanarchgirl', 'roles': ['participant', 'Mentor']},
-		{'user':'en_Figgdi', 'roles': ['participant', 'mentor']}
+		{'user':'Ylmaz Z.', 'roles': ['mentor', 'participant']},
+		{'user':'Shaggy', 'roles': ['participant', 'mentor'], 'comment': 'I can cook Taiwanese'},
+		{'user':'gähri W.', 'roles': ['participant']},
+		{'user':'Felix', 'roles': ['participant', 'mentor']},
+		{'user':'Lucy', 'roles': ['participant', 'mentor']}
 	]
 },{
 	'name':        'WC-Brunnen Bau',
@@ -489,7 +465,7 @@ template:
 	'description': 'Once in a while meet to do some gardening, exchange know-How, infrastructure, relations, seeds and plants. Support different free garden projects to grow vegetables, herbs, for food and medication. I have access to 2-3 gardens, with capacity for some motivated gardeners.',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'en_Dr Greenthumb', 'roles': ['participant','team', 'host']},
+		{'user':'en_Dr Greenthumb', 'roles': ['participant','team', 'host'], 'comment':'proposed the course' },
 		{'user':'en_Sandro', 'roles': ['participant','team']},
 		{'user':'en_Schufi', 'roles': ['participant']},
 		{'user':'en_Kampfhippie', 'roles': ['participant']},
@@ -610,9 +586,9 @@ template:
 	'description': 'Some people are organizing a crypto-party on friday the 28th of September. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.',
 	'roles':      ['team','host'],
 	'members': [
-		{'user':'en_31337', 'roles': ['team']},
+		{'user':'en_31337', 'roles': ['team'], 'comment': 'yeah,yeah,yeah'},
 		{'user':'en_INYORBASE', 'roles': ['team']},
-		{'user':'en_⧌', 'roles': ['team']},
+		{'user':'en_⧌', 'roles': ['team'], 'comment': 'cool! think thats important'},
 		{'user':'en_c⃠', 'roles': ['team']},
 		{'user':'en_!!!⃤', 'roles': ['host']},
 	],
@@ -836,7 +812,7 @@ template:
 		{'user':'en_Ylmaz Z.', 'roles': ['mentor', 'participant']},
 		{'user':'en_Shaggy', 'roles': ['participant', 'mentor']},
 		{'user':'en_gähri W.', 'roles': ['participant']},
-		{'user':'en_sexyanarchgirl', 'roles': ['participant', 'Mentor']},
+		{'user':'en_sexyanarchgirl', 'roles': ['participant', 'mentor']},
 		{'user':'en_Figgdi', 'roles': ['participant', 'mentor']}
 	],
 	'region':        'Englistan'
