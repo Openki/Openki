@@ -1,31 +1,32 @@
 hmmm
 ====
 
-**Course-Organization-Platform** built with [Meteor.js](http://meteor.com)
+**Platform for open education** – built with [Meteor.js](http://meteor.com)
+A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 
-It's a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
-
-- Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")  /play 56k
-- Concept: [news.schuel.ch](http://news.schuel.ch "our blog") /play story
-- Contact: [schueldev[at]lists.xiala.net](mailto:schueldev[_at_]lists.xiala.net "write us")  /play trololo
+- Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
+- Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
+- Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
 
 ![schuel.ch - concept cloud](http://news.schuel.ch/wp-content/uploads/2014/11/141105_GD_wolke_EN-1024x584.png)
 
 ### Features
-- :pencil: :mag: Propose and fulltext-search courses and events
+- :pencil: Easily propose courses and events
+- :mag: And fulltext-search them
 - :speech_balloon: Simple discussion-board
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
-- :kissing_cat: Categories with sub-categories
-- :house_with_garden: :door: Regions- and room-system
+- :cat: Categories with sub-categories
+- :door: Regions- and room-system
 - :mortar_board: Extendable participant roles
-- :calendar: :date: Calendar
-- :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...
+- :date: Calendar
+- :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...)
 - :ideograph_advantage: In-browser-GUI for life i18n
 - :envelope: Email notifications
 
 ### Intended features
 - :closed_lock_with_key: Privacy settings and security
 - :open_file_folder: File upload for course-documentation
+- :white_flower: Groups-, community- program system
 - :mailbox: Privat messages
 - :beginner: :name_badge: OpenBadges
 - :ghost: Customizability
@@ -43,6 +44,9 @@ It's a simple open-source tool for local, self-organized knowledge exchange: As 
 - Run `meteor`
 - Browse to http://localhost:3000/
 
+### Technical documentation
+It might be in the [Wiki](https://github.com/schuel/hmmm/wiki)
+
 ### Compass, or how to work on stylesheets
 - install ruby
 - `gem install compass`
@@ -53,4 +57,4 @@ It's a simple open-source tool for local, self-organized knowledge exchange: As 
 - compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)
 
 ### License
-- AGPL `GNU Affero General Public License`
+AGPL – GNU Affero General Public License
