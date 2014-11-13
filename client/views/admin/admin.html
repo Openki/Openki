@@ -3,11 +3,11 @@
 	<div id="admin">
 
 		{{#unless isAdmin}}
-			<p>Sorry, you're not admin</p>
+			<p>{{mf 'admin.no_admin' "Sorry, you're not admin"}}</p>
 		{{else}}
 
-		<h1 class="name">Admin-Interface</h1>
-		choose user to upgrade to admin
+		<h1 class="name">{{mf 'admin.interface' 'Admin-Interface'}}</h1>
+		{{mf 'admin.choose_user' 'choose user to upgrade to admin'}}
 
 		{{/unless}}
 	</div>

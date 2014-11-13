@@ -80,6 +80,8 @@ p {
   position: fixed;
   z-index: 100;
   min-width: 850px;
+  
+  width: 100%;
 }
 
 /***** LOGIN ******/
@@ -221,6 +223,21 @@ p {
 /* line 208, ../../sass/orig/_screen.scss */
 .courselist_results .course_name {
   width: 150px !important;
+}
+
+.course_submenu{
+  list-style-type: none;
+}
+
+.course_submenu li {
+  display: inline;
+  border: 1px solid black;
+  padding: 0.3em 1.5em;
+}
+
+.course_submenu li.active {
+  background-color: #ddddff;
+  border: 1.5px solid black;
 }
 
 /***** COURSE DETAILS ******/
@@ -890,6 +907,7 @@ a:hover {
 
 /* line 813, ../../sass/orig/_screen.scss */
 .dropdown:hover .dropdown-menu {
+  margin-top: -5px;
   display: block;
 }
 

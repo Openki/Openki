@@ -16,23 +16,26 @@ Router.map(function() {
 })
 
 
-// if userprofile is the same as the logged in user
-Template.userprofile.ownuser = function () {
-	if (this._id === Meteor.userId()){
-		return("ownuser", true);
+Template.userprofile.helpers({
+	courses_from_userid: function() {
+		return get_courselist({courses_from_userid: this._id});
+	},
+	
+	// if userprofile is the same as the logged in user
+	ownuser: function () {
+		if (this._id === Meteor.userId()){
+			return("ownuser", true);
+		}
+		else {
+			return("ownuser", false);
+		}
+	},
+	
+	selected_user_ID: function () {
+		return Session.get('selected_user');
 	}
-	else {
-		return("ownuser", false);
-	}
-};
-
-
-
-
-Template.userprofile.selected_user_ID = function () {
-	return Session.get('selected_user');
-}
-
+	
+})
 
 
 Template.userprofile.events({

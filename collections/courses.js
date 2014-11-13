@@ -24,37 +24,6 @@ Courses.allow({
 });
 
 
-function findCourses(params){
-	var find = {};
-
-	if (params.member) {
-		// courses where given user is member
-		find.members = { user: params.member }
-	}
-
-	if (Session.get('region')) {
-		find.region = Session.get('region')
-	}
-
-	if (params.missing=="organisator") {
-		// show courses with no organisator
-		find['members.roles'] = { $ne: 'team' }
-	}
-
-	if (param.search) {
-		_.extend(find, {
-			$or: [
-				// FIXME: Runs unescaped as regex, absolutely not ok
-				// ALSO: Not user friendly, do we can have fulltext?
-				{ name: { $regex: param.search, $options: 'i' } },
-				{ description: { $regex: param.search, $options: 'i' } }
-			]
-		})
-	}
-
-	return Courses.find(find, {sort: {time_lastedit: -1, time_created: -1}});
-}
-
 function addRole(course, role, user, comment) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
@@ -213,30 +182,19 @@ Meteor.methods({
 		set.time_lastedit = new Date
 		if (isNew) {
 			/* region cannot be changed */
-			set.region = Regions.findOne({_id: changes.region})
-			if (!set.region) throw new Exception(404, 'region missing')
+			var region = Regions.findOne({_id: changes.region})
+			if (!region) throw Meteor.error(404, 'region missing');
+			set.region = region._id
 
+			/* When a course is created, the creator is automatically added as sole member of the team */
 			courseId = Courses.insert({
-				members: [{ user: user._id, roles: [] }],
+				members: [{ user: user._id, roles: ['team'] }],
 				createdby: user._id,
 				time_created: new Date
-			}, checkInsert)
+			})
 		}
 
-		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne)
-
-		return course
+		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
+		return courseId;
 	}
 })
-
-
-/* Need to find a good place to make these available to all */
-
-function checkInsert(err, id) {
-	if (err) throw err
-}
-
-function checkUpdateOne(err, aff) {
-	if (err) throw err;
-	if (aff != 1) throw "Query affected "+aff+" docs, expected 1"
-}

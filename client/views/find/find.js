@@ -38,6 +38,8 @@ Template.find.events({
 	'change': submitForm
 });
 
-Template.find.hasUpcomingEventsChecked = function() {
-	if (this.hasUpcomingEvent) return "checked";
-}
+Template.find.helpers({
+	'hasUpcomingEventsChecked': function() {
+		if (this.hasUpcomingEvent) return "checked";
+	}
+})

@@ -6,12 +6,13 @@ Template.course_edit.helpers({
 	},
 
 	available_categories: function(parent) {
-		if (parent)return Categories.find({parent: parent})
-		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
-	},
-	
-	available_subcategories: function() {
-		return Categories.find({parent: {$lt:1}})   //only shows cats with parents undefined
+		var query = {}
+		if (parent) {
+			query.parent = parent;
+		} else {
+			query.parent = { $exists: false };
+		}
+		return Categories.find(query);
 	},
 	
 	available_roles: function() {
@@ -51,8 +52,6 @@ Template.course_edit.helpers({
 Template.course_edit.events({
 	'submit form.course_edit, click input.save': function (ev) {
 		ev.preventDefault()
-		
-
 		try {
 			if (!Meteor.userId()){
 			    alert("Please log in!")
@@ -82,10 +81,10 @@ Template.course_edit.events({
 				}
 			}
 
-			Meteor.call("save_course", courseId, changes, function(err, course) {
+			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				Session.set('search', ''); // clear searchfield
 				if (err) alert("Saving the course went terribly wrong: "+err)
-				Router.go('showCourse', course)
+				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 			})
 
 			
@@ -96,7 +95,7 @@ Template.course_edit.events({
 	},
 
 	'click input.cancel': function() {
-		Session.set("isEditing", false);
+		Router.go('showCourse', this);
 	},
 
 	'click #show_categories_to_edit': function(event){
@@ -104,7 +103,7 @@ Template.course_edit.events({
 		$('#edit_categories').toggle();
 	},
 
-	'change .checkbox': function(){
+	'change .categories .checkbox': function(){
 		//$('#' + event.currentTarget.id +" .subcategories").toggle();
 		$('#cat_' + this._id +" .subcategories").toggle();
 

@@ -4,7 +4,7 @@
 // "description" -> string
 // "mentors" -> [userIDs]   optional
 // "startdate" -> ISODate
-// "hosts" -> [userIDs]     optional
+// "host" -> [userIDs]     optional
 // "location" -> ...............
 // "createdby" -> userId
 // "time_created" -> timestamp

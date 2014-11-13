@@ -29,17 +29,6 @@ Router.map(function () {
 	})
 
 
-	this.route('locations',{								///////// locationlist /////////
-		path: 'locations',
-		template: 'locationlist',
-		waitOn: function () {
-			return Meteor.subscribe('locations');
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Location list'
-		}
-	})
-
 	this.route('categorylist',{								///////// categories /////////
 		waitOn: function () {
 			return Meteor.subscribe('categories');     // TODO: Anchor tags don't work anyway

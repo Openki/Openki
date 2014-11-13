@@ -15,7 +15,7 @@
 				{{>course_event}}
 			</div>
 		{{else}}
-			no events
+			{{mf 'course.events.no_events' 'no events'}}
 		{{/each}}
 
 	</div>
@@ -29,7 +29,7 @@
 				{{>course_event}}
 			</div>
 		{{else}}
-			no events
+			{{mf 'course.events.no_events' 'no events'}}
 		{{/each}}
 
 	</div>
@@ -62,7 +62,7 @@
 				</p>
 				{{/if}}
 				{{#if this.hosts}}
-				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : hosted by {{username host}} </p>
+				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.events.hosted_by' 'hosted by'}} {{username host}} </p>
 				{{/if}}
             </a>
 			{{/with}}

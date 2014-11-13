@@ -5,10 +5,10 @@
         <input id="hide" type="button" value="Hide chat" />
         <input id="deleteChat" type="button" value="Clear chat" />
 
-        <h2>Chat</h2>
+        <h2>{{mf 'chat' 'Chat'}}</h2>
         <table>
         <tr>
-          <th>Name: </th>
+          <th>{{mf 'chat.name' 'Name:'}}</th>
           <td>
           {{#if chatName}}
           
@@ -26,7 +26,7 @@
           </td>
         </tr>
         <tr>
-            <th>Message: </th>
+            <th>{{mf 'chat.message' 'Message:'}}</th>
             <td><input id="message" /></td>
         </tr>
         <tr>

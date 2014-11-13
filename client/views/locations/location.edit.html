@@ -27,7 +27,7 @@
 			<select name='region' class="region_select">
 				<option value=''>Please select</option>
 			{{#each regions}}
-				<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
+				<option value='{{_id}}' {{regionSel}}>{{name}}</option>
 			{{/each}}
 			</select>
 		</p>

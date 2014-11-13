@@ -16,7 +16,7 @@ Router.map(function () {
 		},
 		data: function() {
 			return {
-				results: Courses.find()
+				results: Courses.find({}, {sort: {time_lastedit: -1}})
 			}
 		},
 		onAfterAction: function() {
