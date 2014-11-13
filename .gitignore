@@ -13,5 +13,6 @@ codekit-config.json
 
 packages/
 .meteor/release
-
+.meteor/local
+.meteor/meteorite
 .bower_components
