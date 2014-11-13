@@ -52,8 +52,6 @@ Template.course_edit.helpers({
 Template.course_edit.events({
 	'submit form.course_edit, click input.save': function (ev) {
 		ev.preventDefault()
-		
-
 		try {
 			if (!Meteor.userId()){
 			    alert("Please log in!")
@@ -83,10 +81,10 @@ Template.course_edit.events({
 				}
 			}
 
-			Meteor.call("save_course", courseId, changes, function(err, course) {
+			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				Session.set('search', ''); // clear searchfield
 				if (err) alert("Saving the course went terribly wrong: "+err)
-				Router.go('showCourse', course)
+				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 			})
 
 			

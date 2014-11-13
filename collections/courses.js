@@ -191,11 +191,10 @@ Meteor.methods({
 				members: [{ user: user._id, roles: ['team'] }],
 				createdby: user._id,
 				time_created: new Date
-			}, checkInsert)
+			})
 		}
 
-		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne)
-
-		return course
+		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
+		return courseId;
 	}
 })
