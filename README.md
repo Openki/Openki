@@ -4,14 +4,13 @@ hmmm
 **Platform for open education** – built with [Meteor.js](http://meteor.com)
 
 A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
-[read on...](http://news.schuel.ch "our blog")
+[  read on...](http://news.schuel.ch "our blog")
 
 - Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
 - Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
 - Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
 
-![schuel.ch - concept cloud](http://news.schuel.ch/wp-content/uploads/2014/11/141105_GD_wolke_EN-1024x584.png)
-<img src="http://news.schuel.ch/wp-content/uploads/2014/11/141105_GD_wolke_EN-1024x584.png" width="400">
+<img src="http://news.schuel.ch/wp-content/uploads/2014/11/141105_GD_wolke_EN-1024x584.png" width="580" alt="cloud diagram showing connection between individuals, comunities, event locations and calendars" align="middle" >
 
 ----
 
