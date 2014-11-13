@@ -3,11 +3,10 @@
 </template>
 
 
-
 <template name="userprofile">
 	<div id="profile">
-		<h1 class="name">{{this.username}}'s {{mf 'profile.profile_page' 'Profile-Page'}}</h1>
-		<p class="small">{{mf 'profile.userid' 'UserID:'}}{{this._id}}</p>
+		<h1 class="name">{{user.username}}'s {{mf 'profile.profile_page' 'Profile-Page'}}</h1>
+		<p class="small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
 		<br><br><br><br><br>
 		{{#if ownuser}}
 			{{mf 'profile.its_you' "it's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
@@ -27,7 +26,7 @@
 		{{/if}}
 		<div class="list_small">
 			<h3>{{this.username}}'s {{mf 'profile.courses' 'Courses:'}}</h3>	   <!--(this because there is a helper called username) -->
-			{{> courselist courses_from_userid}}
+			{{> courselist involvedIn}}
 		</div>
 	</div>
 </template>

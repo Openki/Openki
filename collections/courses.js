@@ -61,6 +61,32 @@ function removeRole(course, role, user) {
 	)
 }
 
+coursesFind = function(region, query, filter) {
+	var find = {}
+	if (region != 'all') find.region = region
+	if (filter.hasUpcomingEvent) {
+		var future_events = Events.find({startdate: {$gt: new Date()}}).fetch()
+		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
+		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
+	}
+	if (filter.userInvolved) {
+		find['members.user'] = filter.userInvolved;
+	}
+	if (query) {
+		var searchTerms = query.split(/\s+/);
+		var searchQueries = _.map(searchTerms, function(searchTerm) {
+			return { $or: [
+				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+			] }
+		});
+
+		find.$and = searchQueries;
+	}
+	var options = { limit: 40, sort: {time_lastedit: -1, time_created: -1} };
+	return Courses.find(find, options);
+} 
+
 
 Meteor.methods({
 
