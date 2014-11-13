@@ -183,9 +183,6 @@ Meteor.methods({
 		if (isNew) {
 			/* region cannot be changed */
 			var region = Regions.findOne({_id: changes.region})
-			console.log(changes)
-			console.log(Regions.find().fetch())
-			console.log(region)
 			if (!region) throw Meteor.error(404, 'region missing');
 			set.region = region._id
 
