@@ -21,7 +21,7 @@ Router.map(function () {
 	})
 })
 
-var submitForm = function() {
+var submitForm = function(event) {
 	options = {}
 	if ($("#hasUpcomingEvent")[0].checked) {
 		options.query = "hasUpcomingEvent";
