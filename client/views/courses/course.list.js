@@ -57,10 +57,12 @@ Template.course.helpers({
 	},
 	
 	requiresMentor: function() {
+		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1
 	},
 
 	requiresHost: function() {
+		if (!this.roles) return false;
 		return this.roles.indexOf('host') != -1
 	},
 
