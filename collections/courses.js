@@ -199,15 +199,3 @@ Meteor.methods({
 		return course
 	}
 })
-
-
-/* Need to find a good place to make these available to all */
-
-function checkInsert(err, id) {
-	if (err) throw err
-}
-
-function checkUpdateOne(err, aff) {
-	if (err) throw err;
-	if (aff != 1) throw "Query affected "+aff+" docs, expected 1"
-}
