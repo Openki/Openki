@@ -9,6 +9,7 @@ Router.map(function () {
 				var region = Regions.findOne({ name: this.params.region } )
 				if (region) Session.set('region', region._id)
 			}
+			this.next();
 		},
 		waitOn: function () {
 			var region = Session.get('region')

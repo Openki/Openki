@@ -9,6 +9,7 @@ webpagename = 'Hmmm - Course Organisation Platform - '  // global (document titl
 // Skip to top on page change
 Router.onBeforeAction(function() {
 	$('body,html').scrollTop(0);
+    this.next();
 })
 
 Router.map(function () {

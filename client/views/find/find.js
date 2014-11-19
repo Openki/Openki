@@ -1,27 +1,27 @@
 Router.map(function () {
 	this.route('find', {
-		path: '/find/:query?',
+		path: '/find/:search?',
 		template: 'find',
 		waitOn: function () {
 			var region = Session.get('region')
 			var filter = {}
-			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true
-			return Meteor.subscribe('coursesFind', region, this.params.query, filter);
+			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true;
+			return Meteor.subscribe('coursesFind', region, this.params.search, filter);
 		},
 		data: function() {
 			return {
 				hasUpcomingEvent: this.params.hasUpcomingEvent,
-				query: this.params.query,
+				query: this.params.search,
 				results: Courses.find()
 			}
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Find ' + this.params.query
+			document.title = webpagename + 'Find ' + this.params.search
 		}
 	})
 })
 
-var submitForm = function() {
+var submitForm = function(event) {
 	options = {}
 	if ($("#hasUpcomingEvent")[0].checked) {
 		options.query = "hasUpcomingEvent";
