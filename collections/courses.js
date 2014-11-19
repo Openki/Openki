@@ -61,7 +61,7 @@ function removeRole(course, role, user) {
 	)
 }
 
-coursesFind = function(region, query, filter) {
+coursesFind = function(region, query, filter, limit) {
 	var find = {}
 	if (region != 'all') find.region = region
 	if (filter.hasUpcomingEvent) {
@@ -72,6 +72,11 @@ coursesFind = function(region, query, filter) {
 	if (filter.userInvolved) {
 		find['members.user'] = filter.userInvolved;
 	}
+	
+	if (filter.missingTeam) {	
+		find['members.roles'] = { $ne: 'team' }
+	}
+	
 	if (query) {
 		var searchTerms = query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
@@ -83,7 +88,7 @@ coursesFind = function(region, query, filter) {
 
 		find.$and = searchQueries;
 	}
-	var options = { limit: 40, sort: {time_lastedit: -1, time_created: -1} };
+	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
 	return Courses.find(find, options);
 } 
 
