@@ -3,7 +3,7 @@ Router.map(function () {
 		path: 'profile',
 		waitOn: function () {
 			return [ 
-				Meteor.subscribe('users'),
+				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('coursesFind', 'all', false, { userInvovled: Meteor.userId() })
 			];
 		},
@@ -11,7 +11,8 @@ Router.map(function () {
 			var user = Meteor.user()
 			if(user) {
 				var userdata = {
-					name: user.username
+					_id: user._id,
+					name: user.profile.name
 				}
 				if(user.emails) {
 					userdata.email = user.emails[0].address
@@ -31,7 +32,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne()
 			if (!user) return;
-			document.title = webpagename + 'My Profile_Settings - ' + user.username
+			document.title = webpagename + 'My Profile_Settings - ' + user.profile.name;
 		}
 	})
 })

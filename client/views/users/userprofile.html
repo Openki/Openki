@@ -5,13 +5,12 @@
 
 <template name="userprofile">
 	<div id="profile">
-		<h1 class="name">{{user.username}}'s {{mf 'profile.profile_page' 'Profile-Page'}}</h1>
+		<h1 class="name">{{mf 'profile.profile_page' "NAME's Profile-Page" NAME=user.profile.name}}</h1>
 		<p class="small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
-		<br><br><br><br><br>
 		{{#if ownuser}}
 			{{mf 'profile.its_you' "it's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
 		{{else}}
-			<p>---------------------------------------------------------</p>
+			<hr>
 			<p>{{mf 'profile.mail.to_user' 'you can write an email to this user:'}}</p>
 			<br>
 				{{mf 'profile.mail.content' 'Your message:'}}
@@ -25,7 +24,7 @@
 				<input type="button" class="sendmail" value="Send Email" />
 		{{/if}}
 		<div class="list_small">
-			<h3>{{this.username}}'s {{mf 'profile.courses' 'Courses:'}}</h3>	   <!--(this because there is a helper called username) -->
+			<h3>{{mf 'profile.courses' "NAME's Courses:" NAME=user.profile.name}}</h3>
 			{{> courselist involvedIn}}
 		</div>
 	</div>

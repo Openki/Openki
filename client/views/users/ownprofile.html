@@ -12,9 +12,9 @@
 			<p>{{mf 'profile.input.new_pswd' 'New password (optional):'}} <input type="password" id="editform_newpassword" value=""/></p>
 			<input type="button" class="save" value="Save" />
 		{{else}}
-			<p class="descr_small">{{mf 'profile.id' 'ID:'}}{{user._id}}</p>
-			<p class="descr">{{mf 'profile.username' 'Username:'}}{{user.username}}</p>
-			<p class="descr">{{mf 'profile.email' 'Email:'}}{{user.email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
+			<p class="descr_small">{{mf 'profile.id' 'ID:'}} {{user._id}}</p>
+			<p class="descr">{{mf 'profile.username' 'Username:'}} {{user.name}}</p>
+			<p class="descr">{{mf 'profile.email' 'Email:'}} {{user.email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
 				{{#unless user.veryfiedEmailTrue}}
 					<input type="button" class="verify" value="Verify my Email" />
 				{{/unless}}
