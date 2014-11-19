@@ -24,7 +24,7 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :mortar_board: Extendable participant roles
 - :date: Calendar
 - :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...)
-- :ideograph_advantage: In-browser-GUI for life i18n
+- :ideograph_advantage: I18n: In-browser-GUI for life translation
 - :envelope: Email notifications
 
 ### Intended features
@@ -36,6 +36,7 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :ghost: Customizability
 - :ticket: Mozzila Persona
 - :8ball: Connection to SocialNetworks APIs
+- :iphone: Smartphone App
 
 ### Installation
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip (or clone) Hmmm into /some/path
@@ -49,16 +50,7 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - Browse to http://localhost:3000/
 
 ### Technical documentation
-- Might be in the [Wiki](https://github.com/schuel/hmmm/wiki)
-
-### Compass, or how to work on stylesheets
-- install ruby
-- `gem install compass`
-- install bower `npm install -g bower`
-- run `bower install` in project root
-- run `compass compile` in project root
-- scss/sass files go into sass folder
-- compiled css goes to client/css. never edit these files. they are just there for the convenience of the guys without compass :-)
+- Is in the [Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
 AGPL – GNU Affero General Public License
