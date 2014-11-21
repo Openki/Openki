@@ -1,11 +1,10 @@
 <template name="coursedetails">
-	{{#with course}}
 
 	<div id="coursedetails">
-		{{#if ../edit}}
-			{{>course_edit}}
+		{{#if edit}}
+			{{> course_edit course}}
 		{{else}}
-
+			{{#with course}}
 			<div class="course_main">
                 {{title name " - hmmm"}}
                 <h2 class="name">{{name}}</h2>
@@ -25,21 +24,24 @@
                 {{/if}}
 
 			</div>
+			{{/with}}
 		{{/if}}
 
 
-		{{> roleDetails ../roleDetails}}
+		{{> roleDetails roleDetails}}
 
-
-		{{> Members}}
+		{{#if member}}
+			{{> roleComment}}
+		{{/if}}
+		
+		{{> Members course}}
 
 		<div class="discussion">
-		{{> discussion}}
+		{{> discussion course}}
 		</div>
-		{{> votelists}}
-		{{> postDialog}}
+		{{> votelists course}}
+		{{> postDialog course}}
 	</div>
-    {{/with}}
 	<div class="course_right_column">
 		{{> course_events}}
 	</div>

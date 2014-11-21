@@ -14,4 +14,5 @@ standard-app-packages
 check
 iron:router
 gadicohen:messageformat
+reactive-var
 

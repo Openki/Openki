@@ -15,11 +15,14 @@ Router.map(function () {
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id})
 			if (!course) return null;
+			   
+			var userId = Meteor.userId();
+			var member = getMember(course.members, userId);
 			return {
-				edit: !!this.params.edit,
-				roleDetails: loadroles(course, this.params.enrol),
+				edit: !!this.params.query.edit,
+				roleDetails: loadroles(course),
 				course: course,
-				subscribe: this.params.subscribe
+				member: member
 			};
 		},
 		onAfterAction: function() {
@@ -49,21 +52,18 @@ Router.map(function () {
 
 })
 
-function loadroles(course, enroling) {
-	var userId = Meteor.userId()
-	var member = getMember(course.members, userId)
+function loadroles(course) {
+	var userId = Meteor.userId();
 	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
 		var role = roletype.type
-		var sub = hasRoleUser(course.members, role, userId)
+		var sub = hasRoleUser(course.members, role, userId);
 		if (course.roles.indexOf(role) !== -1) {
 			goodroles.push({
 				roletype: roletype,
 				role: role,
 				subscribed: !!sub,
 				anonsub: sub == 'anon',
-				course: course,
-				enroling: enroling == role,
-				comment: member.comment
+				course: course
 			})
 		}
 		return goodroles;
