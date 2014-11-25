@@ -1,6 +1,5 @@
 Template.roleComment.created = function() {
-	this.editing = new ReactiveVar;
-	this.editing.set(false)
+	this.editing = new ReactiveVar(false);
 }
 
 Template.roleComment.helpers({
@@ -27,8 +26,7 @@ Template.roleComment.events({
 
 
 Template.roleDetail.created = function() {
-	this.enrolling = new ReactiveVar;
-	this.enrolling.set(false)
+	this.enrolling = new ReactiveVar(false);
 }
 
 Template.roleDetail.helpers({
