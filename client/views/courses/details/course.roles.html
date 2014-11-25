@@ -39,23 +39,26 @@
 <template name="roleDetail">
 	<div class="roleDetails role_{{roletype.type}}">
 		<div class="subscribe">
-		{{! The id= tags on the input fields are not referenced by our code. They were added to help the spark patcher figure out what to patch. I must assume there is a simple and proper solution to avoid this kludge, alas I have no knowledge of it. }}
 		{{#if subscribed}}
-			<span class='subscribed'>{{mf 'course.roles.you_are' 'you are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}}<input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract" id="unsubscribe_{{roletype.type}}"/></span>
+			<span class='subscribed'>{{mf 'course.roles.you_are' 'you are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}} <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract"/></span>
 		{{else}}
 			{{#if enrolling}}
 				<div>
-					<h3>{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}</h3>
-					<form name="form_post">
-						<input type="button" class="subscribe" value="Ok" />
-						<input type="button" class="cancel" value="cancel" />
-						<input type="button" class="subscribeAnon" value="anonymously ☔" />
-						<br>{{mf 'course.roles.your_message' 'leave a message/wish/interest here:'}}<br>
-						<textarea cols="70" rows="3" class='comment'>{{../member.comment}}</textarea>
-					</form>
+					<h3>
+						{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}
+					</h3>
+					<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosub' 'incognito ☔'}}</label>
+
+					<button class="subscribe">{{mf 'course.roles.enrol' 'enrol'}}</button>
+					<button class="cancel">{{mf 'course.roles.cancelenrol'  'cancel'}}</button>
+
+					<div>
+						{{mf 'course.roles.your_message' 'leave a message/wish/interest here:'}}<br>
+						<textarea cols="70" rows="3" class='comment'>{{../../member.comment}}</textarea>
+					</div>
 				</div>
 			{{else}}
-				<input type="button" class="enrol" name="participant" value="{{roletype.subscribe}}"  id="subscribe_{{roletype.type}}"/>
+				<input type="button" class="enrol" name="participant" value="{{roletype.subscribe}}"/>
 			{{/if}}
 		{{/if}}
 		</div>

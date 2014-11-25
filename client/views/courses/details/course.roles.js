@@ -1,6 +1,5 @@
 Template.roleComment.created = function() {
-	this.editing = new ReactiveVar;
-	this.editing.set(false)
+	this.editing = new ReactiveVar(false);
 }
 
 Template.roleComment.helpers({
@@ -27,8 +26,7 @@ Template.roleComment.events({
 
 
 Template.roleDetail.created = function() {
-	this.enrolling = new ReactiveVar;
-	this.enrolling.set(false)
+	this.enrolling = new ReactiveVar(false);
 }
 
 Template.roleDetail.helpers({
@@ -45,23 +43,18 @@ Template.roleDetail.events({
 		return false;
 	},
 	
-	'click input.subscribe': function (e, template) {
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, false);
+	'click button.subscribe': function (e, template) {
+		var incognito = $(template.find('.incognito')).prop('checked');
+		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, incognito);
+		
+		// Store the comment
 		var comment = $(template.find('.comment')).val();
 		Meteor.call("change_comment", this.course._id, comment);
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click input.subscribeAnon': function (e, template) {
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, true);
-		var comment = $(template.find('.comment')).val();
-		Meteor.call("change_comment", this.course._id, comment);
-		template.enrolling.set(false);
-		return false;
-	},
-
-	'click input.cancel': function (e, template) {
+	'click button.cancel': function (e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
