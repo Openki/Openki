@@ -9,10 +9,13 @@ Router.map(function () {
 			return Meteor.subscribe('coursesFind', region, this.params.search, filter);
 		},
 		data: function() {
+			var region = Session.get('region')
+			var filter = {}
+			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true;
 			return {
 				hasUpcomingEvent: this.params.hasUpcomingEvent,
 				query: this.params.search,
-				results: Courses.find()
+				results: coursesFind(region, this.params.search, filter)
 			}
 		},
 		onAfterAction: function() {
