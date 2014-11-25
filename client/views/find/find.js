@@ -27,7 +27,7 @@ var submitForm = function(event) {
 		options.query = "hasUpcomingEvent";
 	}
 
-	Router.go('find', { query: $('#find').val().replace("/", " ")}, options )
+	Router.go('find', { search: $('#find').val().replace("/", " ")}, options )
 	event.preventDefault();
 	event.stopPropagation();
 	return false; 

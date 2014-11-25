@@ -3,7 +3,6 @@ Template.search_form.events({
 		Session.set('search', event.currentTarget.value)
 	},
 	'submit': function(event){
-		console.log(event)
 		event.preventDefault()
 		Router.go('proposeCourse')
 	}
