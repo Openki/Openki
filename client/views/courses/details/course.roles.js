@@ -20,7 +20,7 @@ Template.roleComment.events({
 	},
 	
 	'click input.reset': function (e, template) {
-		template.find('.comment').val("" + template.data.comment);
+		$(template.find('.comment')).val("" + template.data.member.comment);
 		template.editing.set(false);
 	},
 });
