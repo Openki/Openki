@@ -6,13 +6,19 @@ Router.map(function () {
 		path: 'courses',
 		template: 'coursepage',
 		waitOn: function () {
-			return Meteor.subscribe('courses');
+			var region = Session.get('region')
+			return [
+				Meteor.subscribe('coursesFind', region, false, {}, 40),
+				Meteor.subscribe('coursesFind', region, false, { missingTeam: true }, 5),
+				Meteor.subscribe('coursesFind', region, false, { missingParticipants: true }, 5),
+			]
 		},
 		data: function () {
+			var region = Session.get('region')
 			return {
-				missing_organisator: get_courselist({missing: "organisator"}).fetch(),
-				missing_subscribers: get_courselist({missing: "subscribers"}),
-				all_courses: get_courselist({})
+				missing_organisator: coursesFind(region, false, { missingTeam: true }, 5),
+				missing_subscribers: coursesFind(region, false, { missingParticipants: true }, 5),
+				all_courses: coursesFind(region, false, {}, 36)
 			};
 		},
 		onAfterAction: function() {
@@ -20,31 +26,6 @@ Router.map(function () {
 		},
 	})
 })
-
-/* ------------------------- Query / List ------------------------- */
-
-// TODO: convert to lirary function or method
-
-function get_courselist(listparameters){
-	//return a course list
-	var find ={};
-
-	if (listparameters.courses_from_userid) {
-		// courses where given user is member
-		find['members.user'] = listparameters.courses_from_userid
-	}
-
-	if (Session.get('region')) {
-		find.region = Session.get('region')
-	}
-
-	if (listparameters.missing=="organisator") {
-		// show courses with no organisator
-		find['members.roles'] = { $ne: 'team' }
-	}
-
-	return Courses.find(find, {sort: {time_lastedit: -1}});
-}
 
 
 Template.course.helpers({

@@ -976,3 +976,12 @@ ul.categories {
   font-size: 26px !important;
   margin-left: 5px;
 }
+
+#loginFrame {
+	background-color: blue;
+	padding: 1em;
+}
+
+.loginClose {
+	float: right;
+}

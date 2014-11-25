@@ -1,23 +1,32 @@
+Router.map(function() {
+	this.route('userprofile', {
+		path: 'user/:_id/:username?',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('users'),
+				Meteor.subscribe('coursesFind', 'all', false, { userInvovled: this.params._id })
+			];
+		},
+		data: function () {
+			return {
+				'user': Meteor.users.findOne({_id: this.params._id}),
+				'involvedIn': coursesFind('all', false, { userInvovled: this.params._id })
+			};
+		},
+		onAfterAction: function() {
+			var user = Meteor.users.findOne({_id: this.params._id})
+			if (!user) return; // wtf
+			document.title = webpagename + '' + user.profile.name + "'s Profile"
+		}
+	})
+})
+
 
 Template.userprofile.helpers({
-	courses_from_userid: function() {
-		return get_courselist({courses_from_userid: this._id});
-	},
-	
-	// if userprofile is the same as the logged in user
+	// whether userprofile is for the logged-in user
 	ownuser: function () {
-		if (this._id === Meteor.userId()){
-			return("ownuser", true);
-		}
-		else {
-			return("ownuser", false);
-		}
-	},
-	
-	selected_user_ID: function () {
-		return Session.get('selected_user');
+		return this._id === Meteor.userId()
 	}
-	
 })
 
 

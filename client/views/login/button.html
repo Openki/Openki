@@ -1,0 +1,9 @@
+<template name='loginButton'>
+	<a class="loginButton">
+	{{#if currentUser}}
+		{{currentUser.username}}&nbsp;▼
+	{{else}}
+		{{mf 'login.navig.unlogged' 'Login/Sign up'}}&nbsp;▼
+	{{/if}}
+	</a>
+</template>

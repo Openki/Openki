@@ -72,21 +72,6 @@ Router.map(function () {
 		}
 	})
 
-	this.route('userprofile', {								///////// userprofile /////////
-		path: 'user/:_id/:username?',
-		waitOn: function () {
-			return Meteor.subscribe('users');
-		},
-		data: function () {
-			return Meteor.users.findOne({_id: this.params._id})
-		},
-		onAfterAction: function() {
-			var user = Meteor.users.findOne({_id: this.params._id})
-			if (!user) return; // wtf
-			document.title = webpagename + '' + user.username + "'s Profile"
-		}
-	})
-
 	this.route('calendar', {								///////// calendar /////////
 		path: 'calendar',
 		template: 'calendar',

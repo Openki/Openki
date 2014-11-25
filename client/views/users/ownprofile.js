@@ -2,22 +2,18 @@ Router.map(function () {
 	this.route('profile', {
 		path: 'profile',
 		waitOn: function () {
-			return Meteor.subscribe('users');
-		},
-		onBeforeAction: function () {
-			if (!Meteor.user()) {
-				// render the login template but keep the url in the browser the same
-				this.render('not_loggedin');
-				// alert ('Please log in!')
-				// stop the rest of the before hooks and the action function
-				this.stop();
-			}
-			this.next();
+			return [ 
+				Meteor.subscribe('currentUser'),
+				Meteor.subscribe('coursesFind', 'all', false, { userInvovled: Meteor.userId() })
+			];
 		},
 		data: function () {
 			var user = Meteor.user()
 			if(user) {
-				var userdata = user
+				var userdata = {
+					_id: user._id,
+					name: user.profile.name
+				}
 				if(user.emails) {
 					userdata.email = user.emails[0].address
 					if(user.emails[0].verified){
@@ -26,28 +22,27 @@ Router.map(function () {
 					}
 					else userdata.verifiedEmail = 'not verified'
 				}
-				return userdata
+				
+				return { 
+					user: userdata,
+					courses: coursesFind('all', false, { userInvovled: user._id })
+				};
 			}
 		},
 		onAfterAction: function() {
 			var user = Meteor.users.findOne()
-			if (!user) alert ("you're not logged in")
-			document.title = webpagename + 'My Profile_Settings - ' + user.username
+			if (!user) return;
+			document.title = webpagename + 'My Profile_Settings - ' + user.profile.name;
 		}
 	})
 })
 
 
 Template.profile.helpers({
-	'courses_from_userid': function() {
-		return get_courselist({courses_from_userid: Meteor.userId()});
+	isEditing: function () {
+		return Session.get("isEditing");
 	}
-})
-
-
-Template.profile.isEditing = function () {
-	return Session.get("isEditing");
-};
+});
 
 Template.profile.events({
 	'click input.edit': function () {

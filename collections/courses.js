@@ -24,7 +24,7 @@ Courses.allow({
 });
 
 
-function addRole(course, role, user, comment) {
+function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
 		{ _id: course._id, 'members.user': { $ne: user } },
@@ -36,7 +36,7 @@ function addRole(course, role, user, comment) {
 	if (!Meteor.isClient) {
 		Courses.update(
 			{ _id: course._id, 'members.user': user },
-			{ '$addToSet': { 'members.$.roles': role }, $set:{'members.$.comment' : comment}},
+			{ '$addToSet': { 'members.$.roles': role }},
 			checkUpdateOne
 		)
 	}
@@ -61,15 +61,60 @@ function removeRole(course, role, user) {
 	)
 }
 
+coursesFind = function(region, query, filter, limit) {
+	var find = {}
+	if (region != 'all') find.region = region
+	if (filter.hasUpcomingEvent) {
+		var future_events = Events.find({startdate: {$gt: new Date()}}).fetch()
+		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
+		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
+	}
+	if (filter.userInvolved) {
+		find['members.user'] = filter.userInvolved;
+	}
+	
+	if (filter.missingTeam) {	
+		find['members.roles'] = { $ne: 'team' }
+	}
+	
+	if (query) {
+		var searchTerms = query.split(/\s+/);
+		var searchQueries = _.map(searchTerms, function(searchTerm) {
+			return { $or: [
+				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+			] }
+		});
+
+		find.$and = searchQueries;
+	}
+	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
+	return Courses.find(find, options);
+} 
+
 
 Meteor.methods({
 
-	change_subscription: function(courseId, role, add, anon, comment) {
+	change_comment: function(courseId, comment) {
+		check(courseId, String);
+		check(comment, String);
+		var course = Courses.findOne({_id: courseId})
+		if (!course) throw new Meteor.Error(404, "Course not found");
+
+		if (!Meteor.isClient) {
+			Courses.update(
+				{ _id: course._id, 'members.user': Meteor.userId() },
+				{ $set: { 'members.$.comment': comment } },
+				checkUpdateOne
+			)
+		}
+	},
+	
+	change_subscription: function(courseId, role, add, anon) {
 		check(role, String)
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
-		check(comment, Match.OneOf(null, String))
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
@@ -106,7 +151,7 @@ Meteor.methods({
 		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role)
 
 		if (add) {
-			addRole(course, role, userId, comment)
+			addRole(course, role, userId)
 			var time = new Date
 			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
 		} else {
