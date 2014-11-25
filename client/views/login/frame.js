@@ -35,10 +35,15 @@ Template.loginRegister.events({
 Template.loginLogin.events({
 	'submit form': function(event, template){
 		event.preventDefault();
-		var emailVar = template.find('#login-email').value;
-		var passwordVar = template.find('#login-password').value;
-		Meteor.loginWithPassword(emailVar, passwordVar);
+		var email = template.find('#login-email').value;
+		var password = template.find('#login-password').value;
+		Meteor.loginWithPassword(email, password, function(err) {
+			if (err) {
+				console.log(err);
+			} else {
+				Session.set('showLogin', false);
+			}
+		});
 		
-		Session.set('showLogin', false);
 	}
 });
