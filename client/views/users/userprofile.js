@@ -4,19 +4,19 @@ Router.map(function() {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('users'),
-				Meteor.subscribe('coursesFind', 'all', false, { userInvovled: this.params._id })
+				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: this.params._id })
 			];
 		},
 		data: function () {
 			return {
 				'user': Meteor.users.findOne({_id: this.params._id}),
-				'involvedIn': coursesFind('all', false, { userInvovled: this.params._id })
+				'involvedIn': coursesFind('all', false, { userInvolved: this.params._id })
 			};
 		},
 		onAfterAction: function() {
 			var user = Meteor.users.findOne({_id: this.params._id})
 			if (!user) return; // wtf
-			document.title = webpagename + '' + user.profile.name + "'s Profile"
+			document.title = webpagename + '' + user.username + "'s Profile"
 		}
 	})
 })
