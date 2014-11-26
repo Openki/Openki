@@ -6,7 +6,7 @@
 <template name="userprofile">
 	<div id="profile">
 		<h1 class="name">{{user.username}}'s {{mf 'profile.profile_page' 'Profile-Page'}}</h1>
-		<h1 class="name">{{mf 'profile.profile_page' "{{NAME}}'s Profile-Page" NAME=user.username}}</h1>
+		<h1 class="name">{{mf 'profile.profile_page' "{NAME}'s Profile-Page" NAME="username"}}</h1>
 		<p class="small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
 		{{#if ownuser}}
 			{{mf 'profile.its_you' "it's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
@@ -15,7 +15,7 @@
 			<p>{{mf 'profile.mail.to_user' 'you can write an email to this user:'}}</p>
 			<br>
 				{{mf 'profile.mail.content' 'Your message:'}}
-				<p> <input type="text" id="emailmessage" placeholder="Hi {{this.username}}! ..."/></p>
+				<p> <input type="text" id="emailmessage" placeholder="Hi {{username this.user._id}}! ..."/></p>
 				<p>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet -->
 					<form>
 						<input type="checkbox" name="email1" value="send">{{mf 'profile.mail.attachmail' 'attach my email address'}}<br>
