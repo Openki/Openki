@@ -25,7 +25,7 @@ Router.map(function() {
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser: function () {
-		return this._id === Meteor.userId()
+		return this.user._id === Meteor.userId()
 	}
 })
 
