@@ -14,7 +14,14 @@ Template.loginFrame.events({
 		Meteor.logout();
 		Session.set('showLogin', false);
 	}
-})
+});
+
+
+Template.loginFrame.helpers({
+  username: function () {
+    return Meteor.user() && Meteor.user().username;
+  }
+});
 
 
 Template.loginRegister.events({
@@ -31,7 +38,6 @@ Template.loginRegister.events({
 	}
 });
 
- 
 Template.loginLogin.events({
 	'submit form': function(event, template){
 		event.preventDefault();

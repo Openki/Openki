@@ -14,7 +14,6 @@ Template.region_sel.events({
 		var region_id = this._id ? this._id : 'all'
 		localStorage.setItem("region", region_id); // to survive page reload
 		Session.set('region', region_id)
-		return false
+		//return false
 	}
 })
-
