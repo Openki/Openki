@@ -9,7 +9,7 @@
 		<h1 class="name">{{mf 'profile.profile_page' "{NAME}'s Profile-Page" NAME="username"}}</h1>
 		<p class="small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
 		{{#if ownuser}}
-			{{mf 'profile.its_you' "it's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
+			{{mf 'profile.its_you' "It's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
 		{{else}}
 			<hr>
 			<p>{{mf 'profile.mail.to_user' 'you can write an email to this user:'}}</p>
@@ -25,7 +25,7 @@
 				<input type="button" class="sendmail" value="Send Email" />
 		{{/if}}
 		<div class="list_small">
-			<h3>{{mf 'profile.courses' "NAME's Courses:" NAME=user.profile.name}}</h3>
+			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=user.profile.name}}</h3>
 			{{> courselist involvedIn}}
 		</div>
 	</div>

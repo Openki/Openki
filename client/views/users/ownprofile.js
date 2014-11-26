@@ -12,7 +12,7 @@ Router.map(function () {
 			if(user) {
 				var userdata = {
 					_id: user._id,
-					name: user.profile.name
+					name: user.username
 				}
 				if(user.emails) {
 					userdata.email = user.emails[0].address
@@ -32,7 +32,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne()
 			if (!user) return;
-			document.title = webpagename + 'My Profile_Settings - ' + user.profile.name;
+			document.title = webpagename + 'My Profile_Settings - ' + user.username;
 		}
 	})
 })
