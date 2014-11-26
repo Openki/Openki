@@ -6,8 +6,11 @@
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 			<nav>
 				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
-					{{mf 'login.frame.profile' 'Visit my profile'}}
-				</a>
+					{{mf 'login.frame.profile' 'My public profile'}}
+				</a><br>
+				<a href="{{pathFor 'profile'}}">
+					{{mf 'login.frame.settings' 'Account settings'}}
+				</a><br>
 				<a href="#" class="loginLogout">
 					{{mf 'login.logout' 'Logout'}}
 				</a>
