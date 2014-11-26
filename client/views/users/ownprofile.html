@@ -7,7 +7,7 @@
 	{{else}}
 		{{#if isEditing}}
 			<p class="descr_small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
-			<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.username}}"/></p>
+			<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
 			<p>{{mf 'profile.input.email' 'Email (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
 			<p>{{mf 'profile.input.new_pswd' 'New password (optional):'}} <input type="password" id="editform_newpassword" value=""/></p>
 			<input type="button" class="save" value="Save" />
