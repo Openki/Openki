@@ -10,9 +10,9 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
 - Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
 
-<img src="http://news.schuel.ch/wp-content/uploads/2014/11/141105_GD_wolke_EN-1024x584.png" width="580" alt="cloud diagram showing connection between individuals, comunities, event locations and calendars" align="middle" >
 
-----
+<div align="center"><img src="https://cloud.githubusercontent.com/assets/4281072/5208556/6eeed1ba-75b5-11e4-94f3-208323380ec4.png" width="590" alt="cloud diagram showing connection between individuals, comunities, event locations and calendars"></div>
+
 
 ### Features
 - :pencil: Easily propose courses and events
@@ -30,8 +30,8 @@ A interactive web-platform in development with the ambition to facilitate a barr
 ### Intended features
 - :closed_lock_with_key: Privacy settings and security
 - :open_file_folder: File upload for course-documentation
-- :white_flower: Groups-, community- and program system
-- :mailbox: Privat messages
+- :white_flower: Groups-, community- and program-system
+- :mailbox: Privat messaging
 - :name_badge: OpenBadges
 - :ghost: Customizability
 - :ticket: Mozzila Persona
@@ -39,18 +39,14 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :iphone: Smartphone App
 
 ### Installation
-- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip (or clone) Hmmm into /some/path
+- To install Meteor, run: `curl https://install.meteor.com | sh`
+- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or clone Hmmm into /some/path
 - `cd /some/path`
-- To install Meteor, run:
-    - ` curl https://install.meteor.com | sh`
-    - (sudo)` apt-get install nodejs`  (mac: install from [nodejs.org](nodejs.org)
-    - (sudo)` npm install -g meteorite meteor-messageformat`
-    - ` mrt update`
 - Run `meteor`
 - Browse to http://localhost:3000/
 
 ### Technical documentation
-- Is in the [Wiki](https://github.com/schuel/hmmm/wiki)
+- Is here in the [Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
 AGPL – GNU Affero General Public License
