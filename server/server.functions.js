@@ -12,14 +12,15 @@ Meteor.methods({
 	insert_userdata: function(username, email, password){
 		Accounts.createUser({username:username, email:email, password:password});
 	},
-	update_userdata: function(username,email) {
+	update_userdata: function(username,email,privacy) {
 		Meteor.users.update(Meteor.userId(), {
 			$set: {
 				username: username,
-				 emails: [{
+				emails: [{
 					address: email,
 					verified: false
-				}]
+				}],
+				privacy: privacy == true
 			}
 		});
 	},

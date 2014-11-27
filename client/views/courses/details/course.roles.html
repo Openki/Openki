@@ -47,15 +47,17 @@
 					<h3>
 						{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}
 					</h3>
-					<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosub' 'incognito ☔'}}</label>
+
+					<div>
+						{{mf 'course.roles.your_message' 'leave a message/wish/interest here:'}}<br>
+						<textarea cols="50" rows="3" class='comment'>{{../../member.comment}}</textarea>
+					</div>
+
+					{{#if privacyEnabled}}<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosubscription' 'incognito'}} ☔</label>{{/if}}
 
 					<button class="subscribe">{{mf 'course.roles.enrol' 'enrol'}}</button>
 					<button class="cancel">{{mf 'course.roles.cancelenrol'  'cancel'}}</button>
 
-					<div>
-						{{mf 'course.roles.your_message' 'leave a message/wish/interest here:'}}<br>
-						<textarea cols="70" rows="3" class='comment'>{{../../member.comment}}</textarea>
-					</div>
 				</div>
 			{{else}}
 				<input type="button" class="enrol" name="participant" value="{{roletype.subscribe}}"/>

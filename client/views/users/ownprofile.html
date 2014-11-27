@@ -10,6 +10,7 @@
 			<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
 			<p>{{mf 'profile.input.email' 'Email (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
 			<p>{{mf 'profile.input.new_pswd' 'New password (optional):'}} <input type="password" id="editform_newpassword" value=""/></p>
+			<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
 			<input type="button" class="save" value="Save" />
 		{{else}}
 			<p class="descr_small">{{mf 'profile.id' 'ID:'}} {{user._id}}</p>
@@ -18,6 +19,8 @@
 				{{#unless user.veryfiedEmailTrue}}
 					<input type="button" class="verify" value="Verify my Email" />
 				{{/unless}}
+			</p>
+			<p class="descr">{{#if user.privacy}} {{mf 'profile.privacy.on' 'Privacy settings: on'}} {{else}} {{mf 'profile.privacy.off' 'Privacy settings: off'}} {{/if}}
 			</p>
 			<input type="button" class="edit" value="Edit" />
 		{{/if}}

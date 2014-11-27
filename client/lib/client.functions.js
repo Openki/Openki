@@ -67,7 +67,17 @@ goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params) // Shirely, you know of a better way?
 }
 
+
 /*************** HandleBars Helpers ***********************/
+
+Handlebars.registerHelper ("privacyEnabled", function(){
+	var user = Meteor.user();
+	if(!user)
+		return false;
+	return user.privacy
+	// return user && (user.privacy || course.privacy)   //TODO: send course etc aswell
+});
+
 
 Handlebars.registerHelper("log", function(context) {
 	if (window.console) console.log(context)

@@ -12,7 +12,8 @@ Router.map(function () {
 			if(user) {
 				var userdata = {
 					_id: user._id,
-					name: user.username
+					name: user.username,
+					privacy: user.privacy
 				}
 				if(user.emails) {
 					userdata.email = user.emails[0].address
@@ -46,13 +47,14 @@ Template.profile.helpers({
 
 Template.profile.events({
 	'click input.edit': function () {
-		// gehe in den edit-mode, siehe html
 		Session.set("isEditing", true);
+		// document.getElementById('privacy').checked = Meteor.user().privacy;  // FIXME!
+		// var privacy = $(template.find('.privacy')).prop('checked');
+
 	},
 	'click input.save': function () {
-		// wenn im edit-mode abgespeichert wird, update db und verlasse den edit-mode
-		//alert(document.getElementById('editform_username').value);
-		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value); //kann nur auf server ausgeführt werden (file:server/main.js)
+		// if it gets saved in edit-mode: update the db and leave edit-mode
+		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value,document.getElementById('privacy').checked); //can only be run on serverside (file:server/main.js)
 		if(document.getElementById('editform_newpassword').value!="") {
 			Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
 		}

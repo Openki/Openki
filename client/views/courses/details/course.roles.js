@@ -44,7 +44,9 @@ Template.roleDetail.events({
 	},
 	
 	'click button.subscribe': function (e, template) {
-		var incognito = $(template.find('.incognito')).prop('checked');
+		if (template.find('.incognito')) {
+			var incognito = $(template.find('.incognito')).prop('checked');
+		} else incognito = false
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, incognito);
 		
 		// Store the comment

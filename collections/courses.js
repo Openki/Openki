@@ -103,7 +103,7 @@ Meteor.methods({
 
 		if (!Meteor.isClient) {
 			Courses.update(
-				{ _id: course._id, 'members.user': Meteor.userId() },
+				{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
 				{ $set: { 'members.$.comment': comment } },
 				checkUpdateOne
 			)
