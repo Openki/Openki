@@ -1,11 +1,11 @@
 <template name='loginButton'>
-	<a class="loginButton">
+	<a class="loginButton" role="button">
 		{{#if currentUser}}
 		<!--		{{currentUser.profile.name}} -->
 			user: {{username}}
 		<!--	user: {{currentUser.username}} -->
 		{{else}}
-			{{mf 'login.navig.unlogged' 'Login/Sign up'}}
+			{{mf 'login.navig.unlogged' 'Login/Register'}}
 		{{/if}}
 	</a>
 </template>
