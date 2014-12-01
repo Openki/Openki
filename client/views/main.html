@@ -1,9 +1,9 @@
 <template name="layout">
 	<body>
-		<nav class="navbar navbar-default navbar-static-top" role="navigation">
-			<div class="container">
+		<nav class="navbar navbar-default center nav-height" role="navigation">
+			<div class="container nav-height">
 
-				<div class="container-fluid">
+				<div class="container-fluid nav-height">
 				    <!-- Brand and toggle get grouped for better mobile display -->
 				    <div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -13,7 +13,7 @@
 							<span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="#">openky</a>
-						<a id="ugly_logo" href="/"><img src="/logo.gif"></a>
+						<!--<a id="ugly_logo" href="/"><img src="/logo.gif"></a>-->
 				    </div>
 
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -70,29 +70,27 @@
 							<li class="dropdown navbar-btn">
 								{{> region_sel}}
 							</li>
-
-							<li class="navbar-btn">
-								{{> loginButton}}
-							</li>
-							<li></li>
 					    </ul>
-					    <ul class="navbar-nav nav">
-							<li>
-								<div>
+					    <ul class="nav navbar-nav login-btn">
+					    	<li class="navbar-btn login-btn">
+					    		{{> loginButton}}
+							</li>
+						</ul>
+				    </div>
+				    <div>
+					<ul class="nav navbar-nav login-btn">
+						<li>&nbsp; &nbsp;</li>
+					    	<li class="navbar-btn login-btn">
 								{{> loginFrame}}
-								</div>
 							</li>
 						</ul>
 				    </div>
 				</div>
 			</div>
 		</nav>
-
-	
-
 		<div class="container-fluid">
 			<div id="outer">
-				<div id="maincontent">
+				<div id="maincontent" class="center top">
 					{{> yield}}
 				</div>
 			</div>

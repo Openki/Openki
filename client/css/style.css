@@ -1,8 +1,57 @@
 
 #loginFrame {
-background-color: white;
+background-color: #ffffff;
 padding: 1em;
-width:50%;
+width:220px;
+position: absolute;
+right: 0px;
+margin: 0px;
+border: 1px solid #f1f1f1;
 }
+
+.center{
+	margin-right: auto;
+	margin-left: auto;
+	width:73%;
+}
+
+.top{
+	margin-top:-50px;
+	z-index: 999999;
+}
+
+.login-btn{
+	text-align: right;
+	right: -25px;
+	top:-28px;
+	width: 100%;
+	position: absolute;
+}
+
+.login-input-label{
+	text-align: left;
+}
+
+.nav-height{
+	height: 60px;
+}
+
+@media (max-width: 768px){
+	
+	h1{
+		font-size: 20px;
+	}
+
+	#loginFrame {
+		left:-40px;
+		top:40px;
+	}
+
+	.center {
+		width:98%;
+	}
+
+}
+
 
 
