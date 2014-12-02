@@ -38,7 +38,7 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :8ball: Connection to SocialNetworks APIs
 - :iphone: Smartphone App
 
-### Installation
+### Installation (OSX and Linux)
 - To install Meteor, run: `curl https://install.meteor.com | sh`
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or clone Hmmm into /some/path
 - `cd /some/path`
@@ -49,4 +49,5 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - Is here in the [Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
-AGPL – GNU Affero General Public License
+- AGPL – GNU Affero General Public License (for the sourcecode)
+- Intended for Course Contents: Creative Commons (BY) SA
