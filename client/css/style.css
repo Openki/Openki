@@ -1,18 +1,18 @@
 
 #loginFrame {
-background-color: #ffffff;
-padding: 1em;
-width:220px;
-position: absolute;
-right: 0px;
-margin: 0px;
-border: 1px solid #f1f1f1;
+	background-color: #ffffff;
+	padding: 1em;
+	width:220px;
+	right:0px;
+	border: 1px solid #f1f1f1;
+	text-align: right;
+	position: relative;
 }
 
 .center{
 	margin-right: auto;
 	margin-left: auto;
-	width:73%;
+	width:90%;
 }
 
 .top{
@@ -22,10 +22,9 @@ border: 1px solid #f1f1f1;
 
 .login-btn{
 	text-align: right;
-	right: -25px;
-	top:-28px;
 	width: 100%;
-	position: absolute;
+	right:5%;
+	top:-24px;
 }
 
 .login-input-label{
@@ -34,6 +33,11 @@ border: 1px solid #f1f1f1;
 
 .nav-height{
 	height: 60px;
+}
+
+.down{
+	padding:30px 30px 30px 0px;
+	margin-top:40px;
 }
 
 @media (max-width: 768px){
@@ -48,7 +52,19 @@ border: 1px solid #f1f1f1;
 	}
 
 	.center {
-		width:98%;
+		width:100%;
+	}
+
+	.login-btn{
+	text-align: right;
+	width: 100%;
+	top:-24px;
+}
+
+	.bgsolid{
+		background-color: white;
+		width:300px;
+		border: 1px solid #f1f1f1;
 	}
 
 }
