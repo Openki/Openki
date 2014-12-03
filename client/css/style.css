@@ -3,10 +3,9 @@
 	background-color: #ffffff;
 	padding: 1em;
 	width:220px;
-	right:0px;
 	border: 1px solid #f1f1f1;
 	text-align: right;
-	position: relative;
+	position: absolute;
 }
 
 .center{
@@ -47,8 +46,7 @@
 	}
 
 	#loginFrame {
-		left:-40px;
-		top:40px;
+		top:20px;
 	}
 
 	.center {
