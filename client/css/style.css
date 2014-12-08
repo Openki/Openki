@@ -4,26 +4,17 @@
 	padding: 1em;
 	width:220px;
 	border: 1px solid #f1f1f1;
+	right:50px;
+}
+
+.txt-right{
 	text-align: right;
-	position: absolute;
 }
 
 .center{
 	margin-right: auto;
 	margin-left: auto;
-	width:90%;
-}
-
-.top{
-	margin-top:-50px;
-	z-index: 999999;
-}
-
-.login-btn{
-	text-align: right;
-	width: 100%;
-	right:5%;
-	top:-24px;
+	width:100%;
 }
 
 .login-input-label{
@@ -45,13 +36,6 @@
 		font-size: 20px;
 	}
 
-	#loginFrame {
-		top:20px;
-	}
-
-	.center {
-		width:100%;
-	}
 
 	.login-btn{
 	text-align: right;
@@ -61,9 +45,14 @@
 
 	.bgsolid{
 		background-color: white;
-		width:300px;
 		border: 1px solid #f1f1f1;
 	}
+
+
+#loginFrame {
+	top:20px;
+	float:right;
+}
 
 }
 

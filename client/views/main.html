@@ -1,9 +1,7 @@
 <template name="layout">
-	<body>
-		<nav class="navbar navbar-default center nav-height navbar-fixed-top" role="navigation">
-			<div class="container nav-height">
-
-				<div class="container-fluid nav-height">
+	<body class="container">
+		<nav class="row navbar navbar-default center nav-height navbar-fixed-top" role="navigation">
+				<div class="container-fluid center nav-height">
 				    <!-- Brand and toggle get grouped for better mobile display -->
 				    <div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -15,7 +13,7 @@
 						<a class="navbar-brand" href="#">netropoly</a>
 						<!--<a id="ugly_logo" href="/"><img src="/logo.gif"></a>-->
 				    </div>
-
+				    <div class="container">
 				    <div class="collapse navbar-collapse bgsolid" id="bs-example-navbar-collapse-1">
 				    	<ul class="nav navbar-nav">
 							<li class="dropdown">
@@ -70,13 +68,13 @@
 							<li class="dropdown navbar-btn">
 								{{> region_sel}}
 							</li>
-					    </ul>
-					    <ul class="nav navbar-nav login-btn">
-					    	<li class="navbar-nav login-btn">
-					    		{{> loginButton}}
+							<li class="navbar-btn">
+								{{> loginButton}}	
 							</li>
-						</ul>
+					    </ul>
+					    	
 				    </div>
+				</div>
 					<ul class="nav navbar-nav">
 						<li>&nbsp; &nbsp;</li>
 					    	<li class="navbar-btn">
@@ -84,11 +82,10 @@
 							</li>
 						</ul>
 				</div>
-			</div>
 		</nav>
 		<div class="container-fluid">
 			<div id="outer">
-				<div id="maincontent" class="center down">
+				<div id="maincontent" class="down">
 					{{> yield}}
 				</div>
 			</div>

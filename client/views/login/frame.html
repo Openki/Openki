@@ -1,28 +1,37 @@
 <template name='loginFrame'>
 {{#if showLoginFrame}}
-	<div id="loginFrame" class="list-group">
+<div class="container">
+	<div class="row">
+	<div id="loginFrame" class="list-group txt-right offset4 span4">
 		<a href="#" class="loginClose close">{{mf 'login.close' 'close'}}</a>
 		{{#if currentUser}}
+		<div class="panel-title login-input-label">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=username}}
+		</div>
 			<nav class="panel-default">
-				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<li class="login-input-label">
+					<br>
+				<a class="btn center" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					{{mf 'login.frame.profile' 'Visit my profile'}}
 				</a>
-				<a href="#" class="loginLogout">
+				<a href="#" class="loginLogout btn center">
 					{{mf 'login.logout' 'Logout'}}
 				</a>
+			</li>
 			</nav>
 		{{else}}
-			{{> loginRegister}}
 			{{> loginLogin}}
+			{{> loginRegister}}	
 		{{/if}}
 	</div>
+</div>
+</div>
 {{/if}}
 </template>
 
 <template name="loginRegister">
 	<form>
-		<div class="login-input-label"><br>Register</div>
+		<div class="login-input-label">Register<br></div>
 		<input type="text" class="form-control" id="register-email">
 		<input type="password" class="form-control" id="register-password">
 		<input type="submit" class="btn" value="{{mf 'login.register.submit' 'Register'}}">
@@ -31,7 +40,7 @@
 
 <template name="loginLogin">
 	<form>
-		<div class="login-input-label">Login</div>
+		<div class="login-input-label"><br>Login<br></div>
 		<input type="text" class="form-control" id="login-email">
 		<input type="password" class="form-control" id="login-password">
 		<input type="submit" class="btn text-right" value="{{mf 'login.login.submit' 'Login'}}">
