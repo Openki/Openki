@@ -36,6 +36,12 @@
 }
 
 /****** COURSE LIST ******/
+
+ul.courselist_results>div {
+  width: 320px;
+  display: inline-block;
+}
+
 /* line 129, ../../sass/orig/_screen.scss */
 .courselist {
   float: left;
@@ -435,23 +441,29 @@ ul.subscribers ul.roles li {
 		font-size: 20px;
 	}
 
+  ul.nav.navbar-nav > li {
+    float: none;
+  }
+
+  #bs-example-navbar-collapse-1 {
+    max-height: none;
+  }
 
 	.login-btn{
 	text-align: right;
 	width: 100%;
 	top:-24px;
-}
+  }
 
 	.bgsolid{
 		background-color: white;
 		border: 1px solid #f1f1f1;
 	}
 
-
-#loginFrame {
-	top:20px;
-	float:right;
-}
+  #loginFrame {
+  	top:20px;
+  	float:right;
+  }
 
 }
 
