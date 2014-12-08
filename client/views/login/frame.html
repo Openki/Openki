@@ -3,7 +3,10 @@
 <div class="container">
 	<div class="row">
 	<div id="loginFrame" class="list-group txt-right offset4 span4">
-		<a href="#" class="loginClose close">{{mf 'login.close' 'close'}}</a>
+
+		<a href="#" class="loginClose close">
+			<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">{{mf 'login.close' ' '}}</span></button>
+		</a>
 		{{#if currentUser}}
 		<div class="panel-title login-input-label">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=username}}
