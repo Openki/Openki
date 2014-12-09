@@ -150,7 +150,7 @@ border-radius: 15px;
 
 /* line 208, ../../sass/orig/_screen.scss */
 .courselist_results .course_name {
-  width: 300px !important;
+  width: 200px !important;
 }
 
 .course_name{
@@ -172,6 +172,18 @@ border-radius: 15px;
   border: 1.5px solid black;
 }
 
+/***** COURSE EVENT on OVERVIEW ******/
+
+.course_eventlist{
+  float:right;
+  top:20px;
+  background: #f1f1f1;
+  margin:0px 5px 5px 5px;
+  padding:5px;
+  width:100px;
+  height:100%;
+}
+
 /***** COURSE DETAILS ******/
 /* line 217, ../../sass/orig/_screen.scss */
 .create_course {
@@ -180,16 +192,15 @@ border-radius: 15px;
 
 /* line 224, ../../sass/orig/_screen.scss */
 #coursedetails {
-  margin: 0px 10px 50px 50px;
-  padding: 0px 0px;
+  margin: 0px 10px 10px 10px;
+  padding: 0px;
   float: left;
   width: 540px;
-  float: left;
 }
 
 /* line 232, ../../sass/orig/_screen.scss */
 .course_right_column {
-  margin: 50px;
+  margin: 10px;
   width: 300px;
   float: left;
 }
@@ -215,7 +226,7 @@ h2.name {
 #coursedetails .course_main {
   background-color: #EEE;
   padding: 1em;
-  margin: 50px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 /* line 257, ../../sass/orig/_screen.scss */
@@ -223,7 +234,7 @@ h2.name {
   clear: both;
   background-color: #CCDDDF;
   padding: 15px;
-  margin: 50px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 /* line 264, ../../sass/orig/_screen.scss */
@@ -255,7 +266,7 @@ h2.name {
 /* line 284, ../../sass/orig/_screen.scss */
 .course_event {
   float: left;
-  width: 220px;
+  width: 100%;
   margin: 10px;
   background-color: #C1F2AE;
 }
@@ -263,14 +274,15 @@ h2.name {
 /* line 292, ../../sass/orig/_screen.scss */
 .course_event_past {
   float: left;
-  width: 220px;
+  width: 100%;
   margin: 10px;
   background-color: #DDD;
+  overflow: auto;
 }
 
 /* line 300, ../../sass/orig/_screen.scss */
 .calendar_event {
-  width: 400px;
+  width: 100%;
   margin: 10px;
   background-color: #C1F2AE;
 }
@@ -473,6 +485,22 @@ ul.subscribers ul.roles li {
   	top:20px;
   	float:right;
   }
+
+  .courselist_course {
+  border: 1px solid #CCCCFF;
+  padding: 5px;
+  margin-right:5px;
+  width:220px;
+  min-height:150px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+}
+
+#coursedetails {
+  margin: 0px;
+  padding: 0px;
+  width:510px;
+}
 
 }
 

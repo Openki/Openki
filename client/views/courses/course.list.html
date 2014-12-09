@@ -41,16 +41,16 @@
 				{{#if hasupcomingevents}}
 					<ul class="course_eventlist">
 						{{#each course_eventlist}}
-							<li>
-								<div class="course_eventlist_date">
-									<span class="icon-mini_date"></span> {{dateformat_mini this.startdate}}
+							<li class="nav">
+								<div>
+									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{dateformat_mini this.startdate}}
 								</div>
-								<div class="course_eventlist_time">
+								<div>
+									<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
 									{{timeformat this.startdate}}
 								</div>
-
-								<div class="course_eventlist_location">
-									<span class="icon-mini_location"></span> Ortsmuseum Luegis...
+								<div>
+									<span  class="glyphicon glyphicon-home" aria-hidden="true"></span> location
 								</div>
 							</li>
 						{{/each}}
