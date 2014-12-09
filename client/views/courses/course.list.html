@@ -27,7 +27,7 @@
 </template>
 
 <template name="course">
-	<div class="container">
+	<div>
 	<li class="courselist_course">
 		<a href="{{pathFor 'showCourse'}}">
 			<div class="{{coursestate}}" style="height:0px">
@@ -62,7 +62,7 @@
 				{{else}}
 				<div class="upright">
 					<ul class="course_status nav">
-							<li class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organisator{{else}}{{#if is_team}} you are organisator{{else}}has a organisator-team{{/if}}{{/if}}">T{{#if is_team}}*{{/if}}</li>
+							<li class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organizer{{else}}{{#if is_team}} you are organizer{{else}}has a organizer-team{{/if}}{{/if}}">T{{#if is_team}}*{{/if}}</li>
 						{{#if requiresMentor}}
 							<li class="mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}" title="{{#if needsMentor}}still needs a mentor{{else}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{/if}}">M{{#if is_mentor}}*{{/if}}</li>
 						{{/if}}

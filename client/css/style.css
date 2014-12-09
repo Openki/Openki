@@ -11,11 +11,18 @@
 	text-align: right;
 }
 
-.center{
+.center_marge{
 	margin-right: auto;
 	margin-left: auto;
-	width:100%;
+	width:75%;
 }
+
+.center{
+  margin-right: auto;
+  margin-left: auto;
+  width:90%;
+}
+
 
 .login-input-label{
 	text-align: left;
@@ -40,6 +47,9 @@
 ul.courselist_results>div {
   width: 320px;
   display: inline-block;
+  margin-left:0px;
+  margin-right:10px;
+  margin-bottom: 10px;
 }
 
 /* line 129, ../../sass/orig/_screen.scss */
@@ -53,12 +63,11 @@ ul.courselist_results>div {
   overflow: auto;
   border: 1px solid #CCCCFF;
   padding: 5px;
-  margin:5px;
+  margin-right:15px;
   width:320px;
   min-height:150px;
   -moz-border-radius: 15px;
 border-radius: 15px;
-box-shadow: 5px;
 }
 
 /* line 142, ../../sass/orig/_screen.scss */
@@ -74,7 +83,7 @@ box-shadow: 5px;
 }
 
 /* line 152, ../../sass/orig/_screen.scss */
-.courselist_course .organisator {
+.courselist_course .organizer {
   font-size: 12px;
   font-weight: bold;
   color: orange;
@@ -135,8 +144,8 @@ box-shadow: 5px;
 
 /* line 201, ../../sass/orig/_screen.scss */
 .courselist_results {
-  margin: 15px;
-  padding:5px 5px 0px 5px;
+  margin: 0px;
+  padding:5px:;
 }
 
 /* line 208, ../../sass/orig/_screen.scss */
