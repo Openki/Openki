@@ -80,11 +80,14 @@ Template.course_edit.events({
 					return;
 				}
 			}
-
+			
 			Meteor.call("save_course", courseId, changes, function(err, courseId) {
-				Session.set('search', ''); // clear searchfield
-				if (err) alert("Saving the course went terribly wrong: "+err)
-				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
+				if (err) {
+					addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+				} else {
+					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
+					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to {NAME}'));
+				}
 			})
 
 			
@@ -92,6 +95,7 @@ Template.course_edit.events({
 			if (err instanceof String) alert(err)
 			else throw err
 		}
+		return false;
 	},
 
 	'click input.cancel': function() {
