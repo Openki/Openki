@@ -42,6 +42,9 @@ Router.map(function () {
 Template.profile.helpers({
 	isEditing: function () {
 		return Session.get("isEditing");
+	},
+	verifyDelete: function () {
+		return Session.get('verify') === 'delete';
 	}
 });
 
@@ -51,6 +54,18 @@ Template.profile.events({
 		// document.getElementById('privacy').checked = Meteor.user().privacy;  // FIXME!
 		// var privacy = $(template.find('.privacy')).prop('checked');
 
+	},
+	'click button.delete': function () {
+		Session.set('verify', 'delete');
+	},
+	'click button.confirmdelete': function () {
+		Meteor.call('delete_profile', function() { 
+			addMessage(mf('profile.deleted', 'Your account has been deleted'));
+		});
+		Session.set('verify', false);
+	},
+	'click .verifycancel': function () {
+		Session.set('verify', false);
 	},
 	'click input.save': function () {
 		// if it gets saved in edit-mode: update the db and leave edit-mode

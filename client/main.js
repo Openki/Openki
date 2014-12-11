@@ -22,5 +22,12 @@ Meteor.subscribe('votings');
 Meteor.subscribe('users');
 return Meteor.subscribe('currentUser');
 
+// close any verification dialogs still open
+Router.onBeforeAction(function() {
+	Session.set('verify', false);
+	this.next();
+});
+
+
 
 
