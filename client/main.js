@@ -1,9 +1,4 @@
 
-////////////// login stettings
-Accounts.ui.config({
-	passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
-});
-
 ////////////// loading-indicator
 Meteor.startup(function () {
   Session.setDefault('coursesLoaded', false);
