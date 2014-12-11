@@ -74,10 +74,7 @@ Template.profile.events({
 			Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
 		}
 		Session.set("isEditing", false);
-	}
-});
-
-Template.profile.events({
+	},
 	'click input.verify': function () {
 		Meteor.call('sendVerificationEmail')
 	}
