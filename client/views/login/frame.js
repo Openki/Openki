@@ -52,8 +52,6 @@ Template.loginLogin.events({
 		}, function (err) {
 			if (err) {
 				addMessage(err.reason || 'Unknown error');
-			} else {
-				addMessage('OH HAI YOU LOGGED IN VIA GITHUB');
 			}
 		});
 		Session.set('showLogin', false);
