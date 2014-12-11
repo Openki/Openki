@@ -45,5 +45,17 @@ Template.loginLogin.events({
 			}
 		});
 		
+	},
+	'click .loginWithGithub': function(event){
+		event.preventDefault();
+		Meteor.loginWithGithub({
+		}, function (err) {
+			if (err) {
+				addMessage(err.reason || 'Unknown error');
+			} else {
+				addMessage('OH HAI YOU LOGGED IN VIA GITHUB');
+			}
+		});
+		Session.set('showLogin', false);
 	}
 });
