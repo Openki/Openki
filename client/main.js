@@ -15,7 +15,6 @@ Meteor.startup(function () {
 
 ////////////// db-subscriptions:
 
-//Meteor.subscribe('courses', Session.get('region'))
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
 Meteor.subscribe('events');
