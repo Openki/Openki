@@ -10,9 +10,9 @@ Template.lang_sel.helpers({
 });
 
 Template.lang_sel.events({
-	'click a.langselect': function(){
-		Session.set('locale', this.lg)
-		return false;
+	'click a.langselect': function(e){
+		Session.set('locale', this.lg);
+		e.preventDefault();
 	}
 })
 
