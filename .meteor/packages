@@ -19,3 +19,5 @@ accounts-github
 service-configuration
 bootstrap
 citizenkevin:medium-editor
+djedi:sanitize-html
+
