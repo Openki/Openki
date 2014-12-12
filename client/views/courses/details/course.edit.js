@@ -49,7 +49,7 @@ Template.course_edit.helpers({
 });
 
 Template.course_edit.rendered = function() {
-	$(this.find('#editform_description')).summernote();
+	new MediumEditor(this.find('#editform_description'));
 }
 
 Template.course_edit.events({
@@ -70,7 +70,7 @@ Template.course_edit.events({
 			})
 
 			var changes = {
-				description: $('#editform_description').code(),
+				description: $('#editform_description').html(),
 				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
 				name: $('#editform_name').val(),
 				roles: roles
