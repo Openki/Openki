@@ -15,11 +15,13 @@
 		{{else}}
 			<p class="descr_small">{{mf 'profile.id' 'ID:'}} {{user._id}}</p>
 			<p class="descr">{{mf 'profile.username' 'Username:'}} {{user.name}}</p>
+			{{#if user.have_email}}
 			<p class="descr">{{mf 'profile.email' 'Email:'}} {{user.email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
 				{{#unless user.veryfiedEmailTrue}}
 					<input type="button" class="verify" value="Verify my Email" />
 				{{/unless}}
 			</p>
+			{{/if}}
 			<p class="descr">{{#if user.privacy}} {{mf 'profile.privacy.on' 'Privacy settings: on'}} {{else}} {{mf 'profile.privacy.off' 'Privacy settings: off'}} {{/if}}
 			</p>
 			<input type="button" class="edit" value="Edit" />

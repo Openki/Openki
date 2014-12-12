@@ -1,5 +1,3 @@
-
-
 Meteor.startup(function () {
 	createCategoriesIfNone();
 	createCoursesIfNone();         // TESTING...
@@ -12,17 +10,27 @@ Meteor.methods({
 	insert_userdata: function(username, email, password){
 		Accounts.createUser({username:username, email:email, password:password});
 	},
-	update_userdata: function(username,email,privacy) {
-		Meteor.users.update(Meteor.userId(), {
-			$set: {
-				username: username,
-				emails: [{
-					address: email,
-					verified: false
-				}],
-				privacy: privacy == true
+	update_userdata: function(username, email, privacy) {
+		var user = Meteor.user();
+		
+		var changes = {};
+		if (user.username !== username) { changes.username = username; }
+		if (user.privacy !== privacy) { changes.privacy = !!privacy; }
+		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
+			// Working under the assumption that there is only one address
+			// if there was more than one address oops I accidentally your addresses
+			if (email && email.length > 3) {
+				changes.emails = [{ address: email, verified: false }];
+			} else {
+				changes.emails = [];
 			}
-		});
+		} 
+
+		if (!_.isEmpty(changes)) {
+			Meteor.users.update(Meteor.userId(), {
+				$set: changes
+			});
+		}
 	},
 	update_userpassword: function(new_password) {
 		Accounts.setPassword(Meteor.userId(), new_password)

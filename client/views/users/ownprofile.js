@@ -15,7 +15,8 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy
 				}
-				if(user.emails) {
+				userdata.have_email = user.emails && user.emails.length > 0;
+				if (userdata.have_email) {
 					userdata.email = user.emails[0].address
 					if(user.emails[0].verified){
 						userdata.verifiedEmail = 'verified'

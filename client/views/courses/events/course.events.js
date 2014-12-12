@@ -51,7 +51,7 @@ Template.course_events.events({
 			alert("Please log in!");
 			return;
 		}
-		Router.go(Router.current().route.name, Router.current().params, { query: { 'editEvent': 'new' } }) // Shirely, you know of a better way?
+		Router.go(Router.current().route.getName(), Router.current().getParams(), { query: { 'editEvent': 'new' } }) // Shirely, you know of a better way?
 	},
 	
 	'click input.eventDelete': function () {
