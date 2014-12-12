@@ -18,4 +18,5 @@ reactive-var
 accounts-github
 service-configuration
 summernote:summernote
+bootstrap
 

@@ -11,7 +11,7 @@
 		</div>
 		<h1>{{mf 'courses.all' 'All courses'}}</h1>
 		{{> courselist all_courses}}
-	</div>
+</div>
 	{{> course_create}}
 </template>
 
@@ -27,9 +27,10 @@
 </template>
 
 <template name="course">
+	<div>
 	<li class="courselist_course">
 		<a href="{{pathFor 'showCourse'}}">
-			<div class="courselist_course_text {{coursestate}}">
+			<div class="{{coursestate}}" style="height:0px">
 				<div class="course_name">{{name}}</div>
 			
 				<div class="course_categories">{{> show_categories}}</div>
@@ -40,16 +41,16 @@
 				{{#if hasupcomingevents}}
 					<ul class="course_eventlist">
 						{{#each course_eventlist}}
-							<li>
-								<div class="course_eventlist_date">
-									<span class="icon-mini_date"></span> {{dateformat_mini this.startdate}}
+							<li class="nav">
+								<div>
+									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{dateformat_mini this.startdate}}
 								</div>
-								<div class="course_eventlist_time">
+								<div>
+									<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
 									{{timeformat this.startdate}}
 								</div>
-
-								<div class="course_eventlist_location">
-									<span class="icon-mini_location"></span> Ortsmuseum Luegis...
+								<div>
+									<span  class="glyphicon glyphicon-home" aria-hidden="true"></span> location
 								</div>
 							</li>
 						{{/each}}
@@ -59,8 +60,9 @@
 						{{/if}}
 					</ul>
 				{{else}}
-					<ul class="course_status">
-							<li class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organisator{{else}}{{#if is_team}} you are organisator{{else}}has a organisator-team{{/if}}{{/if}}">T{{#if is_team}}*{{/if}}</li>
+				<div class="upright">
+					<ul class="course_status nav">
+							<li class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organizer{{else}}{{#if is_team}} you are organizer{{else}}has a organizer-team{{/if}}{{/if}}">T{{#if is_team}}*{{/if}}</li>
 						{{#if requiresMentor}}
 							<li class="mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}" title="{{#if needsMentor}}still needs a mentor{{else}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{/if}}">M{{#if is_mentor}}*{{/if}}</li>
 						{{/if}}
@@ -74,8 +76,10 @@
 							<li class="cook_status {{cook_status}}" title="{{#if isYes cook_status}}{{#if is_cook}}you are cook{{else}}has a cook{{/if}}{{else}}still needs a cook{{/if}}">H{{#if is_cook}}*{{/if}}</li>
 						{{/if}}
 					</ul>
+				</div>
 				{{/if}}
 			</div>
 		</a>
 	</li>
+	</div>
 </template>

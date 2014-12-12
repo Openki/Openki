@@ -1,43 +1,56 @@
 <template name='loginFrame'>
 {{#if showLoginFrame}}
-	<div id="loginFrame">
-		<a href="#" class="loginClose">{{mf 'login.close' 'close'}}</a>
+<div class="container">
+	<div class="row">
+	<div id="loginFrame" class="list-group txt-right offset4 span4">
+
+		<a href="#" class="loginClose close">
+			<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">{{mf 'login.close' ' '}}</span></button>
+		</a>
 		{{#if currentUser}}
+		<div class="panel-title login-input-label">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-			<nav>
-				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
-					{{mf 'login.frame.profile' 'My public profile'}}
-				</a><br>
-				<a href="{{pathFor 'profile'}}">
+		</div>
+			<nav class="panel-default">
+				<li class="login-input-label">
+					<br>
+				<a class="btn center" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+					{{mf 'login.frame.profile' 'Visit my profile'}}
+				</a>
+				<a class="btn center" href="{{pathFor 'profile'}}">
 					{{mf 'login.frame.settings' 'Account settings'}}
 				</a><br>
-				<a href="#" class="loginLogout">
+				<a href="#" class="loginLogout btn center">
 					{{mf 'login.logout' 'Logout'}}
 				</a>
+			</li>
 			</nav>
 		{{else}}
-			{{> loginRegister}}
 			{{> loginLogin}}
+			{{> loginRegister}}	
 		{{/if}}
 	</div>
+</div>
+</div>
 {{/if}}
 </template>
 
-
 <template name="loginRegister">
 	<form>
-		<input type="text" id="register-name">
-		<input type="password" id="register-password">
-		<input type="submit" value="{{mf 'login.register.submit' 'Register'}}">
+		<div class="login-input-label">Register<br></div>
+		<input type="text" class="form-control" id="register-name">
+		<input type="password" class="form-control" id="register-password">
+		<input type="submit" class="btn" value="{{mf 'login.register.submit' 'Register'}}">
 	</form>
 </template>
-
 
 <template name="loginLogin">
 	<form>
-		<input type="text" id="login-name">
-		<input type="password" id="login-password">
-		<input type="submit" value="{{mf 'login.login.submit' 'Login'}}">
+		<div class="login-input-label"><br>Login<br></div>
+		<input type="text" class="form-control" id="login-name">
+		<input type="password" class="form-control" id="login-password">
+		<input type="submit" class="btn text-right" value="{{mf 'login.login.submit' 'Login'}}">
 	</form>
 	<button class="loginWithGithub">LOGIN WITH GITHUB</button>
 </template>
+

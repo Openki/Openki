@@ -11,8 +11,8 @@ Template.lang_sel.helpers({
 
 Template.lang_sel.events({
 	'click a.langselect': function(){
-		Session.set('locale', this.lg)
-		return false;
+		Session.set('locale', this.lg);
+		//return false;
+		e.preventDefault();
 	}
 })
-

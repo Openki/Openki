@@ -8,7 +8,7 @@
 		{{/if}}
 	{{/if}}
 
-	<div class="course_events">
+	<div>
 		<h3>{{mf 'course.title.Upcoming events' 'Upcoming events'}}</h3>
 		{{#each events_list}}
 			<div class="course_event">
@@ -17,12 +17,9 @@
 		{{else}}
 			{{mf 'course.events.no_events' 'no events'}}
 		{{/each}}
-
 	</div>
 
-
-
-	<div class="course_events_past">
+	<div>
 		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
 		{{#each events_list_past}}
 			<div class="course_event_past">

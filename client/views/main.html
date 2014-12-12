@@ -1,119 +1,145 @@
 <template name="layout">
-	<body>
-		<div id="container">
-			<div id="header_bar">
-				<div id="ticker">
-					{{> ticker}}
-				</div>
+	<body class="container">
+		<nav class="row navbar navbar-default nav-height navbar-fixed-top" role="navigation">
+				<div class="container-fluid nav-height center_marge">
+				    <!-- Brand and toggle get grouped for better mobile display -->
+				    <div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">netropoly</a>
+						<!--<a id="ugly_logo" href="/"><img src="/logo.gif"></a>-->
+				    </div>
+				    <div class="collapse navbar-collapse bgsolid" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+							<li class="dropdown">
+							  <a href="#" class="dropdown-toggle navbar-btn" data-toggle="dropdown" role="button" aria-expanded="false">
+							  		{{mf 'menue.Courses' 'Courses'}}
+							  	<span class="caret"></span>
+							  </a>
+							  <ul class="dropdown-menu" role="menu">
+							  	<li>
+									<a href="/">
+										{{mf 'menue.Search' 'Search'}}
+									</a>
+								</li>
+								<li>
+									<a href="/locations/">
+										{{mf 'menue.LocationList' 'Location List'}}
+									</a>
+								</li>
+								<li>
+									<a href="/categorylist/">
+										{{mf 'menue.CategoryList' 'Category List'}}
+									</a>
+								</li>
+								<li>
+									<a href="{{pathFor 'courses'}}">
+										{{mf 'menue.BrowseCourses' 'Browse Courses'}}
+									</a>
+								</li>
+								<li>
+									<a href="{{pathFor 'proposeCourse'}}">
+										{{mf 'menue.ProposeCourse' 'Propose Course'}}
+									</a>
+								</li>
+								<li>
+									<a href="{{pathFor 'createCourse'}}">
+										{{mf 'menue.CreateEvent' 'Create Event'}}
+									</a>
+								</li>
+							  </ul>
+							</li>
 
-				<div id="login">
-					{{> loginButton}}
-					{{> loginFrame}}
-				</div>
-				<div id="search">
-					{{> search_menue}}
-				</div>
-				<div id="create">
-					{{> create_menue}}
-				</div>
-				<div id="region_sel">
-					{{> region_sel}}
-				</div>
-				<div id="lang_sel">
-					{{> lang_sel}}
-				</div>
-				<div id="translate">
-					<a href="/translate" style="color:black; font-size:100%"> {{mf 'menue.translate' 'translate this page'}}</a>
-				</div>
-			</div>
+							<li class="navbar-btn">
+								<a href="/">
+									{{mf 'menue.Calendar' 'Calendar'}}
+								</a>
+							</li>
 
 
-			<div id="outer">
-				<div id="maincontent">
+							<li class="dropdown navbar-btn">
+								{{> lang_sel}}
+							</li>
+							<li class="dropdown navbar-btn">
+								{{> region_sel}}
+							</li>
+							<li class="navbar-btn">
+								{{> loginButton}}	
+							</li>
+					    </ul>
+				    </div>
+					<ul class="nav navbar-nav">
+						<li>&nbsp; &nbsp;</li>
+					    	<li class="navbar-btn">
+								{{> loginFrame}}
+							</li>
+						</ul>
+				</div>
+		</nav>
+		<div class="container-fluid">
+			<div id="outer" class="row">
+				<div id="maincontent" class="down">
+					<ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
 					{{> messages}}
 
 					{{> yield}}
+				</ul>
 				</div>
 			</div>
 		</div>
 	</body>
 </template>
 
-
-<template name="search_menue">
-	<div class="dropdown"><a id="ugly_logo" href="/"><img src="/logo.gif" style="height:30px; margin: 0 15px"> </a>
-		<a id="mainmenue" href="/"><span class="icon-nav_birne"></span> {{mf 'menue.Courses' 'Courses'}}</a>
-		<div class="dropdown-menu">
-			<ul role="menu">
-				<li><a class="regionselect" href="/">{{mf 'menue.Search' 'Search'}}</a></li>
-				<li><a class="regionselect" href="/locations/">{{mf 'menue.LocationList' 'Location List'}}</a></li>
-				<li><a class="regionselect" href="/categorylist/">{{mf 'menue.CategoryList' 'Category List'}}</a></li>
-				<li><a class="regionselect" href="{{pathFor 'courses'}}">{{mf 'menue.BrowseCourses' 'Browse Courses'}}</a></li>
-				<li><a class="regionselect" href="{{pathFor 'proposeCourse'}}">{{mf 'menue.ProposeCourse' 'Propose Course'}}</a></li>
-				<li><a class="regionselect" href="{{pathFor 'createCourse'}}">{{mf 'menue.CreateEvent' 'Create Event'}}</a></li>
-			</ul>
-		</div>
-		{{about}}
-	</div>
-</template>
-
-
-<template name="create_menue">
-	<div class="dropdown">
-		<a id="mainmenue" href="/calendar/"><span class="icon-nav_calendar"></span> {{mf 'menue.Calendar' 'Calendar'}}</a>
-	</div>
-</template>
-
-
-<template name="about_menue">
-	<div class="dropdown">
-		<a class="regions" href="/page/about">{{mf 'menue.about' 'about'}}</a>
-		<div class="dropdown-menu">
-			<ul role="menu">
-				<li><a class="regionselect" href="/page/about">{{mf 'menue.about' 'about'}}</a></li>
-				<li><a class="regionselect" href="/page/FAQ">{{mf 'menue.FAQ' 'FAQ'}}</a></li>
-			</ul>
-		</div>
-		{{about}}
-	</div>
-</template>
-
-
 <template name="region_sel">
-	<div class="dropdown">
-		<a class="regions" href="#"><span class="icon-nav_region"></span></a>
-		<div class="dropdown-menu">
-			<ul role="menu">
-				<li><a class="regionselect" href="/region/">{{mf 'menue.All regions' 'All regions'}}</a></li>
-				{{# each regions}}
-					<li><a class="regionselect" href="/region/{{_id}}">{{name}}</a></li>
-				{{/each}}
-			</ul>
-		</div>
-		<a class="regionselect" href="#">{{region}} ▼ </a>
-	</div>
-</template>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		{{region}}
+		<span class="caret"></span>
+	</a>
 
+	<ul class="dropdown-menu" role="menu">
+		<li>
+			<a class="regionselect" href="/region/">
+				{{mf 'menue.All regions' 'All regions'}}
+			</a>
+		</li>
+		{{# each regions}}
+			<li>
+				<a href="#" class="regionselect">
+					{{name}}
+				</a>
+			</li>
+		{{/each}}
+	</ul>
+</template>
 
 <template name="lang_sel">
-	<div class="dropdown">
-		<a class="regions" href="#"><span class="icon-nav_lang"></span></a>
-		<div class="dropdown-menu">
-			<ul role="menu">
-				{{#each lgs}}
-					<li><a class="langselect" href="/lang/{{this.lg}}">{{this.lg}}</a></li>
-				{{/each}}
-			</ul>
-		</div>
-		<a class="regionselect" href="#">{{lg}} ▼ </a>
-	</div>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		{{lg}}
+		<span class="caret"></span>
+	</a>
+
+	<ul class="dropdown-menu" role="menu">
+		{{#each lgs}}
+			<li>
+				<a href="#" class="langselect">
+					{{this.lg}}
+				</a>
+			</li>
+		{{/each}}
+	</ul>
 </template>
 
 
-<!-- ///////////// Demo-Page-Ticker ///////////// -->
+
+<!-- ///////////// Demo-Page-Ticker ///////////// 
 <template name="ticker">
 	<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
 	{{mf 'menue.Testpage' 'This is only a <b>Testpage</b>. '}}<span style = "padding-left:10em"> </span>
 	{{mf 'menue.Testpage2' 'All data will be erased regularly. '}}<span style = "padding-left:10em"> </span>
 	</marquee>
 </template>
+-->
