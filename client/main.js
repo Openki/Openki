@@ -1,9 +1,4 @@
 
-////////////// login stettings
-Accounts.ui.config({
-	passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
-});
-
 ////////////// loading-indicator
 Meteor.startup(function () {
   Session.setDefault('coursesLoaded', false);
@@ -15,7 +10,6 @@ Meteor.startup(function () {
 
 ////////////// db-subscriptions:
 
-//Meteor.subscribe('courses', Session.get('region'))
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
 Meteor.subscribe('events');
@@ -27,6 +21,13 @@ Meteor.subscribe('roles');
 Meteor.subscribe('votings');
 Meteor.subscribe('users');
 return Meteor.subscribe('currentUser');
+
+// close any verification dialogs still open
+Router.onBeforeAction(function() {
+	Session.set('verify', false);
+	this.next();
+});
+
 
 
 

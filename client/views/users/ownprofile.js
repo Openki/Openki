@@ -42,6 +42,9 @@ Router.map(function () {
 Template.profile.helpers({
 	isEditing: function () {
 		return Session.get("isEditing");
+	},
+	verifyDelete: function () {
+		return Session.get('verify') === 'delete';
 	}
 });
 
@@ -52,6 +55,18 @@ Template.profile.events({
 		// var privacy = $(template.find('.privacy')).prop('checked');
 
 	},
+	'click button.delete': function () {
+		Session.set('verify', 'delete');
+	},
+	'click button.confirmdelete': function () {
+		Meteor.call('delete_profile', function() { 
+			addMessage(mf('profile.deleted', 'Your account has been deleted'));
+		});
+		Session.set('verify', false);
+	},
+	'click .verifycancel': function () {
+		Session.set('verify', false);
+	},
 	'click input.save': function () {
 		// if it gets saved in edit-mode: update the db and leave edit-mode
 		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value,document.getElementById('privacy').checked); //can only be run on serverside (file:server/main.js)
@@ -59,10 +74,7 @@ Template.profile.events({
 			Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
 		}
 		Session.set("isEditing", false);
-	}
-});
-
-Template.profile.events({
+	},
 	'click input.verify': function () {
 		Meteor.call('sendVerificationEmail')
 	}

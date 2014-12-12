@@ -37,7 +37,7 @@
     
         <table>
         {{#each messages}}
-          {{> message }}
+          {{> chatMessage }}
         {{/each}}
         </table>
       {{/if}}
@@ -49,6 +49,6 @@
   </div>
 </template>
 
-<template name="message">
+<template name="chatMessage">
   <tr><th title="{{sent}}">{{name}}:</th> <td>{{text}}</td></tr>
 </template>

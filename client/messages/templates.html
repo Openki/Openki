@@ -1,0 +1,14 @@
+<template name="messages">
+	<ul class="messages">
+		{{#each messages}}
+			{{> message}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="message">
+	<li class="message">
+		<button type="button" class="close">&times;</button>
+		{{message}}
+	</li>
+</template>
