@@ -22,6 +22,7 @@ ejson@1.0.4
 email@1.0.4
 fastclick@1.0.1
 follower-livedata@1.0.2
+fortawesome:fontawesome@4.2.0
 gadicohen:headers@0.0.25
 gadicohen:messageformat@0.0.46
 geojson-utils@1.0.1
@@ -71,8 +72,10 @@ spacebars@1.0.3
 spiderable@1.0.5
 srp@1.0.1
 standard-app-packages@1.0.3
+summernote:summernote@0.6.0_1
 templating@1.0.9
 tracker@1.0.3
+twbs:bootstrap@3.3.1
 ui@1.0.4
 underscore@1.0.1
 url@1.0.2

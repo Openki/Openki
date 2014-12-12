@@ -48,6 +48,9 @@ Template.course_edit.helpers({
 	}
 });
 
+Template.course_edit.rendered = function() {
+	$(this.find('#editform_description')).summernote();
+}
 
 Template.course_edit.events({
 	'submit form.course_edit, click input.save': function (ev) {
@@ -67,7 +70,7 @@ Template.course_edit.events({
 			})
 
 			var changes = {
-				description: $('#editform_description').val(),
+				description: $('#editform_description').code(),
 				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
 				name: $('#editform_name').val(),
 				roles: roles
