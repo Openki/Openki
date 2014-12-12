@@ -2,7 +2,7 @@
 	<form class="course_edit">
 		<h2>{{#if _id}}{{mf 'course.edit.edit_course' 'Edit course'}}{{else}}{{mf 'course.edit.propose' 'Propose new course'}}{{/if}}</h2>
 		<p>{{mf 'course.edit.title' 'Title:'}} <input type="text" id="editform_name" size="40" value="{{#if _id}}{{name}}{{else}}{{this.query}}{{/if}}"/></p>
-		<p>{{mf 'course.edit.description' 'Desc:'}} <textarea cols="65" rows="10" id="editform_description" name="editform_description">{{description}}</textarea></p>
+		<p>{{mf 'course.edit.description' 'Desc:'}} <div id="editform_description" name="editform_description">{{{description}}}</div></p>
 
 		<div id='editform_categories'>
 			<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">

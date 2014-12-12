@@ -18,5 +18,4 @@ reactive-var
 accounts-github
 service-configuration
 bootstrap
-summernote:standalone
-
+citizenkevin:medium-editor
