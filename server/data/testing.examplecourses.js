@@ -415,11 +415,52 @@ testcourses = [{
 		{'user':'', 'roles': ['']}
 	]
 },{
+	'name':        'Schweissen',
+	'categories': ['Handwerk', 'Holz / Metall'],
+	'tags':       ['', ''],
+	'createdby':   'Julia',
+	'description': 'Ich habe vor 2 Jahren mit Holzbearbeitung angefangen. Und mache selbständig Innenausstattung und hab auch schon ein Bühnenbild für ein Theater gemacht. Nun würde ich gerne massive Sachen aus Stahl bauen aber auch kleine Sachen wie Kerzenständer. Anscheinend gibt es viele verschiedene Arten von Schweissen, ich weiss nicht, welche die geeignetste oder und praktischste ist. auf dem Wikipediaartikel "Schweissen" bin ich nicht schlau geworden',
+	'roles':      ['team', 'participant', 'mentor', 'host'],
+	'members': [
+		{'user':'Lara', 'roles': ['participant']}
+	],
+	'comment': 'Also es gibt grobgesehen TIG- und MIG- (und Elektroden-Schweissen)... lies mal folgenden link: http://www.conrad.ch/ce/de/content/ti_schweisstechniken/Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad'
+},{
+	'name':        'Velo Flicken',
+	'categories': ['Handwerk'],
+	'tags':       ['', ''],
+	'createdby':   'Sandra',
+	'description': 'Wer kann mir beibringen, Fahrräder zu reparieren?',
+	'roles':      ['team', 'participant', 'mentor', 'host'],
+	'members': [
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']}
+	]
+},{
 	'name':        '',
 	'categories': ['', ''],
 	'tags':       ['', ''],
 	'createdby':   '',
 	'description': '',
+	'roles':      ['team', 'participant', 'mentor', 'host'],
+	'members': [
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']}
+	]
+},{
+	'name':        'Lerne Russisch in 2 Stunden',
+	'categories': ['Sprache', ''],
+	'tags':       ['', ''],
+	'createdby':   'Sandra',
+	'description': '1.Stunde Kyrillisch, <br> 2. Konversation',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'', 'roles': ['']},
