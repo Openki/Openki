@@ -17,6 +17,6 @@ gadicohen:messageformat
 reactive-var
 accounts-github
 service-configuration
-summernote:summernote
 bootstrap
+summernote:standalone
 
