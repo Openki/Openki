@@ -148,7 +148,7 @@ testcourses = [{
 		{'user':'Du', 'roles': ['host']}
 	]
 },{
-	'name':        'Cyrypto Party',
+	'name':        'Crypto Party',
 	'categories': ['Internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'createdby':   'Mike_85',
