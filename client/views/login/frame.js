@@ -20,11 +20,11 @@ Template.loginFrame.events({
 Template.loginRegister.events({
 	'submit form': function(event, template){
 		event.preventDefault();
-		var emailVar = template.find('#register-email').value;
-		var passwordVar = template.find('#register-password').value;
+		var name = template.find('#register-name').value;
+		var password = template.find('#register-password').value;
 		Accounts.createUser({
-			email: emailVar,
-			password: passwordVar
+			username: name,
+			password: password
 		});
 		
 		Session.set('showLogin', false);
@@ -35,9 +35,9 @@ Template.loginRegister.events({
 Template.loginLogin.events({
 	'submit form': function(event, template){
 		event.preventDefault();
-		var email = template.find('#login-email').value;
+		var name = template.find('#login-name').value;
 		var password = template.find('#login-password').value;
-		Meteor.loginWithPassword(email, password, function(err) {
+		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
 				console.log(err);
 			} else {
