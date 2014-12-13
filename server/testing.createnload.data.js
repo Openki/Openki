@@ -23,11 +23,12 @@ function ensureUser(name) {
 		if (user) return user;
 		
 		console.log("Adding user "+name+' '+email)
+
 		var id = Accounts.createUser({
 			username: name,
 			email: email,
 			password: name,
-			profile: {name : name}
+			profile: {name : name},
 		});
 		
 		var age = Math.floor(Random.fraction()*100000000000)
@@ -109,9 +110,10 @@ function createCourses(){
 			if (course.region) {
 				course.region = ensureRegion(course.region)
 			} else {
-				/* pplace in random test region */
-				course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
+				/* place in random test region, Spilistan or Testistan */
+				course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'  
 			}
+			course.groups = _.map(course.groups, ensureGroup)
 			var id = Courses.insert(course)
 			console.log("Added course "+course.name+" "+id)
 		}
@@ -221,3 +223,43 @@ createEventsIfNone = function(){
 	}
 }
 
+createGroupsIfNone = function(){
+    //Events.remove({});
+	if (Groups.find().count() === 0) {
+		_.each (testgroups, function (group){
+			group.createdby = 'ServerScript'
+			var age = Math.floor(Random.fraction()*10000000000)
+			group.time_created = new Date(new Date().getTime()-age)
+			group.time_lastedit = new Date(new Date().getTime()-age*0.25)
+				// TESTING: allways use same id for same group to avoid broken urls while testing
+			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+			m5.update(group.name);
+			m5.update(group.description);
+			group._id = m5.digest('hex').substring(0, 8)
+
+			var members = group.members
+			delete group.members
+			Groups.insert(group)
+			console.log("Adding group "+group.name)
+
+			_.each (members, function (name){
+				var member = ensureUser(name)
+				Meteor.users.update(member._id, {$push:{'groups':group._id}})
+			})
+		})
+	}
+}
+
+function ensureGroup(name) {
+	while (true) {
+		var group = Groups.findOne({name: name})
+		if (group) return group._id;
+		
+		var id = Regions.insert({
+			name: name,
+			createdby: 'ServerScript_from_TestCouses',
+			description: 'Automaticaly created Group by server'
+		});
+		console.log("Added group from TestCouses "+name+" "+id)
+	}
+}
