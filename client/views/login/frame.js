@@ -46,9 +46,13 @@ Template.loginLogin.events({
 		});
 		
 	},
-	'click .loginWithGithub': function(event){
-		event.preventDefault();
-		Meteor.loginWithGithub({
+	'click .loginWithService': function(event) {
+		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		if (!Meteor[loginMethod]) {
+			console.log("don't have "+loginMethod);
+			return;
+		}
+		Meteor['loginWith'+event.currentTarget.dataset.service]({
 		}, function (err) {
 			if (err) {
 				addMessage(err.reason || 'Unknown error');
