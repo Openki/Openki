@@ -80,7 +80,7 @@ Handlebars.registerHelper ("privacyEnabled", function(){
 
 
 Handlebars.registerHelper("log", function(context) {
-	if (window.console) console.log(context)
+	if (window.console) console.log(arguments.length > 0 ? context : this);
 });
 
 Handlebars.registerHelper("title", function() {
