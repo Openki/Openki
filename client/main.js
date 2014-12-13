@@ -20,7 +20,7 @@ Meteor.subscribe('regions');
 Meteor.subscribe('roles');
 Meteor.subscribe('votings');
 Meteor.subscribe('users');
-return Meteor.subscribe('currentUser');
+Meteor.subscribe('currentUser');
 
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
