@@ -1,13 +1,12 @@
 <template name="coursedetails">
-
 	<div id="coursedetails">
 		{{#if edit}}
 			{{> course_edit course}}
 		{{else}}
-			{{#with course}}
 			<div class="course_main">
+			{{#with course}}
                 {{title name " - hmmm"}}
-                <h2 class="name">{{name}}</h2>
+                <h2 class="name {{#if currentUserMayEdit}}editableTitle{{/if}}" data-field='name'>{{name}}</h2>
                 <p class="small">{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}</p>
 
                 <div class="categorylist small">
@@ -16,15 +15,18 @@
 
                 {{> show_course_submenu}}
                 <br class="clear"/>
-                <p class="descr">{{{description}}}</p>
+			{{/with}}
+			
+                {{>editable editableDescription}}
+                <br class="clear"/>
 
-                {{#if currentUserMayEdit}}
+			{{#with course}}
+                {{#if currentUserMayEdit course}}
                 <input type="button" class="edit" value="Edit" />
                 <input type="button" class="del" value="Delete" />
                 {{/if}}
-
-			</div>
 			{{/with}}
+			</div>
 		{{/if}}
 
 
