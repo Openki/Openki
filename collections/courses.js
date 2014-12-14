@@ -221,7 +221,7 @@ Meteor.methods({
 			set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
 				set.description = sanitizeHtml(set.description, {
-					allowedTags: [ 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote'],
+					allowedTags: [ 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote'],
 					allowedAttributes: {
 						'a': [ 'href' ]
 					}
