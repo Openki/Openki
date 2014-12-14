@@ -9,7 +9,8 @@ Router.map(function () {
 				Meteor.subscribe('categories'),
 				Meteor.subscribe('courses'),
 				Meteor.subscribe('users'),
-				Meteor.subscribe('events')
+				Meteor.subscribe('events'),
+				Meteor.subscribe('groups')
 			]
 		},
 		data: function () {
