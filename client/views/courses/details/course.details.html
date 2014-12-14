@@ -6,22 +6,22 @@
 		{{else}}
 			{{#with course}}
 			<div class="course_main">
-                {{title name " - hmmm"}}
-                <h2 class="name">{{name}}</h2>
-                <p class="small">{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}</p>
+				{{title name " - hmmm"}}
+				<h2 class="name">{{name}}</h2>
+				<p class="small">{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}</p>
 
-                <div class="categorylist small">
-                {{> show_categories}}
-                </div>
+				<div class="categorylist small">
+				{{> show_categories}}
+				</div>
 
-                {{> show_course_submenu}}
-                <br class="clear"/>
-                <p class="descr">{{{description}}}</p>
+				{{> show_course_submenu}}
+				<br class="clear"/>
+				<p class="descr">{{{description}}}</p>
 
-                {{#if currentUserMayEdit}}
-                <input type="button" class="edit" value="Edit" />
-                <input type="button" class="del" value="Delete" />
-                {{/if}}
+				{{#if currentUserMayEdit}}
+				<input type="button" class="edit" value="Edit" />
+				<input type="button" class="del" value="Delete" />
+				{{/if}}
 
 			</div>
 			{{/with}}
@@ -51,11 +51,11 @@
 
 
 <template name="show_course_submenu">
-    <ul class="course_submenu">
-        <li class='active'><a href="{{pathFor 'showCourse'}}">Description</a></li>
-        <li><a href="{{pathFor 'showCourseWiki'}}">Wiki</a></li>
-        <li><a href="#">Docs</a></li>
-        <li><a href="#">History</a></li>
-    </ul>
+	<ul class="course_submenu">
+		<li class='active'><a href="{{pathFor 'showCourse'}}">Description</a></li>
+		<li><a href="{{pathFor 'showCourseWiki'}}">Wiki</a></li>
+		<li><a href="#">Docs</a></li>
+		<li><a href="#">History</a></li>
+	</ul>
 </template>
 
