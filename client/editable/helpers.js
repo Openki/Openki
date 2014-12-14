@@ -14,6 +14,10 @@ Template.editable.rendered = function() {
 				// as a simple solution, we just discard everything that is in the field. 
 				// We could try merging the current contents with the updated version but that's for another day
 				this.$('.editable').html('');
+				if (self.changed.get()) {
+					self.changed.set(false);
+					addMessage(mf('editable.sorrychanged', "Sorry, somebody else just changed that. Your changes have been discarded."));
+				}	
 			})
 		}
 	});
