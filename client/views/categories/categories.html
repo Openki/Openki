@@ -1,60 +1,58 @@
 <template name="categorylist">
+	<div class="courselist">
+		<h1>{{mf 'categories.title.categories' 'Categories'}}</h1>
+		{{#each categories}}
+			{{> category}}
+		{{else}}
+			{{mf 'categories.no_categories' 'No categories defined!'}}
+		{{/each}}
 
-  <div class="courselist">
-  	<h1>{{mf 'categories.title.categories' 'Categories'}}</h1>
-    {{#each categories}}
-        {{> category}}
-    {{else}}
-        {{mf 'categories.no_categories' 'No categories defined!'}}
-    {{/each}}
-
-    {{> course_category}}
-
-  </div>
+		{{> course_category}}
+	</div>
 </template>
 
 <template name="category">
-  <div class="categorylist">
-    <p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}" id="{{_id}}">{{name}}:</p>
-      <p>
-	        <ul class="category">
-          {{#each courses_by_category}}
-				<li><a href="{{pathFor 'showCourse'}}"> {{name}}</a></li>
-              {{else}} <li class='category_no_course'>{{mf 'categories.no_courses' 'no courses defined in this category!'}} </li>
-          {{/each}}
-          </ul>
-     </p>
-    </div>
+	<div class="categorylist">
+	<p class="name {{#unless courses_by_category.count}} no_courses_cat {{/unless}}" id="{{_id}}">{{name}}:</p>
+	<p>
+		<ul class="category">
+		{{#each courses_by_category}}
+			<li><a href="{{pathFor 'showCourse'}}"> {{name}}</a></li>
+		{{else}} <li class='category_no_course'>{{mf 'categories.no_courses' 'no courses defined in this category!'}} </li>
+		{{/each}}
+		</ul>
+	</p>
+	</div>
 </template>
 
 <template name="course_by_category">
-      <a href="{{pathFor 'showCourse'}}"> {{name}}</a><br />
+		<a href="{{pathFor 'showCourse'}}"> {{name}}</a><br />
 </template>
 
 
 <!-- create categories, (admins only) -->
 <template name="course_category">
-    <div class="create_category">
-    <form>
-    <h3>{{mf 'categories.new' 'New category'}}</h3>
-    <table>
-        <tr>
-            <th>{{mf 'categories.new.name' 'Name:'}} </th><td><input type="text" id="addform_name"/> </td>
-        </tr>
-        <tr>
-            <th></th><td><input type="button" class="add" value="Add new" /> </td>
-        </tr>
+	<div class="create_category">
+	<form>
+	<h3>{{mf 'categories.new' 'New category'}}</h3>
+	<table>
+		<tr>
+			<th>{{mf 'categories.new.name' 'Name:'}} </th><td><input type="text" id="addform_name"/> </td>
+		</tr>
+		<tr>
+			<th></th><td><input type="button" class="add" value="Add new" /> </td>
+		</tr>
 
-    </table>
-    </form>
-    </div>
+	</table>
+	</form>
+	</div>
 </template>
 
 
 <template name="show_categories">
-    <ul>
-      {{#each loadcategories categories}}
-        <li> <a href="/categorylist/#{{_id}}">{{name}}</a></li>
-      {{/each}}
-    </ul>
+	<ul>
+		{{#each loadcategories categories}}
+		<li> <a href="/categorylist/#{{_id}}">{{name}}</a></li>
+		{{/each}}
+	</ul>
 </template>
