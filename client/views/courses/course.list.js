@@ -55,7 +55,7 @@ Template.course.helpers({
 		return !hasRole(this.members, 'mentor')
 	},
 
-	TneedsHost: function() {
+	needsHost: function() {
 		return !hasRole(this.members, 'host')
 	},
 
