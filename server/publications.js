@@ -59,3 +59,7 @@ Meteor.publish ('users', function(){
 Meteor.publish('currentUser', function() {
   return Meteor.users.find(this.userId);
 });
+
+Meteor.publish ('groups', function(){
+	return Groups.find();
+});
