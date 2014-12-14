@@ -1,12 +1,3 @@
-Meteor.startup(function () {
-	createGroupsIfNone();          // TESTING...
-	createCategoriesIfNone();
-	createCoursesIfNone();         // TESTING...
-	createLocationsIfNone();       // TESTING...
-	createEventsIfNone();          // TESTING...
-});
-
-
 Meteor.methods({
 	insert_userdata: function(username, email, password){
 		Accounts.createUser({username:username, email:email, password:password});
@@ -48,7 +39,7 @@ Meteor.methods({
 
 // SETUP: Create Categories if not all anymore
 
-function createCategoriesIfNone() {
+createCategoriesIfNone = function() {
 	if (Categories.find().count() === 0) {
 		_.each(categories, function(category){
 			Categories.insert(category)
