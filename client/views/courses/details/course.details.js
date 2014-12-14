@@ -13,8 +13,10 @@ Router.map(function () {
 			]
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
-			if (!course) return null;
+			var self = this;
+			var courseCursor = Courses.find({_id: this.params._id});
+			var course = courseCursor.fetch().pop();
+			if (!course) return;
 			   
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
@@ -24,7 +26,6 @@ Router.map(function () {
 				course: course,
 				member: member,
 				editableDescription: makeEditable(course.description, function(newDescription, callback) {
-					console.log(newDescription);
 					Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 						if (err) {
 							addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
@@ -32,6 +33,14 @@ Router.map(function () {
 							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
 						}
 						callback();
+					});
+				}, function(beforeChange) {
+					// notify the template when a change to the field is imminent
+					// this is an ugly hack
+					courseCursor.observeChanges({
+						changed: function(id, fields) {
+							if (fields.description) beforeChange(fields.description);
+						}
 					});
 				})
 			};

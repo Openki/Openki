@@ -7,7 +7,15 @@ Template.editable.rendered = function() {
 	var editable = this.$('.editable');
 	self.editor = new MediumEditor(editable); /* { disableReturn: true, disableToolbar: true } */
 	editable.on('input', function() {
-		self.changed.set(true);
+		if (!self.changed.get()) {
+			self.changed.set(true);
+			self.data.beforeChange(function(text) {
+				// we're notified that the field contents will soon change
+				// as a simple solution, we just discard everything that is in the field. 
+				// We could try merging the current contents with the updated version but that's for another day
+				this.$('.editable').html('');
+			})
+		}
 	});
 }
 
@@ -19,13 +27,10 @@ Template.editable.events({
 	'click .editable-store': function(event, instance) {
 		var editable = instance.$('.editable')
 		instance.data.store(editable.html(), function() { instance.changed.set(false); });
-		
-		// ugly hack to have the field empty before it is reactively updated
-		// otherwise new tags in the edited HTML would get added as duplicates
-		editable.html('')
 	},
 	'click .editable-cancel': function(event, instance) { 
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
 	}
 });
+
