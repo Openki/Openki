@@ -1,8 +1,10 @@
 <template name="show_groups">
-	Part of:
-	<ul>
-		{{#each loadgroups groups}}
-		<li> <a href="/grouplist/#{{_id}}">{{name}}</a></li>
-		{{/each}}
-	</ul>
+	{{#if groups}}
+		Part of:
+		<ul>
+			{{#each loadgroups groups}}
+			<li> <a href="/grouplist/#{{_id}}">{{name}}</a></li>
+			{{/each}}
+		</ul>
+	{{/if}}
 </template>
