@@ -255,7 +255,7 @@ function ensureGroup(name) {
 		var group = Groups.findOne({name: name})
 		if (group) return group._id;
 		
-		var id = Regions.insert({
+		var id = Groups.insert({
 			name: name,
 			createdby: 'ServerScript_from_TestCouses',
 			description: 'Automaticaly created Group by server'
