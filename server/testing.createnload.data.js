@@ -249,7 +249,6 @@ createGroupsIfNone = function(){
 		})
 	}
 }
-
 function ensureGroup(name) {
 	while (true) {
 		var group = Groups.findOne({name: name})
@@ -258,8 +257,19 @@ function ensureGroup(name) {
 		var id = Groups.insert({
 			name: name,
 			createdby: 'ServerScript_from_TestCouses',
-			description: 'Automaticaly created Group by server'
+			description: 'Automaticaly created group by server'
 		});
 		console.log("Added group from TestCouses "+name+" "+id)
+	}
+}
+
+
+/////////////////////////////// TESTING: Create Regions if non in db
+
+createTestRegionsIfNone = function(){
+	if (Meteor.isServer && Regions.find().count() == 0) {
+		_.each(regions, function(region){
+			Regions.insert(region)
+		})
 	}
 }
