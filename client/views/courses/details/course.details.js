@@ -24,17 +24,42 @@ Router.map(function () {
 				edit: !!this.params.query.edit,
 				roleDetails: loadroles(course),
 				course: course,
-				member: member,
-				editableDescription: makeEditable(course.description, function(newDescription, callback) {
+			member: member,
+			editableName: makeEditable(
+				course.name, 
+				true,
+				function(newName) {
+					Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+						if (err) {
+							addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+						} else {
+							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+						}
+					});
+				}, 
+				function(beforeChange) {
+					// notify the template when a change to the field is imminent
+					// this is an ugly hack
+					courseCursor.observeChanges({
+						changed: function(id, fields) {
+							if (fields.name) beforeChange(fields.name);
+						}
+					});
+				}
+			),
+			editableDescription: makeEditable(
+				course.description, 
+				false,
+				function(newDescription) {
 					Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 						if (err) {
 							addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 						} else {
 							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
 						}
-						callback();
 					});
-				}, function(beforeChange) {
+				}, 
+				function(beforeChange) {
 					// notify the template when a change to the field is imminent
 					// this is an ugly hack
 					courseCursor.observeChanges({
