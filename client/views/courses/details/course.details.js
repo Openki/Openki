@@ -7,7 +7,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
-				Meteor.subscribe('courses'),
+				Meteor.subscribe('courseDetails', this.params._id),
 				Meteor.subscribe('users'),
 				Meteor.subscribe('events'),
 				Meteor.subscribe('groups')
@@ -72,9 +72,14 @@ Router.map(function () {
 			};
 		},
 		onAfterAction: function() {
-			var course = Courses.findOne({_id: this.params._id})
-			if (!course) return; // wtf
-			document.title = webpagename + 'Course: ' + course.name
+			var data = this.data();
+			if (data) {
+				var course = data.course;
+				document.title = webpagename + 'Course: ' + course.name
+				
+				// This hack subscribes us for the docs required to display userinfo
+				Meteor.subscribe('userSelection', _.pluck(course.members, 'user'));				
+			}
 		}
 	})
 	this.route('showCourseWiki', {
@@ -83,7 +88,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
-				Meteor.subscribe('courses'),
+			    Meteor.subscribe('courseDetails', this.params._id),
 				Meteor.subscribe('users'),
 				Meteor.subscribe('events')
 			]

@@ -2,7 +2,11 @@
 
 Meteor.publish ('courses', function(region){
 	if(!region) return Courses.find();
-	return Courses.find({region: region});
+				return Courses.find({region: region});
+});
+
+Meteor.publish ('courseDetails', function(id) {
+	return Courses.find({ _id: id });
 });
 
 Meteor.publish ('coursesFind', coursesFind);
@@ -42,18 +46,19 @@ Meteor.publish ('events', function(){
 	return Events.find();
 });
 
-/*
-Meteor.publish ('comments', function(){
-	return CourseComments.find();
-});
-*/
 
-//tried this, for publishing the users
 Meteor.publish ('users', function(){
 	return Meteor.users.find({}, {
 		fields: {username: 1}
 	});
 
+});
+
+Meteor.publish('userSelection', function(userIds) {
+	return Meteor.users.find(
+		{ _id: {$in: userIds} },
+		{ fields: {username: 1} }
+	);
 });
 
 Meteor.publish('currentUser', function() {
