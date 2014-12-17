@@ -106,14 +106,12 @@ Template.course.helpers({
 
 
 	course_eventlist_hasmore: function() {
-
 		var today= new Date();
 		var eventcount = Events.find({course_id: this._id,startdate: {$gt:today}},{sort: {startdate: 1}}).count();
 		return eventcount > 1 ? (eventcount-1)  : false
 	},
 
 	hasupcomingevents: function() {
-
 		var today= new Date();
 		return Events.find({course_id: this._id, startdate: {$gt:today}},{sort: {startdate: 1}}).count() > 0
 
