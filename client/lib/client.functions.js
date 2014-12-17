@@ -65,7 +65,7 @@ hasRoleUser = function(members, role, user) {
 
 /* Get a username from ID
  * 
- * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user perusing that incognito-ID is currently logged in.
+ * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
 userName = function(userId) {
 	if (!userId) return '';
