@@ -29,14 +29,6 @@ Router.map(function () {
 
 
 Template.course.helpers({
-	participant_status: function() {
-		if (this.subscribers_min < 1) return 'ontheway';
-		var ratio = this.roles.participant.subscribed.length / this.subscribers_min;
-		if (ratio < 0.5) return 'no';
-		if (ratio >= 1) return 'yes';
-		return 'ontheway';
-	},
-	
 	requiresMentor: function() {
 		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1
@@ -72,20 +64,14 @@ Template.course.helpers({
 	},
 
 	coursestate: function() {
-
 		var today = new Date();
-		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0
+		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
+		if (upcoming) return 'hasupcomingevents';
+		
 		var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
-
-		if(upcoming || past){
-			if(upcoming){
-				return "hasupcomingevents"
-			}else{
-				return "haspastevents"
-			}
-		}else{
-			return "proposal"
-		}
+		if (past) return 'haspastevents';
+						
+		return 'proposal';
 	},
 
 	donator_status: function() {
