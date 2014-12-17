@@ -42,13 +42,7 @@ Meteor.publish ('events', function(){
 	return Events.find();
 });
 
-/*
-Meteor.publish ('comments', function(){
-	return CourseComments.find();
-});
-*/
 
-//tried this, for publishing the users
 Meteor.publish ('users', function(){
 	return Meteor.users.find({}, {
 		fields: {username: 1}
