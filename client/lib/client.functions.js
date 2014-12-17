@@ -68,9 +68,8 @@ hasRoleUser = function(members, role, user) {
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user perusing that incognito-ID is currently logged in.
  */
 userName = function(userId) {
-	console.log(userId);
 	if (!userId) return '';
-	var user= Meteor.users.findOne({ _id: userId });
+	var user = Meteor.users.findOne({ _id: userId });
 	if (user) {
 		if (user.username) {
 			return user.username;
