@@ -54,6 +54,13 @@ Meteor.publish ('users', function(){
 
 });
 
+Meteor.publish('userSelection', function(userIds) {
+	return Meteor.users.find(
+		{ _id: {$in: userIds} },
+		{ fields: {username: 1} }
+	);
+});
+
 Meteor.publish('currentUser', function() {
   return Meteor.users.find(this.userId);
 });
