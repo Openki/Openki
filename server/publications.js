@@ -2,7 +2,11 @@
 
 Meteor.publish ('courses', function(region){
 	if(!region) return Courses.find();
-	return Courses.find({region: region});
+				return Courses.find({region: region});
+});
+
+Meteor.publish ('course', function(id){
+	return Courses.find({_id: id});
 });
 
 Meteor.publish ('coursesFind', coursesFind);
