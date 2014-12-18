@@ -1,12 +1,12 @@
 // TESTING: in order to test scalebility
-ScaleFaktor = 1
+var ScaleFaktor = 1;
 
 // TESTING: create new Courses if non in db
 
 createCoursesIfNone = function(){
- if (Courses.find().count() === 0) {
-        createCourses();
-  }
+	if (Courses.find().count() === 0) {
+		createCourses();
+	}
 }
 
 
