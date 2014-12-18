@@ -12,7 +12,6 @@ Meteor.startup(function () {
 
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
-Meteor.subscribe('events');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
 Meteor.subscribe('messages');

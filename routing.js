@@ -72,17 +72,6 @@ Router.map(function () {
 		}
 	})
 
-	this.route('calendar', {								///////// calendar /////////
-		path: 'calendar',
-		template: 'calendar',
-		waitOn: function () {
-			return Meteor.subscribe('courses');
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Calendar'
-		}
-	})
-
 	this.route('admin', {								///////// admin /////////
 		template: 'admin'
 	})
