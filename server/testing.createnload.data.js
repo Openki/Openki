@@ -186,28 +186,43 @@ function createLocations(){
 createEventsIfNone = function(){
     //Events.remove({});
 	if (Events.find().count() === 0) {
-		var event = {}
-		for (var n = 0; n < (35*ScaleFaktor); n++){
-		 	var course_count= Courses.find().count()
-			var course = Courses.find({},{skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch()
-			event.course_id = course[0]._id
-			event.title = course[0].name + '-Kurs'
-			event.description = 'This is the event-description'
-			event.mentors = []
-			event.host = []
-			var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
-			var timeToGo = Random.fraction()-0.8 				// put 80% in the past
-			if (timeToGo >= 0.05) {								// 75% of the remaining in future
-				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
+		Courses.find().forEach(function(course) {
+			for (var n = 0; n < Math.pow(Math.random() * 2, 4); n++) {
+				var event = {};
+				var description = course.description;
+				if (!description) description = "No description"; // :-(
+				var words = _.shuffle(description.split(' '));
+				event.region = course.region;
+				event.course_id = course._id;
+				event.title = course.name + ' ' + _.sample(words);
+				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
+				event.mentors = []
+				event.host = []
+				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
+				var timeToGo = Random.fraction()-0.8 				// put 80% in the past
+				if (timeToGo >= 0.05) {								// 75% of the remaining in future
+					timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
+				}
+				timeToGo = Math.floor(timeToGo*spread);
+				var date = new Date(new Date().getTime() + timeToGo);
+				var hour = date.getHours();
+				if (Random.fraction() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
+				if (Random.fraction() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
+				event.startdate = date;
+				
+				event.createdby = 'ServerScript'
+				var age = Math.floor(Random.fraction() * 10000000000)
+				event.time_created = new Date(new Date().getTime() - age)
+				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
+				console.log("Adding event " + event.title);
+				Events.insert(event)
 			}
-			timeToGo = Math.floor(timeToGo*spread)
-			event.startdate = new Date(new Date().getTime() + timeToGo)
-
-			event.createdby = 'ServerScript'
-			var age = Math.floor(Random.fraction() * 10000000000)
-			event.time_created = new Date(new Date().getTime() - age)
-			event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
-			Events.insert(event)
+		});
+		var event = {}
+		for (var n = 0; n < (35 * ScaleFaktor); n++){
+		 	var course_count= Courses.find().count()
+			var course = Courses.find({}, {skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch().pop();
+			
 		}
 	}
 }
