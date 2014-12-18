@@ -1,27 +1,18 @@
 <template name="calendar">
   <div class="calendar">
-
 	<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}</h1>
-
 	<ul class="calendar_eventlist">
-		{{#if calendar_eventlist}}
-			{{#each calendar_eventlist}}
-				{{> calendar_event}}
-			{{/each}}
-		{{else}}
-			<img src="/spinner.gif">
-		{{/if}}
-
-	<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
-		{{#if calendar_eventlist_past}}
-			{{#each calendar_eventlist_past}}
-				{{> calendar_event_past}}
-			{{/each}}
-		{{else}}
-			<img src="/spinner.gif">
-		{{/if}}
+		{{#each calendar_eventlist}}
+			{{> calendar_event}}
+		{{/each}}
 	</ul>
-
+	
+	<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
+	<ul>
+		{{#each calendar_eventlist_past}}
+			{{> calendar_event_past}}
+		{{/each}}
+	</ul>
   </div>
 </template>
 
