@@ -5,7 +5,7 @@ hmmm
 
 A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 [  read on...](http://news.schuel.ch "our blog")  
-<span class="octicon octicon-star"></span>Please star us if you like the idea.
+<span class="octicon octicon-star"></span> Star us if you like the idea.
 
 - Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
 - Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
@@ -47,8 +47,8 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - Browse to http://localhost:3000/
 
 ### Technical documentation
-- Is here in the [Wiki](https://github.com/schuel/hmmm/wiki) <span class="octicon octicon-mark-github"></span><span class="octicon octicon-book"></span>
+- Is here in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki) 
 
 ### License
-- AGPL – GNU Affero General Public License (for the sourcecode)
+- AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
 - Intended for Course Contents: Creative Commons (BY) SA
