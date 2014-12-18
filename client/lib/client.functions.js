@@ -62,6 +62,33 @@ hasRoleUser = function(members, role, user) {
 	return has;
 }
 
+
+/* Get a username from ID
+ * 
+ * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
+ */
+userName = function(userId) {
+	if (!userId) return '';
+	var user = Meteor.users.findOne({ _id: userId });
+	if (user) {
+		if (user.username) {
+			return user.username;
+		} else {
+			return "userId: " + user._id;
+		}
+	} else {
+		if (userId.substr(0, 5)  == 'Anon_') {
+			var loggeduser = Meteor.user();
+			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
+				return  '☔ ' + loggeduser.username + ' ☔';
+			}
+			return "☔ incognito";
+		}
+		return "No_User";
+	}
+}
+
+
 /* Go to the same page removing query parameters */
 goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params) // Shirely, you know of a better way?
@@ -88,27 +115,7 @@ Handlebars.registerHelper("title", function() {
 	document.title = les.join("");
 });
 
-Handlebars.registerHelper('username', function (userId){
-	if (!userId) return '';
-	var user= Meteor.users.findOne({_id:userId});
-	if(user){
-		if(user.username){
-			return user.username;
-		}else{
-			return "userId: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
-		}
-	}
-	else {
-		if (userId.substr(0, 5)  == 'Anon_'){
-			var loggeduser = Meteor.user()
-			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1){
-				return loggeduser.username + ' ☔'
-			}
-			return "Anonymous☔";
-		}
-		return "No_User";
-	}
-})
+Handlebars.registerHelper('username', userName);
 
 
 Handlebars.registerHelper('dateformat', function(date) {
