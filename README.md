@@ -5,7 +5,7 @@ hmmm
 
 A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 [  read on...](http://news.schuel.ch "our blog")  
-<span class="octicon octicon-star"></span> Star us if you like the idea.
+<span class="octicon octicon-star">★</span> Star us if you like the idea.
 
 - Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
 - Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
