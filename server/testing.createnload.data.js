@@ -195,27 +195,18 @@ createEventsIfNone = function(){
 			event.description = 'This is the event-description'
 			event.mentors = []
 			event.host = []
-			var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Jears
+			var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
 			var timeToGo = Random.fraction()-0.8 				// put 80% in the past
 			if (timeToGo >= 0.05) {								// 75% of the remaining in future
-				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponetial. in order to decrease occurrence in time
+				timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
 			}
 			timeToGo = Math.floor(timeToGo*spread)
-			event.startdate = new Date(new Date().getTime()+timeToGo)
+			event.startdate = new Date(new Date().getTime() + timeToGo)
 
-		/*  														TODO: ???
-			if (course[0].roles.indexOf(mentor) != -1) {
-				event.mentors = ['Serverscript']
-			}
-			if (hasRole (course[0], host)){
-				course[0].members.   // function not jet here!
-			}
-			else event.host = ['Serverscript']
-		*/
 			event.createdby = 'ServerScript'
-			var age = Math.floor(Random.fraction()*10000000000)
-			event.time_created = new Date(new Date().getTime()-age)
-			event.time_lastedit = new Date(new Date().getTime()-age*0.25)
+			var age = Math.floor(Random.fraction() * 10000000000)
+			event.time_created = new Date(new Date().getTime() - age)
+			event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
 			Events.insert(event)
 		}
 	}
