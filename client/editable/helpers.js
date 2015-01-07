@@ -6,7 +6,7 @@ Template.editable.created = function() {
 Template.editable.rendered = function() {
 	var self = this;
 	var editable = this.$('.editable');
-	options = {};
+	var options = {};
 	if (this.data.simple) {
 		options.disableReturn = true;
 		options.disableToolbar = true;
@@ -15,7 +15,7 @@ Template.editable.rendered = function() {
 	// When the text changes while we are editing, the changes will be
 	// inserted as new nodes instead of replacing the other nodes.
 	// That's because Blaze doesn't know how to merge the current DOM
-	// with the new text value its given.
+	// with the new text value it's given.
 	// Merging the two versions is nontrivial and the current behaviour
 	// is to just discard the local edits.
 	self.autorun(function() {
