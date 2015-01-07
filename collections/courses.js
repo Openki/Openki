@@ -38,19 +38,20 @@ function addRole(course, role, user) {
 			{ _id: course._id, 'members.user': user },
 			{ '$addToSet': { 'members.$.roles': role }},
 			checkUpdateOne
-		)
+		);
 	}
 }
+
 
 function removeRole(course, role, user) {
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
 	if (!Meteor.isClient) {
-			var result = Courses.update(
-				{ _id: course._id, 'members.user': user },
-				{ '$pull': { 'members.$.roles': role }},
-				checkUpdateOne
-			)
+		var result = Courses.update(
+			{ _id: course._id, 'members.user': user },
+			{ '$pull': { 'members.$.roles': role }},
+			checkUpdateOne
+		);
 	}
 
 	// Housekeeping: Remove members that have no role left
@@ -59,6 +60,7 @@ function removeRole(course, role, user) {
 		{ $pull: { members: { roles: { $size: 0 } }}}
 	)
 }
+
 
 coursesFind = function(region, query, filter, limit) {
 	var find = {}
