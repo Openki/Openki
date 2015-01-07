@@ -1,23 +1,27 @@
 <template name="coursepage">
-	<div class="coursepage">
+	<div class="container-fluid">
 		<h1>{{mf 'course.list.title' 'CourseList'}}</h1>
-		<div class="list_small">
-			<h3>{{mf 'courses.missingorg' 'Courses missing organisator(-team)'}}</h3>
+		<div class="row container-fluid">
+			<h1>{{mf 'courses.missingorg' 'Courses missing organisator(-team)'}}</h1>
 			{{> courselist missing_organisator}}
 		</div>
-		<div class="list_small">
-			<h3>{{mf 'courses.missingsubs' 'Courses that are still looking for participants'}}</h3>
+		<div class="row container-fluid">
+			<h1>{{mf 'courses.missingsubs' 'Courses that are still looking for participants'}}</h1>
 			{{> courselist missing_subscribers}}
 		</div>
-		<h1>{{mf 'courses.all' 'All courses'}}</h1>
-		{{> courselist all_courses}}
-</div>
-	{{> course_create}}
+		<div class="row container-fluid">
+			<h1>{{mf 'courses.all' 'All courses'}}</h1>
+			{{> courselist all_courses}}
+		</div>
+		<div class="row container-fluid">
+			{{> course_create}}
+		</div>
+	</div>
 </template>
 
 
 <template name="courselist">
-	<ul class="courselist">
+	<ul class="courselist list-unstyled">
 		{{#each this}}
 			{{> course}}
 		{{else}}
