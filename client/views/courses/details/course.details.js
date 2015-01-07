@@ -37,15 +37,6 @@ Router.map(function () {
 							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
 						}
 					});
-				}, 
-				function(beforeChange) {
-					// notify the template when a change to the field is imminent
-					// this is an ugly hack
-					courseCursor.observeChanges({
-						changed: function(id, fields) {
-							if (fields.name) beforeChange(fields.name);
-						}
-					});
 				}
 			),
 			editableDescription: makeEditable(
@@ -59,17 +50,8 @@ Router.map(function () {
 							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
 						}
 					});
-				}, 
-				function(beforeChange) {
-					// notify the template when a change to the field is imminent
-					// this is an ugly hack
-					courseCursor.observeChanges({
-						changed: function(id, fields) {
-							if (fields.description) beforeChange(fields.description);
-						}
-					});
-				})
-			};
+				}
+			)};
 		},
 		onAfterAction: function() {
 			var data = this.data();

@@ -1,5 +1,6 @@
 Template.editable.created = function() {
 	this.changed = new ReactiveVar(false);
+	this.editingVersion = false;
 }
 
 Template.editable.rendered = function() {
@@ -10,20 +11,36 @@ Template.editable.rendered = function() {
 		options.disableReturn = true;
 		options.disableToolbar = true;
 	}
+	
+	// When the text changes while we are editing, the changes will be
+	// inserted as new nodes instead of replacing the other nodes.
+	// That's because Blaze doesn't know how to merge the current DOM
+	// with the new text value its given.
+	// Merging the two versions is nontrivial and the current behaviour
+	// is to just discard the local edits.
+	self.autorun(function() {
+		var currentText = Template.currentData().text;
+		
+		// Here we instill the version we got in the DB
+		// Most of the time, it will be the same as what
+		// is already displayed
+		editable.html(currentText);
+		
+		if (self.editingVersion !== false && currentText !== self.editingVersion) {
+			// Uh oh, not handling this well
+			addMessage(mf('editable.sorrychanged', "Sorry, somebody else just changed that. Your changes have been discarded."));
+			
+			//:-( REALLY BAD
+			self.changed.set(false);
+			self.editingVersion = false;
+		}
+	});
+	
 	self.editor = new MediumEditor(editable, options);
 	editable.on('input', function() {
 		if (!self.changed.get()) {
 			self.changed.set(true);
-			self.data.beforeChange(function(text) {
-				// we're notified that the field contents will soon change
-				// as a simple solution, we just discard everything that is in the field. 
-				// We could try merging the current contents with the updated version but that's for another day
-				jQuery(self.findAll('.editable')).html('');
-				if (self.changed.get()) {
-					self.changed.set(false);
-					addMessage(mf('editable.sorrychanged', "Sorry, somebody else just changed that. Your changes have been discarded."));
-				}	
-			})
+			self.editingVersion = self.data.text;
 		}
 	});
 }
@@ -37,10 +54,12 @@ Template.editable.events({
 		instance.changed.set(false);
 		var editable = instance.$('.editable')
 		instance.data.store(editable.html());
+		instance.editingVersion = false;
 	},
 	'click .editable-cancel': function(event, instance) { 
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
+		instance.editingVersion = false;
 	}
 });
 

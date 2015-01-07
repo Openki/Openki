@@ -1,8 +1,7 @@
-makeEditable = function(text, simple, store, beforeChange) {
+makeEditable = function(text, simple, store) {
 	return {
 		text: text,
 		simple: simple,
-		store: store,
-		beforeChange: beforeChange
+		store: store
 	};
 }
