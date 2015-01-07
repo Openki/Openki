@@ -11,23 +11,28 @@
 	</div>
 </template>
 
+
 <template name="membersRoles">
 	<div class="participants">
 		<h3>{{mf 'course.title.Participants' 'Participants'}}</h3>
 		<ul class='subscribers'>
 		{{#each members}}
-			<li>
-				{{>profilelink user}}
-				<ul class='roles'>
-					{{#each roles}}
-						<li class='{{this}}'> {{this}} </li>
-					{{/each}}
-				</ul>
-				{{comment}}
-			</li>
+			{{> memberRoles}}
 		{{/each}}
 		</ul>
 	</div>
+</template>
+
+<template name="memberRoles">
+	<li>
+		{{>profilelink user}}
+		<ul class='roles'>
+			{{#each roles}}
+				<li class='{{this}}'> {{this}} </li>
+			{{/each}}
+		</ul>
+		{{comment}}
+	</li>
 </template>
 
 <template name="roleDetails">
