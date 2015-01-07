@@ -1,97 +1,87 @@
 <template name="layout">
-	<body class="container">
-		<nav class="row navbar navbar-default nav-height navbar-fixed-top" role="navigation">
-				<div class="container-fluid nav-height center_marge">
-				    <!-- Brand and toggle get grouped for better mobile display -->
-				    <div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">netropoly</a>
-						<!--<a id="ugly_logo" href="/"><img src="/logo.gif"></a>-->
-				    </div>
-				    <div class="collapse navbar-collapse bgsolid" id="bs-example-navbar-collapse-1">
-				    	<ul class="nav navbar-nav">
-							<li class="dropdown">
-							  <a href="#" class="dropdown-toggle navbar-btn" data-toggle="dropdown" role="button" aria-expanded="false">
-							  		{{mf 'menue.Courses' 'Courses'}}
-							  	<span class="caret"></span>
-							  </a>
-							  <ul class="dropdown-menu" role="menu">
-							  	<li>
-									<a href="/">
-										{{mf 'menue.Search' 'Search'}}
-									</a>
-								</li>
-								<li>
-									<a href="/locations/">
-										{{mf 'menue.LocationList' 'Location List'}}
-									</a>
-								</li>
-								<li>
-									<a href="/categorylist/">
-										{{mf 'menue.CategoryList' 'Category List'}}
-									</a>
-								</li>
-								<li>
-									<a href="{{pathFor 'courses'}}">
-										{{mf 'menue.BrowseCourses' 'Browse Courses'}}
-									</a>
-								</li>
-								<li>
-									<a href="{{pathFor 'proposeCourse'}}">
-										{{mf 'menue.ProposeCourse' 'Propose Course'}}
-									</a>
-								</li>
-								<li>
-									<a href="{{pathFor 'createCourse'}}">
-										{{mf 'menue.CreateEvent' 'Create Event'}}
-									</a>
-								</li>
-							  </ul>
-							</li>
-
-							<li class="navbar-btn">
-								<a href="/">
-									{{mf 'menue.Calendar' 'Calendar'}}
-								</a>
-							</li>
-
-
-							<li class="dropdown navbar-btn">
-								{{> lang_sel}}
-							</li>
-							<li class="dropdown navbar-btn">
-								{{> region_sel}}
-							</li>
-							<li class="navbar-btn">
-								{{> loginButton}}	
-							</li>
-					    </ul>
-				    </div>
-					<ul class="nav navbar-nav">
-						<li>&nbsp; &nbsp;</li>
-					    	<li class="navbar-btn">
-								{{> loginFrame}}
-							</li>
-						</ul>
-				</div>
-		</nav>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
-			<div id="outer" class="row">
-				<div id="maincontent" class="down">
-					<ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
-					{{> messages}}
-
-					{{> yield}}
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">netropoly</a>
+				<!--<a id="ugly_logo" href="/"><img src="/logo.gif"></a>-->
+		    </div>
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    	<ul class="nav navbar-nav navbar-left">
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+					  		{{mf 'menue.Courses' 'Courses'}}
+					  	<span class="caret"></span>
+					  </a>
+					  <ul class="dropdown-menu" role="menu">
+					  	<li>
+							<a href="/">
+								{{mf 'menue.Search' 'Search'}}
+							</a>
+						</li>
+						<li>
+							<a href="/locations/">
+								{{mf 'menue.LocationList' 'Location List'}}
+							</a>
+						</li>
+						<li>
+							<a href="/categorylist/">
+								{{mf 'menue.CategoryList' 'Category List'}}
+							</a>
+						</li>
+						<li>
+							<a href="{{pathFor 'courses'}}">
+								{{mf 'menue.BrowseCourses' 'Browse Courses'}}
+							</a>
+						</li>
+						<li>
+							<a href="{{pathFor 'proposeCourse'}}">
+								{{mf 'menue.ProposeCourse' 'Propose Course'}}
+							</a>
+						</li>
+						<li>
+							<a href="{{pathFor 'createCourse'}}">
+								{{mf 'menue.CreateEvent' 'Create Event'}}
+							</a>
+						</li>
+					  </ul>
+					</li>
+					<li>
+						<a href="">
+							{{mf 'menue.Calendar' 'Calendar'}}
+						</a>
+					</li>
+					<li class="dropdown">
+						{{> lang_sel}}
+					</li>
+					<li class="dropdown">
+						{{> region_sel}}
+					</li>
+					<li>
+						{{> loginButton}}	
+					</li>
+			    	<li>
+						{{> loginFrame}}
+					</li>
 				</ul>
-				</div>
 			</div>
 		</div>
-	</body>
+	</nav>
+	<div class="container-fluid">
+		<div id="outer" class="row">
+			<div id="maincontent" class="down">
+				{{> messages}}
+
+				{{> yield}}
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="region_sel">
