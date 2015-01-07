@@ -65,4 +65,25 @@ Template.roleDetail.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false, null);
 		return false;
 	}
-})
+});
+
+Template.memberRoles.helpers({
+	editableMessage: function() {
+		var self = Template.instance();
+		var course = self.data.course;
+console.log(self.data)
+		return makeEditable(
+			self.data.member.comment, 
+			true,
+			function(newMessage) {
+				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
+					if (err) {
+						addMessage(mf('subscribemessage.saving.error', { ERROR: err }, 'Unable to change your message. We encountered the following error: {ERROR}'));
+					} else {
+						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'));
+					}
+				});
+			}
+		);
+	}
+});

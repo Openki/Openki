@@ -17,7 +17,7 @@
 		<h3>{{mf 'course.title.Participants' 'Participants'}}</h3>
 		<ul class='subscribers'>
 		{{#each members}}
-			{{> memberRoles}}
+			{{> memberRoles member=this course=..}}
 		{{/each}}
 		</ul>
 	</div>
@@ -25,13 +25,13 @@
 
 <template name="memberRoles">
 	<li>
-		{{>profilelink user}}
+		{{>profilelink member.user}}
 		<ul class='roles'>
-			{{#each roles}}
+			{{#each member.roles}}
 				<li class='{{this}}'> {{this}} </li>
 			{{/each}}
 		</ul>
-		{{comment}}
+		{{> editable editableMessage}}
 	</li>
 </template>
 
