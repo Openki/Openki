@@ -25,33 +25,34 @@ Router.map(function () {
 				edit: !!this.params.query.edit,
 				roleDetails: loadroles(course),
 				course: course,
-			member: member,
-			editableName: makeEditable(
-				course.name, 
-				true,
-				function(newName) {
-					Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
-						if (err) {
-							addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
-						} else {
-							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
-						}
-					});
-				}
-			),
-			editableDescription: makeEditable(
-				course.description, 
-				false,
-				function(newDescription) {
-					Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
-						if (err) {
-							addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
-						} else {
-							addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
-						}
-					});
-				}
-			)};
+				member: member,
+				editableName: makeEditable(
+					course.name, 
+					true,
+					function(newName) {
+						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+							if (err) {
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+							} else {
+								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+							}
+						});
+					}
+				),
+				editableDescription: makeEditable(
+					course.description, 
+					false,
+					function(newDescription) {
+						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
+							if (err) {
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+							} else {
+								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+							}
+						});
+					}
+				)
+			};
 		},
 		onAfterAction: function() {
 			var data = this.data();
