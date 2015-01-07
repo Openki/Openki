@@ -459,7 +459,30 @@ testcourses = [{
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']}
 	]
+},,{
+	'name':        'Lesegruppe',
+	'categories': ['Sprache','Literatur'],
+	'tags':       ['', ''],
+	'createdby':   'Sandra',
+	'description': 'Kurzgeschichten lesen, oder auch mal was längeres, ich mag philosophisches',
+	'roles':      ['team', 'participant', 'host'],
+	'members': [
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']}
+	]
 },
+
+
+
+
+
+
+
+
 
 /***************** english Testcourses **********************/
 {
