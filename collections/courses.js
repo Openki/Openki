@@ -28,8 +28,8 @@ function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
 		{ _id: course._id, 'members.user': { $ne: user } },
-		{ $addToSet: { 'members': { user: user, roles: []} }}
-	)
+		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
+	);
 
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
@@ -54,7 +54,6 @@ function removeRole(course, role, user) {
 	}
 
 	// Housekeeping: Remove members that have no role left
-	// Note that we have a race condition here with the addRole() function, blissfully ignoring the unlikely case
 	Courses.update(
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
