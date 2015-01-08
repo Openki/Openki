@@ -69,11 +69,10 @@ Template.roleDetail.events({
 
 Template.memberRoles.helpers({
 	editableMessage: function() {
-		var self = Template.instance();
-		var course = self.data.course;
-		if (self.data.member.user !== Meteor.userId()) return false;
+		var course = this.course;
+		if (this.member.user !== Meteor.userId()) return false;
 		return makeEditable(
-			self.data.member.comment, 
+			this.member.comment, 
 			true,
 			function(newMessage) {
 				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
