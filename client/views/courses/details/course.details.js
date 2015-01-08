@@ -15,8 +15,7 @@ Router.map(function () {
 		},
 		data: function () {
 			var self = this;
-			var courseCursor = Courses.find({_id: this.params._id});
-			var course = courseCursor.fetch().pop();
+			var course = Courses.findOne({_id: this.params._id});
 			if (!course) return;
 			   
 			var userId = Meteor.userId();
