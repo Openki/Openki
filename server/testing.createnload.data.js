@@ -187,7 +187,8 @@ createEventsIfNone = function(){
     //Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
-			for (var n = 0; n < Math.pow(Math.random() * 2, 4); n++) {
+			var event_count =  Math.pow(Math.random() * 2, 4);
+			for (var n = 0; n < event_count; n++) {
 				var event = {};
 				var description = course.description;
 				if (!description) description = "No description"; // :-(
