@@ -187,7 +187,7 @@ Meteor.methods({
 		}
 
  		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
-		if (!mayEdit) throw new Meteor.Error(401, "get lost")
+		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted")
 
 
 		/* Changes we want to perform */
