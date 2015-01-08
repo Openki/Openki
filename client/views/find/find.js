@@ -5,8 +5,11 @@ Router.map(function () {
 		waitOn: function () {
 			var region = Session.get('region')
 			var filter = {}
-			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true;
-			return Meteor.subscribe('coursesFind', region, this.params.search, filter);
+			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
+			return [
+				Meteor.subscribe('coursesFind', region, this.params.search, filter),
+				Meteor.subscribe('futureEvents')
+			];
 		},
 		data: function() {
 			var region = Session.get('region')
