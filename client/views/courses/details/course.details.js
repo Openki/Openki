@@ -20,12 +20,14 @@ Router.map(function () {
 			   
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
-			return {
+			var data = {
 				edit: !!this.params.query.edit,
 				roleDetails: loadroles(course),
 				course: course,
-				member: member,
-				editableName: makeEditable(
+				member: member
+			};
+			if (mayEdit(Meteor.user(), course)) {
+				data.editableName = makeEditable(
 					course.name, 
 					true,
 					function(newName) {
@@ -37,8 +39,8 @@ Router.map(function () {
 							}
 						});
 					}
-				),
-				editableDescription: makeEditable(
+				);
+				data.editableDescription = makeEditable(
 					course.description, 
 					false,
 					function(newDescription) {
@@ -50,8 +52,9 @@ Router.map(function () {
 							}
 						});
 					}
-				)
-			};
+				);
+			}
+			return data;
 		},
 		onAfterAction: function() {
 			var data = this.data();

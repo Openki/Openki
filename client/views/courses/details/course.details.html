@@ -5,7 +5,7 @@
 		{{else}}
 			<div class="course_main">
                 {{title course.name " - hmmm"}}
-                <h2 class="name">{{>editable editableName}}</h2>
+                <h2 class="name">{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}</h2>
                 <br class="clear"/>
 			{{#with course}}
 				<p class='small'>
@@ -22,11 +22,11 @@
                 <br class="clear"/>
 			{{/with}}
 			
-                {{>editable editableDescription}}
+                {{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
                 <br class="clear"/>
 
 			{{#with course}}
-                {{#if currentUserMayEdit course}}
+                {{#if currentUserMayEdit}}
                 <input type="button" class="edit" value="Edit" />
                 <input type="button" class="del" value="Delete" />
                 {{/if}}

@@ -19,7 +19,8 @@ Template.editable.rendered = function() {
 	// Merging the two versions is nontrivial and the current behaviour
 	// is to just discard the local edits.
 	self.autorun(function() {
-		var currentText = Template.currentData().text;
+		var currentData = Template.currentData();
+		var currentText = currentData.text;
 		
 		// Here we instill the version we got in the DB
 		// Most of the time, it will be the same as what
