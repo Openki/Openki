@@ -71,7 +71,7 @@ Template.memberRoles.helpers({
 	editableMessage: function() {
 		var self = Template.instance();
 		var course = self.data.course;
-console.log(self.data)
+		if (self.data.member.user !== Meteor.userId()) return false;
 		return makeEditable(
 			self.data.member.comment, 
 			true,

@@ -31,7 +31,11 @@
 				<li class='{{this}}'> {{this}} </li>
 			{{/each}}
 		</ul>
-		{{> editable editableMessage}}
+		{{#if editableMessage}}
+			{{> editable editableMessage}}
+		{{else}}
+			{{comment}}
+		{{/if}}
 	</li>
 </template>
 
