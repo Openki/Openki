@@ -10,10 +10,10 @@ Router.map(function () {
 		},
 		data: function() {
 			var region = Session.get('region')
-			var filter = {}
-			if (this.params.hasUpcomingEvent) filter.hasUpcomingEvent = true;
+			var filter = {};
+			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
 			return {
-				hasUpcomingEvent: this.params.hasUpcomingEvent,
+				hasUpcomingEvent: filter.hasUpcomingEvent,
 				query: this.params.search,
 				results: coursesFind(region, this.params.search, filter)
 			}
