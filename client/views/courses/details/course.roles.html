@@ -1,17 +1,3 @@
-<template name="roleComment">
-	<div>
-		<form name="form_post">
-			{{mf 'course.roles.your_message' 'Your message:'}}<br>
-			<textarea cols="70" rows="3" class="comment">{{../member.comment}}</textarea>
-		{{#if editing}}
-			<input type="button" class="save" value="save" />
-			<input type="button" class="reset" value="reset" />
-		{{/if}}
-		</form>
-	</div>
-</template>
-
-
 <template name="membersRoles">
 	<div class="participants">
 		<h3>{{mf 'course.title.Participants' 'Participants'}}</h3>

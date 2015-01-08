@@ -1,30 +1,3 @@
-Template.roleComment.created = function() {
-	this.editing = new ReactiveVar(false);
-}
-
-Template.roleComment.helpers({
-	editing: function() { return Template.instance().editing.get() }
-})
-
-Template.roleComment.events({
-	'keyup .comment, change .comment': function(e, template) {
-		template.editing.set(true);
-	},
-	
-	'click input.save': function(e, template) {
-		var comment = $(template.find('.comment')).val();
-		Meteor.call("change_comment", this.course._id, comment);
-		template.editing.set(false);
-		e.preventDefault();
-	},
-	
-	'click input.reset': function (e, template) {
-		$(template.find('.comment')).val("" + template.data.member.comment);
-		template.editing.set(false);
-	},
-});
-
-
 Template.roleDetail.created = function() {
 	this.enrolling = new ReactiveVar(false);
 }
