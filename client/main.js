@@ -18,7 +18,6 @@ Meteor.subscribe('messages');
 Meteor.subscribe('regions');
 Meteor.subscribe('roles');
 Meteor.subscribe('votings');
-Meteor.subscribe('users');
 Meteor.subscribe('currentUser');
 
 // close any verification dialogs still open
