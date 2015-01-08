@@ -8,7 +8,7 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('categories'),
 				Meteor.subscribe('courseDetails', this.params._id),
-				Meteor.subscribe('events'),
+				Meteor.subscribe('eventsForCourse', this.params._id),
 				Meteor.subscribe('groups')
 			]
 		},
@@ -72,9 +72,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
-			    Meteor.subscribe('courseDetails', this.params._id),
-				Meteor.subscribe('users'),
-				Meteor.subscribe('events')
+			    Meteor.subscribe('courseDetails', this.params._id)
 			]
 		},
 		data: function () {
