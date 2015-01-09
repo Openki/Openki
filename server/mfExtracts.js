@@ -4,7 +4,7 @@ mfPkg.addNative(
     "key": "menue.Courses",
     "text": "Courses",
     "file": "./client/views/main.html",
-    "line": 20,
+    "line": 19,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -13,7 +13,7 @@ mfPkg.addNative(
     "key": "menue.Search",
     "text": "Search",
     "file": "./client/views/main.html",
-    "line": 26,
+    "line": 25,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -22,7 +22,7 @@ mfPkg.addNative(
     "key": "menue.LocationList",
     "text": "Location List",
     "file": "./client/views/main.html",
-    "line": 31,
+    "line": 30,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -31,7 +31,7 @@ mfPkg.addNative(
     "key": "menue.CategoryList",
     "text": "Category List",
     "file": "./client/views/main.html",
-    "line": 36,
+    "line": 35,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -40,7 +40,7 @@ mfPkg.addNative(
     "key": "menue.BrowseCourses",
     "text": "Browse Courses",
     "file": "./client/views/main.html",
-    "line": 41,
+    "line": 40,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -49,7 +49,7 @@ mfPkg.addNative(
     "key": "menue.ProposeCourse",
     "text": "Propose Course",
     "file": "./client/views/main.html",
-    "line": 46,
+    "line": 45,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -58,7 +58,7 @@ mfPkg.addNative(
     "key": "menue.CreateEvent",
     "text": "Create Event",
     "file": "./client/views/main.html",
-    "line": 51,
+    "line": 50,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -67,7 +67,7 @@ mfPkg.addNative(
     "key": "menue.Calendar",
     "text": "Calendar",
     "file": "./client/views/main.html",
-    "line": 59,
+    "line": 57,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -76,7 +76,7 @@ mfPkg.addNative(
     "key": "menue.All regions",
     "text": "All regions",
     "file": "./client/views/main.html",
-    "line": 106,
+    "line": 94,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -85,7 +85,7 @@ mfPkg.addNative(
     "key": "menue.Testpage",
     "text": "This is only a <b>Testpage</b>. ",
     "file": "./client/views/main.html",
-    "line": 141,
+    "line": 129,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -94,7 +94,7 @@ mfPkg.addNative(
     "key": "menue.Testpage2",
     "text": "All data will be erased regularly. ",
     "file": "./client/views/main.html",
-    "line": 142,
+    "line": 130,
     "template": "layout",
     "ctime": 1404604221980,
     "mtime": 1404604221980
@@ -249,8 +249,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 29,
     "template": "profile",
-    "mtime": 1418417990645,
-    "ctime": 1418417990645
+    "ctime": 1418417990645,
+    "mtime": 1418417990645
   },
   "profile.delete": {
     "key": "profile.delete",
@@ -258,8 +258,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 34,
     "template": "profile",
-    "mtime": 1418417990645,
-    "ctime": 1418417990645
+    "ctime": 1418417990645,
+    "mtime": 1418417990645
   },
   "profile.deletecancel": {
     "key": "profile.deletecancel",
@@ -267,8 +267,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 31,
     "template": "profile",
-    "mtime": 1418417990645,
-    "ctime": 1418417990645
+    "ctime": 1418417990645,
+    "mtime": 1418417990645
   },
   "profile.my_courses": {
     "key": "profile.my_courses",
@@ -382,7 +382,7 @@ mfPkg.addNative(
     "key": "login.close",
     "text": " ",
     "file": "./client/views/login/frame.html",
-    "line": 8,
+    "line": 9,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1418417990645
@@ -391,7 +391,7 @@ mfPkg.addNative(
     "key": "login.frame.welcome",
     "text": "Welcome {NAME}!",
     "file": "./client/views/login/frame.html",
-    "line": 12,
+    "line": 13,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1417023103736
@@ -400,7 +400,7 @@ mfPkg.addNative(
     "key": "login.frame.profile",
     "text": "Visit my profile",
     "file": "./client/views/login/frame.html",
-    "line": 18,
+    "line": 19,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1418417990645
@@ -409,7 +409,7 @@ mfPkg.addNative(
     "key": "login.frame.settings",
     "text": "Account settings",
     "file": "./client/views/login/frame.html",
-    "line": 21,
+    "line": 22,
     "template": "loginFrame",
     "ctime": 1417697489041,
     "mtime": 1417697489041
@@ -418,7 +418,7 @@ mfPkg.addNative(
     "key": "login.logout",
     "text": "Logout",
     "file": "./client/views/login/frame.html",
-    "line": 24,
+    "line": 25,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1417023103736
@@ -427,7 +427,7 @@ mfPkg.addNative(
     "key": "login.register.submit",
     "text": "Register",
     "file": "./client/views/login/frame.html",
-    "line": 43,
+    "line": 45,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1417023103736
@@ -436,10 +436,280 @@ mfPkg.addNative(
     "key": "login.login.submit",
     "text": "Login",
     "file": "./client/views/login/frame.html",
-    "line": 52,
+    "line": 54,
     "template": "loginFrame",
     "ctime": 1417023103736,
     "mtime": 1417023103736
+  },
+  "location.details.title": {
+    "key": "location.details.title",
+    "text": "Location details",
+    "file": "./client/views/locations/location.details.html",
+    "line": 2,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.time_created": {
+    "key": "location.details.time_created",
+    "text": "Time created:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.last_edited": {
+    "key": "location.details.last_edited",
+    "text": "Last edited:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.created_by": {
+    "key": "location.details.created_by",
+    "text": "Created by:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.desc": {
+    "key": "location.details.desc",
+    "text": "Desc:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 16,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.hosts_admin": {
+    "key": "location.details.hosts_admin",
+    "text": "Hosts/Admin:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 17,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.online": {
+    "key": "location.details.online",
+    "text": "Online:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 24,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.address": {
+    "key": "location.details.address",
+    "text": "Address:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 25,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.how_go_there": {
+    "key": "location.details.how_go_there",
+    "text": "How to go there:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 26,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.max_ppl": {
+    "key": "location.details.max_ppl",
+    "text": "Maximum People:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 27,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.max_workplaces": {
+    "key": "location.details.max_workplaces",
+    "text": "Maximum Workplaces:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 28,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.has_projector": {
+    "key": "location.details.has_projector",
+    "text": "Has a Projector!",
+    "file": "./client/views/locations/location.details.html",
+    "line": 29,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.details.specials": {
+    "key": "location.details.specials",
+    "text": "Specials:",
+    "file": "./client/views/locations/location.details.html",
+    "line": 30,
+    "template": "location_details",
+    "mtime": 1420734180686,
+    "ctime": 1420734180686
+  },
+  "location.edit.edit_location": {
+    "key": "location.edit.edit_location",
+    "text": "Edit location",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 7,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.add_location": {
+    "key": "location.edit.add_location",
+    "text": "Add location",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 7,
+    "template": "location_edit",
+    "ctime": 1420733503590,
+    "mtime": 1420733503590
+  },
+  "location.edit.name": {
+    "key": "location.edit.name",
+    "text": "Name:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 8,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.desc": {
+    "key": "location.edit.desc",
+    "text": "Desc:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 10,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.address": {
+    "key": "location.edit.address",
+    "text": "Address:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 15,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.route": {
+    "key": "location.edit.route",
+    "text": "Route:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 17,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.visible_in_list": {
+    "key": "location.edit.visible_in_list",
+    "text": "Visible in list (contactable for other users)",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 21,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.public_space": {
+    "key": "location.edit.public_space",
+    "text": "Public Space (everybody is allowed to host here)",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 23,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.region": {
+    "key": "location.edit.region",
+    "text": "Region:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 26,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.pls_select": {
+    "key": "location.edit.pls_select",
+    "text": "Please select",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 28,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.hosts_admins": {
+    "key": "location.edit.hosts_admins",
+    "text": "Hosts/Admins",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 37,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.search_usr_add_host": {
+    "key": "location.edit.search_usr_add_host",
+    "text": "Search for username to add as host:",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 45,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.no_usr_found": {
+    "key": "location.edit.no_usr_found",
+    "text": "no username found",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 51,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.optional_info": {
+    "key": "location.edit.optional_info",
+    "text": "Optional Info",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 61,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.max_ppl": {
+    "key": "location.edit.max_ppl",
+    "text": "Max. People",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 63,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "location.edit.max_workplace": {
+    "key": "location.edit.max_workplace",
+    "text": "Max. Workplaces",
+    "file": "./client/views/locations/location.edit.html",
+    "line": 64,
+    "template": "location_edit",
+    "ctime": 1420733341289,
+    "mtime": 1420733341289
+  },
+  "locations.list.title": {
+    "key": "locations.list.title",
+    "text": "Rooms",
+    "file": "./client/views/locations/location.list.html",
+    "line": 3,
+    "template": "locationlist",
+    "ctime": 1420732741418,
+    "mtime": 1420732741418
   },
   "find.WhatLearn?": {
     "key": "find.WhatLearn?",
@@ -463,7 +733,7 @@ mfPkg.addNative(
     "key": "find.no entries found. propose new course?",
     "text": "No entries found. Do you want to propose a new course?",
     "file": "./client/views/find/find.html",
-    "line": 13,
+    "line": 14,
     "template": "find",
     "ctime": 1414002480587,
     "mtime": 1414002480587
@@ -508,7 +778,7 @@ mfPkg.addNative(
     "key": "courses.all",
     "text": "All courses",
     "file": "./client/views/courses/course.list.html",
-    "line": 12,
+    "line": 13,
     "template": "coursepage",
     "ctime": 1413307437297,
     "mtime": 1413307437297
@@ -517,7 +787,7 @@ mfPkg.addNative(
     "key": "courses.none",
     "text": "no courses found",
     "file": "./client/views/courses/course.list.html",
-    "line": 24,
+    "line": 28,
     "template": "coursepage",
     "ctime": 1413307437297,
     "mtime": 1413307437297
@@ -805,7 +1075,7 @@ mfPkg.addNative(
     "key": "course.edit.edit_course",
     "text": "Edit course",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 3,
+    "line": 4,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -814,7 +1084,7 @@ mfPkg.addNative(
     "key": "course.edit.propose",
     "text": "Propose new course",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 3,
+    "line": 4,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -823,7 +1093,7 @@ mfPkg.addNative(
     "key": "course.edit.title",
     "text": "Title:",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 4,
+    "line": 5,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -832,7 +1102,7 @@ mfPkg.addNative(
     "key": "course.edit.description",
     "text": "Desc:",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 5,
+    "line": 6,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -841,7 +1111,7 @@ mfPkg.addNative(
     "key": "course.edit.edit",
     "text": "Edit",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 9,
+    "line": 10,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -850,7 +1120,7 @@ mfPkg.addNative(
     "key": "course.edit.categories",
     "text": "Categories",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 10,
+    "line": 11,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -859,7 +1129,7 @@ mfPkg.addNative(
     "key": "course.edit.edit_categories",
     "text": "Edit Categories:",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 14,
+    "line": 15,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -868,7 +1138,7 @@ mfPkg.addNative(
     "key": "course.edit.neededs_ppl_who",
     "text": "Needs people who",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 32,
+    "line": 33,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -877,7 +1147,7 @@ mfPkg.addNative(
     "key": "course.edit.region",
     "text": "Region:",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 41,
+    "line": 42,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -886,7 +1156,7 @@ mfPkg.addNative(
     "key": "course.edit.pls_select",
     "text": "Please select",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 43,
+    "line": 44,
     "template": "course_edit",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -1021,7 +1291,7 @@ mfPkg.addNative(
     "key": "categories.title.categories",
     "text": "Categories",
     "file": "./client/views/categories/categories.html",
-    "line": 4,
+    "line": 3,
     "template": "categorylist",
     "ctime": 1414002480587,
     "mtime": 1414002480587
@@ -1030,7 +1300,7 @@ mfPkg.addNative(
     "key": "categories.no_categories",
     "text": "No categories defined!",
     "file": "./client/views/categories/categories.html",
-    "line": 8,
+    "line": 7,
     "template": "categorylist",
     "ctime": 1414002480587,
     "mtime": 1414002480587
@@ -1039,7 +1309,7 @@ mfPkg.addNative(
     "key": "categories.no_courses",
     "text": "no courses defined in this category!",
     "file": "./client/views/categories/categories.html",
-    "line": 23,
+    "line": 22,
     "template": "categorylist",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -1048,7 +1318,7 @@ mfPkg.addNative(
     "key": "categories.new",
     "text": "New category",
     "file": "./client/views/categories/categories.html",
-    "line": 39,
+    "line": 38,
     "template": "categorylist",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -1057,7 +1327,7 @@ mfPkg.addNative(
     "key": "categories.new.name",
     "text": "Name:",
     "file": "./client/views/categories/categories.html",
-    "line": 42,
+    "line": 41,
     "template": "categorylist",
     "ctime": 1414089850544,
     "mtime": 1414089850544
@@ -1114,7 +1384,7 @@ mfPkg.addNative(
     "line": 26,
     "template": "layout",
     "ctime": 1417023103736,
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "removed": true
   },
   "menue.about": {
@@ -1124,7 +1394,7 @@ mfPkg.addNative(
     "line": 74,
     "template": "layout",
     "ctime": 1404604221980,
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "removed": true
   },
   "menue.FAQ": {
@@ -1134,7 +1404,7 @@ mfPkg.addNative(
     "line": 75,
     "template": "layout",
     "ctime": 1404604221980,
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "removed": true
   },
   "course.roles.incognitosub": {
@@ -1143,7 +1413,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.roles.html",
     "line": 50,
     "template": "roleComment",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1417023103737,
     "removed": true
   },
@@ -1153,7 +1423,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 33,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1163,7 +1433,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 36,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1173,7 +1443,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 39,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1183,7 +1453,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 42,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1193,7 +1463,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 48,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1203,7 +1473,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 50,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1213,7 +1483,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 51,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1223,7 +1493,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 52,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1233,7 +1503,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 53,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1243,7 +1513,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 54,
     "template": "course_edit",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1253,7 +1523,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.roles.html",
     "line": 30,
     "template": "Members",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -1263,7 +1533,7 @@ mfPkg.addNative(
     "file": "./client/views/users/userprofile.html",
     "line": 13,
     "template": "profilelink",
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "ctime": 1414019114300,
     "removed": true
   },
@@ -1274,11 +1544,11 @@ mfPkg.addNative(
     "line": 53,
     "template": "votelists",
     "ctime": 1414007096861,
-    "mtime": 1418417990645,
+    "mtime": 1420734180686,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1418417990646,
-  "updatedAt": 1418417990645
+  "extractedAt": 1420734180687,
+  "updatedAt": 1420734180686
 });
