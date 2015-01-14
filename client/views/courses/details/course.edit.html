@@ -1,5 +1,5 @@
 <template name="course_edit">
-		<form>
+		<form class="row">
 			<h2>{{#if _id}}{{mf 'course.edit.edit_course' 'Edit course'}}{{else}}{{mf 'course.edit.propose' 'Propose new course'}}{{/if}}</h2>
 			<p>{{mf 'course.edit.title' 'Title:'}} <input type="text" id="editform_name" size="40" value="{{#if _id}}{{name}}{{else}}{{this.query}}{{/if}}"/></p>
 			<p>{{mf 'course.edit.description' 'Desc:'}} <div id="editform_description" name="editform_description">{{{description}}}</div></p>

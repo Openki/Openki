@@ -33,14 +33,14 @@
 <template name="course">
 	<li class="courselist_course col-xs-12 col-sm-4 col-md-3 col-lg-2">
 		<a href="{{pathFor 'showCourse'}}">
-			<div class="{{coursestate}}" style="height:0px">
+			<div class="{{coursestate}} col-xd-9 col-sm-9 col-md-9 col-lg-9" style="height:0px">
 				<div class="course_name">{{name}}</div>
 			
 				<div class="course_categories">{{> show_categories}}</div>
 				
 			</div>
 
-			<div class="courselist_course_info">
+			<div class="courselist_course_info col-xd-3 col-sm-3 col-md-3 col-lg-3">
 				{{#if hasupcomingevents}}
 					<ul class="course_eventlist">
 						{{#each course_eventlist}}
@@ -63,7 +63,7 @@
 						{{/if}}
 					</ul>
 				{{else}}
-					<ul class="course_status nav pull-right">
+					<ul class="course_status list-unstyled">
 							<li class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organizer{{else}}{{#if is_team}} you are organizer{{else}}has a organizer-team{{/if}}{{/if}}">T{{#if is_team}}*{{/if}}</li>
 						{{#if requiresMentor}}
 							<li class="mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}" title="{{#if needsMentor}}still needs a mentor{{else}}{{#if is_mentor}}you are mentor{{else}}has a mentor{{/if}}{{/if}}">M{{#if is_mentor}}*{{/if}}</li>
