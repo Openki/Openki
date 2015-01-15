@@ -49,7 +49,8 @@ Template.course_edit.helpers({
 });
 
 Template.course_edit.rendered = function() {
-	new MediumEditor(this.find('#editform_description'));
+	var desc = this.find('#editform_description');
+	if (desc) new MediumEditor(desc);
 }
 
 Template.course_edit.events({
@@ -58,7 +59,7 @@ Template.course_edit.events({
 		try {
 			if (!Meteor.userId()){
 			    alert("Please log in!")
-			    throw "Please log in!"
+			    return;
 			}
 			
 			var courseId = this._id ? this._id : ''
