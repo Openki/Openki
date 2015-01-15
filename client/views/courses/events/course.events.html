@@ -1,34 +1,31 @@
 <template name="course_events">
 
 	{{# if currentUser}}
+		<h3>{{mf 'course.events.add' 'New date?'}}</h3>
 		{{>course_event course=course event=newEvent}}
 	{{/if}}
 
+	{{#if events_list}}
 	<div class="course_events clear">
 		<h3>{{mf 'course.title.Upcoming events' 'Upcoming events'}}</h3>
 		{{#each events_list}}
 			<div class="course_event">
 				{{>course_event}}
 			</div>
-		{{else}}
-			{{mf 'course.events.no_events' 'no events'}}
 		{{/each}}
-
 	</div>
+	{{/if}}
 
-
-
+	{{#if events_list_past}}
 	<div class="course_events_past clear">
 		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
 		{{#each events_list_past}}
 			<div class="course_event_past">
 				{{>course_event}}
 			</div>
-		{{else}}
-			{{mf 'course.events.no_events' 'no events'}}
 		{{/each}}
-
 	</div>
+	{{/if}}
 </template>
 
 
