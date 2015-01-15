@@ -98,7 +98,10 @@ Template.course_event.events({
 		if (!this.event.new) {
 			Events.update(this.event._id, { $set: editevent })
 		} else {
-			if (this.course) editevent.course_id = this.course._id;
+			if (this.course) {
+				editevent.course_id = this.course._id;
+				editevent.region = this.course.region;
+			}
 			editevent.createdBy = Meteor.userId()
 			editevent.time_created = now
 			Events.insert(editevent);
