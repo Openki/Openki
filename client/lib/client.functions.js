@@ -135,6 +135,11 @@ Handlebars.registerHelper('dateformat_withday', function(date) {
 	if (date) return moment(date).format('ddd D.MM.YYYY');
 });
 
+Handlebars.registerHelper('fullDate', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('ddd D.MM.YYYY HH:mm');
+});
+
 
 Handlebars.registerHelper('dateformat_mini', function(date) {
 	if (date) return moment(date).format('D.M.');
@@ -142,8 +147,12 @@ Handlebars.registerHelper('dateformat_mini', function(date) {
 
 
 Handlebars.registerHelper('timeformat', function(date) {
-	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('HH:mm');
+});
+
+Handlebars.registerHelper('fromNow', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).fromNow();
 });
 
 
