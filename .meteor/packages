@@ -20,5 +20,7 @@ service-configuration
 bootstrap
 citizenkevin:medium-editor
 djedi:sanitize-html
-momentjs:moment
+rzymek:moment
+rzymek:moment-locales
+
 
