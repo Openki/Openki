@@ -1,9 +1,5 @@
 "use strict";
 
-
-Template.course_events.created = function() {
-	this.adding = new ReactiveVar(false);
-}
 Template.course_events.helpers({
 	events_list: function() {
 		var course=this.course;
@@ -37,20 +33,9 @@ Template.course_events.helpers({
 		});
 	},
 	
-	new_event: function() {
-		return {course: this.course, event: {}}
-	},
-	
-	adding: function (event) {
-		return Template.instance().adding.get();
+	newEvent: function() {
+		return  { new: true, startdate: new Date(), title: this.course.name }
 	}
-});
-
-
-Template.course_events.events({
-	'click input.addEvent': function () {
-		Template.instance().adding.set(true);
-	},
 });
 
 Template.course_event.events({
@@ -63,12 +48,13 @@ Template.course_event.events({
 		}
 		Template.instance().editing.set(false);
 	},
+
 	'click input.eventEdit': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;
 		}
-		Template.instance().editing.set(this.event._id);
+		Template.instance().editing.set(true);
 	},
 	
 	'click input.saveEditEvent': function(event, instance) {
@@ -106,16 +92,15 @@ Template.course_event.events({
 			startdate: startdate
 		}
 		
-		if (this.event._id) {
-			editevent.time_lastedit= now
+		editevent.time_lastedit= now
+		
+		if (!this.event.new) {
 			Events.update(this.event._id, { $set: editevent })
 		} else {
 			if (this.course) editevent.course_id = this.course._id;
 			editevent.createdBy = Meteor.userId()
 			editevent.time_created = now
-			editevent.time_lastedit= now
-			
-			Events.insert(editevent)
+			Events.insert(editevent);
 		}
 		
 		Template.instance().editing.set(false);
@@ -132,8 +117,12 @@ Template.course_event.created = function() {
 }
 
 Template.course_event.helpers({
-	editingEvent: function (event) {
-		return Template.instance().editing.get() === event;
+	editing: function() {
+		return Template.instance().editing.get();
+	},
+	
+	showAddButton: function() {
+		return this.event.new && !Template.instance().editing.get();
 	}
 });
 
