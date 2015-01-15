@@ -66,9 +66,27 @@ Router.map(function () {
 			}
 		}
 	})
-	this.route('showCourseWiki', {
-		path: 'course/:_id/:slug/wiki',
-		template: 'coursewiki',
+	this.route('showCourseDocs', {
+		path: 'course/:_id/:slug/docs',
+		template: 'coursedocs',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('categories'),
+			    Meteor.subscribe('courseDetails', this.params._id),
+				Meteor.subscribe('users'),
+				Meteor.subscribe('events')
+			]
+		},
+		data: function () {
+			var course = Courses.findOne({_id: this.params._id})
+			return {
+				course: course
+			};
+		}
+	})
+	this.route('showCourseHistory', {
+		path: 'course/:_id/:slug/History',
+		template: 'coursehistory',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
