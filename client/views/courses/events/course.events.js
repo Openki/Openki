@@ -90,6 +90,7 @@ Template.course_event.events({
 			description: instance.$('#edit_event_description').val(),
 			//mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
 			//host: $('input:radio:checked.edit_event_host').val(),
+			location: instance.$('#edit_event_location').val(),
 			startdate: startdate
 		}
 		

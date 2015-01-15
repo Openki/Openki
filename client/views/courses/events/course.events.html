@@ -47,6 +47,7 @@
 				</p>
 				<p class="course_event_time">
 					<span class="icon-clock"></span> {{timeformat startdate}}
+					{{#if location}}<br><span class="icon-mini_location"></span> {{location}}{{/if}}
 				</p>
 				<p class="course_event_title">{{this.title}}</p>
 				<p class="course_event_desc">{{description}}</p>

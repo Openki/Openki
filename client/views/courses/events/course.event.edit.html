@@ -4,8 +4,8 @@
 		<p>  {{mf 'course.event.edit.date_start' 'Date start'}} <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
 		<p>{{mf 'course.event.edit.time_start' 'Time start'}} <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
 		<p> {{mf 'course.event.edit.title' 'Event title:'}} <input type="text" id="edit_event_title" size="30" value="{{event.title}}"/></p>
-		<p>  {{mf 'course.event.edit.desc' 'Desc:'}} <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
-
+		<p>  {{mf 'course.event.edit.desc' 'Desc:'}}<br> <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
+		<p>{{mf 'course.event.edit.location' 'Location:'}} <div id="editform_location" name="editform_location"><input type="text" id="edit_event_location" size="40" value="{{event.location}}"/></div></p>
 		 <p>  {{mf 'course.event.edit.host_location' 'Host / Location'}}
 			<ul>
 				{{#each possible_hosts}}
