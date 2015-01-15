@@ -1,33 +1,28 @@
-<template name="roleComment">
-	<div>
-		<form name="form_post">
-			{{mf 'course.roles.your_message' 'Your message:'}}<br>
-			<textarea cols="70" rows="3" class="comment">{{../member.comment}}</textarea>
-		{{#if editing}}
-			<input type="button" class="save" value="save" />
-			<input type="button" class="reset" value="reset" />
-		{{/if}}
-		</form>
-	</div>
-</template>
-
-<template name="Members">
+<template name="membersRoles">
 	<div class="participants">
 		<h3>{{mf 'course.title.Participants' 'Participants'}}</h3>
 		<ul class='subscribers'>
 		{{#each members}}
-			<li>
-				{{>profilelink user}}
-				<ul class='roles'>
-					{{#each roles}}
-						<li class='{{this}}'> {{this}} </li>
-					{{/each}}
-				</ul>
-				{{comment}}
-			</li>
+			{{> memberRoles member=this course=..}}
 		{{/each}}
 		</ul>
 	</div>
+</template>
+
+<template name="memberRoles">
+	<li>
+		{{>profilelink member.user}}
+		<ul class='roles'>
+			{{#each member.roles}}
+				<li class='{{this}}'> {{this}} </li>
+			{{/each}}
+		</ul>
+		{{#if editableMessage}}
+			{{> editable editableMessage}}
+		{{else}}
+			{{comment}}
+		{{/if}}
+	</li>
 </template>
 
 <template name="roleDetails">

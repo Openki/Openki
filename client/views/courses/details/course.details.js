@@ -8,23 +8,52 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('categories'),
 				Meteor.subscribe('courseDetails', this.params._id),
-				Meteor.subscribe('users'),
-				Meteor.subscribe('events'),
+				Meteor.subscribe('eventsForCourse', this.params._id),
 				Meteor.subscribe('groups')
 			]
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
-			if (!course) return null;
+			var self = this;
+			var course = Courses.findOne({_id: this.params._id});
+			if (!course) return;
 			   
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
-			return {
+			var data = {
 				edit: !!this.params.query.edit,
 				roleDetails: loadroles(course),
 				course: course,
 				member: member
 			};
+			if (mayEdit(Meteor.user(), course)) {
+				data.editableName = makeEditable(
+					course.name, 
+					true,
+					function(newName) {
+						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+							if (err) {
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+							} else {
+								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+							}
+						});
+					}
+				);
+				data.editableDescription = makeEditable(
+					course.description, 
+					false,
+					function(newDescription) {
+						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
+							if (err) {
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+							} else {
+								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+							}
+						});
+					}
+				);
+			}
+			return data;
 		},
 		onAfterAction: function() {
 			var data = this.data();
@@ -61,9 +90,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
-			    Meteor.subscribe('courseDetails', this.params._id),
-				Meteor.subscribe('users'),
-				Meteor.subscribe('events')
+			    Meteor.subscribe('courseDetails', this.params._id)
 			]
 		},
 		data: function () {
@@ -99,8 +126,7 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
 		return mayEdit(Meteor.user(), this);
 	}
-})
-
+});
 
 Template.coursedetails.events({
 	'click input.del': function () {

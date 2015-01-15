@@ -1,45 +1,42 @@
 <template name="coursedetails">
-
 	<div id="coursedetails">
 		{{#if edit}}
 			{{> course_edit course}}
 		{{else}}
-			{{#with course}}
 			<div class="course_main">
-				{{title name " - hmmm"}}
-				<h2 class="name">{{name}}</h2>
-				<p class="small">
+                {{title course.name " - hmmm"}}
+                <h2 class="name">{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}</h2>
+                <br class="clear"/>
+			{{#with course}}
+				<p class='small'>
 				{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
 				{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
 				{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
 				</p>
-
 				<div class="categorylist small">
 				{{> show_categories}}
 				{{> show_groups}}
 				</div>
 
-				{{> show_course_submenu}}
-				<br class="clear"/>
-				<p class="descr">{{{description}}}</p>
-
-				{{#if currentUserMayEdit}}
-				<input type="button" class="edit" value="Edit" />
-				<input type="button" class="del" value="Delete" />
-				{{/if}}
-
-			</div>
+                {{> show_course_submenu}}
+                <br class="clear"/>
 			{{/with}}
-		{{/if}}
+			
+                {{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
+                <br class="clear"/>
 
+			{{#with course}}
+                {{#if currentUserMayEdit}}
+                <input type="button" class="edit" value="Edit" />
+                <input type="button" class="del" value="Delete" />
+                {{/if}}
+			{{/with}}
+			</div>
+		{{/if}}
 
 		{{> roleDetails roleDetails}}
-
-		{{#if member}}
-			{{> roleComment}}
-		{{/if}}
 		
-		{{> Members course}}
+		{{> membersRoles course}}
 
 		<div class="discussion">
 		{{> discussion course}}

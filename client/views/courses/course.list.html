@@ -48,9 +48,11 @@
 									{{timeformat this.startdate}}
 								</div>
 
+								{{#if location}}
 								<div class="course_eventlist_location">
-									<span class="icon-mini_location"></span> Ortsmuseum Luegis...
+									<span class="icon-mini_location"></span>{{location}}
 								</div>
+								{{/if}}
 							</li>
 						{{/each}}
 

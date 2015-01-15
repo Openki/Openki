@@ -42,10 +42,18 @@ Meteor.publish ('discussions', function(){
 });
 
 
-Meteor.publish ('events', function(){
-	return Events.find();
+Meteor.publish('events', function(region) {
+	if(!region) return Events.find();
+	return Events.find({region: region});
 });
 
+Meteor.publish('eventsForCourse', function(courseId) {
+	return Events.find({course_id: courseId});
+});
+
+Meteor.publish('futureEvents', function() {
+	return Events.find({startdate: {$gt: new Date()}});
+});
 
 Meteor.publish ('users', function(){
 	return Meteor.users.find({}, {

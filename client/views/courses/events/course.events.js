@@ -1,7 +1,4 @@
-
-var editingEvent = function (event) {
-	return Router.current().params.editEvent === event
-};
+"use strict";
 
 Template.course_events.helpers({
 	events_list: function() {
@@ -36,24 +33,13 @@ Template.course_events.helpers({
 		});
 	},
 	
-	new_event: function() {
-		return {course: this.course, event: {}}
-	},
-	
-	editingEvent: editingEvent
+	newEvent: function() {
+		var date = moment().add(1, 'week').startOf('hour').toDate();
+		return  { new: true, startdate: date, title: this.course.name }
+	}
 });
 
-
-Template.course_events.events({
-
-	'click input.addEvent': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
-		Router.go(Router.current().route.getName(), Router.current().getParams(), { query: { 'editEvent': 'new' } }) // Shirely, you know of a better way?
-	},
-	
+Template.course_event.events({
 	'click input.eventDelete': function () {
 			if(!Meteor.userId()) {
 				alert("Please log in!");
@@ -61,19 +47,87 @@ Template.course_events.events({
 		if (confirm("delete event "+"'"+this.event.title+"'"+"?")) {
 			Events.remove(this.event._id);
 		}
-		goBase()
+		Template.instance().editing.set(false);
 	},
+
 	'click input.eventEdit': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;
 		}
-		Router.go(Router.current().route.name, Router.current().params, { query: { 'editEvent': this.event._id } }) // Shirely, you know of a better way?
+		Template.instance().editing.set(true);
+	},
+	
+	'click input.saveEditEvent': function(event, instance) {
+		// format startdate
+		var dateParts =  instance.$('#edit_event_startdate').val().split(".");
+		
+		if (!dateParts[2]){
+			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
+			return;
+		}
+		
+		if(dateParts[2].toString().length==2) dateParts[2]=2000+dateParts[2]*1;
+
+		if(instance.$('#edit_event_starttime').val()!=""){
+			var timeParts =  $('#edit_event_starttime').val().split(":");
+		}else{
+			var timeParts =  [0,0];
+		}
+		
+		var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1])
+		var now= new Date();
+		
+		
+		if (startdate<now){
+			alert("Date must be in future");
+			return;
+		}
+		
+		
+		var editevent = {
+			title: instance.$('#edit_event_title').val(),
+			description: instance.$('#edit_event_description').val(),
+			//mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
+			//host: $('input:radio:checked.edit_event_host').val(),
+			location: instance.$('#edit_event_location').val(),
+			startdate: startdate
+		}
+		
+		editevent.time_lastedit= now
+		
+		if (!this.event.new) {
+			Events.update(this.event._id, { $set: editevent })
+		} else {
+			if (this.course) {
+				editevent.course_id = this.course._id;
+				editevent.region = this.course.region;
+			}
+			editevent.createdBy = Meteor.userId()
+			editevent.time_created = now
+			Events.insert(editevent);
+		}
+		
+		Template.instance().editing.set(false);
+	},
+	
+	'click input.cancelEditEvent': function () {
+		Template.instance().editing.set(false);
 	}
 });
 
 
+Template.course_event.created = function() {
+	this.editing = new ReactiveVar(false);
+}
+
 Template.course_event.helpers({
-	editingEvent: editingEvent
+	editing: function() {
+		return Template.instance().editing.get();
+	},
+	
+	showAddButton: function() {
+		return this.event.new && !Template.instance().editing.get();
+	}
 });
 

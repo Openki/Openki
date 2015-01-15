@@ -1,30 +1,3 @@
-Template.roleComment.created = function() {
-	this.editing = new ReactiveVar(false);
-}
-
-Template.roleComment.helpers({
-	editing: function() { return Template.instance().editing.get() }
-})
-
-Template.roleComment.events({
-	'keyup .comment, change .comment': function(e, template) {
-		template.editing.set(true);
-	},
-	
-	'click input.save': function(e, template) {
-		var comment = $(template.find('.comment')).val();
-		Meteor.call("change_comment", this.course._id, comment);
-		template.editing.set(false);
-		e.preventDefault();
-	},
-	
-	'click input.reset': function (e, template) {
-		$(template.find('.comment')).val("" + template.data.member.comment);
-		template.editing.set(false);
-	},
-});
-
-
 Template.roleDetail.created = function() {
 	this.enrolling = new ReactiveVar(false);
 }
@@ -65,4 +38,24 @@ Template.roleDetail.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false, null);
 		return false;
 	}
-})
+});
+
+Template.memberRoles.helpers({
+	editableMessage: function() {
+		var course = this.course;
+		if (this.member.user !== Meteor.userId()) return false;
+		return makeEditable(
+			this.member.comment, 
+			true,
+			function(newMessage) {
+				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
+					if (err) {
+						addMessage(mf('subscribemessage.saving.error', { ERROR: err }, 'Unable to change your message. We encountered the following error: {ERROR}'));
+					} else {
+						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'));
+					}
+				});
+			}
+		);
+	}
+});

@@ -66,10 +66,6 @@ Meteor.methods({
 			if (!location) throw new Meteor.Error(404, "Location not found")
 		}
 
- 		//var mayEdit = isNew || user.isAdmin || Locations.findOne({_id: locationId, roles:{$elemMatch: { user: user._id, roles: 'team' }}})
-		//if (!mayEdit) throw new Meteor.Error(401, "get lost")
-
-
 		/* Changes we want to perform */
 		var set = {}
 
