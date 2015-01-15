@@ -1,0 +1,27 @@
+<template name="coursehistory">
+	<div id="coursedetails">
+	{{#with course}}
+		<div class="course_main">
+			{{title name " hist - hmmm"}}
+			<h2 class="name">{{name}}</h2>
+			<p class="small">				
+				Time created: {{dateformat time_created}}, &nbsp;&nbsp;
+				Last edited: {{dateformat time_lastedit}}, &nbsp;&nbsp;
+				Created by: {{>profilelink createdby}}
+			</p>
+			<div class="categorylist small">
+			{{> show_categories}}
+			</div>
+			<br class="clear"/>
+			
+			{{> show_course_submenu}}
+			
+			<h3>History</h3>
+			<p class="descr">In a later Version of this Software you can see the history of edits and enrolements here.</p>
+
+			<p class="small">{{description}}</p>
+		</div>
+
+	{{/with}}
+	</div>
+</template>
