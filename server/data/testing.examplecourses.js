@@ -14,7 +14,7 @@ testcourses = [{
 	'categories': ['Kampfsport/-kunst'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
 	'createdby':   'Kampfhippie',
-	'description': 'Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören. Youtube-Video Wikipedia-link',
+	'description': '<p> Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören.</p> <p><ul>  <li><a href="https://www.youtube.com/watch?v=qAc-gQIeAaI"> Video on Youtube</a>  <li><a href="http://en.wikipedia.org/wiki/Aikido"> Aikido on Wikipedia</a> </ul></p>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Kampfhippie', 'roles': ['participant'], 'comment':'ich hab das vor ca.8 Jahren mal eine Weile gemacht, aber alles vergessen'},
@@ -43,7 +43,7 @@ testcourses = [{
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
-	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: * Spieltheorie * Spielidee * Spielmechanik * Storytelling * Concept Art * Charakterentwicklung * Zeichnen und Bildbearbeitung mit Photoshop * Usability * Prototyping und Gamedesign mit Unity Gameengine * Leveldesign * 3D-Modelling und -Animation mit Blender * Programmieren mit JavaScript und C-Sharp * Sound-Design mit Audacity * Polishing ',
+	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: <ul> <li>* Spieltheorie <li>* Spielidee <li>* Spielmechanik <li>* Storytelling <li>* Concept Art <li>* Charakterentwicklung <li>* Zeichnen und Bildbearbeitung mit Photoshop <li>* Usability <li>* Prototyping und Gamedesign mit Unity Gameengine <li>* Leveldesign <li>* 3D-Modelling und -Animation mit Blender <li>* Programmieren mit JavaScript und C-Sharp <li>* Sound-Design mit Audacity <li>* Polishing </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seee', 'roles': ['team','mentor']}
@@ -53,7 +53,7 @@ testcourses = [{
 	'categories': ['Garten / Landwirtschaft'],
 	'tags':       ['Theorie', 'Projekt'],
 	'createdby':   'Greendampf',
-	'description': '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen" [[http://commonsblog.wordpress.com/was-sind-commons/|Was sind Commons?]] Fände es interessant, das Thema der unkommerziellen //Commons-based peer production// zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)',
+	'description': '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen"<a href="http://commonsblog.wordpress.com/was-sind-commons/"> Was sind Commons?</a> <br> Fände es interessant, das Thema der unkommerziellen <i>Commons-based peer production</i> zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)',
 	'roles':      ['team', 'participant'],
 	'members': [
 		{'user':'Greendampf', 'roles': ['participant']}
@@ -63,7 +63,7 @@ testcourses = [{
 	'categories': ['Programmieren','Internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
-	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. * Konzeption / Idee  * Usability  * Gestaltung mit Photoshop  * Clientseitige Programmierung mit HTML, CSS und JavaScript  * Serverseitige Programmierung mit PHP / Phyton  * Datenbank mit mySQL',
+	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. <ul> <li>* Konzeption / Idee  <li>* Usability  <li>* Gestaltung mit Photoshop  <li>* Clientseitige Programmierung mit HTML, CSS und JavaScript  <li>* Serverseitige Programmierung mit PHP / Phyton  <li>* Datenbank mit mySQL </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seee', 'roles': ['team', 'mentor']},
@@ -77,7 +77,7 @@ testcourses = [{
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
-	'description': ' hoi tsäme!   ich würd mal gerne ein grundlagen von elektronik lernen… so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;)   einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).   hat wer bock? c u ',
+	'description': ' hoi tsäme! <br>  ich würd mal gerne ein grundlagen von elektronik lernen… <br> so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;) <br> einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. <br> <br> nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).  <br>hat wer bock? <br> c u',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'greg', 'roles': ['host','team']},
@@ -103,7 +103,7 @@ testcourses = [{
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
 	'createdby':   'greg',
-	'description': 'Ich will ubuntu auf meinem mac ohne auf os zu verzichten. habs probiert abr s hat nicht geklappt und die technik-kacke interessiert mich nicht soooooo derart unglaublich. gibts wer, der mir und andern mit dem selben problem frontalunterrichtsmässig hilft? so im allgemeinen welt-rettungsplan? ich rett die welt dafür n ander mal. von mir aus morgen abend, in meiner küche hats platz für 4 people (wenn sie cool sind, sonst für 5).'   /*   --> Wieso gibts keine Komputer-Kategorie????? */,
+	'description': 'Ich will ubuntu auf meinem mac ohne auf os zu verzichten. habs probiert abr s hat nicht geklappt und die technik-kacke interessiert mich nicht soooooo derart unglaublich. <br> <b> gibts wer, der mir und andern mit dem selben problem frontalunterrichtsmässig hilft? </b> so im allgemeinen welt-rettungsplan? ich rett die welt dafür n ander mal. von mir aus morgen abend, in meiner küche hats platz für 4 people (wenn sie cool sind, sonst für 5).'   /*   --> Wieso gibts keine Komputer-Kategorie????? */,
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'greg', 'roles': ['participant','team','host']},
@@ -115,7 +115,7 @@ testcourses = [{
 	'categories': ['Design','Handwerk'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
 	'createdby':   'Sandro',
-	'description': ' Habe eine Kiste voll mit Kleider, an denen ich (bei den meisten schon seit längerem) etwas flicken müsste: Reisverschlüsse grosse Risse, Löcher und so.   Zusammen macht das irrgendwie mehr Spass und eine fachkundige Hilfe währe natürlich auch nicht schlecht, wenn man bedenkt das die Flicke auch ein bisschen halten sollen.',
+	'description': ' Habe eine Kiste voll mit Kleider, an denen ich (bei den meisten schon seit längerem) etwas flicken müsste: Reisverschlüsse grosse Risse, Löcher und so. <br> Zusammen macht das irrgendwie mehr Spass und eine fachkundige Hilfe währe natürlich auch nicht schlecht, wenn man bedenkt das die Flicke auch ein bisschen halten sollen.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Sandro', 'roles': ['team','host']},
@@ -125,7 +125,7 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Dialekt','Wallis'],
 	'createdby':   'LeOnI',
-	'description': 'Unter fachkundiger Leitung die Walliser Sprche verstehen und auch sprechen lernen.      Ich würde voll gerne die eigene Melodie, die spezielle Betonung, die struben Endungen und Wendungen und natürlich die wichtigsten „spezialbegriffe“ vom Walliserdeutsch lernen. à la mbrüf …. di zwee schönschte schwarznaase nou! .. chüm Üeli.    Hörspiele oder Filme währen natürlich gute Grundlage youtube-link ',
+	'description': '<p> Unter fachkundiger Leitung die Walliser Sprche verstehen und auch sprechen lernen.      Ich würde voll gerne die eigene Melodie, die spezielle Betonung, die struben Endungen und Wendungen und natürlich die wichtigsten „spezialbegriffe“ vom Walliserdeutsch lernen. à la mbrüf …. di zwee schönschte schwarznaase nou! .. chüm Üeli. </p> <p> Hörspiele oder Filme währen natürlich gute Grundlage <ul> <li> <a href="http://youtu.be/p7WCJ-A2C58"> Schwarznasenschafe Baywatch</a> <li> <a href="http://youtu.be/IEVIi91FWq0"> Synked Ueli Murer </a> <li> <a href="http://youtu.be/CXNv9CpYFCw"> LC1 Werbung </a> </ul></p>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'LeOnI', 'roles': ['team']},
@@ -137,7 +137,7 @@ testcourses = [{
 	'tags': ['Bier'],
 	'categories': ['Kultur'],
 	'createdby':   'Gähri',
-	'description': 'Gutes Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne feines Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein zu nem Hopfigen!! Ein super Hobby dsa nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
+	'description': 'Gutes Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne feines Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein zu nem Hopfigen!! Ein super Hobby das nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Gähri', 'roles': ['team','mentor']},
@@ -153,7 +153,7 @@ testcourses = [{
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'groups':     ['CCC'],
 	'createdby':   'Mike_85',
-	'description': 'Ein paar Leute veranstalten am Freitag 28.09. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi,                     Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die, die können und wollen, werden sich gegenseitig und Allen Themen vorstellen ',
+	'description': '<p> Ein paar Leute veranstalten am Freitag 28. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi... </p> <p>Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die, die können und wollen, werden sich gegenseitig und Allen Themen vorstellen </p>',
 	'roles':      ['team','host'],
 	'members': [
 		{'user':'31337', 'roles': ['team']},
@@ -168,7 +168,7 @@ testcourses = [{
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'groups':     ['SGMK'],
 	'createdby':   'Mike_85',
-	'description': ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…      link Openlab, link SGMK',
+	'description': ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…<br><a href="http://www.mechatronicart.ch/mechartlab/openlab"OpenLab</a>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'bert', 'roles': ['participant']},
@@ -280,7 +280,7 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'IvanZ',
-	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  ',
+	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen <br> ****  Weekly meeting and wiledly exchange language and different Culture  <br> ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> ****  una réunione par semana per excambiare la lingua et cultura <br> ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'IvanZ', 'roles': ['host','participant']},
@@ -293,7 +293,7 @@ testcourses = [{
 	'categories': ['Musik'],
 	'tags':       ['Singen', 'Jodeln'],
 	'createdby':   'Sandra',
-	'description': 'Wer will auch Jodeln (lernen) ? Nicht so spiessig wie beim Jodelverein. Wenn möglich unter profesioneller Leitung vielleicht auch, wenn sich niemand finden lässt, in gruppe ein paar lieder einstudieren, vielleicht auch entfremden… villeicht auch aufführen :) ',
+	'description': 'Wer will auch Jodeln (lernen) ? <br> Nicht so spiessig wie beim Jodelverein. Wenn möglich unter profesioneller Leitung. <br> Vielleicht auch, wenn sich niemand finden lässt, in Gruppe ein paar Lieder einstudieren, vielleicht auch entfremden… villeicht auch aufführen :) ',
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
 		{'user':'Sandra', 'roles': ['participant']},
@@ -304,7 +304,7 @@ testcourses = [{
 	'categories': ['Medizin'],
 	'tags':       ['Medizin', 'Nothelfer'],
 	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->',
-	'description': 'Ist etwas, was man eigentlich mindestens jährlich auffrischen müsste nicht? bei mir ist es schon ca 5 Jahre her und ich weiss entsprechend nicht mehr viel.',
+	'description': 'Ist etwas, was man eigentlich mindestens jährlich auffrischen müsste, nicht? <br> bei mir ist es schon ca 5 Jahre her und ich weiss entsprechend nicht mehr viel.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'OliviaTheMan!!!Yeah <!-- Hack -->', 'roles': ['participant']},
@@ -366,7 +366,7 @@ testcourses = [{
 	'categories': ['Handwerk', 'Musik'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanal',
-	'description': 'Mein Traum ist es ein mobiles Soundsystem zu haben damit ich spontane soca Paraden und illegale outdoorpartys veranstalten kann. Es gibt doch sicher a) Leute die auch ein mobiles Soundsystem haben wollen und b) Leute die wissen wie man eines baut. Wir sollten uns zusammentun uns bei meinem Vater in der Werkstatt unsere indivuellen Soundsysteme bauen. Mehr Lärm in der Schweiz!',
+	'description': 'Mein Traum ist es, ein mobiles Soundsystem zu haben damit ich spontane soca Paraden und illegale outdoorpartys veranstalten kann. Es gibt doch sicher <br>a) Leute die auch ein mobiles Soundsystem haben wollen und <br>b) Leute die wissen wie man eines baut. <br>Wir sollten uns zusammentun uns bei meinem Vater in der Werkstatt unsere indivuellen Soundsysteme bauen.' /*Mehr Lärm in der Schweiz!'*/,
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
 		{'user':'MachelMontano', 'roles': ['mentor']},
@@ -379,7 +379,7 @@ testcourses = [{
 	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmamma',
-	'description': 'Grüezi Mitterand, Ich dune uu gern choche und chan au ganz gute choche, aber leider nume traditionelle schwiizerchuchi und die klassische Italienische Gricht. Wie wärs wemer eus eimal ide Wuche am Samstag morge treffet und immer duet öppert anderst es Gricht wo er/sie bsunders guet cha choche de andere biibringe. Indisch, Chinesisch, Nigerianisch, Vegan, was-au-immer hauptsach fein! Mir chöntet ide schuelchuchi vom nägelimoos sekundarschuelhuus üebe.',
+	'description': 'Grüezi Mitterand, Ich dune uu gern choche und chan au ganz gute choche, aber leider nume traditionelle schwiizerchuchi und die klassische Italienische Gricht. Wie wärs wemer eus eimal ide Wuche am Samstag morge treffet und immer duet öppert anderst es Gricht wo er/sie bsunders guet cha choche de andere biibringe. Indisch, Chinesisch, Nigerianisch, Vegan, was-au-immer, hauptsach fein! <br> Mir chöntet ide schuelchuchi vom nägelimoos sekundarschuelhuus üebe.',
 	'roles':      ['team', 'participant', 'host', 'mentor'],
 	'members': [
 		{'user':'Ylmaz Z.', 'roles': ['mentor', 'participant']},
@@ -423,12 +423,12 @@ testcourses = [{
 	'categories': ['Handwerk', 'Holz / Metall'],
 	'tags':       ['', ''],
 	'createdby':   'Julia',
-	'description': 'Ich habe vor 2 Jahren mit Holzbearbeitung angefangen. Und mache selbständig Innenausstattung und hab auch schon ein Bühnenbild für ein Theater gemacht. Nun würde ich gerne massive Sachen aus Stahl bauen aber auch kleine Sachen wie Kerzenständer. Anscheinend gibt es viele verschiedene Arten von Schweissen, ich weiss nicht, welche die geeignetste oder und praktischste ist. auf dem Wikipediaartikel "Schweissen" bin ich nicht schlau geworden',
+	'description': 'Ich habe vor 2 Jahren mit Holzbearbeitung angefangen. Und mache selbständig Innenausstattung und hab auch schon ein Bühnenbild für ein Theater gemacht. Nun würde ich gerne massive Sachen aus Stahl bauen aber auch kleine Sachen wie Kerzenständer. Anscheinend gibt es viele verschiedene Arten von Schweissen und ich weiss nicht, welche die geeignetste oder und praktischste ist. auf dem Wikipediapartikel "Schweissen" bin ich nicht schlau geworden',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Lara', 'roles': ['participant']}
 	],
-	'comment': 'Also es gibt grobgesehen TIG- und MIG- (und Elektroden-Schweissen)... lies mal folgenden link: http://www.conrad.ch/ce/de/content/ti_schweisstechniken/Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad'
+	'comment': 'Also es gibt grobgesehen TIG- und MIG- (und Elektroden-Schweissen)... lies mal folgenden link: <a href="http://www.conrad.ch/ce/de/content/ti_schweisstechniken/Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad/"> Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad </a>'
 },{
 	'name':        'Velo Flicken',
 	'categories': ['Handwerk'],
@@ -490,7 +490,7 @@ testcourses = [{
 	'categories': ['Sport / Bewegung'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 	'createdby':   'FeeLingen',
-	'description': 'Wouldn`t it be awesome to practice some meditation, yoga and Qi-Gong every morning? I have not enough self-discipline and my yoga/Qi-Gong knowledge is not that good, thats why a small group of people would be perfect. We also need a place to practice, in Summertime we could do it outside, by the lake for example.',
+	'description': 'Wouldn`t it be awesome to practice some meditation, yoga and Qi-Gong every morning? I have not enough self-discipline and my yoga/Qi-Gong knowledge is not that good, thats why a small group of people would be perfect. <br> We also need a place to practice, in Summertime we could do it outside, by the lake for example.',
 	'roles':      ['team', 'participant', 'host'],
 	'members':    [
 		{'user':'FeeLingen', 'roles': ['team','participant']},
@@ -502,7 +502,7 @@ testcourses = [{
 	'categories': ['Kampfsport/-kunst'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
 	'createdby':   'Kampfhippieen',
-	'description': 'I would love to have some regular Aikido trainings. If we manage to get a small group of people I could organize a real Trainer and a Dojo. For me aikido is one of the most beautiful Fight Sports because it trys to respond your opposite and to solve the conflict without destroying the other human. https://www.youtube.com/watch?v=qAc-gQIeAaI   http://en.wikipedia.org/wiki/Main_Page',
+	'description': '<p> I would love to have some regular Aikido trainings. If we manage to get a small group of people I could organize a real Trainer and a Dojo. For me aikido is one of the most beautiful Fight Sports because it trys to respond your opposite and to solve the conflict without destroying the other human. </p> <ul>  <li><a href="https://www.youtube.com/watch?v=qAc-gQIeAaI"> Video on Youtube</a>  <li><a href="http://en.wikipedia.org/wiki/Aikido"> Aikido on Wikipedia</a> </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Kampfhippieen', 'roles': ['participant']},
@@ -532,7 +532,7 @@ testcourses = [{
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seeeen',
-	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: * game theory  * game idea * game mechanic * Storytelling * Concept Art * game character developing * draw and image editing with photoshop * Usability * Prototyping and Gamedesign with Unity Gameengine * Leveldesign * 3D-Modelling and -Animation with Blender * Programming with JavaScript and C-Sharp * Sound-Design with Audacity * Polishing ',
+	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: <ul> <li>* game theory  <li>* game idea <li>* game mechanic <li>* Storytelling <li>* Concept Art <li>* game character developing <li>* draw and image editing with photoshop <li>* Usability <li>* Prototyping and Gamedesign with Unity Gameengine <li>* Leveldesign <li>* 3D-Modelling and -Animation with Blender <li>* Programming with JavaScript and C-Sharp <li>* Sound-Design with Audacity <li>* Polishing </ul> ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seeeen', 'roles': ['team','mentor']}
@@ -543,7 +543,7 @@ testcourses = [{
 	'categories': ['Garten / Landwirtschaft'],
 	'tags':       ['Theorie', 'Projekt'],
 	'createdby':   'Dr Greenthumben',
-	'description': '"commons are collaborative formal or informal Governance-Systems, to use as a collective, resources." [[http://en.wikipedia.org/wiki/Commons|what are commons?]] Would be interesting to talk about noncommercial //Commons-based peer production// and even better try to realize in practice a bigger project (for example a vegetable garden) (That would be on a long-term basis, with a lot of responsibility)',
+	'description': '"Commons are collaborative formal or informal Governance-Systems, to use as a collective, resources." <a href="http://en.wikipedia.org/wiki/Commons"> what are commons? </a> <br> Would be interesting to talk about noncommercial <i> Commons-based peer production </i> and even better try to realize in practice a bigger project (for example a vegetable garden) (That would be on a long-term basis, with a lot of responsibility)',
 	'roles':      ['team', 'participant'],
 	'members': [
 		{'user':'Dr Greenthumben', 'roles': ['participant']}
@@ -554,7 +554,7 @@ testcourses = [{
 	'categories': ['Programmieren','Internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
-	'description': 'I could give you a substantial introduction to conception, shaping and technical realization of a website. *conception/ideas *usability *photoshop *HTML, CSS and JavaScript *PHP/ phyton *Database with mySQL',
+	'description': 'I could give you a substantial introduction to conception, shaping and technical realization of a website. <ul><li>*conception/ideas <li>*usability <li>*photoshop <li>*HTML, CSS and JavaScript <li>*PHP/ phyton <li>*Database with mySQL </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seeeen', 'roles': ['team','mentor']},
@@ -569,7 +569,7 @@ testcourses = [{
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'gregen',
-	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
+	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... <br>I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'gregen', 'roles': ['host','team']},
@@ -583,7 +583,7 @@ testcourses = [{
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
 	'createdby':   'gregen',
-	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not reaaaaaally interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. With food for example, in my kitchen there is space for like 4 people.',
+	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not <b>reaaaaaally</b> interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. <br>With food for example, in my kitchen there is space for like 4 people.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'gregen', 'roles': ['participant','team','host']},
@@ -596,7 +596,7 @@ testcourses = [{
 	'categories': ['Design','Handwerk'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
 	'createdby':   'Sandroen',
-	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. the patching should be done good so its not gonna bust again so soon.',
+	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. The patching should be done good so its not gonna bust again so soon.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Sandroen', 'roles': ['team','host']},
@@ -607,7 +607,7 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Dialekt','Wallis'],
 	'createdby':   'LeOnIen',
-	'description': 'Watch this video: http://youtu.be/dABo_DCIdpM - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis. Share some links',
+	'description': 'Watch this video: <a href="http://youtu.be/dABo_DCIdpM"> Link </a><br> - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis I think.<br> So share some links in the comments!',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'LeOnIen', 'roles': ['team']},
@@ -757,7 +757,7 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'Ylmaz Z.en',
-	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural',
+	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  <br>****  Weekly meeting and wiledly exchange language and different Culture  <br> ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> ****  una réunione par semana per excambiare la lingua et cultura <br> ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> ****  Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'ylmaz Zen', 'roles': ['host','participant']},
@@ -771,7 +771,7 @@ testcourses = [{
 	'categories': ['Musik'],
 	'tags':       ['Singen', 'Jodeln'],
 	'createdby':   'Sandraen',
-	'description': 'Who else wants to learn swiss yodeling? Not like in a suburban yodel association... If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  https://en.wikipedia.org/wiki/Yodeling ',
+	'description': 'Who else wants to learn swiss yodeling? <br> Not like in a suburban yodel association... <br> If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. <br> Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  <p> <a href="https://en.wikipedia.org/wiki/Yodeling" Yodeling Article on Wikipedia </a> </p>',
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
 		{'user':'Sandraen', 'roles': ['participant']},
@@ -783,7 +783,7 @@ testcourses = [{
 	'categories': ['Medizin'],
 	'tags':       ['Medizin', 'Nothelfer'],
 	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->en',
-	'description': 'First Aid is something so important that we all should renew every year. My last class was five years ago and I forgott almost everything......',
+	'description': 'First Aid is something so important that we all should renew <b>every year</b>. <br> My last class was five years ago and I forgott almost everything......',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'OliviaTheMan!!!Yeah <!-- Hack -->en', 'roles': ['participant']},
@@ -849,7 +849,7 @@ testcourses = [{
 	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanalen',
-	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. a) I think there are more people who really need a mobile Soundsystem b)Im sure there are people out there who know how to construct one. We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
+	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. <br>a) I think there are more people who really need a mobile Soundsystem <br>b)Im sure there are people out there who know how to construct one. <br>We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
 		{'user':'MachelMontanoen', 'roles': ['mentor']},
@@ -863,7 +863,7 @@ testcourses = [{
 	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmammaen',
-	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! We can use the school kitchen of the secondary school Nägelimoos in kloten',
+	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. <br>How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! <br><br><br>We can use the school kitchen of the secondary school Nägelimoos in kloten',
 	'roles':      ['team', 'participant', 'host', 'mentor'],
 	'members': [
 		{'user':'Ylmaz Z.en', 'roles': ['mentor', 'participant']},
