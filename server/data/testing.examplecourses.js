@@ -489,64 +489,64 @@ testcourses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
 	'categories': ['Sport / Bewegung'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
-	'createdby':   'en_FeeLing',
+	'createdby':   'FeeLingen',
 	'description': 'Wouldn`t it be awesome to practice some meditation, yoga and Qi-Gong every morning? I have not enough self-discipline and my yoga/Qi-Gong knowledge is not that good, thats why a small group of people would be perfect. We also need a place to practice, in Summertime we could do it outside, by the lake for example.',
 	'roles':      ['team', 'participant', 'host'],
 	'members':    [
-		{'user':'en_FeeLing', 'roles': ['team','participant']},
-		{'user':'en_Crosle', 'roles': ['participant']}
+		{'user':'FeeLingen', 'roles': ['team','participant']},
+		{'user':'Crosleen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Aikido',
 	'categories': ['Kampfsport/-kunst'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
-	'createdby':   'en_Kampfhippie',
+	'createdby':   'Kampfhippieen',
 	'description': 'I would love to have some regular Aikido trainings. If we manage to get a small group of people I could organize a real Trainer and a Dojo. For me aikido is one of the most beautiful Fight Sports because it trys to respond your opposite and to solve the conflict without destroying the other human. https://www.youtube.com/watch?v=qAc-gQIeAaI   http://en.wikipedia.org/wiki/Main_Page',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Kampfhippie', 'roles': ['participant']},
-		{'user':'en_Seee', 'roles': ['participant']},
-		{'user':'en_Chnöde', 'roles': ['participant']}
+		{'user':'Kampfhippieen', 'roles': ['participant']},
+		{'user':'Seeeen', 'roles': ['participant']},
+		{'user':'Chnödeen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Garden',
 	'categories': ['Garten / Landwirtschaft', 'Biologie'],
 	'tags':       ['Garden', 'Plants'],
-	'createdby':   'en_Dr Greenthumb',
+	'createdby':   'Dr Greenthumben',
 	'description': 'Once in a while meet to do some gardening, exchange know-How, infrastructure, relations, seeds and plants. Support different free garden projects to grow vegetables, herbs, for food and medication. I have access to 2-3 gardens, with capacity for some motivated gardeners.',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'en_Dr Greenthumb', 'roles': ['participant','team', 'host'], 'comment':'proposed the course' },
-		{'user':'en_Sandro', 'roles': ['participant','team']},
-		{'user':'en_Schufi', 'roles': ['participant']},
-		{'user':'en_Kampfhippie', 'roles': ['participant']},
-		{'user':'en_LeOnI', 'roles': ['participant']},
-		{'user':'en_IvanZ', 'roles': ['participant']},
-		{'user':'en_WAvegetarian', 'roles': ['participant']}
+		{'user':'Dr Greenthumben', 'roles': ['participant','team', 'host'], 'comment':'proposed the course' },
+		{'user':'Sandroen', 'roles': ['participant','team']},
+		{'user':'Schufien', 'roles': ['participant']},
+		{'user':'Kampfhippieen', 'roles': ['participant']},
+		{'user':'LeOnIen', 'roles': ['participant']},
+		{'user':'IvanZen', 'roles': ['participant']},
+		{'user':'WAvegetarianen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Game Design with Unity',
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
-	'createdby':   'en_Seee',
+	'createdby':   'Seeeen',
 	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: * game theory  * game idea * game mechanic * Storytelling * Concept Art * game character developing * draw and image editing with photoshop * Usability * Prototyping and Gamedesign with Unity Gameengine * Leveldesign * 3D-Modelling and -Animation with Blender * Programming with JavaScript and C-Sharp * Sound-Design with Audacity * Polishing ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Seee', 'roles': ['team','mentor']}
+		{'user':'Seeeen', 'roles': ['team','mentor']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'noncommercial Commons-based peer production',
 	'categories': ['Garten / Landwirtschaft'],
 	'tags':       ['Theorie', 'Projekt'],
-	'createdby':   'en_Dr Greenthumb',
+	'createdby':   'Dr Greenthumben',
 	'description': '"commons are collaborative formal or informal Governance-Systems, to use as a collective, resources." [[http://en.wikipedia.org/wiki/Commons|what are commons?]] Would be interesting to talk about noncommercial //Commons-based peer production// and even better try to realize in practice a bigger project (for example a vegetable garden) (That would be on a long-term basis, with a lot of responsibility)',
 	'roles':      ['team', 'participant'],
 	'members': [
-		{'user':'en_Dr Greenthumb', 'roles': ['participant']}
+		{'user':'Dr Greenthumben', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
@@ -557,78 +557,78 @@ testcourses = [{
 	'description': 'I could give you a substantial introduction to conception, shaping and technical realization of a website. *conception/ideas *usability *photoshop *HTML, CSS and JavaScript *PHP/ phyton *Database with mySQL',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Seee', 'roles': ['team','mentor']},
-		{'user':'en_Dr Greenthumb', 'roles': ['participant']},
-		{'user':'en_Sandro', 'roles': ['participant']},
-		{'user':'en_IvanZ', 'roles': ['participant']},
-		{'user':'en_greg', 'roles': ['host']}
+		{'user':'Seeeen', 'roles': ['team','mentor']},
+		{'user':'Dr Greenthumben', 'roles': ['participant']},
+		{'user':'Sandroen', 'roles': ['participant']},
+		{'user':'IvanZen', 'roles': ['participant']},
+		{'user':'gregen', 'roles': ['host']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Elektronics',
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
-	'createdby':   'en_greg',
+	'createdby':   'gregen',
 	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_greg', 'roles': ['host','team']},
-		{'user':'en_LeOnI', 'roles': ['participant']},
-		{'user':'en_IvanZ', 'roles': ['participant']},
-		{'user':'en_Barbie92', 'roles': ['participant']}
+		{'user':'gregen', 'roles': ['host','team']},
+		{'user':'LeOnIen', 'roles': ['participant']},
+		{'user':'IvanZen', 'roles': ['participant']},
+		{'user':'Barbie92en', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Ubuntu for Mac (dual-Boot)',
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
-	'createdby':   'en_greg',
+	'createdby':   'gregen',
 	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not reaaaaaally interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. With food for example, in my kitchen there is space for like 4 people.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_greg', 'roles': ['participant','team','host']},
-		{'user':'en_Mike_85', 'roles': ['participant']},
-		{'user':'en_IvanZ', 'roles': ['participant']}
+		{'user':'gregen', 'roles': ['participant','team','host']},
+		{'user':'Mike_85en', 'roles': ['participant']},
+		{'user':'IvanZen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Patching up Clothes-Afternoon',
 	'categories': ['Design','Handwerk'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
-	'createdby':   'en_Sandro',
+	'createdby':   'Sandroen',
 	'description': ' I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. the patching should be done good so its not gonna bust again so soon.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Sandro', 'roles': ['team','host']},
+		{'user':'Sandroen', 'roles': ['team','host']},
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Different accents',
 	'categories': ['Sprache'],
 	'tags':       ['Dialekt','Wallis'],
-	'createdby':   'en_LeOnI',
+	'createdby':   'LeOnIen',
 	'description': 'Watch this video: http://youtu.be/dABo_DCIdpM - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis. Share some links',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_LeOnI', 'roles': ['team']},
-		{'user':'en_WAvegetarian', 'roles': ['participant','team']},
-		{'user':'en_Sandro', 'roles': ['host']}
+		{'user':'LeOnIen', 'roles': ['team']},
+		{'user':'WAvegetarianen', 'roles': ['participant','team']},
+		{'user':'Sandroen', 'roles': ['host']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'to brew beer',
 	'tags': ['Bier'],
 	'categories': ['Kultur'],
-	'createdby':   'en_Gähri Weber',
+	'createdby':   'Gähri Weberen',
 	'description': 'It is really easy to brew beer! I show you how to brew your own tasty beer in your bathtub. We just need some ingredients and it will ferment by itself. Its a very cool hobby, it brings you some diversity in your beer consolation and it is very healthy. ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Gähri W.', 'roles': ['team','mentor']},
-		{'user':'en_Lavenia Lastrapes', 'roles': ['participant']},
-		{'user':'en_Greenthumb', 'roles': ['participant']},
-		{'user':'en_WAvegetarian', 'roles': ['participant']},
-		{'user':'en_Lara', 'roles': ['participant']},
-		{'user':'en_Du', 'roles': ['host']}
+		{'user':'Gähri W.en', 'roles': ['team','mentor']},
+		{'user':'Lavenia Lastrapesen', 'roles': ['participant']},
+		{'user':'Greenthumben', 'roles': ['participant']},
+		{'user':'WAvegetarianen', 'roles': ['participant']},
+		{'user':'Laraen', 'roles': ['participant']},
+		{'user':'Duen', 'roles': ['host']}
 	],
 	'region':      'Englistan'
 },{
@@ -636,15 +636,15 @@ testcourses = [{
 	'categories': ['Internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'groups':     ['CCC'],
-	'createdby':   'en_Mike_85',
+	'createdby':   'Mike_85en',
 	'description': 'Some people are organizing a crypto-party on friday the 28th of September. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.',
 	'roles':      ['team','host'],
 	'members': [
-		{'user':'en_31337', 'roles': ['team'], 'comment': 'yeah,yeah,yeah'},
-		{'user':'en_INYORBASE', 'roles': ['team']},
-		{'user':'en_⧌', 'roles': ['team'], 'comment': 'cool! think thats important'},
-		{'user':'en_c⃠', 'roles': ['team']},
-		{'user':'en_!!!⃤', 'roles': ['host']},
+		{'user':'31337en', 'roles': ['team'], 'comment': 'yeah,yeah,yeah'},
+		{'user':'INYORBASEen', 'roles': ['team']},
+		{'user':'⧌en', 'roles': ['team'], 'comment': 'cool! think thats important'},
+		{'user':'c⃠en', 'roles': ['team']},
+		{'user':'!!!⃤en', 'roles': ['host']},
 	],
 	'region':      'Englistan'
 },{
@@ -652,15 +652,15 @@ testcourses = [{
 	'categories': ['Elektronik / Strom', 'Programmieren'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'groups':     ['SGMK'],
-	'createdby':   'en_Mike_85',
+	'createdby':   'Mike_85en',
 	'description': 'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... Link Openlab, Link SGMK',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_bert', 'roles': ['participant']},
-		{'user':'en_Felix', 'roles': ['host','participant']},
-		{'user':'en_INYORBASE', 'roles': ['participant']},
-		{'user':'en_Barbie92', 'roles': ['participant']},
-		{'user':'en_c⃠', 'roles': ['participant']}
+		{'user':'berten', 'roles': ['participant']},
+		{'user':'Felixen', 'roles': ['host','participant']},
+		{'user':'INYORBASEen', 'roles': ['participant']},
+		{'user':'Barbie92en', 'roles': ['participant']},
+		{'user':'c⃠en', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
@@ -668,34 +668,34 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Sprache'],
 	'groups':     ['ASZ Bildung für Alle'],
-	'createdby':   'en_ASZ - Bildung für alle',
+	'createdby':   'ASZ - Bildung für alleen',
 	'description': 'jerman now and for effrybody',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Scotty Solorio', 'roles': ['participant']},
-		{'user':'en_Edith Escudero', 'roles': ['participant']},
-		{'user':'en_Willian Wiesner', 'roles': ['participant']},
-		{'user':'en_Russel Rowsey', 'roles': ['participant']},
-		{'user':'en_Krysta Kabel', 'roles': ['participant']},
-		{'user':'en_Zane Zeringue', 'roles': ['participant']},
-		{'user':'en_Buena Balling', 'roles': ['participant']},
-		{'user':'en_Pablo Petti', 'roles': ['participant']},
-		{'user':'en_Ed Epting', 'roles': ['participant']},
-		{'user':'en_Mathilda Morita', 'roles': ['participant']},
-		{'user':'en_Nevada Nicola', 'roles': ['participant']},
-		{'user':'en_Dick Dominguez', 'roles': ['participant']},
-		{'user':'en_Marylyn Metoyer', 'roles': ['participant']},
-		{'user':'en_September Stubblefield', 'roles': ['participant']},
-		{'user':'en_Chastity Capp', 'roles': ['participant']},
-		{'user':'en_Mellisa Momon', 'roles': ['participant']},
-		{'user':'en_Jack Jordon', 'roles': ['participant']},
-		{'user':'en_Yolonda Yoshida', 'roles': ['participant']},
-		{'user':'en_Raymundo Rowland', 'roles': ['participant']},
-		{'user':'en_Beatrice Bernett', 'roles': ['participant']},
-		{'user':'en_Lisa', 'roles': ['mentor']},
-		{'user':'en_Robi', 'roles': ['mentor']},
-		{'user':'en_KGut', 'roles': ['mentor']},
-		{'user':'en_ASZ - Bildung für alle', 'roles': ['host']}
+		{'user':'Scotty Solorioen', 'roles': ['participant']},
+		{'user':'Edith Escuderoen', 'roles': ['participant']},
+		{'user':'Willian Wiesneren', 'roles': ['participant']},
+		{'user':'Russel Rowseyen', 'roles': ['participant']},
+		{'user':'Krysta Kabelen', 'roles': ['participant']},
+		{'user':'Zane Zeringueen', 'roles': ['participant']},
+		{'user':'Buena Ballingen', 'roles': ['participant']},
+		{'user':'Pablo Pettien', 'roles': ['participant']},
+		{'user':'Ed Eptingen', 'roles': ['participant']},
+		{'user':'Mathilda Moritaen', 'roles': ['participant']},
+		{'user':'Nevada Nicolaen', 'roles': ['participant']},
+		{'user':'Dick Dominguezen', 'roles': ['participant']},
+		{'user':'Marylyn Metoyeren', 'roles': ['participant']},
+		{'user':'September Stubblefielden', 'roles': ['participant']},
+		{'user':'Chastity Cappen', 'roles': ['participant']},
+		{'user':'Mellisa Momonen', 'roles': ['participant']},
+		{'user':'Jack Jordonen', 'roles': ['participant']},
+		{'user':'Yolonda Yoshidaen', 'roles': ['participant']},
+		{'user':'Raymundo Rowlanden', 'roles': ['participant']},
+		{'user':'Beatrice Bernetten', 'roles': ['participant']},
+		{'user':'Lisaen', 'roles': ['mentor']},
+		{'user':'Robien', 'roles': ['mentor']},
+		{'user':'KGuten', 'roles': ['mentor']},
+		{'user':'ASZ - Bildung für alleen', 'roles': ['host']}
 	],
 	'region':      'Englistan'
 },{
@@ -703,144 +703,144 @@ testcourses = [{
 	'categories': ['Sprache'],
 	'tags':       ['Deutsch', 'Aussländer_in', 'Immigrant_in'],
 	'groups':     ['ASZ Bildung für Alle'],
-	'createdby':   'en_Ylmaz Z.',
+	'createdby':   'Ylmaz Z.en',
 	'description': 'I want to learn german, thats great!',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Maryellen Moyers', 'roles': ['participant']},
-		{'user':'en_Otto Oshields', 'roles': ['participant']},
-		{'user':'en_Hui Hung', 'roles': ['participant']},
-		{'user':'en_Wilhelmina Wolf', 'roles': ['participant']},
-		{'user':'en_Lenora Lucca', 'roles': ['participant']},
-		{'user':'en_Etha Eis', 'roles': ['participant']},
-		{'user':'en_lorence Flavors', 'roles': ['participant']},
-		{'user':'en_Kandace Kahn', 'roles': ['participant']},
-		{'user':'en_Elaine Elswick', 'roles': ['participant']},
-		{'user':'en_Dinorah Duwe', 'roles': ['participant']},
-		{'user':'en_Levi Lind', 'roles': ['participant']},
-		{'user':'en_Shelba Slinkard', 'roles': ['participant']},
-		{'user':'en_Marina Maiden', 'roles': ['participant']},
-		{'user':'en_Nickie Nordin', 'roles': ['participant']},
-		{'user':'en_Valda Vento', 'roles': ['participant']},
-		{'user':'en_Rosalinda Runyan', 'roles': ['participant']},
-		{'user':'en_Latrisha Lamon', 'roles': ['participant']},
-		{'user':'en_Eartha Ellenburg', 'roles': ['participant']},
-		{'user':'en_Irena Ivers', 'roles': ['participant']},
-		{'user':'en_Chassidy Cerna', 'roles': ['participant']},
-		{'user':'en_Luis Lambrecht', 'roles': ['participant']},
-		{'user':'en_Eugena Elling', 'roles': ['participant']},
-		{'user':'en_Lavenia Lastrapes', 'roles': ['participant']},
-		{'user':'en_Truman Tomson', 'roles': ['participant']},
-		{'user':'en_Seth Stall', 'roles': ['participant']},
-		{'user':'en_Regena Robey', 'roles': ['participant']},
-		{'user':'en_Michel Mancil', 'roles': ['participant']},
-		{'user':'en_Lorilee Leftwich', 'roles': ['participant']},
-		{'user':'en_Jonah Jaeger', 'roles': ['participant']},
-		{'user':'en_Jesica Jeanbart', 'roles': ['participant']},
-		{'user':'en_KGut', 'roles': ['mentor']},
-		{'user':'en_Felice Friedt', 'roles': ['mentor']},
-		{'user':'en_Illa Iser', 'roles': ['mentor']},
+		{'user':'Maryellen Moyersen', 'roles': ['participant']},
+		{'user':'Otto Oshieldsen', 'roles': ['participant']},
+		{'user':'Hui Hungen', 'roles': ['participant']},
+		{'user':'Wilhelmina Wolfen', 'roles': ['participant']},
+		{'user':'Lenora Luccaen', 'roles': ['participant']},
+		{'user':'Etha Eisen', 'roles': ['participant']},
+		{'user':'lorence Flavorsen', 'roles': ['participant']},
+		{'user':'Kandace Kahnen', 'roles': ['participant']},
+		{'user':'Elaine Elswicken', 'roles': ['participant']},
+		{'user':'Dinorah Duween', 'roles': ['participant']},
+		{'user':'Levi Linden', 'roles': ['participant']},
+		{'user':'Shelba Slinkarden', 'roles': ['participant']},
+		{'user':'Marina Maidenen', 'roles': ['participant']},
+		{'user':'Nickie Nordinen', 'roles': ['participant']},
+		{'user':'Valda Ventoen', 'roles': ['participant']},
+		{'user':'Rosalinda Runyanen', 'roles': ['participant']},
+		{'user':'Latrisha Lamonen', 'roles': ['participant']},
+		{'user':'Eartha Ellenburgen', 'roles': ['participant']},
+		{'user':'Irena Iversen', 'roles': ['participant']},
+		{'user':'Chassidy Cernaen', 'roles': ['participant']},
+		{'user':'Luis Lambrechten', 'roles': ['participant']},
+		{'user':'Eugena Ellingen', 'roles': ['participant']},
+		{'user':'Lavenia Lastrapesen', 'roles': ['participant']},
+		{'user':'Truman Tomsonen', 'roles': ['participant']},
+		{'user':'Seth Stallen', 'roles': ['participant']},
+		{'user':'Regena Robeyen', 'roles': ['participant']},
+		{'user':'Michel Mancilen', 'roles': ['participant']},
+		{'user':'Lorilee Leftwichen', 'roles': ['participant']},
+		{'user':'Jonah Jaegeren', 'roles': ['participant']},
+		{'user':'Jesica Jeanbarten', 'roles': ['participant']},
+		{'user':'KGuten', 'roles': ['mentor']},
+		{'user':'Felice Friedten', 'roles': ['mentor']},
+		{'user':'Illa Iseren', 'roles': ['mentor']},
 	],
 	'region':      'Englistan'
 },{
 	'name':        'German workshop',
 	'categories': ['Sprache'],
 	'tags':       ['Langage', 'Switzerland'],
-	'createdby':   'en_IvanZ',
+	'createdby':   'IvanZen',
 	'description': 'Who else would be interested in an independent workshop, with no mentor. Just lerning a language and all arround it',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Sandro', 'roles': ['host']},
+		{'user':'Sandroen', 'roles': ['host']},
 	]
 },{
 	'name':        'Language Exchange',
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
-	'createdby':   'en_Ylmaz Z.',
+	'createdby':   'Ylmaz Z.en',
 	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  ****  Weekly meeting and wiledly exchange language and different Culture   ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles ****  una réunione par semana per excambiare la lingua et cultura ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek  ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_ylmaz Z', 'roles': ['host','participant']},
-		{'user':'en_BenDe', 'roles': ['participant']},
-		{'user':'en_Lucy', 'roles': ['participant']},
-		{'user':'en_SeulSoul', 'roles': ['participant']}
+		{'user':'ylmaz Zen', 'roles': ['host','participant']},
+		{'user':'BenDeen', 'roles': ['participant']},
+		{'user':'Lucyen', 'roles': ['participant']},
+		{'user':'SeulSoulen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Yodeling!',
 	'categories': ['Musik'],
 	'tags':       ['Singen', 'Jodeln'],
-	'createdby':   'en_Sandra',
+	'createdby':   'Sandraen',
 	'description': 'Who else wants to learn swiss yodeling? Not like in a suburban yodel association... If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  https://en.wikipedia.org/wiki/Yodeling ',
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
-		{'user':'en_Sandra', 'roles': ['participant']},
-		{'user':'en_HertsPflaschter', 'roles': ['participant']}
+		{'user':'Sandraen', 'roles': ['participant']},
+		{'user':'HertsPflaschteren', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'First-Aid Course',
 	'categories': ['Medizin'],
 	'tags':       ['Medizin', 'Nothelfer'],
-	'createdby':   'en_OliviaTheMan!!!Yeah <!-- Hack -->',
+	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->en',
 	'description': 'First Aid is something so important that we all should renew every year. My last class was five years ago and I forgott almost everything......',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_OliviaTheMan!!!Yeah <!-- Hack -->', 'roles': ['participant']},
-		{'user':'en_HertsPflaschter', 'roles': ['participant']},
-		{'user':'en_DGass', 'roles': ['host']}
+		{'user':'OliviaTheMan!!!Yeah <!-- Hack -->en', 'roles': ['participant']},
+		{'user':'HertsPflaschteren', 'roles': ['participant']},
+		{'user':'DGassen', 'roles': ['host']}
 	]
 },{
 	'name':        'Meteor.js Workshop',
 	'categories': ['Programmieren'],
 	'tags':       ['Meteor.js', 'Coden'],
-	'createdby':   'en_HackerOne',
+	'createdby':   'HackerOneen',
 	'description': 'Who is in??',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_Mao', 'roles': ['participant']},
-		{'user':'en_Tse', 'roles': ['participant']},
-		{'user':'en_Tung', 'roles': ['participant']},
-		{'user':'en_Flumsi', 'roles': ['host']}
+		{'user':'Maoen', 'roles': ['participant']},
+		{'user':'Tseen', 'roles': ['participant']},
+		{'user':'Tungen', 'roles': ['participant']},
+		{'user':'Flumsien', 'roles': ['host']}
 	],
 	'region':      'Englistan'
 },/*{
 	'name':        'graffiti',
 	'categories': ['Subkultur'],
 	'tags':       ['Graffiti', 'Writing your name'],
-	'createdby':   'en_Fuck The Police',
+	'createdby':   'Fuck The Policeen',
 	'description': 'Lets get mad. I show you how it works. Make sure you bring some cans.',
 	'roles':      ['participant'],
 	'members': [
-		{'user':'en_Fuck The Police', 'roles': ['participant']},
-		{'user':'en_01', 'roles': ['participant']},
-		{'user':'en_Eimi', 'roles': ['participant']},
-		{'user':'en_~UnDeRdOuG~', 'roles': ['participant']},
-		{'user':'en_FiggDi', 'roles': ['participant']},
-		{'user':'en_Barbie92', 'roles': ['participant']},
-		{'user':'en_Mao', 'roles': ['participant']},
-		{'user':'en_Sandra', 'roles': ['participant']},
-		{'user':'en_FUFZIGRAPPER', 'roles': ['participant']},
-		{'user':'en_031', 'roles': ['participant']},
-		{'user':'en_Vollpfoschte98', 'roles': ['participant']},
-		{'user':'en_SchwarzMiFarb', 'roles': ['participant']},
-		{'user':'en_PUBeR', 'roles': ['participant']}
+		{'user':'Fuck The Policeen', 'roles': ['participant']},
+		{'user':'01en', 'roles': ['participant']},
+		{'user':'Eimien', 'roles': ['participant']},
+		{'user':'~UnDeRdOuG~en', 'roles': ['participant']},
+		{'user':'FiggDien', 'roles': ['participant']},
+		{'user':'Barbie92en', 'roles': ['participant']},
+		{'user':'Maoen', 'roles': ['participant']},
+		{'user':'Sandraen', 'roles': ['participant']},
+		{'user':'FUFZIGRAPPERen', 'roles': ['participant']},
+		{'user':'031en', 'roles': ['participant']},
+		{'user':'Vollpfoschte98en', 'roles': ['participant']},
+		{'user':'SchwarzMiFarben', 'roles': ['participant']},
+		{'user':'PUBeRen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },{
 	'name':        'Feministic Twerking workshop'
 	'categories': ['Dance', 'politics'],
 	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
-	'createdby':   'en_sexyanarchogirl',
+	'createdby':   'sexyanarchogirlen',
 	'description': 'I love to twerk, wiggle, jiggle and wine up my bumper. But Im still a radical feminist. Is that even possible or not? I would love to organize a Twerking Workshop with a discussion about "queeranarchistic twerking" afterwards. This workshop is for all women*interested in feminism and/or queer, no matter how much they are engaged in queer_feminism and anti-sexism already. With women* we understand  all persons that identify as women*.',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'en_milena', 'roles': ['participant']},
-		{'user':'en_elvis', 'roles': ['participant']},
-		{'user':'en_european dancehallqueen', 'roles': ['participant']},
-		{'user':'en_babaroots sound system', 'roles': ['participant']},
-		{'user':'en_kos crew', 'roles': ['participant']},
-		{'user':'en_ dj alibaba', 'roles': ['participant']}
+		{'user':'milenaen', 'roles': ['participant']},
+		{'user':'elvisen', 'roles': ['participant']},
+		{'user':'european dancehallqueenen', 'roles': ['participant']},
+		{'user':'babaroots sound systemen', 'roles': ['participant']},
+		{'user':'kos crewen', 'roles': ['participant']},
+		{'user':' dj alibabaen', 'roles': ['participant']}
 	],
 	'region':      'Englistan'
 },*/
@@ -848,29 +848,29 @@ testcourses = [{
 	'name':        'Build your mobile Soundsystem',
 	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
 	'tags':       ['1', '2'],
-	'createdby':   'en_OhBacchanal',
+	'createdby':   'OhBacchanalen',
 	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. a) I think there are more people who really need a mobile Soundsystem b)Im sure there are people out there who know how to construct one. We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'en_MachelMontano', 'roles': ['mentor']},
-		{'user':'en_Shaggy', 'roles': ['participant']},
-		{'user':'en_Babaroots', 'roles': ['participant']},
-		{'user':'en_sexyanarchgirl', 'roles': ['participant']}
+		{'user':'MachelMontanoen', 'roles': ['mentor']},
+		{'user':'Shaggyen', 'roles': ['participant']},
+		{'user':'Babarootsen', 'roles': ['participant']},
+		{'user':'sexyanarchgirlen', 'roles': ['participant']}
 	],
 	'region':        'Englistan'
 },{
 	'name':        'International Cookin Course',
 	'categories': ['Kochen'],
 	'tags':       ['fein', 'gsund'],
-	'createdby':   'en_Hotelmamma',
+	'createdby':   'Hotelmammaen',
 	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! We can use the school kitchen of the secondary school Nägelimoos in kloten',
 	'roles':      ['team', 'participant', 'host', 'mentor'],
 	'members': [
-		{'user':'en_Ylmaz Z.', 'roles': ['mentor', 'participant']},
-		{'user':'en_Shaggy', 'roles': ['participant', 'mentor']},
-		{'user':'en_gähri W.', 'roles': ['participant']},
-		{'user':'en_sexyanarchgirl', 'roles': ['participant', 'mentor']},
-		{'user':'en_Figgdi', 'roles': ['participant', 'mentor']}
+		{'user':'Ylmaz Z.en', 'roles': ['mentor', 'participant']},
+		{'user':'Shaggyen', 'roles': ['participant', 'mentor']},
+		{'user':'gähri W.en', 'roles': ['participant']},
+		{'user':'sexyanarchgirlen', 'roles': ['participant', 'mentor']},
+		{'user':'Figgdien', 'roles': ['participant', 'mentor']}
 	],
 	'region':        'Englistan'
 }]
