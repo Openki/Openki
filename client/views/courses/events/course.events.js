@@ -34,7 +34,8 @@ Template.course_events.helpers({
 	},
 	
 	newEvent: function() {
-		return  { new: true, startdate: new Date(), title: this.course.name }
+		var date = moment().add(1, 'week').startOf('hour').toDate();
+		return  { new: true, startdate: date, title: this.course.name }
 	}
 });
 
