@@ -26,6 +26,10 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
-
-
-
+// Use browser language for date formatting
+Deps.autorun(function() {
+	var desiredLocale = Session.get('locale');
+	var setLocale = moment.locale(desiredLocale);
+	Session.set('timeLocale', setLocale);
+	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+});

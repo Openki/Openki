@@ -125,12 +125,14 @@ Handlebars.registerHelper('dateformat', function(date) {
     if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });
 
-Handlebars.registerHelper('dateformat_withday', function(date) {
-    // We'll need a date formatter at some point
-    //if (date) return date.toDateString();
-    horrible_date_array=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]; //FIXME
+Handlebars.registerHelper('dateformat_calendar', function(date) {
+	Session.get('timeLocale');
+	if (date) return moment(date).calendar();
+});
 
-    if (date) return horrible_date_array[date.getDay()]+". "+date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+Handlebars.registerHelper('dateformat_withday', function(date) {
+	Session.get('timeLocale');
+	if (date) return moment(date).format('ddd D.MM.YYYY');
 });
 
 
