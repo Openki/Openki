@@ -12,7 +12,6 @@ binary-heap@1.0.1
 blaze-tools@1.0.1
 blaze@2.0.3
 boilerplate-generator@1.0.1
-bootstrap@1.0.1
 callback-hook@1.0.1
 check@1.0.2
 citizenkevin:medium-editor@1.0.1
@@ -55,6 +54,8 @@ minifiers@1.1.2
 minimongo@1.0.5
 mobile-status-bar@1.0.1
 mongo@1.0.9
+nemo64:bootstrap-data@3.3.1_1
+nemo64:bootstrap@3.3.1_1
 npm-bcrypt@0.7.7
 oauth2@1.1.1
 oauth@1.1.2
