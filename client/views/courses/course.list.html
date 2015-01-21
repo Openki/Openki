@@ -33,14 +33,14 @@
 <template name="course">
 	<li class="courselist_course col-xs-12 col-sm-4 col-md-3 col-lg-2">
 		<a href="{{pathFor 'showCourse'}}">
-			<div class="{{coursestate}} col-xd-9 col-sm-9 col-md-9 col-lg-9" style="height:0px">
+			<div class="{{coursestate}} col-xs-9 col-sm-9 col-md-9 col-lg-9" style="height:0px">
 				<div class="course_name">{{name}}</div>
 			
 				<div class="course_categories">{{> show_categories}}</div>
 				
 			</div>
 
-			<div class="courselist_course_info col-xd-3 col-sm-3 col-md-3 col-lg-3">
+			<div class="courselist_course_info col-xs-3 col-sm-3 col-md-3 col-lg-3">
 				{{#if hasupcomingevents}}
 					<ul class="course_eventlist">
 						{{#each course_eventlist}}
