@@ -1,0 +1,15 @@
+<template name="kioskt">
+	{{yield}}
+</template>
+
+<template name="kiosk">
+  <div class="calendar">
+	<h1>Upcoming events</h1>
+	<ul class="calendar_eventlist">
+		{{#each this}}
+			{{> calendar_event}}
+		{{/each}}
+	</ul>
+  </div>
+</template>
+
