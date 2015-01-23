@@ -15,6 +15,7 @@ boilerplate-generator@1.0.1
 callback-hook@1.0.1
 check@1.0.2
 citizenkevin:medium-editor@1.0.1
+cscottnet:es5-shim@4.0.5_1
 ctl-helper@1.0.4
 ctl@1.0.2
 ddp@1.0.12
