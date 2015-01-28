@@ -23,43 +23,49 @@ Template.loginFrame.helpers({
   }
 });
 
-
-Template.loginRegister.events({
-	'submit form': function(event, template){
+ 
+Template.loginLogin.events({
+	'click .loginRegister': function(event, template){
 		event.preventDefault();
-		var name = template.find('#register-name').value;
-		var password = template.find('#register-password').value;
+		var name = template.find('#login-name').value;
+		var password = template.find('#login-password').value;
+		console.log(name)
 		Accounts.createUser({
 			username: name,
 			password: password
+		}, function(err) {
+			if (err) {
+				addMessage(err);
+			} else {
+				Session.set('showLogin', false);
+			}
 		});
-		
-		Session.set('showLogin', false);
-	}
-});
-
-Template.loginLogin.events({
-	'submit form': function(event, template){
+	},
+	'submit form, click .loginLogin': function(event, template){
 		event.preventDefault();
 		var name = template.find('#login-name').value;
 		var password = template.find('#login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-				console.log(err);
+				addMessage(err);
 			} else {
 				Session.set('showLogin', false);
 			}
 		});
-		
 	},
-	'click .loginWithGithub': function(event){
-		event.preventDefault();
-		Meteor.loginWithGithub({
+	'click .loginWithService': function(event) {
+		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		if (!Meteor[loginMethod]) {
+			console.log("don't have "+loginMethod);
+			return;
+		}
+		Meteor['loginWith'+event.currentTarget.dataset.service]({
 		}, function (err) {
 			if (err) {
 				addMessage(err.reason || 'Unknown error');
+			} else {
+				Session.set('showLogin', false);
 			}
 		});
-		Session.set('showLogin', false);
 	}
 });

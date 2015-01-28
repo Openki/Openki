@@ -4,7 +4,8 @@ Router.map(function () {
 		waitOn: function () {
 			return [ 
 				Meteor.subscribe('currentUser'),
-				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: Meteor.userId() })
+				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: Meteor.userId() }),
+				Meteor.subscribe('groups')
 			];
 		},
 		data: function () {
@@ -13,7 +14,9 @@ Router.map(function () {
 				var userdata = {
 					_id: user._id,
 					name: user.username,
-					privacy: user.privacy
+					privacy: user.privacy,
+					groups: !!user.groups && Groups.find({_id: {$in: user.groups}}).map(function(grp) { return grp.name }).join(', '),
+					groupcount: user.groups && user.groups.length || 0
 				}
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -79,4 +82,4 @@ Template.profile.events({
 	'click input.verify': function () {
 		Meteor.call('sendVerificationEmail')
 	}
-})
+});

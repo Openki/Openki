@@ -24,6 +24,15 @@
 			{{/if}}
 			<p class="descr">{{#if user.privacy}} {{mf 'profile.privacy.on' 'Privacy settings: on'}} {{else}} {{mf 'profile.privacy.off' 'Privacy settings: off'}} {{/if}}
 			</p>
+			<p class="descr">
+				{{#mf KEY='member_of_groups' NUM_GROUPS=user.groupcount GROUPS_LIST=user.groups}}
+				You are {NUM_GROUPS, plural,
+				=0 {not a member of any group}
+				=1 {member of the group {GROUPS_LIST}}
+				other {member of the groups {GROUPS_LIST}}}
+				.
+				{{/mf}}
+			</p>
 			<input type="button" class="edit" value="Edit" />
 			{{#if verifyDelete}}
 				<div>{{mf 'profile.reallydelete' 'Please confirm you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}

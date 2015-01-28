@@ -13,7 +13,10 @@ Router.map(function () {
 		},
 		waitOn: function () {
 			var region = Session.get('region')
-			return Meteor.subscribe('coursesFind', region, false, {}, 36);
+			return [
+				Meteor.subscribe('coursesFind', region, false, {}, 36),
+				Meteor.subscribe('futureEvents')
+			];
 		},
 		data: function() {
 			return {

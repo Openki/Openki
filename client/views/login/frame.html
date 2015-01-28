@@ -27,8 +27,7 @@
 					</li>
 					</nav>
 				{{else}}
-					{{> loginLogin}}
-					{{> loginRegister}}	
+					{{> loginLogin}}	
 				{{/if}}
 			</div>
 		</div>
@@ -37,21 +36,13 @@
 {{/if}}
 </template>
 
-<template name="loginRegister">
-	<form>
-		<div class="login-input-label">Register<br></div>
-		<input type="text" class="form-control" id="register-name">
-		<input type="password" class="form-control" id="register-password">
-		<input type="submit" class="btn" value="{{mf 'login.register.submit' 'Register'}}">
-	</form>
-</template>
-
 <template name="loginLogin">
 	<form>
-		<div class="login-input-label"><br>Login<br></div>
-		<input type="text" class="form-control" id="login-name">
-		<input type="password" class="form-control" id="login-password">
-		<input type="submit" class="btn text-right" value="{{mf 'login.login.submit' 'Login'}}">
+		<input type="text" id="login-name">
+		<input type="password" id="login-password">
+		<input type="submit" class='loginLogin btn' value="{{mf 'login.login.submit' 'Login'}}">
+		<input type="submit" class='loginRegister btn' value="{{mf 'login.register.submit' 'Create account'}}">
 	</form>
-	<button class="loginWithGithub">LOGIN WITH GITHUB</button>
+	<button class="loginWithService" data-service='Github'>LOGIN WITH GITHUB</button>
+	<button class="loginWithService" data-service='Facebook'>LOGIN WITH FACEBOOK</button>
 </template>

@@ -19,7 +19,8 @@ accounts-github
 service-configuration
 citizenkevin:medium-editor
 djedi:sanitize-html
+rzymek:moment
+rzymek:moment-locales
 nemo64:bootstrap
 less
 cscottnet:es5-shim
-

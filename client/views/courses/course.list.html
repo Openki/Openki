@@ -52,9 +52,11 @@
 									<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
 									{{timeformat this.startdate}}
 								</div>
-								<div>
-									<span  class="glyphicon glyphicon-home" aria-hidden="true"></span> location
+								{{#if location}}
+								<div class="course_eventlist_location">
+									<span class="glyphicon glyphicon-home" aria-hidden="true"></span>{{location}}
 								</div>
+								{{/if}}
 							</li>
 						{{/each}}
 

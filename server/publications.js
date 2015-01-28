@@ -2,7 +2,11 @@
 
 Meteor.publish ('courses', function(region){
 	if(!region) return Courses.find();
-	return Courses.find({region: region});
+				return Courses.find({region: region});
+});
+
+Meteor.publish ('courseDetails', function(id) {
+	return Courses.find({ _id: id });
 });
 
 Meteor.publish ('coursesFind', coursesFind);
@@ -38,17 +42,19 @@ Meteor.publish ('discussions', function(){
 });
 
 
-Meteor.publish ('events', function(){
-	return Events.find();
+Meteor.publish('events', function(region) {
+	if(!region) return Events.find();
+	return Events.find({region: region});
 });
 
-/*
-Meteor.publish ('comments', function(){
-	return CourseComments.find();
+Meteor.publish('eventsForCourse', function(courseId) {
+	return Events.find({course_id: courseId});
 });
-*/
 
-//tried this, for publishing the users
+Meteor.publish('futureEvents', function() {
+	return Events.find({startdate: {$gt: new Date()}});
+});
+
 Meteor.publish ('users', function(){
 	return Meteor.users.find({}, {
 		fields: {username: 1}
@@ -56,6 +62,17 @@ Meteor.publish ('users', function(){
 
 });
 
+Meteor.publish('userSelection', function(userIds) {
+	return Meteor.users.find(
+		{ _id: {$in: userIds} },
+		{ fields: {username: 1} }
+	);
+});
+
 Meteor.publish('currentUser', function() {
   return Meteor.users.find(this.userId);
+});
+
+Meteor.publish ('groups', function(){
+	return Groups.find();
 });

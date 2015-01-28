@@ -12,15 +12,13 @@ Meteor.startup(function () {
 
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
-Meteor.subscribe('events');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
 Meteor.subscribe('messages');
 Meteor.subscribe('regions');
 Meteor.subscribe('roles');
 Meteor.subscribe('votings');
-Meteor.subscribe('users');
-return Meteor.subscribe('currentUser');
+Meteor.subscribe('currentUser');
 
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
@@ -28,6 +26,10 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
-
-
-
+// Use browser language for date formatting
+Deps.autorun(function() {
+	var desiredLocale = Session.get('locale');
+	var setLocale = moment.locale(desiredLocale);
+	Session.set('timeLocale', setLocale);
+	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+});

@@ -28,8 +28,8 @@ function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
 		{ _id: course._id, 'members.user': { $ne: user } },
-		{ $addToSet: { 'members': { user: user, roles: []} }}
-	)
+		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
+	);
 
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
@@ -38,28 +38,29 @@ function addRole(course, role, user) {
 			{ _id: course._id, 'members.user': user },
 			{ '$addToSet': { 'members.$.roles': role }},
 			checkUpdateOne
-		)
+		);
 	}
 }
+
 
 function removeRole(course, role, user) {
 	// Minimongo does not currently support the $ field selector
 	// Remove this guard once it does
 	if (!Meteor.isClient) {
-			var result = Courses.update(
-				{ _id: course._id, 'members.user': user },
-				{ '$pull': { 'members.$.roles': role }},
-				checkUpdateOne
-			)
+		var result = Courses.update(
+			{ _id: course._id, 'members.user': user },
+			{ '$pull': { 'members.$.roles': role }},
+			checkUpdateOne
+		);
 	}
 
 	// Housekeeping: Remove members that have no role left
-	// Note that we have a race condition here with the addRole() function, blissfully ignoring the unlikely case
 	Courses.update(
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
 	)
 }
+
 
 coursesFind = function(region, query, filter, limit) {
 	var find = {}
@@ -186,7 +187,7 @@ Meteor.methods({
 		}
 
  		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
-		if (!mayEdit) throw new Meteor.Error(401, "get lost")
+		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted")
 
 
 		/* Changes we want to perform */
@@ -221,7 +222,7 @@ Meteor.methods({
 			set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
 				set.description = sanitizeHtml(set.description, {
-					allowedTags: [ 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote'],
+					allowedTags: [ 'br', 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote'],
 					allowedAttributes: {
 						'a': [ 'href' ]
 					}

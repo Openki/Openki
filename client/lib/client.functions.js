@@ -62,6 +62,33 @@ hasRoleUser = function(members, role, user) {
 	return has;
 }
 
+
+/* Get a username from ID
+ * 
+ * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
+ */
+userName = function(userId) {
+	if (!userId) return '';
+	var user = Meteor.users.findOne({ _id: userId });
+	if (user) {
+		if (user.username) {
+			return user.username;
+		} else {
+			return "userId: " + user._id;
+		}
+	} else {
+		if (userId.substr(0, 5)  == 'Anon_') {
+			var loggeduser = Meteor.user();
+			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
+				return  '☔ ' + loggeduser.username + ' ☔';
+			}
+			return "☔ incognito";
+		}
+		return "No_User";
+	}
+}
+
+
 /* Go to the same page removing query parameters */
 goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params) // Shirely, you know of a better way?
@@ -80,7 +107,7 @@ Handlebars.registerHelper ("privacyEnabled", function(){
 
 
 Handlebars.registerHelper("log", function(context) {
-	if (window.console) console.log(context)
+	if (window.console) console.log(arguments.length > 0 ? context : this);
 });
 
 Handlebars.registerHelper("title", function() {
@@ -88,27 +115,7 @@ Handlebars.registerHelper("title", function() {
 	document.title = les.join("");
 });
 
-Handlebars.registerHelper('username', function (userId){
-	if (!userId) return '';
-	var user= Meteor.users.findOne({_id:userId});
-	if(user){
-		if(user.username){
-			return user.username;
-		}else{
-			return "userId: "+user._id; // solange .username noch nix ist, haben wir nur die _id...
-		}
-	}
-	else {
-		if (userId.substr(0, 5)  == 'Anon_'){
-			var loggeduser = Meteor.user()
-			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1){
-				return loggeduser.username + ' ☔'
-			}
-			return "Anonymous☔";
-		}
-		return "No_User";
-	}
-})
+Handlebars.registerHelper('username', userName);
 
 
 Handlebars.registerHelper('dateformat', function(date) {
@@ -118,27 +125,34 @@ Handlebars.registerHelper('dateformat', function(date) {
     if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });
 
-Handlebars.registerHelper('dateformat_withday', function(date) {
-    // We'll need a date formatter at some point
-    //if (date) return date.toDateString();
-    horrible_date_array=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]; //FIXME
+Handlebars.registerHelper('dateformat_calendar', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).calendar();
+});
 
-    if (date) return horrible_date_array[date.getDay()]+". "+date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+Handlebars.registerHelper('dateformat_withday', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('ddd D.MM.YYYY');
+});
+
+Handlebars.registerHelper('fullDate', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('ddd D.MM.YYYY HH:mm');
 });
 
 
 Handlebars.registerHelper('dateformat_mini', function(date) {
-    // We'll need a date formatter at some point
-    //if (date) return date.toDateString();
-    if (date) return date.getDate()+"."+(date.getMonth()+1)+".";
+	if (date) return moment(date).format('D.M.');
 });
 
 
 Handlebars.registerHelper('timeformat', function(date) {
-    // We'll need a time formatter at some point
-    //if (date) return date.toTimeString();
+	if (date) return moment(date).format('HH:mm');
+});
 
-    if (date) return ("0"+date.getHours()).slice(-2)+":"+("0"+date.getMinutes()).slice(-2);
+Handlebars.registerHelper('fromNow', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).fromNow();
 });
 
 

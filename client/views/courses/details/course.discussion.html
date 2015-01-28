@@ -23,13 +23,13 @@
 			<div class="comment">
 				<h4>{{this.title}}</h4>
 				<p>{{text}}</p>
-				<p>{{mf 'course.discussion.time_created' 'Time:'}} {{time_created}}, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
+				<p><span title="{{fullDate time_created}}">{{fromNow time_created}}</span>, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
 			</div>
 		{{else}}
 			<div class="post">
 				<h4>{{this.title}}</h4>
 				<p>{{text}}</p>
-				<p>Zeit: {{time_created}}, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
+				<p><span title="{{fullDate time_created}}">{{fromNow time_created}}</span>, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
 				<input type="button" class="answer" value="answer this!" />
 			</div>
 		{{/if}}
