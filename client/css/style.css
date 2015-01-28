@@ -1,7 +1,12 @@
+/* ALL TO BE REWRITTEN AS .LESS*/
+
 body {
 	padding-top: 45px; 
 }
 
+#loginFrame {
+  padding-top: 15px;
+}
 
 /* line 161, ../../sass/orig/_screen.scss */
 .courselist_course .yes {

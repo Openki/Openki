@@ -1,48 +1,47 @@
 <template name='loginFrame'>
 {{#if showLoginFrame}}
-<div class="row">
 	<div class="container-fluid">
 		<div class="container-fluid">
-			<div id="loginFrame" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-
-				<a href="#" class="loginClose close">
-					<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">{{mf 'login.close' ' '}}</span></button>
-				</a>
+			<div id="loginFrame">				
 				{{#if currentUser}}
-				<div class="panel-title login-input-label">
+				<div class="panel-title">
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 				</div>
-					<nav class="panel-default">
-						<li class="login-input-label">
-							<br>
-						<a class="btn center" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-							{{mf 'login.frame.profile' 'Visit my profile'}}
-						</a>
-						<a class="btn center" href="{{pathFor 'profile'}}">
-							{{mf 'login.frame.settings' 'Account settings'}}
-						</a><br>
-						<a href="#" class="loginLogout btn center">
-							{{mf 'login.logout' 'Logout'}}
-						</a>
-					</li>
-					</nav>
+				<nav class="panel-default">
+					<a class="btn" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+						{{mf 'login.frame.profile' 'Visit my profile'}}
+					</a>
+					<a class="btn" href="{{pathFor 'profile'}}">
+						{{mf 'login.frame.settings' 'Account settings'}}
+					</a>
+					<a href="#" class="loginLogout btn">
+						{{mf 'login.logout' 'Logout'}}
+					</a>
+				</nav>
 				{{else}}
 					{{> loginLogin}}	
 				{{/if}}
 			</div>
 		</div>
 	</div>
-</div>
 {{/if}}
 </template>
 
 <template name="loginLogin">
 	<form>
-		<input type="text" id="login-name">
-		<input type="password" id="login-password">
-		<input type="submit" class='loginLogin btn' value="{{mf 'login.login.submit' 'Login'}}">
-		<input type="submit" class='loginRegister btn' value="{{mf 'login.register.submit' 'Create account'}}">
+		<div class="form-group">
+			<label for="login-name">{{mf 'login.frame.login-name' 'Username:'}}</label>
+			<input type="text" id="login-name" placeholder="Enter username">
+			<label for="login-password">{{mf 'login.frame.login-password' 'Password:'}}</label>
+			<input type="password" id="login-password" placeholder="Enter password">
+			<input type="submit" class='loginLogin btn btn-default' value="{{mf 'login.login.submit' 'Login'}}">
+			<input type="submit" class='loginRegister btn btn-default' value="{{mf 'login.register.submit' 'Create account'}}">
+			<button class="loginWithService btn btn-default" data-service='Github'>
+				{{mf 'login.frame.github-login' 'LOGIN WITH GITHUB'}}
+			</button>
+			<button class="loginWithService btn btn-default" data-service='Facebook'>
+				{{mf 'login.frame.facebook-login' 'LOGIN WITH FACEBOOK'}}
+			</button>
+		</div>
 	</form>
-	<button class="loginWithService" data-service='Github'>LOGIN WITH GITHUB</button>
-	<button class="loginWithService" data-service='Facebook'>LOGIN WITH FACEBOOK</button>
 </template>
