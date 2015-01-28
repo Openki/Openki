@@ -34,8 +34,13 @@ Deps.autorun(function() {
 	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
 });
 
-// Set up a reactive date source that updates every five minutes
-// This granularity is fine for most time-dependent views
-function setRoughTime() { Session.set('roughTime', new Date()); }
-setRoughTime();
-Meteor.setInterval(setRoughTime, 1000*60*5);
+// Set up a reactive date sources that can be used for updates based on time
+function setTimes() {
+	var now = moment();
+	Session.set('coarseTime', ''+moment().startOf('hour').toDate());
+	Session.set('fineTime', ''+moment().startOf('minute').toDate());
+}
+setTimes();
+
+// Update interval of five seconds is okay
+Meteor.setInterval(setTimes, 1000*5);

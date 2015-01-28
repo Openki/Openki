@@ -135,6 +135,11 @@ Handlebars.registerHelper('dateformat_withday', function(date) {
 	if (date) return moment(date).format('ddd D.MM.YYYY');
 });
 
+Handlebars.registerHelper('dateformat_fromnow', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).fromNow();
+});
+
 Handlebars.registerHelper('fullDate', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('ddd D.MM.YYYY HH:mm');
