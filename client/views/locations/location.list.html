@@ -1,14 +1,16 @@
 <template name="locationlist">
-<h1>Rooms</h1>
+	<div class="container-fluid">
+		<h1>{{mf 'locations.list.title' 'Rooms'}}</h1>
 	Publically visible locations in {{region}}:    <!-- TODO: -->
-	<div class="locationlist">
-		{{#each locations}}
-			{{> location}}
-		{{else}}
-			no locations
-		{{/each}}
+		<div class="">
+			{{#each locations}}
+				{{> location}}
+			{{else}}
+				no locations
+			{{/each}}
 
-		{{> location_edit}}
+			{{> location_edit}}
+		</div>
 	</div>
 </template>
 

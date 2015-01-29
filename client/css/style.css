@@ -1,0 +1,31 @@
+/* ALL TO BE REWRITTEN AS .LESS*/
+
+body {
+	padding-top: 45px; 
+}
+
+#loginFrame {
+  padding-top: 15px;
+}
+
+/* line 161, ../../sass/orig/_screen.scss */
+.courselist_course .yes {
+  color: #407d5c;
+  background-color: #C1F2AE;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  width:15px;
+  margin:3px;
+  text-align: center;
+}
+
+/* line 171, ../../sass/orig/_screen.scss */
+.courselist_course .no {
+  color: #751313;
+  background-color: #EC6D6D;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  width:15px;
+  margin:3px;
+  text-align: center;
+}

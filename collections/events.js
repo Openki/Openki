@@ -26,3 +26,16 @@ Events.allow({
 		return userId && true;	// allow only if UserId is present
 	}
 });
+
+eventsFind = function(fromDate, limit) {
+	var find = { 
+		startdate: { $gt: fromDate }
+	};
+
+	var options = { 
+		limit: limit,
+		sort: { startdate: 1 } 
+	};
+
+	return Events.find(find, options);
+} 

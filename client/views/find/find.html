@@ -6,12 +6,14 @@
 			<label><input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}> {{mf 'find.only with events_checkbox' 'only with events'}}</label>
 		</form>
 	</div>
-	<ul class="courselist_results">
-		{{#each results}}
-			{{> course}}
-		{{else}}
-			{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
-			{{> course_edit}}
-		{{/each}}
-	</ul>
+	<div class="container-fluid">
+		<ul class="courselist_results row list-unstyled">
+			{{#each results}}
+				{{> course}}
+			{{else}}
+				{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
+			{{/each}}
+		</ul>
+		{{> course_edit}}
+	</div>
 </template>

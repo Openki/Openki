@@ -14,7 +14,14 @@ Template.loginFrame.events({
 		Meteor.logout();
 		Session.set('showLogin', false);
 	}
-})
+});
+
+
+Template.loginFrame.helpers({
+  username: function () {
+    return Meteor.user() && Meteor.user().username;
+  }
+});
 
  
 Template.loginLogin.events({
@@ -34,7 +41,7 @@ Template.loginLogin.events({
 			}
 		});
 	},
-	'click .loginLogin': function(event, template){
+	'submit form, click .loginLogin': function(event, template){
 		event.preventDefault();
 		var name = template.find('#login-name').value;
 		var password = template.find('#login-password').value;

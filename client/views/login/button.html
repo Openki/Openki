@@ -1,11 +1,11 @@
 <template name='loginButton'>
 {{#if loginServicesConfigured}}
-	<a class="loginButton">
+	<button type="button" class="loginButton btn btn-default navbar-btn" role="button">
 	{{#if currentUser}}
-		{{currentUser.username}}&nbsp;▼
+		user: {{currentUser.username}}
 	{{else}}
-		{{mf 'login.navig.unlogged' 'Login/Sign up'}}&nbsp;▼
+		{{mf 'login.navig.unlogged' 'Login/Register'}}
 	{{/if}}
-	</a>
+	</button>
 {{/if}}
 </template>

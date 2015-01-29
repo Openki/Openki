@@ -15,4 +15,3 @@ Template.lang_sel.events({
 		e.preventDefault();
 	}
 })
-

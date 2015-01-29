@@ -1,35 +1,47 @@
 <template name='loginFrame'>
 {{#if showLoginFrame}}
-	<div id="loginFrame">
-		<a href="#" class="loginClose">{{mf 'login.close' 'close'}}</a>
-		{{#if currentUser}}
-			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-			<nav>
-				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
-					{{mf 'login.frame.profile' 'My public profile'}}
-				</a><br>
-				<a href="{{pathFor 'profile'}}">
-					{{mf 'login.frame.settings' 'Account settings'}}
-				</a><br>
-				<a href="#" class="loginLogout">
-					{{mf 'login.logout' 'Logout'}}
-				</a>
-			</nav>
-		{{else}}
-			{{> loginLogin}}
-		{{/if}}
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<div id="loginFrame">				
+				{{#if currentUser}}
+				<div class="panel-title">
+					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+				</div>
+				<nav class="panel-default">
+					<a class="btn" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+						{{mf 'login.frame.profile' 'Visit my profile'}}
+					</a>
+					<a class="btn" href="{{pathFor 'profile'}}">
+						{{mf 'login.frame.settings' 'Account settings'}}
+					</a>
+					<a href="#" class="loginLogout btn">
+						{{mf 'login.logout' 'Logout'}}
+					</a>
+				</nav>
+				{{else}}
+					{{> loginLogin}}	
+				{{/if}}
+			</div>
+		</div>
 	</div>
 {{/if}}
 </template>
 
-
 <template name="loginLogin">
 	<form>
-		<input type="text" id="login-name">
-		<input type="password" id="login-password">
-		<input type="submit" class='loginLogin' value="{{mf 'login.login.submit' 'Login'}}">
-		<input type="submit" class='loginRegister' value="{{mf 'login.register.submit' 'Create account'}}">
+		<div class="form-group">
+			<label for="login-name">{{mf 'login.frame.login-name' 'Username:'}}</label>
+			<input type="text" id="login-name" placeholder="Enter username">
+			<label for="login-password">{{mf 'login.frame.login-password' 'Password:'}}</label>
+			<input type="password" id="login-password" placeholder="Enter password">
+			<input type="submit" class='loginLogin btn btn-default' value="{{mf 'login.login.submit' 'Login'}}">
+			<input type="submit" class='loginRegister btn btn-default' value="{{mf 'login.register.submit' 'Create account'}}">
+			<button class="loginWithService btn btn-default" data-service='Github'>
+				{{mf 'login.frame.github-login' 'LOGIN WITH GITHUB'}}
+			</button>
+			<button class="loginWithService btn btn-default" data-service='Facebook'>
+				{{mf 'login.frame.facebook-login' 'LOGIN WITH FACEBOOK'}}
+			</button>
+		</div>
 	</form>
-	<button class="loginWithService" data-service='Github'>LOGIN WITH GITHUB</button>
-	<button class="loginWithService" data-service='Facebook'>LOGIN WITH FACEBOOK</button>
 </template>

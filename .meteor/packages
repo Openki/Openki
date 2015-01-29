@@ -17,10 +17,10 @@ gadicohen:messageformat
 reactive-var
 accounts-github
 service-configuration
-bootstrap
 citizenkevin:medium-editor
 djedi:sanitize-html
 rzymek:moment
 rzymek:moment-locales
-
-
+nemo64:bootstrap
+less
+cscottnet:es5-shim
