@@ -8,12 +8,33 @@ body {
   padding-top: 15px;
 }
 
+.courselist_course {
+  display: inline-block;
+  width: 300px;
+  height: 150px;
+  border: 7px dotted #DDD;
+  margin: 5px;
+  padding-right: 0 !important;
+}
+.courselist_course_info {
+  right: -7px;
+  padding: 0;
+  width: 25%;
+}
+
+div.no-padding {
+  padding: 0;
+}
+
+.course_categories > ul li {
+  display: inline-block;
+  background: #DDD;
+}
+
 /* line 161, ../../sass/orig/_screen.scss */
 .courselist_course .yes {
   color: #407d5c;
   background-color: #C1F2AE;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
   width:15px;
   margin:3px;
   text-align: center;
@@ -23,9 +44,7 @@ body {
 .courselist_course .no {
   color: #751313;
   background-color: #EC6D6D;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  width:15px;
+  width: 100%;
   margin:3px;
   text-align: center;
 }
