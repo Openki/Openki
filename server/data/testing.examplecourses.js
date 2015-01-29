@@ -43,7 +43,7 @@ testcourses = [{
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
-	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: <ul> <li>* Spieltheorie <li>* Spielidee <li>* Spielmechanik <li>* Storytelling <li>* Concept Art <li>* Charakterentwicklung <li>* Zeichnen und Bildbearbeitung mit Photoshop <li>* Usability <li>* Prototyping und Gamedesign mit Unity Gameengine <li>* Leveldesign <li>* 3D-Modelling und -Animation mit Blender <li>* Programmieren mit JavaScript und C-Sharp <li>* Sound-Design mit Audacity <li>* Polishing </ul>',
+	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: <ul> <li> Spieltheorie <li> Spielidee <li> Spielmechanik <li> Storytelling <li> Concept Art <li> Charakterentwicklung <li> Zeichnen und Bildbearbeitung mit Photoshop <li> Usability <li> Prototyping und Gamedesign mit Unity Gameengine <li> Leveldesign <li> 3D-Modelling und -Animation mit Blender <li> Programmieren mit JavaScript und C-Sharp <li> Sound-Design mit Audacity <li> Polishing </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seee', 'roles': ['team','mentor']}
@@ -63,7 +63,7 @@ testcourses = [{
 	'categories': ['Programmieren','Internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
-	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. <ul> <li>* Konzeption / Idee  <li>* Usability  <li>* Gestaltung mit Photoshop  <li>* Clientseitige Programmierung mit HTML, CSS und JavaScript  <li>* Serverseitige Programmierung mit PHP / Phyton  <li>* Datenbank mit mySQL </ul>',
+	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. <ul> <li> Konzeption / Idee  <li> Usability  <li> Gestaltung mit Photoshop  <li> Clientseitige Programmierung mit HTML, CSS und JavaScript  <li> Serverseitige Programmierung mit PHP / Phyton  <li> Datenbank mit mySQL </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seee', 'roles': ['team', 'mentor']},
@@ -77,7 +77,7 @@ testcourses = [{
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
-	'description': ' hoi tsäme! <br>  ich würd mal gerne ein grundlagen von elektronik lernen… <br> so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;) <br> einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. <br> <br> nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).  <br>hat wer bock? <br> c u',
+	'description': ' hoi tsäme! <br>Ich würd mal gerne die Grundlagen von elektronik lernen… <br> so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;) <br> einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. <br> <br> nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).  <br>hat wer bock? <br> c u',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'greg', 'roles': ['host','team']},
@@ -276,11 +276,11 @@ testcourses = [{
 
 	]
 },{
-	'name':        'Sprachaustasch',
+	'name':        'Sprachaustausch',
 	'categories': ['Sprache'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'IvanZ',
-	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen <br> ****  Weekly meeting and wiledly exchange language and different Culture  <br> ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> ****  una réunione par semana per excambiare la lingua et cultura <br> ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> ****    Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  ',
+	'description': '**** Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen <br> **** Weekly meeting and wiledly exchange language and different Culture  <br> **** Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> **** una réunione par semana per excambiare la lingua et cultura <br> **** Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> **** Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'IvanZ', 'roles': ['host','participant']},
@@ -459,7 +459,7 @@ testcourses = [{
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']}
 	]
-},,{
+},{
 	'name':        'Lesegruppe',
 	'categories': ['Sprache','Literatur'],
 	'tags':       ['', ''],
@@ -474,7 +474,43 @@ testcourses = [{
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']}
 	]
+},{
+	'name':        'Zeitreisen durch die Kartenwerke von swisstopo',
+	'categories': ['Naturwissenschaft','Geographie','Geschichte'],
+	'tags':       ['', ''],
+	'createdby':   'UZH',
+	'description': 'Mittwoch, 21. Januar 2015, 18:15 Uhr bis 19:45 Uhr <br> Zu seinem 175-Jahr-Jubiläum hat das Bundesamt für Landestopografie swisstopo 2013 auf seiner Homepage www.swisstopo.ch die „Zeitreise“ aufgeschaltet. Mit dieser Web-Applikation lassen sich die über 7600 gedruckten Kartenblätter der Landeskartenwerke 1:25 000, 1:50 0000 und 1:100 000 aus dem Zeitraum von 1844 bis heute an jedem beliebigen Ort der Schweiz auf attraktive Weise am Bildschirm visualisieren. Das Referat vermittelt Hintergrundinformationen zu dieser weltweit einmaligen Realisierung des kartographischen Öffentlichkeitsprinzips und stellt ausgewählte Beispiele vor. <br> MitDr. Martin Rickenbacher (Bundesamt für Landestopografie swisstopo, Wabern) <br> Ort ETH Zentrum, Rämistrasse 101, 8092 Zürich <br> Raum: Auditorium, E 1.2 <br> VeranstalterGeographisch-Ethnographische Gesellschaft Zürich <br> ReiheVermessung der Erde – Erfassung der Welt <br> KontaktNorman Backhaus (Mail) <br> KarteAuf Google-Maps anzeigen',
+	'roles':      ['host'],
+	'members': [
+		{'user':'', 'roles': ['Roger']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']},
+		{'user':'', 'roles': ['']}
+	]
 },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -532,7 +568,7 @@ testcourses = [{
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seeeen',
-	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: <ul> <li>* game theory  <li>* game idea <li>* game mechanic <li>* Storytelling <li>* Concept Art <li>* game character developing <li>* draw and image editing with photoshop <li>* Usability <li>* Prototyping and Gamedesign with Unity Gameengine <li>* Leveldesign <li>* 3D-Modelling and -Animation with Blender <li>* Programming with JavaScript and C-Sharp <li>* Sound-Design with Audacity <li>* Polishing </ul> ',
+	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: <ul> <li>game theory  <li>game idea <li>game mechanic <li>Storytelling <li>Concept Art <li>game character developing <li>draw and image editing with photoshop <li>Usability <li>Prototyping and Gamedesign with Unity Gameengine <li>Leveldesign <li>3D-Modelling and -Animation with Blender <li>Programming with JavaScript and C-Sharp <li>Sound-Design with Audacity <li>Polishing </ul> ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'Seeeen', 'roles': ['team','mentor']}
@@ -653,7 +689,7 @@ testcourses = [{
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'groups':     ['SGMK'],
 	'createdby':   'Mike_85en',
-	'description': 'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... Link Openlab, Link SGMK',
+	'description': 'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... <br><a href="http://www.mechatronicart.ch/mechartlab/openlab"OpenLab</a>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
 		{'user':'berten', 'roles': ['participant']},
