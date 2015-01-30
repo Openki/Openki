@@ -7,13 +7,13 @@
 		</form>
 	</div>
 	<div class="container-fluid">
-		<ul class="courselist_results row list-unstyled">
+		<div class="courselist_results row">
 			{{#each results}}
 				{{> course}}
 			{{else}}
 				{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
 			{{/each}}
-		</ul>
+		</div>
 		{{> course_edit}}
 	</div>
 </template>

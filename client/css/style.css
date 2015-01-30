@@ -1,25 +1,44 @@
 /* ALL TO BE REWRITTEN AS .LESS*/
 
 body {
-	padding-top: 45px; 
+	padding-top: 65px; 
 }
 
 #loginFrame {
   padding-top: 15px;
 }
 
+.courselist_results {
+  margin-top: 10px;
+}
+
 .courselist_course {
   display: inline-block;
   width: 300px;
   height: 150px;
-  border: 7px dotted #DDD;
-  margin: 5px;
+  border: 7px dashed #D4E9F3;
+  margin: 10px 10px 10px 0;
   padding-right: 0 !important;
 }
+
+.courselist_course h4 {
+  -moz-transition: color 1s;
+}
+
+.courselist_course:hover h4 {
+  color: #38829C;
+}
+
+.courselist_course > a {
+  color: #333;
+}
+
 .courselist_course_info {
   right: -7px;
+  top: -7px;
   padding: 0;
   width: 25%;
+  background: #fff;
 }
 
 div.no-padding {
@@ -31,12 +50,16 @@ div.no-padding {
   background: #DDD;
 }
 
+.course_categories > ul li a {
+  color: #333;
+}
+
 /* line 161, ../../sass/orig/_screen.scss */
 .courselist_course .yes {
   color: #407d5c;
   background-color: #C1F2AE;
-  width:15px;
-  margin:3px;
+  width: 100%;
+  margin-bottom: 3px;
   text-align: center;
 }
 
@@ -45,6 +68,6 @@ div.no-padding {
   color: #751313;
   background-color: #EC6D6D;
   width: 100%;
-  margin:3px;
+  margin-bottom: 3px;
   text-align: center;
 }
