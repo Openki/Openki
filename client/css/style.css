@@ -16,7 +16,7 @@ body {
   display: inline-block;
   width: 300px;
   height: 150px;
-  border: 7px dashed #D4E9F3;
+  border: 7px dashed #D8EBF4;
   margin: 10px 10px 10px 0;
   padding-right: 0 !important;
 }
@@ -39,6 +39,19 @@ body {
   padding: 0;
   width: 25%;
   background: #fff;
+}
+
+.course_eventlist_container {
+  background: #C1F2AE;
+  text-align: center;
+}
+
+.course_eventlist_container > div {
+  padding-bottom: 2px;
+}
+
+.course_eventlist_container > div:first-child {
+  padding-top: 3px;
 }
 
 div.no-padding {

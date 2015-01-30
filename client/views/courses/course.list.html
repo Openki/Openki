@@ -37,6 +37,7 @@
 			</div>
 			<div class="courselist_course_info col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
 				{{#if hasupcomingevents}}
+					<div class="course_eventlist_container">
 					{{#each course_eventlist}}
 						<div>
 							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{dateformat_mini this.startdate}}
@@ -46,7 +47,7 @@
 							{{timeformat this.startdate}}
 						</div>
 						{{#if location}}
-						<div class="course_eventlist_location">
+						<div>
 							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>{{location}}
 						</div>
 						{{/if}}
@@ -57,6 +58,7 @@
 							<span class="icon-mini_date"></span>
 						</div>
 					{{/if}}
+				</div>
 				{{else}}
 					<div class="team_status {{#if needsTeam}}no{{else}}yes{{/if}}" title="{{#if needsTeam}}needs an organizer{{else}}{{#if is_team}} you are organizer{{else}}has a organizer-team{{/if}}{{/if}}">
 						T{{#if is_team}}*{{/if}}
