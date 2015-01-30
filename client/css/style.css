@@ -19,6 +19,7 @@ body {
   border: 7px dashed #D8EBF4;
   margin: 10px 10px 10px 0;
   padding-right: 0 !important;
+  padding-left: 10px !important;
 }
 
 .courselist_course h4 {
@@ -31,6 +32,10 @@ body {
 
 .courselist_course > a {
   color: #333;
+}
+
+.courselist_course.hasupcomingevents {
+  background: #D8EBF4;
 }
 
 .courselist_course_info {
@@ -51,7 +56,11 @@ body {
 }
 
 .course_eventlist_container > div:first-child {
-  padding-top: 3px;
+  padding-top: 4px;
+}
+
+.course_eventlist_container > div:last-child {
+  padding-bottom: 4px;
 }
 
 div.no-padding {
@@ -60,11 +69,10 @@ div.no-padding {
 
 .course_categories > ul li {
   display: inline-block;
-  background: #DDD;
 }
 
 .course_categories > ul li a {
-  color: #333;
+  color: #38829C;
 }
 
 /* line 161, ../../sass/orig/_screen.scss */

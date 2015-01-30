@@ -29,7 +29,7 @@
 </template>
 
 <template name="course">
-	<div class="courselist_course col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	<div class="courselist_course {{coursestate}} col-xs-12 col-sm-4 col-md-3 col-lg-2">
 		<a href="{{pathFor 'showCourse'}}">
 			<div class="{{coursestate}} col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
 				<div class="course_name"><h4>{{name}}</h4></div>

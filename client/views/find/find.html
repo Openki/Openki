@@ -3,7 +3,10 @@
 		<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 		<form id='search_form'>
 			<input id="find" class="searchform" value="{{query}}" placeholder="everything">
-			<label><input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}> {{mf 'find.only with events_checkbox' 'only with events'}}</label>
+			<label>
+				<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
+				{{mf 'find.only with events_checkbox' 'only with events'}}
+			</label>
 		</form>
 	</div>
 	<div class="container-fluid">
