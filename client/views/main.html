@@ -71,11 +71,13 @@
 	</nav>
 	{{> loginFrame}}
 	<div class="container-fluid">
-		<div id="outer" class="row">
-			<div id="maincontent">
-				{{> messages}}
+		<div class="container-fluid">
+			<div id="outer" class="row">
+				<div id="maincontent">
+					{{> messages}}
 
-				{{> yield}}
+					{{> yield}}
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,47 +1,62 @@
 <template name="calendar">
-  <div class="calendar">
-	<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}</h1>
-	<ul class="calendar_eventlist">
-		{{#each calendar_eventlist}}
-			{{> calendar_event}}
-		{{/each}}
-	</ul>
-	
-	<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
-	<ul>
-		{{#each calendar_eventlist_past}}
-			{{> calendar_event_past}}
-		{{/each}}
-	</ul>
-  </div>
+	<div class="container-fluid">
+		<div class="calendar">
+			<div class="container-fluid">
+				<div class="calendar_eventlist row">
+				<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}</h1>
+					{{#each calendar_eventlist}}
+						{{> calendar_event}}
+					{{/each}}
+				</div>
+				<div class="row">
+					<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
+					{{#each calendar_eventlist_past}}
+						{{> calendar_event_past}}
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="calendar_event">
 	<a href="{{pathFor 'showEvent'}}">
-	  <div class="calendar_event">
-		<p class="course_event_date">
-			<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
-		</p>
-		<p class="course_event_time">
-			<span class="icon-clock"></span> {{timeformat startdate}}
-		</p>
-		<p class="course_event_title">{{this.title}}</p>
-		<p class="course_event_desc">{{this.description}}</p>
-	  </div>
+		<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding">
+			<div class="course_event_date">
+				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+				{{dateformat_withday startdate}}
+			</div>
+			<div class="course_event_time">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				{{timeformat startdate}}
+			</div>
+			<div class="course_event_title">
+				<h4>{{this.title}}</h4>
+			</div>
+			<div class="course_event_desc">
+				<p>{{this.description}}</p>
+			</div>
+		</div>
 	</a>
 </template>
 
 <template name="calendar_event_past">
 	<a href="{{pathFor 'showEvent'}}">
-	  <div class="calendar_event_past">
-		<p class="course_event_date">
-			<span class="icon-mini_date"></span> {{dateformat startdate}} 
-		</p>
-		<p class="course_event_time">
-			<span class="icon-clock"></span> {{timeformat startdate}}
-		</p>
-		<p class="course_event_title">{{this.title}}</p>
-		<p class="course_event_desc">{{description}}</p>
-	  </div>
+	  	<div class="calendar_event_past no-padding col-xs-12 col-sm-4 col-md-3 col-lg-2">
+			<div class="course_event_date">
+				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+				{{dateformat startdate}} 
+			</div>
+			<div class="course_event_time">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
+				{{timeformat startdate}}
+			</div>
+			<div class="course_event_title">
+				<h4>{{this.title}}</h4>
+			</div>
+			<div class="course_event_desc">
+				<p>{{description}}</p>
+			</div>
+	  	</div>
 	</a>
 </template>

@@ -8,13 +8,26 @@ body {
   padding-top: 15px;
 }
 
+h1 {
+  color: #38829C;
+}
+
+#find {
+  width: 280px;
+  font-size: 20px;
+}
+
+#hasUpcomingEvent {
+  margin-left: 10px;
+}
+
 .courselist_results {
   margin-top: 10px;
 }
 
 .courselist_course {
   display: inline-block;
-  width: 300px;
+  width: 280px;
   height: 150px;
   border: 7px dashed #D8EBF4;
   margin: 10px 10px 10px 0;
@@ -72,6 +85,60 @@ div.no-padding {
 }
 
 .course_categories > ul li a {
+  color: #38829C;
+}
+
+.calendar > a:hover {
+  color: inherit;
+}
+
+.calendar_event,
+.calendar_event_past {
+  width: 280px;
+  height: 300px;
+  margin: 10px 10px 10px 0;
+  background: #D8EBF4;
+}
+
+.calendar_event > .course_event_date,
+.calendar_event_past > .course_event_date {
+  padding-top: 10px;
+  width: 100%;
+  background: #C1F2AE;
+  font-size: large;
+  color: #333;
+  text-align: center;
+}
+
+.calendar_event > .course_event_time,
+.calendar_event_past > .course_event_time {
+  padding-bottom: 10px;
+  width: 100%;
+  background: #C1F2AE;
+  font-size: medium;
+  color: #333;
+  text-align: center;
+}
+
+.calendar_event > .course_event_title,
+.calendar_event_past > .course_event_title,
+.calendar_event > .course_event_desc,
+.calendar_event_past > .course_event_desc {
+  padding: 0 10px;
+}
+
+.calendar_event .course_event_title > h4,
+.calendar_event_past .course_event_title > h4 {
+  color: #333;
+  -moz-transition: color 1s;
+}
+
+.calendar_event:hover .course_event_title > h4,
+.calendar_event_past:hover .course_event_title > h4 {
+  color: #38829C;
+}
+
+.calendar_event .course_event_desc > p {
   color: #38829C;
 }
 
