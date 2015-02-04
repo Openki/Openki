@@ -47,6 +47,10 @@ h1 {
   color: #333;
 }
 
+.courselist_course a:hover {
+  text-decoration: none;
+}
+
 .courselist_course.hasupcomingevents {
   background: #D8EBF4;
 }
@@ -94,30 +98,29 @@ div.no-padding {
 
 .calendar_event,
 .calendar_event_past {
-  width: 280px;
-  height: 300px;
+  width: 350px;
+  height: 230px;
   margin: 10px 10px 10px 0;
   background: #D8EBF4;
 }
 
 .calendar_event > .course_event_date,
 .calendar_event_past > .course_event_date {
-  padding-top: 10px;
+  padding: 10px 10px 0 10px;
   width: 100%;
   background: #C1F2AE;
   font-size: large;
   color: #333;
-  text-align: center;
+  text-align: left;
 }
 
 .calendar_event > .course_event_time,
 .calendar_event_past > .course_event_time {
-  padding-bottom: 10px;
+  padding: 0 10px 10px 10px;
   width: 100%;
   background: #C1F2AE;
   font-size: medium;
   color: #333;
-  text-align: center;
 }
 
 .calendar_event > .course_event_title,
