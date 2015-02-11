@@ -4,28 +4,30 @@
 
 
 <template name="userprofile">
-	<div id="profile">
-		<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile-Page" NAME=user.profile.name}}</h1>
-		<p class="descr_small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
-		{{#if ownuser}}
-			{{mf 'profile.its_you' "It's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
-		{{else}}
-			<hr>
-			<p>{{mf 'profile.mail.to_user' 'you can write an email to this user:'}}</p>
-			<br>
-				{{mf 'profile.mail.content' 'Your message:'}}
-				<p> <input type="text" id="emailmessage" placeholder="Hi {{username this.user._id}}! ..."/></p>
-				<p>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet -->
-					<form>
-						<input type="checkbox" name="email1" value="send">{{mf 'profile.mail.attachmail' 'attach my email address'}}<br>
-						<input type="checkbox" name="email2" value="copy">{{mf 'profile.mail.copy' 'send me a copy of this message'}}<br>
-					</form>
-				</p>
-				<input type="button" class="sendmail" value="Send Email" />
-		{{/if}}
-		<div class="list_small">
-			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=user.profile.name}}</h3>
-			{{> courselist involvedIn}}
+	<div class="container-fluid">
+		<div id="profile">
+			<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile-Page" NAME=user.profile.name}}</h1>
+			<p class="descr_small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
+			{{#if ownuser}}
+				{{mf 'profile.its_you' "It's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
+			{{else}}
+				<hr>
+				<p>{{mf 'profile.mail.to_user' 'you can write an email to this user:'}}</p>
+				<br>
+					{{mf 'profile.mail.content' 'Your message:'}}
+					<p> <input type="text" id="emailmessage" placeholder="Hi {{username this.user._id}}! ..."/></p>
+					<p>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet -->
+						<form>
+							<input type="checkbox" name="email1" value="send">{{mf 'profile.mail.attachmail' 'attach my email address'}}<br>
+							<input type="checkbox" name="email2" value="copy">{{mf 'profile.mail.copy' 'send me a copy of this message'}}<br>
+						</form>
+					</p>
+					<input type="button" class="sendmail" value="Send Email" />
+			{{/if}}
+			<div class="list_small">
+				<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=user.profile.name}}</h3>
+				{{> courselist involvedIn}}
+			</div>
 		</div>
 	</div>
 </template>
