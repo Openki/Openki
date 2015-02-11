@@ -62,14 +62,18 @@
 					<li class="dropdown">
 						{{> lang_sel}}
 					</li>
-					<li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
 						{{> loginButton}}
+						<div class="dropdown-menu login-dropdown">
+							{{> loginFrame}}
+						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	{{> loginFrame}}
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<div id="outer" class="row">

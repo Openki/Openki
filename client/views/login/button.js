@@ -3,9 +3,3 @@ Template.loginButton.helpers({
 		return Accounts.loginServicesConfigured();
 	}
 });
-
-Template.loginButton.events({
-	'click .loginButton': function() {
-		Session.set('showLogin', !Session.get('showLogin'));
-	}
-});

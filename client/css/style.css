@@ -4,12 +4,26 @@ body {
 	padding-top: 65px; 
 }
 
-#loginFrame {
-  padding-top: 15px;
-}
-
 h1 {
   color: #38829C;
+}
+
+.navbar-right a.loginButton {
+  cursor: pointer !important;
+}
+
+.dropdown-menu {
+   background: #D8EBF4;
+   width: 300px;
+}
+
+#loginFrame {
+  text-align: center;
+  background: #D8EBF4;
+}
+
+input#login-name {
+  margin-top: 12px;
 }
 
 #find {
