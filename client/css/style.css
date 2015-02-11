@@ -8,6 +8,10 @@ h1 {
   color: #38829C;
 }
 
+.navbar-right:hover {
+  cursor: pointer !important;
+}
+
 .login-dropdown {
   text-align: center;
   background: #D8EBF4;

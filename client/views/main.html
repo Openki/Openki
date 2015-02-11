@@ -65,18 +65,15 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="{{pathFor 'home'}}" class="dropdown-toggle navbar-signin" data-toggle="dropdown" role="button" aria-expanded="false">
-							Sign In
-						</a>
+						{{> loginButton}}
 						<div class="dropdown-menu login-dropdown">
-							{{> loginLogin}}
+							{{> loginFrame}}
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	{{> loginFrame}}
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<div id="outer" class="row">

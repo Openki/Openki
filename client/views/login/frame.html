@@ -1,57 +1,53 @@
 <template name='loginFrame'>
-{{#if showLoginFrame}}
 	<div class="container-fluid">
-		<div class="container-fluid">
-			<div id="loginFrame">				
-				{{#if currentUser}}
-				<div class="panel-title">
-					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-				</div>
-				<nav class="panel-default">
-					<a class="btn" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-						{{mf 'login.frame.profile' 'Visit my profile'}}
-					</a>
-					<a class="btn" href="{{pathFor 'profile'}}">
-						{{mf 'login.frame.settings' 'Account settings'}}
-					</a>
-					<a href="#" class="loginLogout btn">
-						{{mf 'login.logout' 'Logout'}}
-					</a>
-				</nav>
-				{{else}}
-					{{> loginLogin}}	
-				{{/if}}
+		<div id="loginFrame">				
+			{{#if currentUser}}
+			<div class="panel-title">
+				{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 			</div>
+			<nav class="panel-default">
+				<a class="btn" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+					{{mf 'login.frame.profile' 'Visit my profile'}}
+				</a>
+				<a class="btn" href="{{pathFor 'profile'}}">
+					{{mf 'login.frame.settings' 'Account settings'}}
+				</a>
+				<a href="#" class="loginLogout btn">
+					{{mf 'login.logout' 'Logout'}}
+				</a>
+			</nav>
+			{{else}}
+				{{> loginLogin}}	
+			{{/if}}
 		</div>
 	</div>
-{{/if}}
 </template>
 
 <template name="loginLogin">
 	<div class="container-fluid">
-			<form>
-				<div class="form-group">
-					<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
-				</div>
-				<div class="form-group">
-					<input type="submit" class='loginLogin btn btn-primary form-control' value="{{mf 'login.login.submit' 'Login'}}">
-</div>
-				<div class="form-group">
-					<input type="submit" class='loginRegister btn btn-primary form-control' value="{{mf 'login.register.submit' 'Create account'}}">
-				</div>
-				<div class="form-group">
-					<button class="loginWithService btn btn-primary form-control" data-service='Github'>
-						{{mf 'login.frame.github-login' 'Login with GitHub'}}
-					</button>
-				</div>
-				<div class="form-group">
-					<button class="loginWithService btn btn-primary form-control" data-service='Facebook'>
-						{{mf 'login.frame.facebook-login' 'Login with Facebook'}}
-					</button>
-				</div>
-			</form>
+		<form>
+			<div class="form-group">
+				<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
+			</div>
+			<div class="form-group">
+				<input type="submit" class='loginLogin btn btn-primary form-control' value="{{mf 'login.login.submit' 'Login'}}">
+			</div>
+			<div class="form-group">
+				<input type="submit" class='loginRegister btn btn-primary form-control' value="{{mf 'login.register.submit' 'Create account'}}">
+			</div>
+			<div class="form-group">
+				<button class="loginWithService btn btn-primary form-control" data-service='Github'>
+					{{mf 'login.frame.github-login' 'Login with GitHub'}}
+				</button>
+			</div>
+			<div class="form-group">
+				<button class="loginWithService btn btn-primary form-control" data-service='Facebook'>
+					{{mf 'login.frame.facebook-login' 'Login with Facebook'}}
+				</button>
+			</div>
+		</form>
 	</div>
 </template>
