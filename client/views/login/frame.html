@@ -2,20 +2,24 @@
 	<div class="container-fluid">
 		<div id="loginFrame">				
 			{{#if currentUser}}
-			<div class="panel-title">
-				{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-			</div>
-			<nav class="panel-default">
-				<a class="btn" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-					{{mf 'login.frame.profile' 'Visit my profile'}}
-				</a>
-				<a class="btn" href="{{pathFor 'profile'}}">
-					{{mf 'login.frame.settings' 'Account settings'}}
-				</a>
-				<a href="#" class="loginLogout btn">
-					{{mf 'login.logout' 'Logout'}}
-				</a>
-			</nav>
+				<div class="form-group">
+					<h3>{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}</h3>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-primary" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+						{{mf 'login.frame.profile' 'Visit my profile'}}
+					</a>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-primary" href="{{pathFor 'profile'}}">
+						{{mf 'login.frame.settings' 'Account settings'}}
+					</a>
+				</div>
+				<div class="form-group">
+					<button href="#" class="loginLogout btn btn-primary">
+						{{mf 'login.logout' 'Logout'}}
+					</button>
+				</div>
 			{{else}}
 				{{> loginLogin}}	
 			{{/if}}

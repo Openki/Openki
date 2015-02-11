@@ -1,12 +1,8 @@
 Template.loginFrame.events({
-	'click .loginClose': function() {
-		Session.set('showLogin', false);
-	},
 	'click .loginLogout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		Session.set('showLogin', false);
-	}
+	},
 });
 
 

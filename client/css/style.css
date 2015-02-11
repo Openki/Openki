@@ -8,14 +8,18 @@ h1 {
   color: #38829C;
 }
 
-.navbar-right:hover {
+.navbar-right a.loginButton {
   cursor: pointer !important;
 }
 
-.login-dropdown {
+.dropdown-menu {
+   background: #D8EBF4;
+   width: 300px;
+}
+
+#loginFrame {
   text-align: center;
   background: #D8EBF4;
-  width: 300px;
 }
 
 input#login-name {
