@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+fail() {
+	echo "$1"
+	exit 1
+}
+
+usage() {
+	echo "Usage: $0 <hostname>"
+	fail "$1"
+}
+
+
+host=$1
+[ -n "$host" ] || usage "please add hostname argument."
+
+URL=$(meteor mongo --url "$host")
+echo "DB URL is: $URL"
+
+CMD=$(echo "$URL" | sed 's_mongodb://\([a-z0-9\-]*\):\([a-f0-9\-]*\)@\(.*\)/\(.*\)_mongorestore --username \1 --password \2 --host \3 --db \4_')
+
+[ -d "dump" ] || fail "dump directory does not exist."
+
+[ -n "$2" ] || (ls dump && fail "please specify source dump from above list.")
+
+dump="dump/$2"
+[ -d "$dump" ] || (ls dump && fail "please specify source dump from above list.")
+
+echo "Restoring $dump"
+$CMD --drop "$dump"
