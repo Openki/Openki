@@ -7,7 +7,7 @@ fail() {
 }
 
 usage() {
-	echo "Usage: $0 <hostname>"
+	echo "Usage: $0 <hostname> <source dump>" 
 	fail "$1"
 }
 
