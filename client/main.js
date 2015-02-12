@@ -41,7 +41,7 @@ Deps.autorun(function() {
 	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
 });
 
-// Set up a reactive date sources that can be used for updates based on time
+// Set up reactive date sources that can be used for updates based on time
 function setTimes() {
 	var now = moment();
 	Session.set('coarseTime', ''+moment().startOf('hour').toDate());
