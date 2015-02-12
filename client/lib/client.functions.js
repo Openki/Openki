@@ -135,6 +135,16 @@ Handlebars.registerHelper('dateformat_withday', function(date) {
 	if (date) return moment(date).format('ddd D.MM.YYYY');
 });
 
+Handlebars.registerHelper('weekday', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('dddd');
+});
+
+Handlebars.registerHelper('weekday_short', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('ddd');
+});
+
 Handlebars.registerHelper('dateformat_fromnow', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).fromNow();
@@ -150,6 +160,10 @@ Handlebars.registerHelper('dateformat_mini', function(date) {
 	if (date) return moment(date).format('D.M.');
 });
 
+Handlebars.registerHelper('dateformat_mini_fullmonth', function(date) {
+	Session.get('timeLocale'); // it depends
+	if (date) return moment(date).format('D. MMMM');
+});
 
 Handlebars.registerHelper('timeformat', function(date) {
 	if (date) return moment(date).format('HH:mm');

@@ -1,14 +1,19 @@
 <template name="messages">
-	<ul class="messages">
-		{{#each messages}}
-			{{> message}}
-		{{/each}}
-	</ul>
+	<div class="container-fluid">
+		<ul class="messages list-unstyled">
+			{{#each messages}}
+				{{> message}}
+			{{/each}}
+		</ul>
+	</div>
 </template>
 
 <template name="message">
-	<li class="message">
-		<button type="button" class="close">&times;</button>
-		{{message}}
-	</li>
+		<li class="message">
+			<div>
+				<span class="glyphicon glyphicon-exclamation-sign"></span>
+				{{message}}
+				<button type="button" class="close">&times;</button>
+			</div>
+		</li>
 </template>
