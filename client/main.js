@@ -1,10 +1,10 @@
 
 ////////////// loading-indicator
 Meteor.startup(function () {
-  Session.setDefault('coursesLoaded', false);
-  var region = localStorage.getItem("region")
-  if (!region) region = 'all';
-  Session.set("region", region);
+	Session.setDefault('coursesLoaded', false);
+	var region = localStorage.getItem("region")
+	if (!region) region = 'all';
+	Session.set("region", region);
 });
 
 
