@@ -1,21 +1,13 @@
 
-////////////// loading-indicator
-Meteor.startup(function () {
-	Session.setDefault('coursesLoaded', false);
-	var region = localStorage.getItem("region")
-	if (!region) region = 'all';
-	Session.set("region", region);
-});
-
 
 ////////////// db-subscriptions:
 
+var regionSub = Meteor.subscribe('regions');
 Meteor.subscribe('categories');
 Meteor.subscribe('comments');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
 Meteor.subscribe('messages');
-Meteor.subscribe('regions');
 Meteor.subscribe('roles');
 Meteor.subscribe('votings');
 Meteor.subscribe('currentUser');
@@ -24,6 +16,21 @@ Meteor.subscribe('currentUser');
 Router.onBeforeAction(function() {
 	Session.set('verify', false);
 	this.next();
+});
+
+// Choose default region when none is set
+Deps.autorun(function() {
+	if (regionSub.ready()) {
+		var region = localStorage.getItem("region");
+		if (!region || region == 'all') {
+			if (Regions.find({}).count() == 1) {
+				region = Regions.findOne({})._id;
+			} else {
+				region = 'all';
+			}
+		}
+		Session.set("region", region);
+	}
 });
 
 // Use browser language for date formatting
