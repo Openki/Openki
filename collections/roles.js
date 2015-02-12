@@ -5,7 +5,6 @@
 // "subscribe" -> string  (decription for subscription)
 // "preset" -> boolean
 // "show_subscribers" -> boolean
-// "protorole" -> {"subscribed": []}
 // ===========================
 
 
@@ -17,19 +16,7 @@ var roles = [{
 		'subscribe':   'I help organize',
 		'preset':      true,					//if true: allways available, not offered as choice in proposal
 		'show_subscribers': true,
-	},/*{
-		'type':        'interested',
-		'description': 'are interested',
-		'subscribe':   'I want to be notified when it starts',
-		'preset':      true,
-		'show_subscribers': false,
 	},{
-		'type':        'follow',
-		'description': 'get informed',
-		'subscribe':   'I want to be notified about all changes' ,
-		'preset':      true,
-		'show_subscribers': false,
-	},*/{
 		'type':        'participant',
 		'description': 'take part',
 		'subscribe':   'I want to take part',
@@ -51,19 +38,6 @@ var roles = [{
 		'fields': {
 			'address': 'text'
 		},
-	},{
-		'type':        'donator',
-		'description': 'donate to the course',
-		'subscribe':   'I want to donate',
-		'show_subscribers': true,
-		'fields': {
-			'what': 'text'
-		},
-	},{
-		'type':        'cook',
-		'description': 'cook for gatherings',
-		'subscribe':   'I can bring food' ,
-		'show_subscribers': true,
 	}
 ]
 
