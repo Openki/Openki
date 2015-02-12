@@ -47,5 +47,12 @@ Template.find.events({
 Template.find.helpers({
 	'hasUpcomingEventsChecked': function() {
 		if (this.hasUpcomingEvent) return "checked";
+	},
+	
+	'newCourse': function() {
+		return {
+			name: this.query,
+			region: Session.get('region')
+		}
 	}
 })

@@ -2,8 +2,10 @@
 {{#if loginServicesConfigured}}
 	<a class="loginButton dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	{{#if currentUser}}
-		user: {{currentUser.username}}
+		<span class="glyphicon glyphicon-user"></span>&nbsp;
+		{{currentUser.username}}
 	{{else}}
+		<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 		{{mf 'login.navig.unlogged' 'Login/Register'}}
 	{{/if}}
 	</a>

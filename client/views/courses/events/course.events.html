@@ -1,31 +1,35 @@
 <template name="course_events">
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		{{# if currentUser}}
+			<h3>{{mf 'course.events.add' 'New date?'}}</h3>
+			{{>course_event course=course event=newEvent}}
+		{{/if}}
 
-	{{# if currentUser}}
-		<h3>{{mf 'course.events.add' 'New date?'}}</h3>
-		{{>course_event course=course event=newEvent}}
-	{{/if}}
-
-	{{#if events_list}}
-	<div class="course_events clear">
-		<h3>{{mf 'course.title.Upcoming events' 'Upcoming events'}}</h3>
-		{{#each events_list}}
-			<div class="course_event">
-				{{>course_event}}
+		{{#if events_list}}
+			<div class="course_events row">
+				<div class="container-fluid">
+					{{#each events_list}}
+						<div class="course_event_container col-xs-12 col-xs-6 col-md-4 col-lg-4">
+							{{>course_event}}
+						</div>
+					{{/each}}
+				</div>
 			</div>
-		{{/each}}
-	</div>
-	{{/if}}
+		{{/if}}
 
-	{{#if events_list_past}}
-	<div class="course_events_past clear">
-		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
-		{{#each events_list_past}}
-			<div class="course_event_past">
-				{{>course_event}}
+		{{#if events_list_past}}
+			<div class="course_events_past row hidden">
+				<div class="container-fluid">
+					<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
+					{{#each events_list_past}}
+						<div class="course_event_past_container col-xs-12 col-xs-6 col-md-4 col-lg-4">
+							{{>course_event}}
+						</div>
+					{{/each}}
+				</div>
 			</div>
-		{{/each}}
+		{{/if}}
 	</div>
-	{{/if}}
 </template>
 
 
@@ -33,22 +37,21 @@
 	{{#if showAddButton}}
 		<input type="button" class="eventEdit" value="add a Date"/>
 	{{else}}
-    <div class="{{#if isCurrent}}current_event{{/if}}">
+    <div class="{{#if isCurrent}}current_event{{/if}} course_event">
 		{{#if editing}}
 			{{>course_event_edit}}
 		{{else}}
 			{{#with event}}
 			<a href="{{pathFor 'showEvent'}}">
-				<p class="course_event_date">
-					<span class="icon-mini_date"></span> {{dateformat_calendar startdate}}
-				</p>
-				<p class="course_event_time">
-					<span class="icon-clock"></span> {{timeformat startdate}}
-					{{#if location}}<br><span class="icon-mini_location"></span> {{location}}{{/if}}
-				</p>
-				<p class="course_event_title">{{this.title}}</p>
-				<p class="course_event_desc">{{description}}</p>
-
+				<div class="course_event_date">
+					<span class="day">{{weekday startdate}}</span><br>
+					<span class="date">{{dateformat_mini_fullmonth startdate}}</span>
+				</div>
+				<div class="course_event_title"><h4>{{this.title}}</h4></div>
+				<div class="course_event_time">
+					<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
+					{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
+				</div>
 				{{#if this.mentors}}
 				<p class="course_event_info">
 						<ul class="course_event_mentors">

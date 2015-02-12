@@ -1,9 +1,9 @@
 <template name="show_groups">
 	{{#if groups}}
-		Part of:
-		<ul>
+		{{mf 'groups.groups' 'Groups:'}}
+		<ul class="list-unstyled">
 			{{#each loadgroups groups}}
-			<li> <a href="/grouplist/#{{_id}}">{{name}}</a></li>
+			<li><a href="/grouplist/#{{_id}}">{{name}}</a></li>
 			{{/each}}
 		</ul>
 	{{/if}}

@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+fail() {
+	echo "$1"
+	exit 1
+}
+
+usage() {
+	echo "Usage: $0 <dump-dir>"
+	fail "$1"
+}
+
+[ -d "dump" ] || fail "dump directory does not exist."
+
+[ -n "$1" ] || (ls dump && fail "please specify dump-dir from above list.")
+
+dump="dump/$1"
+[ -d "$dump" ] || (ls dump && fail "please specify dump-dir from above list.")
+
+path=$(realpath "$(dirname "$0")/../.meteor/local/db/")
+[ -d "$path" ] || fail "local DB $path missing"
+
+echo "Restoring $dump to $path"
+mongorestore  --drop --db meteor --dbpath "$path" "$dump"

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+fail() {
+	echo "$1"
+	exit 1
+}
+
+path=$(realpath "$(dirname "$0")/../.meteor/local/db/")
+
+mongodump --dbpath "$path"

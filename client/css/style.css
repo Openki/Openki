@@ -8,6 +8,10 @@ h1 {
   color: #38829C;
 }
 
+.search .row {
+  margin-left: 0;
+}
+
 .navbar-right a.loginButton {
   cursor: pointer !important;
 }
@@ -22,18 +26,43 @@ h1 {
   background: #D8EBF4;
 }
 
-input#login-name {
+#loginFrame > div:first-child {
   margin-top: 12px;
 }
 
-#find {
-  width: 280px;
+/*#loginFrame .form-group .input-group > span.input-group-addon {
+  background: #38829C;
+  color: #fff;
+}*/
+
+input#find {
   font-size: 20px;
 }
 
-#hasUpcomingEvent {
-  margin-left: 10px;
+.external_logins {
+  margin: 15px 0;
 }
+
+/*MESSAGE STYLING//START*/
+
+ul.messages {
+  background: #f0ad4e;
+  text-align: center;
+}
+
+ul.messages > li:first-child {
+  padding-top: 10px;
+}
+
+ul.messages > li:last-child {
+  padding-bottom: 10px;
+}
+
+ul.messages li button.close {
+  float: none;
+}
+
+/*START//COURSELIST*/
 
 .courselist_results {
   margin-top: 10px;
@@ -65,9 +94,12 @@ input#login-name {
   text-decoration: none;
 }
 
-.courselist_course.hasupcomingevents {
+/*SAME BACKGROUND CHANGE FOR COURSELIST & COURSEVIEW*/
+.courselist_course.hasupcomingevents,
+.course_main.hasupcomingevents {
   background: #D8EBF4;
 }
+/*-----------------------------------------------*/
 
 .courselist_course_info {
   right: -7px;
@@ -100,11 +132,115 @@ div.no-padding {
 
 .course_categories > ul li {
   display: inline-block;
-}
+} /*Used for courselist & detail*/
 
 .course_categories > ul li a {
   color: #38829C;
 }
+
+.course_categories > ul li a:hover {
+  text-decoration: underline;
+}
+
+/*END//COURSELIST*/
+/*START//COURSEDETAIL*/
+
+
+.course_main {
+  border: 7px dashed #D8EBF4;
+  margin-top: 20px;
+}
+
+.course_groups ul,
+.course_groups ul li,
+.course_groups ul li a {
+  display: inline-block;
+}
+
+p.course_description {
+  padding-top: 10px;
+}
+
+ul.nav-tabs li a {
+  color: #555;
+}
+
+ul.nav-tabs li a:hover {
+  color: #fff;
+}
+
+.edit_buttons {
+  padding: 10px 0;
+  text-align: center;
+  width: calc(100% + 44px);
+  background: #D8EBF4;
+  margin: -7px 0 -0 -22px;
+}
+
+/*FOR EDIT STYLING*/
+.course_main.hasupcomingevents ul.nav-tabs li.active a{
+  background: #D8EBF4;
+}
+
+.course_main .edit_buttons {
+  background: #38829C;
+  border-bottom: 3px solid #fff;
+}
+/*---------------------*/
+
+/*COURSEDETAILS EVENT*/
+
+.course_events {
+  padding-top: 20px;
+}
+
+.course_event_container,
+.course_event_past_container {
+  background: #D8EBF4;
+  border-bottom: 5px solid white;
+  border-right: 5px solid white;
+  padding-bottom: 10px;
+}
+
+.course_event > a,
+.course_event > a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.course_event a > .course_event_date {
+  padding: 10px 15px;
+  border-bottom: 3px solid #fff;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  background: #C1F2AE;
+}
+
+.course_event a .course_event_date span.day {
+  font-size: medium;
+}
+
+.course_event a .course_event_date span.date {
+  font-size: x-large;
+}
+
+.course_event a > .course_event_title {
+  padding-top: 10px;
+  -moz-transition: color 1s;
+}
+
+.course_event a > .course_event_time {
+  font-size: medium;
+  padding: 0 0 10px 0;
+}
+
+.course_event a:hover > .course_event_title {
+  color: #38829C;
+}
+
+
+/*END//COURSEDETAIL*/
+/*START//CALENDAR*/
 
 .calendar > a:hover {
   color: inherit;
@@ -158,6 +294,9 @@ div.no-padding {
 .calendar_event .course_event_desc > p {
   color: #38829C;
 }
+
+/*END//CALENDAR*/
+
 
 /* line 161, ../../sass/orig/_screen.scss */
 .courselist_course .yes {

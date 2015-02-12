@@ -3,49 +3,56 @@
 		{{#if edit}}
 			{{> course_edit course}}
 		{{else}}
-			<div class="course_main">
-                {{title course.name " - hmmm"}}
-                <h2 class="name">{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}</h2>
-                <br class="clear"/>
-			{{#with course}}
-				<p class='small'>
-				{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
-				{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
-				{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
-				</p>
-				<div class="categorylist small">
-				{{> show_categories}}
-				{{> show_groups}}
-				</div>
-
-                {{> show_course_submenu}}
-                <br class="clear"/>
-			{{/with}}
-			
-                {{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-                <br class="clear"/>
-
-			{{#with course}}
-                {{#if currentUserMayEdit}}
-                <input type="button" class="edit" value="Edit" />
-                <input type="button" class="del" value="Delete" />
-                {{/if}}
-			{{/with}}
+			<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                {{title course.name " - openki"}}
+	            {{#with course}}
+	                {{#if currentUserMayEdit}}
+	                <div class="edit_buttons">
+	                	<div class="btn-group" role="group" aria-label="...">
+			                <button type="button" class="edit btn btn-success" role="button">
+			                	<span class="glyphicon glyphicon-edit"></span>
+			                	{{mf 'course.details.edit_btn' 'Edit'}}
+			                </button>
+			                <button type="button" class="del btn btn-danger" role="button">
+			                	<span class="glyphicon glyphicon-remove"></span>
+			                	{{mf 'course.details.del_btn' 'Delete'}}
+			                </button>
+			            </div>
+		            </div>
+	                {{/if}}
+				{{/with}}
+                <h2 class="name" style="min-height: 3ex">
+                	{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+                </h2>
+				{{#with course}}
+					<p class='small'>
+					{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
+					{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
+					{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
+					</p>
+					<div class="course_categories">
+						{{> show_categories}}
+					</div>
+					<div class="course_groups">
+						{{> show_groups}}
+					</div>
+	                {{> show_course_submenu}}
+				{{/with}}
+                <p class="course_description">
+                	{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
+                </p>
 			</div>
 		{{/if}}
-
+		<div>
+			{{> course_events}}
+		</div>
 		{{> roleDetails roleDetails}}
-		
 		{{> membersRoles course}}
-
 		<div class="discussion">
-		{{> discussion course}}
+			{{> discussion course}}
 		</div>
 		{{> votelists course}}
 		{{> postDialog course}}
-	</div>
-	<div class="course_right_column">
-		{{> course_events}}
 	</div>
 </template>
 
@@ -53,10 +60,26 @@
 
 
 <template name="show_course_submenu">
-	<ul class="course_submenu">
-		<li class='active'><a href="{{pathFor 'showCourse'}}">Description</a></li>
-		<li><a href="{{pathFor 'showCourseDocs'}}">Docs</a></li>
-		<li><a href="{{pathFor 'showCourseHistory'}}">History</a></li>
-	</ul>
+	<nav>
+		<ul class="nav nav-tabs">
+			<li role="presentation" class='active'>
+				<a href="{{pathFor 'showCourse'}}">
+					<span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+					Description
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="{{pathFor 'showCourseDocs'}}">
+					<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+					Docs
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="{{pathFor 'showCourseHistory'}}">
+					<span class="glyphicon glyphicon-road"></span>&nbsp;
+					History
+				</a>
+			</li>
+		</ul>
+	</nav>
 </template>
-

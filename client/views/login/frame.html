@@ -8,16 +8,19 @@
 				</div>
 				<div class="form-group">
 					<a class="btn btn-primary form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+						<span class="glyphicon glyphicon-share-alt"></span>
 						{{mf 'login.frame.profile' 'Visit my profile'}}
 					</a>
 				</div>
 				<div class="form-group">
 					<a class="btn btn-primary form-control" href="{{pathFor 'profile'}}">
+						<span class="glyphicon glyphicon-cog"></span>
 						{{mf 'login.frame.settings' 'Account settings'}}
 					</a>
 				</div>
 				<div class="form-group">
 					<button href="#" class="loginLogout btn btn-primary form-control">
+						<span class="glyphicon glyphicon-log-out"></span>
 						{{mf 'login.logout' 'Logout'}}
 					</button>
 				</div>
@@ -33,25 +36,40 @@
 	<div class="container-fluid">
 		<form>
 			<div class="form-group">
-				<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-user"></span>
+					</span>
+					<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
+				</div>
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-lock"></span>
+					</span>
+					<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
+				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" class='loginLogin btn btn-primary form-control' value="{{mf 'login.login.submit' 'Login'}}">
-			</div>
-			<div class="form-group">
-				<input type="submit" class='loginRegister btn btn-primary form-control' value="{{mf 'login.register.submit' 'Create account'}}">
-			</div>
-			<div class="form-group">
-				<button class="loginWithService btn btn-primary form-control" data-service='Github'>
-					{{mf 'login.frame.github-login' 'Login with GitHub'}}
+				<button type="submit" class='loginLogin btn btn-primary form-control'>
+					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+					{{mf 'login.login.submit' 'Login'}}
 				</button>
 			</div>
 			<div class="form-group">
-				<button class="loginWithService btn btn-primary form-control" data-service='Facebook'>
-					{{mf 'login.frame.facebook-login' 'Login with Facebook'}}
+				<button type="submit" class='loginRegister btn btn-primary form-control'>
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
+					{{mf 'login.register.submit' 'Create account'}}
+				</button>
+			</div>
+			<li role="presentation" class="dropdown-header">{{mf 'frame.login_external_services' 'Or login with:'}}</li>
+			<div class="btn-group external_logins">
+				<button class="loginWithService btn btn-primary" data-service='Github'>
+					{{mf 'login.frame.github-login' 'GitHub'}}
+				</button>
+				<button class="loginWithService btn btn-primary" data-service='Facebook'>
+					{{mf 'login.frame.facebook-login' 'Facebook'}}
 				</button>
 			</div>
 		</form>
