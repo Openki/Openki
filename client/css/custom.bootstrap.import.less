@@ -24,10 +24,10 @@
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
 @brand-primary:         #38829C;
-@brand-success:         #5cb85c;
+@brand-success:         #C1F2AE;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
-@brand-danger:          #d9534f;
+@brand-danger:          #EC6D6D;
 
 
 //== Scaffolding
@@ -161,9 +161,9 @@
 @btn-primary-bg:                 @brand-primary;
 @btn-primary-border:             darken(@btn-primary-bg, 5%);
 
-@btn-success-color:              #fff;
+@btn-success-color:              #407d5c;
 @btn-success-bg:                 @brand-success;
-@btn-success-border:             darken(@btn-success-bg, 5%);
+@btn-success-border:             @brand-success;
 
 @btn-info-color:                 #fff;
 @btn-info-bg:                    @brand-info;
@@ -173,9 +173,9 @@
 @btn-warning-bg:                 @brand-warning;
 @btn-warning-border:             darken(@btn-warning-bg, 5%);
 
-@btn-danger-color:               #fff;
+@btn-danger-color:               #751313;
 @btn-danger-bg:                  @brand-danger;
-@btn-danger-border:              darken(@btn-danger-bg, 5%);
+@btn-danger-border:              @brand-danger;
 
 @btn-link-disabled-color:        @gray-light;
 
@@ -419,19 +419,19 @@
 
 //=== Shared nav styles
 @nav-link-padding:                          10px 15px;
-@nav-link-hover-bg:                         @gray-lighter;
+@nav-link-hover-bg:                         @brand-primary;
 
 @nav-disabled-link-color:                   @gray-light;
 @nav-disabled-link-hover-color:             @gray-light;
 
 //== Tabs
-@nav-tabs-border-color:                     #ddd;
+@nav-tabs-border-color:                     @brand-primary;
 
-@nav-tabs-link-hover-border-color:          @gray-lighter;
+@nav-tabs-link-hover-border-color:          none;
 
 @nav-tabs-active-link-hover-bg:             @body-bg;
 @nav-tabs-active-link-hover-color:          @gray;
-@nav-tabs-active-link-hover-border-color:   #ddd;
+@nav-tabs-active-link-hover-border-color:   @brand-primary;
 
 @nav-tabs-justified-link-border-color:            #ddd;
 @nav-tabs-justified-active-link-border-color:     @body-bg;

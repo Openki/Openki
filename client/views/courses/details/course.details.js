@@ -125,11 +125,22 @@ function loadroles(course) {
 Template.coursedetails.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
 		return mayEdit(Meteor.user(), this);
+	},
+	coursestate: function() {
+		console.log(this);
+		var today = new Date();
+		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
+		if (upcoming) return 'hasupcomingevents';
+		
+		var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
+		if (past) return 'haspastevents';
+						
+		return 'proposal';
 	}
 });
 
 Template.coursedetails.events({
-	'click input.del': function () {
+	'click button.del': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
@@ -139,7 +150,7 @@ Template.coursedetails.events({
 			Router.go('/');
 		}
 	},
-	'click input.edit': function () {
+	'click button.edit': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;
@@ -149,3 +160,6 @@ Template.coursedetails.events({
 	}
 })
 
+Template.coursedetails.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
+}

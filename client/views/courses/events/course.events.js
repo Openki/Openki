@@ -130,4 +130,3 @@ Template.course_event.helpers({
 		return this.event.new && !Template.instance().editing.get();
 	}
 });
-

@@ -1,24 +1,33 @@
 <template name="find">
 	<div class="container-fluid">
-		<div class="search">
-			<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
-			<form id='search_form'>
-				<input id="find" class="searchform" value="{{query}}" placeholder="everything">
-				<label>
-					<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
-					{{mf 'find.only with events_checkbox' 'only with events'}}
-				</label>
-			</form>
-		</div>
 		<div class="container-fluid">
-			<div class="courselist_results row">
-				{{#each results}}
-					{{> course}}
-				{{else}}
-					{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
-				{{/each}}
+			<div class="search row">
+				<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 no-padding">
+					<div class="input-group">
+						<input type="text" id="find" class="form-control" value="{{query}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">{{mf 'find.search_go' 'GO!'}}</button>
+						</span>
+					</div>
+					<div class="checkbox row">
+						<label>
+							<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
+							{{mf 'find.only with events_checkbox' 'only with events'}}
+						</label>
+					</div>
+				</div>
 			</div>
-			{{> course_edit newCourse}}
+			<div class="container-fluid row">
+				<div class="courselist_results row">
+					{{#each results}}
+						{{> course}}
+					{{else}}
+						{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
+					{{/each}}
+				</div>
+				{{> course_edit newCourse}}
+			</div>
 		</div>
 	</div>
 </template>
