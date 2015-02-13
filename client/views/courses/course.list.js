@@ -74,24 +74,8 @@ Template.course.helpers({
 		return 'proposal';
 	},
 
-	donator_status: function() {
-		return this.roles.donator.subscribed.length > 0 ? 'yes' : 'no'
-	},
-
-	cook_status: function() {
-		return this.roles.cook.subscribed.length > 0 ? 'yes' : 'no'
-	},
-
 	is_subscriber: function() {
 		return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
-	},
-
-	is_donator: function() {
-		return this.roles.donator.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
-	},
-
-	is_cook: function() {
-		return this.roles.cook.subscribed.indexOf(Meteor.userId()) >= 0 ? true : false
 	},
 
 	categorynames: function() {

@@ -186,20 +186,29 @@ ul.nav-tabs li a:hover {
   background: #38829C;
   border-bottom: 3px solid #fff;
 }
+
+button.eventEdit.addButton {
+  margin-top: 20px;
+}
 /*---------------------*/
+
 
 /*COURSEDETAILS EVENT*/
 
 .course_events {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .course_event_container,
 .course_event_past_container {
-  background: #D8EBF4;
-  border-bottom: 5px solid white;
-  border-right: 5px solid white;
-  padding-bottom: 10px;
+  padding: 0 10px 10px 0;
+}
+
+.course_event:hover,
+.course_event:hover {
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset, 
+              0px 0px 20px rgba(56, 130, 156, 0.6);
+  z-index: 9999;
 }
 
 .course_event > a,
@@ -209,23 +218,21 @@ ul.nav-tabs li a:hover {
 }
 
 .course_event a > .course_event_date {
-  padding: 10px 15px;
+  padding: 10px 0;
   border-bottom: 3px solid #fff;
-  width: calc(100% + 30px);
-  margin-left: -15px;
   background: #C1F2AE;
-}
-
-.course_event a .course_event_date span.day {
-  font-size: medium;
 }
 
 .course_event a .course_event_date span.date {
   font-size: x-large;
 }
 
-.course_event a > .course_event_title {
-  padding-top: 10px;
+.course_event_lower_section {
+  background: #D8EBF4;
+  padding-bottom: 10px;
+}
+
+.course_event_title {
   -moz-transition: color 1s;
 }
 
@@ -234,10 +241,100 @@ ul.nav-tabs li a:hover {
   padding: 0 0 10px 0;
 }
 
-.course_event a:hover > .course_event_title {
+.course_event a .course_event_time > span {
+  font-size: small;
+}
+
+.course_event:hover .course_event_title {
   color: #38829C;
 }
 
+.course_event > .eventEdit_buttons {
+  background: #38829C;
+  text-align: center;
+  margin-bottom: -10px;
+  padding: 10px 0;
+}
+
+/*---------------------------------------
+/*COURSEDTAIL ROLES*/
+
+.courseDetails_roles_container {
+  background: #D8EBF4;
+  margin-top: 20px;
+  height: 100%;
+}
+
+.courseDetails_participants_count {
+  height: 60px;
+  background: #EC6D6D;
+  border-bottom: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.courseDetails_participants_count p,
+.courseDetails_mentor p {
+  padding-top: 15px;
+  font-size: large;
+}
+
+.courseDetails_mentor.mentor_status.yes {
+  background: #C1F2AE;
+  height: 60px;
+  border-bottom: 3px solid #fff;
+}
+
+.courseDetails_participants {
+  padding-top: 20px;
+}
+
+ul.subscribers {
+  font-size: medium;
+}
+
+ul.subscribers li {
+  padding: 5px 0;
+}
+
+ul.subscribers li a {
+  color: #333;
+}
+
+ul.roles,
+ul.roles li {
+  display: inline-block;
+}
+
+ul.roles li {
+  color: #fff;
+  background: #38829C;
+  padding: 5px;
+  text-transform: uppercase;
+  font-size: small;
+  font-weight: bold;
+}
+
+ul.roles li.participant {
+  display: none;
+}
+
+ul.roles {
+  margin-left: 20px;
+}
+
+button.enrol {
+  border-radius: 0;
+  border: none;
+  border-top: 3px solid #fff;
+  min-height: 60px;
+  text-align: left;
+  font-size: x-large;
+}
+
+button.enrol:hover {
+  border: none;
+  border-top: 3px solid #fff;
+}
 
 /*END//COURSEDETAIL*/
 /*START//CALENDAR*/

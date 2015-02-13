@@ -17,7 +17,10 @@
 
 <template name="discussion">
 	<h3>{{mf 'course.title.Discussion' 'Discussion'}}</h3>
-	<input type ="button" class="write" value="write Comment" />
+	<button type ="button" class="write btn btn-primary">
+		<span class="glyphicon glyphicon-comment"></span>&nbsp;
+		{{mf 'course.discussion.write_comment' 'write comment'}}
+	</button>
 	{{#each post}}
 		{{#if parent_ID}}
 			<div class="comment">

@@ -127,7 +127,6 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		return mayEdit(Meteor.user(), this);
 	},
 	coursestate: function() {
-		console.log(this);
 		var today = new Date();
 		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
@@ -136,7 +135,10 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		if (past) return 'haspastevents';
 						
 		return 'proposal';
-	}
+	},
+	needsMentor: function() {
+		return !hasRole(this.members, 'mentor')
+	},
 });
 
 Template.coursedetails.events({

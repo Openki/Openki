@@ -1,7 +1,6 @@
 <template name="membersRoles">
 	<div class="participants">
-		<h3>{{mf 'course.title.Participants' 'Participants'}}</h3>
-		<ul class='subscribers'>
+		<ul class='subscribers list-unstyled'>
 		{{#each members}}
 			{{> memberRoles member=this course=..}}
 		{{/each}}
@@ -12,7 +11,7 @@
 <template name="memberRoles">
 	<li>
 		{{>profilelink member.user}}
-		<ul class='roles'>
+		<ul class='roles list-unstyled'>
 			{{#each member.roles}}
 				<li class='{{this}}'> {{this}} </li>
 			{{/each}}
@@ -55,7 +54,11 @@
 
 				</div>
 			{{else}}
-				<input type="button" class="enrol" name="participant" value="{{roletype.subscribe}}"/>
+					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
+						<div class="container-fluid">
+							{{roletype.subscribe}}
+						</div>
+					</button>
 			{{/if}}
 		{{/if}}
 		</div>

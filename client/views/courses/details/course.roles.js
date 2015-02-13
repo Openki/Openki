@@ -7,7 +7,7 @@ Template.roleDetail.helpers({
 })
 
 Template.roleDetail.events({
-	'click input.enrol': function(e, template) {
+	'click button.enrol': function(e, template) {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;

@@ -85,7 +85,7 @@ Template.discussion.events({
 		Session.set("showPostDialog", true);
 	},
 	//write new post
-	'click input.write': function () {
+	'click button.write': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
