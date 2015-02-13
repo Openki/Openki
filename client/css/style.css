@@ -196,7 +196,7 @@ button.eventEdit.addButton {
 /*COURSEDETAILS EVENT*/
 
 .course_events {
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .course_event_container,
@@ -285,7 +285,7 @@ button.eventEdit.addButton {
 }
 
 .courseDetails_participants {
-  padding-top: 20px;
+  padding-top: 15px;
 }
 
 ul.subscribers {
@@ -310,7 +310,7 @@ ul.roles li {
   background: #38829C;
   padding: 5px;
   text-transform: uppercase;
-  font-size: small;
+  font-size: x-small;
   font-weight: bold;
 }
 
@@ -335,6 +335,31 @@ button.enrol:hover {
   border: none;
   border-top: 3px solid #fff;
 }
+ /*---------------------------------
+
+ /*COURSEDETAIL DISCUSSION*/
+
+.discussion {
+  margin-top: 20px;
+  background: #D8EBF4;
+}
+
+.discussion_titlebar {
+  background: #C1F2AE;
+  height: 60px;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  border-bottom: 3px solid #fff;
+  font-size: large;
+ }
+
+ .discussion_titlebar p {
+  padding: 15px 0 0 7px;
+ }
+
+ .discussion button.write {
+  margin-top: 10px;
+ }
 
 /*END//COURSEDETAIL*/
 /*START//CALENDAR*/

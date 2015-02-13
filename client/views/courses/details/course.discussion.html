@@ -16,7 +16,14 @@
 </template>
 
 <template name="discussion">
-	<h3>{{mf 'course.title.Discussion' 'Discussion'}}</h3>
+	<div class="discussion_titlebar">
+		<div class="container-fluid">
+			<p>
+				<span class="glyphicon glyphicon-comment"></span>&nbsp;
+				{{mf 'course.title.Discussion' 'Discussion'}}
+			</p>
+		</div>
+	</div>
 	<button type ="button" class="write btn btn-primary">
 		<span class="glyphicon glyphicon-comment"></span>&nbsp;
 		{{mf 'course.discussion.write_comment' 'write comment'}}

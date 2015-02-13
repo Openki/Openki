@@ -1,5 +1,5 @@
 <template name="course_events">
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		{{# if currentUser}}
 			{{>course_event course=course event=newEvent}}
 		{{/if}}
@@ -7,7 +7,6 @@
 		{{#if events_list}}
 			<div class="course_events row">
 				<div class="container-fluid">
-					<h4>{{mf 'course.events.events' 'Events:'}}</h4>
 					{{#each events_list}}
 						<div class="course_event_container col-xs-12 col-sm-6 col-md-4 col-lg-4">
 							{{>course_event}}

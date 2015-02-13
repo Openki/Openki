@@ -1,82 +1,86 @@
 <template name="coursedetails">
 	<div class="coursedetails container-fluid">
-		{{#if edit}}
-			{{> course_edit course}}
-		{{else}}
-			<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                {{title course.name " - openki"}}
-	            {{#with course}}
-	                {{#if currentUserMayEdit}}
-	                <div class="edit_buttons">
-	                	<div class="btn-group" role="group" aria-label="...">
-			                <button type="button" class="edit btn btn-success" role="button">
-			                	<span class="glyphicon glyphicon-edit"></span>
-			                	{{mf 'course.details.edit_btn' 'Edit'}}
-			                </button>
-			                <button type="button" class="del btn btn-danger" role="button">
-			                	<span class="glyphicon glyphicon-remove"></span>
-			                	{{mf 'course.details.del_btn' 'Delete'}}
-			                </button>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
+			{{#if edit}}
+				{{> course_edit course}}
+			{{else}}
+				<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	                {{title course.name " - openki"}}
+		            {{#with course}}
+		                {{#if currentUserMayEdit}}
+		                <div class="edit_buttons">
+		                	<div class="btn-group" role="group" aria-label="...">
+				                <button type="button" class="edit btn btn-success" role="button">
+				                	<span class="glyphicon glyphicon-edit"></span>
+				                	{{mf 'course.details.edit_btn' 'Edit'}}
+				                </button>
+				                <button type="button" class="del btn btn-danger" role="button">
+				                	<span class="glyphicon glyphicon-remove"></span>
+				                	{{mf 'course.details.del_btn' 'Delete'}}
+				                </button>
+				            </div>
 			            </div>
-		            </div>
-	                {{/if}}
-				{{/with}}
-                <h2 class="name" style="min-height: 3ex">
-                	{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-                </h2>
-				{{#with course}}
-					<p class='small'>
-					{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
-					{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
-					{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
-					</p>
-					<div class="course_categories">
-						{{> show_categories}}
-					</div>
-					<div class="course_groups">
-						{{> show_groups}}
-					</div>
-	                {{> show_course_submenu}}
-				{{/with}}
-                <p class="course_description">
-                	{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-                </p>
-			</div>
-		{{/if}}
-		{{> course_events}}
-		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			<div class="courseDetails_roles_container">
-				<div class="courseDetails_participants_count col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<div class="container-fluid">
-						<p>
-							<span class="glyphicon glyphicon-user"></span>
+		                {{/if}}
+					{{/with}}
+	                <h2 class="name" style="min-height: 3ex">
+	                	{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+	                </h2>
+					{{#with course}}
+						<p class='small'>
+						{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
+						{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
+						{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
 						</p>
-					</div>
+						<div class="course_categories">
+							{{> show_categories}}
+						</div>
+						<div class="course_groups">
+							{{> show_groups}}
+						</div>
+		                {{> show_course_submenu}}
+					{{/with}}
+	                <p class="course_description">
+	                	{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
+	                </p>
 				</div>
-				<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
+			{{/if}}
+			<div class="discussion col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				{{> discussion course}}
+				{{> postDialog course}}
+			</div>
+			{{> votelists course}}
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding"> 	
+			{{> course_events}}
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="courseDetails_roles_container">
+					<div class="courseDetails_participants_count col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<div class="container-fluid">
+							<p>
+								<span class="glyphicon glyphicon-user"></span>
+							</p>
+						</div>
+					</div>
+					<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
 							<div class="container-fluid">
-								<p>
-									Mentor
-								</p>
+								<div class="container-fluid">
+									<p>
+										Mentor
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="container-fluid courseDetails_participants">
-						{{> membersRoles course}}
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="container-fluid courseDetails_participants">
+							{{> membersRoles course}}
+						</div>
 					</div>
+					{{> roleDetails roleDetails}}
 				</div>
-				{{> roleDetails roleDetails}}
 			</div>
 		</div>
-		<div class="test col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			{{> discussion course}}
-		</div>
-		{{> votelists course}}
-		{{> postDialog course}}
 	</div>
 </template>
 
