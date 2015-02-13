@@ -16,11 +16,13 @@
 				<li class='{{this}}'> {{this}} </li>
 			{{/each}}
 		</ul>
-		{{#if editableMessage}}
-			{{> editable editableMessage}}
-		{{else}}
-			{{member.comment}}
-		{{/if}}
+		<span class="member_comment">
+			{{#if editableMessage}}
+				{{> editable editableMessage}}
+			{{else}}
+				{{member.comment}}
+			{{/if}}
+		</span>
 	</li>
 </template>
 

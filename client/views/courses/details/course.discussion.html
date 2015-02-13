@@ -6,11 +6,15 @@
 
 <template name="writePostDialog">
 	<div class="popup">
-		<h3>{{mf 'course.discussion.write_comment' 'write comment'}}</h3>
 		<form name="form_post">
-			<input type="text" id="post_title" /><br />
-			<textarea cols="70" rows="5" id="post_text"></textarea><br><br>
-			<input type="button" class="add" value="write!" /><input type="button" class="cancel" value="cancel" />
+			<input type="text" id="post_title" class="form-control" placeholder="{{mf 'course.discussion.comment_title' 'Title'}}" /><br>
+			<textarea cols="70" rows="5" id="post_text" class="form-control" placeholder="Your comment.."></textarea><br>
+			<button type="button" class="add btn btn-primary">
+				{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+			</button>
+			<button type="button" class="cancel btn btn-danger">
+				{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+			</button>
 		</form>
 	</div>
 </template>
@@ -25,23 +29,51 @@
 		</div>
 	</div>
 	<button type ="button" class="write btn btn-primary">
-		<span class="glyphicon glyphicon-comment"></span>&nbsp;
-		{{mf 'course.discussion.write_comment' 'write comment'}}
+		<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+		{{mf 'course.discussion.write_comment' 'write a comment'}}
 	</button>
-	{{#each post}}
-		{{#if parent_ID}}
-			<div class="comment">
-				<h4>{{this.title}}</h4>
-				<p>{{text}}</p>
-				<p><span title="{{fullDate time_created}}">{{fromNow time_created}}</span>, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
-			</div>
-		{{else}}
-			<div class="post">
-				<h4>{{this.title}}</h4>
-				<p>{{text}}</p>
-				<p><span title="{{fullDate time_created}}">{{fromNow time_created}}</span>, {{mf 'course.discussion.user' 'User:'}} {{username user_ID}}</p>
-				<input type="button" class="answer" value="answer this!" />
-			</div>
-		{{/if}}
-	{{/each}}
+	{{> postDialog course}}
+	<div class="discussion_conversation">
+		<div class="container-fluid">
+			{{#each post}}
+				{{#if parent_ID}}
+					<div class="comment">
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
+							<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+							<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+								{{fromNow time_created}}
+							</span>
+						</div>
+						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+							<h4 class="comment_title">{{this.title}}</h4>
+							<p>{{text}}</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+						<hr class="comment_hr">
+					</div>
+				{{else}}
+					<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
+							<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+							<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+								{{fromNow time_created}}
+							</span>
+						</div>
+						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+							<h4 class="comment_title">{{this.title}}</h4>
+							<p>{{text}}</p>
+							<button type="button" class="answer pull-right" role="button">
+								<span class="glyphicon glyphicon-comment"></span>
+								{{mf 'course.discussion.comment_answer' 'Answer'}}
+							</button>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+						<hr class="comment_hr">
+					</div>
+				{{/if}}
+			{{/each}}
+		</div>
+	</div>
 </template>

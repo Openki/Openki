@@ -183,7 +183,7 @@ ul.nav-tabs li a:hover {
 }
 
 .course_main .edit_buttons {
-  background: #38829C;
+  background: #f0ad4e;
   border-bottom: 3px solid #fff;
 }
 
@@ -250,10 +250,11 @@ button.eventEdit.addButton {
 }
 
 .course_event > .eventEdit_buttons {
-  background: #38829C;
+  background: #f0ad4e;
   text-align: center;
   margin-bottom: -10px;
   padding: 10px 0;
+  border-top: 3px solid #fff;
 }
 
 /*---------------------------------------
@@ -322,6 +323,31 @@ ul.roles {
   margin-left: 20px;
 }
 
+span.member_comment {
+  margin-left: 20px;
+}
+
+span.editable:after {
+  width: 100px;
+}
+
+.editable-controls,
+button.editable-store,
+button.editable-cancel {
+  border: 0;
+  background: none;
+  color: #38829C;
+  display: inline-block;
+}
+
+button.editable-store > span.glyphicon-ok {
+  color: #5cb85c;
+}
+
+button.editable-cancel > span.glyphicon-remove {
+  color: #EC6D6D;
+}
+
 button.enrol {
   border-radius: 0;
   border: none;
@@ -353,14 +379,55 @@ button.enrol:hover {
   font-size: large;
  }
 
- .discussion_titlebar p {
+.discussion_titlebar p {
   padding: 15px 0 0 7px;
  }
 
- .discussion button.write {
-  margin-top: 10px;
+.discussion button.write {
+  margin: 20px 0;
  }
 
+.popup {
+  padding-bottom: 20px;
+}
+
+.discussion_conversation {
+  background: #fff;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.comment {
+  margin-left: 60px;
+}
+
+h4.comment_user a {
+  color: #333;
+  -moz-transition: color 1s;
+}
+
+.comment_time_created {
+  color: #38829C;
+  cursor: help;
+}
+
+button.answer {
+  background: none;
+  border: 0;
+  color: #38829C;
+  padding-bottom: 5px;
+}
+
+button.answer:hover {
+  color: #2B6376; /*darken(@brand-primary) like buttons background*/
+}
+
+.comment_hr {
+  background: #D8EBF4;
+  border: 0;
+  height: 1px;
+  margin: 0;
+}
 /*END//COURSEDETAIL*/
 /*START//CALENDAR*/
 

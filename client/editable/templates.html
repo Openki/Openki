@@ -1,18 +1,30 @@
 <template name='editable'>
 	{{#if simple}}
-		<span class='editable' data-placeholder='{{mf 'editable.add_text' 'Add text here'}}'>{{text}}</span>
+		<span class='editable' data-placeholder="{{mf 'editable.add_text' 'Add text here'}}">{{text}}</span>
 		{{#if changed}}
 		<div class='editable-controls'>
-			<button class='editable-store'>{{mf 'editable.store' 'Store changes'}}</button> 
-			<button class='editable-cancel'>{{mf 'editable.discard' 'Discard changes'}}</button> 
+			<button class='editable-store'>
+				<span class="glyphicon glyphicon-ok"></span>
+				{{mf 'editable.store' 'Store changes'}}
+			</button> 
+			<button class='editable-cancel'>
+				<span class="glyphicon glyphicon-remove"></span>
+				{{mf 'editable.discard' 'Discard changes'}}
+			</button> 
 		</div>
 		{{/if}}
 	{{else}}
-		<div class='editable' data-placeholder='{{mf 'editable.add_text' 'Add text here'}}' style="min-height: 4ex">{{{text}}}</div>
+		<div class='editable' data-placeholder="{{mf 'editable.add_text' 'Add text here'}}" style="min-height: 4ex">{{{text}}}</div>
 		{{#if changed}}
 		<div class='editable-controls'>
-			<button class='editable-store'>{{mf 'editable.store' 'Store changes'}}</button> 
-			<button class='editable-cancel'>{{mf 'editable.discard' 'Discard changes'}}</button> 
+			<button class='editable-store'>
+				<span class="glyphicon glyphicon-ok"></span>
+				{{mf 'editable.store' 'Store changes'}}
+			</button> 
+			<button class='editable-cancel'>
+				<span class="glyphicon glyphicon-remove"></span>
+				{{mf 'editable.discard' 'Discard changes'}}
+			</button> 
 		</div>
 		{{/if}}
 	{{/if}}

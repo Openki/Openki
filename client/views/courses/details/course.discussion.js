@@ -30,7 +30,7 @@ Template.postDialog.helpers({
 });
 
 Template.writePostDialog.events({
-	'click input.add': function () {
+	'click button.add': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
@@ -69,7 +69,7 @@ Template.writePostDialog.events({
 		Session.set("postID", false);
 	},
 	//reset session variables, hide dialog
-	'click input.cancel': function () {
+	'click button.cancel': function () {
 		Session.set("showPostDialog", false);
 		Session.set("postID", false);
 	}
@@ -77,7 +77,7 @@ Template.writePostDialog.events({
 
 Template.discussion.events({
 	//comment existing post
-	'click input.answer': function (template) {
+	'click button.answer': function (template) {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
 			return;}
@@ -92,3 +92,7 @@ Template.discussion.events({
 		Session.set("showPostDialog", true);
 	}
 });
+
+Template.discussion.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
+}
