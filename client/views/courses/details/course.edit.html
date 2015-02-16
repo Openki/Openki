@@ -20,16 +20,16 @@
 							<ul class='categories list-unstyled'>
 								{{#each available_categories false}}
 									<li id="cat_{{_id}}">
-											<label for="checkbox_cat">
-												<input type='checkbox' id="checkbox_cat" class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>
+											<label>
+												<input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>
 												{{name}}
 											</label>
 										<ul class='subcategories' style="display:{{show_subcats _id ../categories}}">
 										{{#each available_categories _id}}
 											<li>
 												<div class="checkbox">
-													<label for="cat_sub_{{_id}}">
-														<input type='checkbox' class='checkbox_sub'  id="cat_sub_{{_id}}" name='{{_id}}' value="1" {{checked _id ../../categories}}>
+													<label>
+														<input type='checkbox' class='checkbox_sub'  name='{{_id}}' value="1" {{checked _id ../../categories}}>
 														{{name}}
 													</label>
 												</div>
