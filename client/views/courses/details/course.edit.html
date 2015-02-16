@@ -21,7 +21,7 @@
 								{{#each available_categories false}}
 									<li id="cat_{{_id}}">
 											<label>
-												<input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>
+												<input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}} style="display: inline">
 												{{name}}
 											</label>
 										<ul class='subcategories' style="display:{{show_subcats _id ../categories}}">
