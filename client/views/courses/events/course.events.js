@@ -58,7 +58,7 @@ Template.course_event.events({
 		Template.instance().editing.set(true);
 	},
 	
-	'click input.saveEditEvent': function(event, instance) {
+	'click button.saveEditEvent': function(event, instance) {
 		// format startdate
 		var dateParts =  instance.$('#edit_event_startdate').val().split(".");
 		
@@ -111,7 +111,7 @@ Template.course_event.events({
 		Template.instance().editing.set(false);
 	},
 	
-	'click input.cancelEditEvent': function () {
+	'click button.cancelEditEvent': function () {
 		Template.instance().editing.set(false);
 	}
 });
