@@ -1,17 +1,42 @@
-<template name="postDialog">
-	{{#if showPostDialog}}
+<template name="newPost">
+	{{#if writing}}
 		{{> writePostDialog}}
+	{{else}}
+		{{#if parent}}
+			<button type="button" class="write pull-right" role="button">
+				<span class="glyphicon glyphicon-comment"></span>
+				{{mf 'course.discussion.comment_answer' 'Answer'}}
+			</button>
+		{{else}}
+			<button type="button" class="write btn btn-primary">
+				<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+				{{mf 'course.discussion.write_comment' 'write a comment'}}
+			</button>
+		{{/if}}
 	{{/if}}
 </template>
 
 <template name="writePostDialog">
+	<h3>
+	{{#if parent}}
+		{{mf 'course.discussion.answer_comment' 'write answer'}}
+	{{else}}
+		{{mf 'course.discussion.write_comment' 'write a comment'}}
+	{{/if}}
+	</h3>
 	<div class="popup">
 		<form name="form_post">
 			<input type="text" id="post_title" class="form-control" placeholder="{{mf 'course.discussion.comment_title' 'Title'}}" /><br>
 			<textarea cols="70" rows="5" id="post_text" class="form-control" placeholder="Your comment.."></textarea><br>
+		{{#if parent}}
+			<button type="button" class="add btn btn-primary">
+				{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+			</button>
+		{{else}}
 			<button type="button" class="add btn btn-primary">
 				{{mf 'course.discussion.comment_btn.write' 'Write!'}}
 			</button>
+		{{/if}}
 			<button type="button" class="cancel btn btn-danger">
 				{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
 			</button>
@@ -28,11 +53,7 @@
 			</p>
 		</div>
 	</div>
-	<button type ="button" class="write btn btn-primary">
-		<span class="glyphicon glyphicon-pencil"></span>&nbsp;
-		{{mf 'course.discussion.write_comment' 'write a comment'}}
-	</button>
-	{{> postDialog course}}
+	{{> newPost}}
 	<div class="discussion_conversation">
 		<div class="container-fluid">
 			{{#each post}}
@@ -63,10 +84,7 @@
 						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
 							<h4 class="comment_title">{{this.title}}</h4>
 							<p>{{text}}</p>
-							<button type="button" class="answer pull-right" role="button">
-								<span class="glyphicon glyphicon-comment"></span>
-								{{mf 'course.discussion.comment_answer' 'Answer'}}
-							</button>
+							{{> newPost parent=this}}
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">

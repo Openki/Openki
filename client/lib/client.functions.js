@@ -6,6 +6,7 @@ get_timestamp = function (){
 }
 
 hasRole = function(members, role) {
+	if (!members) return false;
 	var has = false;
 	members.forEach(function(member) {
 		if (member.roles.indexOf(role) !== -1) {
@@ -24,6 +25,7 @@ havingRole = function(members, role) {
 }
 
 getMember = function(members, user) {
+	if (!members) return false;
 	var member = false;
 	members.forEach(function(member_candidate) {
 		if (member_candidate.user == user) {
