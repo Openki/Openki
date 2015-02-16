@@ -1,5 +1,5 @@
 <template name="course_edit">
-	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
 		<form>
 			<h2>{{#if _id}}{{mf 'course.edit.edit_course' 'Edit course'}}{{else}}{{mf 'course.edit.propose' 'Propose new course'}}{{/if}}</h2>
 			<div class="course_edit_editbox col-sm-12 no-padding">
@@ -24,7 +24,7 @@
 												<input type='checkbox' id="checkbox_cat" class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>
 												{{name}}
 											</label>
-										<ul class='subcategories' style="display:{{show_subcats _id ../categories}}">
+										<ul class='subcategories list-unstyled' style="display:{{show_subcats _id ../categories}}">
 										{{#each available_categories _id}}
 											<li>
 												<div class="checkbox">

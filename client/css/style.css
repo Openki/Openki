@@ -225,7 +225,9 @@ input#editform_name {
 }
 
 .course_event:hover,
-.course_event:hover {
+.course_event:hover,
+.calendar_event:hover,
+.calendar_event_past:hover {
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset, 
               0px 0px 20px rgba(56, 130, 156, 0.6);
   z-index: 9999;
@@ -466,7 +468,7 @@ button.answer:hover {
 .calendar_event_past {
   width: 350px;
   height: 230px;
-  margin: 10px 10px 10px 0;
+  margin: 7px;
   background: #D8EBF4;
 }
 
@@ -475,7 +477,7 @@ button.answer:hover {
   padding: 10px 10px 0 10px;
   width: 100%;
   background: #C1F2AE;
-  font-size: large;
+  font-size: x-large;
   color: #333;
   text-align: left;
 }
@@ -487,6 +489,7 @@ button.answer:hover {
   background: #C1F2AE;
   font-size: medium;
   color: #333;
+  border-bottom: 3px solid #fff;
 }
 
 .calendar_event > .course_event_title,
