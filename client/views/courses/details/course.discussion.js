@@ -23,13 +23,25 @@ Template.discussion.helpers({
 	}
 });
 
-Template.postDialog.helpers({
-	showPostDialog: function () {
-		return Session.get("showPostDialog");
+Template.newPost.created = function() {
+	this.writing = new ReactiveVar(false);
+}
+
+Template.newPost.helpers({
+	writing: function() {
+		return Template.instance().writing.get();
 	}
 });
 
-Template.writePostDialog.events({
+Template.newPost.events({
+	'click button.write': function () {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;
+		}
+		Template.instance().writing.set(true);
+	},
+
 	'click button.add': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
@@ -60,18 +72,15 @@ Template.writePostDialog.events({
 				"title":$("#post_title").val(),
 				"text":$("#post_text").val()
 			});
-			
+
 			// HACK update course so time_lastchange is updated
 			Meteor.call("save_course", course, {})
 		}
-		//reset session variables, hide dialog
-		Session.set("showPostDialog", false);
-		Session.set("postID", false);
+		Template.instance().writing.set(false);
 	},
-	//reset session variables, hide dialog
+
 	'click button.cancel': function () {
-		Session.set("showPostDialog", false);
-		Session.set("postID", false);
+		Template.instance().writing.set(false);
 	}
 });
 

@@ -1,10 +1,16 @@
-<template name="postDialog">
-	{{#if showPostDialog}}
+<template name="newPost">
+	{{#if writing}}
 		{{> writePostDialog}}
+	{{else}}
+		<button type="button" class="write btn btn-primary">
+			<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+			{{mf 'course.discussion.write_comment' 'write a comment'}}
+		</button>
 	{{/if}}
 </template>
 
 <template name="writePostDialog">
+	<h3>{{mf 'course.discussion.write_comment' 'write a comment'}}</h3>
 	<div class="popup">
 		<form name="form_post">
 			<input type="text" id="post_title" class="form-control" placeholder="{{mf 'course.discussion.comment_title' 'Title'}}" /><br>
@@ -28,11 +34,7 @@
 			</p>
 		</div>
 	</div>
-	<button type ="button" class="write btn btn-primary">
-		<span class="glyphicon glyphicon-pencil"></span>&nbsp;
-		{{mf 'course.discussion.write_comment' 'write a comment'}}
-	</button>
-	{{> postDialog course}}
+	{{> newPost course}}
 	<div class="discussion_conversation">
 		<div class="container-fluid">
 			{{#each post}}
