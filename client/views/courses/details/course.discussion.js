@@ -56,14 +56,11 @@ Template.newPost.events({
 				"parent_ID":parent_ID,
 				"course_ID":course,
 				"time_created":timestamp,
+				"time_updated":timestamp,
 				"user_ID":user,
 				"title":$("#post_title").val(),
 				"text":$("#post_text").val()
 			});
-			CourseDiscussions.update(
-				{_id:Session.get("postID")},
-				{$set:{"time_updated":timestamp}}
-			);
 		} else {
 			CourseDiscussions.insert({
 				"course_ID":course,
