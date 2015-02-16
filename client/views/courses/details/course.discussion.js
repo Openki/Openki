@@ -49,10 +49,11 @@ Template.newPost.events({
 		var timestamp = new Date();
 		var user = Meteor.userId();
 		var course = this._id;
+		var parent_ID = this.parent &&  this.parent._id
 
-		if(Session.get("postID")){
+		if (parent_ID) {
 			CourseDiscussions.insert({
-				"parent_ID":Session.get("postID"),
+				"parent_ID":parent_ID,
 				"course_ID":course,
 				"time_created":timestamp,
 				"user_ID":user,
@@ -63,7 +64,7 @@ Template.newPost.events({
 				{_id:Session.get("postID")},
 				{$set:{"time_updated":timestamp}}
 			);
-		}else{
+		} else {
 			CourseDiscussions.insert({
 				"course_ID":course,
 				"time_created":timestamp,
