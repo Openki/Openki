@@ -12,7 +12,6 @@ Template.discussion.helpers({
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
 			ordered_posts.push(post);
-			console.log("post: "+post.title+"/ parent_id: "+post.parent_ID);
 			var comments = CourseDiscussions.find({parent_ID: post._id}, {sort: {time_created: -1}});
 			comments.forEach(function (comment){
 				ordered_posts.push(comment);
@@ -45,7 +44,8 @@ Template.newPost.events({
 	'click button.add': function () {
 		if(!Meteor.userId()) {
 			alert("Please log in!");
-			return;}
+			return;
+		}
 		var timestamp = new Date();
 		var user = Meteor.userId();
 		var course = this._id;

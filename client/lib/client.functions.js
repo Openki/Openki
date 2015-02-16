@@ -148,6 +148,7 @@ Handlebars.registerHelper('weekday_short', function(date) {
 });
 
 Handlebars.registerHelper('dateformat_fromnow', function(date) {
+	Session.get('fineTime');
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).fromNow();
 });
@@ -172,6 +173,7 @@ Handlebars.registerHelper('timeformat', function(date) {
 });
 
 Handlebars.registerHelper('fromNow', function(date) {
+	Session.get('fineTime');
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).fromNow();
 });
