@@ -41,7 +41,7 @@ var submitForm = function(event) {
 
 Template.find.events({
 	'submit': submitForm,
-	'change': submitForm
+	'change .search': submitForm
 });
 
 Template.find.helpers({
