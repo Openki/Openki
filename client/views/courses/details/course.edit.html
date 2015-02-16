@@ -1,56 +1,66 @@
 <template name="course_edit">
-		<form class="row">
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
+		<form>
 			<h2>{{#if _id}}{{mf 'course.edit.edit_course' 'Edit course'}}{{else}}{{mf 'course.edit.propose' 'Propose new course'}}{{/if}}</h2>
-			<p>{{mf 'course.edit.title' 'Title:'}} <input type="text" id="editform_name" size="40" value="{{name}}"/></p>
-			<p>{{mf 'course.edit.description' 'Desc:'}} <div id="editform_description" name="editform_description">{{{description}}}</div></p>
+			<div class="course_edit_editbox">
+				<p>{{mf 'course.edit.title' 'Title:'}} <input type="text" id="editform_name" size="40" value="{{name}}"/></p>
+				<p>{{mf 'course.edit.description' 'Desc:'}} <div id="editform_description" name="editform_description">{{{description}}}</div></p>
 
-			<div id='editform_categories'>
-				<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
-					{{mf 'course.edit.edit' 'Edit'}} {{#if categories}}{{>show_categories}}{{/if}}
-					{{#unless categories}}{{mf 'course.edit.categories' 'Categories'}}{{/unless}}
+				<div id='editform_categories'>
+					<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
+						{{mf 'course.edit.edit' 'Edit'}} {{#if categories}}{{>show_categories}}{{/if}}
+						{{#unless categories}}{{mf 'course.edit.categories' 'Categories'}}{{/unless}}
+					</div>
+
+					<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
+						{{mf 'course.edit.edit_categories' 'Edit Categories:'}}
+						<ul class='categories'>
+							{{#each available_categories false}}
+								<li id="cat_{{_id}}">
+									<label><input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>&nbsp;{{name}}</label>
+									<ul class='subcategories' style="display:{{show_subcats _id ../categories}}">
+									{{#each available_categories _id}}
+										<li>
+											<label><input type='checkbox' class='checkbox_sub'  id="cat_sub_{{_id}}" name='{{_id}}' value="1" {{checked _id ../../categories}}>&nbsp;{{name}}</label>
+										</li>
+									{{/each}}
+									</ul>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
 				</div>
 
-				<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
-					{{mf 'course.edit.edit_categories' 'Edit Categories:'}}
-					<ul class='categories'>
-						{{#each available_categories false}}
-							<li id="cat_{{_id}}">
-								<label><input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}}>&nbsp;{{name}}</label>
-								<ul class='subcategories' style="display:{{show_subcats _id ../categories}}">
-								{{#each available_categories _id}}
-									<li>
-										<label><input type='checkbox' class='checkbox_sub'  id="cat_sub_{{_id}}" name='{{_id}}' value="1" {{checked _id ../../categories}}>&nbsp;{{name}}</label>
-									</li>
-								{{/each}}
-								</ul>
-							</li>
+				<div> {{mf 'course.edit.neededs_ppl_who' 'Needs people who'}}
+					<ul>
+						{{#each available_roles}}
+							<li><label><input type="checkbox" class='roleselection' name='{{type}}' {{checked type ../roles}}>&nbsp;{{description}}</label></li>
 						{{/each}}
 					</ul>
 				</div>
-			</div>
-
-			<div> {{mf 'course.edit.neededs_ppl_who' 'Needs people who'}}
-				<ul>
-					{{#each available_roles}}
-						<li><label><input type="checkbox" class='roleselection' name='{{type}}' {{checked type ../roles}}>&nbsp;{{description}}</label></li>
+				
+				{{#unless _id}}
+				<p> {{mf 'course.edit.region' 'Region:'}} 
+					<select name='region' class="region_select">
+						<option value=''>{{mf 'course.edit.pls_select' 'Please select'}}</option>
+					{{#each regions}}
+						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
 					{{/each}}
-				</ul>
+					</select>
+				</p>
+				{{/unless}}
 			</div>
-			
-			{{#unless _id}}
-			<p> {{mf 'course.edit.region' 'Region:'}} 
-				<select name='region' class="region_select">
-					<option value=''>{{mf 'course.edit.pls_select' 'Please select'}}</option>
-				{{#each regions}}
-					<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-				{{/each}}
-				</select>
-			</p>
-			{{/unless}}
-			
 			<p>
-				<input type="button" class="save" value="Save" />
-				<input type="button" class="cancel" value="Cancel" />
+				<button type="button btn btn-default" class="save">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'course.edit.save_btn' 'Save'}}
+				</button>
+
+				<button type="button" class="cancel">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'course.edit.cancel_btn' 'Cancel'}}
+				</button>
 			</p>
 		</form>
+	</div>
 </template>

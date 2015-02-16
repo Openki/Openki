@@ -1,31 +1,50 @@
 <template name="course_event_edit">
 	<div class="course_event_edit">
-		<h2>{{#if this.event._id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
-		<p>  {{mf 'course.event.edit.date_start' 'Date start'}} <input type="text" id="edit_event_startdate" value="{{dateformat event.startdate}}" size="8"> </p>
-		<p>{{mf 'course.event.edit.time_start' 'Time start'}} <input type="text" id="edit_event_starttime" value="{{timeformat event.startdate}}" size="5"></p>
-		<p> {{mf 'course.event.edit.title' 'Event title:'}} <input type="text" id="edit_event_title" size="30" value="{{event.title}}"/></p>
-		<p>  {{mf 'course.event.edit.desc' 'Desc:'}}<br> <textarea cols="30" rows="2" id="edit_event_description" name="event_description">{{event.description}}</textarea></p>
-		<p>{{mf 'course.event.edit.location' 'Location:'}} <div id="editform_location" name="editform_location"><input type="text" id="edit_event_location" size="40" value="{{event.location}}"/></div></p>
-		 <p>  {{mf 'course.event.edit.host_location' 'Host / Location'}}
-			<ul>
-				{{#each possible_hosts}}
-					<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location name)) : <br>{{mf 'course.event.edit.by' 'by'}}{{this.username}}</li>
-				{{else}}
-					<li>{{mf 'course.event.edit.no_hosts' 'No Hosts available'}}</li>
-				{{/each}}
-			</ul>
-		</p>
-		{{#if needsRole 'mentor'}}
-		<p>  {{mf 'course.event.edit.mentors' 'Mentors'}}
-			<ul>
-				{{#each possible_mentors}}
-					<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}> {{this.username}}</li>
-				{{else}}
-					<li>{{mf 'course.event.edit.no_mentors' 'No Mentors available'}}</li>
-				{{/each}}
-			</ul>
-		 </p>
-		 {{/if}}
-		<p> <input type="button" class="saveEditEvent" value="Save" /> <input type="button" class="cancelEditEvent" value="Cancel" /></p>
+		<div class="container-fluid">
+			<h2>{{#if this.event._id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 no-padding">
+				<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
+				<input type="text" class="form-control" id="edit_event_title" size="30" value="{{event.title}}"/>
+				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+				<input type="text" id="edit_event_startdate" class="form-control" value="{{dateformat event.startdate}}" size="8">
+				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
+				<input type="text" id="edit_event_starttime" class="form-control" value="{{timeformat event.startdate}}" size="5">			
+				<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
+				<textarea cols="30" rows="2" id="edit_event_description" class="form-control" name="event_description">{{event.description}}</textarea>
+				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
+				<div id="editform_location" name="editform_location">
+				<input type="text" id="edit_event_location" class="form-control" size="40" value="{{event.location}}"/></div>
+				<h4>{{mf 'course.event.edit.host_location' 'Host / Location'}}</h4>
+					<ul class="list-unstyled">
+						{{#each possible_hosts}}
+							<li><input type="radio" class="edit_event_host" name="edit_event_host" value="{{this.id}}" {{this.checked}}> ((Location name)) : <br>{{mf 'course.event.edit.by' 'by'}}{{this.username}}</li>
+						{{else}}
+							<li>{{mf 'course.event.edit.no_hosts' 'No Hosts available'}}</li>
+						{{/each}}
+					</ul>
+				{{#if needsRole 'mentor'}}
+				<p>  {{mf 'course.event.edit.mentors' 'Mentors'}}
+					<ul class="list-unstyled">
+						{{#each possible_mentors}}
+							<li><input type="checkbox" class="edit_event_mentors" name="{{this.id}}" {{this.checked}}> {{this.username}}</li>
+						{{else}}
+							<li>{{mf 'course.event.edit.no_mentors' 'No Mentors available'}}</li>
+						{{/each}}
+					</ul>
+				 </p>
+				 {{/if}}
+				<p>
+					<button type="button" class="saveEditEvent btn btn-default">
+						<span class="glyphicon glyphicon-save"></span>
+						{{mf 'course.event.edit.save_btn' 'Save'}}
+					</button>
+
+					<button type="button" class="cancelEditEvent btn btn-default">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
+					</button>
+				</p>
+			</div>
+		</div>
 	</div>
 </template>

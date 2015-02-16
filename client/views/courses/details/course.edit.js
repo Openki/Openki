@@ -54,7 +54,7 @@ Template.course_edit.rendered = function() {
 }
 
 Template.course_edit.events({
-	'submit form.course_edit, click input.save': function (ev) {
+	'submit form.course_edit, click button.save': function (ev) {
 		ev.preventDefault()
 		try {
 			if (!Meteor.userId()){
@@ -103,7 +103,7 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click input.cancel': function() {
+	'click button.cancel': function() {
 		Router.go('showCourse', this);
 	},
 

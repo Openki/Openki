@@ -190,6 +190,17 @@ ul.nav-tabs li a:hover {
 button.eventEdit.addButton {
   margin-top: 20px;
 }
+
+.course_event_edit {
+  border: 7px dashed #D8EBF4;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+/*TO BE MOVED*/
+.course_edit_editbox {
+  border: 7px dashed #D8EBF4;
+}
 /*---------------------*/
 
 
