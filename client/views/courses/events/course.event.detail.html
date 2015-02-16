@@ -4,7 +4,7 @@
 		{{#if editingEvent current_event._id}}
 				{{>course_event_edit}}
 		{{else}}
-            <div class="course_main">
+            <div>
 			
                 {{#with course}}
 			    <p>
@@ -50,8 +50,7 @@
         <!-- <input type="button" class="eventDelete" value="Delete" />-->
 	
         
-        <div style="border:red solid 1px;">
-        {{mf 'course.event.detail.todo' 'TODO'}}
+        <div>
             {{#with current_event}}
             
                 <div class="discussion">
