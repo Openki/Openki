@@ -1,5 +1,6 @@
 <template name="coursedetails">
 	<div class="coursedetails container-fluid">
+		<!-- COLUMN left -->
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
 			{{#if edit}}
 				{{> course_edit course}}
@@ -44,41 +45,82 @@
 	                </p>
 				</div>
 			{{/if}}
-			<div class="discussion col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				{{> discussion course}}
-			</div>
-			{{> votelists course}}
+			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
+			{{#if mobileViewport}}
+				{{> course_events}}
+			{{else}}
+				<div class="discussion col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					{{> discussion course}}
+				</div>
+				{{> votelists course}}
+			{{/if}}
 		</div>
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding"> 	
-			{{> course_events}}
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="courseDetails_roles_container">
-					<div class="courseDetails_participants_count col-xs-12 col-sm-9 col-md-9 col-lg-9">
-						<div class="container-fluid">
-							<p>
-								<span class="glyphicon glyphicon-user"></span>
-							</p>
-						</div>
-					</div>
-					<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
-						<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
+		<!-- COlUMN right-->
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
+			{{#if mobileViewport}}
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="courseDetails_roles_container">
+						<div class="courseDetails_participants_count col-xs-12 col-sm-9 col-md-9 col-lg-9">
 							<div class="container-fluid">
+								<p>
+									<span class="glyphicon glyphicon-user"></span>
+								</p>
+							</div>
+						</div>
+						<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
 								<div class="container-fluid">
-									<p>
-										Mentor
-									</p>
+									<div class="container-fluid">
+										<p>
+											Mentor
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="container-fluid courseDetails_participants">
-							{{> membersRoles course}}
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="container-fluid courseDetails_participants">
+								{{> membersRoles course}}
+							</div>
 						</div>
+						{{> roleDetails roleDetails}}
 					</div>
-					{{> roleDetails roleDetails}}
 				</div>
-			</div>
+				<div class="discussion col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					{{> discussion course}}
+				</div>
+				{{> votelists course}}
+			{{else}}
+				{{> course_events}}
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="courseDetails_roles_container">
+						<div class="courseDetails_participants_count col-xs-12 col-sm-9 col-md-9 col-lg-9">
+							<div class="container-fluid">
+								<p>
+									<span class="glyphicon glyphicon-user"></span>
+								</p>
+							</div>
+						</div>
+						<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
+								<div class="container-fluid">
+									<div class="container-fluid">
+										<p>
+											Mentor
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="container-fluid courseDetails_participants">
+								{{> membersRoles course}}
+							</div>
+						</div>
+						{{> roleDetails roleDetails}}
+					</div>
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </template>

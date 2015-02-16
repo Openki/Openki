@@ -201,7 +201,7 @@ button.eventEdit.addButton {
 
 .course_event_container,
 .course_event_past_container {
-  padding: 0 10px 10px 0;
+  padding: 5px;
 }
 
 .course_event:hover,
