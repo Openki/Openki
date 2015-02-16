@@ -2,23 +2,25 @@
 	<div id="coursedetails">
 	{{#with course}}
 		<div class="course_main">
-			{{title name " docs - hmmm"}}
-			<h2 class="name">{{name}}</h2>
-			<p class="small"> 
-				Time created: {{dateformat time_created}}, &nbsp;&nbsp;
-				Last edited: {{dateformat time_lastedit}}, &nbsp;&nbsp;
-				Created by: {{>profilelink createdby}}
-			</p>
-			<div class="categorylist small">
-			{{> show_categories}}
-			</div>
-			<br class="clear"/>
-			{{> show_course_submenu}}
-			
-			<h3>Docs</h3>
-			<p class="descr">In a later Version of this Software you can upload Files for Course-Documentation here. (Handouts, Slides, Exercises, Photos etc.)</p>
+			{{title name " docs - openki"}}
+			<div class="container-fluid">
+				<h2 class="name">{{name}}</h2>
+				<p class="small"> 
+					Time created: {{dateformat time_created}}, &nbsp;&nbsp;
+					Last edited: {{dateformat time_lastedit}}, &nbsp;&nbsp;
+					Created by: {{>profilelink createdby}}
+				</p>
+				<div class="categorylist small">
+				{{> show_categories}}
+				</div>
+				<br class="clear"/>
+				{{> show_course_submenu}}
+				
+				<h3>Docs</h3>
+				<h1>In a later Version of this Software you can upload Files for Course-Documentation here. (Handouts, Slides, Exercises, Photos etc.)</h1>
 
-			<p class="small">{{description}}</p>
+				<p class="small">{{description}}</p>
+			</div>
 		</div>
 
 	{{/with}}

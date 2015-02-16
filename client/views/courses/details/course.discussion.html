@@ -54,44 +54,46 @@
 		</div>
 	</div>
 	{{> newPost}}
-	<div class="discussion_conversation">
-		<div class="container-fluid">
-			{{#each post}}
-				{{#if parent_ID}}
-					<div class="comment">
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
-							<h4 class="comment_user">{{>profilelink user_ID}}</h4>
-							<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
-								{{fromNow time_created}}
-							</span>
-						</div>
-						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-							<h4 class="comment_title">{{this.title}}</h4>
-							<p>{{text}}</p>
-						</div>
+	<div class="container-fluid">
+		{{#each post}}
+			{{#if parent_ID}}
+			<div class="discussion_conversation">
+				<div class="comment">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
+						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+						<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+							{{fromNow time_created}}
+						</span>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-						<hr class="comment_hr">
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+						<h4 class="comment_title">{{this.title}}</h4>
+						<p>{{text}}</p>
 					</div>
-				{{else}}
-					<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
-							<h4 class="comment_user">{{>profilelink user_ID}}</h4>
-							<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
-								{{fromNow time_created}}
-							</span>
-						</div>
-						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-							<h4 class="comment_title">{{this.title}}</h4>
-							<p>{{text}}</p>
-							{{> newPost parent=this}}
-						</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+					<hr class="comment_hr">
+				</div>
+			</div>
+			{{else}}
+			<div class="discussion_conversation">
+				<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
+						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+						<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+							{{fromNow time_created}}
+						</span>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-						<hr class="comment_hr">
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+						<h4 class="comment_title">{{this.title}}</h4>
+						<p>{{text}}</p>
+						{{> newPost parent=this}}
 					</div>
-				{{/if}}
-			{{/each}}
-		</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+					<hr class="comment_hr">
+				</div>
+			</div>
+			{{/if}}
+		{{/each}}
 	</div>
 </template>
