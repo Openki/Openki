@@ -67,6 +67,10 @@ button.readmore > span.glyphicon-chevron-up {
 
 /*/////////////////////////////*/
 
+#maincontent {
+  padding-bottom: 50px;
+}
+
 a.navbar-brand {
   font-size: x-large;
 }
@@ -510,10 +514,14 @@ button.enrol:hover {
   padding-bottom: 20px;
 }
 
+.discussion_conversation_container {
+  background: #fff;
+  margin-bottom: 20px;
+}
+
 .discussion_conversation {
   background: #fff;
-  padding: 20px 0;
-  margin-bottom: 20px;
+  padding: 10px 10px;
 }
 
 .comment {

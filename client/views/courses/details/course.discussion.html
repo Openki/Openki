@@ -54,10 +54,10 @@
 		</div>
 	</div>
 	{{> newPost}}
-	<div class="container-fluid">
+	<div class="container-fluid discussion_conversation_container">
 		{{#each post}}
 			{{#if parent_ID}}
-			<div class="discussion_conversation">
+			<div class="discussion_conversation col-sm-12">
 				<div class="comment">
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
 						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			{{else}}
-			<div class="discussion_conversation">
+			<div class="discussion_conversation col-sm-12">
 				<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
 					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding">
 						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
