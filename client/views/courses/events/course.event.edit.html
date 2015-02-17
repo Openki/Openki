@@ -32,8 +32,12 @@
 				<textarea cols="30" rows="2" id="edit_event_description" class="form-control" name="event_description">{{event.description}}</textarea>
 			</div>
 			<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
-			<div id="editform_location" name="editform_location">
-			<input type="text" id="edit_event_location" class="form-control" size="40" value="{{event.location}}"/></div>
+			<div id="editform_location" name="editform_location" class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-map-marker"></span>
+				</span>
+				<input type="text" id="edit_event_location" class="form-control" size="40" value="{{event.location}}"/>
+			</div>
 			<h4>{{mf 'course.event.edit.host_location' 'Host / Location'}}</h4>
 				<ul class="list-unstyled">
 					{{#each possible_hosts}}

@@ -73,6 +73,5 @@ Template.find.helpers({
 
 	'showNW_info': function() {
 		return Session.get('showInfo');
-	},
-
+	}
 })
