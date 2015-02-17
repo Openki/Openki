@@ -1,5 +1,80 @@
 /* ALL TO BE REWRITTEN AS .LESS*/
 
+/*NACHHALTIGKEITSWOCHEHEADER*/
+
+
+.nw_header{
+  text-align: center;
+  margin-top: -10px;
+}
+
+.nw_header.hideIt {
+  display: none;
+}
+
+img.nw_box {
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+h3.teaser {
+  display: inline;
+}
+
+h3.teaser > span.teaser_text {
+  margin: 0;
+}
+
+.NWinfo {
+  display: none;
+  background: #D8EBF4;
+  text-align: left;
+  font-size: large;
+  margin-top: 15px;
+}
+
+.NWinfo.true {
+  display: block;
+}
+
+.NWinfo > .text {
+  padding: 15px 10px 10px 10px;
+}
+
+button.nw_close,
+button.readmore {
+  border: none;
+  background: none;
+  font-size: large;
+  color: #38829C;
+}
+
+button.nw_close:hover,
+button.readmore:hover {
+  color: #333;
+}
+
+button.readmore {
+  padding-top: 10px;
+}
+
+button.readmore > span.glyphicon-chevron-down,
+button.readmore > span.glyphicon-chevron-up {
+  font-size: medium;
+}
+
+
+
+/*/////////////////////////////*/
+
+a.navbar-brand {
+  font-size: x-large;
+}
+
+.navbar-nav > li > a {
+  font-size: large;
+}
+
 body {
 	padding-top: 65px; 
 }
