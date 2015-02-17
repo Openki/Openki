@@ -4,7 +4,7 @@ Router.configure({
 	loadingTemplate: 'loading',
 });
 
-webpagename = 'Hmmm - Course Organisation Platform - '  // global (document title init)
+webpagename = 'Openki - Course Organisation Platform - '  // global (document title init)
 
 // Skip to top on page change
 Router.onBeforeAction(function() {
