@@ -17,14 +17,9 @@ img.nw_box {
   padding-bottom: 10px;
 }
 
-.teaser_container {
-  margin-bottom: 30px;
-}
-
 h3.teaser {
-  display: inline;
-  background: #D8EBF4;
   padding: 15px;
+  background: #D8EBF4;
 }
 
 h3.teaser > span.teaser_text {
@@ -60,7 +55,7 @@ button.readmore:hover {
 }
 
 button.readmore {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 button.readmore > span.glyphicon-chevron-down,
