@@ -15,7 +15,7 @@ Router.map(function () {
 		data: function () {
 			
 			var event;
-			var create = 'new' == this.params._id;
+			var create = 'create' == this.params._id;
 			if (create) {
 				var date = moment().add(1, 'week').startOf('hour').toDate();
 				event = { new: true, startdate: date }
