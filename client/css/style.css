@@ -1,5 +1,84 @@
 /* ALL TO BE REWRITTEN AS .LESS*/
 
+/*NACHHALTIGKEITSWOCHEHEADER*/
+
+
+.nw_header{
+  text-align: center;
+  margin-top: -10px;
+}
+
+.nw_header.hideIt {
+  display: none;
+}
+
+img.nw_box {
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+h3.teaser {
+  padding: 15px;
+  background: #D8EBF4;
+}
+
+h3.teaser > span.teaser_text {
+  margin: 0;
+}
+
+.NWinfo {
+  display: none;
+  background: #D8EBF4;
+  text-align: left;
+  font-size: large;
+}
+
+.NWinfo.true {
+  display: block;
+}
+
+.NWinfo > .text {
+  padding: 15px 10px 10px 10px;
+}
+
+button.nw_close,
+button.readmore {
+  border: none;
+  background: none;
+  font-size: large;
+  color: #38829C;
+}
+
+button.nw_close:hover,
+button.readmore:hover {
+  color: #333;
+}
+
+button.readmore {
+  padding-top: 5px;
+}
+
+button.readmore > span.glyphicon-chevron-down,
+button.readmore > span.glyphicon-chevron-up {
+  font-size: medium;
+}
+
+
+
+/*/////////////////////////////*/
+
+#maincontent {
+  padding-bottom: 50px;
+}
+
+a.navbar-brand {
+  font-size: x-large;
+}
+
+.navbar-nav > li > a {
+  font-size: large;
+}
+
 body {
 	padding-top: 65px; 
 }
@@ -202,15 +281,31 @@ button.eventEdit.addButton {
 /*TO BE MOVED*/
 .course_edit_editbox {
   border: 7px dashed #D8EBF4;
-  padding-top: 10px;
-}
-
-#editform_description {
-  min-height: 25px;
+  padding: 5px 0 !important;
 }
 
 input#editform_name {
   font-size: large;
+}
+
+#editform_description {
+  min-height: 100px;
+  border: 1px solid #CCC;
+  padding: 5px;
+}
+
+#editform_description:focus {
+  border-color: #38829C;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 
+              0px 0px 8px rgba(56, 130, 156, 0.6);
+}
+
+ul.subcategories > li {
+  display: inline-block;
+}
+
+.course_edit_finishbtns {
+  padding: 10px 0 !important;
 }
 /*---------------------*/
 
@@ -419,10 +514,14 @@ button.enrol:hover {
   padding-bottom: 20px;
 }
 
+.discussion_conversation_container {
+  background: #fff;
+  margin-bottom: 20px;
+}
+
 .discussion_conversation {
   background: #fff;
-  padding: 20px 0;
-  margin-bottom: 20px;
+  padding: 10px 10px;
 }
 
 .comment {

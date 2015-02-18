@@ -24,6 +24,7 @@ Meteor.startup(function () {
 
 /////////////  upcomming:  ///////////////
 // loadTestComments();          FIXME/TODO
+// loadTemporaryEvent-Setting(Region=Zurich);  FIXME/TODO
 //
 // enable to show testing environment and prototype-messages
 // TEST-ENV=1                   FIXME/TODO

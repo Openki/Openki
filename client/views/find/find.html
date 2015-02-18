@@ -1,4 +1,45 @@
 <template name="find">
+	<div class="container-fluid no-padding nw_header {{showNW_Header}}">
+		<button class="nw_close pull-right" type="button">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+		<div class="col-sm-12 no-padding teaser_container">
+			<div class="col-sm-12">
+					<h3 class="teaser">
+						<span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;
+						<span class="teaser_text">Diese Seite ist ein Prototyp von Openki.net und wird hier an der NHW zum ersten mal öffentlich gebraucht (und getestet).</span>
+					</h3>
+			</div>
+		</div>
+		<div class="container">
+			<div class="NWinfo {{showNW_info}} col-sm-12">
+				<div class="text">
+					<p>Hier kannst du Kurse vorschlagen und organisieren. Im <a href="{{pathFor 'calendar'}}">Kalender</a> siehst du, welche Workshops wann und wo geschehen.</p>
+
+					<p>Du kannst auch die Vorschläge der anderen betrachten, neue eigene erstellen, dich als Teilnehmer_in, Mentor_in oder Host anmelden, kommentieren und helfen, dass die Kurse stattfinden. 
+					Dafür reserviert sind der Dienstag und der Freitag Nachmittag.</p>
+
+					<p>Diese Webseite ist in Freiwilligenarbeit entstanden und noch lange nicht fertig programmiert, wie gesagt: ein Prototyp. Sei also nicht Böse wenn was nicht funktioniert oder abstürzt. Wenn du weisst, wie's besser währe, bring dich ein. Und wenn du sogar was besser programmieren kannst: voila le Sourcecode: <a href='https://github.com/schuel/hmmm'>Github.com </a>.<br>
+					Melde dich bei uns <a href="mailto:schuelcore[ät]lists.xiala.net"> schuelcore [ät] lists.xiala.net</a> </p>
+
+					<p>Wenn du mehr über das Projekt erfahren möchtest gehts hier weiter: <a href='http://openki.net'> Openki.net</a> </p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			{{#if showNW_info}}
+			<button class="readmore" type="button">
+				{{mf 'readmore.button.less' 'Less..'}}
+				<span class="glyphicon glyphicon-chevron-up"></span>
+			</button>
+			{{else}}
+			<button class="readmore" type="button">
+				{{mf 'readmore.button' 'Read more..'}}
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button>
+			{{/if}}
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<div class="search row">
@@ -18,7 +59,7 @@
 					</div>
 				</div>
 			</div>
-			{{> welcome_info_NHW}}
+			<!-- {{> welcome_info_NHW}} -->
 			<div class="container-fluid row">
 				<div class="courselist_results row">
 					{{#each results}}
@@ -28,9 +69,7 @@
 					{{/each}}
 				</div>
 				<div class="row">
-					<div classs="col-sm-8 no.padding">
 						{{> course_edit newCourse}}
-					</div>
 				</div>
 			</div>
 		</div>

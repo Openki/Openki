@@ -6,6 +6,6 @@ fail() {
 	exit 1
 }
 
-path=$(realpath "$(dirname "$0")/../.meteor/local/db/")
+path=$(dirname "$0")/../.meteor/local/db/
 
 mongodump --dbpath "$path"
