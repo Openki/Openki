@@ -39,3 +39,30 @@ eventsFind = function(fromDate, limit) {
 
 	return Events.find(find, options);
 } 
+
+
+eventsSearch = function(query, standalone, limit) {
+	var find = {startdate: {$gt: new Date()}};
+	
+	if (standalone) {
+		find.course_id = { $exists: false } // We're not $exists 
+	}
+	
+	if (query) {
+		var searchTerms = query.split(/\s+/);
+		var searchQueries = _.map(searchTerms, function(searchTerm) {
+			return { $or: [
+				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
+								  { description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+			] }
+		});
+		
+		find.$and = searchQueries;
+	}
+	
+	var options = { 
+		limit: limit,
+		sort: { startdate: 1 } 
+	};
+	return Events.find(find, options);
+} 

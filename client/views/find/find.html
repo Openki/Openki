@@ -67,6 +67,10 @@
 					{{else}}
 						{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
 					{{/each}}
+					<hr>
+					{{#each eventResults}}
+						{{>course_event event=this}}
+					{{/each}}
 				</div>
 				<div class="row">
 						{{> course_edit newCourse}}
