@@ -245,7 +245,7 @@ Meteor.methods({
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
 			courseId = Courses.insert({
-				members: [{ user: user._id, roles: ['team'] }],
+				members: [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}],
 				createdby: user._id,
 				time_created: new Date
 			})
