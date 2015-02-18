@@ -43,12 +43,14 @@ Template.loginLogin.events({
 		});
 	},
 	'click .loginWithService': function(event) {
+		console.log('123')
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		console.log(loginMethod)
 		if (!Meteor[loginMethod]) {
 			console.log("don't have "+loginMethod);
 			return;
 		}
-		Meteor['loginWith'+event.currentTarget.dataset.service]({
+		Meteor[loginMethod]({
 		}, function (err) {
 			if (err) {
 				addMessage(err.reason || 'Unknown error');

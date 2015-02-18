@@ -22,5 +22,9 @@ Accounts.onCreateUser(function(options, user) {
 	user.username = username || name;
 	user.profile.name = name || username;
 
+	// puting facebooks emailadress into our email field
+	if (user.services && user.services.facebook && user.services.facebook.email){
+		user.emails = [{'address': user.services.facebook.email, "verified": true}];
+	}
 	return user;
 });
