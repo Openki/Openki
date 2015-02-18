@@ -57,7 +57,7 @@ mfPkg.syncAll({
     "menue.CreateEvent": {
       "key": "menue.CreateEvent",
       "lang": "de",
-      "text": "Abmachen",
+      "text": "Event Erstellen",
       "ctime": 1413306366317,
       "mtime": 1413306366317,
       "revisionId": "9o4fqtpJnzJSemkH6",
@@ -75,7 +75,7 @@ mfPkg.syncAll({
     "menue.about": {
       "key": "menue.about",
       "lang": "de",
-      "text": "über",
+      "text": "about",
       "ctime": 1413306374544,
       "mtime": 1413306374544,
       "revisionId": "7neMpxfWCYg7muXY2",
@@ -84,7 +84,7 @@ mfPkg.syncAll({
     "menue.FAQ": {
       "key": "menue.FAQ",
       "lang": "de",
-      "text": "Fragen und Antworten",
+      "text": "FAQ",
       "ctime": 1413306389962,
       "mtime": 1413306389962,
       "revisionId": "uta9bDBZheGuv9QAD",
@@ -102,7 +102,7 @@ mfPkg.syncAll({
     "menue.Testpage": {
       "key": "menue.Testpage",
       "lang": "de",
-      "text": "Das ist <b>nur eine Testseite</b>",
+      "text": "Das ist nur eine Testseite",
       "ctime": 1413306413941,
       "mtime": 1413306413941,
       "revisionId": "YJbiyvKtA2QXzHCQe",
