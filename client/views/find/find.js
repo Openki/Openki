@@ -41,7 +41,18 @@ var submitForm = function(event) {
 
 Template.find.events({
 	'submit': submitForm,
-	'change .search': submitForm
+	'change .search': submitForm,
+	//TEMPORARY EVENTS FOR NACHHALTIGKEITSWOCHE HEADER
+	'click button.nw_close': function() { 
+		Session.set('showHeader', "hideIt");
+	},
+	
+	'click button.readmore': function() {
+		if (Session.get('showInfo') != true) {
+			Session.set('showInfo', true);
+		}
+		else Session.set('showInfo', false);
+	}
 });
 
 Template.find.helpers({
@@ -54,5 +65,13 @@ Template.find.helpers({
 			name: this.query,
 			region: Session.get('region')
 		}
+	},
+
+	'showNW_Header': function() {
+		return Session.get('showHeader')
+	},
+
+	'showNW_info': function() {
+		return Session.get('showInfo');
 	}
 })
