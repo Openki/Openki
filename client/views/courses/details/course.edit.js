@@ -21,7 +21,7 @@ Template.course_edit.helpers({
 	
 	// Emit 'checked' string if id shows up as member or property of cats
 	checked: function(id, cats) {
-		if (cats === undefined) return;
+		if (!cats) return;
 		if (cats.length) {
 			return cats.indexOf(id) >= 0 ? 'checked' : ''
 		} else {

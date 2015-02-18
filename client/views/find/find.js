@@ -9,7 +9,7 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('coursesFind', region, this.params.search, filter),
 				Meteor.subscribe('futureEvents'),
-				Meteor.subscribe('eventsSearch', this.params.search, false, 10)
+				Meteor.subscribe('eventsSearch', this.params.search, true, 10)
 			];
 		},
 		data: function() {
@@ -20,7 +20,7 @@ Router.map(function () {
 				hasUpcomingEvent: filter.hasUpcomingEvent,
 				query: this.params.search,
 				results: coursesFind(region, this.params.search, filter),
-				eventResults: eventsSearch(this.params.search, false, 10)
+				eventResults: eventsSearch(this.params.search, true, 10)
 			}
 		},
 		onAfterAction: function() {
