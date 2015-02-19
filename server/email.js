@@ -41,5 +41,22 @@ var email = {
     console.log('sending mail… ...................................................................')
     console.log(email)
     Email.send(email);
-  }
+  },
+  
+	report: function(subject, location, report) {
+		var reporter = "A fellow visitor";
+		if (this.userId) {
+			var user = Meteor.users.findOne(this.userId);
+			if (user) {
+				reporter = user.username+" ("+this.userId+")"
+			}
+		}
+		Email.send({
+			from: 'reporter@openki.net',
+			to: 'admins@openki.net',
+			subject: "Report: "+subject,
+			text: reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n"+report+"\n/end of report"
+			
+		});
+	}
 });

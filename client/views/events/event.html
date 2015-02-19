@@ -1,0 +1,105 @@
+<template name="eventPage">
+	<div class="course_event_detail" id="coursedetails">
+		{{#if course}}
+		<p>
+            <a href="{{pathFor 'showCourse' _id=course._id}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"</a>
+        </p>
+        {{/if}}
+		{{>event event}}
+	</div>
+</template>
+
+<template name="event">
+	{{#if editing}}
+	<div class="course_event_edit col-sm-12">
+		<div class="col-sm-12">
+			<h2>{{#if _id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
+			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
+			<input type="text" class="form-control" id="edit_event_title" size="30" value="{{this.title}}" name="_" />
+		</div>
+		<div class="col-sm-6">
+			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+				<input type="text" id="edit_event_startdate" class="form-control" value="{{dateformat startdate}}" size="8">
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-time"></span>
+				</span>
+				<input type="text" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-info-sign"></span>
+				</span>
+				<textarea cols="30" rows="2" id="edit_event_description" class="form-control" name="event_description">{{description}}</textarea>
+			</div>
+			<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
+			<div id="editform_location" name="editform_location" class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-map-marker"></span>
+				</span>
+				<input type="text" id="edit_event_location" class="form-control" size="40" value="{{location}}"/>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<button type="button" class="saveEditEvent btn btn-default form-control">
+				<span class="glyphicon glyphicon-save"></span>
+				{{mf 'course.event.edit.save_btn' 'Save'}}
+			</button>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<button type="button" class="cancelEditEvent btn btn-default form-control">
+				<span class="glyphicon glyphicon-remove"></span>
+				{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
+			</button>
+		</div>
+	</div>
+	{{else}}
+		<div class="course_event">
+			<div class="course_event_date">
+				<div class="container-fluid">
+					<span class="day">{{weekday startdate}}</span><br>
+					<span class="date">{{dateformat_mini_fullmonth startdate}}</span>
+				</div>
+			</div>
+			<div class="course_event_lower_section">
+				<div class="container-fluid">
+					<div class="course_event_title"><h4>{{this.title}}</h4></div>
+					<div class="course_event_time">
+						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
+						{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
+					</div>
+				</div>
+			</div>
+			
+			<p>
+				{{description}}
+			</p>
+			{{# if currentUser}}
+				<div class="eventEdit_buttons">
+					<div class="btn-group" role="group">
+						<button type="button" class="eventEdit btn btn-success" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							{{mf 'course.details.edit_btn' 'Edit'}}
+						</button>
+						<button type="button" class="eventDelete btn btn-danger" role="button">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf 'course.details.del_btn' 'Delete'}}
+						</button>
+					</div>
+				</div>
+			{{/if}}
+		</div>
+	{{/if}}
+</template>
+

@@ -1,0 +1,28 @@
+<template name='report'>
+	{{#if error}}
+		<span class="glyphicon glyphicon-error"></span>
+		{{mf 'report.error' "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."}}
+	{{/if}}
+	{{#if confirm}}
+		{{mf 'report.confirm' 'Your report was sent. A human will try to find an appropriate solution.'}}
+	{{/if}}
+	{{#if reporting}}
+		{{mf 'report.text' 'Please tell us what is wrong.'}}
+		<div>
+			<textarea name="report" class="report" placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
+			<button class='send'>
+				<span class="glyphicon glyphicon-ok"></span>
+				{{mf 'report.report' 'Send report'}}
+			</button> 
+			<button class='cancel'>
+				<span class="glyphicon glyphicon-remove"></span>
+				{{mf 'report.cancel' 'Nevermind'}}
+			</button> 
+		</div>
+	{{else}}
+		<button class='open'>
+			<span class="glyphicon glyphicon-remove"></span>
+			{{mf 'report.open' 'Report problem'}}
+		</button>
+	{{/if}}
+</template>

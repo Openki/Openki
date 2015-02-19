@@ -21,3 +21,14 @@ echo "DB URL is: $URL"
 CMD=$(echo "$URL" | sed 's_mongodb://\([a-z0-9\-]*\):\([a-f0-9\-]*\)@\(.*\)/\(.*\)_mongodump --username \1 --password \2 --host \3 --db \4_')
 echo "Running $CMD"
 $CMD
+
+# Some collections should never be kept outside their installation.
+# The system.* collections keep password information. Not only should these
+# be kept private, they must not be overwritten either!
+# 
+# This is a bit overbroad because it deletes system collections not only from
+# the downloaded DB but from every DB in the dump dir. But what's a girl to do?
+echo -n "SAFER DUMPING: Deleting system.* collections: "
+rm dump/*/system.*
+
+echo "Done."
