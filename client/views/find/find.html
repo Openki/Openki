@@ -25,11 +25,16 @@
 					{{#each results}}
 						{{> course}}
 					{{else}}
-						{{mf 'find.no entries found. propose new course?' 'No entries found. Do you want to propose a new course?'}}
+						{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
 					{{/each}}
+				</div>
+				<div class="courselist_results row">
 					<hr>
+						{{mf 'find.events' 'The following events have been found:'}}
 					{{#each eventResults}}
 						{{>course_event event=this}}
+					{{else}}
+						{{mf 'find.no_events_found.' 'No unlinked event found'}}{{#unless results}} neither{{/unless}}.
 					{{/each}}
 				</div>
 				<div class="row">
