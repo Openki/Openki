@@ -72,35 +72,58 @@ Template.event.events({
 	
 	'click button.saveEditEvent': function(event, instance) {
 		// format startdate
-		var dateParts =  instance.$('#edit_event_startdate').val().split(".");
-		
-		if (!dateParts[2]){
+		var startDateParts =  instance.$('#edit_event_startdate').val().split(".");
+		if (!startDateParts[2]){
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 			return;
 		}
-		
-		if(dateParts[2].toString().length==2) dateParts[2]=2000+dateParts[2]*1;
-
+		if(startDateParts[2].toString().length==2) startDateParts[2]=2000+startDateParts[2]*1;
 		if (instance.$('#edit_event_starttime').val()!="") {
-			var timeParts = $('#edit_event_starttime').val().split(":");
+			var startTimeParts = $('#edit_event_starttime').val().split(":");
 		} else {
-			var timeParts = [0,0];
+			var startTimeParts = [0,0];
 		}
-		
-		var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1])
+		var startdate = new Date(startDateParts[2], (startDateParts[1] - 1), startDateParts[0],startTimeParts[0],startTimeParts[1])
 		var now = new Date();
-		
 		if (startdate < now) {
 			alert("Date must be in future");
 			return;
 		}
 		
-		
+
+
+		var duration = instance.$('#edit_event_duration').val()
+		if (duration){
+			var enddate = startdate  //TODO: help here!
+			enddate.setMinutes(startdate.getMinutes()+duration);	
+		} else {	
+			// format enddate
+			var endDateParts =  instance.$('#edit_event_startdate').val().split(".");
+			if (!endDateParts[2]){
+				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
+				return;
+			}
+			if(endDateParts[2].toString().length==2) endDateParts[2]=2000+endDateParts[2]*1;
+			if (instance.$('#edit_event_endtime').val()!="") {
+				var endTimeParts = $('#edit_event_endtime').val().split(":");
+			} else {
+				var endTimeParts = [0,0];
+			}
+			var enddate = new Date(endDateParts[2], (endDateParts[1] - 1), endDateParts[0],endTimeParts[0],endTimeParts[1])
+			var now = new Date();
+			if (enddate < startdate) {
+				alert("end must be after start");
+				return;
+			}
+		}
+
 		var editevent = {
 			title: instance.$('#edit_event_title').val(),
 			description: instance.$('#edit_event_description').val(),
 			location: instance.$('#edit_event_location').val(),
-			startdate: startdate
+			room: instance.$('#edit_event_room').val(),
+			startdate: startdate,
+			enddate: enddate
 		}
 		
 		editevent.time_lastedit = now
@@ -131,5 +154,11 @@ Template.event.events({
 	
 	'click button.cancelEditEvent': function () {
 		Template.instance().editing.set(false);
-	}
+	},
+
+	'click #toggle_duration': function(event){
+		$('#show_time_end').toggle(300);
+		$('#show_duration').toggle(300);
+	},
+
 });

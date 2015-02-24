@@ -108,8 +108,8 @@ Template.course_edit.events({
 	},
 
 	'click #show_categories_to_edit': function(event){
-		$('#show_categories_to_edit').toggle();
-		$('#edit_categories').toggle();
+		$('#show_categories_to_edit').toggle(1000);
+		$('#edit_categories').toggle(1000);
 	},
 
 	'change .categories .checkbox': function(){
