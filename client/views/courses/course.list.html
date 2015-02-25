@@ -40,7 +40,8 @@
 				<div class="course_eventlist_container">
 				{{#each course_eventlist}}
 					<div>
-						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{dateformat_mini this.startdate}}
+						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+						{{dateformat_mini this.startdate}}
 					</div>
 					<div>
 						<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
@@ -48,7 +49,8 @@
 					</div>
 					{{#if location}}
 					<div>
-						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>{{location}}
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<p>{{location}}</p>
 					</div>
 					{{/if}}
 				{{/each}}
