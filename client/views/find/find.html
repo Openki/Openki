@@ -28,19 +28,35 @@
 						{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
 					{{/each}}
 				</div>
+				{{#if eventResults.count}}
 				<div class="courselist_results row">
 					<hr>
-					<h3>{{mf 'find.events' 'The following events have been found:'}}</h3><br />
+					<h3>
+					{{#if results.count}}
+						{{#mf KEY='find.events.aditional_results' EVENTS=eventResults.count}}
+							 {EVENTS, plural,
+								one {In addition, we found this event}
+								other {In addition, we found these # events}
+							}
+						{{/mf}}
+					{{else}}
+						{{#mf KEY='find.events.results_if_no_courses' EVENTS=eventResults.count}}
+							{EVENTS, plural,
+								one {All we found is this one event}
+								other {Yet # Events have been found}
+							}
+						{{/mf}}
+					{{/if}}
+					</h3><br />
 					<div class="col-sm-12 no-padding">
 						{{#each eventResults}}
 						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 							{{>course_event event=this}}
 						</div>
-						{{else}}
-							{{mf 'find.no_events_found.' 'No unlinked event found'}}{{#unless results}} neither{{/unless}}.
 						{{/each}}
 					</div>
 				</div>
+				{{/if}}
 				<div class="row">
 						{{> course_edit newCourse}}
 				</div>
