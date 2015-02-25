@@ -6,6 +6,7 @@ accounts-password@1.0.6
 accounts-ui@1.1.4
 accounts-ui-unstyled@1.1.6
 application-configuration@1.0.4
+archive:jquery-dotdotdot@1.6.15
 autoupdate@1.1.5
 backbone@1.0.0
 base64@1.0.2

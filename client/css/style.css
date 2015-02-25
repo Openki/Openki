@@ -81,6 +81,8 @@ a.navbar-brand {
 
 body {
 	padding-top: 65px; 
+  word-wrap: break-word;
+  text-overflow: ellipsis;
 }
 
 h1 {
@@ -193,6 +195,7 @@ ul.messages li button.close {
   background: #C1F2AE;
   text-align: center;
   color: #333;
+  max-height: 150px;
 }
 
 .course_eventlist_container > div {
@@ -205,6 +208,11 @@ ul.messages li button.close {
 
 .course_eventlist_container > div:last-child {
   padding-bottom: 4px;
+}
+
+.course_eventlist_container > div.course_eventlist_location {
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 div.no-padding {

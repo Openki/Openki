@@ -37,7 +37,7 @@
 		</div>
 		<div class="courselist_course_info col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
 			{{#if hasupcomingevents}}
-				<div class="course_eventlist_container">
+				<div class="course_eventlist_container ellipsis">
 				{{#each course_eventlist}}
 					<div>
 						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -48,9 +48,9 @@
 						{{timeformat this.startdate}}
 					</div>
 					{{#if location}}
-					<div>
-						<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-						<p>{{location}}</p>
+					<div class="course_eventlist_location">
+						<span class="glyphicon glyphicon-home" aria-hidden="true" style="padding-right:3px"></span>
+						{{location}}
 					</div>
 					{{/if}}
 				{{/each}}
