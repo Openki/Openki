@@ -3,6 +3,10 @@
 /*NACHHALTIGKEITSWOCHEHEADER*/
 
 
+a#nhw_logo:hover > img {
+  opacity: 0.7;
+}
+
 .nw_header{
   text-align: center;
   margin-top: -10px;
@@ -62,7 +66,6 @@ button.readmore > span.glyphicon-chevron-down,
 button.readmore > span.glyphicon-chevron-up {
   font-size: medium;
 }
-
 
 
 /*/////////////////////////////*/
