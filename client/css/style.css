@@ -80,9 +80,7 @@ a.navbar-brand {
 }
 
 body {
-	padding-top: 65px; 
-  word-wrap: break-word;
-  text-overflow: ellipsis;
+	padding-top: 65px;
 }
 
 h1 {
@@ -213,6 +211,7 @@ ul.messages li button.close {
 .course_eventlist_container > div.course_eventlist_location {
   padding-left: 4px;
   padding-right: 4px;
+  overflow: hidden;
 }
 
 div.no-padding {

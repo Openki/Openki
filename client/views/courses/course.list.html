@@ -37,20 +37,20 @@
 		</div>
 		<div class="courselist_course_info col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
 			{{#if hasupcomingevents}}
-				<div class="course_eventlist_container ellipsis">
+				<div class="course_eventlist_container ellipsis col-sm-12 no-padding">
 				{{#each course_eventlist}}
-					<div>
+					<div class="col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 						{{dateformat_mini this.startdate}}
 					</div>
-					<div>
+					<div class="col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
 						{{timeformat this.startdate}}
 					</div>
 					{{#if location}}
-					<div class="course_eventlist_location">
+					<div class="course_eventlist_location col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-home" aria-hidden="true" style="padding-right:3px"></span>
-						{{location}}
+						<span class="ellipsis">{{location}}</span>
 					</div>
 					{{/if}}
 				{{/each}}
