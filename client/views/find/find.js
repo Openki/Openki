@@ -68,7 +68,9 @@ Template.find.helpers({
 			region: Session.get('region')
 		}
 	},
+});
 
+Template.NHW_info.helpers({
 	'showNW_Header': function() {
 		return Session.get('showHeader')
 	},

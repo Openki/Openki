@@ -39,7 +39,7 @@ mfPkg.syncAll({
     "menue.BrowseCourses": {
       "key": "menue.BrowseCourses",
       "lang": "de",
-      "text": "Kurse abgrasen",
+      "text": "Kurs Übersicht",
       "ctime": 1413306340764,
       "mtime": 1413306340764,
       "revisionId": "eJFLqrMSYY6nnzsQE",
@@ -290,7 +290,7 @@ mfPkg.syncAll({
     "menue.Testpage": {
       "key": "menue.Testpage",
       "lang": "en",
-      "text": "This is only a <b>Testpage</b>. ",
+      "text": "This is only a Testpage. ",
       "ctime": 1404604221980,
       "mtime": 1404604221980,
       "revisionId": "mFfSR4Y4jSozEXW4S",
