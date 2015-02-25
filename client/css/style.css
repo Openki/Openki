@@ -287,7 +287,8 @@ button.eventEdit.addButton {
 
 /*TO BE MOVED*/
 .course_edit_editbox {
-  border: 7px dashed #D8EBF4;
+  border: 7px solid #D8EBF4;
+  background: #D8EBF4;
   padding: 5px 0 !important;
 }
 
@@ -299,6 +300,7 @@ input#editform_name {
   min-height: 100px;
   border: 1px solid #CCC;
   padding: 5px;
+  background: #fff;
 }
 
 #editform_description:focus {

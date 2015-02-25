@@ -30,12 +30,16 @@
 				</div>
 				<div class="courselist_results row">
 					<hr>
-						{{mf 'find.events' 'The following events have been found:'}}
-					{{#each eventResults}}
-						{{>course_event event=this}}
-					{{else}}
-						{{mf 'find.no_events_found.' 'No unlinked event found'}}{{#unless results}} neither{{/unless}}.
-					{{/each}}
+					<h3>{{mf 'find.events' 'The following events have been found:'}}</h3><br />
+					<div class="col-sm-12 no-padding">
+						{{#each eventResults}}
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							{{>course_event event=this}}
+						</div>
+						{{else}}
+							{{mf 'find.no_events_found.' 'No unlinked event found'}}{{#unless results}} neither{{/unless}}.
+						{{/each}}
+					</div>
 				</div>
 				<div class="row">
 						{{> course_edit newCourse}}
