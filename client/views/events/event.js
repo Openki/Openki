@@ -69,49 +69,48 @@ Template.event.events({
 	},
 	
 	'click button.saveEditEvent': function(event, instance) {
+		function readTime(str, date) {
+			var digits = str.replace(/[^0-9]+/g, '');
+			if (digits.length > 0) {
+				if (digits.length < 3) {
+					date.setMinutes(0);
+					date.setHours(parseInt(digits, 10));
+				} else {
+					date.setMinutes(parseInt(digits.substr(2), 10));
+					date.setHours(parseInt(digits.substr(0, 2), 10));
+				}
+			}
+		}
+
 		// format startdate
 		var startDateParts =  instance.$('#edit_event_startdate').val().split(".");
 		if (!startDateParts[2]){
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 			return;
 		}
-		if(startDateParts[2].toString().length==2) startDateParts[2]=2000+startDateParts[2]*1;
-		if (instance.$('#edit_event_starttime').val()!="") {
-			var startTimeParts = $('#edit_event_starttime').val().split(":");
-		} else {
-			var startTimeParts = [0,0];
-		}
-		var startdate = new Date(startDateParts[2], (startDateParts[1] - 1), startDateParts[0],startTimeParts[0],startTimeParts[1])
+		var startdate = new Date(startDateParts[2], (startDateParts[1] - 1), startDateParts[0]);
+
+		var startStr = instance.$('#edit_event_starttime').val();
+		readTime(startStr, startdate);
+
+
 		var now = new Date();
 		if (startdate < now) {
 			alert("Date must be in future");
 			return;
 		}
-		
 
+		var enddate = new Date(startdate.getTime()); // Rough approximation
 
-		var duration = instance.$('#edit_event_duration').val()
 		if (duration){
-			var enddate = new Date(startdate.getTime());
+			var duration = instance.$('#edit_event_duration').val();
 			enddate.setMinutes(enddate.getMinutes()+duration);	
-		} else {	
-			// format enddate
-			var endDateParts =  instance.$('#edit_event_startdate').val().split(".");
-			if (!endDateParts[2]){
-				alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
-				return;
-			}
-			if(endDateParts[2].toString().length==2) endDateParts[2]=2000+endDateParts[2]*1;
-			if (instance.$('#edit_event_endtime').val()!="") {
-				var endTimeParts = $('#edit_event_endtime').val().split(":");
-			} else {
-				var endTimeParts = [0,0];
-			}
-			var enddate = new Date(endDateParts[2], (endDateParts[1] - 1), endDateParts[0],endTimeParts[0],endTimeParts[1])
-			var now = new Date();
+		} else {
+			var endStr = instance.$('#edit_event_endtime').val()
+			readTime(endStr, enddate);
+
 			if (enddate < startdate) {
-				alert("end must be after start");
-				return;
+				enddate = startdate // No questions asked
 			}
 		}
 
