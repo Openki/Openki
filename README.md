@@ -1,14 +1,14 @@
-hmmm
+Openki/hmmm
 ====
 
 **Platform for open education** – built with [Meteor.js](http://meteor.com)
 
 A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
-[  read on...](http://news.schuel.ch "our blog")  
-<span class="octicon octicon-star">★</span> Star us if you like the idea.
+[  read on...](http://openki.net "our blog")  
+<div align="right"> <span class="octicon octicon-star">★</span> Star us if you like the idea.</div>
 
 - Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
-- Concept: [news.schuel.ch](http://news.schuel.ch "our blog")
+- Concept: [openki.net](http://openki.net "our blog")
 - Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
 
 
