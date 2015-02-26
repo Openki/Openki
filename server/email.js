@@ -51,6 +51,7 @@ var email = {
 				reporter = user.username+" ("+this.userId+")"
 			}
 		}
+
 		Email.send({
 			from: 'reporter@openki.net',
 			to: 'admins@openki.net',

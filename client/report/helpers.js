@@ -4,9 +4,7 @@ Template.report.created = function() {
 
 Template.report.helpers({
 	reporting: function() { return Template.instance().state.get() == 'reporting'; },
-	sending: function() { return Template.instance().state.get() == 'sending'; },
-	confirm: function() { return Template.instance().state.get() == 'confirm'; },
-	error: function() { return Template.instance().state.get() == 'error'; }
+	sending: function() { return Template.instance().state.get() == 'sending'; }
 });
 
 Template.report.events({
@@ -19,10 +17,11 @@ Template.report.events({
 	'click .send': function(event, instance) {
 		Meteor.call('report', document.title, window.location.href, instance.$('.report').val(), function(error, result) {
 			if (error) {
-				instance.state.set('error');
+				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."));
 			} else {
-				instance.state.set('confirm');
+				addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."));
 			}
+			instance.state.set('');
 		});
 		instance.state.set('sending');
 	}

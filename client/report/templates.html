@@ -1,10 +1,6 @@
 <template name='report'>
-	{{#if error}}
-		<span class="glyphicon glyphicon-error"></span>
-		{{mf 'report.error' "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."}}
-	{{/if}}
-	{{#if confirm}}
-		{{mf 'report.confirm' 'Your report was sent. A human will try to find an appropriate solution.'}}
+	{{#if sending}}
+		<div>{{mf 'report.sending' 'Report is being sent…'}}</div>
 	{{/if}}
 	{{#if reporting}}
 		{{mf 'report.text' 'Please tell us what is wrong.'}}
