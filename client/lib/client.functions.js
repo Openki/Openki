@@ -207,3 +207,10 @@ Handlebars.registerHelper('isAdmin', function() {
     return user && user.isAdmin
 });
 
+
+// Strip HTML markup
+Handlebars.registerHelper('plain', function(html) {
+	var div = document.createElement('div');
+	div.innerHTML = html;
+	return div.textContent || div.innerText || '';
+});
