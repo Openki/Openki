@@ -1,16 +1,14 @@
 Router.map(function () {
 	this.route('kiosk', {
-		path: '/kiosk/events/',
+		path: '/kiosk/events/:location?/:room?',
 		template: 'kioskEvents',
 		layoutTemplate: 'kioskLayout',
 		waitOn: function () {
 			Session.get('roughTime'); // Time dependency so this will be reactively updated
-			// Backdate filter by an hour so that courses that just started are still visible
-			// We would have to know the duration of events to improve on this
-			// The haphazard type mangling is due to moment() being reactive when initialized with current date (really??) so converting the current date to a string then reading that was the quickest workaround I could think of (and I was offline) :-D
-			var retardedTime = moment(''+new Date()).subtract(1, 'hour').toDate();
+			// The haphazard type mangling is due to moment() being reactive when initialized with current date (really??) so converting the current date to a string then reading that was the quickest workaround I could think of :-D
+			var endtime = moment(''+new Date()).toDate();
 
-			return Meteor.subscribe('eventsFind', retardedTime, 10);
+			return Meteor.subscribe('eventsFind', endtime, 10, this.params.location, this.params.room);
 		},
 		data: function() {
 			var lg = this.params.lg;
@@ -19,8 +17,8 @@ Router.map(function () {
 			   
 			Session.get('fineTime');
 			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
-			var retardedTime = moment(''+new Date()).subtract(1, 'hour').toDate();
-			return eventsFind(retardedTime, 5);
+			var endtime = moment(''+new Date()).toDate();
+			return eventsFind(endtime, 5, this.params.location, this.params.room);
 		},
 		onAfterAction: function() {
 			document.title = webpagename + ' Events'

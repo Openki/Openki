@@ -40,15 +40,23 @@ if (Meteor.isServer) {
 	});
 }
 
-eventsFind = function(fromDate, limit) {
+eventsFind = function(fromDate, limit, location, room) {
 	var find = { 
-		startdate: { $gt: fromDate }
+		enddate: { $gt: fromDate }
 	};
 
 	var options = { 
 		limit: limit,
 		sort: { startdate: 1 } 
 	};
+
+	if (location) {
+		find.location = location;
+	}
+
+	if (room) {
+		find.room = room;
+	}
 
 	return Events.find(find, options);
 } 
