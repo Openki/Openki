@@ -11,6 +11,9 @@ Meteor.startup(function () {
 
 /***** TESTING *****/
 
+// In order to test scalebility (Courses multiplicated)
+var ScaleFaktor = 1;
+
 // Uncomment the following lines if you want to have testdata loaded 
 // by the script in server/testing.createnload.data.js 
 // (there are probably some dependencies) -> FIXME
