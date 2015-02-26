@@ -17,8 +17,12 @@ Router.map(function () {
 			var event;
 			var create = 'create' == this.params._id;
 			if (create) {
-				var date = moment().add(1, 'week').startOf('hour').toDate();
-				event = { new: true, startdate: date }
+				var propose = moment().add(1, 'week').startOf('hour');
+				event = {
+					new: true,
+					startdate: propose.toDate(),
+					enddate: moment(propose).add(2, 'hour').toDate()
+				};
 			} else {
 				event = Events.findOne({_id: this.params._id});
 				if (!event) return {};
