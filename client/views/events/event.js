@@ -38,15 +38,9 @@ Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
 }
 
-Template.event.rendered = function() {
-	if (this.data && this.data.new) {
-		this.editing.set(true);
-	}
-}
-
 Template.event.helpers({
 	editing: function() {
-		return Template.instance().editing.get();
+		return this.new || Template.instance().editing.get();
 	}
 });
 
@@ -94,8 +88,8 @@ Template.event.events({
 
 		var duration = instance.$('#edit_event_duration').val()
 		if (duration){
-			var enddate = startdate  //TODO: help here!
-			enddate.setMinutes(startdate.getMinutes()+duration);	
+			var enddate = new Date(startdate.getTime());
+			enddate.setMinutes(enddate.getMinutes()+duration);	
 		} else {	
 			// format enddate
 			var endDateParts =  instance.$('#edit_event_startdate').val().split(".");
