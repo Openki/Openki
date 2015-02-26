@@ -27,6 +27,19 @@ Events.allow({
 	}
 });
 
+if (Meteor.isServer) {
+	Events.before.insert(function(userId, event) {
+		event.time_created = new Date();
+		event.time_lastedit = event.time_created;
+		event.description = saneHtml(event.description);
+	});
+
+	Events.before.update(function(userId, event, _, set) {
+		set.$set.time_lastedit = new Date();
+		set.$set.description = saneHtml(set.$set.description);
+	});
+}
+
 eventsFind = function(fromDate, limit) {
 	var find = { 
 		startdate: { $gt: fromDate }
