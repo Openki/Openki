@@ -221,12 +221,7 @@ Meteor.methods({
 		if (changes.description) {
 			set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
-				set.description = sanitizeHtml(set.description, {
-					allowedTags: [ 'br', 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote'],
-					allowedAttributes: {
-						'a': [ 'href' ]
-					}
-				});
+				set.description = saneHtml(set.description);
 			}
 		}
 
