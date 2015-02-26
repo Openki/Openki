@@ -44,6 +44,10 @@ Template.event.helpers({
 	}
 });
 
+Template.eventDescritpionEdit.rendered = function() {
+	console.log(new MediumEditor(this.firstNode));
+}
+
 Template.event.events({
 	'click button.eventDelete': function () {
 		if (!Meteor.userId()) {
@@ -113,7 +117,7 @@ Template.event.events({
 
 		var editevent = {
 			title: instance.$('#edit_event_title').val(),
-			description: instance.$('#edit_event_description').val(),
+			description: instance.$('#edit_event_description').html(),
 			location: instance.$('#edit_event_location').val(),
 			room: instance.$('#edit_event_room').val(),
 			startdate: startdate,

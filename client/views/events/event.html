@@ -59,7 +59,7 @@
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-info-sign"></span>
 				</span>
-				<textarea cols="30" rows="2" id="edit_event_description" class="form-control" name="event_description">{{description}}</textarea>
+				{{>eventDescritpionEdit description}}
 			</div>
 		</div>
 		<div class="col-sm-6">
@@ -130,5 +130,9 @@
 			{{/if}}
 		</div>
 	{{/if}}
+</template>
+
+<template name="eventDescritpionEdit">
+	<div id="edit_event_description" style="min-height: 10ex">{{{this}}}</div>
 </template>
 
