@@ -81,10 +81,14 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-6">
+			{{#if currentUser}}
 			<button type="button" class="saveEditEvent btn btn-default form-control">
 				<span class="glyphicon glyphicon-save"></span>
 				{{mf 'course.event.edit.save_btn' 'Save'}}
 			</button>
+			{{else}}
+				{{mf 'course.event.edit.pleaselogin' 'Please login or register'}}
+			{{/if}}
 		</div>
 		<div class="col-xs-12 col-sm-6">
 			<button type="button" class="cancelEditEvent btn btn-default form-control">

@@ -73,6 +73,10 @@ Template.event.events({
 	},
 	
 	'click button.saveEditEvent': function(event, instance) {
+		if(!Meteor.userId()) {
+			alert("Please log in!");
+			return;
+		}
 		function readTime(str, date) {
 			var digits = str.replace(/[^0-9]+/g, '');
 			if (digits.length > 0) {
