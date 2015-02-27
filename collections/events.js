@@ -46,7 +46,7 @@ eventsFind = function(fromDate, limit, location, room) {
 	};
 
 	var options = { 
-		limit: limit,
+		limit: limit || 3,
 		sort: { startdate: 1 } 
 	};
 
