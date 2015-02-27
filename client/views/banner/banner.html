@@ -1,0 +1,29 @@
+<template name="bannerLayout">
+	{{> yield}}
+</template>
+
+<template name="bannerEvents">
+  <div class="calendar">
+	<h1>Upcoming events</h1>
+	<ul class="calendar_eventlist">
+		{{#each this}}
+			{{> bannerEvent}}
+		{{/each}}
+	</ul>
+  </div>
+</template>
+
+<template name="bannerEvent">
+	<a href="{{pathFor 'showEvent'}}">
+	<div class="calendar_event" style='overflow: hidden'>
+		<p class="course_event_date">
+			<span class="icon-mini_date"></span> {{dateformat_fromnow startdate}} 
+		</p>
+		<p class="course_event_time">
+			<span class="icon-clock"></span> {{timeformat startdate}}
+		</p>
+		<p class="course_event_title">{{plain this.title}}</p>
+		<p class="course_event_desc">{{plain this.description}}</p>
+	</div>
+	</a>
+</template>
