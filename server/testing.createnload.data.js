@@ -1,5 +1,4 @@
-// TESTING: in order to test scalebility
-var ScaleFaktor = 1;
+// TESTING
 
 createCoursesIfNone = function(){
 	if (Courses.find().count() === 0) {
