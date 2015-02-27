@@ -2,20 +2,20 @@
 	{{> yield}}
 </template>
 
-<template name="kioskEvents">
-  <div class="calendar">
-	<h1>Upcoming events</h1>
-	<ul class="calendar_eventlist">
-		{{#each this}}
-			{{> kioskEvent}}
-		{{/each}}
-	</ul>
-  </div>
+	<template name="kioskEvents">
+	<div class="calendar">
+		<h1>Upcoming events</h1>
+		<ul class="calendar_eventlist">
+			{{#each this}}
+				{{> kioskEvent}}
+			{{/each}}
+		</ul>
+	</div>
 </template>
 
 <template name="kioskEvent">
 	<a href="{{pathFor 'showEvent'}}">
-	  <div class="calendar_event">
+	<div class="calendar_event" style='overflow: hidden'>
 		<p class="course_event_date">
 			<span class="icon-mini_date"></span> {{dateformat_fromnow startdate}} 
 		</p>
@@ -24,7 +24,7 @@
 		</p>
 		<p class="course_event_title">{{this.title}}</p>
 		<p class="course_event_desc">{{this.description}}</p>
-	  </div>
+	</div>
 	</a>
 </template>
 
