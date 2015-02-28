@@ -101,6 +101,14 @@ h1 {
   color: #38829C;
 }
 
+p {  
+  -moz-hyphens: auto;
+  -o-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; 
+}
+
 .search .row {
   margin-left: 0;
 }
