@@ -7,23 +7,16 @@ Meteor.methods({
 Meteor.methods({
 	sendEmail: function (rec_user_id, from, subject, text) {
 
-		var from = 'hmmm@schuel.ch'
-		var subject = '[hmmm] '+subject
+		var from = 'kontakt@openki.net';
+		var subject = '[Openki] '+subject;
 
-		var to= Meteor.users.findOne({_id:rec_user_id});
-		if(to){
-			if(to.emails[0].address){
-				var to= to.emails[0].address;
-			}
-// für den fall, dass keine email vorhanden oder verifiziert ist, brauchts noch eine fehlermeldung
-			else if(to.username){
-				var to= to.username;
-			}
-			else{
-				var to= "userid: "+user._id;
-			}
+		var to = Meteor.users.findOne({_id:rec_user_id});
+		if(to && to.emails && to.emails[0] && to.emails[0].address){
+			var to= to.emails[0].address;
 		}
-
+		else {
+			throw new Meteor.Error(401, "this user has no email")
+		}
 		check([to, from, subject, text], [String]);
 
 		// Let other method calls from the same client start running,
@@ -34,7 +27,7 @@ var email = {
 			from: from,
 			to: to,
 			subject: subject,
-			text: text,
+			text: text+'\nhttp://openki.net'
 //			html: html
 		}
 
