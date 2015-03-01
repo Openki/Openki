@@ -2,9 +2,12 @@
 
 /*NACHHALTIGKEITSWOCHEHEADER*/
 
-
 a#nhw_logo:hover > img {
   opacity: 0.7;
+}
+
+.nw_header .container > div {
+  background: #D8EBF4;
 }
 
 .nw_header{
@@ -22,8 +25,9 @@ img.nw_box {
 }
 
 h3.teaser {
-  padding: 15px;
-  background: #D8EBF4;
+  line-height: 35px;
+  font-size: 2em;
+  margin-top: 0;
 }
 
 h3.teaser > span.teaser_text {
@@ -42,7 +46,7 @@ h3.teaser > span.teaser_text {
 }
 
 .NWinfo > .text {
-  padding: 15px 10px 10px 10px;
+  padding: 15px 10px 0px 10px;
 }
 
 button.nw_close,
@@ -56,6 +60,11 @@ button.readmore {
 button.nw_close:hover,
 button.readmore:hover {
   color: #333;
+  z-index: 9999;
+}
+
+button.nw_close {
+  padding-top: 5px;
 }
 
 button.readmore {
@@ -67,7 +76,9 @@ button.readmore > span.glyphicon-chevron-up {
   font-size: medium;
 }
 
-
+div.fold-buttons {
+  padding-bottom: 10px;
+}
 /*/////////////////////////////*/
 
 #maincontent {
@@ -88,6 +99,14 @@ body {
 
 h1 {
   color: #38829C;
+}
+
+p {  
+  -moz-hyphens: auto;
+  -o-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; 
 }
 
 .search .row {
@@ -611,7 +630,6 @@ button.answer:hover {
 .calendar_event_past > .course_event_desc {
   padding: 0 10px;
 }
-
 .calendar_event .course_event_title > h4,
 .calendar_event_past .course_event_title > h4 {
   color: #333;
