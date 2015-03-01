@@ -82,24 +82,6 @@ Template.newPost.events({
 	}
 });
 
-Template.discussion.events({
-	//comment existing post
-	'click button.answer': function (template) {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;}
-		Session.set("postID", this._id);
-		Session.set("showPostDialog", true);
-	},
-	//write new post
-	'click button.write': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;}
-		Session.set("showPostDialog", true);
-	}
-});
-
 Template.discussion.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
-}
+};
