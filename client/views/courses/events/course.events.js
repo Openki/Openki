@@ -41,9 +41,7 @@ Template.course_events.helpers({
 
 Template.course_event.events({
 	'click button.eventDelete': function () {
-			if(!Meteor.userId()) {
-				alert("Please log in!");
-				return;}
+		if (pleaseLogin()) return;
 		if (confirm("delete event "+"'"+this.event.title+"'"+"?")) {
 			Events.remove(this.event._id);
 		}
@@ -51,10 +49,7 @@ Template.course_event.events({
 	},
 
 	'click button.eventEdit': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
 	},
 	

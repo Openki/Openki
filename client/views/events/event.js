@@ -54,10 +54,7 @@ Template.eventDescritpionEdit.rendered = function() {
 
 Template.event.events({
 	'click button.eventDelete': function () {
-		if (!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		if (confirm("delete event "+"'"+this.title+"'"+"?")) {
 			Events.remove(this._id);
 		}
@@ -65,18 +62,12 @@ Template.event.events({
 	},
 	
 	'click button.eventEdit': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
 	},
 	
 	'click button.saveEditEvent': function(event, instance) {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		function readTime(str, date) {
 			var digits = str.replace(/[^0-9]+/g, '');
 			if (digits.length > 0) {

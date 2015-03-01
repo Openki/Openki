@@ -147,20 +147,14 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 
 Template.coursedetails.events({
 	'click button.del': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;}
-
+		if (pleaseLogin()) return;
 		if (confirm("really?")) {
 			Courses.remove(this._id);
 			Router.go('/');
 		}
 	},
 	'click button.edit': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		Router.go('showCourse', this, { query: {edit: 'course'} })
 
 	}

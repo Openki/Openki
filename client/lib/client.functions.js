@@ -97,6 +97,23 @@ goBase = function() {
 }
 
 
+pleaseLogin = function() {
+	if (Meteor.userId()) return false;
+	alert(mf('Please.login', 'Please login or register'));
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*************** HandleBars Helpers ***********************/
 
 Handlebars.registerHelper ("privacyEnabled", function(){

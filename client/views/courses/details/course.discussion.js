@@ -34,18 +34,12 @@ Template.newPost.helpers({
 
 Template.newPost.events({
 	'click button.write': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		Template.instance().writing.set(true);
 	},
 
 	'click button.add': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;
-		}
+		if (pleaseLogin()) return;
 		var timestamp = new Date();
 		var user = Meteor.userId();
 		var course = this._id;

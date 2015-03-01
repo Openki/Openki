@@ -25,9 +25,7 @@ Template.location_details.helpers({
 Template.location_details.events({
 	
 	'click input.edit': function () {
-		if(!Meteor.userId() ) {
-			alert("Please log in!");
-			return;}		
+		if (pleaseLogin()) return;
 
 		// das reicht wohl noch nicht, muss auf server-seite passieren?
 		if(this.hosts.indexOf(Meteor.userId())==-1 ) {
@@ -42,9 +40,7 @@ Template.location_details.events({
 	},
 
 	'click input.del': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;}
+		if (pleaseLogin()) return;
 
 		// das reicht wohl noch nicht, muss auf server-seite passieren?
 		if(this.hosts.indexOf(Meteor.userId())==-1 ) {

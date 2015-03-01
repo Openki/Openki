@@ -95,16 +95,11 @@ Template.votelists.events({
 
 Template.votelists.events({
 	'click input.show_add_vote': function () {
-		if(!Meteor.userId()){
-			alert("Please log in!"); 
-			return;}
-			
+		if (pleaseLogin()) return;
 		Session.set('addingVote', true)
 	},
 	'click input.create_votelist': function () {
-		if(!Meteor.userId()){
-			alert("Please log in!"); 
-			return;}
+		if (pleaseLogin()) return;
 		var option_array=$(".add_vote_option_button").map(function(){return $(this).val();}).get();
 		var option_object=[];
 		for(var i in option_array) {
@@ -115,10 +110,7 @@ Template.votelists.events({
 		Session.set('addingVote', false)
 	},
 	'click input.add_vote_add_option': function () {
-		if(!Meteor.userId()){
-			alert("Please log in!"); 
-			return;}
-			
+		if (pleaseLogin()) return;
 		$("#add_vote_options").append(
 		$(".add_vote_option").last().clone()
 		);

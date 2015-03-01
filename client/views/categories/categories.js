@@ -22,10 +22,7 @@ Template.category.helpers({
 
 Template.course_category.events({
 	'click input.add': function () {
-		if(!Meteor.userId()){
-			alert("to create a new category, please log in");
-			return; // <-- (FIXME: gruusig... bricht funktion ab) not nice, just ends the function - marcel
-		}
+		if (pleaseLogin()) return;
 		if ($("#addform_name").val()==""){
 			// wenn kein kurs name angegeben ist, warne und poste nichts in db
 			alert("Please write something and think twice");

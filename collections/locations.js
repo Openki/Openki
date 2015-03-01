@@ -52,7 +52,7 @@ Meteor.methods({
 		var user = Meteor.user()
 		if (!user) {
 		    if (Meteor.is_client) {
-				alert('please log in')
+				pleaseLogin();
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in")

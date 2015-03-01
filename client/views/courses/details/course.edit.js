@@ -57,10 +57,7 @@ Template.course_edit.events({
 	'submit form.course_edit, click button.save': function (ev) {
 		ev.preventDefault()
 		try {
-			if (!Meteor.userId()){
-			    alert("Please log in!")
-			    return;
-			}
+			if (pleaseLogin()) return;
 			
 			var courseId = this._id ? this._id : ''
 			var isNew = courseId === ''

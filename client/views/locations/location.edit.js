@@ -32,10 +32,7 @@ Template.location_edit.events({
 		
 
 		try {
-			if (!Meteor.userId()){  // TODO: AUTHENTICATION SHIT, USER ALLOWED TO EDIT?
-			    alert("Please log in!")
-			    throw "Please log in!"
-			} 
+			if (pleaseLogin()) return;
 			
 			var locationId = this._id ? this._id : ''
 			var isNew = locationId === ''	
@@ -120,9 +117,8 @@ Template.location_edit.events({
 	},
 
 	'click input.edit': function () {
-		if(!Meteor.userId()) {
-			alert("Please log in!");
-			return;}
+		if (pleaseLogin()) return;
+
 		// gehe in den edit-mode, siehe html
 	}
 
