@@ -1,6 +1,6 @@
 Template.lang_sel.helpers({
 	lgs: function() {
-		return [{ lg: 'en'}, { lg: 'de'}, { lg: 'fr'}, { lg: 'it'}];
+		return [{ lg: 'en'}, { lg: 'de'}, { lg: 'fr'}, { lg: 'it'}, {lg:'ar'}, {lg: 'zh_TW'}];
 	},
 	
 	lg: function() {
@@ -14,4 +14,4 @@ Template.lang_sel.events({
 		Session.set('locale', this.lg);
 		e.preventDefault();
 	}
-})
+});
