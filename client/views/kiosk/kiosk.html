@@ -4,7 +4,7 @@
 
 	<template name="kioskEvents">
 	<div class="calendar">
-		<h1>Upcoming events</h1>
+		<h1>openki.nachhaltigkeitswoche.ch</h1>
 		<ul class="calendar_eventlist">
 			{{#each this}}
 				{{> kioskEvent}}
@@ -20,7 +20,7 @@
 			<span class="icon-mini_date"></span> {{dateformat_fromnow startdate}} 
 		</p>
 		<p class="course_event_time">
-			<span class="icon-clock"></span> {{timeformat startdate}}
+			<span class="icon-clock"></span> {{timeformat startdate}} - {{timeformat enddate}} &nbsp;&nbsp;&nbsp; {{this.location}}, {{this.room}}
 		</p>
 		<p class="course_event_title">{{this.title}}</p>
 		<p class="course_event_desc">{{this.description}}</p>
