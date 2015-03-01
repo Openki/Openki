@@ -38,7 +38,7 @@ Template.loginLogin.events({
 			if (err) {
 				addMessage(err);
 			} else {
-				Session.set('showLogin', false);
+				$('.dropdown.open').removeClass('open');
 			}
 		});
 	},
@@ -55,7 +55,7 @@ Template.loginLogin.events({
 			if (err) {
 				addMessage(err.reason || 'Unknown error');
 			} else {
-				Session.set('showLogin', false);
+				$('.dropdown.open').removeClass('open');
 			}
 		});
 	}
