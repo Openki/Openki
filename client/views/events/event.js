@@ -49,7 +49,7 @@ Template.event.helpers({
 });
 
 Template.eventDescritpionEdit.rendered = function() {
-	console.log(new MediumEditor(this.firstNode));
+	new MediumEditor(this.firstNode);
 }
 
 Template.event.events({
