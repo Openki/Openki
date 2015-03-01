@@ -106,8 +106,11 @@
 				<div class="container-fluid">
 					<div class="course_event_title"><h4>{{this.title}}</h4></div>
 					<div class="course_event_time">
-						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
-						{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
+						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}} - {{timeformat enddate}}
+						{{#if location}}
+							<br><span class="glyphicon glyphicon-home"></span> {{location}} 
+							{{#if room}} - {{room}}{{/if}}
+						{{/if}} 
 					</div>
 				</div>
 			</div>
