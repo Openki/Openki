@@ -6,7 +6,7 @@
 <template name="userprofile">
 	<div class="container-fluid">
 		<div id="profile">
-			<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile-Page" NAME=user.profile.name}}</h1>
+			<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile-Page" NAME=this.user.username}}</h1>
 			<p class="descr_small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
 			{{#if ownuser}}
 				{{mf 'profile.its_you' "It's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
