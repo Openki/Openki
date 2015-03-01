@@ -158,6 +158,7 @@ Template.event.events({
 	},
 	
 	'click button.cancelEditEvent': function () {
+		if (this.new) history.back();
 		Template.instance().editing.set(false);
 	},
 
