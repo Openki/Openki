@@ -1,11 +1,16 @@
 <template name="eventPage">
-	<div class="course_event_detail" id="coursedetails">
-		{{#if course}}
-		<p>
-            <a href="{{pathFor 'showCourse' _id=course._id}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"</a>
-        </p>
-        {{/if}}
-		{{>event event}}
+	<div class="container-fluid">
+		<div class="course_event_detail" id="coursedetails">
+			{{#if course}}
+			<p>
+	            <a href="{{pathFor 'showCourse' _id=course._id}}">
+	            	<span class="glyphicon glyphicon-arrow-left"></span>
+	            	{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+	            </a>
+	        </p>
+	        {{/if}}
+			{{>event event}}
+		</div>
 	</div>
 </template>
 
@@ -99,7 +104,10 @@
 			<div class="course_event_date">
 				<div class="container-fluid">
 					<span class="day">{{weekday startdate}}</span><br>
-					<span class="date">{{dateformat_mini_fullmonth startdate}}</span>
+					<span class="date">
+						<span class="glyphicon glyphicon-calendar"></span>
+						{{dateformat_mini_fullmonth startdate}}
+					</span>
 				</div>
 			</div>
 			<div class="course_event_lower_section">
@@ -114,12 +122,11 @@
 					</div>
 				</div>
 			</div>
-			
-			<p>
-				{{{description}}}
-			</p>
-
-			{{> report}}
+			<div class="container-fluid event_detail_description">
+				<p>
+					{{{description}}}
+				</p>
+			</div>
 
 			{{# if currentUser}}
 				<div class="eventEdit_buttons">
@@ -136,7 +143,8 @@
 				</div>
 			{{/if}}
 		</div>
-	{{/if}}
+	{{/if}}<br>
+	{{> report}}
 </template>
 
 <template name="eventDescritpionEdit">

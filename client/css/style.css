@@ -86,7 +86,6 @@ div.fold-buttons {
 }
 
 footer.footer {
-  bottom: 0px;
   background: #38829C;
   width: 100%;
   height: 100px;
@@ -363,6 +362,31 @@ ul.subcategories > li {
   padding: 10px 0 !important;
 }
 /*---------------------*/
+
+/*EVENT*/
+
+.course_event_detail .course_event > .course_event_date {
+  padding: 10px 0;
+  border-bottom: 3px solid #fff;
+  background: #C1F2AE;
+}
+
+.course_event_detail .course_event > .course_event_date span.date {
+  font-size: x-large;
+}
+
+.course_event_detail .course_event > .event_detail_description {
+  background: #D8EBF4
+}
+
+.course_event_detail > .course_event:hover,
+.course_event_detail > .course_event:hover,
+.course_event_detail > .calendar_event:hover,
+.course_event_detail > .calendar_event_past:hover {
+  box-shadow: none;
+}
+
+/*END EVENT*/
 
 
 /*COURSEDETAILS EVENT*/
