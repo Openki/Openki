@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="calendar">
 			<div class="container-fluid">
-				<div class="calendar_eventlist row">
+				<div class="row">
 					<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}</h1>
 					{{#each calendar_eventlist}}
 						{{> calendar_event}}
@@ -28,7 +28,18 @@
 			</div>
 			<div class="course_event_time">
 				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-				{{timeformat startdate}} - {{timeformat enddate}} &nbsp;&nbsp;&nbsp; {{this.location}}, {{this.room}}
+				{{timeformat startdate}}
+				{{#if enddate}}
+					- {{timeformat enddate}}
+				{{/if}}
+				<br>
+				{{#if location}}
+					<span class="glyphicon glyphicon-home"></span>
+					{{this.location}}
+					{{#if room}}
+						- {{this.room}}
+					{{/if}}
+				{{/if}}
 			</div>
 			<div class="course_event_title">
 				<h4>{{this.title}}</h4>
