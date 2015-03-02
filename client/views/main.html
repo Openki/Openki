@@ -4,6 +4,7 @@
 </head>
 
 <template name="layout">
+	<div id="wrap">
 	<nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" role="navigation">
 		<div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
@@ -109,15 +110,16 @@
 	<footer class="footer">
 		<div class="container-fluid">
 			<div class="row container-fluid links">
-				<a href="about.html" >{{mf 'main.about_link' 'About'}}</a>
+				<a href="/about" >{{mf 'main.about_link' 'About'}}</a>
 				<a href="https://wwww.openki.net">{{mf 'main.concept_link' 'Concept'}}</a>
-				<a href="faq.html">{{mf 'main.faq_link' 'FAQ'}}</a>
+				<a href="/FAQ">{{mf 'main.faq_link' 'FAQ'}}</a>
 				|
 				<div class="long_link">
 				<a href="https://github.com/schuel/hmmm/">{{mf 'main.github_link' 'Code on Github'}}</a></div>
 			</div>
 		</div>
 	</footer>
+</div>
 </template>
 
 <template name="region_sel">
