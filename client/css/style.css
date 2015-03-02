@@ -95,6 +95,11 @@ div.fold-buttons {
 
 /*KIOSK*/
 
+.kiosk h1 > a {
+  font-size: large;
+  padding-top: 20px;
+}
+
 .kiosk a > .calendar_event {
   width: 100%;
 }
@@ -106,10 +111,15 @@ div.fold-buttons {
 
 .kiosk a .calendar_event > .kiosk_date_time {
   background: #C1F2AE;
-  font-size: x-large;
+  font-size: large;
   color: #000;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.kiosk a .calendar_event .kiosk_date_time > .kiosk_home {
+  padding-top: 15px;
+  text-align: right;
 }
 
 .kiosk a .calendar_event .course_event_title > h3 {
