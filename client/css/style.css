@@ -81,8 +81,24 @@ div.fold-buttons {
 }
 /*/////////////////////////////*/
 
+/*BANNER*/
+
+.banner {
+  margin-top: -65px;
+}
+
+.banner > a:hover {
+  color: #38829C;
+}
+
+/*///////////////////////////*/
 #maincontent {
   padding-bottom: 50px;
+}
+
+.about {
+  font-size: medium;
+  padding: 0 30px;
 }
 
 footer.footer {
@@ -118,6 +134,18 @@ a.navbar-brand {
 
 body {
 	padding-top: 65px;
+}
+
+html,
+body {
+  height: 100%
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -100px;
 }
 
 h1 {
@@ -360,6 +388,18 @@ ul.subcategories > li {
 
 .course_edit_finishbtns {
   padding: 10px 0 !important;
+}
+
+div#edit_event_description {
+  border: 1px solid #CCC;
+  padding: 5px;
+  background: #fff;
+}
+
+div#edit_event_description:focus {
+  border-color: #38829C;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 
+              0px 0px 8px rgba(56, 130, 156, 0.6);
 }
 /*---------------------*/
 
