@@ -142,14 +142,27 @@ div.grey_out {
 #maincontent {
     padding-bottom: 50px;
 }
+
 .about {
     font-size: medium;
     padding: 0 30px;
 }
+
+body {
+    padding-top: 65px;
+}
+
+html,body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+    margin: 0 auto -100px;
+}
+
 footer.footer {
     background: #38829C;
-    width: 100%;
-    height: 100px;
     text-align: center;
     font-size: large;
     color: #fff;
@@ -158,8 +171,6 @@ footer.footer {
             color: #fff;
         }
     }
-}
-footer {
     .links {
         word-spacing: 10px;
         padding-top: 35px;
@@ -169,6 +180,12 @@ footer {
         }
     }
 }
+
+.footer,
+.push {
+    height: 100px;
+}
+
 a.navbar-brand {
     font-size: x-large;
 }
@@ -179,17 +196,7 @@ a.navbar-brand {
         }
     }
 }
-body {
-    padding-top: 65px;
-}
-html,body {
-    height: 100%;
-}
-#wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -100px;
-}
+
 h1 {
     color: #38829C;
 }
