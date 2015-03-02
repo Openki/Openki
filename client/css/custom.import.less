@@ -112,6 +112,7 @@ div.fold-buttons {
         }
     }
     a:hover {
+        text-decoration: none;
         .calendar_event {
             & > .course_event_desc {
                 color: #38829C;
@@ -122,6 +123,22 @@ div.fold-buttons {
 
 // BASIC STYLINGS (TODO:SPLIT & STRUCTURE)
 // =========================================
+
+//Helpers
+div.no-padding {
+    padding: 0;
+}
+div.grey_out {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: #E6E6E6;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+//
 #maincontent {
     padding-bottom: 50px;
 }
@@ -182,9 +199,6 @@ p {
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-}
-div.no-padding {
-    padding: 0;
 }
 .search {
     .row {
