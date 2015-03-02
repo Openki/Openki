@@ -123,8 +123,13 @@ div.fold-buttons {
 }
 
 .kiosk a .calendar_event .course_event_title > h3 {
-  margin-top: 10px;
+  margin-top: 15px;
+  color: #000;
 }
+
+.kiosk a:hover .calendar_event > .course_event_desc {
+  color: #38829C;
+} 
 
 #maincontent {
   padding-bottom: 50px;
