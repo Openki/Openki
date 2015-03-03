@@ -1,59 +1,48 @@
 <template name="course_event_detail">
-	<div class="course_event_detail" id="coursedetails">
-	
+	<div class="container-fluid">
+		<div class="course_event_detail" id="coursedetails">
 		{{#if editingEvent current_event._id}}
-				{{>course_event_edit}}
+			{{>course_event_edit}}
 		{{else}}
-            <div>
-			
-                {{#with course}}
+			<div>
+			{{#with course}}
 			    <p>
-                    <a href="{{pathFor 'showCourse'}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{name}}"</a>
-                </p>
-                {{/with}}
-
+	                <a href="{{pathFor 'showCourse'}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{name}}"</a>
+	            </p>
+	        {{/with}}
 			{{#with current_event}}
-
-                <p class="course_event_date">
+	            <p class="course_event_date">
 					<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
 				</p>
 				<p class="course_event_time">
 					<span class="icon-clock"></span> {{timeformat startdate}}
 				</p>
-
-                <h3 class="name">{{mf 'course.event.detail.event' 'Event:'}}' {{this.title}}</h3>
-
-                
-                <p>
-                {{description}}
-                </p>
-
-				
+	            <h3 class="name">{{mf 'course.event.detail.event' 'Event:'}}' {{this.title}}</h3>
+	            <p>
+	                {{description}}
+	            </p>				
 				{{#if this.mentors}}
-				<p class="course_event_info">	
+					<p class="course_event_info">	
 						<ul class="course_event_mentors">
 						{{#each this.mentors}}
 							<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
 						{{/each}}
 						</ul>
-				</p>
+					</p>
 				{{/if}}
 				{{#if host}}
-				<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.event.detail.hosted_by' 'hosted by'}} {{username host}} </p>
+					<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.event.detail.hosted_by' 'hosted by'}} {{username host}} </p>
 				{{/if}}
 			{{/with}}
-			<!-- TODO -->
-			<!-- <input type="button" class="eventEdit" value="Edit" />-->
+				<!-- TODO -->
+				<!-- <input type="button" class="eventEdit" value="Edit" />-->
 			</div>
 		{{/if}}
-		<!-- TODO -->
-        <!-- <input type="button" class="eventDelete" value="Delete" />-->
-        
-    </div>
-    
-	<div class="course_right_column">
-    		{{> course_events}}
+			<!-- TODO -->
+	        <!-- <input type="button" class="eventDelete" value="Delete" />-->
+	    </div>
+    	<div class="course_right_column">
+	    		{{> course_events}}
+		</div>
 	</div>
-	
-
 </template>

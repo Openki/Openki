@@ -1,30 +1,59 @@
 <template name="kioskLayout">
-	{{> yield}}
+	<div class="container">
+		<div class="container-fluid">
+			{{#if showKioskCalendar}}
+				<a href="{{pathFor 'kiosk'}}" style="font-size:medium">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
+				</a>
+			{{/if}}
+		</div>
+		{{> yield}}
+	</div>
 </template>
 
 	<template name="kioskEvents">
-	<div class="calendar">
-		<h1>openki.nachhaltigkeitswoche.ch</h1>
-		<ul class="calendar_eventlist">
-			{{#each this}}
-				{{> kioskEvent}}
-			{{/each}}
-		</ul>
+	<div class="kiosk">
+		<h1>openki.nachhaltigkeitswoche.ch 
+			<a href="{{pathFor 'kioskCalendar'}}" class="pull-right">
+				<span class="glyphicon glyphicon-calendar"></span>
+				{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
+			</a>
+		</h1>
+		<hr>
+		{{#each this}}
+			{{> kioskEvent}}
+		{{/each}}
 	</div>
 </template>
 
 <template name="kioskEvent">
-	<a href="{{pathFor 'showEvent'}}">
-	<div class="calendar_event" style='overflow: hidden'>
-		<p class="course_event_date">
-			<span class="icon-mini_date"></span> {{dateformat_fromnow startdate}} 
-		</p>
-		<p class="course_event_time">
-			<span class="icon-clock"></span> {{timeformat startdate}} - {{timeformat enddate}} &nbsp;&nbsp;&nbsp; {{this.location}}, {{this.room}}
-		</p>
-		<p class="course_event_title">{{this.title}}</p>
-		<p class="course_event_desc">{{plain this.description}}</p>
-	</div>
-	</a>
+		<a href="{{pathFor 'showEvent'}}">
+		<div class="calendar_event" style='overflow: hidden'>
+			<div class="kiosk_date_time col-sm-12">
+				<div class="col-sm-6 no-padding">
+					<span style="font-size:x-large">
+						<span class="glyphicon glyphicon-time"></span>&nbsp;{{dateformat_fromnow startdate}}
+					</span>
+					<br>
+					<span class="glyphicon glyphicon-calendar"></span>
+					{{weekday startdate}}
+					{{timeformat startdate}} - {{timeformat enddate}}
+				</div>
+				<div class="kiosk_home col-sm-6">
+					<span class="glyphicon glyphicon-home"></span>
+					{{this.location}} 
+					{{#if room}}
+						- {{this.room}}
+					{{/if}}
+				</div>
+			</div>
+			<div class="course_event_title col-sm-12">
+				<h3>{{plain this.title}}</h3>
+			</div>
+			<div class="course_event_desc">{{plain this.description}}</div>
+		</div>
+		</a>
+		<br>
 </template>
 

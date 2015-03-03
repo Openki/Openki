@@ -3,26 +3,35 @@
 </template>
 
 <template name="bannerEvents">
-  <div class="calendarrrrrrr_aendert_nichts" style='margin-left:-48px; margin-top:-73px'> 
-	<ul class="calendar_eventlistttttttt_aendert_nichts">
-		{{#each this}}
-			{{> bannerEvent}}
-		{{/each}}
-	</ul>
+  <div class="banner">
+	{{#each this}}
+		{{> bannerEvent}}
+	{{/each}}
   </div>
 </template>
 
 <template name="bannerEvent">
 	<a href="{{pathFor 'showEvent'}}">
 	<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding" style='overflow: hidden'>
-		<p class="course_event_date">
-			<span class="icon-mini_date"></span> {{dateformat_fromnow startdate}} 
-		</p>
-		<p class="course_event_time">
-			<span class="icon-clock"></span> {{timeformat startdate}} - {{timeformat enddate}} &nbsp; &nbsp; &nbsp; {{this.location}}, {{this.room}}
-		</p>
-		<p class="course_event_title">{{plain this.title}}</p>
-		<p class="course_event_desc">{{plain this.description}}</p>
+		<div class="course_event_date">
+			<span class="glyphicon glyphicon-calendar"></span>&nbsp;{{dateformat_fromnow startdate}} 
+		</div>
+		<div class="course_event_time">
+			<span class="glyphicon glyphicon-time"></span>
+			{{timeformat startdate}} - {{timeformat enddate}}
+			<br>
+			<span class="glyphicon glyphicon-home"></span>
+			{{this.location}} 
+			{{#if room}}
+				- {{this.room}}
+			{{/if}}
+		</div>
+		<div class="col-sm-12">
+			<div class="course_event_title">
+				<h4>{{plain this.title}}</h4>
+			</div>
+			<div class="course_event_desc">{{plain this.description}}</div>
+		</div>
 	</div>
 	</a>
 </template>
