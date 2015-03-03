@@ -8,6 +8,7 @@ a#nhw_logo:hover {
         opacity: 0.7;
     }
 }
+
 .nw_header {
     text-align: center;
     margin-top: -10px;
@@ -17,13 +18,16 @@ a#nhw_logo:hover {
         }
     }
 }
+
 .nw_header.hideIt {
     display: none;
 }
+
 img.nw_box {
     padding-right: 20px;
     padding-bottom: 10px;
 }
+
 h3.teaser {
     line-height: 35px;
     font-size: 2em;
@@ -32,6 +36,7 @@ h3.teaser {
         margin: 0;
     }
 }
+
 .NWinfo {
     display: none;
     background: #D8EBF4;
@@ -41,31 +46,40 @@ h3.teaser {
         padding: 15px 10px 0px 10px;
     }
 }
+
 .NWinfo.true {
     display: block;
 }
+
 button.nw_close,button.readmore {
     border: none;
     background: none;
     font-size: large;
     color: #38829C;
 }
+
 button.nw_close:hover,button.readmore:hover {
     color: #333;
     z-index: 9999;
 }
+
 button.nw_close {
     padding-top: 5px;
 }
+
 :button.readmore {
     padding-top: 5px;
 }
-button.readmore &>span.glyphicon-chevron-down,button.readmore &>span.glyphicon-chevron-up {
+
+button.readmore &>span.glyphicon-chevron-down,
+button.readmore &>span.glyphicon-chevron-up {
     font-size: medium;
 }
+
 div.fold-buttons {
     padding-bottom: 10px;
 }
+
 .banner {
     margin-top: -65px;
     & > a:hover {
@@ -75,6 +89,7 @@ div.fold-buttons {
 
 // KIOSK MODE STYLING
 // =======================================
+
 .kiosk {
     h1 {
         & > a {
@@ -126,9 +141,11 @@ div.fold-buttons {
 // =========================================
 
 //Helpers
+
 div.no-padding {
     padding: 0;
 }
+
 div.grey_out {
     position: absolute;
     top: 0px;
@@ -139,7 +156,9 @@ div.grey_out {
     opacity: 0.5;
     filter: alpha(opacity=50); /* For IE8 and earlier */
 }
-//
+
+////////////
+
 #maincontent {
     padding-bottom: 50px;
 }
@@ -190,6 +209,7 @@ footer.footer {
 a.navbar-brand {
     font-size: x-large;
 }
+
 .navbar-nav {
     & > li {
         & > a {
@@ -201,6 +221,7 @@ a.navbar-brand {
 h1 {
     color: #38829C;
 }
+
 p {
     -moz-hyphens: auto;
     -o-hyphens: auto;
@@ -208,20 +229,24 @@ p {
     -ms-hyphens: auto;
     hyphens: auto;
 }
+
 .search {
     .row {
         margin-left: 0;
     }
 }
+
 .navbar-right {
     a.loginButton {
         cursor: pointer !important;
     }
 }
+
 .dropdown-menu {
     background: #D8EBF4;
     width: 300px;
 }
+
 #loginFrame {
     text-align: center;
     background: #D8EBF4;
@@ -229,12 +254,15 @@ p {
         margin-top: 12px;
     }
 }
+
 input#find {
     font-size: 20px;
 }
+
 .external_logins {
     margin: 15px 0;
 }
+
 ul.messages {
     background: #f0ad4e;
     text-align: center;
@@ -253,9 +281,11 @@ ul.messages {
 
 // COURSELIST STYLING
 // ====================================
+
 .courselist_results {
     margin-top: 10px;
 }
+
 .courselist_course {
     display: inline-block;
     width: 280px;
@@ -289,14 +319,18 @@ ul.messages {
         text-align: center;
     }
 }
+
 .courselist_course:hover {
     h4 {
         color: #38829C;
     }
 }
-.courselist_course.hasupcomingevents,.course_main.hasupcomingevents {
+
+.courselist_course.hasupcomingevents,
+.course_main.hasupcomingevents {
     background: #D8EBF4;
 }
+
 .courselist_course_info {
     right: -7px;
     top: -7px;
@@ -304,6 +338,7 @@ ul.messages {
     width: 25%;
     background: #fff;
 }
+
 .course_eventlist_container {
     background: #C1F2AE;
     text-align: center;
@@ -324,6 +359,7 @@ ul.messages {
         overflow: hidden;
     }
 }
+
 .course_categories {
     & > ul {
         li {
@@ -337,8 +373,10 @@ ul.messages {
         }
     }
 }
+
 // COURSEDETAIL STYLING
 // ===================================================
+
 .course_main {
     border: 7px dashed #D8EBF4;
     margin-top: 20px;
@@ -347,12 +385,16 @@ ul.messages {
         border-bottom: 3px solid #fff;
     }
 }
-.course_groups ul,.course_groups ul li,.course_groups ul li a {
+
+.course_groups ul,.course_groups ul li,
+.course_groups ul li a {
     display: inline-block;
 }
+
 p.course_description {
     padding: 10px 0;
 }
+
 ul.nav-tabs {
     li {
         a {
@@ -363,6 +405,7 @@ ul.nav-tabs {
         }
     }
 }
+
 .edit_buttons {
     padding: 10px 0;
     text-align: center;
@@ -370,6 +413,7 @@ ul.nav-tabs {
     background: #D8EBF4;
     margin: -7px 0 -0 -22px;
 }
+
 .course_main.hasupcomingevents {
     ul.nav-tabs {
         li.active {
@@ -379,9 +423,11 @@ ul.nav-tabs {
         }
     }
 }
+
 button.eventEdit.addButton {
     margin-top: 20px;
 }
+
 .course_event_edit {
     border: 7px dashed #D8EBF4;
     margin-top: 20px;
@@ -390,44 +436,55 @@ button.eventEdit.addButton {
         padding-top: 15px;
     }
 }
+
 .course_edit_editbox {
     border: 7px solid #D8EBF4;
     background: #D8EBF4;
     padding: 5px 0 !important;
 }
+
 input#editform_name {
     font-size: large;
 }
+
 #editform_description {
     min-height: 100px;
     border: 1px solid #CCC;
     padding: 5px;
     background: #fff;
 }
+
 #editform_description:focus {
     border-color: #38829C;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,0px 0px 8px rgba(56, 130, 156, 0.6);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+                0px 0px 8px rgba(56, 130, 156, 0.6);
 }
+
 ul.subcategories {
     & > li {
         display: inline-block;
     }
 }
+
 .course_edit_finishbtns {
     padding: 10px 0 !important;
 }
 
 // COURSE EVENTS STYLING
 // ===============================================
+
 div#edit_event_description {
     border: 1px solid #CCC;
     padding: 5px;
     background: #fff;
 }
+
 div#edit_event_description:focus {
     border-color: #38829C;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,0px 0px 8px rgba(56, 130, 156, 0.6);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+                0px 0px 8px rgba(56, 130, 156, 0.6);
 }
+
 .course_event_detail {
     .course_event {
         & > .course_event_date {
@@ -443,23 +500,37 @@ div#edit_event_description:focus {
         }
     }
 }
-.course_event_detail &>.course_event:hover,.course_event_detail &>.course_event:hover,.course_event_detail &>.calendar_event:hover,.course_event_detail &>.calendar_event_past:hover {
+
+.course_event_detail &>.course_event:hover,
+.course_event_detail &>.course_event:hover,
+.course_event_detail &>.calendar_event:hover,
+.course_event_detail &>.calendar_event_past:hover {
     box-shadow: none;
 }
+
 .course_events {
     padding-top: 20px;
 }
-.course_event_container,.course_event_past_container {
+
+.course_event_container,
+.course_event_past_container {
     padding: 5px;
 }
-.course_event:hover,.course_event:hover,.calendar_event:hover,.calendar_event_past:hover {
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset,0px 0px 20px rgba(56, 130, 156, 0.6);
+
+.course_event:hover,
+.course_event:hover,
+.calendar_event:hover,
+.calendar_event_past:hover {
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset,
+                0px 0px 20px rgba(56, 130, 156, 0.6);
     z-index: 1029;
 }
+
 .course_event &>a,.course_event &>a:hover {
     color: #333;
     text-decoration: none;
 }
+
 .course_event {
     a {
         & > .course_event_date {
@@ -490,46 +561,58 @@ div#edit_event_description:focus {
         border-top: 3px solid #fff;
     }
 }
+
 .course_event_lower_section {
     background: #D8EBF4;
     padding-bottom: 10px;
 }
+
 .course_event_title {
     -moz-transition: color 1s;
 }
+
 .course_event:hover {
     .course_event_title {
         color: #38829C;
     }
 }
+
 input#edit_event_title {
     font-size: large;
 }
+
 // COURSEDETAILS ROLES STYLING
 // ====================================================
+
 .courseDetails_roles_container {
     background: #D8EBF4;
     margin-top: 20px;
     height: 100%;
 }
+
 .courseDetails_participants_count {
     height: 60px;
     background: #EC6D6D;
     border-bottom: 3px solid #fff;
     border-right: 3px solid #fff;
 }
-.courseDetails_participants_count p,.courseDetails_mentor p {
+
+.courseDetails_participants_count p,
+.courseDetails_mentor p {
     padding-top: 15px;
     font-size: large;
 }
+
 .courseDetails_mentor.mentor_status.yes {
     background: #C1F2AE;
     height: 60px;
     border-bottom: 3px solid #fff;
 }
+
 .courseDetails_participants {
     padding-top: 15px;
 }
+
 ul.subscribers {
     font-size: medium;
     li {
@@ -539,9 +622,11 @@ ul.subscribers {
         }
     }
 }
+
 ul.roles,ul.roles li {
     display: inline-block;
 }
+
 ul.roles {
     margin-left: 20px;
     li {
@@ -556,28 +641,36 @@ ul.roles {
         display: none;
     }
 }
+
 span.member_comment {
     margin-left: 20px;
 }
+
 span.editable:after {
     width: 100px;
 }
-.editable-controls,button.editable-store,button.editable-cancel {
+
+.editable-controls,
+button.editable-store,
+button.editable-cancel {
     border: 0;
     background: none;
     color: #38829C;
     display: inline-block;
 }
+
 button.editable-store {
     & > span.glyphicon-ok {
         color: #5cb85c;
     }
 }
+
 button.editable-cancel {
     & > span.glyphicon-remove {
         color: #EC6D6D;
     }
 }
+
 button.enrol {
     border-radius: 0;
     border: none;
@@ -586,16 +679,20 @@ button.enrol {
     text-align: left;
     font-size: x-large;
 }
+
 button.enrol:hover {
     border: none;
     border-top: 3px solid #fff;
 }
+
 // DISCUSSION STYLING
 // ===========================================
+
 .discussion {
     margin-top: 20px;
     background: #D8EBF4;
 }
+
 .discussion_titlebar {
     background: #C1F2AE;
     height: 60px;
@@ -607,18 +704,22 @@ button.enrol:hover {
         padding: 15px 0 0 7px;
     }
 }
+
 .discussion {
     button.write {
         margin: 20px 0;
     }
 }
+
 .popup {
     padding-bottom: 20px;
 }
+
 .discussion_conversation_container {
     background: #fff;
     margin-bottom: 20px;
 }
+
 .discussion_conversation {
     background: #fff;
     padding: 10px 10px;
@@ -632,39 +733,48 @@ h4.comment_user {
         -moz-transition: color 1s;
     }
 }
+
 .comment_time_created {
     color: #38829C;
     cursor: help;
 }
+
 button.answer {
     background: none;
     border: 0;
     color: #38829C;
     padding-bottom: 5px;
 }
+
 button.answer:hover {
     color: #2B6376;
 }
+
 .comment_hr {
     background: #D8EBF4;
     border: 0;
     height: 1px;
     margin: 0;
 }
+
 // CALENDAR STYLING
 // ================================
+
 .calendar {
     & > a:hover {
         color: inherit;
     }
 }
+
 .calendar_event,.calendar_event_past {
     width: 350px;
     height: 230px;
     margin: 7px;
     background: #D8EBF4;
 }
-.calendar_event &>.course_event_date,.calendar_event_past &>.course_event_date {
+
+.calendar_event &>.course_event_date,
+.calendar_event_past &>.course_event_date {
     padding: 10px 10px 0 10px;
     width: 100%;
     background: #C1F2AE;
@@ -672,7 +782,9 @@ button.answer:hover {
     color: #333;
     text-align: left;
 }
-.calendar_event &>.course_event_time,.calendar_event_past &>.course_event_time {
+
+.calendar_event &>.course_event_time,
+.calendar_event_past &>.course_event_time {
     padding: 0 10px 10px 10px;
     width: 100%;
     background: #C1F2AE;
@@ -680,16 +792,25 @@ button.answer:hover {
     color: #333;
     border-bottom: 3px solid #fff;
 }
-.calendar_event &>.course_event_title,.calendar_event_past &>.course_event_title,.calendar_event &>.course_event_desc,.calendar_event_past &>.course_event_desc {
+
+.calendar_event &>.course_event_title,
+.calendar_event_past &>.course_event_title,
+.calendar_event &>.course_event_desc,
+.calendar_event_past &>.course_event_desc {
     padding: 0 10px;
 }
-.calendar_event .course_event_title &>h4,.calendar_event_past .course_event_title &>h4 {
+
+.calendar_event .course_event_title &>h4,
+.calendar_event_past .course_event_title &>h4 {
     color: #333;
     -moz-transition: color 1s;
 }
-.calendar_event:hover .course_event_title &>h4,.calendar_event_past:hover .course_event_title &>h4 {
+
+.calendar_event:hover .course_event_title &>h4,
+.calendar_event_past:hover .course_event_title &>h4 {
     color: #38829C;
 }
+
 .calendar_event {
     .course_event_desc {
         & > p {
