@@ -1,29 +1,69 @@
-<html>
-<head>
+<template name="kioskLayout">
+	<head>
+	<style type="text/css">
+		body {
+		background-position: right;
+		background-image: url("http://www.nachhaltigkeitswoche.ch/site/templates/images/bggreen.svgz");
+		background-repeat: no-repeat;
+		}
+	</style>
+	</head>
+	<div class="container">
+		<div class="container-fluid">
+			{{#if showKioskCalendar}}
+				<a href="{{pathFor 'kiosk'}}" style="font-size:medium">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
+				</a>
+			{{/if}}
+		</div>
+		{{> yield}}
+	</div>
+</template>
 
+<template name="kioskEvents">
+	<div class="kiosk">
+		<IMG SRC="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" ALT="Logo der Nachhaltigkeitswoche" width="100%" />
+		<h1>openki.nachhaltigkeitswoche.ch 
+			<a href="{{pathFor 'kioskCalendar'}}" class="pull-right">
+				<span class="glyphicon glyphicon-calendar"></span>
+				{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
+			</a>
+		</h1>
+		<hr>
+		{{#each this}}
+			{{> kioskEvent}}
+		{{/each}}
+	</div>
+</template>
 
+<template name="kioskEvent">
+		<a href="{{pathFor 'showEvent'}}">
+		<div class="calendar_event" style='overflow: hidden'>
+			<div class="kiosk_date_time col-sm-12">
+				<div class="col-sm-6 no-padding">
+					<span style="font-size:x-large">
+						<span class="glyphicon glyphicon-time"></span>&nbsp;{{dateformat_fromnow startdate}}
+					</span>
+					<br>
+					<span class="glyphicon glyphicon-calendar"></span>
+					{{weekday startdate}}
+					{{timeformat startdate}} - {{timeformat enddate}}
+				</div>
+				<div class="kiosk_home col-sm-6">
+					<span class="glyphicon glyphicon-home"></span>
+					{{this.location}} 
+					{{#if room}}
+						- {{this.room}}
+					{{/if}}
+				</div>
+			</div>
+			<div class="course_event_title col-sm-12">
+				<h3>{{plain this.title}}</h3>
+			</div>
+			<div class="course_event_desc">{{plain this.description}}</div>
+		</div>
+		</a>
+		<br>
+</template>
 
-	
-<style type="text/css">
-	body {
-	    background-position: right;
-	    background-image: url("http://www.nachhaltigkeitswoche.ch/site/templates/images/bggreen.svgz");
-	    background-repeat: no-repeat;
-	}
-</style>
-
-
-</head>
-
-
-<body>
-
-
-        
-       <!-- <div class="bgimage" style="width: 100%; height: 100%;">-->
-        
-            <IMG SRC="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" ALT="Logo der Nachhaltigkeitswoche" HEIGHT="10%" />
-<!--</div>-->
-
-</body>
-</html>
