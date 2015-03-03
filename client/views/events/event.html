@@ -67,36 +67,39 @@
 				{{>eventDescritpionEdit description}}
 			</div>
 		</div>
-		<div class="col-sm-6">
-			<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
-			<div id="editform_location" name="editform_location" class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-map-marker"></span>
-				</span>
-				<input type="text" id="edit_event_location" class="form-control" size="40" value="{{location}}"/>
+		<div class="col-sm-12 no-padding">
+			<div class="col-xs-12 col-sm-6">
+				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
+				<div id="editform_location" name="editform_location" class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-map-marker"></span>
+					</span>
+					<input type="text" id="edit_event_location" class="form-control" size="40" value="{{location}}"/>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4> 
+				<div id="editform_room" name="editform_room" class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-map-marker"></span>
+					</span>
+					<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
-			<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4> 
-			<div id="editform_room" name="editform_room" class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-map-marker"></span>
-				</span>
-				<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
+		<div class="col-sm-12 no-padding event_edit_buttons">
+			<div class="col-xs-12 col-sm-6">
+				<button type="button" class="saveEditEvent btn btn-default form-control">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'course.event.edit.save_btn' 'Save'}}
+				</button>
 			</div>
-		</div>
-		<div class="col-xs-12 col-sm-6">
-			<button type="button" class="saveEditEvent btn btn-default form-control">
-				<span class="glyphicon glyphicon-save"></span>
-				{{mf 'course.event.edit.save_btn' 'Save'}}
-			</button>
-			
-		</div>
-		<div class="col-xs-12 col-sm-6">
-			<button type="button" class="cancelEditEvent btn btn-default form-control">
-				<span class="glyphicon glyphicon-remove"></span>
-				{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
-			</button>
+			<div class="col-xs-12 col-sm-6">
+				<button type="button" class="cancelEditEvent btn btn-default form-control">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
+				</button>
+			</div>
 		</div>
 	</div>
 	{{else}}
