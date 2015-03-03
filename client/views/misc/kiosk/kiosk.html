@@ -1,4 +1,11 @@
 <template name="kioskLayout">
+	<style type="text/css">
+		body {
+		    background-position: right;
+		    background-image: url("http://www.nachhaltigkeitswoche.ch/site/templates/images/bggreen.svgz");
+		    background-repeat: no-repeat;
+		}
+	</style>
 	<div class="container">
 		<div class="container-fluid">
 			{{#if showKioskCalendar}}
@@ -12,8 +19,9 @@
 	</div>
 </template>
 
-	<template name="kioskEvents">
+<template name="kioskEvents">
 	<div class="kiosk">
+		<IMG SRC="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" ALT="Logo der Nachhaltigkeitswoche" HEIGHT="10%" />
 		<h1>openki.nachhaltigkeitswoche.ch 
 			<a href="{{pathFor 'kioskCalendar'}}" class="pull-right">
 				<span class="glyphicon glyphicon-calendar"></span>
