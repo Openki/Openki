@@ -2,7 +2,7 @@
 	<head>
 	<style type="text/css">
 		body {
-		background-position: right;
+		background-position: 100% 0%;
 		background-image: url("http://www.nachhaltigkeitswoche.ch/site/templates/images/bggreen.svgz");
 		background-repeat: no-repeat;
 		}
@@ -11,10 +11,12 @@
 	<div class="container">
 		<div class="container-fluid">
 			{{#if showKioskCalendar}}
-				<a href="{{pathFor 'kiosk'}}" style="font-size:medium">
-					<span class="glyphicon glyphicon-arrow-left"></span>
+				<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/>
+				<a id ="backToKiosk" href="{{pathFor 'kiosk'}}" class="pull-right">
+					<span class="glyphicon glyphicon-share-alt"></span>&nbsp;
 					{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
 				</a>
+				<hr>
 			{{/if}}
 		</div>
 		{{> yield}}
@@ -23,13 +25,11 @@
 
 <template name="kioskEvents">
 	<div class="kiosk">
-		<IMG SRC="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" ALT="Logo der Nachhaltigkeitswoche" width="100%" />
-		<h1>openki.nachhaltigkeitswoche.ch 
-			<a href="{{pathFor 'kioskCalendar'}}" class="pull-right">
-				<span class="glyphicon glyphicon-calendar"></span>
-				{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
-			</a>
-		</h1>
+		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/>
+		<a id="switch" href="{{pathFor 'kioskCalendar'}}" class="pull-right">
+			<span class="glyphicon glyphicon-calendar"></span>
+			{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
+		</a>
 		<hr>
 		{{#each this}}
 			{{> kioskEvent}}
