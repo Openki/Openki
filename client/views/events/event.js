@@ -68,15 +68,31 @@ Template.event.events({
 	
 	'click button.saveEditEvent': function(event, instance) {
 		if (pleaseLogin()) return;
+
 		function readTime(str, date) {
+			/* Given str, set minute and hour of date
+			 * given "08:00", "0800", "8.00", or "8" time is set to 8 hours 0 minutes
+			 * given "08:30" "0830" "8.30" time is set to 8 hours 30 minutes
+			 * given "08:30pm" "0830PM" "830p" time is set to 20 hours 30 minutes
+			 * given "12:59AM" "12:59PM" time is set to 12 hours 59 minutes
+			 * given "" or "my hovercraft is full of eels" time is not changed
+			 * given "my 5 hovercraft are full of peels" time is set to 17 hours 0 minutes
+			 * The behavior for values over 23 (hours) and 59 (minutes) is left as a surprise to the user.
+			 */
 			var digits = str.replace(/[^0-9]+/g, '');
 			if (digits.length > 0) {
 				if (digits.length < 3) {
 					date.setMinutes(0);
 					date.setHours(parseInt(digits, 10));
 				} else {
-					date.setMinutes(parseInt(digits.substr(2), 10));
-					date.setHours(parseInt(digits.substr(0, 2), 10));
+					date.setMinutes(parseInt(digits.substr(-2), 10));
+					date.setHours(parseInt(digits.substr(0, digits.length-2), 10));
+				}
+				if (str.toLowerCase().indexOf('p') != -1) {
+					var hours = date.getHours();
+					if (hours < 12) { // not correct for midn SHUT UP
+						date.setHours(hours + 12);  // YOU'RE IN THE ARMY NOW
+					}
 				}
 			}
 		}
