@@ -30,21 +30,21 @@
 			<span class="glyphicon glyphicon-calendar"></span>
 			{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
 		</a>
-		{{#if now}}
+		{{#if now.count}}
 			<hr>
 			<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event} other {# ongoing events} }' NUM=now.count}}</h3>
 			{{#each now}}
 				{{> kioskEventSlim}}
 			{{/each}}
 		{{/if}}
-		{{#if today}}
+		{{#if today.count}}
 			<hr>
 			<h2>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today' NUM=today.count}}</h2>
 			{{#each today}}
 				{{> kioskEvent}}
 			{{/each}}
 		{{/if}}
-		{{#if future}}
+		{{#if future.count}}
 			<hr>
 			<h1>{{mf 'kiosk.future' 'Future events' NUM=future.count}}</h1>
 			{{#each future}}
