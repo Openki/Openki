@@ -15,6 +15,10 @@ Meteor.subscribe('currentUser');
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
 	Session.set('verify', false);
+
+	// Skip to top on page change
+	$('body,html').scrollTop(0);
+
 	this.next();
 });
 

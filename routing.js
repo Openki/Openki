@@ -6,12 +6,6 @@ Router.configure({
 
 webpagename = 'Openki - Course Organisation Platform - '  // global (document title init)
 
-// Skip to top on page change
-Router.onBeforeAction(function() {
-	$('body,html').scrollTop(0);
-    this.next();
-})
-
 Router.map(function () {
 	this.route('locationDetails',{							///////// locationdetails /////////
 		path: 'locations/:_id',
