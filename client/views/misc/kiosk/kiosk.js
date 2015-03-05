@@ -14,10 +14,14 @@ Router.map(function () {
 		data: function() {
 			var now = minuteTime.get();
 			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
+			var tomorrow = new Date(now);
+			tomorrow.setHours(tomorrow.getHours() + 24);
+			tomorrow.setHours(0);
 
 			return {
-				future: eventsFind({ after: now, location: this.params.location, room: this.params.room }, 10),
-				present: eventsFind({ ongoing: now, location: this.params.location, room: this.params.room })
+				today: eventsFind({ after: now, before: tomorrow, location: this.params.location, room: this.params.room }, 10),
+				future: eventsFind({ after: tomorrow, location: this.params.location, room: this.params.room }, 10),
+				now: eventsFind({ ongoing: now, location: this.params.location, room: this.params.room })
 			};
 		},
 		onAfterAction: function() {

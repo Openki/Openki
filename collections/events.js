@@ -76,7 +76,7 @@ eventsFind = function(filter, limit) {
 
 	if (filter.before) {
 		find.enddate = { $lt: filter.before };
-		options.sort = { startdate: -1 }
+		if (!filter.after) options.sort = { startdate: -1 }
 	}
 
 	if (filter.location) {
