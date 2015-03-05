@@ -15,8 +15,7 @@ Router.map(function () {
 		template: 'bannerEvents',
 		layoutTemplate: 'bannerLayout',
 		waitOn: function () {
-			Session.get('fineTime');
-			var now = moment(''+new Date()).toDate();
+			var now = minuteTime.get();
 
 			var future = locfilters(this.params);
 			future.after = now;
@@ -27,9 +26,8 @@ Router.map(function () {
 		},
 
 		data: function() {
-			Session.get('fineTime');
 			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
-			var now = moment(''+new Date()).toDate();
+			var now = minuteTime.get();
 
 			var future = locfilters(this.params);
 			future.after = now;
