@@ -30,8 +30,15 @@
 			<span class="glyphicon glyphicon-calendar"></span>
 			{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
 		</a>
+		{{#if present}}
 		<hr>
-		{{#each this}}
+		<h2>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event} other {# ongoing events} }' NUM=present.count}}</h2>
+		{{#each present}}
+			{{> kioskEventSlim}}
+		{{/each}}
+		{{/if}}
+		<hr>
+		{{#each future}}
 			{{> kioskEvent}}
 		{{/each}}
 	</div>
@@ -52,7 +59,7 @@
 				</div>
 				<div class="kiosk_home col-sm-6">
 					<span class="glyphicon glyphicon-home"></span>
-					{{this.location}} 
+					{{this.location}}
 					{{#if room}}
 						- {{this.room}}
 					{{/if}}
@@ -62,6 +69,28 @@
 				<h3>{{plain this.title}}</h3>
 			</div>
 			<div class="course_event_desc">{{plain this.description}}</div>
+		</div>
+		</a>
+		<br>
+</template>
+
+<template name="kioskEventSlim">
+		<a href="{{pathFor 'showEvent'}}">
+		<div style='overflow: hidden'>
+			<div style="float: right; width: 22em">
+				<span class="glyphicon glyphicon-time"></span>&nbsp;{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow startdate}}
+				{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow enddate}}
+			</div>
+			<div style="float: right; width: 20em" >
+				<span class="glyphicon glyphicon-home"></span>
+				{{this.location}}
+				{{#if room}}
+					- {{this.room}}
+				{{/if}}
+			</div>
+			<span style="font-size:x-large">
+				{{plain this.title}}
+			</span>
 		</div>
 		</a>
 		<br>

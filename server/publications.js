@@ -48,7 +48,6 @@ Meteor.publish('events', function(region) {
 });
 
 Meteor.publish ('eventsFind', eventsFind);
-Meteor.publish ('eventsSearch', eventsSearch);
 
 Meteor.publish('eventsForCourse', function(courseId) {
 	return Events.find({course_id: courseId});

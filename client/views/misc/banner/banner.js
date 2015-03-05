@@ -1,31 +1,44 @@
 Router.map(function () {
+	var locfilters = function(params) {
+		var filter = {};
+		if (params.location && params.location !== 'ALL') {
+			filter.location = params.location;
+		}
+		if (params.room && params.room !== 'ALL') {
+			filter.room = params.room;
+		}
+		return filter;
+	}
+
 	this.route('banner', {
 		path: '/banner/events/:location?/:room?',
 		template: 'bannerEvents',
 		layoutTemplate: 'bannerLayout',
 		waitOn: function () {
-			Session.get('roughTime'); // Time dependency so this will be reactively updated
-			// The haphazard type mangling is due to moment() being reactive when initialized with current date (really??) so converting the current date to a string then reading that was the quickest workaround I could think of :-D
-			var endtime = moment(''+new Date()).toDate();
+			Session.get('fineTime');
+			var now = moment(''+new Date()).toDate();
+
+			var future = locfilters(this.params);
+			future.after = now;
 
 			var limit = parseInt(this.params.query.count, 10) || 5;
-			if (this.params.location == 'All') this.params.location = undefined;
-			if (this.params.room == 'All') this.params.room = undefined;
-			return Meteor.subscribe('eventsFind', endtime, limit*2, this.params.location, this.params.room);
+
+			return Meteor.subscribe('eventsFind', future, limit);
 		},
+
 		data: function() {
-			var lg = this.params.lg;
-			if (!lg) lg = Session.get('lg');
-			if (!lg) lg = 'en'; // We could do navigator.languages too
-			
 			Session.get('fineTime');
 			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
-			var endtime = moment(''+new Date()).toDate();
+			var now = moment(''+new Date()).toDate();
+
+			var future = locfilters(this.params);
+			future.after = now;
+
 			var limit = parseInt(this.params.query.count, 10) || 5;
-			if (this.params.location == 'All') this.params.location = undefined;
-			if (this.params.room == 'All') this.params.room = undefined;
-			return eventsFind(endtime, limit, this.params.location, this.params.room);
+
+			return eventsFind(future, limit);
 		},
+
 		onAfterAction: function() {
 			document.title = webpagename + ' Events';
 			if (this.params.query.lg) {

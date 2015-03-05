@@ -45,11 +45,18 @@ Deps.autorun(function() {
 	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
 });
 
+minuteTime = new ReactiveVar();
+
 // Set up reactive date sources that can be used for updates based on time
 function setTimes() {
-	var now = moment();
-	Session.set('coarseTime', ''+moment().startOf('hour').toDate());
-	Session.set('fineTime', ''+moment().startOf('minute').toDate());
+	var now = new Date();
+
+	now.setSeconds(0);
+	now.setMilliseconds(0);
+	var old = minuteTime.get();
+	if (!old || old.getTime() !== now.getTime()) {
+		minuteTime.set(now);
+	}
 }
 setTimes();
 

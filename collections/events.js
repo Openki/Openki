@@ -40,50 +40,69 @@ if (Meteor.isServer) {
 	});
 }
 
-eventsFind = function(fromDate, limit, location, room) {
-	var find = { 
-		enddate: { $gt: fromDate }
+/* Find events for given filters
+ *
+ * filter: dictionary with filter options
+ *   query: string of words to search for
+ *   after: only events starting after this date
+ *   ongoing: only events that are ongoing during this date
+ *   before: only events that ended before this date
+ *   location: only events at this location (string match)
+ *   room: only events in this room (string match)
+ *   standalone: only events that are not attached to a course
+ * limit: how many to find
+ *
+ * The events are sorted by startdate (ascending, before-filter causes descending order)
+ *
+ */
+eventsFind = function(filter, limit) {
+	var find = {};
+	var options = {
+		sort: { startdate: 1 }
 	};
 
-	var options = { 
-		limit: limit || 3,
-		sort: { startdate: 1 } 
-	};
-
-	if (location) {
-		find.location = location;
+	if (limit > 0) {
+		options.limit = limit;
 	}
 
-	if (room) {
-		find.room = room;
+	if (filter.after) {
+		find.startdate = { $gt: filter.after };
 	}
 
-	return Events.find(find, options);
-} 
-
-
-eventsSearch = function(query, standalone, limit) {
-	var find = {startdate: {$gt: new Date()}};
-	
-	if (standalone) {
-		find.course_id = { $exists: false } // We're not $exists 
+	if (filter.ongoing) {
+		find.startdate = { $lte: filter.ongoing };
+		find.enddate = { $gte: filter.ongoing };
 	}
-	
-	if (query) {
-		var searchTerms = query.split(/\s+/);
+
+	if (filter.before) {
+		find.enddate = { $lt: filter.before };
+		options.sort = { startdate: -1 }
+	}
+
+	if (filter.location) {
+		find.location = filter.location;
+	}
+
+	if (filter.room) {
+		find.room = filter.room;
+	}
+
+	if (filter.standalone) {
+		find.course_id = { $exists: false };
+	}
+
+	if (filter.query) {
+		var searchTerms = filter.query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
 			return { $or: [
 				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
-								  { description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
 			] }
 		});
-		
+
 		find.$and = searchQueries;
 	}
-	
-	var options = { 
-		limit: limit,
-		sort: { startdate: 1 } 
-	};
+
 	return Events.find(find, options);
-} 
+}
+
