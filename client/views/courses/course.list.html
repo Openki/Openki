@@ -50,7 +50,9 @@
 					{{#if location}}
 					<div class="course_eventlist_location col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-home" aria-hidden="true" style="padding-right:3px"></span>
-						<span class="ellipsis">{{location}}</span>
+						<div class="ellipsis">
+						{{location}}
+					</div>
 					</div>
 					{{/if}}
 				{{/each}}
@@ -66,12 +68,12 @@
 					{{mf 'course.list.status_letter.team' 'T'}}{{#if is_team}}*{{/if}}
 				</div>
 				{{#if requiresMentor}}
-					<div class="mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsMentor}}{{mf 'course.list.status_titles.needs_mentor' 'Still&nbsp;needs&nbsp;a&nbsp;mentor'}}{{else}}{{#if is_mentor}}{{mf 'course.list.status_titles.u_are_mentor' 'You&nbsp;are&nbsp;mentor'}}{{else}}{{mf 'course.list.status_titles.has_mentor' 'Has&nbsp;a&nbsp;mentor'}}{{/if}}{{/if}}">
+					<div class="mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsMentor}}{{mf 'course.list.status_titles.needs_mentor' 'Needs&nbsp;a&nbsp;mentor'}}{{else}}{{#if is_mentor}}{{mf 'course.list.status_titles.u_are_mentor' 'You&nbsp;are&nbsp;mentor'}}{{else}}{{mf 'course.list.status_titles.has_mentor' 'Has&nbsp;a&nbsp;mentor'}}{{/if}}{{/if}}">
 						{{mf 'course.list.status_letter.mentor' 'M'}}{{#if is_mentor}}*{{/if}}
 					</div>
 				{{/if}}
 				{{#if requiresHost}}
-					<div class="host_status {{#if needsHost}}no{{else}}yes{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsHost}}{{mf 'course.list.status_titles.needs_host' 'Still&nbsp;needs&nbsp;a&nbsp;host'}}{{else}}{{#if is_host}}{{mf 'course.list.status_titles.u_are_host' 'You&nbsp;are&nbsp;host'}}{{else}}{{mf 'course.list.status_titles.has_host' 'Has&nbsp;a&nbsp;host'}}{{/if}}{{/if}}">
+					<div class="host_status {{#if needsHost}}no{{else}}yes{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsHost}}{{mf 'course.list.status_titles.needs_host' 'Needs&nbsp;a&nbsp;host'}}{{else}}{{#if is_host}}{{mf 'course.list.status_titles.u_are_host' 'You&nbsp;are&nbsp;host'}}{{else}}{{mf 'course.list.status_titles.has_host' 'Has&nbsp;a&nbsp;host'}}{{/if}}{{/if}}">
 						{{mf 'course.list.status_letter.host' 'H'}}{{#if is_host}}*{{/if}}
 					</div>
 				{{/if}}
