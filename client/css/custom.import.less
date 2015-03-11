@@ -700,6 +700,7 @@ button.answer:hover {
     height: 230px;
     margin: 7px;
     background: #D8EBF4;
+    word-wrap: break-word;
 }
 
 .calendar_event &>.course_event_date,
@@ -740,10 +741,12 @@ button.answer:hover {
     color: #38829C;
 }
 
-.calendar_event {
+.calendar_event,
+.calendar_event_past {
     .course_event_desc {
         & > p {
             color: #38829C;
+            max-height: 40px; //Ugly fix, has to fill the rest of the calendar event
         }
     }
 }

@@ -22,7 +22,7 @@
 
 <template name="calendar_event">
 	<a href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding" style='overflow: hidden'>
+		<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding">
 			<div class="course_event_date">
 				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 				{{dateformat_withday startdate}}
@@ -45,8 +45,8 @@
 			<div class="course_event_title">
 				<h4>{{this.title}}</h4>
 			</div>
-			<div class="course_event_desc" >
-				<p>{{plain this.description}}</p>
+			<div class="course_event_desc ellipsis" style="word-wrap: break-word">
+				<p >{{plain this.description}}</p>
 			</div>
 		</div>
 	</a>
@@ -66,7 +66,7 @@
 			<div class="course_event_title">
 				<h4>{{this.title}}</h4>
 			</div>
-			<div class="course_event_desc">
+			<div class="course_event_desc ellipsis">
 				<p>{{plain description}}</p>
 			</div>
 			<div class="grey_out"></div>

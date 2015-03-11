@@ -19,3 +19,9 @@ Router.map(function () {
 		}
 	});
 });
+
+Template.calendar.rendered = function() {
+	$('.ellipsis').dotdotdot({
+		//CONFIGURATION GOES HERE
+	});
+};
