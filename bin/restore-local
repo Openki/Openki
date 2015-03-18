@@ -21,5 +21,13 @@ dump="dump/$1"
 path=$(dirname "$0")/../.meteor/local/db/
 [ -d "$path" ] || fail "local DB $path missing"
 
-echo "Restoring $dump to $path"
-mongorestore  --drop --db meteor --dbpath "$path" "$dump"
+echo "Restoring $dump"
+mongopid=`cat "${path}mongod.lock"`
+if [ -n "$mongopid" ] # eh good enough
+then
+	portfile="${path}METEOR-PORT"
+	port=`cat "$portfile"`
+	mongorestore  --drop --host localhost --port "$port" --db meteor "$dump"
+else	
+	mongorestore  --drop --db meteor --dbpath "$path" "$dump"
+fi
