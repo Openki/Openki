@@ -10,6 +10,7 @@ providers_secret.js
 codekit-config.json
 
 *~
+dump/
 
 packages/
 .meteor/release
