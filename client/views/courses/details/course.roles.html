@@ -39,21 +39,36 @@
 			<span class='subscribed'>{{mf 'course.roles.you_are' 'you are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}} <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract"/></span>
 		{{else}}
 			{{#if enrolling}}
-				<div>
-					<h3>
-						{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}
-					</h3>
-
-					<div>
-						{{mf 'course.roles.leave_message' 'leave a message/wish/interest here:'}}<br>
-						<textarea cols="50" rows="3" class='comment'>{{../../member.comment}}</textarea>
+				<div class="enrol_as_title col-sm-12">
+					<div class="container-fluid">
+						<h3>{{mf 'course.roles.enrol_as' 'enrol as'}} {{role}}</h3>
 					</div>
+				</div>
+				<div class="enrol_as_options col-sm-12">
+					<span class="glyphicon glyphicon-send"></span>
+					{{mf 'course.roles.leave_message' 'leave a message/wish/interest here:'}}<br>
+					<textarea cols="50" rows="3" class='comment form-control'>{{../../member.comment}}</textarea>
 
-					{{#if privacyEnabled}}<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosubscription' 'incognito'}} ☔</label>{{/if}}
+					{{#if privacyEnabled}}
+					<div class="checkbox">
+						<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosubscription' 'incognito'}} ☔</label>
+					</div>
+					{{/if}}
 
-					<button class="subscribe">{{mf 'course.roles.enrol' 'enrol'}}</button>
-					<button class="cancel">{{mf 'course.roles.cancelenrol'  'cancel'}}</button>
-
+					<div class="enrol_as_buttons col-sm-12 no-padding">
+						<div class="col-sm-6">
+							<button class="subscribe form-control btn btn-default">
+								<span class="glyphicon glyphicon-ok"></span>
+								{{mf 'course.roles.enrol' 'enrol'}}
+							</button>
+						</div>
+						<div class="col-sm-6">
+						<button class="cancel form-control btn btn-default">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf 'course.roles.cancelenrol'  'Cancel'}}
+						</button>
+						</div>
+					</div>
 				</div>
 			{{else}}
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
