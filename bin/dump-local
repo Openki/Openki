@@ -8,9 +8,12 @@ fail() {
 
 path=$(dirname "$0")/../.meteor/local/db/
 
-portfile="${path}METEOR-PORT"
-port=`cat "$portfile"`
-if [ -n "$port" ]
-then mongodump --host 127.0.0.1:$port
-else mongodump --dbpath "$path"
+mongopid=`cat "${path}mongod.lock"`
+if [ -n "$mongopid" ] # eh good enough
+then
+	portfile="${path}METEOR-PORT"
+	port=`cat "$portfile"`
+	mongodump --host 127.0.0.1:$port
+else 
+	mongodump --dbpath "$path"
 fi
