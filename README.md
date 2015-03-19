@@ -53,4 +53,5 @@ A interactive web-platform in development with the ambition to facilitate a barr
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
-- For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA   
+- For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA
+- For all testing-events descriptions (server/data/testing.events.js): Creative Commons BY-NC-SA
