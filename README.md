@@ -19,19 +19,21 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :pencil: Easily propose courses and events
 - :mag: Fulltext-search them
 - :speech_balloon: Simple discussion-board
-- :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :cat: Categories with sub-categories
 - :door: Regions- and room-system
 - :mortar_board: Extendable participant roles
+- :white_flower: Groups-, community- and program-system
 - :date: Calendar
 - :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...)
 - :ideograph_advantage: I18n: In-browser-GUI for life translation
 - :envelope: Email notifications
+- :computer: additional views with upcomming events for information-displays and iframes
+
 
 ### Intended features
 - :closed_lock_with_key: Privacy settings and security
+- :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :open_file_folder: File upload for course-documentation
-- :white_flower: Groups-, community- and program-system
 - :mailbox: Privat messaging
 - :name_badge: OpenBadges
 - :ghost: Customizability
@@ -51,4 +53,4 @@ A interactive web-platform in development with the ambition to facilitate a barr
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
-- Intended for Course Contents: Creative Commons (BY) SA   
+- For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA   
