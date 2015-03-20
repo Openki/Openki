@@ -6,26 +6,26 @@
 				{{> course_edit course}}
 			{{else}}
 				<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	                {{title course.name " - openki"}}
-		            {{#with course}}
-		                {{#if currentUserMayEdit}}
-		                <div class="edit_buttons">
-		                	<div class="btn-group" role="group" aria-label="...">
-				                <button type="button" class="edit btn btn-success" role="button">
-				                	<span class="glyphicon glyphicon-edit"></span>
-				                	{{mf 'course.details.edit_btn' 'Edit'}}
-				                </button>
-				                <button type="button" class="del btn btn-danger" role="button">
-				                	<span class="glyphicon glyphicon-remove"></span>
-				                	{{mf 'course.details.del_btn' 'Delete'}}
-				                </button>
-				            </div>
-			            </div>
-		                {{/if}}
+					{{title course.name " - openki"}}
+					{{#with course}}
+						{{#if currentUserMayEdit}}
+						<div class="edit_buttons">
+							<div class="btn-group" role="group" aria-label="...">
+								<button type="button" class="edit btn btn-success" role="button">
+									<span class="glyphicon glyphicon-edit"></span>
+									{{mf 'course.details.edit_btn' 'Edit'}}
+								</button>
+								<button type="button" class="del btn btn-danger" role="button">
+									<span class="glyphicon glyphicon-remove"></span>
+									{{mf 'course.details.del_btn' 'Delete'}}
+								</button>
+							</div>
+						</div>
+						{{/if}}
 					{{/with}}
-	                <h2 class="name" style="min-height: 3ex">
-	                	{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-	                </h2>
+					<h2 class="name" style="min-height: 3ex">
+						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+					</h2>
 					{{#with course}}
 						<p class='small'>
 						{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
@@ -38,13 +38,13 @@
 						<div class="course_groups">
 							{{> show_groups}}
 						</div>
-		                {{> show_course_submenu}}
+						{{> show_course_submenu}}
 					{{/with}}
-	                <p class="course_description">
-	                	{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-	                	<!-- {{> coursedocs}} -->	
-	                	<!-- {{> coursehistory}} -->
-	                </p>
+					<p class="course_description">
+						{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
+						<!-- {{> coursedocs}} -->	
+						<!-- {{> coursehistory}} -->
+					</p>
 				</div>
 				{{> report}}
 			{{/if}}

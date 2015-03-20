@@ -6,21 +6,21 @@
 		{{else}}
 			<div>
 			{{#with course}}
-			    <p>
-	                <a href="{{pathFor 'showCourse'}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{name}}"</a>
-	            </p>
-	        {{/with}}
+				<p>
+					<a href="{{pathFor 'showCourse'}}">{{mf 'course.event.detail.back' 'Back to course'}} "{{name}}"</a>
+				</p>
+			{{/with}}
 			{{#with current_event}}
-	            <p class="course_event_date">
+				<p class="course_event_date">
 					<span class="icon-mini_date"></span> {{dateformat_withday startdate}} 
 				</p>
 				<p class="course_event_time">
 					<span class="icon-clock"></span> {{timeformat startdate}}
 				</p>
-	            <h3 class="name">{{mf 'course.event.detail.event' 'Event:'}}' {{this.title}}</h3>
-	            <p>
-	                {{description}}
-	            </p>				
+				<h3 class="name">{{mf 'course.event.detail.event' 'Event:'}}' {{this.title}}</h3>
+				<p>
+					{{description}}
+				</p>				
 				{{#if this.mentors}}
 					<p class="course_event_info">	
 						<ul class="course_event_mentors">
@@ -39,10 +39,10 @@
 			</div>
 		{{/if}}
 			<!-- TODO -->
-	        <!-- <input type="button" class="eventDelete" value="Delete" />-->
-	    </div>
-    	<div class="course_right_column">
-	    		{{> course_events}}
+			<!-- <input type="button" class="eventDelete" value="Delete" />-->
+		</div>
+		<div class="course_right_column">
+				{{> course_events}}
 		</div>
 	</div>
 </template>

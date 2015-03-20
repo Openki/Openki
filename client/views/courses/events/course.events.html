@@ -42,7 +42,7 @@
 		{{#if editing}}
 			{{>course_event_edit}}
 		{{else}}
-		    <div class="{{#if isCurrent}}current_event{{/if}} course_event">
+			<div class="{{#if isCurrent}}current_event{{/if}} course_event">
 				{{#with event}}
 				<a href="{{pathFor 'showEvent'}}">
 					<div class="course_event_date">
@@ -78,19 +78,19 @@
 				</a>
 				{{/with}}
 
-				{{!--      <!-- (handlebar-commented would suffice)
+				{{!--		  <!-- (handlebar-commented would suffice)
 				{{# if currentUser}}
 					<div class="eventEdit_buttons">
 						<div class="btn-group" role="group" aria-label="...">
-			            	<button type="button" class="eventEdit btn btn-success" role="button">
-			                	<span class="glyphicon glyphicon-edit"></span>
-			                	{{mf 'course.details.edit_btn' 'Edit'}}
-			                </button>
-			                <button type="button" class="eventDelete btn btn-danger" role="button">
-			                	<span class="glyphicon glyphicon-remove"></span>
-			                	{{mf 'course.details.del_btn' 'Delete'}}
-			                </button>
-			            </div>
+							<button type="button" class="eventEdit btn btn-success" role="button">
+								<span class="glyphicon glyphicon-edit"></span>
+								{{mf 'course.details.edit_btn' 'Edit'}}
+							</button>
+							<button type="button" class="eventDelete btn btn-danger" role="button">
+								<span class="glyphicon glyphicon-remove"></span>
+								{{mf 'course.details.del_btn' 'Delete'}}
+							</button>
+						</div>
 					</div>
 				{{/if}}
 				--> --}}
