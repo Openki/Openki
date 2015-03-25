@@ -46,8 +46,8 @@
 				</div>
 				<div class="enrol_as_options col-sm-12">
 					<span class="glyphicon glyphicon-send"></span>
-					{{mf 'course.roles.leave_message' 'leave a message/wish/interest here:'}}<br>
-					<textarea cols="50" rows="3" class='comment form-control'>{{../../member.comment}}</textarea>
+					{{mf 'course.roles.leave_message' 'leave a message/wish/interest here:'}}
+					<textarea cols="50" rows="3" class='enrol_as_comment form-control'>{{../../member.comment}}</textarea>
 
 					{{#if privacyEnabled}}
 					<div class="checkbox">
@@ -74,6 +74,7 @@
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
 							{{roletype.subscribe}}
+							
 						</div>
 					</button>
 			{{/if}}
