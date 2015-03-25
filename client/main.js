@@ -7,9 +7,7 @@ Meteor.subscribe('categories');
 Meteor.subscribe('comments');
 Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
-Meteor.subscribe('messages');
 Meteor.subscribe('roles');
-Meteor.subscribe('votings');
 Meteor.subscribe('currentUser');
 
 // close any verification dialogs still open

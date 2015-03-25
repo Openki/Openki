@@ -15,20 +15,12 @@ Meteor.publish ('categories', function(){
 	return Categories.find();
 });
 
-Meteor.publish ('votings', function(){
-	return Votings.find();
-});
-
 Meteor.publish ('roles', function(){
 	return Roles.find();
 });
 
 Meteor.publish ('regions', function(){
 	return Regions.find();
-});
-
-Meteor.publish ('messages', function(){
-	return Messages.find();
 });
 
 Meteor.publish ('locations', function(region) {
