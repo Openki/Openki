@@ -64,6 +64,13 @@ Meteor.publish ('users', function(){
 
 });
 
+Meteor.publish('user', function(userId) {
+	return Meteor.users.find(
+		{ _id: userId },
+		{ fields: {username: 1} }
+	);
+});
+
 Meteor.publish('userSelection', function(userIds) {
 	return Meteor.users.find(
 		{ _id: {$in: userIds} },
