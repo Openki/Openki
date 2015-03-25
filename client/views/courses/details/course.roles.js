@@ -31,7 +31,7 @@ Template.roleDetail.events({
 		return false;
 	},
 
-	'click input.unsubscribe': function () {
+	'click button.unsubscribe': function () {
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false, null);
 		return false;
 	}

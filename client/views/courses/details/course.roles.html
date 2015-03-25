@@ -36,7 +36,11 @@
 	<div class="roleDetails role_{{roletype.type}}">
 		<div class="subscribe">
 		{{#if subscribed}}
-			<span class='subscribed'>{{mf 'course.roles.you_are' 'you are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}} <input type="button" class="unsubscribe" name="{{roletype.type}}" value="retract"/></span>
+		<div class="enroled_as_title col-sm-12">
+			<div class="container-fluid">
+				<h3>{{mf 'course.roles.you_are' 'You are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}} <button class="unsubscribe btn btn-danger" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
+			</div>
+		</div>
 		{{else}}
 			{{#if enrolling}}
 				<div class="enrol_as_title col-sm-12">
@@ -74,7 +78,6 @@
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
 							{{roletype.subscribe}}
-							
 						</div>
 					</button>
 			{{/if}}
