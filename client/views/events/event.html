@@ -104,20 +104,6 @@
 	</div>
 	{{else}}
 		<div class="course_event">
-			{{# if currentUser}}
-				<div class="eventEdit_buttons">
-					<div class="btn-group" role="group">
-						<button type="button" class="eventEdit btn btn-success" role="button">
-							<span class="glyphicon glyphicon-edit"></span>
-							{{mf 'course.details.edit_btn' 'Edit'}}
-						</button>
-						<button type="button" class="eventDelete btn btn-danger" role="button">
-							<span class="glyphicon glyphicon-remove"></span>
-							{{mf 'course.details.del_btn' 'Delete'}}
-						</button>
-					</div>
-				</div>
-			{{/if}}
 			<div class="course_event_date">
 				<div class="container-fluid">
 					<span class="day">{{weekday startdate}}</span><br>
@@ -144,6 +130,20 @@
 					{{{description}}}
 				</p>
 			</div>
+			{{# if currentUser}}
+			<div class="eventEdit_buttons">
+				<div class="btn-group" role="group">
+					<button type="button" class="eventEdit btn btn-success" role="button">
+						<span class="glyphicon glyphicon-edit"></span>
+						{{mf 'course.details.edit_btn' 'Edit'}}
+					</button>
+					<button type="button" class="eventDelete btn btn-danger" role="button">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf 'course.details.del_btn' 'Delete'}}
+					</button>
+				</div>
+			</div>
+			{{/if}}
 		</div>
 	{{/if}}<br>
 	{{> report}}
