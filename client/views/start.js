@@ -14,8 +14,7 @@ Router.map(function () {
 		waitOn: function () {
 			var region = Session.get('region')
 			return [
-				Meteor.subscribe('coursesFind', region, false, {}, 36),
-				Meteor.subscribe('futureEvents')
+				Meteor.subscribe('coursesFind', region, false, {}, 36)
 			];
 		},
 		data: function() {

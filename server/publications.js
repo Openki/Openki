@@ -49,6 +49,10 @@ Meteor.publish('futureEvents', function() {
 	return Events.find({startdate: {$gt: new Date()}});
 });
 
+Meteor.publish('nextEvent', function(courseId) {
+	return Events.find({ course_id: courseId });
+});
+
 Meteor.publish ('users', function(){
 	return Meteor.users.find({}, {
 		fields: {username: 1}

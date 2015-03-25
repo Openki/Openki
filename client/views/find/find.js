@@ -8,7 +8,7 @@ Router.map(function () {
 			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
 			return [
 				Meteor.subscribe('coursesFind', region, this.params.search, filter),
-				Meteor.subscribe('futureEvents'),
+
 				Meteor.subscribe('eventsFind', { query: this.params.search, standalone:true }, 10)
 			];
 		},

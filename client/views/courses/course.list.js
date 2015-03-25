@@ -65,6 +65,9 @@ Template.course.helpers({
 
 	coursestate: function() {
 		var today = new Date();
+		
+		Meteor.subscribe('nextEvent', this._id);
+		
 		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
 		
