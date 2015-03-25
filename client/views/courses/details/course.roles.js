@@ -20,7 +20,7 @@ Template.roleDetail.events({
 		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, incognito);
 		
 		// Store the comment
-		var comment = $(template.find('.comment')).val();
+		var comment = $(template.find('.enrol_as_comment')).val();
 		Meteor.call("change_comment", this.course._id, comment);
 		template.enrolling.set(false);
 		return false;
