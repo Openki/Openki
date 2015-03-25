@@ -71,6 +71,20 @@ hasRoleUser = function(members, role, user) {
  */
 userName = function(userId) {
 	if (!userId) return '';
+	
+	if (userId.substr(0, 5)  == 'Anon_') {
+		var loggeduser = Meteor.user();
+		if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
+			return  '☔ ' + loggeduser.username + ' ☔';
+		}
+		return "☔ incognito";
+	}
+	
+	// This seems extremely wasteful
+	// But the alternatives are more complicated by a few orders of magnitude
+	var tpl = Template.instance();
+	tpl.subscribe('user', userId);
+	
 	var user = Meteor.users.findOne({ _id: userId });
 	if (user) {
 		if (user.username) {
@@ -78,16 +92,9 @@ userName = function(userId) {
 		} else {
 			return "userId: " + user._id;
 		}
-	} else {
-		if (userId.substr(0, 5)  == 'Anon_') {
-			var loggeduser = Meteor.user();
-			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
-				return  '☔ ' + loggeduser.username + ' ☔';
-			}
-			return "☔ incognito";
-		}
-		return "No_User";
-	}
+	} 
+		
+	return "No_User";
 }
 
 
