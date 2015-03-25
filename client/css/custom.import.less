@@ -308,10 +308,6 @@ ul.messages {
 .course_main {
 	border: 7px dashed #D8EBF4;
 	margin-top: 20px;
-	.edit_buttons {
-		background: #cfcfcf;
-		border-bottom: 3px solid #fff;
-	}
 }
 
 .course_groups ul,.course_groups ul li,
@@ -338,8 +334,9 @@ ul.nav-tabs {
 	padding: 10px 0;
 	text-align: center;
 	width: calc(~"100% + 44px");
-	background: #D8EBF4;
-	margin: -7px 0 -0 -22px;
+	margin: 0 0 -7px -22px;
+	background: #cfcfcf;
+	border-top: 3px solid #fff;
 }
 
 .course_main.hasupcomingevents {
@@ -486,7 +483,7 @@ div#edit_event_description:focus {
 		background: #cfcfcf;
 		text-align: center;
 		padding: 10px 0;
-		border-bottom: 3px solid #fff;
+		border-top: 3px solid #fff;
 	}
 }
 
@@ -628,8 +625,12 @@ div.enrol_as_title {
 	}
 }
 
+textarea.enrol_as_comment {
+	margin-top: 5px;
+}
+
 div.enrol_as_options {
-	padding: 10px 12px;
+	padding: 10px 12px 11px 12px;
 	& > div.enrol_as_buttons {
 		padding-top: 10px;
 	}
