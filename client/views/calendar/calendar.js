@@ -21,7 +21,7 @@ Router.map(function () {
 });
 
 Template.calendar.rendered = function() {
-	$('.ellipsis').dotdotdot({
+	this.$('.ellipsis').dotdotdot({
 		//CONFIGURATION GOES HERE
 	});
 };
