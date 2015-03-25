@@ -1,13 +1,4 @@
 <template name="kioskLayout">
-	<head>
-	<style type="text/css">
-		body {
-		background-position: 100% 0%;
-		background-image: url("http://www.nachhaltigkeitswoche.ch/site/templates/images/bggreen.svgz");
-		background-repeat: no-repeat;
-		}
-	</style>
-	</head>
 	<div class="container">
 		<div class="container-fluid">
 			{{#if showKioskCalendar}}
@@ -24,12 +15,15 @@
 </template>
 
 <template name="kioskEvents">
-	<div class="kiosk">
-		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/>
-		<a id="switch" href="{{pathFor 'kioskCalendar'}}" class="pull-right">
+	<div class="kiosk"><!-- 
+		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
+		<div style="background:#C8293C;width:342px;height:100px;top:20px;">
+			<h1>KIOSK</h1>
+		</div>
+		<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
 			<span class="glyphicon glyphicon-calendar"></span>
 			{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
-		</a>
+		</a> -->
 		{{#if now.count}}
 			<hr>
 			<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event} other {# ongoing events} }' NUM=now.count}}</h3>
@@ -86,7 +80,10 @@
 
 <template name="kioskEventSlim">
 		<a href="{{pathFor 'showEvent'}}">
-		<div style='overflow: hidden'>
+		<div style='overflow: hidden col-sm-12'>			
+			<span style="font-size:x-large">
+				{{plain this.title}}
+			</span>
 			<div style="float: right; width: 22em">
 				<span class="glyphicon glyphicon-time"></span>&nbsp;{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow startdate}}
 				{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow enddate}}
@@ -98,9 +95,6 @@
 					- {{this.room}}
 				{{/if}}
 			</div>
-			<span style="font-size:x-large">
-				{{plain this.title}}
-			</span>
 		</div>
 		</a>
 		<br>
