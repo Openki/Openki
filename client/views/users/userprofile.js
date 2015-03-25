@@ -3,7 +3,7 @@ Router.map(function() {
 		path: 'user/:_id/:username?',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('users'),
+				Meteor.subscribe('user', this.params._id),
 				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: this.params._id })
 			];
 		},
