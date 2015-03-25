@@ -4,8 +4,6 @@
 
 var regionSub = Meteor.subscribe('regions');
 Meteor.subscribe('categories');
-Meteor.subscribe('comments');
-Meteor.subscribe('discussions');
 Meteor.subscribe('locations');
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
