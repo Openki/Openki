@@ -70,12 +70,3 @@ Template.find.helpers({
 	},
 });
 
-Template.NHW_info.helpers({
-	'showNW_Header': function() {
-		return Session.get('showHeader')
-	},
-
-	'showNW_info': function() {
-		return Session.get('showInfo');
-	}
-})
