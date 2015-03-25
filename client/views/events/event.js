@@ -7,7 +7,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
-				Meteor.subscribe('events')
+				Meteor.subscribe('event', this.params._id)
 			]
 		},
 		data: function () {
@@ -38,7 +38,6 @@ Template.event.created = function() {
 
 Template.eventPage.helpers({
 	course: function() {
-		console.log(this)
 		var courseId = this.course_id;
 		if (courseId) {
 			// Very bad?
