@@ -36,7 +36,11 @@ Meteor.publish('discussion', function(courseId) {
 
 Meteor.publish('events', function(region) {
 	if(!region) return Events.find();
-	return Events.find({region: region});
+			   return Events.find({region: region});
+});
+
+Meteor.publish('event', function(eventId) {
+	return Events.find({ _id: eventId });
 });
 
 Meteor.publish ('eventsFind', eventsFind);
