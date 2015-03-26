@@ -48,7 +48,7 @@ Template.newPost.events({
 		if (parent_ID) {
 			CourseDiscussions.insert({
 				"parent_ID":parent_ID,
-				"course_ID":course,
+				"course_ID":this.parent.course_ID,
 				"time_created":timestamp,
 				"time_updated":timestamp,
 				"user_ID":user,
