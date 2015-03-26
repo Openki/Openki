@@ -60,10 +60,7 @@ Router.map(function () {
 			var data = this.data();
 			if (data) {
 				var course = data.course;
-				document.title = webpagename + 'Course: ' + course.name
-				
-				// This hack subscribes us for the docs required to display userinfo
-				Meteor.subscribe('userSelection', _.pluck(course.members, 'user'));				
+				document.title = webpagename + 'Course: ' + course.name;
 			}
 		}
 	})
