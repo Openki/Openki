@@ -12,9 +12,6 @@ Meteor.subscribe('currentUser');
 Router.onBeforeAction(function() {
 	Session.set('verify', false);
 
-	// Skip to top on page change
-	$('body,html').scrollTop(0);
-
 	this.next();
 });
 
