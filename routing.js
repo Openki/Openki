@@ -68,6 +68,31 @@ Router.map(function () {
 
 	this.route('admin', {								///////// admin /////////
 		template: 'admin'
-	})
-})
+	});
+	
+	this.route('cal', {							///////// create /////////
+		path: 'cal/',
+		where: 'server',
+		action: function () {
+			var request = this.request;
+			var response = this.response;
+			
+			var calendar = new iCalendar.CalendarBuilder();
+			eventsFind({}).forEach(function(dbevent) {
+				var event = new iCalendar.EventBuilder();
+				event.setStartDate(dbevent.startdate);
+				if (dbevent.enddate) event.setEndDate(dbevent.enddate);
+				event.setSummary(dbevent.title);
+				calendar.addEvent(event.getEvent());
+			});
+			
+			var calendarstring = calendar.getCalendar().toString()
+			this.response.writeHead(200, {
+				'Content-Type': 'text/calendar'
+			});
+			response.write(calendarstring);
+			response.end();
+		}
+	});
+});
 
