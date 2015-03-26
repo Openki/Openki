@@ -71,12 +71,18 @@ Template.course_edit.events({
 				description: $('#editform_description').html(),
 				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
 				name: $('#editform_name').val(),
-				location: $('#editform_location').val(),
 				roles: roles
+			}
+			
+			changes.name = saneText(changes.name);
+			
+			if (changes.name.length == 0) {
+				alert("Please provide a title")
+				return;
 			}
 
 			if (isNew) {
-				changes.region = $('.region_select').val()
+				changes.region = $('.region_select').val();
 				if (!changes.region) {
 					alert("Please select a region")
 					return;
