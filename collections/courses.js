@@ -249,4 +249,4 @@ Meteor.methods({
 		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		return courseId;
 	}
-})
+});
