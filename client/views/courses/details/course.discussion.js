@@ -39,36 +39,29 @@ Template.newPost.events({
 	},
 
 	'click button.add': function () {
-		if (pleaseLogin()) return;
-		var timestamp = new Date();
-		var user = Meteor.userId();
-		var course = this._id;
-		var parent_ID = this.parent &&  this.parent._id
-
+		if (pleaseLogin()) return;		
+		var comment = {
+		title: $("#post_title").val(),
+		text: $("#post_text").val()
+		};
+		var parent_ID = this.parent && this.parent._id;
 		if (parent_ID) {
-			CourseDiscussions.insert({
-				"parent_ID":parent_ID,
-				"course_ID":this.parent.course_ID,
-				"time_created":timestamp,
-				"time_updated":timestamp,
-				"user_ID":user,
-				"title":$("#post_title").val(),
-				"text":$("#post_text").val()
-			});
+			comment.parent_ID = parent_ID;
+			comment.course_ID = this.parent.course_ID;
 		} else {
-			CourseDiscussions.insert({
-				"course_ID":course,
-				"time_created":timestamp,
-				"time_updated":timestamp,
-				"user_ID":user,
-				"title":$("#post_title").val(),
-				"text":$("#post_text").val()
-			});
-
-			// HACK update course so time_lastchange is updated
-			Meteor.call("save_course", course, {})
+			comment.course_ID = this._id;
 		}
-		Template.instance().writing.set(false);
+
+		var templateInstance = Template.instance();
+		Meteor.call('postComment', comment, function(err, commentId) {
+			if (err) {
+				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+			} else {
+				console.log(Template.instance())
+				templateInstance.writing.set(false);
+			}
+		});
+
 	},
 
 	'click button.cancel': function () {

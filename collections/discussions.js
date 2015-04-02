@@ -11,18 +11,59 @@
 
 CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 
-// Meteor.publish("CourseDiscussions", function(){
-//		  return CourseDiscussions.find({});
-//	});
 
-CourseDiscussions.allow({
-	update: function (userId, doc, fieldNames, modifier) {
-		return userId && true;	// allow only if UserId is present
-	},
-	insert: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
-	},
-	remove: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
+Meteor.methods({
+	postComment: function(comment) {
+		check(comment, {
+			course_ID: String,
+		    parent_ID: Match.Optional(String),
+			title: String,
+			text: String
+		});
+		
+		var user = Meteor.user()
+		if (!user) {
+			if (Meteor.is_client) {
+				pleaseLogin();
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in")
+			}
+		}
+		
+		comment.user_ID = user._id;
+		comment.time_created = new Date();
+		
+		var course = Courses.findOne(comment.course_ID);
+		if (!course) {
+			throw new Meteor.Error(404, "course not found");
+		}
+		
+		if (comment.parent_ID) {
+			var parentComment = CourseDiscussions.findOne(comment.parent_ID);
+			if (!parentComment) {
+				throw new Meteor.Error(404, "parent comment not found");
+			}
+			
+			if (parentComment.course_ID !== comment.course_ID) {
+				// I could try to mend this but why should I?
+				throw new Meteor.Error(400, "Course mismatch"); 
+			}
+			
+			// No nesting beyond one level
+			if (parentComment.parent_ID) {
+				throw new Meteor.Error(400, "Nesting error"); 
+			}
+		}
+		
+		comment.title = saneText(comment.title).substr(0, 200);
+		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
+		
+		var commentId = CourseDiscussions.insert(comment);
+		
+		// HACK update course so time_lastchange is updated
+		Meteor.call("save_course", course._id, {});
+		
+		return commentId;
 	}
 });
