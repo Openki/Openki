@@ -36,7 +36,7 @@ Meteor.methods({
 			title:       String,
 			description: String,
 			location:    String,
-			room:        String,
+			room:        Match.Optional(String),
 			startdate:   Date,
 			enddate:     Date
 		}
@@ -51,7 +51,7 @@ Meteor.methods({
 
 		var user = Meteor.user()
 		if (!user) {
-			if (Meteor.is_client) {
+			if (Meteor.isClient) {
 				pleaseLogin();
 				return;
 			} else {
@@ -75,7 +75,9 @@ Meteor.methods({
 			throw new Meteor.error(400, "Enddate before startdate");
 		}
 		
-		changes.description = saneHtml(changes.description);
+		if (Meteor.isServer) {
+			changes.description = saneHtml(changes.description);
+		}
 		
 		if (isNew) {
 			var eventId = Events.insert(changes);

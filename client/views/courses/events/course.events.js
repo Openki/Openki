@@ -86,24 +86,27 @@ Template.course_event.events({
 			//mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
 			//host: $('input:radio:checked.edit_event_host').val(),
 			location: instance.$('#edit_event_location').val(),
-			startdate: startdate
+			startdate: startdate,
+			enddate: startdate
 		}
 		
-		editevent.time_lastedit= now
-		
-		if (!this.event.new) {
-			Events.update(this.event._id, { $set: editevent })
-		} else {
+		var eventId = this.event._id;
+		if (this.event.new) {
+			eventId = '';
 			if (this.course) {
 				editevent.course_id = this.course._id;
 				editevent.region = this.course.region;
 			}
-			editevent.createdBy = Meteor.userId()
-			editevent.time_created = now
-			Events.insert(editevent);
-		}
+		}	
 		
-		Template.instance().editing.set(false);
+		Meteor.call('saveEvent',  eventId, editevent, function(error, eventId) {
+			if (error) {
+				console.log(error);
+			} else {
+				if (this.event.new) Router.go('showEvent', { _id: eventId });
+				instance.editing.set(false);
+			}
+		});
 	},
 	
 	'click button.cancelEditEvent': function () {
