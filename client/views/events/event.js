@@ -144,30 +144,27 @@ Template.event.events({
 			enddate: enddate
 		}
 		
-		editevent.time_lastedit = now
-		
-		if (this._id) {
-			Events.update(this._id, { $set: editevent });
-			instance.editing.set(false);
-		} else {
+		var eventId = this._id;
+		var isNew = !this._id;
+		if (isNew) {
+			eventId = '';
+			
 			if (this.course_id) {
 				editevent.course_id = this.course._id;
 				editevent.region = this.course.region;
 			} else {
 				editevent.region = Session.get('region');
 			}
-			editevent.createdBy = Meteor.userId()
-			editevent.time_created = now
-			Events.insert(editevent, function(error, result) {
-				if (error) {
-					console.log(error);
-				} else {
-					Router.go('showEvent', { _id: result });
-					instance.editing.set(false);
-				}
-			});
 		}
 		
+		Meteor.call('saveEvent',  eventId, editevent, function(error, eventId) {
+			if (error) {
+				console.log(error);
+			} else {
+				if (isNew) Router.go('showEvent', { _id: eventId });
+				instance.editing.set(false);
+			}
+		});
 	},
 	
 	'click button.cancelEditEvent': function () {

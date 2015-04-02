@@ -40,6 +40,65 @@ if (Meteor.isServer) {
 	});
 }
 
+
+Meteor.methods({
+	saveEvent: function(eventId, changes) {
+		check(eventId, String);
+		
+		var expectedFields = {
+			title:       String,
+			description: String,
+			location:    String,
+			room:        String,
+			startdate:   Date,
+			enddate:     Date
+		}
+		
+		var isNew = eventId === '';
+		if (isNew) {
+			expectedFields.region = String;
+			expectedFields.course_id = Match.Optional(String);
+		}
+		
+		check(changes, expectedFields);
+
+		var user = Meteor.user()
+		if (!user) {
+			if (Meteor.is_client) {
+				pleaseLogin();
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in")
+			}
+		}
+		
+		var now = new Date();
+		
+		changes.time_lastedit = now;
+		
+		if (isNew) {
+			changes.time_created = now;
+		}
+		
+		if (changes.startdate < now) {
+			throw new Meteor.error(400, "Can't edit events in the past");
+		}
+		
+		if (changes.enddate < changes.startdate) {
+			throw new Meteor.error(400, "Enddate before startdate");
+		}
+		
+		if (isNew) {
+			var eventId = Events.insert(changes);
+		} else {
+			Events.update(eventId, { $set: changes });
+		}
+		
+		return eventId;
+	}
+});
+
+
 /* Find events for given filters
  *
  * filter: dictionary with filter options
