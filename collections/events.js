@@ -6,7 +6,7 @@
 // "startdate" -> ISODate
 // "host" -> [userIDs]     optional
 // "location" -> ...............
-// "createdby" -> userId
+// "createdBy" -> userId
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
 // "course_id" -> ID_course          (maybe list in Future)
@@ -14,31 +14,101 @@
 
 Events = new Meteor.Collection("Events");
 
+mayEditEvent = function(user, event) {
+	console.log(user,event)
+	if (event.createdBy == user._id) return true;
+	if (user.isAdmin) return true;
+	if (event.course_id) {
+		var course = Courses.findOne({_id: event.course_id, members: {$elemMatch: { user: user._id, roles: 'team' }}});
+		if (course) return true;
+	}
+	return false;
+}
 
-Events.allow({
-	update: function (userId, doc, fieldNames, modifier) {
-		return userId && true;	// allow only if UserId is present
+Meteor.methods({
+	saveEvent: function(eventId, changes) {
+		check(eventId, String);
+		
+		var expectedFields = {
+			title:       String,
+			description: String,
+			location:    String,
+			room:        Match.Optional(String),
+			   startdate:   Date,
+			   enddate:     Date
+		}
+		
+		var isNew = eventId === '';
+		if (isNew) {
+			expectedFields.region = String;
+			expectedFields.course_id = Match.Optional(String);
+		}
+		
+		check(changes, expectedFields);
+		
+		var user = Meteor.user()
+		if (!user) {
+			if (Meteor.isClient) {
+				pleaseLogin();
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in")
+			}
+		}
+		
+		var now = new Date();
+		
+		changes.time_lastedit = now;
+		
+		if (isNew) {
+			changes.time_created = now;
+			if (changes.course_id && !mayEditEvent(user, changes)) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+		} else {
+			var event = Events.findOne(eventId);
+			if (!event) throw new Meteor.error(404, "No such event");
+			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		}
+		
+		if (changes.startdate < now) {
+			throw new Meteor.error(400, "Can't edit events in the past");
+		}
+		
+		if (changes.enddate < changes.startdate) {
+			throw new Meteor.error(400, "Enddate before startdate");
+		}
+		
+		if (Meteor.isServer) {
+			changes.description = saneHtml(changes.description);
+		}
+		
+		if (isNew) {
+			changes.createdBy = user._id;
+			var eventId = Events.insert(changes);
+		} else {
+			Events.update(eventId, { $set: changes });
+		}
+		
+		return eventId;
 	},
-	insert: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
-	},
-	remove: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
+	
+	removeEvent: function(eventId) {
+		check(eventId, String);
+
+		var user = Meteor.user()
+		if (!user) {
+			throw new Meteor.Error(401, "please log in");
+		}
+		
+		var event = Events.findOne(eventId);
+		if (!event) throw new Meteor.error(404, "No such event");
+		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		
+		Events.remove(eventId);
 	}
 });
 
-if (Meteor.isServer) {
-	Events.before.insert(function(userId, event) {
-		event.time_created = new Date();
-		event.time_lastedit = event.time_created;
-		event.description = saneHtml(event.description);
-	});
-
-	Events.before.update(function(userId, event, _, set) {
-		set.$set.time_lastedit = new Date();
-		set.$set.description = saneHtml(set.$set.description);
-	});
-}
 
 /* Find events for given filters
  *
