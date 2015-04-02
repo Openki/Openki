@@ -27,19 +27,6 @@ Events.allow({
 	}
 });
 
-if (Meteor.isServer) {
-	Events.before.insert(function(userId, event) {
-		event.time_created = new Date();
-		event.time_lastedit = event.time_created;
-		event.description = saneHtml(event.description);
-	});
-
-	Events.before.update(function(userId, event, _, set) {
-		set.$set.time_lastedit = new Date();
-		set.$set.description = saneHtml(set.$set.description);
-	});
-}
-
 
 Meteor.methods({
 	saveEvent: function(eventId, changes) {
@@ -87,6 +74,8 @@ Meteor.methods({
 		if (changes.enddate < changes.startdate) {
 			throw new Meteor.error(400, "Enddate before startdate");
 		}
+		
+		changes.description = saneHtml(changes.description);
 		
 		if (isNew) {
 			var eventId = Events.insert(changes);
