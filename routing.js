@@ -69,30 +69,38 @@ Router.map(function () {
 	this.route('admin', {								///////// admin /////////
 		template: 'admin'
 	});
-	
-	this.route('cal', {							///////// create /////////
-		path: 'cal/',
-		where: 'server',
-		action: function () {
-			var request = this.request;
-			var response = this.response;
+
+});
+
+
+Router.map(function () {
+	this.route('showEvent', {
+		path: 'event/:_id',
+		template: 'eventPage',
+		waitOn: function () {
+			return [
+			Meteor.subscribe('categories'),
+			   Meteor.subscribe('event', this.params._id)
+			]
+		},
+		data: function () {
 			
-			var calendar = new iCalendar.CalendarBuilder();
-			eventsFind({}).forEach(function(dbevent) {
-				var event = new iCalendar.EventBuilder();
-				event.setStartDate(dbevent.startdate);
-				if (dbevent.enddate) event.setEndDate(dbevent.enddate);
-				event.setSummary(dbevent.title);
-				calendar.addEvent(event.getEvent());
-			});
+			var event;
+			var create = 'create' == this.params._id;
+			if (create) {
+				var propose = moment().add(1, 'week').startOf('hour');
+				event = {
+					new: true,
+			startdate: propose.toDate(),
+			   enddate: moment(propose).add(2, 'hour').toDate()
+				};
+			} else {
+				event = Events.findOne({_id: this.params._id});
+				if (!event) return {};
+			}
 			
-			var calendarstring = calendar.getCalendar().toString()
-			this.response.writeHead(200, {
-				'Content-Type': 'text/calendar'
-			});
-			response.write(calendarstring);
-			response.end();
+			return event;
 		}
-	});
+	})
 });
 
