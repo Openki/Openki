@@ -8,7 +8,7 @@ testevents = [
 	"enddate" : { "$date" : 1425484800000 },
 	"time_lastedit" : { "$date" : 1425255006913 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425255006913 },
 	"_id" : "23pHya44bHji9SbfZ" 
 },
@@ -21,7 +21,7 @@ testevents = [
 	"enddate" : { "$date" : 1425423540000 },
 	"time_lastedit" : { "$date" : 1425138768658 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425138768658 },
 	"_id" : "2hWpGKQWYZRQJcNaL"
 },
@@ -34,7 +34,7 @@ testevents = [
 	"enddate" : { "$date" : 1425578400000 },
 	"time_lastedit" : { "$date" : 1425247990828 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425247990828 },
 	"_id" : "2u8f9DopDkicy5Qm4"
 },
@@ -47,7 +47,7 @@ testevents = [
 	"enddate" : { "$date" : 1425384000000 },
 	"time_lastedit" : { "$date" : 1425138493200 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Ruedi",
 	"time_created" : { "$date" : 1425138493200 },
 	"_id" : "4xTYQ3NW5hDK2shkp"
 },
@@ -60,7 +60,7 @@ testevents = [
 	"enddate" : { "$date" : 1425480300000 },
 	"time_lastedit" : { "$date" : 1425256157707 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425256157707 },
 	"_id" : "5mjPC2nthDQkstxYb"
 },
@@ -73,7 +73,7 @@ testevents = [
 	"enddate" : { "$date" : 1425573900000 },
 	"time_lastedit" : { "$date" : 1425247723510 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Sophie Rüdisüli",
 	"time_created" : { "$date" : 1425247723510 },
 	"_id" : "5yzKCxnmv75PPWL8g"
 },
@@ -86,13 +86,13 @@ testevents = [
 	"enddate" : { "$date" : 1425661200000 },
 	"time_lastedit" : { "$date" : 1425253395524 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425253395524 },
 	"_id" : "6JNeNAvoLyLNwhqL2"
 },
 {
 	"_id" : "6x2gZqEGixFJPnEPY",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Nora",
 	"description" : "<br /><p>Schnitzeljagd, Dauer ca 1 - 1.5h</p><p>Wenn Menschen tagsüber in tiefe Gestrüppe klettern, in Cafés suchend unter Tische schauen oder auf der Strasse komische Aktionen durchführen, sind sie entweder einer Anstalt entflohen oder auf einer Schnitzeljagd. Bist Du es Leid, immer nur deinen alltäglichen Verpflichtungen nachzurennen, kannst du diesen Nachmittag mit deinen Freunden nach Rätseln jagen und dabei sowohl nachhaltige Geschäfte kennenlernen, als auch Rätsel zum Thema lösen.</p>",
 	"enddate" : { "$date" : 1425661200000 },
 	"location" : "Zürich Kreis 1",
@@ -112,7 +112,7 @@ testevents = [
 	"enddate" : { "$date" : 1425484800000 },
 	"time_lastedit" : { "$date" : 1425255909087 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425255909087 },
 	"_id" : "7JGfEeKZNWmizuWmA"
 },
@@ -125,7 +125,7 @@ testevents = [
 	"enddate" : { "$date" : 1425466800000 },
 	"time_lastedit" : { "$date" : 1425255407075 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425255407075 },
 	"_id" : "8RJcAqLZPCLZgbTTf"
 },
@@ -138,7 +138,7 @@ testevents = [
 	"enddate" : { "$date" : 1425393900000 },
 	"time_lastedit" : { "$date" : 1425138947025 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Seee",
 	"time_created" : { "$date" : 1425138947025 },
 	"_id" : "8cKbtr8K6mRDFAuTF"
 },
@@ -151,7 +151,7 @@ testevents = [
 	"enddate" : { "$date" : 1425646800000 },
 	"time_lastedit" : { "$date" : 1425253512379 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Vera",
 	"time_created" : { "$date" : 1425253512379 },
 	"_id" : "9EXYpqjEqGR9xxpRq"
 },
@@ -164,13 +164,13 @@ testevents = [
 	"enddate" : { "$date" : 1425402000000 },
 	"time_lastedit" : { "$date" : 1425138858714 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Nic",
 	"time_created" : { "$date" : 1425138858714 },
 	"_id" : "ALzN3oyijSr7WKGgJ"
 },
 {
 	"_id" : "BmJnhd6Pdm8iThFHB",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Nic",
 	"description" : "<h4>Führung durch den Wohn- und Gewerbebau Kalkbreite</h4><p><b>mit Anmeldung </b><br /></p><p>Urbaner Lebensraum, soziale Durchmischung, Ziele der 2000-Watt-Gesellschaft — Sind die Anforderungen an den Städtebau umsetzbar? Die Genossenschaft Kalkbreite hat mit ihrem Wohn- und Gewerbebau eine nachhaltige Bebauung des Kalkbreite- Areals geschaffen. <br />Auf dem Rundgang erhalten Interessierte einen Einblick in die Wohnformen und in das Grundkonzept.</p>",
 	"enddate" : { "$date" : 1425299400000 },
 	"location" : "Rosengartenplatz (Kalkbreitestrasse 2, 8003 Zürich) vor der Treppe zum Hof",
@@ -190,13 +190,13 @@ testevents = [
 	"enddate" : { "$date" : 1425657600000 },
 	"time_lastedit" : { "$date" : 1425253617248 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Nic",
 	"time_created" : { "$date" : 1425253617248 },
 	"_id" : "CZAdSmEDbF6js5PHB"
 },
 {
 	"_id" : "CagtrNgyPymj9tquM",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Seee",
 	"description" : "<h4>Exkursion, <b>mit Anmeldung</b></h4><p><b>Treffpunkt: 13.15 am Central, vor dem Eingang der Polybahn</b></p><p>Schauen Sie den Fachleuten von Entsorgung + Recycling Zürich im Klärwerk Werdhölzli über die Schulter: Jeden Tag reinigen sie zwischen 150’000 und 500’000 Kubikmeter Abwasser und leiten es sauber in die Limmat. In vier Reinigungsstufen holen sie alle festen und gelösten Schmutzstoffe aus dem Abwasser und verwerten die Rückstände ökologisch und sinnvoll – damit der natürliche Wasserkreislauf geschützt bleibt.</p><p><b>Anmelden kannst Du dich bis am 28.2.2015.</b></p><p>Die Plätze sind begrenzt auf 12 Teilnehmer pro Workshop. Mitnehmen musst Du zwei Einmachgläser.</p>",
 	"enddate" : { "$date" : 1425481200000 },
 	"location" : "ERZ Klärwerk Werdhölzli",
@@ -216,7 +216,7 @@ testevents = [
 	"enddate" : { "$date" : 1425553200000 },
 	"time_lastedit" : { "$date" : 1425247477475 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425247477475 },
 	"_id" : "CzoqCY5juqd7RSjsc"
 },
@@ -229,13 +229,13 @@ testevents = [
 	"enddate" : { "$date" : 1425480300000 },
 	"time_lastedit" : { "$date" : 1425255808676 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "wankelmut",
 	"time_created" : { "$date" : 1425255808676 },
 	"_id" : "Djb4enAdKSWyQsKnq"
 },
 {
 	"_id" : "GS27FXZuDgfsHkNmq",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "wankelmut",
 	"description" : "<p>Dialog mit anschliessendem Apero <br />Pioneers in Sustainability.\n<br /></p><p>Mit Markus Freitag, Entrepreneur<br />mit Verlosung von 3 FREITAG-Artikeln </p><p>Was bewegt Menschen, die bewegen? Wie leben erfolgreiche Pioniere ihre Visionen? Die Kult-Taschen-Designer Markus Freitag und sein Bruder setzen seit Jahren ihre Visionen um. Tag für Tag. Mit Kopf und Herz. Und weltweitem Erfolg. Markus Freitag ist ehemaliger Velokurier, Taschendesigner, LKW-Planen-Upcycler, Entrepreneur, Arbeit-/Ideengeber und Vater.</p>",
 	"enddate" : { "$date" : 1425308400000 },
 	"location" : "ETH",
@@ -255,13 +255,13 @@ testevents = [
 	"enddate" : { "$date" : 1425486600000 },
 	"time_lastedit" : { "$date" : 1425256393196 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Claudio Beretta",
 	"time_created" : { "$date" : 1425256393196 },
 	"_id" : "GWzAgypjFDGMPkS6x"
 },
 {
 	"_id" : "GkAgCpa6CaELfJjdY",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Vollpfoschte",
 	"description" : "<p><i>Videokonferenz</i></p><p>mit <b>Cosima Dannoritzer</b></p><p>Dinge, die kurz nach Ablauf der Garantie kaputt gehen, sind uns inzwischen bekannt. Das ist nicht nur ärgerlich für den Konsumenten, sondern verursacht jedes Jahr Unmengen von Müll, den es zu entsorgen gilt — oft auf intransparente und moralisch bedenkliche Weise. Die Filmautorin der Filme «Kaufen für die Müllhalde» und «Giftige Geschäfte — Der Elektromüll-Skandal» steht per Videokonferenz mit uns in Verbindung um darüber zu diskutieren, welche Alternativen es gibt oder wie Müllexporte vermieden werden können. Die Trailer der beiden Filme und weitere Filmausschnitte liefern die Grundlage der Diskussion.</p>",
 	"enddate" : { "$date" : 1425466800000 },
 	"location" : "ETH",
@@ -281,13 +281,13 @@ testevents = [
 	"enddate" : { "$date" : 1425631500000 },
 	"time_lastedit" : { "$date" : 1425252642428 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425252642428 },
 	"_id" : "HAeL8JYhFHFxE8xYy"
 },
 {
 	"_id" : "Htpqu2AWjfyLX4Mnc",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Sandro",
 	"description" : "<i>Vortrag</i><br /><p><br /></p><p>mit <b>Anton Küchler</b>,<br />dipl. Umwelt-Natw. ETH, Inhaber und Geschäftsführer von<a href=\"http://weichenstellen.ch\"> Weichen stellen</a>, Büro für Nachhaltigkeit, Initiator der Lebensgemeinschaft Balmeggberg, Mitglied vom Permakulturplanungsbüro Planofuturo</p>Permakultur gestaltet Lebensräume und Systeme, die langfristig funktionieren und nachhaltig produktiv bleiben. Diese Lebensräume liefern eine Vielzahl an Leistungen und Produkte, welche die Bedürfnisse der Menschen befriedigen ohne die natürlichen Kreisläufe zu beeinträchtigen.",
 	"enddate" : { "$date" : 1425578400000 },
 	"location" : "Toni-Areal",
@@ -307,7 +307,7 @@ testevents = [
 	"enddate" : { "$date" : 1425639600000 },
 	"time_lastedit" : { "$date" : 1425252820327 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425252820327 },
 	"_id" : "JniffMYmJN2Y4sYZo"
 },
@@ -320,13 +320,13 @@ testevents = [
 	"enddate" : { "$date" : 1425574800000 },
 	"time_lastedit" : { "$date" : 1425247607764 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "mutti",
 	"time_created" : { "$date" : 1425247607764 },
 	"_id" : "LMLxDp5zvj8bYvpRk"
 },
 {
 	"_id" : "M7o8Z3WsBSntTQqY8",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Sandro",
 	"description" : "<h4>Offener Brunch</h4><p>Mit Slow Food Youth und vielen weiteren studentischen Organisationen\n\n<br />Zum Auftakt lädt Slow Food Youth zu einem Eat-In ein: Für frisches Brot, Butter, Milch, Eier und Kaffee ist gesorgt. Für alles andere seid Ihr zuständig, sei es nun Euer Lieblingskäse von der Chäsi, selbstgemachte Confi etc. Ein Degu-Stand bietet Gelegenheit, Labels und Einkaufsgewohnheiten zu hinterfragen. <br />Studentische Organisationen sind präsent: networking garantiert!\n</p>",
 	"enddate" : { "$date" : 1425301200000 },
 	"location" : "UZH Zentrum",
@@ -339,7 +339,7 @@ testevents = [
 },
 {
 	"_id" : "M7xE4cYWpjmSGh2jA",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Seee",
 	"description" : "<p>A new theory of ecologically intelligent design argues that manufacturers’ products, when discarded, should either be completely recyclable in the Technosphere or become biodegradable food for the Biosphere. <br />The film WASTE=FOOD explores this «cradle to cradle» design developed by American architect William McDonough and German chemist Michael Braungart.</p>",
 	"enddate" : { "$date" : 1425298500000 },
 	"location" : "ETH",
@@ -359,7 +359,7 @@ testevents = [
 	"enddate" : { "$date" : 1425646800000 },
 	"time_lastedit" : { "$date" : 1425328677498 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Rudolf von Guggisbühl",
 	"time_created" : { "$date" : 1425328677498 },
 	"_id" : "NcYsMfqpFjBd2m9cG"
 },
@@ -372,7 +372,7 @@ testevents = [
 	"enddate" : { "$date" : 1425589200000 },
 	"time_lastedit" : { "$date" : 1425247269060 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Verena Aeberli",
 	"time_created" : { "$date" : 1425247269060 },
 	"_id" : "PT9CsGq84orriQarr"
 },
@@ -385,7 +385,7 @@ testevents = [
 	"enddate" : { "$date" : 1425574800000 },
 	"time_lastedit" : { "$date" : 1425254535056 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Milva Serengeti",
 	"time_created" : { "$date" : 1425247903016 },
 	"_id" : "Q4KyabewWWs7nvENS"
 },
@@ -398,13 +398,13 @@ testevents = [
 	"enddate" : { "$date" : 1425412800000 },
 	"time_lastedit" : { "$date" : 1425139480080 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Pietro Chang",
 	"time_created" : { "$date" : 1425139480080 },
 	"_id" : "Q7Sh2N2MuzQrnhERp"
 },
 {
 	"_id" : "RxpzwvcBm8YyBkSkz",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Sandra Mihailovic",
 	"description" : "<h4>Podiumsdiskussion mit anschliessendem nachhaltigem Apero\n\n</h4>mit: \n<br /><p>Prof. <b>Wilhelm Gruissem</b> (Professur Pflanzenbiotechnologie ETH, Stv. Leiter Institut für Agrarwissenschaften)<br /><b>Tina Goethe</b> (Brot für alle) \n<br /><b>Adriano Mannino</b> (Sentience Politics) \n<br />Dr. <b>Sibyl Anwander</b> (ProTerra, ehem. Leiterin Nachhaltigkeit Coop) \n<br /><b>Daniel Bärtschi</b> (Geschäftsführer BioSuisse, Agronom) <br />Moderation: <b>Sandro Brotz</b> (SRF Rundschau)<br /></p><p>Die Weltbevölkerung und der globale Wohlstand steigen. Bisher korreliert die Nachfrage an Nahrungsmitteln. Ist der wachsende Bedarf mit einem schonenden Umgang der Umwelt vereinbar? Ist der Trend des Wachstums durch Verhaltensänderungen im Konsum beeinflussbar? Eine Diskussion mit ExpertInnen über Themen wie Gentechnik, biologische Landwirtschaft und Fleischkonsum. Anschliessend laden wir Dich zu einem Apero riche ein — gesponsert von nachhaltiger Zürcher Gastronomie.</p>",
 	"enddate" : { "$date" : 1425325500000 },
 	"location" : "UZH Zentrum",
@@ -424,7 +424,7 @@ testevents = [
 	"enddate" : { "$date" : 1425657600000 },
 	"time_lastedit" : { "$date" : 1425253601431 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Mao Ching Po",
 	"time_created" : { "$date" : 1425253601431 },
 	"_id" : "Sr2PenmgxyhBC5sQE"
 },
@@ -437,7 +437,7 @@ testevents = [
 	"enddate" : { "$date" : 1425636900000 },
 	"time_lastedit" : { "$date" : 1425252730125 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Taneia Tanabalasindram",
 	"time_created" : { "$date" : 1425252730125 },
 	"_id" : "TppwNueFQzLqa9izG"
 },
@@ -450,13 +450,13 @@ testevents = [
 	"enddate" : { "$date" : 1425394800000 },
 	"time_lastedit" : { "$date" : 1425138999036 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Gregory Sauber",
 	"time_created" : { "$date" : 1425138999036 },
 	"_id" : "WYmJrwDbX3cR2D2XR"
 },
 {
 	"_id" : "XdoyogCP4upyDf7pK",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Maria_95",
 	"description" : "<h4>Umweltpsychologischer Workshop der IPU, (Max. 40 Personen)</h4><p>mit <b>Vivian Frick</b>, Netzwerkbeauftragte der IPU, Vorstandsmitglied VSN, Psychologin (M. Sc.)</p><p>und <b>Matthias Lüthi</b>, Projektleiter der IPU, Doktorand in Biopsychologie</p><p>Faulheit wird oft als Hindernis für einen nachhaltigen Lebensstil wahrgenommen. Kann Faulheit auch nachhaltig sein? Aus umweltpsychologischer Sicht werden wir beide Seiten der Faulheit beleuchten und anhand von Alltagsbeispielen in Gruppen diskutieren. Die Teilnehmenden lernen, wie sie Faulheit im Sinne der Nachhaltigkeit überwinden oder nutzen können.</p><p></p>",
 	"enddate" : { "$date" : 1425402000000 },
 	"location" : "UZH Zentrum",
@@ -476,7 +476,7 @@ testevents = [
 	"enddate" : { "$date" : 1425657600000 },
 	"time_lastedit" : { "$date" : 1425253616886 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "CoolKeeper1",
 	"time_created" : { "$date" : 1425253616886 },
 	"_id" : "YJxmY55uvyxLkjWRD"
 },
@@ -489,7 +489,7 @@ testevents = [
 	"enddate" : { "$date" : 1425416400000 },
 	"time_lastedit" : { "$date" : 1425138304229 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Mondblume",
 	"time_created" : { "$date" : 1425138304229 },
 	"_id" : "YPmqsj7h4WBNgM4h7"
 },
@@ -502,7 +502,7 @@ testevents = [
 	"enddate" : { "$date" : 1425378600000 },
 	"time_lastedit" : { "$date" : 1425138415494 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Freedomfighter_Against_War_007",
 	"time_created" : { "$date" : 1425138415494 },
 	"_id" : "ZAnTEKS2xrEgcFCDa"
 },
@@ -515,7 +515,7 @@ testevents = [
 	"enddate" : { "$date" : 1425657600000 },
 	"time_lastedit" : { "$date" : 1425253617299 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Geroldswiiler_Smöker",
 	"time_created" : { "$date" : 1425253617299 },
 	"_id" : "ZSnGukhyWLhkorBiP"
 },
@@ -528,7 +528,7 @@ testevents = [
 	"enddate" : { "$date" : 1425498300000 },
 	"time_lastedit" : { "$date" : 1425256492588 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Nimbus",
 	"time_created" : { "$date" : 1425256492588 },
 	"_id" : "a988iHc4dftCyxuF4"
 },
@@ -541,7 +541,7 @@ testevents = [
 	"enddate" : { "$date" : 1425412800000 },
 	"time_lastedit" : { "$date" : 1425336424217 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Wehrmutstropfen",
 	"time_created" : { "$date" : 1425139306472 },
 	"_id" : "ake3CnwMPQMh4scFJ"
 },
@@ -554,13 +554,13 @@ testevents = [
 	"enddate" : { "$date" : 1425466800000 },
 	"time_lastedit" : { "$date" : 1425255197923 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "The Machine",
 	"time_created" : { "$date" : 1425255197923 },
 	"_id" : "cAhb6cLG8TQxy2CeY"
 },
 {
 	"_id" : "essdofDRZsB8evsDJ",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "greg",
 	"description" : "<h4>Workshop\nmit <a href=\"http://openki.net\">Openki</a> und Verein KOPF</h4><p>Ein Workshop über offene Bildung anhand der Kursplattform Openki.net.<br />Es geht um die sozialen Aspekte von selbstorganisiertem Wissensaustausch als Gegenbewegung zur extremen Spezialisierung, Bürokratisierung und Kommerzialisierung der Bildung.</p>",
 	"enddate" : { "$date" : 1425304800000 },
 	"location" : "ETH",
@@ -580,7 +580,7 @@ testevents = [
 	"enddate" : { "$date" : 1425551400000 },
 	"time_lastedit" : { "$date" : 1425247388477 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Seee",
 	"time_created" : { "$date" : 1425247388477 },
 	"_id" : "i5p7CXT45EDbaTBgT"
 },
@@ -593,7 +593,7 @@ testevents = [
 	"enddate" : { "$date" : 1425474000000 },
 	"time_lastedit" : { "$date" : 1425256107264 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "No_Boarder-No_Nation-Stop_Deportation",
 	"time_created" : { "$date" : 1425256107264 },
 	"_id" : "jznGRbLBoYzoXnG5w" 
 },
@@ -606,7 +606,7 @@ testevents = [
 	"enddate" : { "$date" : 1425639600000 },
 	"time_lastedit" : { "$date" : 1425252547013 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Randständig",
 	"time_created" : { "$date" : 1425252547013 },
 	"_id" : "ok9eD6cEoJrmKpoCp"
 },
@@ -619,13 +619,13 @@ testevents = [
 	"enddate" : { "$date" : 1425589200000 },
 	"time_lastedit" : { "$date" : 1425305141823 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "YCwPbfbBRhseveiNu",
+	"createdBy" : "Büsi1986",
 	"time_created" : { "$date" : 1425305141823 },
 	"_id" : "qxZWkGN4MBXgTRKX2"
 },
 {
 	"_id" : "rbBb9mmzKTZYYAipR",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "macanico",
 	"description" : "<h4>Vortrag (in English)\n</h4><p>mit <b>Laura Metzger</b> und <b>Adina Rom</b>, PhD candidates ETH Nadel, Center for Development and Cooperation <br /></p><p>How can research and innovation support effective poverty reduction and sustainable development in the Global South? Using various case studies Metzger and Rom illustrate how research can help optimize technologies and policies for poverty reduction. Further they discuss how research on program effectiveness impacts policy and individual donor decisions.</p>",
 	"enddate" : { "$date" : 1425316500000 },
 	"location" : "UZH Zentrum",
@@ -645,7 +645,7 @@ testevents = [
 	"enddate" : { "$date" : 1425391200000 },
 	"time_lastedit" : { "$date" : 1425139108683 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Marcel",
 	"time_created" : { "$date" : 1425139108683 },
 	"_id" : "reh2QBzbLfZoXpeRu"
 },
@@ -658,7 +658,7 @@ testevents = [
 	"enddate" : { "$date" : 1425387600000 },
 	"time_lastedit" : { "$date" : 1425138559337 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Martin",
 	"time_created" : { "$date" : 1425138559337 },
 	"_id" : "rerCG63aLoxHo8Fa8"
 },
@@ -671,7 +671,7 @@ testevents = [
 	"enddate" : { "$date" : 1425682740000 },
 	"time_lastedit" : { "$date" : 1425253998018 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Vera",
 	"time_created" : { "$date" : 1425253998018 },
 	"_id" : "s9KsbJTkHgKHGuN7J"
 },
@@ -684,13 +684,13 @@ testevents = [
 	"enddate" : { "$date" : 1425659400000 },
 	"time_lastedit" : { "$date" : 1425253723944 },
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Android_lover-with_heart",
 	"time_created" : { "$date" : 1425253723944 },
 	"_id" : "sBbXKdxpc5zXntnHh"
 },
 {
 	"_id" : "t3kxMFiyaozW8kZy4",
-	"createdBy" : "7N92iorGrqykrm5Cv",
+	"createdBy" : "Android_lover-with_heart",
 	"description" : "<h4>Workshop, mit Anmeldung</h4><p>mit BiofürJede, <b>Claudio Beretta</b> (Mitbegründer <a href=\"http://foodwaste.ch/\">foodwaste.ch</a>)</p><p>Wir werden mit BiofürJede in die Technik des Einmachens eingeführt und verarbeiten biologische und saisonale Lebensmittel so, dass wir diese auch Monate später geniessen können. In einem spannenden Workshop erfährst Du, wie du dem Ablaufen einiger Lebensmittel vorbeugen kannst. Während dem Workshop wird Claudio Beretta uns theoretische Hintergründe zum Thema Foodwaste liefern.</p><p><b>Anmelden kannst Du dich bis am 28.2.2015.</b></p><p>Die Plätze sind begrenzt auf 12 Teilnehmer pro Workshop. Mitnehmen musst Du zwei Einmachgläser.</p><p><a href=\"http://goo.gl/forms/fd0gmtpMlR\">Zur Anmeldung</a></p>",
 	"enddate" : { "$date" : 1425472200000 },
 	"location" : "PHZH",
@@ -703,7 +703,7 @@ testevents = [
 },
 {
 	"_id" : "wTdSXp3EfccLAt5Mn",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Anderson72",
 	"description" : "<p></p><h4>Offene Diskussionsrunde\n\n</h4><p>Mit <b>Stefan Baumann</b> (Leitung der Steuergruppe «Bildung für Nachhaltige Entwicklung BNE an der PH Zürich») <br />und <b>Anita Schneider</b> (Integration von Bildung für Nachhaltige Entwicklung in die Ausbildung und Leitung der Umweltkommission)\n<br /></p><p>Soll Konsumverhalten in der Grundschule thematisiert werden?<br />Sind vegetarische Mensen an den Schulen legitim? <br />Wie wird Nachhaltigkeit in den Schulen behandelt und umgesetzt? <br />Diese und weitere brenzlige Fragen werden in einer moderierten, offenen Diskussionsrunde mit unseren zwei ExpertenInnen Stefan Baumann und Anita Schneider thematisiert.\n</p>",
 	"enddate" : { "$date" : 1425313800000 },
 	"location" : "PHZH",
@@ -715,7 +715,14 @@ testevents = [
 	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE" 
 },
 
-/// Events whith courses
+
+
+
+
+
+
+
+//////////////////////7// Events whith courses
 
 { 
 	"title" : "WC-Brunnen bauen",
@@ -725,14 +732,14 @@ testevents = [
 	"time_lastedit" : { "$date" : 1425505012741 },
 	"course_id" : "exTv2FGtdgjqhp7hS",
 	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "DgjKzXfANizWA5dcG",
+	"createdBy" : "Stephan",
 	"time_created" : { "$date" : 1425505012741 },
 	"_id" : "nnBXH4a44jdHjYnFD" 
 },
 {
 	"_id" : "o7xmFjNCqomatWMAz",
 	"course_id" : "SQWppFPaLFFB6MovL",
-	"createdBy" : "ixMZWDR9wzGFzotpC",
+	"createdBy" : "Milva",
 	"description" : "Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten?<br /><p>Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses. </p><p>Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  \n\nWas lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet.</p>",
 	"enddate" : { "$date" : 1425661200000 },
 	"location" : "ETH",
@@ -746,7 +753,7 @@ testevents = [
 {
 	"_id" : "gcT94v49CE9F2jz2C",
 	"course_id" : "tQdBkPut5JLN7v52X",
-	"createdBy" : "huQY6ajJC8Zqj6gPb",
+	"createdBy" : "Serengeti",
 	"description" : "<p>Wir haben hier genügend Platz für ca. 10 - 15 Menschen, jemand der Innendekorateurin gelernt hat (=nähen/ reparieren kann), einen kleinen Nähkasten und eine Nähmaschine (die nur Zick-Zack und gerade nähen kann).\n\nAm besten bringst du aber selbst etwas Nähzeug mit, wenn du hast. Wir beginnen um 16:00 Uhr und du kannst bis ca. 23:00 eintreffen/ hier sein.</p>",
 	"enddate" : { "$date" : 1425416400000 },
 	"location" : "sinndrin Alfred-Escher-Str. 46",
@@ -760,7 +767,7 @@ testevents = [
 {
 	"_id" : "RbnfsBXd6CsNxYYfK",
 	"course_id" : "ykPtNzX84D85seows",
-	"createdBy" : "MDBB3PG92fF8FD2Rp",
+	"createdBy" : "Die Speerspitze des Gedankenguts",
 	"description" : "",
 	"enddate" : { "$date" : 1425650400000 },
 	"location" : "Toni-Areal",
