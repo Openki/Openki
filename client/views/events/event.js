@@ -62,7 +62,7 @@ Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;
 		if (confirm("delete event "+"'"+this.title+"'"+"?")) {
-			Events.remove(this._id);
+			Meteor.call('removeEvent', this._id)
 		}
 		Template.instance().editing.set(false);
 	},
