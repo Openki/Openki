@@ -392,35 +392,13 @@ testcourses = [{
 		{'user':'Lucy', 'roles': ['participant', 'mentor']}
 	]
 },{
-	'name':        'WC-Brunnen Bau',
-	'categories': ['Handwerk'],
-	'tags':       ['DIY', 'Ökologie'],
-	'createdby':   '',
-	'description': '',
-	'roles':      ['team', 'participant', 'mentor', 'host'],
-	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
-	]
-},{
 	'name':        'Verschlafen',
 	'categories': ['Experimantal'],
 	'tags':       ['', ''],
 	'createdby':   '',
 	'description': '',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
-	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
-	]
+	'members': []
 },{
 	'name':        'Schweissen',
 	'categories': ['Handwerk', 'Holz / Metall'],
@@ -440,13 +418,8 @@ testcourses = [{
 	'description': 'Wer kann mir beibringen, Fahrräder zu reparieren?',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
-	]
+		{'user':'Vreni', 'roles': ['mentor']}
+		]
 },{
 	'name':        'Lerne Russisch in 2 Stunden',
 	'categories': ['Sprache'],
@@ -455,12 +428,6 @@ testcourses = [{
 	'description': '1.Stunde Kyrillisch, <br> 2. Konversation',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
 	]
 },{
 	'name':        'Lesegruppe',
@@ -470,12 +437,7 @@ testcourses = [{
 	'description': 'Kurzgeschichten lesen, oder auch mal was längeres, ich mag philosophisches',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
+		{'user':'Seee', 'roles': ['participant']}
 	]
 },{
 	'name':        'Notebooks auf Ubuntu Linux umrüsten',
@@ -485,12 +447,6 @@ testcourses = [{
 	'description': "<p>In diesem Workshop rüsten wir alte Notebook auf das Betriebssystem Ubuntu Linux als Alternative zu OS X oder Windows um, damit die alten Notebooks wieder schneller laufen und potentiell noch Jahre lang verwendet werden können. <br /></p><p>Bringe dein altes Notebook mit und wir helfen dir bei der Installation und den ersten Schritten. PS: Bitte sichere allfällige Daten möglichst vorher, damit nichts verloren geht... Anmeldung ist erwünscht.<br /></p>",
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
 	]
 },{
 	'name':        'Catching fish with flies!?',
@@ -500,20 +456,14 @@ testcourses = [{
 	'description': '<p>Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten. Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in  Aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischdökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses.  Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  </p><p>Was lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet. <br /></p>',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']},
-		{'user':'', 'roles': ['']}
 	]
 },{
-	'name':        'Catching fish with flies!?',
+	'name':        'WC-Brunnen Bau',
 	'categories': ['Handwerk'],
-	'tags':       ['', ''],
+	'tags':       ['DIY', 'Ökologie'],
 	'createdby':   'sb',
 	'description': '"<p>WC-Brunnen bieten nicht nur viel Komfort beim Händewaschen, sie helfen auch beim Wassersparen! </p><p><br /><a href=\"http://www.vorsicht-glass.de/assets/images/Good_Hotel_bathroom.jpg\">Foto von professionellem Beispiel</a><br />Dieses Prinzip, aber alles DIY und für weniger als 10.-</p><p><br /></p>',
-	'roles':      ['team', 'participant', 'host'],
+	'roles':      ['team', 'participant', 'host', 'mentor'],
 	"members" : [
 		{
 			"comment" : "hab schon ein paar gebaut",
@@ -533,8 +483,6 @@ testcourses = [{
 	]
 
 },
-
-
 
 
 

@@ -748,7 +748,7 @@ testevents = [
 	"startdate" : { "$date" : 1425505012741 },
 	"enddate" : { "$date" : 1425507012741 },
 	"time_lastedit" : { "$date" : 1425505012741 },
-	"course_id" : "exTv2FGtdgjqhp7hS",
+	"course_id" : "eb5d462d",
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Stephan",
 	"time_created" : { "$date" : 1425505012741 },
@@ -756,7 +756,7 @@ testevents = [
 },
 {
 	"_id" : "o7xmFjNCqomatWMAz",
-	"course_id" : "SQWppFPaLFFB6MovL",
+	"course_id" : "821948d1",
 	"createdBy" : "Milva",
 	"description" : "Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten?<br /><p>Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses. </p><p>Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  \n\nWas lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet.</p>",
 	"enddate" : { "$date" : 1425661200000 },
@@ -770,7 +770,7 @@ testevents = [
 },
 {
 	"_id" : "gcT94v49CE9F2jz2C",
-	"course_id" : "tQdBkPut5JLN7v52X",
+	"course_id" : "32b2e56b",
 	"createdBy" : "Serengeti",
 	"description" : "<p>Wir haben hier genügend Platz für ca. 10 - 15 Menschen, jemand der Innendekorateurin gelernt hat (=nähen/ reparieren kann), einen kleinen Nähkasten und eine Nähmaschine (die nur Zick-Zack und gerade nähen kann).\n\nAm besten bringst du aber selbst etwas Nähzeug mit, wenn du hast. Wir beginnen um 16:00 Uhr und du kannst bis ca. 23:00 eintreffen/ hier sein.</p>",
 	"enddate" : { "$date" : 1425416400000 },
@@ -784,7 +784,7 @@ testevents = [
 },
 {
 	"_id" : "RbnfsBXd6CsNxYYfK",
-	"course_id" : "ykPtNzX84D85seows",
+	"course_id" : "71b0ebc9",
 	"createdBy" : "Die Speerspitze des Gedankenguts",
 	"description" : "",
 	"enddate" : { "$date" : 1425650400000 },
