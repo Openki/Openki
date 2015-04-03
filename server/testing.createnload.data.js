@@ -10,7 +10,7 @@ createCoursesIfNone = function(){
 // TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
-	var email = (name.replace(' ', '')+"@schuel.example").toLowerCase()
+	var email = (name.replace(' ', '')+"@openki.example").toLowerCase()
 	
 	while (true) {
 		var user = Meteor.users.findOne({ "emails.address": email})
@@ -18,8 +18,6 @@ function ensureUser(name) {
 		
 		user = Meteor.users.findOne({username: name})
 		if (user) return user;
-		
-		console.log("Adding user "+name+' '+email)
 
 		var id = Accounts.createUser({
 			username: name,
@@ -28,14 +26,14 @@ function ensureUser(name) {
 			profile: {name : name},
 		});
 		
-		var age = 0 //Math.floor(Random.fraction()*100000000000)
+		var age = Math.floor(Random.fraction()*100000000000)  // this takes ages (ok: millis!)
 		Meteor.users.update({ _id: id },{$set:{
 			createdAt: new Date(new Date().getTime()-age),
 			lastLogin: new Date(new Date().getTime()-age/30),
 			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
-		}})
+		}});
 
-		console.log("...done")
+		console.log("   Added user: "+name)
 
 	}
 }
@@ -51,7 +49,7 @@ function ensureRegion(name) {
 			timezone: "UTC+"+Math.floor(Random.fraction()*12)+":00"
 		});
 		
-		console.log("Added region "+name+" "+id)
+		console.log("Added region: "+name+" "+id)
 	}
 }
 
@@ -115,7 +113,7 @@ function createCourses(){
 			}
 			course.groups = _.map(course.groups, ensureGroup)
 			var id = Courses.insert(course)
-			console.log("Added course "+course.name+" "+id)
+			console.log("Added course: "+course.name)
 		}
 	})
 }
@@ -219,8 +217,8 @@ createEventsIfNone = function(){
 				var age = Math.floor(Random.fraction() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
-				console.log("Adding event " + event.title);
 				Events.insert(event)
+				console.log('Added generic event:  "' + event.title + '"');
 			}
 		});
 		var event = {}
@@ -253,9 +251,9 @@ loadTestEvents = function(){
 			var DayOfFirstEvent = new Date(event.startdate.$date)
 			DayOfFirstEvent.setHours(0); DayOfFirstEvent.setMinutes(0); DayOfFirstEvent.setSeconds(0);
 			dateOffset = toDay.getTime()-DayOfFirstEvent.getTime()
-			console.log("   Date Offset is: "+moment.duration(dateOffset).humanize());
-			console.log("   or "+dateOffset+" milliseconds, right?");
-			console.log("   toDay: "+toDay+", Day of first event: "+DayOfFirstEvent);
+			console.log("   Loading events, Date Offset is: "+moment.duration(dateOffset).humanize());
+			console.log("   which is "+dateOffset+" milliseconds, right?");
+			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
 
 		event.startdate = new Date(event.startdate.$date+dateOffset);
@@ -263,8 +261,7 @@ loadTestEvents = function(){
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
 		var id = Events.insert(event);
-		console.log("Added event "+event.title+"  - ID is: "+id);
-		console.log(" On: "+event.startdate);
+		console.log("Added event:  "+event.title);
 	})
 }
 
@@ -274,7 +271,6 @@ loadTestEvents = function(){
 
 
 createGroupsIfNone = function(){
-    //Events.remove({});
 	if (Groups.find().count() === 0) {
 		_.each (testgroups, function (group){
 			group.createdby = 'ServerScript'
@@ -290,8 +286,7 @@ createGroupsIfNone = function(){
 			var members = group.members
 			delete group.members
 			Groups.insert(group)
-			console.log("Adding group: "+group.name)
-
+			console.log("Added group:   "+group.name)
 			_.each (members, function (name){
 				var member = ensureUser(name)
 				Meteor.users.update(member._id, {$push:{'groups':group._id}})
@@ -299,6 +294,7 @@ createGroupsIfNone = function(){
 		})
 	}
 }
+
 function ensureGroup(name) {
 	while (true) {
 		var group = Groups.findOne({name: name})
@@ -309,7 +305,7 @@ function ensureGroup(name) {
 			createdby: 'ServerScript_from_TestCouses',
 			description: 'Automaticaly created group by server'
 		});
-		console.log("Added group from TestCouses "+name+" "+id)
+		console.log("Added group from TestCouses: "+name+"    id: "+id)
 	}
 }
 
