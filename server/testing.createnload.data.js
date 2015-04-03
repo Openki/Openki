@@ -121,40 +121,6 @@ function createCourses(){
 }
 
 
-/////////////////////////////// TESTING: load Events with molstly no parrent Courses
-
-
-loadTestEvents = function(){
-	var dateOffset = 0
-	_.each(testevents, function(event) {
-		if (!event.createdBy) return; // Don't create events that don't have an creator name
-		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
-		
-		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
-
-		/* Create Events arround current Day. 
-		First loaded Event gets moved to current day, but stays at original hour */
-		if (dateOffset == 0){
-			var toDay = new Date();
-			toDay.setHours(0); toDay.setMinutes(0); toDay.setSeconds(0);
-			var DayOfFirstEvent = new Date(event.startdate.$date)
-			DayOfFirstEvent.setHours(0); DayOfFirstEvent.setMinutes(0); DayOfFirstEvent.setSeconds(0);
-			dateOffset = toDay.getTime()-DayOfFirstEvent.getTime()
-			console.log("   Date Offset is: "+moment.duration(dateOffset).humanize());
-			console.log("   or "+dateOffset+" milliseconds, right?");
-			console.log("   toDay: "+toDay+", Day of first event: "+DayOfFirstEvent);
-		}
-
-		event.startdate = new Date(event.startdate.$date+dateOffset);
-		event.enddate = new Date(event.enddate.$date+dateOffset);
-		event.time_created = new Date(event.time_created.$date);
-		event.time_lastedit = new Date(event.time_lastedit.$date);
-		var id = Events.insert(event);
-		console.log("Added event "+event.title+"  - ID is: "+id);
-		console.log(" On: "+event.startdate);
-	})
-}
-
 
 
 /////////////////////////////// TESTING: Create Locations if non in db
@@ -223,7 +189,7 @@ function createLocations(){
 
 createEventsIfNone = function(){
     //Events.remove({});
-	if (Events.find().count() <= 60) {      //there are currently arround 60 loaded events
+	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
 			var event_count =  Math.pow(Math.random() * 2, 4);
 			for (var n = 0; n < event_count; n++) {
@@ -266,6 +232,47 @@ createEventsIfNone = function(){
 	}
 }
 
+
+
+/////////////////////////////// TESTING: load the events from file. they molstly don't have parrent Courses
+
+
+loadTestEvents = function(){
+	var dateOffset = 0
+	_.each(testevents, function(event) {
+		if (!event.createdBy) return; // Don't create events that don't have an creator name
+		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
+		
+		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
+
+		/* Create the events arround the current Day. 
+		First loaded event gets moved to current day. All events stay at original hour */
+		if (dateOffset == 0){
+			var toDay = new Date();
+			toDay.setHours(0); toDay.setMinutes(0); toDay.setSeconds(0);
+			var DayOfFirstEvent = new Date(event.startdate.$date)
+			DayOfFirstEvent.setHours(0); DayOfFirstEvent.setMinutes(0); DayOfFirstEvent.setSeconds(0);
+			dateOffset = toDay.getTime()-DayOfFirstEvent.getTime()
+			console.log("   Date Offset is: "+moment.duration(dateOffset).humanize());
+			console.log("   or "+dateOffset+" milliseconds, right?");
+			console.log("   toDay: "+toDay+", Day of first event: "+DayOfFirstEvent);
+		}
+
+		event.startdate = new Date(event.startdate.$date+dateOffset);
+		event.enddate = new Date(event.enddate.$date+dateOffset);
+		event.time_created = new Date(event.time_created.$date);
+		event.time_lastedit = new Date(event.time_lastedit.$date);
+		var id = Events.insert(event);
+		console.log("Added event "+event.title+"  - ID is: "+id);
+		console.log(" On: "+event.startdate);
+	})
+}
+
+
+
+
+
+
 createGroupsIfNone = function(){
     //Events.remove({});
 	if (Groups.find().count() === 0) {
@@ -283,7 +290,7 @@ createGroupsIfNone = function(){
 			var members = group.members
 			delete group.members
 			Groups.insert(group)
-			console.log("Adding group "+group.name)
+			console.log("Adding group: "+group.name)
 
 			_.each (members, function (name){
 				var member = ensureUser(name)
