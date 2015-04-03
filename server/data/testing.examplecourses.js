@@ -43,6 +43,7 @@ testcourses = [{
 	'categories': ['Programmieren'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
+	'groups':     ['CCC'],
 	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: <ul> <li> Spieltheorie <li> Spielidee <li> Spielmechanik <li> Storytelling <li> Concept Art <li> Charakterentwicklung <li> Zeichnen und Bildbearbeitung mit Photoshop <li> Usability <li> Prototyping und Gamedesign mit Unity Gameengine <li> Leveldesign <li> 3D-Modelling und -Animation mit Blender <li> Programmieren mit JavaScript und C-Sharp <li> Sound-Design mit Audacity <li> Polishing </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -63,6 +64,7 @@ testcourses = [{
 	'categories': ['Programmieren','Internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
+	'groups':     ['CCC'],
 	'description': 'Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. <ul> <li> Konzeption / Idee  <li> Usability  <li> Gestaltung mit Photoshop  <li> Clientseitige Programmierung mit HTML, CSS und JavaScript  <li> Serverseitige Programmierung mit PHP / Phyton  <li> Datenbank mit mySQL </ul>',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -77,6 +79,7 @@ testcourses = [{
 	'categories': ['Elektronik / Strom'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
+	'groups':     ['SGMK'],
 	'description': ' hoi tsäme! <br>Ich würd mal gerne die Grundlagen von elektronik lernen… <br> so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;) <br> einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. <br> <br> nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).  <br>hat wer bock? <br> c u',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
 	'members': [
@@ -490,26 +493,46 @@ testcourses = [{
 		{'user':'', 'roles': ['']}
 	]
 },{
-	'name':        'Zeitreisen durch die Kartenwerke von swisstopo',
-	'categories': ['Naturwissenschaft','Geographie','Geschichte'],
+	'name':        'Catching fish with flies!?',
+	'categories': ['♥Undefined♥','Experimantal','Sport / Bewegung'],
 	'tags':       ['', ''],
-	'createdby':   'UZH',
-	'description': 'Mittwoch, 21. Januar 2015, 18:15 Uhr bis 19:45 Uhr <br> Zu seinem 175-Jahr-Jubiläum hat das Bundesamt für Landestopografie swisstopo 2013 auf seiner Homepage www.swisstopo.ch die „Zeitreise“ aufgeschaltet. Mit dieser Web-Applikation lassen sich die über 7600 gedruckten Kartenblätter der Landeskartenwerke 1:25 000, 1:50 0000 und 1:100 000 aus dem Zeitraum von 1844 bis heute an jedem beliebigen Ort der Schweiz auf attraktive Weise am Bildschirm visualisieren. Das Referat vermittelt Hintergrundinformationen zu dieser weltweit einmaligen Realisierung des kartographischen Öffentlichkeitsprinzips und stellt ausgewählte Beispiele vor. <br> MitDr. Martin Rickenbacher (Bundesamt für Landestopografie swisstopo, Wabern) <br> Ort ETH Zentrum, Rämistrasse 101, 8092 Zürich <br> Raum: Auditorium, E 1.2 <br> VeranstalterGeographisch-Ethnographische Gesellschaft Zürich <br> ReiheVermessung der Erde – Erfassung der Welt <br> KontaktNorman Backhaus (Mail) <br> KarteAuf Google-Maps anzeigen',
-	'roles':      ['host'],
+	'createdby':   'Päda',
+	'description': '<p>Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten. Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in  Aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischdökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses.  Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  </p><p>Was lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet. <br /></p>',
+	'roles':      ['team', 'participant', 'host'],
 	'members': [
-		{'user':'', 'roles': ['Roger']},
+		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']},
 		{'user':'', 'roles': ['']}
 	]
+},{
+	'name':        'Catching fish with flies!?',
+	'categories': ['Handwerk'],
+	'tags':       ['', ''],
+	'createdby':   'sb',
+	'description': '"<p>WC-Brunnen bieten nicht nur viel Komfort beim Händewaschen, sie helfen auch beim Wassersparen! </p><p><br /><a href=\"http://www.vorsicht-glass.de/assets/images/Good_Hotel_bathroom.jpg\">Foto von professionellem Beispiel</a><br />Dieses Prinzip, aber alles DIY und für weniger als 10.-</p><p><br /></p>',
+	'roles':      ['team', 'participant', 'host'],
+	"members" : [
+		{
+			"comment" : "hab schon ein paar gebaut",
+			"roles" : [	"team",	"mentor"],
+			"user" : "sb"
+		},
+		{
+			"comment" : "Geil, Ich helfe organisieren, wenn sich noch ein paar leute finden.",
+			"roles" : [	"team"],
+			"user" : "1u"
+		},
+		{
+			"user" : "greg",
+			"roles" : [	"team",	"participant"],
+			"comment" : ""
+		}
+	]
+
 },
-
-
-
-
-
 
 
 

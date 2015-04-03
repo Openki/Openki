@@ -714,6 +714,20 @@ testevents = [
 	"time_lastedit" : { "$date" : 1425044922996 },
 	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE" 
 },
+{
+	"_id" : "0T4SXl3ErJcLAt5MK",
+	'categories': ['Naturwissenschaft','Geographie','Geschichte'],
+	"createdBy" : "Norman Backhaus",
+	"description" : "<p>Mittwoch, 21. Januar 2015, 18:15 Uhr bis 19:45 Uhr <br> Zu seinem 175-Jahr-Jubiläum hat das Bundesamt für Landestopografie swisstopo 2013 auf seiner Homepage www.swisstopo.ch die „Zeitreise“ aufgeschaltet. Mit dieser Web-Applikation lassen sich die über 7600 gedruckten Kartenblätter der Landeskartenwerke 1:25 000, 1:50 0000 und 1:100 000 aus dem Zeitraum von 1844 bis heute an jedem beliebigen Ort der Schweiz auf attraktive Weise am Bildschirm visualisieren. Das Referat vermittelt Hintergrundinformationen zu dieser weltweit einmaligen Realisierung des kartographischen Öffentlichkeitsprinzips und stellt ausgewählte Beispiele vor. <br> MitDr. Martin Rickenbacher (Bundesamt für Landestopografie swisstopo, Wabern) <br> Ort ETH Zentrum, Rämistrasse 101, 8092 Zürich <br> Raum: Auditorium, E 1.2 <br> Veranstalter: Geographisch-Ethnographische Gesellschaft Zürich <br> Reihe: Vermessung der Erde – Erfassung der Welt <br> Kontakt: Norman Backhaus (Mail) <br> KarteAuf Google-Maps anzeigen\n</p>  <p> copyright: Geographisch-Ethnographische Gesellschaft Zürich</p> ",
+	"enddate" : { "$date" : 1425913200000 },
+	"location" : "ETH",
+	"region" : "J6GDhEEvdmdSMzPPF",
+	"room" : "Auditorium, E 1.2",
+	"startdate" : { "$date" : 1425308400000 },
+	"time_created" : { "$date" : 1424922325857 },
+	"time_lastedit" : { "$date" : 1425045022996 },
+	"title" : "Zeitreisen durch die Kartenwerke von swisstopo" 
+},
 
 
 
@@ -722,7 +736,10 @@ testevents = [
 
 
 
-//////////////////////7// Events whith courses
+
+
+
+//////////////////////// Events whith courses  ////////////////////////
 
 { 
 	"title" : "WC-Brunnen bauen",
