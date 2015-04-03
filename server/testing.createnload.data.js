@@ -118,6 +118,38 @@ function createCourses(){
 }
 
 
+/////////////////////////////// TESTING: load Events with molstly no parrent Courses
+
+
+loadTestEvents = function(){     //TODO: dont load them if they are loaded allready
+	var dateOffset = 0
+	_.each(testevents, function(event) {
+		if (!event.createdBy) return; // Don't create events that don't have an creator name
+
+		
+		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
+
+		/* Create Events arround current Day */
+		if (dateOffset == 0){
+			var today = new Date();
+			today.setHours(0); today.setMinutes(0); today.setSeconds(0);
+			var DayOfFirstEvent = new Date(event.startdate.$date)
+			DayOfFirstEvent.setHours(0); DayOfFirstEvent.setMinutes(0); DayOfFirstEvent.setSeconds(0);
+			dateOffset = today - DayOfFirstEvent;
+			console.log("Date Offset is: "+dateOffset+" milliseconds, right?")
+		}
+
+		event.startdate = new Date(event.startdate.$date) + dateOffset;
+		event.enddate = new Date(event.enddate.$date) + dateOffset;
+		event.time_created = new Date(event.time_created);
+		event.time_lastedit = new Date(event.time_lastedit);
+		var id = Events.insert(event);
+		console.log("Added event "+event.title+" - with ID: "+id);
+	})
+}
+
+
+
 /////////////////////////////// TESTING: Create Locations if non in db
 
 createLocationsIfNone = function(){

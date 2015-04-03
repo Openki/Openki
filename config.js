@@ -22,7 +22,8 @@ ScaleFaktor = 1;
 	createCoursesIfNone();         // Courses    in server/data/testing.examplecourses.js
 	createGroupsIfNone();          // Groups     in server/data/testing.groups.rawdata.js
 	createLocationsIfNone();       // Locations  in server/data/testing.locations.rawdata.js
-	createEventsIfNone();          // Events  (generic) in server/testing.createnload.data.js 
+	loadTestEvents();        // Events     in server/data/testing.events.js
+	createEventsIfNone();          // Events     (generic) in server/testing.createnload.data.js 
 
 
 /////////////  upcomming:  ///////////////
