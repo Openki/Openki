@@ -6,7 +6,7 @@
 // "startdate" -> ISODate
 // "host" -> [userIDs]     optional
 // "location" -> ...............
-// "createdby" -> userId
+// "createdBy" -> userId
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp
 // "course_id" -> ID_course          (maybe list in Future)
@@ -14,19 +14,16 @@
 
 Events = new Meteor.Collection("Events");
 
-
-Events.allow({
-	update: function (userId, doc, fieldNames, modifier) {
-		return userId && true;	// allow only if UserId is present
-	},
-	insert: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
-	},
-	remove: function (userId, doc) {
-		return userId && true;	// allow only if UserId is present
+mayEditEvent = function(user, event) {
+	console.log(user,event)
+	if (event.createdBy == user._id) return true;
+	if (user.isAdmin) return true;
+	if (event.course_id) {
+		var course = Courses.findOne({_id: event.course_id, members: {$elemMatch: { user: user._id, roles: 'team' }}});
+		if (course) return true;
 	}
-});
-
+	return false;
+}
 
 Meteor.methods({
 	saveEvent: function(eventId, changes) {
@@ -36,9 +33,9 @@ Meteor.methods({
 			title:       String,
 			description: String,
 			location:    String,
-			room:        String,
-			startdate:   Date,
-			enddate:     Date
+			room:        Match.Optional(String),
+			   startdate:   Date,
+			   enddate:     Date
 		}
 		
 		var isNew = eventId === '';
@@ -48,10 +45,10 @@ Meteor.methods({
 		}
 		
 		check(changes, expectedFields);
-
+		
 		var user = Meteor.user()
 		if (!user) {
-			if (Meteor.is_client) {
+			if (Meteor.isClient) {
 				pleaseLogin();
 				return;
 			} else {
@@ -65,6 +62,13 @@ Meteor.methods({
 		
 		if (isNew) {
 			changes.time_created = now;
+			if (changes.course_id && !mayEditEvent(user, changes)) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+		} else {
+			var event = Events.findOne(eventId);
+			if (!event) throw new Meteor.error(404, "No such event");
+			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 		}
 		
 		if (changes.startdate < now) {
@@ -75,15 +79,33 @@ Meteor.methods({
 			throw new Meteor.error(400, "Enddate before startdate");
 		}
 		
-		changes.description = saneHtml(changes.description);
+		if (Meteor.isServer) {
+			changes.description = saneHtml(changes.description);
+		}
 		
 		if (isNew) {
+			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
 		}
 		
 		return eventId;
+	},
+	
+	removeEvent: function(eventId) {
+		check(eventId, String);
+
+		var user = Meteor.user()
+		if (!user) {
+			throw new Meteor.Error(401, "please log in");
+		}
+		
+		var event = Events.findOne(eventId);
+		if (!event) throw new Meteor.error(404, "No such event");
+		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		
+		Events.remove(eventId);
 	}
 });
 

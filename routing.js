@@ -68,6 +68,39 @@ Router.map(function () {
 
 	this.route('admin', {								///////// admin /////////
 		template: 'admin'
+	});
+
+});
+
+
+Router.map(function () {
+	this.route('showEvent', {
+		path: 'event/:_id',
+		template: 'eventPage',
+		waitOn: function () {
+			return [
+			Meteor.subscribe('categories'),
+			   Meteor.subscribe('event', this.params._id)
+			]
+		},
+		data: function () {
+			
+			var event;
+			var create = 'create' == this.params._id;
+			if (create) {
+				var propose = moment().add(1, 'week').startOf('hour');
+				event = {
+					new: true,
+			startdate: propose.toDate(),
+			   enddate: moment(propose).add(2, 'hour').toDate()
+				};
+			} else {
+				event = Events.findOne({_id: this.params._id});
+				if (!event) return {};
+			}
+			
+			return event;
+		}
 	})
-})
+});
 
