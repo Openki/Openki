@@ -10,6 +10,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425255006913 },
+	"groups" : ["NHW"]
 	"_id" : "23pHya44bHji9SbfZ" 
 },
 { 
@@ -23,6 +24,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425138768658 },
+	"groups" : ["NHW"]
 	"_id" : "2hWpGKQWYZRQJcNaL"
 },
 {
@@ -36,6 +38,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425247990828 },
+	"groups" : ["NHW"]
 	"_id" : "2u8f9DopDkicy5Qm4"
 },
 {
@@ -49,6 +52,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Ruedi",
 	"time_created" : { "$date" : 1425138493200 },
+	"groups" : ["NHW"]
 	"_id" : "4xTYQ3NW5hDK2shkp"
 },
 {
@@ -62,6 +66,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425256157707 },
+	"groups" : ["NHW"]
 	"_id" : "5mjPC2nthDQkstxYb"
 },
 {
@@ -75,6 +80,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Sophie Rüdisüli",
 	"time_created" : { "$date" : 1425247723510 },
+	"groups" : ["NHW"]
 	"_id" : "5yzKCxnmv75PPWL8g"
 },
 {
@@ -88,9 +94,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425253395524 },
+	"groups" : ["NHW"]
 	"_id" : "6JNeNAvoLyLNwhqL2"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "6x2gZqEGixFJPnEPY",
 	"createdBy" : "Nora",
 	"description" : "<br /><p>Schnitzeljagd, Dauer ca 1 - 1.5h</p><p>Wenn Menschen tagsüber in tiefe Gestrüppe klettern, in Cafés suchend unter Tische schauen oder auf der Strasse komische Aktionen durchführen, sind sie entweder einer Anstalt entflohen oder auf einer Schnitzeljagd. Bist Du es Leid, immer nur deinen alltäglichen Verpflichtungen nachzurennen, kannst du diesen Nachmittag mit deinen Freunden nach Rätseln jagen und dabei sowohl nachhaltige Geschäfte kennenlernen, als auch Rätsel zum Thema lösen.</p>",
@@ -114,6 +122,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Meret",
 	"time_created" : { "$date" : 1425255909087 },
+	"groups" : ["NHW"]
 	"_id" : "7JGfEeKZNWmizuWmA"
 },
 {
@@ -127,6 +136,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425255407075 },
+	"groups" : ["NHW"]
 	"_id" : "8RJcAqLZPCLZgbTTf"
 },
 {
@@ -140,6 +150,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Seee",
 	"time_created" : { "$date" : 1425138947025 },
+	"groups" : ["NHW"]
 	"_id" : "8cKbtr8K6mRDFAuTF"
 },
 {
@@ -153,6 +164,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Vera",
 	"time_created" : { "$date" : 1425253512379 },
+	"groups" : ["NHW"]
 	"_id" : "9EXYpqjEqGR9xxpRq"
 },
 {
@@ -166,9 +178,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Nic",
 	"time_created" : { "$date" : 1425138858714 },
+	"groups" : ["NHW", "Openki"]
 	"_id" : "ALzN3oyijSr7WKGgJ"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "BmJnhd6Pdm8iThFHB",
 	"createdBy" : "Nic",
 	"description" : "<h4>Führung durch den Wohn- und Gewerbebau Kalkbreite</h4><p><b>mit Anmeldung </b><br /></p><p>Urbaner Lebensraum, soziale Durchmischung, Ziele der 2000-Watt-Gesellschaft — Sind die Anforderungen an den Städtebau umsetzbar? Die Genossenschaft Kalkbreite hat mit ihrem Wohn- und Gewerbebau eine nachhaltige Bebauung des Kalkbreite- Areals geschaffen. <br />Auf dem Rundgang erhalten Interessierte einen Einblick in die Wohnformen und in das Grundkonzept.</p>",
@@ -192,9 +206,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Nic",
 	"time_created" : { "$date" : 1425253617248 },
+	"groups" : ["NHW"]
 	"_id" : "CZAdSmEDbF6js5PHB"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "CagtrNgyPymj9tquM",
 	"createdBy" : "Seee",
 	"description" : "<h4>Exkursion, <b>mit Anmeldung</b></h4><p><b>Treffpunkt: 13.15 am Central, vor dem Eingang der Polybahn</b></p><p>Schauen Sie den Fachleuten von Entsorgung + Recycling Zürich im Klärwerk Werdhölzli über die Schulter: Jeden Tag reinigen sie zwischen 150’000 und 500’000 Kubikmeter Abwasser und leiten es sauber in die Limmat. In vier Reinigungsstufen holen sie alle festen und gelösten Schmutzstoffe aus dem Abwasser und verwerten die Rückstände ökologisch und sinnvoll – damit der natürliche Wasserkreislauf geschützt bleibt.</p><p><b>Anmelden kannst Du dich bis am 28.2.2015.</b></p><p>Die Plätze sind begrenzt auf 12 Teilnehmer pro Workshop. Mitnehmen musst Du zwei Einmachgläser.</p>",
@@ -218,6 +234,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425247477475 },
+	"groups" : ["NHW", "Studiengang Kommunikationsguerilla"]
 	"_id" : "CzoqCY5juqd7RSjsc"
 },
 {
@@ -231,9 +248,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "wankelmut",
 	"time_created" : { "$date" : 1425255808676 },
+	"groups" : ["NHW", "DIY-ZH"]
 	"_id" : "Djb4enAdKSWyQsKnq"
 },
 {
+	"groups" : ["NHW", "Jungfreisinnige"]
 	"_id" : "GS27FXZuDgfsHkNmq",
 	"createdBy" : "wankelmut",
 	"description" : "<p>Dialog mit anschliessendem Apero <br />Pioneers in Sustainability.\n<br /></p><p>Mit Markus Freitag, Entrepreneur<br />mit Verlosung von 3 FREITAG-Artikeln </p><p>Was bewegt Menschen, die bewegen? Wie leben erfolgreiche Pioniere ihre Visionen? Die Kult-Taschen-Designer Markus Freitag und sein Bruder setzen seit Jahren ihre Visionen um. Tag für Tag. Mit Kopf und Herz. Und weltweitem Erfolg. Markus Freitag ist ehemaliger Velokurier, Taschendesigner, LKW-Planen-Upcycler, Entrepreneur, Arbeit-/Ideengeber und Vater.</p>",
@@ -257,9 +276,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Claudio Beretta",
 	"time_created" : { "$date" : 1425256393196 },
+	"groups" : ["NHW", "DIY-ZH"]
 	"_id" : "GWzAgypjFDGMPkS6x"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "GkAgCpa6CaELfJjdY",
 	"createdBy" : "Vollpfoschte",
 	"description" : "<p><i>Videokonferenz</i></p><p>mit <b>Cosima Dannoritzer</b></p><p>Dinge, die kurz nach Ablauf der Garantie kaputt gehen, sind uns inzwischen bekannt. Das ist nicht nur ärgerlich für den Konsumenten, sondern verursacht jedes Jahr Unmengen von Müll, den es zu entsorgen gilt — oft auf intransparente und moralisch bedenkliche Weise. Die Filmautorin der Filme «Kaufen für die Müllhalde» und «Giftige Geschäfte — Der Elektromüll-Skandal» steht per Videokonferenz mit uns in Verbindung um darüber zu diskutieren, welche Alternativen es gibt oder wie Müllexporte vermieden werden können. Die Trailer der beiden Filme und weitere Filmausschnitte liefern die Grundlage der Diskussion.</p>",
@@ -283,9 +304,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425252642428 },
+	"groups" : ["NHW", "LAMM"]
 	"_id" : "HAeL8JYhFHFxE8xYy"
 },
 {
+	"groups" : ["Wohlfühlgruppe-ZH"]
 	"_id" : "Htpqu2AWjfyLX4Mnc",
 	"createdBy" : "Sandro",
 	"description" : "<i>Vortrag</i><br /><p><br /></p><p>mit <b>Anton Küchler</b>,<br />dipl. Umwelt-Natw. ETH, Inhaber und Geschäftsführer von<a href=\"http://weichenstellen.ch\"> Weichen stellen</a>, Büro für Nachhaltigkeit, Initiator der Lebensgemeinschaft Balmeggberg, Mitglied vom Permakulturplanungsbüro Planofuturo</p>Permakultur gestaltet Lebensräume und Systeme, die langfristig funktionieren und nachhaltig produktiv bleiben. Diese Lebensräume liefern eine Vielzahl an Leistungen und Produkte, welche die Bedürfnisse der Menschen befriedigen ohne die natürlichen Kreisläufe zu beeinträchtigen.",
@@ -309,6 +332,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "greg",
 	"time_created" : { "$date" : 1425252820327 },
+	"groups" : ["NHW", "Wohlfühlgruppe-ZH"]
 	"_id" : "JniffMYmJN2Y4sYZo"
 },
 {
@@ -322,9 +346,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "mutti",
 	"time_created" : { "$date" : 1425247607764 },
+	"groups" : ["NHW", "DIY-ZH"]
 	"_id" : "LMLxDp5zvj8bYvpRk"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "M7o8Z3WsBSntTQqY8",
 	"createdBy" : "Sandro",
 	"description" : "<h4>Offener Brunch</h4><p>Mit Slow Food Youth und vielen weiteren studentischen Organisationen\n\n<br />Zum Auftakt lädt Slow Food Youth zu einem Eat-In ein: Für frisches Brot, Butter, Milch, Eier und Kaffee ist gesorgt. Für alles andere seid Ihr zuständig, sei es nun Euer Lieblingskäse von der Chäsi, selbstgemachte Confi etc. Ein Degu-Stand bietet Gelegenheit, Labels und Einkaufsgewohnheiten zu hinterfragen. <br />Studentische Organisationen sind präsent: networking garantiert!\n</p>",
@@ -338,6 +364,7 @@ testevents = [
 	"title" : "KICK-OFF-BRUNCH MIT STUDENTISCHEN NACHHALTIGKEITSORGANISATIONEN"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "M7xE4cYWpjmSGh2jA",
 	"createdBy" : "Seee",
 	"description" : "<p>A new theory of ecologically intelligent design argues that manufacturers’ products, when discarded, should either be completely recyclable in the Technosphere or become biodegradable food for the Biosphere. <br />The film WASTE=FOOD explores this «cradle to cradle» design developed by American architect William McDonough and German chemist Michael Braungart.</p>",
@@ -361,6 +388,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Rudolf von Guggisbühl",
 	"time_created" : { "$date" : 1425328677498 },
+	"groups" : ["NHW"]
 	"_id" : "NcYsMfqpFjBd2m9cG"
 },
 {
@@ -374,6 +402,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Verena Aeberli",
 	"time_created" : { "$date" : 1425247269060 },
+	"groups" : ["NHW"]
 	"_id" : "PT9CsGq84orriQarr"
 },
 {
@@ -387,6 +416,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Milva Serengeti",
 	"time_created" : { "$date" : 1425247903016 },
+	"groups" : ["NHW"]
 	"_id" : "Q4KyabewWWs7nvENS"
 },
 {
@@ -400,9 +430,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Pietro Chang",
 	"time_created" : { "$date" : 1425139480080 },
+	"groups" : ["NHW", "Filme für die Erde"]
 	"_id" : "Q7Sh2N2MuzQrnhERp"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "RxpzwvcBm8YyBkSkz",
 	"createdBy" : "Sandra Mihailovic",
 	"description" : "<h4>Podiumsdiskussion mit anschliessendem nachhaltigem Apero\n\n</h4>mit: \n<br /><p>Prof. <b>Wilhelm Gruissem</b> (Professur Pflanzenbiotechnologie ETH, Stv. Leiter Institut für Agrarwissenschaften)<br /><b>Tina Goethe</b> (Brot für alle) \n<br /><b>Adriano Mannino</b> (Sentience Politics) \n<br />Dr. <b>Sibyl Anwander</b> (ProTerra, ehem. Leiterin Nachhaltigkeit Coop) \n<br /><b>Daniel Bärtschi</b> (Geschäftsführer BioSuisse, Agronom) <br />Moderation: <b>Sandro Brotz</b> (SRF Rundschau)<br /></p><p>Die Weltbevölkerung und der globale Wohlstand steigen. Bisher korreliert die Nachfrage an Nahrungsmitteln. Ist der wachsende Bedarf mit einem schonenden Umgang der Umwelt vereinbar? Ist der Trend des Wachstums durch Verhaltensänderungen im Konsum beeinflussbar? Eine Diskussion mit ExpertInnen über Themen wie Gentechnik, biologische Landwirtschaft und Fleischkonsum. Anschliessend laden wir Dich zu einem Apero riche ein — gesponsert von nachhaltiger Zürcher Gastronomie.</p>",
@@ -416,19 +448,6 @@ testevents = [
 	"title" : "NACHHALTIGE LANDWIRTSCHAFT TROTZ BEVÖLKERUNGSWACHSTUM — REALISTISCH ODER UTOPISCH?"
 },
 {
-	"title" : "REHAB: SPIELEN FÜR DEN REGENWALD",
-	"description" : "<i>Workshop</i> (Auf Englisch)<p>mit <b>Anne Giger Dray</b>, Dozentin Terrestrische Ökosysteme, ETH Zürich</p><p>Das ReHab-Game simuliert die Schwierigkeiten im Umgang mit dem Regenwald als Lebensgrundlage und schützenswertes Gebiet.</p><p>Begib dich in die Rolle eines der vielen Akteure und erfahre wer sonst noch seine Finger im Spiel hat, wenn es um die Ressource Regenwald geht.</p>",
-	"location" : "ETH",
-	"room" : "ML E13",
-	"startdate" : { "$date" : 1425646800000 },
-	"enddate" : { "$date" : 1425657600000 },
-	"time_lastedit" : { "$date" : 1425253601431 },
-	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "Mao Ching Po",
-	"time_created" : { "$date" : 1425253601431 },
-	"_id" : "Sr2PenmgxyhBC5sQE"
-},
-{
 	"title" : "WÄHREND DEM STUDIUM EIN START-UP GRÜNDEN! MACHT SINN UND VIEL SPASS.",
 	"description" : "<i>Vortrag</i><p>mit <b>Lukas Bühler</b>, Gründer von “Zum guten Heinrich”</p><p>«Zum guten Heinrich» ist das Gastronomie Start-Up für nachhaltige Mittagsmenüs. Aus unförmigem — und somit unverkäuflichem — Gemüse werden schmackhafte Mittagsmenüs hergestellt, die von einem ausgefallenen Take-Away Stand verkauft werden: Ein umgebautes Lastenfahrrad dient gleichzeitig als Verkaufsstand und Transportgerät. Die Menüs haben Charakter: gegen Lebensmittelverschwendung — für Liebe zum Essen!</p>",
 	"location" : "ETH",
@@ -439,6 +458,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Taneia Tanabalasindram",
 	"time_created" : { "$date" : 1425252730125 },
+	"groups" : ["NHW"]
 	"_id" : "TppwNueFQzLqa9izG"
 },
 {
@@ -452,9 +472,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Gregory Sauber",
 	"time_created" : { "$date" : 1425138999036 },
+	"groups" : ["NHW"]
 	"_id" : "WYmJrwDbX3cR2D2XR"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "XdoyogCP4upyDf7pK",
 	"createdBy" : "Maria_95",
 	"description" : "<h4>Umweltpsychologischer Workshop der IPU, (Max. 40 Personen)</h4><p>mit <b>Vivian Frick</b>, Netzwerkbeauftragte der IPU, Vorstandsmitglied VSN, Psychologin (M. Sc.)</p><p>und <b>Matthias Lüthi</b>, Projektleiter der IPU, Doktorand in Biopsychologie</p><p>Faulheit wird oft als Hindernis für einen nachhaltigen Lebensstil wahrgenommen. Kann Faulheit auch nachhaltig sein? Aus umweltpsychologischer Sicht werden wir beide Seiten der Faulheit beleuchten und anhand von Alltagsbeispielen in Gruppen diskutieren. Die Teilnehmenden lernen, wie sie Faulheit im Sinne der Nachhaltigkeit überwinden oder nutzen können.</p><p></p>",
@@ -468,19 +490,6 @@ testevents = [
 	"title" : "FAULHEIT ALS HINDERNIS ODER ZUR FÖRDERUNG VON NACHHALTIGKEIT?"
 },
 {
-	"title" : "REHAB: SPIELEN FÜR DEN REGENWALD",
-	"description" : "<i>Workshop</i> (Auf Englisch)<p>mit <b>Anne Giger Dray</b>, Dozentin Terrestrische Ökosysteme, ETH Zürich</p><p>Das ReHab-Game simuliert die Schwierigkeiten im Umgang mit dem Regenwald als Lebensgrundlage und schützenswertes Gebiet.</p><p>Begib dich in die Rolle eines der vielen Akteure und erfahre wer sonst noch seine Finger im Spiel hat, wenn es um die Ressource Regenwald geht.</p>",
-	"location" : "ETH",
-	"room" : "ML E13",
-	"startdate" : { "$date" : 1425646800000 },
-	"enddate" : { "$date" : 1425657600000 },
-	"time_lastedit" : { "$date" : 1425253616886 },
-	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "CoolKeeper1",
-	"time_created" : { "$date" : 1425253616886 },
-	"_id" : "YJxmY55uvyxLkjWRD"
-},
-{
 	"title" : "BIO, NICHT-BIO AUSSTELLUNG",
 	"description" : "<p>Eine Foto-Ausstellung, die Unterschiede zwischen Bio und Nicht-Bio Lebensmitteln visualisiert.</p>",
 	"location" : "UZH Zentrum",
@@ -491,6 +500,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Mondblume",
 	"time_created" : { "$date" : 1425138304229 },
+	"groups" : ["NHW"]
 	"_id" : "YPmqsj7h4WBNgM4h7"
 },
 {
@@ -504,20 +514,8 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Freedomfighter_Against_War_007",
 	"time_created" : { "$date" : 1425138415494 },
+	"groups" : ["NHW"]
 	"_id" : "ZAnTEKS2xrEgcFCDa"
-},
-{
-	"title" : "REHAB: SPIELEN FÜR DEN REGENWALD",
-	"description" : "<i>Workshop</i> (Auf Englisch)<p>mit <b>Anne Giger Dray</b>, Dozentin Terrestrische Ökosysteme, ETH Zürich</p><p>Das ReHab-Game simuliert die Schwierigkeiten im Umgang mit dem Regenwald als Lebensgrundlage und schützenswertes Gebiet.</p><p>Begib dich in die Rolle eines der vielen Akteure und erfahre wer sonst noch seine Finger im Spiel hat, wenn es um die Ressource Regenwald geht.</p>",
-	"location" : "ETH",
-	"room" : "ML E13",
-	"startdate" : { "$date" : 1425646800000 },
-	"enddate" : { "$date" : 1425657600000 },
-	"time_lastedit" : { "$date" : 1425253617299 },
-	"region" : "J6GDhEEvdmdSMzPPF",
-	"createdBy" : "Geroldswiiler_Smöker",
-	"time_created" : { "$date" : 1425253617299 },
-	"_id" : "ZSnGukhyWLhkorBiP"
 },
 {
 	"title" : "ENERGIEWENDE — WELCHE VERANTWORTUNG TRAGEN DIE HOCHSCHULEN?",
@@ -530,6 +528,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Nimbus",
 	"time_created" : { "$date" : 1425256492588 },
+	"groups" : ["NHW"]
 	"_id" : "a988iHc4dftCyxuF4"
 },
 {
@@ -543,6 +542,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Wehrmutstropfen",
 	"time_created" : { "$date" : 1425139306472 },
+	"groups" : ["NHW"]
 	"_id" : "ake3CnwMPQMh4scFJ"
 },
 {
@@ -556,9 +556,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "The Machine",
 	"time_created" : { "$date" : 1425255197923 },
+	"groups" : ["NHW","DIY-ZH"]
 	"_id" : "cAhb6cLG8TQxy2CeY"
 },
 {
+	"groups" : ["NHW", "Openki"]
 	"_id" : "essdofDRZsB8evsDJ",
 	"createdBy" : "greg",
 	"description" : "<h4>Workshop\nmit <a href=\"http://openki.net\">Openki</a> und Verein KOPF</h4><p>Ein Workshop über offene Bildung anhand der Kursplattform Openki.net.<br />Es geht um die sozialen Aspekte von selbstorganisiertem Wissensaustausch als Gegenbewegung zur extremen Spezialisierung, Bürokratisierung und Kommerzialisierung der Bildung.</p>",
@@ -582,6 +584,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Seee",
 	"time_created" : { "$date" : 1425247388477 },
+	"groups" : ["NHW", "CSA - regionale Vertragslandwirtschaft"]
 	"_id" : "i5p7CXT45EDbaTBgT"
 },
 {
@@ -595,6 +598,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "No_Boarder-No_Nation-Stop_Deportation",
 	"time_created" : { "$date" : 1425256107264 },
+	"groups" : ["NHW", "Museum für Gestaltung"]
 	"_id" : "jznGRbLBoYzoXnG5w" 
 },
 { 
@@ -608,6 +612,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Randständig",
 	"time_created" : { "$date" : 1425252547013 },
+	"groups" : ["NHW"]
 	"_id" : "ok9eD6cEoJrmKpoCp"
 },
 {
@@ -621,9 +626,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Büsi1986",
 	"time_created" : { "$date" : 1425305141823 },
+	"groups" : ["ASZ Bildung für Alle"]
 	"_id" : "qxZWkGN4MBXgTRKX2"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "rbBb9mmzKTZYYAipR",
 	"createdBy" : "macanico",
 	"description" : "<h4>Vortrag (in English)\n</h4><p>mit <b>Laura Metzger</b> und <b>Adina Rom</b>, PhD candidates ETH Nadel, Center for Development and Cooperation <br /></p><p>How can research and innovation support effective poverty reduction and sustainable development in the Global South? Using various case studies Metzger and Rom illustrate how research can help optimize technologies and policies for poverty reduction. Further they discuss how research on program effectiveness impacts policy and individual donor decisions.</p>",
@@ -647,6 +654,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Marcel",
 	"time_created" : { "$date" : 1425139108683 },
+	"groups" : ["NHW"]
 	"_id" : "reh2QBzbLfZoXpeRu"
 },
 {
@@ -660,6 +668,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Martin",
 	"time_created" : { "$date" : 1425138559337 },
+	"groups" : ["NHW", "Vegan Züri"]
 	"_id" : "rerCG63aLoxHo8Fa8"
 },
 {
@@ -673,6 +682,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Vera",
 	"time_created" : { "$date" : 1425253998018 },
+	"groups" : ["NHW", "Bio für Jede"]
 	"_id" : "s9KsbJTkHgKHGuN7J"
 },
 {
@@ -686,9 +696,11 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Android_lover-with_heart",
 	"time_created" : { "$date" : 1425253723944 },
+	"groups" : ["NHW", "Vegan Züri"]
 	"_id" : "sBbXKdxpc5zXntnHh"
 },
 {
+	"groups" : ["NHW", "DIY-ZH"]
 	"_id" : "t3kxMFiyaozW8kZy4",
 	"createdBy" : "Android_lover-with_heart",
 	"description" : "<h4>Workshop, mit Anmeldung</h4><p>mit BiofürJede, <b>Claudio Beretta</b> (Mitbegründer <a href=\"http://foodwaste.ch/\">foodwaste.ch</a>)</p><p>Wir werden mit BiofürJede in die Technik des Einmachens eingeführt und verarbeiten biologische und saisonale Lebensmittel so, dass wir diese auch Monate später geniessen können. In einem spannenden Workshop erfährst Du, wie du dem Ablaufen einiger Lebensmittel vorbeugen kannst. Während dem Workshop wird Claudio Beretta uns theoretische Hintergründe zum Thema Foodwaste liefern.</p><p><b>Anmelden kannst Du dich bis am 28.2.2015.</b></p><p>Die Plätze sind begrenzt auf 12 Teilnehmer pro Workshop. Mitnehmen musst Du zwei Einmachgläser.</p><p><a href=\"http://goo.gl/forms/fd0gmtpMlR\">Zur Anmeldung</a></p>",
@@ -702,6 +714,7 @@ testevents = [
 	"title" : "ESSEN LÄNGER HALTBAR MACHEN"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "wTdSXp3EfccLAt5Mn",
 	"createdBy" : "Anderson72",
 	"description" : "<p></p><h4>Offene Diskussionsrunde\n\n</h4><p>Mit <b>Stefan Baumann</b> (Leitung der Steuergruppe «Bildung für Nachhaltige Entwicklung BNE an der PH Zürich») <br />und <b>Anita Schneider</b> (Integration von Bildung für Nachhaltige Entwicklung in die Ausbildung und Leitung der Umweltkommission)\n<br /></p><p>Soll Konsumverhalten in der Grundschule thematisiert werden?<br />Sind vegetarische Mensen an den Schulen legitim? <br />Wie wird Nachhaltigkeit in den Schulen behandelt und umgesetzt? <br />Diese und weitere brenzlige Fragen werden in einer moderierten, offenen Diskussionsrunde mit unseren zwei ExpertenInnen Stefan Baumann und Anita Schneider thematisiert.\n</p>",
@@ -715,6 +728,7 @@ testevents = [
 	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE" 
 },
 {
+	"groups" : ["Geographisch-Ethnographische Gesellschaft Zürich"]
 	"_id" : "0T4SXl3ErJcLAt5MK",
 	'categories': ['Naturwissenschaft','Geographie','Geschichte'],
 	"createdBy" : "Norman Backhaus",
@@ -752,6 +766,7 @@ testevents = [
 	"region" : "J6GDhEEvdmdSMzPPF",
 	"createdBy" : "Stephan",
 	"time_created" : { "$date" : 1425505012741 },
+	"groups" : ["DIY-BE", "DIY-ZH"]
 	"_id" : "nnBXH4a44jdHjYnFD" 
 },
 {
@@ -769,6 +784,7 @@ testevents = [
 	"title" : "Catching fish with flies!" 
 },
 {
+	"groups" : ["NHW","DIY-ZH"]
 	"_id" : "gcT94v49CE9F2jz2C",
 	"course_id" : "32b2e56b",
 	"createdBy" : "Serengeti",
@@ -783,6 +799,7 @@ testevents = [
 	"title" : "Kleider flicken"
 },
 {
+	"groups" : ["NHW"]
 	"_id" : "RbnfsBXd6CsNxYYfK",
 	"course_id" : "71b0ebc9",
 	"createdBy" : "Die Speerspitze des Gedankenguts",
