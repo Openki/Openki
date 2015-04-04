@@ -33,8 +33,8 @@ Meteor.methods({
 			description: String,
 			location:    String,
 			room:        Match.Optional(String),
-			   startdate:   Date,
-			   enddate:     Date
+			startdate:   Date,
+			enddate:     Date
 		}
 		
 		var isNew = eventId === '';
@@ -66,16 +66,16 @@ Meteor.methods({
 			}
 		} else {
 			var event = Events.findOne(eventId);
-			if (!event) throw new Meteor.error(404, "No such event");
+			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 		}
 		
 		if (changes.startdate < now) {
-			throw new Meteor.error(400, "Can't edit events in the past");
+			throw new Meteor.Error(400, "Can't edit events in the past");
 		}
 		
 		if (changes.enddate < changes.startdate) {
-			throw new Meteor.error(400, "Enddate before startdate");
+			throw new Meteor.Error(400, "Enddate before startdate");
 		}
 		
 		if (Meteor.isServer) {
@@ -96,15 +96,13 @@ Meteor.methods({
 		check(eventId, String);
 
 		var user = Meteor.user()
-		if (!user) {
-			throw new Meteor.Error(401, "please log in");
-		}
-		
+		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
-		if (!event) throw new Meteor.error(404, "No such event");
+		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 		
 		Events.remove(eventId);
+		return Events.findOne({id:eventId}) === undefined;
 	}
 });
 

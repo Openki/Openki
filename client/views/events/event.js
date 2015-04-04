@@ -18,7 +18,7 @@ Template.eventPage.helpers({
 
 Template.eventPage.helpers({
 	isEvent: function() {
-		return (this._id !== undefined);
+		return (this._id !== undefined) || this.new;
 	}
 });
 
@@ -35,10 +35,14 @@ Template.eventDescritpionEdit.rendered = function() {
 Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;
-		if (confirm("delete event "+"'"+this.title+"'"+"?")) {
-			Meteor.call('removeEvent', this._id)
+		if (confirm('Delete event "'+this.title+'"?')) {
+			var title = this.title
+			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
+				if (eventRemoved) addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
+				else console.log('An error Occured while deleting Event'+error);
+			});
+			Template.instance().editing.set(false);
 		}
-		Template.instance().editing.set(false);
 	},
 	
 	'click button.eventEdit': function () {
@@ -131,12 +135,13 @@ Template.event.events({
 			}
 		}
 		
-		Meteor.call('saveEvent',  eventId, editevent, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
 			if (error) {
-				console.log('An error Occured while saving Event'+error);
+				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 			} else {
 				if (isNew) Router.go('showEvent', { _id: eventId });
-				instance.editing.set(false);
+				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
+				instance.editing.set(false);	
 			}
 		});
 	},
