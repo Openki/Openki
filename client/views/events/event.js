@@ -16,6 +16,12 @@ Template.eventPage.helpers({
 	}
 });
 
+Template.eventPage.helpers({
+	isEvent: function() {
+		return (this._id !== undefined);
+	}
+});
+
 Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
@@ -127,7 +133,7 @@ Template.event.events({
 		
 		Meteor.call('saveEvent',  eventId, editevent, function(error, eventId) {
 			if (error) {
-				console.log(error);
+				console.log('An error Occured while saving Event'+error);
 			} else {
 				if (isNew) Router.go('showEvent', { _id: eventId });
 				instance.editing.set(false);

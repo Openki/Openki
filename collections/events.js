@@ -15,7 +15,6 @@
 Events = new Meteor.Collection("Events");
 
 mayEditEvent = function(user, event) {
-	console.log(user,event)
 	if (event.createdBy == user._id) return true;
 	if (user.isAdmin) return true;
 	if (event.course_id) {
