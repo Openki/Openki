@@ -22,12 +22,12 @@ function ensureUser(name) {
 		var id = Accounts.createUser({
 			username: name,
 			email: email,
-			password: name,
 			profile: {name : name},
 		});
 		
-		var age = Math.floor(Random.fraction()*100000000000)  // this takes ages (ok: millis!)
+		var age = Math.floor(Random.fraction()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
+			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
 			createdAt: new Date(new Date().getTime()-age),
 			lastLogin: new Date(new Date().getTime()-age/30),
 			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
