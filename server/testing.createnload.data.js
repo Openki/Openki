@@ -1,12 +1,3 @@
-// TESTING
-
-createCoursesIfNone = function(){
-	if (Courses.find().count() === 0) {
-		createCourses();
-	}
-}
-
-
 // TESTING: Get user object for name and create it if it doesn't exist
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
@@ -61,6 +52,12 @@ function categoryForName(name) {
 }
 
 
+createCoursesIfNone = function() {
+	if (Courses.find().count() === 0) {
+		createCourses();
+	}
+}
+
 function createCourses(){
 
 	// Make a number that looks like a human chose it, favouring 2 and 5
@@ -71,7 +68,7 @@ function createCourses(){
 
 
 	_.each(testcourses, function(course) {
-		if (!course.createdby) return; // Don't create courses that don't have an creator name
+		if (!course.createdby) return; // Don't create courses that don't have a creator name
 
 		var category_names = course.categories
 		course.categories = []
@@ -92,7 +89,7 @@ function createCourses(){
 			course.slug = getSlug(name + ' Kopie ' + n)
 
 
-			// TESTING: allways use same id for same course to avoid broken urls while testing
+			// TESTING: always use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 			m5.update(course.name);
 			m5.update(course.description);
@@ -144,7 +141,7 @@ function createLocations(){
 	_.each(testlocations, function(location) {
 		if (!location.name) return; // Don't create locations that don't have a name
 
-		// TESTING: allways use same id for same location to avoid broken urls while testing
+		// TESTING: always use same id for same location to avoid broken urls while testing
 		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 		m5.update(location.name);
 //		m5.update(location.description);
@@ -183,7 +180,7 @@ function createLocations(){
 
 
 
-/////////////////////////////// TESTING: Create Events if non in db
+/////////////////////////////// TESTING: Create Events if not in db
 
 createEventsIfNone = function(){
     //Events.remove({});
@@ -232,18 +229,18 @@ createEventsIfNone = function(){
 
 
 
-/////////////////////////////// TESTING: load the events from file. they molstly don't have parrent Courses
+/////////////////////////////// TESTING: load the events from file. most don't have a parent course
 
 
 loadTestEvents = function(){
 	var dateOffset = 0
 	_.each(testevents, function(event) {
-		if (!event.createdBy) return; // Don't create events that don't have an creator name
+		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
 		
 		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
 
-		/* Create the events arround the current Day. 
+		/* Create the events around the current Day. 
 		First loaded event gets moved to current day. All events stay at original hour */
 		if (dateOffset == 0){
 			var toDay = new Date();
