@@ -268,7 +268,7 @@ createGroupsIfNone = function(){
 			var age = Math.floor(Random.fraction()*10000000000)
 			group.time_created = new Date(new Date().getTime()-age)
 			group.time_lastedit = new Date(new Date().getTime()-age*0.25)
-				// TESTING: allways use same id for same group to avoid broken urls while testing
+				// TESTING: always use same id for same group to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 			m5.update(group.name);
 			m5.update(group.description);
