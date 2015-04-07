@@ -218,12 +218,6 @@ createEventsIfNone = function(){
 				console.log('Added generic event:  "' + event.title + '"');
 			}
 		});
-		var event = {}
-		for (var n = 0; n < (35 * ScaleFaktor); n++){
-		 	var course_count= Courses.find().count()
-			var course = Courses.find({}, {skip: Math.floor((Math.random()*(course_count-1))), limit: 1}).fetch().pop();
-			
-		}
 	}
 }
 
