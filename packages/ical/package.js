@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "pull ical-generator"
+  summary: "generate calendars"
 });
 
 Package.on_use(function (api, where) {
