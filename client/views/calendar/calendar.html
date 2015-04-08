@@ -1,20 +1,20 @@
 <template name="calendar">
 	<div class="container-fluid">
-		<div class="calendar">
-			<div class="container-fluid">
-				<div class="row">
-					<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}
-					</h1>
-					{{#each calendar_eventlist}}
-						{{> calendar_event}}
-					{{/each}}
-				</div>
-				<div class="row">
-					<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
-					{{#each calendar_eventlist_past}}
-						{{> calendar_event_past}}
-					{{/each}}
-				</div>
+		<div class="calendar container-fluid">
+			<div class="row">
+				<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}
+				</h1>
+			</div>
+			<div class="calendar_eventlist row">
+			{{#each calendar_eventlist}}
+				{{> calendar_event}}
+			{{/each}}
+			</div>
+			<div class="calendar_eventlist row">
+				<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
+				{{#each calendar_eventlist_past}}
+					{{> calendar_event_past}}
+				{{/each}}
 			</div>
 		</div>
 	</div>
