@@ -141,7 +141,7 @@ Template.event.events({
 			} else {
 				if (isNew) Router.go('showEvent', { _id: eventId });
 				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
-				instance.editing.set(false);	
+				instance.editing.set(false);
 			}
 		});
 	},

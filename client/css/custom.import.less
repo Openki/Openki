@@ -50,15 +50,27 @@
 			}
 		}
 	}
-	// a#switch {
-	// 	font-size: large;
-	// }
+	.kiosk_logo {
+		img {
+			width: 100%;
+		}
+	}
+	.kiosk_slim {
+		overflow: hidden;
+		background: #C1F2AE;
+		border: 5px solid #fff;
+		display: inline-block;
+	}
 }
 
 // #backToKiosk {
 // 	font-size: large;
 // 	padding-top: 80px;
 // }
+
+// a#switch {
+	// 	font-size: large;
+	// }
 
 // a#backToKiosk:hover {
 // 	text-decoration: none;
@@ -105,7 +117,7 @@ html,body {
 
 #wrap {
 	min-height: 100%;
-	margin: 0 auto -80px;
+	margin: 0 auto -50px;
 }
 
 footer.footer {
@@ -120,7 +132,7 @@ footer.footer {
 	}
 	.links {
 		word-spacing: 10px;
-		padding-top: 25px;
+		padding-top: 12px;
 		div.long_link {
 			word-spacing: normal;
 			display: inline-block;
@@ -130,7 +142,7 @@ footer.footer {
 
 .footer,
 .push {
-	height: 80px;
+	height: 50px;
 }
 
 a.navbar-brand {
@@ -433,7 +445,10 @@ div#edit_event_description:focus {
 }
 
 .course_events {
-	padding-top: 20px;
+	padding-top: 15px;
+	&> div:first-child {
+		padding: 0 10px;
+	}
 }
 
 .course_event_container,
@@ -730,6 +745,10 @@ button.answer:hover {
 	& > a:hover {
 		color: inherit;
 	}
+}
+
+.calendar_eventlist {
+	margin-left: -20git px;
 }
 
 .calendar_event,.calendar_event_past {
