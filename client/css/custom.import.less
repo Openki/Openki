@@ -50,15 +50,27 @@
 			}
 		}
 	}
-	// a#switch {
-	// 	font-size: large;
-	// }
+	.kiosk_logo {
+		img {
+			width: 100%;
+		}
+	}
+	.kiosk_slim {
+		overflow: hidden;
+		background: #C1F2AE;
+		border: 5px solid #fff;
+		display: inline-block;
+	}
 }
 
 // #backToKiosk {
 // 	font-size: large;
 // 	padding-top: 80px;
 // }
+
+// a#switch {
+	// 	font-size: large;
+	// }
 
 // a#backToKiosk:hover {
 // 	text-decoration: none;
@@ -433,7 +445,10 @@ div#edit_event_description:focus {
 }
 
 .course_events {
-	padding-top: 20px;
+	padding-top: 15px;
+	&> div:first-child {
+		padding: 0 10px;
+	}
 }
 
 .course_event_container,
@@ -730,6 +745,10 @@ button.answer:hover {
 	& > a:hover {
 		color: inherit;
 	}
+}
+
+.calendar_eventlist {
+	margin-left: -20px;
 }
 
 .calendar_event,.calendar_event_past {
