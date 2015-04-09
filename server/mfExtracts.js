@@ -1023,8 +1023,8 @@ mfPkg.addNative(
     "file": "./client/views/events/event.html",
     "line": 15,
     "template": "eventPage",
-    "mtime": 1428605988933,
-    "ctime": 1428605988933
+    "ctime": 1428605988933,
+    "mtime": 1428605988933
   },
   "course.event.edit.edit": {
     "key": "course.event.edit.edit",
@@ -1176,8 +1176,8 @@ mfPkg.addNative(
     "file": "./client/views/events/event.js",
     "line": 41,
     "func": "function (error, eventRemoved)",
-    "mtime": 1428605988933,
-    "ctime": 1428605988933
+    "ctime": 1428605988933,
+    "mtime": 1428605988933
   },
   "event.saving.error": {
     "key": "event.saving.error",
@@ -1185,8 +1185,8 @@ mfPkg.addNative(
     "file": "./client/views/events/event.js",
     "line": 140,
     "func": "function(error, eventId)",
-    "mtime": 1428605988933,
-    "ctime": 1428605988933
+    "ctime": 1428605988933,
+    "mtime": 1428605988933
   },
   "event.saving.success": {
     "key": "event.saving.success",
@@ -1194,8 +1194,8 @@ mfPkg.addNative(
     "file": "./client/views/events/event.js",
     "line": 143,
     "func": "function(error, eventId)",
-    "mtime": 1428605988933,
-    "ctime": 1428605988933
+    "ctime": 1428605988933,
+    "mtime": 1428605988933
   },
   "course.list.title": {
     "key": "course.list.title",
@@ -1581,8 +1581,8 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.discussion.js",
     "line": 58,
     "func": "function(err, commentId)",
-    "mtime": 1428605988933,
-    "ctime": 1428605988933
+    "ctime": 1428605988933,
+    "mtime": 1428605988933
   },
   "course.edit.edit_course": {
     "key": "course.edit.edit_course",
@@ -1730,21 +1730,21 @@ mfPkg.addNative(
   },
   "course.roles.enrol_as": {
     "key": "course.roles.enrol_as",
-    "text": "enrol as",
+    "text": "Enrol as",
     "file": "./client/views/courses/details/course.roles.html",
     "line": 48,
     "template": "membersRoles",
     "ctime": 1414089850544,
-    "mtime": 1414089850544
+    "mtime": 1428606277177
   },
   "course.roles.leave_message": {
     "key": "course.roles.leave_message",
-    "text": "leave a message/wish/interest here:",
+    "text": "Leave a message/wish/interest here:",
     "file": "./client/views/courses/details/course.roles.html",
     "line": 53,
     "template": "membersRoles",
     "ctime": 1417704045050,
-    "mtime": 1417704045050
+    "mtime": 1428606336807
   },
   "course.roles.incognitosubscription": {
     "key": "course.roles.incognitosubscription",
@@ -1924,7 +1924,7 @@ mfPkg.addNative(
     "line": 24,
     "template": "votelists",
     "ctime": 1414007096861,
-    "mtime": 1428605988933,
+    "mtime": 1428606514546,
     "removed": true
   },
   "voting.no_votings_yet": {
@@ -1934,7 +1934,7 @@ mfPkg.addNative(
     "line": 41,
     "template": "votelists",
     "ctime": 1414016261881,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "voting.new_voting": {
@@ -1944,7 +1944,7 @@ mfPkg.addNative(
     "line": 49,
     "template": "votelists",
     "ctime": 1414007096861,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "voting.input.option": {
@@ -1954,7 +1954,7 @@ mfPkg.addNative(
     "line": 53,
     "template": "votelists",
     "ctime": 1414019114300,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "readmore.button.less": {
@@ -1964,7 +1964,7 @@ mfPkg.addNative(
     "line": 32,
     "template": "NHW_info",
     "ctime": 1424880591243,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "readmore.button": {
@@ -1974,7 +1974,7 @@ mfPkg.addNative(
     "line": 37,
     "template": "NHW_info",
     "ctime": 1424880591244,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "find.events": {
@@ -1984,7 +1984,7 @@ mfPkg.addNative(
     "line": 33,
     "template": "find",
     "ctime": 1424880591244,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "find.no_events_found.": {
@@ -1994,7 +1994,7 @@ mfPkg.addNative(
     "line": 37,
     "template": "find",
     "ctime": 1424880591244,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "profile.profile_page": {
@@ -2004,7 +2004,7 @@ mfPkg.addNative(
     "line": 8,
     "template": "profilelink",
     "ctime": 1414019114300,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "login.close": {
@@ -2014,7 +2014,7 @@ mfPkg.addNative(
     "line": 9,
     "template": "loginFrame",
     "ctime": 1417023103736,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "find.no entries found. propose new course?": {
@@ -2024,7 +2024,7 @@ mfPkg.addNative(
     "line": 14,
     "template": "find",
     "ctime": 1414002480587,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.event.detail.todo": {
@@ -2034,7 +2034,7 @@ mfPkg.addNative(
     "line": 54,
     "template": "course_event_detail",
     "ctime": 1417023103736,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.event.edit.date_end": {
@@ -2044,7 +2044,7 @@ mfPkg.addNative(
     "line": 7,
     "template": "course_event_edit",
     "ctime": 1417023103736,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.event.edit.send_mail_participants": {
@@ -2054,7 +2054,7 @@ mfPkg.addNative(
     "line": 34,
     "template": "course_event_edit",
     "ctime": 1417023103737,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.title.Upcoming events": {
@@ -2064,7 +2064,7 @@ mfPkg.addNative(
     "line": 12,
     "template": "course_events",
     "ctime": 1414002480587,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.events.no_events": {
@@ -2074,7 +2074,7 @@ mfPkg.addNative(
     "line": 29,
     "template": "course_events",
     "ctime": 1417023103737,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.create.proposal": {
@@ -2084,7 +2084,7 @@ mfPkg.addNative(
     "line": 15,
     "template": "createcourse",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.discussion.time_created": {
@@ -2094,7 +2094,7 @@ mfPkg.addNative(
     "line": 26,
     "template": "postDialog",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.discussion.user": {
@@ -2104,7 +2104,7 @@ mfPkg.addNative(
     "line": 32,
     "template": "postDialog",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.roles.your_message": {
@@ -2114,7 +2114,7 @@ mfPkg.addNative(
     "line": 4,
     "template": "roleComment",
     "ctime": 1417023103737,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.title.Participants": {
@@ -2124,7 +2124,7 @@ mfPkg.addNative(
     "line": 16,
     "template": "roleComment",
     "ctime": 1414002480587,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "chat": {
@@ -2134,7 +2134,7 @@ mfPkg.addNative(
     "line": 8,
     "template": "chat",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "chat.name": {
@@ -2144,7 +2144,7 @@ mfPkg.addNative(
     "line": 11,
     "template": "chat",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "chat.message": {
@@ -2154,7 +2154,7 @@ mfPkg.addNative(
     "line": 29,
     "template": "chat",
     "ctime": 1414089850544,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "menue.translate": {
@@ -2164,7 +2164,7 @@ mfPkg.addNative(
     "line": 26,
     "template": "layout",
     "ctime": 1417023103736,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "menue.about": {
@@ -2174,7 +2174,7 @@ mfPkg.addNative(
     "line": 74,
     "template": "layout",
     "ctime": 1404604221980,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "menue.FAQ": {
@@ -2184,7 +2184,7 @@ mfPkg.addNative(
     "line": 75,
     "template": "layout",
     "ctime": 1404604221980,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   },
   "course.roles.incognitosub": {
@@ -2193,7 +2193,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.roles.html",
     "line": 50,
     "template": "roleComment",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1417023103737,
     "removed": true
   },
@@ -2203,7 +2203,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 33,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2213,7 +2213,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 36,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2223,7 +2223,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 39,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2233,7 +2233,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 42,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2243,7 +2243,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 48,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2253,7 +2253,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 50,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2263,7 +2263,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 51,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2273,7 +2273,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 52,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2283,7 +2283,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 53,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2293,7 +2293,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.edit.html",
     "line": 54,
     "template": "course_edit",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2303,7 +2303,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.roles.html",
     "line": 30,
     "template": "Members",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414089850544,
     "removed": true
   },
@@ -2313,7 +2313,7 @@ mfPkg.addNative(
     "file": "./client/views/users/userprofile.html",
     "line": 13,
     "template": "profilelink",
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "ctime": 1414019114300,
     "removed": true
   },
@@ -2324,11 +2324,11 @@ mfPkg.addNative(
     "line": 53,
     "template": "votelists",
     "ctime": 1414007096861,
-    "mtime": 1428605988933,
+    "mtime": 1428606514547,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1428605988933,
-  "updatedAt": 1428605988933
+  "extractedAt": 1428606514547,
+  "updatedAt": 1428606514547
 });
