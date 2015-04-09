@@ -1,5 +1,9 @@
 // TODO: STRUCTURE & COMMENTS
 
+* {
+	border-radius: 0 !important;
+}
+
 
 // KIOSK MODE STYLING
 // =======================================
@@ -117,7 +121,7 @@ html,body {
 
 #wrap {
 	min-height: 100%;
-	margin: 0 auto -80px;
+	margin: 0 auto -50px;
 }
 
 footer.footer {
@@ -132,7 +136,7 @@ footer.footer {
 	}
 	.links {
 		word-spacing: 10px;
-		padding-top: 25px;
+		padding-top: 12px;
 		div.long_link {
 			word-spacing: normal;
 			display: inline-block;
@@ -142,7 +146,7 @@ footer.footer {
 
 .footer,
 .push {
-	height: 80px;
+	height: 50px;
 }
 
 a.navbar-brand {
@@ -301,10 +305,13 @@ ul.messages {
 
 .course_categories {
 	& > ul {
+		line-height: 23px;
 		li {
 			display: inline-block;
 			a {
 				color: #38829C;
+				background: rgba(216, 216, 216, 0.5);
+				padding: 0 2px 1px 2px;
 			}
 			a:hover {
 				text-decoration: underline;
@@ -366,7 +373,7 @@ button.eventEdit.addButton {
 
 .course_event_edit {
 	border: 7px dashed #D8EBF4;
-	margin-top: 20px;
+	margin: 20px 0;
 	padding-bottom: 20px;
 	.event_edit_buttons {
 		padding-top: 15px;
@@ -748,7 +755,7 @@ button.answer:hover {
 }
 
 .calendar_eventlist {
-	margin-left: -20px;
+	margin-left: -20git px;
 }
 
 .calendar_event,.calendar_event_past {
