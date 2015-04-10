@@ -180,7 +180,7 @@ function createLocations(){
 
 
 
-/////////////////////////////// TESTING: Create Events if not in db
+/////////////////////////////// TESTING: Create generic events if not in db
 
 createEventsIfNone = function(){
     //Events.remove({});
@@ -193,11 +193,18 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
+				var random = Random.fraction();
+				if (random < 0.4) event.location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				else if (random < 0.7) event.location = random < 0.5 ? 'Volkshaus' : 'SQ131';
+				else if (random < 0.8) event.location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
+				else if (random < 0.9) event.location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
+				else event.location = random < 0.95 ? 'Hub' : 'ASZ';
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 				event.mentors = []
 				event.host = []
+
 				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
 				var timeToGo = Random.fraction()-0.8 				// put 80% in the past
 				if (timeToGo >= 0.05) {								// 75% of the remaining in future
@@ -223,7 +230,8 @@ createEventsIfNone = function(){
 
 
 
-/////////////////////////////// TESTING: load the events from file. most don't have a parent course
+/////////////////////////////// TESTING: load the events from file server/data/testing.events.js
+/////////////////////////////// most of these don't have a parent course
 
 
 loadTestEvents = function(){
