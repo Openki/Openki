@@ -1,7 +1,13 @@
 <template name="course_edit">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
 		<form>
-			<h2>{{#if _id}}{{mf 'course.edit.edit_course' 'Edit course'}}{{else}}{{mf 'course.edit.propose' 'Propose new course'}}{{/if}}</h2>
+			<h2>
+				{{#if _id}}
+				{{mf 'course.edit.edit_course' 'Edit course'}}
+				{{else}}
+				{{mf 'course.edit.propose' 'Propose new course'}}
+				{{/if}}
+			</h2>
 			<div class="course_edit_editbox col-sm-12">
 				<div class="col-sm-12">
 					<h4>{{mf 'course.edit.title' 'Title:'}}</h4>

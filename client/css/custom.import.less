@@ -4,6 +4,13 @@
 	border-radius: 0 !important;
 }
 
+.form-control {
+	padding: 6px 10px;
+}
+
+.tooltip {
+	font-size: 14px;
+}
 
 // KIOSK MODE STYLING
 // =======================================
@@ -85,8 +92,16 @@
 
 //Helpers
 
-div.no-padding {
+.no-padding {
 	padding: 0;
+}
+
+.no-padding-left {
+	padding-left: 0;
+}
+
+.no-padding-right {
+	padding-right: 0;
 }
 
 div.grey_out {
@@ -196,10 +211,18 @@ p {
 	& > div:first-child {
 		margin-top: 12px;
 	}
+	h3 {
+		margin-top: 0;
+	}
+}
+
+button.find-btn {
+	height: 38px;
 }
 
 input#find {
 	font-size: 20px;
+	height: 38px;
 }
 
 .external_logins {
@@ -353,7 +376,7 @@ ul.nav-tabs {
 	text-align: center;
 	width: calc(~"100% + 44px");
 	margin: 0 0 -7px -22px;
-	background: #cfcfcf;
+	background: #38829C;
 	border-top: 3px solid #fff;
 }
 
@@ -418,7 +441,7 @@ ul.subcategories {
 
 div#edit_event_description {
 	border: 1px solid #CCC;
-	padding: 5px;
+	padding: 6px 10px;
 	background: #fff;
 }
 
@@ -618,7 +641,6 @@ button.editable-cancel {
 }
 
 button.enrol {
-	border-radius: 0;
 	border: none;
 	border-top: 3px solid #fff;
 	min-height: 60px;
@@ -633,7 +655,7 @@ button.enrol:hover {
 
 div.enrol_as_title {
 	background: #38829C;
-	padding: 6px 12px;
+	padding: 6px 0;
 	width: 100%;
 	color: #fff;
 	border-top: 3px solid #fff;
@@ -647,7 +669,7 @@ div.enrol_as_title {
 
 div.enroled_as_title {
 	background: #C1F2AE;
-	padding: 6px 12px;
+	padding: 6px 0;
 	width: 100%;
 	color: #333;
 	border-top: 3px solid #fff;
@@ -694,8 +716,11 @@ div.enrol_as_options {
 }
 
 .discussion {
+	h3 {
+		margin-top: 15px;
+	}
 	button.write {
-		margin: 20px 0;
+		margin: 10px 0;
 	}
 }
 
@@ -705,26 +730,45 @@ div.enrol_as_options {
 
 .discussion_conversation_container {
 	background: #fff;
+	padding: 10px 10px 10px 10px; 
 	margin-bottom: 20px;
 }
 
 .discussion_conversation {
 	background: #fff;
-	padding: 10px 10px;
+	padding: 5px 0;
 }
+
+.post {
+	background: #D8EBF4;
+	padding: 7px 15px 5px;
+	// border: 1px solid #38829C;
+	h4.comment_user,
+	h4.comment_title,
+	button.write {
+		margin: 4px 0 10px;
+	}
+}
+
 .discussion_comment {
-	margin-left: 60px;
+	// margin-left: 45px;
+	padding: 0 15px 5px;
 }
+
 h4.comment_user {
 	a {
 		color: #333;
 		-moz-transition: color 1s;
+		&:hover {
+			color: #38829C;
+			text-decoration: none;
+		}
 	}
 }
 
 .comment_time_created {
 	color: #38829C;
-	cursor: help;
+	cursor: default;
 }
 
 button.answer {
