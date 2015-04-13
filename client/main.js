@@ -7,7 +7,7 @@ Meteor.subscribe('categories');
 Meteor.subscribe('locations');
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
-
+Meteor.subscribe('files');
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
 	Session.set('verify', false);

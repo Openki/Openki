@@ -50,6 +50,33 @@ Template.event.events({
 		Template.instance().editing.set(true);
 	},
 	
+		 
+	'change .eventFileInput': function(event, template) {
+		
+		FS.Utility.eachFile(event, function(file) {
+	 
+	        Files.insert(file, function (err, fileObj) {
+		    
+		    	if (err){
+
+	          	} else {
+					//adds a single file at a time at the moment
+	            	
+	            	var fileList = [
+	            		{
+	            			file : "/cfs/files/files/" + fileObj._id,
+	            			filename : fileObj.original.name,
+		    				filesize : fileObj.original.size,
+	            		}
+	            	];
+	          		template.files = fileList
+	          	}
+	        });
+		});
+	},
+	
+	
+	
 	'click button.saveEditEvent': function(event, instance) {
 		if (pleaseLogin()) return;
 
@@ -121,6 +148,27 @@ Template.event.events({
 			startdate: startdate,
 			enddate: enddate
 		}
+		
+		
+		var fileList = instance.files;
+		//check if file object is stored in the template object
+		if(fileList != null){
+		    
+
+			var tmp = []				
+			$.each( this.files, function( i,fileObj ){
+				tmp.push( fileObj );
+			});
+			
+			$.each( fileList, function( i, fileObj ){
+				tmp.push( fileObj );
+				//$.extend( editevent.files, filesURL );	
+			});
+			
+			editevent.files = tmp;
+			
+		}		
+		
 		
 		var eventId = this._id;
 		var isNew = !this._id;
