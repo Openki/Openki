@@ -23,6 +23,10 @@ Template.eventPage.helpers({
 });
 
 Template.event.helpers({
+	isoDateFormat: function(date)
+	{
+		return moment(date).format("YYYY-MM-DD");
+	},
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	}
@@ -31,6 +35,55 @@ Template.event.helpers({
 Template.eventDescritpionEdit.rendered = function() {
 	new MediumEditor(this.firstNode);
 }
+
+
+
+var getEventStartMoment = function(template){
+	var startMoment =  moment(template.$('#edit_event_startdate').val())
+	var startTime = template.$('#edit_event_starttime').val();
+	var startTimeParts = startTime.split(":");
+	var minutes = startTimeParts[1];
+	var hours = startTimeParts[0];
+	startMoment.hours(hours);
+	startMoment.minutes(minutes);
+	return startMoment;
+}
+
+var getEventEndMoment = function(template){
+	var startMoment = getEventStartMoment(template);
+	var endMoment = moment(startMoment);
+	var endtime = template.$('#edit_event_endtime').val();
+	var endtimeParts = endtime.split(":");
+	var minutes = endtimeParts[1];
+	var hours = endtimeParts[0];
+	endMoment.hours(hours);
+	endMoment.minutes(minutes);
+	if(endMoment.diff(startMoment)<0)
+		endMoment.add(1,"day");
+
+	return endMoment;
+}
+var getEventDuration = function(template){
+	var duration = parseInt(template.$('#edit_event_duration').val(),10);
+
+	return Math.max(0,duration);
+}
+
+var calculateEndMoment = function(startMoment, duration) {
+	return moment(startMoment).add(duration, "minutes"); 
+}
+
+var setDurationInTemplate = function(template)
+{
+	var startMoment = getEventStartMoment(template);
+	var endMoment = getEventEndMoment(template);
+	var duration = endMoment.diff(startMoment, "minutes");
+	template.$("#edit_event_duration").val(duration);
+}
+
+Template.event.onRendered(function(){
+	setDurationInTemplate(this);
+});
 
 Template.event.events({
 	'click button.eventDelete': function () {
@@ -73,10 +126,10 @@ Template.event.events({
 		});
 	},
 	
-	'click button.fileDelete': function (event, instance) {
+	'click button.fileDelete': function (event, template) {
 		
 		var fileid = this._id;
-		var eventid = instance.data._id;
+		var eventid = template.data._id;
 		var filename = this.filename;
 		//delete the actual file
 		var fp = Files.remove(fileid)
@@ -93,82 +146,40 @@ Template.event.events({
 	},
 	
 	
-	'click button.saveEditEvent': function(event, instance) {
+	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
-		function readTime(str, date) {
-			/* Given str, set minute and hour of date
-			 * given "08:00", "0800", "8.00", or "8" time is set to 8 hours 0 minutes
-			 * given "08:30" "0830" "8.30" time is set to 8 hours 30 minutes
-			 * given "08:30pm" "0830PM" "830p" time is set to 20 hours 30 minutes
-			 * given "12:59AM" "12:59PM" time is set to 12 hours 59 minutes
-			 * given "" or "my hovercraft is full of eels" time is not changed
-			 * given "my 5 hovercraft are full of peels" time is set to 17 hours 0 minutes
-			 * The behavior for values over 23 (hours) and 59 (minutes) is left as a surprise to the user.
-			 */
-			var digits = str.replace(/[^0-9]+/g, '');
-			if (digits.length > 0) {
-				if (digits.length < 3) {
-					date.setMinutes(0);
-					date.setHours(parseInt(digits, 10));
-				} else {
-					date.setMinutes(parseInt(digits.substr(-2), 10));
-					date.setHours(parseInt(digits.substr(0, digits.length-2), 10));
-				}
-				if (str.toLowerCase().indexOf('p') != -1) {
-					var hours = date.getHours();
-					if (hours < 12) { // not correct for midn SHUT UP
-						date.setHours(hours + 12);  // YOU'RE IN THE ARMY NOW
-					}
-				}
-			}
-		}
-
-		// format startdate
-		var startDateParts =  instance.$('#edit_event_startdate').val().split(".");
-		if (!startDateParts[2]){
+		
+		var startMoment = getEventStartMoment(template);
+		if(!startMoment) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
-			return;
+			return null;
 		}
-		var startdate = new Date(startDateParts[2], (startDateParts[1] - 1), startDateParts[0]);
-
-		var startStr = instance.$('#edit_event_starttime').val();
-		readTime(startStr, startdate);
-
-
-		var now = new Date();
-		if (startdate < now) {
+		var duration = getEventDuration(template);
+		var endMoment = calculateEndMoment(startMoment, duration);
+		
+		var nowMoment = moment();
+		if (startMoment.diff(nowMoment)<0) {
 			alert("Date must be in future");
 			return;
 		}
 
-		var enddate = new Date(startdate.getTime()); // Rough approximation
+		
 
-		if (duration){
-			var duration = instance.$('#edit_event_duration').val();
-			enddate.setMinutes(enddate.getMinutes()+duration);	
-		} else {
-			var endStr = instance.$('#edit_event_endtime').val()
-			readTime(endStr, enddate);
-
-			if (enddate < startdate) {
-				enddate = startdate // No questions asked
-			}
-		}
 
 		var editevent = {
-			title: instance.$('#edit_event_title').val(),
-			description: instance.$('#edit_event_description').html(),
-			location: instance.$('#edit_event_location').val(),
-			room: instance.$('#edit_event_room').val(),
-			startdate: startdate,
-			enddate: enddate,
+			title: template.$('#edit_event_title').val(),
+			description: template.$('#edit_event_description').html(),
+			location: template.$('#edit_event_location').val(),
+			room: template.$('#edit_event_room').val(),
+			startdate: startMoment.toDate(),
+			enddate: endMoment.toDate(),
 			files: this.files,
 		}
 		
 		
-		var fileList = instance.files;
-		instance.files = null;
+		var fileList = template.files;
+		template.files = null;
 
 		//check if file object is stored in the template object
 		if(fileList != null){
@@ -204,7 +215,7 @@ Template.event.events({
 			} else {
 				if (isNew) Router.go('showEvent', { _id: eventId });
 				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
-				instance.editing.set(false);
+				template.editing.set(false);
 			}
 		});
 	},
@@ -214,9 +225,24 @@ Template.event.events({
 		Template.instance().editing.set(false);
 	},
 
-	'click #toggle_duration': function(event){
-		$('#show_time_end').toggle(300);
-		$('#show_duration').toggle(300);
+	'click .toggle_duration': function(event, template){
+
+		template.$('.show_time_end').toggle(300);
+		template.$('.show_duration').toggle(300);
 	},
+
+	'change #edit_event_duration, change #edit_event_starttime': function(event, template) {
+		var startMoment = getEventStartMoment(template);
+		var duration = getEventDuration(template);
+		var endMoment = calculateEndMoment(startMoment, duration);
+		template.$("#edit_event_endtime").val(endMoment.format("HH:mm"));
+
+	},
+
+	'change #edit_event_endtime': function(event, template) {
+		setDurationInTemplate(template);
+
+	}
+
 
 });

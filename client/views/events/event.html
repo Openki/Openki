@@ -1,5 +1,5 @@
 <template name="eventPage">
-	<div class="container-fluid">
+	<div class="container">
 		<div class="course_event_detail" id="coursedetails">
 			{{#if course}}
 			<p>
@@ -10,9 +10,9 @@
 	        </p>
 	        {{/if}}
 	        {{#if isEvent}}
-			{{>event}}
+				{{>event}}
 			{{else}}
-			<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it had been deleted or has never existed."}}</h4>
+				<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it had been deleted or has never existed."}}</h4>
 			{{/if}}
 		</div>
 	</div>
@@ -26,40 +26,40 @@
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
 			<input type="text" class="form-control" id="edit_event_title" size="30" value="{{this.title}}" name="_" />
 		</div>
-		<div class="col-sm-12">
+		<div class="col-sm-4">
 			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
 				</span>
-				<input type="text" id="edit_event_startdate" class="form-control" value="{{dateformat startdate}}" size="8">
+				<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
 			</div>
 		</div>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-time"></span>
 				</span>
-				<input type="text" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
+				<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
 			</div>
 		</div>
-		<div id="show_time_end" class="col-sm-6">
-			<h4>{{mf 'course.event.edit.time_end' 'Time end'}} <small id="toggle_duration" > &nbsp;&nbsp;{{mf 'course.event.edit.swich_duration' 'switch to duration'}} </small></h4>
+		<div class="show_time_end col-sm-4">
+			<h4>{{mf 'course.event.edit.time_end' 'Time end'}} <small class="toggle_duration" > &nbsp;&nbsp;{{mf 'course.event.edit.swich_duration' 'switch to duration'}} </small></h4>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-time"></span>
 				</span>
-				<input type="text" id="edit_event_endtime" class="form-control" value="{{timeformat enddate}}" size="5">			
+				<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat enddate}}" size="5">			
 			</div>
 		</div>
-		<div id="show_duration" style="display:none" class="col-sm-6">
-			<h4>{{mf 'course.event.edit.duration' 'Duration (in minutes)'}} <small id="toggle_duration" > &nbsp;&nbsp; {{mf 'course.event.edit.switch_time_end' 'switch to end time'}} </small></h4>
+		<div style="display:none" class="col-sm-6 show_duration">
+			<h4>{{mf 'course.event.edit.duration' 'Duration (in minutes)'}} <small class="toggle_duration" > &nbsp;&nbsp; {{mf 'course.event.edit.switch_time_end' 'switch to end time'}} </small></h4>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-time"></span>
 				</span>
-				<input type="text" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
+				<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
 			</div>
 		</div>
 		<div class="col-sm-12">
@@ -126,7 +126,7 @@
 		</div>
 		<div class="col-sm-12 no-padding event_edit_buttons">
 			<div class="col-xs-12 col-sm-6">
-				<button type="button" class="saveEditEvent btn btn-default form-control">
+				<button type="button" class="saveEditEvent btn btn-primary form-control">
 					<span class="glyphicon glyphicon-save"></span>
 					{{mf 'course.event.edit.save_btn' 'Save'}}
 				</button>
