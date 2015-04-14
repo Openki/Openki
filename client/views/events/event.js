@@ -54,16 +54,14 @@ Template.event.events({
 	'change .eventFileInput': function(event, template) {
 		
 		FS.Utility.eachFile(event, function(file) {
-	 
 	        Files.insert(file, function (err, fileObj) {
-		    
 		    	if (err){
-
+					// add err handling
 	          	} else {
 					//adds a single file at a time at the moment
-	            	
 	            	var fileList = [
 	            		{
+	            			_id: fileObj._id,
 	            			file : "/cfs/files/files/" + fileObj._id,
 	            			filename : fileObj.original.name,
 		    				filesize : fileObj.original.size,
@@ -75,6 +73,24 @@ Template.event.events({
 		});
 	},
 	
+	'click button.fileDelete': function (event, instance) {
+		
+		var fileid = this._id;
+		var eventid = instance.data._id;
+		var filename = this.filename;
+		//delete the actual file
+		var fp = Files.remove(fileid)
+		
+		//hide file name
+		var rowid = "tr#row-" + fileid;		
+		$(rowid).hide();
+		
+		//remove file attribute from the event
+		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
+			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Sucessfully removed file {FILENAME}.'));
+			else console.log('An error Occured while deleting Event'+error);
+		});		
+	},
 	
 	
 	'click button.saveEditEvent': function(event, instance) {
@@ -146,15 +162,16 @@ Template.event.events({
 			location: instance.$('#edit_event_location').val(),
 			room: instance.$('#edit_event_room').val(),
 			startdate: startdate,
-			enddate: enddate
+			enddate: enddate,
+			files: this.files,
 		}
 		
 		
 		var fileList = instance.files;
+		instance.files = null;
+
 		//check if file object is stored in the template object
 		if(fileList != null){
-		    
-
 			var tmp = []				
 			$.each( this.files, function( i,fileObj ){
 				tmp.push( fileObj );
@@ -162,11 +179,9 @@ Template.event.events({
 			
 			$.each( fileList, function( i, fileObj ){
 				tmp.push( fileObj );
-				//$.extend( editevent.files, filesURL );	
-			});
-			
+			});	
+					
 			editevent.files = tmp;
-			
 		}		
 		
 		
