@@ -1,0 +1,86 @@
+.discussion {
+	margin-top: 20px;
+	background: @light-blue;
+	h3 {
+		margin-top: 15px;
+	}
+	button.write {
+		margin: 10px 0;
+	}
+}
+
+.discussion_titlebar {
+	background: @brand-success;
+	height: 60px;
+	width: calc(~"100% + 30px");
+	margin-left: -15px;
+	border-bottom: 3px solid @body-bg;
+	font-size: large;
+	p {
+		padding: 15px 0 0 7px;
+	}
+}
+
+.popup {
+	padding-bottom: 20px;
+}
+
+.discussion_conversation_container {
+	background: @body-bg;
+	padding: 10px 10px 10px 10px; 
+	margin-bottom: 20px;
+}
+
+.discussion_conversation {
+	background: @body-bg;
+	padding: 5px 0;
+}
+
+.post {
+	background: @light-blue;
+	padding: 7px 15px 5px;
+	// border: 1px solid @brand-primary;
+	h4.comment_user,
+	h4.comment_title,
+	button.write {
+		margin: 4px 0 10px;
+	}
+}
+
+.discussion_comment {
+	// margin-left: 45px;
+	padding: 0 15px 5px;
+}
+
+h4.comment_user {
+	a {
+		color: #333;
+		-moz-transition: color 1s;
+		&:hover {
+			color: @brand-primary;
+			text-decoration: none;
+		}
+	}
+}
+
+.comment_time_created {
+	color: @brand-primary;
+	cursor: default;
+}
+
+button.answer {
+	background: none;
+	border: 0;
+	color: @brand-primary;
+	padding-bottom: 5px;
+	&:hover {
+		color: #2B6376;
+	}
+}
+
+.comment_hr {
+	background: @light-blue;
+	border: 0;
+	height: 1px;
+	margin: 0;
+}

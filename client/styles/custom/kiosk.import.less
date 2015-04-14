@@ -1,0 +1,71 @@
+.kiosk {
+	h1 {
+		margin: 0;
+		padding-bottom: 15px;
+		& > a {
+			font-size: large;
+			&:hover {
+			text-decoration: none;
+			}
+		}
+	}
+	a {
+		&:hover {
+			text-decoration: none;
+			.calendar_event {
+				& > .course_event_desc {
+					color: @brand-primary;
+				}
+			}
+		}
+		& > .calendar_event {
+			width: 100%;
+		}
+		.calendar_event {
+			& > .kiosk_date_time {
+				background: @brand-success;
+				font-size: large;
+				color: @gray-base;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+			.kiosk_date_time {
+				border-bottom: 3px solid @body-bg;
+				& > .kiosk_home {
+					padding-top: 15px;
+					text-align: right;
+				}
+			}
+			.course_event_title {
+				& > h3 {
+					margin-top: 15px;
+					color: @gray-base;
+				}
+			}
+		}
+	}
+	.kiosk_logo {
+		img {
+			width: 100%;
+		}
+	}
+	.kiosk_slim {
+		overflow: hidden;
+		background: @brand-success;
+		border: 5px solid @body-bg;
+		display: inline-block;
+	}
+}
+
+// #backToKiosk {
+// 	font-size: large;
+// 	padding-top: 80px;
+// }
+
+// a#switch {
+	// 	font-size: large;
+	// }
+
+// a#backToKiosk:hover {
+// 	text-decoration: none;
+// }
