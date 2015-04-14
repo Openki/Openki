@@ -1,0 +1,55 @@
+.calendar {
+	& > a:hover {
+		color: inherit;
+	}
+}
+
+.calendar_eventlist {
+	margin-left: -20px;
+}
+
+.calendar_event,
+.calendar_event_past {
+	width: 350px;
+	height: 230px;
+	margin: 7px;
+	background: @light-blue;
+	word-wrap: break-word;
+	&>.course_event_date {
+		padding: 10px 10px 0 10px;
+		width: 100%;
+		background: @brand-success;
+		font-size: x-large;
+		color: #333;
+		text-align: left;
+	}
+	&>.course_event_time {
+		padding: 0 10px 10px 10px;
+		width: 100%;
+		background: @brand-success;
+		font-size: medium;
+		color: #333;
+		border-bottom: 3px solid @body-bg;
+	}
+	&>.course_event_title,
+	&>.course_event_desc {
+		padding: 0 10px;
+		&>h4 {
+			color: #333;
+			-moz-transition: color 1s;
+		}
+	}
+	.course_event_desc {
+		& > p {
+			color: @brand-primary;
+			max-height: 40px; //Ugly fix, has to fill the rest of the calendar event
+		}
+	}
+	&:hover {
+		&> .course_event_title {
+			&>h4 {
+				color: @brand-primary;
+			}
+		}
+	}
+}

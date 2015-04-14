@@ -1,0 +1,111 @@
+div#edit_event_description {
+	border: 1px solid #CCC;
+	padding: 6px 10px;
+	background: @body-bg;
+	&:focus {
+		border-color: @brand-primary;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+					0px 0px 8px rgba(56, 130, 156, 0.6);
+	}
+}
+
+.course_event_detail {
+	.course_event {
+		& > .course_event_date {
+			padding: 10px 0;
+			border-bottom: 3px solid @body-bg;
+			background: @brand-success;
+			span.date {
+				font-size: x-large;
+			}
+		}
+		& > .event_detail_description {
+			background: @light-blue;
+		}
+	}
+}
+
+.course_event_detail {
+	&>.course_event:hover,
+	&>.calendar_event:hover,
+	&>.calendar_event_past:hover {
+		box-shadow: none;
+	}
+}
+
+.course_events {
+	padding-top: 15px;
+	&> div:first-child {
+		padding: 0 10px;
+	}
+}
+
+.course_event_container,
+.course_event_past_container {
+	padding: 5px;
+}
+
+.course_event,
+.calendar_event,
+.calendar_event_past {
+	&:hover {
+		box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.075) inset,
+					0px 0px 20px rgba(56, 130, 156, 0.6);
+		z-index: 1029;
+	}
+}
+
+.course_event &>a,
+.course_event &>a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+.course_event {
+	&:hover {
+		.course_event_title {
+			color: @brand-primary;
+		}
+	}
+	a {
+		& > .course_event_date {
+			padding: 10px 0;
+			border-bottom: 3px solid @body-bg;
+			background: @brand-success;
+		}
+		.course_event_date {
+			span.date {
+				font-size: x-large;
+			}
+		}
+		& > .course_event_time {
+			font-size: medium;
+			padding: 0 0 10px 0;
+		}
+		.course_event_time {
+			& > span {
+				font-size: small;
+			}
+		}
+	}
+	& > .eventEdit_buttons {
+		background: #cfcfcf;
+		text-align: center;
+		padding: 10px 0;
+		border-top: 3px solid @body-bg;
+	}
+}
+
+.course_event_lower_section {
+	background: @light-blue;
+	padding-bottom: 10px;
+	overflow: hidden;
+}
+
+.course_event_title {
+	-moz-transition: color 1s;
+}
+
+input#edit_event_title {
+	font-size: large;
+}

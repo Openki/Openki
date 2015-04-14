@@ -1,0 +1,79 @@
+.course_main {
+	border: 7px dashed @light-blue;
+	margin-top: 20px;
+}
+
+.course_groups ul,
+.course_groups ul li,
+.course_groups ul li a {
+	display: inline-block;
+}
+
+p.course_description {
+	padding: 10px 0;
+}
+
+
+.edit_buttons {
+	padding: 10px 0;
+	text-align: center;
+	width: calc(~"100% + 44px"); //different solution? -> compability
+	margin: 0 0 -7px -22px;
+	background: @brand-primary;
+	border-top: 3px solid @body-bg;
+}
+
+.course_main.hasupcomingevents {
+	ul.nav-tabs {
+		li.active {
+			a {
+				background: @light-blue;
+			}
+		}
+	}
+}
+
+button.eventEdit.addButton {
+	margin-top: 20px;
+}
+
+.course_event_edit {
+	border: 7px dashed @light-blue;
+	margin: 20px 0;
+	padding-bottom: 20px;
+	.event_edit_buttons {
+		padding-top: 15px;
+	}
+}
+
+.course_edit_editbox {
+	border: 7px solid @light-blue;
+	background: @light-blue;
+	padding: 5px 0 !important;
+}
+
+input#editform_name {
+	font-size: large;
+}
+
+#editform_description {
+	min-height: 100px;
+	border: 1px solid #CCC;
+	padding: 5px;
+	background: @body-bg;
+	&:focus {
+		border-color: @brand-primary;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+					0px 0px 8px rgba(56, 130, 156, 0.6);
+	}
+}
+
+ul.subcategories {
+	& > li {
+		display: inline-block;
+	}
+}
+
+.course_edit_finishbtns {
+	padding: 10px 0 !important;
+}

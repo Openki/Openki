@@ -1,0 +1,95 @@
+.courselist_results {
+	margin-top: 10px;
+}
+
+.courselist_course {
+	display: inline-block;
+	width: 280px;
+	height: 150px;
+	border: 7px dashed @light-blue;
+	margin: 10px 10px 10px 0;
+	padding-right: 0 !important;
+	padding-left: 10px !important;
+	&:hover {
+		h4 {
+			color: @brand-primary;
+		}
+	}
+	h4 {
+		-moz-transition: color 1s;
+		color: #333;
+	}
+	& > a {
+		color: #333;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	.yes {
+		color: #407d5c;
+		background-color: @brand-success;
+		width: 100%;
+		margin-bottom: 3px;
+		text-align: center;
+	}
+	.no {
+		color: #751313;
+		background-color: @light-red;
+		width: 100%;
+		margin-bottom: 3px;
+		text-align: center;
+	}
+}
+
+.courselist_course,
+.course_main {
+	&.hasupcomingevents {
+		background: @light-blue;
+	}
+}
+
+.courselist_course_info {
+	right: -7px;
+	top: -7px;
+	padding: 0;
+	width: 25%;
+	background: @body-bg;
+}
+
+.course_eventlist_container {
+	background: @brand-success;
+	text-align: center;
+	color: #333;
+	max-height: 150px;
+	& > div {
+		padding-bottom: 2px;
+		&:first-child {
+			padding-top: 4px;
+		}
+		&:last-child {
+			padding-bottom: 4px;
+		}
+		&.course_eventlist_location {
+			padding-left: 4px;
+			padding-right: 4px;
+			word-wrap: break-word;
+		}
+	}
+}
+
+.course_categories {
+	& > ul {
+		line-height: 23px;
+		li {
+			display: inline-block;
+			a {
+				color: @brand-primary;
+				background: rgba(216, 216, 216, 0.5);
+				padding: 0 2px 1px 2px;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
