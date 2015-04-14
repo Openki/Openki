@@ -66,7 +66,7 @@ Router.map(function () {
 	})
 	this.route('showCourseDocs', {
 		path: 'course/:_id/:slug/docs',
-		template: 'coursedocs',
+		//template: 'coursedocs',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
@@ -82,7 +82,7 @@ Router.map(function () {
 	})
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
-		template: 'coursehistory',
+		//template: 'coursehistory',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('categories'),
