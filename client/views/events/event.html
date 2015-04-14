@@ -63,14 +63,47 @@
 			</div>
 		</div>
 		<div class="col-sm-12">
-			<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-info-sign"></span>
-				</span>
-				{{>eventDescritpionEdit description}}
+			<div class="col-xs-12 col-sm-6 no-padding">
+				<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</span>
+					{{>eventDescritpionEdit description}}
+				</div>
+			
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4> 
+
+				<div class="input-group">
+					
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</span>
+					
+					<div id="edit_event_description" style="min-height: 10ex">
+						<div style="float:left;min-width:55ex;">
+							<input type="file" name="…" class="eventFileInput" id="edit_files">
+						</div>
+						{{#if files}} 
+							<div>
+								<table>
+									
+									{{#each files}}
+				        				{{> eventAttachmentsEdit}}
+				      				{{/each}}
+									
+								</table>
+							</div>
+						{{/if}}					
+					</div>
+				</div>
 			</div>
 		</div>
+		
+		
+		
 		<div class="col-sm-12 no-padding">
 			<div class="col-xs-12 col-sm-6">
 				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
@@ -106,11 +139,7 @@
 			</div>
 		</div>
 		
-		<div class="col-sm-12 no-padding event_edit_buttons">
-			<div class="col-xs-12 col-sm-6">
-			<input type="file" name="…" class="eventFileInput" id="edit_files">
-			</div>
-		</div>
+
 		
 	</div>
 	{{else}}
@@ -187,3 +216,17 @@
 	</li>
 </template>
 
+
+<template name="eventAttachmentsEdit">
+	<tr id="row-{{_id}}">
+		<td style="padding-right:5px;">
+			<a href="{{file}}" target="_blank">{{filename}}</a>
+		</td>
+		<td>
+			<button role="button" class="fileDelete btn btn-danger" type="button">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+		</td>					
+								
+	</tr>
+</template>

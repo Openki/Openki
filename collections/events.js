@@ -104,7 +104,35 @@ Meteor.methods({
 		
 		Events.remove(eventId);
 		return Events.findOne({id:eventId}) === undefined;
+	},
+
+
+	removeFile: function(eventId,fileId) {
+		check(eventId, String);
+		
+		var user = Meteor.user()
+		if (!user) throw new Meteor.Error(401, "please log in");
+		var event = Events.findOne(eventId);
+		if (!event) throw new Meteor.Error(404, "No such event");
+		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		
+		var tmp = []	
+		
+		for(var i = 0; i < event.files.length; i++ ){
+			var fileObj = event.files[i];
+			if( fileObj._id != fileId){
+				tmp.push(fileObj);
+				console.log(fileObj);
+			}
+		};
+
+		var edits = {
+			files: tmp,
+		}
+		var upd = Events.update(eventId, { $set: edits });
+		return upd;
 	}
+
 });
 
 
