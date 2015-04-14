@@ -23,13 +23,8 @@
 						<div class="course_groups">
 							{{> show_groups}}
 						</div>
-						{{> show_course_submenu}}
 					{{/with}}
-					<p class="course_description">
-						{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-						<!-- {{> coursedocs}} -->	
-						<!-- {{> coursehistory}} -->
-					</p>
+					{{> show_course_submenu}}
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 						<div class="edit_buttons">
@@ -131,26 +126,51 @@
 
 
 <template name="show_course_submenu">
-	<nav>
-		<ul class="nav nav-tabs">
-			<li role="presentation" class='active'>
-				<a href="{{pathFor 'showCourse'}}">
-					<span class="glyphicon glyphicon-info-sign"></span>&nbsp;
-					Description
-				</a>
-			</li>
-			<li role="presentation">
-				<a href="{{pathFor 'showCourseDocs'}}">
-					<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-					Docs
-				</a>
-			</li>
-			<li role="presentation">
-				<a href="{{pathFor 'showCourseHistory'}}">
-					<span class="glyphicon glyphicon-road"></span>&nbsp;
-					History
-				</a>
-			</li>
-		</ul>
-	</nav>
+	<div>
+		<nav>
+			<ul class="nav nav-tabs">
+				<li role="presentation" class='active'>
+					<a href="#description {{pathFor 'showCourse'}}">
+						<span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+						Description
+					</a>
+				</li>
+				<li role="presentation">
+					<a href="#docs {{pathFor 'showCourseDocs'}}">
+						<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+						Docs
+					</a>
+				</li>
+				<li role="presentation">
+					<a href="#history {{pathFor 'showCourseHistory'}}">
+						<span class="glyphicon glyphicon-road"></span>&nbsp;
+						History
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div>
+			<div class="tab-pane active" id="description">
+				{{> course_description}}
+			</div>
+			<div class="tab-pane" id="docs">
+				{{> coursedocs}}
+			</div>
+			<div class="tab-pane" id="history">
+				{{> coursehistory}}
+			</div>
+		</div>	
+	</div>
 </template>
+
+<template name="course_description">
+	<div>
+		<p class="course_description">
+			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
+		</p>
+	</div>
+</template>
+
+
+						<!-- {{> coursedocs}} -->	
+						<!-- {{> coursehistory}} -->
