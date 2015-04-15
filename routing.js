@@ -66,10 +66,6 @@ Router.map(function () {
 		}
 	})
 
-	this.route('admin', {								///////// admin /////////
-		template: 'admin'
-	});
-
 });
 
 
