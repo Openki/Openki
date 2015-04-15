@@ -107,6 +107,9 @@ goBase = function() {
 pleaseLogin = function() {
 	if (Meteor.userId()) return false;
 	alert(mf('Please.login', 'Please login or register'));
+	setTimeout(function(){
+		$('.loginButton').dropdown('toggle');  	//or $('.dropdown').addClass('open');
+	},0);
 	return true;
 }
 
