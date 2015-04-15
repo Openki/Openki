@@ -31,3 +31,4 @@ ical
 cfs:standard-packages
 cfs:gridfs
 yogiben:admin
+aldeed:simple-schema

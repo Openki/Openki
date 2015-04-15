@@ -17,6 +17,15 @@
 
 Courses = new Meteor.Collection("Courses");
 
+var CourseSchema = new SimpleSchema({
+	name: { type: String },
+	description: { type: String },
+	'members.$.user':  { type: String },
+	'members.$.roles':  { type: [String] }
+});
+
+Courses.attachSchema(CourseSchema);
+
 Courses.allow({
 	remove: function (userId, doc) {
 		return userId && true;   // allow only if UserId is present
