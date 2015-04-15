@@ -38,4 +38,11 @@ Router.map(function () {
 			sendIcal(Events.find({ _id: this.params._id }), this.response);
 		}
 	});
+	this.route('calCourse', {
+		path: 'cal/course/:_id',
+		where: 'server',
+		action: function () {
+			sendIcal(Events.find({ course_id: this.params._id }), this.response);
+		}
+	});
 });

@@ -29,9 +29,9 @@
 		<div class="col-sm-4">
 			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
 			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
 				<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
 			</div>
 		</div>
@@ -148,7 +148,9 @@
 				<div class="container-fluid">
 					<span class="day">{{weekday startdate}}</span><br>
 					<span class="date">
-						<span class="glyphicon glyphicon-calendar"></span>
+						<a href="{{pathFor 'calEvent' this}}">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</a>
 						{{dateformat_mini_fullmonth startdate}}
 					</span>
 				</div>
