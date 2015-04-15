@@ -43,3 +43,12 @@ ScaleFaktor = 1;
 
 
 })}
+
+
+this.AdminConfig = {
+	name: 'Опеньки',
+	adminEmails: ['greg@openki.example'],
+	collections: {
+		Courses: {}
+	}
+};
