@@ -104,7 +104,7 @@ function loadroles(course) {
 	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
 		var role = roletype.type
 		var sub = hasRoleUser(course.members, role, userId);
-		if (course.roles.indexOf(role) !== -1) {
+		if (course.roles && course.roles.indexOf(role) !== -1) {
 			goodroles.push({
 				roletype: roletype,
 				role: role,
