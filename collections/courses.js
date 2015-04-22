@@ -110,13 +110,11 @@ Meteor.methods({
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
-		if (!Meteor.isClient) {
-			Courses.update(
-				{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
-				{ $set: { 'members.$.comment': comment } },
-				checkUpdateOne
-			)
-		}
+		Courses.update(
+			{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
+			{ $set: { 'members.$.comment': comment } },
+			checkUpdateOne
+		);
 	},
 	
 	change_subscription: function(courseId, role, add, anon) {
