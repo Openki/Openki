@@ -19,8 +19,15 @@ Courses = new Meteor.Collection("Courses");
 
 var CourseSchema = new SimpleSchema({
 	name: { type: String },
-	description: { type: String },
+	region: { type: String },
+	categories: { type: [String], optional: true },
+	description: { type: String, optional: true },
+	roles: { type: [String] },
+	time_lastedit: { type: Date },
+	time_created: { type: Date },
+	slug: { type: String, optional: true },
 	'members.$.user':  { type: String },
+	'members.$.comment':  { type: String, optional: true },
 	'members.$.roles':  { type: [String] }
 });
 
