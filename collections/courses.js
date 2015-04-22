@@ -122,6 +122,7 @@ Meteor.methods({
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
+
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
@@ -160,7 +161,7 @@ Meteor.methods({
 		if (add) {
 			addRole(course, role, userId)
 			var time = new Date
-			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
+			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne)
 		} else {
 			removeRole(course, role, userId)
 		}
