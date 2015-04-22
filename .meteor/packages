@@ -18,8 +18,6 @@ accounts-github
 service-configuration
 citizenkevin:medium-editor
 djedi:sanitize-html
-rzymek:moment
-rzymek:moment-locales
 nemo64:bootstrap
 less
 cscottnet:es5-shim
@@ -31,3 +29,9 @@ cfs:standard-packages
 cfs:gridfs
 yogiben:admin
 aldeed:simple-schema
+rzymek:moment-locale-ar
+rzymek:moment-locale-de
+rzymek:moment-locale-es
+rzymek:moment-locale-fr
+rzymek:moment-locale-it
+rzymek:moment-locale-zh-tw
