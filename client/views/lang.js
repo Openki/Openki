@@ -12,7 +12,6 @@ Template.lang_sel.helpers({
 Template.lang_sel.events({
 	'click a.langselect': function(e){
 		mfPkg.setLocale(this.lg);
-		mfPkg.ready();
 		e.preventDefault();
 	}
 });

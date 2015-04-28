@@ -57,12 +57,17 @@ var Schemas = {
 
 var CourseSchema = new SimpleSchema({
 	name: { type: String },
+	categories: { type: [String], optional: true },
 	description: Schemas.LongString,
 	region: Schemas.RegionId,
+	roles: { type: [String] },
 	createdby: Schemas.UserId,
+	time_lastedit: { type: Date },
+	time_created: { type: Date },
+	slug: { type: String, optional: true },
 	'members.$.user':  Schemas.UserId,
 	'members.$.comment':  Schemas.OptionalString,
- 	'members.$.roles':  { type: [String] }
+	'members.$.roles':  { type: [String] }
 });
 
 Courses.attachSchema(CourseSchema);
@@ -144,13 +149,11 @@ Meteor.methods({
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
-		if (!Meteor.isClient) {
-			Courses.update(
-				{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
-				{ $set: { 'members.$.comment': comment } },
-				checkUpdateOne
-			)
-		}
+		Courses.update(
+			{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
+			{ $set: { 'members.$.comment': comment } },
+			checkUpdateOne
+		);
 	},
 	
 	change_subscription: function(courseId, role, add, anon) {
@@ -158,6 +161,7 @@ Meteor.methods({
 		check(courseId, String)
 		check(add, Boolean)
 		check(anon, Boolean)
+
 		var course = Courses.findOne({_id: courseId})
 		if (!course) throw new Meteor.Error(404, "Course not found")
 		var userId = false
@@ -196,7 +200,7 @@ Meteor.methods({
 		if (add) {
 			addRole(course, role, userId)
 			var time = new Date
-			Courses.update({_id: courseId}, { $set: {time_lastenrol:time}}, checkUpdateOne)
+			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne)
 		} else {
 			removeRole(course, role, userId)
 		}
