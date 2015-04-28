@@ -23,14 +23,13 @@ Template.eventPage.helpers({
 });
 
 Template.event.helpers({
-	isoDateFormat: function(date)
-	{
+	isoDateFormat: function(date) {
 		return moment(date).format("YYYY-MM-DD");
 	},
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
-	frequencyOptions:function(){
+	frequencyOptions:function() {
 	    return [{
 	      frequency:0,
 	      text:"once" 
@@ -52,8 +51,7 @@ Template.eventDescritpionEdit.rendered = function() {
 }
 
 
-
-var getEventStartMoment = function(template){
+var getEventStartMoment = function(template) {
 	var startMoment =  moment(template.$('#edit_event_startdate').val())
 	var startTime = template.$('#edit_event_starttime').val();
 	var startTimeParts = startTime.split(":");
@@ -64,7 +62,7 @@ var getEventStartMoment = function(template){
 	return startMoment;
 }
 
-var getEventEndMoment = function(template){
+var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = moment(startMoment);
 	var endtime = template.$('#edit_event_endtime').val();
@@ -73,12 +71,14 @@ var getEventEndMoment = function(template){
 	var hours = endtimeParts[0];
 	endMoment.hours(hours);
 	endMoment.minutes(minutes);
-	if(endMoment.diff(startMoment)<0)
+	if(endMoment.diff(startMoment) < 0) {
 		endMoment.add(1,"day");
+	}
 
 	return endMoment;
 }
-var getEventDuration = function(template){
+
+var getEventDuration = function(template) {
 	var duration = parseInt(template.$('#edit_event_duration').val(),10);
 
 	return Math.max(0,duration);
@@ -88,8 +88,7 @@ var calculateEndMoment = function(startMoment, duration) {
 	return moment(startMoment).add(duration, "minutes"); 
 }
 
-var setDurationInTemplate = function(template)
-{
+var setDurationInTemplate = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = getEventEndMoment(template);
 	var duration = endMoment.diff(startMoment, "minutes");
@@ -97,7 +96,7 @@ var setDurationInTemplate = function(template)
 };
 
 
-var getEventFrequency = function(template){
+var getEventFrequency = function(template) {
 	
 	var startDate =  moment(template.$('#edit_event_startdate').val());	
 	var nowMoment = moment();
