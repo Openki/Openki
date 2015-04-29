@@ -303,8 +303,9 @@ Template.event.events({
 			eventId = '';
 			
 			if (this.course_id) {
-				editevent.course_id = this.course._id;
-				editevent.region = this.course.region;
+				var course = Courses.findOne(this.course_id);
+				editevent.region = course.region;
+				editevent.course_id = this.course_id;
 			} else {
 				editevent.region = Session.get('region');
 			}

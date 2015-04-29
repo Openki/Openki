@@ -49,8 +49,7 @@ Template.course_event.events({
 	},
 
 	'click button.eventEdit': function () {
-		if (pleaseLogin()) return;
-		Template.instance().editing.set(true);
+		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
 	},
 	
 	'click button.saveEditEvent': function(event, instance) {

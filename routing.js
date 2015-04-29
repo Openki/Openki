@@ -88,7 +88,8 @@ Router.map(function () {
 				event = {
 					new: true,
 					startdate: propose.toDate(),
-					enddate: moment(propose).add(2, 'hour').toDate()
+					enddate: moment(propose).add(2, 'hour').toDate(),
+					course_id: this.params.query.courseId
 				};
 			} else {
 				event = Events.findOne({_id: this.params._id});
