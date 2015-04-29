@@ -34,7 +34,7 @@ Template.course_events.helpers({
 	}
 });
 
-Template.course_event.events({
+Template.course_events.events({
 	'click button.eventEdit': function () {
 		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
 	}

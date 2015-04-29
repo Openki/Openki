@@ -75,12 +75,11 @@ Router.map(function () {
 		template: 'eventPage',
 		waitOn: function () {
 			return [
-			Meteor.subscribe('categories'),
-			   Meteor.subscribe('event', this.params._id)
+				Meteor.subscribe('categories'),
+				Meteor.subscribe('event', this.params._id)
 			]
 		},
 		data: function () {
-			
 			var event;
 			var create = 'create' == this.params._id;
 			if (create) {
