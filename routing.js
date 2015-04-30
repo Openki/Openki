@@ -74,10 +74,15 @@ Router.map(function () {
 		path: 'event/:_id',
 		template: 'eventPage',
 		waitOn: function () {
-			return [
+			var subs = [
 				Meteor.subscribe('categories'),
 				Meteor.subscribe('event', this.params._id)
 			]
+			var courseId = this.params.query.courseId;
+			if (courseId) {
+				subs.push(Meteor.subscribe('courseDetails', courseId));
+			}
+			return subs;
 		},
 		data: function () {
 			var event;
@@ -88,8 +93,12 @@ Router.map(function () {
 					new: true,
 					startdate: propose.toDate(),
 					enddate: moment(propose).add(2, 'hour').toDate(),
-					course_id: this.params.query.courseId
 				};
+				var course = Courses.findOne(this.params.query.courseId);
+				if (course) {
+					event.title = course.name,
+					event.course_id = course._id;
+				}
 			} else {
 				event = Events.findOne({_id: this.params._id});
 				if (!event) return {};
@@ -99,4 +108,3 @@ Router.map(function () {
 		}
 	})
 });
-
