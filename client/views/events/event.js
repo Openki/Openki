@@ -23,13 +23,27 @@ Template.eventPage.helpers({
 });
 
 Template.event.helpers({
-	isoDateFormat: function(date)
-	{
+	isoDateFormat: function(date) {
 		return moment(date).format("YYYY-MM-DD");
 	},
 	editing: function() {
 		return this.new || Template.instance().editing.get();
-	}
+	},
+	frequencyOptions:function() {
+	    return [{
+	      frequency:0,
+	      text:"once" 
+	    },{
+	      frequency:1,
+	      text:"every day"
+	    },{
+	      frequency:7,
+	      text:"once a week"
+	    },{
+	      frequency:30,
+	      text:"once a month"
+	    }];
+  	}
 });
 
 Template.eventDescritpionEdit.rendered = function() {
@@ -37,8 +51,7 @@ Template.eventDescritpionEdit.rendered = function() {
 }
 
 
-
-var getEventStartMoment = function(template){
+var getEventStartMoment = function(template) {
 	var startMoment =  moment(template.$('#edit_event_startdate').val())
 	var startTime = template.$('#edit_event_starttime').val();
 	var startTimeParts = startTime.split(":");
@@ -49,7 +62,7 @@ var getEventStartMoment = function(template){
 	return startMoment;
 }
 
-var getEventEndMoment = function(template){
+var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = moment(startMoment);
 	var endtime = template.$('#edit_event_endtime').val();
@@ -58,12 +71,14 @@ var getEventEndMoment = function(template){
 	var hours = endtimeParts[0];
 	endMoment.hours(hours);
 	endMoment.minutes(minutes);
-	if(endMoment.diff(startMoment)<0)
+	if(endMoment.diff(startMoment) < 0) {
 		endMoment.add(1,"day");
+	}
 
 	return endMoment;
 }
-var getEventDuration = function(template){
+
+var getEventDuration = function(template) {
 	var duration = parseInt(template.$('#edit_event_duration').val(),10);
 
 	return Math.max(0,duration);
@@ -73,13 +88,77 @@ var calculateEndMoment = function(startMoment, duration) {
 	return moment(startMoment).add(duration, "minutes"); 
 }
 
-var setDurationInTemplate = function(template)
-{
+var setDurationInTemplate = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = getEventEndMoment(template);
 	var duration = endMoment.diff(startMoment, "minutes");
 	template.$("#edit_event_duration").val(duration);
-}
+};
+
+
+var getEventFrequency = function(template) {
+	
+	var startDate =  moment(template.$('#edit_event_startdate').val());	
+	var nowMoment = moment();
+	if (startDate.diff(nowMoment)<0) {
+		alert("Date must be in future");
+		return;
+	}
+	var endDate = moment(template.$('#edit_event_enddate').val());
+	var frequency = template.$('#edit_frequency').val();
+	var diffDays = endDate.diff(startDate, "days");
+	
+
+	var dates = [];
+	//detect how many events we should create
+	//and return a list of start-end times when the events should be created
+	var nrEvents = Math.floor(diffDays/frequency) + 1;
+	
+	var unit = "";
+	if(frequency == 0){ //once
+		unit = "days"; //doesn't matter what we set here
+		nrEvents = 1;		
+	}
+	else if(frequency == 1){ //every day
+		unit = "days";		
+	}
+	else if(frequency == 7){ //every week
+		unit = "weeks";
+	}
+	else if(frequency == 30){ //every month
+		unit = "months";
+	}
+	
+	
+	
+	for(var i = 0; i < nrEvents; i++){
+		var dt = moment(startDate).add(i, unit); 
+		var startTime = template.$('#edit_event_starttime').val();
+		var startTimeParts = startTime.split(":");
+		var minutes = startTimeParts[1];
+		var hours = startTimeParts[0];
+		var startMoment = dt;
+		startMoment.hours(hours);
+		startMoment.minutes(minutes);
+	
+		if(!startMoment) {
+			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
+			continue;
+		}
+		var duration = getEventDuration(template);
+		var endMoment = calculateEndMoment(startMoment, duration);
+		var eventTime = [ startMoment,endMoment ];
+		dates.push( eventTime );
+	}
+	
+	console.log( dates );
+	return(dates);
+	
+	
+
+
+
+};
 
 Template.event.onRendered(function(){
 	setDurationInTemplate(this);
@@ -103,11 +182,22 @@ Template.event.events({
 		Template.instance().editing.set(true);
 	},
 	
-		 
+	
 	'change .eventFileInput': function(event, template) {
+		 
+		template.$('button.eventFileUpload').toggle(300);
+	}, 
+		 
+	'click button.eventFileUpload': function(event, template) {
+	
 		
-		FS.Utility.eachFile(event, function(file) {
+		var fileEvent = $('.eventFileInput')[0].files;
+		
+		//FS.Utility.eachFile(fileEvent, function(file) {
+	    $.each( fileEvent, function(i,file){  	
+	    	console.log(file);
 	        Files.insert(file, function (err, fileObj) {
+		    	console.log(fileObj);
 		    	if (err){
 					// add err handling
 	          	} else {
@@ -120,7 +210,8 @@ Template.event.events({
 		    				filesize : fileObj.original.size,
 	            		}
 	            	];
-	          		template.files = fileList
+	          		template.files = fileList;
+	          		template.$('button.eventFileUpload').hide(50);
 	          	}
 	        });
 		});
@@ -149,7 +240,16 @@ Template.event.events({
 	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
+		//get all startDates where the event should be created
+		//this does not do anything yet other than generating the start-end times for a given period
+		var dates = getEventFrequency(template);
 		
+		$.each( dates, function( i,eventTime ){
+				console.log(eventTime);
+		});
+			
+		
+		//this will not be necessary once the above is active
 		var startMoment = getEventStartMoment(template);
 		if(!startMoment) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
@@ -163,7 +263,8 @@ Template.event.events({
 			alert("Date must be in future");
 			return;
 		}
-
+		
+		
 		
 
 
@@ -175,7 +276,7 @@ Template.event.events({
 			startdate: startMoment.toDate(),
 			enddate: endMoment.toDate(),
 			files: this.files,
-		}
+		};
 		
 		
 		var fileList = template.files;
@@ -202,8 +303,9 @@ Template.event.events({
 			eventId = '';
 			
 			if (this.course_id) {
-				editevent.course_id = this.course._id;
-				editevent.region = this.course.region;
+				var course = Courses.findOne(this.course_id);
+				editevent.region = course.region;
+				editevent.course_id = this.course_id;
 			} else {
 				editevent.region = Session.get('region');
 			}

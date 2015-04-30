@@ -35,7 +35,7 @@ Meteor.methods({
 			room:        Match.Optional(String),
 			startdate:   Date,
 			enddate:     Date,
-			files:		 Array
+			files:       Match.Optional(Array)
 		}
 		
 		var isNew = eventId === '';

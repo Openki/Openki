@@ -49,6 +49,10 @@ this.AdminConfig = {
 	name: 'Опеньки',
 	adminEmails: ['greg@openki.example'],
 	collections: {
-		Courses: {}
+		Courses: {
+			tableColumns: [
+				{label: 'Name', name: 'name'}
+			]
+		}
 	}
 };

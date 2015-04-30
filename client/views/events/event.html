@@ -26,42 +26,81 @@
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
 			<input type="text" class="form-control" id="edit_event_title" size="30" value="{{this.title}}" name="_" />
 		</div>
-		<div class="col-sm-4">
-			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-				<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+		<div class="col-sm-12">
+			<div class="col-sm-4">
+				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<h4>{{mf '' 'End Date (if not one-time event)'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+					<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<h4>{{mf 'course.event.edit.frequency' 'Frequency'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+		
+					 <select id="edit_frequency">
+					    {{#each frequencyOptions}}
+					      <option value="{{frequency}}">{{text}}</option>
+					    {{/each}}
+  					</select> 
+					
+					
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		
+		<div class="col-sm-12">
+		
+			<div class="col-sm-4">
+				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
+				</div>
+			</div>
+			
+			<div class="show_time_end col-sm-4">
+				<h4>{{mf 'course.event.edit.time_end' 'Time end'}} <small class="toggle_duration" > &nbsp;&nbsp;{{mf 'course.event.edit.swich_duration' 'switch to duration'}} </small></h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat enddate}}" size="5">			
+				</div>
+			</div>
+			
+			<div style="display:none" class="col-sm-4 show_duration">
+				<h4>{{mf 'course.event.edit.duration' 'Duration (in minutes)'}} <small class="toggle_duration" > &nbsp;&nbsp; {{mf 'course.event.edit.switch_time_end' 'switch to end time'}} </small></h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-4">
-			<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
-			</div>
-		</div>
-		<div class="show_time_end col-sm-4">
-			<h4>{{mf 'course.event.edit.time_end' 'Time end'}} <small class="toggle_duration" > &nbsp;&nbsp;{{mf 'course.event.edit.swich_duration' 'switch to duration'}} </small></h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat enddate}}" size="5">			
-			</div>
-		</div>
-		<div style="display:none" class="col-sm-4 show_duration">
-			<h4>{{mf 'course.event.edit.duration' 'Duration (in minutes)'}} <small class="toggle_duration" > &nbsp;&nbsp; {{mf 'course.event.edit.switch_time_end' 'switch to end time'}} </small></h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
-			</div>
-		</div>
+		
 		<div class="col-sm-12">
 			<div class="col-xs-12 col-sm-6 no-padding">
 				<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
@@ -79,15 +118,23 @@
 				<div class="input-group">
 					
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-info-sign"></span>
+						<span class="glyphicon glyphicon-file"></span>
 					</span>
 					
-					<div id="edit_event_description" style="min-height: 10ex">
-						<div style="float:left;min-width:55ex;">
+					<div id="edit_event_description" style="min-height: 10ex; position:relative">
+						<div style="float:left;width:70%;">
 							<input type="file" name="…" class="eventFileInput" id="edit_files">
+							
+							<button style="display:none" type="button" class="eventFileUpload" role="button">
+								<span class="glyphicon glyphicon-edit"></span>
+								Start Upload
+							</button>
+									
+							
+							
 						</div>
 						{{#if files}} 
-							<div>
+							<div style="float:left;width:20%;">
 								<table>
 									
 									{{#each files}}
@@ -109,7 +156,7 @@
 				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
 				<div id="editform_location" name="editform_location" class="input-group">
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-map-marker"></span>
+						<span class="glyphicon glyphicon-home"></span>
 					</span>
 					<input type="text" id="edit_event_location" class="form-control" size="40" value="{{location}}"/>
 				</div>
@@ -148,7 +195,9 @@
 				<div class="container-fluid">
 					<span class="day">{{weekday startdate}}</span><br>
 					<span class="date">
-						<span class="glyphicon glyphicon-calendar"></span>
+						<a href="{{pathFor 'calEvent' this}}">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</a>
 						{{dateformat_mini_fullmonth startdate}}
 					</span>
 				</div>
@@ -223,7 +272,7 @@
 			<a href="{{file}}" target="_blank">{{filename}}</a>
 		</td>
 		<td>
-			<button role="button" class="fileDelete btn btn-danger" type="button">
+			<button role="button" class="fileDelete close" type="button">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
 		</td>					

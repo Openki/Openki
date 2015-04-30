@@ -87,8 +87,9 @@ Router.map(function () {
 				var propose = moment().add(1, 'week').startOf('hour');
 				event = {
 					new: true,
-			startdate: propose.toDate(),
-			   enddate: moment(propose).add(2, 'hour').toDate()
+					startdate: propose.toDate(),
+					enddate: moment(propose).add(2, 'hour').toDate(),
+					course_id: this.params.query.courseId
 				};
 			} else {
 				event = Events.findOne({_id: this.params._id});
