@@ -16,7 +16,7 @@ Template.course_events.helpers({
 			}
 		});
 	},
-	
+
 	events_list_past: function() {
 		var course=this.course;
 		if (!course) return [];
@@ -26,104 +26,17 @@ Template.course_events.helpers({
 			var isCurrent = false;
 			if(current_event && current_event._id==event._id) isCurrent=true;
 			return {
-				course: course, 
-				event: event, 
+				course: course,
+				event: event,
 				isCurrent: isCurrent
 			}
 		});
-	},
-	
-	newEvent: function() {
-		var date = moment().add(1, 'week').startOf('hour').toDate();
-		return  { new: true, startdate: date, title: this.course.name }
 	}
 });
 
-Template.course_event.events({
-	'click button.eventDelete': function () {
-		if (pleaseLogin()) return;
-		if (confirm("delete event "+"'"+this.event.title+"'"+"?")) {
-			Events.remove(this.event._id);
-		}
-		Template.instance().editing.set(false);
-	},
-
+Template.course_events.events({
 	'click button.eventEdit': function () {
 		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
-	},
-	
-	'click button.saveEditEvent': function(event, instance) {
-		// format startdate
-		var dateParts =  instance.$('#edit_event_startdate').val().split(".");
-		
-		if (!dateParts[2]){
-			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
-			return;
-		}
-		
-		if(dateParts[2].toString().length==2) dateParts[2]=2000+dateParts[2]*1;
-
-		if(instance.$('#edit_event_starttime').val()!=""){
-			var timeParts =  $('#edit_event_starttime').val().split(":");
-		}else{
-			var timeParts =  [0,0];
-		}
-		
-		var startdate = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0],timeParts[0],timeParts[1])
-		var now= new Date();
-		
-		
-		if (startdate<now){
-			alert("Date must be in future");
-			return;
-		}
-		
-		
-		var editevent = {
-			title: instance.$('#edit_event_title').val(),
-			description: instance.$('#edit_event_description').val(),
-			//mentors: $('input:checkbox:checked.edit_event_mentors').map(function(){ return this.name}).get(),
-			//host: $('input:radio:checked.edit_event_host').val(),
-			location: instance.$('#edit_event_location').val(),
-			startdate: startdate,
-			enddate: startdate
-		}
-		
-		var eventId = this.event._id;
-		if (this.event.new) {
-			eventId = '';
-			if (this.course) {
-				editevent.course_id = this.course._id;
-				editevent.region = this.course.region;
-			}
-		}	
-		
-		Meteor.call('saveEvent',  eventId, editevent, function(error, eventId) {
-			if (error) {
-				console.log(error);
-			} else {
-				if (this.event.new) Router.go('showEvent', { _id: eventId });
-				instance.editing.set(false);
-			}
-		});
-	},
-	
-	'click button.cancelEditEvent': function () {
-		Template.instance().editing.set(false);
 	}
 });
 
-
-Template.course_event.created = function() {
-	this.editing = new ReactiveVar(false);
-}
-
-Template.course_event.helpers({
-	editing: function() {
-		return Template.instance().editing.get();
-	},
-	
-	showAddButton: function() {
-		return this.event.new && !Template.instance().editing.get();
-	}
-});

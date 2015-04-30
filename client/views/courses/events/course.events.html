@@ -1,7 +1,10 @@
 <template name="course_events">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		{{# if currentUser}}
-			{{>course_event course=course event=newEvent}}
+		<button type="button" class="eventEdit addButton btn btn-success">
+			<span class="glyphicon glyphicon-plus"></span>
+			{{mf 'course.events.addButton' 'add an Event'}}
+		</button>
 		{{/if}}
 
 		{{#if events_list}}
@@ -33,70 +36,41 @@
 
 
 <template name="course_event">
-	{{#if showAddButton}}
-		<button type="button" class="eventEdit addButton btn btn-success">
-			<span class="glyphicon glyphicon-plus"></span>
-			{{mf 'course.events.addButton' 'add an Event'}}
-		</button>
-	{{else}}
-		{{#if editing}}
-			{{>course_event_edit}}
-		{{else}}
-			<div class="{{#if isCurrent}}current_event{{/if}} course_event">
-				{{#with event}}
-				<a href="{{pathFor 'showEvent'}}">
-					<div class="course_event_date">
-						<div class="container-fluid">
-							<span class="day">{{weekday startdate}}</span><br>
-							<span class="date">
-								<span class="glyphicon glyphicon-calendar"></span>
-								{{dateformat_mini_fullmonth startdate}}
-							</span>
-						</div>
-					</div>
-					<div class="course_event_lower_section">
-						<div class="container-fluid">
-							<div class="course_event_title"><h4>{{this.title}}</h4></div>
-							<div class="course_event_time">
-								<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
-								{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
-							</div>
-						</div>
-					</div>
-					{{#if this.mentors}}
-					<p class="course_event_info">
-							<ul class="course_event_mentors">
-							{{#each this.mentors}}
-								<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
-							{{/each}}
-							</ul>
-					</p>
-					{{/if}}
-					{{#if this.hosts}}
-					<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.events.hosted_by' 'hosted by'}} {{username host}} </p>
-					{{/if}}
-				</a>
-				{{/with}}
-
-				{{!--		  <!-- (handlebar-commented would suffice)
-				{{# if currentUser}}
-					<div class="eventEdit_buttons">
-						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" class="eventEdit btn btn-success" role="button">
-								<span class="glyphicon glyphicon-edit"></span>
-								{{mf 'course.details.edit_btn' 'Edit'}}
-							</button>
-							<button type="button" class="eventDelete btn btn-danger" role="button">
-								<span class="glyphicon glyphicon-remove"></span>
-								{{mf 'course.details.del_btn' 'Delete'}}
-							</button>
-						</div>
-					</div>
-				{{/if}}
-				--> --}}
-
+	<div class="{{#if isCurrent}}current_event{{/if}} course_event">
+		{{#with event}}
+		<a href="{{pathFor 'showEvent'}}">
+			<div class="course_event_date">
+				<div class="container-fluid">
+					<span class="day">{{weekday startdate}}</span><br>
+					<span class="date">
+						<span class="glyphicon glyphicon-calendar"></span>
+						{{dateformat_mini_fullmonth startdate}}
+					</span>
+				</div>
 			</div>
-		{{/if}}
-	{{/if}}
+			<div class="course_event_lower_section">
+				<div class="container-fluid">
+					<div class="course_event_title"><h4>{{this.title}}</h4></div>
+					<div class="course_event_time">
+						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
+						{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
+					</div>
+				</div>
+			</div>
+			{{#if this.mentors}}
+			<p class="course_event_info">
+					<ul class="course_event_mentors">
+					{{#each this.mentors}}
+						<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
+					{{/each}}
+					</ul>
+			</p>
+			{{/if}}
+			{{#if this.hosts}}
+			<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.events.hosted_by' 'hosted by'}} {{username host}} </p>
+			{{/if}}
+		</a>
+		{{/with}}
+	</div>
 </template>
 
