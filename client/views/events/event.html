@@ -37,39 +37,7 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
-				<h4>{{mf '' 'End Date (if not one-time event)'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
-					<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
-				</div>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>{{mf 'course.event.edit.frequency' 'Frequency'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
-		
-					 <select id="edit_frequency">
-					    {{#each frequencyOptions}}
-					      <option value="{{frequency}}">{{text}}</option>
-					    {{/each}}
-  					</select> 
-					
-					
-				</div>
-			</div>
-			
-			
-		</div>
-		
-		
-		<div class="col-sm-12">
-		
+
 			<div class="col-sm-4">
 				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
 				<div class="input-group">
@@ -99,7 +67,12 @@
 					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
 				</div>
 			</div>
+			
+			
 		</div>
+		
+		
+
 		
 		<div class="col-sm-12">
 			<div class="col-xs-12 col-sm-6 no-padding">
@@ -233,7 +206,10 @@
 
 			
 			{{# if currentUser}}
-			<div class="eventEdit_buttons">
+			<div class="eventEdit_buttons col-sm-12" >
+				
+				
+				
 				<div class="btn-group" role="group">
 					<button type="button" class="eventEdit btn btn-success" role="button">
 						<span class="glyphicon glyphicon-edit"></span>
@@ -243,7 +219,67 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf 'course.details.del_btn' 'Delete'}}
 					</button>
+					
+					<button type="button" class="eventReplicateMenu btn btn-warning" role="button">
+						<span class="glyphicon glyphicon-plus"></span>
+						{{mf 'course.details.repl_menu_btn' 'Replicate'}}
+					</button>
+					
 				</div>
+				
+				
+				<div id="eventReplicationMenu" style="display:none;">
+					
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf '' 'End Date'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-2">
+						<h4>Frequency</h4>
+						<div class="input-group">
+							 <select id="edit_frequency" class="form-control">
+							    {{#each frequencyOptions}}
+							      <option value="{{frequency}}">{{text}}</option>
+							    {{/each}}
+		  					</select> 
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-2">
+						<h4></h4>
+
+						<div class="input-group">
+							<button type="button" class="eventReplicate btn btn-warning" role="button">
+								<!--span class="glyphicon glyphicon-plus"></span-->
+								{{mf 'course.details.repl_btn' 'Go!'}}
+							</button>
+						</div>
+					</div>
+					
+					
+					
+					
+				</div>
+			
+				
+				
+				
 			</div>
 			{{/if}}
 		</div>

@@ -240,14 +240,7 @@ Template.event.events({
 	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
-		//get all startDates where the event should be created
-		//this does not do anything yet other than generating the start-end times for a given period
-		var dates = getEventFrequency(template);
-		
-		$.each( dates, function( i,eventTime ){
-				console.log(eventTime);
-		});
-			
+
 		
 		//this will not be necessary once the above is active
 		var startMoment = getEventStartMoment(template);
@@ -322,6 +315,16 @@ Template.event.events({
 		});
 	},
 	
+	'click button.eventReplicate': function (event, template) {
+		//get all startDates where the event should be created
+		//this does not do anything yet other than generating the start-end times for a given period
+		var dates = getEventFrequency(template);
+		
+		$.each( dates, function( i,eventTime ){
+				console.log(eventTime);
+		});
+			
+	},
 	'click button.cancelEditEvent': function () {
 		if (this.new) history.back();
 		Template.instance().editing.set(false);
@@ -331,6 +334,11 @@ Template.event.events({
 
 		template.$('.show_time_end').toggle(300);
 		template.$('.show_duration').toggle(300);
+	},
+
+	'click .eventReplicateMenu': function(event, template){
+		
+		template.$('div#eventReplicationMenu').slideDown(300);
 	},
 
 	'change #edit_event_duration, change #edit_event_starttime': function(event, template) {
