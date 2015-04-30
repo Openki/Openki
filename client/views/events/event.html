@@ -37,39 +37,7 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
-				<h4>{{mf '' 'End Date (if not one-time event)'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
-					<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
-				</div>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>{{mf 'course.event.edit.frequency' 'Frequency'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
-		
-					 <select id="edit_frequency">
-					    {{#each frequencyOptions}}
-					      <option value="{{frequency}}">{{text}}</option>
-					    {{/each}}
-  					</select> 
-					
-					
-				</div>
-			</div>
-			
-			
-		</div>
-		
-		
-		<div class="col-sm-12">
-		
+
 			<div class="col-sm-4">
 				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
 				<div class="input-group">
@@ -99,7 +67,10 @@
 					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
 				</div>
 			</div>
+			
 		</div>
+		
+
 		
 		<div class="col-sm-12">
 			<div class="col-xs-12 col-sm-6 no-padding">

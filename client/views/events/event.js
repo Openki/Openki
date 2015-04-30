@@ -240,14 +240,7 @@ Template.event.events({
 	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
-		//get all startDates where the event should be created
-		//this does not do anything yet other than generating the start-end times for a given period
-		var dates = getEventFrequency(template);
-		
-		$.each( dates, function( i,eventTime ){
-				console.log(eventTime);
-		});
-			
+
 		
 		//this will not be necessary once the above is active
 		var startMoment = getEventStartMoment(template);
