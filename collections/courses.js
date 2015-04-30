@@ -286,14 +286,14 @@ Meteor.methods({
 			set.region = region._id
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
-			courseId = Courses.insert({
-				members: [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}],
-				createdby: user._id,
-				time_created: new Date
-			})
+			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
+			set.createdby = user._id;
+			set.time_created = new Date;
+			courseId = Courses.insert(set, checkInsert);
+		} else {
+			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		}
 
-		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		return courseId;
 	}
 });
