@@ -195,9 +195,7 @@
 				<div class="container-fluid">
 					<span class="day">{{weekday startdate}}</span><br>
 					<span class="date">
-						<a href="{{pathFor 'calEvent' this}}">
-							<span class="glyphicon glyphicon-calendar"></span>
-						</a>
+						<span class="glyphicon glyphicon-calendar"></span>
 						{{dateformat_mini_fullmonth startdate}}
 					</span>
 				</div>
@@ -249,8 +247,12 @@
 			</div>
 			{{/if}}
 		</div>
+		<a href="{{pathFor 'calEvent' this}}">
+			<span class="glyphicon glyphicon-calendar"></span>{{mf 'event.download_cal' 'Download to my calendar'}}
+		</a>
 	{{/if}}
 	{{> report}}
+
 </template>
 
 <template name="eventDescritpionEdit">

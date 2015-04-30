@@ -4,6 +4,11 @@ Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
 }
 
+Template.event.onRendered(function(){
+	if (this.editing.get()) setDurationInTemplate(this);
+});
+
+
 Template.eventPage.helpers({
 	course: function() {
 		var courseId = this.course_id;
@@ -159,11 +164,6 @@ var getEventFrequency = function(template) {
 
 
 };
-
-Template.event.onRendered(function(){
-	setDurationInTemplate(this);
-});
-
 Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;

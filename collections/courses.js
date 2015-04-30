@@ -207,21 +207,22 @@ Meteor.methods({
 	},
 
 	save_course: function(courseId, changes) {
-		check(courseId, String)
+		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
 			categories:  Match.Optional([String]),
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object)
-		})
-		var user = Meteor.user()
+		});
+
+		var user = Meteor.user();
 		if (!user) {
 		    if (Meteor.is_client) {
 				pleaseLogin();
 				return;
 			} else {
-				throw new Meteor.Error(401, "please log in")
+				throw new Meteor.Error(401, "please log in");
 			}
 		}
 
@@ -285,14 +286,14 @@ Meteor.methods({
 			set.region = region._id
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
-			courseId = Courses.insert({
-				members: [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}],
-				createdby: user._id,
-				time_created: new Date
-			})
+			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
+			set.createdby = user._id;
+			set.time_created = new Date;
+			courseId = Courses.insert(set, checkInsert);
+		} else {
+			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		}
 
-		Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		return courseId;
 	}
 });
