@@ -207,21 +207,22 @@ Meteor.methods({
 	},
 
 	save_course: function(courseId, changes) {
-		check(courseId, String)
+		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
 			categories:  Match.Optional([String]),
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object)
-		})
-		var user = Meteor.user()
+		});
+
+		var user = Meteor.user();
 		if (!user) {
 		    if (Meteor.is_client) {
 				pleaseLogin();
 				return;
 			} else {
-				throw new Meteor.Error(401, "please log in")
+				throw new Meteor.Error(401, "please log in");
 			}
 		}
 
