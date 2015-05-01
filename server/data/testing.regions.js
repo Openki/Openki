@@ -14,7 +14,7 @@ regions = [{
 		'name':        'Bern',
 		'_id':         'Siifr2P7drkv66FNA',
 		'country':     'CH',
-		'region':      'BE', 
+		'region':      'BE',
 		'latitude':    '46.9511',
 		'longitude':   '7.4386',
 		'timeZone':    'UTC+01:00'
