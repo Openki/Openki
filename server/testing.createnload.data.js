@@ -314,7 +314,13 @@ function ensureGroup(name) {
 createTestRegionsIfNone = function(){
 	if (Meteor.isServer && Regions.find().count() == 0) {
 		_.each(regions, function(region){
+			if (region.loc) {
+				region.loc = region.loc.reverse()			//latitude first !!?!
+				region.loc = { "type": "Point", "coordinates": region.loc } //2dsphere
+			}
 			Regions.insert(region)
+			console.log('*Added region: '+region.name)
 		})
+		Regions._ensureIndex({loc : "2dsphere"});
 	}
 }

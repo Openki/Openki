@@ -11,15 +11,12 @@ Router.map(function () {
 			};
 			this.next();
 			var region = Session.get('region')
-			console.log('Regions: '+region)
 			if (region == undefined){
-				var clientIp = '8.8.8.8' // this.request.connection.remoteAddress;
-				console.log('ip: '+clientIp)
-				Meteor.call ('autoSelectRegion', clientIp, function(error, regionId){
-					console.log('regionId: '+regionId+'   error: '+error)
-					if (regionId) Session.set('region', regionId)
+				Meteor.call ('autoSelectRegion', '1.2.3.4', function(error, regionId){
+					if (regionId) Session.set('region', regionId);
 				});
 			} else {
+				return;
 				this.next();
 			};
 		},

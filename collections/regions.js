@@ -18,18 +18,3 @@ Regions.allow({
 		return userId && false;
 	}
 });
-
-////////  Geo-Ip
-
-//GeoIP = Meteor.npmRequire('geoip-lite')
-
-Meteor.methods({
-
-	autoSelectRegion: function(clientIp) {
-		var ip = clientIp
-		//this.response.writeHead(200, {'Content-Type': 'application/json'});
-		//this.response.end(          JSON.stringify(GeoIP.lookup(ip))      );
-		return 'h6ZeeIBfp72msnnp3'  //for Luzern
-	}
-
-});
