@@ -1,6 +1,6 @@
 <template name='editable'>
 	{{#if simple}}
-		<span class='editable' data-placeholder="{{mf 'editable.add_text' 'Add text here'}}" style="padding: 0.5em">>{{text}}</span>
+		<div class='editable' data-placeholder="{{mf 'editable.add_text' 'Add text here'}}" style="padding: 0.5em; display: inline-block">{{text}}</div>
 		{{#if changed}}
 		<div class='editable-controls'>
 			<button class='editable-store'>
