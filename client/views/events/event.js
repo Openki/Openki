@@ -103,7 +103,9 @@ var setDurationInTemplate = function(template) {
 
 var getEventFrequency = function(template) {
 	
-	var startDate =  moment(template.$('#edit_event_startdate').val());	
+	var startDate =  moment(template.$('#edit_event_startdate').val());	//2015-05-06T12:15:39.565Z
+	
+	//check if startDate is also before endDate
 	var nowMoment = moment();
 	if (startDate.diff(nowMoment)<0) {
 		alert("Date must be in future");
@@ -113,8 +115,8 @@ var getEventFrequency = function(template) {
 	var frequency = template.$('#edit_frequency').val();
 	var diffDays = endDate.diff(startDate, "days");
 	
-
 	var dates = [];
+	
 	//detect how many events we should create
 	//and return a list of start-end times when the events should be created
 	var nrEvents = Math.floor(diffDays/frequency) + 1;
@@ -135,24 +137,25 @@ var getEventFrequency = function(template) {
 	}
 	
 	
+	var startMoment = template.data.startdate;
+	var hours = startMoment.getHours();
+	var minutes = startMoment.getMinutes();
+	var endMoment = template.data.enddate;
 	
+	console.log(template.data);
+
 	for(var i = 0; i < nrEvents; i++){
-		var dt = moment(startDate).add(i, unit); 
-		var startTime = template.$('#edit_event_starttime').val();
-		var startTimeParts = startTime.split(":");
-		var minutes = startTimeParts[1];
-		var hours = startTimeParts[0];
-		var startMoment = dt;
-		startMoment.hours(hours);
-		startMoment.minutes(minutes);
+		
+		var dtstart = moment( startMoment ).add(i, unit); 
+		var dtend = moment( endMoment ).add(i, unit); 
+
 	
-		if(!startMoment) {
+		if(!dtstart || !dtend ) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 			continue;
 		}
-		var duration = getEventDuration(template);
-		var endMoment = calculateEndMoment(startMoment, duration);
-		var eventTime = [ startMoment,endMoment ];
+		
+		var eventTime = [ dtstart,dtend ];
 		dates.push( eventTime );
 	}
 	
@@ -168,7 +171,7 @@ Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;
 		if (confirm('Delete event "'+this.title+'"?')) {
-			var title = this.title
+			var title = this.title;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
 				else console.log('An error Occured while deleting Event'+error);
@@ -223,7 +226,7 @@ Template.event.events({
 		var eventid = template.data._id;
 		var filename = this.filename;
 		//delete the actual file
-		var fp = Files.remove(fileid)
+		var fp = Files.remove(fileid);
 		
 		//hide file name
 		var rowid = "tr#row-" + fileid;		
@@ -318,10 +321,43 @@ Template.event.events({
 	'click button.eventReplicate': function (event, template) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
+		
 		var dates = getEventFrequency(template);
 		
 		$.each( dates, function( i,eventTime ){
 				console.log(eventTime);
+		
+			/*create a new event for each time interval */
+			
+			var replicaEvent = {
+
+				title: template.data.title,
+				description: template.data.description,
+				location: template.data.locatiom,
+				room: template.data.room,
+				startdate: dates[0].toDate(),
+				enddate: dates[0].toDate(),
+				files: template.data.files,
+				mentors: template.data.mentors,
+				host: template.data.host,
+				region: template.data.region,
+				course_id: template.data.course_id,
+				replicaOf: template.data._id,
+			};
+		
+			eventId = '';
+				
+			Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
+				if (error) {
+					addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+				} else {
+					if (isNew) Router.go('showEvent', { _id: eventId });
+					else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
+					//template.editing.set(false);
+				}
+			});
+		
+		
 		});
 			
 	},
