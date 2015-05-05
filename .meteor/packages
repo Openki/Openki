@@ -27,8 +27,6 @@ matb33:collection-hooks
 ical
 cfs:standard-packages
 cfs:gridfs
-yogiben:admin
-aldeed:simple-schema
 rzymek:moment-locale-ar
 rzymek:moment-locale-de
 rzymek:moment-locale-es

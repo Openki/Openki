@@ -17,60 +17,6 @@
 
 Courses = new Meteor.Collection("Courses");
 
-var Schemas = {
-	OptionalString: {
-		type: String,
-		optional: true
-	},
-	LongString: {
-		type: String,
-		autoform: { rows: 5 },
-		optional: true
-	},
-	UserId: {
-		type: String,
-		autoform: {
-			options: function() {
-				return _.map(Meteor.users.find().fetch(), function(user) {
-					return {
-						label: user.emails[0].address,
-				 value: user._id
-					};
-				});
-			}
-		}
-	},
-	RegionId: {
-		type: String,
-		autoform: {
-			options: function() {
-				return _.map(Regions.find().fetch(), function(region) {
-					return {
-						label: region.name,
-						value: region._id
-					};
-				});
-			}
-		}
-	}
-};
-
-var CourseSchema = new SimpleSchema({
-	name: { type: String },
-	categories: { type: [String], optional: true },
-	description: Schemas.LongString,
-	region: Schemas.RegionId,
-	roles: { type: [String] },
-	createdby: Schemas.UserId,
-	time_lastedit: { type: Date },
-	time_created: { type: Date },
-	slug: { type: String, optional: true },
-	'members.$.user':  Schemas.UserId,
-	'members.$.comment':  Schemas.OptionalString,
-	'members.$.roles':  { type: [String] }
-});
-
-Courses.attachSchema(CourseSchema);
 
 Courses.allow({
 	remove: function (userId, doc) {
