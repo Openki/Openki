@@ -4,10 +4,6 @@ var categories_helper = function () {
 	return Categories.find();
 }
 
-Template.course_create.helpers({
-	categories: categories_helper
-})
-
 Template.categorylist.helpers({
 	categories: categories_helper
 })
