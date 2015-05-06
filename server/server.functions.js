@@ -49,32 +49,22 @@ createCategoriesIfNone = function() {
 
 
 ////////  Geo-IP    find nearest region to IP of user
-
 Meteor.methods({
-	autoSelectRegion: function(ehemals_clientIp) {
+	autoSelectRegion: function() {
 		var regionId = '9JyFCoKWkxnf8LWPh'				//Testistan for localhost
-		var clientIp = this.connection.clientAddress
-		if (clientIp !== '127.0.0.1'){
+		var ip = this.connection.clientAddress;
+		if (ip !== '127.0.0.1'){
+			var geo = GeoIP.lookup(ip);
 
-			//var geoIp = Npm.require('geoip-lite');
-			//var clientIp = "207.97.227.238";			//testing ...
-			//var geo = geoIp.lookup(ip);
-			//console.log(geo.country)
-			var geo = {'ll': [47.556,8.8965]};			//(Frauenfeld) testing / tinkering ...
-
-
-			/*  2d-version, if 2dsphere-$near doesn't work... (see testing.createnload.data.js)
-			return Regions.findOne({loc: {$near: geo_ll}})._id;
-			//, $maxDistance: 0.5 	//(in radians) for 2d only supportet from v2.6	on	
-			*/
-
-			return Regions.findOne({
-				loc: {$near: {$geometry: {type: "Point", coordinates: geo.ll.reverse()},   
+			var region = Regions.findOne({
+				loc: {$near: {$geometry: {type: "Point", coordinates: geo.ll.reverse()},
 				$maxDistance: 200000}}  	//meters
-			})._id;
+			});
+
+			if (region) regionId = region._id;
 		}
 
-		return regionId
+		return regionId;
 	}
 
 });

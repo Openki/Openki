@@ -12,7 +12,7 @@ Router.map(function () {
 			this.next();
 			var region = Session.get('region')
 			if (region == undefined){
-				Meteor.call ('autoSelectRegion', '1.2.3.4', function(error, regionId){
+				Meteor.call ('autoSelectRegion', function(error, regionId){
 					if (regionId) Session.set('region', regionId);
 				});
 			} else {
