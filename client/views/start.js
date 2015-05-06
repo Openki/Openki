@@ -15,10 +15,7 @@ Router.map(function () {
 				Meteor.call ('autoSelectRegion', function(error, regionId){
 					if (regionId) Session.set('region', regionId);
 				});
-			} else {
-				return;
-				this.next();
-			};
+			}
 		},
 		waitOn: function () {
 			var region = Session.get('region')
