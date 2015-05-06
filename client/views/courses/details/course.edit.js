@@ -107,7 +107,10 @@ Template.course_edit.events({
 	},
 
 	'click button.cancel': function() {
-		Router.go('showCourse', this);
+		if (this._id) {
+			Router.go('showCourse', this);
+		}
+		Router.go('/');
 	},
 
 	'click #show_categories_to_edit': function(event){
