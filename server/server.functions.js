@@ -51,20 +51,24 @@ createCategoriesIfNone = function() {
 ////////  Geo-IP    find nearest region to IP of user
 Meteor.methods({
 	autoSelectRegion: function() {
-		var regionId = '9JyFCoKWkxnf8LWPh'				//Testistan for localhost
 		var ip = this.connection.clientAddress;
-		if (ip !== '127.0.0.1'){
-			var geo = GeoIP.lookup(ip);
 
-			var region = Regions.findOne({
-				loc: {$near: {$geometry: {type: "Point", coordinates: geo.ll.reverse()},
-				$maxDistance: 200000}}  	//meters
-			});
-
-			if (region) regionId = region._id;
+		if (ip.indexOf('127') === 0) {
+			return '9JyFCoKWkxnf8LWPh'; // Testistan for localhost
 		}
 
-		return regionId;
+		var geo = GeoIP.lookup(ip);
+
+		var closest = Regions.findOne({
+			loc: { $near: {
+				$geometry: {type: "Point", coordinates: geo.ll.reverse()},
+				$maxDistance: 200000 // meters
+			}}
+		});
+
+		if (closest) return closest._id;
+
+		return false;
 	}
 
 });
