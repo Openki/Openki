@@ -309,7 +309,8 @@ testcourses = [{
 	'roles':      ['team', 'participant', 'mentor'],
 	'members': [
 		{'user':'Sandra', 'roles': ['participant']},
-		{'user':'HertsPflaschter', 'roles': ['participant']}
+		{'user':'HertsPflaschter', 'roles': ['participant']},
+		{'user':'greg', 'roles': ['participant','team'], 'comment': 'Mo ist auch dabei. Wir haben auch schon einen Namen: AJV - Und ein Alphorn habe ich auch. Das gibt uns schon die ersten Auftritte :D ...Jetzt müssen wir nurnoch üben'},
 	]
 },{
 	'name':        'Erste-Hilfe',
