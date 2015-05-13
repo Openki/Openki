@@ -8,9 +8,9 @@
 				<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					{{title course.name " - openki"}}
 
-					<h2 class="name" style="min-height: 3ex">
+					<div class="name" style="min-height: 3ex">
 						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-					</h2>
+					</div>
 					{{#with course}}
 						<p class='small'>
 						{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
