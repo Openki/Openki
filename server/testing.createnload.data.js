@@ -52,13 +52,13 @@ function categoryForName(name) {
 }
 
 
-createCoursesIfNone = function() {
+createCoursesIfNone = function(scale) {
 	if (Courses.find().count() === 0) {
-		createCourses();
+		createCourses(scale);
 	}
 }
 
-function createCourses(){
+function createCourses(scale) {
 
 	// Make a number that looks like a human chose it, favouring 2 and 5
 	function humandistrib() {
@@ -84,9 +84,9 @@ function createCourses(){
 		})
 		course.createdby = ensureUser(course.createdby)._id
 		var name = course.name
-		for (var n = 0; n < ScaleFaktor; n++) {
-			course.name = name + (n > 0 ? ' Kopie ' + n : '')
-			course.slug = getSlug(name + ' Kopie ' + n)
+		for (var n = 0; n < scale; n++) {
+			course.name = name + (n > 0 ? ' (' + n + ')' : '');
+			course.slug = getSlug(name + ' (' + n + ')');
 
 
 			// TESTING: always use same id for same course to avoid broken urls while testing
