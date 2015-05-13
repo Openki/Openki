@@ -11,4 +11,30 @@ Meteor.startup(function () {
 		createEventsIfNone();          // Events     in   server/testing.createnload.data.js (generic)
 		loadTestEvents();              // Events     from server/data/testing.events.js
 	}
+
+	var serviceConf = Meteor.settings.service;
+	if (serviceConf) {
+		if (serviceConf.facebook) {
+			ServiceConfiguration.configurations.remove({
+				service: 'facebook'
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'facebook',
+				loginStyle: "popup",
+				appId: serviceConf.facebook.appId,
+				secret: serviceConf.facebook.secret
+			});
+		}
+		if (serviceConf.github) {
+			ServiceConfiguration.configurations.remove({
+				service: "github"
+			});
+			ServiceConfiguration.configurations.insert({
+				service: "github",
+				loginStyle: "popup",
+				clientId: serviceConf.github.clientId,
+				secret: serviceConf.github.secret
+			});
+		}
+	}
 });
