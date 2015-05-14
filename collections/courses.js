@@ -179,7 +179,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
 
- 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
+ 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted")
 
 

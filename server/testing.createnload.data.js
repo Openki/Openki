@@ -20,8 +20,7 @@ function ensureUser(name) {
 		Meteor.users.update({ _id: id },{$set:{
 			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
 			createdAt: new Date(new Date().getTime()-age),
-			lastLogin: new Date(new Date().getTime()-age/30),
-			isAdmin: ['greg', 'FeeLing', 'IvanZ'].indexOf(name) != -1
+			lastLogin: new Date(new Date().getTime()-age/30)
 		}});
 
 		console.log("   Added user: "+name)

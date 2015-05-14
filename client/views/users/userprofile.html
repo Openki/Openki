@@ -24,6 +24,46 @@
 					<input type="button" class="sendmail" value="Send Email" />
 				</div>
 			{{/if}}
+
+			{{#if showPrivileges}}
+			<div>
+				<h3>{{mf 'privileges.title' 'Privileges'}}</h3>
+				<ul class="privileges">
+
+					{{#if privileges.admin}}
+						<li class="admin">
+							{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
+							{{#if alterPrivileges}}
+								<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'remove privilege'}}</button>
+							{{/if}}
+						</li>
+					{{else}}
+						{{#if alterPrivileges}}
+							<li class="admin">
+								<button class="giveAdmin">{{mf 'privilege.add.admin' 'Grant administrator privileges'}}</button>
+							</li>
+						{{/if}}
+					{{/if}}
+
+					{{#if privileges.upload}}
+						<li class="admin">
+							{{mf 'privilege.has.upload' 'Upload allowed'}}
+							{{#if alterPrivileges}}
+								<button class="remove" data-priv='upload'>{{mf 'privilege.remove' 'remove privilege'}}</button>
+							{{/if}}
+						</li>
+					{{else}}
+						{{#if alterPrivileges}}
+							<li class="admin">
+								<button class="giveUpload">{{mf 'privilege.add.upload' 'Grant upload privilege'}}</button>
+							</li>
+						{{/if}}
+					{{/if}}
+
+				</ul>
+			</div>
+			{{/if}}
+
 			<div class="list_small">
 				<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
 				{{> courselist involvedIn}}

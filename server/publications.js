@@ -65,9 +65,14 @@ Meteor.publish ('users', function(){
 });
 
 Meteor.publish('user', function(userId) {
+	var fields = {username: 1};
+	
+	// Admins may see other's privileges
+	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
+
 	return Meteor.users.find(
 		{ _id: userId },
-		{ fields: {username: 1} }
+		{ fields: fields }
 	);
 });
 

@@ -37,4 +37,13 @@ Meteor.startup(function () {
 			});
 		}
 	}
+	
+	if (Meteor.settings.admins) {
+		for (name in Meteor.settings.admins) {
+			var user = Meteor.users.findOne({ username: Meteor.settings.admins[name]});
+			if (user) {
+				Meteor.users.update({_id: user._id}, { $addToSet: { privileges: 'admin' }});
+			}
+		}
+	}
 });

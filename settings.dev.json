@@ -1,3 +1,4 @@
 {
-	"testdata": 1
+	"testdata": 1,
+	"admins": ["greg", "FeeLing", "IvanZ"]
 }
