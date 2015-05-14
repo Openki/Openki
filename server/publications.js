@@ -57,13 +57,6 @@ Meteor.publish('nextEvent', function(courseId) {
 	return Events.find({ course_id: courseId });
 });
 
-Meteor.publish ('users', function(){
-	return Meteor.users.find({}, {
-		fields: {username: 1}
-	});
-
-});
-
 Meteor.publish('user', function(userId) {
 	var fields = {username: 1};
 	
