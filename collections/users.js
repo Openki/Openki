@@ -4,6 +4,11 @@ privilegedTo = function(privilege) {
 }
 
 privileged = function(user, privilege) {
+	// Load user object if ID was passed
+	if (typeof user === 'string' || user instanceof String) {
+		user = Meteor.users.findOne({ _id: user });
+	}
+
 	return (
 	    user
 	    && user.privileges
