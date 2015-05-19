@@ -106,9 +106,9 @@
 							
 							
 						</div>
-						{{#if files}} 
+						
 							<div style="float:left;width:20%;">
-								<table>
+								<table class="file-list">
 									
 									{{#each files}}
 				        				{{> eventAttachmentsEdit}}
@@ -116,7 +116,7 @@
 									
 								</table>
 							</div>
-						{{/if}}					
+									
 					</div>
 				</div>
 			</div>
@@ -145,13 +145,20 @@
 			</div>
 		</div>
 		<div class="col-sm-12 no-padding event_edit_buttons">
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-xs-12 col-sm-5">
 				<button type="button" class="saveEditEvent btn btn-primary form-control">
 					<span class="glyphicon glyphicon-save"></span>
 					{{mf 'course.event.edit.save_btn' 'Save'}}
 				</button>
+				
+				
 			</div>
-			<div class="col-xs-12 col-sm-6">
+			
+			<div class="col-xs-12 col-sm-2">
+				<input type="checkbox" name="updateReplicas">Update Replicas<br>
+			</div>
+			
+			<div class="col-xs-12 col-sm-5">
 				<button type="button" class="cancelEditEvent btn btn-default form-control">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
@@ -262,12 +269,12 @@
 					</div>
 					
 					<div class="col-xs-12 col-sm-2">
-						<h4></h4>
-
+						<br/> <br/>
+						
 						<div class="input-group">
 							<button type="button" class="eventReplicate btn btn-warning" role="button">
 								<!--span class="glyphicon glyphicon-plus"></span-->
-								{{mf 'course.details.repl_btn' 'Go!'}}
+								{{mf 'course.details.repl_btn' 'Create events'}}
 							</button>
 						</div>
 					</div>

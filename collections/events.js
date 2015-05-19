@@ -35,8 +35,11 @@ Meteor.methods({
 			room:        Match.Optional(String),
 			startdate:   Date,
 			enddate:     Date,
-			files:       Match.Optional(Array)
-		}
+			files:       Match.Optional(Array),
+			mentors:	 Match.Optional(Array),
+			host:	 	 Match.Optional(Array),
+			replicaOf:	 Match.Optional(String),
+		};
 		
 		var isNew = eventId === '';
 		if (isNew) {
@@ -46,13 +49,13 @@ Meteor.methods({
 		
 		check(changes, expectedFields);
 		
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.isClient) {
 				pleaseLogin();
 				return;
 			} else {
-				throw new Meteor.Error(401, "please log in")
+				throw new Meteor.Error(401, "please log in");
 			}
 		}
 		
@@ -87,8 +90,9 @@ Meteor.methods({
 			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
 		} else {
-			Events.update(eventId, { $set: changes });
+			Events.update(eventId, { $set: changes });		
 		}
+		
 		
 		return eventId;
 	},
@@ -106,6 +110,20 @@ Meteor.methods({
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
+	updateReplicas: function(eventId,changes){
+		
+		//update the replicas of this event
+		delete changes.startdate;
+		delete changes.enddate; 
+		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
+		//and the event of which this is a replica, and that event's replicas
+		var repEventId = changes.replicaOf;
+		if(repEventId){
+			Events.update( repEventId, { $set: changes }, { multi:true} );
+			Events.update( { replicaOf: repEventId }, { $set: changes }, { multi:true} );	
+		}
+		
+	},
 
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
