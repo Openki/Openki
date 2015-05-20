@@ -200,7 +200,7 @@ Meteor.methods({
 				
 				// HACK
 				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
-				// so we keep removing ony by one until there are none left
+				// so we keep removing one by one until there are none left
 				while(Courses.update(
 					{ _id: courseId, "members.roles": type },
 					{ $pull: { 'members.$.roles': type }}
