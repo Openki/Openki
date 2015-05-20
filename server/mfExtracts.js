@@ -6,8 +6,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 5,
     "template": "mfFixedTranslations",
-    "ctime": 1432126753801,
-    "mtime": 1432126753801
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "roles.participant.subscribe": {
     "key": "roles.participant.subscribe",
@@ -15,8 +15,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 7,
     "template": "mfFixedTranslations",
-    "ctime": 1432126753801,
-    "mtime": 1432126753801
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "roles.mentor.subscribe": {
     "key": "roles.mentor.subscribe",
@@ -24,8 +24,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 9,
     "template": "mfFixedTranslations",
-    "ctime": 1432126753801,
-    "mtime": 1432126753801
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "roles.mentor.description": {
     "key": "roles.mentor.description",
@@ -33,8 +33,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 10,
     "template": "mfFixedTranslations",
-    "mtime": 1432127764555,
-    "ctime": 1432127764555
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "roles.host.subscribe": {
     "key": "roles.host.subscribe",
@@ -42,8 +42,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 12,
     "template": "mfFixedTranslations",
-    "ctime": 1432126753801,
-    "mtime": 1432126753801
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "roles.host.description": {
     "key": "roles.host.description",
@@ -51,8 +51,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 13,
     "template": "mfFixedTranslations",
-    "ctime": 1432126753801,
-    "mtime": 1432126753801
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Courses": {
     "key": "menue.Courses",
@@ -60,8 +60,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 26,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Create": {
     "key": "menue.Create",
@@ -69,8 +69,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 32,
     "template": "layout",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Search": {
     "key": "menue.Search",
@@ -78,8 +78,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 39,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.LocationList": {
     "key": "menue.LocationList",
@@ -87,8 +87,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 44,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.CategoryList": {
     "key": "menue.CategoryList",
@@ -96,8 +96,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 49,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.BrowseCourses": {
     "key": "menue.BrowseCourses",
@@ -105,8 +105,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 54,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.ProposeCourse": {
     "key": "menue.ProposeCourse",
@@ -114,8 +114,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 60,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.CreateEvent": {
     "key": "menue.CreateEvent",
@@ -123,8 +123,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 65,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Calendar": {
     "key": "menue.Calendar",
@@ -132,8 +132,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 73,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "main.about_link": {
     "key": "main.about_link",
@@ -141,8 +141,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 110,
     "template": "layout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "main.concept_link": {
     "key": "main.concept_link",
@@ -150,8 +150,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 111,
     "template": "layout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "main.faq_link": {
     "key": "main.faq_link",
@@ -159,8 +159,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 112,
     "template": "layout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "main.github_link": {
     "key": "main.github_link",
@@ -168,8 +168,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 115,
     "template": "layout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.All regions": {
     "key": "menue.All regions",
@@ -177,8 +177,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 135,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Testpage": {
     "key": "menue.Testpage",
@@ -186,8 +186,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 169,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "menue.Testpage2": {
     "key": "menue.Testpage2",
@@ -195,8 +195,8 @@ mfPkg.addNative(
     "file": "./client/views/main.html",
     "line": 170,
     "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1404604221980
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.my_profile": {
     "key": "profile.my_profile",
@@ -204,26 +204,26 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 4,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.not_logged_in": {
     "key": "profile.not_logged_in",
-    "text": "you're not logged in...",
+    "text": "You're not logged in...",
     "file": "./client/views/users/ownprofile.html",
     "line": 6,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017928623
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.userid": {
     "key": "profile.userid",
     "text": "UserID:",
-    "file": "./client/views/users/userprofile.html",
-    "line": 10,
-    "template": "profilelink",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "file": "./client/views/users/ownprofile.html",
+    "line": 9,
+    "template": "profile",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.input.username": {
     "key": "profile.input.username",
@@ -231,17 +231,17 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 10,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.input.email": {
     "key": "profile.input.email",
-    "text": "Email (optional):",
+    "text": "E-Mail (optional):",
     "file": "./client/views/users/ownprofile.html",
     "line": 11,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.input.new_pswd": {
     "key": "profile.input.new_pswd",
@@ -249,8 +249,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 12,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.toggle.highprivacy": {
     "key": "profile.toggle.highprivacy",
@@ -258,8 +258,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 13,
     "template": "profile",
-    "ctime": 1417697489041,
-    "mtime": 1417697489041
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.id": {
     "key": "profile.id",
@@ -267,8 +267,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 16,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.username": {
     "key": "profile.username",
@@ -276,17 +276,17 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 17,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.email": {
     "key": "profile.email",
-    "text": "Email:",
+    "text": "E-Mail:",
     "file": "./client/views/users/ownprofile.html",
     "line": 19,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.privacy.on": {
     "key": "profile.privacy.on",
@@ -294,8 +294,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 25,
     "template": "profile",
-    "ctime": 1417697489041,
-    "mtime": 1417697489041
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.privacy.off": {
     "key": "profile.privacy.off",
@@ -303,26 +303,26 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 25,
     "template": "profile",
-    "ctime": 1417697489041,
-    "mtime": 1417697489041
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "Profile.translate_this_page": {
     "key": "Profile.translate_this_page",
-    "text": "help us to translate this Page here",
+    "text": "Help us to translate this Page here",
     "file": "./client/views/users/ownprofile.html",
     "line": 38,
     "template": "profile",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.reallydelete": {
     "key": "profile.reallydelete",
-    "text": "Please confirm you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
+    "text": "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
     "file": "./client/views/users/ownprofile.html",
     "line": 41,
     "template": "profile",
-    "ctime": 1418417990645,
-    "mtime": 1418417990645
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.delete": {
     "key": "profile.delete",
@@ -330,8 +330,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 46,
     "template": "profile",
-    "ctime": 1418417990645,
-    "mtime": 1418417990645
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.deletecancel": {
     "key": "profile.deletecancel",
@@ -339,8 +339,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 43,
     "template": "profile",
-    "ctime": 1418417990645,
-    "mtime": 1418417990645
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.my_courses": {
     "key": "profile.my_courses",
@@ -348,8 +348,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 50,
     "template": "profile",
-    "ctime": 1414017460607,
-    "mtime": 1414017460607
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "member_of_groups": {
     "key": "member_of_groups",
@@ -357,1628 +357,8 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.html",
     "line": 28,
     "template": "profile",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "profile.users_profile_page": {
-    "key": "profile.users_profile_page",
-    "text": "{NAME}'s Profile-Page",
-    "file": "./client/views/users/userprofile.html",
-    "line": 9,
-    "template": "profilelink",
-    "ctime": 1417703984200,
-    "mtime": 1417703984200
-  },
-  "profile.its_you": {
-    "key": "profile.its_you",
-    "text": "It's you!",
-    "file": "./client/views/users/userprofile.html",
-    "line": 12,
-    "template": "profilelink",
-    "ctime": 1414089850544,
-    "mtime": 1417697489041
-  },
-  "profile.pref_site": {
-    "key": "profile.pref_site",
-    "text": "here's your pref. site",
-    "file": "./client/views/users/userprofile.html",
-    "line": 12,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "profile.mail.to_user": {
-    "key": "profile.mail.to_user",
-    "text": "you can write an email to this user:",
-    "file": "./client/views/users/userprofile.html",
-    "line": 15,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "profile.mail.content": {
-    "key": "profile.mail.content",
-    "text": "Your message:",
-    "file": "./client/views/users/userprofile.html",
-    "line": 16,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "profile.mail.options": {
-    "key": "profile.mail.options",
-    "text": "Options:",
-    "file": "./client/views/users/userprofile.html",
-    "line": 18,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "profile.mail.attachmail": {
-    "key": "profile.mail.attachmail",
-    "text": "attach my email address",
-    "file": "./client/views/users/userprofile.html",
-    "line": 20,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "profile.mail.copy": {
-    "key": "profile.mail.copy",
-    "text": "send me a copy of this message",
-    "file": "./client/views/users/userprofile.html",
-    "line": 21,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1414019114300
-  },
-  "privileges.title": {
-    "key": "privileges.title",
-    "text": "Privileges",
-    "file": "./client/views/users/userprofile.html",
-    "line": 30,
-    "template": "profilelink",
-    "ctime": 1432123455854,
-    "mtime": 1432123455854
-  },
-  "privilege.has.admin": {
-    "key": "privilege.has.admin",
-    "text": "Administrator privileges granted",
-    "file": "./client/views/users/userprofile.html",
-    "line": 35,
-    "template": "profilelink",
-    "ctime": 1432123455854,
-    "mtime": 1432123455854
-  },
-  "privilege.remove": {
-    "key": "privilege.remove",
-    "text": "remove privilege",
-    "file": "./client/views/users/userprofile.html",
-    "line": 52,
-    "template": "profilelink",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "privilege.add.admin": {
-    "key": "privilege.add.admin",
-    "text": "Grant administrator privileges",
-    "file": "./client/views/users/userprofile.html",
-    "line": 43,
-    "template": "profilelink",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "privilege.has.upload": {
-    "key": "privilege.has.upload",
-    "text": "Upload allowed",
-    "file": "./client/views/users/userprofile.html",
-    "line": 50,
-    "template": "profilelink",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "privilege.add.upload": {
-    "key": "privilege.add.upload",
-    "text": "Grant upload privilege",
-    "file": "./client/views/users/userprofile.html",
-    "line": 58,
-    "template": "profilelink",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "profile.courses": {
-    "key": "profile.courses",
-    "text": "{NAME}'s Courses:",
-    "file": "./client/views/users/userprofile.html",
-    "line": 68,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1417697489041
-  },
-  "privilege.errorAdding": {
-    "key": "privilege.errorAdding",
-    "text": "Unable to add privilege: {ERROR}",
-    "file": "./client/views/users/userprofile.js",
-    "line": 62,
-    "func": "function(err)",
-    "ctime": 1432123455855,
-    "mtime": 1432126948618
-  },
-  "privilege.errorRemoving": {
-    "key": "privilege.errorRemoving",
-    "text": "Unable to remove privilege: {ERROR}",
-    "file": "./client/views/users/userprofile.js",
-    "line": 73,
-    "func": "function(err)",
-    "ctime": 1432126948618,
-    "mtime": 1432126948618
-  },
-  "location.details.title": {
-    "key": "location.details.title",
-    "text": "Location details",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 2,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.time_created": {
-    "key": "location.details.time_created",
-    "text": "Time created:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 13,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.last_edited": {
-    "key": "location.details.last_edited",
-    "text": "Last edited:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 13,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.created_by": {
-    "key": "location.details.created_by",
-    "text": "Created by:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 13,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.desc": {
-    "key": "location.details.desc",
-    "text": "Desc:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 16,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.hosts_admin": {
-    "key": "location.details.hosts_admin",
-    "text": "Hosts/Admin:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 17,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.online": {
-    "key": "location.details.online",
-    "text": "Online:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 24,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.address": {
-    "key": "location.details.address",
-    "text": "Address:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 25,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.how_go_there": {
-    "key": "location.details.how_go_there",
-    "text": "How to go there:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 26,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.max_ppl": {
-    "key": "location.details.max_ppl",
-    "text": "Maximum People:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 27,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.max_workplaces": {
-    "key": "location.details.max_workplaces",
-    "text": "Maximum Workplaces:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 28,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.has_projector": {
-    "key": "location.details.has_projector",
-    "text": "Has a Projector!",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 29,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.details.specials": {
-    "key": "location.details.specials",
-    "text": "Specials:",
-    "file": "./client/views/misc/locations/location.details.html",
-    "line": 30,
-    "template": "location_details",
-    "ctime": 1420734180686,
-    "mtime": 1420734180686
-  },
-  "location.edit.edit_location": {
-    "key": "location.edit.edit_location",
-    "text": "Edit location",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 7,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.add_location": {
-    "key": "location.edit.add_location",
-    "text": "Add location",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 7,
-    "template": "location_edit",
-    "ctime": 1420733503590,
-    "mtime": 1420733503590
-  },
-  "location.edit.name": {
-    "key": "location.edit.name",
-    "text": "Name:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 8,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.desc": {
-    "key": "location.edit.desc",
-    "text": "Desc:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 10,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.address": {
-    "key": "location.edit.address",
-    "text": "Address:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 15,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.route": {
-    "key": "location.edit.route",
-    "text": "Route:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 17,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.visible_in_list": {
-    "key": "location.edit.visible_in_list",
-    "text": "Visible in list (contactable for other users)",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 21,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.public_space": {
-    "key": "location.edit.public_space",
-    "text": "Public Space (everybody is allowed to host here)",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 23,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.region": {
-    "key": "location.edit.region",
-    "text": "Region:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 26,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.pls_select": {
-    "key": "location.edit.pls_select",
-    "text": "Please select",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 28,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.hosts_admins": {
-    "key": "location.edit.hosts_admins",
-    "text": "Hosts/Admins",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 37,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.search_usr_add_host": {
-    "key": "location.edit.search_usr_add_host",
-    "text": "Search for username to add as host:",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 45,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.no_usr_found": {
-    "key": "location.edit.no_usr_found",
-    "text": "no username found",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 51,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.optional_info": {
-    "key": "location.edit.optional_info",
-    "text": "Optional Info",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 61,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.max_ppl": {
-    "key": "location.edit.max_ppl",
-    "text": "Max. People",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 63,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "location.edit.max_workplace": {
-    "key": "location.edit.max_workplace",
-    "text": "Max. Workplaces",
-    "file": "./client/views/misc/locations/location.edit.html",
-    "line": 64,
-    "template": "location_edit",
-    "ctime": 1420733341289,
-    "mtime": 1420733341289
-  },
-  "locations.list.title": {
-    "key": "locations.list.title",
-    "text": "Rooms",
-    "file": "./client/views/misc/locations/location.list.html",
-    "line": 3,
-    "template": "locationlist",
-    "ctime": 1420732741418,
-    "mtime": 1420732741418
-  },
-  "kiosk.kiosk_link": {
-    "key": "kiosk.kiosk_link",
-    "text": "back to Kiosk mode",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 7,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.calendar_link": {
-    "key": "kiosk.calendar_link",
-    "text": "view in Calendar mode",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 27,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.ongoing": {
-    "key": "kiosk.ongoing",
-    "text": "{NUM, plural, one {One ongoing event} other {# ongoing events} }",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 31,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.today": {
-    "key": "kiosk.today",
-    "text": "{NUM, plural, one {One event} other {# events} } later today",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 42,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.future": {
-    "key": "kiosk.future",
-    "text": "Future events",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 49,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.started": {
-    "key": "kiosk.started",
-    "text": "Started",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 95,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "kiosk.andends": {
-    "key": "kiosk.andends",
-    "text": "and ends",
-    "file": "./client/views/misc/kiosk/kiosk.html",
-    "line": 96,
-    "template": "kioskLayout",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "groups.groups": {
-    "key": "groups.groups",
-    "text": "Groups:",
-    "file": "./client/views/misc/groups/groups.html",
-    "line": 3,
-    "template": "show_groups",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "categories.title.categories": {
-    "key": "categories.title.categories",
-    "text": "Categories",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 3,
-    "template": "categorylist",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "categories.no_categories": {
-    "key": "categories.no_categories",
-    "text": "No categories defined!",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 7,
-    "template": "categorylist",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "categories.no_courses": {
-    "key": "categories.no_courses",
-    "text": "no courses defined in this category!",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 21,
-    "template": "categorylist",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "categories.new": {
-    "key": "categories.new",
-    "text": "New category",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 37,
-    "template": "categorylist",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "categories.new.name": {
-    "key": "categories.new.name",
-    "text": "Name:",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 40,
-    "template": "categorylist",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "login.navig.unlogged": {
-    "key": "login.navig.unlogged",
-    "text": "Login/Register",
-    "file": "./client/views/login/button.html",
-    "line": 9,
-    "template": "loginButton",
-    "ctime": 1417023103736,
-    "mtime": 1418417990645
-  },
-  "login.frame.welcome": {
-    "key": "login.frame.welcome",
-    "text": "Welcome {NAME}!",
-    "file": "./client/views/login/frame.html",
-    "line": 7,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "login.frame.profile": {
-    "key": "login.frame.profile",
-    "text": "Visit my profile",
-    "file": "./client/views/login/frame.html",
-    "line": 12,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1418417990645
-  },
-  "login.frame.settings": {
-    "key": "login.frame.settings",
-    "text": "Account settings",
-    "file": "./client/views/login/frame.html",
-    "line": 18,
-    "template": "loginFrame",
-    "ctime": 1417697489041,
-    "mtime": 1417697489041
-  },
-  "login.logout": {
-    "key": "login.logout",
-    "text": "Logout",
-    "file": "./client/views/login/frame.html",
-    "line": 24,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "frame.login.username": {
-    "key": "frame.login.username",
-    "text": "Username",
-    "file": "./client/views/login/frame.html",
-    "line": 43,
-    "template": "loginFrame",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "frame.login.password": {
-    "key": "frame.login.password",
-    "text": "Password",
-    "file": "./client/views/login/frame.html",
-    "line": 51,
-    "template": "loginFrame",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "frame.login.email": {
-    "key": "frame.login.email",
-    "text": "E-Mail",
-    "file": "./client/views/login/frame.html",
-    "line": 59,
-    "template": "loginFrame",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "login.login.submit": {
-    "key": "login.login.submit",
-    "text": "Login",
-    "file": "./client/views/login/frame.html",
-    "line": 65,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "login.register.submit": {
-    "key": "login.register.submit",
-    "text": "Create account",
-    "file": "./client/views/login/frame.html",
-    "line": 71,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1424880591244
-  },
-  "frame.login_external_services": {
-    "key": "frame.login_external_services",
-    "text": "Or login with:",
-    "file": "./client/views/login/frame.html",
-    "line": 74,
-    "template": "loginFrame",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "login.frame.github-login": {
-    "key": "login.frame.github-login",
-    "text": "GitHub",
-    "file": "./client/views/login/frame.html",
-    "line": 78,
-    "template": "loginFrame",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "login.frame.facebook-login": {
-    "key": "login.frame.facebook-login",
-    "text": "facebook",
-    "file": "./client/views/login/frame.html",
-    "line": 81,
-    "template": "loginFrame",
-    "ctime": 1424880591244,
-    "mtime": 1432123455855
-  },
-  "find.WhatLearn?": {
-    "key": "find.WhatLearn?",
-    "text": "What do you want to learn?",
-    "file": "./client/views/find/find.html",
-    "line": 5,
-    "template": "find",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "find.search_placeholder": {
-    "key": "find.search_placeholder",
-    "text": "Everything",
-    "file": "./client/views/find/find.html",
-    "line": 8,
-    "template": "find",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "find.search_go": {
-    "key": "find.search_go",
-    "text": "GO!",
-    "file": "./client/views/find/find.html",
-    "line": 10,
-    "template": "find",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "find.only with events_checkbox": {
-    "key": "find.only with events_checkbox",
-    "text": "only with events",
-    "file": "./client/views/find/find.html",
-    "line": 16,
-    "template": "find",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "find.no_courses_found.propose_new_course?": {
-    "key": "find.no_courses_found.propose_new_course?",
-    "text": "No Courses found. Do you want to propose this one?",
-    "file": "./client/views/find/find.html",
-    "line": 26,
-    "template": "find",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "find.events.aditional_results": {
-    "key": "find.events.aditional_results",
-    "text": "{EVENTS, plural,\n\t\t\t\t\t\t\t\tone {In addition, we found this event}\n\t\t\t\t\t\t\t\tother {In addition, we found these # events}\n\t\t\t\t\t\t\t}",
-    "file": "./client/views/find/find.html",
-    "line": 34,
-    "template": "find",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "find.events.results_if_no_courses": {
-    "key": "find.events.results_if_no_courses",
-    "text": "{EVENTS, plural,\n\t\t\t\t\t\t\t\tone {All we found is this one event}\n\t\t\t\t\t\t\t\tother {Yet # Events have been found}\n\t\t\t\t\t\t\t}",
-    "file": "./client/views/find/find.html",
-    "line": 41,
-    "template": "find",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "find.form.Header.What do you want to learn?": {
-    "key": "find.form.Header.What do you want to learn?",
-    "text": "What do you want to learn?",
-    "file": "./client/views/find/form.html",
-    "line": 4,
-    "template": "search_form",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "course.event.detail.back": {
-    "key": "course.event.detail.back",
-    "text": "Back to course",
-    "file": "./client/views/events/event.html",
-    "line": 8,
-    "template": "eventPage",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "event.no_event": {
-    "key": "event.no_event",
-    "text": "Sorry, we couldn't find this event, it had been deleted or has never existed.",
-    "file": "./client/views/events/event.html",
-    "line": 15,
-    "template": "eventPage",
-    "ctime": 1428605988933,
-    "mtime": 1428605988933
-  },
-  "course.event.edit.edit": {
-    "key": "course.event.edit.edit",
-    "text": "Edit event",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 4,
-    "template": "course_event_edit",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "course.event.edit.add": {
-    "key": "course.event.edit.add",
-    "text": "Add event",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 4,
-    "template": "course_event_edit",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "course.event.edit.title": {
-    "key": "course.event.edit.title",
-    "text": "Event title:",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 5,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.event.edit.date_start": {
-    "key": "course.event.edit.date_start",
-    "text": "Date",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 9,
-    "template": "course_event_edit",
-    "ctime": 1417023103736,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.time_start": {
-    "key": "course.event.edit.time_start",
-    "text": "Time start",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 18,
-    "template": "course_event_edit",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "course.event.edit.time_end": {
-    "key": "course.event.edit.time_end",
-    "text": "Time end",
-    "file": "./client/views/events/event.html",
-    "line": 52,
-    "template": "eventPage",
-    "ctime": 1417023103736,
-    "mtime": 1417023103736
-  },
-  "course.event.edit.swich_duration": {
-    "key": "course.event.edit.swich_duration",
-    "text": "switch to duration",
-    "file": "./client/views/events/event.html",
-    "line": 52,
-    "template": "eventPage",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.duration": {
-    "key": "course.event.edit.duration",
-    "text": "Duration (in minutes)",
-    "file": "./client/views/events/event.html",
-    "line": 62,
-    "template": "eventPage",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.switch_time_end": {
-    "key": "course.event.edit.switch_time_end",
-    "text": "switch to end time",
-    "file": "./client/views/events/event.html",
-    "line": 62,
-    "template": "eventPage",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.desc": {
-    "key": "course.event.edit.desc",
-    "text": "Description:",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 27,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.files": {
-    "key": "course.event.edit.files",
-    "text": "Files: (optional)",
-    "file": "./client/views/events/event.html",
-    "line": 87,
-    "template": "eventPage",
-    "ctime": 1429087931723,
-    "mtime": 1429087931723
-  },
-  "course.event.edit.location": {
-    "key": "course.event.edit.location",
-    "text": "Location:",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 34,
-    "template": "course_event_edit",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.room": {
-    "key": "course.event.edit.room",
-    "text": "Room: (optional)",
-    "file": "./client/views/events/event.html",
-    "line": 136,
-    "template": "eventPage",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.save_btn": {
-    "key": "course.event.edit.save_btn",
-    "text": "Save",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 64,
-    "template": "course_event_edit",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.event.edit.cancel_btn": {
-    "key": "course.event.edit.cancel_btn",
-    "text": "Cancel",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 70,
-    "template": "course_event_edit",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.details.edit_btn": {
-    "key": "course.details.edit_btn",
-    "text": "Edit",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 34,
-    "template": "coursedetails",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.details.del_btn": {
-    "key": "course.details.del_btn",
-    "text": "Delete",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 38,
-    "template": "coursedetails",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "event.download_cal": {
-    "key": "event.download_cal",
-    "text": "Download to my calendar",
-    "file": "./client/views/events/event.html",
-    "line": 222,
-    "template": "eventPage",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "event.removed": {
-    "key": "event.removed",
-    "text": "Sucessfully removed event \"{TITLE}\".",
-    "file": "./client/views/events/event.js",
-    "line": 173,
-    "func": "function (error, eventRemoved)",
-    "ctime": 1428605988933,
-    "mtime": 1428605988933
-  },
-  "file.removed": {
-    "key": "file.removed",
-    "text": "Sucessfully removed file {FILENAME}.",
-    "file": "./client/views/events/event.js",
-    "line": 234,
-    "func": "function (error, fileRemoved)",
-    "ctime": 1429087931723,
-    "mtime": 1429087931723
-  },
-  "event.saving.error": {
-    "key": "event.saving.error",
-    "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
-    "file": "./client/views/events/event.js",
-    "line": 309,
-    "func": "function(error, eventId)",
-    "ctime": 1428605988933,
-    "mtime": 1428605988933
-  },
-  "event.saving.success": {
-    "key": "event.saving.success",
-    "text": "Saved changes to event \"{TITLE}\".",
-    "file": "./client/views/events/event.js",
-    "line": 312,
-    "func": "function(error, eventId)",
-    "ctime": 1428605988933,
-    "mtime": 1428605988933
-  },
-  "course.list.title": {
-    "key": "course.list.title",
-    "text": "CourseList",
-    "file": "./client/views/courses/course.list.html",
-    "line": 3,
-    "template": "coursepage",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "courses.missingorg": {
-    "key": "courses.missingorg",
-    "text": "Courses missing organisator(-team)",
-    "file": "./client/views/courses/course.list.html",
-    "line": 5,
-    "template": "coursepage",
-    "ctime": 1413307437297,
-    "mtime": 1413307437297
-  },
-  "courses.missingsubs": {
-    "key": "courses.missingsubs",
-    "text": "Courses that are still looking for participants",
-    "file": "./client/views/courses/course.list.html",
-    "line": 9,
-    "template": "coursepage",
-    "ctime": 1413307437297,
-    "mtime": 1413307437297
-  },
-  "courses.all": {
-    "key": "courses.all",
-    "text": "All courses",
-    "file": "./client/views/courses/course.list.html",
-    "line": 13,
-    "template": "coursepage",
-    "ctime": 1413307437297,
-    "mtime": 1413307437297
-  },
-  "courses.none": {
-    "key": "courses.none",
-    "text": "no courses found",
-    "file": "./client/views/courses/course.list.html",
-    "line": 24,
-    "template": "coursepage",
-    "ctime": 1413307437297,
-    "mtime": 1413307437297
-  },
-  "course.list.status_titles.needs_organizer": {
-    "key": "course.list.status_titles.needs_organizer",
-    "text": "Needs&nbsp;an&nbsp;organizer",
-    "file": "./client/views/courses/course.list.html",
-    "line": 62,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "course.list.status_titles.u_are_organizer": {
-    "key": "course.list.status_titles.u_are_organizer",
-    "text": "You&nbsp;are&nbsp;organizer",
-    "file": "./client/views/courses/course.list.html",
-    "line": 62,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "course.list.status_titles.has_team": {
-    "key": "course.list.status_titles.has_team",
-    "text": "Has&nbsp;a&nbsp;organizer-team",
-    "file": "./client/views/courses/course.list.html",
-    "line": 62,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "course.list.status_titles.needs_mentor": {
-    "key": "course.list.status_titles.needs_mentor",
-    "text": "Needs&nbsp;a&nbsp;mentor",
-    "file": "./client/views/courses/course.list.html",
-    "line": 66,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426080935799
-  },
-  "course.list.status_titles.u_are_mentor": {
-    "key": "course.list.status_titles.u_are_mentor",
-    "text": "You&nbsp;are&nbsp;mentor",
-    "file": "./client/views/courses/course.list.html",
-    "line": 66,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "course.list.status_titles.has_mentor": {
-    "key": "course.list.status_titles.has_mentor",
-    "text": "Has&nbsp;a&nbsp;mentor",
-    "file": "./client/views/courses/course.list.html",
-    "line": 66,
-    "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1426079041054
-  },
-  "course.list.status_titles.needs_host": {
-    "key": "course.list.status_titles.needs_host",
-    "text": "Needs&nbsp;a&nbsp;host",
-    "file": "./client/views/courses/course.list.html",
-    "line": 71,
-    "template": "coursepage",
-    "ctime": 1426079041055,
-    "mtime": 1426080935799
-  },
-  "course.list.status_titles.u_are_host": {
-    "key": "course.list.status_titles.u_are_host",
-    "text": "You&nbsp;are&nbsp;host",
-    "file": "./client/views/courses/course.list.html",
-    "line": 71,
-    "template": "coursepage",
-    "ctime": 1426079041055,
-    "mtime": 1426079041055
-  },
-  "course.list.status_titles.has_host": {
-    "key": "course.list.status_titles.has_host",
-    "text": "Has&nbsp;a&nbsp;host",
-    "file": "./client/views/courses/course.list.html",
-    "line": 71,
-    "template": "coursepage",
-    "ctime": 1426079041055,
-    "mtime": 1426079041055
-  },
-  "course.event.edit.host_location": {
-    "key": "course.event.edit.host_location",
-    "text": "Host / Location",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 41,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.event.edit.by": {
-    "key": "course.event.edit.by",
-    "text": "by",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 44,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.event.edit.no_hosts": {
-    "key": "course.event.edit.no_hosts",
-    "text": "No Hosts available",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 46,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.event.edit.mentors": {
-    "key": "course.event.edit.mentors",
-    "text": "Mentors",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 50,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.event.edit.no_mentors": {
-    "key": "course.event.edit.no_mentors",
-    "text": "No Mentors available",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 55,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.events.addButton": {
-    "key": "course.events.addButton",
-    "text": "add an Event",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 6,
-    "template": "course_events",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.download_cal": {
-    "key": "course.download_cal",
-    "text": "Download events to my calendar",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 10,
-    "template": "course_events",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "course.title.Past events": {
-    "key": "course.title.Past events",
-    "text": "Past events",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 27,
-    "template": "course_events",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "course.events.hosted_by": {
-    "key": "course.events.hosted_by",
-    "text": "hosted by",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 72,
-    "template": "course_events",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.create.enter_arranged_course": {
-    "key": "course.create.enter_arranged_course",
-    "text": "Put here a course that is allready arranged with date etc.",
-    "file": "./client/views/courses/details/course.create.html",
-    "line": 4,
-    "template": "createcourse",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.details.time_created": {
-    "key": "course.details.time_created",
-    "text": "Time created:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 16,
-    "template": "coursedetails",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.details.last_edited": {
-    "key": "course.details.last_edited",
-    "text": "Last edited:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 17,
-    "template": "coursedetails",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.details.created_by": {
-    "key": "course.details.created_by",
-    "text": "Created by:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 18,
-    "template": "coursedetails",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.dtails.paticipants.title": {
-    "key": "course.dtails.paticipants.title",
-    "text": "Participants",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 106,
-    "template": "coursedetails",
-    "ctime": 1427321334569,
-    "mtime": 1427321334569
-  },
-  "course.subnav.descr": {
-    "key": "course.subnav.descr",
-    "text": "Description",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 135,
-    "template": "coursedetails",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "course.subnav.docs": {
-    "key": "course.subnav.docs",
-    "text": "Docs",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 141,
-    "template": "coursedetails",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "course.subnav.history": {
-    "key": "course.subnav.history",
-    "text": "History",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 147,
-    "template": "coursedetails",
-    "ctime": 1432123455855,
-    "mtime": 1432123455855
-  },
-  "course.saving.error": {
-    "key": "course.saving.error",
-    "text": "Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}",
-    "file": "./client/views/courses/details/course.edit.js",
-    "line": 98,
-    "func": "function(err, courseId)",
-    "ctime": 1417023103737,
-    "mtime": 1417023103737
-  },
-  "course.discussion.comment_answer": {
-    "key": "course.discussion.comment_answer",
-    "text": "Answer",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 8,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.discussion.write_comment": {
-    "key": "course.discussion.write_comment",
-    "text": "write a comment",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 13,
-    "template": "newPost",
-    "ctime": 1414089850544,
-    "mtime": 1432127009990
-  },
-  "course.discussion.answer_comment": {
-    "key": "course.discussion.answer_comment",
-    "text": "write answer",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 22,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.discussion.comment_title": {
-    "key": "course.discussion.comment_title",
-    "text": "Title",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 29,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.discussion.comment_btn.answer": {
-    "key": "course.discussion.comment_btn.answer",
-    "text": "Answer!",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 33,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.discussion.comment_btn.write": {
-    "key": "course.discussion.comment_btn.write",
-    "text": "Write!",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 37,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.discussion.comment_btn.cancel": {
-    "key": "course.discussion.comment_btn.cancel",
-    "text": "Cancel",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 41,
-    "template": "newPost",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.title.Discussion": {
-    "key": "course.title.Discussion",
-    "text": "Discussion",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 52,
-    "template": "newPost",
-    "ctime": 1414002480587,
-    "mtime": 1414002480587
-  },
-  "comment.saving.error": {
-    "key": "comment.saving.error",
-    "text": "Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}",
-    "file": "./client/views/courses/details/course.discussion.js",
-    "line": 58,
-    "func": "function(err, commentId)",
-    "ctime": 1428605988933,
-    "mtime": 1428605988933
-  },
-  "course.edit.edit_course": {
-    "key": "course.edit.edit_course",
-    "text": "Edit course",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 6,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.propose": {
-    "key": "course.edit.propose",
-    "text": "Propose new course",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 8,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.title": {
-    "key": "course.edit.title",
-    "text": "Title:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 13,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.description": {
-    "key": "course.edit.description",
-    "text": "Desc:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 15,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.edit": {
-    "key": "course.edit.edit",
-    "text": "Edit",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 21,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.categories": {
-    "key": "course.edit.categories",
-    "text": "Categories",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 22,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.edit_categories": {
-    "key": "course.edit.edit_categories",
-    "text": "Edit Categories:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 25,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.neededs_ppl_who": {
-    "key": "course.edit.neededs_ppl_who",
-    "text": "Needs people who",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 53,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.region": {
-    "key": "course.edit.region",
-    "text": "Region:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 71,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.pls_select": {
-    "key": "course.edit.pls_select",
-    "text": "Please select",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 73,
-    "template": "course_edit",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.edit.save_btn": {
-    "key": "course.edit.save_btn",
-    "text": "Save",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 84,
-    "template": "course_edit",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.edit.cancel_btn": {
-    "key": "course.edit.cancel_btn",
-    "text": "Cancel",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 90,
-    "template": "course_edit",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "course.saving.success": {
-    "key": "course.saving.success",
-    "text": "Saved changes to course \"{NAME}\"",
-    "file": "./client/views/courses/details/course.edit.js",
-    "line": 101,
-    "func": "function(err, courseId)",
-    "ctime": 1417023103737,
-    "mtime": 1428605988933
-  },
-  "course.roles.you_are": {
-    "key": "course.roles.you_are",
-    "text": "You are",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
-    "template": "membersRoles",
-    "ctime": 1414089850544,
-    "mtime": 1427321334569
-  },
-  "course.roles.anonymously": {
-    "key": "course.roles.anonymously",
-    "text": "anonymously",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
-    "template": "membersRoles",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.roles.subscribed_as": {
-    "key": "course.roles.subscribed_as",
-    "text": "subscribed as",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
-    "template": "membersRoles",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "course.roles.retract": {
-    "key": "course.roles.retract",
-    "text": "Retract",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
-    "template": "membersRoles",
-    "ctime": 1427321334569,
-    "mtime": 1427321334569
-  },
-  "course.roles.enrol_as": {
-    "key": "course.roles.enrol_as",
-    "text": "Enrol as",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 50,
-    "template": "membersRoles",
-    "ctime": 1414089850544,
-    "mtime": 1428606277177
-  },
-  "course.roles.leave_message": {
-    "key": "course.roles.leave_message",
-    "text": "Leave a message/wish/interest here:",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 55,
-    "template": "membersRoles",
-    "ctime": 1417704045050,
-    "mtime": 1428637645292
-  },
-  "course.roles.incognitosubscription": {
-    "key": "course.roles.incognitosubscription",
-    "text": "incognito",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 60,
-    "template": "membersRoles",
-    "ctime": 1417697489041,
-    "mtime": 1432126843993
-  },
-  "course.roles.enrol": {
-    "key": "course.roles.enrol",
-    "text": "Enrol",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 67,
-    "template": "membersRoles",
-    "ctime": 1417023103737,
-    "mtime": 1428605988933
-  },
-  "subscribemessage.saving.error": {
-    "key": "subscribemessage.saving.error",
-    "text": "Unable to change your message. We encountered the following error: {ERROR}",
-    "file": "./client/views/courses/details/course.roles.js",
-    "line": 54,
-    "func": "function(err, courseId)",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "subscribemessage.saving.success": {
-    "key": "subscribemessage.saving.success",
-    "text": "Changed your message on {NAME}",
-    "file": "./client/views/courses/details/course.roles.js",
-    "line": 56,
-    "func": "function(err, courseId)",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "calendar.upcoming_events": {
-    "key": "calendar.upcoming_events",
-    "text": "Upcoming Events",
-    "file": "./client/views/calendar/calendar.html",
-    "line": 5,
-    "template": "calendar",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "calendar.past_events": {
-    "key": "calendar.past_events",
-    "text": "Past Events",
-    "file": "./client/views/calendar/calendar.html",
-    "line": 14,
-    "template": "calendar",
-    "ctime": 1414089850544,
-    "mtime": 1414089850544
-  },
-  "report.sending": {
-    "key": "report.sending",
-    "text": "Report is being sent…",
-    "file": "./client/report/templates.html",
-    "line": 3,
-    "template": "report",
-    "ctime": 1426079041055,
-    "mtime": 1426079041055
-  },
-  "report.text": {
-    "key": "report.text",
-    "text": "Please tell us what is wrong.",
-    "file": "./client/report/templates.html",
-    "line": 6,
-    "template": "report",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "report.placeholder": {
-    "key": "report.placeholder",
-    "text": "My hovercraft is full of eels.",
-    "file": "./client/report/templates.html",
-    "line": 8,
-    "template": "report",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "report.report": {
-    "key": "report.report",
-    "text": "Send report",
-    "file": "./client/report/templates.html",
-    "line": 11,
-    "template": "report",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "report.cancel": {
-    "key": "report.cancel",
-    "text": "Nevermind",
-    "file": "./client/report/templates.html",
-    "line": 15,
-    "template": "report",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "report.open": {
-    "key": "report.open",
-    "text": "Report problem",
-    "file": "./client/report/templates.html",
-    "line": 21,
-    "template": "report",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "editable.add_text": {
-    "key": "editable.add_text",
-    "text": "Add text here",
-    "file": "./client/editable/templates.html",
-    "line": 17,
-    "template": "editable",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "editable.store": {
-    "key": "editable.store",
-    "text": "Store changes",
-    "file": "./client/editable/templates.html",
-    "line": 22,
-    "template": "editable",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
-  },
-  "editable.discard": {
-    "key": "editable.discard",
-    "text": "Discard changes",
-    "file": "./client/editable/templates.html",
-    "line": 26,
-    "template": "editable",
-    "ctime": 1424880591244,
-    "mtime": 1424880591244
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "profile.deleted": {
     "key": "profile.deleted",
@@ -1986,99 +366,1583 @@ mfPkg.addNative(
     "file": "./client/views/users/ownprofile.js",
     "line": 67,
     "func": "function()",
-    "ctime": 1427321334568,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.users_profile_page": {
+    "key": "profile.users_profile_page",
+    "text": "{NAME}'s Profile",
+    "file": "./client/views/users/userprofile.html",
+    "line": 9,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.its_you": {
+    "key": "profile.its_you",
+    "text": "It's you!",
+    "file": "./client/views/users/userprofile.html",
+    "line": 11,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.pref_site": {
+    "key": "profile.pref_site",
+    "text": "here's your pref. site",
+    "file": "./client/views/users/userprofile.html",
+    "line": 11,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.mail.to_user": {
+    "key": "profile.mail.to_user",
+    "text": "You can write an e-mail to this user:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 14,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.mail.content": {
+    "key": "profile.mail.content",
+    "text": "Your message:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 15,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.mail.options": {
+    "key": "profile.mail.options",
+    "text": "Options:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 17,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.mail.attachmail": {
+    "key": "profile.mail.attachmail",
+    "text": "Attach my e-mail address",
+    "file": "./client/views/users/userprofile.html",
+    "line": 19,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.mail.copy": {
+    "key": "profile.mail.copy",
+    "text": "Send me a copy of this message",
+    "file": "./client/views/users/userprofile.html",
+    "line": 20,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privileges.title": {
+    "key": "privileges.title",
+    "text": "Privileges",
+    "file": "./client/views/users/userprofile.html",
+    "line": 29,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.has.admin": {
+    "key": "privilege.has.admin",
+    "text": "Administrator privileges granted",
+    "file": "./client/views/users/userprofile.html",
+    "line": 34,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.remove": {
+    "key": "privilege.remove",
+    "text": "remove privilege",
+    "file": "./client/views/users/userprofile.html",
+    "line": 51,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.add.admin": {
+    "key": "privilege.add.admin",
+    "text": "Grant administrator privileges",
+    "file": "./client/views/users/userprofile.html",
+    "line": 42,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.has.upload": {
+    "key": "privilege.has.upload",
+    "text": "Upload allowed",
+    "file": "./client/views/users/userprofile.html",
+    "line": 49,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.add.upload": {
+    "key": "privilege.add.upload",
+    "text": "Grant upload privilege",
+    "file": "./client/views/users/userprofile.html",
+    "line": 57,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "profile.courses": {
+    "key": "profile.courses",
+    "text": "{NAME}'s Courses:",
+    "file": "./client/views/users/userprofile.html",
+    "line": 67,
+    "template": "profilelink",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.errorAdding": {
+    "key": "privilege.errorAdding",
+    "text": "Unable to add privilege: {ERROR}",
+    "file": "./client/views/users/userprofile.js",
+    "line": 62,
+    "func": "function(err)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.addedAdmin": {
+    "key": "privilege.addedAdmin",
+    "text": "Granted admin privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 54,
+    "func": "function(err)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.addedUpload": {
+    "key": "privilege.addedUpload",
+    "text": "Granted upload privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 64,
+    "func": "function(err)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.errorRemoving": {
+    "key": "privilege.errorRemoving",
+    "text": "Unable to remove privilege: {ERROR}",
+    "file": "./client/views/users/userprofile.js",
+    "line": 73,
+    "func": "function(err)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "privilege.removed": {
+    "key": "privilege.removed",
+    "text": "Removed privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 75,
+    "func": "function(err)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "email.sent": {
     "key": "email.sent",
     "text": "email could have been sent",
     "file": "./client/views/users/userprofile.js",
-    "line": 72,
+    "line": 118,
     "func": "function(error, result)",
-    "ctime": 1427321334569,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "admin.no_admin": {
-    "key": "admin.no_admin",
-    "text": "Sorry, you're not admin",
-    "file": "./client/views/misc/admin/admin.html",
-    "line": 6,
-    "template": "admin",
-    "ctime": 1414089850544,
-    "mtime": 1432127764555,
-    "removed": true
+  "location.details.title": {
+    "key": "location.details.title",
+    "text": "Location details",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 2,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "admin.interface": {
-    "key": "admin.interface",
-    "text": "Admin-Interface",
-    "file": "./client/views/misc/admin/admin.html",
-    "line": 9,
-    "template": "admin",
-    "ctime": 1414089850544,
-    "mtime": 1432127764555,
-    "removed": true
+  "location.details.time_created": {
+    "key": "location.details.time_created",
+    "text": "Time created:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "admin.choose_user": {
-    "key": "admin.choose_user",
-    "text": "choose user to upgrade to admin",
-    "file": "./client/views/misc/admin/admin.html",
+  "location.details.last_edited": {
+    "key": "location.details.last_edited",
+    "text": "Last edited:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.created_by": {
+    "key": "location.details.created_by",
+    "text": "Created by:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 13,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.desc": {
+    "key": "location.details.desc",
+    "text": "Desc:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 16,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.hosts_admin": {
+    "key": "location.details.hosts_admin",
+    "text": "Hosts/Admin:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 17,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.online": {
+    "key": "location.details.online",
+    "text": "Online:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 24,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.address": {
+    "key": "location.details.address",
+    "text": "Address:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 25,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.how_go_there": {
+    "key": "location.details.how_go_there",
+    "text": "How to go there:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 26,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.max_ppl": {
+    "key": "location.details.max_ppl",
+    "text": "Maximum People:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 27,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.max_workplaces": {
+    "key": "location.details.max_workplaces",
+    "text": "Maximum Workplaces:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 28,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.has_projector": {
+    "key": "location.details.has_projector",
+    "text": "Has a Projector!",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 29,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.details.specials": {
+    "key": "location.details.specials",
+    "text": "Specials:",
+    "file": "./client/views/misc/locations/location.details.html",
+    "line": 30,
+    "template": "location_details",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.edit_location": {
+    "key": "location.edit.edit_location",
+    "text": "Edit location",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 7,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.add_location": {
+    "key": "location.edit.add_location",
+    "text": "Add location",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 7,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.name": {
+    "key": "location.edit.name",
+    "text": "Name:",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 8,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.desc": {
+    "key": "location.edit.desc",
+    "text": "Desc:",
+    "file": "./client/views/misc/locations/location.edit.html",
     "line": 10,
-    "template": "admin",
-    "ctime": 1414089850544,
-    "mtime": 1432127764555,
-    "removed": true
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "course.list.status_letter.team": {
-    "key": "course.list.status_letter.team",
-    "text": "T",
+  "location.edit.address": {
+    "key": "location.edit.address",
+    "text": "Address:",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 15,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.route": {
+    "key": "location.edit.route",
+    "text": "Route:",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 17,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.visible_in_list": {
+    "key": "location.edit.visible_in_list",
+    "text": "Visible in list (contactable for other users)",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 21,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.public_space": {
+    "key": "location.edit.public_space",
+    "text": "Public Space (everybody is allowed to host here)",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 23,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.region": {
+    "key": "location.edit.region",
+    "text": "Region:",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 26,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.pls_select": {
+    "key": "location.edit.pls_select",
+    "text": "Please select",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 28,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.hosts_admins": {
+    "key": "location.edit.hosts_admins",
+    "text": "Hosts/Admins",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 37,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.search_usr_add_host": {
+    "key": "location.edit.search_usr_add_host",
+    "text": "Search for username to add as host:",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 45,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.no_usr_found": {
+    "key": "location.edit.no_usr_found",
+    "text": "no username found",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 51,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.optional_info": {
+    "key": "location.edit.optional_info",
+    "text": "Optional Info",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 61,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.max_ppl": {
+    "key": "location.edit.max_ppl",
+    "text": "Max. People",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 63,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "location.edit.max_workplace": {
+    "key": "location.edit.max_workplace",
+    "text": "Max. Workplaces",
+    "file": "./client/views/misc/locations/location.edit.html",
+    "line": 64,
+    "template": "location_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "locations.list.title": {
+    "key": "locations.list.title",
+    "text": "Rooms",
+    "file": "./client/views/misc/locations/location.list.html",
+    "line": 3,
+    "template": "locationlist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.kiosk_link": {
+    "key": "kiosk.kiosk_link",
+    "text": "back to Kiosk mode",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 7,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.calendar_link": {
+    "key": "kiosk.calendar_link",
+    "text": "view in Calendar mode",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 27,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.ongoing": {
+    "key": "kiosk.ongoing",
+    "text": "{NUM, plural, one {One ongoing event} other {# ongoing events} }",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 31,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.today": {
+    "key": "kiosk.today",
+    "text": "{NUM, plural, one {One event} other {# events} } later today",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 42,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.future": {
+    "key": "kiosk.future",
+    "text": "Future events",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 49,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.started": {
+    "key": "kiosk.started",
+    "text": "Started",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 95,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "kiosk.andends": {
+    "key": "kiosk.andends",
+    "text": "and ends",
+    "file": "./client/views/misc/kiosk/kiosk.html",
+    "line": 96,
+    "template": "kioskLayout",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "groups.groups": {
+    "key": "groups.groups",
+    "text": "Groups:",
+    "file": "./client/views/misc/groups/groups.html",
+    "line": 3,
+    "template": "show_groups",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "categories.title.categories": {
+    "key": "categories.title.categories",
+    "text": "Categories",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 3,
+    "template": "categorylist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "categories.no_categories": {
+    "key": "categories.no_categories",
+    "text": "No categories defined!",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 7,
+    "template": "categorylist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "categories.no_courses": {
+    "key": "categories.no_courses",
+    "text": "no courses defined in this category!",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 21,
+    "template": "categorylist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "categories.new": {
+    "key": "categories.new",
+    "text": "New category",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 37,
+    "template": "categorylist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "categories.new.name": {
+    "key": "categories.new.name",
+    "text": "Name:",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 40,
+    "template": "categorylist",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.navig.unlogged": {
+    "key": "login.navig.unlogged",
+    "text": "Login/Register",
+    "file": "./client/views/login/button.html",
+    "line": 9,
+    "template": "loginButton",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.frame.welcome": {
+    "key": "login.frame.welcome",
+    "text": "Welcome {NAME}!",
+    "file": "./client/views/login/frame.html",
+    "line": 7,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.frame.profile": {
+    "key": "login.frame.profile",
+    "text": "Visit my profile",
+    "file": "./client/views/login/frame.html",
+    "line": 12,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.frame.settings": {
+    "key": "login.frame.settings",
+    "text": "Account settings",
+    "file": "./client/views/login/frame.html",
+    "line": 18,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.logout": {
+    "key": "login.logout",
+    "text": "Logout",
+    "file": "./client/views/login/frame.html",
+    "line": 24,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "frame.login.username": {
+    "key": "frame.login.username",
+    "text": "Username",
+    "file": "./client/views/login/frame.html",
+    "line": 43,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "frame.login.password": {
+    "key": "frame.login.password",
+    "text": "Password",
+    "file": "./client/views/login/frame.html",
+    "line": 51,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "frame.login.email": {
+    "key": "frame.login.email",
+    "text": "E-Mail",
+    "file": "./client/views/login/frame.html",
+    "line": 59,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.login.submit": {
+    "key": "login.login.submit",
+    "text": "Login",
+    "file": "./client/views/login/frame.html",
+    "line": 65,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.register.submit": {
+    "key": "login.register.submit",
+    "text": "Create account",
+    "file": "./client/views/login/frame.html",
+    "line": 71,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "frame.login_external_services": {
+    "key": "frame.login_external_services",
+    "text": "Or login with:",
+    "file": "./client/views/login/frame.html",
+    "line": 74,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.frame.github-login": {
+    "key": "login.frame.github-login",
+    "text": "GitHub",
+    "file": "./client/views/login/frame.html",
+    "line": 78,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "login.frame.facebook-login": {
+    "key": "login.frame.facebook-login",
+    "text": "facebook",
+    "file": "./client/views/login/frame.html",
+    "line": 81,
+    "template": "loginFrame",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.WhatLearn?": {
+    "key": "find.WhatLearn?",
+    "text": "What do you want to learn?",
+    "file": "./client/views/find/find.html",
+    "line": 5,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.search_placeholder": {
+    "key": "find.search_placeholder",
+    "text": "Everything",
+    "file": "./client/views/find/find.html",
+    "line": 8,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.search_go": {
+    "key": "find.search_go",
+    "text": "GO!",
+    "file": "./client/views/find/find.html",
+    "line": 10,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.only with events_checkbox": {
+    "key": "find.only with events_checkbox",
+    "text": "only with events",
+    "file": "./client/views/find/find.html",
+    "line": 16,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.no_courses_found.propose_new_course?": {
+    "key": "find.no_courses_found.propose_new_course?",
+    "text": "No Courses found. Do you want to propose this one?",
+    "file": "./client/views/find/find.html",
+    "line": 26,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.events.aditional_results": {
+    "key": "find.events.aditional_results",
+    "text": "{EVENTS, plural,\n\t\t\t\t\t\t\t\tone {In addition, we found this event}\n\t\t\t\t\t\t\t\tother {In addition, we found these # events}\n\t\t\t\t\t\t\t}",
+    "file": "./client/views/find/find.html",
+    "line": 34,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.events.results_if_no_courses": {
+    "key": "find.events.results_if_no_courses",
+    "text": "{EVENTS, plural,\n\t\t\t\t\t\t\t\tone {All we found is this one event}\n\t\t\t\t\t\t\t\tother {Yet # Events have been found}\n\t\t\t\t\t\t\t}",
+    "file": "./client/views/find/find.html",
+    "line": 41,
+    "template": "find",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "find.form.Header.What do you want to learn?": {
+    "key": "find.form.Header.What do you want to learn?",
+    "text": "What do you want to learn?",
+    "file": "./client/views/find/form.html",
+    "line": 4,
+    "template": "search_form",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.detail.back": {
+    "key": "course.event.detail.back",
+    "text": "Back to course",
+    "file": "./client/views/events/event.html",
+    "line": 8,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "event.no_event": {
+    "key": "event.no_event",
+    "text": "Sorry, we couldn't find this event, it had been deleted or has never existed.",
+    "file": "./client/views/events/event.html",
+    "line": 15,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.edit": {
+    "key": "course.event.edit.edit",
+    "text": "Edit event",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 4,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.add": {
+    "key": "course.event.edit.add",
+    "text": "Add event",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 4,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.title": {
+    "key": "course.event.edit.title",
+    "text": "Event title:",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 5,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.date_start": {
+    "key": "course.event.edit.date_start",
+    "text": "Date",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 9,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.time_start": {
+    "key": "course.event.edit.time_start",
+    "text": "Time start",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 18,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.time_end": {
+    "key": "course.event.edit.time_end",
+    "text": "Time end",
+    "file": "./client/views/events/event.html",
+    "line": 52,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.swich_duration": {
+    "key": "course.event.edit.swich_duration",
+    "text": "switch to duration",
+    "file": "./client/views/events/event.html",
+    "line": 52,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.duration": {
+    "key": "course.event.edit.duration",
+    "text": "Duration (in minutes)",
+    "file": "./client/views/events/event.html",
+    "line": 62,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.switch_time_end": {
+    "key": "course.event.edit.switch_time_end",
+    "text": "switch to end time",
+    "file": "./client/views/events/event.html",
+    "line": 62,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.desc": {
+    "key": "course.event.edit.desc",
+    "text": "Description:",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 27,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.files": {
+    "key": "course.event.edit.files",
+    "text": "Files: (optional)",
+    "file": "./client/views/events/event.html",
+    "line": 87,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.location": {
+    "key": "course.event.edit.location",
+    "text": "Location:",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 34,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.room": {
+    "key": "course.event.edit.room",
+    "text": "Room: (optional)",
+    "file": "./client/views/events/event.html",
+    "line": 136,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.save_btn": {
+    "key": "course.event.edit.save_btn",
+    "text": "Save",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 64,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.cancel_btn": {
+    "key": "course.event.edit.cancel_btn",
+    "text": "Cancel",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 70,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.details.edit_btn": {
+    "key": "course.details.edit_btn",
+    "text": "Edit",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 34,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.details.del_btn": {
+    "key": "course.details.del_btn",
+    "text": "Delete",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 38,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "event.download_cal": {
+    "key": "event.download_cal",
+    "text": "Download to my calendar",
+    "file": "./client/views/events/event.html",
+    "line": 222,
+    "template": "eventPage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "event.removed": {
+    "key": "event.removed",
+    "text": "Sucessfully removed event \"{TITLE}\".",
+    "file": "./client/views/events/event.js",
+    "line": 173,
+    "func": "function (error, eventRemoved)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "file.removed": {
+    "key": "file.removed",
+    "text": "Sucessfully removed file {FILENAME}.",
+    "file": "./client/views/events/event.js",
+    "line": 234,
+    "func": "function (error, fileRemoved)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "event.saving.error": {
+    "key": "event.saving.error",
+    "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
+    "file": "./client/views/events/event.js",
+    "line": 309,
+    "func": "function(error, eventId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "event.saving.success": {
+    "key": "event.saving.success",
+    "text": "Saved changes to event \"{TITLE}\".",
+    "file": "./client/views/events/event.js",
+    "line": 312,
+    "func": "function(error, eventId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.title": {
+    "key": "course.list.title",
+    "text": "CourseList",
+    "file": "./client/views/courses/course.list.html",
+    "line": 3,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "courses.missingorg": {
+    "key": "courses.missingorg",
+    "text": "Courses missing organisator(-team)",
+    "file": "./client/views/courses/course.list.html",
+    "line": 5,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "courses.missingsubs": {
+    "key": "courses.missingsubs",
+    "text": "Courses that are still looking for participants",
+    "file": "./client/views/courses/course.list.html",
+    "line": 9,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "courses.all": {
+    "key": "courses.all",
+    "text": "All courses",
+    "file": "./client/views/courses/course.list.html",
+    "line": 13,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "courses.none": {
+    "key": "courses.none",
+    "text": "no courses found",
+    "file": "./client/views/courses/course.list.html",
+    "line": 24,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.status_titles.needs_organizer": {
+    "key": "course.list.status_titles.needs_organizer",
+    "text": "Needs&nbsp;an&nbsp;organizer",
+    "file": "./client/views/courses/course.list.html",
+    "line": 62,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.status_titles.u_are_organizer": {
+    "key": "course.list.status_titles.u_are_organizer",
+    "text": "You&nbsp;are&nbsp;organizer",
+    "file": "./client/views/courses/course.list.html",
+    "line": 62,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.status_titles.has_team": {
+    "key": "course.list.status_titles.has_team",
+    "text": "Has&nbsp;a&nbsp;organizer-team",
+    "file": "./client/views/courses/course.list.html",
+    "line": 62,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.status_titles.needs_mentor": {
+    "key": "course.list.status_titles.needs_mentor",
+    "text": "Needs&nbsp;a&nbsp;mentor",
     "file": "./client/views/courses/course.list.html",
     "line": 66,
     "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "course.list.status_letter.mentor": {
-    "key": "course.list.status_letter.mentor",
-    "text": "M",
+  "course.list.status_titles.u_are_mentor": {
+    "key": "course.list.status_titles.u_are_mentor",
+    "text": "You&nbsp;are&nbsp;mentor",
     "file": "./client/views/courses/course.list.html",
-    "line": 70,
+    "line": 66,
     "template": "coursepage",
-    "ctime": 1426079041054,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "course.list.status_letter.host": {
-    "key": "course.list.status_letter.host",
-    "text": "H",
+  "course.list.status_titles.has_mentor": {
+    "key": "course.list.status_titles.has_mentor",
+    "text": "Has&nbsp;a&nbsp;mentor",
     "file": "./client/views/courses/course.list.html",
-    "line": 75,
+    "line": 66,
     "template": "coursepage",
-    "ctime": 1426079041055,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "course.event.detail.event": {
-    "key": "course.event.detail.event",
-    "text": "Event:",
-    "file": "./client/views/courses/events/course.event.detail.html",
-    "line": 20,
-    "template": "course_event_detail",
-    "ctime": 1417023103736,
-    "mtime": 1432127764555,
-    "removed": true
+  "course.list.status_titles.needs_host": {
+    "key": "course.list.status_titles.needs_host",
+    "text": "Needs&nbsp;a&nbsp;host",
+    "file": "./client/views/courses/course.list.html",
+    "line": 71,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "course.event.detail.hosted_by": {
-    "key": "course.event.detail.hosted_by",
+  "course.list.status_titles.u_are_host": {
+    "key": "course.list.status_titles.u_are_host",
+    "text": "You&nbsp;are&nbsp;host",
+    "file": "./client/views/courses/course.list.html",
+    "line": 71,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.list.status_titles.has_host": {
+    "key": "course.list.status_titles.has_host",
+    "text": "Has&nbsp;a&nbsp;host",
+    "file": "./client/views/courses/course.list.html",
+    "line": 71,
+    "template": "coursepage",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.host_location": {
+    "key": "course.event.edit.host_location",
+    "text": "Host / Location",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 41,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.by": {
+    "key": "course.event.edit.by",
+    "text": "by",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 44,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.no_hosts": {
+    "key": "course.event.edit.no_hosts",
+    "text": "No Hosts available",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 46,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.mentors": {
+    "key": "course.event.edit.mentors",
+    "text": "Mentors",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 50,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.event.edit.no_mentors": {
+    "key": "course.event.edit.no_mentors",
+    "text": "No Mentors available",
+    "file": "./client/views/courses/events/course.event.edit.html",
+    "line": 55,
+    "template": "course_event_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.events.addButton": {
+    "key": "course.events.addButton",
+    "text": "add an Event",
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 6,
+    "template": "course_events",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.download_cal": {
+    "key": "course.download_cal",
+    "text": "Download events to my calendar",
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 10,
+    "template": "course_events",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.title.Past events": {
+    "key": "course.title.Past events",
+    "text": "Past events",
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 27,
+    "template": "course_events",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.events.hosted_by": {
+    "key": "course.events.hosted_by",
     "text": "hosted by",
-    "file": "./client/views/courses/events/course.event.detail.html",
-    "line": 34,
-    "template": "course_event_detail",
-    "ctime": 1417023103736,
-    "mtime": 1432127764555,
-    "removed": true
+    "file": "./client/views/courses/events/course.events.html",
+    "line": 72,
+    "template": "course_events",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.create.enter_arranged_course": {
+    "key": "course.create.enter_arranged_course",
+    "text": "Put here a course that is allready arranged with date etc.",
+    "file": "./client/views/courses/details/course.create.html",
+    "line": 4,
+    "template": "createcourse",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.details.time_created": {
+    "key": "course.details.time_created",
+    "text": "Time created:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 16,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.details.last_edited": {
+    "key": "course.details.last_edited",
+    "text": "Last edited:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 17,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.details.created_by": {
+    "key": "course.details.created_by",
+    "text": "Created by:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 18,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.dtails.paticipants.title": {
+    "key": "course.dtails.paticipants.title",
+    "text": "Participants",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 106,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.subnav.descr": {
+    "key": "course.subnav.descr",
+    "text": "Description",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 135,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.subnav.docs": {
+    "key": "course.subnav.docs",
+    "text": "Docs",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 141,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.subnav.history": {
+    "key": "course.subnav.history",
+    "text": "History",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 147,
+    "template": "coursedetails",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.saving.error": {
+    "key": "course.saving.error",
+    "text": "Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}",
+    "file": "./client/views/courses/details/course.edit.js",
+    "line": 98,
+    "func": "function(err, courseId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.comment_answer": {
+    "key": "course.discussion.comment_answer",
+    "text": "Answer",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 8,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.write_comment": {
+    "key": "course.discussion.write_comment",
+    "text": "write a comment",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 13,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.answer_comment": {
+    "key": "course.discussion.answer_comment",
+    "text": "write answer",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 22,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.comment_title": {
+    "key": "course.discussion.comment_title",
+    "text": "Title",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 29,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.comment_btn.answer": {
+    "key": "course.discussion.comment_btn.answer",
+    "text": "Answer!",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 33,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.comment_btn.write": {
+    "key": "course.discussion.comment_btn.write",
+    "text": "Write!",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 37,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.discussion.comment_btn.cancel": {
+    "key": "course.discussion.comment_btn.cancel",
+    "text": "Cancel",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 41,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.title.Discussion": {
+    "key": "course.title.Discussion",
+    "text": "Discussion",
+    "file": "./client/views/courses/details/course.discussion.html",
+    "line": 52,
+    "template": "newPost",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "comment.saving.error": {
+    "key": "comment.saving.error",
+    "text": "Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}",
+    "file": "./client/views/courses/details/course.discussion.js",
+    "line": 58,
+    "func": "function(err, commentId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.edit_course": {
+    "key": "course.edit.edit_course",
+    "text": "Edit course",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 6,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.propose": {
+    "key": "course.edit.propose",
+    "text": "Propose new course",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 8,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.title": {
+    "key": "course.edit.title",
+    "text": "Title:",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 13,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.description": {
+    "key": "course.edit.description",
+    "text": "Desc:",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 15,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.edit": {
+    "key": "course.edit.edit",
+    "text": "Edit",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 21,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.categories": {
+    "key": "course.edit.categories",
+    "text": "Categories",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 22,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.edit_categories": {
+    "key": "course.edit.edit_categories",
+    "text": "Edit Categories:",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 25,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.neededs_ppl_who": {
+    "key": "course.edit.neededs_ppl_who",
+    "text": "Needs people who",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 53,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.region": {
+    "key": "course.edit.region",
+    "text": "Region:",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 71,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.pls_select": {
+    "key": "course.edit.pls_select",
+    "text": "Please select",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 73,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.save_btn": {
+    "key": "course.edit.save_btn",
+    "text": "Save",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 84,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.edit.cancel_btn": {
+    "key": "course.edit.cancel_btn",
+    "text": "Cancel",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 90,
+    "template": "course_edit",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.saving.success": {
+    "key": "course.saving.success",
+    "text": "Saved changes to course \"{NAME}\"",
+    "file": "./client/views/courses/details/course.edit.js",
+    "line": 101,
+    "func": "function(err, courseId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.you_are": {
+    "key": "course.roles.you_are",
+    "text": "You are",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 41,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.anonymously": {
+    "key": "course.roles.anonymously",
+    "text": "anonymously",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 41,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.subscribed_as": {
+    "key": "course.roles.subscribed_as",
+    "text": "subscribed as",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 41,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.retract": {
+    "key": "course.roles.retract",
+    "text": "Retract",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 41,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.enrol_as": {
+    "key": "course.roles.enrol_as",
+    "text": "Enrol as",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 50,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.leave_message": {
+    "key": "course.roles.leave_message",
+    "text": "Leave a message/wish/interest here:",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 55,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.incognitosubscription": {
+    "key": "course.roles.incognitosubscription",
+    "text": "incognito",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 60,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "course.roles.enrol": {
+    "key": "course.roles.enrol",
+    "text": "Enrol",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 67,
+    "template": "membersRoles",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "subscribemessage.saving.error": {
+    "key": "subscribemessage.saving.error",
+    "text": "Unable to change your message. We encountered the following error: {ERROR}",
+    "file": "./client/views/courses/details/course.roles.js",
+    "line": 54,
+    "func": "function(err, courseId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "subscribemessage.saving.success": {
+    "key": "subscribemessage.saving.success",
+    "text": "Changed your message on {NAME}",
+    "file": "./client/views/courses/details/course.roles.js",
+    "line": 56,
+    "func": "function(err, courseId)",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "calendar.upcoming_events": {
+    "key": "calendar.upcoming_events",
+    "text": "Upcoming Events",
+    "file": "./client/views/calendar/calendar.html",
+    "line": 5,
+    "template": "calendar",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "calendar.past_events": {
+    "key": "calendar.past_events",
+    "text": "Past Events",
+    "file": "./client/views/calendar/calendar.html",
+    "line": 14,
+    "template": "calendar",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "report.error": {
     "key": "report.error",
@@ -2086,9 +1950,8 @@ mfPkg.addNative(
     "file": "./client/report/helpers.js",
     "line": 20,
     "func": "function(error, result)",
-    "ctime": 1424880591244,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "report.confirm": {
     "key": "report.confirm",
@@ -2096,9 +1959,62 @@ mfPkg.addNative(
     "file": "./client/report/helpers.js",
     "line": 22,
     "func": "function(error, result)",
-    "ctime": 1424880591244,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.sending": {
+    "key": "report.sending",
+    "text": "Report is being sent…",
+    "file": "./client/report/templates.html",
+    "line": 3,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.text": {
+    "key": "report.text",
+    "text": "Please tell us what is wrong.",
+    "file": "./client/report/templates.html",
+    "line": 6,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.placeholder": {
+    "key": "report.placeholder",
+    "text": "My hovercraft is full of eels.",
+    "file": "./client/report/templates.html",
+    "line": 8,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.report": {
+    "key": "report.report",
+    "text": "Send report",
+    "file": "./client/report/templates.html",
+    "line": 11,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.cancel": {
+    "key": "report.cancel",
+    "text": "Nevermind",
+    "file": "./client/report/templates.html",
+    "line": 15,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
+  },
+  "report.open": {
+    "key": "report.open",
+    "text": "Report problem",
+    "file": "./client/report/templates.html",
+    "line": 21,
+    "template": "report",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "Please.login": {
     "key": "Please.login",
@@ -2106,432 +2022,47 @@ mfPkg.addNative(
     "file": "./client/lib/client.functions.js",
     "line": 109,
     "func": "function()",
-    "ctime": 1427321334569,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
   "editable.sorrychanged": {
     "key": "editable.sorrychanged",
     "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
     "file": "./client/editable/helpers.js",
-    "line": 32,
+    "line": 33,
     "func": "function()",
-    "ctime": 1427321334569,
-    "mtime": 1432127764555,
-    "removed": true
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "voting.no_options": {
-    "key": "voting.no_options",
-    "text": "no options",
-    "file": "./client/views/misc/votes/votes.list.html",
-    "line": 24,
-    "template": "votelists",
-    "ctime": 1414007096861,
-    "mtime": 1432127764555,
-    "removed": true
+  "editable.add_text": {
+    "key": "editable.add_text",
+    "text": "Add text here",
+    "file": "./client/editable/templates.html",
+    "line": 17,
+    "template": "editable",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "voting.no_votings_yet": {
-    "key": "voting.no_votings_yet",
-    "text": "no votings yet..",
-    "file": "./client/views/misc/votes/votes.list.html",
-    "line": 41,
-    "template": "votelists",
-    "ctime": 1414016261881,
-    "mtime": 1432127764555,
-    "removed": true
+  "editable.store": {
+    "key": "editable.store",
+    "text": "Store changes",
+    "file": "./client/editable/templates.html",
+    "line": 22,
+    "template": "editable",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   },
-  "voting.new_voting": {
-    "key": "voting.new_voting",
-    "text": "New voting",
-    "file": "./client/views/misc/votes/votes.list.html",
-    "line": 49,
-    "template": "votelists",
-    "ctime": 1414007096861,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "voting.input.option": {
-    "key": "voting.input.option",
-    "text": "Option:",
-    "file": "./client/views/misc/votes/votes.list.html",
-    "line": 53,
-    "template": "votelists",
-    "ctime": 1414019114300,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "readmore.button.less": {
-    "key": "readmore.button.less",
-    "text": "Less..",
-    "file": "./client/views/NHW_info.html",
-    "line": 32,
-    "template": "NHW_info",
-    "ctime": 1424880591243,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "readmore.button": {
-    "key": "readmore.button",
-    "text": "Read more..",
-    "file": "./client/views/NHW_info.html",
-    "line": 37,
-    "template": "NHW_info",
-    "ctime": 1424880591244,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "find.events": {
-    "key": "find.events",
-    "text": "The following events have been found:",
-    "file": "./client/views/find/find.html",
-    "line": 33,
-    "template": "find",
-    "ctime": 1424880591244,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "find.no_events_found.": {
-    "key": "find.no_events_found.",
-    "text": "No unlinked event found",
-    "file": "./client/views/find/find.html",
-    "line": 37,
-    "template": "find",
-    "ctime": 1424880591244,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "profile.profile_page": {
-    "key": "profile.profile_page",
-    "text": "Profile-Page",
-    "file": "./client/views/users/userprofile.html",
-    "line": 8,
-    "template": "profilelink",
-    "ctime": 1414019114300,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "login.close": {
-    "key": "login.close",
-    "text": " ",
-    "file": "./client/views/login/frame.html",
-    "line": 9,
-    "template": "loginFrame",
-    "ctime": 1417023103736,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "find.no entries found. propose new course?": {
-    "key": "find.no entries found. propose new course?",
-    "text": "No entries found. Do you want to propose a new course?",
-    "file": "./client/views/find/find.html",
-    "line": 14,
-    "template": "find",
-    "ctime": 1414002480587,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "course.event.detail.todo": {
-    "key": "course.event.detail.todo",
-    "text": "TODO",
-    "file": "./client/views/courses/events/course.event.detail.html",
-    "line": 54,
-    "template": "course_event_detail",
-    "ctime": 1417023103736,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "course.event.edit.date_end": {
-    "key": "course.event.edit.date_end",
-    "text": "Date end",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 7,
-    "template": "course_event_edit",
-    "ctime": 1417023103736,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "course.event.edit.send_mail_participants": {
-    "key": "course.event.edit.send_mail_participants",
-    "text": "Send notification email to participants",
-    "file": "./client/views/courses/events/course.event.edit.html",
-    "line": 34,
-    "template": "course_event_edit",
-    "ctime": 1417023103737,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "course.title.Upcoming events": {
-    "key": "course.title.Upcoming events",
-    "text": "Upcoming events",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 12,
-    "template": "course_events",
-    "ctime": 1414002480587,
-    "mtime": 1432127764555,
-    "removed": true
-  },
-  "course.events.no_events": {
-    "key": "course.events.no_events",
-    "text": "no events",
-    "file": "./client/views/courses/events/course.events.html",
-    "line": 29,
-    "template": "course_events",
-    "ctime": 1417023103737,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.create.proposal": {
-    "key": "course.create.proposal",
-    "text": "your proposal for a course:",
-    "file": "./client/views/courses/details/course.create.html",
-    "line": 15,
-    "template": "createcourse",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.discussion.time_created": {
-    "key": "course.discussion.time_created",
-    "text": "Time:",
-    "file": "./client/views/courses/details/course.discussion.html",
+  "editable.discard": {
+    "key": "editable.discard",
+    "text": "Discard changes",
+    "file": "./client/editable/templates.html",
     "line": 26,
-    "template": "postDialog",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.discussion.user": {
-    "key": "course.discussion.user",
-    "text": "User:",
-    "file": "./client/views/courses/details/course.discussion.html",
-    "line": 32,
-    "template": "postDialog",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.roles.your_message": {
-    "key": "course.roles.your_message",
-    "text": "Your message:",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 4,
-    "template": "roleComment",
-    "ctime": 1417023103737,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.title.Participants": {
-    "key": "course.title.Participants",
-    "text": "Participants",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 16,
-    "template": "roleComment",
-    "ctime": 1414002480587,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "chat": {
-    "key": "chat",
-    "text": "Chat",
-    "file": "./client/views/chat/chat.html",
-    "line": 8,
-    "template": "chat",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "chat.name": {
-    "key": "chat.name",
-    "text": "Name:",
-    "file": "./client/views/chat/chat.html",
-    "line": 11,
-    "template": "chat",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "chat.message": {
-    "key": "chat.message",
-    "text": "Message:",
-    "file": "./client/views/chat/chat.html",
-    "line": 29,
-    "template": "chat",
-    "ctime": 1414089850544,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "menue.translate": {
-    "key": "menue.translate",
-    "text": "translate this page",
-    "file": "./client/views/main.html",
-    "line": 26,
-    "template": "layout",
-    "ctime": 1417023103736,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "menue.about": {
-    "key": "menue.about",
-    "text": "about",
-    "file": "./client/views/main.html",
-    "line": 74,
-    "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "menue.FAQ": {
-    "key": "menue.FAQ",
-    "text": "FAQ",
-    "file": "./client/views/main.html",
-    "line": 75,
-    "template": "layout",
-    "ctime": 1404604221980,
-    "mtime": 1432127764556,
-    "removed": true
-  },
-  "course.roles.incognitosub": {
-    "key": "course.roles.incognitosub",
-    "text": "incognito ☔",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 50,
-    "template": "roleComment",
-    "mtime": 1432127764556,
-    "ctime": 1417023103737,
-    "removed": true
-  },
-  "course.edit.course_type": {
-    "key": "course.edit.course_type",
-    "text": "Course Type:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 33,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "course.type.lecture": {
-    "key": "course.type.lecture",
-    "text": "Lecture",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 36,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "course.type.workshop": {
-    "key": "course.type.workshop",
-    "text": "Workshop",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 39,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "course.type.self_shizzle": {
-    "key": "course.type.self_shizzle",
-    "text": "Self shizzle",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 42,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "course.edit.special_tags": {
-    "key": "course.edit.special_tags",
-    "text": "Special Tags:",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 48,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "special_tags.diy": {
-    "key": "special_tags.diy",
-    "text": "DIY",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 50,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "special_tags.political": {
-    "key": "special_tags.political",
-    "text": "Political",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 51,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "special_tags.experimental": {
-    "key": "special_tags.experimental",
-    "text": "Experimental",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 52,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "special_tags.theory": {
-    "key": "special_tags.theory",
-    "text": "Theory",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 53,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "special_tags.practical": {
-    "key": "special_tags.practical",
-    "text": "Practical",
-    "file": "./client/views/courses/details/course.edit.html",
-    "line": 54,
-    "template": "course_edit",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "course.roles.leave_msg_wish_interest": {
-    "key": "course.roles.leave_msg_wish_interest",
-    "text": "leave a message/wish/interest here:",
-    "file": "./client/views/courses/details/course.roles.html",
-    "line": 30,
-    "template": "Members",
-    "mtime": 1432127764556,
-    "ctime": 1414089850544,
-    "removed": true
-  },
-  "profile.recognize": {
-    "key": "profile.recognize",
-    "text": "it's you!",
-    "file": "./client/views/users/userprofile.html",
-    "line": 13,
-    "template": "profilelink",
-    "mtime": 1432127764556,
-    "ctime": 1414019114300,
-    "removed": true
-  },
-  "voting.option_input": {
-    "key": "voting.option_input",
-    "text": "Option:",
-    "file": "./client/views/votes/votes.list.html",
-    "line": 53,
-    "template": "votelists",
-    "ctime": 1414007096861,
-    "mtime": 1432127764556,
-    "removed": true
+    "template": "editable",
+    "mtime": 1432132053599,
+    "ctime": 1432132053599
   }
 }, 
 {
-  "extractedAt": 1432127764556,
-  "updatedAt": 1432127764556
+  "extractedAt": 1432132053599,
+  "updatedAt": 1432132053599
 });
