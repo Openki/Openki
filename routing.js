@@ -24,10 +24,7 @@ Router.map(function () {
 	})
 
 
-	this.route('categorylist',{								///////// categories /////////
-		waitOn: function () {
-			return Meteor.subscribe('categories');     // TODO: Anchor tags don't work anyway
-		},
+	this.route('categorylist',{
 		onAfterAction: function() {
 			document.title = webpagename + 'Category list'
 		}
@@ -47,9 +44,6 @@ Router.map(function () {
 	this.route('proposeCourse', {							///////// propose /////////
 		path: 'courses/propose',
 		template: 'proposecourse',
-		waitOn: function () {
-			return Meteor.subscribe('categories');
-		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Propose new course'
 		}
@@ -58,9 +52,6 @@ Router.map(function () {
 	this.route('createCourse', {							///////// create /////////
 		path: 'courses/create',
 		template: 'createcourse',
-		waitOn: function () {
-			return Meteor.subscribe('categories');
-		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Create new course'
 		}
@@ -75,7 +66,6 @@ Router.map(function () {
 		template: 'eventPage',
 		waitOn: function () {
 			var subs = [
-				Meteor.subscribe('categories'),
 				Meteor.subscribe('event', this.params._id)
 			]
 			var courseId = this.params.query.courseId;

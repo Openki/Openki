@@ -17,60 +17,6 @@
 
 Courses = new Meteor.Collection("Courses");
 
-var Schemas = {
-	OptionalString: {
-		type: String,
-		optional: true
-	},
-	LongString: {
-		type: String,
-		autoform: { rows: 5 },
-		optional: true
-	},
-	UserId: {
-		type: String,
-		autoform: {
-			options: function() {
-				return _.map(Meteor.users.find().fetch(), function(user) {
-					return {
-						label: user.emails[0].address,
-				 value: user._id
-					};
-				});
-			}
-		}
-	},
-	RegionId: {
-		type: String,
-		autoform: {
-			options: function() {
-				return _.map(Regions.find().fetch(), function(region) {
-					return {
-						label: region.name,
-						value: region._id
-					};
-				});
-			}
-		}
-	}
-};
-
-var CourseSchema = new SimpleSchema({
-	name: { type: String },
-	categories: { type: [String], optional: true },
-	description: Schemas.LongString,
-	region: Schemas.RegionId,
-	roles: { type: [String] },
-	createdby: Schemas.UserId,
-	time_lastedit: { type: Date },
-	time_created: { type: Date },
-	slug: { type: String, optional: true },
-	'members.$.user':  Schemas.UserId,
-	'members.$.comment':  Schemas.OptionalString,
-	'members.$.roles':  { type: [String] }
-});
-
-Courses.attachSchema(CourseSchema);
 
 Courses.allow({
 	remove: function (userId, doc) {
@@ -233,7 +179,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found")
 		}
 
- 		var mayEdit = isNew || user.isAdmin || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
+ 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted")
 
 
@@ -244,12 +190,21 @@ Meteor.methods({
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
 			var have = !isNew && course.roles.indexOf(type) !== -1
+
 			if (have && !should_have) {
 				Courses.update(
 					{ _id: courseId },
-					{ $pull: { roles: type, 'members.roles': type }},
+					{ $pull: { roles: type }},
 					checkUpdateOne
-				)
+				);
+				
+				// HACK
+				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
+				// so we keep removing one by one until there are none left
+				while(Courses.update(
+					{ _id: courseId, "members.roles": type },
+					{ $pull: { 'members.$.roles': type }}
+				));
 			}
 			if (!have && should_have) {
 				if (isNew) {

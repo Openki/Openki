@@ -40,7 +40,7 @@ getMember = function(members, user) {
 mayEdit = function(user, course){
 	if(!user)
 		return false;
-	return user && (user.isAdmin || hasRoleUser(course.members, 'team', user._id))
+	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id))
 }
 
 hasRoleUser = function(members, role, user) {
@@ -125,6 +125,11 @@ pleaseLogin = function() {
 
 
 /*************** HandleBars Helpers ***********************/
+
+Handlebars.registerHelper ("categoryName", function(cat) {
+	cat = cat || this;
+	return mf('category.'+this);
+});
 
 Handlebars.registerHelper ("privacyEnabled", function(){
 	var user = Meteor.user();
@@ -225,13 +230,6 @@ Handlebars.registerHelper('isYes', function(val) {
 });
 Handlebars.registerHelper('isOntheway', function(val) {
  	return val === 'ontheway'
-});
-
-
-Handlebars.registerHelper('isAdmin', function() {
-    var user = Meteor.user()
-    error.log(user.isAdmin)
-    return user && user.isAdmin
 });
 
 

@@ -3,7 +3,6 @@
 ////////////// db-subscriptions:
 
 var regionSub = Meteor.subscribe('regions');
-Meteor.subscribe('categories');
 Meteor.subscribe('locations');
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
@@ -15,6 +14,7 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
+/*  TODO: QUESTION: redundant with autoRegionSelect?
 // Choose default region when none is set
 Deps.autorun(function() {
 	if (regionSub.ready()) {
@@ -29,6 +29,7 @@ Deps.autorun(function() {
 		Session.set("region", region);
 	}
 });
+*/
 
 // Use browser language for date formatting
 Deps.autorun(function() {

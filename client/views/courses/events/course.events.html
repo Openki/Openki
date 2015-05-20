@@ -6,7 +6,9 @@
 			{{mf 'course.events.addButton' 'add an Event'}}
 		</button>
 		{{/if}}
-
+				<a href="/cal/course/{{course._id}}">
+					<span class="glyphicon glyphicon-calendar"></span>{{mf 'course.download_cal' 'Download events to my calendar'}}
+				</a>
 		{{#if events_list}}
 			<div class="course_events row">
 				<div class="container-fluid">

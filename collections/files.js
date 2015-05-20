@@ -20,14 +20,14 @@ Files.deny({
  });
 
 Files.allow({
-	insert: function(){
-		return true;
+	insert: function(userId) {
+		return privileged(userId, 'upload');
 	},
-	update: function(){
-		return true;
+	update: function(userId) {
+		return privileged(userId, 'upload');
 	},
-	remove: function(){
-		return true;
+	remove: function(userId) {
+		return privileged(userId, 'upload');
 	},
 	download: function(){
 		return true;

@@ -6,26 +6,26 @@ Template.course_edit.helpers({
 	},
 
 	available_categories: function(parent) {
-		var query = {}
 		if (parent) {
-			query.parent = parent;
+			return categories[parent];
 		} else {
-			query.parent = { $exists: false };
+			return Object.keys(categories);
 		}
-		return Categories.find(query);
 	},
 	
 	available_roles: function() {
 		return Roles.find({'preset': { $ne: true }})
 	},
-	
+
+	roleDescription: function() {
+		return mf('roles.'+this.type+'.description');
+	},
+
 	// Emit 'checked' string if id shows up as member or property of cats
-	checked: function(id, cats) {
+	checked: function(cat, cats) {
 		if (!cats) return;
 		if (cats.length) {
-			return cats.indexOf(id) >= 0 ? 'checked' : ''
-		} else {
-			return (id in cats) ? 'checked' : ''
+			return cats.indexOf(cat) >= 0 ? 'checked' : ''
 		}
 	},
 	
@@ -33,8 +33,6 @@ Template.course_edit.helpers({
 		if (!cats) return 'none';
 		if (cats.length) {
 			return cats.indexOf(id) >= 0 ? 'block' : 'none'
-		} else {
-			return (id in cats) ? 'block' : 'none'
 		}
 	},
 	
@@ -107,7 +105,10 @@ Template.course_edit.events({
 	},
 
 	'click button.cancel': function() {
-		Router.go('showCourse', this);
+		if (this._id) {
+			Router.go('showCourse', this);
+		}
+		Router.go('/');
 	},
 
 	'click #show_categories_to_edit': function(event){
@@ -116,14 +117,12 @@ Template.course_edit.events({
 	},
 
 	'change .categories .checkbox': function(){
-		//$('#' + event.currentTarget.id +" .subcategories").toggle();
-		$('#cat_' + this._id +" .subcategories").toggle();
+		$('#cat_' + this +" .subcategories").toggle();
 
-		// todo: deselect all children
-		var is_checked = $('#cat_' + this._id +" .checkbox").first().prop('checked');
-		if(!is_checked)
-			$('#cat_' + this._id +" .checkbox_sub").prop('checked', false);
-
+		var is_checked = $('#cat_' + this +" .checkbox").first().prop('checked');
+		if(!is_checked) {
+			$('#cat_' + this +" .checkbox_sub").prop('checked', false);
+		}
 	}
 });
 

@@ -11,10 +11,6 @@ Meteor.publish ('courseDetails', function(id) {
 
 Meteor.publish ('coursesFind', coursesFind);
 
-Meteor.publish ('categories', function(){
-	return Categories.find();
-});
-
 Meteor.publish ('roles', function(){
 	return Roles.find();
 });
@@ -57,17 +53,15 @@ Meteor.publish('nextEvent', function(courseId) {
 	return Events.find({ course_id: courseId });
 });
 
-Meteor.publish ('users', function(){
-	return Meteor.users.find({}, {
-		fields: {username: 1}
-	});
-
-});
-
 Meteor.publish('user', function(userId) {
+	var fields = {username: 1};
+	
+	// Admins may see other's privileges
+	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
+
 	return Meteor.users.find(
 		{ _id: userId },
-		{ fields: {username: 1} }
+		{ fields: fields }
 	);
 });
 

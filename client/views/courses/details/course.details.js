@@ -6,7 +6,6 @@ Router.map(function () {
 		template: 'coursedetails',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('categories'),
 				Meteor.subscribe('courseDetails', this.params._id),
 				Meteor.subscribe('eventsForCourse', this.params._id),
 				Meteor.subscribe('groups'),
@@ -35,7 +34,7 @@ Router.map(function () {
 							if (err) {
 								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+								addMessage(mf('course.saving.success', { NAME: course.name }));
 							}
 						});
 					}
@@ -48,7 +47,7 @@ Router.map(function () {
 							if (err) {
 								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }, 'Saved changes to {NAME}'));
+								addMessage(mf('course.saving.success', { NAME: course.name }));
 							}
 						});
 					}
@@ -69,7 +68,6 @@ Router.map(function () {
 		//template: 'coursedocs',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('categories'),
 			    Meteor.subscribe('courseDetails', this.params._id),
 			]
 		},
@@ -85,7 +83,6 @@ Router.map(function () {
 		//template: 'coursehistory',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('categories'),
 			    Meteor.subscribe('courseDetails', this.params._id)
 			]
 		},

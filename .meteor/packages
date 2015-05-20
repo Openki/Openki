@@ -27,11 +27,11 @@ matb33:collection-hooks
 ical
 cfs:standard-packages
 cfs:gridfs
-yogiben:admin
-aldeed:simple-schema
 rzymek:moment-locale-ar
 rzymek:moment-locale-de
 rzymek:moment-locale-es
 rzymek:moment-locale-fr
 rzymek:moment-locale-it
 rzymek:moment-locale-zh-tw
+natestrauser:font-awesome
+servicelocale:geoip

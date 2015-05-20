@@ -261,7 +261,6 @@ Template.event.events({
 	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
-
 		var startMoment = getEventStartMoment(template);
 		if(!startMoment) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");

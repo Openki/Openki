@@ -37,13 +37,27 @@ Meteor.methods({
 });
 
 
-// SETUP: Create Categories if not all anymore
+////////  Geo-IP    find nearest region to IP of user
+Meteor.methods({
+	autoSelectRegion: function() {
+		var ip = this.connection.clientAddress;
 
-createCategoriesIfNone = function() {
-	if (Categories.find().count() === 0) {
-		_.each(categories, function(category){
-			Categories.insert(category)
-		})
+		if (ip.indexOf('127') === 0) {
+			return '9JyFCoKWkxnf8LWPh'; // Testistan for localhost
+		}
+
+		var geo = GeoIP.lookup(ip);
+
+		var closest = Regions.findOne({
+			loc: { $near: {
+				$geometry: {type: "Point", coordinates: geo.ll.reverse()},
+				$maxDistance: 200000 // meters
+			}}
+		});
+
+		if (closest) return closest._id;
+
+		return false;
 	}
-}
 
+});

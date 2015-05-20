@@ -25,6 +25,7 @@ Template.editable.rendered = function() {
 		// Here we instill the version we got in the DB
 		// Most of the time, it will be the same as what
 		// is already displayed
+		currentText = currentText || '';
 		editable.html(currentText);
 		
 		if (self.editingVersion !== false && currentText !== self.editingVersion) {

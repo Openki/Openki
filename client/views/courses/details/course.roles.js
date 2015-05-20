@@ -3,7 +3,11 @@ Template.roleDetail.created = function() {
 }
 
 Template.roleDetail.helpers({
-	enrolling: function() { return Template.instance().enrolling.get() }
+	enrolling: function() { return Template.instance().enrolling.get() },
+							
+	roleSubscribe: function() {
+		return mf('roles.'+this.type+'.subscribe');
+	}
 })
 
 Template.roleDetail.events({

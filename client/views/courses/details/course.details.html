@@ -8,9 +8,9 @@
 				<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					{{title course.name " - openki"}}
 
-					<h2 class="name" style="min-height: 3ex">
+					<div class="name" style="min-height: 3ex">
 						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-					</h2>
+					</div>
 					{{#with course}}
 						<p class='small'>
 						{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
@@ -66,7 +66,7 @@
 							</div>
 						</div>
 						<div class="no-padding col-xs-12 col-sm-3 col-md-3 col-lg-3">
-							<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">  <!--FIXME-->>
+							<div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">  <!--FIXME-->
 								<div class="container-fluid">
 									<div class="container-fluid">
 										<p>
