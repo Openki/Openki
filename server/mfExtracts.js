@@ -54,6 +54,375 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "category.sports": {
+    "key": "category.sports",
+    "text": "Sports / Movement",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 18,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.martialarts": {
+    "key": "category.martialarts",
+    "text": "Martial arts",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 19,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.teamsport": {
+    "key": "category.teamsport",
+    "text": "Team sport",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 20,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.artistry": {
+    "key": "category.artistry",
+    "text": "Artistry",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 21,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.handicraft": {
+    "key": "category.handicraft",
+    "text": "Handicraft",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 23,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.metalwood": {
+    "key": "category.metalwood",
+    "text": "Woodwork / Metalwork",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 24,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.electronics": {
+    "key": "category.electronics",
+    "text": "Electronics / Electricity",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 25,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.fabric": {
+    "key": "category.fabric",
+    "text": "Synthetic material / Fabric",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 26,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.gardening": {
+    "key": "category.gardening",
+    "text": "Gardening / Agriculture",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 27,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.construction": {
+    "key": "category.construction",
+    "text": "Construction",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 28,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.sciences": {
+    "key": "category.sciences",
+    "text": "Natural Science",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 30,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.geography": {
+    "key": "category.geography",
+    "text": "Geography",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 31,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.physics": {
+    "key": "category.physics",
+    "text": "Physics",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 32,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.medicine": {
+    "key": "category.medicine",
+    "text": "Medicine",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 33,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.mathematics": {
+    "key": "category.mathematics",
+    "text": "Mathematics",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 34,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.chemistry": {
+    "key": "category.chemistry",
+    "text": "Chemistry",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 35,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.biology": {
+    "key": "category.biology",
+    "text": "Biology",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 36,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.humanities": {
+    "key": "category.humanities",
+    "text": "Arts & Humanities",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 38,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.languages": {
+    "key": "category.languages",
+    "text": "Languages",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 39,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.history": {
+    "key": "category.history",
+    "text": "History",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 40,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.sociology": {
+    "key": "category.sociology",
+    "text": "Sociology",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 41,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.politics": {
+    "key": "category.politics",
+    "text": "Politics",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 42,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.philosophy": {
+    "key": "category.philosophy",
+    "text": "Philosophy",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 43,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.lawbusiness": {
+    "key": "category.lawbusiness",
+    "text": "Business Studies Economics and Law",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 44,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.culture": {
+    "key": "category.culture",
+    "text": "Culture",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 46,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.literature": {
+    "key": "category.literature",
+    "text": "Literature",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 47,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.theatre": {
+    "key": "category.theatre",
+    "text": "Theater",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 48,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.music": {
+    "key": "category.music",
+    "text": "Music",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 49,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.fineart": {
+    "key": "category.fineart",
+    "text": "Fine Art",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 50,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.design": {
+    "key": "category.design",
+    "text": "Design",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 51,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.photography": {
+    "key": "category.photography",
+    "text": "Photography",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 52,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.film": {
+    "key": "category.film",
+    "text": "Film",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 53,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.cooking": {
+    "key": "category.cooking",
+    "text": "Cooking",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 54,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.subculture": {
+    "key": "category.subculture",
+    "text": "Subculture",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 55,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.computer": {
+    "key": "category.computer",
+    "text": "Computer",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 57,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.internet": {
+    "key": "category.internet",
+    "text": "Internet",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 58,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.programming": {
+    "key": "category.programming",
+    "text": "Programming",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 59,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.operating": {
+    "key": "category.operating",
+    "text": "Software Operating",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 60,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.♥undefined♥": {
+    "key": "category.♥undefined♥",
+    "text": "♥Undefined♥",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 62,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
+  "category.experimental": {
+    "key": "category.experimental",
+    "text": "Experimental",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 63,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160527950
+  },
+  "category.spiritual": {
+    "key": "category.spiritual",
+    "text": "Spirituality",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 64,
+    "template": "mfFixedTranslations",
+    "ctime": 1432160446754,
+    "mtime": 1432160446754
+  },
   "menue.Courses": {
     "key": "menue.Courses",
     "text": "Courses",
@@ -360,15 +729,6 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "profile.deleted": {
-    "key": "profile.deleted",
-    "text": "Your account has been deleted",
-    "file": "./client/views/users/ownprofile.js",
-    "line": 67,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "profile.users_profile_page": {
     "key": "profile.users_profile_page",
     "text": "{NAME}'s Profile",
@@ -522,48 +882,12 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "privilege.addedAdmin": {
-    "key": "privilege.addedAdmin",
-    "text": "Granted admin privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 54,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "privilege.addedUpload": {
-    "key": "privilege.addedUpload",
-    "text": "Granted upload privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 64,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "privilege.errorRemoving": {
     "key": "privilege.errorRemoving",
     "text": "Unable to remove privilege: {ERROR}",
     "file": "./client/views/users/userprofile.js",
     "line": 73,
     "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "privilege.removed": {
-    "key": "privilege.removed",
-    "text": "Removed privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 75,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "email.sent": {
-    "key": "email.sent",
-    "text": "email could have been sent",
-    "file": "./client/views/users/userprofile.js",
-    "line": 118,
-    "func": "function(error, result)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
@@ -932,24 +1256,6 @@ mfPkg.addNative(
     "text": "no courses defined in this category!",
     "file": "./client/views/misc/categories/categories.html",
     "line": 21,
-    "template": "categorylist",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "categories.new": {
-    "key": "categories.new",
-    "text": "New category",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 37,
-    "template": "categorylist",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "categories.new.name": {
-    "key": "categories.new.name",
-    "text": "Name:",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 40,
     "template": "categorylist",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1642,7 +1948,7 @@ mfPkg.addNative(
     "key": "course.saving.error",
     "text": "Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}",
     "file": "./client/views/courses/details/course.edit.js",
-    "line": 98,
+    "line": 92,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1840,7 +2146,7 @@ mfPkg.addNative(
     "key": "course.saving.success",
     "text": "Saved changes to course \"{NAME}\"",
     "file": "./client/views/courses/details/course.edit.js",
-    "line": 101,
+    "line": 95,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1953,24 +2259,6 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "report.error": {
-    "key": "report.error",
-    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
-    "file": "./client/report/helpers.js",
-    "line": 20,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "report.confirm": {
-    "key": "report.confirm",
-    "text": "Your report was sent. A human will try to find an appropriate solution.",
-    "file": "./client/report/helpers.js",
-    "line": 22,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "report.sending": {
     "key": "report.sending",
     "text": "Report is being sent…",
@@ -2025,24 +2313,6 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "Please.login": {
-    "key": "Please.login",
-    "text": "Please login or register",
-    "file": "./client/lib/client.functions.js",
-    "line": 109,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "editable.sorrychanged": {
-    "key": "editable.sorrychanged",
-    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
-    "file": "./client/editable/helpers.js",
-    "line": 33,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "editable.add_text": {
     "key": "editable.add_text",
     "text": "Add text here",
@@ -2070,18 +2340,128 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "profile.deleted": {
+    "key": "profile.deleted",
+    "text": "Your account has been deleted",
+    "file": "./client/views/users/ownprofile.js",
+    "line": 67,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "privilege.addedAdmin": {
+    "key": "privilege.addedAdmin",
+    "text": "Granted admin privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 54,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "privilege.addedUpload": {
+    "key": "privilege.addedUpload",
+    "text": "Granted upload privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 64,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "privilege.removed": {
+    "key": "privilege.removed",
+    "text": "Removed privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 75,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "email.sent": {
+    "key": "email.sent",
+    "text": "email could have been sent",
+    "file": "./client/views/users/userprofile.js",
+    "line": 118,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "categories.new": {
+    "key": "categories.new",
+    "text": "New category",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 37,
+    "template": "categorylist",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "categories.new.name": {
+    "key": "categories.new.name",
+    "text": "Name:",
+    "file": "./client/views/misc/categories/categories.html",
+    "line": 40,
+    "template": "categorylist",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "report.error": {
+    "key": "report.error",
+    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
+    "file": "./client/report/helpers.js",
+    "line": 20,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "report.confirm": {
+    "key": "report.confirm",
+    "text": "Your report was sent. A human will try to find an appropriate solution.",
+    "file": "./client/report/helpers.js",
+    "line": 22,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "Please.login": {
+    "key": "Please.login",
+    "text": "Please login or register",
+    "file": "./client/lib/client.functions.js",
+    "line": 109,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
+  "editable.sorrychanged": {
+    "key": "editable.sorrychanged",
+    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
+    "file": "./client/editable/helpers.js",
+    "line": 33,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432160527951,
+    "removed": true
+  },
   "profile.pref_site": {
     "key": "profile.pref_site",
     "text": "here's your pref. site",
     "file": "./client/views/users/userprofile.html",
     "line": 11,
     "template": "profilelink",
-    "mtime": 1432151081644,
+    "mtime": 1432160527951,
     "ctime": 1432132053599,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1432151081644,
-  "updatedAt": 1432151081644
+  "extractedAt": 1432160527951,
+  "updatedAt": 1432160527951
 });
