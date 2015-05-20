@@ -1,6 +1,10 @@
 "use strict";
 
 Template.course_events.helpers({
+	mayAdd: function(members) {
+		return hasRole(members, 'team');
+	},
+	
 	events_list: function() {
 		var course=this.course;
 		if (!course) return [];
