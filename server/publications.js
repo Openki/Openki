@@ -11,10 +11,6 @@ Meteor.publish ('courseDetails', function(id) {
 
 Meteor.publish ('coursesFind', coursesFind);
 
-Meteor.publish ('categories', function(){
-	return Categories.find();
-});
-
 Meteor.publish ('roles', function(){
 	return Roles.find();
 });

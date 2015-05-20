@@ -126,6 +126,11 @@ pleaseLogin = function() {
 
 /*************** HandleBars Helpers ***********************/
 
+Handlebars.registerHelper ("categoryName", function(cat) {
+	cat = cat || this;
+	return mf('category.'+this);
+});
+
 Handlebars.registerHelper ("privacyEnabled", function(){
 	var user = Meteor.user();
 	if(!user)

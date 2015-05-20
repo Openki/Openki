@@ -1,8 +1,5 @@
 Meteor.startup(function () {
 
-	// initialize list of categories
-	createCategoriesIfNone();
-
 	if (Meteor.settings.testdata) {
 		createGroupsIfNone();          // Groups     from server/data/testing.groups.js
 		createTestRegionsIfNone();     // Regions    from server/data/testing.regions.js

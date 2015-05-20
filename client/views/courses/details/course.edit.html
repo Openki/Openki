@@ -25,18 +25,18 @@
 							<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
 							<ul class='categories list-unstyled'>
 								{{#each available_categories false}}
-									<li id="cat_{{_id}}">
+									<li id="cat_{{this}}">
 										<label>
-											<input type='checkbox' class='checkbox' name='{{_id}}' value="1"  {{checked _id ../categories}} style="display: inline">
-											{{name}}
+											<input type='checkbox' class='checkbox' name='{{this}}' value="1"  {{checked this ../categories}} style="display: inline">
+											{{categoryName}}
 										</label>
-										<ul class='subcategories list-unstyled' style="display:{{show_subcats _id ../categories}}">
-										{{#each available_categories _id}}
+										<ul class='subcategories list-unstyled' style="display:{{show_subcats this ../categories}}">
+										{{#each available_categories this}}
 											<li>
 												<div class="checkbox">
 													<label>
-														<input type='checkbox' class='checkbox_sub'  name='{{_id}}' value="1" {{checked _id ../../categories}}>
-														{{name}}
+														<input type='checkbox' class='checkbox_sub'  name='{{this}}' value="1" {{checked this ../../categories}}>
+														{{categoryName}}
 													</label>
 												</div>
 											</li>

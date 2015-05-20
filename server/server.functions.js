@@ -37,17 +37,6 @@ Meteor.methods({
 });
 
 
-// SETUP: Create Categories if not all anymore
-
-createCategoriesIfNone = function() {
-	if (Categories.find().count() === 0) {
-		_.each(categories, function(category){
-			Categories.insert(category)
-		})
-	}
-}
-
-
 ////////  Geo-IP    find nearest region to IP of user
 Meteor.methods({
 	autoSelectRegion: function() {
