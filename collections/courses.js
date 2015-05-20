@@ -190,12 +190,21 @@ Meteor.methods({
 			var type = roletype.type
 			var should_have = roletype.preset || changes.roles && changes.roles[type]
 			var have = !isNew && course.roles.indexOf(type) !== -1
+
 			if (have && !should_have) {
 				Courses.update(
 					{ _id: courseId },
-					{ $pull: { roles: type, 'members.roles': type }},
+					{ $pull: { roles: type }},
 					checkUpdateOne
-				)
+				);
+				
+				// HACK
+				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
+				// so we keep removing ony by one until there are none left
+				while(Courses.update(
+					{ _id: courseId, "members.roles": type },
+					{ $pull: { 'members.$.roles': type }}
+				));
 			}
 			if (!have && should_have) {
 				if (isNew) {
