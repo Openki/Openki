@@ -18,7 +18,11 @@ Template.course_edit.helpers({
 	available_roles: function() {
 		return Roles.find({'preset': { $ne: true }})
 	},
-	
+
+	roleDescription: function() {
+		return mf('roles.'+this.type+'.description');
+	},
+
 	// Emit 'checked' string if id shows up as member or property of cats
 	checked: function(id, cats) {
 		if (!cats) return;

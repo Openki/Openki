@@ -70,7 +70,7 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv')
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to remove privilege: {ERROR}'));
+				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'));
 			} else {
 				addMessage(mf('privilege.removed', 'Removed privilege'));
 			}
