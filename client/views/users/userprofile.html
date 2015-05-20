@@ -5,60 +5,59 @@
 
 <template name="userprofile">
 	<div class="container-fluid">
-		<div id="profile">
+		<div class="userprofile">
 			<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}</h1>
 			{{#if ownuser}}
-				{{mf 'profile.its_you' "It's you!"}} <a href="/profile/" >{{mf 'profile.pref_site' "here's your pref. site"}}</a>
+				<h4>
+					{{mf 'profile.its_you' "It's you!"}}&nbsp;
+					<a href="/profile/" >
+						<span class="glyphicon glyphicon-cog"></span>
+						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
+					</a>
+				</h4>
 			{{else}}
-				<div class="email_box">
-					<p>{{mf 'profile.mail.to_user' 'You can write an e-mail to this user:'}}</p>
-					{{mf 'profile.mail.content' 'Your message:'}}
-					<p> <input type="text" id="emailmessage" placeholder="Hi {{username this.user._id}}! ..."/></p>
-					<p>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet -->
-						<form>
-							<input type="checkbox" name="email1" id="sendOwnAdress">{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}<br>
-							<input type="checkbox" name="email2" id="receiveCopy">{{mf 'profile.mail.copy' 'Send me a copy of this message'}}<br>
-						</form>
-					</p>
-					<input type="button" class="sendmail" value="Send E-Mail" />
+			<div class="row">
+				<div class="col-sm-4">
+					{{>email_box}}
 				</div>
+			</div>
 			{{/if}}
 
 			{{#if showPrivileges}}
-			<div>
+			<div class="privileges">
 				<h3>{{mf 'privileges.title' 'Privileges'}}</h3>
 				<ul class="privileges">
-
-					{{#if privileges.admin}}
-						<li class="admin">
-							{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
-							{{#if alterPrivileges}}
-								<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'remove privilege'}}</button>
-							{{/if}}
-						</li>
-					{{else}}
+				{{#if privileges.admin}}
+					<li class="admin">
+						<span class="glyphicon glyphicon-ok"></span>
+						<span class="granted">{{mf 'privilege.has.admin' 'Administrator privileges granted'}}</span>
 						{{#if alterPrivileges}}
-							<li class="admin">
-								<button class="giveAdmin">{{mf 'privilege.add.admin' 'Grant administrator privileges'}}</button>
-							</li>
+							<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'Remove privilege'}}</button>
 						{{/if}}
-					{{/if}}
-
-					{{#if privileges.upload}}
+					</li>
+				{{else}}
+					{{#if alterPrivileges}}
 						<li class="admin">
-							{{mf 'privilege.has.upload' 'Upload allowed'}}
-							{{#if alterPrivileges}}
-								<button class="remove" data-priv='upload'>{{mf 'privilege.remove' 'remove privilege'}}</button>
-							{{/if}}
+							<button class="giveAdmin">{{mf 'privilege.add.admin' 'Grant administrator privileges'}}</button>
 						</li>
-					{{else}}
-						{{#if alterPrivileges}}
-							<li class="admin">
-								<button class="giveUpload">{{mf 'privilege.add.upload' 'Grant upload privilege'}}</button>
-							</li>
-						{{/if}}
 					{{/if}}
+				{{/if}}
 
+				{{#if privileges.upload}}
+					<li class="admin">
+						<span class="glyphicon glyphicon-ok"></span>
+						<span class="granted">{{mf 'privilege.has.upload' 'Upload allowed'}}</span>
+						{{#if alterPrivileges}}
+							<button class="remove" data-priv='upload'>{{mf 'privilege.remove'}}</button>
+						{{/if}}
+					</li>
+				{{else}}
+					{{#if alterPrivileges}}
+						<li class="admin">
+							<button class="giveUpload">{{mf 'privilege.add.upload' 'Grant upload privilege'}}</button>
+						</li>
+					{{/if}}
+				{{/if}}
 				</ul>
 			</div>
 			{{/if}}
@@ -68,5 +67,27 @@
 				{{> courselist involvedIn}}
 			</div>
 		</div>
+	</div>
+</template>
+
+<template name="email_box">
+	<div class="email_box">
+		<form>
+		<!-- <h4><span class="glyphicon glyphicon-envelope"></span>&nbsp;{{mf 'profile.mail.to_user' 'You can write an e-mail to this user:'}}</h4> -->
+			<h4>{{mf 'profile.mail.content' 'Your message:'}}</h4>
+			<textarea id="emailmessage" placeholder="Hi {{username this.user._id}}! ..." rows="3"></textarea>
+			<h4>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet --></h4>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" id="sendOwnAdress">
+					{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
+				</label>
+				<label>
+					<input type="checkbox" id="receiveCopy">
+					{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
+				</label>
+			</div>
+			<button class="sendmail">{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}</button>
+		</form>
 	</div>
 </template>
