@@ -30,29 +30,11 @@
 </template>
 
 
-<!-- create categories, (admins only) -->
-<template name="course_category">
-	<div class="create_category">
-	<form>
-	<h3>{{mf 'categories.new' 'New category'}}</h3>
-	<table>
-		<tr>
-			<th>{{mf 'categories.new.name' 'Name:'}} </th><td><input type="text" id="addform_name"/> </td>
-		</tr>
-		<tr>
-			<th></th><td><input type="button" class="add" value="Add new" /> </td>
-		</tr>
-
-	</table>
-	</form>
-	</div>
-</template>
-
 
 <template name="show_categories">
 	<ul class="list-unstyled">
-		{{#each loadcategories categories}}
-		<li><a href="/categorylist/#{{_id}}">{{name}}</a></li>
+		{{#each categories}}
+		<li>{{mf this}}</li>
 		{{/each}}
 	</ul>
 </template>
