@@ -1,6 +1,6 @@
 testcourses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
-	'categories': ['Sport / Bewegung'],
+	'categories': ['sports'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 	'groups':     ['Wohlfühlgruppe-ZH'],
 	'createdby':   'FeeLing',
@@ -12,7 +12,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Aikido',
-	'categories': ['Kampfsport/-kunst'],
+	'categories': ['sports', 'martialarts'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
 	'groups':     ['Wohlfühlgruppe-ZH',],
 	'createdby':   'Kampfhippie',
@@ -26,7 +26,7 @@ testcourses = [{
 	region: 'Testistan',
 },{
 	'name':        'Garten',
-	'categories': ['Garten / Landwirtschaft', 'Biologie'],
+	'categories': ['gardening', 'biology'],
 	'tags':       ['Garten', 'Pflanzen'],
 	'groups':     ['Wohlfühlgruppe-ZH', 'CSA - regionale Vertragslandwirtschaft'],
 	'createdby':   'Greendampf',
@@ -43,7 +43,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Game Design mit Unity',
-	'categories': ['Programmieren'],
+	'categories': ['programming'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
 	'groups':     ['CCC', 'ASZ Bildung für Alle'],

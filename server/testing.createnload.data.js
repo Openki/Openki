@@ -43,13 +43,6 @@ function ensureRegion(name) {
 	}
 }
 
-// TESTING: Get category object for name
-function categoryForName(name) {
-		var category = Categories.findOne({nameDE: name})
-		if (!category) throw "No category "+name
-        return category;
-}
-
 
 createCoursesIfNone = function(scale) {
 	if (Courses.find().count() === 0) {
@@ -68,14 +61,6 @@ function createCourses(scale) {
 
 	_.each(testcourses, function(course) {
 		if (!course.createdby) return; // Don't create courses that don't have a creator name
-
-		var category_names = course.categories
-		course.categories = []
-		for (var i=0; category_names && i < category_names.length; i++) {
-			var cat = categoryForName(category_names[i])
-			course.categories.push(cat._id)
-			if (cat.parent) course.categories.push(cat.parent)
-		}
 
 		/* Replace user name with ID */
 		_.each(course.members, function(member) {
