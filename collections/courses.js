@@ -99,6 +99,10 @@ maySubscribe = function(operatorId, course, userId, role) {
 	
 	// The team role is restricted
 	if ('team' === role) {
+		// If there are no team-members, anybody can join
+		if (!hasRole(course.members, 'team')) {
+			return operatorId === userId;
+		}
 		
 		// Only members of the team can take-on other people
 		if (hasRoleUser(course.members, 'team', operatorId)) {
