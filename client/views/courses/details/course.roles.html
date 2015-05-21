@@ -13,8 +13,9 @@
 		{{>profilelink member.user}}
 		<ul class='roles list-unstyled'>
 			{{#each member.roles}}
-				<li class='{{this}}'> (Icon)  {{this}} </li>
+				<li class='{{this}}'>{{roleShort}}</li>
 			{{/each}}
+			{{#if maySubscribe}}<button class='makeTeam'>Add to team!!!</button>{{/if}}
 		</ul>
 		<span class="member_comment">
 			{{#if editableMessage}}
@@ -73,12 +74,14 @@
 					</div>
 				</div>
 			{{else}}
+				{{#if maySubscribe roletype.type}}
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
 							<span class="{{roletype.gl_icon}}"></span> &nbsp;&nbsp;&nbsp;
 							{{#with roletype}}{{roleSubscribe}}{{/with}}
 						</div>
 					</button>
+				{{/if}}
 			{{/if}}
 		{{/if}}
 		</div>

@@ -1,10 +1,19 @@
 mfPkg.addNative(
 {
+  "roles.team.short": {
+    "key": "roles.team.short",
+    "text": "team",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 5,
+    "template": "mfFixedTranslations",
+    "mtime": 1432167286608,
+    "ctime": 1432167286608
+  },
   "roles.team.subscribe": {
     "key": "roles.team.subscribe",
     "text": "I help organize",
     "file": "./client/mfFixedTranslations.html",
-    "line": 5,
+    "line": 6,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -13,16 +22,25 @@ mfPkg.addNative(
     "key": "roles.participant.subscribe",
     "text": "I want to take part",
     "file": "./client/mfFixedTranslations.html",
-    "line": 7,
+    "line": 8,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "roles.mentor.short": {
+    "key": "roles.mentor.short",
+    "text": "mentor",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 10,
+    "template": "mfFixedTranslations",
+    "mtime": 1432167286608,
+    "ctime": 1432167286608
   },
   "roles.mentor.subscribe": {
     "key": "roles.mentor.subscribe",
     "text": "I can be a mentor",
     "file": "./client/mfFixedTranslations.html",
-    "line": 9,
+    "line": 11,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -31,16 +49,25 @@ mfPkg.addNative(
     "key": "roles.mentor.description",
     "text": "help as mentor",
     "file": "./client/mfFixedTranslations.html",
-    "line": 10,
+    "line": 12,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "roles.host.short": {
+    "key": "roles.host.short",
+    "text": "host",
+    "file": "./client/mfFixedTranslations.html",
+    "line": 14,
+    "template": "mfFixedTranslations",
+    "mtime": 1432167286608,
+    "ctime": 1432167286608
   },
   "roles.host.subscribe": {
     "key": "roles.host.subscribe",
     "text": "I have a room to host this",
     "file": "./client/mfFixedTranslations.html",
-    "line": 12,
+    "line": 15,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -49,7 +76,7 @@ mfPkg.addNative(
     "key": "roles.host.description",
     "text": "provide a room to host the course",
     "file": "./client/mfFixedTranslations.html",
-    "line": 13,
+    "line": 16,
     "template": "mfFixedTranslations",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -58,7 +85,7 @@ mfPkg.addNative(
     "key": "category.sports",
     "text": "Sports / Movement",
     "file": "./client/mfFixedTranslations.html",
-    "line": 18,
+    "line": 21,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -67,7 +94,7 @@ mfPkg.addNative(
     "key": "category.martialarts",
     "text": "Martial arts",
     "file": "./client/mfFixedTranslations.html",
-    "line": 19,
+    "line": 22,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -76,7 +103,7 @@ mfPkg.addNative(
     "key": "category.teamsport",
     "text": "Team sport",
     "file": "./client/mfFixedTranslations.html",
-    "line": 20,
+    "line": 23,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -85,7 +112,7 @@ mfPkg.addNative(
     "key": "category.artistry",
     "text": "Artistry",
     "file": "./client/mfFixedTranslations.html",
-    "line": 21,
+    "line": 24,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -94,7 +121,7 @@ mfPkg.addNative(
     "key": "category.handicraft",
     "text": "Handicraft",
     "file": "./client/mfFixedTranslations.html",
-    "line": 23,
+    "line": 26,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -103,7 +130,7 @@ mfPkg.addNative(
     "key": "category.metalwood",
     "text": "Woodwork / Metalwork",
     "file": "./client/mfFixedTranslations.html",
-    "line": 24,
+    "line": 27,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -112,7 +139,7 @@ mfPkg.addNative(
     "key": "category.electronics",
     "text": "Electronics / Electricity",
     "file": "./client/mfFixedTranslations.html",
-    "line": 25,
+    "line": 28,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -121,7 +148,7 @@ mfPkg.addNative(
     "key": "category.fabric",
     "text": "Synthetic material / Fabric",
     "file": "./client/mfFixedTranslations.html",
-    "line": 26,
+    "line": 29,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -130,7 +157,7 @@ mfPkg.addNative(
     "key": "category.gardening",
     "text": "Gardening / Agriculture",
     "file": "./client/mfFixedTranslations.html",
-    "line": 27,
+    "line": 30,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -139,7 +166,7 @@ mfPkg.addNative(
     "key": "category.construction",
     "text": "Construction",
     "file": "./client/mfFixedTranslations.html",
-    "line": 28,
+    "line": 31,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -148,7 +175,7 @@ mfPkg.addNative(
     "key": "category.sciences",
     "text": "Natural Science",
     "file": "./client/mfFixedTranslations.html",
-    "line": 30,
+    "line": 33,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -157,7 +184,7 @@ mfPkg.addNative(
     "key": "category.geography",
     "text": "Geography",
     "file": "./client/mfFixedTranslations.html",
-    "line": 31,
+    "line": 34,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -166,7 +193,7 @@ mfPkg.addNative(
     "key": "category.physics",
     "text": "Physics",
     "file": "./client/mfFixedTranslations.html",
-    "line": 32,
+    "line": 35,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -175,7 +202,7 @@ mfPkg.addNative(
     "key": "category.medicine",
     "text": "Medicine",
     "file": "./client/mfFixedTranslations.html",
-    "line": 33,
+    "line": 36,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -184,7 +211,7 @@ mfPkg.addNative(
     "key": "category.mathematics",
     "text": "Mathematics",
     "file": "./client/mfFixedTranslations.html",
-    "line": 34,
+    "line": 37,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -193,7 +220,7 @@ mfPkg.addNative(
     "key": "category.chemistry",
     "text": "Chemistry",
     "file": "./client/mfFixedTranslations.html",
-    "line": 35,
+    "line": 38,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -202,7 +229,7 @@ mfPkg.addNative(
     "key": "category.biology",
     "text": "Biology",
     "file": "./client/mfFixedTranslations.html",
-    "line": 36,
+    "line": 39,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -211,7 +238,7 @@ mfPkg.addNative(
     "key": "category.humanities",
     "text": "Arts & Humanities",
     "file": "./client/mfFixedTranslations.html",
-    "line": 38,
+    "line": 41,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -220,7 +247,7 @@ mfPkg.addNative(
     "key": "category.languages",
     "text": "Languages",
     "file": "./client/mfFixedTranslations.html",
-    "line": 39,
+    "line": 42,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -229,7 +256,7 @@ mfPkg.addNative(
     "key": "category.history",
     "text": "History",
     "file": "./client/mfFixedTranslations.html",
-    "line": 40,
+    "line": 43,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -238,7 +265,7 @@ mfPkg.addNative(
     "key": "category.sociology",
     "text": "Sociology",
     "file": "./client/mfFixedTranslations.html",
-    "line": 41,
+    "line": 44,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -247,7 +274,7 @@ mfPkg.addNative(
     "key": "category.politics",
     "text": "Politics",
     "file": "./client/mfFixedTranslations.html",
-    "line": 42,
+    "line": 45,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -256,7 +283,7 @@ mfPkg.addNative(
     "key": "category.philosophy",
     "text": "Philosophy",
     "file": "./client/mfFixedTranslations.html",
-    "line": 43,
+    "line": 46,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -265,7 +292,7 @@ mfPkg.addNative(
     "key": "category.lawbusiness",
     "text": "Business Studies Economics and Law",
     "file": "./client/mfFixedTranslations.html",
-    "line": 44,
+    "line": 47,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -274,7 +301,7 @@ mfPkg.addNative(
     "key": "category.culture",
     "text": "Culture",
     "file": "./client/mfFixedTranslations.html",
-    "line": 46,
+    "line": 49,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -283,7 +310,7 @@ mfPkg.addNative(
     "key": "category.literature",
     "text": "Literature",
     "file": "./client/mfFixedTranslations.html",
-    "line": 47,
+    "line": 50,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -292,7 +319,7 @@ mfPkg.addNative(
     "key": "category.theatre",
     "text": "Theater",
     "file": "./client/mfFixedTranslations.html",
-    "line": 48,
+    "line": 51,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -301,7 +328,7 @@ mfPkg.addNative(
     "key": "category.music",
     "text": "Music",
     "file": "./client/mfFixedTranslations.html",
-    "line": 49,
+    "line": 52,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -310,7 +337,7 @@ mfPkg.addNative(
     "key": "category.fineart",
     "text": "Fine Art",
     "file": "./client/mfFixedTranslations.html",
-    "line": 50,
+    "line": 53,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -319,7 +346,7 @@ mfPkg.addNative(
     "key": "category.design",
     "text": "Design",
     "file": "./client/mfFixedTranslations.html",
-    "line": 51,
+    "line": 54,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -328,7 +355,7 @@ mfPkg.addNative(
     "key": "category.photography",
     "text": "Photography",
     "file": "./client/mfFixedTranslations.html",
-    "line": 52,
+    "line": 55,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -337,7 +364,7 @@ mfPkg.addNative(
     "key": "category.film",
     "text": "Film",
     "file": "./client/mfFixedTranslations.html",
-    "line": 53,
+    "line": 56,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -346,7 +373,7 @@ mfPkg.addNative(
     "key": "category.cooking",
     "text": "Cooking",
     "file": "./client/mfFixedTranslations.html",
-    "line": 54,
+    "line": 57,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -355,7 +382,7 @@ mfPkg.addNative(
     "key": "category.subculture",
     "text": "Subculture",
     "file": "./client/mfFixedTranslations.html",
-    "line": 55,
+    "line": 58,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -364,7 +391,7 @@ mfPkg.addNative(
     "key": "category.computer",
     "text": "Computer",
     "file": "./client/mfFixedTranslations.html",
-    "line": 57,
+    "line": 60,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -373,7 +400,7 @@ mfPkg.addNative(
     "key": "category.internet",
     "text": "Internet",
     "file": "./client/mfFixedTranslations.html",
-    "line": 58,
+    "line": 61,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -382,7 +409,7 @@ mfPkg.addNative(
     "key": "category.programming",
     "text": "Programming",
     "file": "./client/mfFixedTranslations.html",
-    "line": 59,
+    "line": 62,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -391,7 +418,7 @@ mfPkg.addNative(
     "key": "category.operating",
     "text": "Software Operating",
     "file": "./client/mfFixedTranslations.html",
-    "line": 60,
+    "line": 63,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -400,7 +427,7 @@ mfPkg.addNative(
     "key": "category.♥undefined♥",
     "text": "♥Undefined♥",
     "file": "./client/mfFixedTranslations.html",
-    "line": 62,
+    "line": 65,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -409,7 +436,7 @@ mfPkg.addNative(
     "key": "category.experimental",
     "text": "Experimental",
     "file": "./client/mfFixedTranslations.html",
-    "line": 63,
+    "line": 66,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160527950
@@ -418,7 +445,7 @@ mfPkg.addNative(
     "key": "category.spiritual",
     "text": "Spirituality",
     "file": "./client/mfFixedTranslations.html",
-    "line": 64,
+    "line": 67,
     "template": "mfFixedTranslations",
     "ctime": 1432160446754,
     "mtime": 1432160446754
@@ -2155,7 +2182,7 @@ mfPkg.addNative(
     "key": "course.roles.you_are",
     "text": "You are",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
+    "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2164,7 +2191,7 @@ mfPkg.addNative(
     "key": "course.roles.anonymously",
     "text": "anonymously",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
+    "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2173,7 +2200,7 @@ mfPkg.addNative(
     "key": "course.roles.subscribed_as",
     "text": "subscribed as",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
+    "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2182,7 +2209,7 @@ mfPkg.addNative(
     "key": "course.roles.retract",
     "text": "Retract",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 41,
+    "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2191,7 +2218,7 @@ mfPkg.addNative(
     "key": "course.roles.enrol_as",
     "text": "Enrol as",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 50,
+    "line": 51,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2200,7 +2227,7 @@ mfPkg.addNative(
     "key": "course.roles.leave_message",
     "text": "Leave a message/wish/interest here:",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 55,
+    "line": 56,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2209,7 +2236,7 @@ mfPkg.addNative(
     "key": "course.roles.incognitosubscription",
     "text": "incognito",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 60,
+    "line": 61,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2218,7 +2245,7 @@ mfPkg.addNative(
     "key": "course.roles.enrol",
     "text": "Enrol",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 67,
+    "line": 68,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2227,7 +2254,7 @@ mfPkg.addNative(
     "key": "subscribemessage.saving.error",
     "text": "Unable to change your message. We encountered the following error: {ERROR}",
     "file": "./client/views/courses/details/course.roles.js",
-    "line": 54,
+    "line": 77,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2236,7 +2263,7 @@ mfPkg.addNative(
     "key": "subscribemessage.saving.success",
     "text": "Changed your message on {NAME}",
     "file": "./client/views/courses/details/course.roles.js",
-    "line": 56,
+    "line": 79,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2347,7 +2374,7 @@ mfPkg.addNative(
     "line": 67,
     "func": "function()",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "privilege.addedAdmin": {
@@ -2357,7 +2384,7 @@ mfPkg.addNative(
     "line": 54,
     "func": "function(err)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "privilege.addedUpload": {
@@ -2367,7 +2394,7 @@ mfPkg.addNative(
     "line": 64,
     "func": "function(err)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "privilege.removed": {
@@ -2377,7 +2404,7 @@ mfPkg.addNative(
     "line": 75,
     "func": "function(err)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "email.sent": {
@@ -2387,7 +2414,7 @@ mfPkg.addNative(
     "line": 118,
     "func": "function(error, result)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "categories.new": {
@@ -2397,7 +2424,7 @@ mfPkg.addNative(
     "line": 37,
     "template": "categorylist",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "categories.new.name": {
@@ -2407,7 +2434,7 @@ mfPkg.addNative(
     "line": 40,
     "template": "categorylist",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "report.error": {
@@ -2417,7 +2444,7 @@ mfPkg.addNative(
     "line": 20,
     "func": "function(error, result)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "report.confirm": {
@@ -2427,7 +2454,7 @@ mfPkg.addNative(
     "line": 22,
     "func": "function(error, result)",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "Please.login": {
@@ -2437,7 +2464,7 @@ mfPkg.addNative(
     "line": 109,
     "func": "function()",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "editable.sorrychanged": {
@@ -2447,7 +2474,7 @@ mfPkg.addNative(
     "line": 33,
     "func": "function()",
     "ctime": 1432132053599,
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "removed": true
   },
   "profile.pref_site": {
@@ -2456,12 +2483,12 @@ mfPkg.addNative(
     "file": "./client/views/users/userprofile.html",
     "line": 11,
     "template": "profilelink",
-    "mtime": 1432160527951,
+    "mtime": 1432167286608,
     "ctime": 1432132053599,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1432160527951,
-  "updatedAt": 1432160527951
+  "extractedAt": 1432167286608,
+  "updatedAt": 1432167286608
 });
