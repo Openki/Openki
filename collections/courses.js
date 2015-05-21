@@ -92,6 +92,11 @@ maySubscribe = function(operatorId, course, userId, role) {
 	// Do not allow subscribing when already subscribed
 	if (hasRoleUser(course.members, role, userId)) return false;
 
+	// Admins may do anything
+	if (privileged(operatorId, 'admin')) {
+		return true;
+	}
+	
 	// The team role is restricted
 	if ('team' === role) {
 		
