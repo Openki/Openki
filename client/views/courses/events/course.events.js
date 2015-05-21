@@ -1,8 +1,8 @@
 "use strict";
 
 Template.course_events.helpers({
-	mayAdd: function(members) {
-		return hasRole(members, 'team');
+	mayAdd: function() {
+		return hasRoleUser(this.course.members, 'team', Meteor.userId());
 	},
 	
 	events_list: function() {
