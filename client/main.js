@@ -3,7 +3,6 @@
 ////////////// db-subscriptions:
 
 var regionSub = Meteor.subscribe('regions');
-Meteor.subscribe('categories');
 Meteor.subscribe('locations');
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');

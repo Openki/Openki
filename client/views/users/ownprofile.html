@@ -3,12 +3,12 @@
 		<div id="profile">
 			<h1 class="name">{{mf 'profile.my_profile' 'My profile'}}</h1>
 		{{#unless user}}
-			<p>{{mf 'profile.not_logged_in' "you're not logged in..."}}</p>
+			<p>{{mf 'profile.not_logged_in' "You're not logged in..."}}</p>
 		{{else}}
 			{{#if isEditing}}
 				<p class="descr_small">{{mf 'profile.userid' 'UserID:'}}{{user._id}}</p>
 				<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
-				<p>{{mf 'profile.input.email' 'Email (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
+				<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
 				<p>{{mf 'profile.input.new_pswd' 'New password (optional):'}} <input type="password" id="editform_newpassword" value=""/></p>
 				<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
 				<input type="button" class="save" value="Save" />
@@ -16,7 +16,7 @@
 				<p class="descr_small">{{mf 'profile.id' 'ID:'}} {{user._id}}</p>
 				<p class="descr">{{mf 'profile.username' 'Username:'}} {{user.name}}</p>
 				{{#if user.have_email}}
-				<p class="descr">{{mf 'profile.email' 'Email:'}} {{user.email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
+				<p class="descr">{{mf 'profile.email' 'E-Mail:'}} {{user.email}}  <span class="descr_small">  ({{verifiedEmail}}) </span>
 					{{#unless user.veryfiedEmailTrue}}
 						<input type="button" class="verify" value="Verify my Email" />
 					{{/unless}}
@@ -35,10 +35,10 @@
 				</p>
 				<input type="button" class="edit" value="Edit" />
 				<p class="descr">
-					<a href="/translate">{{mf 'Profile.translate_this_page' 'help us to translate this Page here'}}</a>
+					<a href="/translate">{{mf 'Profile.translate_this_page' 'Help us to translate this Page here'}}</a>
 				</p>
 				{{#if verifyDelete}}
-					<div>{{mf 'profile.reallydelete' 'Please confirm you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
+					<div>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
 					<button class="confirmdelete">{{mf 'profile.delete' 'Delete my profile'}}</button>
 					<button class="verifycancel">{{mf 'profile.deletecancel' 'Cancel'}}</button>
 					</div>

@@ -16,7 +16,7 @@ Events = new Meteor.Collection("Events");
 
 mayEditEvent = function(user, event) {
 	if (event.createdBy == user._id) return true;
-	if (user.isAdmin) return true;
+	if (privileged(user, 'admin')) return true;
 	if (event.course_id) {
 		var course = Courses.findOne({_id: event.course_id, members: {$elemMatch: { user: user._id, roles: 'team' }}});
 		if (course) return true;

@@ -5,18 +5,6 @@ get_timestamp = function (){
 	return now.getTime();
 }
 
-hasRole = function(members, role) {
-	if (!members) return false;
-	var has = false;
-	members.forEach(function(member) {
-		if (member.roles.indexOf(role) !== -1) {
-			has = true;
-			return true;
-		}
-	})
-	return has;
-}
-
 havingRole = function(members, role) {
 	return _.reduce(members, function(ids, member) {
 		if (member.roles.indexOf(role) !== -1) ids.push(member.user)
@@ -40,29 +28,9 @@ getMember = function(members, user) {
 mayEdit = function(user, course){
 	if(!user)
 		return false;
-	return user && (user.isAdmin || hasRoleUser(course.members, 'team', user._id))
+	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id))
 }
 
-hasRoleUser = function(members, role, user) {
-	var has = false;
-	var loggeduser = Meteor.user()
-
-	members.forEach(function(member) {
-		if (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
-			if(member.roles.indexOf(role) !== -1) has = 'anon'
-		}
-	})
-
-	members.forEach(function(member) {
-		if (member.user == user) {
-			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
-			return true;
-		}
-	})
-
-
-	return has;
-}
 
 
 /* Get a username from ID
@@ -125,6 +93,11 @@ pleaseLogin = function() {
 
 
 /*************** HandleBars Helpers ***********************/
+
+Handlebars.registerHelper ("categoryName", function(cat) {
+	cat = cat || this;
+	return mf('category.'+this);
+});
 
 Handlebars.registerHelper ("privacyEnabled", function(){
 	var user = Meteor.user();
@@ -225,13 +198,6 @@ Handlebars.registerHelper('isYes', function(val) {
 });
 Handlebars.registerHelper('isOntheway', function(val) {
  	return val === 'ontheway'
-});
-
-
-Handlebars.registerHelper('isAdmin', function() {
-    var user = Meteor.user()
-    error.log(user.isAdmin)
-    return user && user.isAdmin
 });
 
 

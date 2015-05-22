@@ -1,8 +1,11 @@
 "use strict";
 
 Meteor.publish ('courses', function(region){
-	if(!region) return Courses.find();
-				return Courses.find({region: region});
+	if(!region) {
+		return Courses.find();
+	} else {
+		return Courses.find({region: region});
+	}
 });
 
 Meteor.publish ('courseDetails', function(id) {
@@ -10,10 +13,6 @@ Meteor.publish ('courseDetails', function(id) {
 });
 
 Meteor.publish ('coursesFind', coursesFind);
-
-Meteor.publish ('categories', function(){
-	return Categories.find();
-});
 
 Meteor.publish ('roles', function(){
 	return Roles.find();
@@ -35,8 +34,11 @@ Meteor.publish('discussion', function(courseId) {
 
 
 Meteor.publish('events', function(region) {
-	if(!region) return Events.find();
-			   return Events.find({region: region});
+	if(!region) {
+		return Events.find();
+	} else {
+		return Events.find({region: region});
+	}
 });
 
 Meteor.publish('event', function(eventId) {
@@ -57,17 +59,15 @@ Meteor.publish('nextEvent', function(courseId) {
 	return Events.find({ course_id: courseId });
 });
 
-Meteor.publish ('users', function(){
-	return Meteor.users.find({}, {
-		fields: {username: 1}
-	});
-
-});
-
 Meteor.publish('user', function(userId) {
+	var fields = {username: 1};
+	
+	// Admins may see other's privileges
+	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
+
 	return Meteor.users.find(
 		{ _id: userId },
-		{ fields: {username: 1} }
+		{ fields: fields }
 	);
 });
 

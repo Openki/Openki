@@ -169,9 +169,14 @@ Template.event.events({
 		if (pleaseLogin()) return;
 		if (confirm('Delete event "'+this.title+'"?')) {
 			var title = this.title
+			var course = this.course_id;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
-				if (eventRemoved) addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
-				else console.log('An error Occured while deleting Event'+error);
+				if (eventRemoved) {
+					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
+					if (course) Router.go('showCourse', { _id: course });
+				} else {
+					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'));
+				}
 			});
 			Template.instance().editing.set(false);
 		}
