@@ -6,8 +6,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 5,
     "template": "mfFixedTranslations",
-    "mtime": 1432167286608,
-    "ctime": 1432167286608
+    "ctime": 1432167286608,
+    "mtime": 1432167286608
   },
   "roles.team.subscribe": {
     "key": "roles.team.subscribe",
@@ -33,8 +33,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 10,
     "template": "mfFixedTranslations",
-    "mtime": 1432167286608,
-    "ctime": 1432167286608
+    "ctime": 1432167286608,
+    "mtime": 1432167286608
   },
   "roles.mentor.subscribe": {
     "key": "roles.mentor.subscribe",
@@ -60,8 +60,8 @@ mfPkg.addNative(
     "file": "./client/mfFixedTranslations.html",
     "line": 14,
     "template": "mfFixedTranslations",
-    "mtime": 1432167286608,
-    "ctime": 1432167286608
+    "ctime": 1432167286608,
+    "mtime": 1432167286608
   },
   "roles.host.subscribe": {
     "key": "roles.host.subscribe",
@@ -756,6 +756,15 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "profile.deleted": {
+    "key": "profile.deleted",
+    "text": "Your account has been deleted",
+    "file": "./client/views/users/ownprofile.js",
+    "line": 67,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
   "profile.users_profile_page": {
     "key": "profile.users_profile_page",
     "text": "{NAME}'s Profile",
@@ -909,6 +918,24 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "privilege.addedAdmin": {
+    "key": "privilege.addedAdmin",
+    "text": "Granted admin privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 54,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
+  "privilege.addedUpload": {
+    "key": "privilege.addedUpload",
+    "text": "Granted upload privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 64,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
   "privilege.errorRemoving": {
     "key": "privilege.errorRemoving",
     "text": "Unable to remove privilege: {ERROR}",
@@ -917,6 +944,24 @@ mfPkg.addNative(
     "func": "function(err)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "privilege.removed": {
+    "key": "privilege.removed",
+    "text": "Removed privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 75,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
+  "email.sent": {
+    "key": "email.sent",
+    "text": "email could have been sent",
+    "file": "./client/views/users/userprofile.js",
+    "line": 118,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
   },
   "location.details.title": {
     "key": "location.details.title",
@@ -1660,16 +1705,25 @@ mfPkg.addNative(
     "key": "event.removed",
     "text": "Sucessfully removed event \"{TITLE}\".",
     "file": "./client/views/events/event.js",
-    "line": 173,
+    "line": 175,
     "func": "function (error, eventRemoved)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "event.remove.error": {
+    "key": "event.remove.error",
+    "text": "Error during removal of event \"{TITLE}\".",
+    "file": "./client/views/events/event.js",
+    "line": 178,
+    "func": "function (error, eventRemoved)",
+    "mtime": 1432388269731,
+    "ctime": 1432388269731
   },
   "file.removed": {
     "key": "file.removed",
     "text": "Sucessfully removed file {FILENAME}.",
     "file": "./client/views/events/event.js",
-    "line": 234,
+    "line": 239,
     "func": "function (error, fileRemoved)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1678,7 +1732,7 @@ mfPkg.addNative(
     "key": "event.saving.error",
     "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
     "file": "./client/views/events/event.js",
-    "line": 309,
+    "line": 314,
     "func": "function(error, eventId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1687,7 +1741,7 @@ mfPkg.addNative(
     "key": "event.saving.success",
     "text": "Saved changes to event \"{TITLE}\".",
     "file": "./client/views/events/event.js",
-    "line": 312,
+    "line": 317,
     "func": "function(error, eventId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2254,7 +2308,7 @@ mfPkg.addNative(
     "key": "subscribemessage.saving.error",
     "text": "Unable to change your message. We encountered the following error: {ERROR}",
     "file": "./client/views/courses/details/course.roles.js",
-    "line": 77,
+    "line": 82,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2263,7 +2317,7 @@ mfPkg.addNative(
     "key": "subscribemessage.saving.success",
     "text": "Changed your message on {NAME}",
     "file": "./client/views/courses/details/course.roles.js",
-    "line": 79,
+    "line": 84,
     "func": "function(err, courseId)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2285,6 +2339,24 @@ mfPkg.addNative(
     "template": "calendar",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "report.error": {
+    "key": "report.error",
+    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
+    "file": "./client/report/helpers.js",
+    "line": 20,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
+  "report.confirm": {
+    "key": "report.confirm",
+    "text": "Your report was sent. A human will try to find an appropriate solution.",
+    "file": "./client/report/helpers.js",
+    "line": 22,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
   },
   "report.sending": {
     "key": "report.sending",
@@ -2340,6 +2412,24 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "Please.login": {
+    "key": "Please.login",
+    "text": "Please login or register",
+    "file": "./client/lib/client.functions.js",
+    "line": 77,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
+  "editable.sorrychanged": {
+    "key": "editable.sorrychanged",
+    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
+    "file": "./client/editable/helpers.js",
+    "line": 33,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432167286608
+  },
   "editable.add_text": {
     "key": "editable.add_text",
     "text": "Add text here",
@@ -2367,56 +2457,6 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "profile.deleted": {
-    "key": "profile.deleted",
-    "text": "Your account has been deleted",
-    "file": "./client/views/users/ownprofile.js",
-    "line": 67,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "privilege.addedAdmin": {
-    "key": "privilege.addedAdmin",
-    "text": "Granted admin privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 54,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "privilege.addedUpload": {
-    "key": "privilege.addedUpload",
-    "text": "Granted upload privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 64,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "privilege.removed": {
-    "key": "privilege.removed",
-    "text": "Removed privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 75,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "email.sent": {
-    "key": "email.sent",
-    "text": "email could have been sent",
-    "file": "./client/views/users/userprofile.js",
-    "line": 118,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
   "categories.new": {
     "key": "categories.new",
     "text": "New category",
@@ -2424,7 +2464,7 @@ mfPkg.addNative(
     "line": 37,
     "template": "categorylist",
     "ctime": 1432132053599,
-    "mtime": 1432167286608,
+    "mtime": 1432388269732,
     "removed": true
   },
   "categories.new.name": {
@@ -2434,47 +2474,7 @@ mfPkg.addNative(
     "line": 40,
     "template": "categorylist",
     "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "report.error": {
-    "key": "report.error",
-    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
-    "file": "./client/report/helpers.js",
-    "line": 20,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "report.confirm": {
-    "key": "report.confirm",
-    "text": "Your report was sent. A human will try to find an appropriate solution.",
-    "file": "./client/report/helpers.js",
-    "line": 22,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "Please.login": {
-    "key": "Please.login",
-    "text": "Please login or register",
-    "file": "./client/lib/client.functions.js",
-    "line": 109,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
-    "removed": true
-  },
-  "editable.sorrychanged": {
-    "key": "editable.sorrychanged",
-    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
-    "file": "./client/editable/helpers.js",
-    "line": 33,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432167286608,
+    "mtime": 1432388269732,
     "removed": true
   },
   "profile.pref_site": {
@@ -2483,12 +2483,12 @@ mfPkg.addNative(
     "file": "./client/views/users/userprofile.html",
     "line": 11,
     "template": "profilelink",
-    "mtime": 1432167286608,
+    "mtime": 1432388269732,
     "ctime": 1432132053599,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1432167286608,
-  "updatedAt": 1432167286608
+  "extractedAt": 1432388269732,
+  "updatedAt": 1432388269732
 });
