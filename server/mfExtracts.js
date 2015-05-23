@@ -1,5 +1,14 @@
 mfPkg.addNative(
 {
+  "roles.subscribe.team": {
+    "key": "roles.subscribe.team",
+    "text": "I help organiiize",
+    "file": "./collections/roles.js",
+    "line": 15,
+    "func": "unknown",
+    "ctime": 1432386224128,
+    "mtime": 1432387450260
+  },
   "roles.team.short": {
     "key": "roles.team.short",
     "text": "team",
@@ -1716,8 +1725,8 @@ mfPkg.addNative(
     "file": "./client/views/events/event.js",
     "line": 178,
     "func": "function (error, eventRemoved)",
-    "mtime": 1432388269731,
-    "ctime": 1432388269731
+    "ctime": 1432388269731,
+    "mtime": 1432388269731
   },
   "file.removed": {
     "key": "file.removed",
@@ -2456,39 +2465,9 @@ mfPkg.addNative(
     "template": "editable",
     "ctime": 1432132053599,
     "mtime": 1432132053599
-  },
-  "categories.new": {
-    "key": "categories.new",
-    "text": "New category",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 37,
-    "template": "categorylist",
-    "ctime": 1432132053599,
-    "mtime": 1432388269732,
-    "removed": true
-  },
-  "categories.new.name": {
-    "key": "categories.new.name",
-    "text": "Name:",
-    "file": "./client/views/misc/categories/categories.html",
-    "line": 40,
-    "template": "categorylist",
-    "ctime": 1432132053599,
-    "mtime": 1432388269732,
-    "removed": true
-  },
-  "profile.pref_site": {
-    "key": "profile.pref_site",
-    "text": "here's your pref. site",
-    "file": "./client/views/users/userprofile.html",
-    "line": 11,
-    "template": "profilelink",
-    "mtime": 1432388269732,
-    "ctime": 1432132053599,
-    "removed": true
   }
 }, 
 {
-  "extractedAt": 1432388269732,
-  "updatedAt": 1432388269732
+  "extractedAt": 1432389097142,
+  "updatedAt": 1432388269731
 });
