@@ -92,20 +92,20 @@ testcourses = [{
 		{'user':'IvanZ', 'roles': ['participant']},
 		{'user':'Barbie92', 'roles': ['participant']}
 	]
-},{
+},/*{
 	'name':        'Super 8',
 	'categories': ['Kunst'],
 	'tags':       ['Kunst'],
 	'createdby':   'greg',
 	'flaged':     ['suspicious'],
-	'description': 'hab einiges an super-8-ghizzle das ich gar nicht brauch: kamera, projektor und so n fancy screen (siehe foto). falls jemand was deichseln will'/*: ich, 25, gross, schlank, blond, schön, thurgauer dialekt, freu mich auf dein interesse!'*/,
+	'description': 'hab einiges an super-8-ghizzle das ich gar nicht brauch: kamera, projektor und so n fancy screen (siehe foto). falls jemand was deichseln will': ich, 25, gross, schlank, blond, schön, thurgauer dialekt, freu mich auf dein interesse!',
 	'roles':      ['team', 'participant', 'host'],
 	'members': [
 		{'user':'greg', 'roles': ['team','host']},
 		{'user':'LeOnI', 'roles': ['participant']},
 		{'user':'IvanZ', 'roles': ['participant']}
 	]
-},{
+},*/{
 	'name':        'Ubuntu auf Mac (dual-Boot)',
 	'categories': ['Softwarebedienung'],
 	'tags':       [],
