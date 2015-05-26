@@ -1,9 +1,20 @@
 ClientMessages = new Meteor.Collection(null);
 
-addMessage = function(message) {
-  ClientMessages.insert({message: message})
+addMessage = function(message, typeParam) {
+	var type = typeParam || 'info';
+
+	var messageId = ClientMessages.insert({
+		message: message,
+		type: type,
+	});
+
+	if (type == 'success') {
+		setTimeout(function() {
+			removeMessage(messageId);
+		}, 5000);
+	}
 }
 
-removeMessage = function(message) {
-  ClientMessages.remove({_id: message._id})
-}
+removeMessage = function(messageId) {
+	ClientMessages.remove({_id: messageId});
+};

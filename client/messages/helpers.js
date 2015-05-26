@@ -6,6 +6,6 @@ Template.messages.helpers({
 
 Template.message.events({
 	'click button.close': function() {
-		removeMessage(this);
+		removeMessage(this._id);
 	}
 });
