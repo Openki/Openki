@@ -20,9 +20,13 @@ Template.roleDetail.created = function() {
 
 Template.roleDetail.helpers({
 	enrolling: function() { return Template.instance().enrolling.get() },
-							
+
 	roleSubscribe: function() {
 		return 'roles.'+this.type+'.subscribe';
+	},	
+	
+	roleSubscribed: function() {
+		return 'roles.'+this.type+'.subscribed';
 	},
 	
 	maySubscribe: function(role) {
