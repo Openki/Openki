@@ -18,7 +18,7 @@ Template.course_edit.helpers({
 	},
 
 	roleDescription: function() {
-		return mf('roles.'+this.type+'.description');
+		return 'roles.'+this.type+'.description';
 	},
 
 	// Emit 'checked' string if id shows up as member or property of cats

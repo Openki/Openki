@@ -13,7 +13,7 @@
 		{{>profilelink member.user}}
 		<ul class='roles list-unstyled'>
 			{{#each member.roles}}
-				<li class='{{this}}'>{{roleShort}}</li>
+				<li class='{{this}}'>{{mf roleShort}}</li>
 			{{/each}}
 			{{#if maySubscribe}}<button class='makeTeam'>Add to team!!!</button>{{/if}}
 		</ul>
@@ -78,7 +78,7 @@
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
 							<span class="{{roletype.icon}}"></span> &nbsp;
-							{{#with roletype}}{{roleSubscribe}}{{/with}} 
+							{{#with roletype}}{{mf roleSubscribe}}{{/with}} 
 						</div>
 					</button>
 				{{/if}}

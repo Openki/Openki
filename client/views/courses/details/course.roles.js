@@ -1,5 +1,5 @@
 Template.memberRoles.helpers({
-	roleShort: function() { return mf('roles.'+this+'.short'); },
+	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
 		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
@@ -22,7 +22,7 @@ Template.roleDetail.helpers({
 	enrolling: function() { return Template.instance().enrolling.get() },
 							
 	roleSubscribe: function() {
-		return mf('roles.'+this.type+'.subscribe');
+		return 'roles.'+this.type+'.subscribe';
 	},
 	
 	maySubscribe: function(role) {
