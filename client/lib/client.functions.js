@@ -207,3 +207,4 @@ Handlebars.registerHelper('plain', function(html) {
 	div.innerHTML = html;
 	return div.textContent || div.innerText || '';
 });
+
