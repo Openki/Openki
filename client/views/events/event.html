@@ -141,7 +141,19 @@
 					<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
 				</div>
 			</div>
+			{{#if showRegionSelection}}
+			<div class="col-xs-12 col-sm-4">
+				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
+				<select name='region' class="region_select">
+					<option value=''>{{mf 'course.edit.pls_select' 'Please select'}}</option>
+				{{#each regions}}
+					<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
+				{{/each}}
+				</select>
+			</div>
+			{{/if}}
 		</div>
+		
 		<div class="col-sm-12 no-padding event_edit_buttons">
 			<div class="col-xs-12 col-sm-6">
 				<button type="button" class="saveEditEvent btn btn-primary form-control">

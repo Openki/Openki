@@ -34,6 +34,24 @@ Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
+
+	regions: function(){
+		return Regions.find();
+	},
+
+	showRegionSelection: function() {
+		// You can select the region for events that are new and not associated
+		// with a course
+		if (this._id) return false;
+		if (this.course_id) return false;
+		return true;
+	},
+	
+	currentRegion: function(region) {
+		var currentRegion = Session.get('region')
+		return currentRegion && region._id == currentRegion;
+	},
+
 	frequencyOptions:function() {
 	    return [{
 	      frequency:0,
@@ -305,7 +323,7 @@ Template.event.events({
 				editevent.region = course.region;
 				editevent.course_id = this.course_id;
 			} else {
-				editevent.region = Session.get('region');
+				editevent.region = template.$('.region_select').val();
 			}
 		}
 		
