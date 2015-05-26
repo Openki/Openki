@@ -31,14 +31,20 @@ Deps.autorun(function() {
 });
 */
 
-// Use browser language for date formatting
-Deps.autorun(function() {
-	var desiredLocale = Session.get('locale');
-	var setLocale = moment.locale(desiredLocale);
-	Session.set('timeLocale', setLocale);
-	if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
-});
+Meteor.startup(function() {
+	Session.set('locale', localStorage.getItem('locale'));
 
+	Deps.autorun(function() {
+		var desiredLocale = Session.get('locale');
+		localStorage.setItem('locale', desiredLocale);
+		
+		// Tell moment to switch the locale
+		// Also change timeLocale which will invalidate the parts that depends on it
+		var setLocale = moment.locale(desiredLocale);
+		Session.set('timeLocale', setLocale);
+		if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+	});
+});
 minuteTime = new ReactiveVar();
 
 // Set up reactive date sources that can be used for updates based on time
