@@ -162,20 +162,11 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "profile.userid": {
-    "key": "profile.userid",
-    "text": "UserID:",
-    "file": "./client/views/users/ownprofile.html",
-    "line": 9,
-    "template": "profile",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "profile.input.username": {
     "key": "profile.input.username",
     "text": "Username:",
     "file": "./client/views/users/ownprofile.html",
-    "line": 10,
+    "line": 9,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -184,7 +175,7 @@ mfPkg.addNative(
     "key": "profile.input.email",
     "text": "E-Mail (optional):",
     "file": "./client/views/users/ownprofile.html",
-    "line": 11,
+    "line": 10,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -193,7 +184,7 @@ mfPkg.addNative(
     "key": "profile.input.new_pswd",
     "text": "New password (optional):",
     "file": "./client/views/users/ownprofile.html",
-    "line": 12,
+    "line": 11,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -202,16 +193,7 @@ mfPkg.addNative(
     "key": "profile.toggle.highprivacy",
     "text": "High privacy:",
     "file": "./client/views/users/ownprofile.html",
-    "line": 13,
-    "template": "profile",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "profile.id": {
-    "key": "profile.id",
-    "text": "ID:",
-    "file": "./client/views/users/ownprofile.html",
-    "line": 16,
+    "line": 12,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -220,7 +202,7 @@ mfPkg.addNative(
     "key": "profile.username",
     "text": "Username:",
     "file": "./client/views/users/ownprofile.html",
-    "line": 17,
+    "line": 15,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -229,16 +211,25 @@ mfPkg.addNative(
     "key": "profile.email",
     "text": "E-Mail:",
     "file": "./client/views/users/ownprofile.html",
-    "line": 19,
+    "line": 17,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "profile.verifymail": {
+    "key": "profile.verifymail",
+    "text": "Verify my E-Mail",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 21,
+    "template": "profile",
+    "mtime": 1432726971769,
+    "ctime": 1432726971769
   },
   "profile.privacy.on": {
     "key": "profile.privacy.on",
     "text": "Privacy settings: on",
     "file": "./client/views/users/ownprofile.html",
-    "line": 25,
+    "line": 26,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -247,25 +238,25 @@ mfPkg.addNative(
     "key": "profile.privacy.off",
     "text": "Privacy settings: off",
     "file": "./client/views/users/ownprofile.html",
-    "line": 25,
+    "line": 26,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "Profile.translate_this_page": {
-    "key": "Profile.translate_this_page",
-    "text": "Help us to translate this Page here",
+  "profile.edit": {
+    "key": "profile.edit",
+    "text": "Edit",
     "file": "./client/views/users/ownprofile.html",
-    "line": 38,
+    "line": 37,
     "template": "profile",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
+    "mtime": 1432726971769,
+    "ctime": 1432726971769
   },
   "profile.reallydelete": {
     "key": "profile.reallydelete",
     "text": "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
     "file": "./client/views/users/ownprofile.html",
-    "line": 41,
+    "line": 39,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -274,7 +265,7 @@ mfPkg.addNative(
     "key": "profile.delete",
     "text": "Delete my profile",
     "file": "./client/views/users/ownprofile.html",
-    "line": 46,
+    "line": 44,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -283,7 +274,16 @@ mfPkg.addNative(
     "key": "profile.deletecancel",
     "text": "Cancel",
     "file": "./client/views/users/ownprofile.html",
-    "line": 43,
+    "line": 41,
+    "template": "profile",
+    "ctime": 1432132053599,
+    "mtime": 1432132053599
+  },
+  "Profile.translate_this_page": {
+    "key": "Profile.translate_this_page",
+    "text": "Help us to translate this Page here",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 49,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -292,7 +292,7 @@ mfPkg.addNative(
     "key": "profile.my_courses",
     "text": "My Courses:",
     "file": "./client/views/users/ownprofile.html",
-    "line": 50,
+    "line": 54,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -301,10 +301,19 @@ mfPkg.addNative(
     "key": "member_of_groups",
     "text": "You are {NUM_GROUPS, plural,\n\t\t\t\t\t=0 {not a member of any group}\n\t\t\t\t\t=1 {member of the group {GROUPS_LIST}}\n\t\t\t\t\tother {member of the groups {GROUPS_LIST}}}\n\t\t\t\t\t.",
     "file": "./client/views/users/ownprofile.html",
-    "line": 28,
+    "line": 29,
     "template": "profile",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "profile.deleted": {
+    "key": "profile.deleted",
+    "text": "Your account has been deleted",
+    "file": "./client/views/users/ownprofile.js",
+    "line": 67,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432683752998
   },
   "profile.users_profile_page": {
     "key": "profile.users_profile_page",
@@ -328,7 +337,7 @@ mfPkg.addNative(
     "key": "profile.preferenceslink",
     "text": "Click here to change your preferences",
     "file": "./client/views/users/userprofile.html",
-    "line": 15,
+    "line": 17,
     "template": "profilelink",
     "ctime": 1432141494717,
     "mtime": 1432141494717
@@ -337,7 +346,7 @@ mfPkg.addNative(
     "key": "privileges.title",
     "text": "Privileges",
     "file": "./client/views/users/userprofile.html",
-    "line": 28,
+    "line": 30,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -346,7 +355,7 @@ mfPkg.addNative(
     "key": "privilege.has.admin",
     "text": "Administrator privileges granted",
     "file": "./client/views/users/userprofile.html",
-    "line": 33,
+    "line": 35,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -355,7 +364,7 @@ mfPkg.addNative(
     "key": "privilege.remove",
     "text": "Remove privilege",
     "file": "./client/views/users/userprofile.html",
-    "line": 35,
+    "line": 37,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432141540131
@@ -364,7 +373,7 @@ mfPkg.addNative(
     "key": "privilege.add.admin",
     "text": "Grant administrator privileges",
     "file": "./client/views/users/userprofile.html",
-    "line": 41,
+    "line": 43,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -373,7 +382,7 @@ mfPkg.addNative(
     "key": "privilege.has.upload",
     "text": "Upload allowed",
     "file": "./client/views/users/userprofile.html",
-    "line": 49,
+    "line": 51,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -382,7 +391,7 @@ mfPkg.addNative(
     "key": "privilege.add.upload",
     "text": "Grant upload privilege",
     "file": "./client/views/users/userprofile.html",
-    "line": 57,
+    "line": 59,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -391,7 +400,7 @@ mfPkg.addNative(
     "key": "profile.courses",
     "text": "{NAME}'s Courses:",
     "file": "./client/views/users/userprofile.html",
-    "line": 66,
+    "line": 68,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -400,7 +409,7 @@ mfPkg.addNative(
     "key": "profile.mail.to_user",
     "text": "You can write an e-mail to this user:",
     "file": "./client/views/users/userprofile.html",
-    "line": 76,
+    "line": 78,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -409,7 +418,7 @@ mfPkg.addNative(
     "key": "profile.mail.content",
     "text": "Your message:",
     "file": "./client/views/users/userprofile.html",
-    "line": 77,
+    "line": 79,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -418,7 +427,7 @@ mfPkg.addNative(
     "key": "profile.mail.options",
     "text": "Options:",
     "file": "./client/views/users/userprofile.html",
-    "line": 79,
+    "line": 81,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -427,7 +436,7 @@ mfPkg.addNative(
     "key": "profile.mail.attachmail",
     "text": "Attach my e-mail address",
     "file": "./client/views/users/userprofile.html",
-    "line": 83,
+    "line": 85,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -436,7 +445,7 @@ mfPkg.addNative(
     "key": "profile.mail.copy",
     "text": "Send me a copy of this message",
     "file": "./client/views/users/userprofile.html",
-    "line": 87,
+    "line": 89,
     "template": "profilelink",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -445,7 +454,7 @@ mfPkg.addNative(
     "key": "userprofile.sendmail-btn",
     "text": "Send E-Mail",
     "file": "./client/views/users/userprofile.html",
-    "line": 90,
+    "line": 92,
     "template": "profilelink",
     "ctime": 1432141494717,
     "mtime": 1432141494717
@@ -459,6 +468,24 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "privilege.addedAdmin": {
+    "key": "privilege.addedAdmin",
+    "text": "Granted admin privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 54,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
+  },
+  "privilege.addedUpload": {
+    "key": "privilege.addedUpload",
+    "text": "Granted upload privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 64,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
+  },
   "privilege.errorRemoving": {
     "key": "privilege.errorRemoving",
     "text": "Unable to remove privilege: {ERROR}",
@@ -467,6 +494,24 @@ mfPkg.addNative(
     "func": "function(err)",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "privilege.removed": {
+    "key": "privilege.removed",
+    "text": "Removed privilege",
+    "file": "./client/views/users/userprofile.js",
+    "line": 75,
+    "func": "function(err)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
+  },
+  "email.sent": {
+    "key": "email.sent",
+    "text": "email could have been sent",
+    "file": "./client/views/users/userprofile.js",
+    "line": 118,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
   },
   "location.details.title": {
     "key": "location.details.title",
@@ -1692,11 +1737,20 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "course.roles.maketeam": {
+    "key": "course.roles.maketeam",
+    "text": "Add to team",
+    "file": "./client/views/courses/details/course.roles.html",
+    "line": 19,
+    "template": "membersRoles",
+    "mtime": 1432726971769,
+    "ctime": 1432726971769
+  },
   "course.roles.retract": {
     "key": "course.roles.retract",
     "text": "Retract",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 42,
+    "line": 44,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1705,7 +1759,7 @@ mfPkg.addNative(
     "key": "course.roles.enrol_as",
     "text": "Enrol as",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 51,
+    "line": 53,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1714,7 +1768,7 @@ mfPkg.addNative(
     "key": "course.roles.leave_message",
     "text": "Leave a message/wish/interest here:",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 56,
+    "line": 58,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1723,7 +1777,7 @@ mfPkg.addNative(
     "key": "course.roles.incognitosubscription",
     "text": "incognito",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 61,
+    "line": 63,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1732,7 +1786,7 @@ mfPkg.addNative(
     "key": "course.roles.enrol",
     "text": "Enrol",
     "file": "./client/views/courses/details/course.roles.html",
-    "line": 68,
+    "line": 70,
     "template": "membersRoles",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1772,6 +1826,24 @@ mfPkg.addNative(
     "template": "calendar",
     "ctime": 1432132053599,
     "mtime": 1432132053599
+  },
+  "report.error": {
+    "key": "report.error",
+    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
+    "file": "./client/report/helpers.js",
+    "line": 20,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
+  },
+  "report.confirm": {
+    "key": "report.confirm",
+    "text": "Your report was sent. A human will try to find an appropriate solution.",
+    "file": "./client/report/helpers.js",
+    "line": 22,
+    "func": "function(error, result)",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
   },
   "report.sending": {
     "key": "report.sending",
@@ -1835,6 +1907,15 @@ mfPkg.addNative(
     "template": "messages",
     "ctime": 1432683667590,
     "mtime": 1432683667590
+  },
+  "Please.login": {
+    "key": "Please.login",
+    "text": "Please login or register",
+    "file": "./client/lib/client.functions.js",
+    "line": 77,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
   },
   "roles.team.short": {
     "key": "roles.team.short",
@@ -2322,6 +2403,15 @@ mfPkg.addNative(
     "ctime": 1432160446754,
     "mtime": 1432160446754
   },
+  "editable.sorrychanged": {
+    "key": "editable.sorrychanged",
+    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
+    "file": "./client/editable/helpers.js",
+    "line": 33,
+    "func": "function()",
+    "ctime": 1432132053599,
+    "mtime": 1432683752999
+  },
   "editable.add_text": {
     "key": "editable.add_text",
     "text": "Add text here",
@@ -2349,6 +2439,26 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "profile.userid": {
+    "key": "profile.userid",
+    "text": "UserID:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 9,
+    "template": "profile",
+    "ctime": 1432132053599,
+    "mtime": 1432726971769,
+    "removed": true
+  },
+  "profile.id": {
+    "key": "profile.id",
+    "text": "ID:",
+    "file": "./client/views/users/ownprofile.html",
+    "line": 16,
+    "template": "profile",
+    "ctime": 1432132053599,
+    "mtime": 1432726971769,
+    "removed": true
+  },
   "roles.subscribe.team": {
     "key": "roles.subscribe.team",
     "text": "I help organiiize",
@@ -2356,57 +2466,7 @@ mfPkg.addNative(
     "line": 15,
     "func": "unknown",
     "ctime": 1432386224128,
-    "mtime": 1432683752998,
-    "removed": true
-  },
-  "profile.deleted": {
-    "key": "profile.deleted",
-    "text": "Your account has been deleted",
-    "file": "./client/views/users/ownprofile.js",
-    "line": 67,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432683752998,
-    "removed": true
-  },
-  "privilege.addedAdmin": {
-    "key": "privilege.addedAdmin",
-    "text": "Granted admin privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 54,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "privilege.addedUpload": {
-    "key": "privilege.addedUpload",
-    "text": "Granted upload privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 64,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "privilege.removed": {
-    "key": "privilege.removed",
-    "text": "Removed privilege",
-    "file": "./client/views/users/userprofile.js",
-    "line": 75,
-    "func": "function(err)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "email.sent": {
-    "key": "email.sent",
-    "text": "email could have been sent",
-    "file": "./client/views/users/userprofile.js",
-    "line": 118,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.event.edit.host_location": {
@@ -2416,7 +2476,7 @@ mfPkg.addNative(
     "line": 41,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.event.edit.by": {
@@ -2426,7 +2486,7 @@ mfPkg.addNative(
     "line": 44,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.event.edit.no_hosts": {
@@ -2436,7 +2496,7 @@ mfPkg.addNative(
     "line": 46,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.event.edit.mentors": {
@@ -2446,7 +2506,7 @@ mfPkg.addNative(
     "line": 50,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.event.edit.no_mentors": {
@@ -2456,7 +2516,7 @@ mfPkg.addNative(
     "line": 55,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.roles.you_are": {
@@ -2466,7 +2526,7 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.roles.anonymously": {
@@ -2476,7 +2536,7 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   },
   "course.roles.subscribed_as": {
@@ -2486,51 +2546,11 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "report.error": {
-    "key": "report.error",
-    "text": "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response.",
-    "file": "./client/report/helpers.js",
-    "line": 20,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "report.confirm": {
-    "key": "report.confirm",
-    "text": "Your report was sent. A human will try to find an appropriate solution.",
-    "file": "./client/report/helpers.js",
-    "line": 22,
-    "func": "function(error, result)",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "Please.login": {
-    "key": "Please.login",
-    "text": "Please login or register",
-    "file": "./client/lib/client.functions.js",
-    "line": 77,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
-    "removed": true
-  },
-  "editable.sorrychanged": {
-    "key": "editable.sorrychanged",
-    "text": "Sorry, somebody else just changed that. Your changes have been discarded.",
-    "file": "./client/editable/helpers.js",
-    "line": 33,
-    "func": "function()",
-    "ctime": 1432132053599,
-    "mtime": 1432683752999,
+    "mtime": 1432726971769,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1432683752999,
-  "updatedAt": 1432683752999
+  "extractedAt": 1432726971769,
+  "updatedAt": 1432726971769
 });
