@@ -15,7 +15,9 @@
 			{{#each member.roles}}
 				<li class='{{this}}'>{{mf roleShort}}</li>
 			{{/each}}
-			{{#if maySubscribe}}<button class='makeTeam'>Add to team!!!</button>{{/if}}
+			{{#if maySubscribe}}
+			<button class='makeTeam btn btn-primary'>{{mf 'course.roles.maketeam' 'Add to team'}}</button>
+			{{/if}}
 		</ul>
 		<span class="member_comment">
 			{{#if editableMessage}}
@@ -39,7 +41,7 @@
 		{{#if subscribed}}
 		<div class="enroled_as_title col-sm-12">
 			<div class="container-fluid">
-				<h3><span class="{{roletype.icon}}">&nbsp;</span>{{#with roletype}}{{mf roleSubscribed}}{{/with}} <button class="unsubscribe btn btn-default" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
+				<h3><span class="{{roletype.icon}}">&nbsp;</span>{{#with roletype}}{{mf roleSubscribed}}{{/with}} <button class="unsubscribe btn btn-primary" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
 			</div>
 		</div>
 		{{else}}
