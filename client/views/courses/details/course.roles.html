@@ -16,7 +16,10 @@
 				<li class='{{this}}'>{{mf roleShort}}</li>
 			{{/each}}
 			{{#if maySubscribe}}
-			<button class='makeTeam btn btn-primary'>{{mf 'course.roles.maketeam' 'Add to team'}}</button>
+			<button class='makeTeam btn btn-primary'>
+				<span class="glyphicon glyphicon-plus"></span>
+				{{mf 'course.roles.maketeam' 'Add to team'}}
+			</button>
 			{{/if}}
 		</ul>
 		<span class="member_comment">
@@ -49,7 +52,7 @@
 				<div class="enrol_as_title col-sm-12">
 					<div class="container-fluid">
 						<h3>
-							<span class="{{roletype.icon}}"></span> &nbsp;
+							<span class="{{roletype.icon}}"></span>&nbsp;
 							{{mf 'course.roles.enrol_as' 'Enrol as'}} {{role}}
 						</h3>
 					</div>
@@ -79,7 +82,7 @@
 				{{#if maySubscribe roletype.type}}
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
-							<span class="{{roletype.icon}}"></span> &nbsp;
+							<span class="{{roletype.icon}}"></span>&nbsp;
 							{{#with roletype}}{{mf roleSubscribe}}{{/with}} 
 						</div>
 					</button>
