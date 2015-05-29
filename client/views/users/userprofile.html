@@ -10,11 +10,13 @@
 			{{#if ownuser}}
 				<h4>
 					{{mf 'profile.its_you' "It's you!"}}&nbsp;
+				</h4>
+				<h5>
 					<a href="/profile/" >
 						<span class="glyphicon glyphicon-cog"></span>
 						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
 					</a>
-				</h4>
+				</h5>
 			{{else}}
 			<div class="row">
 				<div class="col-sm-4">
@@ -38,7 +40,10 @@
 				{{else}}
 					{{#if alterPrivileges}}
 						<li class="admin">
-							<button class="giveAdmin">{{mf 'privilege.add.admin' 'Grant administrator privileges'}}</button>
+							<button class="giveAdmin">
+								<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+								{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
+							</button>
 						</li>
 					{{/if}}
 				{{/if}}
@@ -54,7 +59,10 @@
 				{{else}}
 					{{#if alterPrivileges}}
 						<li class="admin">
-							<button class="giveUpload">{{mf 'privilege.add.upload' 'Grant upload privilege'}}</button>
+							<button class="giveUpload">
+								<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+								{{mf 'privilege.add.upload' 'Grant upload privilege'}}
+							</button>
 						</li>
 					{{/if}}
 				{{/if}}
@@ -87,7 +95,10 @@
 					{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
 				</label>
 			</div>
-			<button class="sendmail">{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}</button>
+			<button class="sendmail">
+				<span class="glyphicon glyphicon-send"></span>&nbsp;
+				{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
+			</button>
 		</form>
 	</div>
 </template>

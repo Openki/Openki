@@ -53,7 +53,7 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	'click input.edit': function () {
+	'click button.edit': function () {
 		Session.set("isEditing", true);
 		// document.getElementById('privacy').checked = Meteor.user().privacy;  // FIXME!
 		// var privacy = $(template.find('.privacy')).prop('checked');
@@ -79,7 +79,7 @@ Template.profile.events({
 		}
 		Session.set("isEditing", false);
 	},
-	'click input.verify': function () {
+	'click button.verify': function () {
 		Meteor.call('sendVerificationEmail')
 	}
 });

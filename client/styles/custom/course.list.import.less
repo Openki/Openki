@@ -14,16 +14,14 @@
 		h4 {
 			color: @brand-primary;
 		}
+		color: @brand-primary;
 	}
 	h4 {
 		-moz-transition: color 1s;
 		color: #333;
 	}
-	& > a {
-		color: #333;
-		&:hover {
+	& > a:hover {
 			text-decoration: none;
-		}
 	}
 	.yes {
 		color: #407d5c;
@@ -91,14 +89,18 @@
 		line-height: 23px;
 		li {
 			display: inline-block;
-			a {
-				color: @brand-primary;
+			span {
 				background: rgba(216, 216, 216, 0.5);
 				padding: 0 2px 1px 2px;
-				&:hover {
-					text-decoration: underline;
-				}
 			}
+			// a {
+			// 	color: @brand-primary;
+			// 	background: rgba(216, 216, 216, 0.5);
+			// 	padding: 0 2px 1px 2px;
+			// 	&:hover {
+			// 		text-decoration: underline;
+			// 	}
+			// }
 		}
 	}
 }
