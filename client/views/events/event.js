@@ -190,6 +190,24 @@ Template.event.events({
 	'click button.eventEdit': function () {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
+		
+		
+		var eventId = this._id;
+		var repEventId = this.replicaOf;
+		
+		//todo: find if these events have replicas as well.
+		console.log(eventId);
+		console.log(repEventId);
+		console.log( Events.findOne( { replicaOf: eventId }) );
+		
+		if(repEventId){
+			Template.instance().replicasExist.set(true);
+		}else{
+			Template.instance().replicasExist.set(false);
+		}
+		 
+		
+		 
 	},
 	
 	
@@ -279,6 +297,7 @@ Template.event.events({
 			return;
 		}
 		
+		//todo:detect changed fields
 		
 		var editevent = {
 			title: template.$('#edit_event_title').val(),
@@ -287,7 +306,8 @@ Template.event.events({
 			room: template.$('#edit_event_room').val(),
 			startdate: startMoment.toDate(),
 			enddate: endMoment.toDate(),
-			files: this.files,
+			files: this.files || Array() ,
+			
 		};
 		
 		
@@ -323,7 +343,7 @@ Template.event.events({
 				editevent.region = course.region;
 				editevent.course_id = this.course_id;
 			} else {
-				editevent.region = Session.get('region');
+				editevent.region = Session.get('region') || ''; //Temporary fix. Region is not always set automatically
 			}
 		}
 		
@@ -337,6 +357,10 @@ Template.event.events({
 				//update replicas too
 				//check if "update replicas" flag is set here, and if yes, update them
 				if(updateReplicas){
+					
+					//we need this to identify the event that this is a replica of, and apply changes to that too
+					editevent.replicaOf = this.replicaOf;
+					
 					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
 						if (error) {	
 							addMessage(mf('event.replicate.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
@@ -364,6 +388,13 @@ Template.event.events({
 		$.each( dates, function( i,eventTime ){
 			
 			/*create a new event for each time interval */
+
+			/*don't replicate the event if it is set for the same day*/
+			if( template.data.startdate.toDateString() == eventTime[0].toDate().toDateString() ){
+				console.log( "replica on same day");
+				console.log( template.data.startdate.toString() + " - " + eventTime[0].toDate().toString()  );
+				return true;
+			}
 			
 			var replicaEvent = {
 
@@ -378,7 +409,7 @@ Template.event.events({
 				host: template.data.host ||  new Array(),
 				region: template.data.region || '',
 				course_id: template.data.course_id || '',
-				replicaOf: template.data._id,
+				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 		
 

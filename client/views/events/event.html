@@ -151,8 +151,10 @@
 				
 			</div>
 			
-			<div class="col-xs-12 col-sm-2">
-				<input type="checkbox" name="updateReplicas">Update Replicas<br>
+			<div class="col-xs-12 col-sm-2">	
+				{{#if replicasExist}}
+					<input type="checkbox" name="updateReplicas">Update Replicas<br>
+				{{/if}}
 			</div>
 			
 			<div class="col-xs-12 col-sm-5">
@@ -235,7 +237,7 @@
 				<div id="eventReplicationMenu" style="display:none;">
 					
 					<div class="col-xs-12 col-sm-3">
-						<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+						<h4>{{mf '' 'Interval Start'}}</h4>
 						<div class="input-group">
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
@@ -245,7 +247,7 @@
 					</div>
 					
 					<div class="col-xs-12 col-sm-3">
-						<h4>{{mf '' 'End Date'}}</h4>
+						<h4>{{mf '' 'Interval End'}}</h4>
 						<div class="input-group">
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
@@ -276,7 +278,13 @@
 						</div>
 					</div>
 					
-					
+				<div class="col-xs-12 col-sm-2">
+						
+					<p style="font-size:12px;">
+						*This will replicate the same event for all the dates that fall in the chosen interval. 
+						The event times will be preserved across all replicated events.
+					</p>
+				</div>
 					
 					
 				</div>
