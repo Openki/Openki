@@ -2,6 +2,7 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
+	this.replicasExist = new ReactiveVar(false);
 }
 
 Template.event.onRendered(function(){
@@ -193,12 +194,24 @@ Template.event.events({
 		
 		
 		var eventId = this._id;
+		var title = this.title;
 		var repEventId = this.replicaOf;
 		
 		//todo: find if these events have replicas as well.
 		console.log(eventId);
-		console.log(repEventId);
-		console.log( Events.findOne( { replicaOf: eventId }) );
+		//console.log(this);
+		//console.log(repEventId);
+		//console.log( eventsFind( { replicaOf: eventId } ) );
+		
+		Events.find( { replicaOf: eventId } ).forEach(function(repEvent){ 
+				console.log( repEvent.title ); 
+				console.log( repEvent._id ); 
+				console.log( repEvent.replicaOf ); 
+
+			}
+		); 
+		
+		// { replicaOf: eventId.toString() }) );
 		
 		if(repEventId){
 			Template.instance().replicasExist.set(true);
@@ -396,22 +409,26 @@ Template.event.events({
 				return true;
 			}
 			
+			
 			var replicaEvent = {
 
 				title: template.data.title,
 				description: template.data.description,
 				location: template.data.location,
-				room: template.data.room || '',
+				room: template.data.room, //|| '',
 				startdate: eventTime[0].toDate(),
 				enddate: eventTime[1].toDate(),
 				files: template.data.files  || new Array(),
 				mentors: template.data.mentors  ||  new Array(),
 				host: template.data.host ||  new Array(),
-				region: template.data.region || '',
-				course_id: template.data.course_id || '',
+				region: template.data.region,  //|| '',
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 		
+			var course_id = template.data.course_id;
+			if(course_id){
+				replicaEvent.course_id  = course_id; 
+			}
 
 			var eventId = '';
 				

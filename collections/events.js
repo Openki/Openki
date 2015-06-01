@@ -39,13 +39,18 @@ Meteor.methods({
 			mentors:	 Match.Optional(Array),
 			host:	 	 Match.Optional(Array),
 			replicaOf:	 Match.Optional(String),
+			region:		String,
+			course_id:	Match.Optional(String),
+		
 		};
 		
 		var isNew = eventId === '';
-		if (isNew) {
-			expectedFields.region = String;
-			expectedFields.course_id = Match.Optional(String);
-		}
+		//if (isNew) {
+		//	expectedFields.region = String;
+		//	expectedFields.course_id = Match.Optional(String);
+		//}
+		
+		console.log(changes);
 		
 		check(changes, expectedFields);
 		
@@ -178,7 +183,7 @@ eventsFind = function(filter, limit) {
 	if (limit > 0) {
 		options.limit = limit;
 	}
-
+	
 	if (filter.after) {
 		find.startdate = { $gt: filter.after };
 	}
@@ -200,11 +205,11 @@ eventsFind = function(filter, limit) {
 	if (filter.room) {
 		find.room = filter.room;
 	}
-
+	
 	if (filter.standalone) {
 		find.course_id = { $exists: false };
 	}
-
+	
 	if (filter.query) {
 		var searchTerms = filter.query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
@@ -216,6 +221,10 @@ eventsFind = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
+
+	//console.log(filter);
+	console.log(find);
+	//console.log(options);
 
 	return Events.find(find, options);
 }
