@@ -39,16 +39,14 @@ Meteor.methods({
 			mentors:	 Match.Optional(Array),
 			host:	 	 Match.Optional(Array),
 			replicaOf:	 Match.Optional(String),
-			region:		String,
 			course_id:	Match.Optional(String),
-		
 		};
 		
 		var isNew = eventId === '';
-		//if (isNew) {
-		//	expectedFields.region = String;
+		if (isNew) {
+			expectedFields.region = String;
 		//	expectedFields.course_id = Match.Optional(String);
-		//}
+		}
 		
 		console.log(changes);
 		
@@ -116,18 +114,27 @@ Meteor.methods({
 	},
 
 	updateReplicas: function(eventId,changes){
-		
+
 		//update the replicas of this event
 		delete changes.startdate;
 		delete changes.enddate; 
 		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
-		//and the event of which this is a replica, and that event's replicas
+		//and the event of which this is a replica, and that event's other replicas
 		var repEventId = changes.replicaOf;
-		if(repEventId){
+		if(repEventId != undefined){
 			Events.update( repEventId, { $set: changes }, { multi:true} );
 			Events.update( { replicaOf: repEventId }, { $set: changes }, { multi:true} );	
 		}
 		
+	},
+	
+	
+	
+	getReplicas: function(eventId){
+			
+		console.log( "search replicas of " + eventId);
+		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;
+		return results;
 	},
 
 	removeFile: function(eventId,fileId) {
@@ -221,10 +228,5 @@ eventsFind = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
-
-	//console.log(filter);
-	console.log(find);
-	//console.log(options);
-
 	return Events.find(find, options);
 }

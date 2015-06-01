@@ -2,7 +2,7 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
-	this.replicasExist = new ReactiveVar(false);
+	this.replicasExist = new ReactiveVar(true);
 }
 
 Template.event.onRendered(function(){
@@ -34,6 +34,9 @@ Template.event.helpers({
 	},
 	editing: function() {
 		return this.new || Template.instance().editing.get();
+	},
+	replicasExist: function() {
+		return this.new || Template.instance().replicasExist.get();
 	},
 	frequencyOptions:function() {
 	    return [{
@@ -188,39 +191,24 @@ Template.event.events({
 		}
 	},
 	
-	'click button.eventEdit': function () {
+	'click button.eventEdit': function (event, template) {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
 		
-		
 		var eventId = this._id;
-		var title = this.title;
 		var repEventId = this.replicaOf;
-		
-		//todo: find if these events have replicas as well.
-		console.log(eventId);
-		//console.log(this);
-		//console.log(repEventId);
-		//console.log( eventsFind( { replicaOf: eventId } ) );
-		
-		Events.find( { replicaOf: eventId } ).forEach(function(repEvent){ 
-				console.log( repEvent.title ); 
-				console.log( repEvent._id ); 
-				console.log( repEvent.replicaOf ); 
-
+	
+		//find if these events have replicas or if whether this event is replicated.
+		Meteor.call('getReplicas', eventId, function (error, results){	
+			if(error){template.replicasExist.set(false);}
+			else if( results > 0 || repEventId != undefined ){
+				template.replicasExist.set(true);
+			}else{
+				template.replicasExist.set(false);		
 			}
-		); 
+		});		
 		
-		// { replicaOf: eventId.toString() }) );
-		
-		if(repEventId){
-			Template.instance().replicasExist.set(true);
-		}else{
-			Template.instance().replicasExist.set(false);
-		}
-		 
-		
-		 
+		console.log( Template.instance().replicasExist.get() );
 	},
 	
 	
@@ -362,6 +350,10 @@ Template.event.events({
 		
 		var updateReplicas = template.$("input[name='updateReplicas']").is(':checked');
 		
+		if(updateReplicas && this.replicaOf != undefined){	
+			editevent.replicaOf = this.replicaOf;		
+		}
+		
 		Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
@@ -372,7 +364,7 @@ Template.event.events({
 				if(updateReplicas){
 					
 					//we need this to identify the event that this is a replica of, and apply changes to that too
-					editevent.replicaOf = this.replicaOf;
+					
 					
 					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
 						if (error) {	
@@ -421,7 +413,7 @@ Template.event.events({
 				files: template.data.files  || new Array(),
 				mentors: template.data.mentors  ||  new Array(),
 				host: template.data.host ||  new Array(),
-				region: template.data.region,  //|| '',
+				region: template.data.region || Session.get('region'),
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 		
