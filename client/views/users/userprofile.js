@@ -77,7 +77,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click input.sendmail': function () {
+	'click button.sendmail': function () {
 		var send_user = Meteor.user()
 		if(send_user) {
 			var send_userdata = {id:Meteor.userId(),username:Meteor.user().username}

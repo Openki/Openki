@@ -13,8 +13,14 @@
 		{{>profilelink member.user}}
 		<ul class='roles list-unstyled'>
 			{{#each member.roles}}
-				<li class='{{this}}'> (Icon)  {{this}} </li>
+				<li class='{{this}}'>{{mf roleShort}}</li>
 			{{/each}}
+			{{#if maySubscribe}}
+			<button class='makeTeam btn btn-primary'>
+				<span class="glyphicon glyphicon-plus"></span>
+				{{mf 'course.roles.maketeam' 'Add to team'}}
+			</button>
+			{{/if}}
 		</ul>
 		<span class="member_comment">
 			{{#if editableMessage}}
@@ -38,7 +44,7 @@
 		{{#if subscribed}}
 		<div class="enroled_as_title col-sm-12">
 			<div class="container-fluid">
-				<h3><span class="{{roletype.gl_icon}}">&nbsp;&nbsp;&nbsp;</span>{{mf 'course.roles.you_are' 'You are'}} {{#if anonsub}}{{mf 'course.roles.anonymously' 'anonymously'}} {{/if}}{{mf 'course.roles.subscribed_as' 'subscribed as'}} {{roletype.type}} <button class="unsubscribe btn btn-default" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
+				<h3><span class="{{roletype.icon}}">&nbsp;</span>{{#with roletype}}{{mf roleSubscribed}}{{/with}} <button class="unsubscribe btn btn-primary" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
 			</div>
 		</div>
 		{{else}}
@@ -46,7 +52,7 @@
 				<div class="enrol_as_title col-sm-12">
 					<div class="container-fluid">
 						<h3>
-							<span class="{{roletype.gl_icon}}"></span> &nbsp;
+							<span class="{{roletype.icon}}"></span>&nbsp;
 							{{mf 'course.roles.enrol_as' 'Enrol as'}} {{role}}
 						</h3>
 					</div>
@@ -73,12 +79,14 @@
 					</div>
 				</div>
 			{{else}}
+				{{#if maySubscribe roletype.type}}
 					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
 						<div class="container-fluid">
-							<span class="{{roletype.gl_icon}}"></span> &nbsp;&nbsp;&nbsp;
-							{{#with roletype}}{{roleSubscribe}}{{/with}}
+							<span class="{{roletype.icon}}"></span>&nbsp;
+							{{#with roletype}}{{mf roleSubscribe}}{{/with}} 
 						</div>
 					</button>
+				{{/if}}
 			{{/if}}
 		{{/if}}
 		</div>

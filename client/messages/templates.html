@@ -1,19 +1,14 @@
 <template name="messages">
 	<div class="container-fluid">
-		<ul class="messages list-unstyled">
-			{{#each messages}}
-				{{> message}}
-			{{/each}}
-		</ul>
+		{{#each messages}}
+			{{> message}}
+		{{/each}}
 	</div>
 </template>
 
 <template name="message">
-		<li class="message">
-			<div>
-				<span class="glyphicon glyphicon-exclamation-sign"></span>
-				{{message}}
-				<button type="button" class="close">&times;</button>
-			</div>
-		</li>
+	<div class="alert alert-{{type}} alert-dismissible" role="alert">
+		{{message}}
+		<button type="button" class="close" data-dismiss="alert" aria-label="{{mf 'message.close' 'Close message'}}"><span aria-hidden="true">&times;</span></button>
+	</div>
 </template>

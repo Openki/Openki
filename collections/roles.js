@@ -12,25 +12,25 @@ Roles = new Meteor.Collection("Roles");
 
 var roles = [{
 		'type':        'team',
-		'gl_icon':     'glyphicon glyphicon-bullhorn',
-		'fa_icon':     'fa fa-info-circle fa fa-connectdevelop',
+		'icon':        'glyphicon glyphicon-bullhorn',
+		'alt_icon':    'fa fa-info-circle fa fa-connectdevelop',
 		'preset':      true,	//if true: allways available, not offered as choice in proposal
 		'show_subscribers': true,
 	},{
 		'type':        'participant',
-		'gl_icon':     'glyphicon glyphicon-user',
-		'fa_icon':     'fa fa-users',
+		'alt_icon':    'glyphicon glyphicon-user',
+		'icon':        'fa fa-users',
 		'preset':      true,
 		'show_subscribers': true
 	},{
 		'type':        'mentor',
-		'gl_icon':     'glyphicon glyphicon-education',
-		'fa_icon':     'fa fa-graduation-cap',
+		'alt_icon':    'glyphicon glyphicon-education',
+		'icon':        'fa fa-graduation-cap',
 		'show_subscribers': true,
 	},{
 		'type':        'host',
-		'gl_icon':     'glyphicon glyphicon-home',
-		'fa_icon':     'fa fa-home',
+		'icon':        'glyphicon glyphicon-home',
+		'alt_icon':    'fa fa-home',
 		'show_subscribers': true,
 		'fields': {
 			'address': 'text'

@@ -38,6 +38,23 @@ Template.event.helpers({
 	replicasExist: function() {
 		return this.new || Template.instance().replicasExist.get();
 	},
+	regions: function(){
+		return Regions.find();
+	},
+
+	showRegionSelection: function() {
+		// You can select the region for events that are new and not associated
+		// with a course
+		if (this._id) return false;
+		if (this.course_id) return false;
+		return true;
+	},
+	
+	currentRegion: function(region) {
+		var currentRegion = Session.get('region')
+		return currentRegion && region._id == currentRegion;
+	},
+
 	frequencyOptions:function() {
 	    return [{
 	      frequency:0,
@@ -183,9 +200,14 @@ Template.event.events({
 		if (pleaseLogin()) return;
 		if (confirm('Delete event "'+this.title+'"?')) {
 			var title = this.title;
+			var course = this.course_id;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
-				if (eventRemoved) addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
-				else console.log('An error Occured while deleting Event'+error);
+				if (eventRemoved) {
+					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
+					if (course) Router.go('showCourse', { _id: course });
+				} else {
+					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'));
+				}
 			});
 			Template.instance().editing.set(false);
 		}
@@ -344,7 +366,7 @@ Template.event.events({
 				editevent.region = course.region;
 				editevent.course_id = this.course_id;
 			} else {
-				editevent.region = Session.get('region') || ''; //Temporary fix. Region is not always set automatically
+				editevent.region = template.$('.region_select').val();
 			}
 		}
 		

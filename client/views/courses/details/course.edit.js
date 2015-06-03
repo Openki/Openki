@@ -18,7 +18,7 @@ Template.course_edit.helpers({
 	},
 
 	roleDescription: function() {
-		return mf('roles.'+this.type+'.description');
+		return 'roles.'+this.type+'.description';
 	},
 
 	// Emit 'checked' string if id shows up as member or property of cats
@@ -89,10 +89,10 @@ Template.course_edit.events({
 			
 			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				if (err) {
-					addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+					addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 				} else {
 					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}"'));
+					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}"'), 'success');
 				}
 			})
 

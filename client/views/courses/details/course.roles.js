@@ -1,14 +1,46 @@
+Template.memberRoles.helpers({
+	roleShort: function() { return 'roles.'+this+'.short'; },
+
+	maySubscribe: function() {
+		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+	}
+});
+
+Template.memberRoles.events({
+	'click button.makeTeam': function(e, template) {
+		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		return false;
+	}
+});
+
+
 Template.roleDetail.created = function() {
 	this.enrolling = new ReactiveVar(false);
-}
+};
 
 Template.roleDetail.helpers({
 	enrolling: function() { return Template.instance().enrolling.get() },
-							
+
 	roleSubscribe: function() {
-		return mf('roles.'+this.type+'.subscribe');
+		return 'roles.'+this.type+'.subscribe';
+	},	
+	
+	roleSubscribed: function() {
+		return 'roles.'+this.type+'.subscribed';
+	},
+	
+	maySubscribe: function(role) {
+		var operator = Meteor.userId();
+		
+		// Show the participation buttons even when not logged-in.
+		// fun HACK: if we pass an arbitrary string instead of falsy
+		// the maySubscribe() will return true if the user could subscribe
+		// if they were logged-in. Plain abuse of maySubscribe().
+		if (!operator) operator = 'unlogged';
+
+		return maySubscribe(operator, this.course, operator, role);
 	}
-})
+});
 
 Template.roleDetail.events({
 	'click button.enrol': function(e, template) {
@@ -21,7 +53,7 @@ Template.roleDetail.events({
 		if (template.find('.incognito')) {
 			var incognito = $(template.find('.incognito')).prop('checked');
 		} else incognito = false
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, true, incognito);
+		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, incognito);
 		
 		// Store the comment
 		var comment = $(template.find('.enrol_as_comment')).val();
@@ -36,7 +68,7 @@ Template.roleDetail.events({
 	},
 
 	'click button.unsubscribe': function () {
-		Meteor.call("change_subscription", this.course._id, this.roletype.type, false, false, null);
+		Meteor.call('remove_role', this.course._id, this.roletype.type);
 		return false;
 	}
 });

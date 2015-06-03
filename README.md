@@ -3,16 +3,16 @@ Openki/hmmm
 
 **Platform for open education** – built with [Meteor.js](http://meteor.com)
 
-A interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple open-source tool for local, self-organized knowledge exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
+An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
+
+<div align="center"><img src="https://cloud.githubusercontent.com/assets/4281072/5208556/6eeed1ba-75b5-11e4-94f3-208323380ec4.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
+
 [  read on...](http://openki.net "our blog")  
 <div align="right"> <span class="octicon octicon-star">★</span> Star us if you like the idea.</div>
 
-- Demo: [test.schuel.ch](http://test.schuel.ch/?region=Englistan "runing here")
+- Demo: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
 - Concept: [openki.net](http://openki.net "our blog")
 - Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
-
-
-<div align="center"><img src="https://cloud.githubusercontent.com/assets/4281072/5208556/6eeed1ba-75b5-11e4-94f3-208323380ec4.png" width="590" alt="cloud diagram showing connection between individuals, comunities, event locations and calendars"></div>
 
 
 ### Features
@@ -27,13 +27,13 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...)
 - :ideograph_advantage: I18n: In-browser-GUI for life translation
 - :envelope: Email notifications
+- :open_file_folder: File upload for course-documentation
 - :computer: additional views with upcomming events for information-displays and iframes
 
 
-### Intended features
+## Intended features
 - :closed_lock_with_key: Privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
-- :open_file_folder: File upload for course-documentation
 - :mailbox: Privat messaging
 - :name_badge: OpenBadges
 - :ghost: Customizability
@@ -41,15 +41,15 @@ A interactive web-platform in development with the ambition to facilitate a barr
 - :8ball: Connection to SocialNetworks APIs
 - :iphone: Smartphone App
 
-### Installation (OSX and Linux)
-- To install Meteor, run: `curl https://install.meteor.com | sh`
+### Installation (Linux, OSX and Windows)
+- To install Meteor, run: `curl https://install.meteor.com | sh`  (dl. [Installer](https://install.meteor.com/windows)for Win)
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or clone Hmmm into /some/path
 - `cd /some/path`
-- Run `meteor`
-- Browse to http://localhost:3000/
+- Run `meteor --settings settings.dev.json`
+- Browse to [localhost:3000](http://localhost:3000/)
 
 ### Technical documentation
-- Is here in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki) 
+- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki) 
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
