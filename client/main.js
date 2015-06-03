@@ -2,11 +2,11 @@
 
 ////////////// db-subscriptions:
 
-var regionSub = Meteor.subscribe('regions');
 Meteor.subscribe('locations');
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
 Meteor.subscribe('files');
+
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
 	Session.set('verify', false);
@@ -14,22 +14,29 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
-/*  TODO: QUESTION: redundant with autoRegionSelect?
-// Choose default region when none is set
-Deps.autorun(function() {
-	if (regionSub.ready()) {
-		var region = localStorage.getItem("region");
-		if (!region || region == 'all') {
-			if (Regions.find({}).count() == 1) {
-				region = Regions.findOne({})._id;
-			} else {
-				region = 'all';
-			}
+// Subscribe to list of regions and configure the regions
+// This checks client storage for a region setting. When there is no previously
+// selected region, we ask the server to do geolocation. If that fails too,
+// we just set it to 'all regions'.
+regionSub = Meteor.subscribe('regions', function() {
+	var useRegion = function(regionId) {
+		if (regionId == 'all' || Regions.findOne({ _id: regionId })) {
+			Session.set("region", regionId);
+			return true;
 		}
-		Session.set("region", region);
+		return false;
 	}
+
+	if (useRegion(localStorage.getItem("region"))) return;
+
+	Meteor.call('autoSelectRegion', function(error, regionId) {
+		if (useRegion(regionId)) return;
+
+		// Give up
+		useRegion('all');
+	});
 });
-*/
+
 
 Meteor.startup(function() {
 	Session.set('locale', localStorage.getItem('locale'));

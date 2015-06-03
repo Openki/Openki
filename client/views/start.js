@@ -10,16 +10,11 @@ Router.map(function () {
 				if (region) Session.set('region', region._id);
 			};
 			this.next();
-			var region = Session.get('region')
-			if (region == undefined){
-				Meteor.call ('autoSelectRegion', function(error, regionId){
-					if (regionId) Session.set('region', regionId);
-				});
-			}
 		},
 		waitOn: function () {
-			var region = Session.get('region')
+			var region = Session.get('region');
 			return [
+				regionSub,
 				Meteor.subscribe('coursesFind', region, false, {}, 36)
 			];
 		},
