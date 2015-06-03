@@ -67,9 +67,8 @@
 					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
 				</div>
 			</div>
-			
 		</div>
-		
+
 
 		
 		<div class="col-sm-12">
@@ -104,9 +103,9 @@
 							
 							
 						</div>
-						{{#if files}} 
+						
 							<div style="float:left;width:20%;">
-								<table>
+								<table class="file-list">
 									
 									{{#each files}}
 				        				{{> eventAttachmentsEdit}}
@@ -114,7 +113,7 @@
 									
 								</table>
 							</div>
-						{{/if}}					
+									
 					</div>
 				</div>
 			</div>
@@ -155,13 +154,22 @@
 		</div>
 		
 		<div class="col-sm-12 no-padding event_edit_buttons">
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-xs-12 col-sm-5">
 				<button type="button" class="saveEditEvent btn btn-primary form-control">
 					<span class="glyphicon glyphicon-save"></span>
 					{{mf 'course.event.edit.save_btn' 'Save'}}
 				</button>
+				
+				
 			</div>
-			<div class="col-xs-12 col-sm-6">
+			
+			<div class="col-xs-12 col-sm-2">	
+				{{#if replicasExist}}
+					<input type="checkbox" name="updateReplicas">Update Replicas<br>
+				{{/if}}
+			</div>
+			
+			<div class="col-xs-12 col-sm-5">
 				<button type="button" class="cancelEditEvent btn btn-default form-control">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
@@ -216,7 +224,10 @@
 
 			
 			{{# if currentUser}}
-			<div class="eventEdit_buttons">
+			<div class="eventEdit_buttons col-sm-12" >
+				
+				
+				
 				<div class="btn-group" role="group">
 					<button type="button" class="eventEdit btn btn-success" role="button">
 						<span class="glyphicon glyphicon-edit"></span>
@@ -226,7 +237,73 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf 'course.details.del_btn' 'Delete'}}
 					</button>
+					
+					<button type="button" class="eventReplicateMenu btn btn-warning" role="button">
+						<span class="glyphicon glyphicon-plus"></span>
+						{{mf 'course.details.repl_menu_btn' 'Replicate'}}
+					</button>
+					
 				</div>
+				
+				
+				<div id="eventReplicationMenu" style="display:none;">
+					
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf '' 'Interval Start'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf '' 'Interval End'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-2">
+						<h4>Frequency</h4>
+						<div class="input-group">
+							 <select id="edit_frequency" class="form-control">
+							    {{#each frequencyOptions}}
+							      <option value="{{frequency}}">{{text}}</option>
+							    {{/each}}
+		  					</select> 
+						</div>
+					</div>
+					
+					<div class="col-xs-12 col-sm-2">
+						<br/> <br/>
+						
+						<div class="input-group">
+							<button type="button" class="eventReplicate btn btn-warning" role="button">
+								<!--span class="glyphicon glyphicon-plus"></span-->
+								{{mf 'course.details.repl_btn' 'Create events'}}
+							</button>
+						</div>
+					</div>
+					
+				<div class="col-xs-12 col-sm-2">
+						
+					<p style="font-size:12px;">
+						*This will replicate the same event for all the dates that fall in the chosen interval. 
+						The event times will be preserved across all replicated events.
+					</p>
+				</div>
+					
+					
+				</div>
+			
+				
+				
+				
 			</div>
 			{{/if}}
 		</div>
