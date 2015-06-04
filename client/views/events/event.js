@@ -468,9 +468,15 @@ Template.event.events({
 		template.$('.show_duration').toggle(300);
 	},
 
-	'click .eventReplicateMenu': function(event, template){
-		
+	'click .eventReplicateMenu_open': function(event, template){
 		template.$('div#eventReplicationMenu').slideDown(300);
+		template.$('.eventReplicateMenu_open').hide(500);
+		template.$('.eventReplicateMenu_close').show(500);
+	},
+	'click .eventReplicateMenu_close': function(event, template){
+		template.$('div#eventReplicationMenu').slideUp(300);
+		template.$('.eventReplicateMenu_close').hide(500);
+		template.$('.eventReplicateMenu_open').show(500);
 	},
 
 	'change #edit_event_duration, change #edit_event_starttime': function(event, template) {
