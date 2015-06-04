@@ -3,13 +3,13 @@
 		<div class="course_event_detail" id="coursedetails">
 			{{#if course}}
 			<p>
-	            <a href="{{pathFor 'showCourse' _id=course._id}}">
-	            	<span class="glyphicon glyphicon-arrow-left"></span>
-	            	{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
-	            </a>
-	        </p>
-	        {{/if}}
-	        {{#if isEvent}}
+				<a href="{{pathFor 'showCourse' _id=course._id}}">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+				</a>
+			</p>
+			{{/if}}
+			{{#if isEvent}}
 				{{>event}}
 			{{else}}
 				<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it had been deleted or has never existed."}}</h4>
@@ -73,7 +73,7 @@
 		
 		<div class="col-sm-12">
 			<div class="col-xs-12 col-sm-6 no-padding-left">
-				<h4>  {{mf 'course.event.edit.desc' 'Description:'}}</h4>
+				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-info-sign"></span>
@@ -108,8 +108,8 @@
 								<table class="file-list">
 									
 									{{#each files}}
-				        				{{> eventAttachmentsEdit}}
-				      				{{/each}}
+										{{> eventAttachmentsEdit}}
+									{{/each}}
 									
 								</table>
 							</div>
@@ -215,8 +215,8 @@
 				<ul style="list-style-type:none">
 					
 					{{#each files}}
-        				{{> eventAttachments}}
-      				{{/each}}
+						{{> eventAttachments}}
+					{{/each}}
 					
 				</ul>
 			</div>
@@ -271,11 +271,11 @@
 					<div class="col-xs-12 col-sm-2">
 						<h4>Frequency</h4>
 						<div class="input-group">
-							 <select id="edit_frequency" class="form-control">
-							    {{#each frequencyOptions}}
-							      <option value="{{frequency}}">{{text}}</option>
-							    {{/each}}
-		  					</select> 
+							<select id="edit_frequency" class="form-control">
+								{{#each frequencyOptions}}
+									<option value="{{frequency}}">{{text}}</option>
+								{{/each}}
+							</select> 
 						</div>
 					</div>
 					

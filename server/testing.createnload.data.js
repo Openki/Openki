@@ -105,18 +105,18 @@ function createCourses(scale) {
 /////////////////////////////// TESTING: Create Locations if non in db
 
 createLocationsIfNone = function(){
- if (Locations.find().count() === 0) {
-        createLocations();
-  }
+ 	if (Locations.find().count() === 0) {
+		createLocations();
+	}
 }
 
 function ensureLocationCategory(name){
-    var category_prototype = {name: name}
-    var category
-    while (!(category = LocationCategories.findOne(category_prototype))) { // Legit
-      LocationCategories.insert(category_prototype)
-    }
-    return category
+	var category_prototype = {name: name}
+	var category
+	while (!(category = LocationCategories.findOne(category_prototype))) { // Legit
+		LocationCategories.insert(category_prototype)
+	}
+	return category
 }
 
 // TESTING:
@@ -167,7 +167,7 @@ function createLocations(){
 /////////////////////////////// TESTING: Create generic events if not in db
 
 createEventsIfNone = function(){
-    //Events.remove({});
+	//Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
 			var event_count =  Math.pow(Math.random() * 2, 4);

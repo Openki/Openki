@@ -56,20 +56,20 @@ Template.event.helpers({
 	},
 
 	frequencyOptions:function() {
-	    return [{
-	      frequency:0,
-	      text:mf('event.replication.freq.once', 'once')
-	    },{
-	      frequency:1,
-	      text:mf('event.replication.freq.daily', 'every day')
-	    },{
-	      frequency:7,
-	      text:mf('event.replication.freq.weekly', 'once a week')
-	    },{
-	      frequency:30,
-	      text:mf('event.replication.freq.monthly', 'once a month')
-	    }];
-  	}
+		return [{
+			frequency:0,
+			text:mf('event.replication.freq.once', 'once')
+		},{
+			frequency:1,
+			text:mf('event.replication.freq.daily', 'every day')
+		},{
+			frequency:7,
+			text:mf('event.replication.freq.weekly', 'once a week')
+		},{
+			frequency:30,
+			text:mf('event.replication.freq.monthly', 'once a month')
+		}];
+	}
 });
 
 Template.eventDescritpionEdit.rendered = function() {
@@ -156,8 +156,8 @@ var getEventFrequency = function(template) {
 	else if(frequency == 30){ //every month
 		unit = "months";
 	}
-	
-	
+
+
 	//get start and end dates from the replication form
 	var startMoment = startDate.toDate();
 	var endMoment = endDate.toDate();
@@ -233,49 +233,43 @@ Template.event.events({
 		console.log("in the first moment, replicas do exist for some millis anyway, then these ghosts disapear, isn't that true?  - "+Template.instance().replicasExist.get() );
 	},
 	
-	
 	'change .eventFileInput': function(event, template) {
-		 
 		template.$('button.eventFileUpload').toggle(300);
 	}, 
-		 
 	'click button.eventFileUpload': function(event, template) {
-	
 		
 		var fileEvent = $('.eventFileInput')[0].files;
 		
 		//FS.Utility.eachFile(fileEvent, function(file) {
-	    $.each( fileEvent, function(i,file){  	
+		$.each( fileEvent, function(i,file){
 
-	        Files.insert(file, function (err, fileObj) {
+			Files.insert(file, function (err, fileObj) {
 
-		    	if (err){
+				if (err){
 					// add err handling
-	          	} else {
+				} else {
 					//adds a single file at a time at the moment
-	            	var fileList = [
-	            		{
-	            			_id: fileObj._id,
-	            			file : "/cfs/files/files/" + fileObj._id,
-	            			filename : fileObj.original.name,
-		    				filesize : fileObj.original.size,
-	            		}
-	            	];
-	          		template.files = fileList;
-	          		template.$('button.eventFileUpload').hide(50);
-	          	
-	          		
-	          		
-	          		var fileHtml = '<tr id="row-' + fileObj._id + '">';
-	          		fileHtml += '<td style="padding-right:5px;">';
-	          		fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
+					var fileList = [
+						{
+							_id: fileObj._id,
+							file : "/cfs/files/files/" + fileObj._id,
+							filename : fileObj.original.name,
+							filesize : fileObj.original.size,
+						}
+					];
+					template.files = fileList;
+					template.$('button.eventFileUpload').hide(50);
+				
+					var fileHtml = '<tr id="row-' + fileObj._id + '">';
+					fileHtml += '<td style="padding-right:5px;">';
+					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
 					fileHtml += '</td><td><button role="button" class="fileDelete close" type="button">';
 					fileHtml += '<span class="glyphicon glyphicon-remove"></span></button></td></tr>';
-	          	
-	          		$("table.file-list").append(fileHtml);
-	          	
-	          	}
-	        });
+				
+					$("table.file-list").append(fileHtml);
+				
+				}
+			});
 		});
 	},
 	

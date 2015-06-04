@@ -121,10 +121,10 @@ Handlebars.registerHelper('username', userName);
 
 
 Handlebars.registerHelper('dateformat', function(date) {
-    // We'll need a date formatter at some point
-    //if (date) return date.toDateString();
+	// We'll need a date formatter at some point
+	//if (date) return date.toDateString();
 
-    if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+	if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
 });
 
 Handlebars.registerHelper('dateformat_calendar', function(date) {
@@ -180,12 +180,12 @@ Handlebars.registerHelper('fromNow', function(date) {
 
 
 Handlebars.registerHelper('isNull', function(val) {
-    return val === null
+	return val === null
 });
 
 Handlebars.registerHelper('courseURL', function(_id) {
-    var course=Courses.findOne(_id);
-    var name = getSlug(course.name);
+	var course=Courses.findOne(_id);
+	var name = getSlug(course.name);
 	//var name = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
 	var _id = _id
 	return '/course/' + _id + '/' + name;
@@ -194,10 +194,10 @@ Handlebars.registerHelper('courseURL', function(_id) {
 
 //Html title attribute of participant-state-sybol in courselist
 Handlebars.registerHelper('isYes', function(val) {
- 	return val === 'yes'
+	return val === 'yes'
 });
 Handlebars.registerHelper('isOntheway', function(val) {
- 	return val === 'ontheway'
+	return val === 'ontheway'
 });
 
 
