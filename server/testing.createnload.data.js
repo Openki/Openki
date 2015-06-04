@@ -200,7 +200,7 @@ createEventsIfNone = function(){
 				if (Random.fraction() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
 				if (Random.fraction() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
 				event.startdate = date;
-				
+				event.enddate = new Date(date.getTime() + (1000*60*60*2));
 				event.createdby = 'ServerScript'
 				var age = Math.floor(Random.fraction() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
