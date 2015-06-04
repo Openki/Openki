@@ -35,24 +35,30 @@ Meteor.methods({
 			room:        Match.Optional(String),
 			startdate:   Date,
 			enddate:     Date,
-			files:       Match.Optional(Array)
-		}
+			files:       Match.Optional(Array),
+			mentors:	 Match.Optional(Array),
+			host:	 	 Match.Optional(Array),
+			replicaOf:	 Match.Optional(String),
+			course_id:	Match.Optional(String),
+		};
 		
 		var isNew = eventId === '';
 		if (isNew) {
 			expectedFields.region = String;
-			expectedFields.course_id = Match.Optional(String);
+		//	expectedFields.course_id = Match.Optional(String);
 		}
+		
+		console.log(changes);
 		
 		check(changes, expectedFields);
 		
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.isClient) {
 				pleaseLogin();
 				return;
 			} else {
-				throw new Meteor.Error(401, "please log in")
+				throw new Meteor.Error(401, "please log in");
 			}
 		}
 		
@@ -87,8 +93,9 @@ Meteor.methods({
 			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
 		} else {
-			Events.update(eventId, { $set: changes });
+			Events.update(eventId, { $set: changes });		
 		}
+		
 		
 		return eventId;
 	},
@@ -106,6 +113,29 @@ Meteor.methods({
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
+	updateReplicas: function(eventId,changes){
+
+		//update the replicas of this event
+		delete changes.startdate;
+		delete changes.enddate; 
+		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
+		//and the event of which this is a replica, and that event's other replicas
+		var repEventId = changes.replicaOf;
+		if(repEventId != undefined){
+			Events.update( repEventId, { $set: changes }, { multi:true} );
+			Events.update( { replicaOf: repEventId }, { $set: changes }, { multi:true} );	
+		}
+		
+	},
+	
+	
+	
+	getReplicas: function(eventId){
+			
+		console.log( "search replicas of " + eventId);
+		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;
+		return results;
+	},
 
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
@@ -160,7 +190,7 @@ eventsFind = function(filter, limit) {
 	if (limit > 0) {
 		options.limit = limit;
 	}
-
+	
 	if (filter.after) {
 		find.startdate = { $gt: filter.after };
 	}
@@ -182,11 +212,11 @@ eventsFind = function(filter, limit) {
 	if (filter.room) {
 		find.room = filter.room;
 	}
-
+	
 	if (filter.standalone) {
 		find.course_id = { $exists: false };
 	}
-
+	
 	if (filter.query) {
 		var searchTerms = filter.query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
@@ -198,6 +228,5 @@ eventsFind = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
-
 	return Events.find(find, options);
 }

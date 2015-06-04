@@ -2,6 +2,7 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
+	this.replicasExist = new ReactiveVar(true);
 }
 
 Template.event.onRendered(function(){
@@ -34,7 +35,9 @@ Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
-
+	replicasExist: function() {
+		return this.new || Template.instance().replicasExist.get();
+	},
 	regions: function(){
 		return Regions.find();
 	},
@@ -121,7 +124,9 @@ var setDurationInTemplate = function(template) {
 
 var getEventFrequency = function(template) {
 	
-	var startDate =  moment(template.$('#edit_event_startdate').val());	
+	var startDate =  moment(template.$('#edit_event_startdate').val());	//2015-05-06T12:15:39.565Z
+	
+	//check if startDate is also before endDate
 	var nowMoment = moment();
 	if (startDate.diff(nowMoment)<0) {
 		alert("Date must be in future");
@@ -132,7 +137,7 @@ var getEventFrequency = function(template) {
 	var diffDays = endDate.diff(startDate, "days");
 	
 
-	var dates = [];
+	
 	//detect how many events we should create
 	//and return a list of start-end times when the events should be created
 	var nrEvents = Math.floor(diffDays/frequency) + 1;
@@ -153,40 +158,48 @@ var getEventFrequency = function(template) {
 	}
 	
 	
+	//get start and end dates from the replication form
+	var startMoment = startDate.toDate();
+	var endMoment = endDate.toDate();
+	
+	//get the hour and minute from the replicated event
+	var origEventStartDate = template.data.startdate;
+	var startHours = origEventStartDate.getHours();
+	var startMinutes = origEventStartDate.getMinutes();
+	var origEventEndDate = template.data.enddate;
+	var endHours = origEventEndDate.getHours();
+	var endMinutes = origEventEndDate.getMinutes();
+	
+	
+	var dates = [];
 	
 	for(var i = 0; i < nrEvents; i++){
-		var dt = moment(startDate).add(i, unit); 
-		var startTime = template.$('#edit_event_starttime').val();
-		var startTimeParts = startTime.split(":");
-		var minutes = startTimeParts[1];
-		var hours = startTimeParts[0];
-		var startMoment = dt;
-		startMoment.hours(hours);
-		startMoment.minutes(minutes);
-	
-		if(!startMoment) {
+		
+		var dtstart = moment( startMoment ).add(i, unit); 
+		var dtend = moment( endMoment ).add(i, unit); 
+
+		dtstart.hours(startHours);
+		dtstart.minutes(startMinutes);
+		dtend.hours(endHours);
+		dtend.minutes(endMinutes);
+
+		if(!dtstart || !dtend ) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 			continue;
 		}
-		var duration = getEventDuration(template);
-		var endMoment = calculateEndMoment(startMoment, duration);
-		var eventTime = [ startMoment,endMoment ];
+		
+		var eventTime = [ dtstart,dtend ];
 		dates.push( eventTime );
 	}
 	
-	console.log( dates );
 	return(dates);
-	
-	
-
-
 
 };
 Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;
 		if (confirm('Delete event "'+this.title+'"?')) {
-			var title = this.title
+			var title = this.title;
 			var course = this.course_id;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) {
@@ -200,9 +213,24 @@ Template.event.events({
 		}
 	},
 	
-	'click button.eventEdit': function () {
+	'click button.eventEdit': function (event, template) {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
+		
+		var eventId = this._id;
+		var repEventId = this.replicaOf;
+	
+		//find if these events have replicas or if whether this event is replicated.
+		Meteor.call('getReplicas', eventId, function (error, results){	
+			if(error){template.replicasExist.set(false);}
+			else if( results > 0 || repEventId != undefined ){
+				template.replicasExist.set(true);
+			}else{
+				template.replicasExist.set(false);		
+			}
+		});		
+		
+		console.log( Template.instance().replicasExist.get() );
 	},
 	
 	
@@ -218,9 +246,9 @@ Template.event.events({
 		
 		//FS.Utility.eachFile(fileEvent, function(file) {
 	    $.each( fileEvent, function(i,file){  	
-	    	console.log(file);
+
 	        Files.insert(file, function (err, fileObj) {
-		    	console.log(fileObj);
+
 		    	if (err){
 					// add err handling
 	          	} else {
@@ -235,6 +263,17 @@ Template.event.events({
 	            	];
 	          		template.files = fileList;
 	          		template.$('button.eventFileUpload').hide(50);
+	          	
+	          		
+	          		
+	          		var fileHtml = '<tr id="row-' + fileObj._id + '">';
+	          		fileHtml += '<td style="padding-right:5px;">';
+	          		fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
+					fileHtml += '</td><td><button role="button" class="fileDelete close" type="button">';
+					fileHtml += '<span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+	          	
+	          		$("table.file-list").append(fileHtml);
+	          	
 	          	}
 	        });
 		});
@@ -246,7 +285,7 @@ Template.event.events({
 		var eventid = template.data._id;
 		var filename = this.filename;
 		//delete the actual file
-		var fp = Files.remove(fileid)
+		var fp = Files.remove(fileid);
 		
 		//hide file name
 		var rowid = "tr#row-" + fileid;		
@@ -263,27 +302,26 @@ Template.event.events({
 	'click button.saveEditEvent': function(event, template) {
 		if (pleaseLogin()) return;
 
-
-		
-		//this will not be necessary once the above is active
 		var startMoment = getEventStartMoment(template);
 		if(!startMoment) {
 			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
 			return null;
 		}
 		var duration = getEventDuration(template);
+		//we need this check because duration is not an event property and it is reset to null after first save
+		if(!duration){
+			setDurationInTemplate(template);
+			duration = getEventDuration(template);
+		}
 		var endMoment = calculateEndMoment(startMoment, duration);
-		
 		var nowMoment = moment();
 		if (startMoment.diff(nowMoment)<0) {
 			alert("Date must be in future");
 			return;
 		}
 		
+		//todo:detect changed fields
 		
-		
-
-
 		var editevent = {
 			title: template.$('#edit_event_title').val(),
 			description: template.$('#edit_event_description').html(),
@@ -291,25 +329,30 @@ Template.event.events({
 			room: template.$('#edit_event_room').val(),
 			startdate: startMoment.toDate(),
 			enddate: endMoment.toDate(),
-			files: this.files,
+			files: this.files || Array() ,
+			
 		};
 		
 		
 		var fileList = template.files;
 		template.files = null;
 
+
 		//check if file object is stored in the template object
 		if(fileList != null){
-			var tmp = []				
-			$.each( this.files, function( i,fileObj ){
-				tmp.push( fileObj );
-			});
+			var tmp = [];		
+			if(this.files){	
+				$.each( this.files, function( i,fileObj ){
+					tmp.push( fileObj );
+				});
+			}
 			
 			$.each( fileList, function( i, fileObj ){
 				tmp.push( fileObj );
 			});	
 					
 			editevent.files = tmp;
+
 		}		
 		
 		
@@ -327,10 +370,35 @@ Template.event.events({
 			}
 		}
 		
+		var updateReplicas = template.$("input[name='updateReplicas']").is(':checked');
+		
+		if(updateReplicas && this.replicaOf != undefined){	
+			editevent.replicaOf = this.replicaOf;		
+		}
+		
 		Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 			} else {
+				
+				//update replicas too
+				//check if "update replicas" flag is set here, and if yes, update them
+				if(updateReplicas){
+					
+					//we need this to identify the event that this is a replica of, and apply changes to that too
+					
+					
+					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
+						if (error) {	
+							addMessage(mf('event.replicate.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
+						}
+						else{
+							addMessage(mf('event.replicate.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'));
+						}		
+					});
+				}
+			
+				
 				if (isNew) Router.go('showEvent', { _id: eventId });
 				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
 				template.editing.set(false);
@@ -338,6 +406,63 @@ Template.event.events({
 		});
 	},
 	
+	'click button.eventReplicate': function (event, template) {
+		//get all startDates where the event should be created
+		//this does not do anything yet other than generating the start-end times for a given period
+		
+		var dates = getEventFrequency(template);
+		var success = true;	
+		$.each( dates, function( i,eventTime ){
+			
+			/*create a new event for each time interval */
+
+			/*don't replicate the event if it is set for the same day*/
+			if( template.data.startdate.toDateString() == eventTime[0].toDate().toDateString() ){
+				console.log( "replica on same day");
+				console.log( template.data.startdate.toString() + " - " + eventTime[0].toDate().toString()  );
+				return true;
+			}
+			
+			
+			var replicaEvent = {
+
+				title: template.data.title,
+				description: template.data.description,
+				location: template.data.location,
+				room: template.data.room, //|| '',
+				startdate: eventTime[0].toDate(),
+				enddate: eventTime[1].toDate(),
+				files: template.data.files  || new Array(),
+				mentors: template.data.mentors  ||  new Array(),
+				host: template.data.host ||  new Array(),
+				region: template.data.region || Session.get('region'),
+				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
+			};
+		
+			var course_id = template.data.course_id;
+			if(course_id){
+				replicaEvent.course_id  = course_id; 
+			}
+
+			var eventId = '';
+				
+			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
+				if (error) {
+					addMessage(mf('event.saving.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+					success = false;
+				} else {
+				}
+			});
+		
+		
+		});
+		if(success){
+			template.$('div#eventReplicationMenu').slideUp(300);
+			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".'));
+			Router.go('showEvent', { _id: template.data._id });
+		}
+			
+	},
 	'click button.cancelEditEvent': function () {
 		if (this.new) history.back();
 		Template.instance().editing.set(false);
@@ -347,6 +472,11 @@ Template.event.events({
 
 		template.$('.show_time_end').toggle(300);
 		template.$('.show_duration').toggle(300);
+	},
+
+	'click .eventReplicateMenu': function(event, template){
+		
+		template.$('div#eventReplicationMenu').slideDown(300);
 	},
 
 	'change #edit_event_duration, change #edit_event_starttime': function(event, template) {
