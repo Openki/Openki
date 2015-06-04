@@ -13,7 +13,7 @@ Roles = new Meteor.Collection("Roles");
 var roles = [{
 		'type':        'team',
 		'icon':        'glyphicon glyphicon-bullhorn',
-		'alt_icon':    'fa fa-info-circle fa fa-connectdevelop',
+		'alt_icon':    'fa fa-info-circle',
 		'preset':      true,	//if true: allways available, not offered as choice in proposal
 		'show_subscribers': true,
 	},{
