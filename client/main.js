@@ -38,12 +38,49 @@ regionSub = Meteor.subscribe('regions', function() {
 });
 
 
+// Try to guess a sensible language
 Meteor.startup(function() {
-	Session.set('locale', localStorage.getItem('locale'));
+	// Could be built dynamically I guess
+	var availableLangs = {
+		'ar': 'ar',
+		'de': 'de',
+		'en': 'en',
+		'es': 'es',
+		'fr': 'fr',
+		'it': 'it',
+		'zh': 'zh_TW'
+	};
 
+	var useLocale = function(lang) {
+		var locale = false;
+		if (availableLangs[lang]) {
+			locale = availableLangs[lang];
+		}
+		if (!locale && lang.length > 2) {
+			var short = langCandidate.substring(0, 2);
+			if (availableLangs[short]) {
+				locale = availableLangs[short];
+			}
+		}
+		if (locale) {
+			Session.set('locale', locale);
+			return true;
+		}
+		return false;
+	}
+
+	// Soon everybody will support this, right?
+	var desiredLangs = navigator.languages || [navigator.language];
+	desiredLangs.unshift(localStorage.getItem('locale'));
+	desiredLangs.push('en'); // fallback
+
+	for (l in desiredLangs) {
+		var langCandidate = desiredLangs[l];
+		if (useLocale(langCandidate)) break;
+	}
+	
 	Deps.autorun(function() {
 		var desiredLocale = Session.get('locale');
-		localStorage.setItem('locale', desiredLocale);
 		
 		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it
@@ -52,6 +89,7 @@ Meteor.startup(function() {
 		if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
 	});
 });
+
 
 minuteTime = new ReactiveVar();
 

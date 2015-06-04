@@ -12,6 +12,8 @@ Template.lang_sel.helpers({
 Template.lang_sel.events({
 	'click a.langselect': function(e){
 		mfPkg.setLocale(this.lg);
+		localStorage.setItem('locale', this.lg);
+		Session.set('locale', this.lg);
 		e.preventDefault();
 	}
 });
