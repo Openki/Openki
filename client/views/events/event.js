@@ -58,16 +58,16 @@ Template.event.helpers({
 	frequencyOptions:function() {
 	    return [{
 	      frequency:0,
-	      text:"once" 
+	      text:mf('event.replication.freq.once', 'once')
 	    },{
 	      frequency:1,
-	      text:"every day"
+	      text:mf('event.replication.freq.daily', 'every day')
 	    },{
 	      frequency:7,
-	      text:"once a week"
+	      text:mf('event.replication.freq.weekly', 'once a week')
 	    },{
 	      frequency:30,
-	      text:"once a month"
+	      text:mf('event.replication.freq.monthly', 'once a month')
 	    }];
   	}
 });
@@ -169,8 +169,8 @@ var getEventFrequency = function(template) {
 	var origEventEndDate = template.data.enddate;
 	var endHours = origEventEndDate.getHours();
 	var endMinutes = origEventEndDate.getMinutes();
-	
-	
+
+
 	var dates = [];
 	
 	for(var i = 0; i < nrEvents; i++){
@@ -230,7 +230,7 @@ Template.event.events({
 			}
 		});		
 		
-		console.log( Template.instance().replicasExist.get() );
+		console.log("in the first moment, replicas do exist for some millis anyway, then these ghosts disapear, isn't that true?  - "+Template.instance().replicasExist.get() );
 	},
 	
 	
@@ -294,7 +294,7 @@ Template.event.events({
 		//remove file attribute from the event
 		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
 			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Sucessfully removed file {FILENAME}.'));
-			else console.log('An error Occured while deleting Event'+error);
+			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."));
 		});		
 	},
 	
@@ -418,8 +418,8 @@ Template.event.events({
 
 			/*don't replicate the event if it is set for the same day*/
 			if( template.data.startdate.toDateString() == eventTime[0].toDate().toDateString() ){
-				console.log( "replica on same day");
-				console.log( template.data.startdate.toString() + " - " + eventTime[0].toDate().toString()  );
+				console.error( "replica on same day");
+				console.error( template.data.startdate.toString() + " - " + eventTime[0].toDate().toString()  );
 				return true;
 			}
 			

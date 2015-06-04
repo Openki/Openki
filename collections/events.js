@@ -47,9 +47,7 @@ Meteor.methods({
 			expectedFields.region = String;
 		//	expectedFields.course_id = Match.Optional(String);
 		}
-		
-		console.log(changes);
-		
+
 		check(changes, expectedFields);
 		
 		var user = Meteor.user();
@@ -132,7 +130,6 @@ Meteor.methods({
 	
 	getReplicas: function(eventId){
 			
-		console.log( "search replicas of " + eventId);
 		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;
 		return results;
 	},
@@ -152,7 +149,6 @@ Meteor.methods({
 			var fileObj = event.files[i];
 			if( fileObj._id != fileId){
 				tmp.push(fileObj);
-				console.log(fileObj);
 			}
 		};
 
