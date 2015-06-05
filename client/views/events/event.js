@@ -387,7 +387,7 @@ Template.event.events({
 							addMessage(mf('event.replicate.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
 						}
 						else{
-							addMessage(mf('event.replicate.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'));
+							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'));
 						}		
 					});
 				}
