@@ -69,6 +69,10 @@ Template.event.helpers({
 			frequency:30,
 			text:mf('event.replication.freq.monthly', 'once a month')
 		}];
+	},
+	
+	mayEdit: function() {
+		return mayEditEvent(Meteor.user(), this);
 	}
 });
 

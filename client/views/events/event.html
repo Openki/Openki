@@ -222,12 +222,8 @@
 			</div>
 			{{/if}}
 
-			
-			{{# if currentUser}}
+			{{#if mayEdit}}
 			<div class="eventEdit_buttons col-sm-12" >
-				
-				
-				
 				<div class="btn-group" role="group">
 					<button type="button" class="eventEdit btn btn-success" role="button">
 						<span class="glyphicon glyphicon-edit"></span>
@@ -246,12 +242,9 @@
 						<span class="glyphicon glyphicon-minus"></span>
 						{{mf 'course.details.repl_menu_btn'}}
 					</button>
-					
 				</div>
-				
-				
+
 				<div id="eventReplicationMenu" style="display:none;">
-					
 					<div class="col-xs-12 col-sm-3">
 						<h4>{{mf 'event.replication.interval.start' 'Interval Start'}}</h4>
 						<div class="input-group">
@@ -294,20 +287,13 @@
 						</div>
 					</div>
 					
-				<div class="col-xs-12 col-sm-2">
-						
-					<p style="font-size:12px;">
-						*This will replicate the same event for all the dates that fall in the chosen interval. 
-						The event times will be preserved across all replicated events.
-					</p>
+					<div class="col-xs-12 col-sm-2">
+						<p style="font-size:12px;">
+							*This will replicate the same event for all the dates that fall in the chosen interval. 
+							The event times will be preserved across all replicated events.
+						</p>
+					</div>
 				</div>
-					
-					
-				</div>
-			
-				
-				
-				
 			</div>
 			{{/if}}
 		</div>
