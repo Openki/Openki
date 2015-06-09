@@ -34,8 +34,8 @@ div#edit_event_description {
 
 .course_events {
 	padding-top: 15px;
-	&> div:first-child {
-		padding: 0 10px;
+	.course_event {
+		height: 204px;
 	}
 }
 
@@ -70,10 +70,11 @@ div#edit_event_description {
 			padding: 10px 0;
 			border-bottom: 3px solid @body-bg;
 			background: @brand-success;
+			height: 70px;
 		}
 		.course_event_date {
 			span.date {
-				font-size: x-large;
+				font-size: large;
 			}
 		}
 		& > .course_event_time {
@@ -98,6 +99,7 @@ div#edit_event_description {
 	background: @light-blue;
 	padding-bottom: 10px;
 	overflow: hidden;
+	height: calc(~"100% - 70px");
 }
 
 .course_event_title {

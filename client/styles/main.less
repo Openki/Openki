@@ -1,26 +1,31 @@
-// Load Fonts
-@import "custom/fonts.import.less";
+// ++ Load Fonts ++
+@import "fonts/fonts.import.less";
 
-// Load Boostrap Variables & Mixins
+// ++ Load Boostrap Variables & Mixins ++
 @import "bootstrap/custom.bootstrap.less";
 
-// Load Custom Stylesheets
-@import "custom/custom.variables.import.less";
+// ++ Load Custom Variables, Mixins & Classes ++ 
 @import "custom/custom.mixins.import.less";
-@import "custom/helper.classes.import.less";
+@import "custom/custom.variables.import.less";
+@import "custom/custom.classes.import.less";
 
-@import "custom/general.import.less";
-@import "custom/navbar.import.less";
-@import "custom/footer.import.less";
-@import "custom/login.import.less";
-@import "custom/find.import.less";
-@import "custom/userprofile.import.less";
-@import "custom/ownprofile.import.less";
+// ++ Load Template Stylesheets ++
+@import "views/main.import.less";
 
-@import "custom/calendar.import.less";
-@import "custom/kiosk.import.less";
-@import "custom/roles.import.less";
-@import "custom/discussion.import.less";
-@import "custom/course.list.import.less";
-@import "custom/course.details.import.less";
-@import "custom/course.events.import.less";
+@import "views/calendar/calendar.import.less";
+
+@import "views/courses/course.list.import.less";
+
+@import "views/courses/details/course.details.import.less";
+@import "views/courses/details/course.discussion.import.less";
+@import "views/courses/details/course.roles.import.less";
+
+@import "views/courses/events/course.events.import.less";
+
+@import "views/misc/kiosk/kiosk.import.less";
+
+@import "views/navigation/navigation.footer.import.less";
+@import "views/navigation/navigation.navbar.import.less";
+
+@import "views/users/ownprofile.import.less";
+@import "views/users/userprofile.import.less";

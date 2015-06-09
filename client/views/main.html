@@ -4,92 +4,7 @@
 
 <template name="layout">
 	<div id="wrap">
-		<nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" role="navigation">
-			<div class="container-fluid">
-			    <!-- Brand and toggle get grouped for better mobile display -->
-			    <div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{{pathFor 'home'}}"><span class="fa fa-university"></span>&nbsp;Openki</a>
-			    </div>
-			    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-			    	<ul class="nav navbar-nav">
-
-			    		<li>
-			    			<a href="/">
-			    				<span class="glyphicon glyphicon-home"></span>&nbsp;
-			    				{{mf 'menue.Courses' 'Courses'}}
-			    			</a>
-			    		</li>
-						<li class="dropdown">
-							<a href="{{pathFor 'home'}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								<span class="glyphicon glyphicon-edit"></span>&nbsp;
-								{{mf 'menue.Create' 'Create'}}
-								<span class="caret"></span>
-							</a>
-						 	<ul class="dropdown-menu" role="menu">
-								<!--
-							  	<li>
-									<a href="/">
-										{{mf 'menue.Search' 'Search'}}
-									</a>
-								</li>
-								<li>
-									<a href="/locations/">
-										{{mf 'menue.LocationList' 'Location List'}}
-									</a>
-								</li>
-								<li>
-									<a href="/categorylist/">
-										{{mf 'menue.CategoryList' 'Category List'}}
-									</a>
-								</li>
-								<li>
-									<a href="{{pathFor 'courses'}}">
-										{{mf 'menue.BrowseCourses' 'Browse Courses'}}
-									</a>
-								</li>
-								-->
-								<li>
-									<a href="{{pathFor 'proposeCourse'}}">
-										{{mf 'menue.ProposeCourse' 'Propose Course'}}
-									</a>
-								</li>
-								<li>
-									<a href="{{pathFor 'showEvent' _id='create'}}">
-										{{mf 'menue.CreateEvent' 'Create Event'}}
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="{{pathFor 'calendar'}}">
-								<span class="glyphicon glyphicon-calendar"></span>&nbsp;
-								{{mf 'menue.Calendar' 'Calendar'}}
-							</a>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							{{> region_sel}}
-						</li>
-						<li class="dropdown">
-							{{> lang_sel}}
-						</li>
-						<li class="dropdown">
-							{{> loginButton}}
-							<div class="dropdown-menu login-dropdown">
-								{{> loginFrame}}
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		{{> navbar}}
 		<div class="container-fluid">
 			<div class="container-fluid">
 				<div id="outer" class="row">
@@ -103,18 +18,7 @@
 		</div>
 		<div class="push"></div>
 	</div>
-	<footer class="footer">
-		<div class="container-fluid">
-			<div class="container-fluid links">
-				<a href="/about" >{{mf 'main.about_link' 'About'}}</a>
-				<a href="http://openki.net">{{mf 'main.concept_link' 'Concept'}}</a>
-				<a href="/FAQ">{{mf 'main.faq_link' 'FAQ'}}</a>
-				|
-				<div class="long_link">
-				<a href="https://github.com/schuel/hmmm/">{{mf 'main.github_link' 'Code on Github'}}</a></div>
-			</div>
-		</div>
-	</footer>
+	{{> footer}}
 </template>
 
 <template name="region_sel">

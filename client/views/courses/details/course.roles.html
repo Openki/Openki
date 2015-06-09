@@ -39,12 +39,18 @@
 </template>
 
 <template name="roleDetail">
-	<div class="roleDetails role_{{roletype.type}}">
-		<div class="subscribe">
+	<div class="roleDetails role_{{roletype.type}} col-sm-12 no-padding">
+		<div class="subscribe col-sm-12 no-padding">
 		{{#if subscribed}}
 		<div class="enroled_as_title col-sm-12">
 			<div class="container-fluid">
-				<h3><span class="{{roletype.icon}}">&nbsp;</span>{{#with roletype}}{{mf roleSubscribed}}{{/with}} <button class="unsubscribe btn btn-primary" name="{{roletype.type}}">{{mf 'course.roles.retract' 'Retract'}}</button></h3>
+				<h3>
+					<span class="{{roletype.icon}}"></span>&nbsp;
+					{{#with roletype}}{{mf roleSubscribed}}{{/with}} 
+					<button class="unsubscribe btn btn-primary" name="{{roletype.type}}">
+						{{mf 'course.roles.retract' 'Retract'}}
+					</button>
+				</h3>
 			</div>
 		</div>
 		{{else}}
@@ -63,15 +69,18 @@
 
 					{{#if privacyEnabled}}
 					<div class="checkbox">
-						<label><input type="checkbox" class="incognito" value="1" /> {{mf 'course.roles.incognitosubscription' 'incognito'}} ☔</label>
+						<label>
+							<input type="checkbox" class="incognito" value="1" />
+							{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
+						</label>
 					</div>
 					{{/if}}
 
 					<div class="enrol_as_buttons col-sm-12 no-padding">
-							<button class="subscribe btn btn-primary">
-								<span class="glyphicon glyphicon-ok"></span>
-								{{mf 'course.roles.enrol' 'Enrol'}}
-							</button>
+						<button class="subscribe btn btn-primary">
+							<span class="glyphicon glyphicon-ok"></span>
+							{{mf 'course.roles.enrol' 'Enrol'}}
+						</button>
 						<button class="cancel btn btn-danger">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
