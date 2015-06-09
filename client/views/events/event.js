@@ -2,7 +2,7 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
-	this.replicasExist = new ReactiveVar(true);
+	this.replicasExist = new ReactiveVar(false);
 }
 
 Template.event.onRendered(function(){
@@ -36,7 +36,7 @@ Template.event.helpers({
 		return this.new || Template.instance().editing.get();
 	},
 	replicasExist: function() {
-		return this.new || Template.instance().replicasExist.get();
+		return Template.instance().replicasExist.get();
 	},
 	regions: function(){
 		return Regions.find();
