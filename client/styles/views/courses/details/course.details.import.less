@@ -101,3 +101,29 @@ ul.subcategories {
 		color: #BBB;
 	}
 }
+
+.courseDetails_roles_container {
+	background: @light-blue;
+	margin-top: 20px;
+
+	.courseDetails_participants_count {
+		height: 60px;
+		background: #C1F2AE;
+		border-bottom: 3px solid @body-bg;
+		border-right: 3px solid @body-bg;
+
+		p {
+			padding-top: 15px;
+			font-size: large;
+		}
+	}
+
+	.courseDetails_mentor.mentor_status {
+		height: 60px;
+		// border-bottom: 3px solid @body-bg; No Functionality, no border.
+
+		.yes {
+			background: @brand-success;
+		}
+	}
+}

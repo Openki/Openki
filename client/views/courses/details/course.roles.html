@@ -1,22 +1,22 @@
-<template name="membersRoles">
-	<div class="participants">
-		<ul class='subscribers list-unstyled'>
+<template name="roles">
+	<div class="roles">
+		<ul class='subscribers'>
 		{{#each members}}
-			{{> memberRoles member=this course=..}}
+			{{> member_roles member=this course=..}}
 		{{/each}}
 		</ul>
 	</div>
 </template>
 
-<template name="memberRoles">
+<template name="member_roles">
 	<li>
 		{{>profilelink member.user}}
-		<ul class='roles list-unstyled'>
+		<ul class='roles'>
 			{{#each member.roles}}
 				<li class='{{this}}'>{{mf roleShort}}</li>
 			{{/each}}
 			{{#if maySubscribe}}
-			<button class='makeTeam btn btn-primary'>
+			<button class='makeTeam'>
 				<span class="glyphicon glyphicon-plus"></span>
 				{{mf 'course.roles.maketeam' 'Add to team'}}
 			</button>
@@ -30,74 +30,4 @@
 			{{/if}}
 		</span>
 	</li>
-</template>
-
-<template name="roleDetails">
-	{{#each this}}
-		{{> roleDetail}}
-	{{/each}}
-</template>
-
-<template name="roleDetail">
-	<div class="roleDetails role_{{roletype.type}} col-sm-12 no-padding">
-		<div class="subscribe col-sm-12 no-padding">
-		{{#if subscribed}}
-		<div class="enroled_as_title col-sm-12">
-			<div class="container-fluid">
-				<h3>
-					<span class="{{roletype.icon}}"></span>&nbsp;
-					{{#with roletype}}{{mf roleSubscribed}}{{/with}} 
-					<button class="unsubscribe btn btn-primary" name="{{roletype.type}}">
-						{{mf 'course.roles.retract' 'Retract'}}
-					</button>
-				</h3>
-			</div>
-		</div>
-		{{else}}
-			{{#if enrolling}}
-				<div class="enrol_as_title col-sm-12">
-					<div class="container-fluid">
-						<h3>
-							<span class="{{roletype.icon}}"></span>&nbsp;
-							{{mf 'course.roles.enrol_as' 'Enrol as'}} {{role}}
-						</h3>
-					</div>
-				</div>
-				<div class="enrol_as_options col-sm-12">
-					{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
-					<textarea cols="50" rows="3" class='enrol_as_comment form-control'>{{../../member.comment}}</textarea>
-
-					{{#if privacyEnabled}}
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" class="incognito" value="1" />
-							{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
-						</label>
-					</div>
-					{{/if}}
-
-					<div class="enrol_as_buttons col-sm-12 no-padding">
-						<button class="subscribe btn btn-primary">
-							<span class="glyphicon glyphicon-ok"></span>
-							{{mf 'course.roles.enrol' 'Enrol'}}
-						</button>
-						<button class="cancel btn btn-danger">
-							<span class="glyphicon glyphicon-remove"></span>
-							{{mf 'course.roles.cancelenrol'  'Cancel'}}
-						</button>
-					</div>
-				</div>
-			{{else}}
-				{{#if maySubscribe roletype.type}}
-					<button type="button" class="enrol form-control btn btn-primary no-padding" name="participant">
-						<div class="container-fluid">
-							<span class="{{roletype.icon}}"></span>&nbsp;
-							{{#with roletype}}{{mf roleSubscribe}}{{/with}} 
-						</div>
-					</button>
-				{{/if}}
-			{{/if}}
-		{{/if}}
-		</div>
-	</div>
 </template>

@@ -72,10 +72,10 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="container-fluid courseDetails_participants">
-								{{> membersRoles course}}
+								{{> roles course}}
 							</div>
 						</div>
-						{{> roleDetails roleDetails}}
+						{{> roles_details roles_details}}
 					</div>
 				</div>
 				<div class="discussion col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -98,11 +98,9 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="container-fluid courseDetails_participants">
-								{{> membersRoles course}}
-							</div>
+								{{> roles course}}
 						</div>
-						{{> roleDetails roleDetails}}
+						{{> roles_details roles_details}}
 					</div>
 				</div>
 			{{/if}}

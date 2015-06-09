@@ -1,4 +1,4 @@
-Template.memberRoles.helpers({
+Template.member_roles.helpers({
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
@@ -6,74 +6,14 @@ Template.memberRoles.helpers({
 	}
 });
 
-Template.memberRoles.events({
+Template.member_roles.events({
 	'click button.makeTeam': function(e, template) {
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
 		return false;
 	}
 });
 
-
-Template.roleDetail.created = function() {
-	this.enrolling = new ReactiveVar(false);
-};
-
-Template.roleDetail.helpers({
-	enrolling: function() { return Template.instance().enrolling.get() },
-
-	roleSubscribe: function() {
-		return 'roles.'+this.type+'.subscribe';
-	},	
-	
-	roleSubscribed: function() {
-		return 'roles.'+this.type+'.subscribed';
-	},
-	
-	maySubscribe: function(role) {
-		var operator = Meteor.userId();
-		
-		// Show the participation buttons even when not logged-in.
-		// fun HACK: if we pass an arbitrary string instead of falsy
-		// the maySubscribe() will return true if the user could subscribe
-		// if they were logged-in. Plain abuse of maySubscribe().
-		if (!operator) operator = 'unlogged';
-
-		return maySubscribe(operator, this.course, operator, role);
-	}
-});
-
-Template.roleDetail.events({
-	'click button.enrol': function(e, template) {
-		if (pleaseLogin()) return;
-		template.enrolling.set(true);
-		return false;
-	},
-	
-	'click button.subscribe': function (e, template) {
-		if (template.find('.incognito')) {
-			var incognito = $(template.find('.incognito')).prop('checked');
-		} else incognito = false
-		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, incognito);
-		
-		// Store the comment
-		var comment = $(template.find('.enrol_as_comment')).val();
-		Meteor.call("change_comment", this.course._id, comment);
-		template.enrolling.set(false);
-		return false;
-	},
-
-	'click button.cancel': function (e, template) {
-		template.enrolling.set(false);
-		return false;
-	},
-
-	'click button.unsubscribe': function () {
-		Meteor.call('remove_role', this.course._id, this.roletype.type);
-		return false;
-	}
-});
-
-Template.memberRoles.helpers({
+Template.member_roles.helpers({
 	editableMessage: function() {
 		var course = this.course;
 		if (this.member.user !== Meteor.userId()) return false;
