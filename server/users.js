@@ -22,6 +22,10 @@ Accounts.onCreateUser(function(options, user) {
 	user.username = username || name;
 	user.profile.name = name || username;
 
+	//tmpfix, all users must have file upload permissions for the events they created ...
+	if(!user.privileges){
+		user.privileges = Array( 'upload' );
+	}
 	// puting facebooks emailadress into our email field
 	if (user.services && user.services.facebook && user.services.facebook.email){
 		user.emails = [{'address': user.services.facebook.email, "verified": true}];
