@@ -172,6 +172,7 @@ Meteor.methods({
  *   location: only events at this location (string match)
  *   room: only events in this room (string match)
  *   standalone: only events that are not attached to a course
+ *   region: restrict to given region
  * limit: how many to find
  *
  * The events are sorted by startdate (ascending, before-filter causes descending order)
@@ -211,6 +212,10 @@ eventsFind = function(filter, limit) {
 	
 	if (filter.standalone) {
 		find.course_id = { $exists: false };
+	}
+	
+	if (filter.region) {
+		find.region = filter.region;
 	}
 	
 	if (filter.query) {
