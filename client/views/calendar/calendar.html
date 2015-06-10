@@ -28,17 +28,15 @@
 <template name="calendar_event">
 	<a href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding">
-			<div class="course_event_date">
-				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-				{{dateformat_withday startdate}}
-			</div>
 			<div class="course_event_time">
+				<div style="padding-top: 0.5em">
 				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
 				{{timeformat startdate}}
 				{{#if enddate}}
 					- {{timeformat enddate}}
 				{{/if}}
-				<br>
+				</div>
+				<div  style="height: 2em" class="ellipsis">
 				{{#if location}}
 					<span class="glyphicon glyphicon-home"></span>
 					{{this.location}}
@@ -46,8 +44,9 @@
 						- {{this.room}}
 					{{/if}}
 				{{/if}}
+				</div>
 			</div>
-			<div class="course_event_title">
+			<div style="height: 2em" class="course_event_title ellipsis">
 				<h4>{{this.title}}</h4>
 			</div>
 			<div class="course_event_desc ellipsis">
