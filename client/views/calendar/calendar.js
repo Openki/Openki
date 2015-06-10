@@ -1,5 +1,5 @@
 Router.map(function () {
-	this.route('calendar', {								///////// calendar /////////
+	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
 		waitOn: function () {
@@ -19,9 +19,3 @@ Router.map(function () {
 		}
 	});
 });
-
-// Template.calendar.rendered = function() {
-// 	this.$('.ellipsis').dotdotdot({
-// 		//CONFIGURATION GOES HERE
-// 	});
-// };
