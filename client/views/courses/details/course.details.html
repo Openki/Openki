@@ -1,49 +1,48 @@
 <template name="coursedetails">
-	<div class="coursedetails container-fluid">
-		<!-- COLUMN left -->
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
-			{{#if edit}}
-				{{> course_edit course}}
-			{{else}}
-				<div class="course_main {{#with course}}{{coursestate}}{{/with}} col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					{{title course.name " - openki"}}
+	<div class="coursedetails">
+		<div class="coursedetails_column_left">
+		{{#if edit}}
+			{{> course_edit course}}
+		{{else}}
+			<div class="course_main {{#with course}}{{coursestate}}{{/with}}">
+				{{title course.name " - openki"}}
 
-					<div class="name" style="min-height: 3ex">
-						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-					</div>
-					{{#with course}}
-						<p class='small'>
-						{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
-						{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
-						{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
-						</p>
-						<div class="course_categories">
-							{{> show_categories}}
-						</div>
-						<div class="course_groups">
-							{{> show_groups}}
-						</div>
-					{{/with}}
-					{{> show_course_submenu}}
-					{{#with course}}
-						{{#if currentUserMayEdit}}
-						<div class="edit_buttons">
-							<div class="btn-group" role="group" aria-label="...">
-								<button type="button" class="edit btn btn-success" role="button">
-									<span class="glyphicon glyphicon-edit"></span>
-									{{mf 'course.details.edit_btn' 'Edit'}}
-								</button>
-								<button type="button" class="del btn btn-danger" role="button">
-									<span class="glyphicon glyphicon-remove"></span>
-									{{mf 'course.details.del_btn' 'Delete'}}
-								</button>
-							</div>
-						</div>
-						{{/if}}
-					{{/with}}
+				<div class="name">
+					{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
 				</div>
-				{{> report}}
-			{{/if}}
+				{{#with course}}
+				<p class='small'>
+				{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
+				{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
+				{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
+				</p>
+				<div class="course_categories">
+					{{> show_categories}}
+				</div>
+				<div class="course_groups">
+					{{> show_groups}}
+				</div>
+				{{/with}}
+				{{> show_course_submenu}}
+				{{#with course}}
+				{{#if currentUserMayEdit}}
+				<div class="edit_buttons">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="edit" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							{{mf 'course.details.edit_btn' 'Edit'}}
+						</button>
+						<button type="button" class="del" role="button">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf 'course.details.del_btn' 'Delete'}}
+						</button>
+					</div>
+				</div>
+				{{/if}}
+				{{/with}}
+			</div>
+			{{> report}}
+		{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
 			{{#if mobileViewport}}
 				{{> course_events}}
@@ -53,8 +52,7 @@
 				</div>
 			{{/if}}
 		</div>
-		<!-- COlUMN right-->
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
+		<div class="coursedetails_column_right">
 			{{#if mobileViewport}}
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="courseDetails_roles_container col-sm-12 no-padding">

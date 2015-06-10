@@ -1,52 +1,9 @@
-.course_main {
-	border: 7px dashed @light-blue;
-	margin-top: 20px;
-}
-
-.name {
-	padding: 0 !important;
-	font-size: 30px;
-	margin-top: 20px;
-	margin-bottom: 10px;
-	&> .editable {
-		padding: 0 !important;
-		font-size: 30px;
-	}
-	&> .editable-controls {
-		font-size: medium;
-	}
-}
-
-.course_groups ul,
-.course_groups ul li,
-.course_groups ul li a {
-	display: inline-block;
-}
-
 p.course_description {
 	padding: 10px 0;
 	font-size: medium; //FIXME: where do you define this?
 }
 
 
-.edit_buttons {
-	padding: 10px 0;
-	text-align: center;
-	width: calc(~"100% + 44px"); //different solution? -> compability
-	margin: 0 0 -7px -22px;
-	background: @brand-primary;
-	border-top: 3px solid @body-bg;
-}
-
-.course_main.hasupcomingevents {
-	ul.nav-tabs {
-		li.active {
-			a {
-				background: @light-blue;
-			}
-		}
-	}
-}
 
 button.eventEdit.addButton {
 	margin-top: 20px;
@@ -102,28 +59,120 @@ ul.subcategories {
 	}
 }
 
-.courseDetails_roles_container {
-	background: @light-blue;
-	margin-top: 20px;
+.coursedetails {
+	.container-fluid;
 
-	.courseDetails_participants_count {
-		height: 60px;
-		background: #C1F2AE;
-		border-bottom: 3px solid @body-bg;
-		border-right: 3px solid @body-bg;
+	.coursedetails_column_left,
+	.coursedetails_column_right {
+		.make-sm-column(6);
+		.make-xs-column(12);
+		.no-padding;
+	}
 
-		p {
-			padding-top: 15px;
-			font-size: large;
+	.course_main {
+		.make-sm-column(12);
+		border: 7px dashed @light-blue;
+		margin-top: 20px;
+
+		&.hasupcomingevents {
+			ul.nav-tabs {
+				li.active {
+					a {
+						background: @light-blue;
+					}
+				}
+			}
+		}
+
+		.name {
+			min-height: 3ex;
+			padding: 0 !important;
+			font-size: 30px;
+			margin-top: 20px;
+			margin-bottom: 10px;
+
+			&> .editable {
+				padding: 0 !important;
+				font-size: 30px;
+			}
+
+			&> .editable-controls {
+				font-size: medium;
+			}
+		}
+
+		.course_groups ul,
+		.course_groups ul li,
+		.course_groups ul li a {
+			display: inline-block;
+		}
+
+		ul.nav-tabs {
+			border-bottom: none;
+
+			a {
+				color: #555;
+
+				&:hover {
+					color: @body-bg;
+					-moz-transition: 0.5s;
+				}
+			}
+
+			li.active {
+				a:hover {
+					color: #555;
+				}
+			}
+		}
+
+		.tab-content {
+			border-top: 1px solid @brand-primary;
+		}
+
+		.edit_buttons {
+			padding: 10px 0;
+			text-align: center;
+			width: calc(~"100% + 44px"); //different solution? -> compability
+			margin: 0 0 -7px -22px;
+			background: @brand-primary;
+			border-top: 3px solid @body-bg;
+
+			button.edit {
+				.btn;
+				.btn-success;
+			}
+
+			button.del {
+				.btn;
+				.btn-danger;
+			}
 		}
 	}
 
-	.courseDetails_mentor.mentor_status {
-		height: 60px;
-		// border-bottom: 3px solid @body-bg; No Functionality, no border.
+	.courseDetails_roles_container {
+		background: @light-blue;
+		margin-top: 20px;
 
-		.yes {
-			background: @brand-success;
+		.courseDetails_participants_count {
+			height: 60px;
+			background: #C1F2AE;
+			border-bottom: 3px solid @body-bg;
+			border-right: 3px solid @body-bg;
+
+			p {
+				padding-top: 15px;
+				font-size: large;
+			}
+		}
+
+		.courseDetails_mentor.mentor_status {
+			height: 60px;
+			// border-bottom: 3px solid @body-bg; No Functionality, no border.
+
+			.yes {
+				background: @brand-success;
+			}
 		}
 	}
 }
