@@ -24,9 +24,6 @@ Meteor.methods({
 			});
 		}
 	},
-	update_userpassword: function(new_password) {
-		Accounts.setPassword(Meteor.userId(), new_password)
-	},
 	insert_anonId: function(anonId){
 		Meteor.users.update(Meteor.userId(), {
 			$push: {

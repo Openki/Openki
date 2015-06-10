@@ -40,24 +40,39 @@ Router.map(function () {
 			document.title = webpagename + 'My Profile_Settings - ' + user.username;
 		}
 	})
-})
+});
 
+Template.profile.created = function() {
+	this.editing = new ReactiveVar(false);
+	this.changingPass = new ReactiveVar(false);
+}
 
 Template.profile.helpers({
-	isEditing: function () {
-		return Session.get("isEditing");
+	editing: function() {
+		return Template.instance().editing.get();
 	},
-	verifyDelete: function () {
+	changingPass: function() {
+		return Template.instance().changingPass.get();
+	},
+	verifyDelete: function() {
 		return Session.get('verify') === 'delete';
 	}
 });
 
 Template.profile.events({
-	'click button.edit': function () {
-		Session.set("isEditing", true);
-		// document.getElementById('privacy').checked = Meteor.user().privacy;  // FIXME!
-		// var privacy = $(template.find('.privacy')).prop('checked');
-
+	'click button.edit': function() {
+		Template.instance().editing.set(true);
+	},
+	'click button.editCancel': function() {
+		Template.instance().editing.set(false);
+		return false;
+	},
+	'click button.changePass': function() {
+		Template.instance().changingPass.set(true);
+	},
+	'click button.changePassCancel': function() {
+		Template.instance().changingPass.set(false);
+		return false;
 	},
 	'click button.delete': function () {
 		Session.set('verify', 'delete');
@@ -71,13 +86,46 @@ Template.profile.events({
 	'click .verifycancel': function () {
 		Session.set('verify', false);
 	},
-	'click input.save': function () {
-		// if it gets saved in edit-mode: update the db and leave edit-mode
-		Meteor.call('update_userdata', document.getElementById('editform_username').value,document.getElementById('editform_email').value,document.getElementById('privacy').checked); //can only be run on serverside (file:server/main.js)
-		if(document.getElementById('editform_newpassword').value!="") {
-			Meteor.call('update_userpassword', document.getElementById('editform_newpassword').value);
+	'submit .edit': function(event) {
+		event.preventDefault();
+		var template = Template.instance();
+		Meteor.call('update_userdata',
+			document.getElementById('editform_username').value,
+			document.getElementById('editform_email').value,
+			document.getElementById('privacy').checked,
+			function(err) {
+				if (!err) {
+					addMessage(mf('profile.updated', 'Updated profile'));
+					template.editing.set(false);
+				}
+			}
+		);
+	},
+	'submit .passChange': function(event) {
+		event.preventDefault();
+		var template = Template.instance();
+		var old = document.getElementById('oldpassword').value;
+		var pass = document.getElementById('newpassword').value;
+		if (pass != "") {
+			if (pass !== document.getElementById('newpassword_confirm').value) {
+				addMessage(mf('profile.passwordMismatch', 'Passwords don\'t match'));
+				return;
+			} else {
+				var minLength = 5; // We've got _some_ standards
+				if (pass.length < minLength) {
+					addMessage(mf('profile.passwordShort', 'Your desired password is too short'));
+					return;
+				}
+				Accounts.changePassword(old, pass, function(err) {
+					if (err) {
+						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'));
+					} else {
+						addMessage(mf('profile.passwordChanged', 'changed password'));
+						template.changingPass.set(false);
+					}
+				});
+			}
 		}
-		Session.set("isEditing", false);
 	},
 	'click button.verify': function () {
 		Meteor.call('sendVerificationEmail')
