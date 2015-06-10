@@ -21,7 +21,7 @@ Router.map(function () {
 			var member = getMember(course.members, userId);
 			var data = {
 				edit: !!this.params.query.edit,
-				roleDetails: loadroles(course),
+				roles_details: loadroles(course),
 				course: course,
 				member: member
 			};

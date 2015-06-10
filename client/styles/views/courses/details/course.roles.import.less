@@ -1,138 +1,65 @@
-.courseDetails_roles_container {
-	background: @light-blue;
-	margin-top: 20px;
-}
-
-.courseDetails_participants_count {
-	height: 60px;
-	background: #C1F2AE;
-	border-bottom: 3px solid @body-bg;
-	border-right: 3px solid @body-bg;
-}
-
-.courseDetails_participants_count p,
-.courseDetails_mentor p {
+.roles {
+	.container-fluid;
 	padding-top: 15px;
-	font-size: large;
-}
 
-.courseDetails_mentor.mentor_status.yes {
-	background: @brand-success;
-	height: 60px;
-	border-bottom: 3px solid @body-bg;
-}
+	ul.subscribers {
+		.list-unstyled;
+		font-size: medium;
 
-.courseDetails_participants {
-	padding-top: 15px;
-}
+		li {
+			padding: 5px 0;
 
-ul.subscribers {
-	font-size: medium;
-	li {
-		padding: 5px 0;
-		a {
-			color: #333;
-		}
-	}
-}
-
-ul.roles {
-	margin-left: 20px;
-	display: inline-block;
-	li {
-		color: @body-bg;
-		background: @brand-primary;
-		padding: 5px;
-		text-transform: uppercase;
-		font-size: x-small;
-		font-weight: bold;
-		display: inline-block;
-		vertical-align: middle;
-		&.participant {
-			display: none;
-		}
-	}
-}
-
-span.member_comment {
-	margin-left: 20px;
-}
-
-span.editable:after {
-	width: 100px;
-}
-
-.editable-controls,
-button.editable-store,
-button.editable-cancel {
-	border: 0;
-	background: none;
-	color: @brand-primary;
-	display: inline-block;
-}
-
-button.editable-store {
-	& > span.glyphicon-ok {
-		color: #5cb85c;
-	}
-}
-
-button.editable-cancel {
-	& > span.glyphicon-remove {
-		color: @light-red;
-	}
-}
-
-button.enrol {
-	border: none;
-	border-top: 3px solid @body-bg;
-	min-height: 60px;
-	text-align: left;
-	font-size: x-large;
-	&:hover {
-		border: none;
-		border-top: 3px solid @body-bg;
-	}
-}
-
-div.enrol_as_title {
-	background: @brand-primary;
-	padding: 6px 0;
-	width: 100%;
-	color: @body-bg;
-	border-top: 3px solid @body-bg;
-	& > .container-fluid {
-		height: 45px;
-		& > h3 {
-			margin: 10px 0 0 0;
-		}
-	}
-}
-
-div.enroled_as_title {
-	background: @brand-success;
-	padding: 6px 0;
-	width: 100%;
-	color: #333;
-	border-top: 3px solid @body-bg;
-	& > .container-fluid {
-		height: 45px;
-		& > h3 {
-			margin: 10px 0 0 0;
-			& > button {
-			margin: -5px 0 0 10px;
+			a {
+				color: #333;
 			}
 		}
-	}
-}
 
-textarea.enrol_as_comment {
-	margin-top: 5px;
-}
+		ul.roles {
+			.list-unstyled;
+			margin-left: 20px;
+			display: inline-block;
 
-div.enrol_as_options {
-	padding: 10px 12px 11px 12px;
-	& > div.enrol_as_buttons {
-		padding-top: 13px;
+			li {
+				color: @body-bg;
+				background: @brand-primary;
+				padding: 5px;
+				text-transform: uppercase;
+				font-size: x-small;
+				font-weight: bold;
+				display: inline-block;
+				vertical-align: middle;
+
+				&.participant {
+					display: none;
+				}
+			}
+
+			button.makeTeam {
+				.btn;
+				.btn-primary;
+			}
+		}
+
+		span.member_comment {
+			margin-left: 20px;
+
+			.editable-controls {
+				button.editable-store,
+				button.editable-cancel {
+					border: 0;
+					background: none;
+					color: @brand-primary;
+					display: inline-block;
+				}
+
+				span.glyphicon-ok {
+					color: #5cb85c;
+				}
+
+				span.glyphicon-remove {
+					color: @light-red;
+				}
+			}
+		}
 	}
 }

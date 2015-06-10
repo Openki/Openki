@@ -1,0 +1,89 @@
+.roles_details {
+    .role_details {
+        .make-sm-column(12);
+        .no-padding;
+
+        .enroled_as_title {
+            .make-sm-column(12);
+            background: @brand-success;
+            padding: 6px 0;
+            width: 100%;
+            color: #333;
+            border-top: 3px solid @body-bg;
+
+            & > .container-fluid {
+                height: 45px;
+
+                & > h3 {
+                    margin: 10px 0 0 0;
+
+                    button.unsubscribe {
+                        .btn;
+                        .btn-primary;
+                        margin: -5px 0 0 10px;
+                    }
+                }
+            }
+        }
+
+        .enrol_as_title {
+            .make-sm-column(12);
+            background: @brand-primary;
+            padding: 6px 0;
+            width: 100%;
+            color: @body-bg;
+            border-top: 3px solid @body-bg;
+
+            & > .container-fluid {
+                height: 45px;
+
+                & > h3 {
+                    margin: 10px 0 0 0;
+                }
+            }
+        }
+
+        .enrol_as_options {
+            .make-sm-column(12);
+            padding: 10px 12px 11px 12px;
+
+            textarea.enrol_as_comment {
+                .form-control;
+                margin-top: 5px;
+            }
+
+            .enrol_as_buttons {
+                .make-sm-column(12);
+                .no-padding;
+                padding-top: 13px;
+
+                button.subscribe {
+                    .btn;
+                    .btn-primary;
+                }
+
+                button.cancel {
+                    .btn;
+                    .btn-danger;
+                }
+            }
+        }
+
+        button.enrol {
+            .form-control;
+            .btn;
+            .btn-primary;
+            .no-padding;
+            border: none;
+            border-top: 3px solid @body-bg;
+            min-height: 60px;
+            text-align: left;
+            font-size: x-large;
+
+            &:hover {
+                border: none;
+                border-top: 3px solid @body-bg;
+            }
+        }
+    }
+}
