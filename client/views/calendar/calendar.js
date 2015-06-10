@@ -20,8 +20,8 @@ Router.map(function () {
 	});
 });
 
-// Template.calendar.rendered = function() {
-// 	this.$('.ellipsis').dotdotdot({
-// 		//CONFIGURATION GOES HERE
-// 	});
-// };
+Template.calendar.rendered = function() {
+	this.$('.ellipsis').dotdotdot({
+		//CONFIGURATION GOES HERE
+	});
+};
