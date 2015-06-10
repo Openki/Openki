@@ -47,3 +47,7 @@ Template.calendar.helpers({
 		return moment().isAfter(this.enddate);
 	}
 });
+
+Template.calendar.rendered = function() {
+	this.$('.ellipsis').dotdotdot({});
+};

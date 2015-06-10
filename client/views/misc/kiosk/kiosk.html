@@ -1,7 +1,7 @@
 <template name="kioskLayout">
 	<div class="container-fluid">
 			{{#if showKioskCalendar}}
-				<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/>
+				<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
 				<a id ="backToKiosk" href="{{pathFor 'kiosk'}}" class="pull-right">
 					<span class="glyphicon glyphicon-share-alt"></span>&nbsp;
 					{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
@@ -18,8 +18,8 @@
 		<div class="col-sm-12 row">
 			<div class="col-sm-4">
 				<div class="kiosk_logo">
-					<!-- <h1>KIOSK</h1> -->
-					<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/>
+					<h1><b>Openki</b></h1> 
+					<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
 				</div>
 			</div>
 			<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
@@ -28,7 +28,7 @@
 			</a> -->
 			<div class="col-sm-8">
 			{{#if now.count}}
-					<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event} other {# ongoing events} }' NUM=now.count}}</h3>
+					<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=now.count}}</h3>
 			
 				{{#each now}}
 					{{> kioskEventSlim}}
@@ -39,14 +39,14 @@
 		<div class="col-sm-12 row">
 			{{#if today.count}}
 				<hr>
-				<h2>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today' NUM=today.count}}</h2>
+				<h2>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h2>
 				{{#each today}}
 					{{> kioskEvent}}
 				{{/each}}
 			{{/if}}
 			{{#if future.count}}
 				<hr>
-				<h1>{{mf 'kiosk.future' 'Future events' NUM=future.count}}</h1>
+				<h1>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h1>
 				{{#each future}}
 					{{> kioskEvent}}
 				{{/each}}
@@ -64,8 +64,6 @@
 						<span class="glyphicon glyphicon-time"></span>&nbsp;{{dateformat_fromnow startdate}}
 					</span>
 					<br>
-					<span class="glyphicon glyphicon-calendar"></span>
-					{{weekday startdate}}
 					{{timeformat startdate}} - {{timeformat enddate}}
 				</div>
 				<div class="kiosk_home col-sm-6">
