@@ -207,7 +207,7 @@ Template.event.events({
 			var course = this.course_id;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) {
-					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'));
+					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'), 'success');
 					if (course) Router.go('showCourse', { _id: course });
 				} else {
 					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'));
@@ -391,14 +391,14 @@ Template.event.events({
 							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
 						}
 						else{
-							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'));
+							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
 						}		
 					});
 				}
 			
 				
 				if (isNew) Router.go('showEvent', { _id: eventId });
-				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'));
+					else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
 				template.editing.set(false);
 			}
 		});

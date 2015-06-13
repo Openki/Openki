@@ -1,21 +1,26 @@
 <template name="calendar">
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
+		{{#each this}}	
 			<div class="row">
-				<h1>{{mf 'calendar.upcoming_events' 'Upcoming Events'}}
-				</h1>
+				<h1>{{weekday day}}</h1>
+				{{#if this.events.count}}
+				{{else}}
+				{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
+				{{/if}}
 			</div>
+			{{#if this.events.count}}
 			<div class="calendar_eventlist row">
-			{{#each calendar_eventlist}}
-				{{> calendar_event}}
+			{{#each this.events}}
+				{{#if past}}
+					{{> calendar_event_past}}
+				{{else}}
+					{{> calendar_event}}
+				{{/if}}
 			{{/each}}
 			</div>
-			<div class="calendar_eventlist row">
-				<h1>{{mf 'calendar.past_events' 'Past Events'}}</h1>
-				{{#each calendar_eventlist_past}}
-					{{> calendar_event_past}}
-				{{/each}}
-			</div>
+			{{/if}}
+		{{/each}}
 		</div>
 	</div>
 </template>
@@ -23,17 +28,15 @@
 <template name="calendar_event">
 	<a href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event col-xs-12 col-sm-4 col-md-3 col-lg-2 no-padding">
-			<div class="course_event_date">
-				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-				{{dateformat_withday startdate}}
-			</div>
 			<div class="course_event_time">
+				<div style="padding-top: 0.5em">
 				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
 				{{timeformat startdate}}
 				{{#if enddate}}
 					- {{timeformat enddate}}
 				{{/if}}
-				<br>
+				</div>
+				<div  style="height: 2em" class="ellipsis">
 				{{#if location}}
 					<span class="glyphicon glyphicon-home"></span>
 					{{this.location}}
@@ -41,11 +44,12 @@
 						- {{this.room}}
 					{{/if}}
 				{{/if}}
+				</div>
 			</div>
-			<div class="course_event_title">
+			<div style="height: 2em" class="course_event_title ellipsis">
 				<h4>{{this.title}}</h4>
 			</div>
-			<div class="course_event_desc ellipsis" style="word-wrap: break-word">
+			<div class="course_event_desc ellipsis">
 				<p >{{plain this.description}}</p>
 			</div>
 		</div>
