@@ -388,7 +388,7 @@ Template.event.events({
 					
 					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
 						if (error) {	
-							addMessage(mf('event.replicate.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
+							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
 						}
 						else{
 							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'));
@@ -446,7 +446,7 @@ Template.event.events({
 				
 			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
 				if (error) {
-					addMessage(mf('event.saving.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 					success = false;
 				} else {
 				}
