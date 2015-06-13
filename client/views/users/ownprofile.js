@@ -108,7 +108,7 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass != "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				addMessage(mf('profile.passwordMismatch', 'Passwords don\'t match'));
+				addMessage(mf('profile.passwordMismatch', "Passwords don't match"));
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
