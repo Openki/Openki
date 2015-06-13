@@ -525,6 +525,8 @@ mfPkg.syncAll({
       "ctime": 1425225186793,
       "mtime": 1425225186793,
       "revisionId": "JygnsYbAGDbxpmRfL",
+      "fuzzy": true,
+      "removed": true,
       "_id": "Jomg5nFEbKMFJpLH6"
     },
     "course.details.last_edited": {
@@ -561,6 +563,8 @@ mfPkg.syncAll({
       "ctime": 1425225158875,
       "mtime": 1425225158875,
       "revisionId": "LL4Hftfec5jneg7Ng",
+      "fuzzy": true,
+      "removed": true,
       "_id": "LJAmYbuAajfCBNc6n"
     },
     "find.search_go": {
@@ -1598,6 +1602,8 @@ mfPkg.syncAll({
       "ctime": 1425226757328,
       "mtime": 1425226757328,
       "revisionId": "RT9hfNpq6nGzXSwJ3",
+      "fuzzy": true,
+      "removed": true,
       "_id": "viYRnvmSAqf4ZGzxE"
     },
     "course.details.del_btn": {
@@ -1634,6 +1640,8 @@ mfPkg.syncAll({
       "ctime": 1425225074899,
       "mtime": 1425225080314,
       "revisionId": "emX77FMmsdZ9gSGCd",
+      "fuzzy": true,
+      "removed": true,
       "_id": "xiKyM8kSytwSfisLQ"
     },
     "profile.its_you": {
@@ -2928,28 +2936,28 @@ mfPkg.syncAll({
     "kiosk.ongoing": {
       "key": "kiosk.ongoing",
       "lang": "de",
-      "text": "{NUM, plural, one {Eine laufende Veranstaltung} other {# laufende Veranstaltungen} }",
+      "text": "{NUM, plural, one {Eine laufende Veranstaltung} other {# laufende Veranstaltungen:} }",
       "ctime": 1432888471743,
-      "mtime": 1432888471743,
-      "revisionId": "ceb9ooDHJoCLbH8cu",
+      "mtime": 1434199026881,
+      "revisionId": "HkgLTjoT565mFez5n",
       "_id": "c8PtA7ehcMTG5mQLK"
     },
     "kiosk.today": {
       "key": "kiosk.today",
       "lang": "de",
-      "text": "{NUM, plural, one {Eine Veranstaltung} other {# Veranstaltungen} } später Heute",
+      "text": "{NUM, plural, one {Eine Veranstaltung} other {# Veranstaltungen} } später Heute:",
       "ctime": 1432888560538,
-      "mtime": 1432888560538,
-      "revisionId": "ouCybJeSvA9qCn9iJ",
+      "mtime": 1434199030519,
+      "revisionId": "EgnAc46cgA4H4stvD",
       "_id": "3BgGyyLefRrQLchjM"
     },
     "kiosk.future": {
       "key": "kiosk.future",
       "lang": "de",
-      "text": "Zukünftige Veranstaltungen",
+      "text": "Zukünftige Veranstaltungen:",
       "ctime": 1432888576723,
-      "mtime": 1432888576723,
-      "revisionId": "pqWSuz8McBTKfhxny",
+      "mtime": 1434199033160,
+      "revisionId": "5BHP7TdmKuSzxbpvC",
       "_id": "ZqArtKuXkmiF7X2Rn"
     },
     "kiosk.started": {
@@ -3207,10 +3215,10 @@ mfPkg.syncAll({
     "roles.mentor.description": {
       "key": "roles.mentor.description",
       "lang": "de",
-      "text": "als Mentor_in helfen",
+      "text": "eine_n Mentor_in",
       "ctime": 1432889500637,
-      "mtime": 1432890973978,
-      "revisionId": "QLykY9QSPCpq3JESn",
+      "mtime": 1434199057285,
+      "revisionId": "yzhL9qfabm7XQJ4ug",
       "_id": "WxFisJhzisGG9Kri7"
     },
     "roles.host.short": {
@@ -3234,10 +3242,10 @@ mfPkg.syncAll({
     "roles.host.description": {
       "key": "roles.host.description",
       "lang": "de",
-      "text": "einen Raum zur Verfügung stellen",
+      "text": "einen Host, der einen Raum zur Verfügung stellt",
       "ctime": 1432889699934,
-      "mtime": 1432891005131,
-      "revisionId": "aQr6wAYBZgJFrnaA3",
+      "mtime": 1434199115498,
+      "revisionId": "S4ewZdrjoxktjyNzj",
       "_id": "2mwJ9QR4KJXs2Mv8z"
     },
     "category.sports": {
@@ -3614,8 +3622,8 @@ mfPkg.syncAll({
       "lang": "de",
       "text": "Du bist im Orga-Team",
       "ctime": 1432890355002,
-      "mtime": 1432890355002,
-      "revisionId": "HAeSebvEouc3gj8TZ",
+      "mtime": 1434199164242,
+      "revisionId": "C2wwBGEgeMz82TnzF",
       "_id": "d55wqpLZ497Sm8WnQ"
     },
     "roles.participant.subscribed": {
@@ -4220,6 +4228,267 @@ mfPkg.syncAll({
       "mtime": 1433160982469,
       "revisionId": "s2qzKbgieCA33ZAR7",
       "_id": "FT9PJTuX47nbmENmr"
+    },
+    "profile.verifymail": {
+      "key": "profile.verifymail",
+      "lang": "de",
+      "text": "Email Adresse bestätigen",
+      "ctime": 1434199183873,
+      "mtime": 1434199183873,
+      "revisionId": "dtANjbWeWGe62NbFf",
+      "_id": "cQCN2YFdTXCZxhNg9"
+    },
+    "profile.edit": {
+      "key": "profile.edit",
+      "lang": "de",
+      "text": "Bearbeiten",
+      "ctime": 1434199192549,
+      "mtime": 1434199192549,
+      "revisionId": "WswdYLeZ7LpzKwzDX",
+      "_id": "9Hv9Lm7KquAYycJAJ"
+    },
+    "course.edit.needs.role": {
+      "key": "course.edit.needs.role",
+      "lang": "de",
+      "text": "Dieser Kurs bräuchte",
+      "ctime": 1434199230347,
+      "mtime": 1434199230347,
+      "revisionId": "PF3iq9PTCLDNtoZLb",
+      "_id": "zpxJ7zQR7YbcrjjPG"
+    },
+    "course.roles.maketeam": {
+      "key": "course.roles.maketeam",
+      "lang": "de",
+      "text": "Ins Team nehmen",
+      "ctime": 1434199259117,
+      "mtime": 1434199259117,
+      "revisionId": "PWvSDvKP9gi5uDt3J",
+      "_id": "8invz53RmpLkKW2W2"
+    },
+    "profile.input.save": {
+      "key": "profile.input.save",
+      "lang": "de",
+      "text": "Speichern",
+      "ctime": 1434199264680,
+      "mtime": 1434199264680,
+      "revisionId": "YsNB8jvieQbDEXcdq",
+      "_id": "vZdLovhjPYqa8WWkt"
+    },
+    "profile.input.cancel": {
+      "key": "profile.input.cancel",
+      "lang": "de",
+      "text": "Abbrechen",
+      "ctime": 1434199269196,
+      "mtime": 1434199269196,
+      "revisionId": "nsixiur7SBuc8P4me",
+      "_id": "XsAtrSvpQfNahtNNN"
+    },
+    "profile.input.oldPassword": {
+      "key": "profile.input.oldPassword",
+      "lang": "de",
+      "text": "Dein aktuelles Passwort",
+      "ctime": 1434199289828,
+      "mtime": 1434199289828,
+      "revisionId": "Rny8d52MZnJkW3iCY",
+      "_id": "CeNm75RAfRfS6xJa5"
+    },
+    "profile.input.newPassword": {
+      "key": "profile.input.newPassword",
+      "lang": "de",
+      "text": "Neues Passwort",
+      "ctime": 1434199300655,
+      "mtime": 1434199300655,
+      "revisionId": "gtNacvKpc8ak36TgA",
+      "_id": "KRi3MPBCGGauZY5bp"
+    },
+    "profile.input.repeatPassword": {
+      "key": "profile.input.repeatPassword",
+      "lang": "de",
+      "text": "Wiederhole dein Passwort",
+      "ctime": 1434199315779,
+      "mtime": 1434199315779,
+      "revisionId": "eEGkQFgbjJ27YZB8L",
+      "_id": "DPEfAdTLoTpBFvpPj"
+    },
+    "profile.changePass": {
+      "key": "profile.changePass",
+      "lang": "de",
+      "text": "Mein Passwort ändern",
+      "ctime": 1434199331194,
+      "mtime": 1434199331194,
+      "revisionId": "rKCfDdtYjDDrbzxbB",
+      "_id": "ejCuoscnsz9SjB5pQ"
+    },
+    "profile.changePassCancel": {
+      "key": "profile.changePassCancel",
+      "lang": "de",
+      "text": "Abbrechen",
+      "ctime": 1434199339732,
+      "mtime": 1434199339732,
+      "revisionId": "dsabwWQ6H3DT4XDHL",
+      "_id": "auhiaB4uDBSbGxqcB"
+    },
+    "profile.updated": {
+      "key": "profile.updated",
+      "lang": "de",
+      "text": "Profil aktualisieren",
+      "ctime": 1434199352237,
+      "mtime": 1434199352237,
+      "revisionId": "s5pPfspZi7yuRQxxB",
+      "_id": "jyJPBAW7Wg9Boz8hM"
+    },
+    "profile.passwordMismatch": {
+      "key": "profile.passwordMismatch",
+      "lang": "de",
+      "text": "Passwörter stimmen nicht überein.",
+      "ctime": 1434199524511,
+      "mtime": 1434199524511,
+      "revisionId": "ZrFqaSacJSNw9Neqx",
+      "_id": "tXA64Goj9GcwP4b3Y"
+    },
+    "profile.passwordShort": {
+      "key": "profile.passwordShort",
+      "lang": "de",
+      "text": "Dein gewünschtes Passwort ist zu kurz",
+      "ctime": 1434199547729,
+      "mtime": 1434199547729,
+      "revisionId": "PqwjTxfb649KQ3QdY",
+      "_id": "6NHRnEgFMKFCw8eFK"
+    },
+    "profile.passwordChangeFailed": {
+      "key": "profile.passwordChangeFailed",
+      "lang": "de",
+      "text": "Ändern des Passworts hat nicht geklappt",
+      "ctime": 1434199586475,
+      "mtime": 1434199586475,
+      "revisionId": "ANppJziSx6KZMPvet",
+      "_id": "KX2yZ8BNdpD5pHa8L"
+    },
+    "profile.passwordChanged": {
+      "key": "profile.passwordChanged",
+      "lang": "de",
+      "text": "geändertes Passwort",
+      "ctime": 1434199606231,
+      "mtime": 1434199606231,
+      "revisionId": "KdboWrQXvGAtryJPB",
+      "_id": "kiruom55YqQcpd3P4"
+    },
+    "course.details.repl_menu_btn": {
+      "key": "course.details.repl_menu_btn",
+      "lang": "de",
+      "text": "Vervielfältigen ",
+      "ctime": 1434199678251,
+      "mtime": 1434199678251,
+      "revisionId": "3psE2n9uKDSS2Z5ui",
+      "_id": "cHDubWin5aGLMvQh5"
+    },
+    "event.replication.interval.start": {
+      "key": "event.replication.interval.start",
+      "lang": "de",
+      "text": "Anfang der Wiederhohlungen",
+      "ctime": 1434199739308,
+      "mtime": 1434199739308,
+      "revisionId": "xzBEQoiXEFruzzHX2",
+      "_id": "TABEt3RA8ESpr2zLT"
+    },
+    "event.replication.interval.end": {
+      "key": "event.replication.interval.end",
+      "lang": "de",
+      "text": "Ende der Wiederhohlungen",
+      "ctime": 1434199747203,
+      "mtime": 1434199747203,
+      "revisionId": "Hugga5Qw7sp63Kkmt",
+      "_id": "WjSks97uD7GpPhoAA"
+    },
+    "course.details.repl_btn": {
+      "key": "course.details.repl_btn",
+      "lang": "de",
+      "text": "Veranstaltungen erstellen",
+      "ctime": 1434199757719,
+      "mtime": 1434199757719,
+      "revisionId": "5Jm2gsuDe5SXoAdjx",
+      "_id": "mwvQtfRv76AiSTT2Z"
+    },
+    "event.replication.freq.once": {
+      "key": "event.replication.freq.once",
+      "lang": "de",
+      "text": "einmalig",
+      "ctime": 1434199764167,
+      "mtime": 1434199764167,
+      "revisionId": "GKQzc96ARWz7bdkJy",
+      "_id": "nWmKdYoKTH2w36zhS"
+    },
+    "event.replication.freq.daily": {
+      "key": "event.replication.freq.daily",
+      "lang": "de",
+      "text": "täglich",
+      "ctime": 1434199768652,
+      "mtime": 1434199768652,
+      "revisionId": "mx9hnS4kMtpwq6x7w",
+      "_id": "DjW6LM4Be6PctLwNo"
+    },
+    "event.replication.freq.weekly": {
+      "key": "event.replication.freq.weekly",
+      "lang": "de",
+      "text": "wöchentlich",
+      "ctime": 1434199773411,
+      "mtime": 1434199773411,
+      "revisionId": "EFDE5at5rPJkvjm5h",
+      "_id": "rTec885GBN3prwThB"
+    },
+    "event.replication.freq.monthly": {
+      "key": "event.replication.freq.monthly",
+      "lang": "de",
+      "text": "monatlich",
+      "ctime": 1434199778630,
+      "mtime": 1434199778630,
+      "revisionId": "uqfrQ2crtJ92Emm7d",
+      "_id": "nkBhYRaYH7HAd8SAu"
+    },
+    "file.removed.fail": {
+      "key": "file.removed.fail",
+      "lang": "de",
+      "text": "Konnte Datei {FILENAME} nicht entfernen",
+      "ctime": 1434199802024,
+      "mtime": 1434199802024,
+      "revisionId": "5Gp4dwYaswsJ9GXm5",
+      "_id": "msam7w9fouQjrewnn"
+    },
+    "event.replicate_update.error": {
+      "key": "event.replicate_update.error",
+      "lang": "de",
+      "text": "Das vervielfältigen des Veranstaltung \"{TITLE}\"schlug fehl. Vielleicht willst du es manuell machen.",
+      "ctime": 1434199856994,
+      "mtime": 1434199867588,
+      "revisionId": "PJTXLHwLCxspSLz58",
+      "_id": "z3Khimmr7iS5N97C2"
+    },
+    "event.edit.replicates.success": {
+      "key": "event.edit.replicates.success",
+      "lang": "de",
+      "text": "Die Vervielfältigungen von \"{TITLE}\" wurden ebenfalls aktualisiert",
+      "ctime": 1434199908729,
+      "mtime": 1434199919587,
+      "revisionId": "EGJAvi3LR9vsB7n4o",
+      "_id": "G9GowpoYZFrTRjNX5"
+    },
+    "event.replicate.error": {
+      "key": "event.replicate.error",
+      "lang": "de",
+      "text": "Sorry, das Vervielfältigen dieser Veranstaltung schlug fehl. Der folgende Fehler ist aufgetreten: {ERROR}",
+      "ctime": 1434200029182,
+      "mtime": 1434200029182,
+      "revisionId": "ZedaMg2zvTSwHXLaL",
+      "_id": "9Dk4zNAo4HhA5Q9ck"
+    },
+    "location.details.address": {
+      "key": "location.details.address",
+      "lang": "de",
+      "text": "Adresse:",
+      "ctime": 1434200055564,
+      "mtime": 1434200055564,
+      "revisionId": "SQh2vb4TAWjfBTKFn",
+      "_id": "ScxjL7kzBTCBdcA2w"
     }
   },
   "ar": {
@@ -4249,6 +4518,15 @@ mfPkg.syncAll({
       "mtime": 1429059083055,
       "revisionId": "CaSJ6S7MjuC9KWCZB",
       "_id": "DnEYzr2GmnKipYmHk"
+    },
+    "profile.its_you": {
+      "key": "profile.its_you",
+      "lang": "ar",
+      "text": "It's you!",
+      "ctime": 1433938890895,
+      "mtime": 1433939042790,
+      "revisionId": "hwEZkgETECcq6zYoA",
+      "_id": "3aKZTyKSee8YJtWrF"
     }
   },
   "fr": {
@@ -4786,18 +5064,6 @@ mfPkg.syncAll({
       "template": "profile",
       "_id": "KqXphJhAHaGkdTxpf"
     },
-    "profile.userid": {
-      "key": "profile.userid",
-      "lang": "en",
-      "text": "UserID:",
-      "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "DQ2wSNmx2FyQruxd8",
-      "file": "./client/views/users/ownprofile.html",
-      "line": 9,
-      "template": "profile",
-      "_id": "J5rnDMdLDsK2TtZDd"
-    },
     "profile.input.username": {
       "key": "profile.input.username",
       "lang": "en",
@@ -4827,12 +5093,13 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "New password (optional):",
       "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "JGxSGkAFYfnA6ZDNJ",
+      "mtime": 1434198396035,
+      "revisionId": "z4wQnjKpRa6HftWN6",
       "file": "./client/views/users/ownprofile.html",
-      "line": 12,
+      "line": 11,
       "template": "profile",
-      "_id": "dStjonueDGW7Awiue"
+      "removed": true,
+      "_id": "uJahuBsD4viFTrKHJ"
     },
     "profile.toggle.highprivacy": {
       "key": "profile.toggle.highprivacy",
@@ -4845,18 +5112,6 @@ mfPkg.syncAll({
       "line": 13,
       "template": "profile",
       "_id": "YyD2ZWuvNe2dgvy3C"
-    },
-    "profile.id": {
-      "key": "profile.id",
-      "lang": "en",
-      "text": "ID:",
-      "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "Pdbm5vA2YW24hs99w",
-      "file": "./client/views/users/ownprofile.html",
-      "line": 16,
-      "template": "profile",
-      "_id": "cPFgyYvgJChksFzW9"
     },
     "profile.username": {
       "key": "profile.username",
@@ -5461,38 +5716,38 @@ mfPkg.syncAll({
     "kiosk.ongoing": {
       "key": "kiosk.ongoing",
       "lang": "en",
-      "text": "{NUM, plural, one {One ongoing event} other {# ongoing events} }",
+      "text": "{NUM, plural, one {One ongoing event:} other {# ongoing events:} }",
       "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "a7KWkFArDEKWvKJub",
+      "mtime": 1434198219466,
+      "revisionId": "X3eNnL5mSQETevmuz",
       "file": "./client/views/misc/kiosk/kiosk.html",
       "line": 31,
       "template": "kioskLayout",
-      "_id": "TaRfoGcwSw9MhmjYe"
+      "_id": "9zfoWwTmqn3YyDgYe"
     },
     "kiosk.today": {
       "key": "kiosk.today",
       "lang": "en",
-      "text": "{NUM, plural, one {One event} other {# events} } later today",
+      "text": "{NUM, plural, one {One event} other {# events} } later today:",
       "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "9fvPbvT35MtkoS6qq",
+      "mtime": 1434198219466,
+      "revisionId": "pXaRyztoMFYf6GYji",
       "file": "./client/views/misc/kiosk/kiosk.html",
       "line": 42,
       "template": "kioskLayout",
-      "_id": "kFfnmf94Bpi8uo36G"
+      "_id": "by2ywSuYXXWnyerRJ"
     },
     "kiosk.future": {
       "key": "kiosk.future",
       "lang": "en",
-      "text": "Future events",
+      "text": "Future events:",
       "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "Y6TcxoPgJvzy9EoZG",
+      "mtime": 1434198219466,
+      "revisionId": "gBxwEhLeNTnE8YuAe",
       "file": "./client/views/misc/kiosk/kiosk.html",
       "line": 49,
       "template": "kioskLayout",
-      "_id": "TRDpDtBs9Lo8cf39Z"
+      "_id": "TCBNa5LKiPGNeh5g2"
     },
     "kiosk.started": {
       "key": "kiosk.started",
@@ -6075,12 +6330,12 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
       "ctime": 1432132053599,
-      "mtime": 1432132053599,
+      "mtime": 1434198344246,
       "revisionId": "G3goYpRD6RQrp325A",
       "file": "./client/views/events/event.js",
-      "line": 314,
+      "line": 379,
       "func": "function(error, eventId)",
-      "_id": "qKk6sH2LeNk2EbRQZ"
+      "_id": "PNdZiQdQGAWQbjEuk"
     },
     "event.saving.success": {
       "key": "event.saving.success",
@@ -6576,70 +6831,83 @@ mfPkg.syncAll({
       "removed": true,
       "_id": "pGnYA3PJXqKCpYXeG"
     },
+    "profile.id": {
+      "key": "profile.id",
+      "lang": "en",
+      "text": "ID:",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "jfS4yMfddp9mdsixe",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 16,
+      "template": "profile",
+      "removed": true,
+      "_id": "6XbGvpyC7YcXDJKLG"
+    },
     "course.event.edit.host_location": {
       "key": "course.event.edit.host_location",
       "lang": "en",
       "text": "Host / Location",
       "ctime": 1432132053599,
-      "mtime": 1432683752999,
+      "mtime": 1434198396035,
       "revisionId": "zjxR37wZf4kCZLbrQ",
       "file": "./client/views/courses/events/course.event.edit.html",
       "line": 41,
       "template": "course_event_edit",
       "removed": true,
-      "_id": "ifqRa4QuSgZsZSDen"
+      "_id": "vAsrQJ7NTJoSebKHw"
     },
     "course.event.edit.by": {
       "key": "course.event.edit.by",
       "lang": "en",
       "text": "by",
       "ctime": 1432132053599,
-      "mtime": 1432683752999,
+      "mtime": 1434198396035,
       "revisionId": "X5ddtwzzd3te6tqAD",
       "file": "./client/views/courses/events/course.event.edit.html",
       "line": 44,
       "template": "course_event_edit",
       "removed": true,
-      "_id": "9wqSaeXmfQSBKG2jd"
+      "_id": "SR5rkonmer55QjuQe"
     },
     "course.event.edit.no_hosts": {
       "key": "course.event.edit.no_hosts",
       "lang": "en",
       "text": "No Hosts available",
       "ctime": 1432132053599,
-      "mtime": 1432683752999,
+      "mtime": 1434198396035,
       "revisionId": "obkXnoau2fqEcse9z",
       "file": "./client/views/courses/events/course.event.edit.html",
       "line": 46,
       "template": "course_event_edit",
       "removed": true,
-      "_id": "YZmv8sWscsAGhudA8"
+      "_id": "bYFge4cbwPyjirzcP"
     },
     "course.event.edit.mentors": {
       "key": "course.event.edit.mentors",
       "lang": "en",
       "text": "Mentors",
       "ctime": 1432132053599,
-      "mtime": 1432683752999,
+      "mtime": 1434198396035,
       "revisionId": "4WL6gGERQPpYPcAt9",
       "file": "./client/views/courses/events/course.event.edit.html",
       "line": 50,
       "template": "course_event_edit",
       "removed": true,
-      "_id": "ZorqhqudTmnyygoLb"
+      "_id": "LQs8DewMDKGaZFKxR"
     },
     "course.event.edit.no_mentors": {
       "key": "course.event.edit.no_mentors",
       "lang": "en",
       "text": "No Mentors available",
       "ctime": 1432132053599,
-      "mtime": 1432683752999,
+      "mtime": 1434198396035,
       "revisionId": "pxpFzsRvFi3z2M2d3",
       "file": "./client/views/courses/events/course.event.edit.html",
       "line": 55,
       "template": "course_event_edit",
       "removed": true,
-      "_id": "mKo6aKaAmReq82R55"
+      "_id": "az2fjh3jeezcsNCsA"
     },
     "voting.no_options": {
       "key": "voting.no_options",
@@ -7234,18 +7502,6 @@ mfPkg.syncAll({
       "template": "mfFixedTranslations",
       "_id": "hfqaibvMGN4MTawWx"
     },
-    "roles.mentor.description": {
-      "key": "roles.mentor.description",
-      "lang": "en",
-      "text": "help as mentor",
-      "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "JYixcoh6qc4GLdrzD",
-      "file": "./client/mfFixedTranslations.html",
-      "line": 12,
-      "template": "mfFixedTranslations",
-      "_id": "iykFcvZqQAcrFScEa"
-    },
     "roles.host.short": {
       "key": "roles.host.short",
       "lang": "en",
@@ -7269,18 +7525,6 @@ mfPkg.syncAll({
       "line": 15,
       "template": "mfFixedTranslations",
       "_id": "dvipAoRk649xfK9mF"
-    },
-    "roles.host.description": {
-      "key": "roles.host.description",
-      "lang": "en",
-      "text": "provide a room to host the course",
-      "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "MAG43LZ9KiA6EhtpL",
-      "file": "./client/mfFixedTranslations.html",
-      "line": 16,
-      "template": "mfFixedTranslations",
-      "_id": "9QtY6Wf5iNwj3LZ3S"
     },
     "category.sports": {
       "key": "category.sports",
@@ -7990,18 +8234,6 @@ mfPkg.syncAll({
       "template": "course_edit",
       "_id": "q4EDhqaFde9Z5gGjT"
     },
-    "course.edit.neededs_ppl_who": {
-      "key": "course.edit.neededs_ppl_who",
-      "lang": "en",
-      "text": "Needs people who",
-      "ctime": 1432132053599,
-      "mtime": 1432132053599,
-      "revisionId": "Dj8i6GMxvmTSM4jPp",
-      "file": "./client/views/courses/details/course.edit.html",
-      "line": 53,
-      "template": "course_edit",
-      "_id": "mtNG5xhKpwj2e8pKG"
-    },
     "course.edit.region": {
       "key": "course.edit.region",
       "lang": "en",
@@ -8278,18 +8510,6 @@ mfPkg.syncAll({
       "template": "messages",
       "_id": "64EMDC23YLjLx8yhW"
     },
-    "roles.team.subscribed": {
-      "key": "roles.team.subscribed",
-      "lang": "en",
-      "text": "You are in the team",
-      "ctime": 1432683667590,
-      "mtime": 1432683752998,
-      "revisionId": "8Ms7aNy2wSN8XRx38",
-      "file": "./client/lib/mfFixedTranslations.html",
-      "line": 7,
-      "template": "mfFixedTranslations",
-      "_id": "Cii3cYttTk7AtWMRd"
-    },
     "roles.participant.subscribed": {
       "key": "roles.participant.subscribed",
       "lang": "en",
@@ -8325,19 +8545,6 @@ mfPkg.syncAll({
       "line": 19,
       "template": "mfFixedTranslations",
       "_id": "Cr7QbutLmsuzC6gwW"
-    },
-    "roles.subscribe.team": {
-      "key": "roles.subscribe.team",
-      "lang": "en",
-      "text": "I help organiiize",
-      "ctime": 1432386224128,
-      "mtime": 1432683752998,
-      "revisionId": "xkZY4ePoe4eKpyGuS",
-      "file": "./collections/roles.js",
-      "line": 15,
-      "func": "unknown",
-      "removed": true,
-      "_id": "RgibfG5Zj7Dt2gRsx"
     },
     "privilege.addedAdmin": {
       "key": "privilege.addedAdmin",
@@ -8377,45 +8584,6 @@ mfPkg.syncAll({
       "func": "function(err)",
       "removed": true,
       "_id": "YEGCvn97tQxyX2K8b"
-    },
-    "course.roles.you_are": {
-      "key": "course.roles.you_are",
-      "lang": "en",
-      "text": "You are",
-      "ctime": 1432132053599,
-      "mtime": 1432683752999,
-      "revisionId": "Qb32XEoodXDmqPDm4",
-      "file": "./client/views/courses/details/course.roles.html",
-      "line": 42,
-      "template": "membersRoles",
-      "removed": true,
-      "_id": "kqSxL6QoB7zXyYYzh"
-    },
-    "course.roles.anonymously": {
-      "key": "course.roles.anonymously",
-      "lang": "en",
-      "text": "anonymously",
-      "ctime": 1432132053599,
-      "mtime": 1432683752999,
-      "revisionId": "zaqEJTmiD234ycW45",
-      "file": "./client/views/courses/details/course.roles.html",
-      "line": 42,
-      "template": "membersRoles",
-      "removed": true,
-      "_id": "GMtdxcMnhSjKQKZrH"
-    },
-    "course.roles.subscribed_as": {
-      "key": "course.roles.subscribed_as",
-      "lang": "en",
-      "text": "subscribed as",
-      "ctime": 1432132053599,
-      "mtime": 1432683752999,
-      "revisionId": "JKLwQRdLAJWz8PhA3",
-      "file": "./client/views/courses/details/course.roles.html",
-      "line": 42,
-      "template": "membersRoles",
-      "removed": true,
-      "_id": "SvFZEiX7tAaZiZh7u"
     },
     "report.error": {
       "key": "report.error",
@@ -8468,9 +8636,482 @@ mfPkg.syncAll({
       "func": "function()",
       "removed": true,
       "_id": "3zYxqQ4NWC6NueH3u"
+    },
+    "profile.verifymail": {
+      "key": "profile.verifymail",
+      "lang": "en",
+      "text": "Verify my E-Mail",
+      "ctime": 1432726971769,
+      "mtime": 1432726971769,
+      "revisionId": "oWJwJFY9s7g2MA7kh",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 21,
+      "template": "profile",
+      "_id": "bWDf7wuMBgf3AWgDn"
+    },
+    "profile.edit": {
+      "key": "profile.edit",
+      "lang": "en",
+      "text": "Edit",
+      "ctime": 1432726971769,
+      "mtime": 1432726971769,
+      "revisionId": "mLm5mzm9hzjnhgX6o",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 37,
+      "template": "profile",
+      "_id": "fSdnhDLhcC8aa7Y5o"
+    },
+    "course.edit.needs.role": {
+      "key": "course.edit.needs.role",
+      "lang": "en",
+      "text": "This course might need",
+      "ctime": 1433381566773,
+      "mtime": 1433381566773,
+      "revisionId": "BXTsQ7MkENHKmRj3u",
+      "file": "./client/views/courses/details/course.edit.html",
+      "line": 53,
+      "template": "course_edit",
+      "_id": "YtKuHpwWnjpXDogCS"
+    },
+    "course.roles.maketeam": {
+      "key": "course.roles.maketeam",
+      "lang": "en",
+      "text": "Add to team",
+      "ctime": 1432726971769,
+      "mtime": 1432726971769,
+      "revisionId": "SDNa8srxF3zLpb2oB",
+      "file": "./client/views/courses/details/course.roles.html",
+      "line": 21,
+      "template": "membersRoles",
+      "_id": "a8ybkkiagdTPgFSom"
+    },
+    "roles.team.subscribed": {
+      "key": "roles.team.subscribed",
+      "lang": "en",
+      "text": "You are on the team",
+      "ctime": 1432683667590,
+      "mtime": 1432767033170,
+      "revisionId": "Xm8HYyqDgvnpt5CDg",
+      "file": "./client/lib/mfFixedTranslations.html",
+      "line": 7,
+      "template": "mfFixedTranslations",
+      "_id": "ACJR4Whtbrf2Ef3Ti"
+    },
+    "roles.mentor.description": {
+      "key": "roles.mentor.description",
+      "lang": "en",
+      "text": "a mentor",
+      "ctime": 1432132053599,
+      "mtime": 1433381566773,
+      "revisionId": "WvHp4YbiKP9KSbNNA",
+      "file": "./client/lib/mfFixedTranslations.html",
+      "line": 15,
+      "template": "mfFixedTranslations",
+      "_id": "w8uYFuz4GaHjGhQgh"
+    },
+    "roles.host.description": {
+      "key": "roles.host.description",
+      "lang": "en",
+      "text": "a host that provides a room",
+      "ctime": 1432132053599,
+      "mtime": 1433381566773,
+      "revisionId": "Y5oDke3ndnuKGRfcx",
+      "file": "./client/lib/mfFixedTranslations.html",
+      "line": 20,
+      "template": "mfFixedTranslations",
+      "_id": "959h4EDC6nf5jdbQH"
+    },
+    "course.edit.neededs_ppl_who": {
+      "key": "course.edit.neededs_ppl_who",
+      "lang": "en",
+      "text": "Needs people who",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "nPQgxogJt87vyhuuW",
+      "file": "./client/views/courses/details/course.edit.html",
+      "line": 53,
+      "template": "course_edit",
+      "removed": true,
+      "_id": "hH8664vNnMFGs7fQW"
+    },
+    "profile.userid": {
+      "key": "profile.userid",
+      "lang": "en",
+      "text": "UserID:",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "aGsN95tZSwp6rGpyd",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 9,
+      "template": "profile",
+      "removed": true,
+      "_id": "5cmWg8pejKuE4RgcW"
+    },
+    "roles.subscribe.team": {
+      "key": "roles.subscribe.team",
+      "lang": "en",
+      "text": "I help organiiize",
+      "ctime": 1432386224128,
+      "mtime": 1434198396035,
+      "revisionId": "xkZY4ePoe4eKpyGuS",
+      "file": "./collections/roles.js",
+      "line": 15,
+      "func": "unknown",
+      "removed": true,
+      "_id": "JdHeaMHnvwmgRpZPh"
+    },
+    "course.roles.you_are": {
+      "key": "course.roles.you_are",
+      "lang": "en",
+      "text": "You are",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "Qb32XEoodXDmqPDm4",
+      "file": "./client/views/courses/details/course.roles.html",
+      "line": 42,
+      "template": "membersRoles",
+      "removed": true,
+      "_id": "giDbrRoo9G7acHMZ3"
+    },
+    "course.roles.anonymously": {
+      "key": "course.roles.anonymously",
+      "lang": "en",
+      "text": "anonymously",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "zaqEJTmiD234ycW45",
+      "file": "./client/views/courses/details/course.roles.html",
+      "line": 42,
+      "template": "membersRoles",
+      "removed": true,
+      "_id": "YC76BhmypqKk3shqe"
+    },
+    "course.roles.subscribed_as": {
+      "key": "course.roles.subscribed_as",
+      "lang": "en",
+      "text": "subscribed as",
+      "ctime": 1432132053599,
+      "mtime": 1434198396035,
+      "revisionId": "JKLwQRdLAJWz8PhA3",
+      "file": "./client/views/courses/details/course.roles.html",
+      "line": 42,
+      "template": "membersRoles",
+      "removed": true,
+      "_id": "Z5YrT7wLrzg7jqMkt"
+    },
+    "profile.input.save": {
+      "key": "profile.input.save",
+      "lang": "en",
+      "text": "Save",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "SvCW5fnxKYKuokyWu",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 13,
+      "template": "profile",
+      "_id": "92dcoYLg9juvTw2pJ"
+    },
+    "profile.input.cancel": {
+      "key": "profile.input.cancel",
+      "lang": "en",
+      "text": "Cancel",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "nGFqK9Z8CS4BMPYg2",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 14,
+      "template": "profile",
+      "_id": "jy5Rw7zoyTFujLDyS"
+    },
+    "profile.input.oldPassword": {
+      "key": "profile.input.oldPassword",
+      "lang": "en",
+      "text": "Your current password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "mPdWnDjZrnewZXmuh",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 37,
+      "template": "profile",
+      "_id": "NvMTGrn5Dk4pGXunr"
+    },
+    "profile.input.newPassword": {
+      "key": "profile.input.newPassword",
+      "lang": "en",
+      "text": "New password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "o55mKkSmSuski8HAG",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 41,
+      "template": "profile",
+      "_id": "377BTxYFHAsu3bNaZ"
+    },
+    "profile.input.repeatPassword": {
+      "key": "profile.input.repeatPassword",
+      "lang": "en",
+      "text": "Repeat new password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "tngPvWsGsrsC7yvyQ",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 45,
+      "template": "profile",
+      "_id": "jJGDiEQFrDqtdBodj"
+    },
+    "profile.changePass": {
+      "key": "profile.changePass",
+      "lang": "en",
+      "text": "Change my password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "5mYQB8ZEvLxh3aZq3",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 53,
+      "template": "profile",
+      "_id": "EFDQg2RMWbDwrDKAC"
+    },
+    "profile.changePassCancel": {
+      "key": "profile.changePassCancel",
+      "lang": "en",
+      "text": "Cancel",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "dAY8XvYbepCTjkEii",
+      "file": "./client/views/users/ownprofile.html",
+      "line": 50,
+      "template": "profile",
+      "_id": "rYXwN9GBbpFBQQ6ZJ"
+    },
+    "profile.updated": {
+      "key": "profile.updated",
+      "lang": "en",
+      "text": "Updated profile",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "BSkd5fnSXg63fhe4J",
+      "file": "./client/views/users/ownprofile.js",
+      "line": 98,
+      "func": "function(err)",
+      "_id": "37oAKodD8qoTXroNP"
+    },
+    "profile.passwordMismatch": {
+      "key": "profile.passwordMismatch",
+      "lang": "en",
+      "text": "Passwords don\\",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "yeYKSkPvfPWWkCkXp",
+      "file": "./client/views/users/ownprofile.js",
+      "line": 111,
+      "func": "function(event)",
+      "_id": "CHP4ZaBKn4NpTZKPN"
+    },
+    "profile.passwordShort": {
+      "key": "profile.passwordShort",
+      "lang": "en",
+      "text": "Your desired password is too short",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "ikZnnzm7FPsrDnikp",
+      "file": "./client/views/users/ownprofile.js",
+      "line": 116,
+      "func": "function(event)",
+      "_id": "xgTn6xs7S2sHAZHd5"
+    },
+    "profile.passwordChangeFailed": {
+      "key": "profile.passwordChangeFailed",
+      "lang": "en",
+      "text": "Failed to change your password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "deqexXiFAzr7reZGA",
+      "file": "./client/views/users/ownprofile.js",
+      "line": 121,
+      "func": "function(err)",
+      "_id": "GXX2oMmbR758NKfsE"
+    },
+    "profile.passwordChanged": {
+      "key": "profile.passwordChanged",
+      "lang": "en",
+      "text": "changed password",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "czvvijg77Hv2RCQDS",
+      "file": "./client/views/users/ownprofile.js",
+      "line": 123,
+      "func": "function(err)",
+      "_id": "CyYB5HjpgZhaqtXYm"
+    },
+    "course.details.repl_menu_btn": {
+      "key": "course.details.repl_menu_btn",
+      "lang": "en",
+      "text": "Replicate",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "kWMu3gLmCtmRw2uoM",
+      "file": "./client/views/events/event.html",
+      "line": 239,
+      "template": "eventPage",
+      "_id": "5cYaLEhK3Z9pRkS7G"
+    },
+    "event.replication.interval.start": {
+      "key": "event.replication.interval.start",
+      "lang": "en",
+      "text": "Interval Start",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "eRcGXQLyFDprGHbkx",
+      "file": "./client/views/events/event.html",
+      "line": 249,
+      "template": "eventPage",
+      "_id": "8ox2xZcR3uJzdrkrY"
+    },
+    "event.replication.interval.end": {
+      "key": "event.replication.interval.end",
+      "lang": "en",
+      "text": "Interval End",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "An6oqCHntRTzRbbAf",
+      "file": "./client/views/events/event.html",
+      "line": 259,
+      "template": "eventPage",
+      "_id": "RnZGdpSGSwgyqvDrq"
+    },
+    "course.details.repl_btn": {
+      "key": "course.details.repl_btn",
+      "lang": "en",
+      "text": "Create events",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "GhDjYANozYbk8r2bx",
+      "file": "./client/views/events/event.html",
+      "line": 285,
+      "template": "eventPage",
+      "_id": "kYoPW6e4p5Gbx435u"
+    },
+    "event.replication.freq.once": {
+      "key": "event.replication.freq.once",
+      "lang": "en",
+      "text": "once",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "TXQY6rgSSbkpfKusy",
+      "file": "./client/views/events/event.js",
+      "line": 61,
+      "func": "function()",
+      "_id": "cBjiSHmjs3x2WpLY8"
+    },
+    "event.replication.freq.daily": {
+      "key": "event.replication.freq.daily",
+      "lang": "en",
+      "text": "every day",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "iAtkv4NP555XxkxYw",
+      "file": "./client/views/events/event.js",
+      "line": 64,
+      "func": "function()",
+      "_id": "Ck8d7pAmJxSp8ALQ9"
+    },
+    "event.replication.freq.weekly": {
+      "key": "event.replication.freq.weekly",
+      "lang": "en",
+      "text": "once a week",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "efYotXxf4CSHnddYA",
+      "file": "./client/views/events/event.js",
+      "line": 67,
+      "func": "function()",
+      "_id": "56RxG5nz6wLhuGS6J"
+    },
+    "event.replication.freq.monthly": {
+      "key": "event.replication.freq.monthly",
+      "lang": "en",
+      "text": "once a month",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "m4oFRrmQPwe9P8boF",
+      "file": "./client/views/events/event.js",
+      "line": 70,
+      "func": "function()",
+      "_id": "5zp7TRERvRYYbN7m2"
+    },
+    "file.removed.fail": {
+      "key": "file.removed.fail",
+      "lang": "en",
+      "text": "Couldn't remove file {FILENAME}.",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "7hojB3nx3EubYMYx9",
+      "file": "./client/views/events/event.js",
+      "line": 295,
+      "func": "function (error, fileRemoved)",
+      "_id": "36piGJbynaKHR22r4"
+    },
+    "event.replicate_update.error": {
+      "key": "event.replicate_update.error",
+      "lang": "en",
+      "text": "Failed to update replicas of \"{TITLE}\". You may want to do it manually.",
+      "ctime": 1434198396034,
+      "mtime": 1434198396034,
+      "revisionId": "Tok8GBvTp3nyvtD8N",
+      "file": "./client/views/events/event.js",
+      "line": 391,
+      "func": "function(error, eventId)",
+      "_id": "JwXoAzokeH3hdfPgB"
+    },
+    "event.edit.replicates.success": {
+      "key": "event.edit.replicates.success",
+      "lang": "en",
+      "text": "Replicas of \"{TITLE}\" also updated.",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "kPHcSTiefJRTTF2D8",
+      "file": "./client/views/events/event.js",
+      "line": 394,
+      "func": "function(error, eventId)",
+      "_id": "i6eN9Qo4WJBoKjXaX"
+    },
+    "event.replicate.error": {
+      "key": "event.replicate.error",
+      "lang": "en",
+      "text": "Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
+      "ctime": 1434198219466,
+      "mtime": 1434198344246,
+      "revisionId": "v6Tj26nynMT6wh3d3",
+      "file": "./client/views/events/event.js",
+      "line": 449,
+      "func": "function(error, eventId)",
+      "_id": "G83Ex9YymnQpKte6W"
+    },
+    "event.replicate.success": {
+      "key": "event.replicate.success",
+      "lang": "en",
+      "text": "Replicated event \"{TITLE}\".",
+      "ctime": 1434198219466,
+      "mtime": 1434198219466,
+      "revisionId": "qZSqj5pH6iPQnceZX",
+      "file": "./client/views/events/event.js",
+      "line": 459,
+      "func": "function(error, eventId)",
+      "_id": "q3qr3i6S3wPPMWT2H"
+    }
+  },
+  "bg": {
+    "menue.Courses": {
+      "key": "menue.Courses",
+      "lang": "bg",
+      "text": "aksjhdgfkajhef",
+      "ctime": 1433872390500,
+      "mtime": 1433872390500,
+      "revisionId": "f4RzcrhSiG2hTikPL",
+      "_id": "5ga45jBjiLhzEj3GD"
     }
   }
 }, {
-  "exportedAt": 1433380365925,
-  "updatedAt": 1433380300067
+  "exportedAt": 1434200076812,
+  "updatedAt": 1434200055564
 });
