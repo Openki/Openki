@@ -30,7 +30,7 @@ Template.loginLogin.events({
 				email: email
 			}, function(err) {
 				if (err) {
-					addMessage(err);
+					addMessage(err, 'danger');
 				} else {
 					Session.set('showLogin', false);
 				}
@@ -53,7 +53,7 @@ Template.loginLogin.events({
 		var password = template.find('#login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-				addMessage(err);
+				addMessage(err, 'danger');
 			} else {
 				$('.dropdown.open').removeClass('open');
 			}
@@ -70,7 +70,7 @@ Template.loginLogin.events({
 		Meteor[loginMethod]({
 		}, function (err) {
 			if (err) {
-				addMessage(err.reason || 'Unknown error');
+				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
 				$('.dropdown.open').removeClass('open');
 			}

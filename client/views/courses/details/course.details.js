@@ -32,9 +32,9 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }));
+								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
 							}
 						});
 					}
@@ -45,9 +45,9 @@ Router.map(function () {
 					function(newDescription) {
 						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }));
+								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
 							}
 						});
 					}

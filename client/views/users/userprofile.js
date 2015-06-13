@@ -49,9 +49,9 @@ Template.userprofile.events({
 	'click button.giveAdmin': function() {
 		Meteor.call('addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'));
+				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
 			} else {
-				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'));
+				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'sucess');
 			}
 		});
 	},
@@ -59,9 +59,9 @@ Template.userprofile.events({
 	'click button.giveUpload': function() {
 		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'));
+				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
 			} else {
-				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'));
+				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
 		});
 	},
@@ -70,9 +70,9 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv')
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'));
+				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'), 'danger');
 			} else {
-				addMessage(mf('privilege.removed', 'Removed privilege'));
+				addMessage(mf('privilege.removed', 'Removed privilege'), 'success');
 			}
 		});
 	},
@@ -105,7 +105,7 @@ Template.userprofile.events({
 				'Privat-message from '+send_userdata.username,
 				message,
 				function(error, result){
-					if (error) addMessage(error)
+					if (error) addMessage(error, 'danger')
 				}
 				);
 				if (receiveCopy){
@@ -115,7 +115,7 @@ Template.userprofile.events({
 					'Copy of your Privat-message to '+rec_user,
 					message);
 				//todo: reset clear the form.
-				addMessage(mf('email.sent', 'email could have been sent'));
+				addMessage(mf('email.sent', 'email could have been sent'), 'success');
 
 				}
 

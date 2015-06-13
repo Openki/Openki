@@ -210,7 +210,7 @@ Template.event.events({
 					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'), 'success');
 					if (course) Router.go('showCourse', { _id: course });
 				} else {
-					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'));
+					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
 				}
 			});
 			Template.instance().editing.set(false);
@@ -291,8 +291,8 @@ Template.event.events({
 		
 		//remove file attribute from the event
 		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
-			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Sucessfully removed file {FILENAME}.'));
-			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."));
+			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Sucessfully removed file {FILENAME}.'), 'success');
+			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."), 'danger');
 		});		
 	},
 	
@@ -376,7 +376,7 @@ Template.event.events({
 		
 		Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
 			if (error) {
-				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
 				
 				//update replicas too
@@ -388,7 +388,7 @@ Template.event.events({
 					
 					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
 						if (error) {	
-							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
+							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'), 'danger');
 						}
 						else{
 							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
@@ -446,7 +446,7 @@ Template.event.events({
 				
 			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
 				if (error) {
-					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 					success = false;
 				} else {
 				}
@@ -456,7 +456,7 @@ Template.event.events({
 		});
 		if(success){
 			template.$('div#eventReplicationMenu').slideUp(300);
-			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".'));
+			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".'), 'success');
 			Router.go('showEvent', { _id: template.data._id });
 		}
 			
