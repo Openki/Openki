@@ -7,11 +7,16 @@ Template.loginFrame.events({
 
 
 Template.loginFrame.helpers({
-  username: function () {
-    return Meteor.user() && Meteor.user().username;
-  }
+    username: function () {
+      return Meteor.user() && Meteor.user().username;
+    },
 });
 
+Template.loginLogin.helpers({
+	registering: function () {
+		return Session.get('registering');
+	},
+});
 
 Template.loginLogin.created = function() {
 	this.registering = new ReactiveVar(false);
@@ -39,6 +44,7 @@ Template.loginLogin.events({
 		else {
 			$('#show_email').show(300);
 			Template.instance().registering.set(true);
+			Session.set('registering', true);
 		}
 	},
 
@@ -47,6 +53,7 @@ Template.loginLogin.events({
 		if(Template.instance().registering.get()){
 			$('#show_email').hide(300);
 			Template.instance().registering.set(false);
+			Session.set('registering', false);
 			return;
 		}
 		var name = template.find('#login-name').value;

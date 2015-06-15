@@ -62,11 +62,15 @@
 			<div class="form-group">
 				<button type="submit" class='loginLogin btn btn-primary form-control'>
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+					{{#if registering}}
+					{{mf 'login.login.back_to_login' 'Back to login'}}
+					{{else}}
 					{{mf 'login.login.submit' 'Login'}}
+					{{/if}}
 				</button>
 			</div>
 			<div class="form-group">
-				<button type="submit" class='loginRegister btn btn-primary form-control'>
+				<button type="submit" class='loginRegister {{#if registering}}registering{{/if}}'>
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
