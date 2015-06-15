@@ -43,4 +43,11 @@ Meteor.startup(function () {
 			}
 		}
 	}
+	var emailConf = Meteor.settings.email;
+	if (emailConf) {
+		if (emailConf.mailgun) {
+			process.env.MAIL_URL = emailConf.mailgun
+			console.info('email configured to: '+emailConf.mailgun+' …done')
+		}
+	}
 });
