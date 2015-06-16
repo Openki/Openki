@@ -44,3 +44,6 @@ Template.course_events.events({
 	}
 });
 
+Template.course.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
+}

@@ -1,39 +1,38 @@
 <template name="course_events">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="course_event_options">
 		{{#if mayAdd}}
-		<button type="button" class="eventEdit addButton btn btn-success">
-			<span class="glyphicon glyphicon-plus"></span>
-			{{mf 'course.events.addButton' 'add an Event'}}
+		<button type="button" class="eventEdit">
+			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
 		{{/if}}
-			<a href="/cal/course/{{course._id}}">
-				<span class="glyphicon glyphicon-calendar"></span>{{mf 'course.download_cal' 'Download events to my calendar'}}
-			</a>
-		{{#if events_list}}
-			<div class="course_events row">
-				<div class="container-fluid">
-					{{#each events_list}}
-						<div class="course_event_container col-xs-12 col-sm-6 col-md-4 col-lg-4">
-							{{>course_event}}
-						</div>
-					{{/each}}
-				</div>
-			</div>
-		{{/if}}
-
-		{{#if events_list_past}}
-			<div class="course_events_past row hidden">
-				<div class="container-fluid">
-					<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
-					{{#each events_list_past}}
-						<div class="course_event_past_container col-xs-12 col-sm-6 col-md-4 col-lg-4">
-							{{>course_event}}
-						</div>
-					{{/each}}
-				</div>
-			</div>
-		{{/if}}
+		<a href="/cal/course/{{course._id}}">
+			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
+			<span class="glyphicon glyphicon-download"></span>&nbsp;
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
+			</button>
+		</a>
 	</div>
+	{{#if events_list}}
+	<div class="course_events">
+		{{#each events_list}}
+		<div class="course_event_container">
+			{{>course_event}}
+		</div>
+		{{/each}}
+	</div>
+	{{/if}}
+
+	{{#if events_list_past}}
+	<div class="course_events_past hidden">
+		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
+		{{#each events_list_past}}
+		<div class="course_event_past_container">
+			{{>course_event}}
+		</div>
+		{{/each}}
+	</div>
+	{{/if}}
 </template>
 
 
