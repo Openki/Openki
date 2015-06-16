@@ -14,7 +14,7 @@ Template.loginFrame.helpers({
 
 Template.loginLogin.helpers({
 	registering: function () {
-		return Session.get('registering');
+		return Template.instance().registering.get();
 	},
 });
 
@@ -44,7 +44,6 @@ Template.loginLogin.events({
 		else {
 			$('#show_email').show(300);
 			Template.instance().registering.set(true);
-			Session.set('registering', true);
 		}
 	},
 
@@ -53,7 +52,6 @@ Template.loginLogin.events({
 		if(Template.instance().registering.get()){
 			$('#show_email').hide(300);
 			Template.instance().registering.set(false);
-			Session.set('registering', false);
 			return;
 		}
 		var name = template.find('#login-name').value;
