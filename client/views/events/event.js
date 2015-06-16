@@ -19,6 +19,10 @@ Template.eventPage.helpers({
 			
 			return Courses.findOne({_id: courseId});
 		}
+	},
+
+	kioskMode: function() {
+		return Session.get('kiosk_mode');
 	}
 });
 
@@ -73,6 +77,10 @@ Template.event.helpers({
 	
 	mayEdit: function() {
 		return mayEditEvent(Meteor.user(), this);
+	},
+
+	kioskMode: function() {
+		return Session.get('kiosk_mode');
 	}
 });
 
