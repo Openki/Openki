@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+# Replace the local dev DB with a copy pulled over SSH from a remote mongo
+#
+# ❧ Works On My Machine™ ☙
+
+fail() {
+	echo "$1"
+	exit 1
+}
+
+usage() {
+	echo "Usage: $0 <ssh-creds> <db-name>"
+	fail "$1"
+}
+
+
+[ -n "$1" ] || usage "please specify SSH creds to connect to remote, example: dba@mongohosting.inc"
+[ -n "$2" ] || usage "please specify DB name of remote you want cloned"
+
+remote=$1
+remotedb=$2
+
+path=$(dirname "$0")/../.meteor/local/db/
+[ -d "$path" ] || fail "local DB $path missing"
+
+mongopid=`cat "${path}mongod.lock"`
+[ -n "$mongopid" ] || fail "Your meteor mongo is not running, launch meteor"
+
+portfile="${path}METEOR-PORT"
+port=`cat "$portfile"`
+
+sshsock=$(tempfile)
+rm "$sshsock" # ugh SSH must create its own socket file but having the file created first is insecure, I'm just lazy
+
+ssh -M -S $sshsock -fnNT -L 27018:localhost:27017 $remote || fail "connecting to remote failed"
+trap "[ -e $sshsock ] && ssh -S $sshsock -O exit $remote" INT TERM EXIT
+
+echo -n "Cloning..."
+mongo --quiet --port "$port" --eval "db.dropDatabase(); db.copyDatabase('$remotedb', 'meteor', 'localhost:27018');" meteor
+echo "done";
