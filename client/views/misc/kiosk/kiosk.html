@@ -1,5 +1,4 @@
 <template name="kioskLayout">
-	<div class="container-fluid">
 			{{#if showKioskCalendar}}
 				<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
 				<a id ="backToKiosk" href="{{pathFor 'kiosk'}}" class="pull-right">
@@ -9,47 +8,56 @@
 				<hr>
 			{{/if}}
 		{{> yield}}
-	</div>
 </template>
 
 <template name="kioskEvents">
 	<div class="kiosk"><!-- 
 		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
-		<div class="col-sm-12 row">
-			<div class="col-sm-4">
-				<div class="kiosk_logo">
-					<h1><b>Openki</b></h1> 
-					<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
-				</div>
-			</div>
+		<div class="kiosk_header">
+			<h1>
+				<b>Openki</b>
+				{{> lang_sel}}
+			</h1>
+			<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
+		</div>
 			<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
 				<span class="glyphicon glyphicon-calendar"></span>
 				{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
 			</a> -->
-			<div class="col-sm-8">
+		<div class="kiosk_events_ongoing_container">
 			{{#if now.count}}
-					<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=now.count}}</h3>
-			
-				{{#each now}}
-					{{> kioskEventSlim}}
-				{{/each}}
-			{{/if}}
+			<div class="kiosk_events_ongoing_title">
+				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=now.count}}</h3>
 			</div>
+			<div class="kiosk_events_ongoing">
+			{{#each now}}
+				{{> kioskEventOngoing}}
+			{{/each}}
+			</div>
+			{{/if}}
 		</div>
-		<div class="col-sm-12 row">
+		<div class="kiosk_events_container">
 			{{#if today.count}}
+			<div class="kiosk_events_title">
 				<hr>
-				<h2>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h2>
+				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h3>
+			</div>
+			<div class="kiosk_events">
 				{{#each today}}
-					{{> kioskEvent}}
+				{{> kioskEvent}}
 				{{/each}}
+			</div>
 			{{/if}}
 			{{#if future.count}}
+			<div class="kiosk_events_title">
 				<hr>
-				<h1>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h1>
+				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
+			</div>
+			<div class="kiosk_events"> 
 				{{#each future}}
-					{{> kioskEvent}}
+				{{> kioskEvent}}
 				{{/each}}
+			</div>
 			{{/if}}
 		</div>
 	</div>
@@ -57,50 +65,57 @@
 
 <template name="kioskEvent">
 		<a href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event" style='overflow: hidden'>
-			<div class="kiosk_date_time col-sm-12">
-				<div class="col-sm-6 no-padding">
-					<span style="font-size:x-large">
-						<span class="glyphicon glyphicon-time"></span>&nbsp;{{dateformat_fromnow startdate}}
-					</span>
-					<br>
+		<div class="calendar_event">
+			<div class="kiosk_event_header">
+				<div class="kiosk_event_date">
+					<span class="glyphicon glyphicon-time"></span>
+					&nbsp;{{dateformat_fromnow startdate}}
 					{{timeformat startdate}} - {{timeformat enddate}}
 				</div>
-				<div class="kiosk_home col-sm-6">
+				<div class="kiosk_event_home">
+					{{#if location}}
 					<span class="glyphicon glyphicon-home"></span>
+					{{/if}}
 					{{this.location}}
 					{{#if room}}
 						- {{this.room}}
 					{{/if}}
 				</div>
 			</div>
-			<div class="course_event_title col-sm-12">
+			<div class="course_event_title">
 				<h3>{{plain this.title}}</h3>
 			</div>
-			<div class="course_event_desc">{{plain this.description}}</div>
+			<div class="course_event_desc">
+				<p>{{plain this.description}}</p>
+			</div>
 		</div>
 		</a>
-		<br>
 </template>
 
-<template name="kioskEventSlim">
-		<a href="{{pathFor 'showEvent'}}">
-		<div style='overflow: hidden; width:200px; height:200px; display:inline-block'>			
-			<span style="font-size:x-large">
-				{{plain this.title}}
-			</span>
-			<div >
-				<span class="glyphicon glyphicon-time"></span>&nbsp;{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow startdate}}
-				{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow enddate}}
+<template name="kioskEventOngoing">
+	<a href="{{pathFor 'showEvent'}}">
+		<div class="calendar_event">
+			<div class="kiosk_event_header">
+				<div class="kiosk_event_date">
+					<span class="glyphicon glyphicon-time"></span>&nbsp;
+					{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow startdate}}
+					{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow enddate}}
+				</div>
+				<div class="kiosk_event_home">
+					{{#if location}}
+					<span class="glyphicon glyphicon-home"></span>
+					&nbsp;
+					{{/if}}
+					{{this.location}}
+					{{#if room}}
+						<br>{{this.room}}
+					{{/if}}
+				</div>
 			</div>
-			<div>
-				<span class="glyphicon glyphicon-home"></span>
-				{{this.location}}
-				{{#if room}}
-					- {{this.room}}
-				{{/if}}
+			<div class="course_event_title ellipsis">
+				<h3>{{plain this.title}}</h3>
 			</div>
 		</div>
-		</a>
+	</a>
 </template>
 

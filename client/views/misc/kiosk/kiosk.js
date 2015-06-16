@@ -56,3 +56,33 @@ Template.kioskLayout.helpers({
 		if (currentIsKiosk != "/kiosk/events") return true
 	}
 });
+
+Template.kioskEvent.events({
+	'click a': function () {
+		Session.set('kiosk_mode', true)
+	}
+})
+
+Template.kioskEventOngoing.events({
+	'click a': function () {
+		Session.set('kiosk_mode', true)
+	}
+})
+
+Template.kioskEvent.rendered = function() {
+	this.$('.course_event_title').dotdotdot({
+		height: 70,
+	})
+	this.$('.course_event_desc').dotdotdot({
+		//
+	});
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 60,
+	});
+};
+
+Template.kioskEventOngoing.rendered = function() {
+	this.$('.ellipsis').dotdotdot({
+		height: 80,
+	});
+};
