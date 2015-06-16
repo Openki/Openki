@@ -1,6 +1,9 @@
 .roles {
-	.container-fluid;
+	.make-sm-column(12);
+	.make-xs-column(12);
 	padding-top: 15px;
+	background: @light-blue;
+	border-top: 3px solid @body-bg;
 
 	ul.subscribers {
 		.list-unstyled;
@@ -14,7 +17,7 @@
 			}
 		}
 
-		ul.roles {
+		ul.roles_list {
 			.list-unstyled;
 			margin-left: 20px;
 			display: inline-block;
@@ -24,7 +27,7 @@
 				background: @brand-primary;
 				padding: 5px;
 				text-transform: uppercase;
-				font-size: x-small;
+				font-size: small;
 				font-weight: bold;
 				display: inline-block;
 				vertical-align: middle;
@@ -37,6 +40,7 @@
 			button.makeTeam {
 				.btn;
 				.btn-primary;
+				padding: 3px 10px;
 			}
 		}
 

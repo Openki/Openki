@@ -10,25 +10,17 @@
     <div class="role_details role_{{roletype.type}}">
     {{#if subscribed}}
         <div class="enroled_as_title">
-            <div class="container-fluid">
-                <h3>
-                    <span class="{{roletype.icon}}"></span>&nbsp;
-                    {{#with roletype}}{{mf roleSubscribed}}{{/with}} 
-                    <button class="unsubscribe" name="{{roletype.type}}">
-                        {{mf 'course.roles.retract' 'Retract'}}
-                    </button>
-                </h3>
-            </div>
+            <span class="{{roletype.icon}}"></span>&nbsp;
+            {{#with roletype}}{{mf roleSubscribed}}{{/with}} 
+            <button class="unsubscribe" name="{{roletype.type}}">
+                {{mf 'course.roles.retract' 'Retract'}}
+            </button>
         </div>
     {{else}}
         {{#if enrolling}}
         <div class="enrol_as_title">
-            <div class="container-fluid">
-                <h3>
-                    <span class="{{roletype.icon}}"></span>&nbsp;
-                    {{mf 'course.roles.enrol_as' 'Enrol as'}} {{role}}
-                </h3>
-            </div>
+            <span class="{{roletype.icon}}"></span>&nbsp;
+            {{mf 'course.roles.enrol_as' 'Enrol as'}} {{role}}
         </div>
         <div class="enrol_as_options">
             {{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
@@ -55,10 +47,8 @@
         {{else}}
         {{#if maySubscribe roletype.type}}
         <button type="button" class="enrol" name="participant">
-            <div class="container-fluid">
-                <span class="{{roletype.icon}}"></span>&nbsp;
-                {{#with roletype}}{{mf roleSubscribe}}{{/with}} 
-            </div>
+            <span class="{{roletype.icon}}"></span>&nbsp;
+            {{#with roletype}}{{mf roleSubscribe}}{{/with}} 
         </button>
         {{/if}}
         {{/if}}

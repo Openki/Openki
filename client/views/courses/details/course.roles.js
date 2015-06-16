@@ -1,6 +1,6 @@
 Template.member_roles.helpers({
 	roleShort: function() { return 'roles.'+this+'.short'; },
-
+	
 	maySubscribe: function() {
 		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
 	}
