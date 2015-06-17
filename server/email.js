@@ -7,7 +7,7 @@ Meteor.methods({
 Meteor.methods({
 	sendEmail: function (rec_user_id, from, subject, text) {
 
-		var from = 'kontakt@openki.net';
+		var from = 'openki@mail.openki.net';
 		var subject = '[Openki] '+subject;
 
 		var to = Meteor.users.findOne({_id:rec_user_id});
@@ -41,15 +41,15 @@ var email = {
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {
-				reporter = user.username+" ("+this.userId+")"
+				reporter = user.username+" (UserID: "+this.userId+")"
 			}
 		}
 
 		Email.send({
-			from: 'reporter@openki.net',
+			from: 'reporter@mail.openki.net',
 			to: 'admins@openki.net',
 			subject: "Report: "+subject,
-			text: reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n"+report+"\n/end of report"
+			text: "User" reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n\n"+report+"\n\n/end of report"
 		});
 	}
 });

@@ -2,10 +2,10 @@ function sendIcal(events, response) {
 	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
 	events.forEach(function(dbevent) {
-		var end = dbevent.enddate || dbevent.startdate;
+		var end = dbevent.end || dbevent.start;
 		calendar.addEvent({
 			uid: dbevent._id,
-			start: dbevent.startdate,
+			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
 			location: [dbevent.location, dbevent.room].filter(function(s) { return !!s; }).join(', '),

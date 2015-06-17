@@ -199,8 +199,8 @@ createEventsIfNone = function(){
 				var hour = date.getHours();
 				if (Random.fraction() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
 				if (Random.fraction() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
-				event.startdate = date;
-				event.enddate = new Date(date.getTime() + (1000*60*60*2));
+				event.start = date;
+				event.end = new Date(date.getTime() + (1000*60*60*2));
 				event.createdby = 'ServerScript'
 				var age = Math.floor(Random.fraction() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
@@ -231,7 +231,7 @@ loadTestEvents = function(){
 		if (dateOffset == 0){
 			var toDay = new Date();
 			toDay.setHours(0); toDay.setMinutes(0); toDay.setSeconds(0);
-			var DayOfFirstEvent = new Date(event.startdate.$date)
+			var DayOfFirstEvent = new Date(event.start.$date)
 			DayOfFirstEvent.setHours(0); DayOfFirstEvent.setMinutes(0); DayOfFirstEvent.setSeconds(0);
 			dateOffset = toDay.getTime()-DayOfFirstEvent.getTime()
 			console.log("   Loading events, Date Offset is: "+moment.duration(dateOffset).humanize());
@@ -239,8 +239,8 @@ loadTestEvents = function(){
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
 
-		event.startdate = new Date(event.startdate.$date+dateOffset);
-		event.enddate = new Date(event.enddate.$date+dateOffset);
+		event.start = new Date(event.start.$date+dateOffset);
+		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
 		var id = Events.insert(event);

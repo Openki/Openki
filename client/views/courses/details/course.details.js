@@ -32,9 +32,9 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }));
+								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
 							}
 						});
 					}
@@ -45,9 +45,9 @@ Router.map(function () {
 					function(newDescription) {
 						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }));
+								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
 							}
 						});
 					}
@@ -121,10 +121,10 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	},
 	coursestate: function() {
 		var today = new Date();
-		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
+		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
 		
-		var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
+		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
 		if (past) return 'haspastevents';
 						
 		return 'proposal';

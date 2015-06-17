@@ -42,10 +42,10 @@
 		<a href="{{pathFor 'showEvent'}}">
 			<div class="course_event_date">
 				<div class="container-fluid">
-					<span class="day">{{weekday startdate}}</span><br>
+					<span class="day">{{weekday start}}</span><br>
 					<span class="date">
 						<span class="glyphicon glyphicon-calendar"></span>
-						{{dateformat_mini_fullmonth startdate}}
+						{{dateformat_mini_fullmonth start}}
 					</span>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 				<div class="container-fluid">
 					<div class="course_event_title"><h4>{{this.title}}</h4></div>
 					<div class="course_event_time">
-						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}}
+						<span class="glyphicon glyphicon-time"></span> {{timeformat start}}
 						{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
 					</div>
 				</div>
