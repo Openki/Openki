@@ -79,7 +79,7 @@ Template.profile.events({
 	},
 	'click button.confirmdelete': function () {
 		Meteor.call('delete_profile', function() { 
-			addMessage(mf('profile.deleted', 'Your account has been deleted'));
+			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		Session.set('verify', false);
 	},
@@ -95,7 +95,7 @@ Template.profile.events({
 			document.getElementById('privacy').checked,
 			function(err) {
 				if (!err) {
-					addMessage(mf('profile.updated', 'Updated profile'));
+					addMessage(mf('profile.updated', 'Updated profile'), 'success');
 					template.editing.set(false);
 				}
 			}
@@ -108,19 +108,19 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass != "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				addMessage(mf('profile.passwordMismatch', "Passwords don't match"));
+				addMessage(mf('profile.passwordMismatch', "Passwords don't match"), 'danger');
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
 				if (pass.length < minLength) {
-					addMessage(mf('profile.passwordShort', 'Your desired password is too short'));
+					addMessage(mf('profile.passwordShort', 'Your desired password is too short'), 'danger');
 					return;
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
-						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'));
+						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'), 'danger');
 					} else {
-						addMessage(mf('profile.passwordChanged', 'changed password'));
+						addMessage(mf('profile.passwordChanged', 'changed password'), 'sucess');
 						template.changingPass.set(false);
 					}
 				});

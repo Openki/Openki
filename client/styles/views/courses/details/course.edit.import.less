@@ -10,6 +10,81 @@
         .make-sm-column(12);
         .make-xs-column(12);
     }
+
+    #editform_categories,
+    .course_edit_roles,
+    .course_edit_region {
+        .make-sm-column(4);
+        .make-xs-column(12);
+    }
+
+    ul.categories,
+    ul.subcategories,
+    ul.roles_list {
+        .list-unstyled;
+    }
+
+    ul.categories,
+    ul.roles_list {
+        * {
+            .transition(0.5s);
+        }
+
+        span.caret {
+            color: #ccc;
+            position: relative;
+            left: 3px;
+            top: -1px;
+
+            &.active {
+                color: #333;
+            }
+        }
+
+        label {
+            &.active {
+                color: @brand-primary;
+            }
+
+            &:hover {
+                cursor: pointer;
+                color: @brand-primary;
+
+                span.caret {
+                    color: #333;
+                }
+            }
+        }
+    }
+
+    ul.subcategories {
+        position: relative;
+        left: 5px;
+        // margin-bottom: -10px;
+
+        li {
+            position: relative;
+            left: 15px;
+        }
+    }
+
+    .course_edit_region {
+        button.selectpicker {
+            .btn-primary;
+        }
+    }
+
+    .course_edit_finishbtns {
+        .make-sm-column(12);
+        .make-xs-column(12);
+        padding-top: 10px;
+
+        button {
+            .btn;
+            .btn-primary;
+        }
+    }
+
 }
 
 .new_course {

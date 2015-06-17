@@ -93,7 +93,7 @@ Template.course_edit.events({
 					addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 				} else {
 					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}"'), 'success');
+					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
 				}
 			})
 
@@ -117,13 +117,23 @@ Template.course_edit.events({
 		$('#edit_categories').toggle(1000);
 	},
 
-	'change .categories .checkbox': function(){
+	'change .categories input.checkbox': function(){
 		$('#cat_' + this +" .subcategories").toggle();
+		$('span.caret' + "." + this).toggleClass('active');
+		$('label' + "." + this).toggleClass('active');
 
 		var is_checked = $('#cat_' + this +" .checkbox").first().prop('checked');
 		if(!is_checked) {
 			$('#cat_' + this +" .checkbox_sub").prop('checked', false);
 		}
+	},
+
+	'change .categories input.checkbox_sub': function() {
+		$('label' + "." + this).toggleClass('active');
+	},
+
+	'change .roles_list input.roleselection': function() {
+		$('label' + "." + this.type).toggleClass('active');
 	}
 });
 

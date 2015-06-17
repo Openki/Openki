@@ -14,81 +14,76 @@
 				<h4>{{mf 'course.edit.description' 'Desc:'}}</h4>
 				<div id="editform_description">{{{description}}}</div>
 			</div>
-			<div class="col-xs-12 col-sm-4">
-				<div id='editform_categories'>
-					<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
-						{{mf 'course.edit.edit' 'Edit'}} {{#if categories}}{{>show_categories}}{{/if}}
-						{{#unless categories}}{{mf 'course.edit.categories' 'Categories'}}{{/unless}}
-					</div>
-					<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
-						<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
-						<ul class='categories list-unstyled'>
-							{{#each available_categories false}}
-								<li id="cat_{{this}}">
-									<label>
-										<input type='checkbox' class='checkbox' name='{{this}}' value="1"  {{checked this ../categories}} style="display: inline">
-										{{categoryName}}
-									</label>
-									<ul class='subcategories list-unstyled' style="display:{{show_subcats this ../categories}}">
-									{{#each available_categories this}}
-										<li>
-											<div class="checkbox">
-												<label>
-													<input type='checkbox' class='checkbox_sub'  name='{{this}}' value="1" {{checked this ../../categories}}>
-													{{categoryName}}
-												</label>
-											</div>
-										</li>
-									{{/each}}
-									</ul>
-								</li>
-							{{/each}}
-						</ul>
-					</div>
+			<div id='editform_categories'>
+				<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
+					{{mf 'course.edit.edit' 'Edit'}} {{#if categories}}{{>show_categories}}{{/if}}
+					{{#unless categories}}{{mf 'course.edit.categories' 'Categories'}}{{/unless}}
 				</div>
-			</div>
-			<div class="col-xs-12 col-sm-4">
-				<div> 
-					<h4>{{mf 'course.edit.needs.role' 'This course might need'}}</h4>
-					<ul class="list-unstyled">
-						{{#each available_roles}}
-							<li>
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" class='roleselection' name='{{type}}' {{checked type ../roles}}>
-										<span class="{{icon}}"></span>
-										{{mf roleDescription}}
-									</label>
-								</div>
-							</li>
+				<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
+					<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
+					<ul class='categories'>
+						{{#each available_categories false}}
+						<li id="cat_{{this}}">
+							<label class="{{this}}">
+								<input type='checkbox' class='checkbox' name='{{this}}' value="1"  {{checked this ../categories}} style="display: inline">
+								{{categoryName}}
+								<span class="caret {{this}}"></span>
+							</label>
+							<ul class='subcategories' style="display:{{show_subcats this ../categories}}">
+								{{#each available_categories this}}
+								<li>
+									<div class="checkbox">
+										<label class="{{this}}">
+											<input type='checkbox' class='checkbox_sub'  name='{{this}}' value="1" {{checked this ../../categories}}>
+											{{categoryName}}
+										</label>
+									</div>
+								</li>
+								{{/each}}
+							</ul>
+						</li>
 						{{/each}}
 					</ul>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-4">
+			<div class="course_edit_roles"> 
+				<h4>{{mf 'course.edit.needs.role' 'This course might need'}}</h4>
+				<ul class="roles_list">
+					{{#each available_roles}}
+					<li>
+						<div class="checkbox">
+							<label class="{{type}}">
+								<input type="checkbox" class='roleselection {{this.type}}' name='{{type}}' {{checked type ../roles}}>
+								<span class="{{icon}}"></span>
+								{{mf roleDescription}}
+							</label>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+			</div>
+			<div class="course_edit_region">
 				{{#unless _id}}
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
 				<select name='region' class="region_select">
-					<option value=''>{{mf 'course.edit.pls_select' 'Please select'}}</option>
-				{{#each regions}}
+					<option value='' disabled selected data-icon="glyphicon-record" class="select_default">
+						{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+					</option>
+					{{#each regions}}
 					<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-				{{/each}}
+					{{/each}}
 				</select>
 				{{/unless}}
 			</div>
-			<div class="col-sm-12 course_edit_finishbtns">
-				<div class="col-xs-12 col-sm-6">
-					<button type="button btn btn-default" class="save form-control">
-						<span class="glyphicon glyphicon-save"></span>
-						{{mf 'course.edit.save_btn' 'Save'}}
-					</button>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-					<button type="button" class="cancel form-control">
-						<span class="glyphicon glyphicon-remove"></span>
-						{{mf 'course.edit.cancel_btn' 'Cancel'}}
-					</button>
-				</div>
+			<div class="course_edit_finishbtns">
+				<button type="button" class="save">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'course.edit.save_btn' 'Save'}}
+				</button>
+				<button type="button" class="cancel">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'course.edit.cancel_btn' 'Cancel'}}
+				</button>
 			</div>
 		</form>
 	</div>

@@ -113,7 +113,7 @@ Template.loginLogin.events({
 		Meteor[loginMethod]({
 		}, function (err) {
 			if (err) {
-				addMessage(err.reason || 'Unknown error');
+				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
 				$('.dropdown.open').removeClass('open');
 			}

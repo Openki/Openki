@@ -17,9 +17,9 @@ Template.report.events({
 	'click .send': function(event, instance) {
 		Meteor.call('report', document.title, window.location.href, instance.$('.report').val(), function(error, result) {
 			if (error) {
-				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."));
+				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."), 'danger');
 			} else {
-				addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."));
+				addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
 			}
 			instance.state.set('');
 		});

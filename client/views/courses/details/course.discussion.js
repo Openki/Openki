@@ -55,7 +55,7 @@ Template.newPost.events({
 		var templateInstance = Template.instance();
 		Meteor.call('postComment', comment, function(err, commentId) {
 			if (err) {
-				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'));
+				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
 				console.log(Template.instance())
 				templateInstance.writing.set(false);
