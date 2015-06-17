@@ -166,6 +166,7 @@ Meteor.methods({
  *
  * filter: dictionary with filter options
  *   query: string of words to search for
+ *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date
  *   before: only events that ended before this date
@@ -186,6 +187,11 @@ eventsFind = function(filter, limit) {
 
 	if (limit > 0) {
 		options.limit = limit;
+	}
+
+	if (filter.period) {
+		find.startdate = { $lte: filter.period[1] }; // Start date before end of period
+		find.enddate = { $gte: filter.period[0] }; // End date after start of period
 	}
 	
 	if (filter.after) {

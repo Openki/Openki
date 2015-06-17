@@ -11,8 +11,7 @@ Router.map(function () {
 
 			return Meteor.subscribe('eventsFind', {
 				region: region,
-				after: today,
-				before: limit
+				period: [today, limit]
 			});
 		},
 		data: function() {
@@ -21,15 +20,14 @@ Router.map(function () {
 			
 			var days = [];
 			for (; i < 8; i++) {
-				var after = moment(today).add(i, 'days');
-				var before = moment(today).add(i+1, 'days');
+				var start = moment(today).add(i, 'days');
+				var end = moment(today).add(i+1, 'days');
 				days.push({
-					day: after,
+					day: start,
 					events: eventsFind({
-						after: after.toDate(),
-						before: before.toDate()
+						period: [start.toDate(), end.toDate()]
 					})
-				})
+				});
 			}
 			return days;
 		},
