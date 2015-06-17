@@ -26,7 +26,7 @@
 						<li id="cat_{{this}}">
 							<label class="{{this}}">
 								<input type='checkbox' class='checkbox' name='{{this}}' value="1"  {{checked this ../categories}} style="display: inline">
-								<span class="category_name">{{categoryName}}</span>
+								{{categoryName}}
 								<span class="caret {{this}}"></span>
 							</label>
 							<ul class='subcategories' style="display:{{show_subcats this ../categories}}">
@@ -35,7 +35,7 @@
 									<div class="checkbox">
 										<label class="{{this}}">
 											<input type='checkbox' class='checkbox_sub'  name='{{this}}' value="1" {{checked this ../../categories}}>
-											<span class="category_name">{{categoryName}}</span>
+											{{categoryName}}
 										</label>
 									</div>
 								</li>
