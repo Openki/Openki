@@ -4,76 +4,74 @@
 
 
 <template name="userprofile">
-	<div class="container-fluid">
-		<div class="userprofile">
-			<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}</h1>
-			{{#if ownuser}}
-				<h4>
-					{{mf 'profile.its_you' "It's you!"}}&nbsp;
-				</h4>
-				<h5>
-					<a href="/profile/" >
-						<span class="glyphicon glyphicon-cog"></span>
-						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
-					</a>
-				</h5>
+	<div class="userprofile">
+		<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}</h1>
+		{{#if ownuser}}
+			<h4>
+				{{mf 'profile.its_you' "It's you!"}}&nbsp;
+			</h4>
+			<h5>
+				<a href="/profile/" >
+					<span class="glyphicon glyphicon-cog"></span>
+					{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
+				</a>
+			</h5>
+		{{else}}
+		<div class="row">
+			<div class="col-sm-4">
+				{{>email_box}}
+			</div>
+		</div>
+		{{/if}}
+
+		{{#if showPrivileges}}
+		<div class="privileges">
+			<h3>{{mf 'privileges.title' 'Privileges'}}</h3>
+			<ul class="privileges">
+			{{#if privileges.admin}}
+				<li class="admin">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span class="granted">{{mf 'privilege.has.admin' 'Administrator privileges granted'}}</span>
+					{{#if alterPrivileges}}
+						<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'Remove privilege'}}</button>
+					{{/if}}
+				</li>
 			{{else}}
-			<div class="row">
-				<div class="col-sm-4">
-					{{>email_box}}
-				</div>
-			</div>
+				{{#if alterPrivileges}}
+					<li class="admin">
+						<button class="giveAdmin">
+							<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+							{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
+						</button>
+					</li>
+				{{/if}}
 			{{/if}}
 
-			{{#if showPrivileges}}
-			<div class="privileges">
-				<h3>{{mf 'privileges.title' 'Privileges'}}</h3>
-				<ul class="privileges">
-				{{#if privileges.admin}}
-					<li class="admin">
-						<span class="glyphicon glyphicon-ok"></span>
-						<span class="granted">{{mf 'privilege.has.admin' 'Administrator privileges granted'}}</span>
-						{{#if alterPrivileges}}
-							<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'Remove privilege'}}</button>
-						{{/if}}
-					</li>
-				{{else}}
+			{{#if privileges.upload}}
+				<li class="admin">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span class="granted">{{mf 'privilege.has.upload' 'Upload allowed'}}</span>
 					{{#if alterPrivileges}}
-						<li class="admin">
-							<button class="giveAdmin">
-								<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
-								{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
-							</button>
-						</li>
+						<button class="remove" data-priv='upload'>{{mf 'privilege.remove'}}</button>
 					{{/if}}
-				{{/if}}
-
-				{{#if privileges.upload}}
+				</li>
+			{{else}}
+				{{#if alterPrivileges}}
 					<li class="admin">
-						<span class="glyphicon glyphicon-ok"></span>
-						<span class="granted">{{mf 'privilege.has.upload' 'Upload allowed'}}</span>
-						{{#if alterPrivileges}}
-							<button class="remove" data-priv='upload'>{{mf 'privilege.remove'}}</button>
-						{{/if}}
+						<button class="giveUpload">
+							<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+							{{mf 'privilege.add.upload' 'Grant upload privilege'}}
+						</button>
 					</li>
-				{{else}}
-					{{#if alterPrivileges}}
-						<li class="admin">
-							<button class="giveUpload">
-								<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
-								{{mf 'privilege.add.upload' 'Grant upload privilege'}}
-							</button>
-						</li>
-					{{/if}}
 				{{/if}}
-				</ul>
-			</div>
 			{{/if}}
+			</ul>
+		</div>
+		{{/if}}
 
-			<div class="list_small">
-				<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
-				{{> courselist involvedIn}}
-			</div>
+		<div class="list_small">
+			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
+			{{> courselist involvedIn}}
 		</div>
 	</div>
 </template>

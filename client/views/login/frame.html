@@ -43,6 +43,13 @@
 					<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
 				</div>
 			</div>
+			<div id="username_warning_not_existing" style="display:none">
+				{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
+			</div>
+			<div id="username_warning" style="display:none">
+				{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
+				{{mf 'login.username.choose_another' 'Please choose another one.'}}
+			</div>
 			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -50,6 +57,12 @@
 					</span>
 					<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
+			</div>
+			<div id="password_warning_incorrect" style="display:none">
+				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
+			</div>
+			<div id="password_warning" style="display:none">
+				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
 			<div id="show_email" style="display:none" class="form-group">
 				<div class="input-group">
@@ -59,14 +72,21 @@
 					<input type="email" class="form-control" id="login-email" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
 				</div>
 			</div>
+			<div id="login_warning" style="display:none">
+				{{mf 'login.login.warning' 'Please enter your username and password to login.'}}
+			</div>
 			<div class="form-group">
 				<button type="submit" class='loginLogin btn btn-primary form-control'>
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+					{{#if registering}}
+					{{mf 'login.login.back_to_login' 'Back to login'}}
+					{{else}}
 					{{mf 'login.login.submit' 'Login'}}
+					{{/if}}
 				</button>
 			</div>
 			<div class="form-group">
-				<button type="submit" class='loginRegister btn btn-primary form-control'>
+				<button type="submit" class='loginRegister {{#if registering}}registering{{/if}}'>
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>

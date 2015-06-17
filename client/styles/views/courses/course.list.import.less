@@ -1,25 +1,38 @@
 .courselist_results {
-	margin-top: 10px;
+	.make-sm-column(12);
+	.make-xs-column(12);
+	padding-bottom: 30px;
+
+	.event_results {
+		.make-sm-column(4);
+		.make-lg-column(3);
+		.make-xs-column(12);
+		.no-padding;
+
+		.course_event {
+			margin: 8px;
+			height: 200px;
+		}
+	}
 }
 
 .courselist_course {
+	.no-padding;
 	display: inline-block;
 	width: 280px;
 	height: 150px;
 	border: 7px dashed @light-blue;
 	margin: 10px 10px 10px 0;
-	padding-right: 0 !important;
-	padding-left: 10px !important;
 	&:hover {
 		h4 {
 			color: @brand-primary;
 		}
 		color: @brand-primary;
 		.box-shadow;
-		.transition;
+		.transition(0.5s);
 	}
 	h4 {
-		-moz-transition: color 1s;
+		.transition(0.5s);
 		color: #333;
 	}
 	& > a:hover {
@@ -49,8 +62,8 @@
 		text-align: center;
 	}
 	.course_content {
-		z-index: 2;
 		background: @body-bg;
+		padding-left: 10px;
 	}
 }
 
@@ -59,8 +72,8 @@
 	&.hasupcomingevents {
 		background: @light-blue;
 		.course_content {
-			z-index: 999;
 			background: @light-blue;
+
 		}
 	}
 }

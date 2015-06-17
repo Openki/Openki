@@ -10,7 +10,7 @@ Template.course_events.helpers({
 		if (!course) return [];
 		var current_event=this.current_event;
 		var today = new Date();
-		return Events.find({course_id:course._id,startdate: {$gt:today}},{sort: {startdate: 1}}).map(function(event){
+		return Events.find({course_id:course._id, start: {$gt:today}}, {sort: {start: 1}}).map(function(event){
 			var isCurrent = false;
 			if(current_event && current_event._id==event._id) isCurrent=true;
 			return {
@@ -26,7 +26,7 @@ Template.course_events.helpers({
 		if (!course) return [];
 		var current_event=this.current_event;
 		var today = new Date();
-		return Events.find({course_id:course._id,startdate: {$lt:today}},{sort: {startdate: -1}}).map(function(event){
+		return Events.find({course_id:course._id, start: {$lt:today}}, {sort: {start: -1}}).map(function(event){
 			var isCurrent = false;
 			if(current_event && current_event._id==event._id) isCurrent=true;
 			return {
@@ -44,3 +44,6 @@ Template.course_events.events({
 	}
 });
 
+Template.course.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
+}

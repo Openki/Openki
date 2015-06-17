@@ -121,10 +121,10 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	},
 	coursestate: function() {
 		var today = new Date();
-		var upcoming = Events.find({course_id: this._id, startdate: {$gt:today}}).count() > 0;
+		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
 		
-		var past = Events.find({course_id: this._id, startdate: {$lt:today}}).count() > 0
+		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
 		if (past) return 'haspastevents';
 						
 		return 'proposal';

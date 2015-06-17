@@ -1,4 +1,11 @@
 <template name="roles">
+	{{#if members}}
+	<div class="courseDetails_participants_count">
+		<p>
+			<span class="glyphicon glyphicon-user"></span>&nbsp;
+			{{mf 'course.dtails.paticipants.title' 'Participants'}}
+		</p>
+	</div>
 	<div class="roles">
 		<ul class='subscribers'>
 		{{#each members}}
@@ -6,14 +13,17 @@
 		{{/each}}
 		</ul>
 	</div>
+	{{/if}}
 </template>
 
 <template name="member_roles">
 	<li>
 		{{>profilelink member.user}}
-		<ul class='roles'>
+		<ul class='roles_list'>
 			{{#each member.roles}}
-				<li class='{{this}}'>{{mf roleShort}}</li>
+				<li class='{{this}}'>
+				{{mf roleShort}}
+				</li>
 			{{/each}}
 			{{#if maySubscribe}}
 			<button class='makeTeam'>

@@ -2,9 +2,8 @@
 // "_id" -> ID
 // "title" -> string
 // "description" -> string
-// "mentors" -> [userIDs]   optional
-// "startdate" -> ISODate
-// "host" -> [userIDs]     optional
+// start       time the events starts
+// end         time the event ends
 // "location" -> ...............
 // "createdBy" -> userId
 // "time_created" -> timestamp
@@ -15,6 +14,7 @@
 Events = new Meteor.Collection("Events");
 
 mayEditEvent = function(user, event) {
+	if (!user) return false;
 	if (event.createdBy == user._id) return true;
 	if (privileged(user, 'admin')) return true;
 	if (event.course_id) {
@@ -24,8 +24,30 @@ mayEditEvent = function(user, event) {
 	return false;
 }
 
+affectedReplicaSelectors = function(event) {
+	var selectors;
+	if (event.replicaOf) {
+		selectors = [
+			{ replicaOf: event.replicaOf },
+			{ _id: event.replicaOf }
+		];
+	} else {
+		selectors = { replicaOf: event._id };
+	}
+	
+	// Only replicas future from the edited event are updated
+	// replicas in the past are never updated
+	var futureDate = event.start;
+	if (futureDate < new Date) futureDate = new Date;
+	
+	return {
+		$or: selectors,
+		start: { $gte: futureDate }
+	};
+}
+
 Meteor.methods({
-	saveEvent: function(eventId, changes) {
+	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
 		
 		var expectedFields = {
@@ -33,13 +55,13 @@ Meteor.methods({
 			description: String,
 			location:    String,
 			room:        Match.Optional(String),
-			startdate:   Date,
-			enddate:     Date,
+			start:       Match.Optional(Date),
+			end:         Match.Optional(Date),
 			files:       Match.Optional(Array),
 			mentors:	 Match.Optional(Array),
-			host:	 	 Match.Optional(Array),
-			replicaOf:	 Match.Optional(String),
-			course_id:	Match.Optional(String),
+			host:        Match.Optional(Array),
+			replicaOf:   Match.Optional(String),
+			course_id:	 Match.Optional(String),
 		};
 		
 		var isNew = eventId === '';
@@ -64,25 +86,39 @@ Meteor.methods({
 		
 		changes.time_lastedit = now;
 		
+		var event = false;
 		if (isNew) {
 			changes.time_created = now;
 			if (changes.course_id && !mayEditEvent(user, changes)) {
 				throw new Meteor.Error(401, "not permitted");
+			}		
+
+			if (!changes.start || changes.start < now) {
+				throw new Meteor.Error(400, "Event date in the past or not provided");
+			}
+			
+			// Coerce faulty end dates
+			if (!changes.end || changes.end < changes.start) {
+				changes.end = changes.start;
 			}
 		} else {
-			var event = Events.findOne(eventId);
+			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+
+			// Not allowed to update
+			delete changes.replicaOf;
 		}
-		
-		if (changes.startdate < now) {
-			throw new Meteor.Error(400, "Can't edit events in the past");
+
+		// Don't allow moving past events or moving events into the past
+		if (!changes.start || changes.start < now) {
+			changes.start = event.start;
 		}
-		
-		if (changes.enddate < changes.startdate) {
-			throw new Meteor.Error(400, "Enddate before startdate");
+
+		if (changes.end && changes.end < changes.start) {
+			throw new Meteor.Error(400, "End before start");
 		}
-		
+
 		if (Meteor.isServer) {
 			changes.description = saneHtml(changes.description);
 		}
@@ -91,13 +127,20 @@ Meteor.methods({
 			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
 		} else {
-			Events.update(eventId, { $set: changes });		
+			Events.update(eventId, { $set: changes });
+			
+			if (updateReplicas) {
+				delete changes.start;
+				delete changes.end;
+
+				Events.update( affectedReplicaSelectors(event), { $set: changes }, { multi: true } );
+			}
 		}
-		
-		
+
 		return eventId;
 	},
-	
+
+
 	removeEvent: function(eventId) {
 		check(eventId, String);
 
@@ -106,33 +149,11 @@ Meteor.methods({
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
-		
+
 		Events.remove(eventId);
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
-	updateReplicas: function(eventId,changes){
-
-		//update the replicas of this event
-		delete changes.startdate;
-		delete changes.enddate; 
-		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
-		//and the event of which this is a replica, and that event's other replicas
-		var repEventId = changes.replicaOf;
-		if(repEventId != undefined){
-			Events.update( repEventId, { $set: changes }, { multi:true} );
-			Events.update( { replicaOf: repEventId }, { $set: changes }, { multi:true} );	
-		}
-		
-	},
-	
-	
-	
-	getReplicas: function(eventId){
-			
-		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;
-		return results;
-	},
 
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
@@ -166,6 +187,7 @@ Meteor.methods({
  *
  * filter: dictionary with filter options
  *   query: string of words to search for
+ *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date
  *   before: only events that ended before this date
@@ -175,31 +197,36 @@ Meteor.methods({
  *   region: restrict to given region
  * limit: how many to find
  *
- * The events are sorted by startdate (ascending, before-filter causes descending order)
+ * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
 eventsFind = function(filter, limit) {
 	var find = {};
 	var options = {
-		sort: { startdate: 1 }
+		sort: { start: 1 }
 	};
 
 	if (limit > 0) {
 		options.limit = limit;
 	}
+
+	if (filter.period) {
+		find.start = { $lte: filter.period[1] }; // Start date before end of period
+		find.end = { $gte: filter.period[0] }; // End date after start of period
+	}
 	
 	if (filter.after) {
-		find.startdate = { $gt: filter.after };
+		find.start = { $gt: filter.after };
 	}
 
 	if (filter.ongoing) {
-		find.startdate = { $lte: filter.ongoing };
-		find.enddate = { $gte: filter.ongoing };
+		find.start = { $lte: filter.ongoing };
+		find.end = { $gte: filter.ongoing };
 	}
 
 	if (filter.before) {
-		find.enddate = { $lt: filter.before };
-		if (!filter.after) options.sort = { startdate: -1 }
+		find.end = { $lt: filter.before };
+		if (!filter.after) options.sort = { start: -1 }
 	}
 
 	if (filter.location) {

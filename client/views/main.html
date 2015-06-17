@@ -5,15 +5,10 @@
 <template name="layout">
 	<div id="wrap">
 		{{> navbar}}
-		<div class="container-fluid">
-			<div class="container-fluid">
-				<div id="outer" class="row">
-					<div id="maincontent">
-						{{> messages}}
-
-						{{> yield}}
-					</div>
-				</div>
+		<div id="outer">
+			<div id="maincontent">
+				{{> yield}}
+				{{> messages}}
 			</div>
 		</div>
 		<div class="push"></div>

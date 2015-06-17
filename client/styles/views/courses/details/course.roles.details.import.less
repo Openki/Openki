@@ -1,51 +1,49 @@
 .roles_details {
+    .make-sm-column(12);
+    .make-xs-column(12);
+    .no-padding;
+
     .role_details {
         .make-sm-column(12);
+        .make-xs-column(12);
         .no-padding;
 
         .enroled_as_title {
             .make-sm-column(12);
+            .make-xs-column(12);
             background: @brand-success;
-            padding: 6px 0;
+            padding: 10px 15px;
             width: 100%;
+            height: 60px;
             color: #333;
             border-top: 3px solid @body-bg;
+            font-size: x-large;
+            vertical-align: middle;
 
-            & > .container-fluid {
-                height: 45px;
-
-                & > h3 {
-                    margin: 10px 0 0 0;
-
-                    button.unsubscribe {
-                        .btn;
-                        .btn-primary;
-                        margin: -5px 0 0 10px;
-                    }
-                }
+            button.unsubscribe {
+                .btn;
+                .btn-primary;
+                margin: -5px 0 0 10px;
             }
         }
 
         .enrol_as_title {
             .make-sm-column(12);
+            .make-xs-column(12);
             background: @brand-primary;
-            padding: 6px 0;
+            padding: 10px 15px;
             width: 100%;
+            height: 60px;
             color: @body-bg;
             border-top: 3px solid @body-bg;
-
-            & > .container-fluid {
-                height: 45px;
-
-                & > h3 {
-                    margin: 10px 0 0 0;
-                }
-            }
+            font-size: x-large;
         }
 
         .enrol_as_options {
             .make-sm-column(12);
+            .make-xs-column(12);
             padding: 10px 12px 11px 12px;
+            background: @light-blue;
 
             textarea.enrol_as_comment {
                 .form-control;
@@ -76,9 +74,10 @@
             .no-padding;
             border: none;
             border-top: 3px solid @body-bg;
-            min-height: 60px;
+            height: 60px;
             text-align: left;
             font-size: x-large;
+            padding: 10px 15px;
 
             &:hover {
                 border: none;

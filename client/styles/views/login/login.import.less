@@ -8,6 +8,31 @@
 		margin-top: 0;
 	}
     .external_logins {
-    margin: 10px 0 15px;
+        margin: 10px 0 15px;
+    }
+
+    button.loginRegister{
+        .form-control;
+        .btn;
+        .btn-primary;
+
+        &.registering {
+            .btn-success;
+        }
+    }
+
+    input#login-name.username_warning,
+    input#login-password.password_warning {
+        border-color: @brand-danger;
+    }
+
+    #username_warning,
+    #username_warning_not_existing,
+    #password_warning,
+    #password_warning_incorrect,
+    #login_warning {
+        color: @brand-danger;
+        margin: -10px 0 10px;
+        text-align: left;
     }
 }

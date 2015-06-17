@@ -10,7 +10,7 @@
 
 .calendar_event,
 .calendar_event_past {
-	.transition;
+	.transition(0.5s);
 	width: 350px;
 	height: 230px;
 	margin: 7px;
@@ -39,7 +39,7 @@
 		padding: 0 10px;
 		&>h4 {
 			color: #333;
-			.transition;
+			.transition(0.5s);
 		}
 	}
 
@@ -57,4 +57,9 @@
 			}
 		}
 	}
+}
+
+button.calendar_download {
+	.btn;
+	.btn-primary;
 }

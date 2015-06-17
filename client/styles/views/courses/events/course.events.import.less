@@ -33,7 +33,15 @@ div#edit_event_description {
 }
 
 .course_events {
+	.make-sm-column(12);
+	.make-xs-column(12);
 	padding-top: 15px;
+	padding-left: 10px;
+
+	@media(@screen-xs) {
+		padding-left: 15px;
+	}
+
 	.course_event {
 		height: 204px;
 	}
@@ -41,6 +49,9 @@ div#edit_event_description {
 
 .course_event_container,
 .course_event_past_container {
+	.make-md-column(4);
+	.make-sm-column(6);
+	.make-xs-column(12);
 	padding: 5px;
 }
 
@@ -60,13 +71,8 @@ div#edit_event_description {
 }
 
 .course_event {
-	.transition;
+	.transition(0.5s);
 
-	&:hover {
-		.course_event_title {
-			color: @brand-primary;
-		}
-	}
 	a {
 		& > .course_event_date {
 			padding: 10px 0;
@@ -105,9 +111,20 @@ div#edit_event_description {
 }
 
 .course_event_title {
-	-moz-transition: color 1s;
+	.transition(0.5s);
+
+	h3 {
+		margin: 10px 0;
+	}
 }
 
 input#edit_event_title {
 	font-size: large;
+}
+
+.event_options {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	.no-padding;
+	padding-top: 15px;
 }

@@ -3,15 +3,8 @@ p.course_description {
 	font-size: medium; //FIXME: where do you define this?
 }
 
-
-
-button.eventEdit.addButton {
-	margin-top: 20px;
-}
-
 .course_event_edit {
 	border: 7px dashed @light-blue;
-	margin: 20px 0;
 	padding-bottom: 25px;
 	.event_edit_buttons {
 		padding-top: 15px;
@@ -21,14 +14,9 @@ button.eventEdit.addButton {
 	}
 }
 
-.course_edit_editbox {
-	border: 7px solid @light-blue;
-	background: @light-blue;
-	padding: 5px 0 !important;
-}
-
 input#editform_name {
 	font-size: large;
+	height: 40px;
 }
 
 #editform_description {
@@ -39,6 +27,7 @@ input#editform_name {
 	&:focus {
 		border-color: @brand-primary;
 		.box-shadow;
+		.transition(0.1s);
 	}
 }
 
@@ -49,7 +38,7 @@ ul.subcategories {
 }
 
 .course_edit_finishbtns {
-	padding: 10px 0 !important;
+	padding-top: 10px;
 }
 
 
@@ -60,7 +49,8 @@ ul.subcategories {
 }
 
 .coursedetails {
-	.container-fluid;
+	.container;
+	padding-top: 20px;
 
 	.coursedetails_column_left,
 	.coursedetails_column_right {
@@ -71,8 +61,8 @@ ul.subcategories {
 
 	.course_main {
 		.make-sm-column(12);
+		.make-xs-column(12);
 		border: 7px dashed @light-blue;
-		margin-top: 20px;
 
 		&.hasupcomingevents {
 			ul.nav-tabs {
@@ -115,7 +105,7 @@ ul.subcategories {
 
 				&:hover {
 					color: @body-bg;
-					-moz-transition: 0.5s;
+					.transition(0.5s);
 				}
 			}
 
@@ -150,15 +140,37 @@ ul.subcategories {
 		}
 	}
 
+	button.open {
+		margin-top: 15px;
+	}
+
+	.course_edit {
+		.course_edit_header {
+			.no-padding;
+		}
+	}
+
+	.course_event_options {
+		.make-sm-column(12);
+		.make-xs-column(12);
+
+		button.eventEdit {
+			.btn;
+			.btn-primary;
+		}
+	}
+
 	.courseDetails_roles_container {
-		background: @light-blue;
-		margin-top: 20px;
+		.make-sm-column(12);
+		.make-xs-column(12);
+		padding-top: 15px;
 
 		.courseDetails_participants_count {
+			.make-sm-column(12);
+			.make-xs-column(12);
 			height: 60px;
 			background: #C1F2AE;
-			border-bottom: 3px solid @body-bg;
-			border-right: 3px solid @body-bg;
+			// border-right: 3px solid @body-bg;
 
 			p {
 				padding-top: 15px;
@@ -167,7 +179,10 @@ ul.subcategories {
 		}
 
 		.courseDetails_mentor.mentor_status {
+			.make-sm-column(3);
+			.make-xs-column(12);
 			height: 60px;
+			background: @light-blue;
 			// border-bottom: 3px solid @body-bg; No Functionality, no border.
 
 			.yes {
