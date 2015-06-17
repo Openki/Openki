@@ -35,12 +35,17 @@ Template.loginLogin.events({
 				email: email
 			}, function (err) {
 				if (err) {
+					console.log(err)
 					if (err.error == 400) {
+						$('#username_warning').hide(300);
+						$('#login-name').removeClass('username_warning');
 						$('#password_warning').show(300);
-						$('#login-password').addClass('no-password');
+						$('#login-password').addClass('password_warning');
 					} else {
+						$('#password_warning').hide(300);
+						$('#login-password').removeClass('password_warning');
 						$('#username_warning').show(300);
-						$('#login-name').addClass('username_exists');
+						$('#login-name').addClass('username_warning');
 					}
 				} else {
 					$('.dropdown.open').removeClass('open');
@@ -48,6 +53,11 @@ Template.loginLogin.events({
 			});
 		}
 		else {
+			$('#password_warning_incorrect').hide(300);
+			$('#username_warning_not_existing').hide(300);
+			$('#login_warning').hide(300);
+			$('#login-name').removeClass('username_warning');
+			$('#login-password').removeClass('password_warning');
 			$('#show_email').show(300);
 			Template.instance().registering.set(true);
 		}
@@ -59,8 +69,8 @@ Template.loginLogin.events({
 			$('#show_email').hide(300);
 			$('#password_warning').hide(300);
 			$('#username_warning').hide(300);
-			$('#login-name').removeClass('username_exists');
-			$('#login-password').removeClass('no-password');
+			$('#login-name').removeClass('username_warning');
+			$('#login-password').removeClass('password_warning');
 			Template.instance().registering.set(false);
 			return;
 		}
@@ -68,7 +78,25 @@ Template.loginLogin.events({
 		var password = template.find('#login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-				addMessage(err);
+				if (err.error == 400) {
+					$('#password_warning_incorrect').hide(300);
+					$('#username_warning_not_existing').hide(300);
+					$('#login-name').addClass('username_warning');
+					$('#login-password').addClass('password_warning');
+					$('#login_warning').show(300);
+				} else if (err.reason == 'Incorrect password') {
+					$('#login_warning').hide(300);
+					$('#username_warning_not_existing').hide(300);
+					$('#login-name').removeClass('username_warning');
+					$('#login-password').addClass('password_warning');
+					$('#password_warning_incorrect').show(300);
+				} else {
+					$('#login_warning').hide(300);
+					$('#password_warning_incorrect').hide(300);
+					$('#login-password').removeClass('password_warning');
+					$('#login-name').addClass('username_warning');
+					$('#username_warning_not_existing').show(300);
+				}
 			} else {
 				$('.dropdown.open').removeClass('open');
 			}

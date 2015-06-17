@@ -43,6 +43,9 @@
 					<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
 				</div>
 			</div>
+			<div id="username_warning_not_existing" style="display:none">
+				{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
+			</div>
 			<div id="username_warning" style="display:none">
 				{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
 				{{mf 'login.username.choose_another' 'Please choose another one.'}}
@@ -55,6 +58,9 @@
 					<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
 			</div>
+			<div id="password_warning_incorrect" style="display:none">
+				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
+			</div>
 			<div id="password_warning" style="display:none">
 				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
@@ -65,6 +71,9 @@
 					</span>
 					<input type="email" class="form-control" id="login-email" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
 				</div>
+			</div>
+			<div id="login_warning" style="display:none">
+				{{mf 'login.login.warning' 'Please enter your username and password to login.'}}
 			</div>
 			<div class="form-group">
 				<button type="submit" class='loginLogin btn btn-primary form-control'>
