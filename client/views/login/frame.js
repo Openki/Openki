@@ -35,7 +35,8 @@ Template.loginLogin.events({
 				email: email
 			}, function(err) {
 				if (err) {
-					addMessage(err);
+					$('#password_warning').show(300);
+					$('#login-password').addClass('no-password');
 				} else {
 					Session.set('showLogin', false);
 				}
@@ -51,6 +52,8 @@ Template.loginLogin.events({
 		event.preventDefault();
 		if(Template.instance().registering.get()){
 			$('#show_email').hide(300);
+			$('#password_warning').hide(300);
+			$('#login-password').removeClass('no-password');
 			Template.instance().registering.set(false);
 			return;
 		}
