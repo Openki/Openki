@@ -164,6 +164,7 @@ var getEventFrequency = function(template) {
 				moment(eventEnd).add(daysFromOriginal, 'days')
 			]);
 			if (frequency == 'once') break;
+			if (dates.length >= 52) break;
 		}
 
 		repStart.add(1, unit);
