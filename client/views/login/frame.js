@@ -33,12 +33,17 @@ Template.loginLogin.events({
 				username: name,
 				password: password,
 				email: email
-			}, function(err) {
+			}, function (err) {
 				if (err) {
-					$('#password_warning').show(300);
-					$('#login-password').addClass('no-password');
+					if (err.error == 400) {
+						$('#password_warning').show(300);
+						$('#login-password').addClass('no-password');
+					} else {
+						$('#username_warning').show(300);
+						$('#login-name').addClass('username_exists');
+					}
 				} else {
-					Session.set('showLogin', false);
+					$('.dropdown.open').removeClass('open');
 				}
 			});
 		}
@@ -53,6 +58,8 @@ Template.loginLogin.events({
 		if(Template.instance().registering.get()){
 			$('#show_email').hide(300);
 			$('#password_warning').hide(300);
+			$('#username_warning').hide(300);
+			$('#login-name').removeClass('username_exists');
 			$('#login-password').removeClass('no-password');
 			Template.instance().registering.set(false);
 			return;
