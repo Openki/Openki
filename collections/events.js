@@ -25,7 +25,7 @@ mayEditEvent = function(user, event) {
 }
 
 Meteor.methods({
-	saveEvent: function(eventId, changes) {
+	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
 		
 		var expectedFields = {
@@ -64,15 +64,19 @@ Meteor.methods({
 		
 		changes.time_lastedit = now;
 		
+		var event = false;
 		if (isNew) {
 			changes.time_created = now;
 			if (changes.course_id && !mayEditEvent(user, changes)) {
 				throw new Meteor.Error(401, "not permitted");
 			}
 		} else {
-			var event = Events.findOne(eventId);
+			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+
+			// Not allowed to update
+			delete changes.replicaOf;
 		}
 
 		if (changes.start < now) {
@@ -91,13 +95,24 @@ Meteor.methods({
 			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
 		} else {
-			Events.update(eventId, { $set: changes });		
+			Events.update(eventId, { $set: changes });
+			
+			if (updateReplicas) {
+				delete changes.start;
+				delete changes.end;
+				var affected = [ { replicaOf: eventId } ];
+				if (event.replicaOf) {
+					affected.push({ replicaOf: event.replicaOf });
+					affected.push({ _id: event.replicaOf });
+				}
+				Events.update( { $or: affected }, { $set: changes }, { multi: true } );
+			}
 		}
-		
-		
+
 		return eventId;
 	},
-	
+
+
 	removeEvent: function(eventId) {
 		check(eventId, String);
 
@@ -106,27 +121,12 @@ Meteor.methods({
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
-		
+
 		Events.remove(eventId);
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
-	updateReplicas: function(eventId, changes) {
-		//update the replicas of this event
-		delete changes.start;
-		delete changes.end; 
-		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
-		//and the event of which this is a replica, and that event's other replicas
-		var repEventId = changes.replicaOf;
-		if(repEventId != undefined){
-			Events.update( repEventId, { $set: changes }, { multi:true} );
-			Events.update( { replicaOf: repEventId }, { $set: changes }, { multi:true} );	
-		}
-		
-	},
-	
-	
-	
+
 	getReplicas: function(eventId){
 			
 		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;

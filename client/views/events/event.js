@@ -311,7 +311,7 @@ Template.event.events({
 
 		var startMoment = getEventStartMoment(template);
 		if(!startMoment) {
-			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
+			alert("Date format must be of the form 2015-11-30");
 			return null;
 		}
 		var duration = getEventDuration(template);
@@ -375,35 +375,17 @@ Template.event.events({
 		
 		var updateReplicas = template.$("input[name='updateReplicas']").is(':checked');
 		
-		if(updateReplicas && this.replicaOf != undefined){	
-			editevent.replicaOf = this.replicaOf;		
-		}
-		
-		Meteor.call('saveEvent', eventId, editevent, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'));
 			} else {
-				
-				//update replicas too
-				//check if "update replicas" flag is set here, and if yes, update them
-				if(updateReplicas){
-					
-					//we need this to identify the event that this is a replica of, and apply changes to that too
-					
-					
-					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
-						if (error) {	
-							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'));
-						}
-						else{
-							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
-						}		
-					});
-				}
-			
-				
 				if (isNew) Router.go('showEvent', { _id: eventId });
-					else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+
+				if (updateReplicas) {
+					addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+				}
+
 				template.editing.set(false);
 			}
 		});
