@@ -15,7 +15,5 @@ dump/
 packages/
 .meteor/release
 .meteor/local
-.meteor/meteorite
-.bower_components
 
 settings.json
