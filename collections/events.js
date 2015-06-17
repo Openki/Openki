@@ -25,25 +25,26 @@ mayEditEvent = function(user, event) {
 }
 
 affectedReplicaSelectors = function(event) {
-	var selectors;
-	if (event.replicaOf) {
-		selectors = [
-			{ replicaOf: event.replicaOf },
-			{ _id: event.replicaOf }
-		];
-	} else {
-		selectors = { replicaOf: event._id };
-	}
-	
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
 	if (futureDate < new Date) futureDate = new Date;
 	
-	return {
-		$or: selectors,
+	var selector = {
 		start: { $gte: futureDate }
 	};
+	
+	var selectors;
+	if (event.replicaOf) {
+		selector.$or = [
+			{ replicaOf: event.replicaOf },
+			{ _id: event.replicaOf }
+		];
+	} else {
+		selector.replicaOf = event._id;
+	}
+
+	return selector;
 }
 
 Meteor.methods({

@@ -2,11 +2,14 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
+	this.replicaDates = new ReactiveVar([]);
 }
 
 Template.event.onRendered(function(){
 	if (this.editing.get()) {
 		setDurationInTemplate(this);
+	} else {
+		updateReplicas(this);
 	}
 });
 
@@ -60,21 +63,13 @@ Template.event.helpers({
 		var currentRegion = Session.get('region')
 		return currentRegion && region._id == currentRegion;
 	},
-
-	frequencyOptions:function() {
-		return [{
-			frequency:0,
-			text:mf('event.replication.freq.once', 'once')
-		},{
-			frequency:1,
-			text:mf('event.replication.freq.daily', 'every day')
-		},{
-			frequency:7,
-			text:mf('event.replication.freq.weekly', 'once a week')
-		},{
-			frequency:30,
-			text:mf('event.replication.freq.monthly', 'once a month')
-		}];
+	
+	replicaDateCount: function() {
+		return Template.instance().replicaDates.get().length;
+	},
+	
+	replicaDates: function() {
+		return Template.instance().replicaDates.get();
 	},
 	
 	mayEdit: function() {
@@ -139,81 +134,47 @@ var setDurationInTemplate = function(template) {
 	template.$("#edit_event_duration").val(duration);
 };
 
+var updateReplicas = function(template) {
+	template.replicaDates.set(_.map(getEventFrequency(template), function(interval) { return interval[0]; } ));
+}
 
 var getEventFrequency = function(template) {
-	
-	var startDate =  moment(template.$('#edit_event_startdate').val());	//2015-05-06T12:15:39.565Z
-	
-	//check if startDate is also before endDate
-	var nowMoment = moment();
-	if (startDate.diff(nowMoment)<0) {
-		alert("Date must be in future");
-		return;
-	}
-	var endDate = moment(template.$('#edit_event_enddate').val());
-	var frequency = template.$('#edit_frequency').val();
+	var startDate = moment(template.$('.replicate_start').val());
+	if (!startDate.isValid()) return [];
+	var endDate   = moment(template.$('.replicate_end').val());
+	if (!endDate.isValid()) return [];
+	var frequency = template.$('.replicate_frequency').val();
 	var diffDays = endDate.diff(startDate, "days");
 	
-
+	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
+	if (unit === undefined) return [];
 	
-	//detect how many events we should create
-	//and return a list of start-end times when the events should be created
-	var nrEvents = Math.floor(diffDays/frequency) + 1;
+	var eventStart = moment(template.data.start);
+	var originDay = moment(eventStart).startOf('day');
+	var eventEnd = moment(template.data.end);
 	
-	var unit = "";
-	if(frequency == 0){ //once
-		unit = "days"; //doesn't matter what we set here
-		nrEvents = 1;		
-	}
-	else if(frequency == 1){ //every day
-		unit = "days";		
-	}
-	else if(frequency == 7){ //every week
-		unit = "weeks";
-	}
-	else if(frequency == 30){ //every month
-		unit = "months";
-	}
-
-
-	//get start and end dates from the replication form
-	var startMoment = startDate.toDate();
-	var endMoment = endDate.toDate();
-	
-	//get the hour and minute from the replicated event
-	var origEventStartDate = template.data.start;
-	var startHours = origEventStartDate.getHours();
-	var startMinutes = origEventStartDate.getMinutes();
-
-	var origEventEndDate = template.data.end;
-	var endHours = origEventEndDate.getHours();
-	var endMinutes = origEventEndDate.getMinutes();
-
-
+	var now = moment();
+	var repStart = moment(startDate).startOf('day');
 	var dates = [];
-	
-	for(var i = 0; i < nrEvents; i++){
-		
-		var dtstart = moment( startMoment ).add(i, unit); 
-		var dtend = moment( endMoment ).add(i, unit); 
-
-		dtstart.hours(startHours);
-		dtstart.minutes(startMinutes);
-		dtend.hours(endHours);
-		dtend.minutes(endMinutes);
-
-		if(!dtstart || !dtend ) {
-			alert("Date format must be dd.mm.yyyy\n(for example 20.3.2014)");
-			continue;
+	while(true) {
+		var daysFromOriginal = repStart.diff(originDay, 'days');
+		if (daysFromOriginal !=0 && repStart.isAfter(now)) {
+			dates.push([
+				moment(eventStart).add(daysFromOriginal, 'days'),
+				moment(eventEnd).add(daysFromOriginal, 'days')
+			]);
+			if (frequency == 'once') break;
 		}
-		
-		var eventTime = [ dtstart,dtend ];
-		dates.push( eventTime );
-	}
-	
-	return(dates);
 
+		repStart.add(1, unit);
+
+		if (repStart.isAfter(endDate)) break;
+	}
+
+	return dates;
 };
+
+
 Template.event.events({
 	'click button.eventDelete': function () {
 		if (pleaseLogin()) return;
@@ -392,15 +353,6 @@ Template.event.events({
 		$.each( dates, function( i,eventTime ){
 			
 			/*create a new event for each time interval */
-
-			/*don't replicate the event if it is set for the same day*/
-			if( template.data.start.toDateString() == eventTime[0].toDate().toDateString() ){
-				console.error( "replica on same day");
-				console.error( template.data.start.toString() + " - " + eventTime[0].toDate().toString()  );
-				return true;
-			}
-			
-			
 			var replicaEvent = {
 
 				title: template.data.title,
@@ -435,6 +387,8 @@ Template.event.events({
 		});
 		if(success){
 			template.$('div#eventReplicationMenu').slideUp(300);
+			template.$('.eventReplicateMenu_close').hide(500);
+			template.$('.eventReplicateMenu_open').show(500);
 			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".'));
 			Router.go('showEvent', { _id: template.data._id });
 		}
@@ -467,15 +421,15 @@ Template.event.events({
 		var duration = getEventDuration(template);
 		var endMoment = calculateEndMoment(startMoment, duration);
 		template.$("#edit_event_endtime").val(endMoment.format("HH:mm"));
-
 	},
 
 	'change #edit_event_endtime': function(event, template) {
 		setDurationInTemplate(template);
+	},
 
+	'change .updateReplicas, keyup .updateReplicas': function(event, template) {
+		updateReplicas(template);
 	}
-
-
 });
 
 Template.event.rendered = function() {
