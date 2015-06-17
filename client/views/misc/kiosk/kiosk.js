@@ -40,8 +40,8 @@ Router.map(function () {
 		data: function() {
 			var today = new Date();
 			return {
-				calendar_eventlist:      Events.find({startdate: {$gte:today}},{sort: {startdate: 1}}),
-				calendar_eventlist_past: Events.find({startdate: {$lt:today}},{sort: {startdate: -1}}),
+				calendar_eventlist:      Events.find({start: {$gte:today}},{sort: {start: 1}}),
+				calendar_eventlist_past: Events.find({start: {$lt:today}},{sort: {start: -1}}),
 			}
 		},
 		onAfterAction: function() {

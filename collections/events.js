@@ -2,9 +2,8 @@
 // "_id" -> ID
 // "title" -> string
 // "description" -> string
-// "mentors" -> [userIDs]   optional
-// "startdate" -> ISODate
-// "host" -> [userIDs]     optional
+// start       time the events starts
+// end         time the event ends
 // "location" -> ...............
 // "createdBy" -> userId
 // "time_created" -> timestamp
@@ -34,8 +33,8 @@ Meteor.methods({
 			description: String,
 			location:    String,
 			room:        Match.Optional(String),
-			startdate:   Date,
-			enddate:     Date,
+			start:   	 Date,
+			end:    	 Date,
 			files:       Match.Optional(Array),
 			mentors:	 Match.Optional(Array),
 			host:	 	 Match.Optional(Array),
@@ -75,15 +74,15 @@ Meteor.methods({
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 		}
-		
-		if (changes.startdate < now) {
+
+		if (changes.start < now) {
 			throw new Meteor.Error(400, "Can't edit events in the past");
 		}
-		
-		if (changes.enddate < changes.startdate) {
-			throw new Meteor.Error(400, "Enddate before startdate");
+
+		if (changes.end < changes.start) {
+			throw new Meteor.Error(400, "End before start");
 		}
-		
+
 		if (Meteor.isServer) {
 			changes.description = saneHtml(changes.description);
 		}
@@ -112,11 +111,10 @@ Meteor.methods({
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
-	updateReplicas: function(eventId,changes){
-
+	updateReplicas: function(eventId, changes) {
 		//update the replicas of this event
-		delete changes.startdate;
-		delete changes.enddate; 
+		delete changes.start;
+		delete changes.end; 
 		Events.update( { replicaOf: eventId }, { $set: changes }, { multi:true} );
 		//and the event of which this is a replica, and that event's other replicas
 		var repEventId = changes.replicaOf;
@@ -177,13 +175,13 @@ Meteor.methods({
  *   region: restrict to given region
  * limit: how many to find
  *
- * The events are sorted by startdate (ascending, before-filter causes descending order)
+ * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
 eventsFind = function(filter, limit) {
 	var find = {};
 	var options = {
-		sort: { startdate: 1 }
+		sort: { start: 1 }
 	};
 
 	if (limit > 0) {
@@ -191,22 +189,22 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.period) {
-		find.startdate = { $lte: filter.period[1] }; // Start date before end of period
-		find.enddate = { $gte: filter.period[0] }; // End date after start of period
+		find.start = { $lte: filter.period[1] }; // Start date before end of period
+		find.end = { $gte: filter.period[0] }; // End date after start of period
 	}
 	
 	if (filter.after) {
-		find.startdate = { $gt: filter.after };
+		find.start = { $gt: filter.after };
 	}
 
 	if (filter.ongoing) {
-		find.startdate = { $lte: filter.ongoing };
-		find.enddate = { $gte: filter.ongoing };
+		find.start = { $lte: filter.ongoing };
+		find.end = { $gte: filter.ongoing };
 	}
 
 	if (filter.before) {
-		find.enddate = { $lt: filter.before };
-		if (!filter.after) options.sort = { startdate: -1 }
+		find.end = { $lt: filter.before };
+		if (!filter.after) options.sort = { start: -1 }
 	}
 
 	if (filter.location) {

@@ -48,7 +48,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>
-					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8">
 				</div>
 			</div>
 			
@@ -59,7 +59,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat startdate}}" size="5">			
+					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat start}}" size="5">			
 				</div>
 			</div>
 			
@@ -69,7 +69,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat enddate}}" size="5">			
+					<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat end}}" size="5">			
 				</div>
 			</div>
 			
@@ -199,10 +199,10 @@
 		<div class="course_event">
 			<div class="course_event_date">
 				<div class="container-fluid">
-					<span class="day">{{weekday startdate}}</span><br>
+					<span class="day">{{weekday start}}</span><br>
 					<span class="date">
 						<span class="glyphicon glyphicon-calendar"></span>
-						{{dateformat_mini_fullmonth startdate}}
+						{{dateformat_mini_fullmonth start}}
 					</span>
 				</div>
 			</div>
@@ -210,7 +210,7 @@
 				<div class="container-fluid">
 					<div class="course_event_title"><h3>{{this.title}}</h3></div>
 					<div class="course_event_time">
-						<span class="glyphicon glyphicon-time"></span> {{timeformat startdate}} - {{timeformat enddate}}
+						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
 						{{#if location}}
 							<br><span class="glyphicon glyphicon-home"></span> {{location}} 
 							{{#if room}} - {{room}}{{/if}}
@@ -266,7 +266,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat startdate}}" size="8">
+							<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8">
 						</div>
 					</div>
 					
@@ -276,7 +276,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat enddate}}" size="8">
+							<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat end}}" size="8">
 						</div>
 					</div>
 					

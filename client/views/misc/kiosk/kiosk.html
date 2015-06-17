@@ -69,8 +69,8 @@
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-time"></span>
-					&nbsp;{{dateformat_fromnow startdate}}
-					{{timeformat startdate}} - {{timeformat enddate}}
+					&nbsp;{{dateformat_fromnow start}}
+					{{timeformat start}} - {{timeformat end}}
 				</div>
 				<div class="kiosk_event_home">
 					{{#if location}}
@@ -98,8 +98,8 @@
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-time"></span>&nbsp;
-					{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow startdate}}
-					{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow enddate}}
+					{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
+					{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow end}}
 				</div>
 				<div class="kiosk_event_home">
 					{{#if location}}

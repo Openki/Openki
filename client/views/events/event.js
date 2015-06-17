@@ -175,10 +175,11 @@ var getEventFrequency = function(template) {
 	var endMoment = endDate.toDate();
 	
 	//get the hour and minute from the replicated event
-	var origEventStartDate = template.data.startdate;
+	var origEventStartDate = template.data.start;
 	var startHours = origEventStartDate.getHours();
 	var startMinutes = origEventStartDate.getMinutes();
-	var origEventEndDate = template.data.enddate;
+
+	var origEventEndDate = template.data.end;
 	var endHours = origEventEndDate.getHours();
 	var endMinutes = origEventEndDate.getMinutes();
 
@@ -325,21 +326,17 @@ Template.event.events({
 			alert("Date must be in future");
 			return;
 		}
-		
-		//todo:detect changed fields
-		
+
 		var editevent = {
 			title: template.$('#edit_event_title').val(),
 			description: template.$('#edit_event_description').html(),
 			location: template.$('#edit_event_location').val(),
 			room: template.$('#edit_event_room').val(),
-			startdate: startMoment.toDate(),
-			enddate: endMoment.toDate(),
+			start: startMoment.toDate(),
+			end:   endMoment.toDate(),
 			files: this.files || Array() ,
-			
 		};
-		
-		
+
 		var fileList = template.files;
 		template.files = null;
 
@@ -423,9 +420,9 @@ Template.event.events({
 			/*create a new event for each time interval */
 
 			/*don't replicate the event if it is set for the same day*/
-			if( template.data.startdate.toDateString() == eventTime[0].toDate().toDateString() ){
+			if( template.data.start.toDateString() == eventTime[0].toDate().toDateString() ){
 				console.error( "replica on same day");
-				console.error( template.data.startdate.toString() + " - " + eventTime[0].toDate().toString()  );
+				console.error( template.data.start.toString() + " - " + eventTime[0].toDate().toString()  );
 				return true;
 			}
 			
@@ -436,8 +433,8 @@ Template.event.events({
 				description: template.data.description,
 				location: template.data.location,
 				room: template.data.room, //|| '',
-				startdate: eventTime[0].toDate(),
-				enddate: eventTime[1].toDate(),
+				start: eventTime[0].toDate(),
+				end: eventTime[1].toDate(),
 				files: template.data.files  || new Array(),
 				mentors: template.data.mentors  ||  new Array(),
 				host: template.data.host ||  new Array(),

@@ -38,11 +38,11 @@
 				{{#each course_eventlist}}
 					<div class="col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-						{{dateformat_mini this.startdate}}
+						{{dateformat_mini this.start}}
 					</div>
 					<div class="col-sm-12 no-padding">
 						<span class="glyphicon glyphicon-time" aria-hidden="true"></span> 
-						{{timeformat this.startdate}}
+						{{timeformat this.start}}
 					</div>
 					{{#if location}}
 					<div class="course_eventlist_location no-padding ellipsis">

@@ -128,7 +128,7 @@ coursesFind = function(region, query, filter, limit) {
 	var find = {}
 	if (region != 'all') find.region = region
 	if (filter.hasUpcomingEvent) {
-		var future_events = Events.find({startdate: {$gt: new Date()}}).fetch()
+		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
 		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
 		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
 	}

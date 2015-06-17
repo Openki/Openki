@@ -42,7 +42,7 @@ Template.calendar.helpers({
 		return day.format('dddd Do MMMM');
 	},
 	past: function() {
-		return moment().isAfter(this.enddate);
+		return moment().isAfter(this.end);
 	}
 });
 
