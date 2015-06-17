@@ -117,13 +117,23 @@ Template.course_edit.events({
 		$('#edit_categories').toggle(1000);
 	},
 
-	'change .categories .checkbox': function(){
+	'change .categories input.checkbox': function(){
 		$('#cat_' + this +" .subcategories").toggle();
+		$('span.caret' + "." + this).toggleClass('active');
+		$('label' + "." + this).toggleClass('active');
 
 		var is_checked = $('#cat_' + this +" .checkbox").first().prop('checked');
 		if(!is_checked) {
 			$('#cat_' + this +" .checkbox_sub").prop('checked', false);
 		}
+	},
+
+	'change .categories input.checkbox_sub': function() {
+		$('label' + "." + this).toggleClass('active');
+	},
+
+	'change .roles_list input.roleselection': function() {
+		$('label' + "." + this.type).toggleClass('active');
 	}
 });
 
