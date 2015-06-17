@@ -79,6 +79,10 @@ Template.event.helpers({
 		return mayEditEvent(Meteor.user(), this);
 	},
 
+	disableForPast: function() {
+		return this.start > new Date ? '' : 'disabled';
+	},
+
 	kioskMode: function() {
 		return Session.get('kiosk_mode');
 	}
@@ -315,6 +319,7 @@ Template.event.events({
 			return null;
 		}
 		var duration = getEventDuration(template);
+
 		//we need this check because duration is not an event property and it is reset to null after first save
 		if(!duration){
 			setDurationInTemplate(template);
@@ -322,10 +327,6 @@ Template.event.events({
 		}
 		var endMoment = calculateEndMoment(startMoment, duration);
 		var nowMoment = moment();
-		if (startMoment.diff(nowMoment)<0) {
-			alert("Date must be in future");
-			return;
-		}
 
 		var editevent = {
 			title: template.$('#edit_event_title').val(),
@@ -355,7 +356,6 @@ Template.event.events({
 			});	
 					
 			editevent.files = tmp;
-
 		}		
 		
 		
@@ -363,7 +363,12 @@ Template.event.events({
 		var isNew = !this._id;
 		if (isNew) {
 			eventId = '';
-			
+
+			if (startMoment.diff(nowMoment) < 0) {
+				alert("Date must be in future");
+				return;
+			}
+
 			if (this.course_id) {
 				var course = Courses.findOne(this.course_id);
 				editevent.region = course.region;

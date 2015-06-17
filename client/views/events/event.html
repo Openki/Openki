@@ -48,7 +48,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</span>
-					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8">
+					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8" {{disableForPast}}>
 				</div>
 			</div>
 			
@@ -59,7 +59,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat start}}" size="5">			
+					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat start}}" size="5" {{disableForPast}}>			
 				</div>
 			</div>
 			

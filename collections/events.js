@@ -33,13 +33,13 @@ Meteor.methods({
 			description: String,
 			location:    String,
 			room:        Match.Optional(String),
-			start:   	 Date,
-			end:    	 Date,
+			start:       Match.Optional(Date),
+			end:         Match.Optional(Date),
 			files:       Match.Optional(Array),
 			mentors:	 Match.Optional(Array),
-			host:	 	 Match.Optional(Array),
-			replicaOf:	 Match.Optional(String),
-			course_id:	Match.Optional(String),
+			host:        Match.Optional(Array),
+			replicaOf:   Match.Optional(String),
+			course_id:	 Match.Optional(String),
 		};
 		
 		var isNew = eventId === '';
@@ -69,6 +69,15 @@ Meteor.methods({
 			changes.time_created = now;
 			if (changes.course_id && !mayEditEvent(user, changes)) {
 				throw new Meteor.Error(401, "not permitted");
+			}		
+
+			if (!changes.start || changes.start < now) {
+				throw new Meteor.Error(400, "Event date in the past or not provided");
+			}
+			
+			// Coerce faulty end dates
+			if (!changes.end || changes.end < changes.start) {
+				changes.end = changes.start;
 			}
 		} else {
 			event = Events.findOne(eventId);
@@ -79,11 +88,12 @@ Meteor.methods({
 			delete changes.replicaOf;
 		}
 
-		if (changes.start < now) {
-			throw new Meteor.Error(400, "Can't edit events in the past");
+		// Don't allow moving past events or moving events into the past
+		if (!changes.start || changes.start < now) {
+			changes.start = event.start;
 		}
 
-		if (changes.end < changes.start) {
+		if (changes.end && changes.end < changes.start) {
 			throw new Meteor.Error(400, "End before start");
 		}
 
