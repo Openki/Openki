@@ -49,6 +49,7 @@ Template.course_edit.helpers({
 Template.course_edit.rendered = function() {
 	var desc = this.find('#editform_description');
 	if (desc) new MediumEditor(desc);
+	this.$('.region_select').selectpicker();
 }
 
 Template.course_edit.events({
