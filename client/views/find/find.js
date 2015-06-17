@@ -6,6 +6,9 @@ Router.map(function () {
 			var region = Session.get('region')
 			var filter = {}
 			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
+			if (this.params.query.category) {
+				filter.categories = this.params.query.category.split(',');
+			}
 			return [
 				Meteor.subscribe('coursesFind', region, this.params.search, filter),
 

@@ -140,6 +140,10 @@ coursesFind = function(region, query, filter, limit) {
 		find['members.roles'] = { $ne: 'team' }
 	}
 	
+	if (filter.categories) {	
+		find.categories = { $all: filter.categories };
+	}
+	
 	if (query) {
 		var searchTerms = query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
