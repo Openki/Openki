@@ -49,7 +49,7 @@ var email = {
 			from: 'reporter@mail.openki.net',
 			to: 'admins@openki.net',
 			subject: "Report: "+subject,
-			text: "User" reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n\n"+report+"\n\n/end of report"
+			text: "User "+reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n\n"+report+"\n\n/end of report"
 		});
 	}
 });
