@@ -506,3 +506,7 @@ Template.event.events({
 
 
 });
+
+Template.event.rendered = function() {
+	this.$('select').selectpicker();
+}
