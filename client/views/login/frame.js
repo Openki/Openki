@@ -35,9 +35,6 @@ Template.loginLogin.events({
 				email: email
 			}, function (err) {
 				if (err) {
-<<<<<<< HEAD
-					addMessage(err, 'danger');
-=======
 					console.log(err)
 					if (err.error == 400) {
 						$('#username_warning').hide(300);
@@ -50,7 +47,6 @@ Template.loginLogin.events({
 						$('#username_warning').show(300);
 						$('#login-name').addClass('username_warning');
 					}
->>>>>>> 38c65d84ffe2bdc4c54d0507776a3f7ca71387b7
 				} else {
 					$('.dropdown.open').removeClass('open');
 				}
@@ -82,9 +78,6 @@ Template.loginLogin.events({
 		var password = template.find('#login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-<<<<<<< HEAD
-				addMessage(err, 'danger');
-=======
 				if (err.error == 400) {
 					$('#password_warning_incorrect').hide(300);
 					$('#username_warning_not_existing').hide(300);
@@ -104,7 +97,6 @@ Template.loginLogin.events({
 					$('#login-name').addClass('username_warning');
 					$('#username_warning_not_existing').show(300);
 				}
->>>>>>> 38c65d84ffe2bdc4c54d0507776a3f7ca71387b7
 			} else {
 				$('.dropdown.open').removeClass('open');
 			}
