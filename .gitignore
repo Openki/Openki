@@ -17,3 +17,5 @@ packages/
 .meteor/local
 .meteor/meteorite
 .bower_components
+
+settings.json
