@@ -51,6 +51,12 @@ Meteor.publish('eventsForCourse', function(courseId) {
 	return Events.find({course_id: courseId});
 });
 
+Meteor.publish('affectedReplica', function(eventId) {
+	var event = Events.findOne(eventId);
+	if (!event) throw new Meteor.Error(400, "provided event id "+eventId+" is invalid");
+	return Events.find(affectedReplicaSelectors(event));
+});
+
 Meteor.publish('nextEvent', function(courseId) {
 	return Events.find({ course_id: courseId });
 });

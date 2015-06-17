@@ -2,11 +2,12 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
-	this.replicasExist = new ReactiveVar(false);
 }
 
 Template.event.onRendered(function(){
-	if (this.editing.get()) setDurationInTemplate(this);
+	if (this.editing.get()) {
+		setDurationInTemplate(this);
+	}
 });
 
 
@@ -39,8 +40,9 @@ Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
-	replicasExist: function() {
-		return Template.instance().replicasExist.get();
+	affectedReplicaCount: function() {
+		Template.instance().subscribe('affectedReplica', this._id);
+		return Events.find(affectedReplicaSelectors(this)).count();
 	},
 	regions: function(){
 		return Regions.find();
@@ -233,21 +235,6 @@ Template.event.events({
 	'click button.eventEdit': function (event, template) {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
-		
-		var eventId = this._id;
-		var repEventId = this.replicaOf;
-	
-		//find if these events have replicas or if whether this event is replicated.
-		Meteor.call('getReplicas', eventId, function (error, results){	
-			if(error){template.replicasExist.set(false);}
-			else if( results > 0 || repEventId != undefined ){
-				template.replicasExist.set(true);
-			}else{
-				template.replicasExist.set(false);		
-			}
-		});		
-		
-		console.log("in the first moment, replicas do exist for some millis anyway, then these ghosts disapear, isn't that true?  - "+Template.instance().replicasExist.get() );
 	},
 	
 	'change .eventFileInput': function(event, template) {

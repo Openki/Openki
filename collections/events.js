@@ -24,6 +24,28 @@ mayEditEvent = function(user, event) {
 	return false;
 }
 
+affectedReplicaSelectors = function(event) {
+	var selectors;
+	if (event.replicaOf) {
+		selectors = [
+			{ replicaOf: event.replicaOf },
+			{ _id: event.replicaOf }
+		];
+	} else {
+		selectors = { replicaOf: event._id };
+	}
+	
+	// Only replicas future from the edited event are updated
+	// replicas in the past are never updated
+	var futureDate = event.start;
+	if (futureDate < new Date) futureDate = new Date;
+	
+	return {
+		$or: selectors,
+		start: { $gte: futureDate }
+	};
+}
+
 Meteor.methods({
 	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
@@ -110,12 +132,8 @@ Meteor.methods({
 			if (updateReplicas) {
 				delete changes.start;
 				delete changes.end;
-				var affected = [ { replicaOf: eventId } ];
-				if (event.replicaOf) {
-					affected.push({ replicaOf: event.replicaOf });
-					affected.push({ _id: event.replicaOf });
-				}
-				Events.update( { $or: affected }, { $set: changes }, { multi: true } );
+
+				Events.update( affectedReplicaSelectors(event), { $set: changes }, { multi: true } );
 			}
 		}
 
@@ -136,12 +154,6 @@ Meteor.methods({
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
-
-	getReplicas: function(eventId){
-			
-		var results =  Events.find( { replicaOf: eventId } ).fetch().length ;
-		return results;
-	},
 
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
