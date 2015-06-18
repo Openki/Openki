@@ -9,3 +9,13 @@ Template.navbar.helpers ({
         this.$('a[href!="' + currentRoute.path(this) + '"].nav_link').removeClass('active');
     }
 });
+
+Template.navbar.rendered = function() {
+    this.$('.dropdown').on('show.bs.dropdown', function(e){
+    $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+  });
+
+    this.$('.dropdown').on('hide.bs.dropdown', function(e){
+    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+  });
+};
