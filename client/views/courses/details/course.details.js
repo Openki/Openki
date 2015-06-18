@@ -155,4 +155,7 @@ Template.coursedetails.events({
 
 Template.coursedetails.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
+	var currentPath = Router.current().route.path(this)
+    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+    $('#nav_courses').addClass('active');
 }

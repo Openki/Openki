@@ -126,11 +126,8 @@ Template.userprofile.events({
 	}
 })
 
-/*
-else if(to.username){
-				var to= to.username;
-			}
-			else{
-				var to= "userid: "+user._id;
-			}
-*/
+Template.userprofile.rendered = function() {
+    var currentPath = Router.current().route.path(this)
+    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+    $('a.loginButton.nav_link').addClass('active');
+}

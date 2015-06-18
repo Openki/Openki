@@ -7,7 +7,7 @@
 
 	span.caret {		
 		position: absolute;
-		bottom: 0px;
+		bottom: 0;
 		left: 46%;
 		color: @brand-primary;
 		.transition(0.5s);
@@ -16,10 +16,12 @@
 
 	li.dropdown.open span.caret {
 		color: @light-blue;
+		bottom: -1px;
 	}
 
 	a.active span.caret {
 		color: @body-bg;
+		bottom: -1px;
 	}
 
 	.dropdown-menu {
