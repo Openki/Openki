@@ -1,6 +1,6 @@
 testcourses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
-	'categories': ['sports'],
+	'categories': ['sports', 'spiritual'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 	'groups':     ['Wohlfühlgruppe-ZH'],
 	'createdby':   'FeeLing',
@@ -43,7 +43,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Game Design mit Unity',
-	'categories': ['programming'],
+	'categories': ['computer', 'programming'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
 	'groups':     ['CCC', 'ASZ Bildung für Alle'],
@@ -54,7 +54,7 @@ testcourses = [{
 	]
 },{
 	'name':        'unkommerzielle Commons-based peer production',
-	'categories': ['Garten / Landwirtschaft'],
+	'categories': ['handicraft', 'gardening'],
 	'tags':       ['Theorie', 'Projekt'],
 	'groups':     ['CSA', 'DIY-ZH'],
 	'createdby':   'Greendampf',
@@ -65,7 +65,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Web Design mit HTML und Phyton/PHP',
-	'categories': ['Programmieren','Internet'],
+	'categories': ['computer', 'internet', 'operating'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
 	'groups':     ['CCC', 'ASZ Bildung für Alle'],
@@ -80,7 +80,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Elektronik',
-	'categories': ['Elektronik / Strom'],
+	'categories': ['handicraft', 'electronics'],
 	'tags':       ['Elektronik'],
 	'createdby':   'greg',
 	'groups':     ['SGMK'],
@@ -94,7 +94,7 @@ testcourses = [{
 	]
 },/*{
 	'name':        'Super 8',
-	'categories': ['Kunst'],
+	'categories': ['culture', 'film'],
 	'tags':       ['Kunst'],
 	'createdby':   'greg',
 	'flaged':     ['suspicious'],
@@ -107,7 +107,7 @@ testcourses = [{
 	]
 },*/{
 	'name':        'Ubuntu auf Mac (dual-Boot)',
-	'categories': ['Softwarebedienung'],
+	'categories': ['computer','operating'],
 	'tags':       [],
 	'groups':     ['CCC'],
 	'createdby':   'greg',
@@ -120,7 +120,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Kleiderflick Nachmittag',
-	'categories': ['Design','Handwerk'],
+	'categories': ['culture', 'design','handicraft','fabric'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
 	'groups':     ['DIY-ZH'],
 	'createdby':   'Sandro',
@@ -131,7 +131,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Walliserdütsch lernen',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Dialekt','Wallis'],
 	'groups':     ['Studiengang Kommunikationsguerilla'],
 	'createdby':   'LeOnI',
@@ -145,7 +145,7 @@ testcourses = [{
 },{
 	'name':        'Bier brauen',
 	'tags': ['Bier'],
-	'categories': ['Kultur'],
+	'categories': ['culture'],
 	'groups':     ['Studiengang Kommunikationsguerilla', 'DIY-ZH'],
 	'createdby':   'Gähri',
 	'description': 'Gutes Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne feines Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt\'s von allein zu nem Hopfigen!! Ein super Hobby das nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!',
@@ -160,7 +160,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Crypto Party',
-	'categories': ['Internet'],
+	'categories': ['computer','internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'groups':     ['CCC'],
 	'createdby':   'Mike_85',
@@ -175,7 +175,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Open Lab',
-	'categories': ['Elektronik / Strom', 'Programmieren'],
+	'categories': ['handicraft', 'electronics', 'computer', 'programming'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'groups':     ['SGMK'],
 	'createdby':   'Mike_85',
@@ -190,7 +190,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Deutschkurse',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Sprache'],
 	'groups':     ['ASZ Bildung für Alle'],
 	'createdby':   'ASZ - Bildung für alle',
@@ -224,7 +224,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Deutschkurs',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Deutsch', 'Aussländer_in', 'Immigrant_in'],
 	'groups':     ['ASZ Bildung für Alle'],
 	'createdby':   'IvanZ',
@@ -267,7 +267,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Deutsch',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Lernen', 'Kurs', 'Workshop', 'Untericht', 'Fremdsprache'],
 	'createdby':   'Lucy',
 	'description': '',
@@ -277,7 +277,7 @@ testcourses = [{
 	]
 },{
 	'name':        'German',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Langage', 'Switzerland'],
 	'createdby':   'IvanZ',
 	'description': 'Who else would be interested in an independent workshop, with no mentor. Just lerning a language and all arround it',
@@ -288,7 +288,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Sprachaustausch',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'IvanZ',
 	'description': '**** Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen <br> **** Weekly meeting and wiledly exchange language and different Culture  <br> **** Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> **** una réunione par semana per excambiare la lingua et cultura <br> **** Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> **** Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural  ',
@@ -301,7 +301,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Jodeln',
-	'categories': ['Musik'],
+	'categories': ['culture','music'],
 	'tags':       ['Singen', 'Jodeln'],
 	'groups':     ['Studiengang Kommunikationsguerilla'],
 	'createdby':   'Sandra',
@@ -314,7 +314,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Erste-Hilfe',
-	'categories': ['Medizin'],
+	'categories': ['sciences','medicine'],
 	'groups':     ['DIY-ZH'],
 	'tags':       ['Medizin', 'Nothelfer'],
 	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->',
@@ -327,7 +327,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Meteor.js Workshop',
-	'categories': ['Programmieren'],
+	'categories': ['computer', 'programming'],
 	'tags':       ['Meteor.js', 'Coden'],
 	'groups':     ['Myzelia', 'Openki'],
 	'createdby':   'HackerOne',
@@ -341,7 +341,7 @@ testcourses = [{
 	]
 },/*{
 	'name':        'Sprayen Gehen',
-	'categories': ['Subkultur'],
+	'categories': ['culture', 'subculture'],
 	'tags':       ['Graffiti', 'Writing your name'],
 	'createdby':   'Fuck The Police',
 	'description': 'Lass uns mal so richtig die Sau rauslassen. Ich zeig allen wies geht, nehmt Dosen mit.',
@@ -362,7 +362,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Feminischer Twerking Workshop'
-	'categories': ['Dance', 'politics'],
+	'categories': ['culture', 'dance', 'humanities', 'politics'],
 	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
 	'createdby':   'sexyanarchogirl',
 	'description': 'Ich liäbs mit mim Füdli z`twerkä, z`wiigglä, z`jigglä und z`gwaggle. Aber ich gsehn mich trotzdem als radikali Feministin. Isch das überhaupt möglich? Ich würd drum gern mal en Twerking-Workshop organisiere mit ahschlüssende Diskussion über “Queer-Anarchistischem Twerkä”. Iglade sind alli Fraue*, die sich für Queer und/oder Feminismus interessiered, unabhängig devo wie starch sie sich bis jetzt demit usenand gsetzt hend. Mit Fraue* mein ich alli Persone, wo sich als Fraue identifiziered.',
@@ -378,7 +378,7 @@ testcourses = [{
 },
 */{
 	'name':        'Mobiles Soundsystem bauen',
-	'categories': ['Handwerk', 'Musik'],
+	'categories': ['handicraft', 'electronics', 'culture', 'music'],
 	'tags':       ['1', '2'],
 	'groups':     ['Studiengang Kommunikationsguerilla'],
 	'createdby':   'OhBacchanal',
@@ -392,7 +392,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Internationaler Kochkurs',
-	'categories': ['Kochen'],
+	'categories': ['culture', 'cooking'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmamma',
 	'description': 'Grüezi Mitterand, Ich dune uu gern choche und chan au ganz gute choche, aber leider nume traditionelle schwiizerchuchi und die klassische Italienische Gricht. Wie wärs wemer eus eimal ide Wuche am Samstag morge treffet und immer duet öppert anderst es Gricht wo er/sie bsunders guet cha choche de andere biibringe. Indisch, Chinesisch, Nigerianisch, Vegan, was-au-immer, hauptsach fein! <br> Mir chöntet ide schuelchuchi vom nägelimoos sekundarschuelhuus üebe.',
@@ -406,7 +406,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Verschlafen',
-	'categories': ['Experimantal'],
+	'categories': ['♥undefined♥', 'experimental'],
 	'tags':       ['', ''],
 	'createdby':   '',
 	'description': '',
@@ -414,7 +414,7 @@ testcourses = [{
 	'members': []
 },{
 	'name':        'Schweissen',
-	'categories': ['Handwerk', 'Holz / Metall'],
+	'categories': ['handicraft', 'metalwood'],
 	'tags':       ['', ''],
 	'groups':     ['DIY-ZH'],
 	'createdby':   'Julia',
@@ -426,7 +426,7 @@ testcourses = [{
 	'comment': 'Also es gibt grobgesehen TIG- und MIG- (und Elektroden-Schweissen)... lies mal folgenden link: <a href="http://www.conrad.ch/ce/de/content/ti_schweisstechniken/Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad/"> Verschiedenste-Schweisstechniken-im-Ueberblick-praesentiert-von-Conrad </a>'
 },{
 	'name':        'Velo Flicken',
-	'categories': ['Handwerk'],
+	'categories': ['handicraft'],
 	'tags':       ['', ''],
 	'groups':     ['DIY-ZH'],
 	'createdby':   'Sandra',
@@ -437,7 +437,7 @@ testcourses = [{
 		]
 },{
 	'name':        'Lerne Russisch in 2 Stunden',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['', ''],
 	'createdby':   'Sandra',
 	'description': '1.Stunde Kyrillisch, <br> 2. Konversation',
@@ -446,7 +446,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Lesegruppe',
-	'categories': ['Sprache','Literatur'],
+	'categories': ['humanities', 'languages', 'culture', 'literature'],
 	'tags':       ['', ''],
 	'createdby':   'Sandra',
 	'description': 'Kurzgeschichten lesen, oder auch mal was längeres, ich mag philosophisches',
@@ -456,7 +456,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Notebooks auf Ubuntu Linux umrüsten',
-	'categories': ['Computer'],
+	'categories': ['computer'],
 	'tags':       ['', ''],
 	'groups':     ['CCC'],
 	'createdby':   'birdy1976',
@@ -466,7 +466,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Catching fish with flies!?',
-	'categories': ['♥Undefined♥','Experimantal','Sport / Bewegung'],
+	'categories': ['♥undefined♥', 'experimental', 'sports'],
 	'tags':       ['', ''],
 	'groups':     ['Outdoor/Survival', 'DIY-ZH'],
 	'createdby':   'Päda',
@@ -476,7 +476,7 @@ testcourses = [{
 	]
 },{
 	'name':        'WC-Brunnen Bau',
-	'categories': ['Handwerk'],
+	'categories': ['handicraft', 'metalwood'],
 	'tags':       ['DIY', 'Ökologie'],
 	'groups':     ['Studiengang Kommunikationsguerilla', 'DIY-ZH'],
 	'createdby':   'sb',
@@ -527,7 +527,7 @@ testcourses = [{
 /***************** english Testcourses **********************/
 {
 	'name':        'Meditation & Yoga/Qi-Gong',
-	'categories': ['Sport / Bewegung'],
+	'categories': ['sports'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
 	'createdby':   'FeeLingen',
 	'description': 'Wouldn`t it be awesome to practice some meditation, yoga and Qi-Gong every morning? I have not enough self-discipline and my yoga/Qi-Gong knowledge is not that good, thats why a small group of people would be perfect. <br> We also need a place to practice, in Summertime we could do it outside, by the lake for example.',
@@ -539,7 +539,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Aikido',
-	'categories': ['Kampfsport/-kunst'],
+	'categories': ['sports', 'martialarts'],
 	'tags':       ['Kampfsport', 'Gschpürschmi'],
 	'createdby':   'Kampfhippieen',
 	'description': '<p> I would love to have some regular Aikido trainings. If we manage to get a small group of people I could organize a real Trainer and a Dojo. For me aikido is one of the most beautiful Fight Sports because it trys to respond your opposite and to solve the conflict without destroying the other human. </p> <ul>  <li><a href="https://www.youtube.com/watch?v=qAc-gQIeAaI"> Video on Youtube</a>  <li><a href="http://en.wikipedia.org/wiki/Aikido"> Aikido on Wikipedia</a> </ul>',
@@ -552,7 +552,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Garden',
-	'categories': ['Garten / Landwirtschaft', 'Biologie'],
+	'categories': ['handicraft', 'gardening', 'sciences','biology'],
 	'tags':       ['Garden', 'Plants'],
 	'createdby':   'Dr Greenthumben',
 	'description': 'Once in a while meet to do some gardening, exchange know-How, infrastructure, relations, seeds and plants. Support different free garden projects to grow vegetables, herbs, for food and medication. I have access to 2-3 gardens, with capacity for some motivated gardeners.',
@@ -569,7 +569,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Game Design with Unity',
-	'categories': ['Programmieren'],
+	'categories': ['computer', 'programming'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seeeen',
 	'description': 'I could give you a profound introduction in the conception, design and the technical Realisation of a Game. The course would start with the development of your idea go on with the planing of the mechanical system and at the end the realization of the final version of your game. You also get a short introduction into those themes: <ul> <li>game theory  <li>game idea <li>game mechanic <li>Storytelling <li>Concept Art <li>game character developing <li>draw and image editing with photoshop <li>Usability <li>Prototyping and Gamedesign with Unity Gameengine <li>Leveldesign <li>3D-Modelling and -Animation with Blender <li>Programming with JavaScript and C-Sharp <li>Sound-Design with Audacity <li>Polishing </ul> ',
@@ -580,7 +580,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'noncommercial Commons-based peer production',
-	'categories': ['Garten / Landwirtschaft'],
+	'categories': ['gardening'],
 	'tags':       ['Theorie', 'Projekt'],
 	'createdby':   'Dr Greenthumben',
 	'description': '"Commons are collaborative formal or informal Governance-Systems, to use as a collective, resources." <a href="http://en.wikipedia.org/wiki/Commons"> what are commons? </a> <br> Would be interesting to talk about noncommercial <i> Commons-based peer production </i> and even better try to realize in practice a bigger project (for example a vegetable garden) (That would be on a long-term basis, with a lot of responsibility)',
@@ -591,7 +591,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Web-Design with HTML und Phyton/PHP',
-	'categories': ['Programmieren','Internet'],
+	'categories': ['computer', 'programming', 'internet'],
 	'tags':       ['Design', 'Computer'],
 	'createdby':   'Seee',
 	'description': 'I could give you a substantial introduction to conception, shaping and technical realization of a website. <ul><li>*conception/ideas <li>*usability <li>*photoshop <li>*HTML, CSS and JavaScript <li>*PHP/ phyton <li>*Database with mySQL </ul>',
@@ -606,7 +606,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Elektronics',
-	'categories': ['Elektronik / Strom'],
+	'categories': ['handicraft', 'electronics'],
 	'tags':       ['Elektronik'],
 	'createdby':   'gregen',
 	'description': 'Hello Everybody, I would love to learn the basics of electronic....I mean I can already play around with electricity (you know lamps and dimmers and stuff like that) I already got some slight electric shocks ;-) There is no special occasion, so I`m open to learn anything.... <br>I have access to different rooms, well when we have a concrete plan, I will check out where exactly. If you want to I will also help with the organization of the course. I have time from now till end of summer somewhen (after that I will not be around for a while). So who is up for that? CU',
@@ -620,7 +620,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Ubuntu for Mac (dual-Boot)',
-	'categories': ['Softwarebedienung'],
+	'categories': ['computer'],
 	'tags':       [],
 	'createdby':   'gregen',
 	'description': 'I want to have Ubuntu on my Mac without giving up OS. I tried that already but it didn`t work out and Im not <b>reaaaaaally</b> interested in that technical shit. Is there someone, who would like to help me, and others with the same problem, with giving a class about that topic? I help you out as well somehow someday. <br>With food for example, in my kitchen there is space for like 4 people.',
@@ -633,7 +633,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Patching up Clothes-Afternoon',
-	'categories': ['Design','Handwerk'],
+	'categories': ['culture', 'design', 'handicraft'],
 	'tags':       ['DIY', 'Kleider', 'Handwerk'],
 	'groups':     ['DIY-ZH'],
 	'createdby':   'Sandroen',
@@ -645,7 +645,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Different accents',
-	'categories': ['Sprache'],
+	'categories': ['humanities', 'languages'],
 	'tags':       ['Dialekt','Wallis'],
 	'groups':     ['Studiengang Kommunikationsguerilla'],
 	'createdby':   'LeOnIen',
@@ -661,7 +661,7 @@ testcourses = [{
 	'name':        'to brew beer',
 	'tags': ['Bier'],
 	'groups':     ['CCC', 'DIY-ZH'],
-	'categories': ['Kultur'],
+	'categories': ['culture'],
 	'createdby':   'Gähri Weberen',
 	'description': 'It is really easy to brew beer! I show you how to brew your own tasty beer in your bathtub. We just need some ingredients and it will ferment by itself. Its a very cool hobby, it brings you some diversity in your beer consolation and it is very healthy. ',
 	'roles':      ['team', 'participant', 'mentor', 'host'],
@@ -676,7 +676,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Crypto Party',
-	'categories': ['Internet'],
+	'categories': ['computer', 'internet'],
 	'tags':       ['IT', 'Computer', 'Überwachung', 'Privacy'],
 	'groups':     ['CCC'],
 	'createdby':   'Mike_85en',
@@ -692,7 +692,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Open Lab',
-	'categories': ['Elektronik / Strom', 'Programmieren'],
+	'categories': ['handicraft', 'electronics', 'computer', 'programming'],
 	'tags':       ['DIY', 'Elektronik', 'Computer'],
 	'groups':     ['SGMK'],
 	'createdby':   'Mike_85en',
@@ -708,7 +708,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'German Class for everybody',
-	'categories': ['Sprache'],
+	'categories': ['humanities','languages'],
 	'tags':       ['Sprache'],
 	'groups':     ['ASZ Bildung für Alle'],
 	'createdby':   'ASZ - Bildung für alleen',
@@ -743,7 +743,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Deutsch Kurs',
-	'categories': ['Sprache'],
+	'categories': ['humanities','languages'],
 	'tags':       ['Deutsch', 'Aussländer_in', 'Immigrant_in'],
 	'groups':     ['ASZ Bildung für Alle'],
 	'createdby':   'Ylmaz Z.en',
@@ -787,7 +787,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'German workshop',
-	'categories': ['Sprache'],
+	'categories': ['humanities','languages'],
 	'tags':       ['Langage', 'Switzerland'],
 	'createdby':   'IvanZen',
 	'description': 'Who else would be interested in an independent workshop, with no mentor. Just lerning a language and all arround it',
@@ -797,7 +797,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Language Exchange',
-	'categories': ['Sprache'],
+	'categories': ['humanities','languages'],
 	'tags':       ['Sprachen', 'Austausch', 'Treff'],
 	'createdby':   'Ylmaz Z.en',
 	'description': 'Wöchentliches treffen und wild sprachen und verschiedenste Kultur austauschen  <br>****  Weekly meeting and wiledly exchange language and different Culture  <br> ****    Rencontre hebdomadaire et parlé sauvagement, et de remplacer diverses activités culturelles <br> ****  una réunione par semana per excambiare la lingua et cultura <br> ****   Haftalık buluşmada yabana söylemekle en değişik kültürlerin takası etmek <br> ****  Se reúnem semanalmente e falou descontroladamente, e substituir vários cultural',
@@ -811,7 +811,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Yodeling!',
-	'categories': ['Musik'],
+	'categories': ['culture', 'music'],
 	'tags':       ['Singen', 'Jodeln'],
 	'createdby':   'Sandraen',
 	'description': 'Who else wants to learn swiss yodeling? <br> Not like in a suburban yodel association... <br> If possible with a professional yodel teacher, and if we cant find somebody, maybe we can learn some songs in a group of motivated people. <br> Maybe we can grow apart from the tradition and create out own interpretation of yodeling?….maybe we become that good that we can perform our songs in public? :-)  <p> <a href="https://en.wikipedia.org/wiki/Yodeling" Yodeling Article on Wikipedia </a> </p>',
@@ -823,7 +823,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'First-Aid Course',
-	'categories': ['Medizin'],
+	'categories': ['sciences', 'medicine'],
 	'tags':       ['Medizin', 'Nothelfer'],
 	'createdby':   'OliviaTheMan!!!Yeah <!-- Hack -->en',
 	'description': 'First Aid is something so important that we all should renew <b>every year</b>. <br> My last class was five years ago and I forgott almost everything......',
@@ -835,7 +835,7 @@ testcourses = [{
 	]
 },{
 	'name':        'Meteor.js Workshop',
-	'categories': ['Programmieren'],
+	'categories': ['computer', 'programming'],
 	'tags':       ['Meteor.js', 'Coden'],
 	'createdby':   'HackerOneen',
 	'description': 'Who is in??',
@@ -849,7 +849,7 @@ testcourses = [{
 	'region':      'Englistan'
 },/*{
 	'name':        'graffiti',
-	'categories': ['Subkultur'],
+	'categories': ['culture', 'subculture'],
 	'tags':       ['Graffiti', 'Writing your name'],
 	'createdby':   'Fuck The Policeen',
 	'description': 'Lets get mad. I show you how it works. Make sure you bring some cans.',
@@ -872,7 +872,7 @@ testcourses = [{
 	'region':      'Englistan'
 },{
 	'name':        'Feministic Twerking workshop'
-	'categories': ['Dance', 'politics'],
+	'categories': ['culture', 'dance', humanities', 'politics'],
 	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
 	'createdby':   'sexyanarchogirlen',
 	'description': 'I love to twerk, wiggle, jiggle and wine up my bumper. But Im still a radical feminist. Is that even possible or not? I would love to organize a Twerking Workshop with a discussion about "queeranarchistic twerking" afterwards. This workshop is for all women*interested in feminism and/or queer, no matter how much they are engaged in queer_feminism and anti-sexism already. With women* we understand  all persons that identify as women*.',
@@ -889,7 +889,7 @@ testcourses = [{
 },*/
 {
 	'name':        'Build your mobile Soundsystem',
-	'categories': ['Handwerk', 'Elektronik / Strom', 'Musik'],
+	'categories': ['handicraft', 'electronics', 'culture', 'music'],
 	'tags':       ['1', '2'],
 	'createdby':   'OhBacchanalen',
 	'description': 'My dream is it to have a mobile Soundsystem so I can make spontaneous Soca Parades and illegal outdoorpartys. <br>a) I think there are more people who really need a mobile Soundsystem <br>b)Im sure there are people out there who know how to construct one. <br>We should all get together and meet by my fathers garage and build our own individual mobile sound system.' /*More noise for switzerland!'*/,
@@ -903,7 +903,7 @@ testcourses = [{
 	'region':        'Englistan'
 },{
 	'name':        'International Cookin Course',
-	'categories': ['Kochen'],
+	'categories': ['culture', 'cooking'],
 	'tags':       ['fein', 'gsund'],
 	'createdby':   'Hotelmammaen',
 	'description': 'Hello together, I love to cook and i can cook pretty good, but only traditional swiss dishes and some of the italian classics. <br>How great would it be if we meet every saturday morning and every time somebody new teaches the others how to cook his/her favorite dish? Indian food, chinese, nigerian, vegan, whatever main point is that it is delicious! <br><br><br>We can use the school kitchen of the secondary school Nägelimoos in kloten',
