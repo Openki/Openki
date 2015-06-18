@@ -67,6 +67,14 @@ Template.find.events({
 			Session.set('showInfo', true);
 		}
 		else Session.set('showInfo', false);
+	},
+	
+	'click .category': function(event, template) {
+		var cats = template.data.filter.categories || [];
+		cats.push(""+this);
+		template.data.filter.categories = _.uniq(cats);
+		submitForm(event, template);
+		return false;
 	}
 });
 
