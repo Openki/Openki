@@ -269,7 +269,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8">
+							<input type="date" class="form-control replicate_start updateReplicas" value="{{isoDateFormat start}}" size="8">
 						</div>
 					</div>
 					
@@ -279,17 +279,17 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" id="edit_event_enddate" class="form-control" value="{{isoDateFormat end}}" size="8">
+							<input type="date" class="form-control replicate_end updateReplicas" value="{{isoDateFormat end}}" size="8">
 						</div>
 					</div>
 					
 					<div class="col-xs-12 col-sm-2">
 						<h4>Frequency</h4>
 						<div class="input-group">
-							<select id="edit_frequency" class="form-control">
-								{{#each frequencyOptions}}
-									<option value="{{frequency}}">{{text}}</option>
-								{{/each}}
+							<select class="replicate_frequency updateReplicas">
+								<option value="once" selected>{{mf 'event.replication.freq.once' 'once'}}</option>
+								<option value="daily">{{mf 'event.replication.freq.daily' 'every day'}}</option>
+								<option value="weekly">{{mf'event.replication.freq.weekly' 'once a week'}}</option>
 							</select> 
 						</div>
 					</div>
@@ -306,10 +306,14 @@
 					</div>
 					
 					<div class="col-xs-12 col-sm-2">
-						<p style="font-size:12px;">
-							*This will replicate the same event for all the dates that fall in the chosen interval. 
-							The event times will be preserved across all replicated events.
-						</p>
+					{{#if replicaDateCount}}
+						{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
+						<ul style="display: inline">
+						{{#each replicaDates}}
+							<li style="display: inline">{{isoDateFormat this}}</li>
+						{{/each}}
+						</ul>
+					{{/if}}
 					</div>
 				</div>
 			</div>
@@ -354,7 +358,6 @@
 			<button role="button" class="fileDelete close" type="button">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
-		</td>					
-								
+		</td>
 	</tr>
 </template>
