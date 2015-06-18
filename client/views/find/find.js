@@ -19,8 +19,11 @@ Router.map(function () {
 			var region = Session.get('region')
 			var filter = {};
 			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
+			if (this.params.query.category) {
+				filter.categories = this.params.query.category.split(',');
+			}
 			return {
-				hasUpcomingEvent: filter.hasUpcomingEvent,
+				filter: filter,
 				query: this.params.search,
 				results: coursesFind(region, this.params.search, filter),
 				eventResults: eventsFind({ query: this.params.search, standalone: true }, 10)
@@ -32,11 +35,17 @@ Router.map(function () {
 	})
 })
 
-var submitForm = function(event) {
+var submitForm = function(event, template) {
 	options = {}
+	
+	var queryParams = [];
 	if ($("#hasUpcomingEvent")[0].checked) {
-		options.query = "hasUpcomingEvent";
+		queryParams.push("hasUpcomingEvent");
 	}
+	if (template.data.filter.categories) {
+		queryParams.push('category='+template.data.filter.categories.join(','));
+	}
+	options.query = queryParams.join('&');
 
 	Router.go('find', { search: $('#find').val().replace("/", " ")}, options )
 	event.preventDefault();
@@ -63,7 +72,7 @@ Template.find.events({
 
 Template.find.helpers({
 	'hasUpcomingEventsChecked': function() {
-		if (this.hasUpcomingEvent) return "checked";
+		if (this.filter.hasUpcomingEvent) return "checked";
 	},
 	
 	'newCourse': function() {
