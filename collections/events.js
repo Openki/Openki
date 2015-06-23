@@ -134,7 +134,7 @@ Meteor.methods({
 				delete changes.start;
 				delete changes.end;
 
-				Events.update( affectedReplicaSelectors(event), { $set: changes }, { multi: true } );
+				Events.update(affectedReplicaSelectors(event), { $set: changes }, { multi: true });
 			}
 		}
 
