@@ -31,6 +31,7 @@ affectedReplicaSelectors = function(event) {
 	if (futureDate < new Date) futureDate = new Date;
 	
 	var selector = {
+		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate }
 	};
 	
