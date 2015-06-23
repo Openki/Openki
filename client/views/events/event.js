@@ -433,7 +433,3 @@ Template.event.events({
 		updateReplicas(template);
 	}
 });
-
-Template.event.rendered = function() {
-	this.$('select').selectpicker();
-}
