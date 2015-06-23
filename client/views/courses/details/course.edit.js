@@ -36,7 +36,7 @@ Template.course_edit.helpers({
 		}
 	},
 	
-	regions: function(){
+	regions: function() {
 	  return Regions.find();
 	},
 	
