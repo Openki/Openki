@@ -38,7 +38,7 @@ function finderRoute(path) {
 
 Router.map(function () {
 	this.route('find', finderRoute('/find/:search?'));
-	this.route('start', finderRoute('/'));
+	this.route('home', finderRoute('/'));
 });
 
 var submitForm = function(event) {
