@@ -1,14 +1,21 @@
-Router.map(function () {
-	this.route('find', {
-		path: '/find/:search?',
+function finderRoute(path) {
+	return {
+		path: path,
 		template: 'find',
+		onBeforeAction: function() {
+			// Allow setting the region in the URL by parameter '?region=Testistan'
+			if (this.params.query.region) {
+				var region = Regions.findOne({ name: this.params.query.region })
+				if (region) Session.set('region', region._id);
+			};
+			this.next();
+		},
 		subscriptions: function () {
 			var region = Session.get('region')
 			var filter = {}
 			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
 			return [
 				Meteor.subscribe('coursesFind', region, this.params.search, filter),
-
 				Meteor.subscribe('eventsFind', { query: this.params.search, standalone:true }, 10)
 			];
 		},
@@ -26,8 +33,13 @@ Router.map(function () {
 		onAfterAction: function() {
 			document.title = webpagename + 'Find ' + this.params.search
 		}
-	})
-})
+	};
+}
+
+Router.map(function () {
+	this.route('find', finderRoute('/find/:search?'));
+	this.route('start', finderRoute('/'));
+});
 
 var submitForm = function(event) {
 	options = {}
