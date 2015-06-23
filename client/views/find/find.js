@@ -15,8 +15,8 @@ function finderRoute(path) {
 			var filter = {}
 			filter.hasUpcomingEvent = !!this.params.query.hasUpcomingEvent;
 			return [
-				Meteor.subscribe('coursesFind', region, this.params.search, filter),
-				Meteor.subscribe('eventsFind', { query: this.params.search, standalone:true }, 10)
+				Meteor.subscribe('coursesFind', region, this.params.search, filter, 36),
+				Meteor.subscribe('eventsFind', { query: this.params.search, standalone:true, region: region }, 10)
 			];
 		},
 		data: function() {
@@ -26,7 +26,7 @@ function finderRoute(path) {
 			return {
 				hasUpcomingEvent: filter.hasUpcomingEvent,
 				query: this.params.search,
-				results: coursesFind(region, this.params.search, filter),
+				results: coursesFind(region, this.params.search, filter, 36),
 				eventResults: eventsFind({ query: this.params.search, standalone: true }, 10)
 			}
 		},
@@ -57,10 +57,6 @@ Template.find.events({
 	'submit': submitForm,
 	'change .search': submitForm,
 	'keyup .search': _.debounce(submitForm, 300),
-	//TEMPORARY EVENTS FOR NACHHALTIGKEITSWOCHE HEADER
-	'click button.nw_close': function() { 
-		Session.set('showHeader', "hideIt");
-	},
 	
 	'click button.readmore': function() {
 		if (Session.get('showInfo') != true) {
