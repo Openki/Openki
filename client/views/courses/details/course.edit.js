@@ -52,7 +52,7 @@ Template.course_edit.rendered = function() {
 }
 
 Template.course_edit.events({
-	'submit form.course_edit, click button.save': function (ev) {
+	'submit form, click button.save': function (ev) {
 		ev.preventDefault()
 		try {
 			if (pleaseLogin()) return;
