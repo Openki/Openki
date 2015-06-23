@@ -141,11 +141,12 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 Template.coursedetails.events({
 	'click button.del': function () {
 		if (pleaseLogin()) return;
-		if (confirm("really?")) {
-			Courses.remove(this._id);
+		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
+			Meteor.call('remove_course', this._id);
 			Router.go('/');
 		}
 	},
+
 	'click button.edit': function () {
 		if (pleaseLogin()) return;
 		Router.go('showCourse', this, { query: {edit: 'course'} })
