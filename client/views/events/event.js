@@ -91,7 +91,7 @@ Template.eventDescritpionEdit.rendered = function() {
 
 
 var getEventStartMoment = function(template) {
-	var startMoment =  moment(template.$('#edit_event_startdate').val())
+	var startMoment =  moment(template.$('#edit_event_startdate').val(), 'YYYY-MM-DD');
 	var startTime = template.$('#edit_event_starttime').val();
 	var startTimeParts = startTime.split(":");
 	var minutes = startTimeParts[1];
@@ -139,9 +139,9 @@ var updateReplicas = function(template) {
 }
 
 var getEventFrequency = function(template) {
-	var startDate = moment(template.$('.replicate_start').val());
+	var startDate = moment(template.$('.replicate_start').val(), 'YYYY-MM-DD');
 	if (!startDate.isValid()) return [];
-	var endDate   = moment(template.$('.replicate_end').val());
+	var endDate   = moment(template.$('.replicate_end').val(), 'YYYY-MM-DD');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.replicate_frequency').val();
 	var diffDays = endDate.diff(startDate, "days");
