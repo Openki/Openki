@@ -158,12 +158,15 @@
 			{{#if showRegionSelection}}
 			<div class="col-xs-12 col-sm-4">
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-				<select name='region' class="region_select">
-					<option value=''>{{mf 'course.edit.pls_select' 'Please select'}}</option>
-				{{#each regions}}
-					<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-				{{/each}}
-				</select>
+				<div class="styled-select">
+					<select name='region' class="region_select">
+						<option value='' class="select_default">{{mf 'course.edit.pls_select' 'Please select'}}</option>
+					{{#each regions}}
+						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
+					{{/each}}
+					</select>
+					<span class="caret"></span>
+				</div>
 			</div>
 			{{/if}}
 		</div>

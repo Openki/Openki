@@ -76,8 +76,54 @@ span.glyphicon-ok {
 	color: #5CB85C;
 }
 
-li.disabled{
-	a.select_default {
-		cursor: default !important;
+.styled-select {
+	width: 180px;
+	height: 34px;
+	overflow: hidden;
+	border: 1px solid darken(@brand-primary, 5%);
+	position: relative;
+	background: @brand-primary;
+	color: @body-bg;
+	.transition(0.5s);
+
+	&:hover {
+		background: darken(@brand-primary, 10%);
+		border-color: darken(@brand-primary, 17%);
+	}
+
+	select {
+		background: transparent;
+		width: 208px;
+		font-size: 16px;
+		line-height: 1;
+		border: 0;
+		border-radius: 0;
+		height: 34px;
+		padding-left: 5px;
+		padding-bottom: 3px;
+
+		option {
+			padding: 3px 10px;
+			background: @light-blue;
+			color: #333;
+
+			&.select_default {
+				color: darken(#ccc, 30%);
+
+				&:hover {
+					background: transparent !important;
+				}
+
+				span.glyphicon {
+					padding-top: 2px;
+				}
+			}
+		}
+	}
+
+	span.caret {
+		position: absolute;
+		top: 14px;
+		right: 12px;
 	}
 }

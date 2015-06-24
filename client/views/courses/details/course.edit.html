@@ -65,14 +65,18 @@
 			<div class="course_edit_region">
 				{{#unless _id}}
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-				<select name='region' class="region_select">
-					<option value='' disabled selected data-icon="glyphicon-record" class="select_default">
-						{{mf 'course.edit.pls_select_region' 'Please select a region'}}
-					</option>
-					{{#each regions}}
-					<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-					{{/each}}
-				</select>
+				<div class="styled-select">
+					<select name='region' class="region_select">
+						<option value='' disabled selected class="select_default">
+							<span class="glyphicon glyphicon-record"></span>
+							{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+						</option>
+						{{#each regions}}
+						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
+						{{/each}}
+					</select>
+					<span class="caret"></span>
+				</div>
 				{{/unless}}
 			</div>
 			<div class="course_edit_finishbtns">
