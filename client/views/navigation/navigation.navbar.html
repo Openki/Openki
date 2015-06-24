@@ -21,7 +21,7 @@
                         <a href="{{pathFor 'start'}}" class="nav_link" id="nav_courses">
                             <span class="glyphicon glyphicon-home"></span>&nbsp;
                             {{mf 'menue.Courses' 'Courses'}}
-                            <span class="caret"></span>
+                            <span class="caret" id="active_caret"></span>
                         </a>
                     </li>
                     <li class="dropdown create">
@@ -54,13 +54,13 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown region_sel">
+                    <li class="dropdown">
                         {{> region_sel}}
                     </li>
                     <li class="dropdown lang_sel">
                         {{> lang_sel}}
                     </li>
-                    <li class="dropdown login">
+                    <li class="dropdown">
                         {{> loginButton}}
                         <div class="dropdown-menu login-dropdown">
                             {{> loginFrame}}
