@@ -1,3 +1,7 @@
+.navbar {
+	border-bottom: none;
+}
+
 .navbar-nav {
 	& > li {
 		& > a {
@@ -7,7 +11,7 @@
 
 	span.caret {		
 		position: absolute;
-		bottom: 0;
+		bottom: 1px;
 		left: 46%;
 		color: @brand-primary;
 		.transition(0.5s);
@@ -16,16 +20,34 @@
 
 	li.dropdown.open span.caret {
 		color: @light-blue;
-		bottom: -1px;
 	}
 
-	a.active span.caret {
-		color: @body-bg;
-		bottom: -1px;
+	a.active {
+		span.caret {
+			color: @body-bg;
+		}
+
+		&.over_content {
+			background: lighten(@brand-primary, 10%);
+
+			&:focus {
+				background: lighten(@brand-primary, 10%);
+				color: @body-bg;
+			}
+
+			span.caret {
+				color: lighten(@brand-primary, 10%);
+				.transition(0.3s);
+			}
+		}
 	}
 
 	.dropdown-menu {
-		border-top: 1px solid transparent;
+		border-top: none;
+	}
+
+	li.lang_sel a.dropdown-toggle {
+		padding-bottom: 16px; //FIX for the mysteriously missing pixel when setting height to 100%.
 	}
 }
 
