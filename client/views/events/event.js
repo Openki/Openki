@@ -375,7 +375,7 @@ Template.event.events({
 			}
 
 			var eventId = '';
-				
+
 			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
 				if (error) {
 					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
@@ -384,21 +384,19 @@ Template.event.events({
 					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: moment(replicaEvent.start).format('LL') }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});
-		
-		
 		});
 
 		template.$('div#eventReplicationMenu').slideUp(300);
 		template.$('.eventReplicateMenu_close').hide(500);
 		template.$('.eventReplicateMenu_open').show(500);
 	},
+
 	'click button.cancelEditEvent': function () {
 		if (this.new) history.back();
 		Template.instance().editing.set(false);
 	},
 
 	'click .toggle_duration': function(event, template){
-
 		template.$('.show_time_end').toggle(300);
 		template.$('.show_duration').toggle(300);
 	},
@@ -408,6 +406,7 @@ Template.event.events({
 		template.$('.eventReplicateMenu_open').hide(500);
 		template.$('.eventReplicateMenu_close').show(500);
 	},
+
 	'click .eventReplicateMenu_close': function(event, template){
 		template.$('div#eventReplicationMenu').slideUp(300);
 		template.$('.eventReplicateMenu_close').hide(500);
