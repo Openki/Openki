@@ -91,7 +91,7 @@ Template.eventDescritpionEdit.rendered = function() {
 
 
 var getEventStartMoment = function(template) {
-	var startMoment =  moment(template.$('#edit_event_startdate').val())
+	var startMoment =  moment(template.$('#edit_event_startdate').val(), 'YYYY-MM-DD');
 	var startTime = template.$('#edit_event_starttime').val();
 	var startTimeParts = startTime.split(":");
 	var minutes = startTimeParts[1];
@@ -139,9 +139,9 @@ var updateReplicas = function(template) {
 }
 
 var getEventFrequency = function(template) {
-	var startDate = moment(template.$('.replicate_start').val());
+	var startDate = moment(template.$('.replicate_start').val(), 'YYYY-MM-DD');
 	if (!startDate.isValid()) return [];
-	var endDate   = moment(template.$('.replicate_end').val());
+	var endDate   = moment(template.$('.replicate_end').val(), 'YYYY-MM-DD');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.replicate_frequency').val();
 	var diffDays = endDate.diff(startDate, "days");
@@ -333,23 +333,6 @@ Template.event.events({
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
-				//update replicas too
-				//check if "update replicas" flag is set here, and if yes, update them
-				if(updateReplicas){
-					
-					//we need this to identify the event that this is a replica of, and apply changes to that too
-					
-					
-					Meteor.call('updateReplicas', eventId, editevent, function(error, eventId) {
-						if (error) {	
-							addMessage(mf('event.replicate_update.error', { TITLE: editevent.title }, 'Failed to update replicas of "{TITLE}". You may want to do it manually.'), 'danger');
-						}
-						else{
-							addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
-						}		
-					});
-				}
-
 				if (isNew) Router.go('showEvent', { _id: eventId });
 				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
 
@@ -368,7 +351,7 @@ Template.event.events({
 		
 		var dates = getEventFrequency(template);
 		var success = true;	
-		$.each( dates, function( i,eventTime ){
+		$.each( dates, function( i,eventTime ) {
 			
 			/*create a new event for each time interval */
 			var replicaEvent = {
@@ -392,34 +375,28 @@ Template.event.events({
 			}
 
 			var eventId = '';
-				
+
 			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
 				if (error) {
 					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 					success = false;
 				} else {
+					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: moment(replicaEvent.start).format('LL') }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});
-		
-		
 		});
-		if(success){
-			template.$('div#eventReplicationMenu').slideUp(300);
-			template.$('.eventReplicateMenu_close').hide(500);
-			template.$('.eventReplicateMenu_open').show(500);
-			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".', 'success'));
 
-			Router.go('showEvent', { _id: template.data._id });
-		}
-			
+		template.$('div#eventReplicationMenu').slideUp(300);
+		template.$('.eventReplicateMenu_close').hide(500);
+		template.$('.eventReplicateMenu_open').show(500);
 	},
+
 	'click button.cancelEditEvent': function () {
 		if (this.new) history.back();
 		Template.instance().editing.set(false);
 	},
 
 	'click .toggle_duration': function(event, template){
-
 		template.$('.show_time_end').toggle(300);
 		template.$('.show_duration').toggle(300);
 	},
@@ -429,6 +406,7 @@ Template.event.events({
 		template.$('.eventReplicateMenu_open').hide(500);
 		template.$('.eventReplicateMenu_close').show(500);
 	},
+
 	'click .eventReplicateMenu_close': function(event, template){
 		template.$('div#eventReplicationMenu').slideUp(300);
 		template.$('.eventReplicateMenu_close').hide(500);
@@ -450,7 +428,3 @@ Template.event.events({
 		updateReplicas(template);
 	}
 });
-
-Template.event.rendered = function() {
-	this.$('select').selectpicker();
-}

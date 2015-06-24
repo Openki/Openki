@@ -48,7 +48,7 @@ Template.loginLogin.events({
 						$('#login-name').addClass('username_warning');
 					}
 				} else {
-					$('.dropdown.open').removeClass('open');
+					this.$('.login-dropdown').hide(0);
 				}
 			});
 		}
@@ -98,7 +98,7 @@ Template.loginLogin.events({
 					$('#username_warning_not_existing').show(300);
 				}
 			} else {
-				$('.dropdown.open').removeClass('open');
+				this.$('.login-dropdown').hide(0);
 			}
 		});
 	},
@@ -115,7 +115,7 @@ Template.loginLogin.events({
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
-				$('.dropdown.open').removeClass('open');
+				this.$('.login-dropdown').hide(0);
 			}
 		});
 	}

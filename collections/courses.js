@@ -18,13 +18,6 @@
 Courses = new Meteor.Collection("Courses");
 
 
-Courses.allow({
-	remove: function (userId, doc) {
-		return userId && true;   // allow only if UserId is present
-	}
-});
-
-
 function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
 	Courses.update(
@@ -359,5 +352,13 @@ Meteor.methods({
 		}
 
 		return courseId;
+	},
+	
+	remove_course: function(courseId) {
+		var user = Meteor.user();
+		var mayEdit = privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
+		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
+		Events.remove({ course_id: courseId });
+		Courses.remove(courseId);
 	}
 });

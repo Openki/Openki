@@ -31,6 +31,7 @@ affectedReplicaSelectors = function(event) {
 	if (futureDate < new Date) futureDate = new Date;
 	
 	var selector = {
+		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate }
 	};
 	
@@ -134,7 +135,7 @@ Meteor.methods({
 				delete changes.start;
 				delete changes.end;
 
-				Events.update( affectedReplicaSelectors(event), { $set: changes }, { multi: true } );
+				Events.update(affectedReplicaSelectors(event), { $set: changes }, { multi: true });
 			}
 		}
 

@@ -48,4 +48,7 @@ Template.calendar.helpers({
 
 Template.calendar.rendered = function() {
 	this.$('.ellipsis').dotdotdot({});
+    var currentPath = Router.current().route.path(this)
+    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+    $('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
