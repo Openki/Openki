@@ -184,6 +184,7 @@
 						<input type="checkbox" name="updateReplicas">
 						{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {replica} other {# replicas}}" COUNT=affectedReplicaCount}}
 					</label>
+					{{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {replica} other {replicas}}." COUNT=affectedReplicaCount}}
 				{{/if}}
 			</div>
 			
