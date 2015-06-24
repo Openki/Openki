@@ -36,7 +36,7 @@ Template.course_edit.helpers({
 		}
 	},
 	
-	regions: function(){
+	regions: function() {
 	  return Regions.find();
 	},
 	
@@ -49,11 +49,10 @@ Template.course_edit.helpers({
 Template.course_edit.rendered = function() {
 	var desc = this.find('#editform_description');
 	if (desc) new MediumEditor(desc);
-	this.$('.region_select').selectpicker();
 }
 
 Template.course_edit.events({
-	'submit form.course_edit, click button.save': function (ev) {
+	'submit form, click button.save': function (ev) {
 		ev.preventDefault()
 		try {
 			if (pleaseLogin()) return;
