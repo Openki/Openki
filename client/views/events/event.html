@@ -35,6 +35,14 @@
 
 <template name="event">
 	{{#if editing}}
+		{{> eventEdit}}
+	{{else}}
+		{{> eventDisplay}}
+	{{/if}}
+</template>
+
+<template name="eventEdit">
+	<form>
 	<div class="course_event_edit col-sm-12">
 		<div class="col-sm-12">
 			<h2>{{#if _id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
@@ -173,12 +181,10 @@
 		
 		<div class="col-sm-12 no-padding event_edit_buttons">
 			<div class="col-xs-12 col-sm-5">
-				<button type="button" class="saveEditEvent btn btn-primary form-control">
+				<button type="submit" class="saveEditEvent btn btn-primary form-control">
 					<span class="glyphicon glyphicon-save"></span>
 					{{mf 'course.event.edit.save_btn' 'Save'}}
 				</button>
-				
-				
 			</div>
 			
 			<div class="col-xs-12 col-sm-2">	
@@ -198,11 +204,11 @@
 				</button>
 			</div>
 		</div>
-		
-
-		
 	</div>
-	{{else}}
+	</form>
+</template>
+
+<template name="eventDisplay">
 		<div class="course_event">
 			<div class="course_event_date">
 				<div class="container-fluid">
@@ -323,9 +329,8 @@
 			</div>
 			{{/if}}
 		</div>
-	{{/if}}
+
 	<div class="event_options">
-		{{#unless editing}}
 		{{#unless kioskMode}}
 		<a href="{{pathFor 'calEvent' this}}">
 			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
@@ -334,10 +339,8 @@
 			</button>
 		</a>
 		{{/unless}}
-		{{/unless}}
 		{{> report}}
 	</div>
-
 </template>
 
 <template name="eventDescritpionEdit">

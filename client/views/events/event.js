@@ -2,15 +2,18 @@
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
+}
+
+Template.eventDisplay.created = function() {
 	this.replicaDates = new ReactiveVar([]);
 }
 
-Template.event.onRendered(function(){
-	if (this.editing.get()) {
-		setDurationInTemplate(this);
-	} else {
-		updateReplicas(this);
-	}
+Template.eventDisplay.onRendered(function() {
+	updateReplicas(this);
+});
+
+Template.eventEdit.onRendered(function() {
+	updateTimes(this, false);
 });
 
 
@@ -37,31 +40,51 @@ Template.eventPage.helpers({
 });
 
 Template.event.helpers({
+	editing: function() {
+		return this.new || Template.instance().editing.get();
+	}
+});
+
+Template.eventEdit.helpers({
 	isoDateFormat: function(date) {
 		return moment(date).format("YYYY-MM-DD");
 	},
-	editing: function() {
-		return this.new || Template.instance().editing.get();
-	},
+	
 	affectedReplicaCount: function() {
 		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(affectedReplicaSelectors(this)).count();
 	},
+
 	regions: function(){
 		return Regions.find();
 	},
-
+	
 	showRegionSelection: function() {
 		// You can select the region for events that are new and not associated
 		// with a course
 		if (this._id) return false;
-		if (this.course_id) return false;
-		return true;
+					   if (this.course_id) return false;
+					   return true;
 	},
 	
 	currentRegion: function(region) {
 		var currentRegion = Session.get('region')
 		return currentRegion && region._id == currentRegion;
+	},
+	
+	disableForPast: function() {
+		return this.start > new Date ? '' : 'disabled';
+	}
+});
+
+Template.eventDisplay.helpers({
+	isoDateFormat: function(date) {
+		return moment(date).format("YYYY-MM-DD");
+	},
+
+	affectedReplicaCount: function() {
+		Template.instance().subscribe('affectedReplica', this._id);
+		return Events.find(affectedReplicaSelectors(this)).count();
 	},
 	
 	replicaDateCount: function() {
@@ -76,10 +99,6 @@ Template.event.helpers({
 		return mayEditEvent(Meteor.user(), this);
 	},
 
-	disableForPast: function() {
-		return this.start > new Date ? '' : 'disabled';
-	},
-
 	kioskMode: function() {
 		return Session.get('kiosk_mode');
 	}
@@ -91,9 +110,10 @@ Template.eventDescritpionEdit.rendered = function() {
 
 
 var getEventStartMoment = function(template) {
-	var startMoment =  moment(template.$('#edit_event_startdate').val(), 'YYYY-MM-DD');
+	var startDateStr = template.$('#edit_event_startdate').val();
+	var startMoment =  moment(startDateStr, 'YYYY-MM-DD');
 	var startTime = template.$('#edit_event_starttime').val();
-	var startTimeParts = startTime.split(":");
+	var startTimeParts = startTime ? startTime.split(":") : [0,0];
 	var minutes = startTimeParts[1];
 	var hours = startTimeParts[0];
 	startMoment.hours(hours);
@@ -104,10 +124,10 @@ var getEventStartMoment = function(template) {
 var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = moment(startMoment);
-	var endtime = template.$('#edit_event_endtime').val();
-	var endtimeParts = endtime.split(":");
-	var minutes = endtimeParts[1];
-	var hours = endtimeParts[0];
+	var endTime = template.$('#edit_event_endtime').val();
+	var endTimeParts = endTime ? endTime.split(":") : [0,0];
+	var minutes = endTimeParts[1];
+	var hours = endTimeParts[0];
 	endMoment.hours(hours);
 	endMoment.minutes(minutes);
 	if(endMoment.diff(startMoment) < 0) {
@@ -118,25 +138,44 @@ var getEventEndMoment = function(template) {
 }
 
 var getEventDuration = function(template) {
-	var duration = parseInt(template.$('#edit_event_duration').val(),10);
-
+	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
 	return Math.max(0,duration);
 }
 
-var calculateEndMoment = function(startMoment, duration) {
-	return moment(startMoment).add(duration, "minutes"); 
+
+/* Patch the end time and the duration when start, end or duration changes */
+var updateTimes = function(template, updateEnd) {
+	var start = getEventStartMoment(template);
+	var end = getEventEndMoment(template);
+	var duration = getEventDuration(template);
+
+	if (!start.isValid() || !end.isValid()) {
+		// If you put into the machine wrong figures, will the right answers come out?
+		return;
+	}
+
+	if (updateEnd) {
+		end = moment(start).add(duration, 'minutes');
+	}
+
+	if (end.isBefore(start)) {
+		// Let sanity prevail
+		end = start;
+		duration = 0;
+	}
+
+	duration = end.diff(start, 'minutes');
+	template.$('#edit_event_startdate').val(start.format('YYYY-MM-DD'));
+	template.$('#edit_event_starttime').val(start.format('HH:mm'));
+	template.$('#edit_event_endtime').val(end.format('HH:mm'));
+	template.$('#edit_event_duration').val(duration.toString());
 }
 
-var setDurationInTemplate = function(template) {
-	var startMoment = getEventStartMoment(template);
-	var endMoment = getEventEndMoment(template);
-	var duration = endMoment.diff(startMoment, "minutes");
-	template.$("#edit_event_duration").val(duration);
-};
 
 var updateReplicas = function(template) {
 	template.replicaDates.set(_.map(getEventFrequency(template), function(interval) { return interval[0]; } ));
 }
+
 
 var getEventFrequency = function(template) {
 	var startDate = moment(template.$('.replicate_start').val(), 'YYYY-MM-DD');
@@ -259,37 +298,30 @@ Template.event.events({
 	},
 	
 	
-	'click button.saveEditEvent': function(event, template) {
+	'submit': function(event, template) {
+		event.preventDefault();
+
 		if (pleaseLogin()) return;
 
-		var startMoment = getEventStartMoment(template);
-		if(!startMoment) {
+		var start = getEventStartMoment(template);
+		if(!start.isValid()) {
 			alert("Date format must be of the form 2015-11-30");
 			return null;
 		}
-		var duration = getEventDuration(template);
-
-		//we need this check because duration is not an event property and it is reset to null after first save
-		if(!duration){
-			setDurationInTemplate(template);
-			duration = getEventDuration(template);
-		}
-		var endMoment = calculateEndMoment(startMoment, duration);
-		var nowMoment = moment();
+		var end = getEventEndMoment(template);
 
 		var editevent = {
 			title: template.$('#edit_event_title').val(),
 			description: template.$('#edit_event_description').html(),
 			location: template.$('#edit_event_location').val(),
 			room: template.$('#edit_event_room').val(),
-			start: startMoment.toDate(),
-			end:   endMoment.toDate(),
+			start: start.toDate(),
+			end:   end.toDate(),
 			files: this.files || Array() ,
 		};
 
 		var fileList = template.files;
 		template.files = null;
-
 
 		//check if file object is stored in the template object
 		if(fileList != null){
@@ -306,14 +338,14 @@ Template.event.events({
 					
 			editevent.files = tmp;
 		}		
-		
-		
+
 		var eventId = this._id;
 		var isNew = !this._id;
+		var now = moment();
 		if (isNew) {
 			eventId = '';
 
-			if (startMoment.diff(nowMoment) < 0) {
+			if (start.isBefore(now)) {
 				alert("Date must be in future");
 				return;
 			}
@@ -324,6 +356,14 @@ Template.event.events({
 				editevent.course_id = this.course_id;
 			} else {
 				editevent.region = template.$('.region_select').val();
+			}
+		} else {
+			// Don't allow setting dates in the past
+			if (start.isBefore(now)) {
+				delete editevent.start;
+			}
+			if (end.isBefore(now)) {
+				delete editevent.end;
 			}
 		}
 		
@@ -413,17 +453,16 @@ Template.event.events({
 		template.$('.eventReplicateMenu_open').show(500);
 	},
 
-	'change #edit_event_duration, change #edit_event_starttime': function(event, template) {
-		var startMoment = getEventStartMoment(template);
-		var duration = getEventDuration(template);
-		var endMoment = calculateEndMoment(startMoment, duration);
-		template.$("#edit_event_endtime").val(endMoment.format("HH:mm"));
+	'change #edit_event_duration, change #edit_event_startdate, change #edit_event_starttime': function(event, template) {
+		updateTimes(template, true);
 	},
 
 	'change #edit_event_endtime': function(event, template) {
-		setDurationInTemplate(template);
-	},
+		updateTimes(template, false);
+	}
+});
 
+Template.eventDisplay.events({
 	'change .updateReplicas, keyup .updateReplicas': function(event, template) {
 		updateReplicas(template);
 	}
