@@ -83,6 +83,14 @@ Template.find.events({
 		template.data.filter.categories = _.uniq(cats);
 		submitForm(event, template);
 		return false;
+	},
+
+	'click .removeCategoryFilter': function(event, template) {
+		var cats = template.data.filter.categories || [];
+		var remCat = ''+this; // comes in a s string object, coerce to string
+		template.data.filter.categories = _.without(cats, remCat);
+		submitForm(event, template);
+		return false;
 	}
 });
 

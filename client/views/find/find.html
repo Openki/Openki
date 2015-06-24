@@ -8,6 +8,16 @@
 				<button class="find-btn btn btn-primary " type="button">{{mf 'find.search_go' 'GO!'}}</button>
 			</span>
 		</div>
+		{{#if filter.categories}}
+		<div>
+			{{mf 'find.filter.categories' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=filter.categories.length}}
+			<ul>
+			{{#each filter.categories}}
+				<li>{{categoryName}} <span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'remove filter'}}"></span></li>
+			{{/each}}
+			</ul>
+		</div>
+		{{/if}}
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
