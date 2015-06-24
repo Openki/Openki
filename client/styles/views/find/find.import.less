@@ -1,33 +1,93 @@
-.search {
-    .make-xs-column(12);
+.find {
+    .container;
 
-    h1 {
-        margin-top: 0;
-    }
-
-    .input-group {
+    .search {
         .make-sm-column(3);
         .make-xs-column(12);
         .no-padding;
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .input-group {
+            .make-sm-column(12);
+            .make-xs-column(12);
+            .no-padding;
+        }
+
+        .search_filter {
+            .make-sm-column(12);
+            .make-xs-column(12);
+            .no-padding;
+            padding-top: 10px;
+
+            * {
+                .transition(0.5s);
+            }
+
+            h5 {
+                color: @brand-primary;
+            }
+
+            .search_filter_header {
+                .make-sm-column(12);
+                .make-xs-column(12);
+                .no-padding;
+                color: @brand-primary;
+                border-bottom: 1px solid @brand-primary;
+            }
+
+            .checkbox {
+                .make-sm-column(12);
+                .make-xs-column(12);
+                .no-padding;
+
+                &:hover {
+                    color: @brand-primary;
+                }
+            }
+
+            .filter_categories {
+                .make-sm-column(12);
+                .make-xs-column(12);
+                .no-padding;
+
+                h5:first-child {
+                    margin-top: 0;
+                }
+
+                ul {
+                    .list-unstyled;
+                    padding-left: 8px;
+                    border-left: 1px solid @brand-primary;
+
+                    span.glyphicon-remove {
+                        color: lighten(@brand-danger, 20%);
+                        cursor: pointer;
+                        position: relative;
+                        top: 2px;
+
+                        &:hover {
+                            color: @brand-danger;
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    .checkbox {
+    button.find-btn {
+        height: 38px;
+    }
+
+    input#find {
+        font-size: 20px;
+        height: 38px;
+    }
+
+    .propose_course {
         .make-sm-column(12);
         .make-xs-column(12);
-        .no-padding;
     }
-}
-
-button.find-btn {
-	height: 38px;
-}
-
-input#find {
-	font-size: 20px;
-	height: 38px;
-}
-
-.propose_course {
-    .make-sm-column(12);
-    .make-xs-column(12);
 }
