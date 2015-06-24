@@ -351,7 +351,7 @@ Template.event.events({
 		
 		var dates = getEventFrequency(template);
 		var success = true;	
-		$.each( dates, function( i,eventTime ){
+		$.each( dates, function( i,eventTime ) {
 			
 			/*create a new event for each time interval */
 			var replicaEvent = {
@@ -381,20 +381,16 @@ Template.event.events({
 					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 					success = false;
 				} else {
+					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: moment(replicaEvent.start).format('LL') }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});
 		
 		
 		});
-		if(success){
-			template.$('div#eventReplicationMenu').slideUp(300);
-			template.$('.eventReplicateMenu_close').hide(500);
-			template.$('.eventReplicateMenu_open').show(500);
-			addMessage(mf('event.replicate.success', { TITLE: template.data.title }, 'Replicated event "{TITLE}".', 'success'));
 
-			Router.go('showEvent', { _id: template.data._id });
-		}
-			
+		template.$('div#eventReplicationMenu').slideUp(300);
+		template.$('.eventReplicateMenu_close').hide(500);
+		template.$('.eventReplicateMenu_open').show(500);
 	},
 	'click button.cancelEditEvent': function () {
 		if (this.new) history.back();
