@@ -33,7 +33,7 @@ Router.map(function () {
 							if (err) {
 								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
+								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
 							}
 						});
 					}
@@ -46,7 +46,7 @@ Router.map(function () {
 							if (err) {
 								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 							} else {
-								addMessage(mf('course.saving.success', { NAME: course.name }), 'success');
+								addMessage(mf('course.saving.desc.editable.success', { NAME: course.name }), 'success');
 							}
 						});
 					}
