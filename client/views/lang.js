@@ -1,12 +1,22 @@
+var lgs = {
+	'ar': { lg: 'ar', name: 'العربية', short: 'العربية'},
+	'de': { lg: 'de', name: 'Deutsch', short: 'de'},
+	'en': { lg: 'en', name: 'English', short: 'en'},
+	'es': { lg: 'es', name: 'Casteillano', short: 'es'},
+	'fr': { lg: 'fr', name: 'Français', short: 'fr'},
+	'it': { lg: 'it', name: 'Italiano', short: 'it'},
+	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語'}
+};
+
 Template.lang_sel.helpers({
 	lgs: function() {
-		return [ {lg:'ar'}, { lg: 'de'}, { lg: 'en'}, {lg:'es'}, { lg: 'fr'}, { lg: 'it'}, {lg: 'zh_TW'}];
+		return _.values(lgs);
 	},
-	
-	lg: function() {
-		var lg = Session.get('locale')
-		return lg ? lg : 'en';
+
+	short: function() {
+		return lgs[Session.get('locale')].short;
 	}
+
 });
 
 Template.lang_sel.events({

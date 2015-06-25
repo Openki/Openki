@@ -46,7 +46,7 @@
 <template name="lang_sel">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		<span class="fa fa-language"></span>&nbsp;
-		{{lg}}
+		{{short}}
 		<span class="caret"></span>
 	</a>
 
@@ -54,7 +54,7 @@
 		{{#each lgs}}
 			<li>
 				<a href="#" class="langselect">
-					{{this.lg}}
+					{{this.name}}
 				</a>
 			</li>
 		{{/each}}
