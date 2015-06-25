@@ -8,7 +8,6 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('courseDetails', this.params._id),
 				Meteor.subscribe('eventsForCourse', this.params._id),
-				Meteor.subscribe('groups'),
 			    Meteor.subscribe('discussion', this.params._id)
 			]
 		},

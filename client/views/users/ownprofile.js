@@ -5,7 +5,7 @@ Router.map(function () {
 			return [ 
 				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: Meteor.userId() }),
-				Meteor.subscribe('groups')
+				Meteor.subscribe('groupsFind', { own: true })
 			];
 		},
 		data: function () {
@@ -15,8 +15,7 @@ Router.map(function () {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
-					groups: !!user.groups && Groups.find({_id: {$in: user.groups}}).map(function(grp) { return grp.name }).join(', '),
-					groupcount: user.groups && user.groups.length || 0
+					groups: groupsFind({ own: true }),
 				}
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -27,7 +26,7 @@ Router.map(function () {
 					}
 					else userdata.verifiedEmail = 'not verified'
 				}
-				
+
 				return { 
 					user: userdata,
 					courses: coursesFind('all', false, { userInvolved: user._id })
@@ -56,6 +55,10 @@ Template.profile.helpers({
 	},
 	verifyDelete: function() {
 		return Session.get('verify') === 'delete';
+	},
+
+	groupCount: function() {
+		return this.user.groups.count();
 	}
 });
 

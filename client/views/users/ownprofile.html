@@ -62,15 +62,17 @@
 				<button class="delete">{{mf 'profile.delete' 'Delete my profile'}}</button>
 			{{/if}}
 			</p>
-			<p class="descr">
-				{{#mf KEY='member_of_groups' NUM_GROUPS=user.groupcount GROUPS_LIST=user.groups}}
+				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
 				You are {NUM_GROUPS, plural,
 				=0 {not a member of any group}
-				=1 {member of the group {GROUPS_LIST}}
-				other {member of the groups {GROUPS_LIST}}}
-				.
+				=1 {member of the group:}
+				other {member of # groups:}}
 				{{/mf}}
-			</p>
+				<ul>
+				{{#each user.groups}}
+					<li>{{name}}</li>
+				{{/each}}
+				</ul>
 			<div class="translate">
 				<a href="/translate">
 					<i class="fa fa-language"></i>
