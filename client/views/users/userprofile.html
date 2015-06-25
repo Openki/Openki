@@ -69,6 +69,16 @@
 		</div>
 		{{/if}}
 
+		{{#each inviteGroups}}
+			<div>
+				{{#if groupMember this ../user}}
+					{{mf 'profile.group.member' 'Member of group "{NAME}"' NAME=name}} <button class="expelFromGroup">{{mf 'profile.group.expel' 'Expel'}}</button>
+				{{else}}
+					<button class="draftIntoGroup">{{mf 'profile.group.draft' 'Draft into group "{NAME}"' NAME=name}}</button>
+				{{/if}}
+			</div>
+		{{/each}}
+
 		<div class="list_small">
 			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
 			{{> courselist involvedIn}}

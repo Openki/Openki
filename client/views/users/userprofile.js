@@ -4,6 +4,7 @@ Router.map(function() {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('user', this.params._id),
+				Meteor.subscribe('groupsFind', { own: true }),
 				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: this.params._id })
 			];
 		},
@@ -21,10 +22,11 @@ Router.map(function() {
 			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
 			return {
-				'user': Meteor.users.findOne({_id: this.params._id}),
+				'user': user,
 				'involvedIn': coursesFind('all', false, { userInvolved: this.params._id }),
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
+				'inviteGroups': groupsFind({ own: true }),
 				'showPrivileges': showPrivileges
 			};
 		},
@@ -40,7 +42,11 @@ Router.map(function() {
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser: function () {
-		return this.user._id === Meteor.userId()
+		return this.user && this.user._id === Meteor.userId()
+	},
+	
+	groupMember: function(group, user) {
+		return user && group && group.members && group.members.indexOf(user._id) >= 0;
 	}
 })
 
@@ -123,7 +129,33 @@ Template.userprofile.events({
 			else {alert ('longer text please')}
 		}
 		else {alert ('login...')}
-	}
+	},
+	
+	'click button.draftIntoGroup': function(event, template) {
+		var groupId = this._id;
+		var name = this.name;
+		var userId = Template.parentData().user._id;
+		Meteor.call('updateGroupMembership', userId, groupId, true, function(err) {
+			if (err) {
+				addMessage(mf('profile.group.draftError', { ERROR: err }, 'Unable draft user into group: {ERROR}'), 'danger');
+			} else {
+				addMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
+			}
+		});
+	},
+	
+	'click button.expelFromGroup': function(event, template) {
+		var groupId = this._id;
+		var name = this.name;
+		var userId = Template.parentData().user._id;
+		Meteor.call('updateGroupMembership', userId, groupId, false, function(err) {
+			if (err) {
+				addMessage(mf('profile.group.expelError', { ERROR: err }, 'Unable expel user from group: {ERROR}'), 'danger');
+			} else {
+				addMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
+			}
+		});
+	},
 })
 
 Template.userprofile.rendered = function() {
