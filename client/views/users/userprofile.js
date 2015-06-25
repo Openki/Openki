@@ -57,7 +57,7 @@ Template.userprofile.events({
 			if (err) {
 				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
 			} else {
-				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'sucess');
+				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
 			}
 		});
 	},
