@@ -71,6 +71,7 @@ Meteor.startup(function() {
 
 	// Soon everybody will support this, right?
 	var desiredLangs = navigator.languages || [navigator.language];
+	desiredLangs = Array.prototype.slice.call(desiredLangs);
 	desiredLangs.unshift(localStorage.getItem('locale'));
 	desiredLangs.push('en'); // fallback
 
