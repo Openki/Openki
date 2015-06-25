@@ -16,8 +16,13 @@
 			</div>
 			<div id='editform_categories'>
 				<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
-					{{mf 'course.edit.edit' 'Edit'}} {{#if categories}}{{>show_categories}}{{/if}}
-					{{#unless categories}}{{mf 'course.edit.categories' 'Categories'}}{{/unless}}
+				<button type="button" class="edit" role="button">
+					<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
+					{{#if categories}}{{>show_categories}}{{/if}}
+					{{#unless categories}}{{mf 'course.edit.no.categories' 'No categories'}}{{/unless}}
+					<span class="glyphicon glyphicon-edit"></span>
+					{{mf 'course.edit.categories-button' 'Edit'}}
+				</button>
 				</div>
 				<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
 					<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
@@ -45,6 +50,8 @@
 						{{/each}}
 					</ul>
 				</div>
+ 
+
 			</div>
 			<div class="course_edit_roles"> 
 				<h4>{{mf 'course.edit.needs.role' 'This course might need'}}</h4>
