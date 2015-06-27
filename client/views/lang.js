@@ -2,7 +2,7 @@ var lgs = {
 	'ar': { lg: 'ar', name: 'العربية', short: 'العربية'},
 	'de': { lg: 'de', name: 'Deutsch', short: 'de'},
 	'en': { lg: 'en', name: 'English', short: 'en'},
-	'es': { lg: 'es', name: 'Casteillano', short: 'es'},
+	'es': { lg: 'es', name: 'Castellano', short: 'es'},
 	'fr': { lg: 'fr', name: 'Français', short: 'fr'},
 	'it': { lg: 'it', name: 'Italiano', short: 'it'},
 	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語'}
