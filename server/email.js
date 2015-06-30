@@ -5,35 +5,62 @@ Meteor.methods({
 
 
 Meteor.methods({
-	sendEmail: function (rec_user_id, from, subject, text) {
+	sendEmail: function (userId, text, revealAddress, sendCopy) {
+		check([userId, text], [String]);
 
-		var from = 'openki@mail.openki.net';
-		var subject = '[Openki] '+subject;
+		var lg = 'en'; // Need to implement storing user's language
 
-		var to = Meteor.users.findOne({_id:rec_user_id});
-		if(to && to.emails && to.emails[0] && to.emails[0].address){
-			var to= to.emails[0].address;
+		var mail = {
+			sender: 'openki@mail.openki.net'
 		}
-		else {
+
+		var recipient = Meteor.users.findOne({
+			_id: userId
+		});
+
+		if (recipient && recipient.emails && recipient.emails[0] && recipient.emails[0].address){
+			mail.to = recipient.emails[0].address;
+		} else {
 			throw new Meteor.Error(401, "this user has no email")
 		}
-		check([to, from, subject, text], [String]);
+
+		var sender = Meteor.user();
+		var senderAddress = false;
+		if (sender.emails && sender.emails[0] && sender.emails[0].address){
+			senderAddress = sender.emails[0].address;
+		}
+
+		if (senderAddress && revealAddress) {
+			mail.from = senderAddress;
+		} else {
+			mail.from = mail.sender;
+		}
+
+		var names = {
+			SENDER: sender.username,
+			RECIPIENT: recipient.username,
+			ADMINS: 'admins@openki.net'
+		};
+
+		mail.subject = '[Openki] ' + mf('sendEmail.subject', names, 'Message from {SENDER}', lg);
+
+		mail.text = mf('sendEmail.greeting', names, 'Message from {SENDER} to {RECIPIENT}:', lg) + '\n'
+		          + '--------------------------------------------------------------------\n'
+				  + text.substr(0, 10000) + '\n'
+				  + '--------------------------------------------------------------------\n'
+				  + mf('sendEmail.footer', names, 'End of message.\nIf these messages are bothering you please let us know immediately {ADMINS}', lg);
 
 		// Let other method calls from the same client start running,
 		// without waiting for the email sending to complete.
 		this.unblock();
 
-var email = {
-			from: from,
-			to: to,
-			subject: subject,
-			text: text+'\nhttp://openki.net'
-//			html: html
-		}
+		Email.send(mail);
 
-		console.log('sending mail… ...................................................................')
-		console.log(email)
-		Email.send(email);
+		if (sendCopy && senderAddress) {
+			mail.from = mail.sender;
+			mail.to = senderAddress;
+			Email.send(mail);
+		}
 	},
 	
 	report: function(subject, location, report) {

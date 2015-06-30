@@ -19,7 +19,7 @@
 		{{else}}
 		<div class="row">
 			<div class="col-sm-4">
-				{{>email_box}}
+				{{>emailBox}}
 			</div>
 		</div>
 		{{/if}}
@@ -86,13 +86,11 @@
 	</div>
 </template>
 
-<template name="email_box">
+<template name="emailBox">
 	<div class="email_box">
-		<form>
-		<!-- <h4><span class="glyphicon glyphicon-envelope"></span>&nbsp;{{mf 'profile.mail.to_user' 'You can write an e-mail to this user:'}}</h4> -->
+		<form class="sendMail">
 			<h4>{{mf 'profile.mail.content' 'Your message:'}}</h4>
-			<textarea id="emailmessage" placeholder="Hi {{username this.user._id}}! ..." rows="3"></textarea>
-			<h4>{{mf 'profile.mail.options' 'Options:'}}	<!-- this is a proposition. doesn't work yet --></h4>
+			<textarea id="emailmessage" placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}" rows="3"></textarea>
 			<div class="checkbox">
 				<label>
 					<input type="checkbox" id="sendOwnAdress">
@@ -103,7 +101,7 @@
 					{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
 				</label>
 			</div>
-			<button class="sendmail">
+			<button type="submit">
 				<span class="glyphicon glyphicon-send"></span>&nbsp;
 				{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
 			</button>
