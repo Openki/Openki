@@ -3,7 +3,7 @@
 	<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 	<div class="search">
 		<div class="input-group">
-			<input type="text" class="form-control searchInput" value="{{query}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
+			<input type="text" class="form-control searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
 			<span class="input-group-btn">
 				<button class="find-btn btn btn-primary " type="button">{{mf 'find.search_go' 'GO!'}}</button>
 			</span>
@@ -22,10 +22,10 @@
 				</label>
 			</div>
 			<div class="filter_categories">
-				{{#if filter.categories}}
-				<h5>{{mf 'find.filter.categories' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=filter.categories.length}}</h5>
+				{{#if categories}}
+				<h5>{{mf 'find.filter.categories' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=categories.length}}</h5>
 				<ul>
-				{{#each filter.categories}}
+				{{#each categories}}
 					<li>
 						{{categoryName}}&nbsp;
 						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove filter'}}"></span>

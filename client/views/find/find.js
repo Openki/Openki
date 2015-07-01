@@ -11,7 +11,7 @@ function finderRoute(path) {
 			this.next();
 		},
 		data: function() {
-			return this.params.query;
+			return this.params;
 		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Find ' + this.params.search
@@ -51,7 +51,7 @@ Template.find.events({
 	'change .search': searchChanged,
 	'keyup .searchInput': _.debounce(function(event, instance) {
 		instance.search.set($('.searchInput').val());
-	}, 300),
+	}, 200),
 	
 	'click .category': function(event, instance) {
 		var cats = instance.categories.get();
@@ -65,7 +65,7 @@ Template.find.events({
 		var cats = instance.categories.get();
 		var remCat = ''+this; // comes in a s string object, coerce to string
 		instance.categories.set(_.without(cats, remCat));
-		submitForm(event, instance);
+		searchChanged(event, instance);
 		return false;
 	}
 });
@@ -85,6 +85,10 @@ var readFilter = function(instance) {
 }
 
 Template.find.helpers({
+	'search': function() {
+		return Template.instance().search.get();
+	},
+
 	'hasUpcomingEventsChecked': function() {
 		if (Template.instance().hasUpcomingEvent.get()) return "checked";
 		return "";
@@ -118,40 +122,53 @@ Template.find.helpers({
 	},
 
 	'ready': function() {
-		var instance = Template.instance();
-		return instance.subs[0] && instance.subs[0][0].ready() && instance.subs[0][1].ready();
+		return Template.instance().subscriptionsReady();
 	}
 });
 
 Template.find.onCreated(function() {
+	// The page tracks two types of modifications
+	// One is modifications the reactive instance vars which change page
+	// content but not URL. The other type is modification of the URL which
+	// is fed back onto the instance vars.
 	var instance = this;
 
-	var search = instance.data.search ? instance.data.search : '';
-	instance.search = new ReactiveVar(search);
+	instance.search = new ReactiveVar('');
+	instance.hasUpcomingEvent = new ReactiveVar(false);
+	instance.categories = new ReactiveVar([]);
 
-	var hasUpcomingEvent = !!instance.data.hasUpcomingEvent;
-	instance.hasUpcomingEvent = new ReactiveVar(hasUpcomingEvent);
+	// Keep old subscriptions around until the new ones are ready
+	// This avoids courses blinking out and back when we renew the subscriptions
+	instance.courseSub = false;
+	instance.eventSub = false;
+	var oldSubs = [];
+	var stopOldSubs = function() {
+		if (instance.courseSub.ready() && instance.eventSub.ready()) {
+			_.map(oldSubs, function(sub) { sub.stop() });
+			oldSubs = [];
+		}
+	}
 
+	// Read URL state
+	instance.autorun(function() {
+		var data = Template.currentData();
+		var query = data.query || {};
 
-	var categories = instance.data.category ? instance.data.category.split(',') : [];
-	instance.categories = new ReactiveVar(categories);
+		instance.search.set(data.search ? data.search : '');
+		instance.hasUpcomingEvent.set(!!(query.hasUpcomingEvent));
+		instance.categories.set(query.category ? query.category.split(',') : []);
+	});
 
-	// Keep two sets of course/event subscriptions around.
-	// This way, the search results don't blink out and back when we switch
-	// subscriptions
-	instance.subs = [];
-
+	// Update whenever instance vars change
 	instance.autorun(function() {
 		var search = instance.search.get();
 		var region = Session.get('region');
 
-		// Stop the penultimate subscriptions
-		if (instance.subs.length > 1) _.map(instance.subs.pop(), function(sub) { sub.stop() });
+		if (instance.courseSub) oldSubs.push(instance.courseSub);
+		instance.courseSub = instance.subscribe('coursesFind', region, search, readFilter(instance), 36, stopOldSubs)
 
-		instance.subs.unshift([
-			instance.subscribe('coursesFind', region, search, readFilter(instance), 36),
-			instance.subscribe('eventsFind', { query: search, standalone: true, region: region }, 10)
-		]);
+		if (instance.eventSub) oldSubs.push(instance.eventSub);
+		instance.eventSub = instance.subscribe('eventsFind', { query: search, standalone: true, region: region }, 10, stopOldSubs);
 	});
 });
 
