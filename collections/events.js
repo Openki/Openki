@@ -69,7 +69,6 @@ Meteor.methods({
 		var isNew = eventId === '';
 		if (isNew) {
 			expectedFields.region = String;
-		//	expectedFields.course_id = Match.Optional(String);
 		}
 
 		check(changes, expectedFields);
