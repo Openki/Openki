@@ -127,15 +127,25 @@ Template.find.helpers({
 });
 
 Template.find.onCreated(function() {
-	// The page tracks two types of modifications
-	// One is modifications the reactive instance vars which change page
-	// content but not URL. The other type is modification of the URL which
-	// is fed back onto the instance vars.
 	var instance = this;
 
+	// The page tracks two types of state
+	// One is the state of the reactive instance vars which change page
+	// content but not URL. The other type is modification of the URL which
+	// is fed back onto the instance vars.
 	instance.search = new ReactiveVar('');
 	instance.hasUpcomingEvent = new ReactiveVar(false);
 	instance.categories = new ReactiveVar([]);
+
+	// Read URL state
+	instance.autorun(function() {
+		var data = Template.currentData();
+		var query = data.query || {};
+
+		instance.search.set(data.search ? data.search : '');
+		instance.hasUpcomingEvent.set(!!(query.hasUpcomingEvent));
+		instance.categories.set(query.category ? query.category.split(',') : []);
+	});
 
 	// Keep old subscriptions around until the new ones are ready
 	// This avoids courses blinking out and back when we renew the subscriptions
@@ -148,17 +158,7 @@ Template.find.onCreated(function() {
 			oldSubs = [];
 		}
 	}
-
-	// Read URL state
-	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
-		instance.search.set(data.search ? data.search : '');
-		instance.hasUpcomingEvent.set(!!(query.hasUpcomingEvent));
-		instance.categories.set(query.category ? query.category.split(',') : []);
-	});
-
+	
 	// Update whenever instance vars change
 	instance.autorun(function() {
 		var search = instance.search.get();
