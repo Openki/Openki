@@ -104,11 +104,12 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click button.cancel': function() {
+	'click button.cancel': function(event) {
 		if (this._id) {
 			Router.go('showCourse', this);
+		} else {
+			Router.go('/');
 		}
-		Router.go('/');
 	},
 
 	'click #show_categories_to_edit': function(event){
