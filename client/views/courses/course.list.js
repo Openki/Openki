@@ -29,6 +29,10 @@ Router.map(function () {
 
 
 Template.course.helpers({
+	ready: function() {
+		return Template.instance().eventSub.ready();
+	},
+
 	requiresMentor: function() {
 		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1
@@ -66,8 +70,6 @@ Template.course.helpers({
 	coursestate: function() {
 		var today = new Date();
 		
-		Meteor.subscribe('nextEvent', this._id);
-		
 		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
 		
@@ -103,6 +105,10 @@ Template.course.helpers({
 		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 	},
 })
+
+Template.course.onCreated(function() {
+	this.eventSub = this.subscribe('nextEvent', this.data._id);
+});
 
 Template.course.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
