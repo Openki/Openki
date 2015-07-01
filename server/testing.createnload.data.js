@@ -265,15 +265,11 @@ createGroupsIfNone = function(){
 			m5.update(group.name);
 			m5.update(group.description);
 			group._id = m5.digest('hex').substring(0, 8)
-
-			var members = group.members
-			delete group.members
+			group.members = _.map(group.members, function (name){
+				return ensureUser(name)._id
+			});
 			Groups.insert(group)
 			console.log("Added group:   "+group.name)
-			_.each (members, function (name){
-				var member = ensureUser(name)
-				Meteor.users.update(member._id, {$push:{'groups':group._id}})
-			})
 		})
 	}
 }
