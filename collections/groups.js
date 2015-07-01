@@ -17,9 +17,15 @@ groupsFind = function(filter, limit) {
 	var find = {};
 	
 	if (filter.own) {
-		find.members = Meteor.userId();
+		var me = Meteor.userId();
+		if (!me) return []; // I don't exist? How could I be in a group?!
+
+		find.members = me;
 	}
-	if (filter.user) {
+
+	// If the property is set but falsy, we don't return anything
+	if (filter.hasOwnProperty('user')) {
+		if (!filter.user) return [];
 		find.members = filter.user;
 	}
 

@@ -82,54 +82,6 @@ Template.userprofile.events({
 			}
 		});
 	},
-
-	'click button.sendmail': function () {
-		var send_user = Meteor.user()
-		if(send_user) {
-			var send_userdata = {id:Meteor.userId(),username:Meteor.user().username}
-			if(send_user.emails) {
-				send_userdata.email = send_user.emails[0].address
-			}
-			var rec_user_id = this.user._id
-			var rec_user = Meteor.users.findOne({_id:rec_user_id});
-			if(rec_user){
-				if(rec_user.username){
-					var rec_user = rec_user.username;
-				}
-			}
-			var messageInput = document.getElementById('emailmessage').value;
-			if ($('#sendOwnAdress').is(':checked')){
-				var ownMail = '\n  his/hers direct contact is: '+send_userdata.email
-			};
-			var receiveCopy = $('#receiveCopy').is(':checked');
-			var message = 'hello '+rec_user+',\n'+send_userdata.username+' sends you the following message:\n"'+messageInput+'"'+(ownMail?ownMail:'')+'\n\ncheers!';
-
-			if (messageInput.length >= '7'){
-				Meteor.call('sendEmail',
-				rec_user_id,
-				'from',
-				'Privat-message from '+send_userdata.username,
-				message,
-				function(error, result){
-					if (error) addMessage(error, 'danger')
-				}
-				);
-				if (receiveCopy){
-					Meteor.call('sendEmail',
-					send_user._id,
-					'from',
-					'Copy of your Privat-message to '+rec_user,
-					message);
-				//todo: reset clear the form.
-				addMessage(mf('email.sent', 'email could have been sent'), 'success');
-
-				}
-
-			}
-			else {alert ('longer text please')}
-		}
-		else {alert ('login...')}
-	},
 	
 	'click button.draftIntoGroup': function(event, template) {
 		var groupId = this._id;
@@ -156,7 +108,49 @@ Template.userprofile.events({
 			}
 		});
 	},
-})
+});
+
+Template.emailBox.events({
+	'submit form.sendMail': function (event, template) {
+		event.preventDefault();
+		if (pleaseLogin()) return;
+
+		var send_user = Meteor.user();
+
+		var rec_user_id = this.user._id
+		var rec_user = Meteor.users.findOne({_id:rec_user_id});
+		if(rec_user){
+			if(rec_user.username){
+				var rec_user = rec_user.username;
+			}
+		}
+
+		var message = template.$('#emailmessage').val();
+		var revealAddress = template.$('#sendOwnAdress').is(':checked');
+		var receiveCopy = template.$('#receiveCopy').is(':checked');
+
+		if (message.length < '8') {
+			alert(mf('profile.mail.longertext', 'longer text please'));
+			return;
+		}
+
+		Meteor.call(
+			'sendEmail',
+			this.user._id,
+			message,
+			revealAddress,
+			receiveCopy,
+			function(error, result) {
+				if (error) {
+					addMessage(error, 'danger');
+				} else {
+					addMessage(mf('profile.mail.sent', 'Your message was sent'), 'success');
+					template.$('#emailmessage').val('');
+				}
+			}
+		);
+	}
+});
 
 Template.userprofile.rendered = function() {
     var currentPath = Router.current().route.path(this)
