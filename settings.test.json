@@ -1,0 +1,7 @@
+{
+	"testdata": 1,
+	"admins": ["greg", "FeeLing", "IvanZ"],
+	"public": {
+		"marquee": 1
+	}
+}
