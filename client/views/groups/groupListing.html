@@ -1,0 +1,12 @@
+<template name="groupListing">
+	{{#each available}}
+		<div>
+			{{#if inGroup this ..}}
+				{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
+				<button class="expelFromGroup">{{mf 'groupListing.expel' 'Expel'}}</button>
+			{{else}}
+				<button class="admitToGroup">{{mf 'groupListing.admit' 'Admit to "{NAME}"' NAME=name}}</button>
+			{{/if}}
+		</div>
+	{{/each}}
+</template>

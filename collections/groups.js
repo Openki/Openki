@@ -39,23 +39,47 @@ Meteor.methods({
 
 		var senderId = Meteor.userId();
 		if (!senderId) return;
-		
+
 		// Only current members of the group may draft other people into it
 		var sel = {
 			_id: groupId,
 			members: senderId
 		}
-		
+
 		var user = Meteor.users.findOne({_id: userId});
 		if (!user) throw new Meteor.Error(404, "User not found");
 
-		var update = {};
+		var update;
 		if (join) {
 			update = { $addToSet: { 'members': user._id } }
 		} else {
 			update = { $pull: { 'members': user._id } }
 		}
-		
+
 		Groups.update(sel, update, checkUpdateOne);
+	},
+
+	updateGroupListing: function(courseId, groupId, join) {
+		check(courseId, String);
+		check(groupId, String);
+
+		var senderId = Meteor.userId();
+		if (!senderId) return;
+
+		// Only current members of the group may list courses into groups
+		var group = Groups.findOne({
+			_id: groupId,
+			members: senderId
+		});
+		if (!group) throw new Meteor.Error(401, "Not in group");
+
+		var update;
+		if (join) {
+			update = { $addToSet: { 'groups': group._id } }
+		} else {
+			update = { $pull: { 'groups': group._id } }
+		}
+		
+		Courses.update(courseId, update, checkUpdateOne);
 	}
 });
