@@ -95,8 +95,9 @@ Template.find.helpers({
 	},
 	
 	'newCourse': function() {
+		var instance = Template.instance();
 		return {
-			name: this.query,
+			name: instance.search.get(),
 			region: Session.get('region')
 		}
 	},
@@ -158,7 +159,7 @@ Template.find.onCreated(function() {
 			oldSubs = [];
 		}
 	}
-	
+
 	// Update whenever instance vars change
 	instance.autorun(function() {
 		var search = instance.search.get();
