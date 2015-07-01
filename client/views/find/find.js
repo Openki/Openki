@@ -57,7 +57,10 @@ var submitForm = function(event, template) {
 	if (template.data.filter.categories) {
 		queryParams.push('category='+template.data.filter.categories.join(','));
 	}
-	options.query = queryParams.join('&');
+
+	if (queryParams.length) {
+		options.query = queryParams.join('&');
+	}
 
 	Router.go('find', { search: $('#find').val().replace("/", " ")}, options )
 	event.preventDefault();
