@@ -59,8 +59,9 @@ Meteor.methods({
 		Groups.update(sel, update, checkUpdateOne);
 	},
 
-	updateGroupListing: function(courseId, groupId, join) {
-		check(courseId, String);
+	/* Update listing of a course or an event in a group. */
+	updateGroupListing: function(thingId, groupId, join) {
+		check(thingId, String);
 		check(groupId, String);
 
 		var senderId = Meteor.userId();
@@ -79,7 +80,12 @@ Meteor.methods({
 		} else {
 			update = { $pull: { 'groups': group._id } }
 		}
-		
-		Courses.update(courseId, update, checkUpdateOne);
+
+		// Welcome to my world of platypus-typing
+		// Because thing may either be a group or an event, we just try both!
+		var changed = Courses.update(thingId, update)
+		            + Events.update(thingId, update);
+
+		if (changed !== 1) throw new Meteor.Error(500, "Query affected "+changed+" documents, expected 1");
 	}
 });
