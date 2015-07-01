@@ -3,7 +3,7 @@
 	<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 	<div class="search">
 		<div class="input-group">
-			<input type="text" id="find" class="form-control" value="{{query}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
+			<input type="text" class="form-control searchInput" value="{{query}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
 			<span class="input-group-btn">
 				<button class="find-btn btn btn-primary " type="button">{{mf 'find.search_go' 'GO!'}}</button>
 			</span>
@@ -40,8 +40,9 @@
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
+			{{#if ready}}{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}{{/if}}
 		{{/each}}
+		{{#unless ready}}<div style="position: absolute; font-size: 300%">LOADING</div>{{/unless}}
 	</div>
 	{{#if eventResults.count}}
 	<div class="courselist_results">
