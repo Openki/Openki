@@ -47,12 +47,6 @@ var searchChanged = function(event, instance) {
 }
 
 Template.find.events({
-	'click button.readmore': function() {
-		if (Session.get('showInfo') != true) {
-			Session.set('showInfo', true);
-		}
-		else Session.set('showInfo', false);
-	},
 	'submit': searchChanged,
 	'change .search': searchChanged,
 	'keyup .searchInput': _.debounce(function(event, instance) {
