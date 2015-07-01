@@ -40,11 +40,13 @@ Meteor.methods({
 		var ip = this.connection.clientAddress;
 
 		if (ip.indexOf('127') === 0) {
-			return '9JyFCoKWkxnf8LWPh'; // Testistan for localhost
+			return '9JyFCoKWkxnf8LWPh'; // use Testistan for localhost
+		}
+		if (Meteor.settings.testdata) {
+			return 'EZqQLGL4PtFCxCNrp';  // use Spilistan if deployed with testdata
 		}
 
 		var geo = GeoIP.lookup(ip);
-
 		var closest = Regions.findOne({
 			loc: { $near: {
 				$geometry: {type: "Point", coordinates: geo.ll.reverse()},
@@ -53,7 +55,6 @@ Meteor.methods({
 		});
 
 		if (closest) return closest._id;
-
 		return false;
 	}
 
