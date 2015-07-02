@@ -77,6 +77,30 @@ testgroups = [{
 	'description':      'Zusammenschluss von LesComplices, CornerCollege, etc.',
 	'members':          ['Simona', 'Marlene']
 },{
+	'name':        	    'CSA - regionale Vertragslandwirtschaft',
+	'short':            'CSA',
+	'claim':            'think global act local',
+	'description':      'test test',
+	'members':          ['greg']
+},{
+	'name':        	    'Outdoor/Survival Group',
+	'short':            'Outdoor',
+	'claim':            '',
+	'description':      '',
+	'members':          ['lu']
+},{
+	'name':        	    'Myzelia Openki',
+	'short':            'Myzelia',
+	'claim':            'selbstorganisation in der Bildung',
+	'description':      '',
+	'members':          ['sbalmer', 'Urban', 'lu40']
+},{
+	'name':        	    'Studiengang Kommunikationsguerilla',
+	'short':            'SKG',
+	'claim':            'nein, ja, nein, nein, ja.',
+	'description':      'Das Ziel der KommunikationsGuerilla ist das Ziel. Die Kommunikationsguerilla ist das Mittel. Der Zweck ist die Befreiung. Das Mittel zur Befreiung ist der Mensch. Der Mensch, der in der fremdverschuldeten Unmündigkeit liegt.',
+	'members':          ['1u']
+},{
 	'name':        	    '',
 	'short':            '',
 	'claim':            '',

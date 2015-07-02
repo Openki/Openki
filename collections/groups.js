@@ -1,6 +1,7 @@
 // ======== DB-Model: ========
 // "_id" -> ID
 // "name" -> string
+// "short" -> string
 // "members" -> [userIds]
 // ===========================
 

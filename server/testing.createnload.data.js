@@ -256,7 +256,7 @@ loadTestEvents = function(){
 createGroupsIfNone = function(){
 	if (Groups.find().count() === 0) {
 		_.each (testgroups, function (group){
-			group.createdby = 'ServerScript'
+			group.createdby = 'ServerScript_loadingTestgroups'
 			var age = Math.floor(Random.fraction()*10000000000)
 			group.time_created = new Date(new Date().getTime()-age)
 			group.time_lastedit = new Date(new Date().getTime()-age*0.25)
@@ -269,18 +269,19 @@ createGroupsIfNone = function(){
 				return ensureUser(name)._id
 			});
 			Groups.insert(group)
-			console.log("Added group:   "+group.name)
+			console.log("Added Testgroup:   "+group.name)
 		})
 	}
 }
 
-function ensureGroup(name) {
+function ensureGroup(short) {
 	while (true) {
-		var group = Groups.findOne({name: name})
+		var group = Groups.findOne({short: short})
 		if (group) return group._id;
 		
 		var id = Groups.insert({
-			name: name,
+			name: short,
+			short: short,
 			createdby: 'ServerScript_from_TestCouses',
 			description: 'Automaticaly created group by server'
 		});
