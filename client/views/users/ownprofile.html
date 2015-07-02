@@ -55,11 +55,11 @@
 			<p>
 			{{#if verifyDelete}}
 				<div>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
-				<button class="confirmdelete">{{mf 'profile.delete' 'Delete my profile'}}</button>
+				<button class="confirmdelete">{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}</button>
 				<button class="verifycancel">{{mf 'profile.deletecancel' 'Cancel'}}</button>
 				</div>
 			{{else}}
-				<button class="delete">{{mf 'profile.delete' 'Delete my profile'}}</button>
+				<button class="delete">{{mf 'profile.delete' 'Delete my account'}}</button>
 			{{/if}}
 			</p>
 				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
