@@ -256,6 +256,7 @@ loadTestEvents = function(){
 createGroupsIfNone = function(){
 	if (Groups.find().count() === 0) {
 		_.each (testgroups, function (group){
+			if (!group.name) return;
 			group.createdby = 'ServerScript_loadingTestgroups'
 			var age = Math.floor(Random.fraction()*10000000000)
 			group.time_created = new Date(new Date().getTime()-age)
