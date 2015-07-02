@@ -64,6 +64,7 @@ Meteor.methods({
 			host:        Match.Optional(Array),
 			replicaOf:   Match.Optional(String),
 			course_id:	 Match.Optional(String),
+			groups:	     Match.Optional([String]),
 		};
 		
 		var isNew = eventId === '';
@@ -102,6 +103,16 @@ Meteor.methods({
 				// Inherit groups from the course
 				var course = Courses.findOne(changes.course_id);
 				changes.groups = course.groups;
+			} else {
+				var tested_groups = [];
+				if (changes.groups) {
+					tested_groups = _.map(changes.groups, function(groupId) {
+						var group = Groups.findOne(groupId);
+						if (!group) throw new Meteor.Error(404, "no group with id "+groupId);
+						return group._id;
+					});
+				}
+				changes.groups = tested_groups;
 			}
 
 			// Coerce faulty end dates
@@ -115,6 +126,7 @@ Meteor.methods({
 
 			// Not allowed to update
 			delete changes.replicaOf;
+			delete changes.groups;
 		}
 
 		// Don't allow moving past events or moving events into the past

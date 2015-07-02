@@ -356,6 +356,12 @@ Template.event.events({
 				editevent.course_id = this.course_id;
 			} else {
 				editevent.region = template.$('.region_select').val();
+
+				var groups = [];
+				if (Router.current().params.query.group) {
+					groups.push(Router.current().params.query.group);
+				}
+				editevent.groups = groups;
 			}
 		} else {
 			// Don't allow setting dates in the past
