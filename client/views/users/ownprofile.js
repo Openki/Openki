@@ -111,19 +111,19 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass != "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				addMessage(mf('profile.passwordMismatch', "Passwords don't match"), 'danger');
+				addMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
 				if (pass.length < minLength) {
-					addMessage(mf('profile.passwordShort', 'Your desired password is too short'), 'danger');
+					addMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'danger');
 					return;
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
 						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'), 'danger');
 					} else {
-						addMessage(mf('profile.passwordChanged', 'changed password'), 'sucess');
+						addMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
 						template.changingPass.set(false);
 					}
 				});

@@ -223,7 +223,7 @@ Template.event.events({
 			var course = this.course_id;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) {
-					addMessage(mf('event.removed', { TITLE: title }, 'Sucessfully removed event "{TITLE}".'), 'success');
+					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
 					if (course) Router.go('showCourse', { _id: course });
 				} else {
 					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
@@ -292,7 +292,7 @@ Template.event.events({
 		
 		//remove file attribute from the event
 		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
-			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Sucessfully removed file {FILENAME}.'), 'success');
+			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
 			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."), 'danger');
 		});		
 	},
