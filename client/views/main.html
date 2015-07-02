@@ -61,11 +61,11 @@
 	</ul>
 </template>
 
-<!-- ///////////// Demo-Page-Ticker ///////////// 
 <template name="ticker">
-	<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
-	{{mf 'menue.Testpage' 'This is only a <b>Testpage</b>. '}}<span style = "padding-left:10em"> </span>
-	{{mf 'menue.Testpage2' 'All data will be erased regularly. '}}<span style = "padding-left:10em"> </span>
-	</marquee>
+	{{#if marquee}}
+		<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
+		{{mf 'menue.Testpage' 'This is only a Testpage. '}}<span style = "padding-left:10em"> </span>
+		{{mf 'menue.Testpage2' 'All data will be erased regularly. '}}<span style = "padding-left:10em"> </span>
+		</marquee>
+	{{/if}}
 </template>
--->

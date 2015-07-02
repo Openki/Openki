@@ -1,6 +1,7 @@
 // ======== DB-Model: ========
 // "_id" -> ID
 // "name" -> string
+// "members" -> [userIds]
 // ===========================
 
 Groups = new Meteor.Collection("Groups");
