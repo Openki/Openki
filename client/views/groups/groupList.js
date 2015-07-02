@@ -5,6 +5,6 @@ Template.groupList.helpers({
 		Template.instance().subscribe('group', groupId);
 		var group = Groups.findOne(groupId);
 		console.log(group)
-		return group && group.name;
+		return group && group.short;
 	}
 });
