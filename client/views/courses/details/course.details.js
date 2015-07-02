@@ -7,9 +7,9 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('courseDetails', this.params._id),
-			    Meteor.subscribe('eventsForCourse', this.params._id),
-			    Meteor.subscribe('discussion', this.params._id),
-			    Meteor.subscribe('groupsFind', { own: false })
+				Meteor.subscribe('eventsForCourse', this.params._id),
+				Meteor.subscribe('discussion', this.params._id),
+				Meteor.subscribe('groupsFind', { own: false })
 			];
 		},
 		data: function () {
@@ -68,7 +68,7 @@ Router.map(function () {
 		//template: 'coursedocs',
 		waitOn: function () {
 			return [
-			    Meteor.subscribe('courseDetails', this.params._id),
+				Meteor.subscribe('courseDetails', this.params._id),
 			]
 		},
 		data: function () {
@@ -83,7 +83,7 @@ Router.map(function () {
 		//template: 'coursehistory',
 		waitOn: function () {
 			return [
-			    Meteor.subscribe('courseDetails', this.params._id)
+				Meteor.subscribe('courseDetails', this.params._id)
 			]
 		},
 		data: function () {
@@ -157,6 +157,6 @@ Template.coursedetails.events({
 Template.coursedetails.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this)
-    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-    $('#nav_courses').addClass('active');
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('#nav_courses').addClass('active');
 }
