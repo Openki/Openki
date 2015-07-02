@@ -31,7 +31,7 @@
 	<div class="courselist_course {{coursestate}} col-xs-12 col-sm-4 col-md-3 col-lg-2">
 		<div class="course_content {{coursestate}} col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
 			<div class="course_name"><h4>{{name}}</h4></div>
-			<div class="course_categories">{{> show_categories}}</div>
+			<div class="course_categories">{{> show_categories}}{{> groupList}}</div>
 		</div>
 		<div class="courselist_course_info col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
 			{{#if hasupcomingevents}}
