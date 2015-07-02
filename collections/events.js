@@ -69,7 +69,6 @@ Meteor.methods({
 		var isNew = eventId === '';
 		if (isNew) {
 			expectedFields.region = String;
-		//	expectedFields.course_id = Match.Optional(String);
 		}
 
 		check(changes, expectedFields);
@@ -98,7 +97,11 @@ Meteor.methods({
 			if (!changes.start || changes.start < now) {
 				throw new Meteor.Error(400, "Event date in the past or not provided");
 			}
-			
+
+			// Inherit groups from the course
+			var course = Courses.findOne(changes.course_id);
+			changes.groups = course.groups;
+
 			// Coerce faulty end dates
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;

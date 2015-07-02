@@ -26,6 +26,7 @@
 </template>
 
 <template name="course">
+	{{#if ready}}
 	<a href="{{pathFor 'showCourse'}}">
 	<div class="courselist_course {{coursestate}} col-xs-12 col-sm-4 col-md-3 col-lg-2">
 		<div class="course_content {{coursestate}} col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
@@ -57,7 +58,7 @@
 						<span class="icon-mini_date"></span>
 					</div>
 				{{/if}}
-			</div>
+				</div>
 			{{else}}
 				<div class="team_status {{#if needsTeam}}no{{else}}yes{{#if is_team}}you{{/if}}{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsTeam}}{{mf 'course.list.status_titles.needs_organizer' 'Needs&nbsp;an&nbsp;organizer'}}{{else}}{{#if is_team}}{{mf 'course.list.status_titles.u_are_organizer' 'You&nbsp;are&nbsp;organizer'}}{{else}}{{mf 'course.list.status_titles.has_team' 'Has&nbsp;a&nbsp;organizer-team'}}{{/if}}{{/if}}">
 					<span class="glyphicon glyphicon-bullhorn"></span>
@@ -75,5 +76,6 @@
 			{{/if}}
 		</div>
 	</div>
-</a>
+	</a>
+	{{/if}}
 </template>
