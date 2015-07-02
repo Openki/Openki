@@ -98,9 +98,11 @@ Meteor.methods({
 				throw new Meteor.Error(400, "Event date in the past or not provided");
 			}
 
-			// Inherit groups from the course
-			var course = Courses.findOne(changes.course_id);
-			changes.groups = course.groups;
+			if (changes.course_id) {
+				// Inherit groups from the course
+				var course = Courses.findOne(changes.course_id);
+				changes.groups = course.groups;
+			}
 
 			// Coerce faulty end dates
 			if (!changes.end || changes.end < changes.start) {

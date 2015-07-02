@@ -85,3 +85,7 @@ Meteor.publish('groupsFind', function(filter) {
 	}
 	return groupsFind(filter);
 });
+
+Meteor.publish('group', function(groupId) {
+	return Groups.find(groupId);
+});
