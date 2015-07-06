@@ -101,6 +101,12 @@ testgroups = [{
 	'description':      'Das Ziel der KommunikationsGuerilla ist das Ziel. Die Kommunikationsguerilla ist das Mittel. Der Zweck ist die Befreiung. Das Mittel zur Befreiung ist der Mensch. Der Mensch, der in der fremdverschuldeten Unmündigkeit liegt.',
 	'members':          ['1u']
 },{
+	'name':        	    'Lern Dich Frei',
+	'short':            'LDF',
+	'claim':            'In 365 Tagen zu einem nachhaltigeren Leben',
+	'description':      '<p>Das Projekt “Lern Dich Frei!” ist als Initiative von Student/innen der Universität Zürich entstanden und bietet während gut eines Jahres Raum für ein breites Spektrum an Themen und öffentlichen Veranstaltungen rund um eine zukunftsfähige Welt.</p><p>Das Ziel des Projektes ist es, nicht nur Wissen zu vermitteln, sondern auch eine Plattform für Expert/innen zu bieten, Netzwerke zu bilden und anregende und umsetzbare Ideen für den Alltag zu liefern.</p><p>Während eines Jahreszyklus’ finden wöchentlich öffentliche Events zu unterschiedlichen Themen statt. Die Teilnahme ist in der Regel kostenlos. Die Agenda ist <a href="http://lerndichfrei.ch/Calender.html">hier</a> zu finden - nutze diese Gelegenheit und nimm an einer unserer Veranstaltungen teil!</p><p>Wichtig: es gibt noch viel Raum für weitere Events, und Deine Ideen sind äusserst willkommen. Mehr zu Möglichkeiten, dich einzubringen, erfährst du <a href="http://lerndichfrei.ch/MakeEvent.html">hier</a>.</p>',
+	'members':          ['greg']
+},{
 	'name':        	    '',
 	'short':            '',
 	'claim':            '',
