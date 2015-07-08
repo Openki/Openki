@@ -111,6 +111,9 @@ Template.course.onCreated(function() {
 });
 
 Template.course.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
 	this.$('.ellipsis').dotdotdot({});
+}
+
+Template.courseStatus.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
 }
