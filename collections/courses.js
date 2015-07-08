@@ -261,7 +261,8 @@ Meteor.methods({
 			categories:  Match.Optional([String]),
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
-			roles:       Match.Optional(Object)
+			roles:       Match.Optional(Object),
+			groups:	     Match.Optional([String])
 		});
 
 		var user = Meteor.user();
@@ -337,6 +338,17 @@ Meteor.methods({
 
 		set.time_lastedit = new Date
 		if (isNew) {
+			// You can add newly created courses to any group
+			var tested_groups = [];
+			if (changes.groups) {
+				tested_groups = _.map(changes.groups, function(groupId) {
+					var group = Groups.findOne(groupId);
+					if (!group) throw new Meteor.Error(404, "no group with id "+groupId);
+					return group._id;
+				});
+			}
+			set.groups = tested_groups;
+
 			/* region cannot be changed */
 			var region = Regions.findOne({_id: changes.region})
 			if (!region) throw Meteor.error(404, 'region missing');

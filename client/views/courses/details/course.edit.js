@@ -85,6 +85,12 @@ Template.course_edit.events({
 					alert("Please select a region")
 					return;
 				}
+
+				var groups = [];
+				if (Router.current().params.query.group) {
+					groups.push(Router.current().params.query.group);
+				}
+				changes.groups = groups;
 			}
 			
 			Meteor.call("save_course", courseId, changes, function(err, courseId) {
