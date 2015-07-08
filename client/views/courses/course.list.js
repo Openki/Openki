@@ -112,7 +112,5 @@ Template.course.onCreated(function() {
 
 Template.course.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
-	this.$('.ellipsis').dotdotdot({
-		//CONFIGURATION GOES HERE
-	});
+	this.$('.ellipsis').dotdotdot({});
 }
