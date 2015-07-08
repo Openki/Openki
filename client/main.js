@@ -77,7 +77,7 @@ Meteor.startup(function() {
 
 	for (l in desiredLangs) {
 		var langCandidate = desiredLangs[l];
-		if (useLocale(langCandidate)) break;
+		if (langCandidate && useLocale(langCandidate)) break;
 	}
 	
 	Deps.autorun(function() {
