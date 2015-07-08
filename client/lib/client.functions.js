@@ -1,9 +1,3 @@
-// Timestamp, das muss man eigentlich auf der Serverseite machen,
-// damit mans nicht faken kann?? Noch anschauen.
-get_timestamp = function (){
-	var now = new Date();
-	return now.getTime();
-}
 
 havingRole = function(members, role) {
 	return _.reduce(members, function(ids, member) {
