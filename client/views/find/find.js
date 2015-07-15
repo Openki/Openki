@@ -24,102 +24,81 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var searchChanged = function(event, instance) {
-	var queryParams = [];
+var updateUrl = function(event, instance) {
+	instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked')).done();
 
-	instance.hasUpcomingEvent.set(!!$("#hasUpcomingEvent")[0].checked);
-	if (instance.hasUpcomingEvent.get()) {
-		queryParams.push("hasUpcomingEvent");
-	}
-
-	var cats = instance.categories.get();
-	if (cats.length) {
-		queryParams.push('category='+cats.join(','));
-	}
-
-	options = {}
+	var queryParams = _.map(instance.filter.toParams(), function(param, name) { return name+'='+param; });
+	var options = {}
 	if (queryParams.length) {
 		options.query = queryParams.join('&');
 	}
 
-	Router.go('find', { search: $('.searchInput').val().replace("/", " ")}, options);
+	Router.go('find', {}, options);
 	event.preventDefault();
 }
 
 Template.find.events({
-	'submit': searchChanged,
-	'change .search': searchChanged,
+	'submit': updateUrl,
+	'change .search': updateUrl,
 	'keyup .searchInput': _.debounce(function(event, instance) {
-		instance.search.set($('.searchInput').val());
+		instance.filter.add('search', $('.searchInput').val()).done();
+		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 	
 	'click .category': function(event, instance) {
-		var cats = instance.categories.get();
-		cats.push(""+this);
-		instance.categories.set(_.uniq(cats));
-		searchChanged(event, instance);
+		instance.filter.add('categories', ""+this).done();
+		updateUrl(event, instance);
 		return false;
 	},
 
 	'click .removeCategoryFilter': function(event, instance) {
-		var cats = instance.categories.get();
-		var remCat = ''+this; // comes in a s string object, coerce to string
-		instance.categories.set(_.without(cats, remCat));
-		searchChanged(event, instance);
+		instance.filter.remove('categories', ''+this).done();
+		updateUrl(event, instance);
 		return false;
 	}
 });
 
-var readFilter = function(instance) {
-	var filter = {};
-	if (instance.hasUpcomingEvent.get()) {
-		filter.hasUpcomingEvent = true;
-	}
-
-	var categories = instance.categories.get();
-	if (categories.length) {
-		filter.categories = categories;
-	}
-
-	return filter;
-}
 
 Template.find.helpers({
 	'search': function() {
-		return Template.instance().search.get();
+		return Template.instance().filter.get('search');
 	},
 
 	'hasUpcomingEventsChecked': function() {
-		if (Template.instance().hasUpcomingEvent.get()) return "checked";
+		if (Template.instance().filter.get('upcomingEvent')) return "checked";
 		return "";
 	},
 	
 	'newCourse': function() {
 		var instance = Template.instance();
 		return {
-			name: instance.search.get(),
+			name: instance.filter.get('search'),
 			region: Session.get('region')
 		}
 	},
 
 	'categories': function() {
-		return Template.instance().categories.get();
+		return Template.instance().filter.get('categories');
 	},
 
 	'results': function() {
-		var instance = Template.instance();
+		var filterQuery = Template.instance().filter.toQuery();
 
-		// Wonky: We should use readFilter() here, like the template
-		// subscriptions do. But if we do that the hasUpcomingEvents filter
-		// will exclude all courses because they don't have their event loaded
-		// yet, their template will do that.
-		var filter = {};
+		// Wonky: Clear the predicate that filters for upcoming events only
+		// Leaving the filter would exclude all courses because they don't
+		// have their event loaded yet, their template will do that.
+		// Here we rely on the filtering done server-side, and that no other
+		// subscirption loads courses.
+		// There are ways to do this properly...
+		delete filterQuery.upcomingEvent;
 
-		return coursesFind(Session.get('region'), instance.search.get(), filter, 36);
+		return coursesFind(filterQuery, 36);
 	},
 
 	'eventResults': function() {
-		return eventsFind({ query: Template.instance().search.get(), standalone: true }, 10);
+		var filterQuery = Template.instance().filter.toQuery();
+		filterQuery.standalone = true;
+		return eventsFind(filterQuery, 10);
 	},
 
 	'ready': function() {
@@ -130,31 +109,28 @@ Template.find.helpers({
 Template.find.onCreated(function() {
 	var instance = this;
 
-	// The page tracks two types of state
-	// One is the state of the reactive instance vars which change page
-	// content but not URL. The other type is modification of the URL which
-	// is fed back onto the instance vars.
-	instance.search = new ReactiveVar('');
-	instance.hasUpcomingEvent = new ReactiveVar(false);
-	instance.categories = new ReactiveVar([]);
+	var filter = Filtering(CoursePredicates);
+	instance.filter = filter;
 
 	// Read URL state
 	instance.autorun(function() {
 		var data = Template.currentData();
 		var query = data.query || {};
 
-		instance.search.set(data.search ? data.search : '');
-		instance.hasUpcomingEvent.set(!!(query.hasUpcomingEvent));
-		instance.categories.set(query.category ? query.category.split(',') : []);
+		filter
+			.clear()
+			.add('region', Session.get('region'))
+			.read(query)
+			.done();
 	});
 
 	// Keep old subscriptions around until the new ones are ready
 	// This avoids courses blinking out and back when we renew the subscriptions
-	instance.courseSub = false;
-	instance.eventSub = false;
+	var courseSub = false;
+	var eventSub = false;
 	var oldSubs = [];
 	var stopOldSubs = function() {
-		if (instance.courseSub.ready() && instance.eventSub.ready()) {
+		if (courseSub.ready() && eventSub.ready()) {
 			_.map(oldSubs, function(sub) { sub.stop() });
 			oldSubs = [];
 		}
@@ -162,14 +138,15 @@ Template.find.onCreated(function() {
 
 	// Update whenever instance vars change
 	instance.autorun(function() {
-		var search = instance.search.get();
-		var region = Session.get('region');
+		var filterQuery = filter.toQuery();
 
-		if (instance.courseSub) oldSubs.push(instance.courseSub);
-		instance.courseSub = instance.subscribe('coursesFind', region, search, readFilter(instance), 36, stopOldSubs)
+		if (courseSub) oldSubs.push(courseSub);
+		courseSub = instance.subscribe('coursesFind', filterQuery, 36, stopOldSubs)
 
-		if (instance.eventSub) oldSubs.push(instance.eventSub);
-		instance.eventSub = instance.subscribe('eventsFind', { query: search, standalone: true, region: region }, 10, stopOldSubs);
+		// Here we show events only when they're not attached to a course
+		filterQuery.standalone = true;
+		if (eventSub) oldSubs.push(eventSub);
+		eventSub = instance.subscribe('eventsFind', filterQuery, 10, stopOldSubs);
 	});
 });
 

@@ -117,10 +117,10 @@ maySubscribe = function(operatorId, course, userId, role) {
 }
 
 
-coursesFind = function(region, query, filter, limit) {
+coursesFind = function(filter, limit) {
 	var find = {}
-	if (region != 'all') find.region = region
-	if (filter.hasUpcomingEvent) {
+	if (filter.region && filter.region != 'all') find.region = filter.region
+	if (filter.upcomingEvent) {
 		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
 		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
 		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
@@ -137,8 +137,8 @@ coursesFind = function(region, query, filter, limit) {
 		find.categories = { $all: filter.categories };
 	}
 	
-	if (query) {
-		var searchTerms = query.split(/\s+/);
+	if (filter.query) {
+		var searchTerms = filter.query.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
 			return { $or: [
 				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
