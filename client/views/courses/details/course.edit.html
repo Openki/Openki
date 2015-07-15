@@ -15,31 +15,23 @@
 				<div id="editform_description">{{{description}}}</div>
 			</div>
 			<div id='editform_categories'>
-				<div id="show_categories_to_edit" style="{{#unless _id}}display:none;{{/unless}}">
-				<button type="button" class="edit" role="button">
-					<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
-					{{#if categories}}{{>show_categories}}{{/if}}
-					{{#unless categories}}{{mf 'course.edit.no.categories' 'No categories'}}{{/unless}}
-					<span class="glyphicon glyphicon-edit"></span>
-					{{mf 'course.edit.categories-button' 'Edit'}}
-				</button>
-				</div>
-				<div id="edit_categories" style="{{#if _id}}display:none;{{/if}}">
+				{{#if editingCategories}}
+				<div id="edit_categories">
 					<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
 					<ul class='categories'>
-						{{#each available_categories false}}
-						<li id="cat_{{this}}">
+						{{#each availableCategories}}
+						<li class="{{activeCategory}}">
 							<label class="{{this}}">
-								<input type='checkbox' class='checkbox' name='{{this}}' value="1"  {{checked this ../categories}} style="display: inline">
+								<input type='checkbox' class='checkbox cat_{{this}}' name='{{this}}' value="1"  {{checkCategory}} style="display: inline">
 								{{categoryName}}
-								<span class="caret {{this}}"></span>
+								<span class="caret {{activeCategory}}"></span>
 							</label>
-							<ul class='subcategories' style="display:{{show_subcats this ../categories}}">
-								{{#each available_categories this}}
+							<ul class='subcategories'>
+								{{#each availableSubcategories this}}
 								<li>
 									<div class="checkbox">
 										<label class="{{this}}">
-											<input type='checkbox' class='checkbox_sub'  name='{{this}}' value="1" {{checked this ../../categories}}>
+											<input type='checkbox' class='checkbox_sub cat_{{this}}'  name='{{this}}' value="1" {{checkCategory}}>
 											{{categoryName}}
 										</label>
 									</div>
@@ -50,7 +42,15 @@
 						{{/each}}
 					</ul>
 				</div>
- 
+				{{else}}
+				<button type="button" class="editCategories" role="button">
+					<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
+					{{#if categories}}{{>show_categories}}{{/if}}
+					{{#unless categories}}{{mf 'course.edit.no.categories' 'No categories'}}{{/unless}}
+					<span class="glyphicon glyphicon-edit"></span>
+					{{mf 'course.edit.categories-button' 'Edit'}}
+				</button>
+				{{/if}}
 
 			</div>
 			<div class="course_edit_roles"> 
@@ -60,7 +60,7 @@
 					<li>
 						<div class="checkbox">
 							<label class="{{type}}">
-								<input type="checkbox" class='roleselection {{this.type}}' name='{{type}}' {{checked type ../roles}}>
+								<input type="checkbox" class='roleselection {{this.type}}' name='{{type}}' {{checkRole}}>
 								<span class="{{icon}}"></span>
 								{{mf roleDescription}}
 							</label>

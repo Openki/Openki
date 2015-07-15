@@ -15,15 +15,18 @@ Router.map(function () {
 		data: function () {
 			var self = this;
 			var course = Courses.findOne({_id: this.params._id});
+					
 			if (!course) return;
-			   
+
+			var events = Events.find({course_id: this.params._id});
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
 			var data = {
 				edit: !!this.params.query.edit,
 				roles_details: loadroles(course),
 				course: course,
-				member: member
+				member: member,
+				courseEvents: events,
 			};
 			if (mayEdit(Meteor.user(), course)) {
 				data.editableName = makeEditable(
@@ -72,7 +75,7 @@ Router.map(function () {
 			]
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
+			var course = Courses.findOne({_id: this.params._id});
 			return {
 				course: course
 			};
