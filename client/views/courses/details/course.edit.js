@@ -1,16 +1,31 @@
 "use strict";
 
+Template.course_edit.created = function() {
+	// Show category selection right away for new courses
+	var editingCategories = !this.data || !this.data._id;
+	this.editingCategories = new ReactiveVar(editingCategories);
+	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+}
+
 Template.course_edit.helpers({
 	query: function() {
 		return Session.get('search')
 	},
 
-	available_categories: function(parent) {
-		if (parent) {
-			return categories[parent];
-		} else {
-			return Object.keys(categories);
-		}
+	availableCategories: function() {
+		return Object.keys(categories);
+	},
+
+	availableSubcategories: function(category) {
+		// Hide if parent categories not selected
+		var selectedCategories = Template.instance().selectedCategories.get();
+		if (selectedCategories.indexOf(category) < 0) return [];
+
+		return categories[category];
+	},
+
+	editingCategories: function() {
+		return Template.instance().editingCategories.get();
 	},
 	
 	available_roles: function() {
@@ -21,19 +36,24 @@ Template.course_edit.helpers({
 		return 'roles.'+this.type+'.description';
 	},
 
-	// Emit 'checked' string if id shows up as member or property of cats
-	checked: function(cat, cats) {
-		if (!cats) return;
-		if (cats.length) {
-			return cats.indexOf(cat) >= 0 ? 'checked' : ''
+	activeCategory: function() {
+		var selectedCategories = Template.instance().selectedCategories.get();
+		if (selectedCategories.length && selectedCategories.indexOf(this) >= 0) {
+			return 'active';
+		}
+		return '';
+	},
+
+	checkCategory: function() {
+		var selectedCategories = Template.instance().selectedCategories.get();
+		if (selectedCategories.length) {
+			return selectedCategories.indexOf(this) >= 0 ? 'checked' : ''
 		}
 	},
-	
-	show_subcats: function(id, cats) {
-		if (!cats) return 'none';
-		if (cats.length) {
-			return cats.indexOf(id) >= 0 ? 'block' : 'none'
-		}
+
+	checkRole: function() {
+		var instance = Template.instance();
+		return instance.data && instance.data.roles && instance.data.roles.indexOf(this.type) >= 0 ? 'checked' : ''
 	},
 	
 	regions: function() {
@@ -52,7 +72,7 @@ Template.course_edit.rendered = function() {
 }
 
 Template.course_edit.events({
-	'submit form, click button.save': function (ev) {
+	'submit form, click button.save': function (ev, instance) {
 		ev.preventDefault()
 		try {
 			if (pleaseLogin()) return;
@@ -67,7 +87,7 @@ Template.course_edit.events({
 
 			var changes = {
 				description: $('#editform_description').html(),
-				categories: $('#editform_categories input:checked').map(function(){ return this.name}).get(),
+				categories: instance.selectedCategories.get(),
 				name: $('#editform_name').val(),
 				roles: roles
 			}
@@ -118,28 +138,26 @@ Template.course_edit.events({
 		}
 	},
 
-	'click #show_categories_to_edit': function(event){
-		$('#show_categories_to_edit').toggle(1000);
-		$('#edit_categories').toggle(1000);
+	'click button.editCategories': function (event, template) {
+		Template.instance().editingCategories.set(true);
 	},
 
-	'change .categories input.checkbox': function(){
-		$('#cat_' + this +" .subcategories").toggle();
-		$('span.caret' + "." + this).toggleClass('active');
-		$('label' + "." + this).toggleClass('active');
+	'change .categories input': function(event, instance) {
+		var selectedCategories = instance.selectedCategories.get();
+		var checked = instance.$('input.cat_'+this).prop('checked');
+		if (checked) {
+			selectedCategories.push(this);
+			selectedCategories = _.uniq(selectedCategories);
+		} else {
+			selectedCategories = _.without(selectedCategories, this);
 
-		var is_checked = $('#cat_' + this +" .checkbox").first().prop('checked');
-		if(!is_checked) {
-			$('#cat_' + this +" .checkbox_sub").prop('checked', false);
+			if (categories[this]) {
+				// Remove all the subcategories as well
+				selectedCategories = _.difference(selectedCategories, categories[this]);
+			}
 		}
-	},
 
-	'change .categories input.checkbox_sub': function() {
-		$('label' + "." + this).toggleClass('active');
-	},
-
-	'change .roles_list input.roleselection': function() {
-		$('label' + "." + this.type).toggleClass('active');
+		instance.selectedCategories.set(selectedCategories);
 	}
 });
 
