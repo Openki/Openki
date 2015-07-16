@@ -141,8 +141,8 @@ coursesFind = function(filter, limit) {
 		find.groups = filter.group;
 	}
 	
-	if (filter.query) {
-		var searchTerms = filter.query.split(/\s+/);
+	if (filter.search) {
+		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
 			return { $or: [
 				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
