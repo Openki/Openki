@@ -18,15 +18,13 @@ Router.map(function () {
 					
 			if (!course) return;
 
-			var events = Events.find({course_id: this.params._id});
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
 			var data = {
 				edit: !!this.params.query.edit,
 				roles_details: loadroles(course),
 				course: course,
-				member: member,
-				courseEvents: events,
+				member: member
 			};
 			if (mayEdit(Meteor.user(), course)) {
 				data.editableName = makeEditable(
@@ -138,8 +136,26 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	mobileViewport: function() {
 		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 		return mobile;
+	},	
+	
+});
+
+Template.coursehistory.helpers({
+	events_list_past: function() {
+		var today= new Date();
+		return Events.find({course_id:this.course._id, start: {$lt:today}}, {sort: {start: -1} } );
 	}
 });
+
+Template.coursedocs.helpers({
+	events_list: function() {
+		var today= new Date();
+		console.log("this");
+		console.log(this);
+		return Events.find({course_id:this.course._id, start: {$gt:today}}, {sort: {start: 1}});
+	}
+});
+
 
 Template.coursedetails.events({
 	'click button.del': function () {
