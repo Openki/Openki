@@ -69,13 +69,13 @@ Template.course.helpers({
 
 	coursestate: function() {
 		var today = new Date();
-		
+
 		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
-		
+
 		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
 		if (past) return 'haspastevents';
-						
+
 		return 'proposal';
 	},
 
@@ -108,6 +108,21 @@ Template.course.helpers({
 
 Template.course.onCreated(function() {
 	this.eventSub = this.subscribe('nextEvent', this.data._id);
+});
+
+Template.course.events({
+	"mouseover a.category": function(event, template){
+		 template.$('.courselist_course').addClass('category-focus-mode');
+	},
+	"mouseout a.category": function(event, template){
+		 template.$('.courselist_course').removeClass('category-focus-mode');
+	},
+	"mouseover a.group": function(event, template){
+		 template.$('.courselist_course').addClass('category-focus-mode');
+	},
+	"mouseout a.group": function(event, template){
+		 template.$('.courselist_course').removeClass('category-focus-mode');
+	}
 });
 
 Template.course.rendered = function() {
