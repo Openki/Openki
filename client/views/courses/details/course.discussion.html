@@ -2,16 +2,27 @@
 	{{#if writing}}
 		{{> writePostDialog}}
 	{{else}}
-		{{#if parent}}
-			<button type="button" class="write btn btn-primary" role="button">
-				<span class="glyphicon glyphicon-comment"></span>
-				{{mf 'course.discussion.comment_answer' 'Answer'}}
-			</button>
+	
+		{{#if editing}}
+			{{> editPostDialog}}
 		{{else}}
-			<button type="button" class="write btn btn-primary">
-				<span class="glyphicon glyphicon-pencil"></span>&nbsp;
-				{{mf 'course.discussion.write_comment' 'write a comment'}}
-			</button>
+				{{#if parent}}
+					<button type="button" class="write btn btn-primary" role="button">
+						<span class="glyphicon glyphicon-comment"></span>
+						{{mf 'course.discussion.comment_answer' 'Answer'}}
+					</button>
+					<button type="button" class="edit btn btn-primary" role="button">
+						<span class="glyphicon glyphicon-comment"></span>
+						{{mf 'course.discussion.comment_edit' 'Edit'}}
+					</button>
+					
+					
+				{{else}}
+					<button type="button" class="write btn btn-primary">
+						<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						{{mf 'course.discussion.write_comment' 'write a comment'}}
+					</button>
+				{{/if}}
 		{{/if}}
 	{{/if}}
 </template>
@@ -102,4 +113,28 @@
 		{{/each}}
 	</div>
 	{{/if}}
+</template>
+
+
+
+
+
+<template name="editPostDialog">
+
+	<div class="popup">
+		<form name="form_edit">
+			<input type="text" id="edit_title" class="form-control" placeholder="" /><br>
+			<textarea cols="70" rows="5" id="edit_text" class="form-control" placeholder=""></textarea><br>
+		
+			<button type="button" class="update btn btn-primary">
+				{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
+			</button>
+		
+
+		
+			<button type="button" class="cancelEdit btn btn-danger">
+				{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+			</button>
+		</form>
+	</div>
 </template>

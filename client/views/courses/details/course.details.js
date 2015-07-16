@@ -150,8 +150,6 @@ Template.coursehistory.helpers({
 Template.coursedocs.helpers({
 	events_list: function() {
 		var today= new Date();
-		console.log("this");
-		console.log(this);
 		return Events.find({course_id:this.course._id, start: {$gt:today}}, {sort: {start: 1}});
 	}
 });
