@@ -88,6 +88,12 @@ Meteor.methods({
 		
 		comment.user_ID = user._id;
 		comment.time_created = new Date();
+		
+		var course = Courses.findOne(comment.course_ID);
+		if (!course) {
+			throw new Meteor.Error(404, "course not found");
+		}
+		
 		comment.title = saneText(comment.title).substr(0, 200);
 		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
 		
