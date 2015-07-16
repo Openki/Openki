@@ -21,19 +21,20 @@
 					{{mf 'find.only with events_checkbox' 'only with events'}}
 				</label>
 			</div>
+			{{#if categories}}
 			<div class="filter_categories">
-				{{#if categories}}
 				<h5>{{mf 'find.filter.categories' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=categories.length}}</h5>
 				<ul>
 				{{#each categories}}
 					<li>
-						{{categoryName}}&nbsp;
+						<span class="category">{{categoryName}}</span>
+						&nbsp;
 						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove filter'}}"></span>
 					</li>
 				{{/each}}
 				</ul>
-				{{/if}}
 			</div>
+			{{/if}}
 		</div>
 	</div>
 	<div class="courselist_results">
