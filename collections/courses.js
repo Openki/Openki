@@ -133,8 +133,12 @@ coursesFind = function(filter, limit) {
 		find['members.roles'] = { $ne: 'team' }
 	}
 	
-	if (filter.categories) {	
+	if (filter.categories) {
 		find.categories = { $all: filter.categories };
+	}
+
+	if (filter.group) {
+		find.groups = filter.group;
 	}
 	
 	if (filter.query) {

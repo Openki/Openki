@@ -55,7 +55,19 @@ Template.find.events({
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
-	}
+	},
+
+	'click .group': function(event, instance) {
+		instance.filter.add('group', ""+this).done();
+		updateUrl(event, instance);
+		return false;
+	},
+
+	'click .removeGroupFilter': function(event, instance) {
+		instance.filter.remove('group', ''+this._id).done();
+		updateUrl(event, instance);
+		return false;
+	},
 });
 
 
@@ -79,6 +91,12 @@ Template.find.helpers({
 
 	'categories': function() {
 		return Template.instance().filter.get('categories');
+	},
+
+	'group': function() {
+		var groupId = Template.instance().filter.get('group');
+		if (!groupId) return false;
+		return Groups.findOne(groupId);
 	},
 
 	'results': function() {
