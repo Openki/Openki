@@ -1,0 +1,100 @@
+#history {
+    .make-sm-column(12);
+    .make-xs-column(12);
+    .no-padding;
+    padding-bottom: 10px;
+
+    * {
+        .transition(0.5s)
+    }
+
+    .timeline-pre {
+        .make-sm-column(12);
+        .make-xs-column(12);
+        .no-padding;
+        height: 30px;
+
+        .timeline-start-container {
+            .make-sm-column-offset(3);
+            .make-sm-column(1);
+            .make-xs-column(1);
+            .no-padding;
+            height: 100%;
+
+            .timeline-start {
+                margin: auto;
+                width: 1px;
+                height: 100%;
+                background: @brand-primary;
+            }
+        }
+
+        .timeline-header {
+            .make-sm-column(8);
+            .make-xs-column(8);
+            .no-padding;
+        }
+    }
+
+    .timeline {
+        .make-sm-column(4);
+        .make-xs-column(4);
+        .no-padding;
+        height: 20px;
+
+        .timeline-eventdate {
+            .make-sm-column(9);
+            .make-xs-column(9);
+            .no-padding;
+            color: rgb(109, 112, 112);
+            text-align: right;
+
+            &.active {
+                color: #333;
+            }
+        }
+
+        .timeline-eventline-container {
+            .make-sm-column(3);
+            .make-xs-column(3);
+            .no-padding;
+            height: 100%;
+
+            .timeline-eventline {
+                margin: auto;
+                background: @brand-primary;
+                height: 100%;
+                width: 1px;
+            }
+
+            .timeline-eventpoint {
+                position: relative;
+                bottom: 13px;
+                margin: auto;
+                width: 7px;
+                height: 7px;
+                background: @brand-primary;
+                border-radius: 50% !important;
+
+                &.active {
+                    background: @brand-danger;
+                }
+            }
+        }
+    }
+
+    .coursehistory-event {
+        .make-xs-column(8);
+        .make-sm-column(8);
+        .no-padding;
+        height: 20px;
+
+        &:hover a {
+            color: #333;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}

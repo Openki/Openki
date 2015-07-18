@@ -1,27 +1,30 @@
 <template name="coursehistory">
-    <div class="beta_inform">
-    <!--h3>In a later Version of this Software you can see the history of edits and enrolments here.</h3-->
     {{#if events_list_past}}
-        <!--h3>{{mf 'course.title.Past events' 'Past events'}}</h3-->
-        
-        <div style="margin-top:10px;">
-		{{#each events_list_past}}
-			<div class="container-fluid">
-				
-				<div style="float:left; margin-right:20px;">
-					<a href="{{pathFor 'showEvent'}}">
-						{{this.title}}
-					</a>
-				</div>
-				<div>
-					{{dateformat_mini_fullmonth start}}
-				</div>
-			</div>				
-		{{/each}}
-		</div>
-    {{else}}
-        <p>No past events for this course.</p>
-    {{/if}}
+    <div class="timeline-pre">
+        <div class="timeline-start-container">
+            <div class="timeline-start"></div>
+        </div>
+        <div class="timeline-header">
+            <h5>{{mf 'course.title.Past events' 'Past events'}}</h5>
+        </div>
     </div>
-       
+	{{#each events_list_past}}
+    <div class="timeline">
+        <div class="timeline-eventdate {{this._id}}">
+            {{dateformat_mini_fullmonth start}}
+        </div>
+        <div class="timeline-eventline-container">
+            <div class="timeline-eventline"></div>
+            <div class="timeline-eventpoint {{this._id}}"></div>
+        </div>
+    </div>
+    <div class="coursehistory-event">
+		<a href="{{pathFor 'showEvent'}}">
+			{{this.title}}
+		</a>
+	</div>
+	{{/each}}
+    {{else}}
+    <p>No past events for this course.</p>
+    {{/if}}
 </template>
