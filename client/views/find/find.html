@@ -12,29 +12,35 @@
 			<div class="search_filter_header">
 				<h4>
 					<span class="glyphicon glyphicon-filter"></span>
-					{{mf 'find.search_filter.title' 'Filter results'}}
+					{{mf 'find.search_filter.title' 'Filter:'}}
 				</h4>
 			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
-					{{mf 'find.only with events_checkbox' 'only with events'}}
-				</label>
+			<div class="search_events">
+				<h4>Events</h4>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" value="" {{hasUpcomingEventsChecked}}>
+						{{mf 'find.only with events_checkbox' 'only with events'}}
+					</label>
+				</div>
 			</div>
-			{{#if categories}}
 			<div class="filter_categories">
-				<h5>{{mf 'find.filter.categories' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=categories.length}}</h5>
+				{{#if categories}}
+				<h4>{{mf 'find.filter.categories.selected' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=categories.length}}</h4>
 				<ul>
 				{{#each categories}}
 					<li>
 						<span class="category">{{categoryName}}</span>
 						&nbsp;
-						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove filter'}}"></span>
+						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove category from filter'}}"></span>
 					</li>
 				{{/each}}
 				</ul>
+				{{else}}
+				<h4>{{mf 'find.filter.categories' 'Categories'}}</h4>
+				{{mf 'find.filter.categories.explanation' 'Click on a category to add it to the filter.'}}
+				{{/if}}
 			</div>
-			{{/if}}
 		</div>
 	</div>
 	<div class="courselist_results">
