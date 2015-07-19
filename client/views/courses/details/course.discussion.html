@@ -1,118 +1,121 @@
 <template name="newPost">
-	{{#if writing}}
-		{{> writePostDialog}}
-	{{else}}
-	
-		{{#if editing}}
-			{{> editPostDialog}}
-		{{else}}
-				{{#if parent}}
-					<button type="button" class="write btn btn-primary" role="button">
-						<span class="glyphicon glyphicon-comment"></span>
-						{{mf 'course.discussion.comment_answer' 'Answer'}}
-					</button>
-					<button type="button" class="edit btn btn-primary" role="button">
-						<span class="glyphicon glyphicon-comment"></span>
-						{{mf 'course.discussion.comment_edit' 'Edit'}}
-					</button>
-					
-					
-				{{else}}
-					<button type="button" class="write btn btn-primary">
-						<span class="glyphicon glyphicon-pencil"></span>&nbsp;
-						{{mf 'course.discussion.write_comment' 'write a comment'}}
-					</button>
-				{{/if}}
-		{{/if}}
-	{{/if}}
+{{#if writing}}
+{{> writePostDialog}}
+{{else}} <!-- Part of 'writing' helper statement -->
+{{#if editing}}
+{{> editPostDialog}}
+{{else}} <!-- Part of 'editing' helper statement -->
+{{#if parent}}
+<button type="button" class="write btn btn-primary" role="button">
+	<span class="glyphicon glyphicon-comment"></span>
+	&nbsp;
+	{{mf 'course.discussion.comment_answer' 'Answer'}}
+</button>
+<button type="button" class="edit btn btn-primary" role="button">
+	<span class="glyphicon glyphicon-comment"></span>
+	&nbsp;
+	{{mf 'course.discussion.comment_edit' 'Edit'}}
+</button>
+{{else}} <!-- Part of 'parent' helper statement -->
+<button type="button" class="write btn btn-primary">
+	<span class="glyphicon glyphicon-pencil"></span>
+	&nbsp;
+	{{mf 'course.discussion.write_comment' 'write a comment'}}
+</button>
+{{/if}} <!-- End 'parent' helper statement -->
+{{/if}} <!-- End 'editing' helper statement -->
+{{/if}} <!-- End 'writing' helper statement -->
 </template>
 
 <template name="writePostDialog">
-	<h3>
-	{{#if parent}}
-		{{mf 'course.discussion.answer_comment' 'write answer'}}
-	{{else}}
-		{{mf 'course.discussion.write_comment'}}
-	{{/if}}
-	</h3>
-	<div class="popup">
-		<form name="form_post">
-			<input type="text" id="post_title" class="form-control" placeholder="{{mf 'course.discussion.comment_title' 'Title'}}" /><br>
-			<textarea cols="70" rows="5" id="post_text" class="form-control" placeholder="Your comment.."></textarea><br>
+<h3>
+{{#if parent}}
+	{{mf 'course.discussion.answer_comment' 'write answer'}}
+{{else}}
+	{{mf 'course.discussion.write_comment'}}
+{{/if}}
+</h3>
+<div class="popup">
+	<form name="form_post">
+		<input type="text" id="post_title" class="form-control" placeholder="{{mf 'course.discussion.comment_title' 'Title'}}" />
+		<br>
+		<textarea cols="70" rows="5" id="post_text" class="form-control" placeholder="Your comment.."></textarea>
+		<br>
 		{{#if parent}}
-			<button type="button" class="add btn btn-primary">
-				{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
-			</button>
-		{{else}}
-			<button type="button" class="add btn btn-primary">
-				{{mf 'course.discussion.comment_btn.write' 'Write!'}}
-			</button>
-		{{/if}}
-			<button type="button" class="cancel btn btn-danger">
-				{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
-			</button>
-		</form>
-	</div>
+		<button type="button" class="add btn btn-primary">
+			{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+		</button>
+		{{else}} <!-- Part of 'parent' helper statement -->
+		<button type="button" class="add btn btn-primary">
+			{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+		</button>
+		{{/if}} <!-- End 'parent' helper statement -->
+		<button type="button" class="cancel btn btn-danger">
+			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+		</button>
+	</form>
+</div>
 </template>
 
 <template name="discussion">
-	<div class="discussion_titlebar">
-		<div class="container-fluid">
-			<p>
-				<span class="glyphicon glyphicon-comment"></span>&nbsp;
-				{{mf 'course.title.Discussion' 'Discussion'}}
-			</p>
+<div class="discussion_titlebar">
+	<div class="container-fluid">
+		<p>
+			<span class="glyphicon glyphicon-comment"></span>
+			&nbsp;
+			{{mf 'course.title.Discussion' 'Discussion'}}
+		</p>
+	</div>
+</div>
+{{> newPost}}
+{{#if post}}
+<div class="container-fluid discussion_conversation_container">
+	{{#each post}}
+	{{#if parent_ID}}
+	<div class="discussion_conversation col-sm-12">
+		<div class="discussion_comment col-sm-12 no-padding">
+			<div class="col-xs-3 col-sm-3 col-sm-offset-1 no-padding">
+				<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+				<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+					{{fromNow time_created}}
+				</span>
+			</div>
+			<div class="col-xs-9 col-sm-8 no-padding">
+				<h4 class="comment_title">{{this.title}}</h4>
+				<p>{{{text}}}</p>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+			<hr class="comment_hr">
 		</div>
 	</div>
-	{{> newPost}}
-	{{#if post}}
-	<div class="container-fluid discussion_conversation_container">
-		{{#each post}}
-			{{#if parent_ID}}
-			<div class="discussion_conversation col-sm-12">
-				<div class="discussion_comment col-sm-12 no-padding">
-					<div class="col-xs-3 col-sm-3 col-sm-offset-1 no-padding">
-						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
-						<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
-							{{fromNow time_created}}
-						</span>
-					</div>
-					<div class="col-xs-9 col-sm-8 no-padding">
-						<h4 class="comment_title">{{this.title}}</h4>
-						<p>{{{text}}}</p>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-					<hr class="comment_hr">
-				</div>
+	{{else}} <!-- Part of 'parent_ID' helper statement -->
+	<div class="discussion_conversation col-sm-12">
+		<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 no-padding-left">
+				<h4 class="comment_user">{{>profilelink user_ID}}</h4>
+				<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
+					{{fromNow time_created}}
+				</span>
 			</div>
-			{{else}}
-			<div class="discussion_conversation col-sm-12">
-				<div class="post col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 no-padding-left">
-						<h4 class="comment_user">{{>profilelink user_ID}}</h4>
-						<span class="comment_time_created" data-toggle="tooltip" data-placement="bottom" title="{{fullDate time_created}}">
-							{{fromNow time_created}}
-						</span>
-					</div>
-					<div class="col-xs-12 col-sm-7 no-padding">
-						<h4 class="comment_title">{{this.title}}</h4>
-						<p>{{{text}}}</p>
-					</div>
-					<div class="col-xs-12 col-sm-2 no-padding">
-						<span class="pull-right">
-							{{> newPost parent=this}}
-						</span>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-					<hr class="comment_hr">
-				</div>
+			<div class="col-xs-12 col-sm-7 no-padding">
+				<h4 class="comment_title">{{this.title}}</h4>
+				<p>{{{text}}}</p>
 			</div>
-			{{/if}}
-		{{/each}}
+			<div class="col-xs-12 col-sm-2 no-padding">
+				<span class="pull-right">
+					{{> newPost parent=this}}
+				</span>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+			<hr class="comment_hr">
+		</div>
 	</div>
-	{{/if}}
+	{{/if}} <!-- End of 'parent_ID' helper statement -->
+	{{/each}} <!-- End of 'post' helper iteration -->
+</div>
+{{/if}} <!-- End of 'post' helper statement -->
 </template>
 
 
@@ -120,21 +123,18 @@
 
 
 <template name="editPostDialog">
-
-	<div class="popup">
-		<form name="form_edit">
-			<input type="text" id="edit_title" class="form-control" placeholder="" /><br>
-			<textarea cols="70" rows="5" id="edit_text" class="form-control" placeholder=""></textarea><br>
-		
-			<button type="button" class="update btn btn-primary">
-				{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
-			</button>
-		
-
-		
-			<button type="button" class="cancelEdit btn btn-danger">
-				{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
-			</button>
-		</form>
-	</div>
+<div class="popup">
+	<form name="form_edit">
+		<input type="text" id="edit_title" class="form-control" placeholder=""/>
+		<br>
+		<textarea cols="70" rows="5" id="edit_text" class="form-control" placeholder=""></textarea>
+		<br>
+		<button type="button" class="update btn btn-primary">
+			{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
+		</button>
+		<button type="button" class="cancelEdit btn btn-danger">
+			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+		</button>
+	</form>
+</div>
 </template>
