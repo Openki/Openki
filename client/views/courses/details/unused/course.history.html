@@ -1,5 +1,5 @@
 <template name="coursehistory">
-    {{#if events_list_past}}
+    {{#if has_past_events}}
     <div class="timeline-pre">
         <div class="timeline-start-container">
             <div class="timeline-start"></div>
@@ -25,6 +25,6 @@
 	</div>
 	{{/each}}
     {{else}}
-    <p>No past events for this course.</p>
+    <h4>{{mf 'course.history.no_past_events' 'No past events for this course.'}}</h4>
     {{/if}}
 </template>

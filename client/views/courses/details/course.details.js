@@ -15,7 +15,7 @@ Router.map(function () {
 		data: function () {
 			var self = this;
 			var course = Courses.findOne({_id: this.params._id});
-					
+
 			if (!course) return;
 
 			var userId = Meteor.userId();
@@ -28,7 +28,7 @@ Router.map(function () {
 			};
 			if (mayEdit(Meteor.user(), course)) {
 				data.editableName = makeEditable(
-					course.name, 
+					course.name,
 					true,
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
@@ -41,7 +41,7 @@ Router.map(function () {
 					}
 				);
 				data.editableDescription = makeEditable(
-					course.description, 
+					course.description,
 					false,
 					function(newDescription) {
 						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
@@ -124,10 +124,10 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		var today = new Date();
 		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
-		
+
 		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
 		if (past) return 'haspastevents';
-						
+
 		return 'proposal';
 	},
 	needsMentor: function() {
@@ -136,15 +136,8 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	mobileViewport: function() {
 		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 		return mobile;
-	},	
-	
-});
+	},
 
-Template.coursehistory.helpers({
-	events_list_past: function() {
-		var today= new Date();
-		return Events.find({course_id:this.course._id, start: {$lt:today}}, {sort: {start: -1} } );
-	}
 });
 
 Template.coursedocs.helpers({
