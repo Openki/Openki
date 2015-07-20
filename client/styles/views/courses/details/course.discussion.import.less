@@ -64,7 +64,6 @@
 .edit-post-dialog {
 	.make-sm-column(12);
 	.make-xs-column(12);
-	padding: 0 0 10px;
 
 	input,
 	textarea {
@@ -76,13 +75,18 @@
 	}
 }
 
-.write-post-dialog.answer {
-	border-top: none;
-	border-top: 3px solid @body-bg;
+.write-post-dialog {
 	padding-bottom: 20px;
+	border-top: 3px solid @body-bg;
+
+	&.answer {
+		border-top: none;
+	}
 }
 
-
+.edit-post-dialog {
+	padding: 0 0 10px;
+}
 
 .discussion-comment {
 	.make-sm-column(11);
