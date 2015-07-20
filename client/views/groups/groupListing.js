@@ -41,3 +41,7 @@ Template.groupListing.events({
 		});
 	},
 });
+
+Template.groupListing.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
+};

@@ -80,9 +80,13 @@ input#editform_name {
 			}
 		}
 
-		.course_groups ul,
-		.course_groups ul li,
-		.course_groups ul li a {
+		.course_categories ul {
+			margin-bottom: 0;
+		}
+
+		ul.groups-list,
+		ul.groups-list li,
+		ul.groups-list li a {
 			display: inline-block;
 		}
 
@@ -164,7 +168,6 @@ input#editform_name {
 			.make-xs-column(12);
 			height: 60px;
 			background: #C1F2AE;
-			// border-right: 3px solid @body-bg;
 
 			p {
 				padding-top: 15px;
@@ -177,7 +180,6 @@ input#editform_name {
 			.make-xs-column(12);
 			height: 60px;
 			background: @light-blue;
-			// border-bottom: 3px solid @body-bg; No Functionality, no border.
 
 			.yes {
 				background: @brand-success;
