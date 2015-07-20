@@ -1,10 +1,11 @@
 <template name="roles">
 	{{#if members}}
 	<div class="courseDetails_participants_count">
-		<p>
-			<span class="glyphicon glyphicon-user"></span>&nbsp;
+		<h4>
+			<span class="fa fa-users"></span>
+			&nbsp;
 			{{mf 'course.dtails.paticipants.title' 'Participants'}}
-		</p>
+		</h4>
 	</div>
 	<div class="roles">
 		{{#each members}}
