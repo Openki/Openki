@@ -24,3 +24,21 @@
     -ms-transform: rotate(@degrees) scale(@x-axis, @y-axis);
     transform: rotate(@degrees) scale(@x-axis, @y-axis);
 }
+
+.big-button() {
+	.form-control;
+	.btn;
+	.btn-primary;
+	.no-padding;
+	border: none;
+	border-top: 3px solid @body-bg;
+	height: 60px;
+	text-align: left;
+	font-size: large;
+	padding: 10px 15px;
+
+	&:hover {
+		border: none;
+		border-top: 3px solid @body-bg;
+	}
+}
