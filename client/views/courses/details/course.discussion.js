@@ -12,7 +12,9 @@ Template.discussion.helpers({
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
 			ordered_posts.push(post);
-			var comments = CourseDiscussions.find({parent_ID: post._id}, {sort: {time_created: -1}});
+			var comments = CourseDiscussions.find({
+				parent_ID: post._id},
+				{sort: {time_created: 1}});
 			comments.forEach(function (comment){
 				ordered_posts.push(comment);
 			});
@@ -30,7 +32,7 @@ Template.newPost.created = function() {
 Template.newPost.helpers({
 	writing: function() {
 		return Template.instance().writing.get();
-	},	
+	},
 	editing: function() {
 		return Template.instance().editing.get();
 	}
@@ -40,11 +42,11 @@ Template.newPost.events({
 	'click button.write': function () {
 		if (pleaseLogin()) return;
 		Template.instance().writing.set(true);
-		
+
 	},
 
 	'click button.add': function () {
-		if (pleaseLogin()) return;		
+		if (pleaseLogin()) return;
 		var comment = {
 		title: $("#post_title").val(),
 		text: $("#post_text").val()
@@ -72,29 +74,29 @@ Template.newPost.events({
 	'click button.cancel': function () {
 		Template.instance().writing.set(false);
 	},
-	
+
 	'click button.edit': function () {
-		if (pleaseLogin()) return;		
+		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
 		$("#edit_text").val( this.parent.text );
 		$("#edit_title").val( this.parent.title );
 		Template.instance().editing.set(true);
 
 	},
-	
+
 	'click button.cancelEdit': function () {
-		if (pleaseLogin()) return;		
+		if (pleaseLogin()) return;
 		Template.instance().editing.set(false);
 		$('form[name=form_edit]').hide();
 	},
 	'click button.update': function () {
-		if (pleaseLogin()) return;		
+		if (pleaseLogin()) return;
 		var comment = {
 			text: $("#edit_text").val(),
 			title: $("#edit_title").val()
 
 		};
-		
+
 		//var parent_ID = this.parent && this.parent._id;
 		//if (parent_ID) {
 		//comment.parent_ID = parent_ID;
@@ -111,12 +113,8 @@ Template.newPost.events({
 				templateInstance.editing.set(false);
 			}
 		});
-		
-	
+
+
 	}
 
 });
-
-Template.discussion.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-};
