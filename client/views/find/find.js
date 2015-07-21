@@ -27,7 +27,9 @@ Router.map(function () {
 var updateUrl = function(event, instance) {
 	instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked')).done();
 
-	var queryParams = _.map(instance.filter.toParams(), function(param, name) { return name+'='+param; });
+	var filterParams = instance.filter.toParams();
+	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+	var queryParams = _.map(filterParams, function(param, name) { return name+'='+param; });
 	var options = {}
 	if (queryParams.length) {
 		options.query = queryParams.join('&');
