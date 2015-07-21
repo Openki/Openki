@@ -33,6 +33,42 @@ Template.course.helpers({
 		return Template.instance().eventSub.ready();
 	},
 
+	coursestate: function() {
+		var today = new Date();
+		
+		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
+		if (upcoming) return 'hasupcomingevents';
+		
+		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
+		if (past) return 'haspastevents';
+						
+		return 'proposal';
+	},
+
+	categorynames: function() {
+		return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
+	},
+
+
+	course_eventlist: function() {
+		var today= new Date();
+		return Events.find({course_id: this._id, start: {$gt:today}}, {sort: {start: 1}, limit: 1});
+	},
+
+
+	course_eventlist_hasmore: function() {
+		var today= new Date();
+		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
+		return eventcount > 1 ? (eventcount-1)  : false
+	},
+
+	hasupcomingevents: function() {
+		var today= new Date();
+		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
+	},
+});
+
+Template.courseStatus.helpers({
 	requiresMentor: function() {
 		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1
@@ -67,44 +103,11 @@ Template.course.helpers({
 		return hasRoleUser(this.members, 'mentor', Meteor.userId())
 	},
 
-	coursestate: function() {
-		var today = new Date();
-		
-		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
-		if (upcoming) return 'hasupcomingevents';
-		
-		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
-		if (past) return 'haspastevents';
-						
-		return 'proposal';
-	},
-
 	is_subscriber: function() {
 		return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
-	},
+	}
 
-	categorynames: function() {
-		return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
-	},
-
-
-	course_eventlist: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}, {sort: {start: 1}, limit: 1});
-	},
-
-
-	course_eventlist_hasmore: function() {
-		var today= new Date();
-		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
-		return eventcount > 1 ? (eventcount-1)  : false
-	},
-
-	hasupcomingevents: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
-	},
-})
+});
 
 Template.course.onCreated(function() {
 	this.eventSub = this.subscribe('nextEvent', this.data._id);
