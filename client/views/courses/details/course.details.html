@@ -10,6 +10,7 @@
 				<div class="name">
 					{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
 				</div>
+
 				{{#with course}}
 				<p class='small'>
 				{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
@@ -19,10 +20,12 @@
 				<div class="course_categories">
 					{{> show_categories}}
 				</div>
-				<div class="course_groups">
+				<div class="course-groups-list-container">
 					{{> show_groups}}
 				</div>
 				{{/with}}
+				{{> groupListing course}}
+
 				{{> show_course_submenu}}
 				{{#with course}}
 				{{#if currentUserMayEdit}}
@@ -59,7 +62,6 @@
 					</div> -->
 						{{> roles course}}
 						{{> roles_details roles_details}}
-						{{> groupListing course}}
 				</div>
 				<div class="discussion">
 					{{> discussion course}}
@@ -71,7 +73,6 @@
 					</div> -->
 						{{> roles course}}
 						{{> roles_details roles_details}}
-						{{> groupListing course}}
 				</div>
 			{{/if}}
 		</div>
@@ -115,7 +116,7 @@
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
 			</div>
-		</div>	
+		</div>
 	</div>
 </template>
 

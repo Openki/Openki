@@ -1,12 +1,26 @@
 <template name="groupListing">
-	{{#each available}}
-		<div>
+<div class="course-groups-manage">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+		{{mf 'groups.listing.manage_groups' "Manage groups"}}
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu groups-options" role="menu">
+		{{#each available}}
+		<li class="{{#if inGroup this ..}}part-of-group{{/if}}">
 			{{#if inGroup this ..}}
-				{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
-				<button class="expelFromGroup">{{mf 'groupListing.expel' 'Expel'}}</button>
+			{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
+			<button role="menuitem" class="expelFromGroup"  data-toggle="tooltip" data-original-title="{{mf 'groupListing.expel' 'Expel&nbsp;from&nbsp;this&nbsp;group'}}" data-html="true" data-placement="top">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
 			{{else}}
-				<button class="admitToGroup">{{mf 'groupListing.admit' 'Admit to "{NAME}"' NAME=name}}</button>
+			<button role="menuitem" class="admitToGroup">
+				<span class="glyhpicon glyphicon-plus"></span>
+				&nbsp;
+				{{mf 'groupListing.admit' 'Admit to "{NAME}"' NAME=name}}
+			</button>
 			{{/if}}
-		</div>
-	{{/each}}
+		</li>
+		{{/each}}
+	</ul>
+</div>
 </template>

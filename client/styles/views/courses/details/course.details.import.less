@@ -71,7 +71,7 @@ input#editform_name {
 			margin-bottom: 10px;
 
 			&> .editable {
-				padding: 0 !important;
+				padding: 0;
 				font-size: 30px;
 			}
 
@@ -80,9 +80,13 @@ input#editform_name {
 			}
 		}
 
-		.course_groups ul,
-		.course_groups ul li,
-		.course_groups ul li a {
+		.course_categories ul {
+			margin-bottom: 0;
+		}
+
+		ul.groups-list,
+		ul.groups-list li,
+		ul.groups-list li a {
 			display: inline-block;
 		}
 
@@ -110,9 +114,12 @@ input#editform_name {
 		}
 
 		.edit_buttons {
+			.make-sm-column(12);
+			.make-xs-column(12);
+			.no-padding;
 			padding: 10px 0;
 			text-align: center;
-			width: calc(~"100% + 44px"); //different solution? -> compability
+			width: calc(~"100% + 44px") !important; //different solution? -> compability
 			margin: 0 0 -7px -22px;
 			background: @brand-primary;
 			border-top: 3px solid @body-bg;
@@ -159,14 +166,7 @@ input#editform_name {
 		.courseDetails_participants_count {
 			.make-sm-column(12);
 			.make-xs-column(12);
-			height: 60px;
-			background: #C1F2AE;
-			// border-right: 3px solid @body-bg;
-
-			p {
-				padding-top: 15px;
-				font-size: large;
-			}
+			background: @orange;
 		}
 
 		.courseDetails_mentor.mentor_status {
@@ -174,7 +174,6 @@ input#editform_name {
 			.make-xs-column(12);
 			height: 60px;
 			background: @light-blue;
-			// border-bottom: 3px solid @body-bg; No Functionality, no border.
 
 			.yes {
 				background: @brand-success;

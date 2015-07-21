@@ -65,5 +65,45 @@ Meteor.methods({
 		Meteor.call("save_course", course._id, {});
 		
 		return commentId;
+	},
+	
+	
+	editComment: function(comment, commentId) {
+		check(comment, {
+			course_ID: String,
+		    parent_ID: Match.Optional(String),
+			title: String,
+			text: String,
+		});
+		
+		var user = Meteor.user();
+		if (!user) {
+			if (Meteor.is_client) {
+				pleaseLogin();
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in");
+			}
+		}
+		
+		comment.user_ID = user._id;
+		comment.time_created = new Date();
+		
+		var course = Courses.findOne(comment.course_ID);
+		if (!course) {
+			throw new Meteor.Error(404, "course not found");
+		}
+		
+		comment.title = saneText(comment.title).substr(0, 200);
+		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
+		
+		var _commentId = CourseDiscussions.update( { _id:commentId }, comment );
+		
+		// HACK update course so time_lastchange is updated
+		Meteor.call("save_course", course._id, {});
+		
+		return _commentId;
 	}
+	
+	
 });
