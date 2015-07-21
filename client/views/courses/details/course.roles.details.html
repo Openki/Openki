@@ -11,7 +11,7 @@
     {{#if subscribed}}
         <div class="enroled_as_title">
             <span class="{{roletype.icon}}"></span>&nbsp;
-            {{#with roletype}}{{mf roleSubscribed}}{{/with}} 
+            {{#with roletype}}{{mf roleSubscribed}}{{/with}}
             <button class="unsubscribe" name="{{roletype.type}}">
                 {{mf 'course.roles.retract' 'Retract'}}
             </button>
@@ -48,7 +48,7 @@
         {{#if maySubscribe roletype.type}}
         <button type="button" class="enrol" name="participant">
             <span class="{{roletype.icon}}"></span>&nbsp;
-            {{#with roletype}}{{mf roleSubscribe}}{{/with}} 
+            {{#with roletype}}{{mf roleSubscribe}}{{/with}}
         </button>
         {{/if}}
         {{/if}}

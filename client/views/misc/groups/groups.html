@@ -1,7 +1,6 @@
 <template name="show_groups">
 	{{#if groups}}
-		{{mf 'groups.groups' 'Groups:'}}
-		<ul class="list-unstyled">
+		<ul class="groups-list">
 			{{#each loadgroups groups}}
 			<li><a href="/grouplist/#{{_id}}">{{name}}</a></li>
 			{{/each}}

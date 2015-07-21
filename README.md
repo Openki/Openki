@@ -5,7 +5,7 @@ Openki/hmmm
 
 An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 
-<div align="center"><img src="https://cloud.githubusercontent.com/assets/4281072/5208556/6eeed1ba-75b5-11e4-94f3-208323380ec4.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
+<div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 
 [  read on...](http://openki.net "our blog")  
 <div align="right"> <span class="octicon octicon-star">★</span> Star us if you like the idea.</div>
@@ -49,7 +49,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 - Browse to [localhost:3000](http://localhost:3000/)
 
 ### Technical documentation
-- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki) 
+- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>

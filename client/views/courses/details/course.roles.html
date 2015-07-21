@@ -1,43 +1,54 @@
 <template name="roles">
 	{{#if members}}
 	<div class="courseDetails_participants_count">
-		<p>
-			<span class="glyphicon glyphicon-user"></span>&nbsp;
+		<h4>
+			<span class="fa fa-users"></span>
+			&nbsp;
 			{{mf 'course.dtails.paticipants.title' 'Participants'}}
-		</p>
+		</h4>
 	</div>
 	<div class="roles">
-		<ul class='subscribers'>
 		{{#each members}}
-			{{> member_roles member=this course=..}}
+		{{> member_roles member=this course=..}}
+		<div class="horizontal-line"></div>
 		{{/each}}
-		</ul>
 	</div>
 	{{/if}}
 </template>
 
 <template name="member_roles">
-	<li>
+	<div class="member_role">
+		<span class="glyphicon glyphicon-user"></span>&nbsp;
 		{{>profilelink member.user}}
+		{{#if hasRoles}}
 		<ul class='roles_list'>
 			{{#each member.roles}}
-				<li class='{{this}}'>
-				{{mf roleShort}}
-				</li>
+			<li class='{{this}}'>
+				<span class="{{rolelist_icon this}}"></span>
+				&nbsp;
+				<span class="role_short">{{mf roleShort}}</span>
+			</li>
 			{{/each}}
-			{{#if maySubscribe}}
-			<button class='makeTeam'>
-				<span class="glyphicon glyphicon-plus"></span>
-				{{mf 'course.roles.maketeam' 'Add to team'}}
-			</button>
-			{{/if}}
 		</ul>
-		<span class="member_comment">
-			{{#if editableMessage}}
-				{{> editable editableMessage}}
-			{{else}}
+		{{/if}}
+		{{#if maySubscribe}}
+		<button class='makeTeam'>
+			<span class="glyphicon glyphicon-plus"></span>
+			<span class="makeTeam_text {{member.user}}">
+				&nbsp;{{mf 'course.roles.maketeam' 'Add to team'}}
+			</span>
+		</button>
+		{{/if}}
+		{{#if editableMessage}}
+		<div class="member_comment">
+			{{> editable editableMessage}}
+		</div>
+		{{else}}
+		{{#if member.comment}}
+		<div class="member_comment">
 				{{member.comment}}
-			{{/if}}
-		</span>
-	</li>
+		</div>
+		{{/if}}
+		{{/if}}
+	</div>
 </template>

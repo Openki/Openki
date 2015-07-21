@@ -19,7 +19,7 @@ var roles = [{
 	},{
 		'type':        'participant',
 		'alt_icon':    'glyphicon glyphicon-user',
-		'icon':        'fa fa-users',
+		'icon':        'fa fa-user-plus',
 		'preset':      true,
 		'show_subscribers': true
 	},{

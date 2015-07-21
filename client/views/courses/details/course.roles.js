@@ -1,24 +1,30 @@
 Template.member_roles.helpers({
 	roleShort: function() { return 'roles.'+this+'.short'; },
-	
+
 	maySubscribe: function() {
 		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
-	}
-});
+	},
 
-Template.member_roles.events({
-	'click button.makeTeam': function(e, template) {
-		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
-		return false;
-	}
-});
+	rolelist_icon: function(roletype) {
+		if (roletype != "participant") {
+			return Roles.findOne({ type: roletype }).icon;
+		}
+	},
 
-Template.member_roles.helpers({
+	hasRoles: function() {
+		if (this.member.roles == "participant") {
+			return false;
+		}
+		else {
+			return true;
+		}
+	},
+
 	editableMessage: function() {
 		var course = this.course;
 		if (this.member.user !== Meteor.userId()) return false;
 		return makeEditable(
-			this.member.comment, 
+			this.member.comment,
 			true,
 			function(newMessage) {
 				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
@@ -30,5 +36,18 @@ Template.member_roles.helpers({
 				});
 			}
 		);
+	}
+});
+
+Template.member_roles.events({
+	'click button.makeTeam': function(e, template) {
+		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		return false;
+	},
+	'mouseover button.makeTeam': function(e, template) {
+		$("." + this.member.user).show(0);
+	},
+	'mouseout button.makeTeam': function(e, template) {
+		$("." + this.member.user).hide(0);
 	}
 });
