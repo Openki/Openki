@@ -1,68 +1,102 @@
 .roles {
 	.make-sm-column(12);
 	.make-xs-column(12);
-	padding-top: 15px;
+	.no-padding;
 	background: @light-blue;
 	border-top: 3px solid @body-bg;
+	font-size: medium;
 
-	ul.subscribers {
+	.member_role {
+		.make-sm-column(12);
+		.make-xs-column(12);
+		padding-top: 10px;
+		padding-bottom: 10px;
+
+		a {
+			color: #333;
+			
+			&:hover {
+				color: @brand-primary;
+			}
+		}
+	}
+
+	.horizontal-line {
+		.make-sm-column(12);
+		.make-xs-column(12);
+		background: @body-bg;
+		height: 1px;
+
+		&:last-child {
+			display: none;
+		}
+	}
+
+	ul.roles_list {
 		.list-unstyled;
-		font-size: medium;
+		margin-left: 10px;
+		margin-bottom: 0;
+		display: inline-block;
 
 		li {
-			padding: 5px 0;
-
-			a {
-				color: #333;
-			}
-		}
-
-		ul.roles_list {
-			.list-unstyled;
-			margin-left: 20px;
+			color: @body-bg;
+			padding: 5px 10px;
+			font-size: small;
+			font-weight: bold;
 			display: inline-block;
+			vertical-align: middle;
+			background: @brand-primary;
 
-			li {
-				color: @body-bg;
-				background: @brand-primary;
-				padding: 5px;
-				text-transform: uppercase;
-				font-size: small;
-				font-weight: bold;
-				display: inline-block;
-				vertical-align: middle;
-
-				&.participant {
-					display: none;
-				}
-			}
-
-			button.makeTeam {
-				.btn;
-				.btn-primary;
-				padding: 3px 10px;
+			&.participant {
+				display: none;
 			}
 		}
 
-		span.member_comment {
-			margin-left: 20px;
+		&:hover {
+			cursor: default;
+		}
 
-			.editable-controls {
-				button.editable-store,
-				button.editable-cancel {
-					border: 0;
-					background: none;
-					color: @brand-primary;
-					display: inline-block;
-				}
+		span.role_short {
+			text-transform: uppercase;
+		}
+	}
 
-				span.glyphicon-ok {
-					color: #5cb85c;
-				}
 
-				span.glyphicon-remove {
-					color: @light-red;
-				}
+	button.makeTeam {
+		.btn;
+		.btn-success;
+		margin-left: 10px;
+		padding: 3px 10px;
+		.transition(0.5s);
+
+		.makeTeam_text {
+			display: none;
+		}
+	}
+
+	.member_comment {
+		display: block;
+		padding-top: 10px;
+
+		.editable {
+			padding-left: 0 !important;
+		}
+
+		.editable-controls {
+			button.editable-store,
+			button.editable-cancel {
+				border: 0;
+				background: none;
+				color: @brand-primary;
+				display: inline-block;
+			}
+
+			span.glyphicon-ok {
+				color: #5cb85c;
+			}
+
+			span.glyphicon-remove {
+				color: @light-red;
 			}
 		}
 	}
