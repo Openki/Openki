@@ -147,4 +147,4 @@ Filtering = function(availablePredicates) {
 	}
 
 	return self;
-}
+};

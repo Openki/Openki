@@ -20,7 +20,7 @@ function finderRoute(path) {
 }
 
 Router.map(function () {
-	this.route('find', finderRoute('/find/:search?'));
+	this.route('find', finderRoute('/find'));
 	this.route('home', finderRoute('/'));
 });
 
@@ -29,10 +29,11 @@ var updateUrl = function(event, instance) {
 
 	var filterParams = instance.filter.toParams();
 	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
-	var queryParams = _.map(filterParams, function(param, name) { return name+'='+param; });
-	var options = {}
-	if (queryParams.length) {
-		options.query = queryParams.join('&');
+	var queryString = UrlTools.paramsToQueryString(filterParams);
+
+	var options = {};
+	if (queryString.length) {
+		options.query = queryString;
 	}
 
 	Router.go('find', {}, options);
