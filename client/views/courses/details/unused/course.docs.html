@@ -1,26 +1,22 @@
 <template name="coursedocs">
-	<div class="beta_inform">
-		<p>
-			<div style="margin-top:10px;">
-				{{#each eventsWithFiles}}
-					{{#if this.files}} 
-						{{#each files}}
-							<div class="container-fluid">
-								<div style="float:left; margin-right:20px;">
-									{{> eventDocs}}
-								</div>
-								<div>
-									{{dateformat_mini_fullmonth ../start}}
-								</div>
-							</div>				
-						{{/each}}
-			
-					{{/if}}
-				{{/each}}
-			</div>
-		</p>
-		<p> If not differently indicated these files are licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons BY-SA </a> </p>
+<div class="course-docs">
+	{{#each eventsWithFiles}}
+	{{#if this.files}}
+	{{#each files}}
+	<div style="float:left; margin-right:20px;">
+		{{> eventDocs}}
 	</div>
+	<div>
+		{{dateformat_mini_fullmonth ../start}}
+	</div>
+	<!-- End 'files' helper iteration -->
+	{{/each}}
+	<!-- End 'this.files' helper statement -->
+	{{/if}}
+	<!-- End 'events_list' helper statement -->
+	{{/each}}
+	<p> If not differently indicated these files are licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons BY-SA </a> </p>
+</div>
 </template>
 
 <template name="eventDocs">
