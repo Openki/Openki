@@ -1,6 +1,6 @@
 Router.map(function () {
 	this.route('kiosk', {
-		path: '/kiosk/events/:location?/:room?',
+		path: '/kiosk/events',
 		template: 'kioskEvents',
 		layoutTemplate: 'kioskLayout',
 		waitOn: function () {
