@@ -57,18 +57,6 @@ Template.kioskLayout.helpers({
 	}
 });
 
-Template.kioskEvent.events({
-	'click a': function () {
-		Session.set('kiosk_mode', true)
-	}
-})
-
-Template.kioskEventOngoing.events({
-	'click a': function () {
-		Session.set('kiosk_mode', true)
-	}
-})
-
 Template.kioskEvent.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,

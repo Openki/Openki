@@ -1,20 +1,6 @@
 <template name="eventPage">
 	<div class="container">
 		<div class="course_event_detail" id="coursedetails">
-			{{#if kioskMode}}
-			<div class="kiosk_header">
-				<h1>
-					<b>Openki</b>
-					{{> lang_sel}}
-				</h1>
-			</div>
-			<p>
-				<a href="/kiosk/events">
-					<span class="glyphicon glyphicon-arrow-left"></span>
-					{{mf 'course.event.detail.back_to_kiosk' 'Back to Overview'}}
-				</a>
-			</p>
-			{{else}}
 			{{#if course}}
 			<p>
 				<a href="{{pathFor 'showCourse' _id=course._id}}">
@@ -22,7 +8,6 @@
 					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
 				</a>
 			</p>
-			{{/if}}
 			{{/if}}
 			{{#if isEvent}}
 				{{>event}}
@@ -334,14 +319,12 @@
 		{{> groupListing}}
 
 	<div class="event_options">
-		{{#unless kioskMode}}
 		<a href="{{pathFor 'calEvent' this}}">
 			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
 			<span class="glyphicon glyphicon-download"></span>&nbsp;
 			{{mf 'course.download_cal' 'Download events to my calendar'}}
 			</button>
 		</a>
-		{{/unless}}
 		{{> report}}
 	</div>
 </template>
