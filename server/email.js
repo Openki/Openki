@@ -65,10 +65,12 @@ Meteor.methods({
 	
 	report: function(subject, location, report) {
 		var reporter = "A fellow visitor";
+		var rootUrl = Meteor.absoluteUrl()
+		var profileLink ="123"
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {
-				reporter = user.username+" (UserID: "+this.userId+")"
+				reporter = "<a href='"+rootUrl+'user/'+this.userId+"'>"+htmlize(user.username)+"</a>";
 			}
 		}
 
@@ -76,7 +78,13 @@ Meteor.methods({
 			from: 'reporter@mail.openki.net',
 			to: 'admins@openki.net',
 			subject: "Report: "+subject,
-			text: "User "+reporter+" reports a problem on the page\n\n"+location+"\n\nTheir report:\n\n"+report+"\n\n/end of report"
+			html: "User "+reporter+" reports a problem on the page <a href='"+htmlize(location)+"'>"+htmlize(subject)+"</a>"
+			+"<br><br>"
+			+"Their report:<br>"
+			+"-------------------------------------------------------------------------------------"
+			+"<br><br>"+htmlize(report)+"<br><br>"
+			+"-------------------------------------------------------------------------------------"
+			+"<br>/end of report."
 		});
 	}
 });
