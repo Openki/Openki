@@ -130,9 +130,6 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 
 		return 'proposal';
 	},
-	needsMentor: function() {
-		return !hasRole(this.members, 'mentor')
-	},
 	mobileViewport: function() {
 		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 		return mobile;
