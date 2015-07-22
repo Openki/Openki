@@ -1,19 +1,17 @@
 <template name="course_events">
-	<div class="course_event_options">
-		{{#if mayAdd}}
-		<button type="button" class="eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
-			{{mf 'course.events.addButton' 'Add event'}}
-		</button>
-		{{/if}}
-		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
-			<span class="glyphicon glyphicon-download"></span>&nbsp;
-			{{mf 'course.download_cal' 'Download events to my calendar'}}
-			</button>
-		</a>
-	</div>
+	{{#if mayAdd}}
+	<button type="button" class="eventEdit">
+		<span class="glyphicon glyphicon-plus"></span>&nbsp;
+		{{mf 'course.events.addButton' 'Add event'}}
+	</button>
+	{{/if}}
 	{{#if events_list}}
+	<a href="/cal/course/{{course._id}}" target="_blank">
+		<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
+			<span class="fa fa-download"></span>&nbsp;
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
+		</button>
+	</a>
 	<div class="course_events">
 		{{#each events_list}}
 		<div class="course_event_container">
@@ -23,7 +21,7 @@
 	</div>
 	{{/if}}
 
-	{{#if events_list_past}}
+	<!-- {{#if events_list_past}}
 	<div class="course_events_past hidden">
 		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
 		{{#each events_list_past}}
@@ -32,7 +30,7 @@
 		</div>
 		{{/each}}
 	</div>
-	{{/if}}
+	{{/if}} -->
 </template>
 
 
@@ -74,4 +72,3 @@
 		{{/with}}
 	</div>
 </template>
-

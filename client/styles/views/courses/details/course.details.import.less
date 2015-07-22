@@ -46,6 +46,11 @@ input#editform_name {
 		.make-sm-column(6);
 		.make-xs-column(12);
 		.no-padding;
+
+
+		&> div:first-child {
+			padding-top: 0;
+		}
 	}
 
 	.coursedetails_column_left {
@@ -63,7 +68,6 @@ input#editform_name {
 			.no-padding;
 		}
 	}
-
 
 	.course_main {
 		.make-sm-column(12);
@@ -161,15 +165,11 @@ input#editform_name {
 		margin-top: 15px;
 	}
 
-	.course_event_options {
-		.make-sm-column(12);
-		.make-xs-column(12);
-		.no-padding;
-
-		button.eventEdit {
-			.btn;
-			.btn-primary;
-		}
+	button.eventEdit,
+	button.calendar_download {
+		.btn-thin;
+		.btn-primary;
+		margin-right: 5px;
 	}
 
 	.courseDetails_roles_container {
