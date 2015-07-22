@@ -7,7 +7,7 @@
 {{else}} <!-- Part of 'editing' helper statement -->
 {{#if parent}}
 <button type="button" class="write" role="button">
-	<span class="fa fa-comment"></span>
+	<span class="fa fa-reply"></span>
 	&nbsp;
 	{{mf 'course.discussion.comment_answer' 'Answer'}}
 </button>
@@ -28,6 +28,11 @@
 </template>
 
 <template name="writePostDialog">
+{{#if parent}}
+<div class="write-answer-graphics">
+	<span class="fa fa-reply"></span>
+</div>
+{{/if}}
 <div class="write-post-dialog {{#if parent}}answer{{/if}}">
 	{{#unless parent}}
 	<h3>{{mf 'course.discussion.write_comment'}}</h3>

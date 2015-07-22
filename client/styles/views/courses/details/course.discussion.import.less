@@ -70,15 +70,30 @@
 	}
 }
 
+.write-answer-graphics {
+	.make-sm-column(1);
+	.make-xs-column(1);
+	padding: 0 15px 0 0;
+	font-size: large;
+	text-align: right;
+
+	span.fa-reply {
+		.flip_n_scale(0deg, -1, -1);
+		margin-top: 15px;
+	}
+}
+
 .write-post-dialog {
 	padding-bottom: 20px;
 	border-top: 3px solid @body-bg;
 
+	button {
+		margin-right: 5px;
+	}
+
 	&.answer {
 		.make-sm-column(11);
-		.make-sm-column-offset(1);
 		.make-xs-column(11);
-		.make-xs-column-offset(1);
 		padding: 10px 0 0;
 		border-top: none;
 		text-align: right;
@@ -118,7 +133,7 @@
 	.make-sm-column(12);
 	.make-xs-column(12);
 	background: @light-blue;
-	padding: 7px 0 5px;
+	padding: 7px 0;
 
 	.post-info {
 		.make-sm-column(12);
@@ -136,6 +151,10 @@
 		.make-sm-column(12);
 		.make-xs-column(12);
 		.no-padding;
+
+		button {
+			margin-right: 5px;
+		}
 	}
 }
 
