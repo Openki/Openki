@@ -61,7 +61,8 @@
 
 	input,
 	textarea {
-		.form-control;
+		.form-control-humble;
+		margin-bottom: 10px;
 	}
 
 	textarea {
@@ -74,7 +75,17 @@
 	border-top: 3px solid @body-bg;
 
 	&.answer {
+		.make-sm-column(11);
+		.make-sm-column-offset(1);
+		.make-xs-column(11);
+		.make-xs-column-offset(1);
+		padding: 10px 0 0;
 		border-top: none;
+		text-align: right;
+
+		button {
+			margin-left: 5px;
+		}
 	}
 }
 
@@ -101,16 +112,6 @@
 		.make-xs-column(9);
 		.no-padding;
 	}
-}
-
-.comment-hr {
-	.make-sm-column(12);
-	.make-xs-column(12);
-	.no-padding;
-	background: @light-blue;
-	border: 0;
-	height: 1px;
-	margin: 0;
 }
 
 .post {

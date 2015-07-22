@@ -29,18 +29,12 @@
 
 <template name="writePostDialog">
 <div class="write-post-dialog {{#if parent}}answer{{/if}}">
-	<h3>
-		{{#if parent}}
-		{{mf 'course.discussion.answer_comment' 'Write answer'}}
-		{{else}}
-		{{mf 'course.discussion.write_comment'}}
-		{{/if}}
-	</h3>
+	{{#unless parent}}
+	<h3>{{mf 'course.discussion.write_comment'}}</h3>
+	{{/unless}}
 	<form name="form_post">
 		<input type="text" id="post_title" placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}" />
-		<br>
-		<textarea id="post_text" placeholder="{{mf 'course.discussion.text_placeholder' 'Your comment..'}}"></textarea>
-		<br>
+		<textarea id="post_text" placeholder="{{#if parent}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment..'}}{{/if}}"></textarea>
 		{{#if parent}}
 		<button type="button" class="add">
 			{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
@@ -82,7 +76,6 @@
 				<p>{{{text}}}</p>
 			</div>
 		</div>
-		<div class="commment-hr"></div>
 	</div>
 	{{else}} <!-- Part of 'parent_ID' helper statement -->
 	<div class="discussion-conversation">
@@ -101,7 +94,6 @@
 				{{> newPost parent=this}}
 			</div>
 		</div>
-		<div class="comment-hr"></div>
 	</div>
 	{{/if}} <!-- End of 'parent_ID' helper statement -->
 	{{/each}} <!-- End of 'post' helper iteration -->
