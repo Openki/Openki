@@ -34,7 +34,7 @@
 	{{/unless}}
 	<form name="form_post">
 		<input type="text" id="post_title" placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}" />
-		<textarea id="post_text" placeholder="{{#if parent}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment..'}}{{/if}}"></textarea>
+		<textarea id="post_text" placeholder="{{#if parent}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"></textarea>
 		{{#if parent}}
 		<button type="button" class="add">
 			{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
