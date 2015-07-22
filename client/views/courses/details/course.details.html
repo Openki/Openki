@@ -14,7 +14,7 @@
 				{{#with course}}
 				<p class='small'>
 				{{mf 'course.details.time_created' 'Time created:'}} {{dateformat time_created}}, &nbsp;&nbsp;
-				{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp;
+<!-- 				{{mf 'course.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}}  &nbsp;&nbsp; -->
 				{{mf 'course.details.created_by' 'Created by:'}} {{>profilelink createdby}}
 				</p>
 				<div class="course_categories">
@@ -58,8 +58,6 @@
 		<div class="coursedetails_column_right">
 			{{#if mobileViewport}}
 				<div class="courseDetails_roles_container">
-					<!-- <div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
-					</div> -->
 						{{> roles course}}
 						{{> roles_details roles_details}}
 				</div>
@@ -69,8 +67,6 @@
 			{{else}}
 				{{> course_events}}
 				<div class="courseDetails_roles_container">
-					<!-- <div class="courseDetails_mentor mentor_status {{#if needsMentor}}no{{else}}yes{{/if}}">
-					</div> -->
 						{{> roles course}}
 						{{> roles_details roles_details}}
 				</div>
@@ -92,12 +88,14 @@
 						{{mf 'course.subnav.descr' 'Description'}}
 					</a>
 				</li>
+			{{#if hasFiles}}
 				<li role="presentation">
 					<a href="#docs" data-toggle="tab">
 						<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
 						{{mf 'course.subnav.docs' 'Docs'}}
 					</a>
 				</li>
+			{{/if}}
 				<li role="presentation">
 					<a href="#history" data-toggle="tab">
 						<span class="glyphicon glyphicon-road"></span>&nbsp;
@@ -110,9 +108,11 @@
 			<div class="tab-pane active" id="description">
 				{{> course_description}}
 			</div>
+		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
 				{{> coursedocs}}
 			</div>
+		{{/if}}
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
 			</div>
