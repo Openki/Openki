@@ -110,6 +110,16 @@
 	}
 }
 
+a.category {
+	color: @brand-primary;
+	background: rgba(216, 216, 216, 0.5);
+	padding: 0 2px 1px 2px;
+	
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .course_categories {
 	& > ul {
 		line-height: 23px;
@@ -119,15 +129,10 @@
 				background: rgba(216, 216, 216, 0.5);
 				padding: 0 2px 1px 2px;
 			}
-			a.category {
-				color: @brand-primary;
-				background: rgba(216, 216, 216, 0.5);
-				padding: 0 2px 1px 2px;
-				&:hover {
-					text-decoration: none;
-					background: darken(rgba(216, 216, 216, 1), 2%);
-					.box-shadow-s(darken(rgba(216, 216, 216, 1), 10%));
-				}
+			a.category:hover {
+				text-decoration: none;
+				background: darken(rgba(216, 216, 216, 1), 2%);
+				.box-shadow-s(darken(rgba(216, 216, 216, 1), 10%));
 			}
 		}
 	}
