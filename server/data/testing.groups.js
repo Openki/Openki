@@ -107,6 +107,12 @@ testgroups = [{
 	'description':      '<p>Das Projekt “Lern Dich Frei!” ist als Initiative von Student/innen der Universität Zürich entstanden und bietet während gut eines Jahres Raum für ein breites Spektrum an Themen und öffentlichen Veranstaltungen rund um eine zukunftsfähige Welt.</p><p>Das Ziel des Projektes ist es, nicht nur Wissen zu vermitteln, sondern auch eine Plattform für Expert/innen zu bieten, Netzwerke zu bilden und anregende und umsetzbare Ideen für den Alltag zu liefern.</p><p>Während eines Jahreszyklus’ finden wöchentlich öffentliche Events zu unterschiedlichen Themen statt. Die Teilnahme ist in der Regel kostenlos. Die Agenda ist <a href="http://lerndichfrei.ch/Calender.html">hier</a> zu finden - nutze diese Gelegenheit und nimm an einer unserer Veranstaltungen teil!</p><p>Wichtig: es gibt noch viel Raum für weitere Events, und Deine Ideen sind äusserst willkommen. Mehr zu Möglichkeiten, dich einzubringen, erfährst du <a href="http://lerndichfrei.ch/MakeEvent.html">hier</a>.</p>',
 	'members':          ['greg']
 },{
+	'name':        	    'Kurzfristig Sprot',
+	'short':            'K-S',
+	'claim':            'Wie komm ich heute noch zu Bewegung',
+	'description':      'Die Gruppe "Kurzfristig Sport" ist gedacht für Menschen mit wenig Verbindlichkeitsbedürfnis. Wer also nicht fix die eine Sportart zum selben Wochentag um die gleichen Zeit am selben Ort treiben will oder kann und sich aber gerne trotzdem mal austoben will oder muss, soll hier angesprochen sein, mitzumachen. <br> Heute abend gibts Volleyball, Pinpong und Stockkampf, dann mach ich vielleicht lieber Morgen mit beim offenen Fussball.',
+	'members':          ['greg']
+},{
 	'name':        	    '',
 	'short':            '',
 	'claim':            '',
