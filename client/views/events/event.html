@@ -221,7 +221,7 @@
 			</div>
 			<div class="course_event_lower_section">
 				<div class="container-fluid">
-					<div class="course_event_title"><h3>{{this.title}}</h3></div>
+					<div class="course_event_title"><h3>{{this.title}}</h3>{{> groupList}}</div>
 					<div class="course_event_time">
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
 						{{#if location}}
