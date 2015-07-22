@@ -134,13 +134,19 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 		return mobile;
 	},
+});
 
+Template.show_course_submenu.helpers({
+	hasFiles: function() {
+		var withFiles = {course_id: this.course._id, files: {$exists: 1, $not: {$size: 0}}};
+		return !!Events.findOne(withFiles);
+	},
 });
 
 Template.coursedocs.helpers({
-	events_list: function() {
-		var today= new Date();
-		return Events.find({course_id:this.course._id, start: {$gt:today}}, {sort: {start: 1}});
+	eventsWithFiles: function() {
+		var withFiles = {course_id: this.course._id, files: {$exists: 1, $not: {$size: 0}}};
+		return Events.find(withFiles, {sort: {start: 1}});
 	}
 });
 
