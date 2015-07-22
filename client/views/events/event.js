@@ -27,10 +27,6 @@ Template.eventPage.helpers({
 			return Courses.findOne({_id: courseId});
 		}
 	},
-
-	kioskMode: function() {
-		return Session.get('kiosk_mode');
-	}
 });
 
 Template.eventPage.helpers({
@@ -98,10 +94,6 @@ Template.eventDisplay.helpers({
 	mayEdit: function() {
 		return mayEditEvent(Meteor.user(), this);
 	},
-
-	kioskMode: function() {
-		return Session.get('kiosk_mode');
-	}
 });
 
 Template.eventDescritpionEdit.rendered = function() {
