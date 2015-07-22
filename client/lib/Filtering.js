@@ -47,10 +47,18 @@ CoursePredicates = {
 	region: Predicates.string,
 	search: Predicates.string,
 	group: Predicates.string,
-	room:  Predicates.string,
 	categories: Predicates.ids,
 	upcomingEvent: Predicates.require
-}
+};
+
+EventPredicates = {
+	region: Predicates.string,
+	search: Predicates.string,
+	categories: Predicates.ids,
+	group: Predicates.string,
+	location:  Predicates.string,
+	room:  Predicates.string,
+};
 
 
 

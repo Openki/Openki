@@ -6,22 +6,41 @@ Router.map(function () {
 		waitOn: function () {
 			var now = minuteTime.get(); // Time dependency so this will be reactively updated
 
+
+			this.filter = Filtering(EventPredicates).read(this.params.query).done();
+
+			var queryFuture = this.filter.toParams();
+			queryFuture.after = now;
+
+			var queryOngoing= this.filter.toParams();
+			queryOngoing.ongoing = now;
+
 			return [
-				Meteor.subscribe('eventsFind', { after: now, location: this.params.location, room: this.params.room }, 10),
-				Meteor.subscribe('eventsFind', { ongoing: now, location: this.params.location, room: this.params.room }),
+				Meteor.subscribe('eventsFind', queryFuture, 20),
+				Meteor.subscribe('eventsFind', queryOngoing),
 			];
 		},
+
 		data: function() {
 			var now = minuteTime.get();
-			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
 			var tomorrow = new Date(now);
 			tomorrow.setHours(tomorrow.getHours() + 24);
 			tomorrow.setHours(0);
 
+			var queryFuture = this.filter.toParams();
+			queryFuture.after = tomorrow;
+
+			var queryToday = this.filter.toParams();
+			queryToday.after = now;
+			queryToday.before = tomorrow;
+
+			var queryNow = this.filter.toParams();
+			queryNow.ongoing = now;
+
 			return {
-				today: eventsFind({ after: now, before: tomorrow, location: this.params.location, room: this.params.room }, 10),
-				future: eventsFind({ after: tomorrow, location: this.params.location, room: this.params.room }, 10),
-				now: eventsFind({ ongoing: now, location: this.params.location, room: this.params.room })
+				today: eventsFind(queryToday, 20),
+				future: eventsFind(queryFuture, 10),
+				now: eventsFind(queryNow)
 			};
 		},
 		onAfterAction: function() {
