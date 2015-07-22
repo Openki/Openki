@@ -48,6 +48,23 @@ input#editform_name {
 		.no-padding;
 	}
 
+	.coursedetails_column_left {
+		padding-right: 7.5px;
+
+		@media @mobile {
+			.no-padding;
+		}
+	}
+
+	.coursedetails_column_right {
+		padding-left: 7.5px;
+
+		@media @mobile {
+			.no-padding;
+		}
+	}
+
+
 	.course_main {
 		.make-sm-column(12);
 		.make-xs-column(12);
@@ -144,17 +161,10 @@ input#editform_name {
 		margin-top: 15px;
 	}
 
-	.course_edit {
-		padding: 0 15px;
-
-		.course_edit_header {
-			.no-padding;
-		}
-	}
-
 	.course_event_options {
 		.make-sm-column(12);
 		.make-xs-column(12);
+		.no-padding;
 
 		button.eventEdit {
 			.btn;
@@ -165,7 +175,7 @@ input#editform_name {
 	.courseDetails_roles_container {
 		.make-sm-column(12);
 		.make-xs-column(12);
-		padding-top: 15px;
+		padding: 15px 0 0;
 
 		.courseDetails_participants_count {
 			.make-sm-column(12);

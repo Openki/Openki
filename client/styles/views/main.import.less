@@ -44,10 +44,6 @@ button {
 	.transition(0.5s) !important;
 }
 
-.form-control {
-	padding: 6px 10px;
-}
-
 .tooltip {
 	font-size: @font-size-base;
 	&-inner {
@@ -78,6 +74,17 @@ span.glyphicon-ok {
 
 select {
 	.form-control;
+	color: #333;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:-moz-focusring {
+		// Hack to make ugly outline in Firefox disappear
+		color: rgba(0,0,0,0);
+		text-shadow: 0 0 0 #333;
+	}
 }
 
 .editable:focus {

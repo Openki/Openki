@@ -9,6 +9,11 @@ div#edit_event_description {
 }
 
 .course_event_detail {
+	.make-sm-column(8);
+    .make-sm-column-offset(2);
+    .make-xs-column(12);
+    .no-padding;
+
 	.course_event {
 		& > .course_event_date {
 			padding: 10px 0;
@@ -35,12 +40,8 @@ div#edit_event_description {
 .course_events {
 	.make-sm-column(12);
 	.make-xs-column(12);
-	padding-top: 15px;
-	padding-left: 10px;
-
-	@media(@screen-xs) {
-		padding-left: 15px;
-	}
+	padding: 15px 0 0;
+	margin-left: -5px;
 
 	.course_event {
 		height: 204px;
@@ -127,4 +128,8 @@ input#edit_event_title {
 	.make-xs-column(12);
 	.no-padding;
 	padding-top: 15px;
+}
+
+.create-event {
+	.container;
 }

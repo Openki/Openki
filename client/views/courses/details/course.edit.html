@@ -43,12 +43,12 @@
 					</ul>
 				</div>
 				{{else}}
+				<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
+				{{#if categories}}{{>show_categories}}{{/if}}
+				{{#unless categories}}{{mf 'course.edit.no.categories' 'No categories'}}{{/unless}}
 				<button type="button" class="editCategories" role="button">
-					<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
-					{{#if categories}}{{>show_categories}}{{/if}}
-					{{#unless categories}}{{mf 'course.edit.no.categories' 'No categories'}}{{/unless}}
 					<span class="glyphicon glyphicon-edit"></span>
-					{{mf 'course.edit.categories-button' 'Edit'}}
+					{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
 				</button>
 				{{/if}}
 

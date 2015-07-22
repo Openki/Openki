@@ -1228,7 +1228,7 @@ mfPkg.addNative(
     "key": "groups.listing.manage_groups",
     "text": "Manage groups",
     "file": "./client/views/groups/groupListing.html",
-    "line": 4,
+    "line": 5,
     "template": "groupListing",
     "ctime": 1437391271702,
     "mtime": 1437400490707
@@ -1237,7 +1237,7 @@ mfPkg.addNative(
     "key": "groupListing.partOfGroup",
     "text": "Part of {NAME}",
     "file": "./client/views/groups/groupListing.html",
-    "line": 11,
+    "line": 12,
     "template": "groupListing",
     "ctime": 1437068252622,
     "mtime": 1437068252622
@@ -1246,7 +1246,7 @@ mfPkg.addNative(
     "key": "groupListing.expel",
     "text": "Expel&nbsp;from&nbsp;this&nbsp;group",
     "file": "./client/views/groups/groupListing.html",
-    "line": 12,
+    "line": 13,
     "template": "groupListing",
     "ctime": 1437068252622,
     "mtime": 1437396658123
@@ -1255,7 +1255,7 @@ mfPkg.addNative(
     "key": "groupListing.admit",
     "text": "Admit to \"{NAME}\"",
     "file": "./client/views/groups/groupListing.html",
-    "line": 19,
+    "line": 20,
     "template": "groupListing",
     "ctime": 1437068252622,
     "mtime": 1437068252622
@@ -1492,7 +1492,7 @@ mfPkg.addNative(
     "line": 75,
     "template": "eventPage",
     "ctime": 1432132053599,
-    "mtime": 1432132053599
+    "mtime": 1437576778788
   },
   "course.event.edit.duration": {
     "key": "course.event.edit.duration",
@@ -1606,7 +1606,7 @@ mfPkg.addNative(
     "key": "course.details.edit_btn",
     "text": "Edit",
     "file": "./client/views/courses/details/course.details.html",
-    "line": 36,
+    "line": 31,
     "template": "coursedetails",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1615,7 +1615,7 @@ mfPkg.addNative(
     "key": "course.details.del_btn",
     "text": "Delete",
     "file": "./client/views/courses/details/course.details.html",
-    "line": 40,
+    "line": 35,
     "template": "coursedetails",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1629,29 +1629,11 @@ mfPkg.addNative(
     "ctime": 1434198219466,
     "mtime": 1434198219466
   },
-  "event.replication.interval.start": {
-    "key": "event.replication.interval.start",
-    "text": "Interval Start",
-    "file": "./client/views/events/event.html",
-    "line": 277,
-    "template": "eventPage",
-    "ctime": 1434198219466,
-    "mtime": 1434198219466
-  },
-  "event.replication.interval.end": {
-    "key": "event.replication.interval.end",
-    "text": "Interval End",
-    "file": "./client/views/events/event.html",
-    "line": 287,
-    "template": "eventPage",
-    "ctime": 1434198219466,
-    "mtime": 1434198219466
-  },
   "event.replication.freq.once": {
     "key": "event.replication.freq.once",
     "text": "once",
     "file": "./client/views/events/event.html",
-    "line": 300,
+    "line": 281,
     "template": "eventPage",
     "ctime": 1434198219466,
     "mtime": 1434198219466
@@ -1660,7 +1642,25 @@ mfPkg.addNative(
     "key": "event.replication.freq.daily",
     "text": "every day",
     "file": "./client/views/events/event.html",
-    "line": 301,
+    "line": 282,
+    "template": "eventPage",
+    "ctime": 1434198219466,
+    "mtime": 1434198219466
+  },
+  "event.replication.interval.start": {
+    "key": "event.replication.interval.start",
+    "text": "Interval Start",
+    "file": "./client/views/events/event.html",
+    "line": 289,
+    "template": "eventPage",
+    "ctime": 1434198219466,
+    "mtime": 1434198219466
+  },
+  "event.replication.interval.end": {
+    "key": "event.replication.interval.end",
+    "text": "Interval End",
+    "file": "./client/views/events/event.html",
+    "line": 299,
     "template": "eventPage",
     "ctime": 1434198219466,
     "mtime": 1434198219466
@@ -1669,7 +1669,7 @@ mfPkg.addNative(
     "key": "course.details.repl_btn",
     "text": "Create events",
     "file": "./client/views/events/event.html",
-    "line": 313,
+    "line": 314,
     "template": "eventPage",
     "ctime": 1434198219466,
     "mtime": 1434198219466
@@ -1678,7 +1678,7 @@ mfPkg.addNative(
     "key": "event.replication.createText",
     "text": "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:",
     "file": "./client/views/events/event.html",
-    "line": 320,
+    "line": 321,
     "template": "eventPage",
     "ctime": 1435199323054,
     "mtime": 1435199323054
@@ -1921,7 +1921,7 @@ mfPkg.addNative(
     "key": "course.title.Past events",
     "text": "Past events",
     "file": "./client/views/courses/details/unused/course.history.html",
-    "line": 8,
+    "line": 7,
     "template": "coursehistory",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1944,38 +1944,11 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "course.details.time_created": {
-    "key": "course.details.time_created",
-    "text": "Time created:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 16,
-    "template": "coursedetails",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "course.details.last_edited": {
-    "key": "course.details.last_edited",
-    "text": "Last edited:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 17,
-    "template": "coursedetails",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
-  "course.details.created_by": {
-    "key": "course.details.created_by",
-    "text": "Created by:",
-    "file": "./client/views/courses/details/course.details.html",
-    "line": 18,
-    "template": "coursedetails",
-    "ctime": 1432132053599,
-    "mtime": 1432132053599
-  },
   "course.subnav.descr": {
     "key": "course.subnav.descr",
     "text": "Description",
     "file": "./client/views/courses/details/course.details.html",
-    "line": 92,
+    "line": 83,
     "template": "coursedetails",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1984,7 +1957,7 @@ mfPkg.addNative(
     "key": "course.subnav.docs",
     "text": "Docs",
     "file": "./client/views/courses/details/course.details.html",
-    "line": 98,
+    "line": 90,
     "template": "coursedetails",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -1993,7 +1966,7 @@ mfPkg.addNative(
     "key": "course.subnav.history",
     "text": "History",
     "file": "./client/views/courses/details/course.details.html",
-    "line": 104,
+    "line": 97,
     "template": "coursedetails",
     "ctime": 1432132053599,
     "mtime": 1432132053599
@@ -2029,7 +2002,7 @@ mfPkg.addNative(
     "key": "course.detail.remove",
     "text": "Remove course and all its events?",
     "file": "./client/views/courses/details/course.details.js",
-    "line": 154,
+    "line": 149,
     "func": "function ()",
     "ctime": 1435199323054,
     "mtime": 1435199323054
@@ -2191,7 +2164,7 @@ mfPkg.addNative(
     "key": "course.edit.categories",
     "text": "Categories:",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 47,
+    "line": 46,
     "template": "course_edit",
     "ctime": 1432132053599,
     "mtime": 1435199323054
@@ -2200,19 +2173,19 @@ mfPkg.addNative(
     "key": "course.edit.no.categories",
     "text": "No categories",
     "file": "./client/views/courses/details/course.edit.html",
-    "line": 49,
+    "line": 48,
     "template": "course_edit",
     "ctime": 1435199323054,
     "mtime": 1435199323054
   },
-  "course.edit.categories-button": {
-    "key": "course.edit.categories-button",
-    "text": "Edit",
+  "course.edit.edit_categories-button": {
+    "key": "course.edit.edit_categories-button",
+    "text": "Edit categories",
     "file": "./client/views/courses/details/course.edit.html",
     "line": 51,
     "template": "course_edit",
-    "ctime": 1435199323054,
-    "mtime": 1435199323054
+    "mtime": 1437602635914,
+    "ctime": 1437602635914
   },
   "course.edit.needs.role": {
     "key": "course.edit.needs.role",
@@ -2340,14 +2313,14 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
-  "course.history.no_past_events": {
-    "key": "course.history.no_past_events",
-    "text": "No past events for this course.",
+  "course.history.created_by": {
+    "key": "course.history.created_by",
+    "text": "Course created by:",
     "file": "./client/views/courses/details/unused/course.history.html",
-    "line": 28,
+    "line": 42,
     "template": "coursehistory",
-    "ctime": 1437350029578,
-    "mtime": 1437350029578
+    "ctime": 1437576778788,
+    "mtime": 1437576778788
   },
   "calendar.noCoursesThisDay": {
     "key": "calendar.noCoursesThisDay",
@@ -2979,6 +2952,56 @@ mfPkg.addNative(
     "ctime": 1432132053599,
     "mtime": 1432132053599
   },
+  "course.details.time_created": {
+    "key": "course.details.time_created",
+    "text": "Time created:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 16,
+    "template": "coursedetails",
+    "ctime": 1432132053599,
+    "mtime": 1437602635914,
+    "removed": true
+  },
+  "course.details.last_edited": {
+    "key": "course.details.last_edited",
+    "text": "Last edited:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 17,
+    "template": "coursedetails",
+    "ctime": 1432132053599,
+    "mtime": 1437602635914,
+    "removed": true
+  },
+  "course.details.created_by": {
+    "key": "course.details.created_by",
+    "text": "Created by:",
+    "file": "./client/views/courses/details/course.details.html",
+    "line": 18,
+    "template": "coursedetails",
+    "ctime": 1432132053599,
+    "mtime": 1437602635914,
+    "removed": true
+  },
+  "course.edit.categories-button": {
+    "key": "course.edit.categories-button",
+    "text": "Edit",
+    "file": "./client/views/courses/details/course.edit.html",
+    "line": 51,
+    "template": "course_edit",
+    "ctime": 1435199323054,
+    "mtime": 1437602635914,
+    "removed": true
+  },
+  "course.history.no_past_events": {
+    "key": "course.history.no_past_events",
+    "text": "No past events for this course.",
+    "file": "./client/views/courses/details/unused/course.history.html",
+    "line": 28,
+    "template": "coursehistory",
+    "ctime": 1437350029578,
+    "mtime": 1437602635914,
+    "removed": true
+  },
   "groups.groups": {
     "key": "groups.groups",
     "text": "Groups:",
@@ -2986,7 +3009,7 @@ mfPkg.addNative(
     "line": 3,
     "template": "show_groups",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.discussion.comment_title": {
@@ -2996,7 +3019,7 @@ mfPkg.addNative(
     "line": 40,
     "template": "newPost",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.passwordChanged": {
@@ -3006,7 +3029,7 @@ mfPkg.addNative(
     "line": 126,
     "func": "function(err)",
     "ctime": 1434198219466,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.mail.to_user": {
@@ -3016,7 +3039,7 @@ mfPkg.addNative(
     "line": 92,
     "template": "profilelink",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.mail.options": {
@@ -3026,7 +3049,7 @@ mfPkg.addNative(
     "line": 95,
     "template": "profilelink",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "email.sent": {
@@ -3036,7 +3059,7 @@ mfPkg.addNative(
     "line": 124,
     "func": "function(error, result)",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.saving.editable.success": {
@@ -3045,7 +3068,7 @@ mfPkg.addNative(
     "file": "./client/views/courses/details/course.details.js",
     "line": 36,
     "func": "function(err, courseId)",
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "ctime": 1435199589794,
     "removed": true
   },
@@ -3056,7 +3079,7 @@ mfPkg.addNative(
     "line": 67,
     "template": "profile",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "menue.Search": {
@@ -3066,7 +3089,7 @@ mfPkg.addNative(
     "line": 35,
     "template": "navbar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "menue.LocationList": {
@@ -3076,7 +3099,7 @@ mfPkg.addNative(
     "line": 40,
     "template": "navbar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "menue.CategoryList": {
@@ -3086,7 +3109,7 @@ mfPkg.addNative(
     "line": 45,
     "template": "navbar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "menue.BrowseCourses": {
@@ -3096,7 +3119,7 @@ mfPkg.addNative(
     "line": 50,
     "template": "navbar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "find.form.Header.What do you want to learn?": {
@@ -3106,7 +3129,7 @@ mfPkg.addNative(
     "line": 4,
     "template": "search_form",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "event.download_cal": {
@@ -3116,7 +3139,7 @@ mfPkg.addNative(
     "line": 301,
     "template": "eventPage",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "event.replication.freq.weekly": {
@@ -3126,7 +3149,7 @@ mfPkg.addNative(
     "line": 67,
     "func": "function()",
     "ctime": 1434198219466,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "event.replication.freq.monthly": {
@@ -3136,7 +3159,7 @@ mfPkg.addNative(
     "line": 70,
     "func": "function()",
     "ctime": 1434198219466,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "event.replicate_update.error": {
@@ -3145,7 +3168,7 @@ mfPkg.addNative(
     "file": "./client/views/events/event.js",
     "line": 391,
     "func": "function(error, eventId)",
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "ctime": 1434198396034,
     "removed": true
   },
@@ -3156,7 +3179,7 @@ mfPkg.addNative(
     "line": 21,
     "template": "course_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "calendar.upcoming_events": {
@@ -3166,7 +3189,7 @@ mfPkg.addNative(
     "line": 5,
     "template": "calendar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "calendar.past_events": {
@@ -3176,7 +3199,7 @@ mfPkg.addNative(
     "line": 14,
     "template": "calendar",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.input.new_pswd": {
@@ -3186,7 +3209,7 @@ mfPkg.addNative(
     "line": 11,
     "template": "profile",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.edit.neededs_ppl_who": {
@@ -3196,7 +3219,7 @@ mfPkg.addNative(
     "line": 53,
     "template": "course_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.userid": {
@@ -3206,7 +3229,7 @@ mfPkg.addNative(
     "line": 9,
     "template": "profile",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "profile.id": {
@@ -3216,7 +3239,7 @@ mfPkg.addNative(
     "line": 16,
     "template": "profile",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "roles.subscribe.team": {
@@ -3226,7 +3249,7 @@ mfPkg.addNative(
     "line": 15,
     "func": "unknown",
     "ctime": 1432386224128,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.event.edit.host_location": {
@@ -3236,7 +3259,7 @@ mfPkg.addNative(
     "line": 41,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.event.edit.by": {
@@ -3246,7 +3269,7 @@ mfPkg.addNative(
     "line": 44,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.event.edit.no_hosts": {
@@ -3256,7 +3279,7 @@ mfPkg.addNative(
     "line": 46,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.event.edit.mentors": {
@@ -3266,7 +3289,7 @@ mfPkg.addNative(
     "line": 50,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.event.edit.no_mentors": {
@@ -3276,7 +3299,7 @@ mfPkg.addNative(
     "line": 55,
     "template": "course_event_edit",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.roles.you_are": {
@@ -3286,7 +3309,7 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.roles.anonymously": {
@@ -3296,7 +3319,7 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   },
   "course.roles.subscribed_as": {
@@ -3306,11 +3329,11 @@ mfPkg.addNative(
     "line": 42,
     "template": "membersRoles",
     "ctime": 1432132053599,
-    "mtime": 1437400490708,
+    "mtime": 1437602635914,
     "removed": true
   }
 }, 
 {
-  "extractedAt": 1437400490708,
-  "updatedAt": 1437400490708
+  "extractedAt": 1437602635914,
+  "updatedAt": 1437602635914
 });

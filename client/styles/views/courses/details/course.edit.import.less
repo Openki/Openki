@@ -1,7 +1,22 @@
+.find,
+.new_course {
+    .container;
+
+    .course_edit {
+        .make-sm-column(8);
+        .make-sm-column-offset(2);
+        .make-xs-column(12);
+    }
+}
+
+.coursedetails {
+    .course_edit {
+        .make-sm-column(12);
+        .make-xs-column(12);
+    }
+}
+
 .course_edit {
-    .make-sm-column(8);
-    .make-sm-column-offset(2);
-    .make-xs-column(12);
     .no-padding;
     border: 7px solid @light-blue;
     background: @light-blue;
@@ -10,6 +25,7 @@
     .course_edit_header {
         .make-sm-column(12);
         .make-xs-column(12);
+        .no-padding;
     }
 
     #editform_categories,
@@ -17,6 +33,7 @@
     .course_edit_region {
         .make-sm-column(4);
         .make-xs-column(12);
+        .no-padding;
     }
 
     ul.categories,
@@ -74,19 +91,22 @@
         }
     }
 
+    button.editCategories {
+        .btn-thin;
+        .btn-primary;
+    }
+
     .course_edit_finishbtns {
         .make-sm-column(12);
         .make-xs-column(12);
+        .no-padding;
         padding-top: 10px;
 
         button {
             .btn;
             .btn-primary;
+            margin-right: 10px;
         }
     }
 
-}
-
-.new_course {
-    .container;
 }

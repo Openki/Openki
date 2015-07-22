@@ -1,13 +1,14 @@
 <template name="coursehistory">
-    {{#if has_past_events}}
     <div class="timeline-pre">
         <div class="timeline-start-container">
             <div class="timeline-start"></div>
         </div>
         <div class="timeline-header">
-            <h5>{{mf 'course.title.Past events' 'Past events'}}</h5>
+            <!-- <h5>{{mf 'course.title.Past events' 'Past events'}}</h5> -->
         </div>
     </div>
+
+    <!-- Start 'events_list_past' helper iteration -->
 	{{#each events_list_past}}
     <div class="timeline">
         <div class="timeline-eventdate {{this._id}}">
@@ -24,7 +25,31 @@
 		</a>
 	</div>
 	{{/each}}
-    {{else}}
-    <h4>{{mf 'course.history.no_past_events' 'No past events for this course.'}}</h4>
-    {{/if}}
+    <!-- End 'events_list_past' helper iteration -->
+
+    <!-- Start 'course' helper data context -->
+    {{#with course}}
+    <div class="timeline">
+        <div class="timeline-eventdate {{this._id}}">
+            {{dateformat_mini_fullmonth time_created}}
+        </div>
+        <div class="timeline-eventline-container">
+            <div class="timeline-eventline"></div>
+            <div class="timeline-eventpoint {{this._id}}"></div>
+        </div>
+    </div>
+    <div class="coursehistory-event">
+		{{mf 'course.history.created_by' 'Course created by:'}}
+        {{>profilelink createdby}}
+	</div>
+    {{/with}}
+    <!-- End 'course' helper data context -->
+
+    <div class="timeline-post">
+        <div class="timeline-end-container">
+            <div class="timeline-end"></div>
+        </div>
+        <div class="timeline-footer">
+        </div>
+    </div>
 </template>
