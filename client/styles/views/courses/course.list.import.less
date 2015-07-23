@@ -24,6 +24,7 @@
 	height: 150px;
 	border: 7px dashed @light-blue;
 	margin: 10px 10px 10px 0;
+
 	&:hover {
 		h4 {
 			color: @brand-primary;
@@ -32,17 +33,21 @@
 		.box-shadow;
 		.transition(0.5s);
 	}
+
 	&.category-focus-mode {
 		box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
 								0px 0px 0px rgba(56, 130, 156, 0.6);
 	}
+
 	h4 {
 		.transition(0.5s);
 		color: #333;
 	}
+
 	& > a:hover {
 			text-decoration: none;
 	}
+
 	.yes {
 		color: #407d5c;
 		background-color: @brand-success;
@@ -50,6 +55,7 @@
 		margin-bottom: 3px;
 		text-align: center;
 	}
+
 	.no {
 		color: #751313;
 		background-color: @light-red;
@@ -57,6 +63,7 @@
 		margin-bottom: 3px;
 		text-align: center;
 	}
+
 	.yesyou {
 		color: darken(@orange, 30%);
 		background-color: @orange;
@@ -64,6 +71,7 @@
 		margin-bottom: 3px;
 		text-align: center;
 	}
+
 	.course_content {
 		background: @body-bg;
 		padding-left: 10px;
@@ -74,6 +82,7 @@
 .course_main {
 	&.hasupcomingevents {
 		background: @light-blue;
+
 		.course_content {
 			background: @light-blue;
 
@@ -94,14 +103,18 @@
 	text-align: center;
 	color: #333;
 	max-height: 150px;
+
 	& > div {
 		padding-bottom: 2px;
+
 		&:first-child {
 			padding-top: 4px;
 		}
+
 		&:last-child {
 			padding-bottom: 4px;
 		}
+
 		&.course_eventlist_location {
 			padding-left: 4px;
 			padding-right: 4px;
@@ -114,7 +127,7 @@ a.category {
 	color: @brand-primary;
 	background: rgba(216, 216, 216, 0.5);
 	padding: 0 2px 1px 2px;
-	
+
 	&:hover {
 		text-decoration: none;
 	}
@@ -123,12 +136,15 @@ a.category {
 .course_categories {
 	& > ul {
 		line-height: 23px;
+
 		li {
 			display: inline-block;
+
 			span {
 				background: rgba(216, 216, 216, 0.5);
 				padding: 0 2px 1px 2px;
 			}
+
 			a.category:hover {
 				text-decoration: none;
 				background: darken(rgba(216, 216, 216, 1), 2%);
