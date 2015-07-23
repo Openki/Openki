@@ -119,3 +119,11 @@
 	</a>
 </template>
 
+<template name="kioskLink">
+{{#if link}}
+	<div class="container-fluid links" style="position: fixed; bottom: 4em; right: 2em; ">
+		<a href="{{link}}">{{mf 'backToKiosk' 'Return to overview'}}</a>
+	</div>
+{{/if}}
+</template>
+

@@ -6,8 +6,8 @@ Router.map(function () {
 		waitOn: function () {
 			var now = minuteTime.get(); // Time dependency so this will be reactively updated
 
-
 			this.filter = Filtering(EventPredicates).read(this.params.query).done();
+			Session.set('kioskFilter', this.filter.toParams());
 
 			var queryFuture = this.filter.toParams();
 			queryFuture.after = now;
@@ -93,3 +93,20 @@ Template.kioskEventOngoing.rendered = function() {
 		height: 80,
 	});
 };
+
+Template.kioskLink.helpers({
+	link: function() {
+		var filterParams = Session.get('kioskFilter');
+		if (!filterParams) return;
+
+		delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+		var queryString = UrlTools.paramsToQueryString(filterParams);
+
+		var options = {};
+		if (queryString.length) {
+			options.query = queryString;
+		}
+
+		return Router.url('kiosk', {}, options);
+	}
+});
