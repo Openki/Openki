@@ -31,6 +31,7 @@
 			{{#if privileges.admin}}
 				<li class="admin">
 					<span class="glyphicon glyphicon-ok"></span>
+					&nbsp;
 					<span class="granted">{{mf 'privilege.has.admin' 'Administrator privileges granted'}}</span>
 					{{#if alterPrivileges}}
 						<button class="remove" data-priv='admin'>{{mf 'privilege.remove' 'Remove privilege'}}</button>
@@ -50,6 +51,7 @@
 			{{#if privileges.upload}}
 				<li class="admin">
 					<span class="glyphicon glyphicon-ok"></span>
+					&nbsp;
 					<span class="granted">{{mf 'privilege.has.upload' 'Upload allowed'}}</span>
 					{{#if alterPrivileges}}
 						<button class="remove" data-priv='upload'>{{mf 'privilege.remove'}}</button>
