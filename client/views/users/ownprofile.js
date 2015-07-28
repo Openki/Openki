@@ -4,7 +4,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [ 
 				Meteor.subscribe('currentUser'),
-				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: Meteor.userId() }),
+				Meteor.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
 				Meteor.subscribe('groupsFind', { own: true })
 			];
 		},
@@ -29,7 +29,7 @@ Router.map(function () {
 
 				return { 
 					user: userdata,
-					courses: coursesFind('all', false, { userInvolved: user._id })
+					courses: coursesFind({ userInvolved: user._id })
 				};
 			}
 		},

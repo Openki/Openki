@@ -5,7 +5,7 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('user', this.params._id),
 				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('coursesFind', 'all', false, { userInvolved: this.params._id })
+				Meteor.subscribe('coursesFind', { userInvolved: this.params._id })
 			];
 		},
 		data: function () {
@@ -23,7 +23,7 @@ Router.map(function() {
 
 			return {
 				'user': user,
-				'involvedIn': coursesFind('all', false, { userInvolved: this.params._id }),
+				'involvedIn': coursesFind({ userInvolved: this.params._id }),
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
 				'inviteGroups': groupsFind({ own: true }),
