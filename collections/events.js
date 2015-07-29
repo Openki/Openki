@@ -214,6 +214,8 @@ Meteor.methods({
  *   room: only events in this room (string match)
  *   standalone: only events that are not attached to a course
  *   region: restrict to given region
+ *   categories: list of category ID the event must be in
+ *   group: the event must be in that group (ID)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -230,7 +232,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.period) {
-		find.start = { $lte: filter.period[1] }; // Start date before end of period
+		find.start = { $lt: filter.period[1] }; // Start date before end of period
 		find.end = { $gte: filter.period[0] }; // End date after start of period
 	}
 	
@@ -262,6 +264,14 @@ eventsFind = function(filter, limit) {
 	
 	if (filter.region) {
 		find.region = filter.region;
+	}
+
+	if (filter.categories) {
+		find.categories = { $all: filter.categories };
+	}
+
+	if (filter.group) {
+		find.groups = filter.group;
 	}
 	
 	if (filter.query) {

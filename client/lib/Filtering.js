@@ -9,6 +9,10 @@ var Predicates = {
 			equals: function(other) { return param === other.get(); }
 		}
 	},
+	id: function(param) {
+		if (param == 'all') return false;
+		return Predicates.string(param)
+	},
 	ids: function(param) {
 		var make = function(ids) {
 			return {
@@ -44,7 +48,7 @@ var Predicates = {
 }
 
 CoursePredicates = {
-	region: Predicates.string,
+	region: Predicates.id,
 	search: Predicates.string,
 	group: Predicates.string,
 	categories: Predicates.ids,
@@ -52,7 +56,7 @@ CoursePredicates = {
 };
 
 EventPredicates = {
-	region: Predicates.string,
+	region: Predicates.id,
 	search: Predicates.string,
 	categories: Predicates.ids,
 	group: Predicates.string,
