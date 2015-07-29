@@ -62,7 +62,7 @@ Template.find.events({
 
 	'click .show_subcategories': function(e, instance) {
 		$(".subcategory" + "." + this).toggle(0);
-		e.stopPropagation();
+		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .group': function(event, instance) {
