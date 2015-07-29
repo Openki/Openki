@@ -8,17 +8,17 @@ Router.map(function () {
 		waitOn: function () {
 			var region = Session.get('region')
 			return [
-				Meteor.subscribe('coursesFind', region, false, {}, 40),
-				Meteor.subscribe('coursesFind', region, false, { missingTeam: true }, 5),
-				Meteor.subscribe('coursesFind', region, false, { missingParticipants: true }, 5),
+				Meteor.subscribe('coursesFind', { region: region }, 40),
+				Meteor.subscribe('coursesFind', { region: region, missingTeam: true }, 5),
+				Meteor.subscribe('coursesFind', { region: region, missingParticipants: true }, 5),
 			]
 		},
 		data: function () {
 			var region = Session.get('region')
 			return {
-				missing_organisator: coursesFind(region, false, { missingTeam: true }, 5),
-				missing_subscribers: coursesFind(region, false, { missingParticipants: true }, 5),
-				all_courses: coursesFind(region, false, {}, 36)
+				all_courses:         coursesFind({ region: region }, 36),
+				missing_organisator: coursesFind({ region: region, missingTeam: true }, 5),
+				missing_subscribers: coursesFind({ region: region, missingParticipants: true }, 5)
 			};
 		},
 		onAfterAction: function() {
