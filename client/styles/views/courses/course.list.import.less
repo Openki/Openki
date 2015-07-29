@@ -17,64 +17,74 @@
 	}
 }
 
-.courselist_course {
+.courselist_course_container{
+	.make-xs-column(12);
+	.make-sm-column(4);
+	.make-md-column(3);
 	.no-padding;
-	display: inline-block;
-	width: 280px;
-	height: 150px;
-	border: 7px dashed @light-blue;
-	margin: 10px 10px 10px 0;
+	border: 5px solid @body-bg;
 
-	&:hover {
-		h4 {
-			color: @brand-primary;
+	.courselist_course {
+		.make-sm-column(12);
+		.make-xs-column(12);
+		.no-padding;
+		height: 150px;
+		border: 7px dashed @light-blue;
+
+		&.haspastevents {
+			border-style: solid;
 		}
-		color: @brand-primary;
-		.box-shadow;
-		.transition(0.5s);
-	}
 
-	&.category-focus-mode {
-		box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
-								0px 0px 0px rgba(56, 130, 156, 0.6);
-	}
+		&:hover {
+			h4 {
+				color: @brand-primary;
+			}
+			color: @brand-primary;
+			.box-shadow;
+			.transition(0.5s);
+		}
 
-	h4 {
-		.transition(0.5s);
-		color: #333;
-	}
+		&.category-focus-mode {
+			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
+									0px 0px 0px rgba(56, 130, 156, 0.6);
+		}
 
-	& > a:hover {
-			text-decoration: none;
-	}
+		h4 {
+			.transition(0.5s);
+			color: #333;
+		}
 
-	.yes {
-		color: #407d5c;
-		background-color: @brand-success;
-		width: 100%;
-		margin-bottom: 3px;
-		text-align: center;
-	}
+		& > a:hover {
+				text-decoration: none;
+		}
 
-	.no {
-		color: #751313;
-		background-color: @light-red;
-		width: 100%;
-		margin-bottom: 3px;
-		text-align: center;
-	}
+		.team_status,
+		.mentor_status,
+		.host_status {
+			text-align: center;
+		}
 
-	.yesyou {
-		color: darken(@orange, 30%);
-		background-color: @orange;
-		width: 100%;
-		margin-bottom: 3px;
-		text-align: center;
-	}
+		.yes {
+			color: #407d5c;
+			background-color: @brand-success;
+		}
 
-	.course_content {
-		background: @body-bg;
-		padding-left: 10px;
+		.no {
+			color: #751313;
+			background-color: @light-red;
+		}
+
+		.yesyou {
+			color: darken(@orange, 30%);
+			background-color: @orange;
+		}
+
+		.course_content {
+			.make-sm-column(9);
+			.make-xs-column(9);
+			padding: 0 0 0 10px;
+			background: @body-bg;
+		}
 	}
 }
 
@@ -91,65 +101,92 @@
 }
 
 .courselist_course_info {
-	right: -7px;
+	.make-sm-column(3);
+	.make-xs-column(3);
+	.no-padding;
+	position: relative;
 	top: -7px;
-	padding: 0;
-	width: 25%;
-	background: @body-bg;
+	right: -7px;
+	z-index: 3;
+
+	&> div {
+		border-top: 3px solid @body-bg;
+
+		&:first-child {
+			border-top: none;
+		}
+	}
 }
 
-.course_eventlist_container {
+.course_eventlist {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	.no-padding;
 	background: @brand-success;
 	text-align: center;
 	color: #333;
 	max-height: 150px;
+	padding: 3px;
 
-	& > div {
-		padding-bottom: 2px;
-
-		&:first-child {
-			padding-top: 4px;
-		}
-
-		&:last-child {
-			padding-bottom: 4px;
-		}
-
-		&.course_eventlist_location {
-			padding-left: 4px;
-			padding-right: 4px;
-			word-wrap: break-word;
-		}
+	.course_eventlist_time,
+	.course_eventlist_date {
+		.make-sm-column(12);
+		.make-xs-column(12);
+		.no-padding;
 	}
-}
 
-a.category {
-	color: @brand-primary;
-	background: rgba(216, 216, 216, 0.5);
-	padding: 0 2px 1px 2px;
-
-	&:hover {
-		text-decoration: none;
+	.course_eventlist_location {
+		padding: 0 4px;
+		word-wrap: break-word;
 	}
 }
 
 .course_categories {
-	& > ul {
+	ul.categories_list {
 		line-height: 23px;
+		.list-unstyled;
 
 		li {
 			display: inline-block;
+			position: relative;
+			z-index: 2;
+
 
 			span {
 				background: rgba(216, 216, 216, 0.5);
 				padding: 0 2px 1px 2px;
 			}
 
-			a.category:hover {
-				text-decoration: none;
-				background: darken(rgba(216, 216, 216, 1), 2%);
-				.box-shadow-s(darken(rgba(216, 216, 216, 1), 10%));
+			a.category {
+				color: @brand-primary;
+				background: rgba(216, 216, 216, 0.5);
+				padding: 0 2px 1px 2px;
+
+				&:hover {
+					text-decoration: none;
+					background: darken(rgba(216, 216, 216, 1), 2%);
+					.box-shadow-s(darken(rgba(216, 216, 216, 1), 10%));
+				}
 			}
 		}
 	}
+}
+
+.course_groups ul.groups-list li {
+	position: relative;
+	z-index: 2;
+	margin-bottom: 5px;
+}
+
+.courselist_course_overlay {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	.no-padding;
+	position: absolute;
+	top: -7px;
+	left: -7px;
+	width: calc(~"100% + 14px") !important;
+	height: calc(~"100% + 14px");
+	// background: rgba(231, 0, 0, 0.51);
+	z-index: 1;
 }

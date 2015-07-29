@@ -52,7 +52,7 @@ Template.find.events({
 	'keyup .searchInput': _.debounce(function(event, instance) {
 		instance.search.set($('.searchInput').val());
 	}, 200),
-	
+
 	'click .category': function(event, instance) {
 		var cats = instance.categories.get();
 		cats.push(""+this);
@@ -67,7 +67,12 @@ Template.find.events({
 		instance.categories.set(_.without(cats, remCat));
 		searchChanged(event, instance);
 		return false;
-	}
+	},
+
+	'click .show_subcategories': function(e, instance) {
+		$(".subcategory" + "." + this).toggle(0);
+		e.stopPropagation();
+	},
 });
 
 var readFilter = function(instance) {
@@ -90,10 +95,9 @@ Template.find.helpers({
 	},
 
 	'hasUpcomingEventsChecked': function() {
-		if (Template.instance().hasUpcomingEvent.get()) return "checked";
-		return "";
+		if (Template.instance().hasUpcomingEvent.get()) return true;
 	},
-	
+
 	'newCourse': function() {
 		var instance = Template.instance();
 		return {
@@ -104,6 +108,14 @@ Template.find.helpers({
 
 	'categories': function() {
 		return Template.instance().categories.get();
+	},
+
+	'availableCategories': function() {
+		return Object.keys(categories);
+	},
+
+	'availableSubcategories': function(category) {
+		return categories[category];
 	},
 
 	'results': function() {
