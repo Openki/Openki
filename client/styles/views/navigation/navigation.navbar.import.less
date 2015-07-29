@@ -1,11 +1,21 @@
 .navbar {
 	border-bottom: none;
+
+	.navbar-brand {
+		padding: 15px 10px;
+
+		span.fa {
+			position: relative;
+			bottom: 2px;
+		}
+	}
 }
 
 .navbar-nav {
 	& > li {
 		& > a {
 			font-size: medium;
+			padding: 15px 10px;
 		}
 	}
 
@@ -51,12 +61,6 @@
 	&:hover * {
 		color: @body-bg !important;
 	}
-}
-
-a.navbar-brand {
-	font-size: x-large;
-	position: relative;
-	bottom: 3px;
 }
 
 
