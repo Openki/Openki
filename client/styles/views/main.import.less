@@ -10,7 +10,7 @@ html,body {
 }
 
 body {
-	padding-top: 55px;
+	padding-top: 50px;
 }
 
 h1 {
@@ -32,11 +32,19 @@ p {
 		padding-top: 0;
 		margin-top: 0;
 	}
+
+	@media @mobile {
+		padding-top: 0;
+	}
 }
 
 .dropdown-menu {
 	width: auto;
 	min-width: 0;
+
+	li {
+		cursor: pointer;
+	}
 }
 
 a,
@@ -73,7 +81,7 @@ span.glyphicon-ok {
 }
 
 select {
-	.form-control;
+	.form-control-humble;
 	color: #333;
 
 	&:hover {
@@ -91,4 +99,15 @@ select {
 	border: 1px solid @light-red;
 	padding: 10px !important;
 	background: @body-bg;
+}
+
+button.report {
+	.btn;
+	.btn-warning;
+	margin-top: 15px;
+
+	@media @mobile {
+		.make-xs-column(12);
+		margin-bottom: 15px;
+	}
 }
