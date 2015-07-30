@@ -45,6 +45,20 @@ var Predicates = {
 			equals: function(other) { return true; }
 		}
 	},
+	date: function(param) {
+		if (!param) return false;
+		var date = moment(param); // Param is ISO date or moment() object
+		if (!date.isValid()) return false;
+		date.startOf('day');
+		return {
+			merge: function(other) { return other; },
+			without: function(predicate) { return false; },
+			get: function() { return moment(date); },
+			param: function() { return moment.format('YYYY-MM-DD'); },
+			query: function() { return date.toDate(); },
+			equals: function(other) { return date.isSame(other.get()); }
+		}
+	},
 }
 
 CoursePredicates = {
@@ -62,6 +76,7 @@ EventPredicates = {
 	group: Predicates.string,
 	location:  Predicates.string,
 	room:  Predicates.string,
+	start: Predicates.date
 };
 
 

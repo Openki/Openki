@@ -17,13 +17,13 @@ Template.calendar.helpers({
 		return moment().isAfter(this.end);
 	},
 	days: function() {
-		var today = moment().startOf('day');
+		var start = Template.instance().filter.get('start');
 		var i = 0;
 		var days = [];
 		for (; i < 8; i++) {
 			days.push({
-				start: moment(today).add(i, 'days'),
-				end: moment(today).add(i+1, 'days')
+				start: moment(start).add(i, 'days'),
+				end: moment(start).add(i+1, 'days')
 			});
 		}
 		return days;
@@ -61,6 +61,7 @@ Template.calendar.onCreated(function() {
 
 		filter
 			.clear()
+			.add('start', moment())
 			.add('region', Session.get('region'))
 			.read(query)
 			.done();
@@ -79,18 +80,38 @@ Template.calendar.onCreated(function() {
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
 
-		var today = moment().startOf('day').toDate();
-		var limit = moment(today).add(8, 'days').toDate();
+		var start = filter.get('start').toDate();
+		var limit = filter.get('start').add(8, 'days').toDate();
 
-		filterQuery.period = [today, limit];
+		filterQuery.period = [start, limit];
 		if (eventSub) oldSubs.push(eventSub);
 		eventSub = instance.subscribe('eventsFind', filterQuery, stopOldSubs);
 	});
 });
 
 Template.calendar.rendered = function() {
-	this.$('.ellipsis').dotdotdot({});
     var currentPath = Router.current().route.path(this)
     $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
     $('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
+
+Template.calendar_event.rendered = function() {
+	this.$('.ellipsis').dotdotdot({});
+};
+
+Template.calendar.events({
+	'click .nextDay': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.add(1, 'day');
+		instance.filter.add('start', start).done();
+		return false;
+	},
+
+	'click .prevDay': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.subtract(1, 'day');
+		instance.filter.add('start', start).done();
+		return false;
+
+	},
+});
