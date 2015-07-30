@@ -2,35 +2,7 @@ Router.map(function () {
 	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
-		waitOn: function () {
-			var region = Session.get('region');
-			if (region === 'all') region = false;
-			   
-			var today = moment().startOf('day').toDate();
-			var limit = moment(today).add(8, 'days').toDate();
-
-			return Meteor.subscribe('eventsFind', {
-				region: region,
-				period: [today, limit]
-			});
-		},
-		data: function() {
-			var today = moment().startOf('day');
-			var i = 0;
-			
-			var days = [];
-			for (; i < 8; i++) {
-				var start = moment(today).add(i, 'days');
-				var end = moment(today).add(i+1, 'days');
-				days.push({
-					day: start,
-					events: eventsFind({
-						period: [start.toDate(), end.toDate()]
-					})
-				});
-			}
-			return days;
-		},
+		data: function() { return this.params; },
 		onAfterAction: function() {
 			document.title = webpagename + 'Calendar'
 		}
@@ -43,7 +15,77 @@ Template.calendar.helpers({
 	},
 	past: function() {
 		return moment().isAfter(this.end);
+	},
+	days: function() {
+		var today = moment().startOf('day');
+		var i = 0;
+		var days = [];
+		for (; i < 8; i++) {
+			days.push({
+				start: moment(today).add(i, 'days'),
+				end: moment(today).add(i+1, 'days')
+			});
+		}
+		return days;
+	},
+	filter: function() {
+		return Template.instance().filter;
 	}
+});
+
+Template.calendarDay.helpers({
+	hasEvents: function() {
+		var filterQuery = this.filter.toQuery();
+		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
+
+		return eventsFind(filterQuery).count() > 0;
+	},
+	events: function() {
+		var filterQuery = this.filter.toQuery();
+		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
+
+		return eventsFind(filterQuery);
+	}
+});
+
+Template.calendar.onCreated(function() {
+	var instance = this;
+
+	var filter = Filtering(EventPredicates);
+	instance.filter = filter;
+
+	// Read URL state
+	instance.autorun(function() {
+		var data = Template.currentData();
+		var query = data.query || {};
+
+		filter
+			.clear()
+			.add('region', Session.get('region'))
+			.read(query)
+			.done();
+	});
+
+	// Keep old subscriptions around until the new ones are ready
+	var eventSub = false;
+	var oldSubs = [];
+	var stopOldSubs = function() {
+		if (eventSub.ready()) {
+			_.map(oldSubs, function(sub) { sub.stop() });
+			oldSubs = [];
+		}
+	}
+
+	instance.autorun(function() {
+		var filterQuery = filter.toQuery();
+
+		var today = moment().startOf('day').toDate();
+		var limit = moment(today).add(8, 'days').toDate();
+
+		filterQuery.period = [today, limit];
+		if (eventSub) oldSubs.push(eventSub);
+		eventSub = instance.subscribe('eventsFind', filterQuery, stopOldSubs);
+	});
 });
 
 Template.calendar.rendered = function() {

@@ -1,28 +1,31 @@
 <template name="calendar">
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
-		{{#each this}}	
-			<div class="row">
-				<h1>{{weekday day}}</h1>
-				{{#if this.events.count}}
-				{{else}}
-				{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
-				{{/if}}
-			</div>
-			{{#if this.events.count}}
-			<div class="calendar_eventlist row">
-			{{#each this.events}}
-				{{#if past}}
-					{{> calendar_event_past}}
-				{{else}}
-					{{> calendar_event}}
-				{{/if}}
-			{{/each}}
-			</div>
-			{{/if}}
+		{{#each days}}
+			{{> calendarDay day=this filter=filter}}
 		{{/each}}
 		</div>
 	</div>
+</template>
+
+<template name="calendarDay">
+	<div class="row">
+		<h1>{{weekday day.start}}</h1>
+		{{#unless hasEvents}}
+		{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
+		{{/unless}}
+	</div>
+	{{#if hasEvents}}
+	<div class="calendar_eventlist row">
+	{{#each events}}
+		{{#if past}}
+			{{> calendar_event_past}}
+		{{else}}
+			{{> calendar_event}}
+		{{/if}}
+	{{/each}}
+	</div>
+	{{/if}}
 </template>
 
 <template name="calendar_event">
