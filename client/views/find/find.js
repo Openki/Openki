@@ -47,7 +47,7 @@ Template.find.events({
 		instance.filter.add('search', $('.searchInput').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
-	
+
 	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
@@ -58,6 +58,11 @@ Template.find.events({
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
+	},
+
+	'click .show_subcategories': function(e, instance) {
+		$(".subcategory" + "." + this).toggle(0);
+		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .group': function(event, instance) {
@@ -80,10 +85,9 @@ Template.find.helpers({
 	},
 
 	'hasUpcomingEventsChecked': function() {
-		if (Template.instance().filter.get('upcomingEvent')) return "checked";
-		return "";
+		if (Template.instance().hasUpcomingEvent.get()) return true;
 	},
-	
+
 	'newCourse': function() {
 		var instance = Template.instance();
 		return {
@@ -100,6 +104,14 @@ Template.find.helpers({
 		var groupId = Template.instance().filter.get('group');
 		if (!groupId) return false;
 		return Groups.findOne(groupId);
+	},
+
+	'availableCategories': function() {
+		return Object.keys(categories);
+	},
+
+	'availableSubcategories': function(category) {
+		return categories[category];
 	},
 
 	'results': function() {

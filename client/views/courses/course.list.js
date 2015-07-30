@@ -35,13 +35,13 @@ Template.course.helpers({
 
 	coursestate: function() {
 		var today = new Date();
-		
+
 		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
-		
+
 		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
 		if (past) return 'haspastevents';
-						
+
 		return 'proposal';
 	},
 
@@ -128,10 +128,12 @@ Template.course.events({
 	}
 });
 
-Template.course.rendered = function() {
-	this.$('.ellipsis').dotdotdot({});
-}
-
 Template.courseStatus.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 }
+
+Template.course.rendered = function() {
+	this.$('.course-name').dotdotdot({
+		height: 30,
+	});
+};
