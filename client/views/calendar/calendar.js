@@ -30,6 +30,12 @@ Template.calendar.helpers({
 	},
 	filter: function() {
 		return Template.instance().filter;
+	},
+	startDate: function() {
+		return Template.instance().filter.get('start').format('LL');
+	},
+	endDate: function() {
+		return Template.instance().filter.get('start').add(8, 'days').format('LL');
 	}
 });
 
@@ -110,6 +116,20 @@ Template.calendar.events({
 	'click .prevDay': function(event, instance) {
 		var start = instance.filter.get('start');
 		start.subtract(1, 'day');
+		instance.filter.add('start', start).done();
+		return false;
+
+	},
+	'click .nextWeek': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.add(1, 'week');
+		instance.filter.add('start', start).done();
+		return false;
+	},
+
+	'click .prevWeek': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.subtract(1, 'week');
 		instance.filter.add('start', start).done();
 		return false;
 
