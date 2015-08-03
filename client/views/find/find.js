@@ -78,14 +78,13 @@ Template.find.events({
 	},
 });
 
-
 Template.find.helpers({
 	'search': function() {
 		return Template.instance().filter.get('search');
 	},
 
 	'hasUpcomingEventsChecked': function() {
-		if (Template.instance().hasUpcomingEvent.get()) return true;
+		return Template.instance().filter.get('upcomingEvent');
 	},
 
 	'newCourse': function() {
