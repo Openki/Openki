@@ -134,4 +134,18 @@ Template.calendar.events({
 		return false;
 
 	},
+	'click .nextMonth': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.add(1, 'month');
+		instance.filter.add('start', start).done();
+		return false;
+	},
+
+	'click .prevMonth': function(event, instance) {
+		var start = instance.filter.get('start');
+		start.subtract(1, 'month');
+		instance.filter.add('start', start).done();
+		return false;
+
+	},
 });
