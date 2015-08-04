@@ -46,9 +46,9 @@ var Predicates = {
 		}
 	},
 	date: function(param) {
-		if (!param) return false;
+		if (!param) return undefined;
 		var date = moment(param); // Param is ISO date or moment() object
-		if (!date.isValid()) return false;
+		if (!date.isValid()) return undefined;
 		date.startOf('day');
 		return {
 			merge: function(other) { return other; },
@@ -98,7 +98,7 @@ Filtering = function(availablePredicates) {
 	self.add = function(name, param) {
 		if (!availablePredicates[name]) throw "No predicate "+name;
 		var toAdd = availablePredicates[name](param);
-		if (!toAdd) return; // Filter construction fsailed, leave as-is
+		if (toAdd === undefined) return; // Filter construction failed, leave as-is
 
 		if (predicates[name]) {
 			predicates[name] = predicates[name].merge(toAdd);
