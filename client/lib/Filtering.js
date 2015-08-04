@@ -54,7 +54,7 @@ var Predicates = {
 			merge: function(other) { return other; },
 			without: function(predicate) { return false; },
 			get: function() { return moment(date); },
-			param: function() { return moment.format('YYYY-MM-DD'); },
+			param: function() { return date.format('YYYY-MM-DD'); },
 			query: function() { return date.toDate(); },
 			equals: function(other) { return date.isSame(other.get()); }
 		}
@@ -98,6 +98,8 @@ Filtering = function(availablePredicates) {
 	self.add = function(name, param) {
 		if (!availablePredicates[name]) throw "No predicate "+name;
 		var toAdd = availablePredicates[name](param);
+		if (!toAdd) return; // Filter construction fsailed, leave as-is
+
 		if (predicates[name]) {
 			predicates[name] = predicates[name].merge(toAdd);
 		} else {

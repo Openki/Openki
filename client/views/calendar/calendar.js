@@ -9,6 +9,20 @@ Router.map(function () {
 	});
 });
 
+var updateUrl = function(event, instance) {
+	var filterParams = instance.filter.toParams();
+	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+	var queryString = UrlTools.paramsToQueryString(filterParams);
+
+	var options = {};
+	if (queryString.length) {
+		options.query = queryString;
+	}
+
+	Router.go('calendar', {}, options);
+	event.preventDefault();
+}
+
 Template.calendar.helpers({
 	weekday: function(day) {
 		return day.format('dddd Do MMMM');
@@ -92,6 +106,7 @@ Template.calendar.onCreated(function() {
 		filterQuery.period = [start, limit];
 		if (eventSub) oldSubs.push(eventSub);
 		eventSub = instance.subscribe('eventsFind', filterQuery, stopOldSubs);
+
 	});
 });
 
@@ -105,47 +120,21 @@ Template.calendar_event.rendered = function() {
 	this.$('.ellipsis').dotdotdot({});
 };
 
+var mvDateHandler = function(amount, unit) {
+	return function(event, instance) {
+		var start = instance.filter.get('start');
+		start.add(amount, unit);
+		instance.filter.add('start', start).done();
+		updateUrl(event, instance);
+		return false;
+	}
+}
+
 Template.calendar.events({
-	'click .nextDay': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.add(1, 'day');
-		instance.filter.add('start', start).done();
-		return false;
-	},
-
-	'click .prevDay': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.subtract(1, 'day');
-		instance.filter.add('start', start).done();
-		return false;
-
-	},
-	'click .nextWeek': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.add(1, 'week');
-		instance.filter.add('start', start).done();
-		return false;
-	},
-
-	'click .prevWeek': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.subtract(1, 'week');
-		instance.filter.add('start', start).done();
-		return false;
-
-	},
-	'click .nextMonth': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.add(1, 'month');
-		instance.filter.add('start', start).done();
-		return false;
-	},
-
-	'click .prevMonth': function(event, instance) {
-		var start = instance.filter.get('start');
-		start.subtract(1, 'month');
-		instance.filter.add('start', start).done();
-		return false;
-
-	},
+	'click .nextDay': mvDateHandler(1, 'day'),
+	'click .prevDay': mvDateHandler(-1, 'day'),
+	'click .nextWeek': mvDateHandler(1, 'week'),
+	'click .prevWeek': mvDateHandler(-1, 'week'),
+	'click .nextMonth': mvDateHandler(1, 'month'),
+	'click .prevMonth': mvDateHandler(-1, 'month'),
 });
