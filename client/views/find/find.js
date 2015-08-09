@@ -51,6 +51,8 @@ Template.find.events({
 	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
+		$('.search_filter').show(0);
+		$('.filter-toggle-btn').addClass('remove-filter');
 		return false;
 	},
 
@@ -68,6 +70,8 @@ Template.find.events({
 	'click .group': function(event, instance) {
 		instance.filter.add('group', ""+this).done();
 		updateUrl(event, instance);
+		$('.search_filter').show(0);
+		$('.filter-toggle-btn').addClass('remove-filter');
 		return false;
 	},
 
