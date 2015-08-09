@@ -76,6 +76,11 @@ Template.find.events({
 		updateUrl(event, instance);
 		return false;
 	},
+
+	'click .filter-toggle-btn': function(event, instance) {
+		$(".search_filter").toggle(0);
+		$(".filter-toggle-btn").toggleClass('remove-filter');
+	}
 });
 
 Template.find.helpers({

@@ -5,10 +5,18 @@
 		<div class="input-group">
 			<input type="text" class="searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
 			<span class="input-group-btn">
-				<button class="find-btn" type="button">{{mf 'find.search_go' 'Go!'}}</button>
+				<button class="filter-toggle-btn" type="button">
+					<span class="glyphicon glyphicon-filter"></span>
+					{{mf 'find.search_filter_toggle' 'Filter'}}
+				</button>
+			</span>
+			<span class="input-group-btn">
+				<button class="find-btn" type="button">
+					{{mf 'find.search_go' 'Go!'}}
+				</button>
 			</span>
 		</div>
-		<div class="search_filter">
+		<div class="search_filter" style="display:none">
 			<div class="search_filter_header">
 				<h4>
 					<span class="glyphicon glyphicon-filter"></span>
@@ -76,7 +84,8 @@
 			{{#with group}}
 			{{#if this}}
 			<div class="filter_group">
-				<h5>{{mf 'find.filter.group' 'Showing courses in group {NAME}' NAME=name}}
+				<h5>
+					{{mf 'find.filter.group' 'Showing courses in group {NAME}' NAME=name}}
 					<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeCategory' 'Remove filter'}}"></span>
 				</h5>
 			</div>

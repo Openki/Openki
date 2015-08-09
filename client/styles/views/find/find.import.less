@@ -18,7 +18,7 @@
         .input-group {
             .make-sm-column(4);
             .make-xs-column(12);
-            .no-padding;
+            padding: 0 0 20px;
 
             input.searchInput {
                 .form-control-humble;
@@ -28,6 +28,15 @@
                 .btn;
                 .btn-primary;
             }
+
+            button.filter-toggle-btn {
+                .btn;
+                .btn-success;
+
+                &.remove-filter {
+                    .btn-danger;
+                }
+            }
         }
 
         .search_filter {
@@ -35,6 +44,14 @@
             .make-sm-column-offset(0.5);
             .make-xs-column(12);
             padding: 0 0 0 15px;
+
+            @media @tablet {
+                .no-padding;
+            }
+
+            @media @mobile {
+                .no-padding;
+            }
 
             * {
                 .transition(0.5s);
