@@ -2,19 +2,21 @@
 <div class="find">
 	<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 	<div class="search">
-		<div class="input-group">
-			<input type="text" class="searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
-			<span class="input-group-btn">
-				<button class="filter-toggle-btn" type="button">
-					<span class="glyphicon glyphicon-filter"></span>
-					{{mf 'find.search_filter_toggle' 'Filter'}}
-				</button>
-			</span>
-			<span class="input-group-btn">
-				<button class="find-btn" type="button">
-					{{mf 'find.search_go' 'Go!'}}
-				</button>
-			</span>
+		<div class="search_field">
+			<div class="input-group">
+				<input type="text" class="searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
+				<span class="input-group-btn">
+					<button class="filter-toggle-btn" type="button">
+						<span class="glyphicon glyphicon-filter"></span>
+						{{mf 'find.search_filter_toggle' 'Filter'}}
+					</button>
+				</span>
+				<span class="input-group-btn">
+					<button class="find-btn" type="button">
+						{{mf 'find.search_go' 'Go!'}}
+					</button>
+				</span>
+			</div>
 		</div>
 		<div class="search_filter" style="display:none">
 			<div class="search_filter_header">
@@ -81,16 +83,24 @@
 				</span>
 				{{/if}}
 			</div>
-			{{#with group}}
-			{{#if this}}
-			<div class="filter_group">
+			<div class="filter_groups">
+				<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
+				{{#with group}}
+				{{#if this}}
 				<h5>
-					{{mf 'find.filter.group' 'Showing courses in group {NAME}' NAME=name}}
-					<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeCategory' 'Remove filter'}}"></span>
+					{{mf 'find.filter.group' 'Showing courses in group'}}
 				</h5>
+				<span class="group">{{name}}</span>
+				<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
+				<br>
+				{{/if}}
+				{{/with}}
+				{{#unless group}}
+				<span class="groups_explanation">
+					{{mf 'find.filter.groups.explanation' 'Click on a group to show its events.'}}
+				</span>
+				{{/unless}}
 			</div>
-			{{/if}}
-			{{/with}}
 		</div>
 	</div>
 	<div class="courselist_results">
