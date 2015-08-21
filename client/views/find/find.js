@@ -73,6 +73,7 @@ Template.find.events({
 		updateUrl(event, instance);
 		$('.search_filter').show(0);
 		$('.filter-toggle-btn').addClass('remove-filter');
+		window.scrollTo(0, 0);
 		return false;
 	},
 
