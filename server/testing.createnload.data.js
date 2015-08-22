@@ -218,8 +218,10 @@ createEventsIfNone = function(){
 createCommentsIfNone = function(){
 	//Events.remove({});
 	if (CourseDiscussions.find().count() === 0) {
+		var userCount = Meteor.users.find().count();
 		Courses.find().forEach(function(course) {
 			var comment_count =  Math.floor(Math.pow(Math.random() * 2, 4));
+			var courseMembers = course.members.length;
 			for (var n = 0; n < comment_count; n++) {
 				var comment = {};
 				var description = course.description;
@@ -227,7 +229,7 @@ createCommentsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				var random = Random.fraction();
 
-				comment.course_id = course._id;
+				comment.course_ID = course._id;
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
 				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 
@@ -237,8 +239,11 @@ createCommentsIfNone = function(){
 				var date = new Date(new Date().getTime() - age);
 				comment.time_created = date;
 				comment.time_updated = date + age * 0.77
-
-				comment.createdby = 'ServerScript' + n
+				var commentor = course.members[Math.floor(Math.random()*courseMembers)].user
+				if (!commentor || Math.random() < 0.2 ){
+					commentor = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id
+				}
+				comment.user_ID = commentor
 				CourseDiscussions.insert(comment)
 				console.log('Added '+ n +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
 			}
