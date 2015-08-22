@@ -14,6 +14,18 @@ Meteor.startup(function () {
 
 	var serviceConf = Meteor.settings.service;
 	if (serviceConf) {
+		if (serviceConf.google
+			) {
+			ServiceConfiguration.configurations.remove({
+				service: 'google'
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'google',
+				loginStyle: "popup",
+				appId: serviceConf.google.appId,
+				secret: serviceConf.google.secret
+			});
+		}
 		if (serviceConf.facebook) {
 			ServiceConfiguration.configurations.remove({
 				service: 'facebook'

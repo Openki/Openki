@@ -103,7 +103,6 @@ Template.loginLogin.events({
 		});
 	},
 	'click .loginWithService': function(event) {
-		console.log('123')
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
 		console.log(loginMethod)
 		if (!Meteor[loginMethod]) {

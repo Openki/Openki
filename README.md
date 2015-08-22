@@ -24,7 +24,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system
 - :date: Calendar
-- :key: Single-Sign-on (OpenID, Github, Facebook, G+, Twitter etc...)
+- :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
 - :ideograph_advantage: I18n: In-browser-GUI for life translation
 - :envelope: Email notifications
 - :open_file_folder: File upload for course-documentation
