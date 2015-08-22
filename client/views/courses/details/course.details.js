@@ -38,7 +38,8 @@ Router.map(function () {
 								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
 							}
 						});
-					}
+					},
+					mf('course.name.placeholder', 'Name my course proposal')
 				);
 				data.editableDescription = makeEditable(
 					course.description,
@@ -51,7 +52,8 @@ Router.map(function () {
 								addMessage(mf('course.saving.desc.editable.success', { NAME: course.name }), 'success');
 							}
 						});
-					}
+					},
+					mf('course.description.placeholder', 'Describe my proposal')
 				);
 			}
 			return data;
