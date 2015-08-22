@@ -9,6 +9,7 @@ Meteor.startup(function () {
 		createLocationsIfNone();       // Locations  from server/data/testing.locations.js
 		createEventsIfNone();          // Events     in   server/testing.createnload.data.js (generic)
 		loadTestEvents();              // Events     from server/data/testing.events.js
+		createCommentsIfNone();        // Comments   in   server/testing.createnload.data.js (generic)
 	}
 
 	var serviceConf = Meteor.settings.service;

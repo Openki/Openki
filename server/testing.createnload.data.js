@@ -212,6 +212,39 @@ createEventsIfNone = function(){
 	}
 }
 
+/////////////////////////////// TESTING: Create generic comments if non in db
+
+
+createCommentsIfNone = function(){
+	//Events.remove({});
+	if (CourseDiscussions.find().count() === 0) {
+		Courses.find().forEach(function(course) {
+			var comment_count =  Math.floor(Math.pow(Math.random() * 2, 4));
+			for (var n = 0; n < comment_count; n++) {
+				var comment = {};
+				var description = course.description;
+				if (!description) description = "No description"; // :-(
+				var words = _.shuffle(description.split(' '));
+				var random = Random.fraction();
+
+				comment.course_id = course._id;
+				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
+				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
+
+				var spread = new Date(new Date().getTime() - course.time_created)
+				var age = Random.fraction()
+				age = Math.floor(age*spread);
+				var date = new Date(new Date().getTime() - age);
+				comment.time_created = date;
+				comment.time_updated = date + age * 0.77
+
+				comment.createdby = 'ServerScript' + n
+				CourseDiscussions.insert(comment)
+				console.log('Added '+ n +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
+			}
+		});
+	}
+}
 
 
 /////////////////////////////// TESTING: load the events from file server/data/testing.events.js
