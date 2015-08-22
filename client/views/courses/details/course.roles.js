@@ -46,8 +46,10 @@ Template.member_roles.events({
 	},
 	'mouseover button.makeTeam': function(e, template) {
 		$("." + this.member.user).show(0);
+		$('.makeTeamPlus').hide(0);
 	},
 	'mouseout button.makeTeam': function(e, template) {
 		$("." + this.member.user).hide(0);
+		$('.makeTeamPlus').show(0);
 	}
 });
