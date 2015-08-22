@@ -170,7 +170,7 @@ createEventsIfNone = function(){
 	//Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
-			var event_count =  Math.floor(Math.pow(Math.random() * 1.6, 6));
+			var event_count =  Math.floor(Math.pow(Math.random() * 1.6, 10));
 			for (var n = 0; n < event_count; n++) {
 				var event = {};
 				var description = course.description;
