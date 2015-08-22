@@ -53,6 +53,7 @@ Template.find.events({
 		updateUrl(event, instance);
 		$('.search_filter').show(0);
 		$('.filter-toggle-btn').addClass('remove-filter');
+		$('#categories_dropdown').dropdown('toggle');
 		return false;
 	},
 
@@ -72,6 +73,7 @@ Template.find.events({
 		updateUrl(event, instance);
 		$('.search_filter').show(0);
 		$('.filter-toggle-btn').addClass('remove-filter');
+		window.scrollTo(0, 0);
 		return false;
 	},
 
@@ -120,6 +122,10 @@ Template.find.helpers({
 
 	'availableSubcategories': function(category) {
 		return categories[category];
+	},
+
+	'availableGroups': function(group) {
+		return groups[group];
 	},
 
 	'results': function() {

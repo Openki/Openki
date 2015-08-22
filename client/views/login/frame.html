@@ -1,6 +1,6 @@
 <template name='loginFrame'>
 	<div class="container-fluid">
-		<div id="loginFrame">				
+		<div id="loginFrame">
 			{{#if currentUser}}
 			<div class="container-fluid">
 				<div class="form-group">
@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			{{else}}
-				{{> loginLogin}}	
+				{{> loginLogin}}
 			{{/if}}
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-user"></span>
 					</span>
-					<input type="text" class="form-control" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
+					<input type="text" id="login-name" placeholder="{{mf 'frame.login.username' 'Username'}}">
 				</div>
 			</div>
 			<div id="username_warning_not_existing" style="display:none">
@@ -55,7 +55,7 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-lock"></span>
 					</span>
-					<input type="password" class="form-control" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
+					<input type="password" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
 			</div>
 			<div id="password_warning_incorrect" style="display:none">

@@ -32,17 +32,34 @@
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent">
 						<span class="fa {{#if hasUpcomingEventsChecked}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></span>
 						&nbsp;
-						{{mf 'find.only with events_checkbox' 'Only with events'}}
+						<span class="filter_events_upcoming_text">
+							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+						</span>
 					</label>
 				</div>
 			</div>
 			<div class="filter_categories">
 				<h4>{{mf 'find.filter.categories' 'Categories'}}</h4>
+				{{#if categories}}
+				<ul class="selected_categories">
+				{{#each categories}}
+					<li>
+						<span class="category">{{categoryName}}</span>
+						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"></span>
+					</li>
+				{{/each}}
+				</ul>
+				{{/if}}
 				<div class="category_select">
 					<div class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown">
-							{{mf 'find.filter.select_categories' 'Select categories'}}
-							<span class="caret"></span>
+						<a class="dropdown-toggle" id="categories_dropdown" data-toggle="dropdown">
+							<!-- {{#if categories}} -->
+							<span class="glyphicon glyphicon-plus"></span>
+							&nbsp;
+							{{mf 'find.filter.add_category' 'Add category to filter'}}
+							<!-- {{else}}
+							{{mf 'find.filter.all_categories' 'All'}}
+							{{/if}} -->
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							{{#each availableCategories}}
@@ -50,11 +67,11 @@
 								<a class="category parent">
 									{{categoryName}}
 									{{#if availableSubcategories this}}
-									&nbsp;
-									<span class="fa fa-level-down show_subcategories {{this}}" title="{{mf 'find.filter.show_subcategories' 'Show subcategories'}}"
-									></span>
 									{{/if}}
 								</a>
+								&nbsp;
+								<span class="fa fa-level-down show_subcategories {{this}}" title="{{mf 'find.filter.show_subcategories' 'Show subcategories'}}"
+								></span>
 							</li>
 							{{#each availableSubcategories this}}
 							<li class="subcategory {{..}}">
@@ -67,21 +84,6 @@
 						</ul>
 					</div>
 				</div>
-				{{#if categories}}
-				<h5>{{mf 'find.filter.categories.selected' 'Selected {COUNT, plural, one {category} other {# categories}}' COUNT=categories.length}}</h5>
-				<ul class="selected_categories">
-				{{#each categories}}
-					<li>
-						<span class="category">{{categoryName}}</span>
-						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"></span>
-					</li>
-				{{/each}}
-				</ul>
-				{{else}}
-				<span class="categories_explanation">
-					{{mf 'find.filter.categories.explanation' '... or click on a category to add it to the filter.'}}
-				</span>
-				{{/if}}
 			</div>
 			<div class="filter_groups">
 				<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
