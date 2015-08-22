@@ -50,10 +50,12 @@ Template.editable.rendered = function() {
 Template.editable.helpers({
 	changed: function() { return Template.instance().changed.get() },
 	editableAttrs: function() {
+		var instance = Template.instance();
 		var classes = ['editable'];
-		if (Template.instance().changed.get()) classes.push('changed');
+		if (instance.changed.get()) classes.push('changed');
 		return {
-			class: classes.join(' '),
+			'class': classes.join(' '),
+			'data-placeholder':  instance.data.placeholderText,
 		};
 	}
 });

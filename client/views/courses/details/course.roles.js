@@ -34,7 +34,8 @@ Template.member_roles.helpers({
 						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'), 'success');
 					}
 				});
-			}
+			},
+			mf('roles.message.placeholder', 'Tell others about my interests')
 		);
 	}
 });
