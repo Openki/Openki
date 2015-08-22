@@ -170,7 +170,7 @@ createEventsIfNone = function(){
 	//Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
-			var event_count =  Math.pow(Math.random() * 2, 4);
+			var event_count =  Math.floor(Math.pow(Math.random() * 1.6, 6));
 			for (var n = 0; n < event_count; n++) {
 				var event = {};
 				var description = course.description;
@@ -190,7 +190,7 @@ createEventsIfNone = function(){
 				event.host = []
 
 				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
-				var timeToGo = Random.fraction()-0.8 				// put 80% in the past
+				var timeToGo = Random.fraction()-0.7 				// put 70% in the past
 				if (timeToGo >= 0.05) {								// 75% of the remaining in future
 					timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
 				}
@@ -206,7 +206,7 @@ createEventsIfNone = function(){
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
 				Events.insert(event)
-				console.log('Added generic event:  "' + event.title + '"');
+				console.log('Added generic event ('+ n +'/' + event_count +'):  "' + event.title + '"');
 			}
 		});
 	}
