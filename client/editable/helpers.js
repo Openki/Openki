@@ -48,7 +48,14 @@ Template.editable.rendered = function() {
 }
 
 Template.editable.helpers({
-	changed: function() { return Template.instance().changed.get() }
+	changed: function() { return Template.instance().changed.get() },
+	editableAttrs: function() {
+		var classes = ['editable'];
+		if (Template.instance().changed.get()) classes.push('changed');
+		return {
+			class: classes.join(' '),
+		};
+	}
 });
 
 Template.editable.events({
