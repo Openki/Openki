@@ -5,6 +5,7 @@ var lgs = {
 	'es': { lg: 'es', name: 'Castellano', short: 'es'},
 	'fr': { lg: 'fr', name: 'Français', short: 'fr'},
 	'it': { lg: 'it', name: 'Italiano', short: 'it'},
+	'da': { lg: 'da', name: 'Dansk', short: 'da'},
 	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語'}
 };
 
@@ -25,6 +26,9 @@ Template.lang_sel.events({
 		localStorage.setItem('locale', this.lg);
 		Session.set('locale', this.lg);
 		e.preventDefault();
+		if (Meteor.user()){
+			Meteor.call('updateUserLocale', this.lg);
+		}
 	}
 });
 

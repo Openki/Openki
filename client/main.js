@@ -91,6 +91,10 @@ Meteor.startup(function() {
 	});
 });
 
+Accounts.onLogin(function() {
+	var locale = Meteor.user().profile.locale;
+	if (locale) Session.set('locale', locale);
+});
 
 minuteTime = new ReactiveVar();
 

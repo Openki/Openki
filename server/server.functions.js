@@ -17,7 +17,6 @@ Meteor.methods({
 				changes.emails = [];
 			}
 		} 
-
 		if (!_.isEmpty(changes)) {
 			Meteor.users.update(Meteor.userId(), {
 				$set: changes
@@ -29,6 +28,11 @@ Meteor.methods({
 			$push: {
 				anonId: anonId
 			}
+		});
+	},
+	updateUserLocale: function(locale){
+		Meteor.users.update(Meteor.userId(), {
+			$set: { 'profile.locale': locale }
 		});
 	}
 });
