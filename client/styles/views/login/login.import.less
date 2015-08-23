@@ -7,9 +7,6 @@
 	h3 {
 		margin-top: 0;
 	}
-    .external_logins {
-        margin: 10px 0 15px;
-    }
 
     button.loginRegister{
         .form-control;
@@ -39,5 +36,38 @@
         color: @brand-danger;
         margin: -10px 0 10px;
         text-align: left;
+    }
+
+	li.dropdown-header:hover {
+		cursor: default;
+	}
+
+	.external_logins {
+        margin: 7px 0 15px;
+
+		.loginWithService {
+			background: none;
+			border: none;
+			font-size: x-large;
+			color: #aca7a7;
+
+			&:hover {
+				.fa {
+					.transition(0.5s);
+				}
+
+				.fa-google-plus-square {
+					color: #dd4b39;
+				}
+
+				.fa-facebook-square {
+					color: #3B5998;
+				}
+
+				.fa-github-square {
+					color: #333;
+				}
+			}
+		}
     }
 }
