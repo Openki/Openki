@@ -14,7 +14,12 @@ function finderRoute(path) {
 			return this.params;
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Find ' + this.params.search
+			var search = this.params.query.search
+			if (search) {
+				document.title = webpagename + mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"');
+			} else {
+				document.title = webpagename + mf('startpage.windowtitle', 'What do you want to learn?');
+			}
 		}
 	};
 }
