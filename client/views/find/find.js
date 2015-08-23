@@ -30,7 +30,12 @@ Router.map(function () {
 });
 
 var updateUrl = function(event, instance) {
-	instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked')).done();
+	event.preventDefault();
+
+	instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
+	instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
+	instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
+	instance.filter.done();
 
 	var filterParams = instance.filter.toParams();
 	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
@@ -40,9 +45,9 @@ var updateUrl = function(event, instance) {
 	if (queryString.length) {
 		options.query = queryString;
 	}
-
 	Router.go('find', {}, options);
-	event.preventDefault();
+	
+	return true;
 }
 
 Template.find.events({
@@ -99,8 +104,12 @@ Template.find.helpers({
 		return Template.instance().filter.get('search');
 	},
 
-	'hasUpcomingEventsChecked': function() {
-		return Template.instance().filter.get('upcomingEvent');
+	'toggleClass': function(name) {
+		return { class: 'fa fa-toggle-' + (Template.instance().filter.get(name) ? 'on' : 'off') };
+	},
+	
+	'toggleChecked': function(name) {
+		return Template.instance().filter.get(name) ? 'checked' : '';
 	},
 
 	'newCourse': function() {

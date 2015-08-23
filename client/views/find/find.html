@@ -26,14 +26,33 @@
 				</h4>
 			</div>
 			<div class="search_events">
-				<h4>Events</h4>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent">
-						<span class="fa {{#if hasUpcomingEventsChecked}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></span>
+						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
+						<span {{toggleClass 'upcomingEvent'}}></span>
 						&nbsp;
 						<span class="filter_events_upcoming_text">
 							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+						</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
+						<span {{toggleClass 'needsHost'}}></span>
+						&nbsp;
+						<span class="filter_events_upcoming_text">
+							{{mf 'find.needsHost' 'looking for a host'}}
+						</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
+						<span {{toggleClass 'needsMentor'}}></span>
+						&nbsp;
+						<span class="filter_events_upcoming_text">
+							{{mf 'find.needsMentor' 'looking for a mentor'}}
 						</span>
 					</label>
 				</div>
