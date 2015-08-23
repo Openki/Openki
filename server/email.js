@@ -24,15 +24,21 @@ Meteor.methods({
 		var lg = (recipient.profile.locale || 'en');
 		var sender = Meteor.user();
 		var senderAddress = false;
-		if (sender.emails && sender.emails[0] && sender.emails[0].address){
+		if (sender.emails && sender.emails[0] && sender.emails[0].address && sender.emails[0].verified) {
 			senderAddress = sender.emails[0].address;
 		}
-
-		if (senderAddress && revealAddress) {
-			mail.from = senderAddress;
-		} else {
-			mail.from = mail.sender;
+		var contactString = '';
+		mail.from = mail.sender;
+		if (revealAddress) {
+			if (senderAddress) {
+				mail.from = senderAddress;
+				contactString = mf('mail.contact.address', {SENDERMAIL:senderAddress}, 'Their mail address is {SENDERMAIL}', lg);
+			} else {
+				throw new Meteor.Error(400, "no verified email address");
+			}
 		}
+console.log(senderAddress)
+console.log(mail)
 
 		var names = {
 			SENDER: htmlize(sender.username),
@@ -47,7 +53,9 @@ Meteor.methods({
 			+ '--------------------------------------------------------------------<br>'
 			+ htmlize(text.substr(0, 10000)) + '<br>'
 			+ '--------------------------------------------------------------------<br>'
-			+ mf('sendEmail.footer', names, 'End of message. <br> If these messages are bothering you please let us know immediately {ADMINS}', lg);
+			+ mf('sendEmail.endMessage', 'End of message.', lg)
+			+ contactString +'<br><br>'
+			+ mf('sendEmail.footer', names, 'If these messages are bothering you please let us know immediately {ADMINS}', lg);
 
 
 		// Let other method calls from the same client start running,
@@ -58,6 +66,7 @@ Meteor.methods({
 		if (sendCopy && senderAddress) {
 			mail.from = mail.sender;
 			mail.to = senderAddress;
+			mail.subject = '[Openki] ' + mf('sendEmail.copy.subject', names, 'Copy of your message to {RECIPIENT}', lg);
 			Email.send(mail);
 		}
 	},
