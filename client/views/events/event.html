@@ -9,13 +9,13 @@
 				</a>
 			</p>
 			{{/if}}
-			{{#if isEvent}}
-				{{>event}}
-			{{else}}
-				<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it had been deleted or has never existed."}}</h4>
-			{{/if}}
+			{{> event}}
 		</div>
 	</div>
+</template>
+
+<template name="eventNotFound">
+	<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it had been deleted or has never existed."}}</h4>
 </template>
 
 <template name="event">

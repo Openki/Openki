@@ -1,25 +1,21 @@
 <template name="notFound">
 	<div class="static_content_top">
-		Ihre IP-Adresse wurde an die zuständige Behörde weitergeleitet.<br/>
-		Das Instiut der angewandten Merkbefreiung wird sich in Kürze mit Ihnen in Verbindung setzen.<br/>
-		Haben sie einen moment Geduld...
-		<pre>
-
-	Übergremium der Autonomen Schulen
-	Abteilung für unbeantwortbare Fragen
-	Keinweg 404
-	127.0.0.1 Diheimistan
-
-		</pre>
-
-		<br/>
-		<br/>
-		<br/>
-		You might read the projects documentation: &nbsp;<a href="http://news.schuel.ch">NEWS.SCHUEL.CH </a><br/>
-		Or go to the startpage: &nbsp;<a href="/">HOME</a> <br/>
-		<br/>
-		<br/>
-		Or go <a href="javascript:window.back()"> BACK</a>
-
+		<h1>{{mf 'notFound.title' "Page not found"}}</h1>
+		
+		<div>
+			{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
+		</div>
+		
+		<div>
+			{{> report}}
+		</div>
+		
+		<div>
+			<h2>{{mf 'notFound.suggestedLinks' "Suggested Links"}}</h2>
+			<ul>
+				<li><a href="#" class="goBack">{{mf 'notFound.goBack' "Go back"}}</a></li>
+				<li><a href='/'>{{mf 'notFound.visitStartPage' "Go to the start page"}}</a></li>
+			</ul>
+		</div>
 	</div>
 </template>
