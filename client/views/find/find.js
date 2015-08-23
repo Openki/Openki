@@ -84,6 +84,7 @@ Template.find.events({
 	'click .group': function(event, instance) {
 		instance.filter.add('group', ""+this).done();
 		updateUrl(event, instance);
+		if (!instance.showingFilters.get()) instance.showingFilters.set(true);
 		window.scrollTo(0, 0);
 		return false;
 	},
