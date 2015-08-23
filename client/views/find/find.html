@@ -142,15 +142,16 @@
 		{{/if}}
 	</div>
 	<div class="courselist_results">
+		{{#unless ready}}
+		{{> loading}}
+		{{else}}
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			{{#if ready}}{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}{{/if}}
+			{{#if ready}}
+			{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
+			{{/if}}
 		{{/each}}
-		{{#unless ready}}
-			<div style="padding-bottom: 100px">
-				{{> loading}}
-			</div>
 		{{/unless}}
 	</div>
 	{{#if eventResults.count}}
