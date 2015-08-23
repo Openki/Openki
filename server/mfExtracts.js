@@ -20,7 +20,7 @@ mfPkg.addNative(
   },
   "sendEmail.footer": {
     "key": "sendEmail.footer",
-    "text": "End of message.\\nIf these messages are bothering you please let us know immediately {ADMINS}",
+    "text": "End of message. <br> If these messages are bothering you please let us know immediately {ADMINS}",
     "file": "./server/email.js",
     "line": 51,
     "func": "function (userId, text, revealAddress, sendCopy)",
