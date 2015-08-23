@@ -11,14 +11,22 @@
 					</button>
 				</span>
 				<span class="input-group-btn">
+					{{#if showingFilters}}
+					<button class="filter-toggle-btn remove-filter" type="button">
+						<span class="glyphicon glyphicon-filter"></span>
+						{{mf 'find.hideFilters' 'remove Filters'}}
+					</button>
+					{{else}}
 					<button class="filter-toggle-btn" type="button">
 						<span class="glyphicon glyphicon-filter"></span>
-						{{mf 'find.search_filter_toggle' 'Filter'}}
+						{{mf 'find.showFilters' 'Filter'}}
 					</button>
+					{{/if}}
 				</span>
 			</div>
 		</div>
-		<div class="search_filter" style="display:none">
+		{{#if showingFilters}}
+		<div class="search_filter">
 			<div class="search_filter_header">
 				<h4>
 					<span class="glyphicon glyphicon-filter"></span>
@@ -26,7 +34,7 @@
 				</h4>
 			</div>
 			<div class="search_events">
-				<div class="checkbox">
+				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
 						<span {{toggleClass 'upcomingEvent'}}></span>
@@ -36,7 +44,7 @@
 						</span>
 					</label>
 				</div>
-				<div class="checkbox">
+				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
 						<span {{toggleClass 'needsHost'}}></span>
@@ -46,7 +54,7 @@
 						</span>
 					</label>
 				</div>
-				<div class="checkbox">
+				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
 						<span {{toggleClass 'needsMentor'}}></span>
@@ -123,6 +131,7 @@
 				{{/unless}}
 			</div>
 		</div>
+		{{/if}}
 	</div>
 	<div class="courselist_results">
 		{{#each results}}

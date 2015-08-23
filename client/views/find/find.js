@@ -29,13 +29,10 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
+var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'group', 'categories'];
+
 var updateUrl = function(event, instance) {
 	event.preventDefault();
-
-	instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
-	instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
-	instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
-	instance.filter.done();
 
 	var filterParams = instance.filter.toParams();
 	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
@@ -52,7 +49,15 @@ var updateUrl = function(event, instance) {
 
 Template.find.events({
 	'submit': updateUrl,
-	'change .search': updateUrl,
+	'change .search_field': updateUrl,
+	'change .filterToggle': function(event, instance) {
+		instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
+		instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
+		instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
+		instance.filter.done();
+		updateUrl(event, instance);
+	},
+
 	'keyup .searchInput': _.debounce(function(event, instance) {
 		instance.filter.add('search', $('.searchInput').val()).done();
 		// we don't updateURL() here, only after the field loses focus
@@ -61,8 +66,6 @@ Template.find.events({
 	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
-		$('.search_filter').show(0);
-		$('.filter-toggle-btn').addClass('remove-filter');
 		$('#categories_dropdown').dropdown('toggle');
 		return false;
 	},
@@ -81,8 +84,6 @@ Template.find.events({
 	'click .group': function(event, instance) {
 		instance.filter.add('group', ""+this).done();
 		updateUrl(event, instance);
-		$('.search_filter').show(0);
-		$('.filter-toggle-btn').addClass('remove-filter');
 		window.scrollTo(0, 0);
 		return false;
 	},
@@ -94,14 +95,24 @@ Template.find.events({
 	},
 
 	'click .filter-toggle-btn': function(event, instance) {
-		$(".search_filter").toggle(0);
-		$(".filter-toggle-btn").toggleClass('remove-filter');
+		var showingFilters = !instance.showingFilters.get();
+		instance.showingFilters.set(showingFilters);
+
+		if (!showingFilters) {
+			for (i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
+			instance.filter.done();
+			updateUrl(event, instance);
+		}
 	}
 });
 
 Template.find.helpers({
 	'search': function() {
 		return Template.instance().filter.get('search');
+	},
+	
+	'showingFilters': function() {
+		return Template.instance().showingFilters.get();
 	},
 
 	'toggleClass': function(name) {
@@ -169,7 +180,9 @@ Template.find.helpers({
 
 Template.find.onCreated(function() {
 	var instance = this;
-
+	
+	instance.showingFilters = new ReactiveVar(false);
+	
 	var filter = Filtering(CoursePredicates);
 	instance.filter = filter;
 
@@ -184,6 +197,13 @@ Template.find.onCreated(function() {
 			.read(query)
 			.done();
 	});
+			
+	// When there are filters set, show the filtering pane
+	for (name in filter.toParams()) {
+		if (hiddenFilters.indexOf(name) > -1) {
+			instance.showingFilters.set(true);
+		}
+	}
 
 	// Keep old subscriptions around until the new ones are ready
 	// This avoids courses blinking out and back when we renew the subscriptions
