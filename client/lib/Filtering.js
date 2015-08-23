@@ -66,7 +66,9 @@ CoursePredicates = {
 	search: Predicates.string,
 	group: Predicates.string,
 	categories: Predicates.ids,
-	upcomingEvent: Predicates.require
+	upcomingEvent: Predicates.require,
+	needsMentor: Predicates.require,
+	needsHost: Predicates.require
 };
 
 EventPredicates = {
