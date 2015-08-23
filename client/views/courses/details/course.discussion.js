@@ -108,7 +108,7 @@ Template.newPost.events({
 		var templateInstance = Template.instance();
 		Meteor.call('editComment', comment, this.parent._id, function(err, commentId) {
 			if (err) {
-				addMessage(mf('comment.saving.error', { ERROR: err }, 'Editing your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+				addMessage(mf('comment.editing.error', { ERROR: err }, 'Editing your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
 				templateInstance.editing.set(false);
 			}
