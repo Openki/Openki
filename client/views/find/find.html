@@ -14,7 +14,7 @@
 					{{#if showingFilters}}
 					<button class="filter-toggle-btn remove-filter" type="button">
 						<span class="glyphicon glyphicon-filter"></span>
-						{{mf 'find.hideFilters' 'remove Filters'}}
+						{{mf 'find.hideFilters' 'Remove filters'}}
 					</button>
 					{{else}}
 					<button class="filter-toggle-btn" type="button">
@@ -49,9 +49,9 @@
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
 						<span {{toggleClass 'needsHost'}}></span>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.needsHost' 'looking for a host'}}
-						</span>
+						{{mf 'find.needsHost' 'Looking for a host'}}
+						&nbsp;
+						<span class="glyphicon glyphicon-home"></span>
 					</label>
 				</div>
 				<div class="checkbox filterToggle">
@@ -59,9 +59,9 @@
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
 						<span {{toggleClass 'needsMentor'}}></span>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.needsMentor' 'looking for a mentor'}}
-						</span>
+						{{mf 'find.needsMentor' 'Looking for a mentor'}}
+						&nbsp;
+						<span class="fa fa-graduation-cap"></span>
 					</label>
 				</div>
 			</div>
