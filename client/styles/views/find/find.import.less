@@ -79,15 +79,32 @@
                 .checkbox {
                     label {
                         padding: 0;
+
+                        &:hover {
+                            color: @brand-primary;
+                        }
                     }
 
     				input#hasUpcomingEvent {
                         display: none;
     				}
 
-                    span.filter_events_upcoming_text {
-                        padding: 2px 5px;
+                    .eventcaption_upcoming {
+                        width: 28px;
+                        height: 20px;
                         background: @light-blue;
+                        display: inline-block;
+                        vertical-align: bottom;
+                        position: relative;
+
+                        .eventcaption_upcoming_box {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 7px;
+                            height: 10px;
+                            background: @brand-success;
+                        }
                     }
 
                     span.fa-toggle-off,
@@ -95,11 +112,16 @@
                         color: @brand-primary;
                     }
 
-                    span.glyphicon-home,
-                    span.fa-graduation-cap {
+                    span.glyphicon-home {
                         background: @light-red;
                         color: #751313;
                         padding: 4px 7px 2px;
+                    }
+
+                    span.fa-graduation-cap {
+                        background: @light-red;
+                        color: #751313;
+                        padding: 4px 5px 2px;
                     }
                 }
             }

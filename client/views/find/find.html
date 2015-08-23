@@ -37,31 +37,39 @@
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
-						<span {{toggleClass 'upcomingEvent'}}></span>
+						<div class="eventcaption_upcoming">
+							<div class="eventcaption_upcoming_box"></div>
+						</div>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
-						</span>
+						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+						&nbsp;
+						{{#if toggleChecked 'upcomingEvent'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
-						<span {{toggleClass 'needsHost'}}></span>
+						<span class="glyphicon glyphicon-home"></span>
 						&nbsp;
 						{{mf 'find.needsHost' 'Looking for a host'}}
 						&nbsp;
-						<span class="glyphicon glyphicon-home"></span>
+						{{#if toggleChecked 'needsHost'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
-						<span {{toggleClass 'needsMentor'}}></span>
+						<span class="fa fa-graduation-cap"></span>
 						&nbsp;
 						{{mf 'find.needsMentor' 'Looking for a mentor'}}
 						&nbsp;
-						<span class="fa fa-graduation-cap"></span>
+						{{#if toggleChecked 'needsMentor'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 			</div>
