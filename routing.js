@@ -54,7 +54,7 @@ Router.map(function () {
 
 Router.map(function () {
 	this.route('showEvent', {
-		path: 'event/:_id',
+		path: 'event/:_id/:title?',
 		template: 'eventPage',
 		waitOn: function () {
 			var subs = [
