@@ -8,13 +8,16 @@ Template.report.helpers({
 });
 
 Template.report.events({
-	'click .open': function(event, instance) {
+	'click ._openReport': function(event, instance) {
+		event.preventDefault();
 		instance.state.set('reporting');
 	},
 	'click .cancel': function(event, instance) {
+		event.preventDefault();
 		instance.state.set('');
 	},
 	'click .send': function(event, instance) {
+		event.preventDefault();
 		Meteor.call('report', document.title, window.location.href, instance.$('.report').val(), function(error, result) {
 			if (error) {
 				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."), 'danger');

@@ -46,11 +46,11 @@ Template.member_roles.events({
 		return false;
 	},
 	'mouseover button.makeTeam': function(e, template) {
-		$("." + this.member.user).show(0);
-		$('.makeTeamPlus').hide(0);
+		$('.makeTeam_text.' + this.member.user).show(0);
+		$('.makeTeamPlus.' + this.member.user).hide(0);
 	},
 	'mouseout button.makeTeam': function(e, template) {
-		$("." + this.member.user).hide(0);
-		$('.makeTeamPlus').show(0);
+		$('.makeTeam_text.' + this.member.user).hide(0);
+		$('.makeTeamPlus.' + this.member.user).show(0);
 	}
 });

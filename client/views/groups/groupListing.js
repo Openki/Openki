@@ -42,6 +42,6 @@ Template.groupListing.events({
 	},
 });
 
-Template.groupListing.rendered = function() {
+Template.groupListEntry.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 };

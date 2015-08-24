@@ -91,20 +91,19 @@
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
 			</div>
-			<li role="presentation" class="dropdown-header">{{mf 'frame.login_external_services' 'Or login with:'}}</li>
+			{{#unless registering}}
+			<div class="external_logins">
+				<button class="loginWithService" data-service='Google' title="Login with Google+">
+					<span class="fa fa-google-plus-square"></span>
+				</button>
+				<button class="loginWithService" data-service='Facebook' title="Login with Facebook">
+					<span class="fa fa-facebook-square"></span>
+				</button>
+				<button class="loginWithService" data-service='Github' title="Login with Github">
+					<span class="fa fa-github-square"></span>
+				</button>
+			</div>
+			{{/unless}}
 		</form>
-		<div class="btn-group external_logins">
-			<button class="loginWithService btn btn-primary" data-service='Google'>
-				<i class="fa fa-google-plus-square"></i> &nbsp;{{mf 'login.frame.google-login' 'Google'}}
-			</button>
-			<button class="loginWithService btn btn-primary" data-service='Facebook'>
-				<i class="fa fa-facebook-square"></i> &nbsp;{{mf 'login.frame.facebook-login' 'facebook'}}
-			</button>
-			<div>
-			<button class="loginWithService btn btn-primary" data-service='Github'>
-				<i class="fa fa-github-square"></i> &nbsp;{{mf 'login.frame.github-login' 'GitHub'}}
-			</button>
-		</div>
-		</div>
 	</div>
 </template>

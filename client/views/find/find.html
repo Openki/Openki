@@ -14,7 +14,7 @@
 					{{#if showingFilters}}
 					<button class="filter-toggle-btn remove-filter" type="button">
 						<span class="glyphicon glyphicon-filter"></span>
-						{{mf 'find.hideFilters' 'remove Filters'}}
+						{{mf 'find.hideFilters' 'Remove filters'}}
 					</button>
 					{{else}}
 					<button class="filter-toggle-btn" type="button">
@@ -37,31 +37,43 @@
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
-						<span {{toggleClass 'upcomingEvent'}}></span>
+						<div class="eventcaption_upcoming">
+							<div class="eventcaption_upcoming_box">
+								<div class="eventcaption_upcoming_text first-line"></div>
+								<div class="eventcaption_upcoming_text second-line"></div>
+								<div class="eventcaption_upcoming_text third-line"></div>
+							</div>
+						</div>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
-						</span>
+						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+						&nbsp;
+						{{#if toggleChecked 'upcomingEvent'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
-						<span {{toggleClass 'needsHost'}}></span>
+						<span class="glyphicon glyphicon-home"></span>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.needsHost' 'looking for a host'}}
-						</span>
+						{{mf 'find.needsHost' 'Looking for a host'}}
+						&nbsp;
+						{{#if toggleChecked 'needsHost'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
-						<span {{toggleClass 'needsMentor'}}></span>
+						<span class="fa fa-graduation-cap"></span>
 						&nbsp;
-						<span class="filter_events_upcoming_text">
-							{{mf 'find.needsMentor' 'looking for a mentor'}}
-						</span>
+						{{mf 'find.needsMentor' 'Looking for a mentor'}}
+						&nbsp;
+						{{#if toggleChecked 'needsMentor'}}
+						<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</label>
 				</div>
 			</div>
@@ -134,15 +146,16 @@
 		{{/if}}
 	</div>
 	<div class="courselist_results">
+		{{#unless ready}}
+		{{> loading}}
+		{{else}}
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			{{#if ready}}{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}{{/if}}
+			{{#if ready}}
+			{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
+			{{/if}}
 		{{/each}}
-		{{#unless ready}}
-			<div style="padding-bottom: 100px">
-				{{> loading}}
-			</div>
 		{{/unless}}
 	</div>
 	{{#if eventResults.count}}

@@ -79,19 +79,69 @@
                 .checkbox {
                     label {
                         padding: 0;
+
+                        &:hover {
+                            color: @brand-primary;
+                        }
                     }
 
     				input#hasUpcomingEvent {
                         display: none;
     				}
 
-                    span.filter_events_upcoming_text {
-                        padding: 2px 5px;
+                    .eventcaption_upcoming {
+                        width: 28px;
+                        height: 20px;
                         background: @light-blue;
+                        display: inline-block;
+                        vertical-align: bottom;
+                        position: relative;
+
+                        .eventcaption_upcoming_box {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 7px;
+                            height: 10px;
+                            background: @brand-success;
+
+                            .eventcaption_upcoming_text {
+                                position: absolute;
+                                left: 2px;
+                                width: 3px;
+                                height: 1px;
+                                background: #333;
+
+                                &.first-line {
+                                    top: 2px;
+                                }
+
+                                &.second-line {
+                                    top: 4px;
+                                }
+
+                                &.third-line {
+                                    top: 6px;
+                                }
+                            }
+                        }
                     }
 
-                    span.fa {
+                    span.fa-toggle-off,
+                    span.fa-toggle-on {
                         color: @brand-primary;
+                    }
+
+                    span.glyphicon-home {
+                        background: @light-red;
+                        color: #751313;
+                        padding: 4px 7px 2px;
+                    }
+
+                    span.fa-graduation-cap {
+                        background: @light-red;
+                        color: #751313;
+                        padding: 4px 5px 2px;
                     }
                 }
             }

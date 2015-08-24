@@ -43,7 +43,7 @@ var updateUrl = function(event, instance) {
 		options.query = queryString;
 	}
 	Router.go('find', {}, options);
-	
+
 	return true;
 }
 
@@ -84,6 +84,7 @@ Template.find.events({
 	'click .group': function(event, instance) {
 		instance.filter.add('group', ""+this).done();
 		updateUrl(event, instance);
+		if (!instance.showingFilters.get()) instance.showingFilters.set(true);
 		window.scrollTo(0, 0);
 		return false;
 	},
@@ -110,15 +111,11 @@ Template.find.helpers({
 	'search': function() {
 		return Template.instance().filter.get('search');
 	},
-	
+
 	'showingFilters': function() {
 		return Template.instance().showingFilters.get();
 	},
 
-	'toggleClass': function(name) {
-		return { class: 'fa fa-toggle-' + (Template.instance().filter.get(name) ? 'on' : 'off') };
-	},
-	
 	'toggleChecked': function(name) {
 		return Template.instance().filter.get(name) ? 'checked' : '';
 	},
@@ -180,9 +177,9 @@ Template.find.helpers({
 
 Template.find.onCreated(function() {
 	var instance = this;
-	
+
 	instance.showingFilters = new ReactiveVar(false);
-	
+
 	var filter = Filtering(CoursePredicates);
 	instance.filter = filter;
 
@@ -197,7 +194,7 @@ Template.find.onCreated(function() {
 			.read(query)
 			.done();
 	});
-			
+
 	// When there are filters set, show the filtering pane
 	for (name in filter.toParams()) {
 		if (hiddenFilters.indexOf(name) > -1) {

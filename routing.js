@@ -3,6 +3,7 @@ Router.configure({
 	notFoundTemplate: 'notFound',
 	loadingTemplate: 'loading',
 });
+Router.onBeforeAction('dataNotFound');
 
 webpagename = 'Openki - ';				  // global (document title init)
 
@@ -56,6 +57,7 @@ Router.map(function () {
 	this.route('showEvent', {
 		path: 'event/:_id/:title?',
 		template: 'eventPage',
+		notFoundTemplate: 'eventNotFound',
 		waitOn: function () {
 			var subs = [
 				Meteor.subscribe('event', this.params._id)
@@ -83,7 +85,7 @@ Router.map(function () {
 				}
 			} else {
 				event = Events.findOne({_id: this.params._id});
-				if (!event) return {};
+				if (!event) return false;
 			}
 			
 			return event;
