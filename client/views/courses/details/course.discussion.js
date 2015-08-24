@@ -75,6 +75,7 @@ Template.newPost.events({
 		Template.instance().writing.set(false);
 	},
 
+/*  /////////////////////////////////////////// TODO: fix comment-editing ////////////////
 	'click button.edit': function () {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
@@ -113,8 +114,7 @@ Template.newPost.events({
 				templateInstance.editing.set(false);
 			}
 		});
-
-
 	}
+*/
 
 });
