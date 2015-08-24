@@ -249,7 +249,7 @@ createCommentsIfNone = function(){
 				}
 				comment.user_ID = commenter
 				CourseDiscussions.insert(comment)
-				console.log('Added '+ n +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
+				console.log('Added '+ (n+1) +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
 			}
 		});
 	}
