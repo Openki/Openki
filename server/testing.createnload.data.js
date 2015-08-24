@@ -238,12 +238,16 @@ createCommentsIfNone = function(){
 				age = Math.floor(age*spread);
 				var date = new Date(new Date().getTime() - age);
 				comment.time_created = date;
-				comment.time_updated = date + age * 0.77
-				var commentor = course.members[Math.floor(Math.random()*courseMembers)].user
-				if (!commentor || Math.random() < 0.2 ){
-					commentor = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id
+				comment.time_updated = date + age * 0.77;
+				
+				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
+				var commentor = false;
+				if (!pickMember || Math.random() < 0.2 ){
+					commenter = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id
+				} else {
+					commenter = pickMember.user;
 				}
-				comment.user_ID = commentor
+				comment.user_ID = commenter
 				CourseDiscussions.insert(comment)
 				console.log('Added '+ n +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
 			}
