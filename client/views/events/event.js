@@ -414,7 +414,8 @@ Template.event.events({
 					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 					success = false;
 				} else {
-					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: moment(replicaEvent.start).format('LL') }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
+					var fmtDate = moment(replicaEvent.start).format('LL');
+					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: fmtDate }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});
 		});
