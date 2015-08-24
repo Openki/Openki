@@ -366,8 +366,12 @@ Template.event.events({
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
-				if (isNew) Router.go('showEvent', { _id: eventId });
-				else addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+				if (isNew) {
+					Router.go('showEvent', { _id: eventId });
+					addMessage(mf('event.creating.success', { TITLE: editevent.title }, 'Created event "{TITLE}".'), 'success');
+				} else {
+					addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+				}
 
 				if (updateReplicas) {
 					addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
