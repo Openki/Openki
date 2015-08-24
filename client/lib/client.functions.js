@@ -90,7 +90,6 @@ pleaseLogin = function() {
 
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;
-	if (!mfPkg.ready()) return this;
 	return mf('category.'+this);
 });
 
