@@ -55,7 +55,7 @@ Router.map(function () {
 
 Router.map(function () {
 	this.route('showEvent', {
-		path: 'event/:_id/:title?',
+		path: 'event/:_id/:slug?',
 		template: 'eventPage',
 		notFoundTemplate: 'eventNotFound',
 		waitOn: function () {

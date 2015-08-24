@@ -142,6 +142,11 @@ Meteor.methods({
 			changes.description = saneHtml(changes.description);
 		}
 		
+		if (changes.title) {
+		    changes.title = saneText(changes.title).substring(0, 1000);
+		    changes.slug = getSlug(changes.title);
+		}
+
 		if (isNew) {
 			changes.createdBy = user._id;
 			var eventId = Events.insert(changes);
