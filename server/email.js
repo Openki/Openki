@@ -37,8 +37,6 @@ Meteor.methods({
 				throw new Meteor.Error(400, "no verified email address");
 			}
 		}
-console.log(senderAddress)
-console.log(mail)
 
 		var names = {
 			SENDER: htmlize(sender.username),

@@ -1,12 +1,16 @@
 {
 	"service": {
 		"facebook": {
-			"appId": "5820484316228393",
-			"secret": "55a578c3aff4111fc75ee3f77003e5d9"
+			"appId": "567890",
+			"secret": "123abcd"
 		},
 		"github": {
-			"clientId": "b66a0d9314052ec0680c",
-			"secret": "4b6efe76a0327dd2d3300a2fb3ede59f"
-		}
+			"clientId": "1234cdef",
+			"secret": "abcd1234"
+		},
+                "google": {
+                        "clientId": "01234-xyz123.apps.googleusercontent.com",
+                        "secret": "XYz_123"
+                }
 	}
 }

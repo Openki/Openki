@@ -36,3 +36,4 @@ rzymek:moment-locale-zh-tw
 servicelocale:geoip
 fortawesome:fontawesome
 mrt:modernizr-meteor
+accounts-google
