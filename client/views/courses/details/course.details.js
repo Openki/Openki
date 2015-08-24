@@ -147,9 +147,16 @@ Template.show_course_submenu.helpers({
 
 Template.coursedetails.events({
 	'click button.del': function () {
+		var self = this;
 		if (pleaseLogin()) return;
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
-			Meteor.call('remove_course', this._id);
+			Meteor.call('remove_course', this._id, function(error) {
+				if (error) {
+					addMessage(mf('course.detail.remove.error', { ERROR: error, NAME: self.name }, 'Sorry but removing the proposal "{NAME}" went wrong. We encountered the following error: {ERROR}'), 'danger');
+				} else {
+					addMessage(mf('course.detail.remove.success', { NAME: self.name }, 'The proposal "{NAME}" was obliterated!'), 'success');
+				}
+			});
 			Router.go('/');
 		}
 	},
