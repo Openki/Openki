@@ -170,7 +170,7 @@ createEventsIfNone = function(){
 	//Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
-			var event_count =  Math.pow(Math.random() * 2, 4);
+			var event_count =  Math.floor(Math.pow(Math.random() * 1.6, 10));
 			for (var n = 0; n < event_count; n++) {
 				var event = {};
 				var description = course.description;
@@ -190,7 +190,7 @@ createEventsIfNone = function(){
 				event.host = []
 
 				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
-				var timeToGo = Random.fraction()-0.8 				// put 80% in the past
+				var timeToGo = Random.fraction()-0.7 				// put 70% in the past
 				if (timeToGo >= 0.05) {								// 75% of the remaining in future
 					timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
 				}
@@ -206,12 +206,54 @@ createEventsIfNone = function(){
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
 				Events.insert(event)
-				console.log('Added generic event:  "' + event.title + '"');
+				console.log('Added generic event ('+ n +'/' + event_count +'):  "' + event.title + '"');
 			}
 		});
 	}
 }
 
+/////////////////////////////// TESTING: Create generic comments if non in db
+
+
+createCommentsIfNone = function(){
+	//Events.remove({});
+	if (CourseDiscussions.find().count() === 0) {
+		var userCount = Meteor.users.find().count();
+		Courses.find().forEach(function(course) {
+			var comment_count =  Math.floor(Math.pow(Math.random() * 2, 4));
+			var courseMembers = course.members.length;
+			for (var n = 0; n < comment_count; n++) {
+				var comment = {};
+				var description = course.description;
+				if (!description) description = "No description"; // :-(
+				var words = _.shuffle(description.split(' '));
+				var random = Random.fraction();
+
+				comment.course_ID = course._id;
+				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
+				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
+
+				var spread = new Date(new Date().getTime() - course.time_created)
+				var age = Random.fraction()
+				age = Math.floor(age*spread);
+				var date = new Date(new Date().getTime() - age);
+				comment.time_created = date;
+				comment.time_updated = date + age * 0.77;
+				
+				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
+				var commentor = false;
+				if (!pickMember || Math.random() < 0.2 ){
+					commenter = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id
+				} else {
+					commenter = pickMember.user;
+				}
+				comment.user_ID = commenter
+				CourseDiscussions.insert(comment)
+				console.log('Added '+ n +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
+			}
+		});
+	}
+}
 
 
 /////////////////////////////// TESTING: load the events from file server/data/testing.events.js

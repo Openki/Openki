@@ -38,3 +38,4 @@ mrt:modernizr-meteor
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
+accounts-google

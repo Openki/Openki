@@ -119,18 +119,34 @@ maySubscribe = function(operatorId, course, userId, role) {
 
 coursesFind = function(filter, limit) {
 	var find = {}
-	if (filter.region && filter.region != 'all') find.region = filter.region
+	if (filter.region && filter.region != 'all') find.region = filter.region;
+
 	if (filter.upcomingEvent) {
 		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
 		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
 		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
 	}
-	if (filter.userInvolved) {
-		find['members.user'] = filter.userInvolved;
+
+	var mustHaveRoles = [];
+	var missingRoles = [];
+
+	if (filter.needsHost) {
+		missingRoles.push('host'); 
+		mustHaveRoles.push('host');
+	}
+
+	if (filter.needsMentor) {
+		missingRoles.push('mentor');
+		mustHaveRoles.push('mentor');
 	}
 	
 	if (filter.missingTeam) {	
-		find['members.roles'] = { $ne: 'team' }
+		missingRoles.push('team');
+		// All courses have the team role so we don't need to restrict to those having it
+	}
+
+	if (filter.userInvolved) {
+		find['members.user'] = filter.userInvolved;
 	}
 	
 	if (filter.categories) {
@@ -141,6 +157,14 @@ coursesFind = function(filter, limit) {
 		find.groups = filter.group;
 	}
 	
+	if (missingRoles.length > 0) {
+		find['members.roles'] = { $nin: missingRoles };
+	}
+	
+	if (mustHaveRoles.length > 0) {
+		find.roles = { $all: mustHaveRoles };
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

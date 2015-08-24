@@ -1,7 +1,11 @@
 <template name="calendar">
-	{{startDate}}
-	<button class="prevDay">-1 day</button>
+	<button class="prevMonth">-1 month</button>
 	<button class="prevWeek">-1 week</button>
+	<button class="prevDay">-1 day</button>
+	{{startDate}}
+	<button class="nextDay">+1 day</button>
+	<button class="nextWeek">+1 week</button>
+	<button class="nextMonth">+1 month</button>
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
 		{{#each days}}
@@ -9,9 +13,13 @@
 		{{/each}}
 		</div>
 	</div>
+	<button class="prevMonth">-1 month</button>
+	<button class="prevWeek">-1 week</button>
+	<button class="prevDay">-1 day</button>
 	{{endDate}}
 	<button class="nextDay">+1 day</button>
 	<button class="nextWeek">+1 week</button>
+	<button class="nextMonth">+1 month</button>
 </template>
 
 <template name="calendarDay">

@@ -9,10 +9,23 @@ Meteor.startup(function () {
 		createLocationsIfNone();       // Locations  from server/data/testing.locations.js
 		createEventsIfNone();          // Events     in   server/testing.createnload.data.js (generic)
 		loadTestEvents();              // Events     from server/data/testing.events.js
+		createCommentsIfNone();        // Comments   in   server/testing.createnload.data.js (generic)
 	}
 
 	var serviceConf = Meteor.settings.service;
 	if (serviceConf) {
+		if (serviceConf.google
+			) {
+			ServiceConfiguration.configurations.remove({
+				service: 'google'
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'google',
+				loginStyle: "popup",
+				appId: serviceConf.google.appId,
+				secret: serviceConf.google.secret
+			});
+		}
 		if (serviceConf.facebook) {
 			ServiceConfiguration.configurations.remove({
 				service: 'facebook'

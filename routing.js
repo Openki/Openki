@@ -3,8 +3,9 @@ Router.configure({
 	notFoundTemplate: 'notFound',
 	loadingTemplate: 'loading',
 });
+Router.onBeforeAction('dataNotFound');
 
-webpagename = 'Openki - Course Organisation Platform - '  // global (document title init)
+webpagename = 'Openki - ';				  // global (document title init)
 
 Router.map(function () {
 	this.route('locationDetails',{							///////// locationdetails /////////
@@ -49,21 +50,14 @@ Router.map(function () {
 		}
 	})
 
-	this.route('createCourse', {							///////// create /////////
-		path: 'courses/create',
-		template: 'createcourse',
-		onAfterAction: function() {
-			document.title = webpagename + 'Create new course'
-		}
-	})
-
 });
 
 
 Router.map(function () {
 	this.route('showEvent', {
-		path: 'event/:_id',
+		path: 'event/:_id/:slug?',
 		template: 'eventPage',
+		notFoundTemplate: 'eventNotFound',
 		waitOn: function () {
 			var subs = [
 				Meteor.subscribe('event', this.params._id)
@@ -91,10 +85,19 @@ Router.map(function () {
 				}
 			} else {
 				event = Events.findOne({_id: this.params._id});
-				if (!event) return {};
+				if (!event) return false;
 			}
 			
 			return event;
+		},
+		onAfterAction: function() {
+			var event = Events.findOne({_id: this.params._id});
+			if (event) {
+				document.title = webpagename + mf('event.windowtitle', {EVENT:event.title, DATE: moment(event.start).calendar()}, '{DATE} {EVENT}');
+			} else {
+				document.title = webpagename + mf('event.windowtitle.create', 'Create event');
+			}
+
 		}
-	})
+	});
 });

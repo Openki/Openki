@@ -34,7 +34,8 @@ Template.member_roles.helpers({
 						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'), 'success');
 					}
 				});
-			}
+			},
+			mf('roles.message.placeholder', 'Tell others about my interests')
 		);
 	}
 });
@@ -45,9 +46,11 @@ Template.member_roles.events({
 		return false;
 	},
 	'mouseover button.makeTeam': function(e, template) {
-		$("." + this.member.user).show(0);
+		$('.makeTeam_text.' + this.member.user).show(0);
+		$('.makeTeamPlus.' + this.member.user).hide(0);
 	},
 	'mouseout button.makeTeam': function(e, template) {
-		$("." + this.member.user).hide(0);
+		$('.makeTeam_text.' + this.member.user).hide(0);
+		$('.makeTeamPlus.' + this.member.user).show(0);
 	}
 });

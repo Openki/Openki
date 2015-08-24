@@ -1,4 +1,5 @@
 <template name='report'>
+	<form>
 	{{#if sending}}
 		<div>{{mf 'report.sending' 'Report is being sent…'}}</div>
 	{{/if}}
@@ -16,9 +17,10 @@
 			</button>
 		</div>
 	{{else}}
-		<button class="report">
+		<button class="report _openReport">
 			<span class="glyphicon glyphicon-warning-sign"></span>
 			{{mf 'report.open' 'Report problem'}}
 		</button>
 	{{/if}}
+	</form>
 </template>

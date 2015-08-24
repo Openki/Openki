@@ -3,6 +3,8 @@
 	.make-xs-column(12);
 	.no-padding;
 	padding-bottom: 30px;
+	width: calc(~"100% + 10px") !important;
+	margin-left: -5px;
 
 	.event_results {
 		.make-sm-column(4);
@@ -30,6 +32,13 @@
 		.no-padding;
 		height: 150px;
 		border: 7px dashed @light-blue;
+
+		.course-name {
+			font-size: 22px;
+			margin: 8px 0 5px;
+			line-height: 24px;
+			color: #333;
+		}
 
 		&.haspastevents {
 			border-style: solid;
@@ -75,8 +84,8 @@
 		}
 
 		.yesyou {
-			color: darken(@orange, 30%);
-			background-color: @orange;
+			color: @ownrole-color;
+			background-color: @ownrole;
 		}
 
 		.course_content {
@@ -151,21 +160,13 @@
 			position: relative;
 			z-index: 2;
 
-
-			span {
-				background: rgba(216, 216, 216, 0.5);
-				padding: 0 2px 1px 2px;
-			}
-
 			a.category {
-				color: @brand-primary;
 				background: rgba(216, 216, 216, 0.5);
-				padding: 0 2px 1px 2px;
+				padding:2px 5px;
 
 				&:hover {
 					text-decoration: none;
-					background: darken(rgba(216, 216, 216, 1), 2%);
-					.box-shadow-s(darken(rgba(216, 216, 216, 1), 10%));
+					color: @brand-primary;
 				}
 			}
 		}

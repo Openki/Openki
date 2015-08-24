@@ -34,7 +34,9 @@ p {
 	}
 
 	@media @mobile {
-		padding-top: 0;
+		.find {
+			margin-top: -20px;
+		}
 	}
 }
 
@@ -95,7 +97,7 @@ select {
 	}
 }
 
-.editable:focus {
+.editable:focus, .editable.changed {
 	border: 1px solid @light-red;
 	padding: 10px !important;
 	background: @body-bg;

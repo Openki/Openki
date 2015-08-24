@@ -46,15 +46,15 @@ var Predicates = {
 		}
 	},
 	date: function(param) {
-		if (!param) return false;
+		if (!param) return undefined;
 		var date = moment(param); // Param is ISO date or moment() object
-		if (!date.isValid()) return false;
+		if (!date.isValid()) return undefined;
 		date.startOf('day');
 		return {
 			merge: function(other) { return other; },
 			without: function(predicate) { return false; },
 			get: function() { return moment(date); },
-			param: function() { return moment.format('YYYY-MM-DD'); },
+			param: function() { return date.format('YYYY-MM-DD'); },
 			query: function() { return date.toDate(); },
 			equals: function(other) { return date.isSame(other.get()); }
 		}
@@ -66,7 +66,9 @@ CoursePredicates = {
 	search: Predicates.string,
 	group: Predicates.string,
 	categories: Predicates.ids,
-	upcomingEvent: Predicates.require
+	upcomingEvent: Predicates.require,
+	needsMentor: Predicates.require,
+	needsHost: Predicates.require
 };
 
 EventPredicates = {
@@ -98,6 +100,8 @@ Filtering = function(availablePredicates) {
 	self.add = function(name, param) {
 		if (!availablePredicates[name]) throw "No predicate "+name;
 		var toAdd = availablePredicates[name](param);
+		if (toAdd === undefined) return; // Filter construction failed, leave as-is
+
 		if (predicates[name]) {
 			predicates[name] = predicates[name].merge(toAdd);
 		} else {
@@ -122,6 +126,11 @@ Filtering = function(availablePredicates) {
 			predicates[name] = predicates[name].without(toRemove);
 		}
 		if (!predicates[name]) delete predicates[name];
+		return self;
+	};
+	
+	self.disable = function(name) {
+		delete predicates[name];
 		return self;
 	};
 

@@ -29,11 +29,6 @@ Template.eventPage.helpers({
 	},
 });
 
-Template.eventPage.helpers({
-	isEvent: function() {
-		return (this._id !== undefined) || this.new;
-	}
-});
 
 Template.event.helpers({
 	editing: function() {

@@ -17,5 +17,4 @@ packages/
 .meteor/local
 
 settings.json
-
-extracts.msgfmt
+server/extracts.msgfmt

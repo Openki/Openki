@@ -34,7 +34,7 @@
 <template name="show_categories">
 	<ul class="categories_list">
 		{{#each categories}}
-		<li><a class='category'>{{categoryName}}</a></li>
+		<li><a class='category' href="/find?categories={{this}}">{{categoryName}}</a></li>
 		{{/each}}
 	</ul>
 </template>
