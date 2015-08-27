@@ -28,6 +28,10 @@ Meteor.publish ('locations', function(region) {
 	return Locations.find(find);
 });
 
+Meteor.publish ('locationDetails', function(id) {
+	return Locations.find(id);
+});
+
 Meteor.publish('discussion', function(courseId) {
 	return CourseDiscussions.find({ course_ID: courseId });
 });

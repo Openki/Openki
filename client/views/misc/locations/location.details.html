@@ -1,4 +1,4 @@
-<template name="location_details">
+<template name="locationDetails">
 	<h1>{{mf 'location.details.title' 'Location details'}}</h1>
 
 	{{#if isEditing}}
@@ -6,7 +6,7 @@
 	{{/if}}
 
 <!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
-
+	{{#with location}}
 	{{#unless isEditing}}
 		<div class="course_main">
 			<h2 class="name">{{name}}</h2>
@@ -36,11 +36,12 @@
 			{{/if}}
 		</div>
 	{{/unless}}
-
+	{{/with}}
 <!--
 TODO: locationedit -> create in a new file location.edit  that is location.create aswell.
 in edit mode: add other user to host in this location:
 {search user}->{add user}
 -->
+
 
 </template>

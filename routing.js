@@ -8,22 +8,6 @@ Router.onBeforeAction('dataNotFound');
 webpagename = 'Openki - ';				  // global (document title init)
 
 Router.map(function () {
-	this.route('locationDetails',{							///////// locationdetails /////////
-		path: 'locations/:_id',
-		template: 'location_details',
-		waitOn: function () {
-			return Meteor.subscribe('locations');
-		},
-		data: function () {
-			return Locations.findOne({_id: this.params._id})
-		},
-		onAfterAction: function() {
-			var location = Locations.findOne({_id: this.params._id})
-			if (!location) return; // wtf
-			document.title = webpagename + 'Location: ' + location.name
-		}
-	})
-
 
 	this.route('categorylist',{
 		onAfterAction: function() {

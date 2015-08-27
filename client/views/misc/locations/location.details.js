@@ -1,6 +1,34 @@
 "use strict";
 
-Template.location_details.helpers({
+Router.map(function() {
+	this.route('locationDetails', {
+		path: 'venue/:_id/:location?',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('locationDetails', this.params._id),
+				Meteor.subscribe('eventsFind', { location : this.params._id })
+			];
+		},
+		data: function () {
+			var location =  Locations.findOne({_id: this.params._id});
+//			console.log(location, this.params._id);
+			if (!location) return false;
+
+			return {
+				'location': location,
+				'events': eventsFind ({location : this.params._id})
+			};
+		},
+		onAfterAction: function() {
+			document.title = webpagename + this.data().location.name + " - venue-details"
+		}
+	})
+})
+
+
+
+
+Template.locationDetails.helpers({
 		
 	 isEditing: function () {
 
@@ -22,7 +50,7 @@ Template.location_details.helpers({
 
 
 
-Template.location_details.events({
+Template.locationDetails.events({
 	
 	'click input.edit': function () {
 		if (pleaseLogin()) return;
