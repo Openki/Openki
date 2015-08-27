@@ -1,5 +1,4 @@
 <template name="locationDetails">
-	<h1>{{mf 'location.details.title' 'Location details'}}</h1>
 
 	{{#if isEditing}}
 			{{>location_edit}}
@@ -9,11 +8,11 @@
 	{{#with location}}
 	{{#unless isEditing}}
 		<div class="course_main">
-			<h2 class="name">{{name}}</h2>
+			<h1 class="name">{{name}}</h1>
 			<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, {{!--> show_locationcategories--}}</p>
 			
 			<img src="{{picture}}" height="137" align="top">
-			<p class="descr">{{mf 'location.details.desc' 'Desc:'}} {{description}}</p>
+			<p class="descr">{{mf 'location.details.desc' 'Description:'}} {{description}}</p>
 			<p>{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}<ul class='hosts'>
 			{{#each hosts}}
 				<li>
@@ -21,7 +20,7 @@
 				</li>
 			{{/each}}
 			</ul></p>
-			{{#if contact.web}} <p>{{mf 'location.details.online' 'Online:'}} <a href="{{contact.web}}">{{contact.web}}</a></p> {{/if}}
+			{{#if contact.web}} <p>{{mf 'location.details.online' 'Website:'}} <a href="{{contact.web}}">{{contact.web}}</a></p> {{/if}}
 			<p>{{mf 'location.details.address' 'Address:'}} {{address}}</p>
 			{{#if route}} <p>{{mf 'location.details.how_go_there' 'How to go there:'}} {{route}}</p> {{/if}}
 			{{#if maxpeople}} <p>{{mf 'location.details.max_ppl' 'Maximum People:'}} {{maxpeople}} </p>  {{/if}}
@@ -31,6 +30,7 @@
 
 			<input type="button" class="contact" value="Contact" /> <br><br>
 			{{#if canEditLocation}}
+			{{mf 'location.details.yourHost' 'You are Host here:'}}
 			<input type="button" class="edit" value="Edit" />
 			<input type="button" class="del" value="Delete" />
 			{{/if}}
