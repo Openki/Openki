@@ -19,6 +19,9 @@
 
 
 Locations = new Meteor.Collection("Locations");
+if (Meteor.isServer) Locations._ensureIndex({loc : "2dsphere"});
+
+
 
 Locations.allow({
 	update: function (userId, doc, fieldNames, modifier) {

@@ -350,6 +350,5 @@ createTestRegionsIfNone = function(){
 			Regions.insert(region)
 			console.log('*Added region: '+region.name)
 		})
-		Regions._ensureIndex({loc : "2dsphere"});
 	}
 }

@@ -12,7 +12,7 @@
 // ===========================
 
 Events = new Meteor.Collection("Events");
-Events._ensureIndex({loc : "2dsphere"});
+if (Meteor.isServer) Events._ensureIndex({loc : "2dsphere"});
 
 
 mayEditEvent = function(user, event) {
