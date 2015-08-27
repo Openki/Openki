@@ -5,6 +5,7 @@
 // ===========================Regions = new Meteor.Collection("Regions");
 
 Regions = new Meteor.Collection("Regions");
+Regions._ensureIndex({loc : "2dsphere"});
 
 
 Regions.allow({

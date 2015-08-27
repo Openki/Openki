@@ -122,6 +122,7 @@ function ensureLocationCategory(name){
 // TESTING:
 function createLocations(){
 
+	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')]
 	_.each(testlocations, function(location) {
 		if (!location.name) return; // Don't create locations that don't have a name
 
@@ -155,7 +156,11 @@ function createLocations(){
 		var age = Math.floor(Random.fraction()*80000000000)
 		location.time_created = new Date(new Date().getTime()-age)
 		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
-		location.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
+		var region = Random.fraction() > 0.85 ? testRegions[0] : testRegions[1];
+		location.region = region._id
+		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
+		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
 		Locations.insert(location)
 	})
 }

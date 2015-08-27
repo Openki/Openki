@@ -12,6 +12,8 @@
 // ===========================
 
 Events = new Meteor.Collection("Events");
+Events._ensureIndex({loc : "2dsphere"});
+
 
 mayEditEvent = function(user, event) {
 	if (!user) return false;

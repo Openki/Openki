@@ -1,13 +1,13 @@
 regions = [{
 		'name':        'Testistan',
 		'_id':         '9JyFCoKWkxnf8LWPh',
-		'loc':          [51.2755,30.2197],
+		'loc':          [47.1375,7.2472],
 		'timeZone':    'UTC+01:00'
 	},{
 		'name':        'Spilistan',
 		'_id':         'EZqQLGL4PtFCxCNrp',
-		'loc':          [37.4214,141.0325],
-		'timeZone':    'UTC+03:00'
+		'loc':          [47.05,8.3],
+		'timeZone':    'UTC+01:00'
 	},{
 		'name':        'Englistan',
 		'_id':         'MPKEnGGC8T9XyCCRG',
@@ -39,20 +39,6 @@ regions = [{
 		'country':     'CH',
 		'region':      'TG',
 		'loc':          [47.556,8.8965],
-		'timeZone':    'UTC+01:00'
-	},{
-		'name':        'Biel',
-		'country':     'CH',
-		'region':      'BE',
-		'loc':          [47.1375,7.2472],
-		'_id':         'Gkkr8Deb2ln4hGp7O',
-		'timeZone':    'UTC+01:00'
-	},{
-		'name':        'Luzern',
-		'country':     'CH',
-		'region':      'LU',
-		'loc':          [47.05,8.3],
-		'_id':         'h6ZeeIBfp72msnnp3',
 		'timeZone':    'UTC+01:00'
 	}
 ]
