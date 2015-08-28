@@ -43,6 +43,40 @@ function ensureRegion(name) {
 	}
 }
 
+function ensureLocation(name, regionId) {
+	while (true) {
+		var location = Locations.findOne({name: name})
+		if (location) return location._id;
+
+		location = {
+			name: name,
+			region: regionId,
+		};
+
+		var region = Regions.findOne(regionId);
+		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);		
+		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
+
+
+		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+		m5.update(location.name);
+
+		var age = Math.floor(Random.fraction()*80000000000)
+		location.time_created = new Date(new Date().getTime()-age)
+		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
+
+		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+		m5.update(location.name);
+		location._id = m5.digest('hex').substring(0, 8)
+
+		Locations.insert(location)
+	}
+}
+
+function ensureRoom(location, room){
+	Locations.update(location, { $addToSet: { rooms: room } });
+}
 
 createCoursesIfNone = function(scale) {
 	if (Courses.find().count() === 0) {
@@ -104,9 +138,9 @@ function createCourses(scale) {
 
 /////////////////////////////// TESTING: Create Locations if non in db
 
-createLocationsIfNone = function(){
+loadLocationsIfNone = function(){
  	if (Locations.find().count() === 0) {
-		createLocations();
+		loadLocations();
 	}
 }
 
@@ -120,17 +154,19 @@ function ensureLocationCategory(name){
 }
 
 // TESTING:
-function createLocations(){
+function loadLocations(){
 
 	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')]
-	_.each(testlocations, function(location) {
-		if (!location.name) return; // Don't create locations that don't have a name
+	_.each(testlocations, function(locationData) {
+		if (!locationData.name) return;      // Don't create locations that don't have a name
+
+		locationData.region = Random.fraction() > 0.85 ? testRegions[0] : testRegions[1];
+		var location = ensureLocation(locationData.name, locationData.region);
+
 
 		// TESTING: always use same id for same location to avoid broken urls while testing
-		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
-		m5.update(location.name);
+
 //		m5.update(location.description);
-		location._id = m5.digest('hex').substring(0, 8)
 
 		var category_names = location.categories
 		location.categories = []
@@ -145,23 +181,15 @@ function createLocations(){
 			})
 		})
 
-		location.createdby = ensureUser(location.createdby)._id
+		location.createdby = ensureUser(location.createdby)._id;
 //		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
-		if (!location.hosts) location.hosts = []
-		location.hosts = [ensureUser(location.hosts[0])._id]
+		if (!location.hosts) location.hosts = [];
+		location.hosts = [ensureUser(location.hosts[0])._id];
 
 //		location.maxWorkplaces = Random.fraction() > 0.3 ? undefined : humandistrib()
 //		location.maxPeople = Random.fraction() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Random.fraction())
 
-		var age = Math.floor(Random.fraction()*80000000000)
-		location.time_created = new Date(new Date().getTime()-age)
-		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
-		var region = Random.fraction() > 0.85 ? testRegions[0] : testRegions[1];
-		location.region = region._id
-		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
-		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
-		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
-		Locations.insert(location)
+		Locations.update(locations._id, location);
 	})
 }
 
@@ -285,7 +313,8 @@ loadTestEvents = function(){
 			console.log("   which is "+dateOffset+" milliseconds, right?");
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
-
+		event.location = ensureLocation(event.location, event.region)._id;
+		if (event.room) ensureRoom (event.location, event.room);
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);

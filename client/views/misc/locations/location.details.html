@@ -27,6 +27,9 @@
 			{{#if maxworkplaces}} <p>{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}} {{maxworkplaces}} </p> {{/if}}
 			{{#if infra2.def }} <p>{{mf 'location.details.has_projector' 'Has a Projector!'}} </p> {{/if}}
 			{{#if specials}} <p>{{mf 'location.details.specials' 'Specials:'}} {{specials}} </p> {{/if}}
+			{{#if loc}} <p>{{mf 'location.details.map' 'Map:'}} {{loc.coordinates.long}}{{loc.coordinates.lat}} </p> {{/if}}
+
+
 
 			<input type="button" class="contact" value="Contact" /> <br><br>
 			{{#if canEditLocation}}
