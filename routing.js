@@ -44,7 +44,8 @@ Router.map(function () {
 		notFoundTemplate: 'eventNotFound',
 		waitOn: function () {
 			var subs = [
-				Meteor.subscribe('event', this.params._id)
+				Meteor.subscribe('event', this.params._id),
+				Meteor.subscribe('locationName', Session.get('region')) //FIXME: actiually here we only want one, right? so locationDetails would be better
 			]
 			var courseId = this.params.query.courseId;
 			if (courseId) {

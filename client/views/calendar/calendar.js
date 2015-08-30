@@ -2,6 +2,9 @@ Router.map(function () {
 	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
+		waitOn: function () {
+			return Meteor.subscribe('locations', Session.get('region'))
+		},
 		data: function() { return this.params; },
 		onAfterAction: function() {
 			document.title = webpagename + 'Calendar'

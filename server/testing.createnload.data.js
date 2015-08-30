@@ -45,8 +45,9 @@ function ensureRegion(name) {
 
 function ensureLocation(name, regionId) {
 	while (true) {
-		var location = Locations.findOne({name: name})
-		if (location) return location._id;
+		var location = Locations.findOne({name: name, region:regionId})
+
+		if (location && location.region === regionId) return location;
 
 		location = {
 			name: name,
@@ -61,17 +62,20 @@ function ensureLocation(name, regionId) {
 		// TESTING: always use same id for same location to avoid broken urls while testing
 		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 		m5.update(location.name);
+		m5.update(location.region);
+
+		location._id = m5.digest('hex').substring(0, 8);
+
 
 		var age = Math.floor(Random.fraction()*80000000000)
 		location.time_created = new Date(new Date().getTime()-age)
 		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
 
-		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
-		m5.update(location.name);
-		location._id = m5.digest('hex').substring(0, 8);
+
 
 		Locations.insert(location);
-		console.log('Added location: '+location.name);
+		console.log('Added location: "'+location.name+'" in region: '+location.region);
+
 		return location;
 	}
 }
@@ -163,7 +167,7 @@ function loadLocations(){
 		if (!locationData.name) return;      // Don't create locations that don't have a name
 
 		locationData.region = Random.fraction() > 0.85 ? testRegions[0] : testRegions[1];
-		var location = ensureLocation(locationData.name, locationData.region);
+		var location = ensureLocation(locationData.name, locationData.region._id);
 
 
 		var category_names = location.categories
@@ -322,7 +326,7 @@ loadTestEvents = function(){
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
 		var id = Events.insert(event);
-		console.log("Added event:  "+event.title);
+		console.log("Loaded event:  "+event.title);
 	})
 }
 

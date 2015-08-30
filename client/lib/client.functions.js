@@ -202,3 +202,7 @@ Handlebars.registerHelper('plain', function(html) {
 	return div.textContent || div.innerText || '';
 });
 
+Handlebars.registerHelper ("locationName", function(loc) {
+	var location = Locations.findOne(loc);
+	return location.name;
+});
