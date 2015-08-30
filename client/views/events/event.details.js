@@ -1,4 +1,5 @@
 "use strict";
+// routing is in /routing.js
 
 Template.event.created = function() {
 	this.editing = new ReactiveVar(false);
