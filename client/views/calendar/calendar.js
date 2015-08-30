@@ -3,7 +3,7 @@ Router.map(function () {
 		path: 'calendar',
 		template: 'calendar',
 		waitOn: function () {
-			return Meteor.subscribe('locations', Session.get('region'))
+			return Meteor.subscribe('locationNames', Session.get('region')); // FIXME for selected region: 'all' -> null
 		},
 		data: function() { return this.params; },
 		onAfterAction: function() {

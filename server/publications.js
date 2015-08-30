@@ -25,17 +25,27 @@ Meteor.publish ('regions', function(){
 
 /////////////////////////////////////////////////// locations
 Meteor.publish ('locations', function(region) {
-	var find = {}
+	var find = {};
 	if (region != 'all') find.region = region
 	return Locations.find(find);
 });
+
 Meteor.publish ('locationNames', function(region) {
-	var find = {}
+//console.log(region);
+///console.log(Locations.find({region: 'J6GDhEEvdmdSMzPPF'}));
+	if(!region) {
+console.log('no region given');
+		 return Locations.find({});
+	}
+	var find = {};
 	if (region != 'all') find.region = region
-	var locations = Locations.find(find);
-									//TODO: only publish name and id
-	return locations;
+console.log(find)
+console.log('--------------------')
+
+	return Locations.find(find);
+				//TODO: only publish name and id
 });
+
 Meteor.publish ('locationDetails', function(id) {
 	return Locations.find(id);
 });

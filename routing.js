@@ -45,8 +45,8 @@ Router.map(function () {
 		waitOn: function () {
 			var subs = [
 				Meteor.subscribe('event', this.params._id),
-				Meteor.subscribe('locationName', Session.get('region')) //FIXME: actiually here we only want one, right? so locationDetails would be better
-			]
+				Meteor.subscribe('locationNames', Session.get('region')) //FIXME: actiually here we only want one, right? so locationDetails would be better
+			];
 			var courseId = this.params.query.courseId;
 			if (courseId) {
 				subs.push(Meteor.subscribe('courseDetails', courseId));
