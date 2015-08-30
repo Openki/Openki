@@ -225,13 +225,14 @@ createEventsIfNone = function(){
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
-				event.mentors = []
-				event.host = []
+				event.groups = course.groups;
+				event.mentors = [];
+				event.host = [];
 
-				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
-				var timeToGo = Random.fraction()-0.7 				// put 70% in the past
-				if (timeToGo >= 0.05) {								// 75% of the remaining in future
-					timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
+				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
+				var timeToGo = Random.fraction()-0.7;             // put 70% in the past
+				if (timeToGo >= 0.05) {                           // 75% of the remaining in future
+					timeToGo = Math.pow((timeToGo-0.05)*5, 2)     // exponential function in order to decrease occurrence in time
 				}
 				timeToGo = Math.floor(timeToGo*spread);
 				var date = new Date(new Date().getTime() + timeToGo);
@@ -305,7 +306,8 @@ loadTestEvents = function(){
 		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
 		
-		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
+		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
+		event.groups = _.map(event.groups, ensureGroup);
 
 		/* Create the events around the current Day. 
 		First loaded event gets moved to current day. All events stay at original hour */
