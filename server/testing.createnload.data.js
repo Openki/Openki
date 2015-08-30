@@ -58,7 +58,7 @@ function ensureLocation(name, regionId) {
 		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);		
 		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
 
-
+		// TESTING: always use same id for same location to avoid broken urls while testing
 		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 		m5.update(location.name);
 
@@ -68,9 +68,11 @@ function ensureLocation(name, regionId) {
 
 		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
 		m5.update(location.name);
-		location._id = m5.digest('hex').substring(0, 8)
+		location._id = m5.digest('hex').substring(0, 8);
 
-		Locations.insert(location)
+		Locations.insert(location);
+		console.log('Added location: '+location.name);
+		return location;
 	}
 }
 
@@ -164,10 +166,6 @@ function loadLocations(){
 		var location = ensureLocation(locationData.name, locationData.region);
 
 
-		// TESTING: always use same id for same location to avoid broken urls while testing
-
-//		m5.update(location.description);
-
 		var category_names = location.categories
 		location.categories = []
 		for (var i=0; category_names && i < category_names.length; i++) {
@@ -181,15 +179,17 @@ function loadLocations(){
 			})
 		})
 
+
 		location.createdby = ensureUser(location.createdby)._id;
 //		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
-		if (!location.hosts) location.hosts = [];
-		location.hosts = [ensureUser(location.hosts[0])._id];
+
+//		if (!location.hosts) location.hosts = [];
+//		location.hosts = [ensureUser(location.hosts[0])._id];
 
 //		location.maxWorkplaces = Random.fraction() > 0.3 ? undefined : humandistrib()
 //		location.maxPeople = Random.fraction() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Random.fraction())
 
-		Locations.update(locations._id, location);
+		Locations.update(location._id, location);
 	})
 }
 
@@ -211,11 +211,13 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				var random = Random.fraction();
-				if (random < 0.4) event.location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
-				else if (random < 0.7) event.location = random < 0.5 ? 'Volkshaus' : 'SQ131';
-				else if (random < 0.8) event.location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
-				else if (random < 0.9) event.location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
-				else event.location = random < 0.95 ? 'Hub' : 'ASZ';
+				var location = 'GZ Humbeldumbel';
+				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
+				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
+				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
+				else location = random < 0.95 ? 'Hub' : 'ASZ';
+				event.location = ensureLocation(location, event.region)._id;
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
