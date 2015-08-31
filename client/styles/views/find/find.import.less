@@ -133,13 +133,13 @@
                     }
 
                     span.glyphicon-home {
-                        background: @light-red;
+                        background: @brand-danger;
                         color: #751313;
                         padding: 4px 7px 2px;
                     }
 
                     span.fa-graduation-cap {
-                        background: @light-red;
+                        background: @brand-danger;
                         color: #751313;
                         padding: 4px 5px 2px;
                     }
@@ -177,14 +177,17 @@
                     }
 
                     ul.dropdown-menu {
+                        background: #ededed;
+                        margin-top: 6px;
 
                         li {
                             &> * {
-                            display: inline-block;
+                                display: inline-block;
+                                color: @brand-primary;
                             }
 
                             &:hover {
-                                background: #ECF5FA;
+                                background: darken(#ededed, 5%);
                             }
 
                             a:hover {
@@ -247,7 +250,7 @@
                 span.group {
                     background: rgba(130, 216, 130, 0.5);
                     color: @brand-primary;
-                    padding: 0 4px 1px;
+                    padding: 2px 5px;
                     margin-bottom: 10px;
                 }
             }
