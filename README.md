@@ -12,7 +12,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 
 - Demo: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
 - Concept: [openki.net](http://openki.net "our blog")
-- Contact: [schuelcore[at]lists.xiala.net](mailto:schuelcore[_at_]lists.xiala.net "write us")
+- Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
 
 ### Features
