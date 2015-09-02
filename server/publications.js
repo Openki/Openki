@@ -25,24 +25,21 @@ Meteor.publish ('regions', function(){
 
 /////////////////////////////////////////////////// locations
 Meteor.publish ('locations', function(region) {
+//	check(region, String);
 	var find = {};
 	if (region != 'all') find.region = region
 	return Locations.find(find);
 });
 
 Meteor.publish ('locationNames', function(region) {
-//console.log(region);
-///console.log(Locations.find({region: 'J6GDhEEvdmdSMzPPF'}));
-	if(!region) {
-console.log('no region given');
-		 return Locations.find({});
-	}
+//	check(region, String);
+
 	var find = {};
 	if (region != 'all') find.region = region
-console.log(find)
-console.log('--------------------')
 
-	return Locations.find(find);
+	var findLoc = Locations.find(find);  //{_id:{$exists:true}}
+
+	return findLoc;
 				//TODO: only publish name and id
 });
 

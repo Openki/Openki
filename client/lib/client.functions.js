@@ -203,6 +203,8 @@ Handlebars.registerHelper('plain', function(html) {
 });
 
 Handlebars.registerHelper ("locationName", function(loc) {
+	console.log(Locations.find().count());
 	var location = Locations.findOne(loc);
+	if (!location) return 'LocationNotFound';
 	return location.name;
 });
