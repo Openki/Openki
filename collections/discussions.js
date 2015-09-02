@@ -13,7 +13,7 @@ CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 
 
 Meteor.methods({
-	postComment: function(comment) {
+	postComment: function(comment, anon) {
 		check(comment, {
 			course_ID: String,
 		    parent_ID: Match.Optional(String),
@@ -22,16 +22,10 @@ Meteor.methods({
 		});
 		
 		var user = Meteor.user()
-		if (!user) {
-			if (Meteor.is_client) {
-				pleaseLogin();
-				return;
-			} else {
-				throw new Meteor.Error(401, "please log in")
-			}
+		if (user && !anon) {
+			comment.user_ID = user._id;
 		}
 		
-		comment.user_ID = user._id;
 		comment.time_created = new Date();
 		
 		var course = Courses.findOne(comment.course_ID);
@@ -60,9 +54,6 @@ Meteor.methods({
 		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
 		
 		var commentId = CourseDiscussions.insert(comment);
-		
-		// HACK update course so time_lastchange is updated
-		Meteor.call("save_course", course._id, {});
 		
 		return commentId;
 	},
