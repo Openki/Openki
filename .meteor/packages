@@ -39,3 +39,4 @@ msgfmt:core
 msgfmt:extract
 msgfmt:ui
 accounts-google
+standard-minifiers
