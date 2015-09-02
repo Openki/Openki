@@ -20,7 +20,9 @@ Router.map(function () {
 				Meteor.subscribe('eventsFind', queryOngoing),
 			];
 		},
-
+		subscriptions: function() {
+			return	Meteor.subscribe('locationNames');
+		},
 		data: function() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);

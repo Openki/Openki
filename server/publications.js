@@ -25,22 +25,16 @@ Meteor.publish ('regions', function(){
 
 /////////////////////////////////////////////////// locations
 Meteor.publish ('locations', function(region) {
-//	check(region, String);
+	check(region, String);
 	var find = {};
 	if (region != 'all') find.region = region
 	return Locations.find(find);
 });
 
 Meteor.publish ('locationNames', function(region) {
-//	check(region, String);
-
 	var find = {};
-	if (region != 'all') find.region = region
-
-	var findLoc = Locations.find(find);  //{_id:{$exists:true}}
-
-	return findLoc;
-				//TODO: only publish name and id
+	if (region != 'all' && region != undefined) find.region = region
+	return Locations.find(find);
 });
 
 Meteor.publish ('locationDetails', function(id) {

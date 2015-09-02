@@ -5,12 +5,13 @@ Router.map(function () {
 	this.route('courses', {
 		path: 'courses',
 		template: 'coursepage',
-		waitOn: function () {
+		waitOn: function() {
 			var region = Session.get('region')
 			return [
 				Meteor.subscribe('coursesFind', { region: region }, 40),
 				Meteor.subscribe('coursesFind', { region: region, missingTeam: true }, 5),
 				Meteor.subscribe('coursesFind', { region: region, missingParticipants: true }, 5),
+				Meteor.subscribe('locationNames', region)
 			]
 		},
 		data: function () {
