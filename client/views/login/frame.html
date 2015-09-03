@@ -76,7 +76,7 @@
 				{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
 			</div>
 			<div class="form-group">
-				<button type="submit" class='loginLogin btn btn-primary form-control'>
+				<button type="submit" class='loginLogin btn btn-primary form-control {{#unless registering}}loginLoginLogin{{/unless}}'>
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 					{{#if registering}}
 					{{mf 'login.login.back_to_login' 'Back to login'}}
@@ -93,6 +93,7 @@
 			</div>
 			{{#unless registering}}
 			<div class="external_logins">
+				<p>{{mf 'frame.login_external_services' 'Or login with:'}}</p>
 				<button class="loginWithService" data-service='Google' title="Login with Google+">
 					<span class="fa fa-google-plus-square"></span>
 				</button>
