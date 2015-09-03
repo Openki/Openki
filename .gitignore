@@ -12,7 +12,8 @@ codekit-config.json
 *~
 dump/
 
-packages/
+.npm
+
 .meteor/release
 .meteor/local
 
