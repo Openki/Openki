@@ -140,4 +140,6 @@ Template.calendar.events({
 	'click .prevWeek': mvDateHandler(-1, 'week'),
 	'click .nextMonth': mvDateHandler(1, 'month'),
 	'click .prevMonth': mvDateHandler(-1, 'month'),
+	'click .nextYear': mvDateHandler(1, 'year'),
+	'click .prevYear': mvDateHandler(-1, 'year'),
 });

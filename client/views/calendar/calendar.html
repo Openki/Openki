@@ -1,4 +1,5 @@
 <template name="calendar">
+	<button class="prevYear">-1 year</button>
 	<button class="prevMonth">-1 month</button>
 	<button class="prevWeek">-1 week</button>
 	<button class="prevDay">-1 day</button>
@@ -6,6 +7,7 @@
 	<button class="nextDay">+1 day</button>
 	<button class="nextWeek">+1 week</button>
 	<button class="nextMonth">+1 month</button>
+	<button class="nextYear">+1 year</button>
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
 		{{#each days}}
@@ -13,6 +15,7 @@
 		{{/each}}
 		</div>
 	</div>
+	<button class="prevYear">-1 year</button>
 	<button class="prevMonth">-1 month</button>
 	<button class="prevWeek">-1 week</button>
 	<button class="prevDay">-1 day</button>
@@ -20,6 +23,7 @@
 	<button class="nextDay">+1 day</button>
 	<button class="nextWeek">+1 week</button>
 	<button class="nextMonth">+1 month</button>
+	<button class="nextYear">+1 year</button>
 </template>
 
 <template name="calendarDay">

@@ -24,10 +24,20 @@ Template.discussion.helpers({
 	}
 });
 
-Template.newPost.created = function() {
+
+Template.writePostDialog.helpers({
+	anonChecked: function() {
+		if (Meteor.user()) return {};
+		return { checked: 1, disabled: 1 };
+	}
+});
+
+
+Template.newPost.onCreated(function() {
 	this.writing = new ReactiveVar(false);
 	this.editing = new ReactiveVar(false);
-}
+});
+
 
 Template.newPost.helpers({
 	writing: function() {
@@ -40,16 +50,13 @@ Template.newPost.helpers({
 
 Template.newPost.events({
 	'click button.write': function () {
-		if (pleaseLogin()) return;
 		Template.instance().writing.set(true);
-
 	},
 
-	'click button.add': function () {
-		if (pleaseLogin()) return;
+	'click button.add': function (event, instance) {
 		var comment = {
-		title: $("#post_title").val(),
-		text: $("#post_text").val()
+			title: $("#post_title").val(),
+			text: $("#post_text").val()
 		};
 		var parent_ID = this.parent && this.parent._id;
 		if (parent_ID) {
@@ -59,13 +66,12 @@ Template.newPost.events({
 			comment.course_ID = this._id;
 		}
 
-		var templateInstance = Template.instance();
-		Meteor.call('postComment', comment, function(err, commentId) {
+		var anon = instance.$('.-anon').prop('checked');
+		Meteor.call('postComment', comment, anon, function(err, commentId) {
 			if (err) {
 				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
-				console.log(Template.instance())
-				templateInstance.writing.set(false);
+				instance.writing.set(false);
 			}
 		});
 
