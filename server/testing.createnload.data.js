@@ -55,8 +55,8 @@ function ensureLocation(name, regionId) {
 		};
 
 		var region = Regions.findOne(regionId);
-		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);
-		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .1 * (Random.fraction() > .5 ? 1 : -1);		
+		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .02 * (Random.fraction() > .5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .02 * (Random.fraction() > .5 ? 1 : -1);
 		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
 
 		// TESTING: always use same id for same location to avoid broken urls while testing
