@@ -3,47 +3,43 @@
 
 Template.event.onCreated(function() {
 	this.editing = new ReactiveVar(false);
+	var markers = new Meteor.Collection(null);
+	this.markers = markers;
+
+	this.setLocation = function(location) {
+		markers.remove({ center: { $ne: true } });
+		if (location && location.loc) {
+			markers.insert(location.loc);
+		}
+	}
+
+	this.setRegion = function(region) {
+		markers.remove({ center: true });
+		if (region && region.loc) {
+			var center = $.extend(region.loc, { center: true })
+			markers.insert(center);
+		}
+	}
+
 });
 
 
 Template.event.onRendered(function() {
 	var instance = this;
 
-	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
-    instance.map = L.map(instance.find('.map'), {
-	}).setView(new L.LatLng(41.8781136, -87.66677956445312), 13);
-	L.tileLayer.provider('Thunderforest.Transport').addTo(instance.map);
+	this.setLocation(this.data.location);
 
-	instance.marker = false;
 
 	if (this.data.location) {
 		Meteor.subscribe('locationDetails', instance.data.location);
 
-		var geojsonMarkerOptions = {
-			radius: 8,
-			fillColor: "#ff7800",
-			color: "#000",
-			weight: 1,
-			opacity: 1,
-			fillOpacity: 0.8
-		};
-
 		Tracker.autorun(function() {
-			if (instance.marker) instance.map.removeLayer(instance.marker);
-
 			var location = Locations.findOne(instance.data.location);
-			if (location) {
-				instance.marker = L.geoJson(location.loc, {
-					pointToLayer: function(feature, latlng) {
-						return L.circleMarker(latlng, geojsonMarkerOptions);
-					}
-				});
+			instance.setLocation(location);
 
-				instance.marker.addTo(instance.map);
-				var bounds = instance.marker.getBounds();
+			if (location) {
 				var region = Regions.findOne(location.region);
-				if (region) bounds.extend(L.geoJson(region.loc).getBounds());
-				instance.map.fitBounds(bounds, { padding: [50, 50] });
+				instance.setRegion(region);
 			}
 		});
 	}
@@ -81,6 +77,9 @@ Template.eventPage.helpers({
 Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
+	},
+	eventMarkers: function() {
+		return Template.instance().markers.find();
 	}
 });
 
