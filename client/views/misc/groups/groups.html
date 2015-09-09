@@ -1,9 +1,0 @@
-<template name="show_groups">
-	{{#if groups}}
-		<ul class="groups-list">
-			{{#each loadgroups groups}}
-			<li><a href="/find?group={{_id}}">{{name}}</a></li>
-			{{/each}}
-		</ul>
-	{{/if}}
-</template>
