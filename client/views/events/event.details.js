@@ -29,8 +29,9 @@ Template.event.onRendered(function() {
 		};
 
 		Tracker.autorun(function() {
+			if (instance.marker) instance.map.removeLayer(instance.marker);
+
 			var location = Locations.findOne(instance.data.location);
-			if (instance.marker) instance.map.removeLayer(marker);
 			if (location) {
 				instance.marker = L.geoJson(location.loc, {
 					pointToLayer: function(feature, latlng) {
@@ -39,8 +40,10 @@ Template.event.onRendered(function() {
 				});
 
 				instance.marker.addTo(instance.map);
-
-				instance.map.fitBounds(instance.marker.getBounds());
+				var bounds = instance.marker.getBounds();
+				var region = Regions.findOne(location.region);
+				if (region) bounds.extend(L.geoJson(region.loc).getBounds());
+				instance.map.fitBounds(bounds, { padding: [50, 50] });
 			}
 		});
 	}
