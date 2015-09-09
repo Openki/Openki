@@ -1,17 +1,61 @@
 "use strict";
 // routing is in /routing.js
 
-Template.event.created = function() {
+Template.event.onCreated(function() {
 	this.editing = new ReactiveVar(false);
-}
+});
+
+
+Template.event.onRendered(function() {
+	var instance = this;
+
+	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
+    instance.map = L.map(instance.find('.map'), {
+	}).setView(new L.LatLng(41.8781136, -87.66677956445312), 13);
+	L.tileLayer.provider('Thunderforest.Transport').addTo(instance.map);
+
+	instance.marker = false;
+
+	if (this.data.location) {
+		Meteor.subscribe('locationDetails', instance.data.location);
+
+		var geojsonMarkerOptions = {
+			radius: 8,
+			fillColor: "#ff7800",
+			color: "#000",
+			weight: 1,
+			opacity: 1,
+			fillOpacity: 0.8
+		};
+
+		Tracker.autorun(function() {
+			var location = Locations.findOne(instance.data.location);
+			if (instance.marker) instance.map.removeLayer(marker);
+			if (location) {
+				instance.marker = L.geoJson(location.loc, {
+					pointToLayer: function(feature, latlng) {
+						return L.circleMarker(latlng, geojsonMarkerOptions);
+					}
+				});
+
+				instance.marker.addTo(instance.map);
+
+				instance.map.fitBounds(instance.marker.getBounds());
+			}
+		});
+	}
+});
+
 
 Template.eventDisplay.created = function() {
 	this.replicaDates = new ReactiveVar([]);
 }
 
+
 Template.eventDisplay.onRendered(function() {
 	updateReplicas(this);
 });
+
 
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
@@ -36,6 +80,7 @@ Template.event.helpers({
 		return this.new || Template.instance().editing.get();
 	}
 });
+
 
 Template.eventEdit.helpers({
 	isoDateFormat: function(date) {
