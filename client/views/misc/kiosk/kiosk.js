@@ -37,10 +37,14 @@ Router.map(function () {
 			var queryNow = this.filter.toParams();
 			queryNow.ongoing = now;
 
+			var filterParams = this.filter.toParams();
+
 			return {
 				today: eventsFind(queryToday, 20),
 				future: eventsFind(queryFuture, 10),
-				now: eventsFind(queryNow)
+				now: eventsFind(queryNow),
+				filter: filterParams,
+				showLocations: !filterParams.location
 			};
 		},
 		onAfterAction: function() {
@@ -64,7 +68,7 @@ Router.map(function () {
 			}
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Calendar'
+			document.title = webpagename + 'Kiosk-View'
 		}
 	});
 });
