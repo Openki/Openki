@@ -14,13 +14,19 @@
 	<div class="kiosk"><!-- 
 		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
 		<div class="kiosk_header">
-			<h1>
-				<b>Openki</b>
-				{{> lang_sel}}
-				{{#if filter.group}}	{{groupShort filter.group}} {{/if}}
-				{{#if filter.location}}	@ {{filter.location}} {{/if}}
+			<div style='float:right'>
+				<h2 style='display:inline'>{{showTime}}</h2> &nbsp;&nbsp; <h4 style='display:inline'>{{showDate}}</h4>
 
+			</div>
+
+			<h1>
+				Openki
+				{{#if filter.group}}	{{groupShort filter.group}} {{/if}}
+				{{#if filter.location}}	@ <b>{{filter.location}}</b> {{/if}}
+
+				{{> lang_sel}}
 			</h1>
+
 			<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
 		</div>
 			<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
@@ -51,7 +57,6 @@
 				{{/each}}
 			</div>
 			{{/if}}
-			{{#if future.count}}
 			<div class="kiosk_events_title">
 				<hr>
 				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
@@ -59,9 +64,10 @@
 			<div class="kiosk_events"> 
 				{{#each future}}
 				{{> kioskEvent}}
+				{{else}}
+				{{mf 'kiosk.noFutureEvents' 'There are no future events'}}
 				{{/each}}
 			</div>
-			{{/if}}
 		</div>
 	</div>
 </template>

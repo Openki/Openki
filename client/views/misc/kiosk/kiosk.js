@@ -48,7 +48,13 @@ Router.map(function () {
 			};
 		},
 		onAfterAction: function() {
+			this.timer = Meteor.setInterval(function() {
+				Session.set('seconds', new Date);
+			}, 1000);
 			document.title = webpagename + ' Events'
+		},
+		unload: function() {
+			Meteor.clearInterval(this.timer);
 		}
 	});
 	this.route('kioskCalendar', {								///////// calendar /////////
@@ -74,9 +80,20 @@ Router.map(function () {
 });
 
 Template.kioskLayout.helpers({
-	showKioskCalendar: function () {
+	showKioskCalendar: function() {
 		var currentIsKiosk = Router.current().route.path();
 		if (currentIsKiosk != "/kiosk/events") return true
+	}
+});
+
+Template.kioskEvents.helpers({
+	showTime: function() {
+		Session.get('seconds');
+		return moment().format('LTS');
+	},
+	showDate: function() {
+		Session.get('seconds');
+		return moment().format('LL');
 	}
 });
 
