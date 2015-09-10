@@ -43,8 +43,7 @@ Router.map(function () {
 				today: eventsFind(queryToday, 20),
 				future: eventsFind(queryFuture, 10),
 				now: eventsFind(queryNow),
-				filter: filterParams,
-				showLocations: !filterParams.location
+				filter: filterParams
 			};
 		},
 		onAfterAction: function() {
@@ -96,6 +95,19 @@ Template.kioskEvents.helpers({
 		return moment().format('LL');
 	}
 });
+
+
+Template.kioskEvent.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+Template.kioskEventOngoing.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+
 
 Template.kioskEvent.rendered = function() {
 	this.$('.course_event_title').dotdotdot({

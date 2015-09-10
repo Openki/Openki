@@ -19,11 +19,11 @@
 
 			</div>
 
-			<h1>
-				Openki
-				{{#if filter.group}}	{{groupShort filter.group}} {{/if}}
-				{{#if filter.location}}	@ <b>{{filter.location}}</b> {{/if}}
-
+			<h1><b>
+				{{#if filter.group}} {{groupShort filter.group}}
+				{{else}} {{#if filter.location}} {{filter.location}}
+				{{else}} Openki {{/if}} {{/if}}
+			</b>
 				{{> lang_sel}}
 			</h1>
 
@@ -92,6 +92,9 @@
 						{{/if}}
 					{{/if}}
 					{{#if room}}
+						{{#unless showLocations}}
+							<span class="fa fa-map-signs"></span>
+						{{/unless}}
 						{{this.room}}
 					{{/if}}
 				</div>
@@ -124,6 +127,9 @@
 						{{/if}}
 					{{/if}}
 					{{#if room}}
+						{{#unless showLocations}}
+							<span class="fa fa-map-signs"></span>
+						{{/unless}}
 						{{this.room}}
 					{{/if}}
 				</div>
