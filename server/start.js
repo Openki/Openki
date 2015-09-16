@@ -22,7 +22,7 @@ Meteor.startup(function () {
 			ServiceConfiguration.configurations.insert({
 				service: 'google',
 				loginStyle: "popup",
-				appId: serviceConf.google.appId,
+				clientId: serviceConf.google.clientId,
 				secret: serviceConf.google.secret
 			});
 		}
