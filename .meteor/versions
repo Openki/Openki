@@ -81,6 +81,7 @@ logging@1.0.8-rc.1
 matb33:collection-hooks@0.7.14
 meteor@1.1.7-rc.1
 meteor-platform@1.2.3-rc.0
+meteorhacks:cluster@1.6.9
 meteorhacks:inject-initial@1.0.2
 minifiers@1.1.6-rc.1
 minimongo@1.0.9-rc.0
