@@ -176,9 +176,9 @@
 				{{#if affectedReplicaCount}}
 					<label>
 						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {replica} other {# replicas}}" COUNT=affectedReplicaCount}}
+						{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {copy} other {# copies}}" COUNT=affectedReplicaCount}}
 					</label>
-					{{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {replica} other {replicas}}." COUNT=affectedReplicaCount}}
+					{{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}." COUNT=affectedReplicaCount}}
 				{{/if}}
 			</div>
 			
@@ -249,7 +249,7 @@
 					
 					<button type="button" class="eventReplicateMenu_open btn btn-warning" role="button">
 						<span class="glyphicon glyphicon-plus"></span>
-						{{mf 'course.details.repl_menu_btn' 'Replicate'}}
+						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 					</button>
 					<button type="button" class="eventReplicateMenu_close btn btn-warning" role="button" style="display:none">
 						<span class="glyphicon glyphicon-minus"></span>
