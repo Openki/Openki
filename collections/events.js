@@ -67,6 +67,7 @@ Meteor.methods({
 			replicaOf:   Match.Optional(String),
 			course_id:	 Match.Optional(String),
 			groups:	     Match.Optional([String]),
+			loc:         Match.Optional(Object) // Dirty, should restrict to geojson
 		};
 		
 		var isNew = eventId === '';

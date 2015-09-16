@@ -17,12 +17,21 @@ Template.map.onRendered(function() {
 	L.tileLayer.provider('Thunderforest.Transport').addTo(map);
 
 	var geojsonMarkerOptions = {
-		radius: 8,
+		radius: 10,
 		fillColor: "#ff7800",
 		color: "#000",
+		weight: 1.5,
+		opacity: 0.9,
+		fillOpacity: 0.6
+	};
+
+	var geojsonProposedMarkerOptions = {
+		radius: 8,
+		fillColor: "#12f",
+		color: "#222",
 		weight: 1,
-		opacity: 1,
-		fillOpacity: 0.8
+		opacity: 0.9,
+		fillOpacity: 0.4
 	};
 
 	// Zoom to show all markers
@@ -35,7 +44,7 @@ Template.map.onRendered(function() {
 			count += 1;
 		}
 
-		// To give some perspective, we include the center in the bounds when there are few markers
+		// To give some perspective, we extend the bounds to include the region center when there are few markers
 		if (count < 2) {
 			for (centerPos in centers) { bounds.extend(centers[centerPos]); }
 			count += 1;
@@ -51,7 +60,8 @@ Template.map.onRendered(function() {
 
 	// Tracked so that observe() will be stopped when the template is destroyed
 	Tracker.autorun(function() {
-		instance.data.markers.observe({
+		var markers = instance.data.markers;
+		markers.find().observe({
 			added: function(mark) {
 				// Marks that have the center flage set are not displayed but used for anchoring the map
 				if (mark.center) {
@@ -59,7 +69,14 @@ Template.map.onRendered(function() {
 				} else {
 					var marker = L.geoJson(mark, {
 						pointToLayer: function(feature, latlng) {
-							return L.circleMarker(latlng, geojsonMarkerOptions);
+							var options = mark.proposed ? geojsonProposedMarkerOptions : geojsonMarkerOptions;
+							var marker = L.circleMarker(latlng, options);
+							// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
+							marker.on('click', function() {
+								markers.update({}, { $set: { selected: false } });
+								markers.update(mark._id, { $set: { selected: true } });
+							});
+							return marker;
 						}
 					});
 					layers[mark._id] = marker;
@@ -68,8 +85,8 @@ Template.map.onRendered(function() {
 				fitBounds();
 			},
 			removed: function(mark) {
-				if (markers[mark._id]) map.removeLayer(markers[mark._id]);
-				delete markers[mark._id];
+				if (layers[mark._id]) map.removeLayer(layers[mark._id]);
+				delete layers[mark._id];
 				delete centers[mark._id];
 				fitBounds();
 			}

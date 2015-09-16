@@ -2,14 +2,17 @@
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
+	var instance = this;
 	this.editing = new ReactiveVar(false);
 	var markers = new Meteor.Collection(null);
 	this.markers = markers;
 
 	this.setLocation = function(location) {
-		markers.remove({ center: { $ne: true } });
+		markers.remove({ main: true });
 		if (location && location.loc) {
-			markers.insert(location.loc);
+			var loc = $.extend(location.loc, { main: true });
+			delete loc._id;
+			markers.insert(loc);
 		}
 	}
 
@@ -21,23 +24,37 @@ Template.event.onCreated(function() {
 		}
 	}
 
+	// Tracked so that observe() will be stopped when the template is destroyed
+	Tracker.autorun(function() {
+		markers.find({ proposed: true, selected: true }).observe({
+			added: function(mark) {
+				// When a propsed marker is selected, we clear the other location proposals and
+				// store it as new location for the event
+				var loc = $.extend(mark, { selected: false, proposed: false });
+				instance.setLocation({ loc: loc });
+				markers.remove({ proposed: true });
+			},
+		});
+	});
 });
 
 
 Template.event.onRendered(function() {
 	var instance = this;
 
-	this.setLocation(this.data.location);
+	this.setLocation(this.data);
 
+	var region = Regions.findOne(instance.data.region);
+	instance.setRegion(region);
 
 	if (this.data.location) {
 		Meteor.subscribe('locationDetails', instance.data.location);
 
 		Tracker.autorun(function() {
 			var location = Locations.findOne(instance.data.location);
-			instance.setLocation(location);
 
 			if (location) {
+				instance.setLocation(location);
 				var region = Regions.findOne(location.region);
 				instance.setRegion(region);
 			}
@@ -79,7 +96,7 @@ Template.event.helpers({
 		return this.new || Template.instance().editing.get();
 	},
 	eventMarkers: function() {
-		return Template.instance().markers.find();
+		return Template.instance().markers;
 	}
 });
 
@@ -374,6 +391,12 @@ Template.event.events({
 			editevent.files = tmp;
 		}		
 
+		var loc = template.markers.findOne({ main: true });
+		if (loc) {
+			delete loc._id;
+			editevent.loc = loc;
+		}
+
 		var eventId = this._id;
 		var isNew = !this._id;
 		var now = moment();
@@ -505,6 +528,31 @@ Template.event.events({
 
 	'change #edit_event_endtime': function(event, template) {
 		updateTimes(template, false);
+	},
+
+	'click .-addressSearch': function(event, template) {
+		HTTP.get('https://nominatim.openstreetmap.org', {
+			params: {
+				format: 'json',
+				q: template.$('._address').val(),
+				limit: 10,
+				polygon_geojson: 1
+			}
+		}, function(error, result) {
+			if (error) {
+				addMessage(error);
+				return;
+			}
+
+			var found = JSON.parse(result.content);
+
+			template.markers.remove({ proposed: true });
+			_.each(found, function(foundLocation) {
+				var marker = foundLocation.geojson;
+				marker.proposed = true;
+				template.markers.insert(marker);
+			});
+		});
 	}
 });
 

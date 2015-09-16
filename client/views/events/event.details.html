@@ -149,6 +149,20 @@
 					<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
 				</div>
 			</div>
+
+
+			<div class="col-xs-12 col-sm-6">
+				<h4>{{mf 'course.event.edit.address' 'Address:'}}</h4>
+				<div id="editform_location" name="editform_location" class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-home"></span>
+					</span>
+					<input type="text" class="form-control _address" size="40" value=""/>
+					<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span></button>
+				</div>
+			</div>
+
+
 			{{#if showRegionSelection}}
 			<div class="col-xs-12 col-sm-4">
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
