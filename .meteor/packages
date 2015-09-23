@@ -41,3 +41,5 @@ msgfmt:ui
 accounts-google
 standard-minifiers
 meteorhacks:cluster
+rzymek:moment-locale-da
+rzymek:moment-locale-ja
