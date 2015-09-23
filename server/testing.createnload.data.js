@@ -79,8 +79,8 @@ function createCourses(scale) {
 			m5.update(course.description);
 			course._id = m5.digest('hex').substring(0, 8)
 
-			course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
-			course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
+			//course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
+			//course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
 			course.date = Random.fraction() > 0.50 ? new Date(new Date().getTime()+((Random.fraction()-0.25)*8000000000)) : false
 			var age = Math.floor(Random.fraction()*80000000000)
 			course.time_created = new Date(new Date().getTime()-age)

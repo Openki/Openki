@@ -1,18 +1,19 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "categories" -> [ID_categories]
-// "tags" -> list ID_categories
-// "description" -> string
-// "slug" -> string
-// "region" -> ID_region
-// "date" -> timestamp     what for?
-// "createdby" -> ID_users
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "time_lastenrol" -> timestamp
-// "roles" -> [role-keys]
-// "members" -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "_id"           -> ID
+// "name"          -> String
+// "categories"    -> [ID_categories]
+// "tags"          -> List of Strings  (not used)
+// "groups"        -> List ID_groups
+// "description"   -> String
+// "slug"          -> String
+// "region"        -> ID_region
+// "date"          -> Date             (what for?)
+// "createdby"     -> ID_user
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "time_lastenrol"-> Date
+// "roles"         -> [role-keys]
+// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // ===========================
 
 Courses = new Meteor.Collection("Courses");

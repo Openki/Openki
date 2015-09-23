@@ -1,14 +1,18 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "title" -> string
-// "description" -> string
-// start       time the events starts
-// end         time the event ends
-// "location" -> ...............
-// "createdBy" -> userId
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "course_id" -> ID_course          (maybe list in Future)
+// "_id"           -> ID
+// "region"        -> ID_region
+// "title"         -> String
+// "description"   -> String
+// "start"         -> time the events starts
+// "end"           -> time the event ends
+// "location"      -> ID_location
+// "room"          -> String (optional)
+// "createdby"     -> userId
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "course_id"     -> ID_course  (maybe list in Future)
+// "mentors"       -> not in use, list of UserIds
+// "hosts"         -> not in use, list of UserIds
 // ===========================
 
 Events = new Meteor.Collection("Events");
