@@ -40,3 +40,5 @@ msgfmt:extract
 msgfmt:ui
 accounts-google
 standard-minifiers
+rzymek:moment-locale-da
+rzymek:moment-locale-ja

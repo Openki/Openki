@@ -37,6 +37,7 @@
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
+						{{#if toggleChecked 'upcomingEvent'}}
 						<div class="eventcaption_upcoming">
 							<div class="eventcaption_upcoming_box">
 								<div class="eventcaption_upcoming_text first-line"></div>
@@ -44,6 +45,10 @@
 								<div class="eventcaption_upcoming_text third-line"></div>
 							</div>
 						</div>
+						{{/if}}
+						{{#unless toggleChecked 'upcomingEvent'}}
+						<span class="fa fa-calendar-o"></span>
+						{{/unless}}
 						&nbsp;
 						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
 						&nbsp;
@@ -55,7 +60,7 @@
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
-						<span class="glyphicon glyphicon-home"></span>
+						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsHost' 'Looking for a host'}}
 						&nbsp;
@@ -67,7 +72,7 @@
 				<div class="checkbox filterToggle">
 					<label>
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
-						<span class="fa fa-graduation-cap"></span>
+						<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsMentor' 'Looking for a mentor'}}
 						&nbsp;
