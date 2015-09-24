@@ -121,8 +121,13 @@
 
         button {
             .btn;
-            .btn-primary;
             margin-right: 10px;
+            &.save {
+                .btn-success;
+            }
+            &.cancel {
+                .btn-danger;
+            }
 
             @media @mobile {
                 .form-control;
