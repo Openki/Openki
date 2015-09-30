@@ -49,7 +49,7 @@ Template.course_events.rendered = function() {
 
 	scrollableContainer.scroll(function (event) {
 		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height()
-		var reactiveArea = trueHeight - 5
+		var reactiveArea = trueHeight - 1
 
         $(".fade_effect_top").show();
 		$(".fade_effect_bottom").show();
@@ -57,7 +57,7 @@ Template.course_events.rendered = function() {
 		if (scrollableContainer.scrollTop() > reactiveArea) {
 			$(".fade_effect_bottom").hide();
 		}
-		else if (scrollableContainer.scrollTop() < 5) {
+		else if (scrollableContainer.scrollTop() < 1) {
             $(".fade_effect_top").hide();
         }
     });
