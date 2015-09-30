@@ -12,12 +12,16 @@
 			{{mf 'course.download_cal' 'Download events to my calendar'}}
 		</button>
 	</a>
-	<div class="course_events">
-		{{#each events_list}}
-		<div class="course_event_container">
-			{{>course_event}}
+	<div class="course_events_fadebox">
+		<div class="course_events">
+			{{#each events_list}}
+			<div class="course_event_container">
+				{{>course_event}}
+			</div>
+			{{/each}}
 		</div>
-		{{/each}}
+		<div class="fade_effect_top" style="display:none"></div>
+		<div class="fade_effect_bottom"></div>
 	</div>
 	{{/if}}
 
