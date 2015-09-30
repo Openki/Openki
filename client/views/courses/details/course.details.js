@@ -54,7 +54,7 @@ Router.map(function () {
 							}
 						});
 					},
-					mf('course.description.placeholder', 'Describe my proposal')
+					mf('course.description.placeholder')
 				);
 			}
 			return data;

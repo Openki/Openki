@@ -1,17 +1,17 @@
 <template name="eventPage">
-	<div class="container">
-		<div class="course_event_detail" id="coursedetails">
-			{{#if course}}
-			<p>
-				<a href="{{pathFor 'showCourse' _id=course._id}}">
-					<span class="glyphicon glyphicon-arrow-left"></span>
-					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
-				</a>
-			</p>
-			{{/if}}
-			{{> event}}
-		</div>
+<div class="container">
+	<div class="course_event_detail" id="coursedetails">
+		{{#if course}}
+		<p>
+			<a href="{{pathFor 'showCourse' _id=course._id}}">
+				<span class="glyphicon glyphicon-arrow-left"></span>
+				{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+			</a>
+		</p>
+		{{/if}}
+		{{> event}}
 	</div>
+</div>
 </template>
 
 <template name="eventNotFound">
@@ -28,12 +28,12 @@
 </template>
 
 <template name="eventEdit">
-	<form>
+<form>
 	<div class="course_event_edit col-sm-12">
 		<div class="col-sm-12">
 			<h2>{{#if _id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-			<input type="text" class="form-control" id="edit_event_title" size="30" value="{{this.title}}" name="_" />
+			<input type="text" class="form-control" id="edit_event_title" size="30" placeholder="{{mf 'event.title.placeholder' 'Put catchy title here'}}" value="{{this.title}}" name="_" />
 		</div>
 		<div class="col-sm-12 no-padding">
 			<div class="col-sm-4">
@@ -45,41 +45,34 @@
 					<input type="date" id="edit_event_startdate" class="form-control" value="{{isoDateFormat start}}" size="8" {{disableForPast}}>
 				</div>
 			</div>
-			
-
 			<div class="col-sm-4">
 				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat start}}" size="5" {{disableForPast}}>			
+					<input type="time" id="edit_event_starttime" class="form-control" value="{{timeformat start}}" size="5" {{disableForPast}}>
 				</div>
 			</div>
-			
 			<div class="show_time_end col-sm-4">
 				<h4>{{mf 'course.event.edit.time_end' 'Time end'}} <small class="toggle_duration" > &nbsp;&nbsp;{{mf 'course.event.edit.swich_duration' 'switch to duration'}} </small></h4>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat end}}" size="5">			
+					<input type="time" id="edit_event_endtime" class="form-control" value="{{timeformat end}}" size="5">
 				</div>
 			</div>
-			
 			<div style="display:none" class="col-sm-4 show_duration">
 				<h4>{{mf 'course.event.edit.duration' 'Duration (in minutes)'}} <small class="toggle_duration" > &nbsp;&nbsp; {{mf 'course.event.edit.switch_time_end' 'switch to end time'}} </small></h4>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">			
+					<input type="number" id="edit_event_duration" class="form-control" value="{{timeformat Duration}}" size="5">
 				</div>
 			</div>
 		</div>
-
-
-		
 		<div class="col-sm-12">
 			<div class="col-xs-12 col-sm-6 no-padding-left">
 				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
@@ -89,50 +82,35 @@
 					</span>
 					{{>eventDescritpionEdit description}}
 				</div>
-			
 			</div>
 			<div class="col-xs-12 col-sm-6 no-padding-right">
-				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4> 
-
+				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
 				<div class="input-group">
-					
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-file"></span>
 					</span>
-					
 					<div id="edit_event_description" style="min-height: 10ex; position:relative">
 						<div style="float:left;width:70%;">
 							<input type="file" name="…" class="eventFileInput" id="edit_files">
-							
 							<button style="display:none" type="button" class="eventFileUpload" role="button">
 								<span class="glyphicon glyphicon-edit"></span>
 								Start Upload
 							</button>
-									
-							
-							
 						</div>
-						
-							<div style="float:left;width:20%;">
-								<table class="file-list">
-									
-									{{#each files}}
-										{{> eventAttachmentsEdit}}
-									{{/each}}
-									
-								</table>
-							</div>
-									
+						<div style="float:left;width:20%;">
+							<table class="file-list">
+								{{#each files}}
+								{{> eventAttachmentsEdit}}
+								{{/each}}
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
 		<div class="col-sm-12 no-padding">
 			<div class="col-xs-12 col-sm-6">
-				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4> 
+				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
 				<div id="editform_location" name="editform_location" class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-home"></span>
@@ -141,7 +119,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
-				<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4> 
+				<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4>
 				<div id="editform_room" name="editform_room" class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-map-marker"></span>
@@ -169,16 +147,15 @@
 				<div class="styled-select">
 					<select name='region' class="region_select">
 						<option value='' class="select_default">{{mf 'course.edit.pls_select' 'Please select'}}</option>
-					{{#each regions}}
+						{{#each regions}}
 						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-					{{/each}}
+						{{/each}}
 					</select>
 					<span class="caret"></span>
 				</div>
 			</div>
 			{{/if}}
 		</div>
-		
 		<div class="col-sm-12 no-padding event_edit_buttons">
 			<div class="col-xs-12 col-sm-5">
 				<button type="submit" class="saveEditEvent btn btn-primary form-control">
@@ -186,17 +163,15 @@
 					{{mf 'course.event.edit.save_btn' 'Save'}}
 				</button>
 			</div>
-			
-			<div class="col-xs-12 col-sm-2">	
+			<div class="col-xs-12 col-sm-2">
 				{{#if affectedReplicaCount}}
 					<label>
 						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {replica} other {# replicas}}" COUNT=affectedReplicaCount}}
+						{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {copy} other {# copies}}" COUNT=affectedReplicaCount}}
 					</label>
-					{{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {replica} other {replicas}}." COUNT=affectedReplicaCount}}
+					{{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}." COUNT=affectedReplicaCount}}
 				{{/if}}
 			</div>
-			
 			<div class="col-xs-12 col-sm-5">
 				<button type="button" class="cancelEditEvent btn btn-default form-control">
 					<span class="glyphicon glyphicon-remove"></span>
@@ -205,7 +180,7 @@
 			</div>
 		</div>
 	</div>
-	</form>
+</form>
 </template>
 
 <template name="eventDisplay">
@@ -227,7 +202,7 @@
 						{{#if location}}
 							<br><span class="glyphicon glyphicon-home"></span> {{locationName location}}
 							{{#if room}} - {{room}}{{/if}}
-						{{/if}} 
+						{{/if}}
 					</div>
 				</div>
 			</div>
@@ -236,20 +211,18 @@
 					{{{description}}}
 				</p>
 			</div>
-			
-			{{#if files}} 
+			{{#if files}}
 			<div class="container-fluid event_detail_description">
 				<p>Related Files:</p>
 				<ul style="list-style-type:none">
-					
+
 					{{#each files}}
 						{{> eventAttachments}}
 					{{/each}}
-					
+
 				</ul>
 			</div>
 			{{/if}}
-
 			{{#if mayEdit}}
 			<div class="eventEdit_buttons col-sm-12" >
 				<div class="btn-group" role="group">
@@ -261,19 +234,17 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf 'course.details.del_btn' 'Delete'}}
 					</button>
-					
+
 					<button type="button" class="eventReplicateMenu_open btn btn-warning" role="button">
 						<span class="glyphicon glyphicon-plus"></span>
-						{{mf 'course.details.repl_menu_btn' 'Replicate'}}
+						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 					</button>
 					<button type="button" class="eventReplicateMenu_close btn btn-warning" role="button" style="display:none">
 						<span class="glyphicon glyphicon-minus"></span>
 						{{mf 'course.details.repl_menu_btn'}}
 					</button>
 				</div>
-
 				<div id="eventReplicationMenu" style="display:none;">
-
 					<div class="col-xs-12 col-sm-2">
 						<h4>Frequency</h4>
 						<div class="input-group">
@@ -281,10 +252,9 @@
 								<option value="once" selected>{{mf 'event.replication.freq.once' 'once'}}</option>
 								<option value="daily">{{mf 'event.replication.freq.daily' 'every day'}}</option>
 								<option value="weekly" selected>{{mf'event.replication.freq.weekly' 'once a week'}}</option>
-							</select> 
+							</select>
 						</div>
 					</div>
-
 					<div class="col-xs-12 col-sm-3">
 						<h4>{{mf 'event.replication.interval.start' 'Interval Start'}}</h4>
 						<div class="input-group">
@@ -294,7 +264,6 @@
 							<input type="date" class="form-control replicate_start updateReplicas" value="{{isoDateFormat start}}" size="8">
 						</div>
 					</div>
-					
 					<div class="col-xs-12 col-sm-3">
 						<h4>{{mf 'event.replication.interval.end' 'Interval End'}}</h4>
 						<div class="input-group">
@@ -304,35 +273,31 @@
 							<input type="date" class="form-control replicate_end updateReplicas" value="{{isoDateFormat end}}" size="8">
 						</div>
 					</div>
-					
 					<div class="col-xs-12 col-sm-2">
 						<br/> <br/>
-						
+
 						<div class="input-group">
-							<button type="button" class="eventReplicate btn btn-warning" role="button">
+							<button type="button" class="eventReplicate btn btn-success" role="button">
 								<!--span class="glyphicon glyphicon-plus"></span-->
 								{{mf 'course.details.repl_btn' 'Create events'}}
 							</button>
 						</div>
 					</div>
-					
 					<div class="col-xs-12 col-sm-2">
 					{{#if replicaDateCount}}
-						{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
-						<ul style="display: inline">
+					{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
+					<ul style="display: inline">
 						{{#each replicaDates}}
-							<li style="display: inline">{{isoDateFormat this}}</li>
+						<li style="display: inline">{{isoDateFormat this}}</li>
 						{{/each}}
-						</ul>
+					</ul>
 					{{/if}}
 					</div>
 				</div>
 			</div>
 			{{/if}}
 		</div>
-
-		{{> groupListing}}
-
+	{{> groupListing}}
 	<div class="event_options">
 		<a href="{{pathFor 'calEvent' this}}">
 			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
@@ -345,27 +310,26 @@
 </template>
 
 <template name="eventDescritpionEdit">
-	<div id="edit_event_description" style="min-height: 10ex">{{{this}}}</div>
+	<div id="edit_event_description" style="min-height: 10ex" data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as good as possible. This helps participants to know how to prepare and what to expect from this event (ex: level, prerequisites, activities, teaching methods...)'}}">{{{this}}}</div>
 </template>
 
 <template name="eventAttachments">
-	<li>
-		<p>
-			<a href="{{file}}" target="_blank">{{filename}}</a>
-		</p>
-	</li>
+<li>
+	<p>
+		<a href="{{file}}" target="_blank">{{filename}}</a>
+	</p>
+</li>
 </template>
 
-
 <template name="eventAttachmentsEdit">
-	<tr id="row-{{_id}}">
-		<td style="padding-right:5px;">
-			<a href="{{file}}" target="_blank">{{filename}}</a>
-		</td>
-		<td>
-			<button role="button" class="fileDelete close" type="button">
-				<span class="glyphicon glyphicon-remove"></span>
-			</button>
-		</td>
-	</tr>
+<tr id="row-{{_id}}">
+	<td style="padding-right:5px;">
+		<a href="{{file}}" target="_blank">{{filename}}</a>
+	</td>
+	<td>
+		<button role="button" class="fileDelete close" type="button">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+	</td>
+</tr>
 </template>
