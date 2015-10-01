@@ -51,14 +51,14 @@ Template.course_events.rendered = function() {
 		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height()
 		var reactiveArea = trueHeight - 1
 
-        $(".fade_effect_top").show();
-		$(".fade_effect_bottom").show();
+        $(".fade_effect_top").fadeIn(200);
+		$(".fade_effect_bottom").fadeIn(200);
 
 		if (scrollableContainer.scrollTop() > reactiveArea) {
-			$(".fade_effect_bottom").hide();
+			$(".fade_effect_bottom").fadeOut(200);
 		}
 		else if (scrollableContainer.scrollTop() < 1) {
-            $(".fade_effect_top").hide();
+            $(".fade_effect_top").fadeOut(200);
         }
     });
 };
