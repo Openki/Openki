@@ -86,7 +86,6 @@ momentjs:moment@2.10.6
 mongo@1.1.1
 mongo-id@1.0.1
 mongo-livedata@1.0.9
-mrt:modernizr-meteor@2.6.2
 msgfmt:core@2.0.0-preview.12
 msgfmt:extract@2.0.0-preview.9
 msgfmt:ui@2.0.0-preview.3

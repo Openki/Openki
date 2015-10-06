@@ -31,7 +31,6 @@ rzymek:moment-locale-it
 rzymek:moment-locale-zh-tw
 servicelocale:geoip
 fortawesome:fontawesome
-mrt:modernizr-meteor
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
