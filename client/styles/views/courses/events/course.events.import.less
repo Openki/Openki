@@ -40,11 +40,25 @@ div#edit_event_description {
 .course_events {
 	.make-sm-column(12);
 	.make-xs-column(12);
-	padding: 15px 0 0;
-	margin-left: -5px;
+	.no-padding;
+	margin: 15px 0 0 -5px;
+	height: 400px;
+	overflow: auto;
+	position: relative;
 
 	.course_event {
 		height: 204px;
+	}
+}
+
+.course_events_fadebox {
+	height: 415px;
+	position: relative;
+
+	.fade_effect_top,
+	.fade_effect_bottom {
+		width: calc(~"100% + 5px");
+		margin-left: -5px;
 	}
 }
 
