@@ -18,7 +18,6 @@ citizenkevin:medium-editor
 djedi:sanitize-html
 nemo64:bootstrap
 less
-cscottnet:es5-shim
 accounts-facebook
 archive:jquery-dotdotdot
 ical
@@ -40,3 +39,5 @@ accounts-google
 standard-minifiers
 rzymek:moment-locale-da
 rzymek:moment-locale-ja
+ecmascript
+es5-shim

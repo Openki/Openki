@@ -37,7 +37,6 @@ cfs:worker@0.1.4
 check@1.0.6
 citizenkevin:medium-editor@1.0.1
 coffeescript@1.0.9
-cscottnet:es5-shim@4.0.5_1
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.1
@@ -50,6 +49,7 @@ ecmascript@0.1.4
 ecmascript-collections@0.1.6
 ejson@1.0.7
 email@1.0.7
+es5-shim@4.1.13
 facebook@1.2.2
 fastclick@1.0.7
 fortawesome:fontawesome@4.4.0
