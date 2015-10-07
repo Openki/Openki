@@ -81,14 +81,10 @@ Template.newPost.events({
 		Template.instance().writing.set(false);
 	},
 
-/*  /////////////////////////////////////////// TODO: fix comment-editing ////////////////
+ /////////////////////////////////////////// TODO: fix comment-editing ////////////////
 	'click button.edit': function () {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
-		$("#edit_text").val( this.parent.text );
-		$("#edit_title").val( this.parent.title );
-		Template.instance().editing.set(true);
-
 	},
 
 	'click button.cancelEdit': function () {
@@ -121,6 +117,6 @@ Template.newPost.events({
 			}
 		});
 	}
-*/
+
 
 });

@@ -12,13 +12,12 @@
 	{{mf 'course.discussion.comment_answer' 'Answer'}}
 </button>
 
-<!--
+
 <button type="button" class="edit" role="button">
 	<span class="glyphicon glyphicon-edit"></span>
 	&nbsp;
 	{{mf 'course.discussion.comment_edit' 'Edit'}}
 </button>
--->
 
 {{else}} <!-- Part of 'parent' helper statement -->
 <button type="button" class="write write-comment">
@@ -112,12 +111,11 @@
 {{> newPost}}
 </template>
 
-<!--  /////////////////////////////////////////// TODO: fix comment-editing ////////////////
 <template name="editPostDialog">
 <div class="edit-post-dialog">
 	<form name="form_edit">
-		<input type="text" id="edit_title" placeholder="{{mf 'course.discussion.title_placeholder'}}"/>
-		<textarea id="edit_text" placeholder="{{mf 'course.discussion.text_placeholder'}}"></textarea>
+		<input type="text" id="edit_title" value="{{this.parent.title}}"/>
+		<textarea id="edit_text">{{this.parent.text}}</textarea>
 		<button type="button" class="update">
 			{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
 		</button>
@@ -127,7 +125,6 @@
 	</form>
 </div>
 </template>
--->
 
 
 <template name="iconProfilelink">
