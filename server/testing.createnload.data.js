@@ -16,7 +16,7 @@ function ensureUser(name) {
 			profile: {name : name},
 		});
 		
-		var age = Math.floor(Random.fraction()*100000000000)
+		var age = Math.floor(Math.random()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
 			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
 			createdAt: new Date(new Date().getTime()-age),
@@ -36,7 +36,7 @@ function ensureRegion(name) {
 		
 		var id = Regions.insert({
 			name: name,
-			timezone: "UTC+"+Math.floor(Random.fraction()*12)+":00"
+			timezone: "UTC+"+Math.floor(Math.random()*12)+":00"
 		});
 		
 		console.log("Added region: "+name+" "+id)
@@ -55,8 +55,8 @@ function ensureLocation(name, regionId) {
 		};
 
 		var region = Regions.findOne(regionId);
-		var lat = region.loc.coordinates[1] + Math.pow(Random.fraction(), 2) * .02 * (Random.fraction() > .5 ? 1 : -1);
-		var lon = region.loc.coordinates[0] + Math.pow(Random.fraction(), 2) * .02 * (Random.fraction() > .5 ? 1 : -1);
+		var lat = region.loc.coordinates[1] + Math.pow(Math.random(), 2) * .02 * (Math.random() > .5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(Math.random(), 2) * .02 * (Math.random() > .5 ? 1 : -1);
 		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
 
 		// TESTING: always use same id for same location to avoid broken urls while testing
@@ -67,7 +67,7 @@ function ensureLocation(name, regionId) {
 		location._id = m5.digest('hex').substring(0, 8);
 
 
-		var age = Math.floor(Random.fraction()*80000000000)
+		var age = Math.floor(Math.random()*80000000000)
 		location.time_created = new Date(new Date().getTime()-age)
 		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
 
@@ -95,7 +95,7 @@ function createCourses(scale) {
 	// Make a number that looks like a human chose it, favouring 2 and 5
 	function humandistrib() {
 		var factors = [0,0,1,2,2,3,5,5]
-		return factors[Math.floor(Random.fraction()*factors.length)] * (Random.fraction() > 0.7 ? humandistrib() : 1) + (Random.fraction() > 0.5 ? humandistrib() : 0)
+		return factors[Math.floor(Math.random()*factors.length)] * (Math.random() > 0.7 ? humandistrib() : 1) + (Math.random() > 0.5 ? humandistrib() : 0)
 	}
 
 
@@ -119,10 +119,10 @@ function createCourses(scale) {
 			m5.update(course.description);
 			course._id = m5.digest('hex').substring(0, 8)
 
-			course.subscribers_min = Random.fraction() > 0.3 ? undefined : humandistrib()
-			course.subscribers_max = Random.fraction() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Random.fraction())
-			course.date = Random.fraction() > 0.50 ? new Date(new Date().getTime()+((Random.fraction()-0.25)*8000000000)) : false
-			var age = Math.floor(Random.fraction()*80000000000)
+			course.subscribers_min = Math.random() > 0.3 ? undefined : humandistrib()
+			course.subscribers_max = Math.random() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Math.random())
+			course.date = Math.random() > 0.50 ? new Date(new Date().getTime()+((Math.random()-0.25)*8000000000)) : false
+			var age = Math.floor(Math.random()*80000000000)
 			course.time_created = new Date(new Date().getTime()-age)
 			course.time_lastedit = new Date(new Date().getTime()-age*0.25)
 			course.time_lastenrol = new Date(new Date().getTime()-age*0.15)
@@ -130,7 +130,7 @@ function createCourses(scale) {
 				course.region = ensureRegion(course.region)
 			} else {
 				/* place in random test region, Spilistan or Testistan */
-				course.region = Random.fraction() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'  
+				course.region = Math.random() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp'
 			}
 			course.groups = _.map(course.groups, ensureGroup)
 			var id = Courses.insert(course)
@@ -166,7 +166,7 @@ function loadLocations(){
 	_.each(testlocations, function(locationData) {
 		if (!locationData.name) return;      // Don't create locations that don't have a name
 
-		locationData.region = Random.fraction() > 0.85 ? testRegions[0] : testRegions[1];
+		locationData.region = Math.random() > 0.85 ? testRegions[0] : testRegions[1];
 		var location = ensureLocation(locationData.name, locationData.region._id);
 
 
@@ -190,11 +190,11 @@ function loadLocations(){
 //		if (!location.hosts) location.hosts = [];
 //		location.hosts = [ensureUser(location.hosts[0])._id];
 
-//		location.maxWorkplaces = Random.fraction() > 0.3 ? undefined : humandistrib()
-//		location.maxPeople = Random.fraction() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Random.fraction())
+//		location.maxWorkplaces = Math.random() > 0.3 ? undefined : humandistrib()
+//		location.maxPeople = Math.random() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Math.random())
 
 		Locations.update(location._id, location);
-	})
+	});
 }
 
 
@@ -214,8 +214,9 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
-				var random = Random.fraction();
-				var location = 'GZ Humbeldumbel';
+				var random = Math.random();
+
+				var location;
 				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
@@ -230,19 +231,19 @@ createEventsIfNone = function(){
 				event.host = [];
 
 				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
-				var timeToGo = Random.fraction()-0.7;             // put 70% in the past
+				var timeToGo = Math.random()-0.7;             // put 70% in the past
 				if (timeToGo >= 0.05) {                           // 75% of the remaining in future
 					timeToGo = Math.pow((timeToGo-0.05)*5, 2)     // exponential function in order to decrease occurrence in time
 				}
 				timeToGo = Math.floor(timeToGo*spread);
 				var date = new Date(new Date().getTime() + timeToGo);
 				var hour = date.getHours();
-				if (Random.fraction() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
-				if (Random.fraction() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
+				if (Math.random() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
+				if (Math.random() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
 				event.start = date;
 				event.end = new Date(date.getTime() + (1000*60*60*2));
 				event.createdby = 'ServerScript'
-				var age = Math.floor(Random.fraction() * 10000000000)
+				var age = Math.floor(Math.random() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
 				Events.insert(event)
@@ -267,14 +268,14 @@ createCommentsIfNone = function(){
 				var description = course.description;
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
-				var random = Random.fraction();
+				var random = Math.random();
 
 				comment.course_ID = course._id;
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
 				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 
 				var spread = new Date(new Date().getTime() - course.time_created)
-				var age = Random.fraction()
+				var age = Math.random()
 				age = Math.floor(age*spread);
 				var date = new Date(new Date().getTime() - age);
 				comment.time_created = date;
@@ -342,7 +343,7 @@ createGroupsIfNone = function(){
 		_.each (testgroups, function (group){
 			if (!group.name) return;
 			group.createdby = 'ServerScript_loadingTestgroups'
-			var age = Math.floor(Random.fraction()*10000000000)
+			var age = Math.floor(Math.random()*10000000000)
 			group.time_created = new Date(new Date().getTime()-age)
 			group.time_lastedit = new Date(new Date().getTime()-age*0.25)
 				// TESTING: always use same id for same group to avoid broken urls while testing

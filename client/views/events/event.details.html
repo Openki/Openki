@@ -33,7 +33,7 @@
 		<div class="col-sm-12">
 			<h2>{{#if _id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-			<input type="text" class="form-control" id="edit_event_title" size="30" placeholder="{{mf 'event.title.placeholder' 'Put catchy title here'}}" value="{{this.title}}" name="_" />
+			<input type="text" class="form-control" id="edit_event_title" size="30" placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}" value="{{this.title}}" name="_" />
 		</div>
 		<div class="col-sm-12 no-padding">
 			<div class="col-sm-4">
@@ -310,7 +310,7 @@
 </template>
 
 <template name="eventDescritpionEdit">
-	<div id="edit_event_description" style="min-height: 10ex" data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as good as possible. This helps participants to know how to prepare and what to expect from this event (ex: level, prerequisites, activities, teaching methods...)'}}">{{{this}}}</div>
+	<div id="edit_event_description" style="min-height: 10ex" data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">{{{this}}}</div>
 </template>
 
 <template name="eventAttachments">

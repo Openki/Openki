@@ -103,8 +103,9 @@ Template.loginLogin.events({
 		});
 	},
 	'click .loginWithService': function(event) {
+		event.preventDefault();
+
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
-		console.log(loginMethod)
 		if (!Meteor[loginMethod]) {
 			console.log("don't have "+loginMethod);
 			return;

@@ -129,10 +129,16 @@
 </template>
 -->
 
+
 <template name="iconProfilelink">
+	{{#if this}}
 	<a class="profilelink" href="/user/{{this}}/{{username this}}">
 		<span class="glyphicon glyphicon-user"></span>
 		&nbsp;
 		{{username this}}
 	</a>
+	{{else}}
+		<span style="color: grey;" class="glyphicon glyphicon-user"></span>
+		{{mf 'noUser_placeholder' 'someone'}}
+	{{/if}}
 </template>

@@ -32,7 +32,7 @@ mayEdit = function(user, course){
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
 userName = function(userId) {
-	if (!userId) return '';
+	if (!userId) return mf('noUser_placeholder', 'someone');
 	
 	if (userId.substr(0, 5)  == 'Anon_') {
 		var loggeduser = Meteor.user();
