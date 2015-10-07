@@ -539,7 +539,7 @@ Template.event.events({
 		var nominatimQuery = {
 			format: 'json',
 			q: template.$('.-address').val(),
-			limit: 2,
+			limit: 10,
 			polygon_geojson: 1
 		};
 		var region = template.region;
