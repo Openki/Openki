@@ -124,7 +124,7 @@ Template.map.helpers({
 				"right: 0",
 			].join('; ');
 		} else {
-			return "width: "+this.width+"px; height: "+this.height+"px;";
+			return "width: "+(this.width ? ""+this.width+"px" : "100%")+"; height: "+this.height+"px;";
 		}
 	},
 
