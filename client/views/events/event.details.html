@@ -134,11 +134,12 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-home"></span>
 					</span>
-					<input type="text" class="form-control _address" size="40" value=""/>
+					<input type="text" class="form-control -address" size="40" value=""/>
 					<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span></button>
 				</div>
 			</div>
 
+			{{>map markers=eventMarkers width=600 height=300}}
 
 			{{#if showRegionSelection}}
 			<div class="col-xs-12 col-sm-4">
@@ -156,7 +157,6 @@
 			{{/if}}
 		</div>
 
-		{{>map markers=eventMarkers width=600 height=300}}
 
 		<div class="col-sm-12 no-padding event_edit_buttons">
 			<div class="col-xs-12 col-sm-5">

@@ -18,6 +18,7 @@ Template.event.onCreated(function() {
 
 	this.setRegion = function(region) {
 		markers.remove({ center: true });
+		instance.region = region;
 		if (region && region.loc) {
 			var center = $.extend(region.loc, { center: true })
 			markers.insert(center);
@@ -535,13 +536,24 @@ Template.event.events({
 	},
 
 	'click .-addressSearch': function(event, template) {
+		var nominatimQuery = {
+			format: 'json',
+			q: template.$('.-address').val(),
+			limit: 2,
+			polygon_geojson: 1
+		};
+		var region = template.region;
+		if (region && region.loc) {
+			nominatimQuery.viewbox = [
+				region.loc.coordinates[0]-0.1,
+				region.loc.coordinates[1]+0.1,
+				region.loc.coordinates[0]+0.1,
+				region.loc.coordinates[1]-0.1,
+			].join(',');
+			nominatimQuery.bounded = 1;
+		}
 		HTTP.get('https://nominatim.openstreetmap.org', {
-			params: {
-				format: 'json',
-				q: template.$('._address').val(),
-				limit: 10,
-				polygon_geojson: 1
-			}
+			params:  nominatimQuery
 		}, function(error, result) {
 			if (error) {
 				addMessage(error);
