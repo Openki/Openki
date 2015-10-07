@@ -95,9 +95,6 @@ Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
-	eventMarkers: function() {
-		return Template.instance().markers;
-	}
 });
 
 
@@ -130,6 +127,10 @@ Template.eventEdit.helpers({
 	
 	disableForPast: function() {
 		return this.start > new Date ? '' : 'disabled';
+	},
+
+	eventMarkers: function() {
+		return Template.instance().parentInstance().markers;
 	}
 });
 
@@ -154,6 +155,9 @@ Template.eventDisplay.helpers({
 	mayEdit: function() {
 		return mayEditEvent(Meteor.user(), this);
 	},
+	eventMarkers: function() {
+		return Template.instance().parentInstance().markers;
+	}
 });
 
 Template.eventDescritpionEdit.rendered = function() {

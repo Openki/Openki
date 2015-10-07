@@ -13,7 +13,13 @@ Template.map.onRendered(function() {
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
-	map = L.map(instance.find('.map'), {}).setView(L.latLng(0,0), 1);
+	var options = {};
+	if (instance.data.mini) {
+		options.zoomControl = false;
+		options.attributionControl = false;
+	}
+
+	map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
 	L.tileLayer.provider('Thunderforest.Transport').addTo(map);
 
 	var geojsonMarkerOptions = {
@@ -92,4 +98,10 @@ Template.map.onRendered(function() {
 			}
 		});
 	});
+});
+
+Template.map.helpers({
+	mapStyle: function() {
+		return "width: "+this.width+"px; height: "+this.height+"px;";
+	}
 });
