@@ -6,6 +6,9 @@
 	<div id="wrap">
 		{{> navbar}}
 		<div id="outer">
+			{{#if showIntro}}
+			{{> introduction}}
+			{{/if}}
 			<div id="maincontent">
 				{{> yield}}
 				{{> messages}}
