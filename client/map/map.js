@@ -5,6 +5,10 @@
  *
  * */
 
+Template.map.onCreated(function() {
+	this.fullscreen = new ReactiveVar(false);
+});
+
 Template.map.onRendered(function() {
 	var instance = this;
 
@@ -98,10 +102,44 @@ Template.map.onRendered(function() {
 			}
 		});
 	});
+
+	Tracker.autorun(function() {
+		instance.fullscreen.get();
+		window.setTimeout(function() {
+			map.invalidateSize();
+			fitBounds();
+		}, 0);
+	});
 });
 
 Template.map.helpers({
 	mapStyle: function() {
-		return "width: "+this.width+"px; height: "+this.height+"px;";
+		if (Template.instance().fullscreen.get()) {
+			return [
+				"z-index: 9999",
+				"position: fixed",
+				"top: 0",
+				"left: 0",
+				"bottom: 0",
+				"right: 0",
+			].join('; ');
+		} else {
+			return "width: "+this.width+"px; height: "+this.height+"px;";
+		}
+	},
+
+	fullscreen: function () {
+		return Template.instance().fullscreen.get();
+	}
+});
+
+
+Template.map.events({
+	'click': function(event, instance) {
+		instance.fullscreen.set(true);
+	},
+
+	'click .-close': function(event, instance) {
+		instance.fullscreen.set(false);
 	}
 });
