@@ -536,9 +536,10 @@ Template.event.events({
 	},
 
 	'click .-addressSearch': function(event, template) {
+		var search = template.$('.-address').val();
 		var nominatimQuery = {
 			format: 'json',
-			q: template.$('.-address').val(),
+			q: search,
 			limit: 10,
 			polygon_geojson: 1
 		};
@@ -563,6 +564,7 @@ Template.event.events({
 			var found = JSON.parse(result.content);
 
 			template.markers.remove({ proposed: true });
+			if (found.length == 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
 			_.each(found, function(foundLocation) {
 				var marker = foundLocation.geojson;
 				marker.proposed = true;
