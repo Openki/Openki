@@ -2,8 +2,12 @@
 	<ul class="groups-list">
 		{{#each groups}}
 		<li>
-			<a class="group">{{name}}</a>
+			{{> groupName}}
 		</li>
 		{{/each}}
 	</ul>
+</template>
+
+<template name="groupName">
+	<a class="group">{{name}}</a>
 </template>
