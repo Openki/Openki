@@ -26,7 +26,7 @@ Template.editable.rendered = function() {
 		// Most of the time, it will be the same as what
 		// is already displayed
 		currentText = currentText || '';
-		editable.html(currentText);
+		if (currentText !== self.editingVersion) editable.html(currentText);
 		
 		if (self.editingVersion !== false && currentText !== self.editingVersion) {
 			// Uh oh, not handling this well
