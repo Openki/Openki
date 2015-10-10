@@ -214,7 +214,7 @@ Template.find.onCreated(function() {
 		}
 	}
 
-	// Update whenever instance vars change
+	// Update whenever filter changes
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
 
@@ -223,6 +223,7 @@ Template.find.onCreated(function() {
 
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
+		filterQuery.after = new Date();
 		if (eventSub) oldSubs.push(eventSub);
 		eventSub = instance.subscribe('eventsFind', filterQuery, 10, stopOldSubs);
 	});
