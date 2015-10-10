@@ -1,4 +1,3 @@
-"use strict";
 
 
 Router.map(function () {
@@ -110,7 +109,7 @@ Template.courseStatus.helpers({
 });
 
 Template.course.onCreated(function() {
-	this.eventSub = this.subscribe('nextEvent', this.data._id);
+	this.eventSub = miniSubs.subscribe('nextEvent', this.data._id);
 });
 
 Template.course.events({
