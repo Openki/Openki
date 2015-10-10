@@ -14,27 +14,26 @@
 	</a>
 	<div class="course_events_fadebox">
 		<div class="course_events">
-			{{#each events_list}}
-			<div class="course_event_container">
-				{{>course_event}}
-			</div>
+			<div>
+			{{#each events_list_past}}
+				<div class="course_event_past_container">
+					{{>course_event}}
+				</div>
 			{{/each}}
+			</div>
+			<hr class="now">
+			<div>
+			{{#each events_list}}
+				<div class="course_event_container">
+					{{>course_event}}
+				</div>
+			{{/each}}
+			</div>
 		</div>
 		<div class="fade_effect_top" style="display:none"></div>
 		<div class="fade_effect_bottom"></div>
 	</div>
 	{{/if}}
-
-	<!-- {{#if events_list_past}}
-	<div class="course_events_past hidden">
-		<h3>{{mf 'course.title.Past events' 'Past events'}}</h3>
-		{{#each events_list_past}}
-		<div class="course_event_past_container">
-			{{>course_event}}
-		</div>
-		{{/each}}
-	</div>
-	{{/if}} -->
 </template>
 
 
