@@ -96,6 +96,7 @@ npm-mongo@1.4.39_1
 oauth@1.1.6
 oauth2@1.1.5
 observe-sequence@1.0.7
+okgrow:router-autoscroll@0.1.0
 ordered-dict@1.0.4
 promise@0.5.0
 raix:eventemitter@0.1.3

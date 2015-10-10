@@ -135,7 +135,7 @@ Template.find.helpers({
 	'group': function() {
 		var groupId = Template.instance().filter.get('group');
 		if (!groupId) return false;
-		return Groups.findOne(groupId);
+		return groupId;
 	},
 
 	'availableCategories': function() {
