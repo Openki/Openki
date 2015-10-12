@@ -79,21 +79,22 @@ Meteor.methods({
 		}
 		
 		comment.user_ID = user._id;
-		comment.time_created = new Date();
+		comment.time_updated = new Date();
 		
 		var course = Courses.findOne(comment.course_ID);
 		if (!course) {
-			throw new Meteor.Error(404, "course not found");
+			throw new Meteor.Error(401, "edit not permitted!");
 		}
 		
 		comment.title = saneText(comment.title).substr(0, 200);
 		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
 		
 		var _commentId = CourseDiscussions.update( { _id:commentId }, comment );
-		
+				
 		// HACK update course so time_lastchange is updated
-		Meteor.call("save_course", course._id, {});
-		
+		// ES: I added a new field time_updated to comments themselves 
+		// so that this would not be necessary aymore
+		//Meteor.call("save_course", course._id, {});
 		return _commentId;
 	}
 

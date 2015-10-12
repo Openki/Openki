@@ -9,12 +9,24 @@ Template.discussion.helpers({
 			{sort: {time_updated: -1, time_created: -1}}
 		);
 		var ordered_posts = [];
+		var course = Courses.findOne( {_id:this._id  } );
+		var currentUser = Meteor.user();
+		console.log(course);
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
+			
+			//show "edit" button only if the comment belongs to this user or if user is course admin
+			if( post.user_ID == currentUser._id || course.createdby == currentUser._id ){
+				post.editableByUser = true;
+			}
+						
+			
 			ordered_posts.push(post);
 			var comments = CourseDiscussions.find({
 				parent_ID: post._id},
 				{sort: {time_created: 1}});
+					
+			//TODO: set which posts are editable here ... and check for ordering
 			comments.forEach(function (comment){
 				ordered_posts.push(comment);
 			});
