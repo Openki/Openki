@@ -66,7 +66,7 @@ Template.find.events({
 	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
-		$('#categories_dropdown').dropdown('toggle');
+		instance.showingFilters.set(true);
 		return false;
 	},
 
