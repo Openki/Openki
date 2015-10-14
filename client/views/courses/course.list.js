@@ -135,6 +135,6 @@ Template.courseStatus.rendered = function() {
 
 Template.course.rendered = function() {
 	this.$('.course-name').dotdotdot({
-		height: 30,
+		height: 60,
 	});
 };
