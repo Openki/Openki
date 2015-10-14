@@ -121,7 +121,12 @@ Meteor.methods({
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;
 			}
+
+			// Synthesize event document because the code below relies on it
+			event = { course_id: changes.course_id };
+
 		} else {
+
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
@@ -163,6 +168,9 @@ Meteor.methods({
 			}
 		}
 
+		// the assumption is that all replicas have the same course if any
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return eventId;
 	},
 
@@ -177,6 +185,9 @@ Meteor.methods({
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 
 		Events.remove(eventId);
+
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return Events.findOne({id:eventId}) === undefined;
 	},
 

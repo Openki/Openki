@@ -153,14 +153,6 @@ Template.find.helpers({
 	'results': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 
-		// Wonky: Clear the predicate that filters for upcoming events only
-		// Leaving the filter would exclude all courses because they don't
-		// have their event loaded yet, their template will do that.
-		// Here we rely on the filtering done server-side, and that no other
-		// subscirption loads courses.
-		// There are ways to do this properly...
-		delete filterQuery.upcomingEvent;
-
 		return coursesFind(filterQuery, 36);
 	},
 
