@@ -152,25 +152,14 @@
 	}
 }
 
-.course_categories {
+.courselist_course_container {
 	ul.categories_list {
-		line-height: 23px;
-		.list-unstyled;
-
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		margin: 0px;
 		li {
-			display: inline-block;
-			position: relative;
-			z-index: 2;
-
-			a.category {
-				background: rgba(216, 216, 216, 0.5);
-				padding:2px 5px;
-
-				&:hover {
-					text-decoration: none;
-					color: @brand-primary;
-				}
-			}
+			float: right;
 		}
 	}
 }
