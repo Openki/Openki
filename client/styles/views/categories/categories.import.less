@@ -1,0 +1,25 @@
+.course_categories {
+	ul.categories_list {
+		line-height: 23px;
+		.list-unstyled;
+
+		li {
+			display: inline-block;
+			margin: 2px;
+			position: relative;
+			z-index: 2;
+
+			a.category {
+				background: rgba(216, 216, 216, 0.5);
+				padding:2px 5px;
+
+				&:hover {
+					text-decoration: none;
+					background: rgba(216, 216, 216, 0.5);
+					color: @brand-primary;
+					.box-shadow-s(rgba(129, 129, 129, 0.3));
+				}
+			}
+		}
+	}
+}
