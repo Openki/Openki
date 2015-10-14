@@ -163,6 +163,12 @@ Template.find.helpers({
 		return eventsFind(filterQuery, 10);
 	},
 
+	'proposeNewBlurb': function() {
+		var instance = Template.instance();
+		var filter = instance.filter.toParams();
+		return !instance.showingFilters.get() && filter.search;
+	},
+
 	'ready': function() {
 		return Template.instance().coursesReady.get();
 	}
