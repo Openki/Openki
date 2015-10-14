@@ -135,6 +135,9 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 		return mobile;
 	},
+	isProposal: function() {
+		return Events.find({course_id: this.course._id}).count() == 0;
+	}
 });
 
 Template.show_course_submenu.helpers({
