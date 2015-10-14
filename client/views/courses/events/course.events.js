@@ -52,6 +52,8 @@ Template.course_events.events({
 Template.course_events.rendered = function() {
 	var scrollableContainer = this.$(".course_events")
 
+	if (scrollableContainer.length == 0) return; // No events
+
 	scrollableContainer.scroll(function (event) {
 		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height()
 		var reactiveArea = trueHeight - 1
