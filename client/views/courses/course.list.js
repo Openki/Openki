@@ -1,4 +1,3 @@
-"use strict";
 
 
 Router.map(function () {
@@ -30,17 +29,17 @@ Router.map(function () {
 
 Template.course.helpers({
 	ready: function() {
-		return Template.instance().eventSub.ready();
+		var instance = Template.instance;
+		return !instance.eventSub || instance.eventSub.ready();
 	},
 
 	coursestate: function() {
 		var today = new Date();
 
-		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
-		if (upcoming) return 'hasupcomingevents';
+		var upcoming = this.nextevent;
+		if (this.nextEvent) return 'hasupcomingevents';
 
-		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
-		if (past) return 'haspastevents';
+		if (this.lastEvent) return 'haspastevents';
 
 		return 'proposal';
 	},
@@ -110,7 +109,9 @@ Template.courseStatus.helpers({
 });
 
 Template.course.onCreated(function() {
-	this.eventSub = this.subscribe('nextEvent', this.data._id);
+	if (this.data.nextEvent) {
+		this.eventSub = miniSubs.subscribe('event', this.data.nextEvent._id);
+	}
 });
 
 Template.course.events({

@@ -135,7 +135,7 @@ Template.find.helpers({
 	'group': function() {
 		var groupId = Template.instance().filter.get('group');
 		if (!groupId) return false;
-		return Groups.findOne(groupId);
+		return groupId;
 	},
 
 	'availableCategories': function() {
@@ -153,25 +153,18 @@ Template.find.helpers({
 	'results': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 
-		// Wonky: Clear the predicate that filters for upcoming events only
-		// Leaving the filter would exclude all courses because they don't
-		// have their event loaded yet, their template will do that.
-		// Here we rely on the filtering done server-side, and that no other
-		// subscirption loads courses.
-		// There are ways to do this properly...
-		delete filterQuery.upcomingEvent;
-
 		return coursesFind(filterQuery, 36);
 	},
 
 	'eventResults': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 		filterQuery.standalone = true;
+		filterQuery.after = minuteTime.get();
 		return eventsFind(filterQuery, 10);
 	},
 
 	'ready': function() {
-		return Template.instance().subscriptionsReady();
+		return Template.instance().coursesReady.get();
 	}
 });
 
@@ -179,6 +172,7 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
+	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	var filter = Filtering(CoursePredicates);
 	instance.filter = filter;
@@ -204,27 +198,31 @@ Template.find.onCreated(function() {
 
 	// Keep old subscriptions around until the new ones are ready
 	// This avoids courses blinking out and back when we renew the subscriptions
+	// Can't wait for sub manager because we want the courses without future events to disappear
+	// as soon as that filter comes into effect. See above.
 	var courseSub = false;
-	var eventSub = false;
 	var oldSubs = [];
-	var stopOldSubs = function() {
-		if (courseSub.ready() && eventSub.ready()) {
-			_.map(oldSubs, function(sub) { sub.stop() });
-			oldSubs = [];
-		}
+	var courseSubReady = function() {
+		instance.coursesReady.set(true);
+		_.each(oldSubs, function(sub) { sub.stop(); });
+		oldSubs = [];
 	}
 
-	// Update whenever instance vars change
+	// Update whenever filter changes
+	instance.autorun(function() {
+		var filterQuery = filter.toQuery();
+		if (courseSub) oldSubs.push(courseSub);
+		courseSub = instance.subscribe('coursesFind', filterQuery, 36, courseSubReady);
+	});
+
+	// The event display reacts to changes in time as well
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
 
-		if (courseSub) oldSubs.push(courseSub);
-		courseSub = instance.subscribe('coursesFind', filterQuery, 36, stopOldSubs)
-
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
-		if (eventSub) oldSubs.push(eventSub);
-		eventSub = instance.subscribe('eventsFind', filterQuery, 10, stopOldSubs);
+		filterQuery.after = minuteTime.get();
+		subs.subscribe('eventsFind', filterQuery, 10);
 	});
 });
 

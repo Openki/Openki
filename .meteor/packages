@@ -3,9 +3,7 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-random
 accounts-password
-accounts-ui
 accounts-base
 email
 spiderable
@@ -19,10 +17,8 @@ citizenkevin:medium-editor
 djedi:sanitize-html
 nemo64:bootstrap
 less
-cscottnet:es5-shim
 accounts-facebook
 archive:jquery-dotdotdot
-matb33:collection-hooks
 ical
 cfs:standard-packages
 cfs:gridfs
@@ -34,7 +30,6 @@ rzymek:moment-locale-it
 rzymek:moment-locale-zh-tw
 servicelocale:geoip
 fortawesome:fontawesome
-mrt:modernizr-meteor
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
@@ -42,3 +37,7 @@ accounts-google
 standard-minifiers
 rzymek:moment-locale-da
 rzymek:moment-locale-ja
+ecmascript
+es5-shim
+okgrow:router-autoscroll
+meteorhacks:subs-manager

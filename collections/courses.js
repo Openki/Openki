@@ -123,9 +123,7 @@ coursesFind = function(filter, limit) {
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent) {
-		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
-		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
-		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
+		find['nextEvent'] = { $ne: null };
 	}
 
 	var mustHaveRoles = [];
@@ -401,5 +399,23 @@ Meteor.methods({
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 		Events.remove({ course_id: courseId });
 		Courses.remove(courseId);
+	},
+
+	// Update the nextEvent field for the courses matching the selector
+	updateNextEvent: function(selector) {
+		Courses.find(selector).forEach(function(course) {
+			var nextEvent = Events.findOne(
+				{course_id: course._id, start: {$gt: new Date()}},
+				{sort: {start: 1}, fields: {start: 1, _id: 1}}
+			);
+			var lastEvent = Events.findOne(
+				{course_id: course._id, start: {$lt: new Date()}},
+				{sort: {start: -1}, fields: {start: 1, _id: 1}}
+			);
+			Courses.update(course._id, { $set: {
+				nextEvent: nextEvent,
+				lastEvent: lastEvent
+			} });
+		});
 	}
 });
