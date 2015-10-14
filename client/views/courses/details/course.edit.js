@@ -53,7 +53,12 @@ Template.course_edit.helpers({
 
 	checkRole: function() {
 		var instance = Template.instance();
-		return instance.data && instance.data.roles && instance.data.roles.indexOf(this.type) >= 0 ? 'checked' : ''
+		return instance.data && instance.data.roles && instance.data.roles.indexOf(this.type) >= 0 ? 'checked' : null;
+	},
+
+	hasRole: function() {
+		var instance = Template.instance();
+		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 	
 	regions: function() {
@@ -119,6 +124,10 @@ Template.course_edit.events({
 				} else {
 					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
+
+					$('input.-enrol').each(function(_, enrolcheck) {
+						Meteor.call( enrolcheck.checked? 'add_role' : 'remove_role', courseId, Meteor.userId(), enrolcheck.name, false);
+					});
 				}
 			})
 
