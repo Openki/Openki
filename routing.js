@@ -31,6 +31,11 @@ Router.map(function () {
 		template: 'proposecourse',
 		onAfterAction: function() {
 			document.title = webpagename + 'Propose new course'
+		},
+		data: function() {
+			return {
+				roles: ['host', 'mentor']
+			};
 		}
 	})
 
