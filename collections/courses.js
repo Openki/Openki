@@ -59,18 +59,18 @@ hasRole = function(members, role) {
 	return has;
 }
 
-hasRoleUser = function(members, role, user) {
+hasRoleUser = function(members, role, userId) {
 	var has = false;
 	var loggeduser = Meteor.user()
 	
 	members.forEach(function(member) {
-		if (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
+		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
 			if(member.roles.indexOf(role) !== -1) has = 'anon'
 		}
 	})
 	
 	members.forEach(function(member) {
-		if (member.user == user) {
+		if (member.user == userId) {
 			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
 				return true;
 		}
