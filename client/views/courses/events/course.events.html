@@ -6,12 +6,6 @@
 	</button>
 	{{/if}}
 	{{#if events_list}}
-	<a href="/cal/course/{{course._id}}" target="_blank">
-		<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
-			<span class="fa fa-download"></span>&nbsp;
-			{{mf 'course.download_cal' 'Download events to my calendar'}}
-		</button>
-	</a>
 	<div class="course_events_fadebox">
 		<div class="course_events">
 			<div>
@@ -22,6 +16,12 @@
 			{{/each}}
 			</div>
 			<hr class="now">
+			<div style="float: right">
+				<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastlist' 'past events'}}&nbsp;&nbsp;
+			</div>
+			<h4 class="courseEvents-titlebar">
+			<span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}
+			</h4>
 			<div>
 			{{#each events_list}}
 				<div class="course_event_container">
@@ -33,6 +33,12 @@
 		<div class="fade_effect_top" style="display:none"></div>
 		<div class="fade_effect_bottom"></div>
 	</div>
+	<a href="/cal/course/{{course._id}}" target="_blank">
+		<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
+			<span class="fa fa-download"></span>&nbsp;
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
+		</button>
+	</a>
 	{{/if}}
 </template>
 
