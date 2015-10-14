@@ -87,6 +87,7 @@ pleaseLogin = function() {
 
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;
+	Session.get('locale'); // Reactive dependency
 	return mf('category.'+this);
 });
 

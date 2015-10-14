@@ -51,6 +51,11 @@ Meteor.methods({
 		}
 
 		var geo = GeoIP.lookup(ip);
+
+		if (!geo) {
+			return false;
+		}
+
 		var closest = Regions.findOne({
 			loc: { $near: {
 				$geometry: {type: "Point", coordinates: geo.ll.reverse()},
