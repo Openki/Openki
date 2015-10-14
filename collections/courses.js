@@ -407,7 +407,14 @@ Meteor.methods({
 				{course_id: course._id, start: {$gt: new Date()}},
 				{sort: {start: 1}, fields: {start: 1, _id: 1}}
 			);
-			Courses.update(course._id, { $set: { nextEvent: nextEvent } });
+			var lastEvent = Events.findOne(
+				{course_id: course._id, start: {$lt: new Date()}},
+				{sort: {start: -1}, fields: {start: 1, _id: 1}}
+			);
+			Courses.update(course._id, { $set: {
+				nextEvent: nextEvent,
+				lastEvent: lastEvent
+			} });
 		});
 	}
 });
