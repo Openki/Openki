@@ -198,3 +198,12 @@ Handlebars.registerHelper('plain', function(html) {
 	div.innerHTML = html;
 	return div.textContent || div.innerText || '';
 });
+
+Handlebars.registerHelper('groupShort', function(groupId) {
+	var instance = Template.instance();
+	instance.subscribe('group', groupId);
+
+	var group = Groups.findOne({ _id: groupId });
+	if (group) return group.short;
+	return "";
+});
