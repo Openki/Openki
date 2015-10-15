@@ -60,13 +60,13 @@
 					<li>
 						<div class="checkbox">
 							<label class="{{type}}">
-								<input type="checkbox" class='roleselection {{this.type}}' name='{{type}}' {{checkRole}}>
+								<input type="checkbox" class='-roleselection {{this.type}}' name='{{type}}' {{checkRole}}>
 								<span class="{{icon}}"></span>
 								{{mf roleDescription}}
 							</label>
-							<label style="margin-left: 2em">
+							<label style="margin-left: 2em; display: true">
 								<input type="checkbox" class='-enrol {{this.type}}' name='{{type}}' {{hasRole}}>
-								I can do this
+								{{mf roleSubscription}}
 							</label>
 						</div>
 					</li>

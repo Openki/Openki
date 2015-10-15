@@ -36,6 +36,10 @@ Template.course_edit.helpers({
 		return 'roles.'+this.type+'.description';
 	},
 
+	roleSubscription: function() {
+		return 'roles.'+this.type+'.subscribe';
+	},
+
 	activeCategory: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length && selectedCategories.indexOf(this) >= 0) {
@@ -86,7 +90,7 @@ Template.course_edit.events({
 			var isNew = courseId === ''
 
 			var roles = {}
-			$('input.roleselection').each(function(_, rolecheck) {
+			$('input.-roleselection').each(function(_, rolecheck) {
 				roles[rolecheck.name] = rolecheck.checked;
 			})
 
