@@ -1,19 +1,23 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "region" -> ID_region
-// "categories" -> string
-// "maxPeople" -> int
-// "maxWorkplaces" -> int
-// "adress" -> string
-// "route" -> string
-// "description" -> string
-// "contact" -> {"meetings","email","web","fon"... -> strings}
-// "picture" -> string   (lokal/external link)
-// "infra" -> not clear jet
-// "createdby" -> ID_user
-// "hosts" -> [ID_users]
-// "contacts" -> [ID_users]
+// "_id"           -> ID
+// "name"          -> String
+// "region"        -> ID_region
+// "categories"    -> String
+// "maxPeople"     -> Int
+// "maxWorkplaces" -> Int
+// "adress"        -> String
+// "route"         -> String
+// "description"   -> String
+// "contact"       -> {"meetings","email","web","fon"... -> strings}
+// "picture"       -> String   (lokal/external link)
+// "infra"         -> not clear jet
+// "createdby"     -> ID_user
+// "hosts"         -> [ID_users]
+// "roles"         -> WTF?
+// "contacts"      -> [ID_users]
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // ===========================
 
 

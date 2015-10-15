@@ -154,9 +154,12 @@
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			{{#if ready}}
-			{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
+			<div style="text-align: center; margin: 2em">
+			{{mf 'find.no_courses_found' 'No Courses found.'}}
+			{{#if proposeNewBlurb}}
+				{{mf 'find.propose_new_course?' 'Why not propose a new one for {TERM}?' TERM=this.query.search}}
 			{{/if}}
+			</div>
 		{{/each}}
 		{{/unless}}
 	</div>

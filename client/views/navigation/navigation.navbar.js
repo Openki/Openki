@@ -16,3 +16,9 @@ Template.navbar.rendered = function() {
         }
     });
 };
+
+Template.navbar.events({
+	'click .-clickClose': function(event, instance) {
+		instance.$('.navbar-collapse').collapse('hide');
+	}
+});

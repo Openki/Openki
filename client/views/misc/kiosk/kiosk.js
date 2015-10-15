@@ -37,14 +37,23 @@ Router.map(function () {
 			var queryNow = this.filter.toParams();
 			queryNow.ongoing = now;
 
+			var filterParams = this.filter.toParams();
+
 			return {
 				today: eventsFind(queryToday, 20),
 				future: eventsFind(queryFuture, 10),
-				now: eventsFind(queryNow)
+				now: eventsFind(queryNow),
+				filter: filterParams
 			};
 		},
 		onAfterAction: function() {
+			this.timer = Meteor.setInterval(function() {
+				Session.set('seconds', new Date);
+			}, 1000);
 			document.title = webpagename + ' Events'
+		},
+		unload: function() {
+			Meteor.clearInterval(this.timer);
 		}
 	});
 	this.route('kioskCalendar', {								///////// calendar /////////
@@ -64,17 +73,41 @@ Router.map(function () {
 			}
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Calendar'
+			document.title = webpagename + 'Kiosk-View'
 		}
 	});
 });
 
 Template.kioskLayout.helpers({
-	showKioskCalendar: function () {
+	showKioskCalendar: function() {
 		var currentIsKiosk = Router.current().route.path();
 		if (currentIsKiosk != "/kiosk/events") return true
 	}
 });
+
+Template.kioskEvents.helpers({
+	showTime: function() {
+		Session.get('seconds');
+		return moment().format('LTS');
+	},
+	showDate: function() {
+		Session.get('seconds');
+		return moment().format('LL');
+	}
+});
+
+
+Template.kioskEvent.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+Template.kioskEventOngoing.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+
 
 Template.kioskEvent.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
