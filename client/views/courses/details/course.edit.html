@@ -58,17 +58,7 @@
 				<ul class="roles_list">
 					{{#each available_roles}}
 					<li>
-						<div class="checkbox">
-							<label class="{{type}}">
-								<input type="checkbox" class='-roleselection {{this.type}}' name='{{type}}' {{checkRole}}>
-								<span class="{{icon}}"></span>
-								{{mf roleDescription}}
-							</label>
-							<label style="margin-left: 2em; display: true">
-								<input type="checkbox" class='-enrol {{this.type}}' name='{{type}}' {{hasRole}}>
-								{{mf roleSubscription}}
-							</label>
-						</div>
+						{{> courseEditRole selected=../roles role=this members=../members}}
 					</li>
 					{{/each}}
 				</ul>
@@ -97,5 +87,21 @@
 				</button>
 			</div>
 		</form>
+	</div>
+</template>
+
+<template name="courseEditRole">
+	<div class="checkbox">
+		<label class="{{role.type}}">
+			<input type="checkbox" class='-roleselection {{role.type}}' name='{{role.type}}' {{checkRole}}>
+			<span class="{{role.icon}}"></span>
+			{{mf roleDescription}}
+		</label>
+		{{#if checkRole}}
+		<label style="margin-left: 2em; display: true">
+			<input type="checkbox" class='-enrol {{role.type}}' name='{{role.type}}' {{hasRole}}>
+			{{mf roleSubscription}}
+		</label>
+		{{/if}}
 	</div>
 </template>

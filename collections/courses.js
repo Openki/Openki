@@ -180,6 +180,69 @@ coursesFind = function(filter, limit) {
 	return Courses.find(find, options);
 } 
 
+if (Meteor.isServer) {
+	Meteor.methods({
+		add_role: function(courseId, userId, role, incognito) {
+			check(courseId, String);
+			check(userId, String);
+			check(role, String);
+			check(incognito, Boolean);
+
+			var user = Meteor.users.findOne(userId);
+			if (!user) throw new Meteor.Error(404, "User not found");
+
+			var operator = Meteor.user();
+			if (!operator) throw new Meteor.Error(401, "please log in");
+
+			var forThemself = operator._id === user._id;
+			if (!forThemself && incognito) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+
+			var course = Courses.findOne({_id: courseId});
+			if (!course) throw new Meteor.Error(404, "Course not found");
+
+			if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
+
+			// do nothing if user is allready subscribed with this role
+			if (hasRoleUser(course.members, role, userId)) return true;
+
+			// Check permissions
+			if (!maySubscribe(operator._id, course, user._id, role)) {
+				console.log(operator._id, course, user._id, role, courseId, userId, role, incognito)
+				throw new Meteor.Error(401, "not permitted");
+			}
+
+			// The subscriptionId is the user._id unless we're subscribing incognito
+			var subscriptionId = false;
+
+			if (incognito) {
+				// Re-use anonId if already used on another role
+				if (user.anonId) {
+					_.each(course.members, function(member){
+						if (user.anonId.indexOf(member.user) != -1) {
+							subscriptionId = member.user;
+						}
+					});
+				}
+
+				if (!subscriptionId) {
+					var newId = new Meteor.Collection.ObjectID();
+					subscriptionId = 'Anon_' + newId._str;
+					Meteor.call('insert_anonId', subscriptionId);
+				}
+			}
+
+			if (!subscriptionId){
+				subscriptionId = user._id;
+			}
+
+			addRole(course, role, subscriptionId);
+			var time = new Date;
+			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
+		}
+	});
+}
 
 Meteor.methods({
 
@@ -194,62 +257,6 @@ Meteor.methods({
 			{ $set: { 'members.$.comment': comment } },
 			checkUpdateOne
 		);
-	},
-	
-	add_role: function(courseId, userId, role, incognito) {
-		check(courseId, String);
-		check(userId, String);
-		check(role, String);
-		check(incognito, Boolean);
-		
-		var user = Meteor.users.findOne(userId);
-		if (!user) throw new Meteor.Error(404, "User not found");
-			   
-		var operator = Meteor.user();
-		if (!operator) throw new Meteor.Error(401, "please log in");
-			   
-		var forThemself = operator._id === user._id;
-		if (!forThemself && incognito) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-		
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
-		
-		// Check permissions
-		if (!maySubscribe(operator._id, course, user._id, role)) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-
-		// The subscriptionId is the user._id unless we're subscribing incognito
-		var subscriptionId = false;
-		
-		if (incognito) {
-			// Re-use anonId if already used on another role
-			if (user.anonId) {
-				_.each(course.members, function(member){
-					if (user.anonId.indexOf(member.user) != -1) {
-						subscriptionId = member.user;
-					}
-				});
-			}
-			
-			if (!subscriptionId) {
-				var newId = new Meteor.Collection.ObjectID();
-				subscriptionId = 'Anon_' + newId._str;
-				Meteor.call('insert_anonId', subscriptionId);
-			}
-		}
-		
-		if (!subscriptionId){
-			subscriptionId = user._id;
-		}
-
-		addRole(course, role, subscriptionId);
-		var time = new Date;
-		Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
 	},
 
 	remove_role: function(courseId, role) {

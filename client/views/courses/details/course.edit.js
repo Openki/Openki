@@ -55,11 +55,6 @@ Template.course_edit.helpers({
 		}
 	},
 
-	checkRole: function() {
-		var instance = Template.instance();
-		return instance.data && instance.data.roles && instance.data.roles.indexOf(this.type) >= 0 ? 'checked' : null;
-	},
-
 	hasRole: function() {
 		var instance = Template.instance();
 		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
@@ -79,6 +74,8 @@ Template.course_edit.rendered = function() {
 	var desc = this.find('#editform_description');
 	if (desc) new MediumEditor(desc);
 }
+
+
 
 Template.course_edit.events({
 	'submit form, click button.save': function (ev, instance) {
@@ -130,7 +127,11 @@ Template.course_edit.events({
 					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
 
 					$('input.-enrol').each(function(_, enrolcheck) {
-						Meteor.call( enrolcheck.checked? 'add_role' : 'remove_role', courseId, Meteor.userId(), enrolcheck.name, false);
+						if (enrolcheck.checked) {
+							Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
+						} else {
+							Meteor.call('remove_role', courseId, enrolcheck.name);
+						}
 					});
 				}
 			})
@@ -174,4 +175,35 @@ Template.course_edit.events({
 	}
 });
 
+Template.courseEditRole.onCreated(function() {
+	this.checked = new ReactiveVar(false);
+});
 
+Template.courseEditRole.onRendered(function() {
+	this.checked.set(this.data.selected.indexOf(this.data.role.type) >= 0);
+});
+
+Template.courseEditRole.helpers({
+	roleDescription: function() {
+		return 'roles.'+this.role.type+'.description';
+	},
+
+	roleSubscription: function() {
+		return 'roles.'+this.role.type+'.subscribe';
+	},
+
+	checkRole: function() {
+		var instance = Template.instance();
+		return instance.checked.get() ? "checked" : null;
+	},
+
+	hasRole: function() {
+		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+	},
+});
+
+Template.courseEditRole.events({
+	"change .-roleselection": function(event, instance) {
+		instance.checked.set(instance.$(".-roleselection").prop("checked"));
+	}
+});

@@ -26,19 +26,6 @@ Router.map(function () {
 		}
 	})
 
-	this.route('proposeCourse', {							///////// propose /////////
-		path: 'courses/propose',
-		template: 'proposecourse',
-		onAfterAction: function() {
-			document.title = webpagename + 'Propose new course'
-		},
-		data: function() {
-			return {
-				roles: ['host', 'mentor']
-			};
-		}
-	})
-
 });
 
 

@@ -122,10 +122,9 @@ Template.find.helpers({
 
 	'newCourse': function() {
 		var instance = Template.instance();
-		return {
-			name: instance.filter.get('search'),
-			region: Session.get('region')
-		}
+		var course = courseTemplate();
+		course.name = instance.filter.get('search');
+		return course;
 	},
 
 	'categories': function() {
