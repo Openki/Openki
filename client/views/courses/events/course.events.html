@@ -10,12 +10,14 @@
 			{{/each}}
 			</div>
 			<hr class="now">
-			<div style="float: right">
-				<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastlist' 'past events'}}&nbsp;&nbsp;
+			<div class="courseEvents-titlebar">
+				<h4>
+					<span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}
+				</h4>
+				<a href="#" class="past">
+					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastlist' 'past events'}}
+				</a>
 			</div>
-			<h4 class="courseEvents-titlebar">
-			<span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}
-			</h4>
 			<div>
 			{{#each events_list}}
 				<div class="course_event_container">
