@@ -2,7 +2,7 @@
 	{{#if events_list}}
 	<div class="course_events_fadebox">
 		<div class="course_events">
-			<div>
+			<div name="past_events">
 			{{#each events_list_past}}
 				<div class="course_event_past_container">
 					{{>course_event}}
@@ -14,9 +14,11 @@
 				<h4>
 					<span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}
 				</h4>
-				<a href="#" class="past">
+				{{#if events_list_past}}
+				<a href="#past_events" class="past">
 					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastlist' 'past events'}}
 				</a>
+				{{/if}}
 			</div>
 			<div>
 			{{#each events_list}}
