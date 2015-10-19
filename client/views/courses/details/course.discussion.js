@@ -12,20 +12,26 @@ Template.discussion.helpers({
 		var course = Courses.findOne( {_id:this._id  } );
 		var currentUser = Meteor.user();
 		
+		
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
 			
-			//show "edit" button only if the comment belongs to this user or if user is course admin
-			if( post.user_ID == currentUser._id || course.createdby == currentUser._id ){
-				post.editableByUser = true;
+			if(currentUser){	
+				//show "edit" button only if the comment belongs to this user or if user is course admin
+				if( post.user_ID == currentUser._id || course.createdby == currentUser._id ){
+					post.editableByUser = true;
+				}else{
+					post.editableByUser = false;
+				}
+			
+				//show "edit" button only if user is course admin
+				if(course.createdby == currentUser._id ){
+					post.deletableByUser = true;
+				}else{
+					post.deletableByUser = false;
+				}
 			}else{
 				post.editableByUser = false;
-			}
-		
-			//show "edit" button only if user is course admin
-			if(course.createdby == currentUser._id ){
-				post.deletableByUser = true;
-			}else{
 				post.deletableByUser = false;
 			}
 			
@@ -33,10 +39,12 @@ Template.discussion.helpers({
 			var comments = CourseDiscussions.find({
 				parent_ID: post._id},
 				{sort: {time_created: 1}});
-					
+			
+			
 			comments.forEach(function (comment){
 				ordered_posts.push(comment);
 			});
+						
 		});
 		//return array with proper order
 		return ordered_posts;
