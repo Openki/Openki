@@ -11,7 +11,7 @@ Template.discussion.helpers({
 		var ordered_posts = [];
 		var course = Courses.findOne( {_id:this._id  } );
 		var currentUser = Meteor.user();
-		console.log(course);
+		
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
 			
@@ -21,14 +21,19 @@ Template.discussion.helpers({
 			}else{
 				post.editableByUser = false;
 			}
-						
+		
+			//show "edit" button only if user is course admin
+			if(course.createdby == currentUser._id ){
+				post.deletableByUser = true;
+			}else{
+				post.deletableByUser = false;
+			}
 			
 			ordered_posts.push(post);
 			var comments = CourseDiscussions.find({
 				parent_ID: post._id},
 				{sort: {time_created: 1}});
 					
-			//TODO: set which posts are editable here ... and check for ordering
 			comments.forEach(function (comment){
 				ordered_posts.push(comment);
 			});
@@ -130,7 +135,21 @@ Template.newPost.events({
 				templateInstance.editing.set(false);
 			}
 		});
-	}
+	},
+
+
+
+	'click button.deleteComment': function () {
+		if (pleaseLogin()) return;
+		
+		Meteor.call('deleteComment', this.parent._id, function(err, commentId) {
+			if (err) {
+				addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
+			}
+		});
+		
+		
+	},
 
 
 });

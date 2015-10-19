@@ -13,10 +13,18 @@
 </button>
 
 {{#if this.parent.editableByUser}}
-<button type="button" class="edit" role="button"  id="edit-button-{{this.parent._id}}">
+<button type="button" class="edit" role="button">
 	<span class="glyphicon glyphicon-edit"></span>
 	&nbsp;
 	{{mf 'course.discussion.comment_edit' 'Edit'}}
+</button>
+{{/if}}
+
+{{#if this.parent.deletableByUser}}
+<button type="button" class="btn-delete deleteComment" role="button">
+	<span class="glyphicon glyphicon-remove"></span>
+	&nbsp;
+	{{mf 'course.details.del_btn' 'Delete'}}
 </button>
 {{/if}}
 

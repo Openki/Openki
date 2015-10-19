@@ -96,6 +96,21 @@ Meteor.methods({
 		// so that this would not be necessary aymore
 		//Meteor.call("save_course", course._id, {});
 		return _commentId;
+	},
+
+	deleteComment: function(commentId) {
+		
+		var user = Meteor.user();
+		if (!user) {
+			if (Meteor.is_client) {
+				pleaseLogin();
+				return;
+			} else {
+				throw new Meteor.Error(401, "please log in");
+			}
+		}
+		var ret = CourseDiscussions.remove( { _id:commentId } );
+		return ret;
 	}
 
 
