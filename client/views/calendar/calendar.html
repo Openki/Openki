@@ -28,7 +28,7 @@
 
 <template name="calendarDay">
 	<div class="row">
-		<h1>{{weekday day.start}}</h1>
+		<h1>{{calendarDay day.start}}</h1>
 		{{#unless hasEvents}}
 		{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
 		{{/unless}}
