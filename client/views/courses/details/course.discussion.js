@@ -18,6 +18,8 @@ Template.discussion.helpers({
 			//show "edit" button only if the comment belongs to this user or if user is course admin
 			if( post.user_ID == currentUser._id || course.createdby == currentUser._id ){
 				post.editableByUser = true;
+			}else{
+				post.editableByUser = false;
 			}
 						
 			

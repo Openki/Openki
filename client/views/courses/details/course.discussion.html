@@ -12,12 +12,13 @@
 	{{mf 'course.discussion.comment_answer' 'Answer'}}
 </button>
 
-
-<button type="button" class="edit" role="button">
+{{#if this.parent.editableByUser}}
+<button type="button" class="edit" role="button"  id="edit-button-{{this.parent._id}}">
 	<span class="glyphicon glyphicon-edit"></span>
 	&nbsp;
 	{{mf 'course.discussion.comment_edit' 'Edit'}}
 </button>
+{{/if}}
 
 {{else}} <!-- Part of 'parent' helper statement -->
 <button type="button" class="write write-comment">
@@ -94,6 +95,11 @@
 				<span class="comment-time-created">
 					{{fromNow time_created}}
 				</span>
+				{{#if time_updated}}
+					<span class="comment-time-updated">
+						last update:{{fromNow time_updated}}
+					</span>
+				{{/if}}
 			</div>
 			<div class="post-text">
 				<h4 class="comment_title">{{this.title}}</h4>
@@ -116,6 +122,7 @@
 	<form name="form_edit">
 		<input type="text" id="edit_title" value="{{this.parent.title}}"/>
 		<textarea id="edit_text">{{this.parent.text}}</textarea>
+		
 		<button type="button" class="update">
 			{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
 		</button>
