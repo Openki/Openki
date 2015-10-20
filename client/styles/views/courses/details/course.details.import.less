@@ -71,6 +71,28 @@ p.course_description {
 			border-style: solid;
 		}
 
+		&.proposal {
+		}
+
+		.courseStatus {
+		//	background-color: white;
+			position: relative;
+			top: -7px;
+			right: -22px;
+			padding: 0 0 0.8em 1.4em;
+		//	border-left: 7px dashed @light-blue;
+		//	border-bottom: 7px dashed @light-blue;
+			float: right;
+		}
+
+		.courseStatus div {
+			background-color: #555;
+			opacity: 0.6;
+			padding: 0.3em 0.7em;
+			font-weight: bold;
+			color: white;
+		}
+
 		.name {
 			min-height: 3ex;
 			padding: 0 !important;
@@ -155,15 +177,15 @@ p.course_description {
 	button.eventEdit,
 	button.calendar_download {
 		.btn;
+		.btn-default;
 		margin-right: 5px;
+		margin-top: 10px;
+		margin-bottom: 15px;
+		float: right;
 	}
 
 	button.eventEdit {
 		.btn-success;
-	}
-
-	button.calendar_download {
-		.btn-primary;
 	}
 
 	.courseDetails_roles_container {

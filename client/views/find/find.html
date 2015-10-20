@@ -131,21 +131,18 @@
 			</div>
 			<div class="filter_groups">
 				<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
-				{{#with group}}
-				{{#if this}}
+				{{#if group}}
 				<h5>
 					{{mf 'find.filter.group' 'Showing courses in group'}}
 				</h5>
-				<span class="group">{{name}}</span>
+				<span class="group">{{> groupName group}}</span>
 				<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
 				<br>
-				{{/if}}
-				{{/with}}
-				{{#unless group}}
+				{{else}}
 				<span class="groups_explanation">
 					{{mf 'find.filter.groups.explanation' 'Click on a group to show its events.'}}
 				</span>
-				{{/unless}}
+				{{/if}}
 			</div>
 		</div>
 		{{/if}}
@@ -157,9 +154,12 @@
 		{{#each results}}
 			{{> course}}
 		{{else}}
-			{{#if ready}}
-			{{mf 'find.no_courses_found.propose_new_course?' 'No Courses found. Do you want to propose this one?'}}
+			<div style="text-align: center; margin: 2em">
+			{{mf 'find.no_courses_found' 'No Courses found.'}}
+			{{#if proposeNewBlurb}}
+				{{mf 'find.propose_new_course?' 'Why not propose a new one for {TERM}?' TERM=this.query.search}}
 			{{/if}}
+			</div>
 		{{/each}}
 		{{/unless}}
 	</div>

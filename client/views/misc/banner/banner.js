@@ -1,40 +1,26 @@
 Router.map(function () {
-	var locfilters = function(params) {
-		var filter = {};
-		if (params.location && params.location !== 'ALL') {
-			filter.location = params.location;
-		}
-		if (params.room && params.room !== 'ALL') {
-			filter.room = params.room;
-		}
-		return filter;
-	}
-
 	this.route('banner', {
-		path: '/banner/events/:location?/:room?',
+		path: '/banner/events',
 		template: 'bannerEvents',
 		layoutTemplate: 'bannerLayout',
 		waitOn: function () {
-			var now = minuteTime.get();
+			this.filter = Filtering(EventPredicates).read(this.params.query).done();
 
-			var future = locfilters(this.params);
-			future.after = now;
+			var filterParams = this.filter.toParams();
+			filterParams.after = minuteTime.get();
 
 			var limit = parseInt(this.params.query.count, 10) || 5;
 
-			return Meteor.subscribe('eventsFind', future, limit);
+			return Meteor.subscribe('eventsFind', filterParams, limit);
 		},
 
 		data: function() {
-			// REVIEW we always do the same things, subscribing in waitOn() then again find() in data().
-			var now = minuteTime.get();
-
-			var future = locfilters(this.params);
-			future.after = now;
+			var filterParams = this.filter.toParams();
+			filterParams.after = minuteTime.get();
 
 			var limit = parseInt(this.params.query.count, 10) || 5;
 
-			return eventsFind(future, limit);
+			return eventsFind(filterParams, limit);
 		},
 
 		onAfterAction: function() {

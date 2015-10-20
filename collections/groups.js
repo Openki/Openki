@@ -1,8 +1,13 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "short" -> string
-// "members" -> [userIds]
+// "_id"           -> ID
+// "name"          -> String
+// "short"         -> String
+// "claim"         -> String
+// "description"   -> String
+// "createdby"     -> userId
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "members"       -> List of userIds
 // ===========================
 
 Groups = new Meteor.Collection("Groups");

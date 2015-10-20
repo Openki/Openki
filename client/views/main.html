@@ -30,13 +30,13 @@
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect" href="/region/">
+			<a class="regionselect -clickClose" href="/region/">
 				{{mf 'menue.All regions' 'All regions'}}
 			</a>
 		</li>
 		{{# each regions}}
 			<li>
-				<a href="#" class="regionselect">
+				<a href="#" class="regionselect -clickClose">
 					{{name}}
 				</a>
 			</li>
@@ -54,7 +54,7 @@
 	<ul class="dropdown-menu" role="menu">
 		{{#each lgs}}
 			<li>
-				<a href="#" class="langselect">
+				<a href="#" class="langselect -clickClose">
 					{{this.name}}
 				</a>
 			</li>
