@@ -238,6 +238,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   course: only events for this course (ID)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -295,7 +296,11 @@ eventsFind = function(filter, limit) {
 	if (filter.group) {
 		find.groups = filter.group;
 	}
-	
+
+	if (filter.course) {
+		find.course_id = filter.course;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

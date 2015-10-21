@@ -7,7 +7,6 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				subs.subscribe('courseDetails', this.params._id),
-				subs.subscribe('eventsForCourse', this.params._id),
 				subs.subscribe('discussion', this.params._id),
 			];
 		},

@@ -3,51 +3,69 @@
 Template.course_events.helpers({
 	mayAdd: function() {
 		return hasRoleUser(this.course.members, 'team', Meteor.userId());
+    },
+
+	haveEvents: function() {
+		return Template.instance().haveEvents();
 	},
 
-	events_list: function() {
-		var course=this.course;
-		if (!course) return [];
-		var current_event=this.current_event;
-		var today = new Date();
-		return Events.find({course_id:course._id, start: {$gt:today}}, {sort: {start: 1}}).map(function(event){
-			var isCurrent = false;
-			if(current_event && current_event._id==event._id) isCurrent=true;
-			return {
-				course: course,
-				event: event,
-				isCurrent: isCurrent
-			}
-		});
+	pastEvents:  function() {
+		var events = Template.instance().pastEvents().fetch();
+		events.reverse(); // eventsFind() is too smart for us
+
+		// HACK Add a balancing element if the count is uneven because the past events should stack up from the bottom
+		if (events.length % 2 == 1) events.unshift(false);
+
+		return events;
 	},
 
-	events_list_past: function() {
-		var course=this.course;
-		if (!course) return [];
-		var current_event=this.current_event;
-		var today = new Date();
-		var pastEvents = Events.find({course_id:course._id, start: {$lt:today}}, {sort: {start: 1}}).map(function(event){
-			var isCurrent = false;
-			if(current_event && current_event._id==event._id) isCurrent=true;
-			return {
-				course: course,
-				event: event,
-				isCurrent: isCurrent
-			}
-		});
-		/// isert empty element to fill up 2-column list
-		if (pastEvents.length % 2 == 1) {
-			pastEvents.unshift({ empty: true });
-		}
-		return pastEvents;
-	}
+	havePastEvents: function() {
+		return Template.instance().pastEvents().count() > 0;
+	},
+
+	ongoingEvents: function() {
+		return Template.instance().ongoingEvents();
+	},
+
+	haveOngoingEvents: function() {
+		return Template.instance().ongoingEvents().count() > 0;
+	},
+
+	futureEvents: function() {
+		return Template.instance().futureEvents();
+	},
+
+	haveFutureEvents: function() {
+		return Template.instance().futureEvents().count() > 0;
+	},
 });
 
-Template.course_events.events({
-	'click button.eventEdit': function () {
-		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
-	}
+
+Template.course_events.onCreated(function() {
+	var instance = this;
+	var courseId = this.data.course._id;
+
+	instance.autorun(function() {
+		subs.subscribe('eventsForCourse', courseId);
+	});
+
+	instance.haveEvents = function() {
+		return eventsFind({ course: courseId }).count() > 0;
+	};
+
+	instance.pastEvents = function() {
+		return eventsFind({ course: courseId, before: minuteTime.get() });
+	};
+
+	instance.ongoingEvents = function() {
+		return eventsFind({ course: courseId, ongoing: minuteTime.get() });
+	};
+
+	instance.futureEvents = function() {
+		return eventsFind({ course: courseId, after: minuteTime.get() });
+	};
 });
+
 
 Template.course_events.rendered = function() {
 	var scrollableContainer = this.$(".course_events")
@@ -74,3 +92,9 @@ Template.course_events.rendered = function() {
 Template.course.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 };
+
+Template.course_events.events({
+	'click button.eventEdit': function () {
+		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
+	}
+});
