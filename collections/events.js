@@ -2,9 +2,22 @@
 // "_id" -> ID
 // "title" -> string
 // "description" -> string
-// start       time the events starts
-// end         time the event ends
-// "location" -> ...............
+//
+// start:      Time the events starts
+//
+// end:        Time the event ends
+//
+// locationId: Reference to a document in the Locations collection
+//             If this is set, the fields locationName, loc, and address are synchronized
+//
+// locationName: Descriptive name for the location
+//
+// loc:        Event location in GeoJSON format
+//
+// address:    Address string where the event will take place
+//
+// room:       Where inside the building the event will take place
+//
 // "createdBy" -> userId
 // "time_created" -> timestamp
 // "time_lastedit" -> timestamp

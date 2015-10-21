@@ -5,7 +5,11 @@
 // "categories" -> string
 // "maxPeople" -> int
 // "maxWorkplaces" -> int
-// "adress" -> string
+//
+// loc:         GeoJSON coordinates of the location
+//
+// address:     Address string of the location
+//
 // "route" -> string
 // "description" -> string
 // "contact" -> {"meetings","email","web","fon"... -> strings}
