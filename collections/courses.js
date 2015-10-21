@@ -215,7 +215,7 @@ Meteor.methods({
 		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
-		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
+		if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
 		
 		// Check permissions
 		if (!maySubscribe(operator._id, course, user._id, role)) {
