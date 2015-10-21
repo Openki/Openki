@@ -222,7 +222,7 @@ createEventsIfNone = function(){
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
-				event.location = ensureLocation(location, event.region)._id;
+				event.locationId = ensureLocation(location, event.region)._id;
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
@@ -322,7 +322,8 @@ loadTestEvents = function(){
 			console.log("   which is "+dateOffset+" milliseconds, right?");
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
-		event.location = ensureLocation(event.location, event.region)._id;
+		event.locationId = ensureLocation(event.location, event.region)._id;
+		delete event.location;
 		if (event.room) ensureRoom (event.location, event.room);
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
