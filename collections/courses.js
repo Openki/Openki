@@ -208,7 +208,6 @@ if (Meteor.isServer) {
 
 			// Check permissions
 			if (!maySubscribe(operator._id, course, user._id, role)) {
-				console.log(operator._id, course, user._id, role, courseId, userId, role, incognito)
 				throw new Meteor.Error(401, "not permitted");
 			}
 
