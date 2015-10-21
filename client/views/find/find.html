@@ -133,14 +133,14 @@
 				<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
 				{{#if group}}
 				<h5>
-					{{mf 'find.filter.group' 'Showing courses in group'}}
+					{{mf 'find.filter.group' 'Showing courses in group:'}}
 				</h5>
 				<span class="group">{{> groupName group}}</span>
 				<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
 				<br>
 				{{else}}
 				<span class="groups_explanation">
-					{{mf 'find.filter.groups.explanation' 'Click on a group to show its events.'}}
+					{{mf 'find.filter.groups.explanation' 'Click on a group to select its courses.'}}
 				</span>
 				{{/if}}
 			</div>
