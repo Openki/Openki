@@ -18,7 +18,7 @@
 			padding: 0;
 			list-style: none;
 			li{
-				margin-top: 10px;
+				margin-top: 5px;
 				&:first-child {
 					margin-top: none;
 				}
@@ -30,6 +30,28 @@
 				.btn-thin;
 				.btn-primary;
 			}
+		}
+	}
+
+	.invite_group {
+		margin-top: 5px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		button {
+			.btn-primary;
+			.btn-thin;
+
+			&:hover {
+				color: #fff;
+			}
+		}
+		span.group {
+			color: @brand-primary;
+			background: rgba(130, 216, 130, 0.5);
+			padding: 0 4px 1px;
 		}
 	}
 }
