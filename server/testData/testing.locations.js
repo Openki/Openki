@@ -7,7 +7,7 @@ testLocations = [{
 	'categories': 		['infoshop'],
 	'maxPeople': 		'40',
 	'maxWorkplaces':	'15',
-	'adress': 			'Militärstrasse 87a, 8004 Zürich, Switzerland',
+	'address': 			'Militärstrasse 87a, 8004 Zürich, Switzerland',
 	'route':			'Bus 31 oder 32 bis Militär/Langstrasse, dann zu Fuss Militärstrasse Richtung HB folgen, rechte Strassenseite bis 87a, im Hinterhof',
 	'description': 		'Lokaler Infoladen seit 1990',
 	'contact':			{
@@ -30,7 +30,7 @@ testLocations = [{
 		'stage': 			'0',
 		'specials': 		'two computers/workstations, big kitchen, bibliothek'},
 	'createdby': 		'FeeLing',
-	'hosts': 			['FeeLing']
+	'hosts': 			['FeeLing', 'Laura', 'HertsPflaschter']
 },
 {
 	'name':        		'SGMK MechArtLab',
@@ -38,7 +38,7 @@ testLocations = [{
 	'categories': 		['hackerspace'],
 	'maxPeople': 		'20',
 	'maxWorkplaces':	'20',
-	'adress': 			'Hohlstrasse 52, 8004 Zürich',
+	'address': 			'Hohlstrasse 52, 8004 Zürich',
 	'route':			'3 min von HelvetiaPlatz, (gleiches Gebäude wie Pusterla-Elektronik)',
 	'description': 		'Das MechArtLab beinhaltet Werkstatt, Schulungsraum, Techn. Bibliothek und Lager und bietet Platz für selbstorganisierte Gruppentreffen, Workshops, Jugendelektronikwerkstatt, uvm.',
 	'contact':			{
@@ -64,7 +64,7 @@ testLocations = [{
 	},
 	'createdby': 		'Sandra',
 
-	'hosts': 			['FeeLing']
+	'hosts': 			['FeeLing', 'Barbie92', 'LeOnI']
 },
 
 {
@@ -195,7 +195,7 @@ testLocations = [{
 	'categories': 		[''],
 	'maxPeople': 		'',
 	'maxWorkplaces':	'',
-	'adress': 			'',
+	'address': 			'',
 	'route':			'',
 	'description': 		'',
 	'contact':			{
