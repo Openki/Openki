@@ -178,14 +178,6 @@ function loadLocations(){
 			location.categories.push(ensureLocationCategory(category_names[i]))
 		}
 
-		if (location.roles === undefined) location.roles = {}
-		_.each(location.roles, function(role) {
-			_.each(role.subscribed, function(subscriber, i) {
-				role.subscribed[i] = ensureUser(subscriber)._id
-			})
-		})
-
-
 		location.createdby = ensureUser(location.createdby)._id;
 //		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
 
