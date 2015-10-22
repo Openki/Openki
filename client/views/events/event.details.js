@@ -26,7 +26,7 @@ Template.event.onCreated(function() {
 	}
 
 	// Tracked so that observe() will be stopped when the template is destroyed
-	Tracker.autorun(function() {
+	instance.autorun(function() {
 		markers.find({ proposed: true, selected: true }).observe({
 			added: function(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
@@ -51,7 +51,7 @@ Template.event.onRendered(function() {
 	if (this.data.location) {
 		Meteor.subscribe('locationDetails', instance.data.location);
 
-		Tracker.autorun(function() {
+		instance.autorun(function() {
 			var location = Locations.findOne(instance.data.location);
 
 			if (location) {
