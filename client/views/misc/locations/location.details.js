@@ -11,7 +11,6 @@ Router.map(function() {
 		},
 		data: function () {
 			var location =  Locations.findOne({_id: this.params._id});
-//			console.log(location, this.params._id);
 			if (!location) return false;
 
 			return {

@@ -84,7 +84,7 @@ function ensureRoom(location, room){
 	Locations.update(location, { $addToSet: { rooms: room } });
 }
 
-createCoursesIfNone = function(scale) {
+loadCoursesIfNone = function(scale) {
 	if (Courses.find().count() === 0) {
 		createCourses(scale);
 	}
@@ -163,12 +163,14 @@ function ensureLocationCategory(name){
 function loadLocations(){
 
 	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')]
-	_.each(testlocations, function(locationData) {
+	_.each(testLocations, function(locationData) {
 		if (!locationData.name) return;      // Don't create locations that don't have a name
 
 		locationData.region = Math.random() > 0.85 ? testRegions[0] : testRegions[1];
+
 		var location = ensureLocation(locationData.name, locationData.region._id);
 
+		_.extend(location, locationData);
 
 		var category_names = location.categories
 		location.categories = []
