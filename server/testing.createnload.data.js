@@ -340,7 +340,7 @@ loadTestEvents = function(){
 
 
 
-createGroupsIfNone = function(){
+loadGroupsIfNone = function(){
 	if (Groups.find().count() === 0) {
 		_.each (testgroups, function (group){
 			if (!group.name) return;
@@ -380,7 +380,7 @@ function ensureGroup(short) {
 
 /////////////////////////////// TESTING: Create Regions if non in db
 
-createTestRegionsIfNone = function(){
+loadTestRegionsIfNone = function(){
 	if (Meteor.isServer && Regions.find().count() == 0) {
 		_.each(regions, function(region){
 			if (region.loc) {
