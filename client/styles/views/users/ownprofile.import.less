@@ -5,6 +5,10 @@
 		margin-top: 0;
 	}
 
+	p {
+		margin-bottom: 5px;
+	}
+
 	form.edit {
 		input {
 			margin-left: 5px;
@@ -12,12 +16,24 @@
 	}
 
 	button {
-		.btn;
+		.btn-thin;
 		.btn-primary;
-		&.verify {
-			.btn-sm;
+	}
+
+	ul.groups {
+		.list-unstyled;
+
+		li {
+			margin-top: 5px;
+
+			span.group {
+				color: @brand-primary;
+				background: rgba(130, 216, 130, 0.5);
+				padding: 0 4px 1px;
+			}
 		}
 	}
+
 	.translate {
 		padding-top: 10px;
 	}

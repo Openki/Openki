@@ -56,7 +56,11 @@
 		<button type="button" class="cancel">
 			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
 		</button>
-		<label><input type='checkbox' class='-anon' {{anonChecked}}>{{mf 'course.discussion.anon' 'Anonymous comment'}}</label>
+		<label>
+			<input type='checkbox' class='-anon' {{anonChecked}}>
+			{{mf 'course.discussion.anon' 'Anonymous comment'}}&nbsp;
+			<span class="fa fa-user-secret"></span>&nbsp;
+		</label>
 	</form>
 </div>
 </template>
