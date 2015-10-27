@@ -1,25 +1,28 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "region" -> ID_region
-// "categories" -> string
-// "maxPeople" -> int
-// "maxWorkplaces" -> int
+// "_id"           -> ID
+// "name"          -> String
+// "region"        -> ID_region
+// "categories"    -> String
+// "maxPeople"     -> Int
+// "maxWorkplaces" -> Int
 //
 // loc:         GeoJSON coordinates of the location
 //
 // address:     Address string of the location
 //
-// "route" -> string
-// "description" -> string
-// "contact" -> {"meetings","email","web","fon"... -> strings}
-// "picture" -> string   (lokal/external link)
-// "infra" -> not clear jet
-// "createdby" -> ID_user
-// "hosts" -> [ID_users]
-// "contacts" -> [ID_users]
+// "route"         -> String
+// "description"   -> String
+// "contact"       -> {"meetings","email","web","fon"... -> strings}
+// "picture"       -> String   (lokal/external link)
+// "infra"         -> not clear jet
+// "createdby"     -> ID_user
+// "hosts"         -> [ID_users]
+// "roles"         -> WTF?
+// "contacts"      -> [ID_users]
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // ===========================
-
 
 
 Locations = new Meteor.Collection("Locations");

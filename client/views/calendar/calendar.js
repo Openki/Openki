@@ -68,6 +68,9 @@ Template.calendarDay.helpers({
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
 		return eventsFind(filterQuery);
+	},
+	calendarDay: function(day) {
+		return day.format('dddd Do MMMM');
 	}
 });
 

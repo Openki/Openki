@@ -1,7 +1,8 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "title" -> string
-// "description" -> string
+// "_id"           -> ID
+// "region"        -> ID_region
+// "title"         -> String
+// "description"   -> String
 //
 // start:      Time the events starts
 //
@@ -18,10 +19,10 @@
 //
 // room:       Where inside the building the event will take place
 //
-// "createdBy" -> userId
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "course_id" -> ID_course          (maybe list in Future)
+// "createdby"     -> userId
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "course_id"     -> ID_course  (maybe list in Future)
 // ===========================
 
 Events = new Meteor.Collection("Events");
@@ -135,7 +136,12 @@ Meteor.methods({
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;
 			}
+
+			// Synthesize event document because the code below relies on it
+			event = { course_id: changes.course_id };
+
 		} else {
+
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
@@ -177,6 +183,9 @@ Meteor.methods({
 			}
 		}
 
+		// the assumption is that all replicas have the same course if any
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return eventId;
 	},
 
@@ -191,6 +200,9 @@ Meteor.methods({
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 
 		Events.remove(eventId);
+
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
@@ -237,6 +249,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   course: only events for this course (ID)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -294,7 +307,11 @@ eventsFind = function(filter, limit) {
 	if (filter.group) {
 		find.groups = filter.group;
 	}
-	
+
+	if (filter.course) {
+		find.course_id = filter.course;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

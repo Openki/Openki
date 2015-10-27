@@ -1,18 +1,19 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "categories" -> [ID_categories]
-// "tags" -> list ID_categories
-// "description" -> string
-// "slug" -> string
-// "region" -> ID_region
-// "date" -> timestamp     what for?
-// "createdby" -> ID_users
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "time_lastenrol" -> timestamp
-// "roles" -> [role-keys]
-// "members" -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "_id"           -> ID
+// "name"          -> String
+// "categories"    -> [ID_categories]
+// "tags"          -> List of Strings  (not used)
+// "groups"        -> List ID_groups
+// "description"   -> String
+// "slug"          -> String
+// "region"        -> ID_region
+// "date"          -> Date             (what for?)
+// "createdby"     -> ID_user
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "time_lastenrol"-> Date
+// "roles"         -> [role-keys]
+// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
@@ -122,9 +123,7 @@ coursesFind = function(filter, limit) {
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent) {
-		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
-		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
-		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
+		find['nextEvent'] = { $ne: null };
 	}
 
 	var mustHaveRoles = [];
@@ -216,7 +215,7 @@ Meteor.methods({
 		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
-		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
+		if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
 		
 		// Check permissions
 		if (!maySubscribe(operator._id, course, user._id, role)) {
@@ -400,5 +399,23 @@ Meteor.methods({
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 		Events.remove({ course_id: courseId });
 		Courses.remove(courseId);
+	},
+
+	// Update the nextEvent field for the courses matching the selector
+	updateNextEvent: function(selector) {
+		Courses.find(selector).forEach(function(course) {
+			var nextEvent = Events.findOne(
+				{course_id: course._id, start: {$gt: new Date()}},
+				{sort: {start: 1}, fields: {start: 1, _id: 1}}
+			);
+			var lastEvent = Events.findOne(
+				{course_id: course._id, start: {$lt: new Date()}},
+				{sort: {start: -1}, fields: {start: 1, _id: 1}}
+			);
+			Courses.update(course._id, { $set: {
+				nextEvent: nextEvent,
+				lastEvent: lastEvent
+			} });
+		});
 	}
 });

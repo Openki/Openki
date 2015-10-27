@@ -14,10 +14,19 @@
 	<div class="kiosk"><!-- 
 		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
 		<div class="kiosk_header">
-			<h1>
-				<b>Openki</b>
+			<div style='float:right'>
+				<h2 style='display:inline'>{{showTime}}</h2> &nbsp;&nbsp; <h4 style='display:inline'>{{showDate}}</h4>
+
+			</div>
+
+			<h1><b>
+				{{#if filter.group}} {{groupShort filter.group}}
+				{{else}} {{#if filter.location}} {{filter.location}}
+				{{else}} Openki {{/if}} {{/if}}
+			</b>
 				{{> lang_sel}}
 			</h1>
+
 			<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
 		</div>
 			<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
@@ -48,7 +57,6 @@
 				{{/each}}
 			</div>
 			{{/if}}
-			{{#if future.count}}
 			<div class="kiosk_events_title">
 				<hr>
 				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
@@ -56,9 +64,10 @@
 			<div class="kiosk_events"> 
 				{{#each future}}
 				{{> kioskEvent}}
+				{{else}}
+				{{mf 'kiosk.noFutureEvents' 'There are no future events'}}
 				{{/each}}
 			</div>
-			{{/if}}
 		</div>
 	</div>
 </template>
@@ -66,19 +75,28 @@
 <template name="kioskEvent">
 		<a href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
+			&nbsp;{{dateformat_fromnow start}}<br>
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-time"></span>
-					&nbsp;{{dateformat_fromnow start}}<br>
 					{{timeformat start}} - {{timeformat end}}
 				</div>
 				<div class="kiosk_event_home">
-					{{#if location}}
-					<span class="glyphicon glyphicon-home"></span>
+					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
+						{{#if location}}
+							<span class="glyphicon glyphicon-home"></span>
+							{{this.location}}
+							{{#if room}}
+								-
+							{{/if}}
+						{{/if}}
 					{{/if}}
 					{{locationName this.location}}
 					{{#if room}}
-						- {{this.room}}
+						{{#unless showLocations}}
+							<span class="fa fa-map-signs"></span>
+						{{/unless}}
+						{{this.room}}
 					{{/if}}
 				</div>
 			</div>
@@ -95,20 +113,25 @@
 <template name="kioskEventOngoing">
 	<a href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
+				{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
 			<div class="kiosk_event_header">
-				<div class="kiosk_event_date">
-					<span class="glyphicon glyphicon-time"></span>&nbsp;
-					{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
-					{{mf 'kiosk.andends' 'and ends'}} {{dateformat_fromnow end}}
-				</div>
+					<span class="glyphicon glyphicon-time"></span>
+					{{timeformat start}} - {{timeformat end}}
 				<div class="kiosk_event_home">
-					{{#if location}}
-					<span class="glyphicon glyphicon-home"></span>
-					&nbsp;
+					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
+						{{#if location}}
+							<span class="glyphicon glyphicon-home"></span>
+							{{this.location}}
+							{{#if room}}
+								-
+							{{/if}}
+						{{/if}}
 					{{/if}}
-					{{this.location}}
 					{{#if room}}
-						<br>{{this.room}}
+						{{#unless showLocations}}
+							<span class="fa fa-map-signs"></span>
+						{{/unless}}
+						{{this.room}}
 					{{/if}}
 				</div>
 			</div>

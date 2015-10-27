@@ -72,9 +72,6 @@ Meteor.publish('affectedReplica', function(eventId) {
 	return Events.find(affectedReplicaSelectors(event));
 });
 
-Meteor.publish('nextEvent', function(courseId) {
-	return Events.find({ course_id: courseId });
-});
 
 Meteor.publish('user', function(userId) {
 	var fields = {username: 1};

@@ -58,4 +58,15 @@ Meteor.startup(function () {
 			}
 		}
 	}
+
+	// Keep the nextEvent entry updated
+	// On startup do a full scan to catch stragglers
+	Meteor.call('updateNextEvent', {}, logAsyncErrors);
+	Meteor.setInterval(
+		function() {
+			// Update nextEvent for courses where it expired
+			Meteor.call('updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
+		},
+		60*1000 // Check every minute
+	);
 });

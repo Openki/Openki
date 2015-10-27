@@ -25,8 +25,6 @@ mayEdit = function(user, course){
 	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id))
 }
 
-
-
 /* Get a username from ID
  * 
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
@@ -44,8 +42,7 @@ userName = function(userId) {
 	
 	// This seems extremely wasteful
 	// But the alternatives are more complicated by a few orders of magnitude
-	var tpl = Template.instance();
-	tpl.subscribe('user', userId);
+	miniSubs.subscribe('user', userId);
 	
 	var user = Meteor.users.findOne({ _id: userId });
 	if (user) {
@@ -90,6 +87,7 @@ pleaseLogin = function() {
 
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;
+	Session.get('locale'); // Reactive dependency
 	return mf('category.'+this);
 });
 
@@ -227,3 +225,12 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
         view = view.parentView;
     }
 };
+
+Handlebars.registerHelper('groupShort', function(groupId) {
+	var instance = Template.instance();
+	instance.subscribe('group', groupId);
+
+	var group = Groups.findOne({ _id: groupId });
+	if (group) return group.short;
+	return "";
+});
