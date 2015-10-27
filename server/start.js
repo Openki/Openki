@@ -59,6 +59,10 @@ Meteor.startup(function () {
 		}
 	}
 
+	// On startup, resync location cache in events
+	Meteor.call('updateEventLocation', {}, logAsyncErrors);
+
+
 	// Keep the nextEvent entry updated
 	// On startup do a full scan to catch stragglers
 	Meteor.call('updateNextEvent', {}, logAsyncErrors);
