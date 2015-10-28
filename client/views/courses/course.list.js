@@ -10,7 +10,6 @@ Router.map(function () {
 				Meteor.subscribe('coursesFind', { region: region }, 40),
 				Meteor.subscribe('coursesFind', { region: region, missingTeam: true }, 5),
 				Meteor.subscribe('coursesFind', { region: region, missingParticipants: true }, 5),
-				Meteor.subscribe('locationNames', region)
 			]
 		},
 		data: function () {

@@ -21,7 +21,7 @@
 
 			<h1><b>
 				{{#if filter.group}} {{groupShort filter.group}}
-				{{else}} {{#if filter.location}} {{filter.location}}
+				{{else}} {{#if filter.location}} {{locationName filter.location}}
 				{{else}} Openki {{/if}} {{/if}}
 			</b>
 				{{> lang_sel}}
@@ -83,15 +83,12 @@
 				</div>
 				<div class="kiosk_event_home">
 					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
-						{{#if location}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{this.location}}
-							{{#if room}}
-								-
-							{{/if}}
+						<span class="glyphicon glyphicon-home"></span>
+						{{location.name}}
+						{{#if room}}
+							-
 						{{/if}}
 					{{/if}}
-					{{locationName this.location}}
 					{{#if room}}
 						{{#unless showLocations}}
 							<span class="fa fa-map-signs"></span>

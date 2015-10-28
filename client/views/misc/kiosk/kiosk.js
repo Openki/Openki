@@ -101,11 +101,13 @@ Template.kioskEvents.helpers({
 
 Template.kioskEvent.helpers({
 	showLocations: function() {
+		if (!this.location.name) return false;
 		return (!Router.current().params.query.location)
 	}
 });
 Template.kioskEventOngoing.helpers({
 	showLocations: function() {
+		if (!this.location.name) return false;
 		return (!Router.current().params.query.location)
 	}
 });

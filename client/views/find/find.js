@@ -10,9 +10,6 @@ function finderRoute(path) {
 			};
 			this.next();
 		},
-		subscriptions: function() {
-			return	Meteor.subscribe('locationNames', Session.get('region'));
-		},
 		data: function() {
 			return this.params;
 		},
