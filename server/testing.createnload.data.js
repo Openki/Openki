@@ -47,7 +47,7 @@ function ensureLocation(name, regionId) {
 	while (true) {
 		var location = Locations.findOne({name: name, region:regionId})
 
-		if (location && location.region === regionId) return location;
+		if (location) return location;
 
 		location = {
 			name: name,
@@ -66,7 +66,6 @@ function ensureLocation(name, regionId) {
 
 		location._id = m5.digest('hex').substring(0, 8);
 
-
 		var age = Math.floor(Math.random()*80000000000)
 		location.time_created = new Date(new Date().getTime()-age)
 		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
@@ -75,8 +74,6 @@ function ensureLocation(name, regionId) {
 
 		Locations.insert(location);
 		console.log('Added location: "'+location.name+'" in region: '+location.region);
-
-		return location;
 	}
 }
 
