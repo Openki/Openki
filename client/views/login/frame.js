@@ -5,6 +5,12 @@ Template.loginFrame.events({
 	},
 });
 
+Template.loginLogin.onRendered(function() {
+	var instance = this;
+	$(".login-dropdown").parent().on("shown.bs.dropdown", function() {
+		instance.$('#login-name').focus();
+	});
+});
 
 Template.loginFrame.helpers({
     username: function () {
