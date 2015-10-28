@@ -1,11 +1,10 @@
-// The location field gets renamed to locationName to avoid confusion when locationId is introduced
+// The location field becomes an object
 UpdatesAvailable.renameLocationName = function() {
 	Events.find({}).fetch().forEach(function(event) {
-		if (event.location) {
-			event.locationName = event.location;
-			delete event.location;
+		if (typeof event.location === "string") {
+			event.location = { name: event.location };
 
 			Events.update(event._id, event);
 		}
-	})
+	});
 }

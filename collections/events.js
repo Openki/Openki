@@ -8,14 +8,12 @@
 //
 // end:        Time the event ends
 //
-// locationId: Reference to a document in the Locations collection
-//             If this is set, the fields locationName, loc, and address are synchronized
-//
-// locationName: Descriptive name for the location
-//
-// loc:        Event location in GeoJSON format
-//
-// address:    Address string where the event will take place
+// location:   Object with location info
+//             _id:     Optional reference to a document in the Locations collection
+//                      If this is set, the fields name, loc, and address are synchronized
+//             name:    Descriptive name for the location
+//             loc:     Event location in GeoJSON format
+//             address: Address string where the event will take place
 //
 // room:       Where inside the building the event will take place
 //
