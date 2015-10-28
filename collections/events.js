@@ -339,7 +339,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.location) {
-		find.location = filter.location;
+		find['location._id'] = filter.location;
 	}
 
 	if (filter.room) {
