@@ -227,7 +227,7 @@ Meteor.methods({
 /* Find events for given filters
  *
  * filter: dictionary with filter options
- *   query: string of words to search for
+ *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date
