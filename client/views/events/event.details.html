@@ -204,8 +204,8 @@
 					<div class="course_event_title"><h3>{{this.title}}</h3>{{> groupList}}</div>
 					<div class="course_event_time">
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
-						{{#if location}}
-							<br><span class="glyphicon glyphicon-home"></span> {{locationName location}}
+						{{#if location.name}}
+							<br><span class="glyphicon glyphicon-home"></span> {{location.name}}
 							{{#if room}} - {{room}}{{/if}}
 						{{/if}}
 					</div>
