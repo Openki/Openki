@@ -23,11 +23,18 @@
 			{{#if contact.web}} <p>{{mf 'location.details.online' 'Website:'}} <a href="{{contact.web}}">{{contact.web}}</a></p> {{/if}}
 			<p>{{mf 'location.details.address' 'Address:'}} {{address}}</p>
 			{{#if route}} <p>{{mf 'location.details.how_go_there' 'How to go there:'}} {{route}}</p> {{/if}}
-			{{#if maxpeople}} <p>{{mf 'location.details.max_ppl' 'Maximum People:'}} {{maxpeople}} </p>  {{/if}}
-			{{#if maxworkplaces}} <p>{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}} {{maxworkplaces}} </p> {{/if}}
+			{{#if maxPeople}} <p>{{mf 'location.details.max_ppl' 'Maximum People:'}} {{maxPeople}} </p>  {{/if}}
+			{{#if maxWorkplaces}} <p>{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}} {{maxWorkplaces}} </p> {{/if}}
 			{{#if infra2.def }} <p>{{mf 'location.details.has_projector' 'Has a Projector!'}} </p> {{/if}}
 			{{#if specials}} <p>{{mf 'location.details.specials' 'Specials:'}} {{specials}} </p> {{/if}}
-			{{#if loc}} <p>{{mf 'location.details.map' 'Map:'}} {{loc.coordinates.long}}{{loc.coordinates.lat}} </p> {{/if}}
+
+
+			{{#if loc}}
+			<div>{{mf 'location.details.map' 'Map:'}}
+				<div>{{>map markers=markers width=300 height=300 mini=true}}</div>
+				{{loc.coordinates.[1]}}{{loc.coordinates.[0]}}
+			</div>
+			{{/if}}
 
 
 
