@@ -43,24 +43,11 @@ Template.event.onCreated(function() {
 Template.event.onRendered(function() {
 	var instance = this;
 
-	this.setLocation(this.data);
+	this.setLocation(this.data.location);
 
 	var region = Regions.findOne(instance.data.region);
 	instance.setRegion(region);
 
-	if (this.data.location) {
-		Meteor.subscribe('locationDetails', instance.data.location);
-
-		instance.autorun(function() {
-			var location = Locations.findOne(instance.data.location);
-
-			if (location) {
-				instance.setLocation(location);
-				var region = Regions.findOne(location.region);
-				instance.setRegion(region);
-			}
-		});
-	}
 });
 
 
