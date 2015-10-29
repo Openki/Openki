@@ -34,7 +34,7 @@ Template.calendar.helpers({
 		var start = Template.instance().filter.get('start');
 		var i = 0;
 		var days = [];
-		for (; i < 8; i++) {
+		for (; i < 7; i++) {
 			days.push({
 				start: moment(start).add(i, 'days'),
 				end: moment(start).add(i+1, 'days')
@@ -49,7 +49,7 @@ Template.calendar.helpers({
 		return Template.instance().filter.get('start').format('LL');
 	},
 	endDate: function() {
-		return Template.instance().filter.get('start').add(8, 'days').format('LL');
+		return Template.instance().filter.get('start').add(1, 'week').format('LL');
 	}
 });
 
@@ -85,7 +85,7 @@ Template.calendar.onCreated(function() {
 
 		filter
 			.clear()
-			.add('start', moment())
+			.add('start', moment().startOf('week'))
 			.add('region', Session.get('region'))
 			.read(query)
 			.done();
@@ -105,7 +105,7 @@ Template.calendar.onCreated(function() {
 		var filterQuery = filter.toQuery();
 
 		var start = filter.get('start').toDate();
-		var limit = filter.get('start').add(8, 'days').toDate();
+		var limit = filter.get('start').add(1, 'week').toDate();
 
 		filterQuery.period = [start, limit];
 		if (eventSub) oldSubs.push(eventSub);
@@ -127,7 +127,7 @@ Template.calendar_event.rendered = function() {
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');
-		start.add(amount, unit);
+		start.add(amount, unit).startOf('week');
 		instance.filter.add('start', start).done();
 		updateUrl(event, instance);
 		return false;
@@ -135,8 +135,6 @@ var mvDateHandler = function(amount, unit) {
 }
 
 Template.calendar.events({
-	'click .nextDay': mvDateHandler(1, 'day'),
-	'click .prevDay': mvDateHandler(-1, 'day'),
 	'click .nextWeek': mvDateHandler(1, 'week'),
 	'click .prevWeek': mvDateHandler(-1, 'week'),
 	'click .nextMonth': mvDateHandler(1, 'month'),
