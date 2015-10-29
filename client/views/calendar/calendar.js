@@ -67,7 +67,8 @@ Template.calendarDay.helpers({
 		return eventsFind(filterQuery);
 	},
 	calendarDay: function(day) {
-		return day.format('dddd Do MMMM');
+		Session.get('timeLocale');
+		return moment(day.toDate()).format('dddd Do MMMM');
 	}
 });
 
