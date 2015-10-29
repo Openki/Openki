@@ -26,26 +26,28 @@ function addRole(course, role, user) {
 		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
 	);
 
-	Courses.update(
+	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$addToSet': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$addToSet': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("addRole affected "+result+" documents");
 }
 
 
 function removeRole(course, role, user) {
 	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$pull': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$pull': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("removeRole affected "+result+" documents");
 
 	// Housekeeping: Remove members that have no role left
 	Courses.update(
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
-	)
+	);
 }
 
 hasRole = function(members, role) {
