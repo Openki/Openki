@@ -107,43 +107,10 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="col-sm-12 no-padding">
-			<div class="col-xs-12 col-sm-6">
-				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
-				<div id="editform_location" name="editform_location" class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-home"></span>
-					</span>
-					<input type="text" id="edit_event_location" class="form-control" size="40" value="{{location.name}}"/>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-6">
-				<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4>
-				<div id="editform_room" name="editform_room" class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-map-marker"></span>
-					</span>
-					<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
-				</div>
-			</div>
 
-
-			<div class="col-xs-12 col-sm-6">
-				<h4>{{mf 'course.event.edit.address' 'Address:'}}</h4>
-				<div id="editform_location" name="editform_location" class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-home"></span>
-					</span>
-					<input type="text" class="form-control -address" size="40" value=""/>
-					<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span></button>
-				</div>
-			</div>
-
-			<div class="col-xs-12 col-sm-6">
-				{{>map markers=eventMarkers height=300}}
-			</div>
-
-			{{#if showRegionSelection}}
+		{{#if showRegionSelection}}
 			<div class="col-xs-12 col-sm-4">
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
 				<div class="styled-select">
@@ -156,7 +123,48 @@
 					<span class="caret"></span>
 				</div>
 			</div>
+		{{/if}}
+
+			<div class="col-xs-12 col-sm-6">
+				<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
+				<div id="editform_location" class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-home"></span>
+					</span>
+			{{#if locationStateShow}}
+					<div style="float: right"><button type="button" class="-locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
+					{{location.name}}
+					{{#if location.address}}<div style="font-size: small">{{location.address}}</div>{{/if}}
+			{{else}}
+					<input type="text" class="form-control -locationName" size="40" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Name of the location"}}"/>
+				{{#if locationStateAdd}}
+					<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address of the location"}}"/>
+					<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span></button>
+				{{else}}
+						<button type="button" class="-locationAdd">{{mf 'event.edit.LocationAdd' "Add new address"}}</button>
+					{{#if locationIsSet}}<button type="button" class="-locationReset">{{mf 'event.edit.locationReset' "Never mind"}}</button>{{/if}}
+				{{/if}}
+					<ul>
+					{{#each locationCandidates}}
+						<li class="-locationCandidate">
+							{{name}}
+							<div style="font-size: small">{{address}}</div>
+						</li>
+					{{/each}}
+					</ul>
 			{{/if}}
+				</div>
+				<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4>
+				<div id="editform_room" name="editform_room" class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-signs"></span>
+					</span>
+					<input type="text" id="edit_event_room" class="form-control" size="40" value="{{room}}"/>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				{{>map markers=eventMarkers height=300 allowPlacing=allowPlacing}}
+			</div>
 		</div>
 
 		<div class="col-sm-12 no-padding event_edit_buttons">

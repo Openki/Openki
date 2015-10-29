@@ -23,7 +23,7 @@ Template.map.onRendered(function() {
 		options.attributionControl = false;
 	}
 
-	map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
+	var map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
 	L.tileLayer.provider('Thunderforest.Transport').addTo(map);
 
 	var geojsonMarkerOptions = {
@@ -130,7 +130,7 @@ Template.map.helpers({
 
 	fullscreen: function () {
 		return Template.instance().fullscreen.get();
-	}
+	},
 });
 
 

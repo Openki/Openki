@@ -41,7 +41,9 @@ Meteor.publish ('locationDetails', function(id) {
 	return Locations.find(id);
 });
 
-
+Meteor.publish('locationSearch', function(find, limit) {
+	return findLocations(find, limit);
+});
 
 Meteor.publish('discussion', function(courseId) {
 	return CourseDiscussions.find({ course_ID: courseId });

@@ -4,10 +4,19 @@
 Template.event.onCreated(function() {
 	var instance = this;
 	this.editing = new ReactiveVar(false);
-	var markers = new Meteor.Collection(null);
-	this.markers = markers;
+	this.locationState = new ReactiveVar('selecting');
 
-	this.setLocation = function(location) {
+	var markers = new Meteor.Collection(null);
+	instance.markers = markers;
+
+	instance.whatLocation = function() {
+		var location = this.data.location;
+		if (location._id) return 'foreign';
+		if (location.name) return 'own';
+		return false;
+	}
+
+	instance.setLocation = function(location) {
 		markers.remove({ main: true });
 		if (location && location.loc) {
 			var loc = $.extend(location.loc, { main: true });
@@ -16,7 +25,7 @@ Template.event.onCreated(function() {
 		}
 	}
 
-	this.setRegion = function(region) {
+	instance.setRegion = function(region) {
 		markers.remove({ center: true });
 		instance.region = region;
 		if (region && region.loc) {
@@ -43,7 +52,9 @@ Template.event.onCreated(function() {
 Template.event.onRendered(function() {
 	var instance = this;
 
-	this.setLocation(this.data.location);
+	instance.locationState.set(instance.whatLocation() ? 'show' : 'select');
+
+	instance.setLocation(instance.data.location);
 
 	var region = Regions.findOne(instance.data.region);
 	instance.setRegion(region);
@@ -104,8 +115,8 @@ Template.eventEdit.helpers({
 		// You can select the region for events that are new and not associated
 		// with a course
 		if (this._id) return false;
-					   if (this.course_id) return false;
-					   return true;
+		if (this.course_id) return false;
+		return true;
 	},
 	
 	currentRegion: function(region) {
@@ -119,6 +130,37 @@ Template.eventEdit.helpers({
 
 	eventMarkers: function() {
 		return Template.instance().parentInstance().markers;
+	},
+
+	locationCandidates: function() {
+		return Template.instance().parentInstance().markers.find({ proposed: true });
+	},
+
+	locationStateShow: function() {
+		return Template.instance().parentInstance().locationState.get() == 'show';
+	},
+
+	locationStateSelect: function() {
+		return Template.instance().parentInstance().locationState.get() == 'select';
+	},
+
+	locationStateAdd: function() {
+		return Template.instance().parentInstance().locationState.get() == 'add';
+	},
+
+	locationIsSet: function() {
+		return !!Template.instance().parentInstance().whatLocation();
+	},
+
+	allowPlacing: function() {
+		var locationState = Template.instance().parentInstance().locationState;
+
+		// We return a function so the reactive dependency on locationState is
+		// established from within the map template which will call it. The
+		// craziness is strong with this one.
+		return function() {
+			return locationState.get() == 'add';
+		}
 	}
 });
 
@@ -524,7 +566,7 @@ Template.event.events({
 	},
 
 	'click .-addressSearch': function(event, template) {
-		var search = template.$('.-address').val();
+		var search = template.$('.-locationAddress').val();
 		var nominatimQuery = {
 			format: 'json',
 			q: search,
@@ -559,6 +601,15 @@ Template.event.events({
 				template.markers.insert(marker);
 			});
 		});
+	},
+
+	'click .-locationChange': function(event, instance) {
+		var newState = instance.whatLocation() == 'own' ? 'add' : 'select';
+		instance.locationState.set(newState);
+	},
+
+	'click .-locationAdd': function(event, instance) {
+		instance.locationState.set('add');
 	}
 });
 
