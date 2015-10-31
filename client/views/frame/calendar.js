@@ -46,13 +46,21 @@ Router.map(function () {
 });
 
 Template.frameCalendar.helpers({
-	weekday:  function() { return this.format('dd'); },
+	weekday:  function() { return this.format('ddd'); },
 	monthday: function() { return this.format('D'); },
 });
 
 Template.frameCalendarEvent.onRendered(function() {
-	this.$('.-eventText').dotdotdot({ height: 60 });
-	this.$('.-eventLocation').dotdotdot({  });
+	this.$('.-eventLocationTime').dotdotdot({
+		height: 50,
+		watch : "window",
+	});
+	this.$('.-eventTitle').dotdotdot({
+		watch: "window",
+	});
+	this.$('.-eventDescription').dotdotdot({
+		watch: "window",
+	});
 });
 
 Template.frameCalendarEvent.helpers({
