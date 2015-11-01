@@ -1,8 +1,8 @@
 Router.map(function () {
-	this.route('banner', {
-		path: '/banner/events',
-		template: 'bannerEvents',
-		layoutTemplate: 'bannerLayout',
+	this.route('frameEvents', {
+		path: '/frame/events',
+		template: 'frameEvents',
+		layoutTemplate: 'frameLayout',
 		waitOn: function () {
 			this.filter = Filtering(EventPredicates).read(this.params.query).done();
 

@@ -1,0 +1,69 @@
+//set custom grid breakpoints
+@screen-xxs:  550px;
+@screen-xxxs: 380px;
+
+.frame_calendar_date {
+  .grid(12);
+  padding: 0 0 10px;
+
+  &:first-child {
+    margin-top: -50px;
+  }
+
+  .date {
+    padding: 5px 7px 5px 9px;
+    width: 100px;
+
+    @media screen and (max-width: @screen-xxxs) {
+      .grid(12);
+      padding: 0.5em;
+    }
+  }
+
+  .frame_calendar_events {
+    .grid(12);
+    padding: 10px 7px 0;
+    margin-bottom: -10px;
+
+    .frame_calendar_event_container {
+      .grid(4, 3, 0, 2);
+      height: 200px;
+      padding: 0 3px 10px;
+
+      @media screen and (max-width: @screen-xxs) {
+        .grid(6);
+        padding: 0 3px 10px;
+      }
+
+      @media screen and (max-width: @screen-xxxs) {
+        .grid(12);
+        padding: 0 3px 10px;
+      }
+
+      .frame_calendar_event {
+        .grid(12);
+        .no-padding;
+        height: 100%;
+
+        .-eventLocationTime {
+          .grid(12);
+          height: 50px;
+          padding: 5px;
+        }
+
+        .-eventTitle {
+          .grid(12);
+          max-height: 56px;
+          padding: 5px;
+        }
+
+        .-eventDescription {
+          .grid(12);
+          height: 85px;
+          margin-top: -3px;
+          padding: 0 5px 5px;
+        }
+      }
+    }
+  }
+}
