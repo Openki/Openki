@@ -1,15 +1,17 @@
 .frame_calendar_date {
   .date {
     background: lighten(rgb(249, 143, 57), 25%);
-    border: 3px solid rgb(249, 143, 57);
-    border-left: none;
+    border-left: 10px solid rgb(249, 143, 57);
     font-size: large;
     text-align: center;
+
+    @media screen and (max-width: @screen-xxxs) {
+      border-left: none;
+      border-top: 10px solid rgb(249, 143, 57);
+    }
   }
 
   .frame_calendar_events {
-    border-top: 3px solid rgb(249, 143, 57);
-
     .frame_calendar_event_container {
       .frame_calendar_event {
         .transition(0.5s);
