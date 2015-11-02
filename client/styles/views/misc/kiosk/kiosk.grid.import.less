@@ -1,0 +1,130 @@
+.kiosk {
+	.grid(12);
+	margin-top: -25px;
+
+	a {
+		& > .calendar_event {
+			width: 100%;
+		}
+		.calendar_event {
+			.grid(12, 6, 3);
+			.no-padding;
+
+			.kiosk_event_header {
+				.grid(12);
+				padding-top: 10px;
+				padding-bottom: 10px;
+
+				.kiosk_event_date {
+					.grid(6);
+					.no-padding;
+				}
+
+				.kiosk_event_home {
+					.grid(6);
+					.no-padding;
+
+					span.glyphicon {
+						padding-right: 5px;
+					}
+				}
+			}
+
+			.course_event_title {
+				.grid(12);
+
+				& > h3 {
+					margin-top: 15px;
+				}
+			}
+			.course_event_desc {
+				.grid(12);
+			}
+		}
+	}
+
+	.kiosk_events_ongoing_container {
+		.grid(12);
+
+		h3 {
+			margin-top: 0;
+		}
+
+		.kiosk_events_ongoing_title {
+			.grid(6, 12);
+			.no-padding;
+		}
+
+		.kiosk_events_ongoing {
+			.grid(8);
+			.no-padding;
+			margin-left: -6px;
+
+			.calendar_event {
+				height: 200px;
+			}
+
+			.kiosk_event_header {
+				.kiosk_event_date {
+					.grid(12);
+					padding: 8px;
+				}
+
+				.kiosk_event_home {
+					.grid(12);
+					padding: 8px 8px 0;
+
+					span.glyphicon {
+						padding-right: 0;
+					}
+				}
+			}
+
+			.course_event_title {
+				h3 {
+					margin: 10px 0 10px 0;
+				}
+			}
+		}
+	}
+
+	.kiosk_events_container {
+		.grid(12);
+		padding-bottom: 50px;
+
+		.kiosk_events_title {
+			.grid(12);
+			.no-padding;
+		}
+
+		.kiosk_events {
+			.grid(12);
+			.no-padding;
+			margin-left: -6px;
+		}
+	}
+}
+
+
+.kiosk_header {
+	.grid(12);
+
+	h1 {
+		margin: 0;
+		padding-bottom: 15px;
+
+		a.dropdown-toggle {
+			padding-left: 30px;
+		}
+
+		ul.dropdown-menu {
+			left: 150px;
+		}
+	}
+}
+
+.course_event_detail {
+	.kiosk_header {
+		.no-padding;
+	}
+}
