@@ -119,7 +119,7 @@ Meteor.methods({
 		var expectedFields = {
 			title:       String,
 			description: String,
-			location:    String,
+			location:    Object,
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
@@ -129,7 +129,6 @@ Meteor.methods({
 			replicaOf:   Match.Optional(String),
 			course_id:	 Match.Optional(String),
 			groups:	     Match.Optional([String]),
-			loc:         Match.Optional(Object) // Dirty, should restrict to geojson
 		};
 		
 		var isNew = eventId === '';

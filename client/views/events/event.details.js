@@ -177,11 +177,10 @@ Template.event.events({
 			
 			/*create a new event for each time interval */
 			var replicaEvent = {
-
 				title: template.data.title,
 				description: template.data.description,
 				location: template.data.location,
-				room: template.data.room, //|| '',
+				room: template.data.room || '',
 				start: eventTime[0].toDate(),
 				end: eventTime[1].toDate(),
 				files: template.data.files  || new Array(),
