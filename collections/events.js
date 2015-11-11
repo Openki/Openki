@@ -39,6 +39,9 @@ mayEditEvent = function(user, event) {
 }
 
 affectedReplicaSelectors = function(event) {
+	// If the event itself is not in the DB, we don't expect it to have replicas
+	if (!$event._id) return { _id: -1 }; // Finds nothing
+
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
@@ -290,7 +293,7 @@ Meteor.methods({
 /* Find events for given filters
  *
  * filter: dictionary with filter options
- *   query: string of words to search for
+ *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date

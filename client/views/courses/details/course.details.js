@@ -37,7 +37,7 @@ Router.map(function () {
 							}
 						});
 					},
-					mf('course.name.placeholder', 'Name my course proposal')
+					mf('course.title.placeholder')
 				);
 				data.editableDescription = makeEditable(
 					course.description,

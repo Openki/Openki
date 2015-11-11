@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		<div class="col-sm-12">
-			<div class="col-xs-12 col-sm-6 no-padding-left">
+			<div class="col-xs-12 no-padding-left">
 				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -82,27 +82,27 @@
 					{{>eventDescritpionEdit description}}
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-6 no-padding-right">
-				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-file"></span>
-					</span>
-					<div id="edit_event_description" style="min-height: 10ex; position:relative">
-						<div style="float:left;width:70%;">
-							<input type="file" name="…" class="eventFileInput" id="edit_files">
-							<button style="display:none" type="button" class="eventFileUpload" role="button">
-								<span class="glyphicon glyphicon-edit"></span>
-								Start Upload
-							</button>
-						</div>
-						<div style="float:left;width:20%;">
-							<table class="file-list">
-								{{#each files}}
-								{{> eventAttachmentsEdit}}
-								{{/each}}
-							</table>
-						</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 ">
+			<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-file"></span>
+				</span>
+				<div id="edit_event_description" style="min-height: 10ex; position:relative">
+					<div style="float:left;width:70%;">
+						<input type="file" name="…" class="eventFileInput" id="edit_files">
+						<button style="display:none" type="button" class="eventFileUpload" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							Start Upload
+						</button>
+					</div>
+					<div style="float:left;width:20%;">
+						<table class="file-list">
+							{{#each files}}
+							{{> eventAttachmentsEdit}}
+							{{/each}}
+						</table>
 					</div>
 				</div>
 			</div>
@@ -274,7 +274,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" class="form-control replicate_start updateReplicas" value="{{isoDateFormat start}}" size="8">
+							<input type="date" class="form-control replicate_start updateReplicas" value="{{replicaStart}}" size="8">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-3">
@@ -283,7 +283,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<input type="date" class="form-control replicate_end updateReplicas" value="{{isoDateFormat end}}" size="8">
+							<input type="date" class="form-control replicate_end updateReplicas" value="{{replicaEnd}}" size="8">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-2">

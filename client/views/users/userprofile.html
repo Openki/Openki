@@ -71,12 +71,23 @@
 		</div>
 		{{/if}}
 
+		<h3>{{mf 'userprofile.groups.header' 'Groups'}}</h3>
 		{{#each inviteGroups}}
-			<div>
+			<div class="invite_group">
 				{{#if groupMember this ../user}}
-					{{mf 'profile.group.member' 'Member of group "{NAME}"' NAME=name}} <button class="expelFromGroup">{{mf 'profile.group.expel' 'Expel'}}</button>
+					{{mf 'profile.group.member' 'Member of group '}}
+					<span class="group">{{name}}</span>
+					&nbsp;
+					<button class="expelFromGroup">
+						{{mf 'profile.group.expel' 'Expel'}}
+					</button>
 				{{else}}
-					<button class="draftIntoGroup">{{mf 'profile.group.draft' 'Draft into group "{NAME}"' NAME=name}}</button>
+					<button class="draftIntoGroup">
+						<span class="fa fa-user-plus"></span>
+						&nbsp;
+						{{mf 'profile.group.draft' 'Draft into group '}}
+						{{name}}
+					</button>
 				{{/if}}
 			</div>
 		{{/each}}
