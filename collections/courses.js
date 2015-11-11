@@ -238,12 +238,10 @@ Meteor.methods({
 			}
 			
 			if (!subscriptionId) {
-				var newId = new Meteor.Collection.ObjectID();
-				subscriptionId = 'Anon_' + newId._str;
-				Meteor.call('insert_anonId', subscriptionId);
+				subscriptionId = Meteor.call('generateAnonId');
 			}
 		}
-		
+
 		if (!subscriptionId){
 			subscriptionId = user._id;
 		}
