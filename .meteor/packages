@@ -37,7 +37,6 @@ accounts-google
 standard-minifiers
 rzymek:moment-locale-da
 rzymek:moment-locale-ja
-ecmascript
 es5-shim
 okgrow:router-autoscroll
 meteorhacks:subs-manager

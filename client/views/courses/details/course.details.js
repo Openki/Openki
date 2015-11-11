@@ -7,7 +7,6 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				subs.subscribe('courseDetails', this.params._id),
-				subs.subscribe('eventsForCourse', this.params._id),
 				subs.subscribe('discussion', this.params._id),
 			];
 		},
@@ -38,7 +37,7 @@ Router.map(function () {
 							}
 						});
 					},
-					mf('course.name.placeholder', 'Name my course proposal')
+					mf('course.title.placeholder')
 				);
 				data.editableDescription = makeEditable(
 					course.description,

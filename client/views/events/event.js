@@ -69,6 +69,14 @@ Template.eventEdit.helpers({
 });
 
 Template.eventDisplay.helpers({
+	replicaStart: function() {
+		return moment.max(moment(this.start), moment()).format("YYYY-MM-DD");
+	},
+
+	replicaEnd: function() {
+		return moment.max(moment(this.start), moment()).add(1, 'week').format("YYYY-MM-DD");
+	},
+
 	isoDateFormat: function(date) {
 		return moment(date).format("YYYY-MM-DD");
 	},

@@ -35,7 +35,7 @@ Template.member_roles.helpers({
 					}
 				});
 			},
-			mf('roles.message.placeholder', 'Tell others about my interests')
+			mf('roles.message.placeholder', 'My interests...')
 		);
 	}
 });

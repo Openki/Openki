@@ -31,6 +31,9 @@ mayEditEvent = function(user, event) {
 }
 
 affectedReplicaSelectors = function(event) {
+	// If the event itself is not in the DB, we don't expect it to have replicas
+	if (!$event._id) return { _id: -1 }; // Finds nothing
+
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
@@ -227,7 +230,7 @@ Meteor.methods({
 /* Find events for given filters
  *
  * filter: dictionary with filter options
- *   query: string of words to search for
+ *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date
@@ -238,6 +241,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   course: only events for this course (ID)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -295,7 +299,11 @@ eventsFind = function(filter, limit) {
 	if (filter.group) {
 		find.groups = filter.group;
 	}
-	
+
+	if (filter.course) {
+		find.course_id = filter.course;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

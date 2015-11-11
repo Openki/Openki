@@ -89,9 +89,10 @@ mongo-id@1.0.1
 mongo-livedata@1.0.9
 msgfmt:core@2.0.0-preview.13
 msgfmt:extract@2.0.0-preview.9
-msgfmt:ui@2.0.0-preview.3
+msgfmt:ui@2.0.0-preview.5
 nemo64:bootstrap@3.3.5_2
 nemo64:bootstrap-data@3.3.5
+nicolaslopezj:router-layer@0.0.11
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 oauth@1.1.6

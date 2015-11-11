@@ -4,6 +4,35 @@
 	}
 }
 
+.switchDate {
+	.make-xs-column(12);
+	background-color: @brand-primary;
+	font-size: 32px;
+	color: white;
+	text-align:center;
+	margin: -15px 0 1em !important;
+
+	button{
+		.btn;
+		.btn-primary;
+		float: left;
+		margin: 3px;
+		margin-top: 6px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	&>.right{
+		float: right;
+	}
+}
+
 .calendar_eventlist {
 	margin-left: -20px;
 }

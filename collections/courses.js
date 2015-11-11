@@ -26,26 +26,28 @@ function addRole(course, role, user) {
 		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
 	);
 
-	Courses.update(
+	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$addToSet': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$addToSet': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("addRole affected "+result+" documents");
 }
 
 
 function removeRole(course, role, user) {
 	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$pull': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$pull': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("removeRole affected "+result+" documents");
 
 	// Housekeeping: Remove members that have no role left
 	Courses.update(
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
-	)
+	);
 }
 
 hasRole = function(members, role) {
@@ -201,7 +203,7 @@ if (Meteor.isServer) {
 			var course = Courses.findOne({_id: courseId});
 			if (!course) throw new Meteor.Error(404, "Course not found");
 
-			if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
+			if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
 
 			// do nothing if user is allready subscribed with this role
 			if (hasRoleUser(course.members, role, userId)) return true;
@@ -225,9 +227,7 @@ if (Meteor.isServer) {
 				}
 
 				if (!subscriptionId) {
-					var newId = new Meteor.Collection.ObjectID();
-					subscriptionId = 'Anon_' + newId._str;
-					Meteor.call('insert_anonId', subscriptionId);
+				subscriptionId = Meteor.call('generateAnonId');
 				}
 			}
 

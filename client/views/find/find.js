@@ -231,8 +231,9 @@ Template.find.onCreated(function() {
 	});
 });
 
-Template.find.rendered = function() {
-    var currentPath = Router.current().route.path(this)
-    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-    $('a[href="/"].nav_link').addClass('active');
-}
+Template.find.onRendered(function() {
+	var currentPath = Router.current().route.path(this)
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="/"].nav_link').addClass('active');
+	this.$('#find').focus();
+});
