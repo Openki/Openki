@@ -1,20 +1,7 @@
 "use strict";
 
-// The instance variables for editing are stored on the parent 'event'
-// template instance because that's where the event handlers are attached too.
-// The historical reason for this weird setup is that the event handlers
-// needed access to the instance variables to change state, 'editing' and
-// so forth. Improvements certainly possible but not a priority.
 Template.event.onCreated(function() {
 	var instance = this;
-	this.locationState = new ReactiveVar('selecting');
-
-	instance.whatLocation = function() {
-		var location = this.data.location;
-		if (location._id) return 'foreign';
-		if (location.name) return 'own';
-		return false;
-	}
 
 	// Tracked so that observe() will be stopped when the template is destroyed
 	instance.autorun(function() {
@@ -30,6 +17,18 @@ Template.event.onCreated(function() {
 	});
 });
 
+
+Template.eventEdit.onCreated(function() {
+	var instance = this;
+	instance.locationState = new ReactiveVar('selecting');
+
+	instance.whatLocation = function() {
+		var location = this.data.location;
+		if (location._id) return 'foreign';
+		if (location.name) return 'own';
+		return false;
+	};
+});
 
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
@@ -76,23 +75,23 @@ Template.eventEdit.helpers({
 	},
 
 	locationStateShow: function() {
-		return Template.instance().parentInstance().locationState.get() == 'show';
+		return Template.instance().locationState.get() == 'show';
 	},
 
 	locationStateSelect: function() {
-		return Template.instance().parentInstance().locationState.get() == 'select';
+		return Template.instance().locationState.get() == 'select';
 	},
 
 	locationStateAdd: function() {
-		return Template.instance().parentInstance().locationState.get() == 'add';
+		return Template.instance().locationState.get() == 'add';
 	},
 
 	locationIsSet: function() {
-		return !!Template.instance().parentInstance().whatLocation();
+		return !!Template.instance().whatLocation();
 	},
 
 	allowPlacing: function() {
-		var locationState = Template.instance().parentInstance().locationState;
+		var locationState = Template.instance().locationState;
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
@@ -170,7 +169,7 @@ var updateTimes = function(template, updateEnd) {
 	template.$('#edit_event_duration').val(duration.toString());
 }
 
-// As explained above the event handlers are attached to the parent 'event' instance
+// The event handlers are attached to the parent 'event' instance
 // so they have access to state variable 'editing'.
 Template.event.events({
 	'change .eventFileInput': function(event, template) {
@@ -352,7 +351,9 @@ Template.event.events({
 	'change #edit_event_endtime': function(event, template) {
 		updateTimes(template, false);
 	},
+});
 
+Template.eventEdit.events({
 	'click .-addressSearch': function(event, template) {
 		var search = template.$('.-locationAddress').val();
 		var nominatimQuery = {
@@ -371,6 +372,9 @@ Template.event.events({
 			].join(',');
 			nominatimQuery.bounded = 1;
 		}
+
+		var markers = template.parentInstance().markers;
+
 		HTTP.get('https://nominatim.openstreetmap.org', {
 			params:  nominatimQuery
 		}, function(error, result) {
@@ -381,12 +385,12 @@ Template.event.events({
 
 			var found = JSON.parse(result.content);
 
-			template.markers.remove({ proposed: true });
+			markers.remove({ proposed: true });
 			if (found.length == 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
 			_.each(found, function(foundLocation) {
 				var marker = foundLocation.geojson;
 				marker.proposed = true;
-				template.markers.insert(marker);
+				markers.insert(marker);
 			});
 		});
 	},
@@ -395,7 +399,9 @@ Template.event.events({
 		var newState = instance.whatLocation() == 'own' ? 'add' : 'select';
 		instance.locationState.set(newState);
 	},
-
+	'click .-locationReset': function(event, instance) {
+		instance.locationState.set('select');
+	},
 	'click .-locationAdd': function(event, instance) {
 		instance.locationState.set('add');
 	}
