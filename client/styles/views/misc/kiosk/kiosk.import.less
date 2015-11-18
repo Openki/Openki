@@ -1,9 +1,4 @@
 .kiosk {
-	.make-sm-column(12);
-	.make-xs-column(12);
-	margin-top: -15px;
-	padding: 0 40px;
-
 	.kioskEvent {
 		.make-md-column(3);
 		.make-xs-column(12);
@@ -38,62 +33,34 @@
 			}
 
 			.kiosk_event_header {
-				.make-sm-column(12);
-				.make-xs-column(12);
 				background: @brand-success;
+				border-bottom: 3px solid @body-bg;
+				color: @gray-base;
 				font-size: large;
 				color: @gray-base;
 				padding-top: 10px;
 				padding-bottom: 10px;
 				border-bottom: 3px solid @body-bg;
 
-				.kiosk_event_date {
-					.make-sm-column(6);
-					.make-xs-column(6);
-					.no-padding;
-				}
 
 				.kiosk_event_home {
-					.make-sm-column(6);
-					.make-xs-column(6);
-					.no-padding;
 					text-align: right;
-
-					span.glyphicon {
-						padding-right: 5px;
-					}
 				}
 			}
 
 			.course_event_title {
-				.make-sm-column(12);
-				.make-xs-column(12);
-
 				& > h3 {
-					margin-top: 15px;
 					color: @gray-base;
 				}
-			}
-			.course_event_desc {
-				.make-sm-column(12);
-				.make-sm-column(12);
 			}
 		}
 	}
 
 	.kiosk_events_ongoing_container {
-		.make-sm-column(12);
-		.make-xs-column(12);
-		h3 {
-			margin-top: 0;
-		}
 		height: 250px;
 		overflow: hidden;
 
 		.kiosk_events_ongoing {
-
-			margin-left: -6px;
-
 			.kioskEvent {
 				.make-sm-column(2);
 				.make-xs-column(4);
@@ -103,7 +70,6 @@
 			}
 
 			.calendar_event {
-
 				height: 200px;
 				background: rgba(250,150,00,0.3);
 			}
@@ -112,47 +78,13 @@
 				background: rgba(200,250,00,0.2);
 				.kiosk_event_date {
 					border: 1px solid @body-bg;
-					padding: 8px;
 					border-radius: 1px !important;
 				}
 
 				.kiosk_event_home {
-					.make-sm-column(12);
-					.make-xs-column(12);
-					.no-padding;
 					text-align: left;
-
-					span.glyphicon {
-						padding-right: 0;
-					}
 				}
 			}
-
-			.course_event_title {
-				h3 {
-					margin: 10px 0 10px 0;
-				}
-			}
-		}
-	}
-
-	.kiosk_events_container {
-		.make-sm-column(12);
-		.make-xs-column(12);
-		padding-bottom: 50px;
-
-		.kiosk_events_title {
-			.make-sm-column(12);
-			.make-xs-column(12);
-			.no-padding;
-		}
-
-		.kiosk_events {
-			.make-sm-column(12);
-			.make-xs-column(12);
-			.no-padding;
-			margin-left: -6px;
-
 		}
 	}
 
@@ -166,30 +98,18 @@
 
 
 .kiosk_header {
-	.make-sm-column(12);
-	.make-xs-column(12);
-
 	h1 {
-		margin: 0;
-		padding-bottom: 15px;
 		a.dropdown-toggle {
-			padding-left: 30px;
 			font-size: large;
 
 			&:focus {
 				text-decoration: none;
 			}
 		}
+		
 		ul.dropdown-menu {
-			left: 150px;
 			z-index: 1030;
 		}
-	}
-}
-
-.course_event_detail {
-	.kiosk_header {
-		.no-padding;
 	}
 }
 // #backToKiosk {

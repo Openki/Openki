@@ -31,6 +31,9 @@ mayEditEvent = function(user, event) {
 }
 
 affectedReplicaSelectors = function(event) {
+	// If the event itself is not in the DB, we don't expect it to have replicas
+	if (!event._id) return { _id: -1 }; // Finds nothing
+
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;

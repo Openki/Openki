@@ -1,6 +1,5 @@
 <template name="kioskLayout">
 			{{#if showKioskCalendar}}
-				<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
 				<a id ="backToKiosk" href="{{pathFor 'kiosk'}}" class="pull-right">
 					<span class="glyphicon glyphicon-share-alt"></span>&nbsp;
 					{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
@@ -11,8 +10,7 @@
 </template>
 
 <template name="kioskEvents">
-	<div class="kiosk"><!-- 
-		<img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche" width="30%" style="top:20px"/> -->
+	<div class="kiosk">
 		<div class="kiosk_header">
 			<div style='float:right'>
 				<h2 style='display:inline'>{{showTime}}</h2> &nbsp;&nbsp; <h4 style='display:inline'>{{showDate}}</h4>
@@ -27,12 +25,7 @@
 				{{> lang_sel}}
 			</h1>
 
-			<!-- <img src="http://www.nachhaltigkeitswoche.ch/site/templates/images/logo.png" alt="Logo der Nachhaltigkeitswoche"/> -->
 		</div>
-			<!-- <a id="switch" href="{{pathFor 'kioskCalendar'}}">
-				<span class="glyphicon glyphicon-calendar"></span>
-				{{mf 'kiosk.calendar_link' 'view in Calendar mode'}}
-			</a> -->
 		<div class="kiosk_events_ongoing_container">
 			{{#if now.count}}
 			<div class="kiosk_events_ongoing_title">
@@ -61,7 +54,7 @@
 				<hr>
 				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
 			</div>
-			<div class="kiosk_events"> 
+			<div class="kiosk_events">
 				{{#each future}}
 					{{> kioskEventFuture}}
 				{{else}}
@@ -189,4 +182,3 @@
 	</div>
 {{/if}}
 </template>
-
