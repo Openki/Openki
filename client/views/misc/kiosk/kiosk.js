@@ -119,8 +119,11 @@ Template.kioskEventFuture.helpers({
 
 
 Template.kioskEventOngoing.rendered = function() {
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 30,
+	});
 	this.$('.ellipsis').dotdotdot({
-		height: 70,
+		height: 90,
 	});
 };
 Template.kioskEventToday.rendered = function() {

@@ -69,7 +69,9 @@
 <template name="kioskEventOngoing">
 	<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
-			{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
+			<div class="statingIn">
+				{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
+			</div>
 			<div class="kiosk_event_header">
 					<span class="glyphicon glyphicon-time"></span>
 					{{timeformat start}} - {{timeformat end}}
@@ -102,7 +104,9 @@
 <template name="kioskEventToday">
 		<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
-			&nbsp;{{dateformat_fromnow start}}<br>
+			<div class="statingIn">
+				{{dateformat_fromnow start}}
+			</div>
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-time"></span>
