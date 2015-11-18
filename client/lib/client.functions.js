@@ -161,7 +161,8 @@ Handlebars.registerHelper('dateformat_mini_fullmonth', function(date) {
 });
 
 Handlebars.registerHelper('timeformat', function(date) {
-	if (date) return moment(date).format('HH:mm');
+	Session.get('timeLocale');
+	if (date) return moment(date).format('LT');
 });
 
 Handlebars.registerHelper('fromNow', function(date) {
