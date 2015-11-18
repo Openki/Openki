@@ -140,11 +140,10 @@
 <template name="kioskEventFuture">
 		<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
-			&nbsp;{{dateformat_fromnow start}}<br>
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
-					<span class="glyphicon glyphicon-time"></span>
-					{{dateformat start}} - {{dateformat end}}
+					<span class="glyphicon glyphicon-calendar"></span>
+					{{dateformat start}} {{timeformat start}}
 				</div>
 				<div class="kiosk_event_home">
 					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
