@@ -6,16 +6,21 @@ LocationTracker = function() {
 		setLocation: function(location) {
 			markers.remove({ main: true });
 			if (location && location.loc) {
-				var loc = $.extend(location.loc, { main: true });
-				delete loc._id;
-				markers.insert(loc);
+				markers.insert({
+					loc: location.loc,
+					main: true
+				});
 			}
 		},
-		setRegion: function(region) {
+		setRegion: function(regionId) {
+			var region = Regions.findOne(regionId);
+
 			markers.remove({ center: true });
 			if (region && region.loc) {
-				var center = $.extend(region.loc, { center: true })
-				markers.insert(center);
+				markers.insert({
+					loc: region.loc,
+					center: true
+				});
 			}
 		}
 	};

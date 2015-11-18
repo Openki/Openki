@@ -10,8 +10,7 @@ Template.eventEditLocation.onCreated(function() {
 	instance.region = false;
 	instance.autorun(function() {
 		var regionId = instance.parent.selectedRegion.get();
-		instance.region = Regions.findOne(regionId);
-		instance.locationTracker.setRegion();
+		instance.locationTracker.setRegion(regionId);
 	});
 
 	instance.autorun(function() {
@@ -26,9 +25,8 @@ Template.eventEditLocation.onCreated(function() {
 			added: function(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
 				// store it as new location for the event
-				var loc = $.extend(mark, { selected: false, proposed: false });
 				var updLocation = instance.parent.selectedLocation.get();
-				updLocation.loc = loc;
+				updLocation.loc = mark.loc;
 				instance.parent.selectedLocation.set(updLocation);
 
 				instance.locationTracker.markers.remove({ proposed: true });
@@ -106,9 +104,11 @@ Template.eventEditLocation.events({
 			format: 'json',
 			q: search,
 			limit: 10,
-			polygon_geojson: 1
 		};
-		var region = instance.region;
+
+		var markers = instance.locationTracker.markers;
+
+		var region = markers.findOne({ center: true });
 		if (region && region.loc) {
 			nominatimQuery.viewbox = [
 				region.loc.coordinates[0]-0.1,
@@ -119,7 +119,6 @@ Template.eventEditLocation.events({
 			nominatimQuery.bounded = 1;
 		}
 
-		var markers = instance.locationTracker.markers;
 
 		HTTP.get('https://nominatim.openstreetmap.org', {
 			params:  nominatimQuery
@@ -134,9 +133,11 @@ Template.eventEditLocation.events({
 			markers.remove({ proposed: true });
 			if (found.length == 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
 			_.each(found, function(foundLocation) {
-				var marker = foundLocation.geojson;
-				marker.proposed = true;
-				marker.name = foundLocation.display_name;
+				var marker = {
+					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},
+					proposed: true,
+					name: foundLocation.display_name
+				};
 				instance.locationTracker.markers.insert(marker);
 			});
 		});
@@ -157,7 +158,7 @@ Template.eventEditLocation.events({
 
 	'click .-locationCandidate': function(event, instance) {
 		var updLocation = instance.parent.selectedLocation.get();
-		updLocation.loc = this;
+		updLocation.loc = this.loc;
 		instance.parent.selectedLocation.set(updLocation);
 
 		instance.locationTracker.markers.remove({ proposed: true });

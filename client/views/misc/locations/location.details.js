@@ -36,17 +36,20 @@ Template.locationDetails.onCreated(function() {
 	this.setLocation = function(location) {
 		markers.remove({ main: true });
 		if (location && location.loc) {
-			var loc = $.extend(location.loc, { main: true });
-			delete loc._id;
-			markers.insert(loc);
+			markers.insert({
+				loc: location.loc,
+				main: true
+			});
 		}
 	}
 
 	this.setRegion = function(region) {
 		markers.remove({ center: true });
 		if (region && region.loc) {
-			var center = $.extend(region.loc, { center: true })
-			markers.insert(center);
+			markers.insert({
+				loc: region.loc,
+				center: true
+			});
 		}
 	}
 });

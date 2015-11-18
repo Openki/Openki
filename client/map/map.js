@@ -75,9 +75,9 @@ Template.map.onRendered(function() {
 			added: function(mark) {
 				// Marks that have the center flage set are not displayed but used for anchoring the map
 				if (mark.center) {
-					centers[mark._id] = L.geoJson(mark).getBounds();
+					centers[mark._id] = L.geoJson(mark.loc).getBounds();
 				} else {
-					var marker = L.geoJson(mark, {
+					var marker = L.geoJson(mark.loc, {
 						pointToLayer: function(feature, latlng) {
 							var options = mark.proposed ? geojsonProposedMarkerOptions : geojsonMarkerOptions;
 							var marker = L.circleMarker(latlng, options);
