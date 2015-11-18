@@ -2,47 +2,20 @@
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
-	var instance = this;
 	this.editing = new ReactiveVar(false);
-
-	var markers = new Meteor.Collection(null);
-	instance.markers = markers;
-
-	instance.setLocation = function(location) {
-		markers.remove({ main: true });
-		if (location && location.loc) {
-			var loc = $.extend(location.loc, { main: true });
-			delete loc._id;
-			markers.insert(loc);
-		}
-	}
-
-	instance.setRegion = function(region) {
-		markers.remove({ center: true });
-		instance.region = region;
-		if (region && region.loc) {
-			var center = $.extend(region.loc, { center: true })
-			markers.insert(center);
-		}
-	}
 });
 
 
-Template.event.onRendered(function() {
-	var instance = this;
-
-	var region = Regions.findOne(instance.data.region);
-	instance.setRegion(region);
-
-});
-
-
-Template.eventDisplay.created = function() {
+Template.eventDisplay.onCreated(function() {
+	this.locationTracker = LocationTracker();
 	this.replicaDates = new ReactiveVar([]);
-}
+});
 
 
 Template.eventDisplay.onRendered(function() {
+	this.locationTracker.setRegion(this.data.region);
+	this.locationTracker.setLocation(this.data.location);
+
 	updateReplicas(this);
 });
 
@@ -97,7 +70,7 @@ Template.eventDisplay.helpers({
 		return mayEditEvent(Meteor.user(), this);
 	},
 	eventMarkers: function() {
-		return Template.instance().parentInstance().markers;
+		return Template.instance().locationTracker.markers;
 	}
 });
 
