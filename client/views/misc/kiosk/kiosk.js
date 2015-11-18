@@ -97,19 +97,44 @@ Template.kioskEvents.helpers({
 });
 
 
-Template.kioskEvent.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
-	}
-});
+
 Template.kioskEventOngoing.helpers({
 	showLocations: function() {
 		return (!Router.current().params.query.location)
 	}
 });
+Template.kioskEventToday.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+Template.kioskEventFuture.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
 
 
-Template.kioskEvent.rendered = function() {
+
+
+
+Template.kioskEventOngoing.rendered = function() {
+	this.$('.ellipsis').dotdotdot({
+		height: 70,
+	});
+};
+Template.kioskEventToday.rendered = function() {
+	this.$('.course_event_title').dotdotdot({
+		height: 70,
+	})
+	this.$('.course_event_desc').dotdotdot({
+		//
+	});
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 60,
+	});
+};
+Template.kioskEventFuture.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,
 	})
@@ -121,11 +146,6 @@ Template.kioskEvent.rendered = function() {
 	});
 };
 
-Template.kioskEventOngoing.rendered = function() {
-	this.$('.ellipsis').dotdotdot({
-		height: 80,
-	});
-};
 
 Template.kioskLink.helpers({
 	link: function() {
