@@ -180,8 +180,13 @@
 
 <template name="kioskLink">
 {{#if link}}
-	<div class="container-fluid links" style="position: fixed; bottom: 4em; right: 2em; ">
-		<a href="{{link}}">{{mf 'backToKiosk' 'Return to overview'}}</a>
+	<div class="container-fluid backToKioskLink" style="position: fixed; bottom: 4em; right: 2em; ">
+		<a href="{{link}}">
+			<span class="fa fa-circle"> </span>
+			<div class="text">
+				{{mf 'backToKiosk' 'Return to overview'}}
+			</div>
+		</a>
 	</div>
 {{/if}}
 </template>

@@ -116,15 +116,36 @@
 		}
 	}
 }
-// #backToKiosk {
-// 	font-size: large;
-// 	padding-top: 80px;
-// }
 
-// a#switch {
-	// 	font-size: large;
-	// }
+.backToKioskLink {
+	a {
+		.text{
+			text-decoration: none;
+			font-size: large;
+			color: black;
+			position: absolute;
+			right: 38px;
+			bottom: 0px;
+			text-align: center;
+		}
 
-// a#backToKiosk:hover {
-// 	text-decoration: none;
-// }
+		.fa{
+			position: absolute;
+			right: 0px;
+			bottom: -45px;
+			color: black;
+			opacity: 0.4;
+			font-size: 12em;
+		}
+
+		&:hover {
+			.text{
+				text-decoration: none;
+				color: white;
+			}
+			.fa{
+				opacity: 0.5;
+			}
+		}
+	}
+}
