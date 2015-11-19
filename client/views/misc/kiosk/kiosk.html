@@ -52,7 +52,11 @@
 					{{> kioskEventToday}}
 				{{/each}}
 			</div>
-			{{/if}}
+		</div>
+		{{/if}}
+
+		{{#if future.count}}
+		<div class="kiosk_events_container">
 			<div class="kiosk_events_title">
 				<hr>
 				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
@@ -65,6 +69,7 @@
 				{{/each}}
 			</div>
 		</div>
+		{{/if}}
 	</div>
 </template>
 
