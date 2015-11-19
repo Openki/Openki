@@ -5,9 +5,7 @@ Template.eventEditLocation.onCreated(function() {
 	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
 
 	instance.locationTracker = LocationTracker();
-	var location = instance.parentInstance().selectedLocation;
 
-	instance.region = false;
 	instance.autorun(function() {
 		var regionId = instance.parent.selectedRegion.get();
 		instance.locationTracker.setRegion(regionId);
