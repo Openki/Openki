@@ -2,7 +2,7 @@
 
 Router.map(function() {
 	this.route('locationDetails', {
-		path: 'venue/:_id/:location?',
+		path: 'venue/:_id/:name?',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('locationDetails', this.params._id),

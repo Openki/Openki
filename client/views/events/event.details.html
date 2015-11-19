@@ -44,7 +44,8 @@
 					<div class="course_event_time">
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
 						{{#if location.name}}
-							<br><span class="glyphicon glyphicon-home"></span> {{location.name}}
+							<br>
+							<a href="{{pathFor 'locationDetails' data=location}}"><span class="glyphicon glyphicon-home"></span> {{location.name}}</a>
 							{{#if room}} - {{room}}{{/if}}
 						{{/if}}
 					</div>
