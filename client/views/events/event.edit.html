@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="col-sm-12">
-			<div class="col-xs-12 no-padding-left">
+			<div class="col-xs-12 no-padding">
 				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -80,10 +80,8 @@
 			</div>
 		</div>
 
-		<div class="col-sm-12 no-padding">
-
 		{{#if showRegionSelection}}
-			<div class="col-xs-12 col-sm-4">
+			<div class="col-xs-12 col-sm-4" style="float: right">
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
 				<div class="styled-select">
 					<select name='region' class="region_select">
@@ -96,6 +94,8 @@
 				</div>
 			</div>
 		{{/if}}
+
+		<div class="col-sm-12 no-padding">
 
 			{{>eventEditLocation}}
 
