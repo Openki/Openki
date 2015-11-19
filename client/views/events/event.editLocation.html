@@ -10,14 +10,16 @@
 			{{location.name}}
 			{{#if location.address}}<div style="font-size: small">{{location.address}}</div>{{/if}}
 	{{else}}
+			<h5>{{mf "event.edit.changingLocation.title" "Select location"}}</h5>
 			<input type="text" class="form-control -locationName" size="40" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Name of the location"}}"/>
 		{{#if locationStateAdd}}
 			<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address of the location"}}"/>
-			<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search">{{mf 'event.edit.addressSearch' "Search address on map"}}</span></button>
+			<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search address on map"}}</button>
 		{{else}}
 				<button type="button" class="-locationAdd">{{mf 'event.edit.LocationAdd' "Add new address"}}</button>
 		{{/if}}
 			{{#if locationIsSet}}<button type="button" class="-locationReset">{{mf 'event.edit.locationReset' "Never mind"}}</button>{{/if}}
+			{{#if locationChanged}}<button type="button" class="-locationSave">{{mf 'event.edit.locationSave' "Done"}}</button>{{/if}}
 			<ul>
 			{{#each locationCandidates}}
 				<li class="-locationCandidate">

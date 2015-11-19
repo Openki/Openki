@@ -80,6 +80,10 @@ Template.eventEditLocation.helpers({
 		return !Template.instance().locationIs('unset');
 	},
 
+	locationChanged: function() {
+		return true; // for now
+	},
+
 	eventMarkers: function() {
 		return Template.instance().locationTracker.markers;
 	},
@@ -149,6 +153,10 @@ Template.eventEditLocation.events({
 	},
 
 	'click .-locationReset': function(event, instance) {
+		instance.locationState.set('show');
+	},
+
+	'click .-locationSave': function(event, instance) {
 		instance.locationState.set('show');
 	},
 
