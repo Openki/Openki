@@ -35,6 +35,15 @@ Template.map.onRendered(function() {
 		fillOpacity: 0.6
 	};
 
+	var geojsonCandidateMarkerOptions = {
+		radius: 10,
+		fillColor: "#00ff00",
+		color: "#000",
+		weight: 1.5,
+		opacity: 0.9,
+		fillOpacity: 0.6
+	};
+
 	var geojsonProposedMarkerOptions = {
 		radius: 8,
 		fillColor: "#12f",
@@ -79,7 +88,10 @@ Template.map.onRendered(function() {
 				} else {
 					var marker = L.geoJson(mark.loc, {
 						pointToLayer: function(feature, latlng) {
-							var options = mark.proposed ? geojsonProposedMarkerOptions : geojsonMarkerOptions;
+							var options = geojsonMarkerOptions;
+							if (mark.proposed) options = geojsonProposedMarkerOptions;
+							if (mark.candidate) options = geojsonCandidateMarkerOptions;
+
 							var marker = L.circleMarker(latlng, options);
 							// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
 							marker.on('click', function() {

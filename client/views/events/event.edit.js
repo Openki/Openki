@@ -3,13 +3,11 @@
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
-	instance.selectedRegion = new ReactiveVar();
-	instance.selectedLocation = new ReactiveVar();
+	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
+	instance.selectedLocation = new ReactiveVar(this.data.location || {});
 });
 
 Template.eventEdit.onRendered(function() {
-	this.selectedRegion.set(this.data.region || Session.get('region'));
-	this.selectedLocation.set(this.data.location || {});
 	updateTimes(this, false);
 });
 

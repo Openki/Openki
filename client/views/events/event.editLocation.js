@@ -5,6 +5,8 @@ Template.eventEditLocation.onCreated(function() {
 	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
 
 	instance.locationTracker = LocationTracker();
+	instance.changed = new ReactiveVar(false);
+	instance.location = new ReactiveVar();
 
 	instance.autorun(function() {
 		var regionId = instance.parent.selectedRegion.get();
@@ -12,9 +14,14 @@ Template.eventEditLocation.onCreated(function() {
 	});
 
 	instance.autorun(function() {
-		var location = instance.parent.selectedLocation.get();
-
-		instance.locationTracker.setLocation(location);
+		if (!instance.changed.get()) {
+			var originalLocation = instance.parent.selectedLocation.get();
+			instance.location.set(originalLocation);
+			instance.locationTracker.setLocation(originalLocation);
+		} else {
+			var location = instance.location.get();
+			if (location.loc) instance.locationTracker.markers.insert({ candidate: true, loc: location.loc });
+		}
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
@@ -23,10 +30,10 @@ Template.eventEditLocation.onCreated(function() {
 			added: function(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
 				// store it as new location for the event
-				var updLocation = instance.parent.selectedLocation.get();
+				var updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
-				instance.parent.selectedLocation.set(updLocation);
-
+				instance.location.set(updLocation);
+				instance.changed.set(true);
 				instance.locationTracker.markers.remove({ proposed: true });
 			},
 		});
@@ -36,8 +43,8 @@ Template.eventEditLocation.onCreated(function() {
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
 	instance.locationIs = function(type) {
-		var location = instance.parentInstance().selectedLocation.get();
-		if (!location) return 'unset' === location;
+		var location = instance.location.get();
+		if (!location) return 'unset' === type;
 		if (location._id) return 'preset' === type;
 		if (location.name) return 'own' === type;
 		return 'unset' === type;
@@ -47,12 +54,19 @@ Template.eventEditLocation.onCreated(function() {
 	//  show: show the selected location
 	//  select: select a predefined location (from Locations)
 	//  add: add address and coordinates manually
-	instance.locationState = new ReactiveVar('show');
-	instance.autorun(function() {
-		instance.locationState.set(
-			instance.locationIs('unset') ? 'select' : 'show'
-		);
-	});
+	instance.locationState = new ReactiveVar(instance.locationIs('unset') ? 'select' : 'show');
+
+	instance.reset = function() {
+		instance.locationState.set('show');
+		instance.locationTracker.markers.remove({ proposed: true });
+		instance.locationTracker.markers.remove({ candidate: true });
+		instance.changed.set(false);
+	};
+
+	instance.save = function() {
+		instance.parent.selectedLocation.set(instance.location.get());
+		instance.reset();
+	}
 });
 
 
@@ -79,7 +93,7 @@ Template.eventEditLocation.helpers({
 	},
 
 	locationChanged: function() {
-		return true; // for now
+		return Template.instance().changed.get();
 	},
 
 	eventMarkers: function() {
@@ -151,11 +165,11 @@ Template.eventEditLocation.events({
 	},
 
 	'click .-locationReset': function(event, instance) {
-		instance.locationState.set('show');
+		instance.reset();
 	},
 
 	'click .-locationSave': function(event, instance) {
-		instance.locationState.set('show');
+		instance.save();
 	},
 
 	'click .-locationAdd': function(event, instance) {
@@ -163,10 +177,10 @@ Template.eventEditLocation.events({
 	},
 
 	'click .-locationCandidate': function(event, instance) {
-		var updLocation = instance.parent.selectedLocation.get();
+		var updLocation = instance.location.get();
 		updLocation.loc = this.loc;
-		instance.parent.selectedLocation.set(updLocation);
-
+		instance.location.set(updLocation);
+		instance.changed.set(true);
 		instance.locationTracker.markers.remove({ proposed: true });
 	}
 });
