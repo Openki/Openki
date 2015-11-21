@@ -18,9 +18,14 @@
 			</div>
 
 			<h1><b>
-				{{#if filter.group}} {{groupShort filter.group}}
-				{{else}} {{#if filter.location}} {{filter.location}}
-				{{else}} Openki {{/if}} {{/if}}
+				{{#if filter.group}}
+					<a href="/find?group={{filter.group}}">{{groupShort filter.group}}</a>
+					{{else}} {{#if filter.location}}
+						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
+						{{else}}
+							<a href="{{pathFor 'home'}}">Openki</a>
+					{{/if}}
+				{{/if}}
 			</b>
 				{{> lang_sel}}
 			</h1>
