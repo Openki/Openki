@@ -19,7 +19,11 @@
 
 			<h1><b>
 				{{#if filter.group}}
-					<a href="/find?group={{filter.group}}">{{groupShort filter.group}}</a>
+					<a href="/find?group={{filter.group}}">{{groupShort filter.group}}
+						{{#if groupLogo filter.group}}
+							&nbsp;&nbsp;<img src="{{groupLogo filter.group}}" width='50'>
+						{{/if}}
+					</a>
 					{{else}} {{#if filter.location}}
 						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
 						{{else}}

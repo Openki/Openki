@@ -209,3 +209,16 @@ Handlebars.registerHelper('groupShort', function(groupId) {
 	if (group) return group.short;
 	return "";
 });
+
+Handlebars.registerHelper('groupLogo', function(groupId) {
+	var instance = Template.instance();
+	instance.subscribe('group', groupId);
+
+	var group = Groups.findOne({ _id: groupId });
+	if (group) {
+		if (group.logo){
+			return group.logo;
+		} return "";
+	}
+	return "";
+});
