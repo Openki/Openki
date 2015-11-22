@@ -164,5 +164,11 @@ Template.kioskLink.helpers({
 		}
 
 		return Router.url('kiosk', {}, options);
+	},
+});
+
+Template.kioskLink.events({
+	'click .-removeBackLink': function() {
+		return Session.set('kioskFilter', false);
 	}
 });
