@@ -3408,66 +3408,18 @@ mfPkg.syncAll({
       "template": "frameCalendar",
       "_id": "Kqp3DY8Z7b82BDTFF"
     },
-    "location.details.title": {
-      "key": "location.details.title",
-      "lang": "en",
-      "text": "Location details",
-      "ctime": "2015-11-19T03:47:46.000Z",
-      "mtime": "2015-11-19T03:47:46.000Z",
-      "revisionId": "mxKnrPC2Pt8h7TLf6",
-      "file": "client/views/misc/locations/location.details.html",
-      "line": 2,
-      "template": "locationDetails",
-      "_id": "QuBSH3oT2aT34cpnd"
-    },
     "location.details.map": {
       "key": "location.details.map",
       "lang": "en",
       "text": "Map:",
       "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T04:07:39.564Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "m7ejJNDzHA3HTtzZr",
       "file": "client/views/misc/locations/location.details.html",
       "line": 33,
       "template": "locationDetails",
       "removed": true,
       "_id": "YDat2dyG36hd8qXrH"
-    },
-    "event.replication.interval.start": {
-      "key": "event.replication.interval.start",
-      "lang": "en",
-      "text": "Interval Start",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "REiWdkBby8f5i8w32",
-      "file": "client/views/events/event.details.html",
-      "line": 103,
-      "template": "eventPage",
-      "_id": "rwnCFtWBd7uDiSB8x"
-    },
-    "event.removed": {
-      "key": "event.removed",
-      "lang": "en",
-      "text": "Successfully removed event \"{TITLE}\".",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "fJsqz8HJGWyesFydv",
-      "file": "client/views/events/event.details.js",
-      "line": 128,
-      "func": "function (error, eventRemoved)",
-      "_id": "J25HirmDvvRfcT4j2"
-    },
-    "course.event.edit.files": {
-      "key": "course.event.edit.files",
-      "lang": "en",
-      "text": "Files: (optional)",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "hFkZLCKrHFu7i9r6m",
-      "file": "client/views/events/event.edit.html",
-      "line": 59,
-      "template": "eventEdit",
-      "_id": "S5TwSuCxp85gLkvM2"
     },
     "profile.group.member": {
       "key": "profile.group.member",
@@ -3480,6 +3432,54 @@ mfPkg.syncAll({
       "line": 78,
       "template": "profilelink",
       "_id": "c8ZwdAHuPNRaC9BcL"
+    },
+    "location.details.title": {
+      "key": "location.details.title",
+      "lang": "en",
+      "text": "Location details",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "mxKnrPC2Pt8h7TLf6",
+      "file": "client/views/misc/locations/location.details.html",
+      "line": 2,
+      "template": "locationDetails",
+      "_id": "QuBSH3oT2aT34cpnd"
+    },
+    "course.event.edit.files": {
+      "key": "course.event.edit.files",
+      "lang": "en",
+      "text": "Files: (optional)",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "hFkZLCKrHFu7i9r6m",
+      "file": "client/views/events/event.html",
+      "line": 89,
+      "template": "eventPage",
+      "_id": "H6w9AJoqj4CkDdGuB"
+    },
+    "event.replication.interval.start": {
+      "key": "event.replication.interval.start",
+      "lang": "en",
+      "text": "Interval Start",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "REiWdkBby8f5i8w32",
+      "file": "client/views/events/event.html",
+      "line": 247,
+      "template": "eventPage",
+      "_id": "ExKKCvTo79vZdvp7j"
+    },
+    "event.removed": {
+      "key": "event.removed",
+      "lang": "en",
+      "text": "Successfully removed event \"{TITLE}\".",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "fJsqz8HJGWyesFydv",
+      "file": "client/views/events/event.js",
+      "line": 221,
+      "func": "function (error, eventRemoved)",
+      "_id": "Msip2aQmfwZhvSF8m"
     },
     "course.discussion.anon": {
       "key": "course.discussion.anon",
@@ -3889,7 +3889,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "and ends",
       "ctime": "2015-10-21T22:42:31.000Z",
-      "mtime": "2015-11-19T04:13:35.081Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "HaG72PTrJoaRTirnM",
       "file": "client/views/misc/kiosk/kiosk.html",
       "line": 102,
@@ -4378,7 +4378,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "Describe your idea Here",
       "ctime": "2015-09-22T21:56:45.000Z",
-      "mtime": "2015-11-19T02:09:19.582Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "x6bbdmK7HjPgMjXxu",
       "file": "client/views/courses/details/course.edit.html",
       "line": 15,
@@ -4607,18 +4607,6 @@ mfPkg.syncAll({
       "removed": true,
       "_id": "Dz4Wfx8zKJK7DkifR"
     },
-    "locations.list.title": {
-      "key": "locations.list.title",
-      "lang": "en",
-      "text": "Rooms",
-      "ctime": null,
-      "mtime": "2015-11-19T03:47:46.000Z",
-      "revisionId": "oFDgf78MpjpY87hcK",
-      "file": "client/views/misc/locations/location.list.html",
-      "line": 3,
-      "template": "locationlist",
-      "_id": "vgY6d6yDdnhE9bc7C"
-    },
     "course.events.pastListLink": {
       "key": "course.events.pastListLink",
       "lang": "en",
@@ -4660,61 +4648,13 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "view in Calendar mode",
       "ctime": "2015-11-18T09:58:50.000Z",
-      "mtime": "2015-11-19T04:09:56.801Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "MjvRRQK559EpjCytq",
       "file": "client/views/misc/kiosk/kiosk.html",
       "line": 34,
       "template": "kioskLayout",
       "removed": true,
       "_id": "g5eBhMtzf5Pvkup3k"
-    },
-    "course.event.edit.add": {
-      "key": "course.event.edit.add",
-      "lang": "en",
-      "text": "Add event",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "23PvJtSbmyuFNkjkH",
-      "file": "client/views/events/event.edit.html",
-      "line": 5,
-      "template": "eventEdit",
-      "_id": "BKoNEhBeYibePE9tJ"
-    },
-    "course.event.edit.swich_duration": {
-      "key": "course.event.edit.swich_duration",
-      "lang": "en",
-      "text": "switch to duration",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "cPNPPQMpmtquCw32w",
-      "file": "client/views/events/event.edit.html",
-      "line": 29,
-      "template": "eventEdit",
-      "_id": "GGqY5YTtiy5YBMdYZ"
-    },
-    "event.edit.updateReplicas": {
-      "key": "event.edit.updateReplicas",
-      "lang": "en",
-      "text": "Update {COUNT, plural, one {copy} other {# copies}}",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "SvNXFxBSYNa6Z3xXy",
-      "file": "client/views/events/event.edit.html",
-      "line": 124,
-      "template": "eventEdit",
-      "_id": "ENixnFcYJRh9r9mi6"
-    },
-    "file.removed": {
-      "key": "file.removed",
-      "lang": "en",
-      "text": "Successfully removed file {FILENAME}.",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "rSZsmhG6LfT9cGawP",
-      "file": "client/views/events/event.edit.js",
-      "line": 171,
-      "func": "function (error, fileRemoved)",
-      "_id": "9YJ29gSNnFxJ9FqYE"
     },
     "profile.groupMembership": {
       "key": "profile.groupMembership",
@@ -4741,18 +4681,6 @@ mfPkg.syncAll({
       "removed": true,
       "_id": "8yjAHfT9L47CDzaQf"
     },
-    "event.no_event": {
-      "key": "event.no_event",
-      "lang": "en",
-      "text": "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place.",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "quksDWc6AccZdzPqc",
-      "file": "client/views/events/event.details.html",
-      "line": 18,
-      "template": "eventPage",
-      "_id": "uCMDGNZbtjePJCjRB"
-    },
     "course.details.edit_btn": {
       "key": "course.details.edit_btn",
       "lang": "en",
@@ -4764,138 +4692,6 @@ mfPkg.syncAll({
       "line": 76,
       "template": "eventPage",
       "_id": "W65ZY72HfyKrkePsq"
-    },
-    "course.details.repl_menu_btn": {
-      "key": "course.details.repl_menu_btn",
-      "lang": "en",
-      "text": "Repeat",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "5e2qYodz9ZCmT4jNG",
-      "file": "client/views/events/event.details.html",
-      "line": 84,
-      "template": "eventPage",
-      "_id": "WTYDMd2h3Equ8uEPm"
-    },
-    "event.replication.freq.once": {
-      "key": "event.replication.freq.once",
-      "lang": "en",
-      "text": "once",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "s2Hjy6Yk2uKN7SAQL",
-      "file": "client/views/events/event.details.html",
-      "line": 96,
-      "template": "eventPage",
-      "_id": "emZ8bc65jFz9eWfnf"
-    },
-    "event.replication.interval.end": {
-      "key": "event.replication.interval.end",
-      "lang": "en",
-      "text": "Interval End",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "fGDWk7B3YR3y2e3NN",
-      "file": "client/views/events/event.details.html",
-      "line": 112,
-      "template": "eventPage",
-      "_id": "aQvm4aNqv6rNyfJ7B"
-    },
-    "course.events.download.tooltip": {
-      "key": "course.events.download.tooltip",
-      "lang": "en",
-      "text": "Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application",
-      "ctime": "2015-11-19T03:23:14.000Z",
-      "mtime": "2015-11-19T03:23:14.000Z",
-      "revisionId": "wpYH6XkjkwtLWSSft",
-      "file": "client/views/events/event.details.html",
-      "line": 148,
-      "template": "eventPage",
-      "_id": "NP6fsxnHkdHXiCGZz"
-    },
-    "event.replicate.error": {
-      "key": "event.replicate.error",
-      "lang": "en",
-      "text": "Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "5WL6i825ZnPNPJpEF",
-      "file": "client/views/events/event.details.js",
-      "line": 176,
-      "func": "function(error, eventId)",
-      "_id": "TNn6kAts3mYxYQKAe"
-    },
-    "course.event.edit.date_start": {
-      "key": "course.event.edit.date_start",
-      "lang": "en",
-      "text": "Date",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "ug56RD4KafxP6KtJY",
-      "file": "client/views/events/event.edit.html",
-      "line": 11,
-      "template": "eventEdit",
-      "_id": "FckiSkHLPQ5Dp3KY8"
-    },
-    "course.event.edit.time_start": {
-      "key": "course.event.edit.time_start",
-      "lang": "en",
-      "text": "Time start",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "3pzKr97CRvxAYjia9",
-      "file": "client/views/events/event.edit.html",
-      "line": 20,
-      "template": "eventEdit",
-      "_id": "57iKgkv6f5REGSMrd"
-    },
-    "course.event.edit.cancel_btn": {
-      "key": "course.event.edit.cancel_btn",
-      "lang": "en",
-      "text": "Cancel",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "zqgvHX4MZZYGDXCsn",
-      "file": "client/views/events/event.edit.html",
-      "line": 132,
-      "template": "eventEdit",
-      "_id": "AXN4t2STah7mqLPCa"
-    },
-    "event.description.placeholder": {
-      "key": "event.description.placeholder",
-      "lang": "en",
-      "text": "Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "m2Csfqte9ggZfWC7A",
-      "file": "client/views/events/event.edit.html",
-      "line": 142,
-      "template": "eventEdit",
-      "_id": "6Fkjzegkcd9nFxssc"
-    },
-    "event.creating.success": {
-      "key": "event.creating.success",
-      "lang": "en",
-      "text": "Created event \"{TITLE}\".",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "Bi6WrL4EP3QmLcipX",
-      "file": "client/views/events/event.edit.js",
-      "line": 259,
-      "func": "function(error, eventId)",
-      "_id": "NpDE7uDaXMmHYCS4o"
-    },
-    "event.edit.replicates.success": {
-      "key": "event.edit.replicates.success",
-      "lang": "en",
-      "text": "Replicas of \"{TITLE}\" also updated.",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "mjKcDTJDwv5ExAqLF",
-      "file": "client/views/events/event.edit.js",
-      "line": 265,
-      "func": "function(error, eventId)",
-      "_id": "CFFoQpRcpBppvR5DC"
     },
     "map.close": {
       "key": "map.close",
@@ -4909,6 +4705,210 @@ mfPkg.syncAll({
       "template": "map",
       "removed": true,
       "_id": "nqr9u45kPEfsGMxzb"
+    },
+    "locations.list.title": {
+      "key": "locations.list.title",
+      "lang": "en",
+      "text": "Rooms",
+      "ctime": null,
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "oFDgf78MpjpY87hcK",
+      "file": "client/views/misc/locations/location.list.html",
+      "line": 3,
+      "template": "locationlist",
+      "_id": "vgY6d6yDdnhE9bc7C"
+    },
+    "course.event.edit.swich_duration": {
+      "key": "course.event.edit.swich_duration",
+      "lang": "en",
+      "text": "switch to duration",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "cPNPPQMpmtquCw32w",
+      "file": "client/views/events/event.html",
+      "line": 59,
+      "template": "eventPage",
+      "_id": "45usNTECEM89z5nj8"
+    },
+    "event.edit.updateReplicas": {
+      "key": "event.edit.updateReplicas",
+      "lang": "en",
+      "text": "Update {COUNT, plural, one {copy} other {# copies}}",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "SvNXFxBSYNa6Z3xXy",
+      "file": "client/views/events/event.html",
+      "line": 157,
+      "template": "eventPage",
+      "_id": "Dd6LutfTTzTdz7Bci"
+    },
+    "file.removed": {
+      "key": "file.removed",
+      "lang": "en",
+      "text": "Successfully removed file {FILENAME}.",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "rSZsmhG6LfT9cGawP",
+      "file": "client/views/events/event.js",
+      "line": 290,
+      "func": "function (error, fileRemoved)",
+      "_id": "TAJS5JeugMqTTxdyG"
+    },
+    "event.no_event": {
+      "key": "event.no_event",
+      "lang": "en",
+      "text": "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place.",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "quksDWc6AccZdzPqc",
+      "file": "client/views/events/event.html",
+      "line": 19,
+      "template": "eventPage",
+      "_id": "tDviJiZQaL5FHEH5t"
+    },
+    "course.event.edit.time_start": {
+      "key": "course.event.edit.time_start",
+      "lang": "en",
+      "text": "Time start",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "3pzKr97CRvxAYjia9",
+      "file": "client/views/events/event.html",
+      "line": 50,
+      "template": "eventPage",
+      "_id": "2gS5qYan7ebiWFuf7"
+    },
+    "event.replication.interval.end": {
+      "key": "event.replication.interval.end",
+      "lang": "en",
+      "text": "Interval End",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "fGDWk7B3YR3y2e3NN",
+      "file": "client/views/events/event.html",
+      "line": 256,
+      "template": "eventPage",
+      "_id": "Z2bT93xs22ppBvPmd"
+    },
+    "course.events.download.tooltip": {
+      "key": "course.events.download.tooltip",
+      "lang": "en",
+      "text": "Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "wpYH6XkjkwtLWSSft",
+      "file": "client/views/courses/events/course.events.html",
+      "line": 68,
+      "template": "course_events",
+      "_id": "wAobTfSgjBYX9WkHk"
+    },
+    "event.description.placeholder": {
+      "key": "event.description.placeholder",
+      "lang": "en",
+      "text": "Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "m2Csfqte9ggZfWC7A",
+      "file": "client/views/events/event.html",
+      "line": 301,
+      "template": "eventPage",
+      "_id": "8xNbxHWtzY3dKqy5E"
+    },
+    "event.creating.success": {
+      "key": "event.creating.success",
+      "lang": "en",
+      "text": "Created event \"{TITLE}\".",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "Bi6WrL4EP3QmLcipX",
+      "file": "client/views/events/event.js",
+      "line": 379,
+      "func": "function(error, eventId)",
+      "_id": "wA5SytAJErpY3w9RH"
+    },
+    "event.edit.replicates.success": {
+      "key": "event.edit.replicates.success",
+      "lang": "en",
+      "text": "Replicas of \"{TITLE}\" also updated.",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "mjKcDTJDwv5ExAqLF",
+      "file": "client/views/events/event.js",
+      "line": 385,
+      "func": "function(error, eventId)",
+      "_id": "ZQEwEn7o74NjsZ6Zm"
+    },
+    "event.replicate.error": {
+      "key": "event.replicate.error",
+      "lang": "en",
+      "text": "Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "5WL6i825ZnPNPJpEF",
+      "file": "client/views/events/event.js",
+      "line": 427,
+      "func": "function(error, eventId)",
+      "_id": "9a79o2zf4J5kNnpqw"
+    },
+    "course.event.edit.add": {
+      "key": "course.event.edit.add",
+      "lang": "en",
+      "text": "Add event",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "23PvJtSbmyuFNkjkH",
+      "file": "client/views/events/event.html",
+      "line": 35,
+      "template": "eventPage",
+      "_id": "ZXyY5E6mvY3W4FBnd"
+    },
+    "course.details.repl_menu_btn": {
+      "key": "course.details.repl_menu_btn",
+      "lang": "en",
+      "text": "Repeat",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "5e2qYodz9ZCmT4jNG",
+      "file": "client/views/events/event.html",
+      "line": 228,
+      "template": "eventPage",
+      "_id": "gjJfhaJGDTvJbNjS8"
+    },
+    "event.replication.freq.once": {
+      "key": "event.replication.freq.once",
+      "lang": "en",
+      "text": "once",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "s2Hjy6Yk2uKN7SAQL",
+      "file": "client/views/events/event.html",
+      "line": 240,
+      "template": "eventPage",
+      "_id": "qAAMjN2ZFLwjoCeGv"
+    },
+    "course.event.edit.date_start": {
+      "key": "course.event.edit.date_start",
+      "lang": "en",
+      "text": "Date",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "ug56RD4KafxP6KtJY",
+      "file": "client/views/events/event.html",
+      "line": 41,
+      "template": "eventPage",
+      "_id": "kgkg4PQ85e6Bn4res"
+    },
+    "course.event.edit.cancel_btn": {
+      "key": "course.event.edit.cancel_btn",
+      "lang": "en",
+      "text": "Cancel",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "zqgvHX4MZZYGDXCsn",
+      "file": "client/views/events/event.html",
+      "line": 165,
+      "template": "eventPage",
+      "_id": "vsHhCi7iPv3AtfxT8"
     },
     "category.chemistry": {
       "key": "category.chemistry",
@@ -5218,7 +5218,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "Username",
       "ctime": "2015-08-24T01:19:56.000Z",
-      "mtime": "2015-11-19T02:09:19.582Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "8kJ2yo6WqTGHk8Qun",
       "file": "client/views/login/frame.html",
       "line": 43,
@@ -6881,7 +6881,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "from",
       "ctime": "2015-10-19T00:04:34.000Z",
-      "mtime": "2015-11-19T04:07:39.564Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "NLSq2LYGpX3gLfzC4",
       "file": "client/views/calendar/calendar.html",
       "line": 7,
@@ -6990,7 +6990,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "No Courses found. Do you want to propose this one?",
       "ctime": "2015-10-21T22:42:31.000Z",
-      "mtime": "2015-11-19T02:09:19.582Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "owjgxxCx6GfNmFmGb",
       "file": "client/views/find/find.html",
       "line": 161,
@@ -7712,49 +7712,13 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "Could not delete comment. Reason: {ERROR}",
       "ctime": "2015-10-28T19:07:13.000Z",
-      "mtime": "2015-11-19T02:09:19.582Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "gRKi7KoNKmjippFNw",
       "file": "client/views/courses/details/course.discussion.js",
       "line": 155,
       "func": "function(err, commentId)",
       "removed": true,
       "_id": "FheNTrfSZQcaK24Ya"
-    },
-    "location.details.online": {
-      "key": "location.details.online",
-      "lang": "en",
-      "text": "Online:",
-      "ctime": null,
-      "mtime": "2015-11-19T03:47:46.000Z",
-      "revisionId": "9eooK3LNJZojB8WxZ",
-      "file": "client/views/misc/locations/location.details.html",
-      "line": 24,
-      "template": "locationDetails",
-      "_id": "Z86H8uc9ZhzZMDipK"
-    },
-    "course.event.edit.switch_time_end": {
-      "key": "course.event.edit.switch_time_end",
-      "lang": "en",
-      "text": "switch to end time",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "juMkF5ZrHzSaPYQEG",
-      "file": "client/views/events/event.edit.html",
-      "line": 38,
-      "template": "eventEdit",
-      "_id": "KpdHdGJTw55iBssqz"
-    },
-    "event.saving.error": {
-      "key": "event.saving.error",
-      "lang": "en",
-      "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "YJNjRyRPw4dCc8DaJ",
-      "file": "client/views/events/event.edit.js",
-      "line": 255,
-      "func": "function(error, eventId)",
-      "_id": "yJL9iSX5c6fCdbFa5"
     },
     "frame.login.usernameOrEmail": {
       "key": "frame.login.usernameOrEmail",
@@ -7804,42 +7768,18 @@ mfPkg.syncAll({
       "template": "course_events",
       "_id": "aZKNwknk2X8o6mcMh"
     },
-    "location.details.desc": {
-      "key": "location.details.desc",
-      "lang": "en",
-      "text": "Desc:",
-      "ctime": null,
-      "mtime": "2015-11-19T03:47:46.000Z",
-      "revisionId": "qgwjB6qgyztGTZHFw",
-      "file": "client/views/misc/locations/location.details.html",
-      "line": 16,
-      "template": "locationDetails",
-      "_id": "DvpQkdvcLxbXviNqH"
-    },
     "location.details.yourHost": {
       "key": "location.details.yourHost",
       "lang": "en",
       "text": "You are Host here:",
       "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T04:07:39.564Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "NPwKtQb8M4PmezL5n",
       "file": "client/views/misc/locations/location.details.html",
       "line": 43,
       "template": "locationDetails",
       "removed": true,
       "_id": "qJkrN8i5KsA5drYj9"
-    },
-    "course.event.detail.back": {
-      "key": "course.event.detail.back",
-      "lang": "en",
-      "text": "Back to course",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "oXxpymbs9f37uN2qS",
-      "file": "client/views/events/event.details.html",
-      "line": 8,
-      "template": "eventPage",
-      "_id": "DT3GqXSbDFr3MLFYe"
     },
     "course.details.del_btn": {
       "key": "course.details.del_btn",
@@ -7852,90 +7792,6 @@ mfPkg.syncAll({
       "line": 80,
       "template": "eventPage",
       "_id": "ckA9GuX5TKhJgGJDX"
-    },
-    "event.remove.error": {
-      "key": "event.remove.error",
-      "lang": "en",
-      "text": "Error during removal of event \"{TITLE}\".",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "5qP3bJ6fBsX7yNWTJ",
-      "file": "client/views/events/event.details.js",
-      "line": 131,
-      "func": "function (error, eventRemoved)",
-      "_id": "ZwumRaFzaYjSsRPuB"
-    },
-    "event.replicate.success": {
-      "key": "event.replicate.success",
-      "lang": "en",
-      "text": "Cloned event \"{TITLE}\" for {DATE}",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "wEDw25LG75reGRTeE",
-      "file": "client/views/events/event.details.js",
-      "line": 180,
-      "func": "function(error, eventId)",
-      "_id": "2gyTsyZWezdkW8PMs"
-    },
-    "event.title.placeholder": {
-      "key": "event.title.placeholder",
-      "lang": "en",
-      "text": "Put a catchy title here",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "ekoSrPy8XbkvZ753C",
-      "file": "client/views/events/event.edit.html",
-      "line": 7,
-      "template": "eventEdit",
-      "_id": "sytBFx8nr8YAyxRK8"
-    },
-    "course.event.edit.duration": {
-      "key": "course.event.edit.duration",
-      "lang": "en",
-      "text": "Duration (in minutes)",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "NGZnwCw9iTvahXtmC",
-      "file": "client/views/events/event.edit.html",
-      "line": 38,
-      "template": "eventEdit",
-      "_id": "XXPX284opefikXJJo"
-    },
-    "file.removed.fail": {
-      "key": "file.removed.fail",
-      "lang": "en",
-      "text": "Couldn't remove file {FILENAME}.",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "iFLFkrhy7WSoGySmX",
-      "file": "client/views/events/event.edit.js",
-      "line": 172,
-      "func": "function (error, fileRemoved)",
-      "_id": "knz67YdrtqM6B5KMS"
-    },
-    "event.saving.success": {
-      "key": "event.saving.success",
-      "lang": "en",
-      "text": "Saved changes to event \"{TITLE}\".",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "Pdz6gw67aL6mQdq3D",
-      "file": "client/views/events/event.edit.js",
-      "line": 261,
-      "func": "function(error, eventId)",
-      "_id": "DGEFNQtTbphLgcBrf"
-    },
-    "course.event.edit.location": {
-      "key": "course.event.edit.location",
-      "lang": "en",
-      "text": "Location:",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "HbT28MvQiFT5jKQRj",
-      "file": "client/views/events/event.editLocation.html",
-      "line": 3,
-      "template": "eventEditLocation",
-      "_id": "Brbz6rKsGb8CFnPWs"
     },
     "event.edit.noResultsforAddress": {
       "key": "event.edit.noResultsforAddress",
@@ -7991,7 +7847,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "Username or Email",
       "ctime": "2015-11-11T18:07:53.000Z",
-      "mtime": "2015-11-19T02:09:19.582Z",
+      "mtime": "2015-11-22T03:22:05.573Z",
       "revisionId": "t9oNRxXZXHWv7qz8A",
       "file": "client/views/login/frame.html",
       "line": 43,
@@ -8004,7 +7860,7 @@ mfPkg.syncAll({
       "lang": "en",
       "text": "past events",
       "ctime": "2015-11-11T18:07:53.000Z",
-      "mtime": "2015-11-19T04:07:39.564Z",
+      "mtime": "2015-11-22T01:11:06.160Z",
       "revisionId": "qEYJv2qsYXKezcXgY",
       "file": "client/views/courses/events/course.events.html",
       "line": 20,
@@ -8073,150 +7929,6 @@ mfPkg.syncAll({
       "template": "eventEditLocation",
       "removed": true,
       "_id": "96CgRockry9XQfSoz"
-    },
-    "event.replication.freq.daily": {
-      "key": "event.replication.freq.daily",
-      "lang": "en",
-      "text": "every day",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "zKEw6aDnzmhosbHKd",
-      "file": "client/views/events/event.details.html",
-      "line": 97,
-      "template": "eventPage",
-      "_id": "7RN2SHtCjZ4tcqJB2"
-    },
-    "course.details.repl_btn": {
-      "key": "course.details.repl_btn",
-      "lang": "en",
-      "text": "Create events",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "BujfsPKFadrhzzsHA",
-      "file": "client/views/events/event.details.html",
-      "line": 126,
-      "template": "eventPage",
-      "_id": "gZezascRpPPe45Gq4"
-    },
-    "event.replication.createText": {
-      "key": "event.replication.createText",
-      "lang": "en",
-      "text": "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "dz5ZCCuq4Kxbm3Joz",
-      "file": "client/views/events/event.details.html",
-      "line": 132,
-      "template": "eventPage",
-      "_id": "6XhGpeNkX2adqJXMR"
-    },
-    "course.download_cal": {
-      "key": "course.download_cal",
-      "lang": "en",
-      "text": "Download events to my calendar",
-      "ctime": "2015-11-19T03:23:14.000Z",
-      "mtime": "2015-11-19T03:23:14.000Z",
-      "revisionId": "ASA3jEYr7WFdYGFaX",
-      "file": "client/views/events/event.details.html",
-      "line": 150,
-      "template": "eventPage",
-      "_id": "7PPem3ARNw8RBHnhW"
-    },
-    "course.event.edit.edit": {
-      "key": "course.event.edit.edit",
-      "lang": "en",
-      "text": "Edit event",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "ddtGevJKmKTFDL4Np",
-      "file": "client/views/events/event.edit.html",
-      "line": 5,
-      "template": "eventEdit",
-      "_id": "vc5zNp2pfDWiHMG5f"
-    },
-    "course.event.edit.title": {
-      "key": "course.event.edit.title",
-      "lang": "en",
-      "text": "Event title:",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "3YDtkwpK4xsZvC4fZ",
-      "file": "client/views/events/event.edit.html",
-      "line": 6,
-      "template": "eventEdit",
-      "_id": "vrr5Qrr2m8aXw79YP"
-    },
-    "course.event.edit.time_end": {
-      "key": "course.event.edit.time_end",
-      "lang": "en",
-      "text": "Time end",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "zgsw45cskEsyCmJ6f",
-      "file": "client/views/events/event.edit.html",
-      "line": 29,
-      "template": "eventEdit",
-      "_id": "fuDNjet3vmBrR6EaB"
-    },
-    "course.event.edit.desc": {
-      "key": "course.event.edit.desc",
-      "lang": "en",
-      "text": "Description:",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "ij5PiusZajLjpS8G9",
-      "file": "client/views/events/event.edit.html",
-      "line": 49,
-      "template": "eventEdit",
-      "_id": "Hea7JLfGgJ9guagFr"
-    },
-    "course.edit.pls_select": {
-      "key": "course.edit.pls_select",
-      "lang": "en",
-      "text": "Please select",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "xAMPA35D6y99K5T2k",
-      "file": "client/views/events/event.edit.html",
-      "line": 90,
-      "template": "eventEdit",
-      "_id": "uCKaJDgC6QNKAMbhE"
-    },
-    "course.event.edit.room": {
-      "key": "course.event.edit.room",
-      "lang": "en",
-      "text": "Room: (optional)",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "gSPabt6LtubucbDgR",
-      "file": "client/views/events/event.edit.html",
-      "line": 103,
-      "template": "eventEdit",
-      "_id": "4nQoTqbndDQqDvpd9"
-    },
-    "course.event.edit.save_btn": {
-      "key": "course.event.edit.save_btn",
-      "lang": "en",
-      "text": "Save",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "KXh8JMxb9X7St5kPF",
-      "file": "client/views/events/event.edit.html",
-      "line": 117,
-      "template": "eventEdit",
-      "_id": "qPJoNqq56ourdm26D"
-    },
-    "event.edit.updateReplicas.times": {
-      "key": "event.edit.updateReplicas.times",
-      "lang": "en",
-      "text": "time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}.",
-      "ctime": "2015-11-19T02:07:11.000Z",
-      "mtime": "2015-11-19T02:07:11.000Z",
-      "revisionId": "qCXw2RcR4aDvjtNzB",
-      "file": "client/views/events/event.edit.html",
-      "line": 126,
-      "template": "eventEdit",
-      "_id": "jrb9G7DuQ7t3pttJZ"
     },
     "event.edit.locationChange": {
       "key": "event.edit.locationChange",
@@ -8295,6 +8007,294 @@ mfPkg.syncAll({
       "template": "eventEditLocation",
       "removed": true,
       "_id": "SfBPd777t5pAZ6sJG"
+    },
+    "location.details.online": {
+      "key": "location.details.online",
+      "lang": "en",
+      "text": "Online:",
+      "ctime": null,
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "9eooK3LNJZojB8WxZ",
+      "file": "client/views/misc/locations/location.details.html",
+      "line": 24,
+      "template": "locationDetails",
+      "_id": "Z86H8uc9ZhzZMDipK"
+    },
+    "location.details.desc": {
+      "key": "location.details.desc",
+      "lang": "en",
+      "text": "Desc:",
+      "ctime": null,
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "qgwjB6qgyztGTZHFw",
+      "file": "client/views/misc/locations/location.details.html",
+      "line": 16,
+      "template": "locationDetails",
+      "_id": "DvpQkdvcLxbXviNqH"
+    },
+    "course.event.edit.switch_time_end": {
+      "key": "course.event.edit.switch_time_end",
+      "lang": "en",
+      "text": "switch to end time",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "juMkF5ZrHzSaPYQEG",
+      "file": "client/views/events/event.html",
+      "line": 68,
+      "template": "eventPage",
+      "_id": "WRB5tWdoSy54cn7Le"
+    },
+    "event.saving.error": {
+      "key": "event.saving.error",
+      "lang": "en",
+      "text": "Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "YJNjRyRPw4dCc8DaJ",
+      "file": "client/views/events/event.js",
+      "line": 375,
+      "func": "function(error, eventId)",
+      "_id": "MucKpQHwpLDJGMuQJ"
+    },
+    "course.event.detail.back": {
+      "key": "course.event.detail.back",
+      "lang": "en",
+      "text": "Back to course",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "oXxpymbs9f37uN2qS",
+      "file": "client/views/events/event.html",
+      "line": 8,
+      "template": "eventPage",
+      "_id": "KcjGxrpiHdMEgNSXv"
+    },
+    "event.title.placeholder": {
+      "key": "event.title.placeholder",
+      "lang": "en",
+      "text": "Put a catchy title here",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "ekoSrPy8XbkvZ753C",
+      "file": "client/views/events/event.html",
+      "line": 37,
+      "template": "eventPage",
+      "_id": "L7CzcyDCkvWj5q9wG"
+    },
+    "course.event.edit.duration": {
+      "key": "course.event.edit.duration",
+      "lang": "en",
+      "text": "Duration (in minutes)",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "NGZnwCw9iTvahXtmC",
+      "file": "client/views/events/event.html",
+      "line": 68,
+      "template": "eventPage",
+      "_id": "YSToXyjqSSqcb4Qaf"
+    },
+    "course.event.edit.location": {
+      "key": "course.event.edit.location",
+      "lang": "en",
+      "text": "Location:",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "HbT28MvQiFT5jKQRj",
+      "file": "client/views/events/event.html",
+      "line": 114,
+      "template": "eventPage",
+      "_id": "gRY36rPXp4jRJHz6i"
+    },
+    "event.remove.error": {
+      "key": "event.remove.error",
+      "lang": "en",
+      "text": "Error during removal of event \"{TITLE}\".",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "5qP3bJ6fBsX7yNWTJ",
+      "file": "client/views/events/event.js",
+      "line": 224,
+      "func": "function (error, eventRemoved)",
+      "_id": "ZDQAvpewLuEPiMrmS"
+    },
+    "file.removed.fail": {
+      "key": "file.removed.fail",
+      "lang": "en",
+      "text": "Couldn't remove file {FILENAME}.",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "iFLFkrhy7WSoGySmX",
+      "file": "client/views/events/event.js",
+      "line": 291,
+      "func": "function (error, fileRemoved)",
+      "_id": "AEwBEgWDLamx3imYJ"
+    },
+    "event.saving.success": {
+      "key": "event.saving.success",
+      "lang": "en",
+      "text": "Saved changes to event \"{TITLE}\".",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "Pdz6gw67aL6mQdq3D",
+      "file": "client/views/events/event.js",
+      "line": 381,
+      "func": "function(error, eventId)",
+      "_id": "Rsgi6MKT9yHPNmvP2"
+    },
+    "event.replicate.success": {
+      "key": "event.replicate.success",
+      "lang": "en",
+      "text": "Cloned event \"{TITLE}\" for {DATE}",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "wEDw25LG75reGRTeE",
+      "file": "client/views/events/event.js",
+      "line": 431,
+      "func": "function(error, eventId)",
+      "_id": "DNkjiHAw5pdTaph6c"
+    },
+    "course.event.edit.edit": {
+      "key": "course.event.edit.edit",
+      "lang": "en",
+      "text": "Edit event",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "ddtGevJKmKTFDL4Np",
+      "file": "client/views/events/event.html",
+      "line": 35,
+      "template": "eventPage",
+      "_id": "G3XojAhHTdR9CqP8b"
+    },
+    "course.event.edit.title": {
+      "key": "course.event.edit.title",
+      "lang": "en",
+      "text": "Event title:",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "3YDtkwpK4xsZvC4fZ",
+      "file": "client/views/events/event.html",
+      "line": 36,
+      "template": "eventPage",
+      "_id": "GdwuNaGPiEYJr3GWw"
+    },
+    "course.event.edit.room": {
+      "key": "course.event.edit.room",
+      "lang": "en",
+      "text": "Room: (optional)",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "gSPabt6LtubucbDgR",
+      "file": "client/views/events/event.html",
+      "line": 123,
+      "template": "eventPage",
+      "_id": "rGYnsnMaWT5ZnW3EM"
+    },
+    "course.edit.pls_select": {
+      "key": "course.edit.pls_select",
+      "lang": "en",
+      "text": "Please select",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "xAMPA35D6y99K5T2k",
+      "file": "client/views/events/event.html",
+      "line": 136,
+      "template": "eventPage",
+      "_id": "DDKCMiX9PfGceWWH2"
+    },
+    "event.edit.updateReplicas.times": {
+      "key": "event.edit.updateReplicas.times",
+      "lang": "en",
+      "text": "time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}.",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "qCXw2RcR4aDvjtNzB",
+      "file": "client/views/events/event.html",
+      "line": 159,
+      "template": "eventPage",
+      "_id": "JiRody8W6noHp8a6e"
+    },
+    "event.replication.freq.daily": {
+      "key": "event.replication.freq.daily",
+      "lang": "en",
+      "text": "every day",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "zKEw6aDnzmhosbHKd",
+      "file": "client/views/events/event.html",
+      "line": 241,
+      "template": "eventPage",
+      "_id": "HNrxZrfMxemXeG5Cw"
+    },
+    "course.details.repl_btn": {
+      "key": "course.details.repl_btn",
+      "lang": "en",
+      "text": "Create events",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "BujfsPKFadrhzzsHA",
+      "file": "client/views/events/event.html",
+      "line": 270,
+      "template": "eventPage",
+      "_id": "BBtTJbQPH2MGmRqNz"
+    },
+    "event.replication.createText": {
+      "key": "event.replication.createText",
+      "lang": "en",
+      "text": "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "dz5ZCCuq4Kxbm3Joz",
+      "file": "client/views/events/event.html",
+      "line": 276,
+      "template": "eventPage",
+      "_id": "YRtDuAFxy2bQsg9gF"
+    },
+    "course.download_cal": {
+      "key": "course.download_cal",
+      "lang": "en",
+      "text": "Download events to my calendar",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "ASA3jEYr7WFdYGFaX",
+      "file": "client/views/courses/events/course.events.html",
+      "line": 70,
+      "template": "course_events",
+      "_id": "b5hr894Eznng7sNvP"
+    },
+    "course.event.edit.time_end": {
+      "key": "course.event.edit.time_end",
+      "lang": "en",
+      "text": "Time end",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "zgsw45cskEsyCmJ6f",
+      "file": "client/views/events/event.html",
+      "line": 59,
+      "template": "eventPage",
+      "_id": "6eEtZNX3Jm2gWjcbo"
+    },
+    "course.event.edit.desc": {
+      "key": "course.event.edit.desc",
+      "lang": "en",
+      "text": "Description:",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "ij5PiusZajLjpS8G9",
+      "file": "client/views/events/event.html",
+      "line": 79,
+      "template": "eventPage",
+      "_id": "xs8hXmqX4Eb3pS5PG"
+    },
+    "course.event.edit.save_btn": {
+      "key": "course.event.edit.save_btn",
+      "lang": "en",
+      "text": "Save",
+      "ctime": "2015-11-19T03:47:46.000Z",
+      "mtime": "2015-11-19T03:47:46.000Z",
+      "revisionId": "KXh8JMxb9X7St5kPF",
+      "file": "client/views/events/event.html",
+      "line": 150,
+      "template": "eventPage",
+      "_id": "zxPXPRJuZXY3PSgEc"
     }
   },
   "zh_TW": {
@@ -13736,8 +13736,8 @@ mfPkg.syncAll({
       "ctime": 1445938298547,
       "mtime": 1445938298547,
       "revisionId": "pnGzjQHRPZJYGHujP",
-      "fuzzy": true,
       "removed": true,
+      "fuzzy": true,
       "_id": "QqkkP3NvR8gPXxaw5"
     },
     "main.about_link": {
@@ -15826,9 +15826,882 @@ mfPkg.syncAll({
       "mtime": 1448108380034,
       "revisionId": "6tDDy4NgXNtFYz548",
       "_id": "XxdhAghJiT8iN3bk5"
+    },
+    "profile.preferenceslink": {
+      "key": "profile.preferenceslink",
+      "lang": "el",
+      "text": "Πατ",
+      "ctime": 1448199065177,
+      "mtime": 1448199065177,
+      "revisionId": "X4bMTEu5BWKs9hWee",
+      "_id": "FsW3YSRFfZ5r87FfS"
+    },
+    "course.detail.remove": {
+      "key": "course.detail.remove",
+      "lang": "el",
+      "text": "Αφαίρεση μαθήματος και όλων των συναντήσεων;",
+      "ctime": 1448199082016,
+      "mtime": 1448199082016,
+      "revisionId": "WGpAwu3z7SrR9aKAu",
+      "_id": "GH67X2MuNYZ5F5NEc"
+    },
+    "kiosk.kiosk_link": {
+      "key": "kiosk.kiosk_link",
+      "lang": "el",
+      "text": "πίσω σε Kiosk mode",
+      "ctime": 1448199101456,
+      "mtime": 1448199101456,
+      "revisionId": "oqFGAW7KfKLcd7Swt",
+      "_id": "qTswvH2Af768S7Ks2"
+    },
+    "frameCalendar.nothingOnThisDay": {
+      "key": "frameCalendar.nothingOnThisDay",
+      "lang": "el",
+      "text": "Δεν υπάρχουν συναντήσεις για σήμερα.",
+      "ctime": 1448199119440,
+      "mtime": 1448199119440,
+      "revisionId": "W5Y3XrzLi8sd82DfQ",
+      "_id": "JoZgvmwDYc6nwvzj8"
+    },
+    "event.replication.interval.start": {
+      "key": "event.replication.interval.start",
+      "lang": "el",
+      "text": "Εκκίνηση διαστήματος",
+      "ctime": 1448199127276,
+      "mtime": 1448199127276,
+      "revisionId": "L9joY7Gpr3ESjtHmw",
+      "_id": "Fp6QpYfNNybc4nw45"
+    },
+    "event.removed": {
+      "key": "event.removed",
+      "lang": "el",
+      "text": "Αφαίρεση συνάντησης \"{TITLE}\" επιτυχής.",
+      "ctime": 1448199146502,
+      "mtime": 1448199146502,
+      "revisionId": "RG9PKoqztTevCraaw",
+      "_id": "TNXejeaLPgHahm6gW"
+    },
+    "profile.mail.copy": {
+      "key": "profile.mail.copy",
+      "lang": "el",
+      "text": "Να μου αποσταλεί αντίγραφο του μηνύματος",
+      "ctime": 1448199190523,
+      "mtime": 1448199190523,
+      "revisionId": "Wyi2cKYkE6QxBN86q",
+      "_id": "MMhJeuTkLwhhtRqnE"
+    },
+    "courses.missingsubs": {
+      "key": "courses.missingsubs",
+      "lang": "el",
+      "text": "Μαθήματα που ψάχνουν ακόμα για συμμετέχοντες",
+      "ctime": 1448199235035,
+      "mtime": 1448199235035,
+      "revisionId": "ofvCZecShmdXhMhEp",
+      "_id": "i9gP8GXFXX5qipGCh"
+    },
+    "location.details.specials": {
+      "key": "location.details.specials",
+      "lang": "el",
+      "text": "Specials:",
+      "ctime": 1448199240906,
+      "mtime": 1448199240906,
+      "revisionId": "RGG8LBqq2rAB2ogHk",
+      "_id": "ysSTidmTyJkFaHND4"
+    },
+    "privilege.errorRemoving": {
+      "key": "privilege.errorRemoving",
+      "lang": "el",
+      "text": "Δεν ήταν δυνατό να αφαιρεθεί το προνόμιο: {ERROR}",
+      "ctime": 1448199264912,
+      "mtime": 1448199264912,
+      "revisionId": "WXxSduRc2QPX6GmZC",
+      "_id": "MEw8Wfc7mndgFC7dq"
+    },
+    "find.propose_new_course?": {
+      "key": "find.propose_new_course?",
+      "lang": "el",
+      "text": "Μπορείτε να προτείνετε ",
+      "ctime": 1448199289011,
+      "mtime": 1448199289011,
+      "revisionId": "gLy9hNCnZQTTmPGLq",
+      "_id": "cmnAuRMZDHGY8ps6b"
+    },
+    "location.edit.no_usr_found": {
+      "key": "location.edit.no_usr_found",
+      "lang": "el",
+      "text": "δε βρέθηκε όνομα χρήστη",
+      "ctime": 1448199304715,
+      "mtime": 1448199304715,
+      "revisionId": "bJ8PRwCJQqyLCirRw",
+      "_id": "sdaHe23k3dW3moLWa"
+    },
+    "login.password.no_password": {
+      "key": "login.password.no_password",
+      "lang": "el",
+      "text": "Παρακαλώ εισάγεται έναν κωδικό για να εγγραφείτε.",
+      "ctime": 1448199325820,
+      "mtime": 1448199325820,
+      "revisionId": "K66AS3cEvhLAWv9bn",
+      "_id": "5ixdBL3MJAPzgYa82"
+    },
+    "sendEmail.footer": {
+      "key": "sendEmail.footer",
+      "lang": "el",
+      "text": "Αν τα μηνύματα αυτά σας ενοχλούν παρακαλώ ενημερώστε μας αμέσως {ADMINS}",
+      "ctime": 1448199410386,
+      "mtime": 1448199410386,
+      "revisionId": "WvmNuheQ2iAktqFpE",
+      "_id": "FvhBSipq2iRx2npnZ"
+    },
+    "report.text": {
+      "key": "report.text",
+      "lang": "el",
+      "text": "Παρακαλώ εξηγήστε ποιό είναι το πρόβλημα.",
+      "ctime": 1448199443662,
+      "mtime": 1448199443662,
+      "revisionId": "fzLMEvhPfosd86X65",
+      "_id": "bLGBiACx2NRnTL5WS"
+    },
+    "location.details.last_edited": {
+      "key": "location.details.last_edited",
+      "lang": "el",
+      "text": "Τελευταία επεξεργασία:",
+      "ctime": 1448199457654,
+      "mtime": 1448199457654,
+      "revisionId": "CBtC7ShkKmRbTx3L3",
+      "_id": "9ZpQioL5hKmAoCFcu"
+    },
+    "course.edit.needs.role": {
+      "key": "course.edit.needs.role",
+      "lang": "el",
+      "text": "Το μάθημα ίσως χρειάζεται...",
+      "ctime": 1448199467803,
+      "mtime": 1448199467803,
+      "revisionId": "t8MKrmE4hjJXHhHPF",
+      "_id": "yvWovhhHRurr8AY96"
+    },
+    "Please.login": {
+      "key": "Please.login",
+      "lang": "el",
+      "text": "Σύνδεση ή εγγραφή",
+      "ctime": 1448199533332,
+      "mtime": 1448199533332,
+      "revisionId": "B9piQxcDoJcBGaHr3",
+      "_id": "q8kPtXLpR8jMJHZWs"
+    },
+    "roles.host.subscribe": {
+      "key": "roles.host.subscribe",
+      "lang": "el",
+      "text": "Έχω διαθέσιμη αίθουσα για αυτή τη συνάντηση",
+      "ctime": 1448199568877,
+      "mtime": 1448199568877,
+      "revisionId": "WK2j4NdNXqpe8yvLx",
+      "_id": "YJgkcC7HHe2ADddwh"
+    },
+    "categories.no_categories": {
+      "key": "categories.no_categories",
+      "lang": "el",
+      "text": "Δεν έχουν επιλεγεί κατηγορίες!",
+      "ctime": 1448199604173,
+      "mtime": 1448199604173,
+      "revisionId": "hs7uniuDdP6fTHKF3",
+      "_id": "SvFAZXHvG9WPSnKqj"
+    },
+    "course.list.status_titles.u_are_host": {
+      "key": "course.list.status_titles.u_are_host",
+      "lang": "el",
+      "text": "Είστε οικοδεσπότης",
+      "ctime": 1448199616057,
+      "mtime": 1448199616057,
+      "revisionId": "efykRwZvybspRBRZn",
+      "_id": "JJjhJXj26wbxrMpHm"
+    },
+    "location.edit.desc": {
+      "key": "location.edit.desc",
+      "lang": "el",
+      "text": "Περιγραφή:",
+      "ctime": 1448199623284,
+      "mtime": 1448199623284,
+      "revisionId": "TpBioF4wqG6o8KHZz",
+      "_id": "qZr9BGWAZoyuHoNG7"
+    },
+    "category.medicine": {
+      "key": "category.medicine",
+      "lang": "el",
+      "text": "Φαρμακευτική",
+      "ctime": 1448199634333,
+      "mtime": 1448199634333,
+      "revisionId": "cTw2CyR5eTTFdWz3P",
+      "_id": "Wpydg6Fc8iMZHM9eQ"
+    },
+    "course.events.hosted_by": {
+      "key": "course.events.hosted_by",
+      "lang": "el",
+      "text": "φιλοξενείται από",
+      "ctime": 1448199641922,
+      "mtime": 1448199641922,
+      "revisionId": "oScsobDG29nCzcefe",
+      "_id": "gBEzFY6oiZNhKtNEN"
+    },
+    "profile.passwordChangeFailed": {
+      "key": "profile.passwordChangeFailed",
+      "lang": "el",
+      "text": "Αποτυχία αλλαγής κωδικού",
+      "ctime": 1448199652884,
+      "mtime": 1448199652884,
+      "revisionId": "t3koa6hf2Bq4yES48",
+      "_id": "ik5TnnKfnEz89darB"
+    },
+    "notFound.title": {
+      "key": "notFound.title",
+      "lang": "el",
+      "text": "Καμία σελίδα δεν βρέθηκε",
+      "ctime": 1448199669881,
+      "mtime": 1448199669881,
+      "revisionId": "5q5ZmqnSZHW5PkRD2",
+      "_id": "PcpFa7pc7bmJsv4Jx"
+    },
+    "privileges.title": {
+      "key": "privileges.title",
+      "lang": "el",
+      "text": "Προνόμια",
+      "ctime": 1448199685087,
+      "mtime": 1448199685087,
+      "revisionId": "6ghSQWvymhCTMyPgc",
+      "_id": "qGq47AvcjCQmxxay8"
+    },
+    "sendEmail.copy.subject": {
+      "key": "sendEmail.copy.subject",
+      "lang": "el",
+      "text": "Αντίγραφο του μηνύματος σε {RECIPIENT}",
+      "ctime": 1448199708470,
+      "mtime": 1448199708470,
+      "revisionId": "rqSbmpCschWLwTNxL",
+      "_id": "dEPihrZN2NCcKFbkE"
+    },
+    "profile.delete.confirm.button": {
+      "key": "profile.delete.confirm.button",
+      "lang": "el",
+      "text": "Διαγραφή του χρήστη και ολόκληρου του προφίλ",
+      "ctime": 1448199729638,
+      "mtime": 1448199729638,
+      "revisionId": "mKxtAXFhoxvFNwWBr",
+      "_id": "pKydX3hLZ9cFkaKfK"
+    },
+    "login.username.usr_doesnt_exist": {
+      "key": "login.username.usr_doesnt_exist",
+      "lang": "el",
+      "text": "Ο χρήστης δεν υπάρχει",
+      "ctime": 1448199743075,
+      "mtime": 1448199743076,
+      "revisionId": "ZGNeQGeSiTBGSZfoD",
+      "_id": "ihfBMGX8Hk745qRNA"
+    },
+    "course.list.status_titles.has_mentor": {
+      "key": "course.list.status_titles.has_mentor",
+      "lang": "el",
+      "text": "Έχει μέντορα",
+      "ctime": 1448199749232,
+      "mtime": 1448199749232,
+      "revisionId": "iubyYFyQt7oJi99yY",
+      "_id": "vC6EziEJDWL9pdrYS"
+    },
+    "login.username.choose_another": {
+      "key": "login.username.choose_another",
+      "lang": "el",
+      "text": "Παρακαλώ επιλέξτε πάλι",
+      "ctime": 1448199778877,
+      "mtime": 1448199778877,
+      "revisionId": "Cxoiqbqnea2Yn3nyn",
+      "_id": "gogdvkkwhgbajANAQ"
+    },
+    "course.list.title": {
+      "key": "course.list.title",
+      "lang": "el",
+      "text": "Λίστα μαθημάτων",
+      "ctime": 1448199788830,
+      "mtime": 1448199788830,
+      "revisionId": "Q7ZexM5JPCPmpNy3Z",
+      "_id": "2koGFqKunjYTbFWcv"
+    },
+    "courses.none": {
+      "key": "courses.none",
+      "lang": "el",
+      "text": "δεν βρέθηκαν μαθήματα",
+      "ctime": 1448199797104,
+      "mtime": 1448199797104,
+      "revisionId": "TFZgPKtmqvjkhZWao",
+      "_id": "kGcMxLBLo3mJsZbjZ"
+    },
+    "find.search_go": {
+      "key": "find.search_go",
+      "lang": "el",
+      "text": "Go!",
+      "ctime": 1448199811559,
+      "mtime": 1448199811559,
+      "revisionId": "SEv65nbwXkMS8ne4J",
+      "_id": "GBiq6edHubyRCRqgS"
+    },
+    "course.roles.enrol": {
+      "key": "course.roles.enrol",
+      "lang": "el",
+      "text": "Συμμετοχή",
+      "ctime": 1448199833900,
+      "mtime": 1448199833900,
+      "revisionId": "9bCPjLdeccanf6q3J",
+      "_id": "da5PrYGuPjH4Hp8M4"
+    },
+    "find.filter.show_subcategories": {
+      "key": "find.filter.show_subcategories",
+      "lang": "el",
+      "text": "Εμφάνιση υποκατηγοριών",
+      "ctime": 1448199865977,
+      "mtime": 1448199865977,
+      "revisionId": "GiZ34trfXK8DZzDxx",
+      "_id": "B6QsC6ctG6YPvg3LJ"
+    },
+    "course.saving.success": {
+      "key": "course.saving.success",
+      "lang": "el",
+      "text": "Αποθήκευση αλλαγών για το μάθημα \"{NAME}\".",
+      "ctime": 1448199881878,
+      "mtime": 1448199881878,
+      "revisionId": "NijY8BDQ93paDysXN",
+      "_id": "kZgtLkirGqNBckrXz"
+    },
+    "login.login.warning": {
+      "key": "login.login.warning",
+      "lang": "el",
+      "text": "Παρακαλώ εισάγετε το όνομα χρήστη ή email και κωδικό για να συνδεθείτε.",
+      "ctime": 1448199910770,
+      "mtime": 1448199910770,
+      "revisionId": "FSw45kQuN2NTo29Zg",
+      "_id": "xTCg4PMuwFwBA3Cub"
+    },
+    "course.list.status_titles.has_host": {
+      "key": "course.list.status_titles.has_host",
+      "lang": "el",
+      "text": "Έχει οικοδεσπότη",
+      "ctime": 1448199924230,
+      "mtime": 1448199924230,
+      "revisionId": "Gmecc2h2rsWNnmaT7",
+      "_id": "MaZKeni224Ypm5kmD"
+    },
+    "location.edit.public_space": {
+      "key": "location.edit.public_space",
+      "lang": "el",
+      "text": "Δημόσιος χώρος (όλοι μπορούν να φιλοξενίσουν συναντήσεις εδώ)",
+      "ctime": 1448199954794,
+      "mtime": 1448199954794,
+      "revisionId": "qoSir4ezisAabP4PH",
+      "_id": "nGYNKtqk84hyN9i6n"
+    },
+    "course.list.status_titles.needs_mentor": {
+      "key": "course.list.status_titles.needs_mentor",
+      "lang": "el",
+      "text": "Χρειάζεται μέντορα",
+      "ctime": 1448199962299,
+      "mtime": 1448199962299,
+      "revisionId": "hvH3REg49Wx5fr45w",
+      "_id": "Cp6Spz9PLiZgR27Nq"
+    },
+    "find.filter.removeGroup": {
+      "key": "find.filter.removeGroup",
+      "lang": "el",
+      "text": "Αφαίρεση ομάδας {GROUPNAME} από το φίλτρο",
+      "ctime": 1448199989286,
+      "mtime": 1448199989286,
+      "revisionId": "BbAE5CCzGRLTSn5YA",
+      "_id": "GaRoXaR38H2HBKRYH"
+    },
+    "profile.changePass": {
+      "key": "profile.changePass",
+      "lang": "el",
+      "text": "Αλλαγή του κωδικού μου",
+      "ctime": 1448199998341,
+      "mtime": 1448199998341,
+      "revisionId": "RWb4yecF3CZwD58QD",
+      "_id": "eqkpwRdx6cNk6mCWL"
+    },
+    "course.list.status_titles.u_are_mentor": {
+      "key": "course.list.status_titles.u_are_mentor",
+      "lang": "el",
+      "text": "Είστε μέντορας",
+      "ctime": 1448200004695,
+      "mtime": 1448200004695,
+      "revisionId": "WjhityCk95BZzczA2",
+      "_id": "gEbQe7CZLADZaRfTH"
+    },
+    "backToKiosk": {
+      "key": "backToKiosk",
+      "lang": "el",
+      "text": "Επιστροφή στην επισκόπηση",
+      "ctime": 1448200022722,
+      "mtime": 1448200022722,
+      "revisionId": "GMukn4ZY4YA4E9W8a",
+      "_id": "SYZxbWn56fHwbyvaR"
+    },
+    "category.construction": {
+      "key": "category.construction",
+      "lang": "el",
+      "text": "Κατασκευές",
+      "ctime": 1448200032834,
+      "mtime": 1448200032834,
+      "revisionId": "RoKahasdnuToGeKy9",
+      "_id": "NFxyL7feuvuL6gxr6"
+    },
+    "find.windowtitle": {
+      "key": "find.windowtitle",
+      "lang": "el",
+      "text": "Αναζήτηση για \"{SEARCH}\"",
+      "ctime": 1448200052089,
+      "mtime": 1448200052089,
+      "revisionId": "MnmLrEtabKkJbW9e4",
+      "_id": "bLMqJvopYSkEkSYGH"
+    },
+    "find.WhatLearn?": {
+      "key": "find.WhatLearn?",
+      "lang": "el",
+      "text": "Τι θα ήθελες να μάθεις;",
+      "ctime": 1448200059168,
+      "mtime": 1448200059168,
+      "revisionId": "Cxom6SYajBoLEkfaM",
+      "_id": "yweqnCZZ9RqYMfCnN"
+    },
+    "privilege.remove": {
+      "key": "privilege.remove",
+      "lang": "el",
+      "text": "Αφαίρεση προνομίου",
+      "ctime": 1448200085456,
+      "mtime": 1448200085456,
+      "revisionId": "taZd5Ehg9e3aE2QEL",
+      "_id": "PzXgpG5ya5WE34JtC"
+    },
+    "calendar.noCoursesThisDay": {
+      "key": "calendar.noCoursesThisDay",
+      "lang": "el",
+      "text": "Δεν υπάρχουν μαθήματα αυτή τη μέρα",
+      "ctime": 1448200104240,
+      "mtime": 1448200104240,
+      "revisionId": "yxLrZSbAh6SrNPTyK",
+      "_id": "AgXPjHBnnJ8XhH6MP"
+    },
+    "location.details.how_go_there": {
+      "key": "location.details.how_go_there",
+      "lang": "el",
+      "text": "Πώς να πάτε εκεί:",
+      "ctime": 1448200130121,
+      "mtime": 1448200130121,
+      "revisionId": "w8Pp5xWREv2Z8LB3h",
+      "_id": "tSnpTvPkox6YjNCuk"
+    },
+    "course.history.created_by": {
+      "key": "course.history.created_by",
+      "lang": "el",
+      "text": "Το μάθημα δημιουργήθηκε από:",
+      "ctime": 1448200141473,
+      "mtime": 1448200141473,
+      "revisionId": "ew52FKCmrcGMJuLuD",
+      "_id": "5wioKPDkZZE2sSdDs"
+    },
+    "profile.its_you": {
+      "key": "profile.its_you",
+      "lang": "el",
+      "text": "Εσύ είσαι!",
+      "ctime": 1448200147601,
+      "mtime": 1448200147601,
+      "revisionId": "BwZRB4gxtbyfqBpRJ",
+      "_id": "CarXoaATvMu5nHQsu"
+    },
+    "course.list.status_titles.u_are_organizer": {
+      "key": "course.list.status_titles.u_are_organizer",
+      "lang": "el",
+      "text": "Είσαι διοργανωτής",
+      "ctime": 1448200159988,
+      "mtime": 1448200159988,
+      "revisionId": "nMyW7fo82AxjgxvPu",
+      "_id": "dhttoHmYqpSZXL4jn"
+    },
+    "course.edit.pls_select_region": {
+      "key": "course.edit.pls_select_region",
+      "lang": "el",
+      "text": "Παρακαλώ επιλέξτε περιοχή",
+      "ctime": 1448200168336,
+      "mtime": 1448200168336,
+      "revisionId": "Wcug4XQCs8CSamejc",
+      "_id": "W9PP6KmhizhM9gm4m"
+    },
+    "profile.input.repeatPassword": {
+      "key": "profile.input.repeatPassword",
+      "lang": "el",
+      "text": "Επανάληψη νέου κωδικού",
+      "ctime": 1448200298906,
+      "mtime": 1448200298906,
+      "revisionId": "PzdveGRdFTq7spgiZ",
+      "_id": "mp8ywg2rR4ea6xyrf"
+    },
+    "login.frame.welcome": {
+      "key": "login.frame.welcome",
+      "lang": "el",
+      "text": "Καλωσήρθες {NAME}!",
+      "ctime": 1448200308239,
+      "mtime": 1448200308239,
+      "revisionId": "pZScyTxh6GJkc2BJT",
+      "_id": "vefPEBMhA2SvauLPp"
+    },
+    "login.navig.unlogged": {
+      "key": "login.navig.unlogged",
+      "lang": "el",
+      "text": "Σύνδεση/Εγγραφή",
+      "ctime": 1448200320487,
+      "mtime": 1448200320487,
+      "revisionId": "oycsoWpcbP88aWKm9",
+      "_id": "FCKCXRbc7ucTtToZ7"
+    },
+    "frame.login.usernameOrEmail": {
+      "key": "frame.login.usernameOrEmail",
+      "lang": "el",
+      "text": "Όνομα χρήστη ή Email",
+      "ctime": 1448200333674,
+      "mtime": 1448200333674,
+      "revisionId": "ywvFXtEXGCNohFA37",
+      "_id": "o7pTCYepM3KQi8eLo"
+    },
+    "course.events.pastList": {
+      "key": "course.events.pastList",
+      "lang": "el",
+      "text": "Προηγούμενες συναντήσεις",
+      "ctime": 1448200342989,
+      "mtime": 1448200342989,
+      "revisionId": "DmdMmW9tg4tfqXk7i",
+      "_id": "YJkxeKWbJ64gAn5ka"
+    },
+    "course.event.detail.back": {
+      "key": "course.event.detail.back",
+      "lang": "el",
+      "text": "Πίσω στο μάθημα",
+      "ctime": 1448200351527,
+      "mtime": 1448200351527,
+      "revisionId": "H3f89oFXc6HRnofYY",
+      "_id": "JsWv3h4gEYy7LB2bw"
+    },
+    "course.event.edit.duration": {
+      "key": "course.event.edit.duration",
+      "lang": "el",
+      "text": "Διάρκεια (σε λεπτά)",
+      "ctime": 1448200358036,
+      "mtime": 1448200358036,
+      "revisionId": "TDRpzGTXyZauk3e24",
+      "_id": "wLK6Rp7WXtFnDyAne"
+    },
+    "course.list.status_titles.needs_organizer": {
+      "key": "course.list.status_titles.needs_organizer",
+      "lang": "el",
+      "text": "Χρειάζεται διοργανωτή",
+      "ctime": 1448200388688,
+      "mtime": 1448200388688,
+      "revisionId": "tBHAAys6NxH5hPakv",
+      "_id": "d5jnAZspHDBks5dMq"
+    },
+    "editable.discard": {
+      "key": "editable.discard",
+      "lang": "el",
+      "text": "Απόρριψη αλλαγών",
+      "ctime": 1448200422471,
+      "mtime": 1448200422471,
+      "revisionId": "smYjYH6EgSAGPKk44",
+      "_id": "X7T82JmTNuHTX5QgT"
+    },
+    "location.edit.hosts_admins": {
+      "key": "location.edit.hosts_admins",
+      "lang": "el",
+      "text": "Οικοδεσπότες/Διαχειριστές",
+      "ctime": 1448200432799,
+      "mtime": 1448200432799,
+      "revisionId": "HJbmTg2xymsmYqi4e",
+      "_id": "k7oCn2hvgQQjZEg5T"
+    },
+    "location.edit.search_usr_add_host": {
+      "key": "location.edit.search_usr_add_host",
+      "lang": "el",
+      "text": "Αναζήτηση χρήστη για οικοδεσπότη:",
+      "ctime": 1448200466834,
+      "mtime": 1448200466834,
+      "revisionId": "WrLRXsjpPusvRWTM4",
+      "_id": "v4yRT9njaKuuANBTi"
+    },
+    "course.roles.enrol_as": {
+      "key": "course.roles.enrol_as",
+      "lang": "el",
+      "text": "Συμμετοχή ως",
+      "ctime": 1448200480395,
+      "mtime": 1448200480395,
+      "revisionId": "J8CyexbK3pA3vr8wd",
+      "_id": "hfb8gNrkhJ9BeGvsT"
+    },
+    "notFound.explanation": {
+      "key": "notFound.explanation",
+      "lang": "el",
+      "text": "Αυτή η σελίδα δεν είναι διαθέσιμη. Ίσως δεν υπήρξε ποτέ.",
+      "ctime": 1448200504215,
+      "mtime": 1448200504215,
+      "revisionId": "KmGeBHGJ5C2cadtss",
+      "_id": "omdAbWCrCQ3trZbtL"
+    },
+    "course.roles.incognitosubscription": {
+      "key": "course.roles.incognitosubscription",
+      "lang": "el",
+      "text": "incognito",
+      "ctime": 1448200509196,
+      "mtime": 1448200509196,
+      "revisionId": "S4zyaGvJTtMJ5vrRx",
+      "_id": "RMddJgsKsmwPRH85M"
+    },
+    "report.cancel": {
+      "key": "report.cancel",
+      "lang": "el",
+      "text": "Δεν πειράζει",
+      "ctime": 1448200519791,
+      "mtime": 1448200519791,
+      "revisionId": "vfpYhRwDRZBREduCC",
+      "_id": "Tm5d8zNMLcXteym7y"
+    },
+    "profile.toggle.highprivacy": {
+      "key": "profile.toggle.highprivacy",
+      "lang": "el",
+      "text": "Υψηλή προστασία προσ. δεδομένων:",
+      "ctime": 1448200544874,
+      "mtime": 1448200544874,
+      "revisionId": "v9mE9RZa8FQHwpqog",
+      "_id": "7N9WDrKSySzghg6zk"
+    },
+    "event.windowtitle": {
+      "key": "event.windowtitle",
+      "lang": "el",
+      "text": "{DATE} {EVENT}",
+      "ctime": 1448200554182,
+      "mtime": 1448200554182,
+      "revisionId": "Z3Q4AyyayQ66stpMJ",
+      "_id": "95FNBN6buhJ8JY6qH"
+    },
+    "profile.passwordShort": {
+      "key": "profile.passwordShort",
+      "lang": "el",
+      "text": "Θα αστειεύεστε! Ο επιλεγμένος κωδικός είναι πολύ μικρός.",
+      "ctime": 1448200596992,
+      "mtime": 1448200596992,
+      "revisionId": "9aSHKYvjLYvmQxmdm",
+      "_id": "afg48uvdTq2Qrpvs8"
+    },
+    "profile.mail.longertext": {
+      "key": "profile.mail.longertext",
+      "lang": "el",
+      "text": "εκτενέστερο κείμενο παρακαλώ",
+      "ctime": 1448200621907,
+      "mtime": 1448200621907,
+      "revisionId": "BPuQed7CkttAuPsp6",
+      "_id": "9dZh9HuZkZ8Qj72Ez"
+    },
+    "category.operating": {
+      "key": "category.operating",
+      "lang": "el",
+      "text": "Χρήση λογισμικού",
+      "ctime": 1448200639383,
+      "mtime": 1448200639383,
+      "revisionId": "9crawNF5ELAw6GGw9",
+      "_id": "y7AbFT3AwXfLp3w3f"
+    },
+    "editable.sorrychanged": {
+      "key": "editable.sorrychanged",
+      "lang": "el",
+      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σας έχουν απορριφθεί.",
+      "ctime": 1448200666966,
+      "mtime": 1448200666966,
+      "revisionId": "dFxe9LG85FSu2WiZG",
+      "_id": "yJZSbNYkFYbwCuuvG"
+    },
+    "course.events.ongoinglist": {
+      "key": "course.events.ongoinglist",
+      "lang": "el",
+      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σας έχουν απορριφθεί.",
+      "ctime": 1448200682367,
+      "mtime": 1448200682367,
+      "revisionId": "wLfu3w7PXMYndZJHk",
+      "_id": "gfyuykCBa7PadZYye"
+    },
+    "profile.privacy.on": {
+      "key": "profile.privacy.on",
+      "lang": "el",
+      "text": "Ρυθμίσεις απορρήτου: on",
+      "ctime": 1448200789740,
+      "mtime": 1448200789740,
+      "revisionId": "tP3Q9twRTMvhHbzfA",
+      "_id": "4udEzJbz2AZEmaT3F"
+    },
+    "course.roles.retract": {
+      "key": "course.roles.retract",
+      "lang": "el",
+      "text": "Ανάκληση",
+      "ctime": 1448200892398,
+      "mtime": 1448200892398,
+      "revisionId": "N39NBo4Ra6KiANieE",
+      "_id": "tMEfaM7q4i3Ht7eEW"
+    },
+    "category.artistry": {
+      "key": "category.artistry",
+      "lang": "el",
+      "text": "Δεξιοτεχνία",
+      "ctime": 1448200930210,
+      "mtime": 1448200930210,
+      "revisionId": "K6fugpFZncqs2BFXk",
+      "_id": "eRQ2qFC2Jiq8uuCe9"
+    },
+    "privilege.has.upload": {
+      "key": "privilege.has.upload",
+      "lang": "el",
+      "text": "Μεταφόρτωση δυνατη",
+      "ctime": 1448200984447,
+      "mtime": 1448200984447,
+      "revisionId": "ToreY9uqfWx7HERBy",
+      "_id": "336kk6NMDKisgDRgP"
+    },
+    "course.events.upcominglist": {
+      "key": "course.events.upcominglist",
+      "lang": "el",
+      "text": "Επερχόμενες συναντήσεις",
+      "ctime": 1448201242585,
+      "mtime": 1448201242585,
+      "revisionId": "Pnr9YFL9nxNB3YTqx",
+      "_id": "tPCKPheeNRsPXncqd"
+    },
+    "profile.privacy.off": {
+      "key": "profile.privacy.off",
+      "lang": "el",
+      "text": "Ρυθμίσεις απορρήτου: off",
+      "ctime": 1448201282446,
+      "mtime": 1448201282446,
+      "revisionId": "ZfGNuBSXPAxrLXFqJ",
+      "_id": "ATLapsHjvvLxB5Kwq"
+    },
+    "category.spiritual": {
+      "key": "category.spiritual",
+      "lang": "el",
+      "text": "Πνευματικότητα",
+      "ctime": 1448201315025,
+      "mtime": 1448201315025,
+      "revisionId": "ShJpJcFcBNxYdNgQg",
+      "_id": "FZ5MNkhk3SEuJt7gP"
+    },
+    "menue.Testpage2": {
+      "key": "menue.Testpage2",
+      "lang": "el",
+      "text": "Όλα τα δεδομένα θα διαγράφονται τακτικά.",
+      "ctime": 1448201327473,
+      "mtime": 1448201327473,
+      "revisionId": "b9kR2NnDCmknbrCsm",
+      "_id": "3JTX38dtRdm4d62Gv"
+    },
+    "find.with_upcoming_events": {
+      "key": "find.with_upcoming_events",
+      "lang": "el",
+      "text": "Με επερχόμενες συναντήσεις",
+      "ctime": 1448201340842,
+      "mtime": 1448201340842,
+      "revisionId": "gaynoWjk9D5JfiXPN",
+      "_id": "8KZNPBDuE4QcDpw5n"
+    },
+    "login.frame.profile": {
+      "key": "login.frame.profile",
+      "lang": "el",
+      "text": "Επίσκεψη του προφίλ μου",
+      "ctime": 1448201350323,
+      "mtime": 1448201350323,
+      "revisionId": "8SG8uekKaxMCG2CcG",
+      "_id": "S4xZfWm4axQ5p3dBu"
+    },
+    "location.details.has_projector": {
+      "key": "location.details.has_projector",
+      "lang": "el",
+      "text": "Έχει προβολέα!",
+      "ctime": 1448201479055,
+      "mtime": 1448201479055,
+      "revisionId": "43ojKmroa9EX63Fyk",
+      "_id": "vZ8qQEu3dGd9sLhZb"
+    },
+    "course.event.edit.switch_time_end": {
+      "key": "course.event.edit.switch_time_end",
+      "lang": "el",
+      "text": "αλλαγή σε ώρα λήξης",
+      "ctime": 1448201500316,
+      "mtime": 1448201500316,
+      "revisionId": "DisucSW9Tr67jh8kf",
+      "_id": "GXDceaE7xMfgNwLi4"
+    },
+    "location.details.online": {
+      "key": "location.details.online",
+      "lang": "el",
+      "text": "Online:",
+      "ctime": 1448201532074,
+      "mtime": 1448201532074,
+      "revisionId": "zkiarfFFAJYiXckN6",
+      "_id": "RcwB5PtZ2iMvKK3HQ"
+    },
+    "location.edit.route": {
+      "key": "location.edit.route",
+      "lang": "el",
+      "text": "Διαδρομή:",
+      "ctime": 1448201542010,
+      "mtime": 1448201542010,
+      "revisionId": "gTwzybDxbKH2BpRYL",
+      "_id": "3QwroEMpbY7FnbkLS"
+    },
+    "login.frame.settings": {
+      "key": "login.frame.settings",
+      "lang": "el",
+      "text": "Ρυθμίσεις λογαριασμού",
+      "ctime": 1448201551589,
+      "mtime": 1448201551589,
+      "revisionId": "TwkRvDLvECc7wijkW",
+      "_id": "zKPqgWzpCAPWWWhCh"
+    },
+    "course.discussion.comment_btn.edit": {
+      "key": "course.discussion.comment_btn.edit",
+      "lang": "el",
+      "text": "Επεξεργασία!",
+      "ctime": 1448201563725,
+      "mtime": 1448201563725,
+      "revisionId": "YP6f63DgospR3w5pB",
+      "_id": "2YxHrRvvairKXZ5se"
+    },
+    "location.details.hosts_admin": {
+      "key": "location.details.hosts_admin",
+      "lang": "el",
+      "text": "Οικοδεσπότες/διαχειριστές:",
+      "ctime": 1448201578177,
+      "mtime": 1448201578177,
+      "revisionId": "TevM5EcTpYdHYdxnn",
+      "_id": "YqgsPnPFnvBfouLuN"
+    },
+    "categories.no_courses": {
+      "key": "categories.no_courses",
+      "lang": "el",
+      "text": "δεν υπάρχουν μαθήματα σε αυτή την κατηγορία!",
+      "ctime": 1448201611895,
+      "mtime": 1448201611895,
+      "revisionId": "hBAPeJmESkH5a5X8y",
+      "_id": "CWFd7ojyQRrEz83WC"
+    },
+    "comment.editing.error": {
+      "key": "comment.editing.error",
+      "lang": "el",
+      "text": "δεν υπάρχουν μαθήματα σε αυτή την κατηγορία!",
+      "ctime": 1448201624257,
+      "mtime": 1448201624257,
+      "revisionId": "J7RWzx2sXarcKarZ3",
+      "_id": "82nAyzvrfSM27NSEq"
     }
   }
 }, {
-  "exportedAt": 1448153875165,
-  "updatedAt": 1448108380034
+  "exportedAt": 1448241972737,
+  "updatedAt": 1448201624257
 });
