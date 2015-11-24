@@ -68,6 +68,13 @@ locationsFind = function(filter, limit) {
 			return { name: { $regex: escapeRegex(searchTerm), $options: 'i' } };
 		});
 	}
+
+	if (filter.recent) {
+		var recentEvents = Events.find({ 'location._id': { $exists: true }}, { sort: { time_lastedit: -1 }, limit: 5 }).fetch();
+		var recentLocations = _.uniq(recentEvents, false, function(event) { return event.location._id; });
+		find._id = { $in: recentLocations };
+	}
+
 	return Locations.find(find, options);
 }
 

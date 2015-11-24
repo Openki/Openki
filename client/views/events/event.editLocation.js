@@ -17,7 +17,8 @@ Template.eventEditLocation.onCreated(function() {
 	instance.autorun(function() {
 		if (instance.changed.get()) {
 			var location = instance.location.get();
-			instance.locationTracker.setLocation();
+			instance.locationTracker.setLocation(null);
+			instance.locationTracker.markers.remove({ candidate: true });
 			if (location.loc) instance.locationTracker.markers.insert({ candidate: true, loc: location.loc });
 		} else {
 			var originalLocation = instance.parent.selectedLocation.get();
@@ -53,28 +54,6 @@ Template.eventEditLocation.onCreated(function() {
 		}
 	});
 
-	instance.autorun(function() {
-		var search = instance.search.get().trim();
-
-		instance.locationTracker.markers.remove({ proposed: true });
-
-		if (search.length > 0) {
-			var regionId = instance.parent.selectedRegion.get();
-			subs.subscribe('locationsFind', { search: search, region: regionId });
-			locationsFind({
-				search: search,
-				region: regionId
-			}).observe({
-				'added': function(location) {
-					location.proposed = true;
-					location.presetName = location.name;
-					location.preset = true;
-					instance.locationTracker.markers.insert(location);
-				}
-			});
-		}
-	});
-
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
@@ -91,6 +70,32 @@ Template.eventEditLocation.onCreated(function() {
 	//  select: select a predefined location (from Locations)
 	//  add: add address and coordinates manually
 	instance.locationState = new ReactiveVar(instance.locationIs('unset') ? 'select' : 'show');
+
+	instance.autorun(function() {
+		instance.locationTracker.markers.remove({ proposed: true });
+
+		if (instance.locationState.get() == 'show') return;
+
+		var search = instance.search.get().trim();
+		var query = { region: instance.parent.selectedRegion.get() };
+
+		if (search.length > 0) {
+			query.search = search;
+		} else {
+			query.recent = true;
+		}
+		var localQuery = _.extend(query, { recent: false } ); // We dont have recent events loaded on the client
+
+		subs.subscribe('locationsFind', query, 5);
+		locationsFind(localQuery).observe({
+			'added': function(location) {
+				location.proposed = true;
+				location.presetName = location.name;
+				location.preset = true;
+				instance.locationTracker.markers.insert(location);
+			}
+		});
+	});
 
 	instance.reset = function() {
 		instance.locationState.set('show');
