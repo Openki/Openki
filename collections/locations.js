@@ -45,13 +45,14 @@ Locations.allow({
 /* Find locations for given filters
  *
  * filter: dictionary with filter options
- *   query: string of words to search for
+ *   search: string of words to search for
  *   region: restrict to locations in that region
  * limit: how many to find
  *
  */
 locationsFind = function(filter, limit) {
 	var find = {};
+	var options = {};
 
 	if (limit > 0) {
 		options.limit = limit;
@@ -64,12 +65,10 @@ locationsFind = function(filter, limit) {
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		find.$and = _.map(searchTerms, function(searchTerm) {
-			return { title: { $regex: escapeRegex(searchTerm), $options: 'i' } };
+			return { name: { $regex: escapeRegex(searchTerm), $options: 'i' } };
 		});
-
-		find.$and = searchQueries;
 	}
-	return Events.find(find, options);
+	return Locations.find(find, options);
 }
 
 Meteor.methods({

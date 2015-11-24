@@ -7,6 +7,7 @@ Template.eventEditLocation.onCreated(function() {
 	instance.locationTracker = LocationTracker();
 	instance.changed = new ReactiveVar(false);
 	instance.location = new ReactiveVar();
+	instance.search = new ReactiveVar('');
 
 	instance.autorun(function() {
 		var regionId = instance.parent.selectedRegion.get();
@@ -14,13 +15,14 @@ Template.eventEditLocation.onCreated(function() {
 	});
 
 	instance.autorun(function() {
-		if (!instance.changed.get()) {
+		if (instance.changed.get()) {
+			var location = instance.location.get();
+			instance.locationTracker.setLocation();
+			if (location.loc) instance.locationTracker.markers.insert({ candidate: true, loc: location.loc });
+		} else {
 			var originalLocation = instance.parent.selectedLocation.get();
 			instance.location.set(originalLocation);
 			instance.locationTracker.setLocation(originalLocation);
-		} else {
-			var location = instance.location.get();
-			if (location.loc) instance.locationTracker.markers.insert({ candidate: true, loc: location.loc });
 		}
 	});
 
@@ -32,11 +34,41 @@ Template.eventEditLocation.onCreated(function() {
 				// store it as new location for the event
 				var updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
+				if (mark.presetName) updLocation.name = mark.presetName;
 				instance.location.set(updLocation);
 				instance.changed.set(true);
 				instance.locationTracker.markers.remove({ proposed: true });
 			},
 		});
+	});
+
+	instance.autorun(function() {
+		var search = instance.search.get();
+
+		if (search.length > 0) {
+			var regionId = instance.parent.selectedRegion.get();
+		}
+	});
+
+	instance.autorun(function() {
+		var search = instance.search.get().trim();
+
+		instance.locationTracker.markers.remove({ proposed: true });
+
+		if (search.length > 0) {
+			var regionId = instance.parent.selectedRegion.get();
+			subs.subscribe('locationsFind', { search: search, region: regionId });
+			locationsFind({
+				search: search,
+				region: regionId
+			}).observe({
+				'added': function(location) {
+					location.proposed = true;
+					location.presetName = location.name;
+					instance.locationTracker.markers.insert(location);
+				}
+			});
+		}
 	});
 
 	// unset: no location selected
@@ -66,12 +98,16 @@ Template.eventEditLocation.onCreated(function() {
 	instance.save = function() {
 		instance.parent.selectedLocation.set(instance.location.get());
 		instance.reset();
-	}
+	};
 });
 
 
 Template.eventEditLocation.helpers({
 	
+	location: function() {
+		return Template.instance().location.get();
+	},
+
 	locationCandidates: function() {
 		return Template.instance().locationTracker.markers.find({ proposed: true });
 	},
@@ -173,14 +209,15 @@ Template.eventEditLocation.events({
 	},
 
 	'click .-locationAdd': function(event, instance) {
+		instance.locationTracker.markers.remove({ proposed: true });
 		instance.locationState.set('add');
 	},
 
 	'click .-locationCandidate': function(event, instance) {
-		var updLocation = instance.location.get();
-		updLocation.loc = this.loc;
-		instance.location.set(updLocation);
-		instance.changed.set(true);
-		instance.locationTracker.markers.remove({ proposed: true });
+		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
+	},
+
+	'keyup .-locationName': function(event, instance) {
+		instance.search.set(event.target.value);
 	}
 });
