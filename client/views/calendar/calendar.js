@@ -46,9 +46,11 @@ Template.calendar.helpers({
 		return Template.instance().filter;
 	},
 	startDate: function() {
-		return Template.instance().filter.get('start').format('LL');
+		Session.get('timeLocale');
+		return moment(Template.instance().filter.get('start')).format('LL');
 	},
 	endDate: function() {
+		Session.get('timeLocale');
 		return Template.instance().filter.get('start').add(1, 'week').format('LL');
 	}
 });

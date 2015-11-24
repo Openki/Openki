@@ -161,7 +161,8 @@ Handlebars.registerHelper('dateformat_mini_fullmonth', function(date) {
 });
 
 Handlebars.registerHelper('timeformat', function(date) {
-	if (date) return moment(date).format('HH:mm');
+	Session.get('timeLocale');
+	if (date) return moment(date).format('LT');
 });
 
 Handlebars.registerHelper('fromNow', function(date) {
@@ -232,5 +233,18 @@ Handlebars.registerHelper('groupShort', function(groupId) {
 
 	var group = Groups.findOne({ _id: groupId });
 	if (group) return group.short;
+	return "";
+});
+
+Handlebars.registerHelper('groupLogo', function(groupId) {
+	var instance = Template.instance();
+	instance.subscribe('group', groupId);
+
+	var group = Groups.findOne({ _id: groupId });
+	if (group) {
+		if (group.logo){
+			return group.logo;
+		} return "";
+	}
 	return "";
 });
