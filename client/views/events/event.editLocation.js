@@ -35,6 +35,9 @@ Template.eventEditLocation.onCreated(function() {
 				var updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
 				if (mark.presetName) updLocation.name = mark.presetName;
+				if (mark.preset) {
+					updLocation._id = mark._id;
+				}
 				instance.location.set(updLocation);
 				instance.changed.set(true);
 				instance.locationTracker.markers.remove({ proposed: true });
@@ -65,6 +68,7 @@ Template.eventEditLocation.onCreated(function() {
 				'added': function(location) {
 					location.proposed = true;
 					location.presetName = location.name;
+					location.preset = true;
 					instance.locationTracker.markers.insert(location);
 				}
 			});
