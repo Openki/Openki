@@ -36,6 +36,7 @@ Template.eventEditLocation.onCreated(function() {
 				var updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
 				if (mark.presetName) updLocation.name = mark.presetName;
+				if (mark.presetAddress) updLocation.address = mark.address;
 				if (mark.preset) {
 					updLocation._id = mark._id;
 				}
@@ -91,6 +92,7 @@ Template.eventEditLocation.onCreated(function() {
 			'added': function(location) {
 				location.proposed = true;
 				location.presetName = location.name;
+				location.presetAddress = location.address;
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
 			}
