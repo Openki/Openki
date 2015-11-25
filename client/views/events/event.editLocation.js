@@ -162,6 +162,7 @@ Template.eventEditLocation.helpers({
 
 Template.eventEditLocation.events({
 	'click .-addressSearch': function(event, instance) {
+		event.preventDefault();
 		var search = instance.$('.-locationAddress').val();
 		var nominatimQuery = {
 			format: 'json',

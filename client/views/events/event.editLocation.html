@@ -23,7 +23,7 @@
 				</ul>
 			{{#if locationStateAdd}}
 				<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address of the location"}}"/>
-				<button type="button" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search address on map"}}</button>
+				<button type="submit" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search address on map"}}</button>
 			{{else}}
 					<button type="button" class="-locationAdd">{{mf 'event.edit.LocationAdd' "Add new address"}}</button>
 			{{/if}}

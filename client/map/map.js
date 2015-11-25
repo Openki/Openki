@@ -144,7 +144,7 @@ Template.map.onRendered(function() {
 		if (bounds.isValid()) {
 			// Have some padding
 			bounds.pad(10);
-			map.fitBounds(bounds);
+			map.fitBounds(bounds, { maxZoom: 16 });
 		}
 	}, 100);
 
