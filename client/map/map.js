@@ -73,7 +73,7 @@ Template.map.onRendered(function() {
 			bounds.pad(10);
 			map.fitBounds(bounds);
 		}
-	}, 0);
+	}, 100);
 
 	fitBounds();
 
