@@ -1,4 +1,5 @@
 <template name="eventEditLocation">
+	<div class="locationFrame">
 	<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
 	<div class="locationEdit input-group">
 				<span class="input-group-addon">
@@ -6,7 +7,7 @@
 				</span>
 		<div class="col-xs-12 col-sm-6">
 		{{#if locationStateShow}}
-				<div style="float: right"><button type="button" class="-locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
+				<div class="location" style="float: right"><button type="button" class="btn -locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
 				<div style="border: 2px solid gray">
 					{{location.name}}
 					{{#if location.address}}<div style="font-size: small">{{location.address}}</div>{{/if}}
@@ -15,7 +16,7 @@
 				<input type="text" class="form-control -locationName" size="40" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Name of the location"}}"/>
 				<ul>
 				{{#each locationCandidates}}
-					<li class="-locationCandidate">
+					<li class='{{candidateClass}}'>
 						{{name}}
 						<div style="font-size: small">{{address}}</div>
 					</li>
@@ -34,5 +35,6 @@
 		<div class="col-xs-12 col-sm-6 locationMap">
 			{{>map markers=eventMarkers height=300 allowPlacing=allowPlacing}}
 		</div>
+	</div>
 	</div>
 </template>

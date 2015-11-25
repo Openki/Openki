@@ -148,15 +148,19 @@ Template.eventEditLocation.helpers({
 	},
 
 	allowPlacing: function() {
-        var locationState = Template.instance().locationState;
+		var locationState = Template.instance().locationState;
 
-        // We return a function so the reactive dependency on locationState is
-        // established from within the map template which will call it. The
-        // craziness is strong with this one.
-        return function() {
-            return locationState.get() == 'add';
-        }
-    }
+		// We return a function so the reactive dependency on locationState is
+		// established from within the map template which will call it. The
+		// craziness is strong with this one.
+		return function() {
+			return locationState.get() == 'add';
+		}
+	},
+
+	candidateClass: function() {
+		return 'locCandy -locationCandidate' + (this.hover ? ' hover' : '');
+	}
 });
 
 
@@ -232,5 +236,14 @@ Template.eventEditLocation.events({
 	'keyup .-locationName': function(event, instance) {
 		instance.search.set(event.target.value);
 	},
+
+	'mouseenter .-locationCandidate': function(event, instance) {
+		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
+		instance.locationTracker.markers.update(this._id, {$set:{hover: true}});
+	},
+
+	'mouseleave .-locationCandidate': function(event, instance) {
+		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
+	}
 
 });

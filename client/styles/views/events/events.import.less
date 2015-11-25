@@ -1,15 +1,48 @@
-.locationEdit{
-	//border-color: red;
-	//border-radius: 20px;
-	//border-style: dotted;
-	//border-width: medium;
-	overflow: auto;
-	margin-top: 15px;
-	background-color: rgba(200, 200, 255, 0.35);
 
+.locationFrame{
+	.make-xs-column(12);
 
-	.locationMap{
-		margin: 10px 0 10px 0;
+	.location{
+		background-color: rgba(200, 200, 255, 0.35);
 	}
 
+	.locationEdit{
+		border: 1px solid #CCC;
+		overflow: auto;
+		background-color: rgba(200, 200, 255, 0.15);
+
+		.form-control{
+			margin-top: 10px;
+			margin-bottom: 15px;
+		}
+
+		ul{
+			padding-left: 0px;
+		}
+
+		.locCandy{
+			.list-unstyled;
+			margin-bottom: 4px;
+			padding-left: 5px;
+			background-color: rgba(200, 200, 255, 0.35);
+		}
+
+		.hover{
+			background: rgba(200, 200, 255, 0.75);
+			fill: #ff1;
+		}
+
+		.locationMap{
+			margin: 10px 0 10px 0;
+		}
+
+		.leaflet-interactive{
+			.hover{
+				fill: #ff1;
+			}
+			&:hover{
+				cursor: default;
+			}
+		}
+	}
 }

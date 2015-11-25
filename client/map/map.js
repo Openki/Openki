@@ -153,36 +153,64 @@ Template.map.onRendered(function() {
 	// Tracked so that observe() will be stopped when the template is destroyed
 	Tracker.autorun(function() {
 		var markers = instance.data.markers;
+
+		var addMarker = function(mark){
+			// Marks that have the center flage set are not displayed but used for anchoring the map
+			if (mark.center) {
+				centers[mark._id] = L.geoJson(mark.loc).getBounds();
+			} else {
+				var marker = L.geoJson(mark.loc, {
+					pointToLayer: function(feature, latlng) {
+						var options = geojsonMarkerOptions;
+						if (mark.proposed) options = geojsonProposedMarkerOptions;
+						if (mark.candidate) options = geojsonCandidateMarkerOptions;
+
+						var marker = L.circleMarker(latlng, options);
+						// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
+						marker.on('click', function() {
+							markers.update({}, { $set: { selected: false } });
+							markers.update(mark._id, { $set: { selected: true } });
+						});
+						marker.on('mouseover', function() {
+							markers.update({}, { $set: { hover: false } }, { multi: true });
+							markers.update(mark._id, { $set: { hover: true } });
+						});
+						marker.on('mouseout', function() {
+							markers.update({}, { $set: { hover: false } }, { multi: true });
+						});
+						return marker;
+					}
+				});
+				layers[mark._id] = marker;
+				marker.addTo(map);
+			}
+		};
+
+		var removeMarker = function(mark) {
+			if (layers[mark._id]) map.removeLayer(layers[mark._id]);
+			delete layers[mark._id];
+			delete centers[mark._id];
+		};
+
+		var updateMarker = function(mark) {
+			var layer = layers[mark._id];
+			if (!layer) return;
+//			layer.setStyle({ className: mark.hover ? 'hover' : '', weight: 10});
+			layer.setStyle({ weight: mark.hover ? 5 : 1});
+		};
+
 		markers.find().observe({
 			added: function(mark) {
-				// Marks that have the center flage set are not displayed but used for anchoring the map
-				if (mark.center) {
-					centers[mark._id] = L.geoJson(mark.loc).getBounds();
-				} else {
-					var marker = L.geoJson(mark.loc, {
-						pointToLayer: function(feature, latlng) {
-							var options = geojsonMarkerOptions;
-							if (mark.proposed) options = geojsonProposedMarkerOptions;
-							if (mark.candidate) options = geojsonCandidateMarkerOptions;
-
-							var marker = L.circleMarker(latlng, options);
-							// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
-							marker.on('click', function() {
-								markers.update({}, { $set: { selected: false } });
-								markers.update(mark._id, { $set: { selected: true } });
-							});
-							return marker;
-						}
-					});
-					layers[mark._id] = marker;
-					marker.addTo(map);
-				}
+				addMarker(mark);
 				fitBounds();
 			},
+
+			changed: function(mark)  {
+				updateMarker(mark);
+			},
+
 			removed: function(mark) {
-				if (layers[mark._id]) map.removeLayer(layers[mark._id]);
-				delete layers[mark._id];
-				delete centers[mark._id];
+				removeMarker(mark);
 				fitBounds();
 			}
 		});
