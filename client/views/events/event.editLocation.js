@@ -42,9 +42,9 @@ Template.eventEditLocation.onCreated(function() {
 				var updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
 				if (mark.presetName) updLocation.name = mark.presetName;
+				if (mark.presetAddress) updLocation.address = mark.presetAddress;
 				if (mark.preset) {
 					updLocation._id = mark._id;
-					updLocation.address = mark.address;
 				}
 				instance.location.set(updLocation);
 				instance.locationTracker.markers.remove({ proposed: true });
@@ -160,7 +160,7 @@ Template.eventEditLocation.events({
 				var marker = {
 					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},
 					proposed: true,
-					address: foundLocation.display_name,
+					presetAddress: foundLocation.display_name,
 					name: foundLocation.display_name
 				};
 				instance.locationTracker.markers.insert(marker);
