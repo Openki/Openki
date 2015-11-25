@@ -9,6 +9,23 @@ Template.map.onCreated(function() {
 	this.fullscreen = new ReactiveVar(false);
 });
 
+var OpenkiControl = L.Control.extend({
+	options: {
+		icon: '',
+		action: '',
+		title: '',
+		position: 'topright'
+	},
+
+	initialize: function(options) {
+		L.Util.setOptions(this, options);
+	},
+
+	onAdd: function(map) {
+		return L.DomUtil.create('span', 'fa fa-'+this.options.icon+' '+this.options.action);
+	}
+});
+
 Template.map.onRendered(function() {
 	var instance = this;
 
@@ -17,15 +34,51 @@ Template.map.onRendered(function() {
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
-	var options = {};
-	if (instance.data.mini) {
-		options.zoomControl = false;
-		options.attributionControl = false;
-	}
+	var options = {
+		zoomControl: false,
+		attributionControl: false
+	};
 
 	var map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
 
-	// Add
+	// Depending on view state, different controls are shown
+	var zoomControl = L.control.zoom({
+		zoomInTitle: mf('map.zoomInTitle', 'zoom in'),
+		zoomOutTitle: mf('map.zoomOutTitle', 'zoom out')
+	});
+	var attributionControl = L.control.attribution();
+	var scaleControl = L.control.scale();
+	var fullscreenControl = new OpenkiControl({
+		icon: 'arrows-alt',
+		action: '-fullscreen',
+		title: mf('map.fullscreen', 'big map')
+	});
+	var closeFullscreenControl = new OpenkiControl({
+		icon: 'close',
+		action: '-fullscreenClose',
+		title: mf('map.fullscreenClose', 'close')
+	});
+
+	instance.autorun(function() {
+		var fullscreen = instance.fullscreen.get();
+		var mini = instance.data.mini;
+		var show = function(control, show) {
+			if (show) {
+				map.addControl(control);
+			} else {
+				map.removeControl(control);
+			}
+		}
+
+		show(attributionControl, fullscreen || !mini);
+		show(zoomControl, !mini);
+		show(scaleControl, fullscreen);
+		show(fullscreenControl, !mini && !fullscreen);
+		show(closeFullscreenControl, fullscreen);
+	});
+
+
+	// Add tiles depending on language
 	var tiles = null;
 	var tileLayers = {
 		'de': 'OpenStreetMap.DE',
@@ -140,6 +193,7 @@ Template.map.onRendered(function() {
 
 Template.map.helpers({
 	mapStyle: function() {
+		// The font-size is specified for the icon height
 		if (Template.instance().fullscreen.get()) {
 			return [
 				"z-index: 9999",
@@ -148,24 +202,43 @@ Template.map.helpers({
 				"left: 0",
 				"bottom: 0",
 				"right: 0",
+				"font-size: 10vh"
 			].join('; ');
 		} else {
-			return "width: "+(this.width ? ""+this.width+"px" : "100%")+"; height: "+this.height+"px;";
+			return [
+				"width: "+(this.width ? ""+this.width+"px" : "100%"),
+				"height: "+this.height+"px",
+				"font-size: "+this.height/10+"px"
+			].join(';');
 		}
 	},
 
 	fullscreen: function () {
 		return Template.instance().fullscreen.get();
 	},
+
+	fullscreenControl: function () {
+		var instance = Template.instance();
+		return !instance.data.mini && !Template.instance().fullscreen.get();
+	},
 });
 
 
 Template.map.events({
 	'click': function(event, instance) {
+		if (instance.data.mini) instance.fullscreen.set(true);
+	},
+
+	'click .-fullscreen': function(event, instance) {
 		instance.fullscreen.set(true);
 	},
 
-	'click .-close': function(event, instance) {
+	'click .-fullscreenClose': function(event, instance) {
 		instance.fullscreen.set(false);
+	},
+
+	'keyup': function(event, instance) {
+		// Press escape to close fullscreen
+		if (event.keyCode == 27) instance.fullscreen.set(false);
 	}
 });

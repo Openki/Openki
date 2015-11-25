@@ -1,9 +1,5 @@
 <template name="map">
 	<div class="mapContainer" style={{mapStyle}}>
-		<div class="map" style="width: 100%; height: 100%"></div>
-		<div style="position: fixed; top: 0; right: 0">
-			{{#if allowPlacing}}<span class="fa fa-map-pin -drag"></span>{{/if}}
-			{{#if fullscreen}}<span style="font-size: 10vh" class="fa fa-close -close" title="{{mf "map.close" "close map"}}"></span>{{/if}}
-		</div>
+		<div class="map" style="z-index: 9999; width: 100%; height: 100%"></div>
 	</div>
 </template>

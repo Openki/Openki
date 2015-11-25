@@ -230,5 +230,6 @@ Template.eventEditLocation.events({
 
 	'keyup .-locationName': function(event, instance) {
 		instance.search.set(event.target.value);
-	}
+	},
+
 });
