@@ -7,7 +7,7 @@ Template.eventEditLocation.onCreated(function() {
 	instance.locationTracker = LocationTracker();
 	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
-	instance.addressSearch = new ReactiveVar(false);
+	instance.addressSearch = new ReactiveVar(!!instance.location.get().name);
 
 	instance.autorun(function() {
 		instance.locationTracker.setLocation(instance.location.get());
