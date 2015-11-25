@@ -41,13 +41,32 @@ Template.map.onRendered(function() {
 
 	var map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
 
+
+	// Add tiles depending on language
+	var tiles = null;
+	var tileLayers = {
+		'de': 'OpenStreetMap.DE',
+		'fr': 'OpenStreetMap.France',
+		'default': 'OpenStreetMap.Mapnik'
+	}
+	instance.autorun(function() {
+		if (tiles) map.removeLayer(tiles);
+		var tileLayer = tileLayers[Session.get('locale')];
+		if (!tileLayer) tileLayer = tileLayers['default'];
+		tiles = L.tileLayer.provider(tileLayer);
+		tiles.addTo(map);
+	});
+
+
 	// Depending on view state, different controls are shown
 	var zoomControl = L.control.zoom({
 		zoomInTitle: mf('map.zoomInTitle', 'zoom in'),
 		zoomOutTitle: mf('map.zoomOutTitle', 'zoom out')
 	});
 	var attributionControl = L.control.attribution();
-	var scaleControl = L.control.scale();
+	var scaleControl = L.control.scale({
+		imperial: Session.get('locale') == 'en'
+	});
 	var fullscreenControl = new OpenkiControl({
 		icon: 'arrows-alt',
 		action: '-fullscreen',
@@ -75,22 +94,6 @@ Template.map.onRendered(function() {
 		show(scaleControl, fullscreen);
 		show(fullscreenControl, !mini && !fullscreen);
 		show(closeFullscreenControl, fullscreen);
-	});
-
-
-	// Add tiles depending on language
-	var tiles = null;
-	var tileLayers = {
-		'de': 'OpenStreetMap.DE',
-		'fr': 'OpenStreetMap.France',
-		'default': 'OpenStreetMap.Mapnik'
-	}
-	instance.autorun(function() {
-		if (tiles) map.removeLayer(tiles);
-		var tileLayer = tileLayers[Session.get('locale')];
-		if (!tileLayer) tileLayer = tileLayers['default'];
-		tiles = L.tileLayer.provider(tileLayer);
-		tiles.addTo(map);
 	});
 
 	var geojsonMarkerOptions = {
