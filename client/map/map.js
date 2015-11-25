@@ -24,7 +24,21 @@ Template.map.onRendered(function() {
 	}
 
 	var map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
-	L.tileLayer.provider('Thunderforest.Transport').addTo(map);
+
+	// Add
+	var tiles = null;
+	var tileLayers = {
+		'de': 'OpenStreetMap.DE',
+		'fr': 'OpenStreetMap.France',
+		'default': 'OpenStreetMap.Mapnik'
+	}
+	instance.autorun(function() {
+		if (tiles) map.removeLayer(tiles);
+		var tileLayer = tileLayers[Session.get('locale')];
+		if (!tileLayer) tileLayer = tileLayers['default'];
+		tiles = L.tileLayer.provider(tileLayer);
+		tiles.addTo(map);
+	});
 
 	var geojsonMarkerOptions = {
 		radius: 10,
