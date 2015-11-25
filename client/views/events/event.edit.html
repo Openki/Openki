@@ -84,7 +84,7 @@
 			<div class="col-xs-12 col-sm-4" style="float: right">
 				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
 				<div class="styled-select">
-					<select name='region' class="region_select">
+					<select name='region' class="region_select -regionSelect">
 						<option value='' class="select_default">{{mf 'course.edit.pls_select' 'Please select'}}</option>
 						{{#each regions}}
 						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>

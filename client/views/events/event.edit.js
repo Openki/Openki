@@ -228,7 +228,7 @@ Template.eventEdit.events({
 				editevent.region = course.region;
 				editevent.course_id = this.course_id;
 			} else {
-				editevent.region = template.$('.region_select').val();
+				editevent.region = template.selectedRegion.get();
 
 				var groups = [];
 				if (Router.current().params.query.group) {
@@ -267,7 +267,7 @@ Template.eventEdit.events({
 		});
 	},
 	
-	'click button.cancelEditEvent': function () {
+	'click button.cancelEditEvent': function (event, instance) {
 		if (this.new) history.back();
 		instance.parent.editing.set(false);
 	},
@@ -283,5 +283,9 @@ Template.eventEdit.events({
 
 	'change #edit_event_endtime': function(event, template) {
 		updateTimes(template, false);
+	},
+
+	'change .-regionSelect': function(event, instance) {
+		instance.selectedRegion.set(instance.$('.-regionSelect').val());
 	},
 });
