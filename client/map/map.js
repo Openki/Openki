@@ -94,6 +94,9 @@ Template.map.onRendered(function() {
 		show(scaleControl, fullscreen);
 		show(fullscreenControl, !mini && !fullscreen);
 		show(closeFullscreenControl, fullscreen);
+
+		var controlSize = fullscreen ? '10vh' : (instance.data.height/10)+'px';
+		instance.$('span.fa').css({ 'font-size': controlSize });
 	});
 
 	var geojsonMarkerOptions = {
