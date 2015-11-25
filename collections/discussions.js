@@ -16,7 +16,7 @@ Meteor.methods({
 	postComment: function(comment, anon) {
 		check(comment, {
 			course_ID: String,
-		    parent_ID: Match.Optional(String),
+			parent_ID: Match.Optional(String),
 			title: String,
 			text: String
 		});
@@ -63,7 +63,7 @@ Meteor.methods({
 	editComment: function(comment, commentId) {
 		check(comment, {
 			course_ID: String,
-		    parent_ID: Match.Optional(String),
+			parent_ID: Match.Optional(String),
 			title: String,
 			text: String,
 		});
