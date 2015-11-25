@@ -182,6 +182,7 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
+				event.groups = course.groups;
 				var random = Math.random();
 				if (random < 0.4) event.location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) event.location = random < 0.5 ? 'Volkshaus' : 'SQ131';
