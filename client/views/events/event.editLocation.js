@@ -5,54 +5,17 @@ Template.eventEditLocation.onCreated(function() {
 	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
 
 	instance.locationTracker = LocationTracker();
-	instance.changed = new ReactiveVar(false);
-	instance.location = new ReactiveVar();
+	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
+	instance.addressSearch = new ReactiveVar(false);
+
+	instance.autorun(function() {
+		instance.locationTracker.setLocation(instance.location.get());
+	});
 
 	instance.autorun(function() {
 		var regionId = instance.parent.selectedRegion.get();
 		instance.locationTracker.setRegion(regionId);
-	});
-
-	instance.autorun(function() {
-		if (instance.changed.get()) {
-			var location = instance.location.get();
-			instance.locationTracker.setLocation(null);
-			instance.locationTracker.markers.remove({ candidate: true });
-			if (location.loc) instance.locationTracker.markers.insert({ candidate: true, loc: location.loc });
-		} else {
-			var originalLocation = instance.parent.selectedLocation.get();
-			instance.location.set(originalLocation);
-			instance.locationTracker.setLocation(originalLocation);
-		}
-	});
-
-	// Tracked so that observe() will be stopped when the template is destroyed
-	instance.autorun(function() {
-		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
-			added: function(mark) {
-				// When a propsed marker is selected, we clear the other location proposals and
-				// store it as new location for the event
-				var updLocation = instance.location.get();
-				updLocation.loc = mark.loc;
-				if (mark.presetName) updLocation.name = mark.presetName;
-				if (mark.presetAddress) updLocation.address = mark.address;
-				if (mark.preset) {
-					updLocation._id = mark._id;
-				}
-				instance.location.set(updLocation);
-				instance.changed.set(true);
-				instance.locationTracker.markers.remove({ proposed: true });
-			},
-		});
-	});
-
-	instance.autorun(function() {
-		var search = instance.search.get();
-
-		if (search.length > 0) {
-			var regionId = instance.parent.selectedRegion.get();
-		}
 	});
 
 	// unset: no location selected
@@ -66,18 +29,37 @@ Template.eventEditLocation.onCreated(function() {
 		return 'unset' === type;
 	};
 
-	// Possible states:
-	//  show: show the selected location
-	//  select: select a predefined location (from Locations)
-	//  add: add address and coordinates manually
-	instance.locationState = new ReactiveVar(instance.locationIs('unset') ? 'select' : 'show');
+	instance.reset = function() {
+		instance.locationTracker.markers.remove({ proposed: true });
+	};
+
+	// Set proposed location as new location when it is selected
+	instance.autorun(function() {
+		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
+			added: function(mark) {
+				// When a propsed marker is selected, we clear the other location proposals and
+				// store it as new location for the event
+				var updLocation = instance.location.get();
+				updLocation.loc = mark.loc;
+				if (mark.presetName) updLocation.name = mark.presetName;
+				if (mark.preset) {
+					updLocation._id = mark._id;
+					updLocation.address = mark.address;
+				}
+				instance.location.set(updLocation);
+				instance.locationTracker.markers.remove({ proposed: true });
+			},
+		});
+	});
 
 	instance.autorun(function() {
-		instance.locationTracker.markers.remove({ proposed: true });
-
-		if (instance.locationState.get() == 'show') return;
+		// Do not search preset locations when one is already chosen or when
+		// searching address
+		if (instance.locationIs('preset') || instance.addressSearch.get()) return;
 
 		var search = instance.search.get().trim();
+		instance.locationTracker.markers.remove({ proposed: true });
+
 		var query = { region: instance.parent.selectedRegion.get() };
 
 		if (search.length > 0) {
@@ -98,18 +80,6 @@ Template.eventEditLocation.onCreated(function() {
 			}
 		});
 	});
-
-	instance.reset = function() {
-		instance.locationState.set('show');
-		instance.locationTracker.markers.remove({ proposed: true });
-		instance.locationTracker.markers.remove({ candidate: true });
-		instance.changed.set(false);
-	};
-
-	instance.save = function() {
-		instance.parent.selectedLocation.set(instance.location.get());
-		instance.reset();
-	};
 });
 
 
@@ -123,24 +93,8 @@ Template.eventEditLocation.helpers({
 		return Template.instance().locationTracker.markers.find({ proposed: true });
 	},
 
-	locationStateShow: function() {
-		return Template.instance().locationState.get() == 'show';
-	},
-
-	locationStateSelect: function() {
-		return Template.instance().locationState.get() == 'select';
-	},
-
-	locationStateAdd: function() {
-		return Template.instance().locationState.get() == 'add';
-	},
-
-	locationIsSet: function() {
-		return !Template.instance().locationIs('unset');
-	},
-
-	locationChanged: function() {
-		return Template.instance().changed.get();
+	locationIsPreset: function() {
+		return Template.instance().locationIs('preset');
 	},
 
 	eventMarkers: function() {
@@ -167,7 +121,9 @@ Template.eventEditLocation.helpers({
 Template.eventEditLocation.events({
 	'click .-addressSearch': function(event, instance) {
 		event.preventDefault();
-		var search = instance.$('.-locationAddress').val();
+
+		instance.addressSearch.set(true);
+		var search = instance.$('.-locationName').val();
 		var nominatimQuery = {
 			format: 'json',
 			q: search,
@@ -204,6 +160,7 @@ Template.eventEditLocation.events({
 				var marker = {
 					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},
 					proposed: true,
+					address: foundLocation.display_name,
 					name: foundLocation.display_name
 				};
 				instance.locationTracker.markers.insert(marker);
@@ -212,21 +169,8 @@ Template.eventEditLocation.events({
 	},
 
 	'click .-locationChange': function(event, instance) {
-		var newState = instance.locationIs('own') ? 'add' : 'select';
-		instance.locationState.set(newState);
-	},
-
-	'click .-locationReset': function(event, instance) {
-		instance.reset();
-	},
-
-	'click .-locationSave': function(event, instance) {
-		instance.save();
-	},
-
-	'click .-locationAdd': function(event, instance) {
-		instance.locationTracker.markers.remove({ proposed: true });
-		instance.locationState.set('add');
+		instance.location.set({});
+		instance.search.set('');
 	},
 
 	'click .-locationCandidate': function(event, instance) {
@@ -234,7 +178,18 @@ Template.eventEditLocation.events({
 	},
 
 	'keyup .-locationName': function(event, instance) {
+		instance.addressSearch.set(false);
 		instance.search.set(event.target.value);
+
+		var updLocation = instance.location.get();
+		updLocation.name = event.target.value;
+		instance.location.set(updLocation);
+	},
+
+	'keyup .-locationAddress': function(event, instance) {
+		var updLocation = instance.location.get();
+		updLocation.address = event.target.value;
+		instance.location.set(updLocation);
 	},
 
 	'mouseenter .-locationCandidate': function(event, instance) {

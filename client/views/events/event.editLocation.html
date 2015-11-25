@@ -6,14 +6,17 @@
 					<span class="glyphicon glyphicon-home"></span>
 				</span>
 		<div class="col-xs-12 col-sm-6">
-		{{#if locationStateShow}}
-				<div class="location" style="float: right"><button type="button" class="btn -locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
+		{{#if locationIsPreset}}
+			<div class="location" style="float: right"><button type="button" class="btn -locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
 				<div style="border: 2px solid gray">
 					{{location.name}}
-					{{#if location.address}}<div style="font-size: small">{{location.address}}</div>{{/if}}
+				{{#if location.address}}
+					<div style="font-size: small">{{location.address}}</div>
+				{{/if}}
 				</div>
 		{{else}}
 				<input type="text" class="form-control -locationName" size="40" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Name of the location"}}"/>
+				<button type="submit" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search on map"}}</button>
 				<ul>
 				{{#each locationCandidates}}
 					<li class='{{candidateClass}}'>
@@ -22,14 +25,7 @@
 					</li>
 				{{/each}}
 				</ul>
-			{{#if locationStateAdd}}
 				<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address of the location"}}"/>
-				<button type="submit" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search address on map"}}</button>
-			{{else}}
-					<button type="button" class="-locationAdd">{{mf 'event.edit.LocationAdd' "Add new address"}}</button>
-			{{/if}}
-				{{#if locationIsSet}}<button type="button" class="-locationReset">{{mf 'event.edit.locationReset' "Never mind"}}</button>{{/if}}
-				{{#if locationChanged}}<button type="button" class="-locationSave">{{mf 'event.edit.locationSave' "Done"}}</button>{{/if}}
 		{{/if}}
 		</div>
 		<div class="col-xs-12 col-sm-6 locationMap">
