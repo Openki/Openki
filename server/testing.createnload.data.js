@@ -205,6 +205,7 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
+				event.groups = course.groups;
 				var random = Math.random();
 
 				var location;

@@ -6,11 +6,11 @@ commit=$(git rev-parse HEAD)
 timestamp=$(git log -1 --date=short --pretty=format:%cd)
 cat > version.js << EOF
 VERSION = {
-    "basic": "$ver",
-    "complete": "$complete",
-    "branch": "$branch",
-    "commit": "$commit",
-    "timestamp": "$timestamp"
+	"basic": "$ver",
+	"complete": "$complete",
+	"branch": "$branch",
+	"commit": "$commit",
+	"timestamp": "$timestamp"
 };
 EOF
 

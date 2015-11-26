@@ -300,7 +300,7 @@ Meteor.methods({
 
 		var user = Meteor.user();
 		if (!user) {
-		    if (Meteor.is_client) {
+			if (Meteor.is_client) {
 				pleaseLogin();
 				return;
 			} else {
@@ -365,8 +365,8 @@ Meteor.methods({
 
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
 		if (changes.name) {
-		    set.name = saneText(changes.name).substring(0, 1000);
-		    set.slug = getSlug(set.name);
+			set.name = saneText(changes.name).substring(0, 1000);
+			set.slug = getSlug(set.name);
 		}
 
 		set.time_lastedit = new Date

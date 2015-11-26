@@ -56,9 +56,9 @@ privileged = function(user, privilege) {
 	}
 
 	return (
-	    user
-	    && user.privileges
-	    && user.privileges.indexOf(privilege) > -1
+		user
+		&& user.privileges
+		&& user.privileges.indexOf(privilege) > -1
 	);
 }
 

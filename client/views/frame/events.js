@@ -9,16 +9,16 @@ Router.map(function () {
 			var filterParams = this.filter.toParams();
 			filterParams.after = minuteTime.get();
 
-			var limit = parseInt(this.params.query.count, 10) || 5;
+			var limit = parseInt(this.params.query.count, 10) || 6;
 
-			return Meteor.subscribe('eventsFind', filterParams, limit);
+			return Meteor.subscribe('eventsFind', filterParams, limit*2);
 		},
 
 		data: function() {
 			var filterParams = this.filter.toParams();
 			filterParams.after = minuteTime.get();
 
-			var limit = parseInt(this.params.query.count, 10) || 5;
+			var limit = parseInt(this.params.query.count, 10) || 6;
 
 			return eventsFind(filterParams, limit);
 		},
