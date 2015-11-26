@@ -44,12 +44,16 @@
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
 						{{#if location.name}}
 							<br>
-							<a href="{{pathFor 'locationDetails' data=location}}"><span class="glyphicon glyphicon-home"></span> {{location.name}}</a>
-							{{#if room}} - {{room}}{{/if}}
+							{{#if location._id}}
+								<a href="{{pathFor 'locationDetails' data=location}}"><span class="glyphicon glyphicon-home"></span> {{location.name}}</a>
+							{{else}}
+								<span class="glyphicon glyphicon-home"></span> {{location.name}}
+							{{/if}}
+							{{#if room}} &nbsp; &nbsp; <span class="fa fa-map-signs"></span> {{room}}{{/if}}
 						{{/if}}
 						{{#if location.address}}
 						<div>
-							{{location.address}}
+							<span class="fa fa-map-marker"></span> {{location.address}}
 						</div>
 						{{/if}}
 					</div>
