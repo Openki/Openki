@@ -113,8 +113,13 @@ Template.eventEditLocation.helpers({
 	},
 
 	candidateClass: function() {
-		return 'locCandy -locationCandidate' + (this.hover ? ' hover' : '');
+		return 'locationCandidate -locationCandidate' + (this.hover ? ' hover' : '');
+	},
+
+	searching: function() {
+		return !!Template.instance().location.get().name;
 	}
+
 });
 
 
