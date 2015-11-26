@@ -21,7 +21,7 @@ Template.eventEditLocation.onCreated(function() {
 	};
 
 	instance.autorun(function() {
-		var draggable = instance.locationIs('own');
+		var draggable = !instance.locationIs('preset');
 		instance.locationTracker.setLocation(instance.location.get(), draggable, draggable);
 	});
 
@@ -115,13 +115,13 @@ Template.eventEditLocation.helpers({
 	},
 
 	allowPlacing: function() {
-		var locationState = Template.instance().locationState;
+		var locationIs = Template.instance().locationIs;
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
 		return function() {
-			return locationState.get() == 'add';
+			return locationIs('unset');
 		}
 	},
 
