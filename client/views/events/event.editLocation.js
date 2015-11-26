@@ -104,6 +104,10 @@ Template.eventEditLocation.helpers({
 		return Template.instance().location.get();
 	},
 
+	haveLocationCandidates: function() {
+		return Template.instance().locationTracker.markers.find({ proposed: true }).count() > 0;
+	},
+
 	locationCandidates: function() {
 		return Template.instance().locationTracker.markers.find({ proposed: true });
 	},
