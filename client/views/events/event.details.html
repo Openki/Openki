@@ -47,6 +47,11 @@
 							<a href="{{pathFor 'locationDetails' data=location}}"><span class="glyphicon glyphicon-home"></span> {{location.name}}</a>
 							{{#if room}} - {{room}}{{/if}}
 						{{/if}}
+						{{#if location.address}}
+						<div>
+							{{location.address}}
+						</div>
+						{{/if}}
 					</div>
 				</div>
 				<div class="map">{{>map markers=eventMarkers height=150 mini=true}}</div>
