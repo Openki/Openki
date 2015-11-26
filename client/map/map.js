@@ -142,9 +142,7 @@ Template.map.onRendered(function() {
 			count += 1;
 		}
 		if (bounds.isValid()) {
-			// Have some padding
-			bounds.pad(10);
-			map.fitBounds(bounds, { maxZoom: 16 });
+			map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 });
 		}
 	}, 100);
 
