@@ -23,10 +23,13 @@
 						</button>
 					</span>
 				</div>
-			{{#if searching}} {{mf 'event.edit.locations.proposed' 'we propose:'}}
+		{{#if haveLocationCandidates}}
+			{{#if searching}}
+				{{mf 'event.edit.locations.proposed' 'Matching locations:'}}
 			{{else}}
-				{{mf 'event.edit.locations.previouslyUsed' 'Or select previously used:'}}
+				{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
 			{{/if}}
+		{{/if}}
 				<ul>
 				{{#each locationCandidates}}
 					<li class='{{candidateClass}}'>
