@@ -78,7 +78,7 @@ Template.map.onRendered(function() {
 		title: mf('map.fullscreenClose', 'close')
 	});
 	var addMarkerControl = new OpenkiControl({
-		icon: 'map-pin',
+		icon: 'map-marker',
 		action: '-addMarker',
 		title: mf('map.addMarker', 'add location')
 	});
@@ -151,7 +151,7 @@ Template.map.onRendered(function() {
 
 	// This must be one of the ugliest pieces of code I've written ever
 	var mainIcon = L.divIcon({
-		'html': '<span class="fa fa-map-pin" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>'
+		'html': '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>'
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
