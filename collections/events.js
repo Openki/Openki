@@ -1,14 +1,18 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "title" -> string
-// "description" -> string
-// start       time the events starts
-// end         time the event ends
-// "location" -> ...............
-// "createdBy" -> userId
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "course_id" -> ID_course          (maybe list in Future)
+// "_id"           -> ID
+// "region"        -> ID_region
+// "title"         -> String
+// "description"   -> String
+// "start"         -> time the events starts
+// "end"           -> time the event ends
+// "location"      -> ID_location
+// "room"          -> String (optional)
+// "createdby"     -> userId
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "course_id"     -> ID_course  (maybe list in Future)
+// "mentors"       -> not in use, list of UserIds
+// "hosts"         -> not in use, list of UserIds
 // ===========================
 
 Events = new Meteor.Collection("Events");
@@ -27,6 +31,9 @@ mayEditEvent = function(user, event) {
 }
 
 affectedReplicaSelectors = function(event) {
+	// If the event itself is not in the DB, we don't expect it to have replicas
+	if (!event._id) return { _id: -1 }; // Finds nothing
+
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
@@ -121,7 +128,12 @@ Meteor.methods({
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;
 			}
+
+			// Synthesize event document because the code below relies on it
+			event = { course_id: changes.course_id };
+
 		} else {
+
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
 			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
@@ -163,6 +175,9 @@ Meteor.methods({
 			}
 		}
 
+		// the assumption is that all replicas have the same course if any
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return eventId;
 	},
 
@@ -177,6 +192,9 @@ Meteor.methods({
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 
 		Events.remove(eventId);
+
+		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+
 		return Events.findOne({id:eventId}) === undefined;
 	},
 
@@ -212,7 +230,7 @@ Meteor.methods({
 /* Find events for given filters
  *
  * filter: dictionary with filter options
- *   query: string of words to search for
+ *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
  *   after: only events starting after this date
  *   ongoing: only events that are ongoing during this date
@@ -223,6 +241,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   course: only events for this course (ID)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -280,7 +299,11 @@ eventsFind = function(filter, limit) {
 	if (filter.group) {
 		find.groups = filter.group;
 	}
-	
+
+	if (filter.course) {
+		find.course_id = filter.course;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

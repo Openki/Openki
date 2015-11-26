@@ -69,6 +69,14 @@ Template.eventEdit.helpers({
 });
 
 Template.eventDisplay.helpers({
+	replicaStart: function() {
+		return moment.max(moment(this.start), moment()).format("YYYY-MM-DD");
+	},
+
+	replicaEnd: function() {
+		return moment.max(moment(this.start), moment()).add(1, 'week').format("YYYY-MM-DD");
+	},
+
 	isoDateFormat: function(date) {
 		return moment(date).format("YYYY-MM-DD");
 	},
@@ -403,6 +411,7 @@ Template.event.events({
 				mentors: template.data.mentors  ||  new Array(),
 				host: template.data.host ||  new Array(),
 				region: template.data.region || Session.get('region'),
+				groups: template.data.groups,
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 		

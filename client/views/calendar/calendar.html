@@ -1,17 +1,22 @@
 <template name="calendar">
-	<button class="prevYear">-1 year</button>
-	<button class="prevMonth">-1 month</button>
-	<button class="prevWeek">-1 week</button>
-	<button class="prevDay">-1 day</button>
-	{{startDate}}
-	<button class="nextDay">+1 day</button>
-	<button class="nextWeek">+1 week</button>
-	<button class="nextMonth">+1 month</button>
-	<button class="nextYear">+1 year</button>
+	<div class="switchDate">
+		<button class="prevYear"><span class="fa fa-arrow-left"></span> 1 year</button>
+		<button class="prevMonth"><span class="fa fa-arrow-left"></span> 1 month</button>
+		<button class="prevWeek"><span class="fa fa-arrow-left"></span> 1 week</button>
+		<!--<button class="prevDay"><span class="fa fa-arrow-left"></span>1 day</button>-->
+	&nbsp; &nbsp;<nobr>{{startDate}}</nobr>&nbsp; &nbsp;
+		<div class="right">
+			<!--<button class="nextDay"><span class="fa fa-arrow-right"></span>1 day</button>-->
+			<button class="nextWeek"><span class="fa fa-arrow-right"></span> 1 week</button>
+			<button class="nextMonth"><span class="fa fa-arrow-right"></span> 1 month</button>
+			<button class="nextYear"><span class="fa fa-arrow-right"></span> 1 year</button>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
+			<hr>
 		{{/each}}
 		</div>
 	</div>
@@ -19,7 +24,7 @@
 	<button class="prevMonth">-1 month</button>
 	<button class="prevWeek">-1 week</button>
 	<button class="prevDay">-1 day</button>
-	{{endDate}}
+	until: {{endDate}}
 	<button class="nextDay">+1 day</button>
 	<button class="nextWeek">+1 week</button>
 	<button class="nextMonth">+1 month</button>
@@ -28,7 +33,7 @@
 
 <template name="calendarDay">
 	<div class="row">
-		<h1>{{weekday day.start}}</h1>
+		<h1>{{calendarDay day.start}}</h1>
 		{{#unless hasEvents}}
 		{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
 		{{/unless}}

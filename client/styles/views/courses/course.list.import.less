@@ -25,7 +25,7 @@
 	.make-md-column(3);
 	.no-padding;
 	border: 5px solid @body-bg;
-	border-bottom-width: 10px;
+	border-bottom-width: 15px;
 
 	.courselist_course {
 		.make-sm-column(12);
@@ -92,7 +92,7 @@
 		.course_content {
 			.make-sm-column(9);
 			.make-xs-column(9);
-			padding: 0 0 0 10px;
+			padding: 0 0 0 15px;
 			background: @body-bg;
 		}
 	}
@@ -152,25 +152,14 @@
 	}
 }
 
-.course_categories {
+.courselist_course_container {
 	ul.categories_list {
-		line-height: 23px;
-		.list-unstyled;
-
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		margin: 0px;
 		li {
-			display: inline-block;
-			position: relative;
-			z-index: 2;
-
-			a.category {
-				background: rgba(216, 216, 216, 0.5);
-				padding:2px 5px;
-
-				&:hover {
-					text-decoration: none;
-					color: @brand-primary;
-				}
-			}
+			float: right;
 		}
 	}
 }

@@ -36,6 +36,10 @@ Template.course_edit.helpers({
 		return 'roles.'+this.type+'.description';
 	},
 
+	roleSubscription: function() {
+		return 'roles.'+this.type+'.subscribe';
+	},
+
 	activeCategory: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length && selectedCategories.indexOf(this) >= 0) {
@@ -51,9 +55,9 @@ Template.course_edit.helpers({
 		}
 	},
 
-	checkRole: function() {
+	hasRole: function() {
 		var instance = Template.instance();
-		return instance.data && instance.data.roles && instance.data.roles.indexOf(this.type) >= 0 ? 'checked' : ''
+		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 	
 	regions: function() {
@@ -71,6 +75,8 @@ Template.course_edit.rendered = function() {
 	if (desc) new MediumEditor(desc);
 }
 
+
+
 Template.course_edit.events({
 	'submit form, click button.save': function (ev, instance) {
 		ev.preventDefault()
@@ -81,7 +87,7 @@ Template.course_edit.events({
 			var isNew = courseId === ''
 
 			var roles = {}
-			$('input.roleselection').each(function(_, rolecheck) {
+			$('input.-roleselection').each(function(_, rolecheck) {
 				roles[rolecheck.name] = rolecheck.checked;
 			})
 
@@ -119,6 +125,14 @@ Template.course_edit.events({
 				} else {
 					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 					addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
+
+					$('input.-enrol').each(function(_, enrolcheck) {
+						if (enrolcheck.checked) {
+							Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
+						} else {
+							Meteor.call('remove_role', courseId, enrolcheck.name);
+						}
+					});
 				}
 			})
 
@@ -161,4 +175,35 @@ Template.course_edit.events({
 	}
 });
 
+Template.courseEditRole.onCreated(function() {
+	this.checked = new ReactiveVar(false);
+});
 
+Template.courseEditRole.onRendered(function() {
+	this.checked.set(this.data.selected.indexOf(this.data.role.type) >= 0);
+});
+
+Template.courseEditRole.helpers({
+	roleDescription: function() {
+		return 'roles.'+this.role.type+'.description';
+	},
+
+	roleSubscription: function() {
+		return 'roles.'+this.role.type+'.subscribe';
+	},
+
+	checkRole: function() {
+		var instance = Template.instance();
+		return instance.checked.get() ? "checked" : null;
+	},
+
+	hasRole: function() {
+		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+	},
+});
+
+Template.courseEditRole.events({
+	"change .-roleselection": function(event, instance) {
+		instance.checked.set(instance.$(".-roleselection").prop("checked"));
+	}
+});

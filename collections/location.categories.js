@@ -1,7 +1,7 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "description" -> string
+// "_id"         -> ID
+// "name"        -> String
+// "description" -> String
 // ===========================
 
 LocationCategories = new Meteor.Collection("LocationCategories");

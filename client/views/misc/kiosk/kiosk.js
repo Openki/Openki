@@ -37,14 +37,23 @@ Router.map(function () {
 			var queryNow = this.filter.toParams();
 			queryNow.ongoing = now;
 
+			var filterParams = this.filter.toParams();
+
 			return {
 				today: eventsFind(queryToday, 20),
 				future: eventsFind(queryFuture, 10),
-				now: eventsFind(queryNow)
+				now: eventsFind(queryNow),
+				filter: filterParams
 			};
 		},
 		onAfterAction: function() {
+			this.timer = Meteor.setInterval(function() {
+				Session.set('seconds', new Date);
+			}, 1000);
 			document.title = webpagename + ' Events'
+		},
+		unload: function() {
+			Meteor.clearInterval(this.timer);
 		}
 	});
 	this.route('kioskCalendar', {								///////// calendar /////////
@@ -64,19 +73,71 @@ Router.map(function () {
 			}
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Calendar'
+			document.title = webpagename + 'Kiosk-View'
 		}
 	});
 });
 
 Template.kioskLayout.helpers({
-	showKioskCalendar: function () {
+	showKioskCalendar: function() {
 		var currentIsKiosk = Router.current().route.path();
 		if (currentIsKiosk != "/kiosk/events") return true
 	}
 });
 
-Template.kioskEvent.rendered = function() {
+Template.kioskEvents.helpers({
+	showTime: function() {
+		Session.get('seconds');
+		return moment().format('LTS');
+	},
+	showDate: function() {
+		Session.get('seconds');
+		return moment().format('LL');
+	}
+});
+
+
+
+Template.kioskEventOngoing.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+Template.kioskEventToday.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+Template.kioskEventFuture.helpers({
+	showLocations: function() {
+		return (!Router.current().params.query.location)
+	}
+});
+
+
+
+
+
+Template.kioskEventOngoing.rendered = function() {
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 30,
+	});
+	this.$('.ellipsis').dotdotdot({
+		height: 90,
+	});
+};
+Template.kioskEventToday.rendered = function() {
+	this.$('.course_event_title').dotdotdot({
+		height: 70,
+	})
+	this.$('.course_event_desc').dotdotdot({
+		//
+	});
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 60,
+	});
+};
+Template.kioskEventFuture.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,
 	})
@@ -88,11 +149,6 @@ Template.kioskEvent.rendered = function() {
 	});
 };
 
-Template.kioskEventOngoing.rendered = function() {
-	this.$('.ellipsis').dotdotdot({
-		height: 80,
-	});
-};
 
 Template.kioskLink.helpers({
 	link: function() {
@@ -108,5 +164,11 @@ Template.kioskLink.helpers({
 		}
 
 		return Router.url('kiosk', {}, options);
+	},
+});
+
+Template.kioskLink.events({
+	'click .-removeBackLink': function() {
+		return Session.set('kioskFilter', false);
 	}
 });

@@ -3,12 +3,24 @@
 	.navbar-fixed-top;
 	border-bottom: none;
 
-	.navbar-brand {
-		padding: 15px 10px;
+	.navbar-container {
+		max-width: 1600px;
+		margin: auto;
+	}
 
-		span.fa {
+	.navbar-brand {
+		padding: 0px;
+		> span {
 			position: relative;
-			bottom: 2px;
+			bottom: -2.5px;
+			padding-right: 15px;
+			font-size: x-large;
+		}
+		img {
+			display: inline-block;
+			height: 100%;
+			opacity: 0.97;
+			padding: 0 6px;
 		}
 	}
 }

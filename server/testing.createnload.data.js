@@ -79,8 +79,8 @@ function createCourses(scale) {
 			m5.update(course.description);
 			course._id = m5.digest('hex').substring(0, 8)
 
-			course.subscribers_min = Math.random() > 0.3 ? undefined : humandistrib()
-			course.subscribers_max = Math.random() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Math.random())
+			//course.subscribers_min = Math.random() > 0.3 ? undefined : humandistrib()
+			//course.subscribers_max = Math.random() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Math.random())
 			course.date = Math.random() > 0.50 ? new Date(new Date().getTime()+((Math.random()-0.25)*8000000000)) : false
 			var age = Math.floor(Math.random()*80000000000)
 			course.time_created = new Date(new Date().getTime()-age)
@@ -182,6 +182,7 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
+				event.groups = course.groups;
 				var random = Math.random();
 				if (random < 0.4) event.location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) event.location = random < 0.5 ? 'Volkshaus' : 'SQ131';

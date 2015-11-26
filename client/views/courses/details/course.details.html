@@ -6,10 +6,19 @@
 		{{else}}
 			<div class="course_main {{#with course}}{{coursestate}}{{/with}}">
 				{{title "Openki - " course.name}}
+				{{#if isProposal}}
+					<div class="courseStatus" >
+						<div>
+						{{mf 'course.details.tag.proposal' 'proposal'}}
+						</div>
+					</div>
+				{{/if}}
 
 				<div class="name">
 					{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
 				</div>
+
+
 
 				{{#with course}}
 				<div class="course_categories">

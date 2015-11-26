@@ -2,6 +2,7 @@
 	<nav class="navbar" id="topnavbar" role="navigation">
 		{{> ticker}}
 		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
@@ -10,13 +11,13 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand -toggleIntro" href="">
-				&nbsp;Openki
+				<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png" alt="Openki logo"><span>Openki</span>
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li>
-					<a href="{{pathFor 'home'}}" class="nav_link" id="nav_courses">
+					<a href="{{pathFor 'home'}}" class="nav_link -clickClose" id="nav_courses">
 						<span class="glyphicon glyphicon-home"></span>&nbsp;
 						{{mf 'menue.Courses' 'Courses'}}
 						<span class="caret" id="active_caret"></span>
@@ -30,13 +31,13 @@
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<a href="{{pathFor 'proposeCourse'}}" class="subnav_link">
+							<a href="{{pathFor 'proposeCourse'}}" class="subnav_link -clickClose">
 								<span class="fa fa-lightbulb-o"></span>&nbsp;
 								{{mf 'menue.ProposeCourse' 'Propose Course'}}
 							</a>
 						</li>
 						<li>
-							<a href="{{pathFor 'showEvent' _id='create'}}" class="subnav_link">
+							<a href="{{pathFor 'showEvent' _id='create'}}" class="subnav_link -clickClose">
 								<span class="fa fa-plus"></span>&nbsp;
 								{{mf 'menue.CreateEvent' 'Create Event'}}
 							</a>
@@ -44,7 +45,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="{{pathFor 'calendar'}}" class="nav_link">
+					<a href="{{pathFor 'calendar'}}" class="nav_link -clickClose">
 						<span class="glyphicon glyphicon-calendar"></span>&nbsp;
 						{{mf 'menue.Calendar' 'Calendar'}}
 						<span class="caret"></span>
@@ -66,5 +67,6 @@
 				</li>
 			</ul>
 		</div>
+	</div>
 	</nav>
 </template>

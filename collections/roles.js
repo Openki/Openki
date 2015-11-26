@@ -1,10 +1,11 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "type" -> string    (name of role)
-// "description" -> string
-// "subscribe" -> string  (decription for subscription)
-// "preset" -> boolean
-// "show_subscribers" -> boolean
+// "_id"              -> ID
+// "type"             -> String     (name of role)
+// "icon"             -> String     ex: "glyphicon glyphicon-bullhorn"
+// "description"      -> String     (not used)
+// "subscribe"        -> String     (decription for subscription)
+// "preset"           -> Boolean
+// "show_subscribers" -> Boolean
 // ===========================
 
 
@@ -39,7 +40,7 @@ var roles = [{
 ]
 
 Meteor.startup(function () {
-    //Roles.remove({});
+	//Roles.remove({});
 	if (Meteor.isServer && Roles.find().count() == 0) {
 		_.each(roles, function(role){
 			Roles.insert(role)

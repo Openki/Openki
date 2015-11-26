@@ -1,18 +1,19 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "name" -> string
-// "categories" -> [ID_categories]
-// "tags" -> list ID_categories
-// "description" -> string
-// "slug" -> string
-// "region" -> ID_region
-// "date" -> timestamp     what for?
-// "createdby" -> ID_users
-// "time_created" -> timestamp
-// "time_lastedit" -> timestamp
-// "time_lastenrol" -> timestamp
-// "roles" -> [role-keys]
-// "members" -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "_id"           -> ID
+// "name"          -> String
+// "categories"    -> [ID_categories]
+// "tags"          -> List of Strings  (not used)
+// "groups"        -> List ID_groups
+// "description"   -> String
+// "slug"          -> String
+// "region"        -> ID_region
+// "date"          -> Date             (what for?)
+// "createdby"     -> ID_user
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "time_lastenrol"-> Date
+// "roles"         -> [role-keys]
+// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
@@ -25,26 +26,28 @@ function addRole(course, role, user) {
 		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
 	);
 
-	Courses.update(
+	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$addToSet': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$addToSet': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("addRole affected "+result+" documents");
 }
 
 
 function removeRole(course, role, user) {
 	var result = Courses.update(
 		{ _id: course._id, 'members.user': user },
-		{ '$pull': { 'members.$.roles': role }},
-		checkUpdateOne
+		{ '$pull': { 'members.$.roles': role }}
 	);
+
+	if (result != 1) throw new Error("removeRole affected "+result+" documents");
 
 	// Housekeeping: Remove members that have no role left
 	Courses.update(
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
-	)
+	);
 }
 
 hasRole = function(members, role) {
@@ -59,18 +62,18 @@ hasRole = function(members, role) {
 	return has;
 }
 
-hasRoleUser = function(members, role, user) {
+hasRoleUser = function(members, role, userId) {
 	var has = false;
 	var loggeduser = Meteor.user()
 	
 	members.forEach(function(member) {
-		if (loggeduser && loggeduser._id == user && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
+		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
 			if(member.roles.indexOf(role) !== -1) has = 'anon'
 		}
 	})
 	
 	members.forEach(function(member) {
-		if (member.user == user) {
+		if (member.user == userId) {
 			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
 				return true;
 		}
@@ -122,9 +125,7 @@ coursesFind = function(filter, limit) {
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent) {
-		var future_events = Events.find({start: {$gt: new Date()}}).fetch()
-		var course_ids_with_future_events = _.pluck(future_events, 'course_id')
-		find['_id'] = { $in: _.uniq(course_ids_with_future_events) }
+		find['nextEvent'] = { $ne: null };
 	}
 
 	var mustHaveRoles = [];
@@ -180,6 +181,66 @@ coursesFind = function(filter, limit) {
 	return Courses.find(find, options);
 } 
 
+if (Meteor.isServer) {
+	Meteor.methods({
+		add_role: function(courseId, userId, role, incognito) {
+			check(courseId, String);
+			check(userId, String);
+			check(role, String);
+			check(incognito, Boolean);
+
+			var user = Meteor.users.findOne(userId);
+			if (!user) throw new Meteor.Error(404, "User not found");
+
+			var operator = Meteor.user();
+			if (!operator) throw new Meteor.Error(401, "please log in");
+
+			var forThemself = operator._id === user._id;
+			if (!forThemself && incognito) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+
+			var course = Courses.findOne({_id: courseId});
+			if (!course) throw new Meteor.Error(404, "Course not found");
+
+			if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
+
+			// do nothing if user is allready subscribed with this role
+			if (hasRoleUser(course.members, role, userId)) return true;
+
+			// Check permissions
+			if (!maySubscribe(operator._id, course, user._id, role)) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+
+			// The subscriptionId is the user._id unless we're subscribing incognito
+			var subscriptionId = false;
+
+			if (incognito) {
+				// Re-use anonId if already used on another role
+				if (user.anonId) {
+					_.each(course.members, function(member){
+						if (user.anonId.indexOf(member.user) != -1) {
+							subscriptionId = member.user;
+						}
+					});
+				}
+
+				if (!subscriptionId) {
+				subscriptionId = Meteor.call('generateAnonId');
+				}
+			}
+
+			if (!subscriptionId){
+				subscriptionId = user._id;
+			}
+
+			addRole(course, role, subscriptionId);
+			var time = new Date;
+			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
+		}
+	});
+}
 
 Meteor.methods({
 
@@ -194,62 +255,6 @@ Meteor.methods({
 			{ $set: { 'members.$.comment': comment } },
 			checkUpdateOne
 		);
-	},
-	
-	add_role: function(courseId, userId, role, incognito) {
-		check(courseId, String);
-		check(userId, String);
-		check(role, String);
-		check(incognito, Boolean);
-		
-		var user = Meteor.users.findOne(userId);
-		if (!user) throw new Meteor.Error(404, "User not found");
-			   
-		var operator = Meteor.user();
-		if (!operator) throw new Meteor.Error(401, "please log in");
-			   
-		var forThemself = operator._id === user._id;
-		if (!forThemself && incognito) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-		
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		if (!course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
-		
-		// Check permissions
-		if (!maySubscribe(operator._id, course, user._id, role)) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-
-		// The subscriptionId is the user._id unless we're subscribing incognito
-		var subscriptionId = false;
-		
-		if (incognito) {
-			// Re-use anonId if already used on another role
-			if (user.anonId) {
-				_.each(course.members, function(member){
-					if (user.anonId.indexOf(member.user) != -1) {
-						subscriptionId = member.user;
-					}
-				});
-			}
-			
-			if (!subscriptionId) {
-				var newId = new Meteor.Collection.ObjectID();
-				subscriptionId = 'Anon_' + newId._str;
-				Meteor.call('insert_anonId', subscriptionId);
-			}
-		}
-		
-		if (!subscriptionId){
-			subscriptionId = user._id;
-		}
-
-		addRole(course, role, subscriptionId);
-		var time = new Date;
-		Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
 	},
 
 	remove_role: function(courseId, role) {
@@ -295,7 +300,7 @@ Meteor.methods({
 
 		var user = Meteor.user();
 		if (!user) {
-		    if (Meteor.is_client) {
+			if (Meteor.is_client) {
 				pleaseLogin();
 				return;
 			} else {
@@ -360,8 +365,8 @@ Meteor.methods({
 
 		if (changes.categories) set.categories = changes.categories.slice(0, 20)
 		if (changes.name) {
-		    set.name = saneText(changes.name).substring(0, 1000);
-		    set.slug = getSlug(set.name);
+			set.name = saneText(changes.name).substring(0, 1000);
+			set.slug = getSlug(set.name);
 		}
 
 		set.time_lastedit = new Date
@@ -400,5 +405,23 @@ Meteor.methods({
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 		Events.remove({ course_id: courseId });
 		Courses.remove(courseId);
+	},
+
+	// Update the nextEvent field for the courses matching the selector
+	updateNextEvent: function(selector) {
+		Courses.find(selector).forEach(function(course) {
+			var nextEvent = Events.findOne(
+				{course_id: course._id, start: {$gt: new Date()}},
+				{sort: {start: 1}, fields: {start: 1, _id: 1}}
+			);
+			var lastEvent = Events.findOne(
+				{course_id: course._id, start: {$lt: new Date()}},
+				{sort: {start: -1}, fields: {start: 1, _id: 1}}
+			);
+			Courses.update(course._id, { $set: {
+				nextEvent: nextEvent,
+				lastEvent: lastEvent
+			} });
+		});
 	}
 });

@@ -1,3 +1,49 @@
+// ======== DB-Model: ========
+// "_id"          -> ID
+// "createdAt"    -> Date
+// "services"     -> {
+//	   password:{
+//         bcrypt:       String},
+//     github:{
+//         id:           Int32
+//         accessToken:  String
+//         email:        String/null
+//         username:     String }
+//     facebook: {
+//         accessTocken: String
+//         expiresAt:    Double
+//         id:           String
+//         email:        String       (not allways)
+//         name:         String
+//         first_name:   String
+//         last_name:    String
+//         link:         String
+//         gender:       String
+//         locale:       String }     ex: de_DE, en_US
+//     google: {
+//         accessTocken: String
+//         idTocken:     String
+//         expiresAt:    Double
+//         id:           String
+//         email:        String
+//         verified_email:Boolean
+//         name:         String
+//         given_name:   String
+//         family_name:  String
+//         picture:      String       (link)
+//         locale:       String }      ex: de
+//         scope:        [https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile]
+//     resume: {
+//         loginTockens: [{when: Date, hashed: String}]}}
+// "username"     -> String
+// "emails"       -> [{address: String, verified: Boolean}]
+// "profile"      -> {name: String, locale: Lang}
+// "privileges"   -> [upload, admin]
+// "lastLogin"    -> Date
+// ===========================
+
+
+
 privilegedTo = function(privilege) {
 	var user = Meteor.user();
 	return privileged(user, privilege);
@@ -10,9 +56,9 @@ privileged = function(user, privilege) {
 	}
 
 	return (
-	    user
-	    && user.privileges
-	    && user.privileges.indexOf(privilege) > -1
+		user
+		&& user.privileges
+		&& user.privileges.indexOf(privilege) > -1
 	);
 }
 

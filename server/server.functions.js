@@ -23,12 +23,13 @@ Meteor.methods({
 			});
 		}
 	},
-	insert_anonId: function(anonId){
+	generateAnonId: function(){
+		var newId = new Meteor.Collection.ObjectID();
+		anonId = 'Anon_' + newId._str;
 		Meteor.users.update(Meteor.userId(), {
-			$push: {
-				anonId: anonId
-			}
+			$push: { anonId: anonId }
 		});
+		return anonId;
 	},
 	updateUserLocale: function(locale){
 		Meteor.users.update(Meteor.userId(), {
@@ -51,6 +52,11 @@ Meteor.methods({
 		}
 
 		var geo = GeoIP.lookup(ip);
+
+		if (!geo) {
+			return false;
+		}
+
 		var closest = Regions.findOne({
 			loc: { $near: {
 				$geometry: {type: "Point", coordinates: geo.ll.reverse()},

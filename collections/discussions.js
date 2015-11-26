@@ -1,12 +1,12 @@
 // ======== DB-Model: ========
-// "_id" -> ID
-// "title" -> string
-// "text" -> string
-// "user_ID" -> ID_users
-// "course_ID" -> ID_Courses
-// "time_created" -> timestamp
-// "time_updated" -> timestamp
-// "parent_ID" -> ID_CourseDiscussions  (optional)
+// "_id"          -> ID
+// "title"        -> String
+// "text"         -> String
+// "user_ID"      -> ID_users
+// "course_ID"    -> ID_Courses
+// "time_created" -> Date
+// "time_updated" -> Date
+// "parent_ID"    -> ID_CourseDiscussions  (optional)
 // ===========================
 
 CourseDiscussions = new Meteor.Collection("CourseDiscussions");
@@ -16,7 +16,7 @@ Meteor.methods({
 	postComment: function(comment, anon) {
 		check(comment, {
 			course_ID: String,
-		    parent_ID: Match.Optional(String),
+			parent_ID: Match.Optional(String),
 			title: String,
 			text: String
 		});
@@ -63,7 +63,7 @@ Meteor.methods({
 	editComment: function(comment, commentId) {
 		check(comment, {
 			course_ID: String,
-		    parent_ID: Match.Optional(String),
+			parent_ID: Match.Optional(String),
 			title: String,
 			text: String,
 		});
