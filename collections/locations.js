@@ -95,7 +95,7 @@ Meteor.methods({
 
 		var user = Meteor.user()
 		if (!user) {
-		    if (Meteor.is_client) {
+			if (Meteor.is_client) {
 				pleaseLogin();
 				return;
 			} else {
@@ -116,8 +116,8 @@ Meteor.methods({
 
 		if (changes.description) set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody */
 		if (changes.name) {
-		    set.name = changes.name.substring(0, 1000)
-		    set.slug = getSlug(set.name);
+			set.name = changes.name.substring(0, 1000)
+			set.slug = getSlug(set.name);
 		}
 
 		if (changes.address) set.address = changes.address.substring(0, 40*1024)

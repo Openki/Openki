@@ -68,7 +68,7 @@ Template.map.onRendered(function() {
 		imperial: Session.get('locale') == 'en'
 	});
 	var fullscreenControl = new OpenkiControl({
-		icon: 'arrows-alt',
+		icon: 'arrows',
 		action: '-fullscreen',
 		title: mf('map.fullscreen', 'big map')
 	});

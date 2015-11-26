@@ -15,17 +15,29 @@
 				{{/if}}
 				</div>
 		{{else}}
-				<input type="text" class="form-control -locationName" size="40" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Name of the location"}}"/>
-				<button type="submit" class="-addressSearch"><span class="glyphicon glyphicon-search"></span>{{mf 'event.edit.addressSearch' "Search on map"}}</button>
+				<div class="input-group">
+					<input type="text" class="form-control -locationName" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"/>
+					<span>
+						<button type="submit" class="button -addressSearch">
+							<span class="glyphicon glyphicon-search"></span> {{mf 'event.edit.addressSearch' "Search"}}
+						</button>
+					</span>
+				</div>
+			{{#if searching}} {{mf 'event.edit.locations.proposed' 'we propose:'}}
+			{{else}}
+				{{mf 'event.edit.locations.previouslyUsed' 'Or select previously used:'}}
+			{{/if}}
 				<ul>
 				{{#each locationCandidates}}
 					<li class='{{candidateClass}}'>
 						{{name}}
-						<div style="font-size: small">{{address}}</div>
+						<div class="address">{{address}}</div>
 					</li>
 				{{/each}}
 				</ul>
-				<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address of the location"}}"/>
+				{{#if searching}}
+				<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"/>
+				{{/if}}
 		{{/if}}
 		</div>
 		<div class="col-xs-12 col-sm-6 locationMap">
