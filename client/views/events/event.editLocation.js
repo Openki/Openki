@@ -9,15 +9,6 @@ Template.eventEditLocation.onCreated(function() {
 	instance.search = new ReactiveVar('');
 	instance.addressSearch = new ReactiveVar(!!instance.location.get().name);
 
-	instance.autorun(function() {
-		instance.locationTracker.setLocation(instance.location.get());
-	});
-
-	instance.autorun(function() {
-		var regionId = instance.parent.selectedRegion.get();
-		instance.locationTracker.setRegion(regionId);
-	});
-
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
@@ -29,12 +20,22 @@ Template.eventEditLocation.onCreated(function() {
 		return 'unset' === type;
 	};
 
+	instance.autorun(function() {
+		var draggable = instance.locationIs('own');
+		instance.locationTracker.setLocation(instance.location.get(), draggable, draggable);
+	});
+
+	instance.autorun(function() {
+		var regionId = instance.parent.selectedRegion.get();
+		instance.locationTracker.setRegion(regionId);
+	});
+
 	instance.reset = function() {
 		instance.locationTracker.markers.remove({ proposed: true });
 	};
 
-	// Set proposed location as new location when it is selected
 	instance.autorun(function() {
+		// Set proposed location as new location when it is selected
 		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
 			added: function(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
@@ -45,10 +46,22 @@ Template.eventEditLocation.onCreated(function() {
 				if (mark.presetAddress) updLocation.address = mark.presetAddress;
 				if (mark.preset) {
 					updLocation._id = mark._id;
+					updLocation.name = mark.presetName;
+					updLocation.address = mark.presetAddress;
 				}
 				instance.location.set(updLocation);
 				instance.locationTracker.markers.remove({ proposed: true });
 			},
+		});
+
+		// Update position if marker was dragged
+		instance.locationTracker.markers.find({ main: true }).observe({
+			changed: function(mark) {
+				var updLocation = instance.location.get();
+				if (_.isEqual(mark.loc, updLocation.loc)) return;
+				updLocation.loc = mark.loc;
+				instance.location.set(updLocation);
+			}
 		});
 	});
 

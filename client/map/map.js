@@ -77,6 +77,11 @@ Template.map.onRendered(function() {
 		action: '-fullscreenClose',
 		title: mf('map.fullscreenClose', 'close')
 	});
+	var addMarkerControl = new OpenkiControl({
+		icon: 'map-pin',
+		action: '-addMarker',
+		title: mf('map.addMarker', 'add location')
+	});
 
 	instance.autorun(function() {
 		var fullscreen = instance.fullscreen.get();
@@ -102,15 +107,6 @@ Template.map.onRendered(function() {
 	var geojsonMarkerOptions = {
 		radius: 10,
 		fillColor: "#ff7800",
-		color: "#000",
-		weight: 1.5,
-		opacity: 0.9,
-		fillOpacity: 0.6
-	};
-
-	var geojsonCandidateMarkerOptions = {
-		radius: 10,
-		fillColor: "#00ff00",
 		color: "#000",
 		weight: 1.5,
 		opacity: 0.9,
@@ -148,6 +144,11 @@ Template.map.onRendered(function() {
 
 	fitBounds();
 
+	// This must be one of the ugliest pieces of code I've written ever
+	var mainIcon = L.divIcon({
+		'html': '<span class="fa fa-map-pin" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>'
+	});
+
 	// Tracked so that observe() will be stopped when the template is destroyed
 	Tracker.autorun(function() {
 		var markers = instance.data.markers;
@@ -159,15 +160,30 @@ Template.map.onRendered(function() {
 			} else {
 				var marker = L.geoJson(mark.loc, {
 					pointToLayer: function(feature, latlng) {
-						var options = geojsonMarkerOptions;
-						if (mark.proposed) options = geojsonProposedMarkerOptions;
-						if (mark.candidate) options = geojsonCandidateMarkerOptions;
 
-						var marker = L.circleMarker(latlng, options);
+						var marker;
+						if (mark.proposed) {
+							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
+						} else {
+							marker = L.marker(latlng, {
+								icon: mainIcon,
+								draggable: mark.draggable }
+							);
+						}
 						// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
 						marker.on('click', function() {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
+						});
+						marker.on('dragend', function(event) {
+							var marker = event.target;
+							var latLng = marker.getLatLng();
+							loc = {
+								type: "Point",
+								coordinates: [latLng.lng, latLng.lat]
+							};
+							map.panTo(latLng);
+							markers.update(mark._id, { $set: { loc: loc } });
 						});
 						marker.on('mouseover', function() {
 							markers.update({}, { $set: { hover: false } }, { multi: true });
@@ -202,7 +218,7 @@ Template.map.onRendered(function() {
 				fitBounds();
 			},
 
-			changed: function(mark)  {
+			changed: function(mark, oldMark)  {
 				updateMarker(mark);
 			},
 

@@ -3,12 +3,21 @@ LocationTracker = function() {
 
 	return {
 		markers: markers,
-		setLocation: function(location) {
+		setLocation: function(location, draggable, soft) {
+			if (soft) {
+				var marker = markers.findOne({ main: true});
+				if (marker && location && location.loc) {
+					markers.update({ _id: marker._id }, { $set: { 'location.loc': location.loc, draggable: draggable } });
+					return;
+				}
+			}
+
 			markers.remove({ main: true });
 			if (location && location.loc) {
 				markers.insert({
 					loc: location.loc,
-					main: true
+					main: true,
+					draggable: draggable
 				});
 			}
 		},
