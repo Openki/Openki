@@ -195,7 +195,6 @@ Template.map.onRendered(function() {
 		var updateMarker = function(mark) {
 			var layer = layers[mark._id];
 			if (!layer) return;
-//			layer.setStyle({ className: mark.hover ? 'hover' : '', weight: 10});
 			layer.setStyle({ weight: mark.hover ? 5 : 1});
 		};
 
