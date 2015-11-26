@@ -105,7 +105,7 @@ Template.map.onRendered(function() {
 		var allowPlacing = instance.data.allowPlacing;
 		show(addMarkerControl, allowPlacing && allowPlacing());
 
-		var controlSize = fullscreen ? '10vh' : (instance.data.height/10)+'px';
+		var controlSize = fullscreen ? '10vh' : Math.max(30, instance.data.height/10)+'px';
 		instance.$('span.fa').css({ 'font-size': controlSize });
 	});
 
