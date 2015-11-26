@@ -49,6 +49,7 @@ Template.eventEditLocation.onCreated(function() {
 					updLocation.name = mark.presetName;
 					updLocation.address = mark.presetAddress;
 				}
+				instance.locationTracker.markers.remove({ main: true });
 				instance.location.set(updLocation);
 				instance.addressSearch.set(true); // Ugly hack to banish location proposals
 				instance.locationTracker.markers.remove({ proposed: true });
