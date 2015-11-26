@@ -16,12 +16,12 @@ Template.eventEditLocation.onCreated(function() {
 		var location = instance.location.get();
 		if (!location) return 'unset' === type;
 		if (location._id) return 'preset' === type;
-		if (location.name) return 'own' === type;
+		if (location.name || location.loc) return 'own' === type;
 		return 'unset' === type;
 	};
 
 	instance.autorun(function() {
-		var draggable = instance.locationIs('own');
+		var draggable = !instance.locationIs('preset');
 		instance.locationTracker.setLocation(instance.location.get(), draggable, draggable);
 	});
 
@@ -50,6 +50,7 @@ Template.eventEditLocation.onCreated(function() {
 					updLocation.address = mark.presetAddress;
 				}
 				instance.location.set(updLocation);
+				instance.addressSearch.set(true); // Ugly hack to banish location proposals
 				instance.locationTracker.markers.remove({ proposed: true });
 			},
 		});
@@ -115,13 +116,13 @@ Template.eventEditLocation.helpers({
 	},
 
 	allowPlacing: function() {
-		var locationState = Template.instance().locationState;
+		var location = Template.instance().location;
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
 		return function() {
-			return locationState.get() == 'add';
+			return !location.get().loc;
 		}
 	},
 

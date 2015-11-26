@@ -100,6 +100,11 @@ Template.map.onRendered(function() {
 		show(fullscreenControl, !mini && !fullscreen);
 		show(closeFullscreenControl, fullscreen);
 
+		// This is actually a function we can call to establish a reactive
+		// dependeny into the other instance.
+		var allowPlacing = instance.data.allowPlacing;
+		show(addMarkerControl, allowPlacing && allowPlacing());
+
 		var controlSize = fullscreen ? '10vh' : (instance.data.height/10)+'px';
 		instance.$('span.fa').css({ 'font-size': controlSize });
 	});
@@ -160,7 +165,6 @@ Template.map.onRendered(function() {
 			} else {
 				var marker = L.geoJson(mark.loc, {
 					pointToLayer: function(feature, latlng) {
-
 						var marker;
 						if (mark.proposed) {
 							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -236,6 +240,15 @@ Template.map.onRendered(function() {
 			fitBounds();
 		}, 0);
 	});
+
+	instance.proposeMarker = function() {
+		var center = map.getCenter();
+		instance.data.markers.insert({
+			proposed: true,
+			selected: true,
+			loc: { type: 'Point', coordinates: [center.lng, center.lat] }
+		});
+	};
 });
 
 Template.map.helpers({
@@ -274,6 +287,10 @@ Template.map.helpers({
 Template.map.events({
 	'click': function(event, instance) {
 		if (instance.data.mini) instance.fullscreen.set(true);
+	},
+
+	'click .-addMarker': function(event, instance) {
+		instance.proposeMarker();
 	},
 
 	'click .-fullscreen': function(event, instance) {
