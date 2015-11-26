@@ -58,7 +58,6 @@ Meteor.methods({
 		return commentId;
 	},
 
-/////////////////////////////////////////// TODO: fix comment-editing ////////////////
 	
 	editComment: function(comment, commentId) {
 		check(comment, {

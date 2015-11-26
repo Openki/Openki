@@ -25,6 +25,18 @@ mayEdit = function(user, course){
 	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id))
 }
 
+mayDeletePost = function(user, course,post){
+	if(!user)
+		return false;
+	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.user_ID == user._id ) )
+}
+
+mayEditPost = function(user, post){
+	if(!user)
+		return false;
+	return user && ( post.user_ID == user._id ) 
+}
+
 /* Get a username from ID
  * 
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.

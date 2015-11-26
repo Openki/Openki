@@ -21,7 +21,7 @@
 {{/if}}
 
 {{#if this.parent.deletableByUser}}
-<button type="button" class="btn-delete deleteComment" role="button">
+<button type="button" class="btn-delete deletePost cancel" role="button">
 	<span class="glyphicon glyphicon-remove"></span>
 	&nbsp;
 	{{mf 'course.details.del_btn' 'Delete'}}
@@ -66,6 +66,7 @@
 		</button>
 		<label><input type='checkbox' class='-anon' {{anonChecked}}>{{mf 'course.discussion.anon' 'Anonymous comment'}}</label>
 	</form>
+
 </div>
 </template>
 
@@ -82,22 +83,46 @@
 	{{#each post}}
 	{{#if parent_ID}}
 	<div class="discussion-conversation">
-		<div class="discussion-comment">
+		
+
+		<div class="discussion-comment" id="discussion-comment-{{ this._id }}">
+					
 			<div class="discussion-comment-info">
 				{{>iconProfilelink user_ID}}
 				<span class="comment-time-created">
 					{{fromNow time_created}}
 				</span>
 			</div>
-			<div class="discussion-comment-text">
-				<h4 class="comment-title">{{this.title}}</h4>
-				<p>{{{text}}}</p>
-			</div>
+			{{#if equals editing this._id }}
+				{{> editCommentDialog}}
+			{{else}}
+				<div class="discussion-comment-text">
+					<h4 class="comment-title">{{this.title}}</h4>
+					<p>{{{text}}}</p>
+				</div>
+				
+				{{#if this.editableByUser}}
+				<button type="button" class="editAnswer" role="button">
+					<span class="glyphicon glyphicon-edit"></span>
+					&nbsp;
+					{{mf 'course.discussion.comment_edit' 'Edit'}}
+				</button>
+				{{/if}}
+				{{#if this.deletableByUser}}
+				<button type="button" class="btn-delete deleteAnswer cancel" role="button">
+					<span class="glyphicon glyphicon-remove"></span>
+					&nbsp;
+					{{mf 'course.details.del_btn' 'Delete'}}
+				</button>
+				{{/if}}
+					
+			{{/if}}		
 		</div>
+		
 	</div>
 	{{else}} <!-- Part of 'parent_ID' helper statement -->
 	<div class="discussion-conversation">
-		<div class="post">
+		<div class="post" id="post-{{ this._id }}">
 			<div class="post-info">
 				{{>iconProfilelink user_ID}}
 				<span class="comment-time-created">
@@ -141,6 +166,22 @@
 </div>
 </template>
 
+
+<template name="editCommentDialog">
+<div class="edit-post-dialog" id="edit-comment-{{this._id}}">
+	<form name="form_edit">
+		<input type="text" id="edit_title" value="{{this.title}}"/>
+		<textarea id="edit_text">{{this.text}}</textarea>
+		
+		<button type="button" class="updateAnswer">
+			{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
+		</button>
+		<button type="button" class="cancelEdit">
+			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+		</button>
+	</form>
+</div>
+</template>
 
 <template name="iconProfilelink">
 	{{#if this}}

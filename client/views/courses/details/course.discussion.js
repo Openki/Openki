@@ -15,40 +15,48 @@ Template.discussion.helpers({
 		
 		// loop over first-level post, search each post for comments, order by most recent
 		posts.forEach(function (post){
-			
-			if(currentUser){	
-				//show "edit" button only if the comment belongs to this user or if user is course admin
-				if( post.user_ID == currentUser._id || course.createdby == currentUser._id ){
-					post.editableByUser = true;
-				}else{
-					post.editableByUser = false;
-				}
-			
-				//show "edit" button only if user is course admin
-				if(course.createdby == currentUser._id ){
-					post.deletableByUser = true;
-				}else{
-					post.deletableByUser = false;
-				}
-			}else{
-				post.editableByUser = false;
-				post.deletableByUser = false;
+
+			post.editableByUser = false;
+			post.deletableByUser = false;
+			if( mayDeletePost( currentUser, course, post) ){
+				post.deletableByUser = true;
 			}
+			if( mayEditPost( currentUser, post) ){
+				post.editableByUser = true;
+			}
+			
 			
 			ordered_posts.push(post);
 			var comments = CourseDiscussions.find({
 				parent_ID: post._id},
 				{sort: {time_created: 1}});
 			
-			
 			comments.forEach(function (comment){
+			
+				//check comment permissions as well, may not be the same as post permissions
+				
+				comment.editableByUser = false;
+				comment.deletableByUser = false;
+				if( mayDeletePost( currentUser, course, comment) ){
+					comment.deletableByUser = true;
+				}
+				if( mayEditPost( currentUser, comment) ){
+					comment.editableByUser = true;
+				}
+			
 				ordered_posts.push(comment);
 			});
 						
 		});
 		//return array with proper order
 		return ordered_posts;
-	}
+	},
+	editing: function() {
+		return Template.instance().editing.get();
+	},
+	equals: function (a, b) {
+      	return a === b;
+    }
 });
 
 
@@ -107,17 +115,17 @@ Template.newPost.events({
 	'click button.cancel': function () {
 		Template.instance().writing.set(false);
 	},
-
- /////////////////////////////////////////// TODO: fix comment-editing ////////////////
 	'click button.edit': function () {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(true);
+		var postSelector = 'div#post-' + this.parent._id + ' div.post-text';
+		$(postSelector).hide();
 	},
-
 	'click button.cancelEdit': function () {
 		if (pleaseLogin()) return;
 		Template.instance().editing.set(false);
 		$('form[name=form_edit]').hide();
+		$('div.post-text').show();
 	},
 	'click button.update': function () {
 		if (pleaseLogin()) return;
@@ -126,14 +134,8 @@ Template.newPost.events({
 			title: $("#edit_title").val()
 
 		};
-
-		//var parent_ID = this.parent && this.parent._id;
-		//if (parent_ID) {
-		//comment.parent_ID = parent_ID;
+		
 		comment.course_ID = this.parent.course_ID;
-		//} else {
-		//	comment.course_ID = this._id;
-		//}
 
 		var templateInstance = Template.instance();
 		Meteor.call('editComment', comment, this.parent._id, function(err, commentId) {
@@ -143,21 +145,80 @@ Template.newPost.events({
 				templateInstance.editing.set(false);
 			}
 		});
+		
+		$('div.post-text').show();
+		
 	},
-
-
-
-	'click button.deleteComment': function () {
+	'click button.deletePost': function () {
 		if (pleaseLogin()) return;
 		
-		Meteor.call('deleteComment', this.parent._id, function(err, commentId) {
-			if (err) {
-				addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
-			}
-		});
+		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ) ) ){
 		
-		
+			Meteor.call('deleteComment', this.parent._id, function(err, commentId) {
+				if (err) {
+					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
+				}
+			});
+			
+		}
 	},
 
 
 });
+
+
+Template.discussion.onCreated(function() {
+	this.editing = new ReactiveVar(false);
+});
+
+//handling events for comments for a given post
+Template.discussion.events({
+
+	'click button.editAnswer': function () {
+		if (pleaseLogin()) return;
+		Template.instance().editing.set(this._id);
+		console.log(Template.instance().editing);
+
+	},
+	'click button.cancelEdit': function () {
+		if (pleaseLogin()) return;
+		Template.instance().editing.set(false);
+		$('form[name=form_edit]').hide();
+	},
+	'click button.updateAnswer': function () {
+		if (pleaseLogin()) return;
+		
+		var selector = "div#edit-comment-" + this._id;
+		
+		var comment = {
+			text: $(selector + " #edit_text").val(),
+			title: $(selector + " #edit_title").val()
+		};
+		
+		comment.course_ID = this.course_ID;
+		comment.parent_ID = this.parent_ID;
+
+		var templateInstance = Template.instance();
+		Meteor.call('editComment', comment, this._id, function(err, commentId) {
+			if (err) {
+				addMessage(mf('comment.editing.error', { ERROR: err }, 'Editing your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+			} else {
+				templateInstance.editing.set(false);
+			}
+		});
+
+	},
+	'click button.deleteAnswer': function () {
+		if (pleaseLogin()) return;
+		
+		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ) ) ){
+		
+			Meteor.call('deleteComment', this._id, function(err, commentId) {
+				if (err) {
+					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
+				}
+			});
+		}
+	},
+});
+
