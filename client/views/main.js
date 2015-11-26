@@ -23,7 +23,10 @@ Template.layout.events({
 		instance.showIntro.set(!instance.showIntro.get());
 		return false
 	},
-	"click": function(event, instance) {
+	"click .-introContainer": function(event, instance) {
+		event.stopImmediatePropagation();
+	},
+	"click #wrap": function(event, instance) {
 		instance.showIntro.set(false);
 	}
 });
