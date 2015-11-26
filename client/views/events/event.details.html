@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="course_event_lower_section">
-				<div class="col-xs-12 col-sm-6">
+				<div class="head">
 					<div class="course_event_title"><h3>{{this.title}}</h3>{{> groupList}}</div>
 					<div class="course_event_time">
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
@@ -49,7 +49,7 @@
 						{{/if}}
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6">{{>map markers=eventMarkers height=150 mini=true}}</div>
+				<div class="map">{{>map markers=eventMarkers height=150 mini=true}}</div>
 			</div>
 			<div class="container-fluid event_detail_description">
 				<p>
