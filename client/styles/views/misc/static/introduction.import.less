@@ -1,0 +1,52 @@
+.introduction{
+	margin-top: 4px;
+	//background-color:#d4d4f0;
+	background-color: @light-blue;
+	opacity: 0.9;
+	padding-top: 2px;
+
+	.close{
+		position: relative;
+		right: -5px;
+		top: 2px;
+		color: grey;
+		opacity: 0.5;
+		&:hover{
+			opacity: 0.8;
+		}
+	}
+
+	h3{
+		margin-top: 10px;
+	}
+
+
+
+
+	ul{
+		.list-unstyled;
+		font-size: medium;
+
+		li{
+			.make-sm-column(1.7);
+			.make-xs-column(5.8);
+
+			h2{
+				margin-bottom: 8px;
+				margin-top: 0px;
+				padding-left: 35%;
+			}
+
+			span{
+				position: absolute;
+				left: -15px;
+				color: grey;
+				font-size: 23px;
+			}
+			border: red;
+			margin-left: 24px;
+		}
+	}
+
+	padding-bottom: 12px;
+}
