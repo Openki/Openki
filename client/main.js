@@ -77,9 +77,17 @@ Meteor.startup(function() {
 
 	// Soon everybody will support this, right?
 	var desiredLangs = navigator.languages || [navigator.language];
-	desiredLangs = Array.prototype.slice.call(desiredLangs);
+	desiredLangs = Array.prototype.slice.call(desiredLangs); // Turn it into a proper array
 	desiredLangs.unshift(localStorage.getItem('locale'));
 	desiredLangs.push('en'); // fallback
+
+	// Lg parameter in URL?
+	var parms = location.search.substring(1).split('&');
+	var i = 0;
+	for (; i < parms.length; i += 1) {
+		keyval = parms[i].split('=');
+		if (keyval[0] === 'lg') desiredLangs.unshift(keyval[1]);
+	}
 
 	for (l in desiredLangs) {
 		var langCandidate = desiredLangs[l];
