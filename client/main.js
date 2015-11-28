@@ -46,26 +46,15 @@ miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
 
 // Try to guess a sensible language
 Meteor.startup(function() {
-	// Could be built dynamically I guess
-	var availableLangs = {
-		'ar': 'ar',
-		'de': 'de',
-		'en': 'en',
-		'es': 'es',
-		'fr': 'fr',
-		'it': 'it',
-		'zh': 'zh_TW'
-	};
-
 	var useLocale = function(lang) {
 		var locale = false;
-		if (availableLangs[lang]) {
-			locale = availableLangs[lang];
+		if (lgs[lang]) {
+			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
 			var short = langCandidate.substring(0, 2);
-			if (availableLangs[short]) {
-				locale = availableLangs[short];
+			if (lgs[short]) {
+				locale = short;
 			}
 		}
 		if (locale) {
@@ -93,11 +82,12 @@ Meteor.startup(function() {
 		var langCandidate = desiredLangs[l];
 		if (langCandidate && useLocale(langCandidate)) break;
 	}
-	
 	Deps.autorun(function() {
 		var desiredLocale = Session.get('locale');
 		
-		// Tell moment to switch the locale
+		mfPkg.setLocale(desiredLocale);
+
+		  // Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it
 		var setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
