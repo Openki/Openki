@@ -20,7 +20,9 @@ Router.map(function () {
 				Meteor.subscribe('eventsFind', queryOngoing),
 			];
 		},
-
+		subscriptions: function() {
+			return	Meteor.subscribe('locationNames');
+		},
 		data: function() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);
@@ -100,6 +102,7 @@ Template.kioskEvents.helpers({
 
 Template.kioskEventOngoing.helpers({
 	showLocations: function() {
+		if (!this.location.name) return false;
 		return (!Router.current().params.query.location)
 	}
 });
@@ -110,6 +113,7 @@ Template.kioskEventToday.helpers({
 });
 Template.kioskEventFuture.helpers({
 	showLocations: function() {
+		if (!this.location.name) return false;
 		return (!Router.current().params.query.location)
 	}
 });

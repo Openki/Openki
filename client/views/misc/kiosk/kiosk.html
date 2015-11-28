@@ -132,12 +132,10 @@
 				</div>
 				<div class="kiosk_event_home">
 					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
-						{{#if location}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{this.location}}
-							{{#if room}}
-								-
-							{{/if}}
+						<span class="glyphicon glyphicon-home"></span>
+						{{location.name}}
+						{{#if room}}
+							-
 						{{/if}}
 					{{/if}}
 					{{#if room}}

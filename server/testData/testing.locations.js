@@ -1,7 +1,7 @@
 // Locations are rather organisations. they can have multiple rooms of couse bit they are not shown on this site.
 
 
-testlocations = [{
+testLocations = [{
 	'name':        		'Kasama',
 	'region': 			'J6GDhEEvdmdSMzPPF',
 	'categories': 		['infoshop'],
@@ -30,7 +30,7 @@ testlocations = [{
 		'stage': 			'0',
 		'specials': 		'two computers/workstations, big kitchen, bibliothek'},
 	'createdby': 		'FeeLing',
-	'hosts': 			['FeeLing']
+	'hosts': 			['FeeLing', 'Laura', 'HertsPflaschter']
 },
 {
 	'name':        		'SGMK MechArtLab',
@@ -64,7 +64,7 @@ testlocations = [{
 	},
 	'createdby': 		'Sandra',
 
-	'hosts': 			['FeeLing']
+	'hosts': 			['FeeLing', 'Barbie92', 'LeOnI']
 },
 
 {

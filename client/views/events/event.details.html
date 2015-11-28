@@ -1,0 +1,172 @@
+<template name="eventPage">
+<div class="container">
+	<div class="course_event_detail" id="coursedetails">
+		{{#if course}}
+		<p>
+			<a href="{{pathFor 'showCourse' _id=course._id}}">
+				<span class="glyphicon glyphicon-arrow-left"></span>
+				{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+			</a>
+		</p>
+		{{/if}}
+		{{> event}}
+	</div>
+</div>
+</template>
+
+<template name="eventNotFound">
+	<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place."}}</h4>
+</template>
+
+<template name="event">
+	{{#if editing}}
+		{{> eventEdit}}
+	{{else}}
+		{{> eventDisplay}}
+	{{/if}}
+</template>
+
+<template name="eventDisplay">
+		<div class="course_event">
+			<div class="course_event_date">
+				<div class="container-fluid">
+					<span class="day">{{weekday start}}</span><br>
+					<span class="date">
+						<span class="glyphicon glyphicon-calendar"></span>
+						{{dateformat_mini_fullmonth start}}
+					</span>
+				</div>
+			</div>
+			<div class="course_event_lower_section">
+				<div class="head">
+					<div class="course_event_title"><h3>{{this.title}}</h3>{{> groupList}}</div>
+					<div class="course_event_time">
+						<span class="glyphicon glyphicon-time"></span> {{timeformat start}} - {{timeformat end}}
+						{{#if location.name}}
+							<br>
+							{{#if location._id}}
+								<a href="{{pathFor 'locationDetails' data=location}}"><span class="glyphicon glyphicon-home"></span> {{location.name}}</a>
+							{{else}}
+								<span class="glyphicon glyphicon-home"></span> {{location.name}}
+							{{/if}}
+							{{#if room}} &nbsp; &nbsp; <span class="fa fa-map-signs"></span> {{room}}{{/if}}
+						{{/if}}
+						{{#if location.address}}
+						<div>
+							<span class="fa fa-map-marker"></span> {{location.address}}
+						</div>
+						{{/if}}
+					</div>
+				</div>
+				<div class="map">{{>map markers=eventMarkers height=150}}</div>
+			</div>
+			<div class="container-fluid event_detail_description">
+				<p>
+					{{{description}}}
+				</p>
+			</div>
+			{{#if files}}
+			<div class="container-fluid event_detail_description">
+				<p>Related Files:</p>
+				<ul style="list-style-type:none">
+
+					{{#each files}}
+						{{> eventAttachments}}
+					{{/each}}
+
+				</ul>
+			</div>
+			{{/if}}
+			{{#if mayEdit}}
+			<div class="eventEdit_buttons col-sm-12" >
+				<div class="btn-group" role="group">
+					<button type="button" class="eventEdit btn btn-success" role="button">
+						<span class="glyphicon glyphicon-edit"></span>
+						{{mf 'course.details.edit_btn' 'Edit'}}
+					</button>
+					<button type="button" class="eventDelete btn btn-danger" role="button">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf 'course.details.del_btn' 'Delete'}}
+					</button>
+
+					<button type="button" class="eventReplicateMenu_open btn btn-warning" role="button">
+						<span class="glyphicon glyphicon-plus"></span>
+						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+					</button>
+					<button type="button" class="eventReplicateMenu_close btn btn-warning" role="button" style="display:none">
+						<span class="glyphicon glyphicon-minus"></span>
+						{{mf 'course.details.repl_menu_btn'}}
+					</button>
+				</div>
+				<div id="eventReplicationMenu" style="display:none;">
+					<div class="col-xs-12 col-sm-2">
+						<h4>Frequency</h4>
+						<div class="input-group">
+							<select class="replicate_frequency updateReplicas">
+								<option value="once" selected>{{mf 'event.replication.freq.once' 'once'}}</option>
+								<option value="daily">{{mf 'event.replication.freq.daily' 'every day'}}</option>
+								<option value="weekly" selected>{{mf'event.replication.freq.weekly' 'once a week'}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf 'event.replication.interval.start' 'Interval Start'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" class="form-control replicate_start updateReplicas" value="{{replicaStart}}" size="8">
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<h4>{{mf 'event.replication.interval.end' 'Interval End'}}</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+							<input type="date" class="form-control replicate_end updateReplicas" value="{{replicaEnd}}" size="8">
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2">
+						<br/> <br/>
+
+						<div class="input-group">
+							<button type="button" class="eventReplicate btn btn-success" role="button">
+								<!--span class="glyphicon glyphicon-plus"></span-->
+								{{mf 'course.details.repl_btn' 'Create events'}}
+							</button>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2">
+					{{#if replicaDateCount}}
+					{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
+					<ul style="display: inline">
+						{{#each replicaDates}}
+						<li style="display: inline">{{isoDateFormat this}}</li>
+						{{/each}}
+					</ul>
+					{{/if}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+	{{> groupListing}}
+	<div class="event_options">
+		<a href="{{pathFor 'calEvent' this}}">
+			<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
+			<span class="glyphicon glyphicon-download"></span>&nbsp;
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
+			</button>
+		</a>
+		{{> report}}
+	</div>
+</template>
+
+<template name="eventAttachments">
+<li>
+	<p>
+		<a href="{{file}}" target="_blank">{{filename}}</a>
+	</p>
+</li>
+</template>

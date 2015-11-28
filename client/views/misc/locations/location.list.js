@@ -1,6 +1,6 @@
 Router.map(function () {
 	this.route('locations',{
-		path: 'locations',
+		path: 'venues',
 		template: 'locationlist',
 		waitOn: function () {
 			return Meteor.subscribe('locations', Session.get('region'));
