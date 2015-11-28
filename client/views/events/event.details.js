@@ -2,7 +2,7 @@
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
-	this.editing = new ReactiveVar(false);
+	this.editing = new ReactiveVar(!this.data._id);
 });
 
 
@@ -71,6 +71,9 @@ Template.eventDisplay.helpers({
 	},
 	eventMarkers: function() {
 		return Template.instance().locationTracker.markers;
+	},
+	haveLocation: function() {
+		return this.location && this.location.loc
 	}
 });
 

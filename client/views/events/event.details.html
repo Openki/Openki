@@ -58,7 +58,9 @@
 						{{/if}}
 					</div>
 				</div>
+			{{#if haveLocation}}
 				<div class="map">{{>map markers=eventMarkers height=150}}</div>
+			{{/if}}
 			</div>
 			<div class="container-fluid event_detail_description">
 				<p>
