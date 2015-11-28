@@ -38,9 +38,6 @@ Router.map(function () {
 
 		onAfterAction: function() {
 			document.title = webpagename + ' Calendar';
-			if (this.params.query.lg) {
-				Session.set('locale', this.params.query.lg);
-			}
 		}
 	});
 });
