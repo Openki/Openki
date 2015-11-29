@@ -98,29 +98,12 @@ Template.kioskEvents.helpers({
 	}
 });
 
-
-
-Template.kioskEventOngoing.helpers({
-	showLocations: function() {
-		if (!this.location.name) return false;
-		return (!Router.current().params.query.location)
+Template.locationDisplay.helpers({
+	showLocation: function() {
+		// The location is shown when we have a location name and the location is not used as a filter
+		return this.location.name && !Router.current().params.query.location;
 	}
 });
-Template.kioskEventToday.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
-	}
-});
-Template.kioskEventFuture.helpers({
-	showLocations: function() {
-		if (!this.location.name) return false;
-		return (!Router.current().params.query.location)
-	}
-});
-
-
-
-
 
 Template.kioskEventOngoing.rendered = function() {
 	this.$('.kiosk_event_home').dotdotdot({
