@@ -3,16 +3,24 @@
 // "region"        -> ID_region
 // "title"         -> String
 // "description"   -> String
-// "start"         -> time the events starts
-// "end"           -> time the event ends
-// "location"      -> ID_location
-// "room"          -> String (optional)
+//
+// start:      Time the events starts
+//
+// end:        Time the event ends
+//
+// location:   Object with location info
+//             _id:     Optional reference to a document in the Locations collection
+//                      If this is set, the fields name, loc, and address are synchronized
+//             name:    Descriptive name for the location
+//             loc:     Event location in GeoJSON format
+//             address: Address string where the event will take place
+//
+// room:       Where inside the building the event will take place
+//
 // "createdby"     -> userId
 // "time_created"  -> Date
 // "time_lastedit" -> Date
 // "course_id"     -> ID_course  (maybe list in Future)
-// "mentors"       -> not in use, list of UserIds
-// "hosts"         -> not in use, list of UserIds
 // ===========================
 
 Events = new Meteor.Collection("Events");
@@ -57,6 +65,53 @@ affectedReplicaSelectors = function(event) {
 	return selector;
 }
 
+// Sync location fields of the event document
+updateEventLocation = function(eventId) {
+	untilClean(function() {
+		var event = Events.findOne(eventId);
+		if (!event) return true; // Nothing was successfully updated, we're done.
+
+		if (typeof event.location != 'object') {
+			// This happens only at creation when the field was not initialized correctly
+			Events.update(event._id, { location: {} });
+			return false;
+		}
+
+		var location = false;
+		if (event.location._id) {
+			location = Locations.findOne(event.location._id);
+		}
+
+		var update;
+		if (location) {
+			// Do not update location for historical events
+			if (event.start < new Date()) return true;
+
+			// Sync values to the values set in the location document
+			update = { $set: {
+				'location.name': location.name,
+				'location.address': location.address,
+				'location.loc': location.loc
+			}};
+		} else {
+			// If the location vanished we delete the locationId but let the cached fields live on
+			update = { $unset: { 'location._id': 1 }};
+		}
+
+		// We have to use the Mongo collection API because Meteor does not
+		// expose the modification counter
+		var r = Events.rawCollection();
+		var result = Meteor.wrapAsync(r.update, r)(
+			{ _id: event._id },
+			update,
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
+}
+
+
 Meteor.methods({
 	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
@@ -64,7 +119,7 @@ Meteor.methods({
 		var expectedFields = {
 			title:       String,
 			description: String,
-			location:    String,
+			location:    Object,
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
@@ -222,8 +277,15 @@ Meteor.methods({
 		}
 		var upd = Events.update(eventId, { $set: edits });
 		return upd;
-	}
+	},
 
+	// Update the location fields for all events matching the selector
+	updateEventLocation: function(selector) {
+		var idOnly = { fields: { _id: 1 } };
+		Events.find(selector, idOnly).forEach(function(event) {
+			updateEventLocation(event._id);
+		});
+	}
 });
 
 
@@ -277,7 +339,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.location) {
-		find.location = filter.location;
+		find['location._id'] = filter.location;
 	}
 
 	if (filter.room) {

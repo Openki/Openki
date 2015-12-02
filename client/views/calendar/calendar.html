@@ -63,9 +63,9 @@
 				{{/if}}
 				</div>
 				<div  style="height: 2em" class="ellipsis">
-				{{#if location}}
+				{{#if location.name}}
 					<span class="glyphicon glyphicon-home"></span>
-					{{this.location}}
+					{{location.name}}
 					{{#if room}}
 						- {{this.room}}
 					{{/if}}

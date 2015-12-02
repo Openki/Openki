@@ -34,10 +34,14 @@ msgfmt:core
 msgfmt:extract
 msgfmt:ui
 accounts-google
+msavin:mongol
 standard-minifiers
+bevanhunt:leaflet
+http
 rzymek:moment-locale-da
 rzymek:moment-locale-ja
 es5-shim
 okgrow:router-autoscroll
 meteorhacks:subs-manager
 rzymek:moment-locale-el
+gildaspk:moment-datepicker

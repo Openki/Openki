@@ -20,7 +20,9 @@ Router.map(function () {
 				Meteor.subscribe('eventsFind', queryOngoing),
 			];
 		},
-
+		subscriptions: function() {
+			return	Meteor.subscribe('locationNames');
+		},
 		data: function() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);
@@ -96,27 +98,12 @@ Template.kioskEvents.helpers({
 	}
 });
 
-
-
-Template.kioskEventOngoing.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
+Template.locationDisplay.helpers({
+	showLocation: function() {
+		// The location is shown when we have a location name and the location is not used as a filter
+		return this.location.name && !Router.current().params.query.location;
 	}
 });
-Template.kioskEventToday.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
-	}
-});
-Template.kioskEventFuture.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
-	}
-});
-
-
-
-
 
 Template.kioskEventOngoing.rendered = function() {
 	this.$('.kiosk_event_home').dotdotdot({

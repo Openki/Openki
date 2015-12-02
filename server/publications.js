@@ -22,14 +22,27 @@ Meteor.publish ('regions', function(){
 	return Regions.find();
 });
 
+
+/////////////////////////////////////////////////// locations
 Meteor.publish ('locations', function(region) {
-	var find = {}
+	check(region, String);
+	var find = {};
 	if (region != 'all') find.region = region
+	return Locations.find(find);
+});
+
+Meteor.publish ('locationNames', function(region) {
+	var find = {};
+	if (region != 'all' && region != undefined) find.region = region
 	return Locations.find(find);
 });
 
 Meteor.publish ('locationDetails', function(id) {
 	return Locations.find(id);
+});
+
+Meteor.publish('locationsFind', function(find, limit) {
+	return locationsFind(find, limit);
 });
 
 Meteor.publish('discussion', function(courseId) {

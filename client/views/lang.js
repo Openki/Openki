@@ -1,4 +1,4 @@
-var lgs = {
+lgs = {
 	'ar': { lg: 'ar', name: 'العربية', short: 'العربية', english:'Arabic'},
 	'da': { lg: 'da', name: 'Dansk', short: 'da', english:'Danish'},
 	'de': { lg: 'de', name: 'Deutsch', short: 'de', english:'German'},
@@ -24,7 +24,6 @@ Template.lang_sel.helpers({
 
 Template.lang_sel.events({
 	'click a.langselect': function(e){
-		mfPkg.setLocale(this.lg);
 		localStorage.setItem('locale', this.lg);
 		Session.set('locale', this.lg);
 		e.preventDefault();
@@ -38,4 +37,4 @@ Template.lang_sel.events({
 // For dynamically constructed translation strings there is no default 
 // translation and meteor would show the translation key if there is no
 // translation in the current locale
-mfPkg.loadLangs('en');  
+mfPkg.loadLangs('en');

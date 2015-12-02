@@ -84,6 +84,23 @@
 </template>
 
 
+<template name="locationDisplay">
+	<div class="kiosk_event_home">
+	{{#if showLocation}}
+		<span class="glyphicon glyphicon-home"></span>
+		{{location.name}}
+		{{#if room}} - {{/if}}
+	{{/if}}
+	{{#if room}}
+		{{#unless showLocation}}
+		<span class="fa fa-map-signs"></span>
+		{{/unless}}
+		{{this.room}}
+	{{/if}}
+	</div>
+</template>
+
+
 <template name="kioskEventOngoing">
 	<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
 		<div class="calendar_event">
@@ -91,25 +108,9 @@
 				{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
 			</div>
 			<div class="kiosk_event_header">
-					<span class="glyphicon glyphicon-time"></span>
-					{{timeformat start}} - {{timeformat end}}
-				<div class="kiosk_event_home">
-					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
-						{{#if location}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{this.location}}
-							{{#if room}}
-								-
-							{{/if}}
-						{{/if}}
-					{{/if}}
-					{{#if room}}
-						{{#unless showLocations}}
-							<span class="fa fa-map-signs"></span>
-						{{/unless}}
-						{{this.room}}
-					{{/if}}
-				</div>
+				<span class="glyphicon glyphicon-time"></span>
+				{{timeformat start}} - {{timeformat end}}
+				{{>locationDisplay}}
 			</div>
 			<div class="course_event_title ellipsis">
 				<h3>{{plain this.title}}</h3>
@@ -130,23 +131,7 @@
 					<span class="glyphicon glyphicon-time"></span>
 					{{timeformat start}} - {{timeformat end}}
 				</div>
-				<div class="kiosk_event_home">
-					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
-						{{#if location}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{this.location}}
-							{{#if room}}
-								-
-							{{/if}}
-						{{/if}}
-					{{/if}}
-					{{#if room}}
-						{{#unless showLocations}}
-							<span class="fa fa-map-signs"></span>
-						{{/unless}}
-						{{this.room}}
-					{{/if}}
-				</div>
+				{{>locationDisplay}}
 			</div>
 			<div class="course_event_title">
 				<h3>{{plain this.title}}</h3>
@@ -167,23 +152,7 @@
 					<span class="glyphicon glyphicon-calendar"></span>
 					{{dateformat start}} {{timeformat start}}
 				</div>
-				<div class="kiosk_event_home">
-					{{#if showLocations}} <!-- we dont want to see each time same Location if filtered-->
-						{{#if location}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{this.location}}
-							{{#if room}}
-								-
-							{{/if}}
-						{{/if}}
-					{{/if}}
-					{{#if room}}
-						{{#unless showLocations}}
-							<span class="fa fa-map-signs"></span>
-						{{/unless}}
-						{{this.room}}
-					{{/if}}
-				</div>
+				{{>locationDisplay}}
 			</div>
 			<div class="course_event_title">
 				<h3>{{plain this.title}}</h3>
