@@ -19,7 +19,6 @@ Template.eventEdit.onRendered(function() {
 
 Template.eventEdit.helpers({
 	localDate: function(date) {
-		console.log(date)
 		return moment(date).format("L");
 	},
 	

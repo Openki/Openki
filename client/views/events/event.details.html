@@ -144,7 +144,7 @@
 					{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
 					<ul style="display: inline">
 						{{#each replicaDates}}
-						<li style="display: inline">{{isoDateFormat this}}</li>
+						<li style="display: inline">{{localDate this}}</li>
 						{{/each}}
 					</ul>
 					{{/if}}

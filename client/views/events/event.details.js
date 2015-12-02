@@ -16,6 +16,16 @@ Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
 	this.locationTracker.setLocation(this.data.location);
 
+	this.$('.replicate_start').datepicker({
+		weekStart: moment.localeData().firstDayOfWeek(),
+		format: 'L',
+	});
+
+	this.$('.replicate_end').datepicker({
+		weekStart: moment.localeData().firstDayOfWeek(),
+		format: 'L',
+	});
+
 	updateReplicas(this);
 });
 
@@ -42,15 +52,15 @@ Template.event.helpers({
 
 Template.eventDisplay.helpers({
 	replicaStart: function() {
-		return moment.max(moment(this.start), moment()).format("YYYY-MM-DD");
+		return moment.max(moment(this.start), moment()).format("L");
 	},
 
 	replicaEnd: function() {
-		return moment.max(moment(this.start), moment()).add(1, 'week').format("YYYY-MM-DD");
+		return moment.max(moment(this.start), moment()).add(1, 'week').format("L");
 	},
 
-	isoDateFormat: function(date) {
-		return moment(date).format("YYYY-MM-DD");
+	localDate: function(date) {
+		return moment(date).format("L");
 	},
 
 	affectedReplicaCount: function() {
@@ -83,9 +93,9 @@ var updateReplicas = function(template) {
 
 
 var getEventFrequency = function(template) {
-	var startDate = moment(template.$('.replicate_start').val(), 'YYYY-MM-DD');
+	var startDate = moment(template.$('.replicate_start').val(), 'L');
 	if (!startDate.isValid()) return [];
-	var endDate   = moment(template.$('.replicate_end').val(), 'YYYY-MM-DD');
+	var endDate   = moment(template.$('.replicate_end').val(), 'L');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.replicate_frequency').val();
 	var diffDays = endDate.diff(startDate, "days");
