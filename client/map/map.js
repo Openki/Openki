@@ -330,7 +330,7 @@ Template.map.events({
 		if (instance.data.mini) instance.fullscreen.set(true);
 	},
 
-	'click .-addMarker': function(event, instance) {
+	'mousedown .-addMarker': function(event, instance) {
 		instance.proposeMarker();
 	},
 
