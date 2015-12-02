@@ -52,28 +52,27 @@ Template.eventDescritpionEdit.rendered = function() {
 var getEventStartMoment = function(template) {
 	var startDateStr = template.$('#edit_event_startdate').val();
 	var startMoment =  moment(startDateStr, 'YYYY-MM-DD');
-	var startTime = template.$('#edit_event_starttime').val();
-	var startTimeParts = startTime ? startTime.split(":") : [0,0];
-	var minutes = startTimeParts[1];
-	var hours = startTimeParts[0];
-	startMoment.hours(hours);
-	startMoment.minutes(minutes);
+	var startTimeStr = template.$('#edit_event_starttime').val();
+	var startTime = moment(startTimeStr, 'LT');
+	startMoment.hours(startTime.hours());
+	startMoment.minutes(startTime.minutes());
+
+
 	return startMoment;
 }
 
 var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = moment(startMoment);
-	var endTime = template.$('#edit_event_endtime').val();
-	var endTimeParts = endTime ? endTime.split(":") : [0,0];
-	var minutes = endTimeParts[1];
-	var hours = endTimeParts[0];
-	endMoment.hours(hours);
-	endMoment.minutes(minutes);
+
+	var endTimeStr = template.$('#edit_event_endtime').val();
+	var endTime = moment(endTimeStr, 'LT');
+	endMoment.hours(endTime.hours());
+	endMoment.minutes(endTime.minutes());
+
 	if(endMoment.diff(startMoment) < 0) {
 		endMoment.add(1,"day");
 	}
-
 	return endMoment;
 }
 
@@ -106,8 +105,8 @@ var updateTimes = function(template, updateEnd) {
 
 	duration = end.diff(start, 'minutes');
 	template.$('#edit_event_startdate').val(start.format('YYYY-MM-DD'));
-	template.$('#edit_event_starttime').val(start.format('HH:mm'));
-	template.$('#edit_event_endtime').val(end.format('HH:mm'));
+	template.$('#edit_event_starttime').val(start.format('LT'));
+	template.$('#edit_event_endtime').val(end.format('LT'));
 	template.$('#edit_event_duration').val(duration.toString());
 }
 
