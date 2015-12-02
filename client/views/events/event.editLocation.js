@@ -60,8 +60,12 @@ Template.eventEditLocation.onCreated(function() {
 		instance.locationTracker.markers.find({ main: true }).observe({
 			changed: function(mark) {
 				var updLocation = instance.location.get();
-				if (_.isEqual(mark.loc, updLocation.loc)) return;
-				updLocation.loc = mark.loc;
+				if (mark.remove) {
+					delete updLocation.loc;
+				} else {
+					if (_.isEqual(mark.loc, updLocation.loc)) return;
+					updLocation.loc = mark.loc;
+				}
 				instance.location.set(updLocation);
 			}
 		});
@@ -128,6 +132,15 @@ Template.eventEditLocation.helpers({
 		// craziness is strong with this one.
 		return function() {
 			return !location.get().loc;
+		}
+	},
+
+	allowRemoving: function() {
+		var locationIs = Template.instance().locationIs;
+		var location = Template.instance().location;
+
+		return function() {
+			return locationIs('own') && location.get().loc;
 		}
 	},
 

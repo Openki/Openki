@@ -11,7 +11,6 @@ LocationTracker = function() {
 					return;
 				}
 			}
-
 			markers.remove({ main: true });
 			if (location && location.loc) {
 				markers.insert({

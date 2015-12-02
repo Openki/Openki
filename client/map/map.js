@@ -9,9 +9,29 @@ Template.map.onCreated(function() {
 	this.fullscreen = new ReactiveVar(false);
 });
 
+var FaIcon = function(faClass) {
+	return function() {
+		return L.DomUtil.create('span', 'fa fa-'+faClass);
+	}
+}
+
+var FaCompIcon = function(opClass, icClass) {
+	return function() {
+		var cont = L.DomUtil.create('span', 'fa');
+		var op = L.DomUtil.create('i', 'fa fa-'+opClass, cont);
+
+		var ic = L.DomUtil.create('i', 'fa fa-lg fa-'+icClass, cont)
+		ic.style.position = 'absolute';
+		ic.style.left = '0.7ex';
+		L.DomUtil.setOpacity(ic, 0.5);
+
+		return cont;
+	}
+}
+
 var OpenkiControl = L.Control.extend({
 	options: {
-		icon: '',
+		icon: null,
 		action: '',
 		title: '',
 		position: 'topright'
@@ -22,7 +42,10 @@ var OpenkiControl = L.Control.extend({
 	},
 
 	onAdd: function(map) {
-		return L.DomUtil.create('span', 'fa fa-'+this.options.icon+' '+this.options.action);
+		var elm = this.options.icon();
+		L.DomUtil.addClass(elm, this.options.action);
+		elm.setAttribute('title', this.options.title);
+		return elm;
 	}
 });
 
@@ -68,19 +91,24 @@ Template.map.onRendered(function() {
 		imperial: Session.get('locale') == 'en'
 	});
 	var fullscreenControl = new OpenkiControl({
-		icon: 'arrows',
+		icon: FaIcon('arrows-alt'),
 		action: '-fullscreen',
 		title: mf('map.fullscreen', 'big map')
 	});
 	var closeFullscreenControl = new OpenkiControl({
-		icon: 'close',
+		icon: FaIcon('close'),
 		action: '-fullscreenClose',
 		title: mf('map.fullscreenClose', 'close')
 	});
 	var addMarkerControl = new OpenkiControl({
-		icon: 'map-marker',
+		icon: FaCompIcon('plus', 'map-marker'),
 		action: '-addMarker',
-		title: mf('map.addMarker', 'add location')
+		title: mf('map.addMarker', 'set marker')
+	});
+	var removeMarkerControl = new OpenkiControl({
+		icon: FaCompIcon('minus', 'map-marker'),
+		action: '-removeMarker',
+		title: mf('map.removeMarker', 'remove the marker')
 	});
 
 	instance.autorun(function() {
@@ -104,6 +132,9 @@ Template.map.onRendered(function() {
 		// dependeny into the other instance.
 		var allowPlacing = instance.data.allowPlacing;
 		show(addMarkerControl, allowPlacing && allowPlacing());
+
+		var allowRemoving = instance.data.allowRemoving;
+		show(removeMarkerControl, allowRemoving && allowRemoving());
 
 		var controlSize = fullscreen ? '10vh' : Math.max(30, instance.data.height/10)+'px';
 		instance.$('span.fa').css({ 'font-size': controlSize });
@@ -137,13 +168,16 @@ Template.map.onRendered(function() {
 			count += 1;
 		}
 
+		var maxZoom = 16;
+
 		// To give some perspective, we extend the bounds to include the region center when there are few markers
 		if (count < 2) {
 			for (centerPos in centers) { bounds.extend(centers[centerPos]); }
 			count += 1;
+			if (count == 1) maxZoom = 13;
 		}
 		if (bounds.isValid()) {
-			map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 });
+			map.fitBounds(bounds, { padding: [20, 20], maxZoom: maxZoom });
 		}
 	}, 100);
 
@@ -158,7 +192,7 @@ Template.map.onRendered(function() {
 	Tracker.autorun(function() {
 		var markers = instance.data.markers;
 
-		var addMarker = function(mark){
+		var addMarker = function(mark) {
 			// Marks that have the center flage set are not displayed but used for anchoring the map
 			if (mark.center) {
 				centers[mark._id] = L.geoJson(mark.loc).getBounds();
@@ -249,6 +283,13 @@ Template.map.onRendered(function() {
 			loc: { type: 'Point', coordinates: [center.lng, center.lat] }
 		});
 	};
+
+	instance.removeMarker = function() {
+		instance.data.markers.update(
+			{ main: true },
+			{ $set: { remove: true } }
+		);
+	};
 });
 
 Template.map.helpers({
@@ -291,6 +332,10 @@ Template.map.events({
 
 	'click .-addMarker': function(event, instance) {
 		instance.proposeMarker();
+	},
+
+	'click .-removeMarker': function(event, instance) {
+		instance.removeMarker();
 	},
 
 	'click .-fullscreen': function(event, instance) {
