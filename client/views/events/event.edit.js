@@ -9,12 +9,18 @@ Template.eventEdit.onCreated(function() {
 
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
+
+	this.$('#edit_event_startdate').datepicker({
+		weekStart: moment.localeData().firstDayOfWeek(),
+		format: 'L',
+	});
 });
 
 
 Template.eventEdit.helpers({
-	isoDateFormat: function(date) {
-		return moment(date).format("YYYY-MM-DD");
+	localDate: function(date) {
+		console.log(date)
+		return moment(date).format("L");
 	},
 	
 	affectedReplicaCount: function() {
@@ -50,7 +56,7 @@ Template.eventDescritpionEdit.rendered = function() {
 
 
 var readDateTime = function(dateStr, timeStr) {
-	return moment(dateStr+' '+timeStr, 'YYYY-MM-DD LT');
+	return moment(dateStr+' '+timeStr, 'L LT');
 };
 
 
@@ -96,7 +102,6 @@ var updateTimes = function(template, updateEnd) {
 	var start = getEventStartMoment(template);
 	var end = getEventEndMoment(template);
 	var duration = getEventDuration(template);
-
 	if (!start.isValid() || !end.isValid()) {
 		// If you put into the machine wrong figures, will the right answers come out?
 		return;
@@ -113,7 +118,7 @@ var updateTimes = function(template, updateEnd) {
 	}
 
 	duration = end.diff(start, 'minutes');
-	template.$('#edit_event_startdate').val(start.format('YYYY-MM-DD'));
+	template.$('#edit_event_startdate').val(start.format('L'));
 	template.$('#edit_event_starttime').val(start.format('LT'));
 	template.$('#edit_event_endtime').val(end.format('LT'));
 	template.$('#edit_event_duration').val(duration.toString());
