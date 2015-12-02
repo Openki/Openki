@@ -1,8 +1,14 @@
 .introduction{
-	margin-top: 4px;
-	//background-color:#d4d4f0;
-	background-color: @light-blue;
-	opacity: 0.9;
+	color: @brand-primary;
+	margin-top: 10px;
+	background-color: #fafafa;
+	transition: all 1s;
+
+	&:hover{
+		background-color: #f4f4f4;
+		transition: all 1s;
+	}
+	//opacity: 0.9;
 	padding-top: 2px;
 
 	.close{
@@ -12,15 +18,20 @@
 		color: grey;
 		opacity: 0.5;
 		&:hover{
+			color: red;
 			opacity: 0.8;
 		}
 	}
 
 	h3{
-		margin-top: 10px;
+		margin-top: 5px;
+		margin-bottom: 6px;
 	}
 
-
+	hr{
+		color: grey;
+		margin-top: 0;
+	}
 
 
 	ul{
@@ -28,23 +39,32 @@
 		font-size: medium;
 
 		li{
-			.make-sm-column(1.7);
-			.make-xs-column(5.8);
+			.make-md-column(1.6);
+			.make-sm-column(1.6);
+			.make-xs-column(8);
 
 			h2{
 				margin-bottom: 8px;
 				margin-top: 0px;
 				padding-left: 35%;
+
+				span {
+					color: grey;
+					opacity: 0.5;
+					padding-top: 5px;
+					padding-left: 105%;
+				}
 			}
 
 			span{
 				position: absolute;
-				left: -15px;
-				color: grey;
+				padding-top: 5px;
+				left: -17px;
+				opacity: 0.6;
 				font-size: 23px;
 			}
-			border: red;
 			margin-left: 24px;
+			margin-bottom: 15px;
 		}
 	}
 
