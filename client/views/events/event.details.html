@@ -80,33 +80,38 @@
 			</div>
 			{{/if}}
 			{{#if mayEdit}}
-			<div class="eventEdit_buttons col-sm-12" >
-				<div class="btn-group" role="group">
-					<button type="button" class="eventEdit btn btn-success" role="button">
-						<span class="glyphicon glyphicon-edit"></span>
-						{{mf 'course.details.edit_btn' 'Edit'}}
-					</button>
-					<button type="button" class="eventDelete btn btn-danger" role="button">
-						<span class="glyphicon glyphicon-remove"></span>
-						{{mf 'course.details.del_btn' 'Delete'}}
-					</button>
-
-				{{#if replicating}}
-					<button type="button" class="-closeReplication btn btn-warning" role="button">
-						<span class="glyphicon glyphicon-minus"></span>
-						{{mf 'course.details.repl_menu_btn'}}
-					</button>
-				{{else}}
-					<button type="button" class="-openReplication btn btn-warning" role="button">
-						<span class="glyphicon glyphicon-plus"></span>
-						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
-					</button>
-				{{/if}}
+			<div class="eventEdit_buttons col-sm-12">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group" role="group">
+						<button type="button" class="eventEdit btn btn-success" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							{{mf 'course.details.edit_btn' 'Edit'}}
+						</button>
+					{{#if replicating}}
+						<button type="button" class="-closeReplication btn btn-warning" role="button">
+							<span class="glyphicon glyphicon-minus"></span>
+							{{mf 'course.details.repl_menu_btn'}}
+						</button>
+					{{else}}
+						<button type="button" class="-openReplication btn btn-warning" role="button">
+							<span class="glyphicon glyphicon-plus"></span>
+							{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+						</button>
+					{{/if}}
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="eventDelete btn btn-danger" role="button">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf 'course.details.del_btn' 'Delete'}}
+						</button>
+					</div>
 				</div>
-				{{#if replicating}}
-					{{>eventReplication}}
-				{{/if}}
 			</div>
+				{{#if replicating}}
+			<div class="eventEdit_buttons col-sm-12">
+					{{>eventReplication}}
+			</div>
+				{{/if}}
 			{{/if}}
 		</div>
 	{{> groupListing}}
