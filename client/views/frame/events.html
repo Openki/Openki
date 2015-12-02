@@ -20,11 +20,17 @@
 			<span class="glyphicon glyphicon-time"></span>
 			{{timeformat start}} - {{timeformat end}}
 			<br>
+		{{#if location.name}}
 			<span class="glyphicon glyphicon-home"></span>
-			{{this.location}} 
-			{{#if room}}
-				- {{this.room}}
-			{{/if}}
+			{{location.name}}
+			{{#if room}} - {{/if}}
+		{{/if}}
+		{{#if room}}
+			{{#unless location.name}}
+			<span class="fa fa-map-signs"></span>
+			{{/unless}}
+			{{this.room}}
+		{{/if}}
 		</div>
 		<div class="col-sm-12">
 			<div class="course_event_title">
