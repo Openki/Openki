@@ -46,35 +46,44 @@ Template.eventEdit.helpers({
 
 Template.eventDescritpionEdit.rendered = function() {
 	new MediumEditor(this.firstNode);
-}
+};
+
+
+var readDateTime = function(dateStr, timeStr) {
+	return moment(dateStr+' '+timeStr, 'YYYY-MM-DD LT');
+};
 
 
 var getEventStartMoment = function(template) {
-	var startDateStr = template.$('#edit_event_startdate').val();
-	var startMoment =  moment(startDateStr, 'YYYY-MM-DD');
-	var startTimeStr = template.$('#edit_event_starttime').val();
-	var startTime = moment(startTimeStr, 'LT');
-	startMoment.hours(startTime.hours());
-	startMoment.minutes(startTime.minutes());
+	return readDateTime(
+		template.$('#edit_event_startdate').val(),
+		template.$('#edit_event_starttime').val()
+	);
+};
 
-
-	return startMoment;
-}
 
 var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
-	var endMoment = moment(startMoment);
+	var endMoment = readDateTime(
+		startMoment.format('YYYY-MM-DD'),
+		template.$('#edit_event_endtime').val()
+	);
 
-	var endTimeStr = template.$('#edit_event_endtime').val();
-	var endTime = moment(endTimeStr, 'LT');
-	endMoment.hours(endTime.hours());
-	endMoment.minutes(endTime.minutes());
-
-	if(endMoment.diff(startMoment) < 0) {
-		endMoment.add(1,"day");
+	// If the end time is earlier than the start time, assume the event
+	// spans into the next day. This might result in some weird behavior
+	// around hour-lapses due to DST (where 1:30 may be 'later'	than 2:00).
+	// Well maybe you shouldn't schedule your events to start or end
+	// in these politically fucked hours.
+	if (endMoment.diff(startMoment) < 0) {
+		endMoment = readDateTime(
+			startMoment.add(1, 'day').format('YYYY-MM-DD'),
+			template.$('#edit_event_endtime').val()
+		);
 	}
+
 	return endMoment;
-}
+};
+
 
 var getEventDuration = function(template) {
 	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
