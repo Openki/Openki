@@ -122,10 +122,9 @@ Template.find.helpers({
 
 	'newCourse': function() {
 		var instance = Template.instance();
-		return {
-			name: instance.filter.get('search'),
-			region: Session.get('region')
-		}
+		var course = courseTemplate();
+		course.name = instance.filter.get('search');
+		return course;
 	},
 
 	'categories': function() {
@@ -232,8 +231,9 @@ Template.find.onCreated(function() {
 	});
 });
 
-Template.find.rendered = function() {
-    var currentPath = Router.current().route.path(this)
-    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-    $('a[href="/"].nav_link').addClass('active');
-}
+Template.find.onRendered(function() {
+	var currentPath = Router.current().route.path(this)
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="/"].nav_link').addClass('active');
+	this.$('#find').focus();
+});

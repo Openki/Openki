@@ -173,7 +173,8 @@ Handlebars.registerHelper('dateformat_mini_fullmonth', function(date) {
 });
 
 Handlebars.registerHelper('timeformat', function(date) {
-	if (date) return moment(date).format('HH:mm');
+	Session.get('timeLocale');
+	if (date) return moment(date).format('LT');
 });
 
 Handlebars.registerHelper('fromNow', function(date) {
@@ -212,11 +213,50 @@ Handlebars.registerHelper('plain', function(html) {
 	return div.textContent || div.innerText || '';
 });
 
+Handlebars.registerHelper ("locationName", function(loc) {
+	var location = Locations.findOne(loc);
+	if (!location) return 'LocationNotFound';
+	return location.name;
+});
+
+// http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
+/**
+ * Get the parent template instance
+ * @param {Number} [levels] How many levels to go up. Default is 1
+ * @returns {Blaze.TemplateInstance}
+ */
+
+Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
+    var view = Blaze.currentView;
+    if (typeof levels === "undefined") {
+        levels = 1;
+    }
+    while (view) {
+        if (view.name.substring(0, 9) === "Template." && !(levels--)) {
+            return view.templateInstance();
+        }
+        view = view.parentView;
+    }
+};
+
 Handlebars.registerHelper('groupShort', function(groupId) {
 	var instance = Template.instance();
 	instance.subscribe('group', groupId);
 
 	var group = Groups.findOne({ _id: groupId });
 	if (group) return group.short;
+	return "";
+});
+
+Handlebars.registerHelper('groupLogo', function(groupId) {
+	var instance = Template.instance();
+	instance.subscribe('group', groupId);
+
+	var group = Groups.findOne({ _id: groupId });
+	if (group) {
+		if (group.logo){
+			return group.logo;
+		} return "";
+	}
 	return "";
 });

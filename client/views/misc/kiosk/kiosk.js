@@ -20,7 +20,9 @@ Router.map(function () {
 				Meteor.subscribe('eventsFind', queryOngoing),
 			];
 		},
-
+		subscriptions: function() {
+			return	Meteor.subscribe('locationNames');
+		},
 		data: function() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);
@@ -96,20 +98,33 @@ Template.kioskEvents.helpers({
 	}
 });
 
-
-Template.kioskEvent.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
-	}
-});
-Template.kioskEventOngoing.helpers({
-	showLocations: function() {
-		return (!Router.current().params.query.location)
+Template.locationDisplay.helpers({
+	showLocation: function() {
+		// The location is shown when we have a location name and the location is not used as a filter
+		return this.location.name && !Router.current().params.query.location;
 	}
 });
 
-
-Template.kioskEvent.rendered = function() {
+Template.kioskEventOngoing.rendered = function() {
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 30,
+	});
+	this.$('.ellipsis').dotdotdot({
+		height: 90,
+	});
+};
+Template.kioskEventToday.rendered = function() {
+	this.$('.course_event_title').dotdotdot({
+		height: 70,
+	})
+	this.$('.course_event_desc').dotdotdot({
+		//
+	});
+	this.$('.kiosk_event_home').dotdotdot({
+		height: 60,
+	});
+};
+Template.kioskEventFuture.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,
 	})
@@ -121,11 +136,6 @@ Template.kioskEvent.rendered = function() {
 	});
 };
 
-Template.kioskEventOngoing.rendered = function() {
-	this.$('.ellipsis').dotdotdot({
-		height: 80,
-	});
-};
 
 Template.kioskLink.helpers({
 	link: function() {
@@ -141,5 +151,11 @@ Template.kioskLink.helpers({
 		}
 
 		return Router.url('kiosk', {}, options);
+	},
+});
+
+Template.kioskLink.events({
+	'click .-removeBackLink': function() {
+		return Session.set('kioskFilter', false);
 	}
 });

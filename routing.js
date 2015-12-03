@@ -26,14 +26,6 @@ Router.map(function () {
 		}
 	})
 
-	this.route('proposeCourse', {							///////// propose /////////
-		path: 'courses/propose',
-		template: 'proposecourse',
-		onAfterAction: function() {
-			document.title = webpagename + 'Propose new course'
-		}
-	})
-
 });
 
 
@@ -45,7 +37,7 @@ Router.map(function () {
 		waitOn: function () {
 			var subs = [
 				Meteor.subscribe('event', this.params._id)
-			]
+			];
 			var courseId = this.params.query.courseId;
 			if (courseId) {
 				subs.push(Meteor.subscribe('courseDetails', courseId));

@@ -40,7 +40,7 @@ var roles = [{
 ]
 
 Meteor.startup(function () {
-    //Roles.remove({});
+	//Roles.remove({});
 	if (Meteor.isServer && Roles.find().count() == 0) {
 		_.each(roles, function(role){
 			Roles.insert(role)

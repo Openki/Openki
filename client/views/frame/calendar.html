@@ -1,0 +1,43 @@
+<template name="frameCalendar">
+	{{#each this}}
+	<div class="frame_calendar_date">
+		{{#with date}}
+		<div class="date">
+			{{weekday}}
+			{{monthday}}.
+		</div>
+		{{/with}}
+		<div class="frame_calendar_events">
+			{{#each dayEvents}}
+			{{> frameCalendarEvent}}
+			{{else}}
+			<div style="text-align: center">
+				{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+	{{/each}}
+</template>
+
+<template name="frameCalendarEvent">
+	<a href="{{pathFor 'showEvent'}}">
+		<div class="frame_calendar_event_container">
+			<div class="frame_calendar_event">
+				<div class="-eventLocationTime">
+					<span class="fa fa-clock-o"></span>
+					{{timeformat start}} - {{timeformat end}}
+					<br>
+					{{#with start}}{{#if timely}}({{dateformat_fromnow this}}){{/if}}{{/with}}
+					{{this.location}}{{#if room}} - {{this.room}}{{/if}}
+				</div>
+				<div class="-eventTitle">
+					{{plain this.title}}
+				</div>
+				<div class="-eventDescription">
+					{{plain this.description}}
+				</div>
+			</div>
+		</div>
+	</a>
+</template>

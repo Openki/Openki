@@ -1,38 +1,65 @@
 <template name="course_events">
-	{{#if events_list}}
+	{{#if haveEvents}}
 	<div class="course_events_fadebox">
 		<div class="course_events">
+		{{#if havePastEvents}}
 			<div name="past_events">
 				<div class="courseEvents-titlebar">
 					<h4><span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.pastList' 'Previous events'}}</h4>				
-					{{#if events_list}}
+				{{#if haveFutureEvents}}
 					<a href="#future_events" class="link">
 						<span class="glyphicon glyphicon-arrow-down"></span> {{mf 'course.events.futureListLink' 'future events'}}
 					</a>
 				{{/if}}
 				</div>
-			{{#each events_list_past}}
+			{{#each pastEvents}}
 				<div class="course_event_past_container">
+				{{#if this}}
+					{{>course_event}}
+				{{/if}}
+				</div>
+			{{/each}}
+			</div>
+		{{/if}}
+
+			<hr class="now" id="future_events">
+
+		{{#if haveOngoingEvents}}
+			<div class="courseEvents-titlebar">
+				<h4>{{mf 'course.events.ongoinglist' 'Ongoing events'}}</h4>
+			{{#if havePastEvents}}
+				<a href="#past_events" class="link">
+					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastListLink' 'past events'}}
+				</a>
+			{{/if}}
+			</div>
+			<div>
+			{{#each ongoingEvents}}
+				<div class="course_event_container">
 					{{>course_event}}
 				</div>
 			{{/each}}
 			</div>
-			<hr class="now" name="future_events">
+		{{/if}}
+
+
+		{{#if haveFutureEvents}}
 			<div class="courseEvents-titlebar">
 				<h4> <span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}</h4>
-				{{#if events_list_past}}
+				{{#if havePastEvents}}
 				<a href="#past_events" class="link">
 					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastListLink' 'past events'}}
 				</a>
 				{{/if}}
 			</div>
 			<div>
-			{{#each events_list}}
+			{{#each futureEvents}}
 				<div class="course_event_container">
 					{{>course_event}}
 				</div>
 			{{/each}}
 			</div>
+		{{/if}}
 		</div>
 		<div class="fade_effect_top" style="display:none"></div>
 		<div class="fade_effect_bottom"></div>
@@ -54,8 +81,7 @@
 
 
 <template name="course_event">
-	<div class="{{#if isCurrent}}current_event{{/if}} course_event">
-		{{#with event}}
+	<div class="course_event">
 		<a href="{{pathFor 'showEvent'}}">
 			<div class="course_event_date">
 				<div class="container-fluid">
@@ -71,7 +97,7 @@
 					<div class="course_event_title"><h4>{{this.title}}</h4></div>
 					<div class="course_event_time">
 						<span class="glyphicon glyphicon-time"></span> {{timeformat start}}
-						{{#if location}}<br><span class="glyphicon glyphicon-home"></span> {{location}}{{/if}}
+						{{#if location.name}}<br><span class="glyphicon glyphicon-home"></span> {{location.name}}{{/if}}
 					</div>
 				</div>
 			</div>
@@ -88,6 +114,5 @@
 			<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.events.hosted_by' 'hosted by'}} {{username host}} </p>
 			{{/if}}
 		</a>
-		{{/with}}
 	</div>
 </template>

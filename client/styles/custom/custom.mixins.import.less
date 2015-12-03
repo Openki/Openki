@@ -32,6 +32,8 @@
     transform: rotate(@degrees) scale(@x-axis, @y-axis);
 }
 
+// CUSTOM BUTTON MIXINS
+
 .btn-thin {
 	.btn;
 	padding: 3px 12px;
@@ -73,4 +75,41 @@
 		border: none;
 		border-top: 3px solid @body-bg;
 	}
+}
+
+// CUSTOM GRID MIXINS
+// One-line statements using bootstrap grid mixins
+// Value 0 is used to inherit the previous value
+
+.grid(@xs) {
+	.make-xs-column(@xs);
+}
+
+.grid(@xs, @sm) {
+	.make-xs-column(@xs);
+	.make-sm-column(@sm);
+}
+
+.grid(@xs, @sm, @md) {
+	.make-xs-column(@xs);
+
+	& when not (@sm = 0) {
+		.make-sm-column(@sm);
+	}
+
+	.make-md-column(@md);
+}
+
+.grid(@xs, @sm, @md, @lg) {
+	.make-xs-column(@xs);
+
+	& when not (@sm = 0) {
+		.make-sm-column(@sm);
+	}
+
+	& when not (@md = 0) {
+		.make-md-column(@md);
+	}
+
+	.make-lg-column(@lg);
 }

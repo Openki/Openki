@@ -43,8 +43,45 @@ function ensureRegion(name) {
 	}
 }
 
+function ensureLocation(name, regionId) {
+	while (true) {
+		var location = Locations.findOne({name: name, region:regionId})
 
-createCoursesIfNone = function(scale) {
+		if (location) return location;
+
+		location = {
+			name: name,
+			region: regionId,
+		};
+
+		var region = Regions.findOne(regionId);
+		var lat = region.loc.coordinates[1] + Math.pow(Math.random(), 2) * .02 * (Math.random() > .5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(Math.random(), 2) * .02 * (Math.random() > .5 ? 1 : -1);
+		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
+
+		// TESTING: always use same id for same location to avoid broken urls while testing
+		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
+		m5.update(location.name);
+		m5.update(location.region);
+
+		location._id = m5.digest('hex').substring(0, 8);
+
+		var age = Math.floor(Math.random()*80000000000)
+		location.time_created = new Date(new Date().getTime()-age)
+		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
+
+
+
+		Locations.insert(location);
+		console.log('Added location: "'+location.name+'" in region: '+location.region);
+	}
+}
+
+function ensureRoom(location, room){
+	Locations.update(location, { $addToSet: { rooms: room } });
+}
+
+loadCoursesIfNone = function(scale) {
 	if (Courses.find().count() === 0) {
 		createCourses(scale);
 	}
@@ -104,9 +141,9 @@ function createCourses(scale) {
 
 /////////////////////////////// TESTING: Create Locations if non in db
 
-createLocationsIfNone = function(){
+loadLocationsIfNone = function(){
  	if (Locations.find().count() === 0) {
-		createLocations();
+		loadLocations();
 	}
 }
 
@@ -120,17 +157,17 @@ function ensureLocationCategory(name){
 }
 
 // TESTING:
-function createLocations(){
+function loadLocations(){
 
 	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')]
-	_.each(testlocations, function(location) {
-		if (!location.name) return; // Don't create locations that don't have a name
+	_.each(testLocations, function(locationData) {
+		if (!locationData.name) return;      // Don't create locations that don't have a name
 
-		// TESTING: always use same id for same location to avoid broken urls while testing
-		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
-		m5.update(location.name);
-//		m5.update(location.description);
-		location._id = m5.digest('hex').substring(0, 8)
+		locationData.region = Math.random() > 0.85 ? testRegions[0] : testRegions[1];
+
+		var location = ensureLocation(locationData.name, locationData.region._id);
+
+		_.extend(location, locationData);
 
 		var category_names = location.categories
 		location.categories = []
@@ -138,31 +175,17 @@ function createLocations(){
 			location.categories.push(ensureLocationCategory(category_names[i]))
 		}
 
-		if (location.roles === undefined) location.roles = {}
-		_.each(location.roles, function(role) {
-			_.each(role.subscribed, function(subscriber, i) {
-				role.subscribed[i] = ensureUser(subscriber)._id
-			})
-		})
-
-		location.createdby = ensureUser(location.createdby)._id
+		location.createdby = ensureUser(location.createdby)._id;
 //		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
-		if (!location.hosts) location.hosts = []
-		location.hosts = [ensureUser(location.hosts[0])._id]
+
+//		if (!location.hosts) location.hosts = [];
+//		location.hosts = [ensureUser(location.hosts[0])._id];
 
 //		location.maxWorkplaces = Math.random() > 0.3 ? undefined : humandistrib()
 //		location.maxPeople = Math.random() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Math.random())
 
-		var age = Math.floor(Math.random()*80000000000)
-		location.time_created = new Date(new Date().getTime()-age)
-		location.time_lastedit = new Date(new Date().getTime()-age*0.25)
-		var region = Math.random() > 0.85 ? testRegions[0] : testRegions[1];
-		location.region = region._id
-		var lat = region.loc.coordinates[1] + Math.pow(Math.random(), 2) * .1 * (Math.random() > .5 ? 1 : -1);
-		var lon = region.loc.coordinates[0] + Math.pow(Math.random(), 2) * .1 * (Math.random() > .5 ? 1 : -1);
-		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
-		Locations.insert(location)
-	})
+		Locations.update(location._id, location);
+	});
 }
 
 
@@ -182,22 +205,27 @@ createEventsIfNone = function(){
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
+				event.groups = course.groups;
 				var random = Math.random();
-				if (random < 0.4) event.location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
-				else if (random < 0.7) event.location = random < 0.5 ? 'Volkshaus' : 'SQ131';
-				else if (random < 0.8) event.location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
-				else if (random < 0.9) event.location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
-				else event.location = random < 0.95 ? 'Hub' : 'ASZ';
+
+				var location;
+				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
+				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
+				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
+				else location = random < 0.95 ? 'Hub' : 'ASZ';
+				event.location = { _id: ensureLocation(location, event.region)._id };
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
-				event.mentors = []
-				event.host = []
+				event.groups = course.groups;
+				event.mentors = [];
+				event.host = [];
 
-				var spread = 1000*60*60*24*365*1.2					// cause it's millis  1.2 Years
-				var timeToGo = Math.random()-0.7 				// put 70% in the past
-				if (timeToGo >= 0.05) {								// 75% of the remaining in future
-					timeToGo = Math.pow((timeToGo-0.05)*5, 2)		// exponential function in order to decrease occurrence in time
+				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
+				var timeToGo = Math.random()-0.7;             // put 70% in the past
+				if (timeToGo >= 0.05) {                           // 75% of the remaining in future
+					timeToGo = Math.pow((timeToGo-0.05)*5, 2)     // exponential function in order to decrease occurrence in time
 				}
 				timeToGo = Math.floor(timeToGo*spread);
 				var date = new Date(new Date().getTime() + timeToGo);
@@ -271,7 +299,8 @@ loadTestEvents = function(){
 		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
 		
-		event.createdBy = ensureUser(event.createdby)._id  // Replace user name with ID
+		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
+		event.groups = _.map(event.groups, ensureGroup);
 
 		/* Create the events around the current Day. 
 		First loaded event gets moved to current day. All events stay at original hour */
@@ -285,13 +314,15 @@ loadTestEvents = function(){
 			console.log("   which is "+dateOffset+" milliseconds, right?");
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
-
+		event.location = { _id: ensureLocation(event.location, event.region)._id };
+		delete event.location;
+		if (event.room) ensureRoom (event.location, event.room);
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
 		var id = Events.insert(event);
-		console.log("Added event:  "+event.title);
+		console.log("Loaded event:  "+event.title);
 	})
 }
 
@@ -300,7 +331,7 @@ loadTestEvents = function(){
 
 
 
-createGroupsIfNone = function(){
+loadGroupsIfNone = function(){
 	if (Groups.find().count() === 0) {
 		_.each (testgroups, function (group){
 			if (!group.name) return;
@@ -340,7 +371,7 @@ function ensureGroup(short) {
 
 /////////////////////////////// TESTING: Create Regions if non in db
 
-createTestRegionsIfNone = function(){
+loadTestRegionsIfNone = function(){
 	if (Meteor.isServer && Regions.find().count() == 0) {
 		_.each(regions, function(region){
 			if (region.loc) {

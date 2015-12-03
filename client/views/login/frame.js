@@ -5,6 +5,16 @@ Template.loginFrame.events({
 	},
 });
 
+Template.loginLogin.onRendered(function() {
+	var instance = this;
+	var dropdownElm = $(".login-dropdown").parent();
+	dropdownElm.on("shown.bs.dropdown", function() {
+		$('#login-name').focus();
+	});
+	instance.closeDropdown = function() {
+		dropdownElm.find("[data-toggle='dropdown']").dropdown('toggle');
+	}
+});
 
 Template.loginFrame.helpers({
     username: function () {
@@ -23,12 +33,12 @@ Template.loginLogin.created = function() {
 }
 
 Template.loginLogin.events({
-	'click .loginRegister': function(event, template){
+	'click .loginRegister': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
-			var name = template.find('#login-name').value;
-			var password = template.find('#login-password').value;
-			var email = template.find('#login-email').value;
+			var name = instance.find('#login-name').value;
+			var password = instance.find('#login-password').value;
+			var email = instance.find('#login-email').value;
 			Accounts.createUser({
 				username: name,
 				password: password,
@@ -48,7 +58,7 @@ Template.loginLogin.events({
 						$('#login-name').addClass('username_warning');
 					}
 				} else {
-					this.$('.login-dropdown').hide(0);
+					instance.closeDropdown();
 				}
 			});
 		}
@@ -63,7 +73,7 @@ Template.loginLogin.events({
 		}
 	},
 
-	'submit form, click .loginLogin': function(event, template){
+	'submit form, click .loginLogin': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
 			$('#show_email').hide(300);
@@ -74,8 +84,8 @@ Template.loginLogin.events({
 			Template.instance().registering.set(false);
 			return;
 		}
-		var name = template.find('#login-name').value;
-		var password = template.find('#login-password').value;
+		var name = instance.find('#login-name').value;
+		var password = instance.find('#login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
 				if (err.error == 400) {
@@ -98,11 +108,11 @@ Template.loginLogin.events({
 					$('#username_warning_not_existing').show(300);
 				}
 			} else {
-				this.$('.login-dropdown').hide(0);
+				instance.closeDropdown();
 			}
 		});
 	},
-	'click .loginWithService': function(event) {
+	'click .loginWithService': function(event, instance) {
 		event.preventDefault();
 
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
@@ -115,7 +125,7 @@ Template.loginLogin.events({
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
-				this.$('.login-dropdown').hide(0);
+				instance.closeDropdown();
 			}
 		});
 	}

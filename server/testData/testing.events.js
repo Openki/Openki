@@ -268,8 +268,8 @@ testevents = [
 {
 	"title" : "ESSEN LÄNGER HALTBAR MACHEN 2",
 	"description" : "<h4>Workshop, <b>mit Anmeldung</b></h4><p>mit BiofürJede, <b>Claudio Beretta</b> (Mitbegründer <a href=\"http://foodwaste.ch/\">foodwaste.ch</a>)</p><p>Wir werden mit BiofürJede in die Technik des Einmachens eingeführt und verarbeiten biologische und saisonale Lebensmittel so, dass wir diese auch Monate später geniessen können. In einem spannenden Workshop erfährst Du, wie du dem Ablaufen einiger Lebensmittel vorbeugen kannst. Während dem Workshop wird Claudio Beretta uns theoretische Hintergründe zum Thema Foodwaste liefern.</p><p><b>Maximale Besucherzahl erreicht</b></p>",
-	"location" : "16:00",
-	"room" : "17:30",
+	"location" : "UZH Zentrum",
+	"room" : "KOL-E-18",
 	"start" : { "$date" : 1425481200000 },
 	"end" : { "$date" : 1425486600000 },
 	"time_lastedit" : { "$date" : 1425256393196 },

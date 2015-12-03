@@ -2,7 +2,7 @@
 
 Router.map(function() {
 	this.route('locationDetails', {
-		path: 'venue/:_id/:location?',
+		path: 'venue/:_id/:name?',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('locationDetails', this.params._id),
@@ -11,7 +11,6 @@ Router.map(function() {
 		},
 		data: function () {
 			var location =  Locations.findOne({_id: this.params._id});
-//			console.log(location, this.params._id);
 			if (!location) return false;
 
 			return {
@@ -20,6 +19,7 @@ Router.map(function() {
 			};
 		},
 		onAfterAction: function() {
+			if (!this.data()) return;
 			document.title = webpagename + this.data().location.name + " - venue-details"
 		}
 	})
@@ -27,23 +27,62 @@ Router.map(function() {
 
 
 
+/////////////////////////////////////////////////// map
 
-Template.locationDetails.helpers({
-		
-	 isEditing: function () {
-
-		return Session.get("isEditing");
-	},
-
-	canEditLocation: function () {
-		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
+Template.locationDetails.onCreated(function() {
+	var markers = new Meteor.Collection(null);
+	this.markers = markers;
+	
+	this.setLocation = function(location) {
+		markers.remove({ main: true });
+		if (location && location.loc) {
+			markers.insert({
+				loc: location.loc,
+				main: true
+			});
+		}
 	}
+
+	this.setRegion = function(region) {
+		markers.remove({ center: true });
+		if (region && region.loc) {
+			markers.insert({
+				loc: region.loc,
+				center: true
+			});
+		}
+	}
+});
+
+Template.locationDetails.onRendered(function() {
+	var instance = this;
+
+	this.setLocation(this.data.location);
+
+	var region = Regions.findOne(instance.data.location.region);
+	instance.setRegion(region);	
 });
 
 
 
 
 
+
+
+Template.locationDetails.helpers({
+
+	 isEditing: function () {
+		return Session.get("isEditing");
+	},
+
+	canEditLocation: function () {
+		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
+	},
+
+	markers: function() {
+		return Template.instance().markers;
+	}
+});
 
 
 
@@ -82,4 +121,3 @@ Template.locationDetails.events({
 	}
 
 });
-
