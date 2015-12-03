@@ -53,13 +53,13 @@ var updateReplicas = function(template) {
 
 
 var getEventFrequency = function(template) {
-	var startDate = moment(template.$('.replicate_start').val(), 'L');
+	var startDate = moment(template.$('.-replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
-	var endDate   = moment(template.$('.replicate_end').val(), 'L');
+	var endDate   = moment(template.$('.-replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
-	var frequency = template.$('.replicate_frequency').val();
+	var frequency = template.$('.-replicateFrequency:checked').val();
 	var diffDays = endDate.diff(startDate, "days");
-	
+
 	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
 	if (unit === undefined) return [];
 	
@@ -91,7 +91,7 @@ var getEventFrequency = function(template) {
 
 
 Template.eventReplication.events({
-	'click button.eventReplicate': function (event, template) {
+	'click .-eventReplicate': function (event, template) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
 		
@@ -136,7 +136,7 @@ Template.eventReplication.events({
 		template.parentInstance().replicating.set(false);
 	},
 
-	'change .updateReplicas, keyup .updateReplicas': function(event, template) {
+	'change .-updateReplicas, keyup .-updateReplicas': function(event, template) {
 		updateReplicas(template);
 	}
 });
