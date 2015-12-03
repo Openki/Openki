@@ -5,14 +5,17 @@
 
 footer.footer {
 	background: @brand-primary;
-	text-align: center;
-	font-size: large;
+	box-shadow: 0 -2px 2px -2px darken(@brand-primary, 3.5%);
 	color: @body-bg;
+	font-size: large;
+	text-align: center;
+
 	div {
 		& > a {
 			color: @body-bg;
 		}
 	}
+
 	.links {
 		word-spacing: 10px;
 		padding-top: 12px;
