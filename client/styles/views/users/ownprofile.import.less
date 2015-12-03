@@ -1,23 +1,82 @@
 .profile {
+	//.make-xs-column(12);
+	//.no-padding;
 	.container;
 
 	h1 {
 		margin-top: 0;
 	}
 
-	p {
-		margin-bottom: 5px;
-	}
+	.infos{
+		.make-sm-column(6);
+		.make-xs-column(12);
+		.no-padding;
+		margin-bottom: 20px;
 
-	form.edit {
-		input {
-			margin-left: 5px;
+		.description{
+			font-size: 110%;
+			padding-right: 30px;
+			padding-left: 5px;
+			.background{
+				background-color: #f8f8f8;
+			}
+			tr.email button {
+				.btn-thin;
+				.btn-default;
+			}
+		}
+
+		.password{
+			margin: 1em 0;
+		}
+
+		p {
+			margin-bottom: 5px;
+		}
+
+		form.edit {
+			input {
+				margin-left: 5px;
+			}
 		}
 	}
 
-	button {
+	button{
 		.btn-thin;
 		.btn-primary;
+	}
+	.edit button{
+		float: left;
+		margin-right: 7px;
+	}
+	.delete {
+		button{
+			.btn-danger;
+			float: left;
+			margin-right: 7px;
+		}
+
+		button.cancelDeletion{
+			.btn-primary;
+		}
+		.pleaseConfirm{
+			float: none;
+		}
+	}
+	.password{
+		.passChange {
+			background: grey;
+		}
+		button{
+			float: left;
+			margin-right: 7px;
+		}
+	}
+
+	.grouplist{
+		.make-sm-column(6);
+		.make-xs-column(12);
+		.no-padding;
 	}
 
 	ul.groups {
@@ -35,6 +94,14 @@
 	}
 
 	.translate {
+		.make-xs-column(12);
+		.no-padding;
 		padding-top: 10px;
+	}
+
+	.courses{
+		.make-xs-column(12);
+		.no-padding;
+		margin-top: 25px;
 	}
 }
