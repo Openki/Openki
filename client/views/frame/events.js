@@ -31,3 +31,16 @@ Router.map(function () {
 		}
 	});
 });
+
+Template.frameEvent.rendered (function() {
+	this.$('.-eventLocationTime').dotdotdot({
+		height: 50,
+		watch : "window",
+	});
+	this.$('.-eventTitle').dotdotdot({
+		watch: "window",
+	});
+	this.$('.-eventDescription').dotdotdot({
+		watch: "window",
+	});
+});
