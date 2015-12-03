@@ -293,25 +293,30 @@ Template.map.onRendered(function() {
 });
 
 Template.map.helpers({
+	mapContainerClass: function() {
+		if (Template.instance().fullscreen.get()) {
+			return "mapContainer fullscreen";
+		} else {
+			return "mapContainer";
+		}
+	},
 	mapStyle: function() {
 		// The font-size is specified for the icon height
-		if (Template.instance().fullscreen.get()) {
-			return [
-				"z-index: 9999",
-				"position: fixed",
-				"top: 0",
-				"left: 0",
-				"bottom: 0",
-				"right: 0",
-				"font-size: 10vh"
-			].join('; ');
-		} else {
+		if (!Template.instance().fullscreen.get()) {
 			return [
 				"width: "+(this.width ? ""+this.width+"px" : "100%"),
 				"height: "+this.height+"px",
 				"font-size: "+this.height/10+"px"
 			].join(';');
 		}
+	},
+
+	mapStyleInner: function() {
+		var style = [];
+		if (Template.instance().fullscreen.get()) {
+			style.push("z-index: 9999");
+		}
+		return style.join(';');
 	},
 
 	fullscreen: function () {
