@@ -25,9 +25,6 @@ Router.map(function () {
 
 		onAfterAction: function() {
 			document.title = webpagename + ' Events';
-			if (this.params.query.lg) {
-				Session.set('locale', this.params.query.lg);
-			}
 		}
 	});
 });

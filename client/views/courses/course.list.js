@@ -4,7 +4,7 @@ Router.map(function () {
 	this.route('courses', {
 		path: 'courses',
 		template: 'coursepage',
-		waitOn: function () {
+		waitOn: function() {
 			var region = Session.get('region')
 			return [
 				Meteor.subscribe('coursesFind', { region: region }, 40),

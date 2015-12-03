@@ -5,7 +5,11 @@
 // "categories"    -> String
 // "maxPeople"     -> Int
 // "maxWorkplaces" -> Int
-// "adress"        -> String
+//
+// loc:         GeoJSON coordinates of the location
+//
+// address:     Address string of the location
+//
 // "route"         -> String
 // "description"   -> String
 // "contact"       -> {"meetings","email","web","fon"... -> strings}
@@ -19,7 +23,6 @@
 // "time_lastedit" -> Date
 // "loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // ===========================
-
 
 
 Locations = new Meteor.Collection("Locations");
@@ -39,7 +42,41 @@ Locations.allow({
 	},
 });
 
+/* Find locations for given filters
+ *
+ * filter: dictionary with filter options
+ *   search: string of words to search for
+ *   region: restrict to locations in that region
+ * limit: how many to find
+ *
+ */
+locationsFind = function(filter, limit) {
+	var find = {};
+	var options = {};
 
+	if (limit > 0) {
+		options.limit = limit;
+	}
+
+	if (filter.region) {
+		find.region = filter.region;
+	}
+
+	if (filter.search) {
+		var searchTerms = filter.search.split(/\s+/);
+		find.$and = _.map(searchTerms, function(searchTerm) {
+			return { name: { $regex: escapeRegex(searchTerm), $options: 'i' } };
+		});
+	}
+
+	if (filter.recent) {
+		var recentEvents = Events.find({ 'location._id': { $exists: true }}, { sort: { time_lastedit: -1 }, limit: 5 }).fetch();
+		var recentLocations = _.uniq(recentEvents, false, function(event) { return event.location._id; });
+		find._id = { $in: recentLocations };
+	}
+
+	return Locations.find(find, options);
+}
 
 Meteor.methods({
 
