@@ -1,6 +1,11 @@
 p.course_description {
 	padding: 10px 0;
-	font-size: medium; //FIXME: where do you define this?
+	font-size: medium;
+
+	.editable {
+		max-height: 300px;
+		overflow: auto;
+	}
 }
 
 .course_event_edit {
@@ -75,13 +80,10 @@ p.course_description {
 		}
 
 		.courseStatus {
-		//	background-color: white;
 			position: relative;
 			top: -7px;
 			right: -22px;
 			padding: 0 0 0.8em 1.4em;
-		//	border-left: 7px dashed @light-blue;
-		//	border-bottom: 7px dashed @light-blue;
 			float: right;
 		}
 
@@ -153,7 +155,7 @@ p.course_description {
 			.no-padding;
 			padding: 10px 0;
 			text-align: center;
-			width: calc(~"100% + 44px") !important; //different solution? -> compability
+			width: calc(~"100% + 44px") !important;
 			margin: 0 0 -7px -22px;
 			background: @brand-primary;
 			border-top: 3px solid @body-bg;
