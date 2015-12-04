@@ -26,18 +26,21 @@
         .make-xs-column(12);
         .no-padding;
 
-        input#editform_name,
-        #editform_description {
-            .form-control-humble;
-        }
-
         input#editform_name {
-            font-size: large;
+          .form-control-humble;
+          font-size: large;
         	height: 40px;
         }
 
         #editform_description {
-            min-height: 100px;
+          .form-control-humble;
+          height: auto; // Reset fixed height from .form-control()
+          max-height: 150px;
+          overflow: auto;
+
+          p {
+            margin: 0;
+          }
         }
     }
 
