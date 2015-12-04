@@ -24,6 +24,8 @@
 
             input.searchInput {
                 .form-control-humble;
+                font-size: large;
+                height: 38px;
             }
 
             button.find-btn {
@@ -38,6 +40,11 @@
                 &.remove-filter {
                     .btn-primary;
                 }
+            }
+
+            button.find-btn,
+            button.filter-toggle-btn {
+              padding: 8px 12px !important;
             }
         }
 
@@ -267,10 +274,5 @@
                 }
             }
         }
-    }
-
-    input#find {
-        font-size: 20px;
-        height: 38px;
     }
 }
