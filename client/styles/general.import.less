@@ -5,14 +5,6 @@
 	outline: none !important;
 }
 
-html,body {
-	height: 100%;
-}
-
-body {
-	padding-top: 50px;
-}
-
 h1 {
 	color: @brand-primary;
 }
@@ -25,28 +17,8 @@ p {
 	hyphens: auto;
 }
 
-#maincontent {
-	padding: 25px 0 50px 0;
-
-	&> *:first-child {
-		padding-top: 0;
-		margin-top: 0;
-	}
-
-	@media @mobile {
-		.find {
-			margin-top: -20px;
-		}
-	}
-}
-
-.dropdown-menu {
-	width: auto;
-	min-width: 0;
-
-	li {
+.dropdown-menu li {
 		cursor: pointer;
-	}
 }
 
 a,
@@ -56,9 +28,6 @@ button {
 
 .tooltip {
 	font-size: @font-size-base;
-	&-inner {
-		max-width: none;
-	}
 }
 
 ul.nav-tabs {
@@ -71,10 +40,6 @@ ul.nav-tabs {
 			}
 		}
 	}
-}
-
-label {
-	display: block;
 }
 
 span.glyphicon-ok {
@@ -90,71 +55,8 @@ select {
 	}
 
 	&:-moz-focusring {
-		// Hack to make ugly outline in Firefox disappear
+		// Hack to make outline in Firefox disappear
 		color: rgba(0,0,0,0);
 		text-shadow: 0 0 0 #333;
-	}
-}
-
-.editable:focus, .editable.changed {
-	border: 1px solid @brand-primary;
-	padding: 10px !important;
-	background: @body-bg;
-}
-
-button.report {
-	.btn;
-	.btn-default;
-	margin-top: 15px;
-
-	@media @mobile {
-		.make-xs-column(12);
-		margin-bottom: 15px;
-	}
-}
-
-.noscript {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background: @light-blue;
-
-	.noscript_message_box {
-		margin: auto;
-		width: 300px;
-		height: 100px;
-		position: relative;
-		top: calc(~"50% - 100px");
-		border: 3px solid #fff;
-		background: @brand-primary;
-
-		img {
-			.grid(4);
-			.no-padding;
-			height: 95px;
-		}
-
-		.noscript_message {
-			.grid (8);
-			padding: 15px 15px;
-			color: #fff;
-			height: 100%;
-		}
-	}
-}
-
-
-.leaflet-marker-icon{
-	background: none;
-	border: none;
-
-	.fa-map-marker {
-		color: black;
-		font-size: 40px;
-		&:hover{
-			cursor: grabbing;
-		}
 	}
 }
