@@ -1,0 +1,93 @@
+.courselist_results {
+  .grid(12);
+  margin-left: -5px;
+	padding: 0 0 20px;
+	width: calc(~"100% + 10px") !important;
+
+	.event_results {
+    .grid(12, 4, inherit, 3);
+		padding: 0;
+
+		.course_event {
+			margin: 8px;
+			height: 200px;
+		}
+	}
+}
+
+.courselist_course_container{
+  .grid(12, 4, 3);
+	padding: 0;
+
+	.courselist_course {
+    .grid(12);
+		height: 150px;
+    padding: 0;
+
+		.course-name {
+			margin: 8px 0 5px;
+		}
+
+		.yesyou {
+      background-color: @ownrole;
+			color: @ownrole-color;
+		}
+
+		.course_content {
+      .grid(9);
+			padding: 0 0 0 15px;
+		}
+	}
+}
+
+.courselist_course_info {
+  .grid(3);
+	padding: 0;
+	position: relative;
+	right: -7px;
+  top: -7px;
+}
+
+.course_eventlist {
+  .grid(12);
+	max-height: 150px;
+	padding: 3px;
+
+	.course_eventlist_time,
+	.course_eventlist_date {
+    .grid(12);
+		padding: 0;
+	}
+
+	.course_eventlist_location {
+		padding: 0 4px;
+	}
+}
+
+.courselist_course_container {
+	ul.categories_list {
+    bottom: 0;
+    margin: 0px;
+		position: absolute;
+		right: 0;
+
+		li {
+			float: right;
+		}
+	}
+}
+
+.course_groups ul.groups-list li {
+	margin-bottom: 5px;
+  position: relative;
+}
+
+.courselist_course_overlay {
+  .grid(12);
+	padding: 0;
+  height: calc(~"100% + 14px");
+  left: -7px;
+	position: absolute;
+	top: -7px;
+	width: calc(~"100% + 14px") !important;
+}

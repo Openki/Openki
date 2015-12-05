@@ -1,19 +1,14 @@
 p.course_description {
-	padding: 10px 0;
 	font-size: medium;
 
 	.editable {
-		max-height: 300px;
 		overflow: auto;
 	}
 }
 
 .course_event_edit {
 	border: 7px dashed @light-blue;
-	padding-bottom: 25px;
-	.event_edit_buttons {
-		padding-top: 15px;
-	}
+
 	.toggle_duration {
 		cursor: pointer;
 	}
@@ -26,40 +21,7 @@ p.course_description {
 }
 
 .coursedetails {
-	.container;
-	padding-top: 20px;
-
-	.coursedetails_column_left,
-	.coursedetails_column_right {
-		.make-sm-column(6);
-		.make-xs-column(12);
-		.no-padding;
-
-
-		&> div:first-child {
-			padding-top: 0;
-		}
-	}
-
-	.coursedetails_column_left {
-		padding-right: 7.5px;
-
-		@media @mobile {
-			.no-padding;
-		}
-	}
-
-	.coursedetails_column_right {
-		padding-left: 7.5px;
-
-		@media @mobile {
-			.no-padding;
-		}
-	}
-
 	.course_main {
-		.make-sm-column(12);
-		.make-xs-column(12);
 		border: 7px dashed @light-blue;
 
 		&.hasupcomingevents {
@@ -76,47 +38,22 @@ p.course_description {
 			border-style: solid;
 		}
 
-		&.proposal {
-		}
-
-		.courseStatus {
-			position: relative;
-			top: -7px;
-			right: -22px;
-			padding: 0 0 0.8em 1.4em;
-			float: right;
-		}
-
 		.courseStatus div {
 			background-color: #555;
-			opacity: 0.6;
-			padding: 0.3em 0.7em;
-			font-weight: bold;
 			color: white;
+			font-weight: bold;
+			opacity: 0.6;
 		}
 
 		.name {
-			min-height: 3ex;
-			padding: 0 !important;
 			font-size: 30px;
-			margin-top: 20px;
-			margin-bottom: 10px;
 
 			&> .editable {
-				padding: 0;
 				font-size: 30px;
 			}
 
 			&> .editable-controls {
 				font-size: medium;
-			}
-		}
-
-		.course_categories ul {
-			margin-bottom: 0;
-
-			li {
-				margin-bottom: 10px;
 			}
 		}
 
@@ -133,8 +70,8 @@ p.course_description {
 				color: #555;
 
 				&:hover {
-					color: @body-bg;
 					.transition(0.5s);
+					color: @body-bg;
 				}
 			}
 
@@ -150,15 +87,9 @@ p.course_description {
 		}
 
 		.edit_buttons {
-			.make-sm-column(12);
-			.make-xs-column(12);
-			.no-padding;
-			padding: 10px 0;
-			text-align: center;
-			width: calc(~"100% + 44px") !important;
-			margin: 0 0 -7px -22px;
 			background: @brand-primary;
 			border-top: 3px solid @body-bg;
+			text-align: center;
 
 			button.edit {
 				.btn;
@@ -172,18 +103,10 @@ p.course_description {
 		}
 	}
 
-	button.open {
-		margin-top: 15px;
-	}
-
 	button.eventEdit,
 	button.calendar_download {
 		.btn;
 		.btn-default;
-		margin-right: 5px;
-		margin-top: 10px;
-		margin-bottom: 15px;
-		float: right;
 	}
 
 	button.eventEdit {
@@ -191,13 +114,7 @@ p.course_description {
 	}
 
 	.courseDetails_roles_container {
-		.make-sm-column(12);
-		.make-xs-column(12);
-		padding: 15px 0 0;
-
 		.courseDetails_participants_count {
-			.make-sm-column(12);
-			.make-xs-column(12);
 			background: @brand-primary;
 			color: @body-bg;
 			border: 5px solid @brand-primary;
@@ -208,9 +125,6 @@ p.course_description {
 		}
 
 		.courseDetails_mentor.mentor_status {
-			.make-sm-column(3);
-			.make-xs-column(12);
-			height: 60px;
 			background: @light-blue;
 
 			.yes {
