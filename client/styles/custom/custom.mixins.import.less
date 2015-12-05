@@ -113,3 +113,38 @@
 
 	.make-lg-column(@lg);
 }
+
+// Create the same for offset statements
+
+.grid-offset(@xs) {
+	.make-xs-column-offset(@xs);
+}
+
+.grid-offset(@xs, @sm) {
+	.make-xs-column-offset(@xs);
+	.make-sm-column-offset(@sm);
+}
+
+.grid-offset(@xs, @sm, @md) {
+	.make-xs-column-offset(@xs);
+
+	& when not (@sm = 0) {
+		.make-sm-column-offset(@sm);
+	}
+
+	.make-md-column-offset(@md);
+}
+
+.grid-offset(@xs, @sm, @md, @lg) {
+	.make-xs-column-offset(@xs);
+
+	& when not (@sm = 0) {
+		.make-sm-column-offset(@sm);
+	}
+
+	& when not (@md = 0) {
+		.make-md-column-offset(@md);
+	}
+
+	.make-lg-column-offset(@lg);
+}
