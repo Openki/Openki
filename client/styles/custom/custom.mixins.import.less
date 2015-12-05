@@ -93,7 +93,7 @@
 .grid(@xs, @sm, @md) {
 	.make-xs-column(@xs);
 
-	& when not (@sm = 0) {
+	& when not (@sm = inherit) {
 		.make-sm-column(@sm);
 	}
 
@@ -103,11 +103,11 @@
 .grid(@xs, @sm, @md, @lg) {
 	.make-xs-column(@xs);
 
-	& when not (@sm = 0) {
+	& when not (@sm = inherit) {
 		.make-sm-column(@sm);
 	}
 
-	& when not (@md = 0) {
+	& when not (@md = inherit) {
 		.make-md-column(@md);
 	}
 
@@ -128,7 +128,7 @@
 .grid-offset(@xs, @sm, @md) {
 	.make-xs-column-offset(@xs);
 
-	& when not (@sm = 0) {
+	& when not (@sm = inherit) {
 		.make-sm-column-offset(@sm);
 	}
 
@@ -138,11 +138,11 @@
 .grid-offset(@xs, @sm, @md, @lg) {
 	.make-xs-column-offset(@xs);
 
-	& when not (@sm = 0) {
+	& when not (@sm = inherit) {
 		.make-sm-column-offset(@sm);
 	}
 
-	& when not (@md = 0) {
+	& when not (@md = inherit) {
 		.make-md-column-offset(@md);
 	}
 
