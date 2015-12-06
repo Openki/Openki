@@ -5,17 +5,17 @@
 			<p>{{mf 'profile.not_logged_in' "You're not logged in..."}}</p>
 		{{else}}
 			<div class="infos">
-				{{#if editing}}
-					<form class="edit">
-						<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
-						<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
-						<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
-						<button type="submit" class="save">{{mf 'profile.input.save' "Save"}}</button>
-						<button class="editCancel">{{mf 'profile.input.cancel' 'Cancel'}}</button>
-					</form>
-					{{else}}
-					<div class="description">
-						<div class="background">
+				<div class="description">
+					<div class="background">
+						{{#if editing}}
+							<form class="edit">
+								<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
+								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
+								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
+								<button type="submit" class="save">{{mf 'profile.input.save' "Save"}}</button>
+								<button class="editCancel">{{mf 'profile.input.cancel' 'Cancel'}}</button>
+							</form>
+						{{else}}
 							<table class="table table-hover">
 								<tr class="name">
 									<td>{{mf 'profile.username' 'Username:'}}</td> <td>{{user.name}}</td>
@@ -56,41 +56,29 @@
 								</tr>
 							</table>
 							<button class="edit">{{mf 'profile.edit' 'Edit'}}</button>
-						</div>
+						{{/if}}
 					</div>
-				{{/if}}
+				</div>
 				<div class="password">
 					{{#if changingPass}}
 						<form class="passChange">
-							<p>
-								<label style="width: 12em">
-									{{mf 'profile.input.oldPassword' 'Your current password'}}
-									<input type="password" id="oldpassword" value=""/>
-								</label>
-								<label style="width: 12em">
-									{{mf 'profile.input.newPassword' 'New password'}}
-									<input type="password" id="newpassword" value=""/>
-								</label>
-								<label style="width: 12em">
-									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-									<input type="password" id="newpassword_confirm" value=""/>
-								</label>
-							</p>
-							<button type="submit" class="save">{{mf 'profile.changePass' 'Change my password'}}</button>
+							<label>
+								{{mf 'profile.input.oldPassword' 'Your current password'}}
+								<input type="password" id="oldpassword" value=""/>
+							</label>
+							<label>
+								{{mf 'profile.input.newPassword' 'New password'}}
+								<input type="password" id="newpassword" value=""/>
+							</label>
+							<label>
+								{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+								<input type="password" id="newpassword_confirm" value=""/>
+							</label>
+							<button type="submit" class="save changePassConfirm">{{mf 'profile.changePass' 'Change my password'}}</button>
 							<button class="changePassCancel">{{mf 'profile.changePassCancel' 'Cancel'}}</button>
 						</form>
 					{{else}}
 						<button class="changePass">{{mf 'profile.changePass' 'Change my password'}}</button>
-				{{/if}}
-				</div>
-				<div class="delete">
-				{{#if verifyDelete}}
-					<div class="pleaseConfirm">{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
-					<button class="confirmdelete">{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}</button>
-					<button class="verifycancel cancelDeletion">{{mf 'profile.deletecancel' 'Cancel'}}</button>
-					</div>
-				{{else}}
-					<button class="delete">{{mf 'profile.delete' 'Delete my account'}}</button>
 				{{/if}}
 				</div>
 			</div>
@@ -110,14 +98,25 @@
 				{{/each}}
 				</ul>
 			</div>
+			<div class="deleteFrame">
+				{{#if verifyDelete}}
+					<div class="pleaseConfirm">
+						{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
+						<button class="verifycancel cancelDeletion">{{mf 'profile.deletecancel' 'Cancel'}}</button>
+						<button class="confirmdelete">{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}</button>
+					</div>
+				{{else}}
+					<button class="delete">{{mf 'profile.delete' 'Delete my account'}}</button>
+				{{/if}}
+			</div>
 			<div class="translate">
 				<a href="/translate">
 					<i class="fa fa-language"></i>
-					{{mf 'Profile.translate_this_page' 'Help us to translate this Page here'}}
+					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 				</a>
 			</div>
-			<hr>
 			<div class="list_small courses">
+				<hr>
 				<h3>{{mf 'profile.my_courses' 'My Courses:'}}</h3>
 				{{> courselist courses}}
 			</div>
