@@ -20,14 +20,13 @@
     padding: 0;
 
     input#editform_name {
-      // Mixin in course.edit.import.less!
     	height: 40px;
     }
 
     #editform_description {
-      .form-control-humble;
       height: auto; // Reset fixed height from .form-control-humble()
       max-height: 150px;
+      min-height: 100px;
 
       p {
         margin: 0;
