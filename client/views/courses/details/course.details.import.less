@@ -1,0 +1,135 @@
+p.course_description {
+	font-size: medium;
+
+	.editable {
+		overflow: auto;
+	}
+}
+
+.course_event_edit {
+	border: 7px dashed @light-blue;
+
+	.toggle_duration {
+		cursor: pointer;
+	}
+}
+
+.beta_inform {
+	h1 {
+		color: #BBB;
+	}
+}
+
+.coursedetails {
+	.course_main {
+		border: 7px dashed @light-blue;
+
+		&.hasupcomingevents {
+			ul.nav-tabs {
+				li.active {
+					a {
+						background: @light-blue;
+					}
+				}
+			}
+		}
+
+		&.haspastevents {
+			border-style: solid;
+		}
+
+		.courseStatus div {
+			background-color: #555;
+			color: white;
+			font-weight: bold;
+			opacity: 0.6;
+		}
+
+		.name {
+			font-size: 30px;
+
+			&> .editable {
+				font-size: 30px;
+			}
+
+			&> .editable-controls {
+				font-size: medium;
+			}
+		}
+
+		ul.groups-list,
+		ul.groups-list li,
+		ul.groups-list li a {
+			display: inline-block;
+		}
+
+		ul.nav-tabs {
+			border-bottom: none;
+
+			a {
+				color: #555;
+
+				&:hover {
+					.transition(0.5s);
+					color: @body-bg;
+				}
+			}
+
+			li.active {
+				a:hover {
+					color: #555;
+				}
+			}
+		}
+
+		.tab-content {
+			border-top: 1px solid @brand-primary;
+		}
+
+		.edit_buttons {
+			background: @brand-primary;
+			border-top: 3px solid @body-bg;
+			text-align: center;
+
+			button.edit {
+				.btn;
+				.btn-success;
+			}
+
+			button.del {
+				.btn;
+				.btn-danger;
+			}
+		}
+	}
+
+	button.eventEdit,
+	button.calendar_download {
+		.btn;
+		.btn-default;
+	}
+
+	button.eventEdit {
+		.btn-success;
+	}
+
+	.courseDetails_roles_container {
+		.courseDetails_participants_count {
+			background: @brand-primary;
+			color: @body-bg;
+			border: 5px solid @brand-primary;
+
+			h4 {
+				font-weight: bold;
+			}
+		}
+
+		.courseDetails_mentor.mentor_status {
+			background: @light-blue;
+
+			.yes {
+				background: @brand-success;
+			}
+		}
+	}
+}

@@ -1,0 +1,32 @@
+#wrap {
+	min-height: 100%;
+	margin: 0 auto -50px;
+}
+
+footer.footer {
+	background: @brand-primary;
+	box-shadow: 0 -2px 2px -2px darken(@brand-primary, 3.5%);
+	color: @body-bg;
+	font-size: large;
+	text-align: center;
+
+	div {
+		& > a {
+			color: @body-bg;
+		}
+	}
+
+	.links {
+		word-spacing: 10px;
+		padding-top: 12px;
+		div.long_link {
+			word-spacing: normal;
+			display: inline-block;
+		}
+	}
+}
+
+.footer,
+.push {
+	height: 50px;
+}
