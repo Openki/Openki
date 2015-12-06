@@ -22,14 +22,21 @@
 
 <template name="frameCalendarEvent">
 	<a href="{{pathFor 'showEvent'}}">
-		<div class="frame_calendar_event_container">
-			<div class="frame_calendar_event">
+		<div class="event_small_container">
+			<div class="event_small">
 				<div class="-eventLocationTime">
 					<span class="fa fa-clock-o"></span>
 					{{timeformat start}} - {{timeformat end}}
 					<br>
-					{{#with start}}{{#if timely}}({{dateformat_fromnow this}}){{/if}}{{/with}}
-					{{this.location}}{{#if room}} - {{this.room}}{{/if}}
+					{{#if location.name}}
+						<span class="glyphicon glyphicon-home"></span>
+						{{location.name}}
+						{{#if room}}&nbsp;{{/if}}
+					{{/if}}
+					{{#if room}}
+						<span class="fa fa-map-signs"></span>
+						{{this.room}}
+					{{/if}}
 				</div>
 				<div class="-eventTitle">
 					{{plain this.title}}

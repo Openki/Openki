@@ -9,9 +9,11 @@ Template.navbar.rendered = function() {
 
 	$(window).scroll(function (event) {
 		if($(window).scrollTop() > 5){
+			this.$('.navbar-container').addClass('over_content');
 			this.$('a.nav_link.active').addClass('over_content');
 		}
 		else if($(window).scrollTop() < 5){
+			this.$('.navbar-container').removeClass('over_content');
 			this.$('a.nav_link.active').removeClass('over_content');
 		}
 	});

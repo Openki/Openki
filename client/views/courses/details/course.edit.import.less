@@ -1,0 +1,79 @@
+.course_edit {
+  background: @light-blue;
+  border: 7px solid @light-blue;
+
+  .course_edit_header {
+    input#editform_name {
+      .form-control-humble;
+      font-size: large;
+    }
+
+    #editform_description {
+      //! .form-control-humble
+      overflow: auto;
+    }
+  }
+
+  ul.categories,
+  ul.subcategories,
+  ul.roles_list {
+    .list-unstyled;
+  }
+
+  ul.categories,
+  ul.roles_list {
+    * {
+      .transition(0.5s);
+    }
+
+    span.caret {
+      color: #ccc;
+
+      &.active {
+        color: #333;
+      }
+    }
+
+    label {
+      font-weight: normal;
+
+      &:hover {
+        color: @brand-primary;
+        cursor: pointer;
+
+        span.caret {
+          color: #333;
+        }
+      }
+
+      &.active {
+        color: @brand-primary;
+      }
+    }
+  }
+
+  button.editCategories {
+    .btn-thin;
+    .btn-primary;
+  }
+
+  .course_edit_finishbtns {
+    button {
+      .btn;
+
+      &.save {
+        .btn-success;
+      }
+
+      &.cancel {
+        .btn-danger;
+      }
+
+      @media @mobile {
+        .form-control;
+        .btn;
+        .btn-primary;
+      }
+    }
+  }
+}

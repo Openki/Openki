@@ -1,0 +1,86 @@
+.course_main .course_groups {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	padding: 0 0 10px;
+}
+
+.course-groups-list-container {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	padding: 0;
+}
+
+ul.groups-list {
+	.list-unstyled;
+	margin-bottom: 0;
+
+	li {
+		display: inline-block;
+		margin-bottom: 10px;
+
+		a {
+			color: @brand-primary;
+			background: rgba(130, 216, 130, 0.5);
+			padding: 0 4px 1px;
+			&:hover {
+				text-decoration: none;
+				background: rgba(129, 215, 129, 1);
+				.box-shadow-s(rgba(129, 215, 129, 1));
+			}
+		}
+	}
+}
+
+.course-groups-manage {
+	.make-sm-column(12);
+	.make-xs-column(12);
+	padding: 0 0 10px;
+
+	a.dropdown-toggle {
+		.btn-thin;
+		.btn-primary;
+	}
+
+	ul.groups-options {
+		top: 80%;
+
+		li {
+			padding: 3px;
+
+			button {
+				background: none;
+				border: none;
+
+				&.admitToGroup {
+					width: 100%;
+					text-align: left;
+				}
+
+				span.glyphicon-remove {
+					color: lighten(@brand-danger, 20%);
+					.transition(0.5s);
+					position: relative;
+					top: 2px;
+				}
+
+				&:hover span.glyphicon-remove {
+					color: @brand-danger;
+				}
+			}
+
+			&:hover {
+				background: @brand-primary;
+				color: @body-bg;
+			}
+
+			&.part-of-group {
+				padding: 3px 10px;
+
+				&:hover {
+					background: @light-blue;
+					color: #333;
+				}
+			}
+		}
+	}
+}
