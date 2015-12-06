@@ -1,0 +1,62 @@
+//This sheet contains site-wide used resets & styles
+
+* {
+	border-radius: 0 !important;
+	outline: none !important;
+}
+
+h1 {
+	color: @brand-primary;
+}
+
+p {
+	-moz-hyphens: auto;
+	-o-hyphens: auto;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
+.dropdown-menu li {
+		cursor: pointer;
+}
+
+a,
+button {
+	.transition(0.5s) !important;
+}
+
+.tooltip {
+	font-size: @font-size-base;
+}
+
+ul.nav-tabs {
+	li {
+		a {
+			color: #555;
+			&:hover {
+				color: @body-bg;
+				.transition(0.5s);
+			}
+		}
+	}
+}
+
+span.glyphicon-ok {
+	color: #5CB85C;
+}
+
+select {
+	.form-control-humble;
+	color: #333;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:-moz-focusring {
+		// Hack to make outline in Firefox disappear
+		color: rgba(0,0,0,0);
+		text-shadow: 0 0 0 #333;
+	}
+}
