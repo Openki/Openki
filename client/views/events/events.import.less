@@ -1,78 +1,40 @@
-
-.locationFrame{
-	.make-xs-column(12);
-
-	.location{
+.locationFrame {
+	.location {
 		background-color: rgba(200, 200, 255, 0.35);
 	}
 
-	.locationEdit{
+	.locationEdit {
+		background-color: rgba(200, 200, 255, 0.15);
 		border: 1px solid #CCC;
 		overflow: auto;
-		background-color: rgba(200, 200, 255, 0.15);
 
-
-		.input-group{
-			margin-top: 10px;
-			margin-bottom: 10px;
-
-			.button {
-				.btn;
-				.btn-primary;
-				position: absolute;
-			}
+		.input-group .button {
+			.btn;
+			.btn-primary;
 		}
 
-
-
-		ul{
-			padding-top: 7px;
-			padding-left: 0px;
-		}
-
-		.locationCandidate{
+		.locationCandidate {
 			.list-unstyled;
-			margin-bottom: 4px;
-			padding-left: 5px;
 			background-color: rgba(200, 200, 255, 0.35);
-			.address{
+
+			.address {
 				font-size: 8px;
 			}
 		}
 
-		.hover{
+		.hover {
 			background: rgba(200, 200, 255, 0.75);
 			fill: #ff1;
 		}
 
-		.locationMap{
-			margin: 10px 0 10px 0;
-		}
-
-		.leaflet-interactive{
-			.hover{
-				fill: #ff1;
-			}
-			&:hover{
+		.leaflet-interactive {
+			&:hover {
 				cursor: default;
 			}
-		}
-	}
-}
 
-.course_event{
-	.course_event_lower_section{
-		.head{
-			.make-sm-column(6);
-			.make-xs-column(12);
-		}
-		.mapBox {
-			.make-sm-column(6);
-			.make-xs-column(12);
-			padding-right: 0;
-		}
-		.event_detail_description{
-			padding-top: 5px;
+			.hover {
+				fill: #ff1;
+			}
 		}
 	}
 }
