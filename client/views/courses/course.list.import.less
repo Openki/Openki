@@ -1,0 +1,109 @@
+.courselist_course_container{
+	border: 5px solid @body-bg;
+	border-bottom-width: 15px;
+
+	.courselist_course {
+		border: 7px dashed @light-blue;
+
+		&:hover {
+			.box-shadow;
+			.transition(0.5s);
+			color: @brand-primary;
+
+			h4 {
+				color: @brand-primary;
+			}
+		}
+
+		&.category-focus-mode {
+			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
+									0px 0px 0px rgba(56, 130, 156, 0.6);
+		}
+
+		&.haspastevents {
+			border-style: solid;
+		}
+
+		& > a:hover {
+				text-decoration: none;
+		}
+
+		h4 {
+			.transition(0.5s);
+			color: #333;
+		}
+
+		.course-name {
+			color: #333;
+			font-size: 22px;
+			line-height: 24px;
+		}
+
+		.team_status,
+		.mentor_status,
+		.host_status {
+			text-align: center;
+		}
+
+		.yes {
+			background-color: @brand-success;
+			color: #407d5c;
+		}
+
+		.no {
+			background-color: @brand-danger;
+			color: #751313;
+		}
+
+		.yesyou {
+			background-color: @ownrole;
+			color: @ownrole-color;
+		}
+
+		.course_content {
+			background: @body-bg;
+		}
+	}
+}
+
+.courselist_course,
+.course_main {
+	&.hasupcomingevents {
+		background: @light-blue;
+
+		.course_content {
+			background: @light-blue;
+		}
+	}
+}
+
+.courselist_course_info {
+	z-index: 3;
+
+	&> div {
+		border-top: 3px solid @body-bg;
+
+		&:first-child,
+		&.tooltip {
+			border-top: none;
+		}
+	}
+}
+
+.course_eventlist {
+	background: @brand-success;
+	color: #333;
+	text-align: center;
+
+	.course_eventlist_location {
+		word-wrap: break-word;
+	}
+}
+
+.course_groups ul.groups-list li {
+	z-index: 2;
+}
+
+.courselist_course_overlay {
+	z-index: 1;
+}

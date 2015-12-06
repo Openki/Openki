@@ -28,3 +28,22 @@ Router.map(function () {
 		}
 	});
 });
+
+Template.frameEvent.rendered (function() {
+	this.$('.-eventLocationTime').dotdotdot({
+		height: 50,
+		watch : "window",
+	});
+	this.$('.-eventTitle').dotdotdot({
+		watch: "window",
+	});
+	this.$('.-eventDescription').dotdotdot({
+		watch: "window",
+	});
+});
+
+Template.frameEvent.helpers ({
+	timely: function() {
+		return moment().add(1, 'day').isAfter(this) && moment().subtract(1, 'day').isBefore(this);
+	},
+});

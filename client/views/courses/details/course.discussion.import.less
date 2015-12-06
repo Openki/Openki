@@ -1,0 +1,127 @@
+.discussion {
+	background: @light-blue;
+
+	button {
+		.btn;
+		.btn-primary;
+
+		&.cancel,
+		&.cancelEdit {
+			.btn-danger;
+		}
+
+		&.write-comment {
+			.big-button-success;
+		}
+
+		&.edit {
+			.btn-success;
+		}
+	}
+
+	.discussion-conversation-container {
+		border-top: 3px solid @body-bg;
+
+		.discussion-conversation {
+			.post-info {
+				border-top: 1px solid @body-bg;
+			}
+
+			&:first-child .post-info {
+				border-top: none;
+			}
+		}
+	}
+
+	label {
+		font-weight: inherit;
+
+		input.-anon {
+			vertical-align: text-top;
+		}
+	}
+}
+
+.discussion-titlebar {
+	background: @brand-primary;
+	border: 5px solid @brand-primary;
+	color: @body-bg;
+
+	h4 {
+		font-weight: bold;
+	}
+}
+
+.write-post-dialog,
+.edit-post-dialog {
+	input,
+	textarea {
+		.form-control-humble;
+	}
+}
+
+.write-answer-graphics {
+	font-size: large;
+	text-align: right;
+
+	span.fa-reply {
+		.flip_n_scale(0deg, -1, -1);
+	}
+}
+
+.write-post-dialog {
+	border-top: 3px solid @body-bg;
+
+	&.answer {
+		border-top: none;
+		text-align: right;
+	}
+}
+
+.discussion-comment {
+	.discussion-comment-info {
+		border-top: 1px solid @body-bg;
+	}
+}
+
+.post {
+	background: @light-blue;
+}
+
+a.profilelink {
+	color: #333;
+	-moz-transition: color 1s;
+
+
+	&:hover {
+		color: @brand-primary;
+		text-decoration: none;
+
+		span.glyphicon {
+			color: #333;
+		}
+	}
+
+	span.glyphicon {
+		font-size: large;
+
+		&:hover {
+			color: #333;
+		}
+	}
+}
+
+.comment-time-created {
+	color: #6D7070;
+	cursor: default;
+}
+
+button.answer {
+	background: none;
+	border: 0;
+	color: @brand-primary;
+
+	&:hover {
+		color: #2B6376;
+	}
+}

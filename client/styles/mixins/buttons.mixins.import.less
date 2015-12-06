@@ -1,0 +1,44 @@
+// BUTTON MIXINS
+
+.btn-thin {
+	.btn;
+	padding: 3px 12px;
+}
+
+.big-button-primary() {
+	.form-control;
+	.btn;
+	.btn-primary;
+	padding: 0;
+	border: none;
+	border-top: 3px solid @body-bg;
+	text-align: left;
+	height: auto;
+	font-size: large;
+	padding: 10px 15px;
+	line-height: 1.1;
+
+	&:hover {
+		border: none;
+		border-top: 3px solid @body-bg;
+	}
+}
+
+.big-button-success() {
+	.form-control;
+	.btn;
+	.btn-success;
+	padding: 0;
+	border: none;
+	border-top: 3px solid @body-bg;
+	text-align: left;
+	height: auto;
+	font-size: large;
+	padding: 10px 15px;
+	line-height: 1.1;
+
+	&:hover {
+		border: none;
+		border-top: 3px solid @body-bg;
+	}
+}

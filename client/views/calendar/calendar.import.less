@@ -1,0 +1,60 @@
+.switchDate {
+	background-color: @brand-primary;
+	color: white;
+	font-size: 32px;
+	text-align: center;
+
+	button{
+		.btn;
+		.btn-primary;
+	}
+}
+
+.calendar {
+	.calendar_event,
+	.calendar_event_past {
+		.transition(0.5s);
+		background: @light-blue;
+
+		&:hover {
+			&> .course_event_title > h4 {
+				color: @brand-primary;
+			}
+		}
+
+		&> a:hover {
+				color: inherit;
+		}
+
+		&> .course_event_date {
+			background: @brand-success;
+			color: #333;
+			font-size: x-large;
+			text-align: left;
+		}
+
+		&> .course_event_time {
+			background: @brand-success;
+			border-bottom: 3px solid @body-bg;
+			color: #333;
+			font-size: medium;
+		}
+
+		&> .course_event_title,
+		&> .course_event_desc {
+			&>h4 {
+				.transition(0.5s);
+				color: #333;
+			}
+		}
+
+		.course_event_desc > p {
+			color: @brand-primary;
+		}
+	}
+}
+
+button.calendar_download {
+	.btn;
+	.btn-primary;
+}
