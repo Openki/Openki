@@ -68,8 +68,8 @@ Template.map.onRendered(function() {
 	// Add tiles depending on language
 	var tiles = null;
 	var tileLayers = {
-		'de': 'OpenStreetMap.DE',
-		'fr': 'OpenStreetMap.France',
+		'de': 'OpenStreetMap.Mapnik',    // use 'OpenStreetMap.DE' here, if u dont need SSL.
+		'fr': 'OpenStreetMap.Mapnik',    // use 'OpenStreetMap.France' here, if u dont want SSL.
 		'default': 'OpenStreetMap.Mapnik'
 	}
 	instance.autorun(function() {
