@@ -14,6 +14,8 @@ Template.eventEdit.onRendered(function() {
 		weekStart: moment.localeData().firstDayOfWeek(),
 		format: 'L',
 	});
+
+	this.$("[data-toggle='tooltip']").tooltip();
 });
 
 
@@ -21,7 +23,7 @@ Template.eventEdit.helpers({
 	localDate: function(date) {
 		return moment(date).format("L");
 	},
-	
+
 	affectedReplicaCount: function() {
 		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(affectedReplicaSelectors(this)).count();
@@ -30,7 +32,7 @@ Template.eventEdit.helpers({
 	regions: function(){
 		return Regions.find();
 	},
-	
+
 	showRegionSelection: function() {
 		// You can select the region for events that are new and not associated
 		// with a course
@@ -38,18 +40,18 @@ Template.eventEdit.helpers({
 		if (this.course_id) return false;
 		return true;
 	},
-	
+
 	currentRegion: function(region) {
 		var currentRegion = Session.get('region')
 		return currentRegion && region._id == currentRegion;
 	},
-	
+
 	disableForPast: function() {
 		return this.start > new Date ? '' : 'disabled';
 	},
 });
 
-Template.eventDescritpionEdit.rendered = function() {
+Template.eventDescriptionEdit.rendered = function() {
 	new MediumEditor(this.firstNode);
 };
 
@@ -126,12 +128,12 @@ var updateTimes = function(template, updateEnd) {
 Template.eventEdit.events({
 	'change .eventFileInput': function(event, template) {
 		template.$('button.eventFileUpload').toggle(300);
-	}, 
+	},
 
 	'click button.eventFileUpload': function(event, template) {
-		
+
 		var fileEvent = $('.eventFileInput')[0].files;
-		
+
 		//FS.Utility.eachFile(fileEvent, function(file) {
 		$.each( fileEvent, function(i,file){
 
@@ -151,38 +153,38 @@ Template.eventEdit.events({
 					];
 					template.files = fileList;
 					template.$('button.eventFileUpload').hide(50);
-				
+
 					var fileHtml = '<tr id="row-' + fileObj._id + '">';
 					fileHtml += '<td style="padding-right:5px;">';
 					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
 					fileHtml += '</td><td><button role="button" class="fileDelete close" type="button">';
 					fileHtml += '<span class="glyphicon glyphicon-remove"></span></button></td></tr>';
-				
+
 					$("table.file-list").append(fileHtml);
-				
+
 				}
 			});
 		});
 	},
-	
+
 	'click button.fileDelete': function (event, template) {
 		var fileid = this._id;
 		var eventid = template.data._id;
 		var filename = this.filename;
 		//delete the actual file
 		var fp = Files.remove(fileid);
-		
+
 		//hide file name
-		var rowid = "tr#row-" + fileid;		
+		var rowid = "tr#row-" + fileid;
 		$(rowid).hide();
-		
+
 		//remove file attribute from the event
 		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
 			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
 			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."), 'danger');
-		});		
+		});
 	},
-	
+
 	'submit': function(event, template) {
 		event.preventDefault();
 
@@ -210,19 +212,19 @@ Template.eventEdit.events({
 
 		//check if file object is stored in the template object
 		if(fileList != null){
-			var tmp = [];		
-			if(this.files){	
+			var tmp = [];
+			if(this.files){
 				$.each( this.files, function( i,fileObj ){
 					tmp.push( fileObj );
 				});
 			}
-			
+
 			$.each( fileList, function( i, fileObj ){
 				tmp.push( fileObj );
-			});	
-					
+			});
+
 			editevent.files = tmp;
-		}		
+		}
 
 		var eventId = this._id;
 		var isNew = !this._id;
@@ -257,9 +259,9 @@ Template.eventEdit.events({
 				delete editevent.end;
 			}
 		}
-		
+
 		var updateReplicas = template.$("input[name='updateReplicas']").is(':checked');
-		
+
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
 			if (error) {
 				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
@@ -278,15 +280,16 @@ Template.eventEdit.events({
 			}
 		});
 	},
-	
+
 	'click button.cancelEditEvent': function (event, instance) {
 		if (this.new) history.back();
 		instance.parent.editing.set(false);
 	},
 
 	'click .toggle_duration': function(event, template){
-		template.$('.show_time_end').toggle(300);
-		template.$('.show_duration').toggle(300);
+		template.$("[data-toggle='tooltip']").tooltip('hide');
+		template.$('.end_time').slideToggle(600);
+		template.$('.show_duration').slideToggle(600);
 	},
 
 	'change #edit_event_duration, change #edit_event_startdate, change #edit_event_starttime': function(event, template) {
