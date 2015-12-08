@@ -103,7 +103,7 @@ Template.eventEditLocation.onCreated(function() {
 
 
 Template.eventEditLocation.helpers({
-	
+
 	location: function() {
 		return Template.instance().location.get();
 	},

@@ -1,0 +1,55 @@
+.locationFrame {
+	.locationEdit {
+		background-color: rgba(200, 200, 255, 0.15);
+		border: 1px solid #CCC;
+		overflow: auto;
+
+		.input-group-addon:first-child {
+			border: none;
+			border-right: 1px solid #CCC;
+		}
+
+		.locationSearch {
+			.currentLocation {
+				span.fa-map-marker {
+					color: darken(@brand-success, 40%);
+				}
+
+				button.-locationChange {
+					.btn-thin;
+					.btn-primary;
+				}
+			}
+
+			.locationSearchbar {
+				input.-locationName {
+					.form-control-humble;
+				}
+
+				button.-addressSearch {
+					.btn;
+					.btn-primary;
+				}
+			}
+
+			input.-locationAddress {
+				.form-control-humble;
+			}
+
+			.locationCandidate {
+				background-color: rgba(200, 200, 255, 0.35);
+				list-style: none;
+
+				&.hover {
+					background: rgba(200, 200, 255, 0.75);
+					cursor: pointer;
+					fill: #ff1;
+				}
+
+				.address {
+					font-size: 11px;
+				}
+			}
+		}
+	}
+}
