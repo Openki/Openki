@@ -20,6 +20,11 @@ Template.eventEdit.onRendered(function() {
 
 
 Template.eventEdit.helpers({
+
+	hasParentCourse: function() {
+		return !! this.course_id;
+	},
+
 	localDate: function(date) {
 		return moment(date).format("L");
 	},
