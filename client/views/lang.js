@@ -9,7 +9,7 @@ lgs = {
 	'it': { lg: 'it', name: 'Italiano', short: 'it', english:'Italian'},
 	'ja': { lg: 'ja', name: '日本語', short: '日本語', english:'Japanese'},
 	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語', english:'Guóyǔ, Taiwanese'},
-	'de_ZH': { lg: 'de_ZH', name: 'Züritüütsch', short 'zri-tü', english:'Zurich German'}
+	'de_ZH': { lg: 'de_ZH', name: 'Züritüütsch', short: 'zri-tü', english:'Zurich German'}
 };
 
 Template.lang_sel.helpers({
