@@ -63,7 +63,11 @@ Template.event.events({
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) {
 					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
-					if (course) Router.go('showCourse', { _id: course });
+					if (course) {
+						Router.go('showCourse', { _id: course });
+					} else {
+						Router.go('/');
+					}
 				} else {
 					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
 				}
