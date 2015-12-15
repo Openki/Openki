@@ -19,14 +19,20 @@ Template.eventReplication.onRendered(function() {
 	updateReplicas(this);
 });
 
+var replicaStartDate = function(originalDate) {
+	var originalMoment = moment(originalDate);
+	var startMoment = moment.max(originalMoment, moment());
+	startMoment.day(originalMoment.day());
+	return startMoment;
+};
 
 Template.eventReplication.helpers({
 	replicaStart: function() {
-		return moment.max(moment(this.start), moment()).format("L");
+		return replicaStartDate(this.start).format("L");
 	},
 
 	replicaEnd: function() {
-		return moment.max(moment(this.start), moment()).add(1, 'week').format("L");
+		return replicaStartDate(this.start).add(1, 'week').format("L");
 	},
 
 	localDate: function(date) {
