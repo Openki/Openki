@@ -1,23 +1,56 @@
+.find,
+.new_course {
+  .course_edit {
+    .grid(12)
+  }
+}
+
+.coursedetails {
+  .course_edit {
+    .grid(12);
+  }
+}
+
 .course_edit {
   background: @light-blue;
   border: 7px solid @light-blue;
+  padding: 0 0 25px;
 
   .course_edit_header {
+    .grid(12);
+    padding: 0;
+
     input#editform_name {
       .form-control-humble;
       font-size: large;
+      height: 40px;
     }
 
     #editform_description {
       .form-control-humble;
+      height: auto; // Reset fixed height from .form-control-humble()
+      max-height: 150px;
+      min-height: 100px;
       overflow: auto;
+
+      p {
+        margin: 0;
+      }
     }
+  }
+
+  #editform_categories,
+  .course_edit_roles,
+  .course_edit_region {
+    .grid(12, 4);
+    padding: 0;
   }
 
   ul.categories,
   ul.subcategories,
   ul.roles_list {
     list-style: none;
+    padding-left: 0;
   }
 
   ul.categories,
@@ -28,6 +61,9 @@
 
     span.caret {
       color: #ccc;
+      left: 3px;
+      position: relative;
+      top: -1px;
 
       &.active {
         color: #333;
@@ -49,6 +85,10 @@
       &.active {
         color: @brand-primary;
       }
+
+      input.checkbox {
+        margin-right: 3px;
+      }
     }
   }
 
@@ -57,9 +97,34 @@
     .btn-primary;
   }
 
+  ul.subcategories {
+    left: 5px;
+    position: relative;
+
+    li {
+      left: 15px;
+      position: relative;
+    }
+  }
+
+  .course_edit_region {
+    margin-bottom: 10px;
+  }
+
   .course_edit_finishbtns {
+    .grid(12);
+    padding: 10px 0 0;
+
     button {
       .btn;
+      margin-right: 10px;
+
+      @media @mobile {
+        .form-control;
+        .btn;
+        .btn-primary;
+        margin-bottom: 10px;
+      }
 
       &.save {
         .btn-success;
@@ -67,12 +132,6 @@
 
       &.cancel {
         .btn-danger;
-      }
-
-      @media @mobile {
-        .form-control;
-        .btn;
-        .btn-primary;
       }
     }
   }

@@ -1,5 +1,29 @@
 //This sheet contains site-wide used resets & styles
 
+body {
+	padding-top: 50px;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+#maincontent {
+	padding: 25px 0 50px 0;
+
+	&> *:first-child {
+		padding-top: 0;
+		margin-top: 0;
+	}
+
+	@media @mobile {
+		.find {
+			margin-top: -20px;
+		}
+	}
+}
+
 * {
 	border-radius: 0 !important;
 	outline: none !important;
@@ -17,8 +41,13 @@ p {
 	hyphens: auto;
 }
 
-.dropdown-menu li {
+.dropdown-menu {
+	min-width: 0;
+	width: auto;
+
+	li {
 		cursor: pointer;
+	}
 }
 
 a,
@@ -28,6 +57,10 @@ button {
 
 .tooltip {
 	font-size: @font-size-base;
+
+	&-inner {
+		max-width: 0;
+	}
 }
 
 ul.nav-tabs {
@@ -40,6 +73,10 @@ ul.nav-tabs {
 			}
 		}
 	}
+}
+
+label {
+	display: block;
 }
 
 span.glyphicon-ok {
