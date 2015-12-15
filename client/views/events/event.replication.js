@@ -61,6 +61,11 @@ var updateReplicas = function(template) {
 var getEventFrequency = function(template) {
 	var startDate = moment(template.$('.-replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
+	if (startDate.isBefore(moment())) {
+		// Jump forward in time so we don't have to look at all these old dates
+		startDate = replicaStartDate(startDate);
+	}
+
 	var endDate   = moment(template.$('.-replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.-replicateFrequency:checked').val();
@@ -76,7 +81,7 @@ var getEventFrequency = function(template) {
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
 	var dates = [];
-	while(true) {
+	while(!repStart.isAfter(endDate)) {
 		var daysFromOriginal = repStart.diff(originDay, 'days');
 		if (daysFromOriginal !=0 && repStart.isAfter(now)) {
 			dates.push([
@@ -88,8 +93,6 @@ var getEventFrequency = function(template) {
 		}
 
 		repStart.add(1, unit);
-
-		if (repStart.isAfter(endDate)) break;
 	}
 
 	return dates;
