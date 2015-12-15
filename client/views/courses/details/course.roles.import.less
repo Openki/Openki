@@ -1,22 +1,40 @@
 .roles {
+	.grid(12);
 	background: @light-blue;
 	border-top: 3px solid @body-bg;
 	font-size: medium;
+	padding: 0;
 
-	.member_role a {
-		color: #333;
+	.member_role {
+		.grid(12);
+		padding-bottom: 10px;
+		padding-top: 10px;
+		
+		a {
+			color: #333;
 
-		&:hover {
-			color: @brand-primary;
+			&:hover {
+				color: @brand-primary;
+			}
 		}
 	}
 
 	.horizontal-line {
+		.grid(12);
 		background: @body-bg;
+		height: 1px;
+
+		&:last-child {
+			display: none;
+		}
 	}
 
 	ul.roles_list {
+		display: inline-block;
 		list-style: none;
+		margin-bottom: 0;
+		margin-left: 10px;
+		padding-left: 0;
 
 		&:hover {
 			cursor: default;
@@ -25,9 +43,15 @@
 		li {
 			background: @brand-primary;
 			color: @body-bg;
+			display: inline-block;
 			font-size: small;
 			font-weight: bold;
+			padding: 5px 10px;
 			vertical-align: middle;
+
+			&.participant {
+				display: none;
+			}
 		}
 
 		span.role_short {
@@ -40,15 +64,29 @@
 		.btn;
 		.btn-success;
 		.transition(0.5s);
+		margin-left: 10px;
+		padding: 3px 10px;
+
+		.makeTeam_text {
+			display: none;
+		}
 	}
 
 	.member_comment {
+		display: block;
+		padding-top: 10px;
+
+		.editable {
+			padding-left: 0 !important;
+		}
+
 		.editable-controls {
 			button.editable-store,
 			button.editable-cancel {
 				background: none;
 				border: 0;
 				color: @brand-primary;
+				display: inline-block;
 			}
 
 			span.glyphicon-ok {
