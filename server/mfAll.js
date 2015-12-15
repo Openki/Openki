@@ -18657,8 +18657,46 @@ mfPkg.syncAll({
       "revisionId": "3DXWHqYKYsSmvyYaY",
       "_id": "6Dein5grjJTYc6st3"
     }
+  },
+  "tr": {
+    "menue.Courses": {
+      "key": "menue.Courses",
+      "lang": "tr",
+      "text": "Kurs",
+      "ctime": 1450178314152,
+      "mtime": 1450178314152,
+      "revisionId": "5Gz4Wiea6Wn4G5u4m",
+      "_id": "drdbAW7C5F2PETebF"
+    },
+    "menue.Create": {
+      "key": "menue.Create",
+      "lang": "tr",
+      "text": "Oluşturmak",
+      "ctime": 1450178372776,
+      "mtime": 1450178410541,
+      "revisionId": "a3foLiRau6EXZdihF",
+      "_id": "qKtpWFmoGJCcvd3dk"
+    },
+    "menue.Calendar": {
+      "key": "menue.Calendar",
+      "lang": "tr",
+      "text": "Takvim",
+      "ctime": 1450178379269,
+      "mtime": 1450178405735,
+      "revisionId": "oMv6A46j9KGhRsrDP",
+      "_id": "Ytc25Do95b9jonxnS"
+    },
+    "event.replication.repeat": {
+      "key": "event.replication.repeat",
+      "lang": "tr",
+      "text": "Oluşturmak",
+      "ctime": 1450178426032,
+      "mtime": 1450178426032,
+      "revisionId": "7R8JLtfaaR4itjQgp",
+      "_id": "ZDs5o8hm3tcToZCMN"
+    }
   }
 }, {
-  "exportedAt": 1450177034364,
-  "updatedAt": 1450177031252
+  "exportedAt": 1450178438325,
+  "updatedAt": 1450178426032
 });
