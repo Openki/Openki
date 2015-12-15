@@ -77,7 +77,7 @@ var getEventStartMoment = function(template) {
 var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = readDateTime(
-		startMoment.format('YYYY-MM-DD'),
+		startMoment.format('L'),
 		template.$('#edit_event_endtime').val()
 	);
 
@@ -88,7 +88,7 @@ var getEventEndMoment = function(template) {
 	// in these politically fucked hours.
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
-			startMoment.add(1, 'day').format('YYYY-MM-DD'),
+			startMoment.add(1, 'day').format('L'),
 			template.$('#edit_event_endtime').val()
 		);
 	}
