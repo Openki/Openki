@@ -6,4 +6,5 @@ categories = {
 	culture:    [ 'literature', 'theatre', 'music', 'dance', 'fineart', 'design', 'photography', 'film', 'cooking', 'subculture' ],
 	computer:   [ 'internet', 'programming', 'operating' ],
 	'♥undefined♥': [ 'experimental', 'spiritual' ]
-}
+};
+

@@ -5,4 +5,4 @@ makeEditable = function(text, simple, store, placeholderText) {
 		store: store,
 		placeholderText:  placeholderText || mf('editable.add_text', 'Add text here')
 	};
-}
+};
