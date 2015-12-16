@@ -19,6 +19,15 @@ Template.navbar.onRendered(function() {
 	});
 });
 
+Template.navbar.helpers({
+	siteName: function() {
+		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+			return Meteor.settings.public.siteName;
+		}
+		return "Hmmm";
+	}
+});
+
 Template.navbar.events({
 	'click .-clickClose': function(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
