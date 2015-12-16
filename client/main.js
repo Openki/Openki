@@ -100,6 +100,11 @@ Accounts.onLogin(function() {
 	if (locale) Session.set('locale', locale);
 });
 
+Template.ticker.helpers({
+	marquee: function() {
+		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.marquee;
+	}
+});
 
 Accounts.onEmailVerificationLink(function(token, done) {
 	Accounts.verifyEmail(token, function(error) {
