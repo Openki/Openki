@@ -10647,10 +10647,10 @@ mfPkg.syncAll({
     "login.logout": {
       "key": "login.logout",
       "lang": "de",
-      "text": "Mentor",
+      "text": "Abmelden",
       "ctime": 1425257001533,
-      "mtime": 1450202613598,
-      "revisionId": "hu7sDDpEYZzQEstdQ",
+      "mtime": 1450226387903,
+      "revisionId": "tbhXWtaSramH3AJm9",
       "_id": "6x37nkJHCAKsiXETP"
     },
     "course.list.status_titles.has_host": {
@@ -10746,10 +10746,10 @@ mfPkg.syncAll({
     "roles.mentor.short": {
       "key": "roles.mentor.short",
       "lang": "de",
-      "text": "Mentor",
+      "text": "Abmelden",
       "ctime": 1432889355486,
-      "mtime": 1450202572681,
-      "revisionId": "hnXRosPsv5jAfSERS",
+      "mtime": 1450226403131,
+      "revisionId": "yr2TJ83dzFtM3uA6y",
       "_id": "8RPG6nNqHc8JiJXya"
     },
     "event.saving.success": {
@@ -13798,10 +13798,10 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.edit": {
       "key": "course.discussion.comment_btn.edit",
       "lang": "de",
-      "text": "Wie man hinkommt:",
+      "text": "Bearbeiten!",
       "ctime": 1448250448875,
-      "mtime": 1449023602979,
-      "revisionId": "NrRy5QfBjuoBSu82p",
+      "mtime": 1450226314193,
+      "revisionId": "Ds57ysbE2bhbscsAN",
       "_id": "HcoA5XpHec6AnXuA5"
     },
     "noUser_placeholder": {
@@ -13888,10 +13888,10 @@ mfPkg.syncAll({
     "event.creating.success": {
       "key": "event.creating.success",
       "lang": "de",
-      "text": "Beschreibe deine Idee so genau wies geht. Das hilft anderen zu Wissen, was sie vom treffen erwarten können und wie man sich vorbereiten kann (z.B. Niveau, Anforderungen, geplante Tätigkeiten, Unterrichtsmethoden, was mitzubringen ist, usw.) ",
+      "text": "Die Veranstaltung \"{TITLE}\" wurde erstellt.",
       "ctime": 1445853528953,
-      "mtime": 1448250991170,
-      "revisionId": "SsjqDKpjuQe9HLWnR",
+      "mtime": 1450226262784,
+      "revisionId": "o4P7sRbegYabNAxKo",
       "_id": "X8hP2t4efh2FsWFJW"
     }
   },
@@ -19111,6 +19111,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450224641848,
-  "updatedAt": 1450224635141
+  "exportedAt": 1450226406032,
+  "updatedAt": 1450226403131
 });
