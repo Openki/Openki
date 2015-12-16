@@ -33,11 +33,13 @@
 .calendar {
 	.calendar_event,
 	.calendar_event_past {
+		.grid(12, 4, 3, 2);
 		.transition(0.5s);
 		background: @light-blue;
 		height: 230px;
 		margin: 7px;
 		width: 350px;
+		padding: 0;
 
 		&:hover {
 			&> .course_event_title > h4 {
