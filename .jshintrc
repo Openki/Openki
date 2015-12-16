@@ -37,6 +37,9 @@
 		"Random": false,
 		"_": false,
 		"$": false,
-		"Router": false
+		"Router": false,
+
+		"moment": false,
+		"mf": false
 	}
 }
