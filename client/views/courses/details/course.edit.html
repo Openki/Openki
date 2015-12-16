@@ -2,13 +2,12 @@
 	<div class="course_edit">
 		<form>
 			<div class="course_edit_header">
-				<h2>
 					{{#if _id}}
-					{{mf 'course.edit.edit_course' 'Edit course'}}
+						<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
 					{{else}}
-					{{mf 'course.edit.propose' 'Propose new course'}}
+						<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
+						<span class="fa fa-info"></span>&nbsp; {{mf 'course.propose.EventInfo' 'In case you want to publish you singular event, use the following form instead:'}} <a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
 					{{/if}}
-				</h2>
 				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
 				<input type="text" id="editform_name" placeholder="{{mf 'course.title.placeholder' 'what do you want to learn?'}}" size="40" value="{{name}}"/>
 				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>

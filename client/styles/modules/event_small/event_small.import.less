@@ -1,7 +1,24 @@
 .event_small_container {
+  .grid(4, 3, inherit, 2);
+  height: 200px;
+  padding: 0 3px 10px;
+
+  @media screen and (max-width: @screen-xxs) {
+    .grid(6);
+    padding: 0 3px 10px;
+  }
+
+  @media screen and (max-width: @screen-xxxs) {
+    .grid(12);
+    padding: 0 3px 10px;
+  }
+
   .event_small {
+    .grid(12);
     .transition(0.5s);
     background: @light-blue;
+    height: 100%;
+    padding: 0;
 
     &:hover {
       .box-shadow;
@@ -15,18 +32,28 @@
     }
 
     .-eventLocationTime {
+      .grid(12);
       background: @brand-success;
       border-bottom: 1px solid #fff;
       color: #333;
+      height: 50px;
+      padding: 5px;
     }
 
     .-eventTitle {
+      .grid(12);
       color: #333;
       font-size: medium;
+      max-height: 56px;
+      padding: 5px;
     }
 
     .-eventDescription {
+      .grid(12);
       color: @brand-primary;
+      height: 85px;
+      margin-top: -3px;
+      padding: 0 5px 5px;
     }
   }
 }

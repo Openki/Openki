@@ -8,11 +8,15 @@ An interactive web-platform in development with the ambition to facilitate a bar
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 
 [  read on...](http://openki.net "our blog")  
-<div align="right"> <span class="octicon octicon-star">★</span> Star us if you like the idea.</div>
+<div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
 - Demo: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
+- Live: [alpha.openki.net](https://alpha.openki.net)
 - Concept: [openki.net](http://openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
+
+
+All submissions are welcome. To submit a change, [fork this repo](https://github.com/schuel/hmmm/fork), commit your changes, and send us a [pull request](http://help.github.com/send-pull-requests/).
 
 
 ### Features
@@ -31,7 +35,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 - :computer: additional views with upcomming events for information-displays and iframes
 
 
-## Intended features
+#### Intended features
 - :closed_lock_with_key: Privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :mailbox: Privat messaging
@@ -42,16 +46,16 @@ An interactive web-platform in development with the ambition to facilitate a bar
 - :iphone: Smartphone App
 
 ### Installation (Linux, OSX and Windows)
-- To install Meteor, run: `curl https://install.meteor.com | sh`  (dl. [Installer](https://install.meteor.com/windows)for Win)
+- To install Meteor, run: `curl https://install.meteor.com | sh`  (dl. [Installer](https://install.meteor.com/windows) for Win)
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or clone Hmmm into /some/path
 - `cd /some/path`
 - Run `meteor --settings settings.dev.json`
-- Browse to [localhost:3000](http://localhost:3000/)
+- Browse to [localhost:3000](http://localhost:3000/) -> done.
 
-### Technical documentation
-- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
+#### Technical documentation
+- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
-- AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
+- AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
 - For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA
 - For all testing-events descriptions (server/data/testing.events.js): Creative Commons BY-NC-SA

@@ -1,9 +1,17 @@
 .discussion {
+	.grid(12);
 	background: @light-blue;
+	padding: 0;
+	margin-top: 15px;
+
+	h3 {
+		margin-top: 15px;
+	}
 
 	button {
 		.btn;
 		.btn-primary;
+		float: right;
 
 		&.cancel,
 		&.cancelEdit {
@@ -20,11 +28,17 @@
 	}
 
 	.discussion-conversation-container {
+		.grid(12);
 		border-top: 3px solid @body-bg;
+		padding-bottom: 10px;
 
 		.discussion-conversation {
+			.grid(12);
+			padding: 0;
+
 			.post-info {
 				border-top: 1px solid @body-bg;
+				padding-top: 10px;
 			}
 
 			&:first-child .post-info {
@@ -35,14 +49,20 @@
 
 	label {
 		font-weight: inherit;
+		padding-top: 8px;
 
 		input.-anon {
+			display: inline-block;
+			height: auto;
+			margin: 0;
 			vertical-align: text-top;
+			width: auto;
 		}
 	}
 }
 
 .discussion-titlebar {
+	.grid(12);
 	background: @brand-primary;
 	border: 5px solid @brand-primary;
 	color: @body-bg;
@@ -54,42 +74,100 @@
 
 .write-post-dialog,
 .edit-post-dialog {
+	.grid(12);
+
 	input,
 	textarea {
 		.form-control-humble;
+		margin-bottom: 10px;
+	}
+
+	textarea {
+		height: 60px;
 	}
 }
 
 .write-answer-graphics {
+	.grid(1);
 	font-size: large;
+	padding: 0 15px 0 0;
 	text-align: right;
 
 	span.fa-reply {
 		.flip_n_scale(0deg, -1, -1);
+		margin-top: 15px;
 	}
 }
 
 .write-post-dialog {
 	border-top: 3px solid @body-bg;
+	padding-bottom: 20px;
 
 	&.answer {
+		.grid(11);
 		border-top: none;
+		padding: 10px 0 0;
 		text-align: right;
+
+		button.cancel {
+			margin-right: 0;
+		}
+	}
+
+	button {
+		margin-right: 5px;
 	}
 }
 
+.edit-post-dialog {
+	padding: 0;
+}
+
 .discussion-comment {
+	.grid(11);
+	.grid-offset(1);
+	padding: 10px 0 0;
+
 	.discussion-comment-info {
+		.grid(12);
 		border-top: 1px solid @body-bg;
+		padding: 10px 0 0;
+	}
+
+	.discussion-comment-text {
+		.grid(9, 8);
+		padding: 0;
 	}
 }
 
 .post {
+	.grid(12);
 	background: @light-blue;
+	padding: 7px 0;
+
+	.post-info {
+		.grid(12);
+		padding: 0;
+	}
+
+	.post-text {
+		.grid(12);
+		padding: 0;
+	}
+
+	.post-options {
+		.grid(12);
+		padding: 0;
+
+		button {
+			margin-right: 5px;
+		}
+	}
 }
 
 a.profilelink {
 	color: #333;
+	padding-right: 5px;
 	-moz-transition: color 1s;
 
 
@@ -99,6 +177,8 @@ a.profilelink {
 
 		span.glyphicon {
 			color: #333;
+			position: relative;
+			top: 4px;
 		}
 	}
 
@@ -120,6 +200,7 @@ button.answer {
 	background: none;
 	border: 0;
 	color: @brand-primary;
+	padding-bottom: 5px;
 
 	&:hover {
 		color: #2B6376;
