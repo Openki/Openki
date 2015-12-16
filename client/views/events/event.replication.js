@@ -6,12 +6,12 @@ Template.eventReplication.onCreated(function() {
 
 
 Template.eventReplication.onRendered(function() {
-	this.$('.replicate_start').datepicker({
+	this.$('.-replicateStart').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		format: 'L',
 	});
 
-	this.$('.replicate_end').datepicker({
+	this.$('.-replicateEnd').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		format: 'L',
 	});
