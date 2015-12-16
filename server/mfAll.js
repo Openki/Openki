@@ -18480,10 +18480,10 @@ mfPkg.syncAll({
     "course.list.status_titles.has_team": {
       "key": "course.list.status_titles.has_team",
       "lang": "de_ZH",
-      "text": "Hed&nbsp;es&nbsp;orga-team",
+      "text": "Hed es orga-team",
       "ctime": 1449923770672,
-      "mtime": 1450019815245,
-      "revisionId": "csYhs7ZAj9cATFcsm",
+      "mtime": 1450284215224,
+      "revisionId": "xvkQQNQu6nM5oyDah",
       "_id": "PDyHpzrceBzQkWT9d"
     },
     "course.events.upcominglist": {
@@ -18831,19 +18831,19 @@ mfPkg.syncAll({
     "course.list.status_titles.has_mentor": {
       "key": "course.list.status_titles.has_mentor",
       "lang": "de_ZH",
-      "text": "Hed&nbsp;än&nbsp;Mentor",
+      "text": "Hed än Mentor",
       "ctime": 1449924116314,
-      "mtime": 1450019725273,
-      "revisionId": "fn83LhBNZ7rHpJ7gJ",
+      "mtime": 1450284246681,
+      "revisionId": "qtcawLB55JYCwaDyF",
       "_id": "swyJ4n26qPnNqogEj"
     },
     "course.subnav.history": {
       "key": "course.subnav.history",
       "lang": "de_ZH",
-      "text": "Hed&nbsp;än&nbsp;Mentor",
+      "text": "Was isch gloffä",
       "ctime": 1450174255869,
-      "mtime": 1450177031252,
-      "revisionId": "7LtYYcd4zeM5rtcgz",
+      "mtime": 1450284289943,
+      "revisionId": "C6rqmvSvoEfNos3Fo",
       "_id": "PYLxa6DZx2JZP4a7x"
     },
     "category.theatre": {
@@ -18939,10 +18939,10 @@ mfPkg.syncAll({
     "course.events.futureListLink": {
       "key": "course.events.futureListLink",
       "lang": "de_ZH",
-      "text": "Zuekünftigi Verahschtaltige",
+      "text": "Was isch gloffä",
       "ctime": 1450205509382,
-      "mtime": 1450205509382,
-      "revisionId": "jq3tDfQRecCHwGdgh",
+      "mtime": 1450284349234,
+      "revisionId": "aYArBbrnoiBoFhr75",
       "_id": "CYPWcrYXiBH5BFGGy"
     },
     "roles.message.placeholder": {
@@ -19070,6 +19070,195 @@ mfPkg.syncAll({
       "mtime": 1450224635141,
       "revisionId": "B9ZKAvEtkLMh9JYip",
       "_id": "2ZrnFSwXnnuQhZmib"
+    },
+    "find.WhatLearn?": {
+      "key": "find.WhatLearn?",
+      "lang": "de_ZH",
+      "text": "Was wotsch lerne?",
+      "ctime": 1450265542008,
+      "mtime": 1450265542008,
+      "revisionId": "ujWSjHwhptTM9pNL6",
+      "_id": "beGajRb9oswky325u"
+    },
+    "editable.store": {
+      "key": "editable.store",
+      "lang": "de_ZH",
+      "text": "Was wotsch lerne?",
+      "ctime": 1450265558995,
+      "mtime": 1450265558995,
+      "revisionId": "9cADfeq2GkymjZGsG",
+      "_id": "N8WEfhojjEL5YyDwC"
+    },
+    "category.politics": {
+      "key": "category.politics",
+      "lang": "de_ZH",
+      "text": "Politik",
+      "ctime": 1450265807672,
+      "mtime": 1450265807672,
+      "revisionId": "JX4XedzqNokuHeEo9",
+      "_id": "BQHonHJAbvAD8EEsJ"
+    },
+    "category.sciences": {
+      "key": "category.sciences",
+      "lang": "de_ZH",
+      "text": "Naturwüsseschaft",
+      "ctime": 1450265898091,
+      "mtime": 1450265898091,
+      "revisionId": "rwMmdXnLJJYCEgY34",
+      "_id": "HXh4hQzyyqFFBay54"
+    },
+    "category.film": {
+      "key": "category.film",
+      "lang": "de_ZH",
+      "text": "Film",
+      "ctime": 1450265913495,
+      "mtime": 1450265913495,
+      "revisionId": "SdcjBf6KEQ8sAbwPc",
+      "_id": "QCrWwCSAkWtSSx3Nh"
+    },
+    "course.details.tag.proposal": {
+      "key": "course.details.tag.proposal",
+      "lang": "de_ZH",
+      "text": "Vorschlag",
+      "ctime": 1450265923480,
+      "mtime": 1450265923480,
+      "revisionId": "KqKfeBoeN2ggYAwkc",
+      "_id": "QMq3iKscsHwswY62H"
+    },
+    "category.sports": {
+      "key": "category.sports",
+      "lang": "de_ZH",
+      "text": "Sport und Bewegig",
+      "ctime": 1450265949861,
+      "mtime": 1450265949861,
+      "revisionId": "neFCFCtk6Nzg9QwQd",
+      "_id": "yuQyw46ddfvxDGNQE"
+    },
+    "category.languages": {
+      "key": "category.languages",
+      "lang": "de_ZH",
+      "text": "Sprachä",
+      "ctime": 1450265960466,
+      "mtime": 1450265960466,
+      "revisionId": "E5cSt7hZwr9KFeTPJ",
+      "_id": "H7sF5iyaBXryLcjSa"
+    },
+    "category.dance": {
+      "key": "category.dance",
+      "lang": "de_ZH",
+      "text": "Tanz",
+      "ctime": 1450265967514,
+      "mtime": 1450265967514,
+      "revisionId": "iqQGw2Ze72ZvpbeTH",
+      "_id": "ejsmE5L22tqAwauoy"
+    },
+    "category.culture": {
+      "key": "category.culture",
+      "lang": "de_ZH",
+      "text": "Kultur",
+      "ctime": 1450265974290,
+      "mtime": 1450265974290,
+      "revisionId": "BEkiZpdR7kRXyQB74",
+      "_id": "A7wsP8T6bcfiTvvR8"
+    },
+    "category.mathematics": {
+      "key": "category.mathematics",
+      "lang": "de_ZH",
+      "text": "Mati",
+      "ctime": 1450266017050,
+      "mtime": 1450266017050,
+      "revisionId": "MBNMZf7Jie9mHRpxZ",
+      "_id": "caWvaekWAiE94dbd9"
+    },
+    "category.programming": {
+      "key": "category.programming",
+      "lang": "de_ZH",
+      "text": "Programmierä",
+      "ctime": 1450266029239,
+      "mtime": 1450266029239,
+      "revisionId": "H6ZctcMcoT85H3wxw",
+      "_id": "JasypcRWMdn45P5HB"
+    },
+    "category.sociology": {
+      "key": "category.sociology",
+      "lang": "de_ZH",
+      "text": "Soziologie",
+      "ctime": 1450266044770,
+      "mtime": 1450266044771,
+      "revisionId": "73su5xYb6ZTF4s2EY",
+      "_id": "bLPmo5qmre52ycbfc"
+    },
+    "roles.team.subscribed": {
+      "key": "roles.team.subscribed",
+      "lang": "de_ZH",
+      "text": "Du bisch im Team",
+      "ctime": 1450266064281,
+      "mtime": 1450266064282,
+      "revisionId": "yn3JeAMb5XiXwXk8s",
+      "_id": "9yQ2W67oh3t6qSjGm"
+    },
+    "category.computer": {
+      "key": "category.computer",
+      "lang": "de_ZH",
+      "text": "Kompi",
+      "ctime": 1450266079985,
+      "mtime": 1450266079985,
+      "revisionId": "6XdDY5oy9poBqYNN7",
+      "_id": "4bwRu3mRjTYM3k62P"
+    },
+    "menue.Testpage": {
+      "key": "menue.Testpage",
+      "lang": "de_ZH",
+      "text": "Das isch nur e Teschtsiitä",
+      "ctime": 1450266106050,
+      "mtime": 1450266106050,
+      "revisionId": "36mSNg9Zr526vWtv5",
+      "_id": "YMJRTE3Z7HGTZcPzC"
+    },
+    "category.operating": {
+      "key": "category.operating",
+      "lang": "de_ZH",
+      "text": "Software bedienig",
+      "ctime": 1450266156397,
+      "mtime": 1450266156397,
+      "revisionId": "86Z6FPjxG3CnGRRmE",
+      "_id": "RbmFbBbCT2HA2yNKs"
+    },
+    "profile.group.draft": {
+      "key": "profile.group.draft",
+      "lang": "de_ZH",
+      "text": "Software bedienig",
+      "ctime": 1450266274418,
+      "mtime": 1450266274418,
+      "revisionId": "XPmC8vQDZEJNd3qn5",
+      "_id": "JueHRay3JnJQS2mse"
+    },
+    "kiosk.started": {
+      "key": "kiosk.started",
+      "lang": "de_ZH",
+      "text": "gschtartäd",
+      "ctime": 1450284054680,
+      "mtime": 1450284054680,
+      "revisionId": "SxfLsTAvAJy6teL6h",
+      "_id": "Aisk5Hu9297RNvern"
+    },
+    "category.gardening": {
+      "key": "category.gardening",
+      "lang": "de_ZH",
+      "text": "Gartä / Buurä",
+      "ctime": 1450284088838,
+      "mtime": 1450284088838,
+      "revisionId": "ziFbbaNr6W7pu5XaH",
+      "_id": "7hHgyRi9MxCWzxKEK"
+    },
+    "location.details.desc": {
+      "key": "location.details.desc",
+      "lang": "de_ZH",
+      "text": "Beschiibig",
+      "ctime": 1450284115078,
+      "mtime": 1450284115078,
+      "revisionId": "syK4adMY5ks3otMye",
+      "_id": "L5dq8sFSh725n5qci"
     }
   },
   "tr": {
@@ -19111,6 +19300,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450226406032,
-  "updatedAt": 1450226403131
+  "exportedAt": 1450284356114,
+  "updatedAt": 1450284349234
 });
