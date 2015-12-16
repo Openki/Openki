@@ -68,15 +68,25 @@ Template.map.onRendered(function() {
 	// Add tiles depending on language
 	var tiles = null;
 	var tileLayers = {
-		'de': 'OpenStreetMap.Mapnik',    // use 'OpenStreetMap.DE' here, if u dont need SSL.
-		'fr': 'OpenStreetMap.Mapnik',    // use 'OpenStreetMap.France' here, if u dont want SSL.
-		'default': 'OpenStreetMap.Mapnik'
+		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
+		'fr': function() {
+			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+		},
+		'default': function() {
+			return  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+		}
 	}
 	instance.autorun(function() {
 		if (tiles) map.removeLayer(tiles);
-		var tileLayer = tileLayers[Session.get('locale')];
-		if (!tileLayer) tileLayer = tileLayers['default'];
-		tiles = L.tileLayer.provider(tileLayer);
+		var tileF = tileLayers[Session.get('locale')];
+		if (!tileF) tileF = tileLayers['default'];
+		tiles = tileF();
 		tiles.addTo(map);
 	});
 
