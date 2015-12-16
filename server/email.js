@@ -1,3 +1,13 @@
+
+if (Meteor.settings.siteEmail) {
+	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
+}
+
+if (Meteor.settings.public && Meteor.settings.public.siteName) {
+	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
+}
+
+
 Meteor.methods({
 	sendVerificationEmail: function(){Accounts.sendVerificationEmail(this.userId)}
 })
@@ -8,7 +18,7 @@ Meteor.methods({
 		check([userId, text], [String]);
 
 		var mail = {
-			sender: 'openki@mail.openki.net'
+			sender: Accounts.emailTemplates.from
 		}
 
 		var recipient = Meteor.users.findOne({
@@ -44,7 +54,7 @@ Meteor.methods({
 			ADMINS: 'admins.openki.net'
 		};
 
-		mail.subject = '[Openki] ' + mf('sendEmail.subject', names, 'You got a Message from {SENDER}', lg);
+		mail.subject = '['+Accounts.emailTemplates.siteName+'] ' + mf('sendEmail.subject', names, 'You got a Message from {SENDER}', lg);
 
 		mail.html =
 			mf('sendEmail.greeting', names, 'Message from {SENDER} to {RECIPIENT}:', lg)+ '<br>'

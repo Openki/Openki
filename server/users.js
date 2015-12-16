@@ -32,3 +32,37 @@ Accounts.onCreateUser(function(options, user) {
 	}
 	return user;
 });
+
+Accounts.config({
+	sendVerificationEmail: true
+});
+
+
+Accounts.emailTemplates.verifyEmail.subject = function(user) {
+	return mf('enrollAccount.subject',
+		{
+			SITE: Accounts.emailTemplates.siteName,
+			NAME: user.name
+		},
+		"Welcome to the {SITE} community, {NAME}"
+	);
+}
+
+Accounts.emailTemplates.verifyEmail.text = function(user, url) {
+	return mf('verifyEmail.text',
+		{
+			SITE: Accounts.emailTemplates.siteName,
+			NAME: user.username,
+		    URL: url
+		},
+		"Hi {NAME}\n"
+		+ "\n"
+		+ "We're happy that you are part of the {SITE} community.\n"
+		+ "\n"
+		+ "You can click on {URL} to verify your email address. \n"
+		+ "This helps us knowing you're a real person. :)\n"
+		+ "\n"
+		+ "Sincerely\n"
+		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)"
+	);
+}

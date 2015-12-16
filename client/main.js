@@ -100,6 +100,17 @@ Accounts.onLogin(function() {
 	if (locale) Session.set('locale', locale);
 });
 
+
+Accounts.onEmailVerificationLink(function(token, done) {
+	Accounts.verifyEmail(token, function(error) {
+		if (error) {
+			addMessage(mf("email.verificationFailed", "Address could not be verified"), 'danger');
+		} else {
+			addMessage(mf("email.verified", "Email verified."), 'success');
+		}
+	});
+});
+
 minuteTime = new ReactiveVar();
 
 // Set up reactive date sources that can be used for updates based on time

@@ -1,7 +1,16 @@
 <template name="eventEdit">
 <form>
 	<div class="course_event_edit">
-		<h2>{{#if _id}}{{mf 'course.event.edit.edit' 'Edit event'}}{{else}}{{mf 'course.event.edit.add' 'Add event'}}{{/if}}</h2>
+		{{#if _id}}
+			<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
+		{{else}}
+			<h2>{{mf 'course.event.edit.add' 'Add event'}}</h2>
+			{{#unless hasParentCourse}}
+				{{mf 'course.createEventInfo' 'Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:'}}
+				<a href="/courses/propose">{{mf 'menue.ProposeCourse'}}</a>
+			{{/unless}}
+		{{/if}}
+
 		<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
 		<input
 			type="text"
@@ -77,7 +86,7 @@
 						href="#"
 						data-toggle="tooltip"
 						data-html="true"
-						data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch&nbsp;to&nbsp;end&nbsp;time'}}">
+						data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
 					</span>
 				</small>
 			</h4>

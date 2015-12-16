@@ -67,6 +67,11 @@ Template.find.events({
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
+	'click .-findButton': function(event, instance) {
+		instance.filter.add('search', $('.searchInput').val()).done();
+		updateURL(event, instance);
+	},
+
 	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
