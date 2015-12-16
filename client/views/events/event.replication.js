@@ -53,9 +53,10 @@ Template.eventReplication.helpers({
 	},
 });
 
+
 var updateReplicas = function(template) {
 	template.replicaDates.set(_.map(getEventFrequency(template), function(interval) { return interval[0]; } ));
-}
+};
 
 
 var getEventFrequency = function(template) {
@@ -116,9 +117,9 @@ Template.eventReplication.events({
 				room: template.data.room || '',
 				start: eventTime[0].toDate(),
 				end: eventTime[1].toDate(),
-				files: template.data.files  || new Array(),
-				mentors: template.data.mentors  ||  new Array(),
-				host: template.data.host ||  new Array(),
+				files: template.data.files  || [],
+				mentors: template.data.mentors  ||  [],
+				host: template.data.host ||  [],
 				region: template.data.region || Session.get('region'),
 				groups: template.data.groups,
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
