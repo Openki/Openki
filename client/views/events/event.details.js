@@ -46,7 +46,7 @@ Template.eventDisplay.helpers({
 		return Template.instance().locationTracker.markers;
 	},
 	haveLocation: function() {
-		return this.location && this.location.loc
+		return this.location && this.location.loc;
 	},
 
 	replicating: function() {

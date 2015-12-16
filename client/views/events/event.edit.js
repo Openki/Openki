@@ -47,12 +47,12 @@ Template.eventEdit.helpers({
 	},
 
 	currentRegion: function(region) {
-		var currentRegion = Session.get('region')
+		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
 	},
 
 	disableForPast: function() {
-		return this.start > new Date ? '' : 'disabled';
+		return this.start > new Date() ? '' : 'disabled';
 	},
 });
 
@@ -100,7 +100,7 @@ var getEventEndMoment = function(template) {
 var getEventDuration = function(template) {
 	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
 	return Math.max(0,duration);
-}
+};
 
 
 /* Patch the end time and the duration when start, end or duration changes */
@@ -128,7 +128,7 @@ var updateTimes = function(template, updateEnd) {
 	template.$('#edit_event_starttime').val(start.format('LT'));
 	template.$('#edit_event_endtime').val(end.format('LT'));
 	template.$('#edit_event_duration').val(duration.toString());
-}
+};
 
 Template.eventEdit.events({
 	'change .eventFileInput': function(event, template) {
