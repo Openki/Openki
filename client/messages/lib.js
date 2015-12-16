@@ -13,7 +13,7 @@ addMessage = function(message, typeParam) {
 			removeMessage(messageId);
 		}, 5000);
 	}
-}
+};
 
 removeMessage = function(messageId) {
 	ClientMessages.remove({_id: messageId});
