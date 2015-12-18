@@ -1,6 +1,7 @@
 #edit_event_description {
 	background: @body-bg;
 	border: 1px solid #CCC;
+	padding: 6px 10px;
 
 	&:focus {
 		.box-shadow;
@@ -8,31 +9,21 @@
 	}
 }
 
-.course_event_detail .course_event {
-	& > .course_event_date {
-		background: @brand-success;
-		border-bottom: 3px solid @body-bg;
-
-		span.date {
-			font-size: x-large;
-		}
-	}
-
-	& > .event_detail_description {
-		background: @light-blue;
-	}
-}
-
-.course_event_detail {
-	&>.course_event:hover,
-	&>.calendar_event:hover,
-	&>.calendar_event_past:hover {
-		box-shadow: none;
-	}
-}
-
 .course_events {
+	.grid(12);
+	height: 400px;
+	margin: 15px 0 0 -5px;
 	overflow: auto;
+	padding: 0;
+	position: relative;
+
+	.course_event {
+		height: 204px;
+	}
+
+	hr {
+		clear: both;
+	}
 }
 
 .course_event,
@@ -44,10 +35,21 @@
 	}
 }
 
-.course_event &>a,
-.course_event &>a:hover {
-	color: #333;
-	text-decoration: none;
+.course_events_fadebox {
+	height: 415px;
+	position: relative;
+
+	.fade_effect_top,
+	.fade_effect_bottom {
+		margin-left: -5px;
+		width: calc(~"100% + 5px");
+	}
+}
+
+.course_event_container,
+.course_event_past_container {
+	.grid(12, 6, 4);
+	padding: 5px;
 }
 
 .course_event_past_container .course_event_date,
@@ -56,6 +58,7 @@
 }
 
 .courseEvents-titlebar {
+	.grid(12);
 	background: @brand-primary;
 	border: 5px solid @brand-primary;
 	color: @body-bg;
@@ -66,6 +69,9 @@
 
 	& > .link{
 		color: black;
+		position: absolute;
+		right: 10px;
+		top: -1px;
 	}
 }
 
@@ -77,6 +83,8 @@
 		& > .course_event_date {
 			background: @brand-success;
 			border-bottom: 3px solid @body-bg;
+			height: 70px;
+			padding: 10px 0;
 		}
 
 		.course_event_date span.date {
@@ -85,6 +93,7 @@
 
 		& > .course_event_time {
 			font-size: medium;
+			padding: 0 0 10px;
 		}
 
 		.course_event_time > span {
@@ -95,22 +104,54 @@
 	& > .eventEdit_buttons {
 		background: #cfcfcf;
 		border-top: 3px solid @body-bg;
+		padding: 10px 0;
 		text-align: center;
+
+		.btn-toolbar {
+			margin: auto;
+			width: 90%;
+		}
+	}
+
+	& > a,
+	& > a:hover {
+		color: #333;
+		text-decoration: none;
 	}
 }
 
 .course_event_lower_section {
 	background: @light-blue;
+	height: calc(~"100% - 70px");
+	padding-bottom: 10px;
 }
 
 .course_event_title {
 	.transition(0.5s);
+
+	h3 {
+		margin: 10px 0;
+	}
 }
 
 input#edit_event_title {
 	font-size: large;
 }
 
+.event_options {
+	.grid(12);
+	padding: 15px 0 0
+}
+
+.create-event {
+	.container;
+}
+
 .eventReplicationMenu {
 	background: #cfcfcf;
+	padding: 10px 0;
+
+	& > div {
+		padding: 1em;
+	}
 }
