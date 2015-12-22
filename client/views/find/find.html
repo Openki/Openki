@@ -6,7 +6,7 @@
 			<div class="input-group">
 				<input type="text" id="find" class="searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
 				<span class="input-group-btn">
-					<button class="find-btn" type="button">
+					<button class="-findButton" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 				</span>
@@ -136,6 +136,7 @@
 					{{mf 'find.filter.group' 'Showing courses in group:'}}
 				</h5>
 				<span class="group">{{> groupName group}}</span>
+				&nbsp;
 				<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
 				<br>
 				{{else}}

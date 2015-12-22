@@ -2,35 +2,57 @@
 	<div class="locationFrame">
 	<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
 	<div class="locationEdit input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-home"></span>
-				</span>
-		<div class="col-xs-12 col-sm-6">
+		<span class="input-group-addon">
+			<span class="glyphicon glyphicon-home"></span>
+		</span>
+		<div class="locationSearch">
 		{{#if locationIsPreset}}
-			<div class="location" style="float: right"><button type="button" class="btn -locationChange">{{mf 'event.edit.locationChange' "Change location"}}</button></div>
-				<div style="border: 2px solid gray">
+			<div class="currentLocation">
+				<div class="locationName">
+					<span class="fa fa-map-marker"></span>&nbsp;
 					{{location.name}}
-				{{#if location.address}}
-					<div style="font-size: small">{{location.address}}</div>
-				{{/if}}
+					{{#if location.address}}
+						<br>
+						{{location.address}}
+					{{/if}}
+					&nbsp;
 				</div>
+				<button type="button" class="-locationChange">
+					{{mf 'event.edit.locationChange' "Change location"}}
+				</button>
+			</div>
 		{{else}}
-				<div class="input-group">
-					<input type="text" class="form-control -locationName" value="{{location.name}}" placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"/>
-					<span>
-						<button type="submit" class="button -addressSearch">
-							<span class="glyphicon glyphicon-search"></span> {{mf 'event.edit.addressSearch' "Search"}}
-						</button>
-					</span>
-				</div>
-		{{#if haveLocationCandidates}}
+			<div class="locationSearchbar input-group">
+				<input
+					type="text"
+					class="-locationName"
+					value="{{location.name}}"
+					placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"
+				/>
+				<span class="input-group-btn">
+					<button type="submit" class="-addressSearch">
+						<span class="glyphicon glyphicon-search"></span>
+						&nbsp;
+						{{mf 'event.edit.addressSearch' "Search"}}
+					</button>
+				</span>
+			</div>
 			{{#if searching}}
-				{{mf 'event.edit.locations.proposed' 'Matching locations:'}}
-			{{else}}
-				{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
+			<input
+				type="text"
+				class="-locationAddress"
+				size="40"
+				value="{{location.address}}"
+				placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"
+			/>
 			{{/if}}
-		{{/if}}
-				<ul>
+			{{#if haveLocationCandidates}}
+				{{#if searching}}
+					{{mf 'event.edit.locations.proposed' 'Matching locations:'}}
+				{{else}}
+					{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
+				{{/if}}
+				<ul class="locationCandidates">
 				{{#each locationCandidates}}
 					<li class='{{candidateClass}}'>
 						{{name}}
@@ -38,12 +60,12 @@
 					</li>
 				{{/each}}
 				</ul>
-				{{#if searching}}
-				<input type="text" class="form-control -locationAddress" size="40" value="{{location.address}}" placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"/>
-				{{/if}}
+			{{else}}
+				{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+			{{/if}}
 		{{/if}}
 		</div>
-		<div class="col-xs-12 col-sm-6 locationMap">
+		<div class="locationMap">
 			{{>map markers=eventMarkers height=300 allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 		</div>
 	</div>

@@ -16,7 +16,7 @@ Router.map(function () {
 			var region = Session.get('region')
 			return {
 				all_courses:         coursesFind({ region: region }, 36),
-				missing_organisator: coursesFind({ region: region, missingTeam: true }, 5),
+				missing_organizer: coursesFind({ region: region, missingTeam: true }, 5),
 				missing_subscribers: coursesFind({ region: region, missingParticipants: true }, 5)
 			};
 		},

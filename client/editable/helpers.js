@@ -1,9 +1,10 @@
-Template.editable.created = function() {
+Template.editable.onCreated(function() {
 	this.changed = new ReactiveVar(false);
 	this.editingVersion = false;
-}
+});
 
-Template.editable.rendered = function() {
+
+Template.editable.onRendered(function() {
 	var self = this;
 	var editable = this.$('.editable');
 	var options = {};
@@ -45,10 +46,10 @@ Template.editable.rendered = function() {
 			self.editingVersion = self.data.text;
 		}
 	});
-}
+});
 
 Template.editable.helpers({
-	changed: function() { return Template.instance().changed.get() },
+	changed: function() { return Template.instance().changed.get(); },
 	editableAttrs: function() {
 		var instance = Template.instance();
 		var classes = ['editable'];

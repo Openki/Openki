@@ -12,22 +12,22 @@ Template.map.onCreated(function() {
 var FaIcon = function(faClass) {
 	return function() {
 		return L.DomUtil.create('span', 'fa fa-'+faClass);
-	}
-}
+	};
+};
 
 var FaCompIcon = function(opClass, icClass) {
 	return function() {
 		var cont = L.DomUtil.create('span', 'fa');
 		var op = L.DomUtil.create('i', 'fa fa-'+opClass, cont);
 
-		var ic = L.DomUtil.create('i', 'fa fa-lg fa-'+icClass, cont)
+		var ic = L.DomUtil.create('i', 'fa fa-lg fa-'+icClass, cont);
 		ic.style.position = 'absolute';
 		ic.style.left = '0.7ex';
 		L.DomUtil.setOpacity(ic, 0.5);
 
 		return cont;
-	}
-}
+	};
+};
 
 var OpenkiControl = L.Control.extend({
 	options: {
@@ -68,15 +68,26 @@ Template.map.onRendered(function() {
 	// Add tiles depending on language
 	var tiles = null;
 	var tileLayers = {
-		'de': 'OpenStreetMap.DE',
-		'fr': 'OpenStreetMap.France',
-		'default': 'OpenStreetMap.Mapnik'
-	}
+		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
+		'fr': function() {
+			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+		},
+		'default': function() {
+			return  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+		}
+	};
+
 	instance.autorun(function() {
 		if (tiles) map.removeLayer(tiles);
-		var tileLayer = tileLayers[Session.get('locale')];
-		if (!tileLayer) tileLayer = tileLayers['default'];
-		tiles = L.tileLayer.provider(tileLayer);
+		var tileF = tileLayers[Session.get('locale')];
+		if (!tileF) tileF = tileLayers['default'];
+		tiles = tileF();
 		tiles.addTo(map);
 	});
 
@@ -120,7 +131,7 @@ Template.map.onRendered(function() {
 			} else {
 				map.removeControl(control);
 			}
-		}
+		};
 
 		show(attributionControl, fullscreen || !mini);
 		show(zoomControl, !mini);
@@ -163,7 +174,7 @@ Template.map.onRendered(function() {
 	var fitBounds = _.debounce(function() {
 		var bounds = L.latLngBounds([]);
 		var count = 0;
-		for (layerPos in layers) {
+		for (var layerPos in layers) {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
 		}
@@ -172,7 +183,7 @@ Template.map.onRendered(function() {
 
 		// To give some perspective, we extend the bounds to include the region center when there are few markers
 		if (count < 2) {
-			for (centerPos in centers) { bounds.extend(centers[centerPos]); }
+			for (var centerPos in centers) { bounds.extend(centers[centerPos]); }
 			count += 1;
 			if (count == 1) maxZoom = 13;
 		}

@@ -1,29 +1,52 @@
 .mapContainer {
-	.map {
-		width: 100%;
-		height: 100%;
+	&.fullscreen {
+		bottom: 0;
+		font-size: 10vh;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 9999;
 	}
-}
 
-.mapContainer.fullscreen {
-	z-index: 9999;
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	font-size: 10vh;
-}
+	.map {
+		height: 100%;
+		width: 100%;
+	}
 
-.leaflet-marker-icon{
-	background: none;
-	border: none;
+	.leaflet-marker-pane {
+		.leaflet-marker-icon{
+			background: none;
+			border: none;
 
-	.fa-map-marker {
-		color: black;
-		font-size: 40px;
-		&:hover{
-			cursor: grabbing;
+			.fa-map-marker {
+				color: black;
+				font-size: 30px;
+
+				&:hover{
+					cursor: grabbing;
+				}
+			}
+		}
+	}
+
+	.leaflet-control-container {
+		.leaflet-right {
+			.leaflet-control {
+				.transition(0.5s);
+
+				&:hover {
+					color: @brand-primary;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+	.leaflet-interactive {
+		&:hover {
+			cursor: pointer;
+			fill: #ff1;
 		}
 	}
 }

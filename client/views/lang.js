@@ -8,7 +8,9 @@ lgs = {
 	'fr': { lg: 'fr', name: 'Français', short: 'fr', english:'French'},
 	'it': { lg: 'it', name: 'Italiano', short: 'it', english:'Italian'},
 	'ja': { lg: 'ja', name: '日本語', short: '日本語', english:'Japanese'},
-	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語', english:'Guóyǔ, Taiwanese'}
+	'tr': { lg: 'tr', name: 'Türkçe', short: 'tr', english:'Turkish'},
+	'zh_TW': { lg: 'zh_TW', name: '國語', short: '國語', english:'Guóyǔ, Taiwanese'},
+	'de_ZH': { lg: 'de_ZH', name: 'Züritüütsch', short: 'zri-tü', english:'Zurich German'}
 };
 
 Template.lang_sel.helpers({
@@ -17,7 +19,8 @@ Template.lang_sel.helpers({
 	},
 
 	short: function() {
-		return lgs[Session.get('locale')].short;
+		var lg = lgs[Session.get('locale')];
+		if (lg) return lg.short;
 	}
 
 });

@@ -5,7 +5,6 @@
 		margin-top: 0;
 
 		@media @mobile {
-			font-size: x-large;
 			margin: 20px 0 10px;
 		}
 	}
@@ -19,20 +18,11 @@
 			padding: 0 0 15px;
 
 			input.searchInput {
-				.form-control-humble;
-				font-size: large;
 				height: 38px;
 			}
 
-			button.-findButton {
-				.btn;
-				.btn-success;
-				padding: 8px 12px !important;
-			}
-
+			button.-findButton,
 			button.filter-toggle-btn {
-				.btn;
-				.btn-primary;
 				padding: 8px 12px !important;
 			}
 		}
@@ -41,19 +31,8 @@
 			.grid(12);
 			padding: 0;
 
-			* {
-				.transition(0.5s);
-			}
-
-			h4,
-			h5 {
-				color: @brand-primary;
-			}
-
 			.search_filter_header {
 				.grid(12);
-				border-bottom: 1px solid @light-blue;
-				color: @brand-primary;
 				padding: 0;
 
 				h4 {
@@ -69,10 +48,6 @@
 				.checkbox {
 					label {
 						padding: 0;
-
-						&:hover {
-							color: @brand-primary;
-						}
 					}
 
 					input#hasUpcomingEvent {
@@ -80,15 +55,12 @@
 					}
 
 					.eventcaption_upcoming {
-						background: @light-blue;
 						display: inline-block;
 						height: 20px;
 						position: relative;
-						vertical-align: bottom;
 						width: 28px;
 
 						.eventcaption_upcoming_box {
-							background: @brand-success;
 							height: 10px;
 							position: absolute;
 							right: 0;
@@ -96,7 +68,6 @@
 							width: 7px;
 
 							.eventcaption_upcoming_text {
-								background: #333;
 								left: 2px;
 								height: 1px;
 								position: absolute;
@@ -117,22 +88,12 @@
 						}
 					}
 
-					span.fa-toggle-off,
-					span.fa-toggle-on {
-						color: @brand-primary;
+					span.checked.glyphicon-home {
+						padding: 4px 17px 2px;
 					}
 
-					span.checked {
-						background: @brand-danger;
-						color: #751313;
-
-						&.glyphicon-home {
-							padding: 4px 17px 2px;
-						}
-
-						&.fa-graduation-cap {
-							padding: 4px 15px 2px;
-						}
+					span.checked.fa-graduation-cap {
+						padding: 4px 15px 2px;
 					}
 				}
 			}
@@ -150,53 +111,22 @@
 					margin-bottom: 10px;
 
 					a.dropdown-toggle {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
 						padding: 2px 5px;
-
-						&:hover {
-							color: @brand-primary;
-							cursor: pointer;
-							text-decoration: none;
-						}
-
-						span.glyphicon-plus {
-								font-size: small;
-						}
 					}
 
 					ul.dropdown-menu {
-						background: #ededed;
 						margin-top: 6px;
 
-						li {
-							&:hover {
-								background: darken(#ededed, 5%);
-							}
-
-							&> * {
-								color: @brand-primary;
-								display: inline-block;
-							}
+						li > * {
+							display: inline-block;
 						}
 
-						a {
-							&:hover {
-								background: none;
-							}
-
-							&.category.parent {
-								padding-right: 0;
-							}
+						a.category.parent {
+							padding-right: 0;
 						}
 
 						.show_subcategories {
-							color: rgb(177, 184, 184);
 							padding-right: 20px;
-
-							&:hover {
-								color: @brand-primary !important;
-							}
 						}
 					}
 
@@ -205,14 +135,12 @@
 						margin-left: 20px;
 
 						a {
-							border-left: 1px solid @brand-primary;
 							padding-left: 10px;
 						}
 					}
 				}
 
 				ul.selected_categories {
-					list-style: none;
 					margin: 0;
 					padding-left: 0;
 
@@ -222,8 +150,6 @@
 					}
 
 					span.category {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
 						padding: 2px 5px;
 					}
 				}
@@ -234,27 +160,15 @@
 				margin-bottom: 10px;
 				padding: 0;
 
-				h5 {
-					color: #333;
-				}
-
 				span.group {
-					background: rgba(130, 216, 130, 0.5);
-					color: @brand-primary;
 					margin-bottom: 10px;
 					padding: 2px 5px;
 				}
 			}
 
 			span.glyphicon-remove {
-				color: lighten(@brand-danger, 20%);
-				cursor: pointer;
 				position: relative;
 				top: 2px;
-
-				&:hover {
-					color: @brand-danger;
-				}
 			}
 		}
 	}

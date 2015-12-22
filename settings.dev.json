@@ -1,4 +1,8 @@
 {
 	"testdata": 1,
-	"admins": ["greg", "FeeLing", "IvanZ"]
+	"admins": ["greg", "FeeLing", "IvanZ"],
+	"public": {
+		"siteName": "Hmmm"
+	},
+	"siteEmail": "HMMM@legit.example"
 }
