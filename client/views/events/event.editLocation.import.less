@@ -1,8 +1,19 @@
 .locationFrame {
+	.grid(12);
+	padding: 0;
+
 	.locationEdit {
+		.grid(12);
 		background-color: rgba(200, 200, 255, 0.15);
 		border: 1px solid #CCC;
 		overflow: auto;
+		padding: 0;
+
+		@media @mobile {
+			span.input-group-addon {
+				display: none;
+			}
+		}
 
 		.input-group-addon:first-child {
 			border: none;
@@ -10,7 +21,15 @@
 		}
 
 		.locationSearch {
+			.grid(12, 6);
+			margin: 10px 0;
+
 			.currentLocation {
+				.locationName {
+					display: inline-block;
+					padding-bottom: 5px;
+				}
+
 				span.fa-map-marker {
 					color: darken(@brand-success, 40%);
 				}
@@ -22,6 +41,8 @@
 			}
 
 			.locationSearchbar {
+				padding-bottom: 5px;
+
 				input.-locationName {
 					.form-control-humble;
 				}
@@ -34,21 +55,38 @@
 
 			input.-locationAddress {
 				.form-control-humble;
+				margin-bottom: 5px;
 			}
 
-			.locationCandidate {
-				background-color: rgba(200, 200, 255, 0.35);
-				list-style: none;
+			ul.locationCandidates {
+				padding: 5px 0;
 
-				&.hover {
-					background: rgba(200, 200, 255, 0.75);
-					cursor: pointer;
-					fill: #ff1;
-				}
+				li.locationCandidate {
+					background-color: rgba(200, 200, 255, 0.35);
+					list-style: none;
+					margin-bottom: 4px;
+					padding-left: 5px;
 
-				.address {
-					font-size: 11px;
+					&.hover {
+						background: rgba(200, 200, 255, 0.75);
+						cursor: pointer;
+						fill: #ff1;
+					}
+
+					.address {
+						font-size: 11px;
+					}
 				}
+			}
+		}
+
+		.locationMap {
+			.grid(12, 6);
+			margin: 10px 0;
+			padding-left: 0;
+
+			@media @mobile {
+				padding-left: 15px;
 			}
 		}
 	}
