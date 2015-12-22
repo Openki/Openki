@@ -117,9 +117,9 @@ Template.calendar.onCreated(function() {
 });
 
 Template.calendar.rendered = function() {
-    var currentPath = Router.current().route.path(this);
-    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-    $('a[href="' + currentPath + '"].nav_link').addClass('active');
+	var currentPath = Router.current().route.path(this);
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
 
 Template.calendar_event.rendered = function() {

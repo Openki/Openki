@@ -53,7 +53,7 @@ Accounts.emailTemplates.verifyEmail.text = function(user, url) {
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.username,
-		    URL: url
+			URL: url
 		},
 		"Hi {NAME}\n"
 		+ "\n"
