@@ -156,7 +156,7 @@ Template.newPost.events({
 		
 		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ) ) ){
 		
-			Meteor.call('deleteComment', this.parent._id, function(err, commentId) {
+			Meteor.call('deleteComment', this.parent, function(err, commentId) {
 				if (err) {
 					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
 				}

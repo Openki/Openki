@@ -100,7 +100,7 @@ Meteor.methods({
 		return _commentId;
 	},
 
-	deleteComment: function(commentId) {
+	deleteComment: function(comment) {
 		
 		var user = Meteor.user();
 		if (!user) {
@@ -111,7 +111,17 @@ Meteor.methods({
 				throw new Meteor.Error(401, "please log in");
 			}
 		}
-		var ret = CourseDiscussions.remove( { _id:commentId } );
+		
+		var course = Courses.findOne(comment.course_ID);
+		if (!course) {
+			throw new Meteor.Error(401, "delete not permitted!");
+		}
+		
+		if( !mayDeletePost( user, course, comment) ){
+			throw new Meteor.Error(401, "delete not permitted!");
+		}
+		
+		var ret = CourseDiscussions.remove( { _id:comment._id } );
 		return ret;
 	}
 
