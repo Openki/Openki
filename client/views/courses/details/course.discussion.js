@@ -160,6 +160,10 @@ Template.newPost.events({
 				if (err) {
 					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
 				}
+				else {
+					addMessage(mf('comment.delete.success', {}, 'Commend deleted successfuly.'), 'danger');
+				}
+				
 			});
 			
 		}
