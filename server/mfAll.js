@@ -11248,10 +11248,10 @@ mfPkg.syncAll({
     "profile.group.member": {
       "key": "profile.group.member",
       "lang": "de",
-      "text": "Mitglied der Gruppe \"{NAME}\"",
+      "text": "Mitglied der Gruppe",
       "ctime": 1442431588776,
-      "mtime": 1442431588776,
-      "revisionId": "2Pcg4pkQJmMSjKPGP",
+      "mtime": 1450860771628,
+      "revisionId": "jmKXLeyPpKxaBMjwz",
       "_id": "Eo46gqZT5iKrnGErm"
     },
     "menue.Courses": {
@@ -11914,10 +11914,10 @@ mfPkg.syncAll({
     "privilege.addedAdmin": {
       "key": "privilege.addedAdmin",
       "lang": "de",
-      "text": "Hallo {USER}!\n…",
+      "text": "Adminprivileg wurde vergeben",
       "ctime": 1445853728247,
-      "mtime": 1445853728247,
-      "revisionId": "z6orykorxPNGCQo7v",
+      "mtime": 1450863208738,
+      "revisionId": "8X823vqkCCEvpAqhB",
       "_id": "SvkpMvXfadznXKvFJ"
     },
     "courses.missingorg": {
@@ -12022,10 +12022,10 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "key": "course.discussion.comment_btn.write",
       "lang": "de",
-      "text": "Diskussion",
+      "text": "Adminprivileg wurde vergeben",
       "ctime": 1425258058739,
-      "mtime": 1448919963616,
-      "revisionId": "GedTeXpv73j6j7oKX",
+      "mtime": 1450863230419,
+      "revisionId": "ahfgktnmTgHuPq5YR",
       "_id": "WgdgZoR6QipLYWtLH"
     },
     "event.replication.interval.end": {
@@ -19379,6 +19379,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450827208679,
-  "updatedAt": 1450826162683
+  "exportedAt": 1450863235066,
+  "updatedAt": 1450863230419
 });
