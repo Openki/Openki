@@ -129,6 +129,7 @@ Template.newPost.events({
 	},
 	'click button.update': function () {
 		if (pleaseLogin()) return;
+				
 		var comment = {
 			text: $("#edit_text").val(),
 			title: $("#edit_title").val()
@@ -136,6 +137,7 @@ Template.newPost.events({
 		};
 		
 		comment.course_ID = this.parent.course_ID;
+		comment.user_ID = this.parent.user_ID;
 
 		var templateInstance = Template.instance();
 		Meteor.call('editComment', comment, this.parent._id, function(err, commentId) {

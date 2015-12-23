@@ -76,8 +76,11 @@ Meteor.methods({
 				throw new Meteor.Error(401, "please log in");
 			}
 		}
+				
+		if( !mayEditPost( user, comment) ){
+			throw new Meteor.Error(401, "edit not permitted!");
+		}
 		
-		comment.user_ID = user._id;
 		comment.time_updated = new Date();
 		
 		var course = Courses.findOne(comment.course_ID);
