@@ -1,28 +1,33 @@
-<template name="groupLink">
-	<a class="groupLink" href="/group/{{this}}/{{this.short}}">{{this.short}}</a>
-</template>
-
 <template name="groupPage">
-	<div class="groupPage">
-		<h1>{{mf 'group.details.title' "Courses of {GROUP}" GROUP=this.group.short}}</h1>
-		<h5>{{this.group.name}}</h5>
+	<div class="groupPage container">
+		<div class="groupPageHeader">
+			{{#if groupLogo _id}}
+				<img src="{{groupLogo _id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
+			{{/if}}
+			<h1>{{mf 'group.details.title' "Courses of {GROUP}" GROUP=short}}</h1>
 
-		<div class="description">
-			{{#if this.group.description}}
-				{{this.group.description}}
+			<h4>{{name}}</h4>
+
+			<div class="description">
+				{{#if description}}
+					{{description}}
+				{{/if}}
+			</div>
+
+			<div class="claim">
+				{{#if claim}}
+					<h4>{{claim}}</h4>
+				{{/if}}
+			</div>
+
+			{{#if inGroup}}
+				<h4>
+					edit
+				</h4>
 			{{/if}}
 		</div>
-
-		<div class="claim">
-			{{#if this.group.claim}}
-				{{this.group.claim}}
-			{{/if}}
+		<div class="groupCourses">
+			{{> find query=groupQuery}}
 		</div>
-
-		{{#if inGroup}}
-			<h4>
-				edit
-			</h4>
-		{{/if}}
 	</div>
 </template>

@@ -86,14 +86,6 @@ Template.find.events({
 		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
-	'click .group': function(event, instance) {
-		instance.filter.add('group', ""+this).done();
-		updateUrl(event, instance);
-		if (!instance.showingFilters.get()) instance.showingFilters.set(true);
-		window.scrollTo(0, 0);
-		return false;
-	},
-
 	'click .removeGroupFilter': function(event, instance) {
 		instance.filter.remove('group', ''+this._id).done();
 		updateUrl(event, instance);
