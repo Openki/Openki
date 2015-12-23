@@ -9,9 +9,6 @@ function finderRoute(path) {
 				if (region) Session.set('region', region._id);
 			};
 
-			var showIntro = Session.get("showIntro");
-			Session.set("showIntro", showIntro === null);
-			
 			this.next();
 		},
 		data: function() {
