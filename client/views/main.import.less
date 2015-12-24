@@ -68,9 +68,10 @@ ul.nav-tabs {
 	li {
 		a {
 			color: #555;
+
 			&:hover {
-				color: @body-bg;
 				.transition(0.5s);
+				color: @body-bg;
 			}
 		}
 	}
@@ -93,8 +94,7 @@ select {
 	}
 
 	&:-moz-focusring {
-		// Hack to make outline in Firefox disappear
-		color: rgba(0,0,0,0);
+		color: rgba(0,0,0,0); // Hack to make outline in Firefox disappear
 		text-shadow: 0 0 0 #333;
 	}
 }

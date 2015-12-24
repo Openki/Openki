@@ -16,7 +16,7 @@
 }
 
 .courselist_course_container{
-	.grid(12, 4, 3);
+	.grid(12, 6, 4, 3);
 	border: 5px solid @body-bg;
 	border-bottom-width: 15px;
 	padding: 0;
@@ -108,7 +108,6 @@
 	position: relative;
 	right: -7px;
 	top: -7px;
-	z-index: 3;
 
 	&> div {
 		border-top: 3px solid @body-bg;
@@ -125,8 +124,8 @@
 	background: @brand-success;
 	color: #333;
 	max-height: 150px;
-	text-align: center;
 	padding: 3px;
+	text-align: center;
 
 	.course_eventlist_time,
 	.course_eventlist_date {
@@ -156,16 +155,4 @@
 .course_groups ul.groups-list li {
 	margin-bottom: 5px;
 	position: relative;
-	z-index: 2;
-}
-
-.courselist_course_overlay {
-	.grid(12);
-	padding: 0;
-	height: calc(~"100% + 14px");
-	left: -7px;
-	position: absolute;
-	top: -7px;
-	width: calc(~"100% + 14px") !important;
-	z-index: 1;
 }

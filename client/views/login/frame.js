@@ -17,9 +17,9 @@ Template.loginLogin.onRendered(function() {
 });
 
 Template.loginFrame.helpers({
-    username: function () {
-      return Meteor.user() && Meteor.user().username;
-    },
+	username: function () {
+		return Meteor.user() && Meteor.user().username;
+	},
 });
 
 Template.loginLogin.helpers({

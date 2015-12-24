@@ -6,4 +6,4 @@ UrlTools = {
 
 		return queryParams.join('&');
 	},
-}
+};

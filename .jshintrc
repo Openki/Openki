@@ -1,0 +1,45 @@
+{
+	"laxbreak": true,
+
+	"globals": {
+		"Meteor": false,
+		"DDP": false,
+		"Mongo": false,
+		"Session": false,
+		"Accounts": false,
+		"Template": false,
+		"Blaze": false,
+		"UI": false,
+		"Match": false,
+		"check": false,
+		"Tracker": false,
+		"Deps": false,
+		"ReactiveVar": false,
+		"EJSON": false,
+		"HTTP": false,
+		"Email": false,
+		"Assets": false,
+		"Handlebars": false,
+		"Package": false,
+		"App": false,
+
+		"DDPServer": false,
+		"global": false,
+		"Log": false,
+		"MongoInternals": false,
+		"process": false,
+		"WebApp": false,
+		"WebAppInternals": false,
+
+		"Npm": false,
+		"Tinytest": false,
+
+		"Random": false,
+		"_": false,
+		"$": false,
+		"Router": false,
+
+		"moment": false,
+		"mf": false
+	}
+}

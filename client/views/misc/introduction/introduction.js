@@ -1,12 +1,3 @@
-Template.ticker.helpers({
-	marquee: function() {
-		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.marquee;
-	}
-});
-
-
-/// Introduction
-
 Template.layout.helpers({
 	showIntro: function() {
 		return Template.instance().showIntro.get();

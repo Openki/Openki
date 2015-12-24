@@ -4,7 +4,7 @@ Router.map(function () {
 		template: 'calendar',
 		data: function() { return this.params; },
 		onAfterAction: function() {
-			document.title = webpagename + 'Calendar'
+			document.title = webpagename + 'Calendar';
 		}
 	});
 });
@@ -21,7 +21,7 @@ var updateUrl = function(event, instance) {
 
 	Router.go('calendar', {}, options);
 	event.preventDefault();
-}
+};
 
 Template.calendar.helpers({
 	weekday: function(day) {
@@ -98,10 +98,10 @@ Template.calendar.onCreated(function() {
 	var oldSubs = [];
 	var stopOldSubs = function() {
 		if (eventSub.ready()) {
-			_.map(oldSubs, function(sub) { sub.stop() });
+			_.map(oldSubs, function(sub) { sub.stop(); });
 			oldSubs = [];
 		}
-	}
+	};
 
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
@@ -117,9 +117,9 @@ Template.calendar.onCreated(function() {
 });
 
 Template.calendar.rendered = function() {
-    var currentPath = Router.current().route.path(this)
-    $('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-    $('a[href="' + currentPath + '"].nav_link').addClass('active');
+	var currentPath = Router.current().route.path(this);
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
 
 Template.calendar_event.rendered = function() {
@@ -133,8 +133,8 @@ var mvDateHandler = function(amount, unit) {
 		instance.filter.add('start', start).done();
 		updateUrl(event, instance);
 		return false;
-	}
-}
+	};
+};
 
 Template.calendar.events({
 	'click .nextWeek': mvDateHandler(1, 'week'),

@@ -34,7 +34,16 @@
 <template name="show_categories">
 	<ul class="categories_list">
 		{{#each categories}}
-		<li><a class='category' href="/find?categories={{this}}">{{categoryName}}</a></li>
+		<li>
+			<a
+				class='category'
+				href="/find?categories={{this}}"
+				data-toggle="tooltip"
+				data-html="true"
+				data-original-title="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}">
+				{{categoryName}}
+			</a>
+		</li>
 		{{/each}}
 	</ul>
 </template>

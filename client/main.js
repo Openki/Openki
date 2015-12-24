@@ -25,7 +25,7 @@ regionSub = Meteor.subscribe('regions', function() {
 			return true;
 		}
 		return false;
-	}
+	};
 
 	if (useRegion(localStorage.getItem("region"))) return;
 
@@ -62,7 +62,7 @@ Meteor.startup(function() {
 			return true;
 		}
 		return false;
-	}
+	};
 
 	// Soon everybody will support this, right?
 	var desiredLangs = navigator.languages || [navigator.language];
@@ -78,7 +78,7 @@ Meteor.startup(function() {
 		if (keyval[0] === 'lg') desiredLangs.unshift(keyval[1]);
 	}
 
-	for (l in desiredLangs) {
+	for (var l in desiredLangs) {
 		var langCandidate = desiredLangs[l];
 		if (langCandidate && useLocale(langCandidate)) break;
 	}
@@ -100,6 +100,11 @@ Accounts.onLogin(function() {
 	if (locale) Session.set('locale', locale);
 });
 
+Template.ticker.helpers({
+	marquee: function() {
+		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.marquee;
+	}
+});
 
 Accounts.onEmailVerificationLink(function(token, done) {
 	Accounts.verifyEmail(token, function(error) {

@@ -129,7 +129,7 @@ Template.kioskEventFuture.rendered = function() {
 		height: 70,
 	})
 	this.$('.course_event_desc').dotdotdot({
-		//
+		height: 20,
 	});
 	this.$('.kiosk_event_home').dotdotdot({
 		height: 60,

@@ -19,7 +19,8 @@ Template.lang_sel.helpers({
 	},
 
 	short: function() {
-		return lgs[Session.get('locale')].short;
+		var lg = lgs[Session.get('locale')];
+		if (lg) return lg.short;
 	}
 
 });

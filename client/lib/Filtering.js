@@ -7,11 +7,11 @@ var Predicates = {
 			param: function() { return param; },
 			query: function() { return param; },
 			equals: function(other) { return param === other.get(); }
-		}
+		};
 	},
 	id: function(param) {
 		if (param == 'all') return false;
-		return Predicates.string(param)
+		return Predicates.string(param);
 	},
 	ids: function(param) {
 		var make = function(ids) {
@@ -27,11 +27,13 @@ var Predicates = {
 				query: function() { return ids; },
 				equals: function(other) {
 					var otherIds = other.get();
-					return ids.length === otherIds.length
-						&& _.intersection(ids, otherIds).length === ids.length;
+					return (
+						   ids.length === otherIds.length
+						&& _.intersection(ids, otherIds).length === ids.length
+					);
 				}
-			}
-		}
+			};
+		};
 		return make(_.uniq(param.split(',')));
 	},
 	require: function(param) {
@@ -43,7 +45,7 @@ var Predicates = {
 			param: function() { return '1'; },
 			query: function() { return true; },
 			equals: function(other) { return true; }
-		}
+		};
 	},
 	date: function(param) {
 		if (!param) return undefined;
@@ -57,9 +59,9 @@ var Predicates = {
 			param: function() { return date.format('YYYY-MM-DD'); },
 			query: function() { return date.toDate(); },
 			equals: function(other) { return date.isSame(other.get()); }
-		}
+		};
 	},
-}
+};
 
 CoursePredicates = {
 	region: Predicates.id,
@@ -87,7 +89,7 @@ Filtering = function(availablePredicates) {
 	var self = {};
 	var predicates = {};
 	var settledPredicates = {};
-	var dep = new Tracker.Dependency;
+	var dep = new Tracker.Dependency();
 
 	self.clear = function() { predicates = {}; return this; };
 
@@ -112,7 +114,7 @@ Filtering = function(availablePredicates) {
 	};
 
 	self.read = function(list) {
-		for (name in list) {
+		for (var name in list) {
 			if (availablePredicates[name]) {
 				self.add(name, list[name]);
 			}
@@ -147,7 +149,7 @@ Filtering = function(availablePredicates) {
 
 		if (same) {
 			// Look closer
-			for (name in predicates) {
+			for (var name in predicates) {
 				same = predicates[name].equals(settled[name]);
 				if (!same) break;
 			}
@@ -159,20 +161,20 @@ Filtering = function(availablePredicates) {
 	self.toParams = function() {
 		if (Tracker.active) dep.depend();
 		var params = {};
-		for (name in settledPredicates) {
+		for (var name in settledPredicates) {
 			params[name] = settledPredicates[name].param();
 		}
 		return params;
-	}
+	};
 
 	self.toQuery = function() {
 		if (Tracker.active) dep.depend();
 		var query = {};
-		for (name in settledPredicates) {
+		for (var name in settledPredicates) {
 			query[name] = settledPredicates[name].query();
 		}
 		return query;
-	}
+	};
 
 	return self;
 };

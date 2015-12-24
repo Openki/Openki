@@ -1,0 +1,34 @@
+.course_event_detail {
+	.container;
+
+	.course_event {
+
+		.course_event_date {
+			.grid(12);
+			background: @brand-success;
+			border-bottom: 3px solid @body-bg;
+			padding-bottom: 10px;
+			padding-top: 10px;
+
+			span.date {
+				font-size: x-large;
+			}
+		}
+
+		.course_event_lower_section {
+			.grid(12);
+			padding: 0;
+		}
+
+		.event_detail_description {
+			.grid(12);
+			background: @light-blue;
+		}
+	}
+
+	&>.course_event:hover,
+	&>.calendar_event:hover,
+	&>.calendar_event_past:hover {
+		box-shadow: none;
+	}
+}
