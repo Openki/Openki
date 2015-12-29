@@ -1,15 +1,15 @@
 <template name="calendar">
 	<div class="switchDate">
-		<button class="prevYear"><span class="fa fa-arrow-left"></span> 1 year</button>
-		<button class="prevMonth"><span class="fa fa-arrow-left"></span> 1 month</button>
-		<button class="prevWeek"><span class="fa fa-arrow-left"></span> 1 week</button>
+		<button class="prevYear"><span class="fa fa-arrow-left"></span> {{oneYear}}</button>
+		<button class="prevMonth"><span class="fa fa-arrow-left"></span> {{oneMonth}}</button>
+		<button class="prevWeek"><span class="fa fa-arrow-left"></span> {{oneWeek}}</button>
 		<!--<button class="prevDay"><span class="fa fa-arrow-left"></span>1 day</button>-->
 	&nbsp; &nbsp;<nobr>{{startDate}}</nobr>&nbsp; &nbsp;
 		<div class="right">
 			<!--<button class="nextDay"><span class="fa fa-arrow-right"></span>1 day</button>-->
-			<button class="nextWeek"><span class="fa fa-arrow-right"></span> 1 week</button>
-			<button class="nextMonth"><span class="fa fa-arrow-right"></span> 1 month</button>
-			<button class="nextYear"><span class="fa fa-arrow-right"></span> 1 year</button>
+			<button class="nextWeek"><span class="fa fa-arrow-right"></span> {{oneWeek}}</button>
+			<button class="nextMonth"><span class="fa fa-arrow-right"></span> {{oneMonth}}</button>
+			<button class="nextYear"><span class="fa fa-arrow-right"></span> {{oneYear}}</button>
 		</div>
 	</div>
 	<div class="container-fluid">
