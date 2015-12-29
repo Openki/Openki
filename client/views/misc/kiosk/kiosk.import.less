@@ -1,19 +1,35 @@
 .kiosk {
+	.grid(12);
+	margin-top: -25px;
+
 	.kioskEvent {
-		.make-md-column(2.4);
-		.make-xs-column(6);
+		.grid(6, inherit, 2.4);
 		padding: 7px;
 		height: 230px;
+
 		.future{
 			height: 150px;
 		}
 	}
+
 	.future {
 		height: 165px;
 	}
 
 	.kiosk_events_container{
+		.grid(12);
 		padding-bottom: 0;
+
+		.kiosk_events_title {
+			.grid(12);
+			padding: 0;
+		}
+
+		.kiosk_events {
+			.grid(12);
+			padding: 0;
+			margin-left: -6px;
+		}
 	}
 
 	h3{
@@ -25,24 +41,10 @@
 	}
 
 	a {
-		&:hover {
-			text-decoration: none;
-			.calendar_event {
-				& > .course_event_desc {
-					color: @brand-primary;
-				}
-			}
-		}
-		& > .calendar_event {
-			width: 100%;
-			height: 216px;
-			background: @light-blue;
-			overflow: hidden;
-		}
-
-
-
 		.calendar_event {
+			.grid(12, 6, 3);
+			padding: 0;
+
 			.statingIn{
 				padding-left: 8px;
 				background-color: rgba(255, 255, 255, 0.8);
@@ -55,6 +57,7 @@
 			}
 
 			.kiosk_event_header {
+				.grid(12);
 				background: @brand-success;
 				border-bottom: 3px solid @body-bg;
 				color: @gray-base;
@@ -64,27 +67,74 @@
 				padding-bottom: 10px;
 				border-bottom: 3px solid @body-bg;
 
+				.kiosk_event_date {
+					.grid(6);
+					padding: 0;
+				}
+
 				.kiosk_event_home {
+					.grid(6);
+					padding: 0;
 					text-align: right;
+
+					span.glyphicon {
+						padding-right: 5px;
+					}
 				}
 			}
 
 			.course_event_title {
+				.grid(12);
+
 				& > h3 {
 					color: @gray-base;
+					margin-top: 15px;
 				}
 			}
+
+			.course_event_desc {
+				.grid(12);
+			}
+		}
+
+		&:hover {
+			text-decoration: none;
+			.calendar_event {
+				& > .course_event_desc {
+					color: @brand-primary;
+				}
+			}
+		}
+
+		& > .calendar_event {
+			width: 100%;
+			height: 216px;
+			background: @light-blue;
+			overflow: hidden;
 		}
 	}
 
 	.kiosk_events_ongoing_container {
+		.grid(12);
 		height: 250px;
 		overflow: hidden;
 
+		h3 {
+			margin-top: 0;
+		}
+
+		.kiosk_events_ongoing_title {
+			.grid(6, 12);
+			padding: 0;
+		}
+
 		.kiosk_events_ongoing {
+			.grid(12);
+			padding: 0;
+			margin-left: -6px;
+
 			.kioskEvent {
-				.make-sm-column(2);
-				.make-xs-column(4);
+				.grid(4, 2);
 				padding: 7px;
 				height: 200px;
 				margin-bottom: 10px;
@@ -97,15 +147,27 @@
 
 			.kiosk_event_header {
 				background: rgba(200,250,00,0.2);
+
 				.kiosk_event_date {
+					.grid(12);
+					padding-top: 8px;
 					border: 1px solid @body-bg;
 					border-radius: 1px !important;
 				}
 
 				.kiosk_event_home {
+					.grid(12);
 					padding: 0px !important;
 					text-align: left;
+
+					span.glyphicon {
+						padding-right: 2px;
+					}
 				}
+			}
+
+			.course_event_title h3 {
+				margin: 10px 0;
 			}
 		}
 	}
@@ -124,18 +186,31 @@
 
 
 .kiosk_header {
+	.grid(12);
+
 	h1 {
+		margin: 0;
+		padding-bottom: 15px;
+
 		a.dropdown-toggle {
 			font-size: large;
+			padding-left: 30px;
 
 			&:focus {
 				text-decoration: none;
 			}
 		}
-		
+
 		ul.dropdown-menu {
+			left: 150px;
 			z-index: 1030;
 		}
+	}
+}
+
+.course_event_detail {
+	.kiosk_header {
+		padding: 0;
 	}
 }
 

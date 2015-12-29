@@ -15,11 +15,15 @@ div.grey_out {
 	left: 0;
 	width: 100%;
 	height: 40px;
-	margin-top: 15px;
+	background: none;
 	background: -webkit-linear-gradient(#ffffff, rgba(0, 0, 0, 0));
 	background: -o-linear-gradient(#ffffff, rgba(0, 0, 0, 0));
 	background: -moz-linear-gradient(#ffffff, rgba(0, 0, 0, 0));
 	background: linear-gradient(#ffffff, rgba(0, 0, 0, 0));
+
+	@media @mobile {
+		background: none;
+	}
 }
 
 .fade_effect_bottom {
@@ -28,8 +32,13 @@ div.grey_out {
 	left: 0;
 	width: 100%;
 	height: 40px;
+	background: none;
 	background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #ffffff);
 	background: -o-linear-gradient(rgba(0, 0, 0, 0), #ffffff);
 	background: -moz-linear-gradient(rgba(0, 0, 0, 0), #ffffff);
 	background: linear-gradient(rgba(0, 0, 0, 0), #ffffff);
+
+	@media @mobile {
+		background: none;
+	}
 }
