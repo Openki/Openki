@@ -116,6 +116,14 @@ Handlebars.registerHelper('dateformat', function(date) {
 	if (date) return moment(date).format('L');
 });
 
+Handlebars.registerHelper('dateLong', function(date) {
+	if (date) {
+		Session.get('timeLocale');
+		date = moment(moment(date).toDate());
+		return moment(date).format('LL');
+	}
+});
+
 Handlebars.registerHelper('dateformat_calendar', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).calendar();

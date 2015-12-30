@@ -1,5 +1,5 @@
 <template name="locationlist">
-	<div class="container-fluid" style="padding-left:40px">
+	<div class="locationlist">
 		<h1>{{mf 'locations.list.title' 'Locations'}}</h1>
 	Publically visible locations in {{region}}:    <!-- TODO: -->
 		<div class="">
@@ -17,13 +17,15 @@
 
 
 <template name="location">
-	<div class="locationlist_location">
-		<p class="name"> <a href="{{pathFor 'locationDetails'}}">{{name}}</a></p>
-		<p class="description">{{description}} </p>
+	<div class="locationlist_location location">
+		<a href="{{pathFor 'locationDetails'}}">
+			<div class="name"> {{name}}</div>
+			<div class="description">{{description}} </div>
 
-		{{#if mayHost}}
-		<p class="mylocation">You can host here</p>
-		{{/if}}
+			{{#if mayHost}}
+			<div class="mylocation">You can host here</div>
+			{{/if}}
+		</a>
 	</div>
 </template>
 

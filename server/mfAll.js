@@ -12022,10 +12022,10 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "key": "course.discussion.comment_btn.write",
       "lang": "de",
-      "text": "Adminprivileg wurde vergeben",
+      "text": "Schreiben!",
       "ctime": 1425258058739,
-      "mtime": 1450863230419,
-      "revisionId": "ahfgktnmTgHuPq5YR",
+      "mtime": 1450923771369,
+      "revisionId": "yDsgNQfqesCMbSmBy",
       "_id": "WgdgZoR6QipLYWtLH"
     },
     "event.replication.interval.end": {
@@ -13065,8 +13065,8 @@ mfPkg.syncAll({
       "lang": "de",
       "text": "Lösche meinen Benutzer und mein Profil",
       "ctime": 1442431491841,
-      "mtime": 1442431491841,
-      "revisionId": "ekPwPehJE3AN8fBrb",
+      "mtime": 1450924082492,
+      "revisionId": "7pDypyidJaSwbASet",
       "_id": "nr7f6EDheTRY547Sg"
     },
     "roles.host.short": {
@@ -19379,6 +19379,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450863235066,
-  "updatedAt": 1450863230419
+  "exportedAt": 1450924168170,
+  "updatedAt": 1450924082492
 });

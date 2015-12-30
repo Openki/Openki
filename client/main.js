@@ -95,6 +95,8 @@ Meteor.startup(function() {
 	});
 });
 
+Meteor.startup(Assistant.init);
+
 Accounts.onLogin(function() {
 	var locale = Meteor.user().profile.locale;
 	if (locale) Session.set('locale', locale);

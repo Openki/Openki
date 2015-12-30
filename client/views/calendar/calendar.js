@@ -47,11 +47,7 @@ Template.calendar.helpers({
 	},
 	startDate: function() {
 		Session.get('timeLocale');
-		return moment(Template.instance().filter.get('start')).format('LL');
-	},
-	endDate: function() {
-		Session.get('timeLocale');
-		return Template.instance().filter.get('start').add(1, 'week').format('LL');
+		return moment(Template.instance().filter.get('start'));
 	}
 });
 
@@ -129,7 +125,11 @@ Template.calendar_event.rendered = function() {
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');
-		start.add(amount, unit).startOf('week');
+		if (amount < 0) {
+			start.add(amount, unit).startOf('week');
+		} else {
+			start.add(amount, unit).add(1, 'week').startOf('week');
+		}
 		instance.filter.add('start', start).done();
 		updateUrl(event, instance);
 		return false;
