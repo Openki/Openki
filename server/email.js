@@ -82,7 +82,6 @@ Meteor.methods({
 	report: function(subject, location, report) {
 		var reporter = "A fellow visitor";
 		var rootUrl = Meteor.absoluteUrl()
-		var profileLink ="123"
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {
