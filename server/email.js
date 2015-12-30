@@ -9,11 +9,11 @@ if (Meteor.settings.public && Meteor.settings.public.siteName) {
 
 
 Meteor.methods({
-	sendVerificationEmail: function(){Accounts.sendVerificationEmail(this.userId)}
-})
+	sendVerificationEmail: function() {
+		Accounts.sendVerificationEmail(this.userId);
+	},
 
 
-Meteor.methods({
 	sendEmail: function (userId, text, revealAddress, sendCopy) {
 		check([userId, text], [String]);
 
