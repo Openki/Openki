@@ -1,25 +1,44 @@
 .locationDetails {
-	.grid(12);
+	.container;
 
-	.description {
-		.grid(12, 6);
-		padding: 0;
+	.head{
+		.grid(12);
+		background-color: #ddd;
+		height: 120px;
+		overflow: auto;
+		padding-right: 0;
+
+		.description h1{
+			background-color: #333;
+			display: inline;
+		}
 
 		img {
-			height: 137px; 
-			align: top;
-		}
-
-		.title {
-			font-weight: bold;
+			height: 120px;
+			float: right;
 		}
 	}
 
-	.location_map {
-		.grid(12, 6);
-		padding: 0;
-	}
+	.body{
+		.grid(12);
+		margin-top: 3px;
+		background-color: #eef;
 
+		.descriptionFrame {
+			.grid(12, 6);
+			padding: 0;
+
+			.title {
+				margin-top: 10px;
+				font-weight: bold;
+			}
+		}
+
+		.location_map {
+			.grid(12, 6);
+			padding: 0;
+		}
+	}
 }
 
 
