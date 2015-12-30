@@ -23,14 +23,13 @@
 		<div class="date">
 			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
 			<div class="input-group">
-				<span class="input-group-addon">
+				<label for="edit_event_startdate" class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
+				</label>
 				<input
-					type="date"
+					type="text"
 					id="edit_event_startdate"
 					value="{{localDate start}}"
-					size="8"
 					{{disableForPast}}
 				/>
 			</div>
@@ -42,7 +41,7 @@
 					<span class="glyphicon glyphicon-time"></span>
 				</span>
 				<input
-					type="time"
+					type="text"
 					id="edit_event_starttime"
 					value="{{timeformat start}}"
 					size="5"
@@ -69,7 +68,7 @@
 					<span class="glyphicon glyphicon-time"></span>
 				</span>
 				<input
-					type="time"
+					type="text"
 					id="edit_event_endtime"
 					value="{{timeformat end}}"
 					size="5"
