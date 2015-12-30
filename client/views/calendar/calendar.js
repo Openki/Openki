@@ -47,20 +47,7 @@ Template.calendar.helpers({
 	},
 	startDate: function() {
 		Session.get('timeLocale');
-		return moment(Template.instance().filter.get('start')).format('LL');
-	},
-	endDate: function() {
-		Session.get('timeLocale');
-		return Template.instance().filter.get('start').add(1, 'week').format('LL');
-	},
-	oneWeek: function() {
-		return moment(moment().add(1, 'week')).fromNow(true);
-	},
-	oneMonth: function() {
-		return moment(moment().add(1, 'month')).fromNow(true);
-	},
-	oneYear: function() {
-		return moment(moment().add(1, 'year')).fromNow(true);
+		return moment(Template.instance().filter.get('start'));
 	}
 });
 

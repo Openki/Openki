@@ -1,17 +1,5 @@
 <template name="calendar">
-	<div class="switchDate">
-		<button class="prevYear"><span class="fa fa-arrow-left"></span> {{oneYear}}</button>
-		<button class="prevMonth"><span class="fa fa-arrow-left"></span> {{oneMonth}}</button>
-		<button class="prevWeek"><span class="fa fa-arrow-left"></span> {{oneWeek}}</button>
-		<!--<button class="prevDay"><span class="fa fa-arrow-left"></span>1 day</button>-->
-	&nbsp; &nbsp;<nobr>{{startDate}}</nobr>&nbsp; &nbsp;
-		<div class="right">
-			<!--<button class="nextDay"><span class="fa fa-arrow-right"></span>1 day</button>-->
-			<button class="nextWeek"><span class="fa fa-arrow-right"></span> {{oneWeek}}</button>
-			<button class="nextMonth"><span class="fa fa-arrow-right"></span> {{oneMonth}}</button>
-			<button class="nextYear"><span class="fa fa-arrow-right"></span> {{oneYear}}</button>
-		</div>
-	</div>
+	{{> switchDate date=startDate}}
 	<div class="container-fluid">
 		<div class="calendar container-fluid">
 		{{#each days}}
@@ -20,15 +8,7 @@
 		{{/each}}
 		</div>
 	</div>
-	<button class="prevYear">-1 year</button>
-	<button class="prevMonth">-1 month</button>
-	<button class="prevWeek">-1 week</button>
-	<button class="prevDay">-1 day</button>
-	until: {{endDate}}
-	<button class="nextDay">+1 day</button>
-	<button class="nextWeek">+1 week</button>
-	<button class="nextMonth">+1 month</button>
-	<button class="nextYear">+1 year</button>
+	{{> switchDate date=startDate}}
 </template>
 
 <template name="calendarDay">
@@ -102,4 +82,32 @@
 			<div class="grey_out"></div>
 	  	</div>
 	</a>
+</template>
+
+<template name="switchDate">
+	<div class="switchDate">
+		<div class="left">
+			<button class="prevYear" aria-label="go back one year">
+				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousYear" "one year"}}
+			</button>
+			<button class="prevMonth" aria-label="go back one month">
+				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousMonth" "one month"}}
+			</button>
+			<button class="prevWeek" aria-label="go back one week">
+				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousweek" "one week"}}
+			</button>
+		</div>
+		&nbsp; &nbsp;<nobr>{{dateLong date}}</nobr>&nbsp; &nbsp;
+		<div class="right">
+			<button class="nextWeek" aria-label="go forward one week">
+				{{mf "calendar.button.nextWeek" "one week"}} <span class="fa fa-arrow-right"></span>
+			</button>
+			<button class="nextMonth" aria-label="go forward one month">
+				{{mf "calendar.button.nextMonth" "one month"}} <span class="fa fa-arrow-right"></span>
+			</button>
+			<button class="nextYear" aria-label="go forward one year">
+				{{mf "calendar.button.nextYear" "one year"}} <span class="fa fa-arrow-right"></span>
+			</button>
+		</div>
+	</div>
 </template>
