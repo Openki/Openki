@@ -83,7 +83,7 @@ Accounts.urls.resetPassword = function(token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function(user, url) {
-	return mf('resetPAssword.text',
+	return mf('resetPassword.text',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.username,
