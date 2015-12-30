@@ -1,5 +1,5 @@
 <template name="locationDetails">
-<div style="padding-left:40px">
+<div class="locationDetails">
 	{{#if isEditing}}
 			{{>location_edit}}
 	{{/if}}
@@ -7,32 +7,48 @@
 <!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
 	{{#with location}}
 	{{#unless isEditing}}
-		<div class="course_main">
+		<div class="location_main">
 			<h1 class="name">{{name}}</h1>
 			<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, {{!--> show_locationcategories--}}</p>
-			
-			<img src="{{picture}}" height="137" align="top">
-			<p class="descr">{{mf 'location.details.desc' 'Description:'}} {{description}}</p>
-			<p>{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}<ul class='hosts'>
-			{{#each hosts}}
-				<li>
-					{{>profilelink this}}
-				</li>
-			{{/each}}
-			</ul></p>
-			{{#if contact.web}} <p>{{mf 'location.details.online' 'Website:'}} <a href="{{contact.web}}">{{contact.web}}</a></p> {{/if}}
-			<p>{{mf 'location.details.address' 'Address:'}} {{address}}</p>
-			{{#if route}} <p>{{mf 'location.details.how_go_there' 'How to go there:'}} {{route}}</p> {{/if}}
-			{{#if maxPeople}} <p>{{mf 'location.details.max_ppl' 'Maximum People:'}} {{maxPeople}} </p>  {{/if}}
-			{{#if maxWorkplaces}} <p>{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}} {{maxWorkplaces}} </p> {{/if}}
-			{{#if infra2.def }} <p>{{mf 'location.details.has_projector' 'Has a Projector!'}} </p> {{/if}}
-			{{#if specials}} <p>{{mf 'location.details.specials' 'Specials:'}} {{specials}} </p> {{/if}}
 
+			<div class="description">
+				<img src="{{picture}}">
+				<div class="title">{{mf 'location.details.desc' 'Description:'}}</div> {{description}}
+				<div class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</div>
+				<ul class='hosts'>
+					{{#each hosts}}
+						<li>
+							{{>profilelink this}}
+						</li>
+					{{/each}}
+				</ul>
+				{{#if contact.web}}
+					<div class="title">{{mf 'location.details.online' 'Website:'}} </div>
+					<a href="{{contact.web}}">{{contact.web}}</a>
+				{{/if}}
+				<div class="title">{{mf 'location.details.address' 'Address:'}}</div> {{address}}
+				{{#if route}}
+					<div class="title">{{mf 'location.details.how_go_there' 'How to go there:'}}</div> {{route}}
+				{{/if}}
+				{{#if maxPeople}}
+					<div class="title">{{mf 'location.details.max_ppl' 'Maximum People:'}}</div> {{maxPeople}}
+				{{/if}}
+				{{#if maxWorkplaces}}
+					<div class="title">{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}}</div> {{maxWorkplaces}}
+				{{/if}}
+				{{#if infra2.def }}
+					<div class="title">{{mf 'location.details.has_projector' 'Has a Projector!'}} </div>
+				{{/if}}
+				{{#if specials}}
+					<div class="title">{{mf 'location.details.specials' 'Specials:'}}</div> {{specials}}
+				{{/if}}
+			</div>
 
 			{{#if loc}}
-			<div>{{mf 'location.details.map' 'Map:'}}
+			<div class="location_map">
+				{{mf 'location.details.map' 'Map:'}}
 				<div>{{>map markers=markers width=300 height=300}}</div>
-				{{loc.coordinates.[1]}}{{loc.coordinates.[0]}}
+				Coordinates: {{loc.coordinates.[1]}} {{loc.coordinates.[0]}}
 			</div>
 			{{/if}}
 
@@ -47,11 +63,6 @@
 		</div>
 	{{/unless}}
 	{{/with}}
-<!--
-TODO: locationedit -> create in a new file location.edit  that is location.create aswell.
-in edit mode: add other user to host in this location:
-{search user}->{add user}
--->
 
 </div>
 </template>
