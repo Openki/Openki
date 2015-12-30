@@ -40,6 +40,13 @@ Template.member_roles.helpers({
 	}
 });
 
+Template.roles.helpers({
+	howManyEnrolled: function() {
+		return this.members.length;
+	}
+});
+
+
 Template.member_roles.events({
 	'click button.makeTeam': function(e, template) {
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
