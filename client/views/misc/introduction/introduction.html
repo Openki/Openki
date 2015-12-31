@@ -2,8 +2,10 @@
 	<div class="introduction container -introContainer about">
 		<a href="#" class="-closeIntro close"> <span class="glyphicon glyphicon-remove"> </span> </a>
 		<h3> {{mf 'introduction.Title' 'How it works:'}} </h3>
-		<hr>
-		<div>
+		<a> <div class="-toggleDetails showDetails">show</div> </a>
+		<a> <div class="-toggleDetails hideDetails">hide</div> </a>
+		<div class="content">
+			<hr>
 			<ul>
 				<li> <h2> 1 <span> > </span></h2> <span class="fa fa-lightbulb-o"></span>{{mf 'introduction.1_teachOrLearn' 'You want to learn somethig, or teach others.'}}</li>
 				<li> <h2> 2 <span> > </span></h2> <span class="fa fa-search"></span>{{mf 'introduction.2_searchNPropose' 'You search if the course already exists. If not, you just propose it.'}}</li>

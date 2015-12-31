@@ -30,5 +30,11 @@ Template.layout.events({
 
 	"click #wrap": function(event, instance) {
 		instance.showIntro.set(false);
+	},
+
+	"click .-toggleDetails": function(event, instance) {
+		instance.$('.content').slideToggle(600);
+		instance.$('.hideDetails').toggle(0);
+		instance.$('.showDetails').toggle(0);
 	}
 });

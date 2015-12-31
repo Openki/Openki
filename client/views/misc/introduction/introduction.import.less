@@ -28,46 +28,58 @@
 		margin-bottom: 6px;
 	}
 
-	hr{
-		color: grey;
-		margin-top: 0;
+	.showDetails{
+		display: inline;
+		color: green;
+	}
+	.hideDetails{
+		color: green;
+		display: none;
 	}
 
+	.content{
+		display: none;
 
-	ul{
-		.list-unstyled;
-		font-size: medium;
+		hr{
+			color: grey;
+			margin-top: 0;
+		}
 
-		li{
-			.grid(8, 1.6, 1.6);
+		ul{
+			.list-unstyled;
+			font-size: medium;
 
-			h2{
-				margin-bottom: 8px;
-				margin-top: 0px;
-				padding-left: 35%;
+			li{
+				.grid(8, 1.6, 1.6);
 
-				span {
-					color: grey;
-					opacity: 0.5;
+				h2{
+					margin-bottom: 8px;
+					margin-top: 0px;
+					padding-left: 35%;
+
+					span {
+						color: grey;
+						opacity: 0.5;
+						padding-top: 5px;
+						padding-left: 105%;
+					}
+				}
+
+				span{
+					position: absolute;
 					padding-top: 5px;
-					padding-left: 105%;
+					left: -17px;
+					opacity: 0.6;
+					font-size: 23px;
+				}
+				margin-left: 24px;
+				margin-bottom: 15px;
+				a {
+					text-decoration: underline;
 				}
 			}
-
-			span{
-				position: absolute;
-				padding-top: 5px;
-				left: -17px;
-				opacity: 0.6;
-				font-size: 23px;
-			}
-			margin-left: 24px;
-			margin-bottom: 15px;
-			a {
-				text-decoration: underline;
-			}
 		}
-	}
 
 	padding-bottom: 12px;
+	}
 }
