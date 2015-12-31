@@ -49,10 +49,14 @@ Template.editable.onRendered(function() {
 });
 
 Template.editable.helpers({
-	changed: function() { return Template.instance().changed.get(); },
+	showControls: function() {
+		return Template.instance().changed.get();
+	},
+
 	editableAttrs: function() {
 		var instance = Template.instance();
 		var classes = ['editable'];
+		classes.push(instance.data.simple ? 'simple' : 'rich');
 		if (instance.changed.get()) classes.push('changed');
 		return {
 			'class': classes.join(' '),
