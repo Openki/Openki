@@ -97,7 +97,7 @@ Meteor.publish('groupsFind', function(filter) {
 		delete filter.own;
 		filter.user = this.userId;
 	}
-	return groupsFind(filter);
+	return GroupLib.find(filter);
 });
 
 Meteor.publish('group', function(groupId) {

@@ -26,7 +26,7 @@ Router.map(function() {
 				'involvedIn': coursesFind({ userInvolved: this.params._id }),
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
-				'inviteGroups': groupsFind({ own: true }),
+				'inviteGroups': GroupLib.find({ own: true }),
 				'showPrivileges': showPrivileges
 			};
 		},
