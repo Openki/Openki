@@ -10978,10 +10978,10 @@ mfPkg.syncAll({
     "course.event.edit.duration": {
       "key": "course.event.edit.duration",
       "lang": "de",
-      "text": "Mentor",
+      "text": "Dauer (in Minuten)",
       "ctime": 1425257915571,
-      "mtime": 1450826162683,
-      "revisionId": "y8yDqTcPsGLW3EJtW",
+      "mtime": 1451532374170,
+      "revisionId": "b7p2ysq3tsbsL2Tzy",
       "_id": "AK5LFpLTsGTNREbGM"
     },
     "course.subnav.history": {
@@ -11205,8 +11205,8 @@ mfPkg.syncAll({
       "lang": "de",
       "text": "täglich",
       "ctime": 1434199768652,
-      "mtime": 1434199768652,
-      "revisionId": "ujCZwgnQCdrKDCrjN",
+      "mtime": 1451532880084,
+      "revisionId": "ssyYuogsxxiSwKSHH",
       "_id": "DjW6LM4Be6PctLwNo"
     },
     "course.list.status_titles.has_mentor": {
@@ -19379,6 +19379,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450924168170,
-  "updatedAt": 1450924082492
+  "exportedAt": 1451532896643,
+  "updatedAt": 1451532880084
 });
