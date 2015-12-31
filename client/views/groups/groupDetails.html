@@ -1,33 +1,41 @@
-<template name="groupPage">
+<template name="groupDetails">
 	<div class="groupPage container">
 		<div class="groupPageHeader">
-			{{#if groupLogo _id}}
-				<img src="{{groupLogo _id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
+			{{#if groupLogo group._id}}
+				<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
 			{{/if}}
-			<h1>{{mf 'group.details.title' "Courses of {GROUP}" GROUP=short}}</h1>
+			<h1>{{mf 'group.details.title' "Courses of {GROUP}" GROUP=group.short}}</h1>
 
-			<h4>{{name}}</h4>
+			<h4>
+				{{#if editableName}}
+					{{>editable editableName}}
+				{{else}}
+					{{group.name}}
+				{{/if}}
+			</h4>
 
 			<div class="description">
-				{{#if description}}
-					{{description}}
+				{{#if editableDescription}}
+					{{>editable editableDescription}}
+				{{else}}
+					{{{group.description}}}
 				{{/if}}
 			</div>
 
 			<div class="claim">
-				{{#if claim}}
-					<h4>{{claim}}</h4>
+				{{#if editableClaim}}
+					<h4>{{>editable editableClaim}}</h4>
+				{{else}}
+					{{#if group.claim}}
+						<h4>{{group.claim}}</h4>
+					{{/if}}
 				{{/if}}
 			</div>
-
-			{{#if inGroup}}
-				<h4>
-					edit
-				</h4>
-			{{/if}}
 		</div>
+	{{#if showCourses}}
 		<div class="groupCourses">
-			{{> find query=groupQuery}}
+			{{> find query=courseQuery}}
 		</div>
+	{{/if}}
 	</div>
 </template>

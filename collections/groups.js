@@ -11,7 +11,7 @@
 // ===========================
 
 Groups = new Meteor.Collection("Groups");
-
+GroupLib = {};
 
 /* Find groups for given filters
  * 
@@ -20,7 +20,7 @@ Groups = new Meteor.Collection("Groups");
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-groupsFind = function(filter, limit) {
+GroupLib.find = function(filter, limit) {
 	var find = {};
 	
 	if (filter.own) {
@@ -37,9 +37,71 @@ groupsFind = function(filter, limit) {
 	}
 
 	return Groups.find(find);
-}
+};
+
+GroupLib.isMember = function(userId, groupId) {
+	check(userId, String);
+	check(groupId, String);
+	return Groups.find({
+		_id: groupId,
+		members: userId
+	}).count() > 0;
+};
+
 
 Meteor.methods({
+	saveGroup: function(groupId, changes) {
+		check(groupId, String);
+		check(changes, {
+			short:       Match.Optional(String),
+			name:        Match.Optional(String),
+			claim:       Match.Optional(String),
+			description: Match.Optional(String),
+		});
+
+		var isNew = groupId === 'create';
+
+		// Load group from DB
+		var group;
+		if (isNew) {
+			// Saving user is added as first member of the group
+			group = {
+				members: [Meteor.userId()]
+			};
+		} else {
+			group = Groups.findOne(groupId);
+			if (!group) throw new Meteor.Error(404, "Group not found");
+		}
+
+		// User must be member of group to edit it
+		if (!isNew && !GroupLib.isMember(Meteor.userId(), group._id)) {
+			throw new Meteor.error(401, "Denied");
+		}
+
+		var updates = {};
+		if (changes.short) {
+			updates.short = changes.short.substring(0, 50);
+		}
+		if (changes.hasOwnProperty('name')) {
+			updates.name = changes.name.substring(0, 200);
+		}
+		if (changes.hasOwnProperty('claim')) {
+			updates.claim = changes.claim.substring(0, 1000);
+		}
+		if (changes.hasOwnProperty('description')) {
+			updates.description = changes.description.substring(0, 640*1024);
+			if (Meteor.isServer) {
+				updates.description = saneHtml(updates.description);
+			}
+		}
+
+		if (isNew) {
+			return Groups.insert(_.extend(group, updates));
+		} else {
+			return Groups.update(group._id, { $set: updates });
+		}
+	},
+
 	updateGroupMembership: function(userId, groupId, join) {
 		check(userId, String);
 		check(groupId, String);
@@ -75,11 +137,9 @@ Meteor.methods({
 		if (!senderId) return;
 
 		// Only current members of the group may list courses into groups
-		var group = Groups.findOne({
-			_id: groupId,
-			members: senderId
-		});
-		if (!group) throw new Meteor.Error(401, "Not in group");
+		if (!GroupLib.isMember(senderId, groupId)) {
+			throw new Meteor.Error(401, "Denied");
+		}
 
 		var update;
 		if (join) {

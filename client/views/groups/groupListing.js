@@ -1,6 +1,6 @@
 Template.groupListing.helpers({
 	available: function() {
-		return groupsFind({ own: true });
+		return GroupLib.find({ own: true });
 	},
 
 	inGroup: function(group, course) {
