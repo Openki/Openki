@@ -47,6 +47,8 @@ miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
 // Try to guess a sensible language
 Meteor.startup(function() {
 	var useLocale = function(lang) {
+		if (!lang) return false;
+
 		var locale = false;
 		if (lgs[lang]) {
 			locale = lang;
@@ -64,24 +66,27 @@ Meteor.startup(function() {
 		return false;
 	};
 
-	// Soon everybody will support this, right?
-	var desiredLangs = navigator.languages || [navigator.language];
-	desiredLangs = Array.prototype.slice.call(desiredLangs); // Turn it into a proper array
-	desiredLangs.unshift(localStorage.getItem('locale'));
-	desiredLangs.push('en'); // fallback
+	// Check query parameter and cookies
+	if (useLocale(UrlTools.queryParam('lg'))) return;
+	if (useLocale(localStorage.getItem('locale'))) return;
 
-	// Lg parameter in URL?
-	var parms = location.search.substring(1).split('&');
-	var i = 0;
-	for (; i < parms.length; i += 1) {
-		keyval = parms[i].split('=');
-		if (keyval[0] === 'lg') desiredLangs.unshift(keyval[1]);
+	// Try to access the preferred languages. For the legacy browsers that don't
+	// expose it we could ask the server for the Accept-Language headers but I'm
+	// too lazy to implement this. It would become obsolete anyway.
+	var acceptLangs = Array.prototype.slice.call(navigator.languages);
+	for (var i in navigator.languages || []) {
+		if (useLocale(navigator.languages[i])) return;
 	}
 
-	for (var l in desiredLangs) {
-		var langCandidate = desiredLangs[l];
-		if (langCandidate && useLocale(langCandidate)) break;
-	}
+	// Here we ask for the browser UI language which may not be what the visitor
+	// wanted. Oh well.
+	if (useLocale(navigator.language)) return;
+
+	// Give up. Here's to Cultural Homogenization.
+	useLocale('en');
+});
+
+Meteor.startup(function() {
 	Deps.autorun(function() {
 		var desiredLocale = Session.get('locale');
 		
