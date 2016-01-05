@@ -1,49 +1,68 @@
 .roles_details {
-  .role_details {
-    .enroled_as_title {
-      background: @ownrole;
-      border-top: 3px solid @body-bg;
-      color: #333;
-      font-size: large;
-      line-height: 1.1;
-      vertical-align: middle;
+	.grid(12);
+	padding: 0;
 
-      button.unsubscribe {
-        .btn-thin;
-        .btn-primary;
-      }
-    }
+	.role_details {
+		.grid(12);
+		padding: 0;
 
-    .enrol_as_title {
-      background: @brand-primary;
-      border-top: 3px solid @body-bg;
-      color: @body-bg;
-      font-size: large;
-      line-height: 1.1;
-    }
+		.enroled_as_title {
+			.grid(12);
+			background: @ownrole;
+			border-top: 3px solid @body-bg;
+			color: #333;
+			font-size: large;
+			line-height: 1.1;
+			padding: 10px 15px;
+			vertical-align: middle;
+			width: 100%;
 
-    .enrol_as_options {
-      background: @light-blue;
+			button.unsubscribe {
+				.btn-thin;
+				.btn-primary;
+				margin: -10px 0 -5px 5px;
+			}
+		}
 
-      textarea.enrol_as_comment {
-        .form-control-humble;
-      }
+		.enrol_as_title {
+			.grid(12);
+			background: @brand-primary;
+			border-top: 3px solid @body-bg;
+			color: @body-bg;
+			font-size: large;
+			line-height: 1.1;
+			padding: 10px 15px;
+			width: 100%;
+		}
 
-      .enrol_as_buttons {
-        button.subscribe {
-            .btn;
-            .btn-primary;
-        }
+		.enrol_as_options {
+			.grid(12);
+			background: @light-blue;
+			padding: 10px 12px 11px;
 
-        button.cancel {
-            .btn;
-            .btn-danger;
-        }
-      }
-    }
+			textarea.enrol_as_comment {
+				.form-control-humble;
+				margin-top: 5px;
+			}
 
-    button.enrol {
-      .big-button-success;
-    }
-  }
+			.enrol_as_buttons {
+				.grid(12);
+				padding: 13px 0 0;
+
+				button.subscribe {
+						.btn;
+						.btn-primary;
+				}
+
+				button.cancel {
+						.btn;
+						.btn-danger;
+				}
+			}
+		}
+
+		button.enrol {
+			.big-button-success;
+		}
+	}
 }

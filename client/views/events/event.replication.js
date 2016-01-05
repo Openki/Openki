@@ -6,12 +6,12 @@ Template.eventReplication.onCreated(function() {
 
 
 Template.eventReplication.onRendered(function() {
-	this.$('.replicate_start').datepicker({
+	this.$('.-replicateStart').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		format: 'L',
 	});
 
-	this.$('.replicate_end').datepicker({
+	this.$('.-replicateEnd').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		format: 'L',
 	});
@@ -19,14 +19,20 @@ Template.eventReplication.onRendered(function() {
 	updateReplicas(this);
 });
 
+var replicaStartDate = function(originalDate) {
+	var originalMoment = moment(originalDate);
+	var startMoment = moment.max(originalMoment, moment());
+	startMoment.day(originalMoment.day());
+	return startMoment;
+};
 
 Template.eventReplication.helpers({
 	replicaStart: function() {
-		return moment.max(moment(this.start), moment()).format("L");
+		return replicaStartDate(this.start).format("L");
 	},
 
 	replicaEnd: function() {
-		return moment.max(moment(this.start), moment()).add(1, 'week').format("L");
+		return replicaStartDate(this.start).add(1, 'week').format("L");
 	},
 
 	localDate: function(date) {
@@ -47,14 +53,20 @@ Template.eventReplication.helpers({
 	},
 });
 
+
 var updateReplicas = function(template) {
 	template.replicaDates.set(_.map(getEventFrequency(template), function(interval) { return interval[0]; } ));
-}
+};
 
 
 var getEventFrequency = function(template) {
 	var startDate = moment(template.$('.-replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
+	if (startDate.isBefore(moment())) {
+		// Jump forward in time so we don't have to look at all these old dates
+		startDate = replicaStartDate(startDate);
+	}
+
 	var endDate   = moment(template.$('.-replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.-replicateFrequency:checked').val();
@@ -70,7 +82,7 @@ var getEventFrequency = function(template) {
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
 	var dates = [];
-	while(true) {
+	while(!repStart.isAfter(endDate)) {
 		var daysFromOriginal = repStart.diff(originDay, 'days');
 		if (daysFromOriginal !=0 && repStart.isAfter(now)) {
 			dates.push([
@@ -82,8 +94,6 @@ var getEventFrequency = function(template) {
 		}
 
 		repStart.add(1, unit);
-
-		if (repStart.isAfter(endDate)) break;
 	}
 
 	return dates;
@@ -107,9 +117,9 @@ Template.eventReplication.events({
 				room: template.data.room || '',
 				start: eventTime[0].toDate(),
 				end: eventTime[1].toDate(),
-				files: template.data.files  || new Array(),
-				mentors: template.data.mentors  ||  new Array(),
-				host: template.data.host ||  new Array(),
+				files: template.data.files  || [],
+				mentors: template.data.mentors  ||  [],
+				host: template.data.host ||  [],
 				region: template.data.region || Session.get('region'),
 				groups: template.data.groups,
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica

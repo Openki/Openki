@@ -1,0 +1,80 @@
+.locationDetails {
+	.container;
+
+	.head{
+		.grid(12);
+		background-color: #ddd;
+		height: 120px;
+		overflow: auto;
+		padding-right: 0;
+
+		.description h1{
+			background-color: #333;
+			display: inline;
+		}
+
+		img {
+			height: 120px;
+			float: right;
+		}
+	}
+
+	.body{
+		.grid(12);
+		margin-top: 3px;
+		background-color: #eef;
+
+		.descriptionFrame {
+			.grid(12, 6);
+			padding: 0;
+
+			.title {
+				margin-top: 10px;
+				font-weight: bold;
+			}
+		}
+
+		.location_map {
+			.grid(12, 6);
+			padding: 0;
+		}
+	}
+}
+
+
+.locationlist {
+	.container-fluid;
+	padding-left: 40px;
+
+	.locationlist_location{
+
+	}
+}
+
+
+.location {
+	margin-bottom: 10px;
+
+	a {
+		background-color: #fbb;
+		color: #300;
+		padding-left: 5px;
+		padding-right: 5px;
+		display: inline-block;
+
+		&:hover {
+			.box-shadow-s(rgba(255, 220, 220, 0.5));
+			background: rgba(240, 200, 200, 0.2);
+			text-decoration: none;
+		}
+	}
+
+	.name {
+		font-size: medium;
+	}
+	.description {
+		font-size: small;
+		color: black;
+	}
+
+}

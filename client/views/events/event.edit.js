@@ -20,6 +20,11 @@ Template.eventEdit.onRendered(function() {
 
 
 Template.eventEdit.helpers({
+
+	hasParentCourse: function() {
+		return !! this.course_id;
+	},
+
 	localDate: function(date) {
 		return moment(date).format("L");
 	},
@@ -42,12 +47,12 @@ Template.eventEdit.helpers({
 	},
 
 	currentRegion: function(region) {
-		var currentRegion = Session.get('region')
+		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
 	},
 
 	disableForPast: function() {
-		return this.start > new Date ? '' : 'disabled';
+		return this.start > new Date() ? '' : 'disabled';
 	},
 });
 
@@ -72,7 +77,7 @@ var getEventStartMoment = function(template) {
 var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = readDateTime(
-		startMoment.format('YYYY-MM-DD'),
+		startMoment.format('L'),
 		template.$('#edit_event_endtime').val()
 	);
 
@@ -83,7 +88,7 @@ var getEventEndMoment = function(template) {
 	// in these politically fucked hours.
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
-			startMoment.add(1, 'day').format('YYYY-MM-DD'),
+			startMoment.add(1, 'day').format('L'),
 			template.$('#edit_event_endtime').val()
 		);
 	}
@@ -95,7 +100,7 @@ var getEventEndMoment = function(template) {
 var getEventDuration = function(template) {
 	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
 	return Math.max(0,duration);
-}
+};
 
 
 /* Patch the end time and the duration when start, end or duration changes */
@@ -123,7 +128,7 @@ var updateTimes = function(template, updateEnd) {
 	template.$('#edit_event_starttime').val(start.format('LT'));
 	template.$('#edit_event_endtime').val(end.format('LT'));
 	template.$('#edit_event_duration').val(duration.toString());
-}
+};
 
 Template.eventEdit.events({
 	'change .eventFileInput': function(event, template) {

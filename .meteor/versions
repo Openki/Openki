@@ -94,8 +94,8 @@ mongo-id@1.0.1
 mongo-livedata@1.0.9
 msavin:mongol@1.6.1
 msgfmt:core@2.0.0-preview.14
-msgfmt:extract@2.0.0-preview.10
-msgfmt:ui@2.0.0-preview.5
+msgfmt:extract@2.0.0-preview.12
+msgfmt:ui@2.0.0-preview.6
 nemo64:bootstrap@3.3.5_2
 nemo64:bootstrap-data@3.3.5
 nicolaslopezj:router-layer@0.0.11
@@ -123,6 +123,7 @@ rzymek:moment-locale-es@2.9.0
 rzymek:moment-locale-fr@2.9.0
 rzymek:moment-locale-it@2.9.0
 rzymek:moment-locale-ja@2.9.0
+rzymek:moment-locale-tr@2.9.0
 rzymek:moment-locale-zh-tw@2.9.0
 service-configuration@1.0.5
 servicelocale:geoip@0.1.3

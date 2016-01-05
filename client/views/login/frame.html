@@ -25,7 +25,11 @@
 					</button>
 				</div>
 			</div>
-			{{else}}
+			{{/if}}
+			{{#if forgot}}
+				{{> loginForgot}}
+			{{/if}}
+			{{#if login}}
 				{{> loginLogin}}
 			{{/if}}
 		</div>
@@ -57,6 +61,12 @@
 					</span>
 					<input type="password" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
+			{{#if showForgot}}
+				<button type="button" class="btn btn-secondary -forgot" style="font-size: smaller">
+					<span class="fa fa-wrench"></span>
+					{{mf 'forgot' "Oops I forgot my password"}}
+				</button>
+			{{/if}}
 			</div>
 			<div id="password_warning_incorrect" style="display:none">
 				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
@@ -64,14 +74,16 @@
 			<div id="password_warning" style="display:none">
 				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
-			<div id="show_email" style="display:none" class="form-group">
+			{{#if showEmail}}
+			<div id="show_email" class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-envelope"></span>
 					</span>
-					<input type="email" id="login-email" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
+					<input type="email" id="login-email" class="-loginEmail" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
 				</div>
 			</div>
+			{{/if}}
 			<div id="login_warning" style="display:none">
 				{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
 			</div>
@@ -91,7 +103,7 @@
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
 			</div>
-			{{#unless registering}}
+		{{#unless registering}}
 			<div class="external_logins">
 				<p>{{mf 'frame.login_external_services' 'Or login with:'}}</p>
 				<button class="loginWithService" data-service='Google' title="Login with Google+">
@@ -104,7 +116,40 @@
 					<span class="fa fa-github-square"></span>
 				</button>
 			</div>
-			{{/unless}}
+		{{/unless}}
+		</form>
+	</div>
+</template>
+
+<template name="loginForgot">
+	<div class="container-fluid">
+		<h2>{{mf 'forgot.title' "Password reset"}}</h2>
+		{{mf 'forgot.explanation'
+		"We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
+
+		<form>
+			<div id="show_email" class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-envelope"></span>
+					</span>
+					<input type="email" id="login-email" class="-loginEmail" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
+				</div>
+				{{#unless validEmail}}
+					{{mf 'forgot.notValid' "Please write the address you signed up with."}}
+				{{/unless}}
+			</div>
+			<div id="show_email" class="form-group">
+				<button type="button" class="btn btn-primary -forgotSend" {{disableForInvalidEmail}}>
+					<span class="glyphicon glyphicon-envelope"></span>
+					{{mf 'forgot.send' 'Send me a mail to reset my password'}}
+				</button>
+
+				<button type="button" class="btn btn-secondary -forgotClose">
+					<span class="fa fa-close"></span>
+					{{mf 'forgot.close' 'Never mind'}}
+				</button>
+			</div>
 		</form>
 	</div>
 </template>

@@ -1,6 +1,6 @@
-Template.report.created = function() {
+Template.report.onCreated(function() {
 	this.state = new ReactiveVar('');
-}
+	});
 
 Template.report.helpers({
 	reporting: function() { return Template.instance().state.get() == 'reporting'; },

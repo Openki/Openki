@@ -1,12 +1,10 @@
 .course_main .course_groups {
-	.make-sm-column(12);
-	.make-xs-column(12);
+	.grid(12);
 	padding: 0 0 10px;
 }
 
 .course-groups-list-container {
-	.make-sm-column(12);
-	.make-xs-column(12);
+	.grid(12);
 	padding: 0;
 }
 
@@ -20,21 +18,21 @@ ul.groups-list {
 		margin-bottom: 10px;
 
 		a {
-			color: @brand-primary;
 			background: rgba(130, 216, 130, 0.5);
+			color: @brand-primary;
 			padding: 0 4px 1px;
+
 			&:hover {
-				text-decoration: none;
-				background: rgba(129, 215, 129, 1);
 				.box-shadow-s(rgba(129, 215, 129, 1));
+				background: rgba(129, 215, 129, 1);
+				text-decoration: none;
 			}
 		}
 	}
 }
 
 .course-groups-manage {
-	.make-sm-column(12);
-	.make-xs-column(12);
+	.grid(12);
 	padding: 0 0 10px;
 
 	a.dropdown-toggle {
@@ -48,30 +46,30 @@ ul.groups-list {
 		li {
 			padding: 3px;
 
+			&:hover {
+				background: @brand-primary;
+				color: @body-bg;
+			}
+
 			button {
 				background: none;
 				border: none;
 
-				&.admitToGroup {
-					width: 100%;
-					text-align: left;
-				}
-
-				span.glyphicon-remove {
-					color: lighten(@brand-danger, 20%);
-					.transition(0.5s);
-					position: relative;
-					top: 2px;
-				}
-
 				&:hover span.glyphicon-remove {
 					color: @brand-danger;
 				}
-			}
 
-			&:hover {
-				background: @brand-primary;
-				color: @body-bg;
+				&.admitToGroup {
+					text-align: left;
+					width: 100%;
+				}
+
+				span.glyphicon-remove {
+					.transition(0.5s);
+					color: lighten(@brand-danger, 20%);
+					position: relative;
+					top: 2px;
+				}
 			}
 
 			&.part-of-group {

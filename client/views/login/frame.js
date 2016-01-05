@@ -1,9 +1,80 @@
+Template.loginFrame.created = function() {
+	this.forgot = new ReactiveVar(false);
+}
+
 Template.loginFrame.events({
 	'click .loginLogout': function(event){
 		event.preventDefault();
 		Meteor.logout();
 	},
+
+	'click .-forgot': function(event, instance) {
+		instance.forgot.set(true);
+		return false;
+	},
+
+	'click .-forgotSend': function(event, instance) {
+		Accounts.forgotPassword({
+			email: instance.$('.-loginEmail').val()
+		}, function(err) {
+			if (err) {
+				addMessage(mf('forgot.failedSending', "We were unable to send a mail to this address!"), 'danger');
+			} else {
+				addMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
+				instance.forgot.set(false);
+			}
+		});
+	},
+
+	'click .-forgotClose': function(event, instance) {
+		instance.forgot.set(false);
+		return false;
+	},
 });
+
+Template.loginFrame.helpers({
+	username: function() {
+		return Meteor.user() && Meteor.user().username;
+	},
+
+	forgot: function() {
+		return !Meteor.user() && Template.instance().forgot.get();
+	},
+
+	login: function() {
+		return !Meteor.user() && !Template.instance().forgot.get();
+	},
+});
+
+
+Template.loginForgot.onCreated(function() {
+	this.loginEmail = new ReactiveVar("");
+});
+
+
+var validEmail = function() {
+	var candidate = Template.instance().loginEmail.get();
+	var atPos = candidate.indexOf('@');
+	return atPos > 0 && atPos < candidate.length - 1;
+};
+
+
+Template.loginForgot.helpers({
+	validEmail: validEmail,
+
+	disableForInvalidEmail: function() {
+		return validEmail() ? '' : 'disabled';
+	}
+});
+
+
+Template.loginForgot.events({
+	'change .-loginEmail, keyup .-loginEmail': function(event, instance) {
+		instance.loginEmail.set("" + instance.$('.-loginEmail').val());
+	},
+});
+
+
 
 Template.loginLogin.onRendered(function() {
 	var instance = this;
@@ -13,32 +84,44 @@ Template.loginLogin.onRendered(function() {
 	});
 	instance.closeDropdown = function() {
 		dropdownElm.find("[data-toggle='dropdown']").dropdown('toggle');
-	}
+	};
 });
 
-Template.loginFrame.helpers({
-    username: function () {
-      return Meteor.user() && Meteor.user().username;
-    },
-});
-
-Template.loginLogin.helpers({
-	registering: function () {
-		return Template.instance().registering.get();
-	},
-});
 
 Template.loginLogin.created = function() {
 	this.registering = new ReactiveVar(false);
 }
 
+
+Template.loginLogin.helpers({
+	registering: function() {
+		return Template.instance().registering.get();
+	},
+
+	showForgot: function() {
+		return !Template.instance().registering.get();
+	},
+
+	showEmail: function() {
+		var instance = Template.instance();
+		return instance.registering.get();
+	},
+
+	validEmail: validEmail,
+
+	disableForInvalidEmail: function() {
+		return validEmail() ? '' : 'disabled';
+	}
+});
+
+
 Template.loginLogin.events({
 	'click .loginRegister': function(event, instance){
 		event.preventDefault();
-		if(Template.instance().registering.get()){
+		if (instance.registering.get()) {
 			var name = instance.find('#login-name').value;
 			var password = instance.find('#login-password').value;
-			var email = instance.find('#login-email').value;
+			var email = instance.$('.-loginEmail').val();
 			Accounts.createUser({
 				username: name,
 				password: password,
@@ -68,7 +151,6 @@ Template.loginLogin.events({
 			$('#login_warning').hide(300);
 			$('#login-name').removeClass('username_warning');
 			$('#login-password').removeClass('password_warning');
-			$('#show_email').show(300);
 			Template.instance().registering.set(true);
 		}
 	},
@@ -76,7 +158,6 @@ Template.loginLogin.events({
 	'submit form, click .loginLogin': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
-			$('#show_email').hide(300);
 			$('#password_warning').hide(300);
 			$('#username_warning').hide(300);
 			$('#login-name').removeClass('username_warning');
@@ -112,6 +193,7 @@ Template.loginLogin.events({
 			}
 		});
 	},
+
 	'click .loginWithService': function(event, instance) {
 		event.preventDefault();
 

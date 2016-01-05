@@ -1,5 +1,29 @@
 //This sheet contains site-wide used resets & styles
 
+body {
+	padding-top: 50px;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+#maincontent {
+	padding: 25px 0 50px 0;
+
+	&> *:first-child {
+		padding-top: 0;
+		margin-top: 0;
+	}
+
+	@media @mobile {
+		.find {
+			margin-top: -20px;
+		}
+	}
+}
+
 * {
 	border-radius: 0 !important;
 	outline: none !important;
@@ -17,8 +41,13 @@ p {
 	hyphens: auto;
 }
 
-.dropdown-menu li {
+.dropdown-menu {
+	min-width: 0;
+	width: auto;
+
+	li {
 		cursor: pointer;
+	}
 }
 
 a,
@@ -28,18 +57,28 @@ button {
 
 .tooltip {
 	font-size: @font-size-base;
+	white-space: nowrap;
+
+	&-inner {
+		max-width: none;
+	}
 }
 
 ul.nav-tabs {
 	li {
 		a {
 			color: #555;
+
 			&:hover {
-				color: @body-bg;
 				.transition(0.5s);
+				color: @body-bg;
 			}
 		}
 	}
+}
+
+label {
+	display: block;
 }
 
 span.glyphicon-ok {
@@ -55,8 +94,7 @@ select {
 	}
 
 	&:-moz-focusring {
-		// Hack to make outline in Firefox disappear
-		color: rgba(0,0,0,0);
+		color: rgba(0,0,0,0); // Hack to make outline in Firefox disappear
 		text-shadow: 0 0 0 #333;
 	}
 }

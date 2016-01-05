@@ -29,7 +29,7 @@ Router.map(function () {
 	});
 });
 
-Template.frameEvent.rendered (function() {
+Template.frameEvent.onRendered(function() {
 	this.$('.-eventLocationTime').dotdotdot({
 		height: 50,
 		watch : "window",
@@ -42,7 +42,7 @@ Template.frameEvent.rendered (function() {
 	});
 });
 
-Template.frameEvent.helpers ({
+Template.frameEvent.helpers({
 	timely: function() {
 		return moment().add(1, 'day').isAfter(this) && moment().subtract(1, 'day').isBefore(this);
 	},

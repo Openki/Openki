@@ -121,8 +121,8 @@
 
 
 <template name="kioskEventToday">
-		<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event">
+		<a class="kioskEvent today" href="{{pathFor 'showEvent'}}">
+		<div class="calendar_event today">
 			<div class="statingIn">
 				{{dateformat_fromnow start}}
 			</div>
@@ -145,12 +145,14 @@
 
 
 <template name="kioskEventFuture">
-		<a class="kioskEvent" href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event">
+		<a class="kioskEvent future" href="{{pathFor 'showEvent'}}">
+		<div class="calendar_event future">
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-calendar"></span>
-					{{dateformat start}} {{timeformat start}}
+					{{dateformat start}} <br>
+					<span class="glyphicon glyphicon-time"></span>
+					{{timeformat start}}
 				</div>
 				{{>locationDisplay}}
 			</div>

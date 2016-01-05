@@ -1,29 +1,30 @@
 
 havingRole = function(members, role) {
 	return _.reduce(members, function(ids, member) {
-		if (member.roles.indexOf(role) !== -1) ids.push(member.user)
-			return ids;
-	}, [])
-}
+		if (member.roles.indexOf(role) !== -1) {
+			ids.push(member.user);
+		}
+		return ids;
+	}, []);
+};
 
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
 	members.forEach(function(member_candidate) {
 		if (member_candidate.user == user) {
-			member = member_candidate
+			member = member_candidate;
 			return true; // break
 		}
-	})
+	});
 	return member;
-}
+};
 
 
-mayEdit = function(user, course){
-	if(!user)
-		return false;
-	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id))
-}
+mayEdit = function(user, course) {
+	if(!user) return false;
+	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id));
+};
 
 mayDeletePost = function(user, course,post){
 	if(!user)
@@ -66,13 +67,13 @@ userName = function(userId) {
 	} 
 		
 	return "No_User";
-}
+};
 
 
 /* Go to the same page removing query parameters */
 goBase = function() {
-	Router.go(Router.current().route.name, Router.current().params) // Shirely, you know of a better way?
-}
+	Router.go(Router.current().route.name, Router.current().params); // Shirely, you know of a better way?
+};
 
 
 pleaseLogin = function() {
@@ -82,7 +83,7 @@ pleaseLogin = function() {
 		$('.loginButton').dropdown('toggle');  	//or $('.dropdown').addClass('open');
 	},0);
 	return true;
-}
+};
 
 
 
@@ -105,10 +106,8 @@ Handlebars.registerHelper ("categoryName", function(cat) {
 
 Handlebars.registerHelper ("privacyEnabled", function(){
 	var user = Meteor.user();
-	if(!user)
-		return false;
-	return user.privacy
-	// return user && (user.privacy || course.privacy)   //TODO: send course etc aswell
+	if(!user) return false;
+	return user.privacy;
 });
 
 
@@ -117,7 +116,7 @@ Handlebars.registerHelper("log", function(context) {
 });
 
 Handlebars.registerHelper("title", function() {
-	var les = Array.prototype.slice.call(arguments, 0, -1)
+	var les = Array.prototype.slice.call(arguments, 0, -1);
 	document.title = les.join("");
 });
 
@@ -125,10 +124,16 @@ Handlebars.registerHelper('username', userName);
 
 
 Handlebars.registerHelper('dateformat', function(date) {
-	// We'll need a date formatter at some point
-	//if (date) return date.toDateString();
+	Session.get('timeLocale');
+	if (date) return moment(date).format('L');
+});
 
-	if (date) return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+Handlebars.registerHelper('dateLong', function(date) {
+	if (date) {
+		Session.get('timeLocale');
+		date = moment(moment(date).toDate());
+		return moment(date).format('LL');
+	}
 });
 
 Handlebars.registerHelper('dateformat_calendar', function(date) {
@@ -185,24 +190,13 @@ Handlebars.registerHelper('fromNow', function(date) {
 
 
 Handlebars.registerHelper('isNull', function(val) {
-	return val === null
+	return val === null;
 });
 
 Handlebars.registerHelper('courseURL', function(_id) {
 	var course=Courses.findOne(_id);
 	var name = getSlug(course.name);
-	//var name = course.name.replace(/[^\w\s]/gi, '-').replace(/[_\s]/g, '_')
-	var _id = _id
 	return '/course/' + _id + '/' + name;
-});
-
-
-//Html title attribute of participant-state-sybol in courselist
-Handlebars.registerHelper('isYes', function(val) {
-	return val === 'yes'
-});
-Handlebars.registerHelper('isOntheway', function(val) {
-	return val === 'ontheway'
 });
 
 

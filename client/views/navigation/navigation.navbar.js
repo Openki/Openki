@@ -1,4 +1,4 @@
-Template.navbar.rendered = function() {
+Template.navbar.onRendered(function() {
 	this.$('.dropdown').on('show.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 	});
@@ -17,7 +17,16 @@ Template.navbar.rendered = function() {
 			this.$('a.nav_link.active').removeClass('over_content');
 		}
 	});
-};
+});
+
+Template.navbar.helpers({
+	siteName: function() {
+		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+			return Meteor.settings.public.siteName;
+		}
+		return "Hmmm";
+	}
+});
 
 Template.navbar.events({
 	'click .-clickClose': function(event, instance) {

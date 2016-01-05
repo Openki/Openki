@@ -1,81 +1,94 @@
 <template name="course_events">
 	{{#if haveEvents}}
-	<div class="course_events_fadebox">
-		<div class="course_events">
-		{{#if havePastEvents}}
-			<div name="past_events">
-				<div class="courseEvents-titlebar">
-					<h4><span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.pastList' 'Previous events'}}</h4>				
-				{{#if haveFutureEvents}}
-					<a href="#future_events" class="link">
-						<span class="glyphicon glyphicon-arrow-down"></span> {{mf 'course.events.futureListLink' 'future events'}}
-					</a>
-				{{/if}}
-				</div>
-			{{#each pastEvents}}
-				<div class="course_event_past_container">
-				{{#if this}}
-					{{>course_event}}
-				{{/if}}
-				</div>
-			{{/each}}
-			</div>
-		{{/if}}
-
-			<hr class="now" id="future_events">
-
-		{{#if haveOngoingEvents}}
-			<div class="courseEvents-titlebar">
-				<h4>{{mf 'course.events.ongoinglist' 'Ongoing events'}}</h4>
-			{{#if havePastEvents}}
-				<a href="#past_events" class="link">
-					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastListLink' 'past events'}}
-				</a>
-			{{/if}}
-			</div>
-			<div>
-			{{#each ongoingEvents}}
-				<div class="course_event_container">
-					{{>course_event}}
-				</div>
-			{{/each}}
-			</div>
-		{{/if}}
-
-
-		{{#if haveFutureEvents}}
-			<div class="courseEvents-titlebar">
-				<h4> <span class="glyphicon glyphicon-calendar"></span> {{mf 'course.events.upcominglist' 'Upcoming events'}}</h4>
+		<div class="course_events_fadebox">
+			<div class="course_events">
 				{{#if havePastEvents}}
-				<a href="#past_events" class="link">
-					<span class="glyphicon glyphicon-arrow-up"></span> {{mf 'course.events.pastListLink' 'past events'}}
-				</a>
+					<div name="past_events">
+						<div class="courseEvents-titlebar">
+							<h4>
+								<span class="glyphicon glyphicon-calendar"></span>
+								{{mf 'course.events.pastList' 'Previous events'}}
+							</h4>
+							{{#if haveFutureEvents}}
+								<a href="#future_events" class="link">
+									<span class="glyphicon glyphicon-arrow-down"></span>
+									{{mf 'course.events.futureListLink' 'future events'}}
+								</a>
+							{{/if}}
+						</div>
+						{{#each pastEvents}}
+							<div class="course_event_past_container">
+								{{#if this}}
+									{{>course_event}}
+								{{/if}}
+							</div>
+						{{/each}}
+					</div>
+				{{/if}}
+				<hr class="now" id="future_events">
+				{{#if haveOngoingEvents}}
+					<div class="courseEvents-titlebar">
+						<h4>{{mf 'course.events.ongoinglist' 'Ongoing events'}}</h4>
+						{{#if havePastEvents}}
+							<a href="#past_events" class="link">
+								<span class="glyphicon glyphicon-arrow-up"></span>
+								{{mf 'course.events.pastListLink' 'past events'}}
+							</a>
+						{{/if}}
+					</div>
+					<div>
+						{{#each ongoingEvents}}
+							<div class="course_event_container">
+								{{>course_event}}
+							</div>
+						{{/each}}
+					</div>
+				{{/if}}
+				{{#if haveFutureEvents}}
+					<div class="courseEvents-titlebar">
+						<h4>
+							<span class="glyphicon glyphicon-calendar"></span>
+							{{mf 'course.events.upcominglist' 'Upcoming events'}}
+						</h4>
+						{{#if havePastEvents}}
+							<a href="#past_events" class="link">
+								<span class="glyphicon glyphicon-arrow-up"></span>
+								{{mf 'course.events.pastListLink' 'past events'}}
+							</a>
+						{{/if}}
+					</div>
+					<div>
+						{{#each futureEvents}}
+							<div class="course_event_container">
+								{{>course_event}}
+							</div>
+						{{/each}}
+					</div>
 				{{/if}}
 			</div>
-			<div>
-			{{#each futureEvents}}
-				<div class="course_event_container">
-					{{>course_event}}
-				</div>
-			{{/each}}
-			</div>
-		{{/if}}
+			<div class="fade_effect_top" style="display:none"></div>
+			<div class="fade_effect_bottom"></div>
 		</div>
-		<div class="fade_effect_top" style="display:none"></div>
-		<div class="fade_effect_bottom"></div>
-	</div>
-	<a href="/cal/course/{{course._id}}" target="_blank">
-		<button type="button" class="calendar_download" href="#" data-toggle="tooltip" data-placement="bottom" data-html="true" data-delay='{"show":"500", "hide":"0"}' data-original-title="{{mf 'course.events.download.tooltip' 'Download&nbsp;as&nbsp;vCalendar&nbsp;for&nbsp;your&nbsp;favorite&nbsp;calendar&nbsp;application'}}">
-			<span class="fa fa-download"></span>&nbsp;
-			{{mf 'course.download_cal' 'Download events to my calendar'}}
-		</button>
-	</a>
+		<a href="/cal/course/{{course._id}}" target="_blank">
+			<button
+				type="button"
+				class="calendar_download"
+				href="#"
+				data-toggle="tooltip"
+				data-placement="top"
+				data-html="true"
+				data-delay='{"show":"500", "hide":"0"}'
+				data-original-title="{{mf 'course.events.download.tooltip'}}">
+				<span class="fa fa-download"></span>&nbsp;
+				{{mf 'course.download_cal' 'Download events to my calendar'}}
+			</button>
+		</a>
 	{{/if}}
 	{{#if mayAdd}}
-	<button type="button" class="eventEdit">
-		<span class="glyphicon glyphicon-plus"></span>&nbsp;
-		{{mf 'course.events.addButton' 'Add event'}}
-	</button>
+		<button type="button" class="eventEdit">
+			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			{{mf 'course.events.addButton' 'Add event'}}
+		</button>
 	{{/if}}
 </template>
 

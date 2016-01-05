@@ -1,63 +1,111 @@
 #history {
-  * {
-    .transition(0.5s)
-  }
+	.grid(12);
+	padding: 0 0 10px;
 
-  .timeline-pre,
-  .timeline-post {
-    .timeline-start-container,
-    .timeline-end-container {
-      .timeline-start {
-        #gradient.vertical(@light-blue;@brand-primary;0%;100%);
-      }
+	* {
+		.transition(0.5s)
+	}
 
-      .timeline-end {
-        #gradient.vertical(@brand-primary;@light-blue;0%;100%);
-      }
-    }
-  }
+	.timeline-pre,
+	.timeline-post {
+		.grid(12);
+		height: 30px;
+		padding: 0;
 
-  .timeline {
-    .timeline-eventdate {
-      color: rgb(109, 112, 112);
-      text-align: right;
+		.timeline-start-container,
+		.timeline-end-container {
+			.grid(1);
+			.grid-offset(0, 3);
+			height: 100%;
+			padding: 0;
 
-      &.active {
-        color: #333;
-      }
-    }
+			.timeline-start,
+			.timeline-end {
+				height: 100%;
+				margin: auto;
+				width: 1px;
+			}
 
-    .timeline-eventline-container {
-      .timeline-eventline {
-        background: @brand-primary;
-      }
+			.timeline-start {
+				#gradient.vertical(@light-blue;@brand-primary;0%;100%);
+			}
 
-      .timeline-eventpoint {
-        background: @brand-primary;
-        border-radius: 50% !important;
+			.timeline-end {
+				#gradient.vertical(@brand-primary;@light-blue;0%;100%);
+			}
+		}
 
-        &.active {
-          background: @brand-danger;
-        }
-      }
-    }
-  }
+		.timeline-header {
+			.grid(8);
+			height: 100%;
+			padding: 0;
+		}
+	}
+
+	.timeline {
+		.grid(4);
+		height: 20px;
+		padding: 0;
+
+		.timeline-eventdate {
+			.grid(9);
+			color: rgb(109, 112, 112);
+			padding: 0;
+			text-align: right;
+
+			&.active {
+				color: #333;
+			}
+		}
+
+		.timeline-eventline-container {
+			.grid(3);
+			height: 100%;
+			padding: 0;
+
+			.timeline-eventline {
+				height: 100%;
+				margin: auto;
+				width: 1px;
+				background: @brand-primary;
+			}
+
+			.timeline-eventpoint {
+				background: @brand-primary;
+				border-radius: 50% !important;
+				bottom: 13px;
+				height: 7px;
+				margin: auto;
+				position: relative;
+				width: 7px;
+
+				&.active {
+					background: @brand-danger;
+				}
+			}
+		}
+	}
 }
 
 .coursehistory-event {
-  &:hover a {
-    color: #333;
+	.grid(8);
+	height: 20px;
+	padding: 0;
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+	&:hover a {
+		color: #333;
 
-  a {
-    color: @brand-primary;
-  }
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 
-  h4 {
-    text-align: center;
-  }
+	a {
+		color: @brand-primary;
+	}
+
+	h4 {
+		padding-top: 10px;
+		text-align: center;
+	}
 }
