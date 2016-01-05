@@ -20,15 +20,29 @@ Router.onBeforeAction(function() {
 // we just set it to 'all regions'.
 regionSub = Meteor.subscribe('regions', function() {
 	var useRegion = function(regionId) {
-		if (regionId == 'all' || Regions.findOne({ _id: regionId })) {
+		if (!regionId) return;
+		if (regionId == 'all') {
 			Session.set("region", regionId);
+			return true;
+		}
+		if (Regions.findOne({ _id: regionId })) {
+			Session.set("region", regionId);
+			return true;
+		}
+
+		var region = Regions.findOne({ name: regionId });
+		if (region) {
+			Session.set("region", region._id);
 			return true;
 		}
 		return false;
 	};
 
+	// Region parameter in URL or in storage?
+	if (useRegion(UrlTools.queryParam('region'))) return;
 	if (useRegion(localStorage.getItem("region"))) return;
 
+	// Ask server to place us
 	Meteor.call('autoSelectRegion', function(error, regionId) {
 		if (useRegion(regionId)) return;
 
