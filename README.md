@@ -10,7 +10,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 [  read on...](http://openki.net "our blog")  
 <div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
-- Demo: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
+- Demo/Playground: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
 - Live: [alpha.openki.net](https://alpha.openki.net)
 - Concept: [openki.net](http://openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
@@ -33,7 +33,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :envelope: Email notifications
 - :open_file_folder: File upload for course-documentation
 - :computer: additional views with upcomming events for information-displays and iframes
-
+- :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
 - :closed_lock_with_key: Privacy settings and security
@@ -46,11 +46,11 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :iphone: Smartphone App
 
 ### Installation (Linux, OSX and Windows)
-- To install Meteor, run: `curl https://install.meteor.com | sh`  (dl. [Installer](https://install.meteor.com/windows) for Win)
-- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or clone Hmmm into /some/path
+- To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
+- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone` Hmmm into /some/path
 - `cd /some/path`
 - Run `meteor --settings settings.dev.json`
-- Browse to [localhost:3000](http://localhost:3000/) -> done.
+- Browse to [localhost:3000](http://localhost:3000/)  -> done.
 
 #### Technical documentation
 - The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
