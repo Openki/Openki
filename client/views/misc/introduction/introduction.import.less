@@ -1,0 +1,73 @@
+.introduction{
+	color: @brand-primary;
+	margin-top: 10px;
+	background-color: #fafafa;
+	transition: all 1s;
+
+	&:hover{
+		background-color: #f4f4f4;
+		transition: all 1s;
+	}
+	//opacity: 0.9;
+	padding-top: 2px;
+
+	.close{
+		position: relative;
+		right: -5px;
+		top: 2px;
+		color: grey;
+		opacity: 0.5;
+		&:hover{
+			color: red;
+			opacity: 0.8;
+		}
+	}
+
+	h3{
+		margin-top: 5px;
+		margin-bottom: 6px;
+	}
+
+	hr{
+		color: grey;
+		margin-top: 0;
+	}
+
+
+	ul{
+		.list-unstyled;
+		font-size: medium;
+
+		li{
+			.grid(8, 1.6, 1.6);
+
+			h2{
+				margin-bottom: 8px;
+				margin-top: 0px;
+				padding-left: 35%;
+
+				span {
+					color: grey;
+					opacity: 0.5;
+					padding-top: 5px;
+					padding-left: 105%;
+				}
+			}
+
+			span{
+				position: absolute;
+				padding-top: 5px;
+				left: -17px;
+				opacity: 0.6;
+				font-size: 23px;
+			}
+			margin-left: 24px;
+			margin-bottom: 15px;
+			a {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	padding-bottom: 12px;
+}

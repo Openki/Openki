@@ -8,6 +8,7 @@ function finderRoute(path) {
 				var region = Regions.findOne({ name: this.params.query.region })
 				if (region) Session.set('region', region._id);
 			};
+
 			this.next();
 		},
 		data: function() {

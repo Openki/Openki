@@ -3,7 +3,13 @@
 		<h4>
 			<span class="fa fa-users"></span>
 			&nbsp;
-			{{mf 'course.dtails.paticipants.title' 'Participants'}}
+			{{#mf KEY='course.dtails.paticipants.title' NUM=howManyEnrolled}}
+				{NUM, plural,
+					=0 {No participants yet}
+					one {1 Participant}
+					other {# Participants}
+				}
+			{{/mf}}
 		</h4>
 	</div>
 	{{#if members}}

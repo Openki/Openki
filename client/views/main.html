@@ -14,8 +14,13 @@
 
 <template name="layout">
 	<div id="wrap">
-		{{> navbar}}
-		<div id="outer">
+		<div id="topBar">
+			{{> navbar}}
+		</div>
+		<div id="outer" class={{testWarningClass}}>
+			{{#if showIntro}}
+			{{> introduction}}
+			{{/if}}
 			<div id="maincontent">
 				{{> yield}}
 				{{> messages}}
@@ -70,13 +75,4 @@
 			</li>
 		{{/each}}
 	</ul>
-</template>
-
-<template name="ticker">
-	{{#if marquee}}
-		<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
-		{{mf 'menue.Testpage' 'This is only a Testpage. '}}<span style = "padding-left:10em"> </span>
-		{{mf 'menue.Testpage2' 'All data will be erased regularly. '}}<span style = "padding-left:10em"> </span>
-		</marquee>
-	{{/if}}
 </template>

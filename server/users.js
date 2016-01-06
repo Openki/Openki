@@ -1,9 +1,8 @@
-
 Accounts.onCreateUser(function(options, user) {
 	if (options.profile) {
 		user.profile = options.profile;
 	} else {
-		user.profile = {}
+		user.profile = {};
 	}
 	// Collect info where a username could possibly be found
 	var name_providers = [user, user.profile];
@@ -13,7 +12,7 @@ Accounts.onCreateUser(function(options, user) {
 	var name = false;
 	var username = false;
 	var provider = false;
-	while(provider = name_providers.pop()) {
+	while ((provider = name_providers.pop()) !== undefined) {
 		if (!name && provider.name) name = provider.name;
 		if (!username && provider.username) username = provider.username;
 	}
@@ -33,20 +32,21 @@ Accounts.onCreateUser(function(options, user) {
 	return user;
 });
 
+
 Accounts.config({
 	sendVerificationEmail: true
 });
 
 
 Accounts.emailTemplates.verifyEmail.subject = function(user) {
-	return mf('enrollAccount.subject',
+	return mf('verifyEmail.subject',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.name
 		},
 		"Welcome to the {SITE} community, {NAME}"
 	);
-}
+};
 
 Accounts.emailTemplates.verifyEmail.text = function(user, url) {
 	return mf('verifyEmail.text',
@@ -59,10 +59,46 @@ Accounts.emailTemplates.verifyEmail.text = function(user, url) {
 		+ "\n"
 		+ "We're happy that you are part of the {SITE} community.\n"
 		+ "\n"
-		+ "You can click on {URL} to verify your email address. \n"
+		+ "You can click this link \n"
+		+ "{URL}\n"
+		+ "to verify your email address. \n"
 		+ "This helps us knowing you're a real person. :)\n"
 		+ "\n"
 		+ "Sincerely\n"
 		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)"
 	);
-}
+};
+
+Accounts.emailTemplates.resetPassword.subject = function(user) {
+	return mf('resetPassword.subject',
+		{
+			SITE: Accounts.emailTemplates.siteName,
+		},
+		"Reset your password on {SITE}"
+	);
+};
+
+Accounts.urls.resetPassword = function(token) {
+	return Meteor.absoluteUrl('reset-password/' + token);
+};
+
+Accounts.emailTemplates.resetPassword.text = function(user, url) {
+	return mf('resetPassword.text',
+		{
+			SITE: Accounts.emailTemplates.siteName,
+			NAME: user.username,
+			URL: url
+		},
+		"Hi {NAME}\n"
+		+ "\n"
+		+ "You requested to reset your password on {SITE}.\n"
+		+ "\n"
+		+ "You can click on \n"
+		+ "{URL}\n"
+		+ "to reset your password. \n"
+		+ "If you did not request this message, you can safely delete it.\n"
+		+ "\n"
+		+ "Regards\n"
+		+ "{SITE} server at your service"
+	);
+};

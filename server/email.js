@@ -9,11 +9,11 @@ if (Meteor.settings.public && Meteor.settings.public.siteName) {
 
 
 Meteor.methods({
-	sendVerificationEmail: function(){Accounts.sendVerificationEmail(this.userId)}
-})
+	sendVerificationEmail: function() {
+		Accounts.sendVerificationEmail(this.userId);
+	},
 
 
-Meteor.methods({
 	sendEmail: function (userId, text, revealAddress, sendCopy) {
 		check([userId, text], [String]);
 
@@ -82,7 +82,6 @@ Meteor.methods({
 	report: function(subject, location, report) {
 		var reporter = "A fellow visitor";
 		var rootUrl = Meteor.absoluteUrl()
-		var profileLink ="123"
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {

@@ -12,7 +12,7 @@
 .course_events {
 	.grid(12);
 	height: 400px;
-	margin: 15px 0 0 -5px;
+	margin-left: -5px;
 	overflow: auto;
 	padding: 0;
 	position: relative;
@@ -23,6 +23,7 @@
 
 	hr {
 		clear: both;
+		margin-bottom: 0;
 	}
 }
 
@@ -54,6 +55,8 @@
 
 .course_event_past_container .course_event_date,
 .course_event_past_container .course_event_lower_section {
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
 	opacity: 0.6;
 }
 

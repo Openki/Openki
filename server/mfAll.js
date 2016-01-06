@@ -10978,10 +10978,10 @@ mfPkg.syncAll({
     "course.event.edit.duration": {
       "key": "course.event.edit.duration",
       "lang": "de",
-      "text": "Mentor",
+      "text": "Dauer (in Minuten)",
       "ctime": 1425257915571,
-      "mtime": 1450826162683,
-      "revisionId": "y8yDqTcPsGLW3EJtW",
+      "mtime": 1451532374170,
+      "revisionId": "b7p2ysq3tsbsL2Tzy",
       "_id": "AK5LFpLTsGTNREbGM"
     },
     "course.subnav.history": {
@@ -11205,8 +11205,8 @@ mfPkg.syncAll({
       "lang": "de",
       "text": "täglich",
       "ctime": 1434199768652,
-      "mtime": 1434199768652,
-      "revisionId": "ujCZwgnQCdrKDCrjN",
+      "mtime": 1451532880084,
+      "revisionId": "ssyYuogsxxiSwKSHH",
       "_id": "DjW6LM4Be6PctLwNo"
     },
     "course.list.status_titles.has_mentor": {
@@ -11248,10 +11248,10 @@ mfPkg.syncAll({
     "profile.group.member": {
       "key": "profile.group.member",
       "lang": "de",
-      "text": "Mitglied der Gruppe \"{NAME}\"",
+      "text": "Mitglied der Gruppe",
       "ctime": 1442431588776,
-      "mtime": 1442431588776,
-      "revisionId": "2Pcg4pkQJmMSjKPGP",
+      "mtime": 1450860771628,
+      "revisionId": "jmKXLeyPpKxaBMjwz",
       "_id": "Eo46gqZT5iKrnGErm"
     },
     "menue.Courses": {
@@ -11914,10 +11914,10 @@ mfPkg.syncAll({
     "privilege.addedAdmin": {
       "key": "privilege.addedAdmin",
       "lang": "de",
-      "text": "Hallo {USER}!\n…",
+      "text": "Adminprivileg wurde vergeben",
       "ctime": 1445853728247,
-      "mtime": 1445853728247,
-      "revisionId": "z6orykorxPNGCQo7v",
+      "mtime": 1450863208738,
+      "revisionId": "8X823vqkCCEvpAqhB",
       "_id": "SvkpMvXfadznXKvFJ"
     },
     "courses.missingorg": {
@@ -12022,10 +12022,10 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "key": "course.discussion.comment_btn.write",
       "lang": "de",
-      "text": "Diskussion",
+      "text": "Schreiben!",
       "ctime": 1425258058739,
-      "mtime": 1448919963616,
-      "revisionId": "GedTeXpv73j6j7oKX",
+      "mtime": 1450923771369,
+      "revisionId": "yDsgNQfqesCMbSmBy",
       "_id": "WgdgZoR6QipLYWtLH"
     },
     "event.replication.interval.end": {
@@ -13065,8 +13065,8 @@ mfPkg.syncAll({
       "lang": "de",
       "text": "Lösche meinen Benutzer und mein Profil",
       "ctime": 1442431491841,
-      "mtime": 1442431491841,
-      "revisionId": "ekPwPehJE3AN8fBrb",
+      "mtime": 1450924082492,
+      "revisionId": "7pDypyidJaSwbASet",
       "_id": "nr7f6EDheTRY547Sg"
     },
     "roles.host.short": {
@@ -19379,6 +19379,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1450827208679,
-  "updatedAt": 1450826162683
+  "exportedAt": 1451532896643,
+  "updatedAt": 1451532880084
 });
