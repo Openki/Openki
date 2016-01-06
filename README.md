@@ -10,7 +10,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 [  read on...](http://openki.net "our blog")  
 <div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
-- Demo: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
+- Demo/Playground: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
 - Live: [alpha.openki.net](https://alpha.openki.net)
 - Concept: [openki.net](http://openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
@@ -33,7 +33,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :envelope: Email notifications
 - :open_file_folder: File upload for course-documentation
 - :computer: additional views with upcomming events for information-displays and iframes
-
+- :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
 - :closed_lock_with_key: Privacy settings and security
