@@ -1,6 +1,6 @@
 <template name="navbar">
 	<nav class="navbar" id="topnavbar" role="navigation">
-		{{> ticker}}
+		{{#if showTestWarning}} {{> testWarningTicker}} {{/if}}
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-container">
 		<div class="navbar-header">
@@ -70,4 +70,14 @@
 		</div>
 	</div>
 	</nav>
+</template>
+
+
+<template name="testWarningTicker">
+	<marquee	bgcolor = "000000" direction="left" scrollamount="5" scrolldelay="1" style="color: white;">
+		⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
+		<span style = "padding-left:10em"> </span>
+		☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
+		<span style = "padding-left:10em"> </span>
+	</marquee>
 </template>
