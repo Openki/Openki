@@ -2,142 +2,125 @@
 // "_id"          -> ID
 // "title"        -> String
 // "text"         -> String
-// "user_ID"      -> ID_users
-// "course_ID"    -> ID_Courses
+// "userId"       -> ID_users
+// "courseId"     -> ID_Courses
 // "time_created" -> Date
 // "time_updated" -> Date
-// "parent_ID"    -> ID_CourseDiscussions  (optional)
+// "parentId"     -> ID_CourseDiscussions  (optional)
 // ===========================
 
 CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 
 
-
 mayDeletePost = function(user, course,post){
-	if(!user)
-		return false;
-	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.user_ID == user._id ) )
+	if (!user) return false;
+	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
 }
 
 mayEditPost = function(user, post){
-	if(!user)
-		return false;
-	return user && ( post.user_ID == user._id ) 
+	if (!user) return false;
+	return user && post.userId == user._id;
 }
 
+var sanitizeComment = function(comment) {
+	return {
+		title: saneText(comment.title).substr(0, 200).trim(),
+		text: saneText(comment.text).substr(0, 640*1024).trim(),
+	};
+};
+
 Meteor.methods({
-	postComment: function(comment, anon) {
+	postComment: function(comment) {
 		check(comment, {
-			course_ID: String,
-			parent_ID: Match.Optional(String),
+			courseId: String,
+			parentId: Match.Optional(String),
 			title: String,
-			text: String
+			text: String,
+			anon: Boolean,
 		});
-		
+
+		var saneComment = sanitizeComment(comment);
+
 		var user = Meteor.user()
-		if (user && !anon) {
-			comment.user_ID = user._id;
+		if (user && !comment.anon) {
+			saneComment.userId = user._id;
 		}
-		
-		comment.time_created = new Date();
-		
-		var course = Courses.findOne(comment.course_ID);
+
+		saneComment.time_created = new Date();
+
+		var course = Courses.findOne(comment.courseId);
 		if (!course) {
 			throw new Meteor.Error(404, "course not found");
 		}
-		
-		if (comment.parent_ID) {
-			var parentComment = CourseDiscussions.findOne(comment.parent_ID);
+		saneComment.courseId = course._id;
+
+		if (comment.parentId) {
+			var parentComment = CourseDiscussions.findOne(comment.parentId);
 			if (!parentComment) {
 				throw new Meteor.Error(404, "parent comment not found");
 			}
-			
-			if (parentComment.course_ID !== comment.course_ID) {
+
+			if (parentComment.courseId !== comment.courseId) {
 				// I could try to mend this but why should I?
-				throw new Meteor.Error(400, "Course mismatch"); 
+				throw new Meteor.Error(400, "Course mismatch");
 			}
-			
+
 			// No nesting beyond one level
-			if (parentComment.parent_ID) {
-				throw new Meteor.Error(400, "Nesting error"); 
+			if (parentComment.parentId) {
+				throw new Meteor.Error(400, "Nesting error");
 			}
+
+			saneComment.parentId = parentComment._id;
 		}
-		
-		comment.title = saneText(comment.title).substr(0, 200);
-		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
-		
-		var commentId = CourseDiscussions.insert(comment);
-		
-		return commentId;
+
+		return CourseDiscussions.insert(saneComment);
 	},
 
-	
-	editComment: function(comment, commentId) {
+
+	editComment: function(comment) {
 		check(comment, {
-			course_ID: String,
-			parent_ID: Match.Optional(String),
+			_id: String,
 			title: String,
-			text: String,
+			text: String
 		});
-		
+
+		var update = sanitizeComment(comment);
+
+		var originalComment = CourseDiscussions.findOne(comment._id);
+		if (!originalComment) throw new Meteor.error(404, "no such comment");
+
 		var user = Meteor.user();
-		if (!user) {
-			if (Meteor.is_client) {
-				pleaseLogin();
-				return;
-			} else {
-				throw new Meteor.Error(401, "please log in");
-			}
-		}
-				
-		if( !mayEditPost( user, comment) ){
-			throw new Meteor.Error(401, "edit not permitted!");
-		}
+		if (!mayEditPost(user, originalComment)) throw new Meteor.error(401, "you cant");
+
+		update.time_updated = new Date();
 		
-		comment.time_updated = new Date();
-		
-		var course = Courses.findOne(comment.course_ID);
-		if (!course) {
-			throw new Meteor.Error(401, "edit not permitted!");
-		}
-		
-		comment.title = saneText(comment.title).substr(0, 200);
-		comment.text = htmlize(comment.text.substr(0, 640*1024).trim());
-		
-		var _commentId = CourseDiscussions.update( { _id:commentId }, comment );
-				
-		// HACK update course so time_lastchange is updated
-		// ES: I added a new field time_updated to comments themselves 
-		// so that this would not be necessary aymore
-		//Meteor.call("save_course", course._id, {});
-		return _commentId;
+		CourseDiscussions.update(originalComment._id, { $set: update });
 	},
 
-	deleteComment: function(comment) {
-		
+	
+	deleteComment: function(commentId) {
+		check(commentId, String);
+
 		var user = Meteor.user();
 		if (!user) {
-			if (Meteor.is_client) {
-				pleaseLogin();
-				return;
-			} else {
-				throw new Meteor.Error(401, "please log in");
-			}
+			throw new Meteor.Error(401, "please log in");
 		}
 		
-		var course = Courses.findOne(comment.course_ID);
+		var comment = CourseDiscussions.findOne(commentId);
+		if (!comment) {
+			throw new Meteor.error(404, "no such comment");
+		}
+
+		var course = Courses.findOne(comment.courseId);
 		if (!course) {
-			throw new Meteor.Error(401, "delete not permitted!");
+			throw new Meteor.Error(401, "delete not permitted");
+		}
+
+		if( !mayDeletePost(user, course, comment) ) {
+			throw new Meteor.Error(401, "delete not permitted");
 		}
 		
-		if( !mayDeletePost( user, course, comment) ){
-			throw new Meteor.Error(401, "delete not permitted!");
-		}
-		
-		var ret = CourseDiscussions.remove( { _id:comment._id } );
-		return ret;
+		CourseDiscussions.remove({ _id: comment._id });
+		CourseDiscussions.remove({ parentId: comment._id });
 	}
-
-
-	
 });

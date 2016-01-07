@@ -260,13 +260,12 @@ createCommentsIfNone = function(){
 				var description = course.description;
 				if (!description) description = "No description"; // :-(
 				var words = _.shuffle(description.split(' '));
-				var random = Math.random();
 
-				comment.course_ID = course._id;
+				comment.courseId = course._id;
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
 				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 
-				var spread = new Date(new Date().getTime() - course.time_created)
+				var spread = new Date(new Date().getTime() - course.time_created);
 				var age = Math.random()
 				age = Math.floor(age*spread);
 				var date = new Date(new Date().getTime() - age);
@@ -274,15 +273,17 @@ createCommentsIfNone = function(){
 				comment.time_updated = date + age * 0.77;
 				
 				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
-				var commentor = false;
+				var commenter = false;
 				if (!pickMember || Math.random() < 0.2 ){
 					commenter = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id
 				} else {
 					commenter = pickMember.user;
 				}
-				comment.user_ID = commenter
-				CourseDiscussions.insert(comment)
-				console.log('Added '+ (n+1) +' of '+ comment_count +' generic comments:  "' + comment.title + '"');
+				comment.userId = commenter;
+				CourseDiscussions.insert(comment);
+			}
+			if (comment_count > 0) {
+				console.log('Added '+ comment_count +' generic comments for ' + course.name);
 			}
 		});
 	}
