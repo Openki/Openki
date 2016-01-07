@@ -13,8 +13,8 @@
 
 	.close{
 		position: relative;
-		right: -5px;
-		top: 2px;
+		right: -1px;
+		top: 7px;
 		color: grey;
 		opacity: 0.5;
 		&:hover{
@@ -23,23 +23,30 @@
 		}
 	}
 
-	h3{
-		margin-top: 5px;
-		margin-bottom: 6px;
-	}
+	h3 {
+		margin: 5px 20px 6px 0;
 
-	.showDetails{
-		display: inline;
-		color: green;
-	}
-	.hideDetails{
-		color: green;
-		display: none;
+		a {
+			text-decoration: none;
+			&:hover {
+				cursor: pointer;
+				.showDetails{
+					color: green;
+				}
+			}
+		}
+
+		.showDetails{
+			display: inline;
+			color: grey;
+		}
+		.hideDetails{
+			display: inline;
+			color: grey;
+		}
 	}
 
 	.content{
-		display: none;
-
 		hr{
 			color: grey;
 			margin-top: 0;

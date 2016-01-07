@@ -1,9 +1,16 @@
 <template name="introduction">
 	<div class="introduction container -introContainer about">
 		<a href="#" class="-closeIntro close"> <span class="glyphicon glyphicon-remove"> </span> </a>
-		<h3> {{mf 'introduction.Title' 'How it works:'}} </h3>
-		<a> <div class="-toggleDetails showDetails">show</div> </a>
-		<a> <div class="-toggleDetails hideDetails">hide</div> </a>
+		<h3>
+			<a class="-toggleDetails">
+				{{mf 'introduction.Title' 'How it works:'}}
+				{{#if openedIntro}}
+					<div class="hideDetails">hide ^</div>
+				{{else}}
+					<div class="showDetails">show ⌵ </div>
+				{{/if}}
+			</a>
+		</h3>
 		<div class="content">
 			<hr>
 			<ul>

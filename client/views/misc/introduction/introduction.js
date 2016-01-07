@@ -1,12 +1,21 @@
+Template.layout.onCreated(function() {
+	this.showIntro = new ReactiveVar(Assistant.showIntro());
+	this.openedIntro = new ReactiveVar(true);
+});
+
+
 Template.layout.helpers({
 	showIntro: function() {
 		return Template.instance().showIntro.get();
 	}
 });
 
-Template.layout.onCreated(function() {
-	this.showIntro = new ReactiveVar(Assistant.showIntro());
+Template.introduction.helpers({
+	openedIntro: function() {
+		return Template.instance().parentInstance().openedIntro.get();
+	}
 });
+
 
 Template.layout.events({
 	"click .-toggleIntro": function(event, instance) {
@@ -33,8 +42,11 @@ Template.layout.events({
 	},
 
 	"click .-toggleDetails": function(event, instance) {
-		instance.$('.content').slideToggle(600);
-		instance.$('.hideDetails').toggle(0);
-		instance.$('.showDetails').toggle(0);
+		instance.openedIntro.set(!instance.openedIntro.get());
+		if (instance.openedIntro.get()) {
+			instance.$('.content').slideDown(400)
+		} else {
+			instance.$('.content').slideUp(400)
+		}
 	}
 });
