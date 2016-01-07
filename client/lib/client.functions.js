@@ -104,10 +104,6 @@ Handlebars.registerHelper("log", function(context) {
 	if (window.console) console.log(arguments.length > 0 ? context : this);
 });
 
-Handlebars.registerHelper("title", function() {
-	var les = Array.prototype.slice.call(arguments, 0, -1);
-	document.title = les.join("");
-});
 
 Handlebars.registerHelper('username', userName);
 
