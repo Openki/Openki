@@ -1,6 +1,12 @@
 Template.layout.onCreated(function() {
 	this.showIntro = new ReactiveVar(Assistant.showIntro());
-	this.openedIntro = new ReactiveVar(true);
+	this.openedIntro = new ReactiveVar(Assistant.openedIntro());
+});
+
+Template.layout.onRendered(function() {
+	if (!this.openedIntro.get()) {
+		this.$('.content').hide();
+	}
 });
 
 

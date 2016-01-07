@@ -24,24 +24,24 @@
 	}
 
 	h3 {
-		margin: 5px 20px 6px 0;
+		margin: 5px 40px 6px 0;
+		padding-right: 30px;
 
 		a {
 			text-decoration: none;
 			&:hover {
 				cursor: pointer;
-				.showDetails{
+				.toggle{
 					color: green;
+					background-color: @brand-success;
 				}
 			}
 		}
 
-		.showDetails{
+		.toggle{
 			display: inline;
-			color: grey;
-		}
-		.hideDetails{
-			display: inline;
+			padding-left: 10px;
+			padding-right: 10px;
 			color: grey;
 		}
 	}
@@ -57,7 +57,7 @@
 			font-size: medium;
 
 			li{
-				.grid(8, 1.6, 1.6);
+				.grid(8, 1.6);
 
 				h2{
 					margin-bottom: 8px;
