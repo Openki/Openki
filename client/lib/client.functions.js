@@ -86,6 +86,13 @@ pleaseLogin = function() {
 
 /*************** HandleBars Helpers ***********************/
 
+Handlebars.registerHelper ("siteName", function() {
+	if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		return Meteor.settings.public.siteName;
+	}
+	return "Hmmm";
+});
+
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;
 	Session.get('locale'); // Reactive dependency

@@ -20,13 +20,6 @@ Template.navbar.onRendered(function() {
 });
 
 Template.navbar.helpers({
-	siteName: function() {
-		if (Meteor.settings.public && Meteor.settings.public.siteName) {
-			return Meteor.settings.public.siteName;
-		}
-		return "Hmmm";
-	},
-
 	showTestWarning: function() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
 	}
