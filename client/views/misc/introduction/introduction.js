@@ -7,6 +7,14 @@ Template.layout.onRendered(function() {
 	if (!this.openedIntro.get()) {
 		this.$('.content').hide();
 	}
+	var instance = this;
+	this.autorun(function() {
+		if (instance.openedIntro.get()) {
+			instance.$('.content').slideDown(400);
+		} else {
+			instance.$('.content').slideUp(400);
+		}
+	});
 });
 
 
@@ -25,13 +33,24 @@ Template.introduction.helpers({
 
 Template.layout.events({
 	"click .-toggleIntro": function(event, instance) {
-		// When we're not on the homepage we don't handle the event
-		if (Router.current().route.options.template != "find") return true;
-		event.stopImmediatePropagation();
+		instance.openedIntro.set(true);
+		if (Router.current().route.options.template === "find") {
+			// Show or hide the intro
+			instance.showIntro.set(!instance.showIntro.get());
 
-		// Show or hide the intro
-		instance.showIntro.set(!instance.showIntro.get());
-		return false
+			// When we're on the homepage we don't switch
+			event.stopImmediatePropagation();
+			return false;
+		} else {
+			instance.showIntro.set(true);
+		}
+	},
+
+	"click .-closeIntroAtHome": function(event, instance) {
+		var routerTemplate = Router.current().route.options.template;
+		if (routerTemplate === "find") {
+			instance.showIntro.set(false);
+		}
 	},
 
 	"click .-closeIntro": function(event, instance) {
@@ -39,20 +58,15 @@ Template.layout.events({
 		Assistant.doneIntro();
 	},
 
-	"click .-introContainer": function(event, instance) {
+/*	"click .-introContainer": function(event, instance) {
 		event.stopImmediatePropagation();
 	},
 
 	"click #wrap": function(event, instance) {
 		instance.showIntro.set(false);
 	},
-
+*/
 	"click .-toggleDetails": function(event, instance) {
 		instance.openedIntro.set(!instance.openedIntro.get());
-		if (instance.openedIntro.get()) {
-			instance.$('.content').slideDown(400)
-		} else {
-			instance.$('.content').slideUp(400)
-		}
 	}
 });
