@@ -14,6 +14,6 @@ then
 	portfile="${path}METEOR-PORT"
 	port=`cat "$portfile"`
 	mongodump --host 127.0.0.1:$port
-else 
+else
 	mongodump --dbpath "$path"
 fi

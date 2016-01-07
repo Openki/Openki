@@ -4,7 +4,7 @@ testgroups = [{
 	'name':        	    'Dynamo',
 	'short':            'Dyn',
 	'claim':            'Jugendkulturhaus',
-	'description':      'Städtisches Jugendkulturhaus, Wasserwekstrasse 21', 
+	'description':      'Städtisches Jugendkulturhaus, Wasserwekstrasse 21',
 },{
 	'name':        	    'denk:mal Autonome Schule Bern',
 	'short':            'Denki',
@@ -16,18 +16,18 @@ testgroups = [{
 	'name':             'CornerCollege',
 	'short':            'CC',
 	'claim':            '',
-	'description':      'Das Corner College ist ein offener Raum für un­regelmässig stattfindende, quasi-akademische Aktivitäten wie Workshops, Vor­träge, Lesungen, Filmvorführungen und kulinarische Versuche.', 
+	'description':      'Das Corner College ist ein offener Raum für un­regelmässig stattfindende, quasi-akademische Aktivitäten wie Workshops, Vor­träge, Lesungen, Filmvorführungen und kulinarische Versuche.',
 	'members':          ['Stefan','Roger']
 },{
 	'name':             'Dock18',
 	'short':            'Dock',
 	'claim':            'Raum für Medienkulturen der Welt',
-	'description':      'Das Dock18 ist abwechselnd und von Zeit zu Zeit simultan unabhängiger Kunstraum, TV Studio, Medienlabor, Meeting Point, Bar, Club, Tanzboden und interaktiver Nährboden für verschiedene Medienkulturen der Welt.', 
+	'description':      'Das Dock18 ist abwechselnd und von Zeit zu Zeit simultan unabhängiger Kunstraum, TV Studio, Medienlabor, Meeting Point, Bar, Club, Tanzboden und interaktiver Nährboden für verschiedene Medienkulturen der Welt.',
 },{
 	'name':        	    'Autonome Schule Zürich, Bildung für Alle',
 	'short':            'ASZ',
 	'claim':            'Bildung für alle',
-	'description':      'Die Autonome Schule Zürich ist ein selbstverwaltetes Bildungsprojekt in Zürich. Es werden zahlreiche Kurse kostenlos angeboten, wobei stets die Möglichkeit besteht sich an Kursen bzw. am Schulprojekt zu beteiligen. Essentiell sind dabei die Deutschkurse, welche besonders für MigrantInnen und Sans-Papiers einen hürdenfreien und emanzipatorischen Zugang zur Sprache ermöglichen.', 
+	'description':      'Die Autonome Schule Zürich ist ein selbstverwaltetes Bildungsprojekt in Zürich. Es werden zahlreiche Kurse kostenlos angeboten, wobei stets die Möglichkeit besteht sich an Kursen bzw. am Schulprojekt zu beteiligen. Essentiell sind dabei die Deutschkurse, welche besonders für MigrantInnen und Sans-Papiers einen hürdenfreien und emanzipatorischen Zugang zur Sprache ermöglichen.',
 	'members':          ['greg'],
 	'logo':             '/zurich/groups/ASZ.png'
 },{
@@ -35,17 +35,17 @@ testgroups = [{
 	'short':            'SGMK',
 	'claim':            '',
 	'description':      'Die SGMK fördert das Schaffen im Bereich der Elektrotechnik, Mechanik und Informatik, sowie artverwandter Gebiete. Dieses wird als künstlerischer Ausdruck des menschlichen Geistes, der nicht primär durch seine Zweckmässigkeit, sondern der Gesamtheit des Besonderen geprägt ist verstanden. Dabei stehen Arbeit und Forschung, Veranstaltung und Weiterbildung, Austausch und Vernetzung sowie Hebung und Wahrung der Qualität in der Mechatronischen Kunst im Zentrum.',
-	'members':          ['greg','ABCD'], 
+	'members':          ['greg','ABCD'],
 },{
 	'name':        	    'Chaos Computer Club Zürich',
 	'short':            'CCC-ZH',
 	'claim':            '',
-	'description':      'Der Chaos Computer Club Zürich (CCCZH) ist ein Verein, bei dem der Spass am Gerät grossgeschrieben wird, ohne aber den gesellschaftlichen Blick zu verlieren. <br> Es geht uns darum Intransparenz und limitierende Faktoren von Computergeräten aufzuheben; auch möchten wir die Kontrolle über diese Geräte haben, weil sie in einer computerisierten Gesellschaft Fehlentwicklungen hervorrufen mögen und weil wir selbst bestimmen möchten, welche unserer Daten verfügbar sind und auch auf welche wir frei zugreifen möchten.<p>Wir arbeiten technisch und politisch, um unsere Forderungen durchzusetzen.</p><p>Hacker, Technikbegeisterte, Menschen mit gesellschaftlichem Blick - alle heissen wir willkommen. Wir verstehen uns nicht als eine elitäre Gruppierung und arbeiten deshalb offen mit allen Interessierten zusammmen. </p>', 
+	'description':      'Der Chaos Computer Club Zürich (CCCZH) ist ein Verein, bei dem der Spass am Gerät grossgeschrieben wird, ohne aber den gesellschaftlichen Blick zu verlieren. <br> Es geht uns darum Intransparenz und limitierende Faktoren von Computergeräten aufzuheben; auch möchten wir die Kontrolle über diese Geräte haben, weil sie in einer computerisierten Gesellschaft Fehlentwicklungen hervorrufen mögen und weil wir selbst bestimmen möchten, welche unserer Daten verfügbar sind und auch auf welche wir frei zugreifen möchten.<p>Wir arbeiten technisch und politisch, um unsere Forderungen durchzusetzen.</p><p>Hacker, Technikbegeisterte, Menschen mit gesellschaftlichem Blick - alle heissen wir willkommen. Wir verstehen uns nicht als eine elitäre Gruppierung und arbeiten deshalb offen mit allen Interessierten zusammmen. </p>',
 },{
 	'name':        	    'MAXIM Theater',
 	'short':            'Maxim',
 	'claim':            '',
-	'description':      'Das MAXIM Theater im Langstrassenquartier in Zürich ist das interkulturell engagierte Theater der Stadt.<br> Im MAXIM Theater spielen Laien und ausgebildete KünstlerInnen aus allen Teilen der Welt. In einem gemeinsamen künstlerischen Prozess geben sie den unterschiedlichsten Erfahrungen von MigrantInnen eine Stimme.', 
+	'description':      'Das MAXIM Theater im Langstrassenquartier in Zürich ist das interkulturell engagierte Theater der Stadt.<br> Im MAXIM Theater spielen Laien und ausgebildete KünstlerInnen aus allen Teilen der Welt. In einem gemeinsamen künstlerischen Prozess geben sie den unterschiedlichsten Erfahrungen von MigrantInnen eine Stimme.',
 },{
 	'name':        	    'Nachhaltigkeitswoche',
 	'short':            'NHW',

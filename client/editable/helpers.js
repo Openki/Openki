@@ -12,7 +12,7 @@ Template.editable.onRendered(function() {
 		options.disableReturn = true;
 		options.disableToolbar = true;
 	}
-	
+
 	// When the text changes while we are editing, the changes will be
 	// inserted as new nodes instead of replacing the other nodes.
 	// That's because Blaze doesn't know how to merge the current DOM
@@ -22,23 +22,23 @@ Template.editable.onRendered(function() {
 	self.autorun(function() {
 		var currentData = Template.currentData();
 		var currentText = currentData.text;
-		
+
 		// Here we instill the version we got in the DB
 		// Most of the time, it will be the same as what
 		// is already displayed
 		currentText = currentText || '';
 		if (currentText !== self.editingVersion) editable.html(currentText);
-		
+
 		if (self.editingVersion !== false && currentText !== self.editingVersion) {
 			// Uh oh, not handling this well
 			addMessage(mf('editable.sorrychanged', "Sorry, somebody else just changed that. Your changes have been discarded."), 'danger');
-			
+
 			//:-( REALLY BAD
 			self.changed.set(false);
 			self.editingVersion = false;
 		}
 	});
-	
+
 	self.editor = new MediumEditor(editable, options);
 	editable.on('input', function() {
 		if (!self.changed.get()) {
@@ -73,7 +73,7 @@ Template.editable.events({
 		instance.data.store(changedText);
 		instance.editingVersion = false;
 	},
-	'click .editable-cancel': function(event, instance) { 
+	'click .editable-cancel': function(event, instance) {
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
 		instance.editingVersion = false;
