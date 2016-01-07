@@ -3,12 +3,14 @@
 		<a href="#" class="-closeIntro close"> <span class="glyphicon glyphicon-remove"> </span> </a>
 		<h3>
 			<a class="-toggleDetails">
-				{{#mf KEY='introduction.Title' SITENAME=siteName}} How {SITENAME} works: {{/mf}}
+				{{#mf KEY='introduction.Title' SITENAME=siteName}}
+				What does {SITENAME} do for you?
+				{{/mf}}
 				<div class="toggle">
 					{{#if openedIntro}}
-						hide ^
+						<span class="hideIntro"> hide ^</span>
 					{{else}}
-						show ⌵
+						<span class="showIntro"> show ⌵</span>
 					{{/if}}
 				</div>
 			</a>
