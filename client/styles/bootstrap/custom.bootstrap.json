@@ -37,7 +37,7 @@
   "tooltip":              true,
   "popovers":             true,
   "carousel":             true,
-  
+
   "affix":                true,
   "alert":                true,
   "button":               true,

@@ -2,11 +2,11 @@
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
 	var email = (name.replace(' ', '')+"@openki.example").toLowerCase()
-	
+
 	while (true) {
 		var user = Meteor.users.findOne({ "emails.address": email})
 		if (user) return user;
-		
+
 		user = Meteor.users.findOne({username: name})
 		if (user) return user;
 
@@ -15,7 +15,7 @@ function ensureUser(name) {
 			email: email,
 			profile: {name : name},
 		});
-		
+
 		var age = Math.floor(Math.random()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
 			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
@@ -32,13 +32,13 @@ function ensureRegion(name) {
 	while (true) {
 		var region = Regions.findOne({name: name})
 		if (region) return region._id;
-		
-		
+
+
 		var id = Regions.insert({
 			name: name,
 			timezone: "UTC+"+Math.floor(Math.random()*12)+":00"
 		});
-		
+
 		console.log("Added region: "+name+" "+id)
 	}
 }
@@ -272,7 +272,7 @@ createCommentsIfNone = function(){
 				var date = new Date(new Date().getTime() - age);
 				comment.time_created = date;
 				comment.time_updated = date + age * 0.77;
-				
+
 				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
 				var commentor = false;
 				if (!pickMember || Math.random() < 0.2 ){
@@ -298,11 +298,11 @@ loadTestEvents = function(){
 	_.each(testevents, function(event) {
 		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
-		
+
 		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
 		event.groups = _.map(event.groups, ensureGroup);
 
-		/* Create the events around the current Day. 
+		/* Create the events around the current Day.
 		First loaded event gets moved to current day. All events stay at original hour */
 		if (dateOffset == 0){
 			var toDay = new Date();
@@ -357,7 +357,7 @@ function ensureGroup(short) {
 	while (true) {
 		var group = Groups.findOne({short: short})
 		if (group) return group._id;
-		
+
 		var id = Groups.insert({
 			name: short,
 			short: short,

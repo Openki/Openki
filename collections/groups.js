@@ -14,7 +14,7 @@ Groups = new Meteor.Collection("Groups");
 GroupLib = {};
 
 /* Find groups for given filters
- * 
+ *
  * filter: dictionary with filter options
  *   own: Limit to groups where logged-in user is a member
  *   user: Limit to groups where given user ID is a member (client only)
@@ -22,7 +22,7 @@ GroupLib = {};
  */
 GroupLib.find = function(filter, limit) {
 	var find = {};
-	
+
 	if (filter.own) {
 		var me = Meteor.userId();
 		if (!me) return []; // I don't exist? How could I be in a group?!
@@ -143,9 +143,9 @@ Meteor.methods({
 
 		var update;
 		if (join) {
-			update = { $addToSet: { 'groups': group._id } }
+			update = { $addToSet: { 'groups': group._id } };
 		} else {
-			update = { $pull: { 'groups': group._id } }
+			update = { $pull: { 'groups': group._id } };
 		}
 
 		// Welcome to my world of platypus-typing

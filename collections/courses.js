@@ -65,20 +65,20 @@ hasRole = function(members, role) {
 hasRoleUser = function(members, role, userId) {
 	var has = false;
 	var loggeduser = Meteor.user()
-	
+
 	members.forEach(function(member) {
 		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
 			if(member.roles.indexOf(role) !== -1) has = 'anon'
 		}
 	})
-	
+
 	members.forEach(function(member) {
 		if (member.user == userId) {
 			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
 				return true;
 		}
 	})
-	
+
 	return has;
 }
 
@@ -92,14 +92,14 @@ maySubscribe = function(operatorId, course, userId, role) {
 	if (privileged(operatorId, 'admin')) {
 		return true;
 	}
-	
+
 	// The team role is restricted
 	if ('team' === role) {
 		// If there are no team-members, anybody can join
 		if (!hasRole(course.members, 'team')) {
 			return operatorId === userId;
 		}
-		
+
 		// Only members of the team can take-on other people
 		if (hasRoleUser(course.members, 'team', operatorId)) {
 			// Only participating users can be drafted
@@ -112,10 +112,10 @@ maySubscribe = function(operatorId, course, userId, role) {
 		}
 		return false;
 	}
-	
+
 	// The other roles can only be chosen by the users themselves
 	if (operatorId !== userId) return false;
-	
+
 	return true;
 }
 
@@ -132,7 +132,7 @@ coursesFind = function(filter, limit) {
 	var missingRoles = [];
 
 	if (filter.needsHost) {
-		missingRoles.push('host'); 
+		missingRoles.push('host');
 		mustHaveRoles.push('host');
 	}
 
@@ -140,8 +140,8 @@ coursesFind = function(filter, limit) {
 		missingRoles.push('mentor');
 		mustHaveRoles.push('mentor');
 	}
-	
-	if (filter.missingTeam) {	
+
+	if (filter.missingTeam) {
 		missingRoles.push('team');
 		// All courses have the team role so we don't need to restrict to those having it
 	}
@@ -149,7 +149,7 @@ coursesFind = function(filter, limit) {
 	if (filter.userInvolved) {
 		find['members.user'] = filter.userInvolved;
 	}
-	
+
 	if (filter.categories) {
 		find.categories = { $all: filter.categories };
 	}
@@ -157,11 +157,11 @@ coursesFind = function(filter, limit) {
 	if (filter.group) {
 		find.groups = filter.group;
 	}
-	
+
 	if (missingRoles.length > 0) {
 		find['members.roles'] = { $nin: missingRoles };
 	}
-	
+
 	if (mustHaveRoles.length > 0) {
 		find.roles = { $all: mustHaveRoles };
 	}
@@ -179,7 +179,7 @@ coursesFind = function(filter, limit) {
 	}
 	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
 	return Courses.find(find, options);
-} 
+}
 
 if (Meteor.isServer) {
 	Meteor.methods({
@@ -333,7 +333,7 @@ Meteor.methods({
 					{ $pull: { roles: type }},
 					checkUpdateOne
 				);
-				
+
 				// HACK
 				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
 				// so we keep removing one by one until there are none left
@@ -398,7 +398,7 @@ Meteor.methods({
 
 		return courseId;
 	},
-	
+
 	remove_course: function(courseId) {
 		var user = Meteor.user();
 		var mayEdit = privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});

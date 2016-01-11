@@ -2,7 +2,7 @@ Accounts.onCreateUser(function(options, user) {
 	if (options.profile) {
 		user.profile = options.profile;
 	} else {
-		user.profile = {}
+		user.profile = {};
 	}
 	// Collect info where a username could possibly be found
 	var name_providers = [user, user.profile];
@@ -12,7 +12,7 @@ Accounts.onCreateUser(function(options, user) {
 	var name = false;
 	var username = false;
 	var provider = false;
-	while(provider = name_providers.pop()) {
+	while ((provider = name_providers.pop()) !== undefined) {
 		if (!name && provider.name) name = provider.name;
 		if (!username && provider.username) username = provider.username;
 	}
@@ -83,7 +83,7 @@ Accounts.urls.resetPassword = function(token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function(user, url) {
-	return mf('resetPAssword.text',
+	return mf('resetPassword.text',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.username,

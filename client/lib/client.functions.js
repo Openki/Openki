@@ -27,12 +27,12 @@ mayEdit = function(user, course) {
 };
 
 /* Get a username from ID
- * 
+ *
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
 userName = function(userId) {
 	if (!userId) return mf('noUser_placeholder', 'someone');
-	
+
 	if (userId.substr(0, 5)  == 'Anon_') {
 		var loggeduser = Meteor.user();
 		if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
@@ -40,11 +40,11 @@ userName = function(userId) {
 		}
 		return "☔ incognito";
 	}
-	
+
 	// This seems extremely wasteful
 	// But the alternatives are more complicated by a few orders of magnitude
 	miniSubs.subscribe('user', userId);
-	
+
 	var user = Meteor.users.findOne({ _id: userId });
 	if (user) {
 		if (user.username) {
@@ -52,8 +52,8 @@ userName = function(userId) {
 		} else {
 			return "userId: " + user._id;
 		}
-	} 
-		
+	}
+
 	return "No_User";
 };
 
@@ -85,6 +85,13 @@ pleaseLogin = function() {
 
 
 /*************** HandleBars Helpers ***********************/
+
+Handlebars.registerHelper ("siteName", function() {
+	if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		return Meteor.settings.public.siteName;
+	}
+	return "Hmmm";
+});
 
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;

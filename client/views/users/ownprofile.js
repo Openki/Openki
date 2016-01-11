@@ -2,7 +2,7 @@ Router.map(function () {
 	this.route('profile', {
 		path: 'profile',
 		waitOn: function () {
-			return [ 
+			return [
 				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
 				Meteor.subscribe('groupsFind', { own: true })
@@ -27,7 +27,7 @@ Router.map(function () {
 					else userdata.verifiedEmail = 'not verified'
 				}
 
-				return { 
+				return {
 					user: userdata,
 					courses: coursesFind({ userInvolved: user._id })
 				};
@@ -81,7 +81,7 @@ Template.profile.events({
 		Session.set('verify', 'delete');
 	},
 	'click button.confirmdelete': function () {
-		Meteor.call('delete_profile', function() { 
+		Meteor.call('delete_profile', function() {
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		Session.set('verify', false);
