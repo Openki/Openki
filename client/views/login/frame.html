@@ -61,18 +61,18 @@
 					</span>
 					<input type="password" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
+				<div id="password_warning_incorrect" style="display:none">
+					{{mf 'login.password.password_incorrect' 'Incorrect password'}}
+				</div>
+				<div id="password_warning" style="display:none">
+					{{mf 'login.password.no_password' 'Please enter a password to register.'}}
+				</div>
 			{{#if showForgot}}
 				<button type="button" class="-forgot">
 					<span class="fa fa-wrench"></span>
 					{{mf 'forgot' "Oops I forgot my password"}}
 				</button>
 			{{/if}}
-			</div>
-			<div id="password_warning_incorrect" style="display:none">
-				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
-			</div>
-			<div id="password_warning" style="display:none">
-				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
 			{{#if showEmail}}
 			<div id="show_email" class="form-group">
