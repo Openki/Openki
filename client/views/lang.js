@@ -37,7 +37,7 @@ Template.lang_sel.events({
 });
 
 // Always load english translation
-// For dynamically constructed translation strings there is no default 
+// For dynamically constructed translation strings there is no default
 // translation and meteor would show the translation key if there is no
 // translation in the current locale
 mfPkg.loadLangs('en');

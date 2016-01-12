@@ -4,7 +4,7 @@ Meteor.methods({
 	},
 	update_userdata: function(username, email, privacy) {
 		var user = Meteor.user();
-		
+
 		var changes = {};
 		if (user.username !== username) { changes.username = username; }
 		if (user.privacy !== privacy) { changes.privacy = !!privacy; }
@@ -16,7 +16,7 @@ Meteor.methods({
 			} else {
 				changes.emails = [];
 			}
-		} 
+		}
 		if (!_.isEmpty(changes)) {
 			Meteor.users.update(Meteor.userId(), {
 				$set: changes

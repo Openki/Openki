@@ -2,6 +2,6 @@
 	"testdata": 1,
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {
-		"marquee": 1
+		"testWarning": 1
 	}
 }
