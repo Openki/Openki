@@ -61,18 +61,18 @@
 					</span>
 					<input type="password" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
+				<div id="password_warning_incorrect" style="display:none">
+					{{mf 'login.password.password_incorrect' 'Incorrect password'}}
+				</div>
+				<div id="password_warning" style="display:none">
+					{{mf 'login.password.no_password' 'Please enter a password to register.'}}
+				</div>
 			{{#if showForgot}}
-				<button type="button" class="btn btn-secondary -forgot" style="font-size: smaller">
+				<button type="button" class="-forgot">
 					<span class="fa fa-wrench"></span>
 					{{mf 'forgot' "Oops I forgot my password"}}
 				</button>
 			{{/if}}
-			</div>
-			<div id="password_warning_incorrect" style="display:none">
-				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
-			</div>
-			<div id="password_warning" style="display:none">
-				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
 			{{#if showEmail}}
 			<div id="show_email" class="form-group">
@@ -82,6 +82,10 @@
 					</span>
 					<input type="email" id="login-email" class="-loginEmail" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
 				</div>
+				<span class="registering_email_instructions">
+					{{mf 'registering.email.instructions'
+					"By entering an e-mail adress you allow us to send you a mail in case you forget your password."}}
+				</span>
 			</div>
 			{{/if}}
 			<div id="login_warning" style="display:none">
@@ -122,11 +126,10 @@
 </template>
 
 <template name="loginForgot">
-	<div class="container-fluid">
+	<div class="container-fluid forgot_login">
 		<h2>{{mf 'forgot.title' "Password reset"}}</h2>
 		{{mf 'forgot.explanation'
 		"We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
-
 		<form>
 			<div id="show_email" class="form-group">
 				<div class="input-group">
@@ -136,16 +139,19 @@
 					<input type="email" id="login-email" class="-loginEmail" placeholder="{{mf 'frame.login.email' 'E-Mail'}}">
 				</div>
 				{{#unless validEmail}}
-					{{mf 'forgot.notValid' "Please write the address you signed up with."}}
+					<span class="email_instructions">
+						{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
+					</span>
 				{{/unless}}
 			</div>
-			<div id="show_email" class="form-group">
-				<button type="button" class="btn btn-primary -forgotSend" {{disableForInvalidEmail}}>
+			<div class="form-group">
+				<button type="button" class="btn btn-primary -forgotSend form-control" {{disableForInvalidEmail}}>
 					<span class="glyphicon glyphicon-envelope"></span>
-					{{mf 'forgot.send' 'Send me a mail to reset my password'}}
+					{{mf 'forgot.send' 'Reset my password'}}
 				</button>
-
-				<button type="button" class="btn btn-secondary -forgotClose">
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-secondary -forgotClose form-control">
 					<span class="fa fa-close"></span>
 					{{mf 'forgot.close' 'Never mind'}}
 				</button>

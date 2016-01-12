@@ -10,6 +10,18 @@
 		margin-top: 0;
 	}
 
+	button.-forgot {
+		.btn;
+		.btn-default;
+		font-size: smaller;
+		margin-top: 5px;
+	}
+
+	span.registering_email_instructions {
+		text-align: justify;
+		width: 100%;
+	}
+
 	button.loginLogin{
 		&.loginLoginLogin {
 			.btn-success;
@@ -39,11 +51,16 @@
 
 	#username_warning,
 	#username_warning_not_existing,
-	#password_warning,
-	#password_warning_incorrect,
 	#login_warning {
 		color: @brand-danger;
 		margin: -10px 0 10px;
+		text-align: left;
+	}
+
+	#password_warning,
+	#password_warning_incorrect {
+		color: @brand-danger;
+		margin: 0px 0 10px;
 		text-align: left;
 	}
 
@@ -76,6 +93,20 @@
 				.fa-github-square {
 					color: #333;
 				}
+			}
+		}
+	}
+
+	.forgot_login {
+		h2 {
+			margin-top: 0;
+		}
+
+		#show_email {
+			padding-top: 10px;
+
+			span.email_instructions {
+				font-size: small;
 			}
 		}
 	}
