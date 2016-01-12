@@ -87,6 +87,11 @@
 			.grid(9);
 			background: @body-bg;
 			padding: 0 0 0 15px;
+
+			&.hasupcomingevents {
+				.grid(7.5);
+				padding: 0 0 0 15px;
+			}
 		}
 	}
 }
@@ -102,7 +107,7 @@
 	}
 }
 
-.courselist_course_info {
+.course_status {
 	.grid(3);
 	padding: 0;
 	position: relative;
@@ -120,11 +125,14 @@
 }
 
 .course_eventlist {
-	.grid(12);
+	.grid(4.5);
 	background: @brand-success;
 	color: #333;
 	max-height: 150px;
 	padding: 3px;
+	position: relative;
+	right: -7px;
+	top: -7px;
 	text-align: center;
 
 	.course_eventlist_time,
