@@ -36,7 +36,6 @@ cfs:tempstore@0.1.5
 cfs:upload-http@0.0.20
 cfs:worker@0.1.4
 check@1.1.0
-citizenkevin:medium-editor@1.0.1
 coffeescript@1.0.11
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.2
@@ -80,6 +79,7 @@ less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
+mediumeditor:mediumeditor@5.2.0
 meteor@1.1.10
 meteor-platform@1.2.3
 meteorhacks:inject-initial@1.0.3

@@ -13,7 +13,7 @@ iron:router
 reactive-var
 accounts-github
 service-configuration
-citizenkevin:medium-editor
+mediumeditor:mediumeditor
 djedi:sanitize-html
 nemo64:bootstrap
 less
