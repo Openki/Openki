@@ -10,13 +10,6 @@
 		margin-top: 0;
 	}
 
-	button.-forgot {
-		.btn;
-		.btn-default;
-		font-size: smaller;
-		margin-top: 5px;
-	}
-
 	span.registering_email_instructions {
 		text-align: justify;
 		width: 100%;
@@ -66,6 +59,34 @@
 
 	li.dropdown-header:hover {
 		cursor: default;
+	}
+
+	.input-group:first-child,
+	button.-forgot,
+	button.loginLogin,
+	button.loginRegister {
+		margin-bottom: 15px;
+	}
+
+	.login_email {
+		margin-top: 15px;
+	}
+
+	button.-forgot {
+		background: none;
+		border: none;
+		float: right;
+		margin-top: 5px;
+		padding-right: 0;
+
+		&:focus {
+			text-decoration: underline;
+		}
+
+		&:hover {
+			cursor: pointer;
+			text-decoration: underline;
+		}
 	}
 
 	.external_logins {
