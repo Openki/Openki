@@ -125,10 +125,11 @@ Template.calendar_event.rendered = function() {
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');
+		var weekCorrection = unit == "week"? 0 : 1;
 		if (amount < 0) {
 			start.add(amount, unit).startOf('week');
 		} else {
-			start.add(amount, unit).add(1, 'week').startOf('week');
+			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
 		}
 		instance.filter.add('start', start).done();
 		updateUrl(event, instance);
