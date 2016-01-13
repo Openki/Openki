@@ -1,16 +1,36 @@
+.editableWrap {
+	position: relative;
+
+	.editIcon {
+		color: gray;
+	}
+
+	&.rich .editIcon {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	&.simple .editable {
+		display: inline-block;
+		min-width: 10em;
+	}
+
+	&.rich .editable {
+		min-height: 4ex;
+		padding: 0.5em;
+	}
+}
+
+.editableWrap:hover {
+	.editIcon {
+		color: black;
+	}
+}
+
 .editable:focus,
 .editable.changed {
 	border: 1px solid @brand-primary;
 	padding: 10px !important;
 	background: @body-bg;
-}
-
-.editable.simple {
-	display: inline-block;
-	min-width: 10em;
-}
-
-.editable.rich {
-	min-height: 4ex;
-	padding: 0.5em;
 }
