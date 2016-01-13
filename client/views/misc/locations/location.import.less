@@ -3,10 +3,15 @@
 
 	.head{
 		.grid(12);
-		background-color: #ddd;
-		height: 120px;
+		background-color: @location-bg;
+		color: @location-text;
+		height: 140px;
 		overflow: auto;
 		padding-right: 0;
+
+		h1 {
+			color: @location-text;
+		}
 
 		.description h1{
 			background-color: #333;
@@ -14,7 +19,7 @@
 		}
 
 		img {
-			height: 120px;
+			height: 140px;
 			float: right;
 		}
 	}
@@ -76,5 +81,15 @@
 		font-size: small;
 		color: black;
 	}
+}
 
+a.location_link {
+	background: @location-bg;
+	color: @location-text;
+	padding: 2px 5px;
+
+	&:hover {
+		background: @location-hover-bg;
+		text-decoration: none;
+	}
 }

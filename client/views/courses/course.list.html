@@ -38,12 +38,9 @@
 						<div class="course-name">
 							<h4>{{name}}</h4>
 						</div>
-						<div class="course_groups">
-							{{> groupList}}
+						<div class="course_categories">
+							{{> show_categories}}
 						</div>
-					</div>
-					<div class="course_categories">
-						{{> show_categories}}
 					</div>
 					<!-- Start 'hasupcomingevents' helper statement -->
 					{{#if hasupcomingevents}}
@@ -73,7 +70,7 @@
 								<div class="course_eventlist_hasmore">
 									+ {{course_eventlist_hasmore}}
 									&nbsp;
-									<span class="fa fa-calendar-o"></span>
+									<span class="glyphicon glyphicon-calendar"></span>
 								</div>
 							{{/if}}
 							<!-- End 'course_eventlist_hasmore' helper statement -->
@@ -83,6 +80,9 @@
 						{{> courseStatus}}
 					{{/if}}
 					<!-- End 'hasupcomingevents' helper statement -->
+					<div class="course_groups">
+						{{> groupList}}
+					</div>
 				</div>
 			</a>
 		</div>

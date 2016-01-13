@@ -7,4 +7,3 @@ categories = {
 	computer:   [ 'internet', 'programming', 'operating' ],
 	'♥undefined♥': [ 'experimental', 'spiritual' ]
 };
-
