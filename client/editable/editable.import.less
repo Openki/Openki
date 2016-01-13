@@ -1,8 +1,23 @@
 .editableWrap {
 	position: relative;
+	margin: -8px;
 
+
+	.editable {
+		padding: 8px;
+	}
+
+	.editable:focus,
+	.editable.changed {
+		border: 1px solid @brand-primary;
+		padding: 7px;
+		background: @body-bg;
+	}
+
+	
 	.editIcon {
 		color: gray;
+		padding: 0.2em;
 	}
 
 	&.rich .editIcon {
@@ -18,7 +33,6 @@
 
 	&.rich .editable {
 		min-height: 4ex;
-		padding: 0.5em;
 	}
 }
 
@@ -28,9 +42,6 @@
 	}
 }
 
-.editable:focus,
-.editable.changed {
-	border: 1px solid @brand-primary;
-	padding: 10px !important;
-	background: @body-bg;
+.editable-controls {
+	margin-top: 12px;
 }
