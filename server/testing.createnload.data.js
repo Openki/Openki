@@ -238,7 +238,7 @@ createEventsIfNone = function(){
 				var age = Math.floor(Math.random() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
-				Events.insert(event)
+				Events.insert(event);
 				console.log('Added generic event ('+ n +'/' + event_count +'):  "' + event.title + '"');
 			}
 		});
@@ -315,13 +315,14 @@ loadTestEvents = function(){
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
 		event.location = { _id: ensureLocation(event.location, event.region)._id };
-		delete event.location;
-		if (event.room) ensureRoom (event.location, event.room);
+		if (event.room) {
+			ensureRoom(event.location, event.room)
+		}
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
-		var id = Events.insert(event);
+		Events.insert(event);
 		console.log("Loaded event:  "+event.title);
 	})
 }
