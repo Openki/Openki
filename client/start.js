@@ -68,7 +68,7 @@ Meteor.startup(function() {
 			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
-			var short = langCandidate.substring(0, 2);
+			var short = lang.substring(0, 2);
 			if (lgs[short]) {
 				locale = short;
 			}
