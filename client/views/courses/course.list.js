@@ -137,7 +137,4 @@ Template.course.rendered = function() {
 	this.$('.course-name').dotdotdot({
 		height: 60,
 	});
-	this.$('.course_categories').dotdotdot({
-		height: 60,
-	})
 };
