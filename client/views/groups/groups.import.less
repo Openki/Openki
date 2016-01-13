@@ -18,13 +18,13 @@ ul.groups-list {
 		margin-bottom: 10px;
 
 		a {
-			background: rgba(130, 216, 130, 0.5);
-			color: @brand-primary;
+			background: @group;
+			color: @groupText;
 			padding: 0 4px 1px;
 
 			&:hover {
-				.box-shadow-s(rgba(129, 215, 129, 1));
-				background: rgba(129, 215, 129, 1);
+				.box-shadow-s(@groupShadow);
+				background: @groupHover;
 				text-decoration: none;
 			}
 		}
