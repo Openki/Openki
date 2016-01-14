@@ -77,6 +77,6 @@ Router.map(function () {
 
 Template.kioskTimetable.helpers({
 	position: function() {
-		return "background-color: #aaa; position: absolute; height: 3em; margin: 0.1em; overflow: hidden; left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
+		return "left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
 	}
 });

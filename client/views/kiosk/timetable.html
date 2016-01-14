@@ -1,18 +1,22 @@
 <template name="kioskTimetable">
-	<div style="">
-	{{#each this}}
-		<div style="margin-left: 15em; position: relative; border-top: 2px solid gray">
-			<div style="position: absolute; left: -15em; padding: 0 1em; width: 15em; text-align: right">
-				{{location.name}}
-			</div>
-		{{#each rows}}
-			<div style="height: 3em">
-			{{#each this}}
-				<a href="{{pathFor  'showEvent'}}" style={{position}}>{{this.title}}</a>
-			{{/each}}
+	<div class="kiosk">
+		<div class="timetable">
+		{{#each this}}
+			<div class="locations">
+				<div class="locationName">
+					{{location.name}}
+				</div>
+				{{#each rows}}
+					<div class="rows">
+					{{#each this}}
+							<a href="{{pathFor  'showEvent'}}" class="event" style={{position}}>
+								{{this.title}}
+							</a>
+					{{/each}}
+					</div>
+				{{/each}}
 			</div>
 		{{/each}}
 		</div>
-	{{/each}}
 	</div>
 </template>
