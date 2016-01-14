@@ -2,16 +2,24 @@
 	<div class="kiosk">
 		<div class="timetable">
 		{{#each this}}
-			<div class="locations">
+			<div class="timeLines">
 				<div class="locationName">
-					{{location.name}}
+					<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
+						<span class="glyphicon glyphicon-home"></span>
+						{{location.name}}
+					</a>
 				</div>
 				{{#each rows}}
 					<div class="rows">
 					{{#each this}}
-							<a href="{{pathFor  'showEvent'}}" class="event" style={{position}}>
-								{{this.title}}
-							</a>
+						<a href="{{pathFor  'showEvent'}}" class="event" style={{position}}>
+							<div class="title">{{this.title}}</div>
+							<div class="time">
+								<span class="glyphicon glyphicon-time"></span>
+								{{timeformat start}} - {{timeformat end}}
+							</div>
+							<div class="description"> {{{description}}}</div>
+						</a>
 					{{/each}}
 					</div>
 				{{/each}}

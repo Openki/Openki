@@ -1,30 +1,66 @@
 .kiosk {
 
-	.locations {
-		margin-left: 15em;
+	.timeLines {
+		z-index: 0;
+		border-top: 2px solid #ddd;
 		position: relative;
-		border-top: 2px solid gray;
+		&:hover {
+			z-index: 1;
+		}
 
 		.locationName {
 			position: absolute;
-			left: -15em;
+			left: -1em;
 			padding: 0 1em;
-			width: 15em;
-			text-align: right;
+			width: 12em;
+			text-align: left;
 		}
 
 		.rows {
+			position: relative;
 			height: 3em;
+			margin-left: 12em;
+			&:hover {
+				z-index: 1;
+			}
 
 			.event {
-				background-color: #aaa;
 				position: absolute;
-				height: 3em;
 				margin: 0.1em;
-				overflow: hidden;
+				color: black;
+
+				.title {
+					background-color: @brand-success;
+					height: 2.8em;
+					padding: 4px 8px;
+					line-height: 1.2em;
+					overflow: hidden;
+				}
+
+				.time {
+					padding: 2px 5px;
+					display: none;
+					position: absolute;
+					top: -22px;
+					background-color: #eee;
+					height: 1.4em;
+					overflow: hidden;
+				}
+
+				.description {
+					display: none;
+					height: 8em;
+					background-color: @light-blue;
+					padding: 4px 8px;
+					overflow: hidden;
+				}
+
+				.title:hover ~ .time,
+				.title:hover ~ .description {
+					display: block;
+					z-index: 2;
+				}
 			}
 		}
-
-
 	}
 }
