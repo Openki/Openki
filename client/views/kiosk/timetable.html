@@ -1,7 +1,24 @@
 <template name="kioskTimetable">
 	<div class="kiosk">
 		<div class="timetable">
-		{{#each this}}
+			<div class="times">
+				<div>
+				{{#each months}}
+					<div style={{position}}>{{showMonth moment}}</div>
+				{{/each}}
+				</div>
+				<div>
+				{{#each days}}
+					<div style={{position}}>{{showDay moment}}</div>
+				{{/each}}
+				</div>
+				<div>
+				{{#each hours}}
+					<div style={{position}}>{{showHour moment}}</div>
+				{{/each}}
+				</div>
+			</div>
+		{{#each this.grouped}}
 			<div class="locations">
 				<div class="locationName">
 					{{location.name}}
