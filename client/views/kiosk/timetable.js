@@ -2,8 +2,16 @@ var makeFilterQuery = function(params) {
 	var filter = Filtering(EventPredicates).read(params).done();
 
 	var query = filter.toQuery();
-	var now = minuteTime.get();
-	query.period = [now, moment(now).add(1, 'days').toDate()];
+
+	var start;
+	if (params.start) start = moment(params.start);
+	if (!start || !start.isValid()) start = moment(minuteTime.get()).startOf('day');
+
+	var end;
+	if (params.end) end = moment(params.end);
+	if (!end || !end.isValid()) end = moment(start).add(1, 'day');
+	
+	query.period = [start.toDate(), end.toDate()];
 
 	return query;
 }
