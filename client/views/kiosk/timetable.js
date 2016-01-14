@@ -37,11 +37,42 @@ Router.map(function () {
 				if (!end   || end         < event.end) end   = event.end;
 			});
 
-			start = start && start.getTime();
-			end = end && end.getTime();
-			var span = end - start;
-			var perLocation = {};
+			if (!start || !end) return [];
 
+			start = moment(start).startOf('hour').add(-1, 'hour');
+			end   = moment(end).startOf('hour').add(1, 'hour');
+
+			startAbs = start.toDate().getTime();
+			endAbs   = end.toDate().getTime();
+
+			var span = endAbs - startAbs;
+			var months = {};
+			var days = {};
+			var hours = {};
+			var cursor = moment(start);
+			do {
+				var month = cursor.month();
+				months[month] = {
+					moment: moment(cursor).startOf('month'),
+					relStart: Math.max(-0.01, (moment(cursor).startOf('month').toDate().getTime() - startAbs) / span),
+					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('month').add(1, 'month').toDate().getTime()) / span)
+				};
+				var day = cursor.day();
+				days[''+month+day] = {
+					moment: moment(cursor).startOf('day'),
+					relStart: Math.max(-0.01, (moment(cursor).startOf('day').toDate().getTime() - startAbs) / span),
+					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate().getTime()) / span)
+				};
+				var hour = cursor.hour();
+				hours[''+month+day+hour] = {
+					moment: moment(cursor).startOf('hour'),
+					relStart: Math.max(-0.01, (moment(cursor).startOf('hour').toDate().getTime() - startAbs) / span),
+					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate().getTime()) / span)
+				};
+				cursor.add(1, 'hour');
+			} while(cursor.isBefore(end));
+
+			var perLocation = {};
 			var useLocation = function(location) {
 				var id = location._id || '#'+location.name;
 				if (!perLocation[id]) {
@@ -54,8 +85,8 @@ Router.map(function () {
 			}
 
 			events.forEach(function(event) {
-				event.relStart = (event.start.getTime() - start) / span;
-				event.relEnd   = (end - event.end.getTime()) / span;
+				event.relStart = (event.start.getTime() - startAbs) / span;
+				event.relEnd   = (endAbs - event.end.getTime()) / span;
 				var placed = false;
 
 				var locationRows = useLocation(event.location);
@@ -77,7 +108,12 @@ Router.map(function () {
 				}
 			});
 
-			return _.toArray(perLocation);
+			return {
+				months: _.toArray(months),
+				days: _.toArray(days),
+				hours: _.toArray(hours),
+				grouped: _.toArray(perLocation)
+			};
 		},
 	});
 });
@@ -86,5 +122,14 @@ Router.map(function () {
 Template.kioskTimetable.helpers({
 	position: function() {
 		return "left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
+	},
+	showMonth: function(moment) {
+		return moment.format('MMMM YYYY');
+	},
+	showDay: function(moment) {
+		return moment.format('dddd Do');
+	},
+	showHour: function(moment) {
+		return moment.format('H');
 	}
 });
