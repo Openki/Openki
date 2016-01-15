@@ -61,15 +61,15 @@
 	margin-bottom: 10px;
 
 	a {
-		background-color: #fbb;
-		color: #300;
+		background-color: @location-bg;
+		color: @location-text;
 		padding-left: 5px;
 		padding-right: 5px;
 		display: inline-block;
 
 		&:hover {
-			.box-shadow-s(rgba(255, 220, 220, 0.5));
-			background: rgba(240, 200, 200, 0.2);
+			.box-shadow-s(@location-hover-shadow);
+			background: @location-hover-bg;
 			text-decoration: none;
 		}
 	}
