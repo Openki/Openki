@@ -1,9 +1,5 @@
 "use strict";
 
-Meteor.publish('version', function() {
-	return Version.find();
-});
-
 Meteor.publish ('courses', function(region){
 	if(!region) {
 		return Courses.find();
@@ -81,7 +77,7 @@ Meteor.publish('affectedReplica', function(eventId) {
 
 Meteor.publish('user', function(userId) {
 	var fields = {username: 1};
-
+	
 	// Admins may see other's privileges
 	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
 

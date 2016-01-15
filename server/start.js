@@ -1,17 +1,7 @@
 Meteor.startup(function () {
 
 	applyUpdates();
-
-	var runningVersion = Version.findOne()
-	if (VERSION && (!runningVersion || runningVersion.commit !== VERSION.commit)) {
-		var newVersion = _.extend(VERSION, {
-			activation: new Date()
-		});
-		Version.upsert({}, newVersion);
-	}
-	Version.update({}, {$set: {lastStart: new Date() }});
-
-
+	
 	if (Meteor.settings.testdata) {
 		loadTestRegionsIfNone();       // Regions    from server/data/testing.regions.js
 		loadLocationsIfNone();         // Locations  from server/data/testing.locations.js
@@ -59,7 +49,7 @@ Meteor.startup(function () {
 			});
 		}
 	}
-
+	
 	if (Meteor.settings.admins) {
 		for (name in Meteor.settings.admins) {
 			var user = Meteor.users.findOne({ username: Meteor.settings.admins[name]});
