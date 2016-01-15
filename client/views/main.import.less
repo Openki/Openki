@@ -83,7 +83,7 @@ span.glyphicon-ok {
 
 select {
 	.form-control-humble;
-	color: #333;
+	color: @default-shadow;
 
 	&:hover {
 		cursor: pointer;
@@ -91,6 +91,6 @@ select {
 
 	&:-moz-focusring {
 		color: rgba(0,0,0,0); // Hack to make outline in Firefox disappear
-		text-shadow: 0 0 0 #333;
+		text-shadow: 0 0 0 @default-shadow;
 	}
 }
