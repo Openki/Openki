@@ -10,7 +10,7 @@
 }
 
 .opacity(@percentage) {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=@percentage)";
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{percentage})";
 	filter: alpha(opacity=@percentage);
 	opacity: @percentage / 100;
 }
