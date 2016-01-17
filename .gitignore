@@ -16,4 +16,4 @@ dump/
 
 settings.json
 server/extracts.msgfmt
-version.js
+server/version.js
