@@ -84,12 +84,18 @@
 }
 
 a.location_link {
+	.transition(0.5s);
 	background: @location-bg;
 	color: @location-text;
-	padding: 2px 5px;
+	padding: 3px 4px 1px;
 
 	&:hover {
 		background: @location-hover-bg;
 		text-decoration: none;
+		.box-shadow-small(@default-shadow);
+	}
+
+	span.glyphicon-home {
+		margin-right: 2px;
 	}
 }

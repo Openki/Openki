@@ -49,7 +49,7 @@ Template.frameCalendar.helpers({
 
 Template.frameCalendarEvent.onRendered(function() {
 	this.$('.-eventLocationTime').dotdotdot({
-		height: 50,
+		height: 55,
 		watch : "window",
 	});
 	this.$('.-eventTitle').dotdotdot({
