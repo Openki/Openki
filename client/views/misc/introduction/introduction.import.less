@@ -1,18 +1,19 @@
 .introduction{
+	.transition(1s);
 	color: @brand-primary;
 	background-color: @introduction-bg;
-	margin-top: 10px;
+	margin-top: 15px;
 	padding-top: 2px;
-	transition: all 1s;
+	position: relative;
 
 	&:hover{
 		background-color: @introduction-text;
-		transition: all 1s;
 	}
 
-	.close{
-		position: relative;
-		right: -1px;
+	.-closeIntro {
+		font-size: 20px;
+		position: absolute;
+		right: 13px;
 		top: 7px;
 
 		span.glyphicon-remove {
