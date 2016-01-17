@@ -27,8 +27,8 @@
     .-eventLocationTime,
     .-eventTitle,
     .-eventDescription {
+			.word-break;
       overflow: hidden;
-      word-wrap: break-word;
     }
 
     .-eventLocationTime {
@@ -38,6 +38,15 @@
       color: @default-black;
       height: 50px;
       padding: 5px;
+
+			span.fa,
+			span.glyphicon {
+				margin-right: 5px;
+			}
+
+			span.fa-map-signs {
+				margin-left: 5px;
+			}
     }
 
     .-eventTitle {
