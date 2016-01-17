@@ -1,25 +1,22 @@
 .introduction{
 	color: @brand-primary;
+	background-color: @introduction-bg;
 	margin-top: 10px;
-	background-color: #fafafa;
+	padding-top: 2px;
 	transition: all 1s;
 
 	&:hover{
-		background-color: #f4f4f4;
+		background-color: @introduction-text;
 		transition: all 1s;
 	}
-	//opacity: 0.9;
-	padding-top: 2px;
 
 	.close{
 		position: relative;
 		right: -1px;
 		top: 7px;
-		color: grey;
-		opacity: 0.5;
-		&:hover{
-			color: red;
-			opacity: 0.8;
+
+		span.glyphicon-remove {
+			.btn-remove;
 		}
 	}
 
@@ -33,12 +30,12 @@
 				cursor: pointer;
 				.toggle{
 					& .showIntro{
-						color: green;
-						background-color: @brand-success;
+						color: @introduction-show-text;
+						background-color: @introduction-show-bg;
 					}
 					& .hideIntro{
-						color: black;
-						background-color: #ddd;
+						color: @default-black;
+						background-color: @default-light-grey;
 					}
 				}
 			}
@@ -48,13 +45,13 @@
 			display: inline;
 			padding-left: 10px;
 			padding-right: 10px;
-			color: grey;
+			color: @default-grey;
 		}
 	}
 
 	.content{
 		hr{
-			color: grey;
+			color: @default-grey;
 			margin-top: 0;
 		}
 

@@ -127,8 +127,8 @@
 					}
 
 					span.checked {
-						background: @brand-danger;
-						color: #751313;
+						background: @role-no-bg;
+						color: @role-no-text;
 
 						&.glyphicon-home {
 							padding: 4px 17px 2px;
@@ -154,12 +154,12 @@
 					margin-bottom: 10px;
 
 					a.dropdown-toggle {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
+						background: @category-bg;
+						color: @category-text;
 						padding: 2px 5px;
 
 						&:hover {
-							color: @brand-primary;
+							color: @category-text;
 							cursor: pointer;
 							text-decoration: none;
 						}
@@ -170,12 +170,12 @@
 					}
 
 					ul.dropdown-menu {
-						background: #ededed;
+						background: @category-bg;
 						margin-top: 6px;
 
 						li {
 							&:hover {
-								background: darken(#ededed, 5%);
+								background: @category-hover-bg;
 							}
 
 							&> * {
@@ -195,7 +195,7 @@
 						}
 
 						.show_subcategories {
-							color: rgb(177, 184, 184);
+							color: darken(@category-hover-bg, 5%);
 							padding-right: 20px;
 
 							&:hover {
@@ -226,8 +226,8 @@
 					}
 
 					span.category {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
+						background: @category-bg;
+						color: @category-text;
 						padding: 2px 5px;
 					}
 				}
@@ -243,22 +243,17 @@
 				}
 
 				span.group {
-					background: rgba(130, 216, 130, 0.5);
-					color: @brand-primary;
+					background: @group-bg;
+					color: @group-text;
 					margin-bottom: 10px;
 					padding: 2px 5px;
 				}
 			}
 
 			span.glyphicon-remove {
-				color: lighten(@brand-danger, 20%);
-				cursor: pointer;
+				.btn-remove;
 				position: relative;
 				top: 2px;
-
-				&:hover {
-					color: @brand-danger;
-				}
 			}
 		}
 	}

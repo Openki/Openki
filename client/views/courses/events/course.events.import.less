@@ -1,12 +1,5 @@
 #edit_event_description {
-	background: @body-bg;
-	border: 1px solid #CCC;
 	padding: 6px 10px;
-
-	&:focus {
-		.box-shadow;
-		border-color: @brand-primary;
-	}
 }
 
 .course_events {
@@ -71,7 +64,7 @@
 	}
 
 	& > .link{
-		color: black;
+		color: @default-black;
 		position: absolute;
 		right: 10px;
 		top: -1px;
@@ -86,7 +79,7 @@
 		& > .course_event_date {
 			white-space: nowrap;
 			background: @brand-success;
-			border-bottom: 3px solid @body-bg;
+			border-bottom: 3px solid @default-white;
 			height: 70px;
 			padding: 10px 0;
 		}
@@ -106,8 +99,8 @@
 	}
 
 	& > .eventEdit_buttons {
-		background: #cfcfcf;
-		border-top: 3px solid @body-bg;
+		background: @default-light-grey;
+		border-top: 3px solid @default-white;
 		padding: 10px 0;
 		text-align: center;
 
@@ -152,7 +145,7 @@ input#edit_event_title {
 }
 
 .eventReplicationMenu {
-	background: #cfcfcf;
+	background: @default-light-grey;
 	padding: 10px 0;
 
 	& > div {
