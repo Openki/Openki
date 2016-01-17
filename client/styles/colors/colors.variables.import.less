@@ -1,30 +1,31 @@
-@light-blue:           #D8EBF4; //Used mainly for backgrounds
-@orange:               #f98f39;
-@yellow:               #f3f981;
+@light-blue:              #D8EBF4; //Used mainly for backgrounds
+@orange:                  #f98f39;
+@yellow:                  #f3f981;
 
-@default-black:						#333;
-@default-shadow:					#586a66;
+@default-black:           #333;
+@default-shadow:          #586a66;
+@brand-primary-hover:     darken(@brand-primary, 10%);
 
 // Group colors
-@group-bg:								#b9e9b9;
-@group-text: 							@brand-primary;
-@group-hover-bg:					darken(@group-bg, 20%);
-@group-hover-shadow:			@default-shadow;
+@group-bg:                #b9e9b9;
+@group-text:              @brand-primary;
+@group-hover-bg:          darken(@group-bg, 10%);
+@group-hover-shadow:      lighten(@default-shadow, 40%);
 
 // Category colors
-@category-bg:							#dad5d5;
-@category-text:						@brand-primary;
-@category-hover-bg:				darken(@category-bg, 10%);
-@category-hover-text:			@brand-primary;
-@category-hover-shadow:		@default-shadow;
+@category-bg:              rgba(216, 216, 216, 0.5);
+@category-text:            @brand-primary;
+@category-hover-bg:        darken(@category-bg, 10%);
+@category-hover-text:      @brand-primary-hover;
+@category-hover-shadow:    lighten(@default-shadow, 40%);
 
 // Location colors
-@location-bg:							#f9c8c8;
-@location-text:						#300;
-@location-hover-bg:				lighten(@location-bg, 7%);
-@location-hover-text:			@location-text;
-@location-hover-shadow:		@default-shadow;
+@location-bg:              #f9c8c8;
+@location-text:            #300;
+@location-hover-bg:        lighten(@location-bg, 7%);
+@location-hover-text:      @location-text;
+@location-hover-shadow:    @default-shadow;
 
 // User colors
-@user-bg:									#bcb6ff;
-@user-text:								#4E4E1C;
+@user-bg:                  #bcb6ff;
+@user-text:                #4E4E1C;
