@@ -113,30 +113,35 @@ p.course_description {
 			display: inline-block;
 		}
 
-		ul.nav-tabs {
-			border-bottom: none;
-			margin-bottom: -2px;
-
-			a {
-				color: @default-black;
-
-				&:hover {
-					.transition(0.5s);
-					color: @default-white;
-				}
-			}
-
-			li.active {
-				border-bottom: 1px solid @default-white;
-
-				a:hover {
-					color: @default-black;
-				}
-			}
+		ul.groups-list {
+			margin-bottom: 10px;
 		}
 
-		.tab-content {
-			border-top: 1px solid @brand-primary;
+		ul.nav-tabs {
+			border-bottom: 1px solid @brand-primary;
+
+			li {
+				border: 1px solid @brand-primary;
+				border-bottom: none;
+				margin: 0 2px -1px 0;
+
+				&.active {
+
+					a:hover {
+						color: @default-black;
+					}
+				}
+
+				a {
+					color: @default-black;
+					border: none;
+					margin: 0;
+
+					&:hover {
+						color: @default-white;
+					}
+				}
+			}
 		}
 
 		.edit_buttons {
