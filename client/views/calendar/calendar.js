@@ -48,7 +48,7 @@ Template.calendar.helpers({
 	startDate: function() {
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
-	}
+	},
 });
 
 Template.calendarDay.helpers({
@@ -144,4 +144,11 @@ Template.calendar.events({
 	'click .prevMonth': mvDateHandler(-1, 'month'),
 	'click .nextYear': mvDateHandler(1, 'year'),
 	'click .prevYear': mvDateHandler(-1, 'year'),
+});
+
+Template.switchDate.helpers({
+	startWeekday:  function() { return this.format('ddd'); },
+	startMonthday: function() { return this.format('D'); },
+	endWeekday: function() { return this.add(6, 'days').format('ddd'); },
+	endMonthday: function() { return this.add(6, 'days').format('D'); },
 });
