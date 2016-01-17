@@ -22,7 +22,7 @@
 
 <template name="groupListAdd">
 	<li>
-		<button role="menuitem" class="admitToGroup">
+		<button role="menuitem" class="-admitToGroup">
 			<span class="glyhpicon glyphicon-plus"></span>
 			&nbsp;
 			{{mf 'groupListing.admit' 'Admit to "{NAME}"' NAME=name}}
@@ -30,10 +30,16 @@
 	</li>
 </template>
 
-<template name="groupListEntry">		
+<template name="groupListEntry">
 	<li class="part-of-group">
 		{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
-		<button role="menuitem" class="expelFromGroup"  data-toggle="tooltip" data-original-title="{{mf 'groupListing.expel' 'Expel from this group'}}" data-html="true" data-placement="top">
+		<button
+			role="menuitem"
+			class="-expelFromGroup"
+			data-toggle="tooltip"
+			data-original-title="{{mf 'groupListing.expel' 'Expel from this group'}}"
+			data-html="true"
+			data-placement="top">
 			<span class="glyphicon glyphicon-remove"></span>
 		</button>
 	</li>

@@ -17,6 +17,7 @@ ul.groups-list {
 		display: inline-block;
 
 		a {
+			.transition(0.5s);
 			background: @group-bg;
 			color: @group-text;
 			padding: 0 4px 1px;
@@ -54,18 +55,16 @@ ul.groups-list {
 				background: none;
 				border: none;
 
-				&:hover span.glyphicon-remove {
-					color: @brand-danger;
-				}
-
-				&.admitToGroup {
+				&.-admitToGroup {
 					text-align: left;
 					width: 100%;
 				}
 
+				&.-expelFromGroup {
+					.btn-remove;
+				}
+
 				span.glyphicon-remove {
-					.transition(0.5s);
-					color: lighten(@brand-danger, 20%);
 					position: relative;
 					top: 2px;
 				}
