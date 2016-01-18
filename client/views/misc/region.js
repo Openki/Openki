@@ -23,7 +23,6 @@ Template.region_sel.events({
 		if (changed) {
 			var routeName = Router.current().route.getName();
 			var routesToKeep = ['home', 'find', 'locations', 'calendar'];
-			console.log(routeName);
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		e.preventDefault();

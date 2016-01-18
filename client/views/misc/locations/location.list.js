@@ -21,7 +21,7 @@ Template.locationlist.helpers({
 
 		return locations;
 	},
-	
+
 	mayHost: function() {
 		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
 	},

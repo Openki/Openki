@@ -65,7 +65,7 @@ Router.map(function () {
 				event = Events.findOne({_id: this.params._id});
 				if (!event) return false;
 			}
-			
+
 			return event;
 		},
 		onAfterAction: function() {
