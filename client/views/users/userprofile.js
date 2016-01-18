@@ -44,7 +44,7 @@ Template.userprofile.helpers({
 	ownuser: function () {
 		return this.user && this.user._id === Meteor.userId()
 	},
-	
+
 	groupMember: function(group, user) {
 		return user && group && group.members && group.members.indexOf(user._id) >= 0;
 	}
@@ -61,7 +61,7 @@ Template.userprofile.events({
 			}
 		});
 	},
-	
+
 	'click button.giveUpload': function() {
 		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
 			if (err) {
@@ -71,7 +71,7 @@ Template.userprofile.events({
 			}
 		});
 	},
-	
+
 	'click button.remove': function(event, template) {
 		var priv = template.$(event.target).data('priv')
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
@@ -82,7 +82,7 @@ Template.userprofile.events({
 			}
 		});
 	},
-	
+
 	'click button.draftIntoGroup': function(event, template) {
 		var groupId = this._id;
 		var name = this.name;
@@ -95,7 +95,7 @@ Template.userprofile.events({
 			}
 		});
 	},
-	
+
 	'click button.expelFromGroup': function(event, template) {
 		var groupId = this._id;
 		var name = this.name;

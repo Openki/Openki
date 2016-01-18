@@ -130,7 +130,7 @@ Filtering = function(availablePredicates) {
 		if (!predicates[name]) delete predicates[name];
 		return self;
 	};
-	
+
 	self.disable = function(name) {
 		delete predicates[name];
 		return self;
