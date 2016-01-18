@@ -11,11 +11,13 @@
 
 			a.category {
 				.transition(all 0.5s);
+				background: @category-bg-fallback;
 				background: @category-bg;
 				padding: 2px 5px;
 
 				&:hover {
 					.box-shadow-small(@category-hover-shadow);
+					background: @category-hover-bg-fallback;
 					background: @category-hover-bg;
 					color: @category-hover-text;
 					text-decoration: none;
