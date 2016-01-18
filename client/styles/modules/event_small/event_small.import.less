@@ -21,23 +21,37 @@
     padding: 0;
 
     &:hover {
-      .box-shadow;
+      .box-shadow-big(@default-shadow);
     }
 
     .-eventLocationTime,
     .-eventTitle,
     .-eventDescription {
+			.word-break;
       overflow: hidden;
-      word-wrap: break-word;
     }
 
     .-eventLocationTime {
       .grid(12);
       background: @brand-success;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid @default-white;
       color: @default-black;
-      height: 50px;
+      height: 55px;
       padding: 5px;
+
+			span.fa,
+			span.glyphicon {
+				margin-right: 2px;
+			}
+
+			span.fa-clock-o,
+			span.event_time {
+				margin-bottom: 5px;
+			}
+
+			span.fa-map-signs {
+				margin-left: 4px;
+			}
     }
 
     .-eventTitle {

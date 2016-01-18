@@ -94,7 +94,7 @@
 	text-align: right;
 
 	span.fa-reply {
-		.flip_n_scale(0deg, -1, -1);
+		.transform(0deg, -1, -1);
 		margin-top: 15px;
 	}
 }
@@ -166,9 +166,9 @@
 }
 
 a.profilelink {
+	.transition(0.5s);
 	color: @default-black;
 	padding-right: 5px;
-	-moz-transition: color 1s;
 
 
 	&:hover {
@@ -192,17 +192,12 @@ a.profilelink {
 }
 
 .comment-time-created {
-	color: #6D7070;
+	color: @default-grey;
 	cursor: default;
 }
 
 button.answer {
-	background: none;
-	border: 0;
-	color: @brand-primary;
+	.btn;
+	.btn-primary;
 	padding-bottom: 5px;
-
-	&:hover {
-		color: #2B6376;
-	}
 }

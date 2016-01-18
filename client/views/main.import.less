@@ -45,28 +45,22 @@ h1 {
 	}
 }
 
-a,
-button {
-	.transition(0.5s) !important;
-}
-
 .tooltip {
 	font-size: @font-size-base;
 	white-space: nowrap;
 
 	&-inner {
+		.box-shadow-small(@default-shadow);
 		max-width: none;
-		.box-shadow-s(rgb(88, 106, 102));
 	}
 }
 
 ul.nav-tabs {
 	li {
 		a {
-			color: #555;
+			color: @default-black;
 
 			&:hover {
-				.transition(0.5s);
 				color: @body-bg;
 			}
 		}
@@ -78,7 +72,7 @@ label {
 }
 
 span.glyphicon-ok {
-	color: #5CB85C;
+	color: darken(@brand-success, 20%);
 }
 
 select {
@@ -90,7 +84,7 @@ select {
 	}
 
 	&:-moz-focusring {
-		color: rgba(0,0,0,0); // Hack to make outline in Firefox disappear
+		color: @default-transparent; // Hack to make outline in Firefox disappear
 		text-shadow: 0 0 0 @default-shadow;
 	}
 }

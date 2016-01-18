@@ -23,13 +23,13 @@
 
 	.courselist_course {
 		.grid(12);
+		.transition(0.5s);
 		border: 7px dashed @light-blue;
 		height: 150px;
 		padding: 0;
 
 		&:hover {
-			.box-shadow;
-			.transition(0.5s);
+			.box-shadow-big(@default-shadow);
 			color: @brand-primary;
 
 			h4 {
@@ -38,8 +38,7 @@
 		}
 
 		&.category-focus-mode {
-			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
-									0px 0px 0px rgba(56, 130, 156, 0.6);
+			transition: (0.5s);
 		}
 
 		&.haspastevents {
@@ -69,13 +68,13 @@
 		}
 
 		.yes {
-			background-color: @brand-success;
-			color: #407d5c;
+			background-color: @role-yes-bg;
+			color: @role-yes-text;
 		}
 
 		.no {
-			background-color: @brand-danger;
-			color: #751313;
+			background-color: @role-no-bg;
+			color: @role-no-text;
 		}
 
 		.yesyou {
@@ -115,7 +114,7 @@
 	.grid(3);
 	padding: 0;
 	position: relative;
-	right: -7px;
+	right: -6px;
 	top: -7px;
 
 	&> div {
@@ -135,7 +134,7 @@
 	max-height: 150px;
 	padding: 3px;
 	position: relative;
-	right: -7px;
+	right: -6px;
 	top: -7px;
 	text-align: center;
 
@@ -146,7 +145,7 @@
 	}
 
 	.course_eventlist_location {
-		.break-word;
+		.word-break;
 		padding: 0 4px;
 
 		span {

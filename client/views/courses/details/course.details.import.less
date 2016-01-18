@@ -18,12 +18,6 @@ p.course_description {
 	}
 }
 
-.beta_inform {
-	h1 {
-		color: #BBB;
-	}
-}
-
 .coursedetails {
 	.container;
 	padding-top: 20px;
@@ -80,10 +74,10 @@ p.course_description {
 			top: -7px;
 
 			div {
-				background-color: #555;
+				.opacity(50);
+				background-color: @default-black;
 				color: white;
 				font-weight: bold;
-				opacity: 0.6;
 				padding: 0.3em 0.7em;
 			}
 		}
@@ -119,30 +113,35 @@ p.course_description {
 			display: inline-block;
 		}
 
-		ul.nav-tabs {
-			border-bottom: none;
-			margin-bottom: -2px;
-
-			a {
-				color: #555;
-
-				&:hover {
-					.transition(0.5s);
-					color: @body-bg;
-				}
-			}
-
-			li.active {
-				border-bottom: 1px solid #fff;
-
-				a:hover {
-					color: #555;
-				}
-			}
+		ul.groups-list {
+			margin-bottom: 10px;
 		}
 
-		.tab-content {
-			border-top: 1px solid @brand-primary;
+		ul.nav-tabs {
+			border-bottom: 1px solid @brand-primary;
+
+			li {
+				border: 1px solid @brand-primary;
+				border-bottom: none;
+				margin: 0 2px -1px 0;
+
+				&.active {
+
+					a:hover {
+						color: @default-black;
+					}
+				}
+
+				a {
+					color: @default-black;
+					border: none;
+					margin: 0;
+
+					&:hover {
+						color: @default-white;
+					}
+				}
+			}
 		}
 
 		.edit_buttons {
@@ -189,7 +188,7 @@ p.course_description {
 		.courseDetails_participants_count {
 			.grid(12);
 			background: @brand-primary;
-			color: @body-bg;
+			color: @default-white;
 			border: 5px solid @brand-primary;
 
 			h4 {
