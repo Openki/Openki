@@ -119,7 +119,16 @@ Template.calendar.rendered = function() {
 };
 
 Template.calendar_event.rendered = function() {
-	this.$('.ellipsis').dotdotdot({});
+	this.$('.-eventLocationTime').dotdotdot({
+		height: 55,
+		watch : "window",
+	});
+	this.$('.-eventTitle').dotdotdot({
+		watch: "window",
+	});
+	this.$('.-eventDescription').dotdotdot({
+		watch: "window",
+	});
 };
 
 var mvDateHandler = function(amount, unit) {
@@ -146,9 +155,9 @@ Template.calendar.events({
 	'click .prevYear': mvDateHandler(-1, 'year'),
 });
 
-Template.switchDate.helpers({
+Template.calendar.helpers({
 	startWeekday:  function() { return this.format('ddd'); },
-	startMonthday: function() { return this.format('D'); },
+	startMonthday: function() { return this.format('D.M.YY'); },
 	endWeekday: function() { return this.add(6, 'days').format('ddd'); },
-	endMonthday: function() { return this.add(6, 'days').format('D'); },
+	endMonthday: function() { return this.add(6, 'days').format('D.M.YY'); },
 });
