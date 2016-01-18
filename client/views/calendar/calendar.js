@@ -48,7 +48,7 @@ Template.calendar.helpers({
 	startDate: function() {
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
-	}
+	},
 });
 
 Template.calendarDay.helpers({
@@ -119,16 +119,26 @@ Template.calendar.rendered = function() {
 };
 
 Template.calendar_event.rendered = function() {
-	this.$('.ellipsis').dotdotdot({});
+	this.$('.-eventLocationTime').dotdotdot({
+		height: 55,
+		watch : "window",
+	});
+	this.$('.-eventTitle').dotdotdot({
+		watch: "window",
+	});
+	this.$('.-eventDescription').dotdotdot({
+		watch: "window",
+	});
 };
 
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');
+		var weekCorrection = unit == "week"? 0 : 1;
 		if (amount < 0) {
 			start.add(amount, unit).startOf('week');
 		} else {
-			start.add(amount, unit).add(1, 'week').startOf('week');
+			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
 		}
 		instance.filter.add('start', start).done();
 		updateUrl(event, instance);
@@ -143,4 +153,11 @@ Template.calendar.events({
 	'click .prevMonth': mvDateHandler(-1, 'month'),
 	'click .nextYear': mvDateHandler(1, 'year'),
 	'click .prevYear': mvDateHandler(-1, 'year'),
+});
+
+Template.calendar.helpers({
+	startWeekday:  function() { return this.format('ddd'); },
+	startMonthday: function() { return this.format('D.M.YY'); },
+	endWeekday: function() { return this.add(6, 'days').format('ddd'); },
+	endMonthday: function() { return this.add(6, 'days').format('D.M.YY'); },
 });

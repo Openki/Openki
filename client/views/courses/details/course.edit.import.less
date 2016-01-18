@@ -12,8 +12,8 @@
 }
 
 .course_edit {
-	background: @light-blue;
-	border: 7px solid @light-blue;
+	background: @brand-bg;
+	border: 7px solid @brand-bg;
 	padding: 0 0 25px;
 
 	.course_edit_header {
@@ -55,18 +55,16 @@
 
 	ul.categories,
 	ul.roles_list {
-		* {
-			.transition(0.5s);
-		}
 
 		span.caret {
-			color: #ccc;
+			.transition(color 0.5s);
+			color: @default-light-grey;
 			left: 3px;
 			position: relative;
 			top: -1px;
 
 			&.active {
-				color: #333;
+				color: @default-black;
 			}
 		}
 
@@ -78,7 +76,7 @@
 				cursor: pointer;
 
 				span.caret {
-					color: #333;
+					color: @default-black;
 				}
 			}
 

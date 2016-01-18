@@ -39,13 +39,10 @@
 					<h3>{{this.title}}</h3>
 					{{> groupList}}
 				</div>
-				<div class="course_event_time">
-					<span class="glyphicon glyphicon-time"></span>
-					{{timeformat start}} - {{timeformat end}}
-					{{#if location.name}}
-						<br>
+				{{#if location.name}}
+					<div class="course_event_location">
 						{{#if location._id}}
-							<a href="{{pathFor 'locationDetails' data=location}}">
+							<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
 								<span class="glyphicon glyphicon-home"></span>
 								{{location.name}}
 							</a>
@@ -54,17 +51,20 @@
 							{{location.name}}
 						{{/if}}
 						{{#if room}}
-							&nbsp; &nbsp;
 							<span class="fa fa-map-signs"></span>
 							{{room}}
 						{{/if}}
-					{{/if}}
-					{{#if location.address}}
-						<div>
-							<span class="fa fa-map-marker"></span>
-							{{location.address}}
-						</div>
-					{{/if}}
+					</div>
+				{{/if}}
+				{{#if location.address}}
+					<div>
+						<span class="fa fa-map-marker"></span>
+						{{location.address}}
+					</div>
+				{{/if}}
+				<div class="course_event_time">
+					<span class="glyphicon glyphicon-time"></span>
+					{{timeformat start}} - {{timeformat end}}
 				</div>
 			</div>
 			{{#if haveLocation}}
@@ -133,7 +133,7 @@
 				data-original-title="{{mf 'course.events.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}"
 				>
 				<span class="glyphicon glyphicon-download"></span>&nbsp;
-				{{mf 'course.download_cal' 'Download events to my calendar'}}
+				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 			</button>
 		</a>
 		{{> report}}

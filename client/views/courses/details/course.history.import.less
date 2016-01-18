@@ -2,10 +2,6 @@
 	.grid(12);
 	padding: 0 0 10px;
 
-	* {
-		.transition(0.5s)
-	}
-
 	.timeline-pre,
 	.timeline-post {
 		.grid(12);
@@ -27,11 +23,11 @@
 			}
 
 			.timeline-start {
-				#gradient.vertical(@light-blue;@brand-primary;0%;100%);
+				#gradient.vertical(@brand-bg;@brand-primary;0%;100%);
 			}
 
 			.timeline-end {
-				#gradient.vertical(@brand-primary;@light-blue;0%;100%);
+				#gradient.vertical(@brand-primary;@brand-bg;0%;100%);
 			}
 		}
 
@@ -54,7 +50,7 @@
 			text-align: right;
 
 			&.active {
-				color: #333;
+				color: @default-black;
 			}
 		}
 
@@ -93,7 +89,7 @@
 	padding: 0;
 
 	&:hover a {
-		color: #333;
+		color: @default-black;
 
 		&:hover {
 			text-decoration: underline;

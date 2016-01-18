@@ -4,8 +4,8 @@
 
 	.locationEdit {
 		.grid(12);
-		background-color: rgba(200, 200, 255, 0.15);
-		border: 1px solid #CCC;
+		background-color: @location-edit-bg;
+		border: 1px solid @default-light-grey;
 		overflow: auto;
 		padding: 0;
 
@@ -17,7 +17,7 @@
 
 		.input-group-addon:first-child {
 			border: none;
-			border-right: 1px solid #CCC;
+			border-right: 1px solid @default-light-grey;
 		}
 
 		.locationSearch {
@@ -62,15 +62,15 @@
 				padding: 5px 0;
 
 				li.locationCandidate {
-					background-color: rgba(200, 200, 255, 0.35);
+					background-color: @location-candidate-bg;
 					list-style: none;
 					margin-bottom: 4px;
 					padding-left: 5px;
 
 					&.hover {
-						background: rgba(200, 200, 255, 0.75);
+						background: @location-candidate-hover-bg;
 						cursor: pointer;
-						fill: #ff1;
+						fill: @location-candidate-hover-fill;
 					}
 
 					.address {

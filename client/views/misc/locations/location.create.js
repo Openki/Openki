@@ -14,10 +14,10 @@ Template.location_create.events({
 			now=new Date();
 			// sonst poste in db und cleare die inputfelder;
 			Locations.insert({
-				name: $("#addlocation_name").val(), 
-				description: $("#addlocation_description").val(), 
-				hosts:[Meteor.userId()], 
-				createdby: Meteor.userId(),  
+				name: $("#addlocation_name").val(),
+				description: $("#addlocation_description").val(),
+				hosts:[Meteor.userId()],
+				createdby: Meteor.userId(),
 				time_created: now,
 				time_lastedit: now,
 				route: "",

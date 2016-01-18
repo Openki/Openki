@@ -23,13 +23,13 @@
 
 	.courselist_course {
 		.grid(12);
-		border: 7px dashed @light-blue;
+		.transition(box-shadow 0.5s);
+		border: 7px dashed @brand-bg;
 		height: 150px;
 		padding: 0;
 
 		&:hover {
-			.box-shadow;
-			.transition(0.5s);
+			.box-shadow-big(@default-shadow);
 			color: @brand-primary;
 
 			h4 {
@@ -38,8 +38,7 @@
 		}
 
 		&.category-focus-mode {
-			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset,
-									0px 0px 0px rgba(56, 130, 156, 0.6);
+			transition: (0.5s);
 		}
 
 		&.haspastevents {
@@ -51,12 +50,12 @@
 		}
 
 		h4 {
-			.transition(0.5s);
-			color: #333;
+			.transition(color 0.5s);
+			color: @default-black;
 		}
 
 		.course-name {
-			color: #333;
+			color: @default-black;
 			font-size: 22px;
 			line-height: 24px;
 			margin: 8px 0 5px;
@@ -69,24 +68,33 @@
 		}
 
 		.yes {
-			background-color: @brand-success;
-			color: #407d5c;
+			background-color: @role-yes-bg;
+			color: @role-yes-text;
 		}
 
 		.no {
-			background-color: @brand-danger;
-			color: #751313;
+			background-color: @role-no-bg;
+			color: @role-no-text;
 		}
 
 		.yesyou {
-			background-color: @ownrole;
-			color: @ownrole-color;
+			background-color: @user-bg;
+			color: @user-text;
 		}
 
 		.course_content {
 			.grid(9);
 			background: @body-bg;
 			padding: 0 0 0 15px;
+
+			&.hasupcomingevents {
+				.grid(7.5);
+				padding: 0 0 0 15px;
+			}
+
+			ul.categories_list {
+				margin-left: -2px;
+			}
 		}
 	}
 }
@@ -94,19 +102,19 @@
 .courselist_course,
 .course_main {
 	&.hasupcomingevents {
-		background: @light-blue;
+		background: @brand-bg;
 
 		.course_content {
-			background: @light-blue;
+			background: @brand-bg;
 		}
 	}
 }
 
-.courselist_course_info {
+.course_status {
 	.grid(3);
 	padding: 0;
 	position: relative;
-	right: -7px;
+	right: -6px;
 	top: -7px;
 
 	&> div {
@@ -120,11 +128,14 @@
 }
 
 .course_eventlist {
-	.grid(12);
+	.grid(4.5);
 	background: @brand-success;
-	color: #333;
+	color: @default-black;
 	max-height: 150px;
 	padding: 3px;
+	position: relative;
+	right: -6px;
+	top: -7px;
 	text-align: center;
 
 	.course_eventlist_time,
@@ -134,25 +145,30 @@
 	}
 
 	.course_eventlist_location {
+		.word-break;
 		padding: 0 4px;
-		word-wrap: break-word;
+
+		span {
+			display: inline;
+		}
+
+		.glyphicon-home {
+			padding-right: 3px;
+		}
 	}
 }
 
-.courselist_course_container {
-	ul.categories_list {
+.course_groups {
+	ul.groups-list {
 		bottom: 0;
-		margin: 0px;
+		margin: 0;
+		padding: 0 7px 7px 0;
 		position: absolute;
 		right: 0;
 
 		li {
 			float: right;
+			margin-left: 4px;
 		}
 	}
-}
-
-.course_groups ul.groups-list li {
-	margin-bottom: 5px;
-	position: relative;
 }

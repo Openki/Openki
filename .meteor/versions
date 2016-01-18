@@ -36,7 +36,6 @@ cfs:tempstore@0.1.5
 cfs:upload-http@0.0.20
 cfs:worker@0.1.4
 check@1.1.0
-citizenkevin:medium-editor@1.0.1
 coffeescript@1.0.11
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.2
@@ -54,7 +53,7 @@ email@1.0.8
 es5-shim@4.1.14
 facebook@1.2.2
 fastclick@1.0.7
-fortawesome:fontawesome@4.4.0
+fortawesome:fontawesome@4.5.0
 geojson-utils@1.0.4
 gildaspk:moment-datepicker@0.0.2
 github@1.1.4
@@ -80,6 +79,7 @@ less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
+mediumeditor:mediumeditor@5.2.0
 meteor@1.1.10
 meteor-platform@1.2.3
 meteorhacks:inject-initial@1.0.3
@@ -93,9 +93,9 @@ mongo@1.1.3
 mongo-id@1.0.1
 mongo-livedata@1.0.9
 msavin:mongol@1.6.1
-msgfmt:core@2.0.0-preview.14
+msgfmt:core@2.0.0-preview.17
 msgfmt:extract@2.0.0-preview.12
-msgfmt:ui@2.0.0-preview.6
+msgfmt:ui@2.0.0-preview.7
 nemo64:bootstrap@3.3.5_2
 nemo64:bootstrap-data@3.3.5
 nicolaslopezj:router-layer@0.0.11

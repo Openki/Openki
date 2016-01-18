@@ -17,9 +17,14 @@ Template.region_sel.events({
 		localStorage.setItem("region", region_id); // to survive page reload
 		Session.set('region', region_id)
 
-		// Go to the homepage when the region is changed
-		if (changed) Router.go('/');
-
+		// When the region changes, we want the content of the page to update
+		// Many pages do not change when the region changed, so we go to
+		// the homepage for those
+		if (changed) {
+			var routeName = Router.current().route.getName();
+			var routesToKeep = ['home', 'find', 'locations', 'calendar'];
+			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
+		}
 		e.preventDefault();
 	}
 })

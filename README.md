@@ -7,7 +7,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 
-[  read on...](http://openki.net "our blog")  
+[  read on...](http://openki.net "our blog")
 <div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
 - Demo/Playground: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")

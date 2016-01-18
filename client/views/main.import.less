@@ -36,14 +36,6 @@ h1 {
 	color: @brand-primary;
 }
 
-p {
-	-moz-hyphens: auto;
-	-o-hyphens: auto;
-	-webkit-hyphens: auto;
-	-ms-hyphens: auto;
-	hyphens: auto;
-}
-
 .dropdown-menu {
 	min-width: 0;
 	width: auto;
@@ -53,16 +45,12 @@ p {
 	}
 }
 
-a,
-button {
-	.transition(0.5s) !important;
-}
-
 .tooltip {
 	font-size: @font-size-base;
 	white-space: nowrap;
 
 	&-inner {
+		.box-shadow-small(@default-shadow);
 		max-width: none;
 	}
 }
@@ -70,10 +58,9 @@ button {
 ul.nav-tabs {
 	li {
 		a {
-			color: #555;
+			color: @default-black;
 
 			&:hover {
-				.transition(0.5s);
 				color: @body-bg;
 			}
 		}
@@ -85,19 +72,19 @@ label {
 }
 
 span.glyphicon-ok {
-	color: #5CB85C;
+	color: darken(@brand-success, 20%);
 }
 
 select {
 	.form-control-humble;
-	color: #333;
+	color: @default-black;
 
 	&:hover {
 		cursor: pointer;
 	}
 
 	&:-moz-focusring {
-		color: rgba(0,0,0,0); // Hack to make outline in Firefox disappear
-		text-shadow: 0 0 0 #333;
+		color: @default-transparent; // Hack to make outline in Firefox disappear
+		text-shadow: 0 0 0 @default-shadow;
 	}
 }

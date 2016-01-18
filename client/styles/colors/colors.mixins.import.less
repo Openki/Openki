@@ -1,0 +1,20 @@
+.btn-remove() {
+	.transition(color 0.5s);
+	color: lighten(@brand-danger, 20%);
+	cursor: pointer;
+
+	&:hover {
+		color: @brand-danger;
+	}
+}
+
+.btn-calendar() {
+	background-color: @calendar-btn-bg;
+	border-color: @calendar-btn-border;
+	color: @calendar-btn-text;
+
+	&:hover {
+		background-color: @calendar-btn-hover-bg;
+		border-color: @calendar-btn-hover-border;
+	}
+}

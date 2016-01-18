@@ -78,16 +78,25 @@ Meteor.methods({
 			Email.send(mail);
 		}
 	},
-	
+
 	report: function(subject, location, report) {
 		var reporter = "A fellow visitor";
-		var rootUrl = Meteor.absoluteUrl()
+		var rootUrl = Meteor.absoluteUrl();
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {
 				reporter = "<a href='"+rootUrl+'user/'+this.userId+"'>"+htmlize(user.username)+"</a>";
 			}
 		}
+		moment.locale('en');
+		var version = Version.findOne();
+		if (version) {
+			var fullVersion = version.basic+(version.branch !== 'master' ? " "+version.branch : '');
+			var commit = version.commitShort;
+			var deployDate = moment(version.activation).format('lll');
+			var restart = moment(version.lastStart).format('lll');
+		}
+		var timeNow = new Date();
 
 		Email.send({
 			from: 'reporter@mail.openki.net',
@@ -100,7 +109,12 @@ Meteor.methods({
 				+"-------------------------------------------------------------------------------------"
 				+"<br><br>"+htmlize(report)+"<br><br>"
 				+"-------------------------------------------------------------------------------------"
-				+"<br>/end of report."
+				+"<br><br>The running version is ["+Accounts.emailTemplates.siteName+"] " +fullVersion+"  @ commit " +commit
+				+"<br>It was deployed on "+deployDate+","
+				+"<br>and last restarted on " +restart+"."
+				+"<br>Now it's "+timeNow+"."
+				+"<br>See you! bye."
+				+"<br><br>/end of report."
 		});
 	}
 });

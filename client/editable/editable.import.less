@@ -1,16 +1,47 @@
-.editable:focus,
-.editable.changed {
-	border: 1px solid @brand-primary;
-	padding: 10px !important;
-	background: @body-bg;
+.editableWrap {
+	position: relative;
+	margin: -8px;
+
+
+	.editable {
+		padding: 8px;
+	}
+
+	.editable:focus,
+	.editable.changed {
+		border: 1px solid @brand-primary;
+		padding: 7px;
+		background: @body-bg;
+	}
+
+
+	.editIcon {
+		color: gray;
+		padding: 0.2em;
+	}
+
+	&.rich .editIcon {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	&.simple .editable {
+		display: inline-block;
+		min-width: 10em;
+	}
+
+	&.rich .editable {
+		min-height: 4ex;
+	}
 }
 
-.editable.simple {
-	display: inline-block;
-	min-width: 10em;
+.editableWrap:hover {
+	.editIcon {
+		color: black;
+	}
 }
 
-.editable.rich {
-	min-height: 4ex;
-	padding: 0.5em;
+.editable-controls {
+	margin-top: 12px;
 }
