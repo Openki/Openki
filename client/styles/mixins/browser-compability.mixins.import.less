@@ -9,12 +9,6 @@
   transform: rotate(@degrees) scale(@x-axis, @y-axis);
 }
 
-.opacity(@percentage) {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{percentage})";
-	filter: alpha(opacity=@percentage);
-	opacity: @percentage / 100;
-}
-
 .word-break() {
 	-ms-word-break: break-all;
 	word-break: break-all;
