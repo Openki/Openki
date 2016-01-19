@@ -15,7 +15,8 @@
 
 		> span {
 			position: relative;
-			bottom: -2.5px;
+			bottom: -3px;
+			left: -3px;
 			padding-right: 15px;
 			font-size: x-large;
 		}
@@ -23,7 +24,8 @@
 		img {
 			display: inline-block;
 			height: 100%;
-			padding: 0 6px;
+			opacity: 0.97;
+			padding: 0 0 0 6px;
 			position: relative;
 			bottom: -2px;
 		}
@@ -34,9 +36,11 @@ ul.navbar-nav {
 	& > li {
 		& > a {
 			color: @brand-bg !important;
-			font-size: medium;
+			font-size: large;
 			padding: 15px 10px;
-
+			span {
+				font-size: medium;
+			}
 			&:hover {
 				color: @default-white !important;
 			}
