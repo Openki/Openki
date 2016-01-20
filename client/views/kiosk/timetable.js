@@ -46,17 +46,10 @@ Router.map(function () {
 			endAbs   = end.toDate().getTime();
 
 			var span = endAbs - startAbs;
-			var months = {};
 			var days = {};
 			var hours = {};
 			var cursor = moment(start);
 			do {
-				var month = cursor.month();
-				months[month] = {
-					moment: moment(cursor).startOf('month'),
-					relStart: Math.max(-0.01, (moment(cursor).startOf('month').toDate().getTime() - startAbs) / span),
-					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('month').add(1, 'month').toDate().getTime()) / span)
-				};
 				var day = cursor.day();
 				days[''+month+day] = {
 					moment: moment(cursor).startOf('day'),
@@ -109,7 +102,6 @@ Router.map(function () {
 			});
 
 			return {
-				months: _.toArray(months),
 				days: _.toArray(days),
 				hours: _.toArray(hours),
 				grouped: _.toArray(perLocation)
