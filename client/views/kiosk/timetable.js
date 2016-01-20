@@ -39,8 +39,8 @@ Router.map(function () {
 
 			if (!start || !end) return [];
 
-			start = moment(start).startOf('hour').add(-1, 'hour');
-			end   = moment(end).startOf('hour').add(1, 'hour');
+			start = moment(start).startOf('hour');
+			end   = moment(end).startOf('hour');
 
 			startAbs = start.toDate().getTime();
 			endAbs   = end.toDate().getTime();
