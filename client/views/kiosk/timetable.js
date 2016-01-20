@@ -19,7 +19,7 @@ var makeFilterQuery = function(params) {
 Router.map(function () {
 	this.route('kioskTimetable', {
 		path: '/kiosk/timetable',
-		layoutTemplate: 'kioskLayout',
+		layoutTemplate: 'kioskTimetableLayout',
 		waitOn: function () {
 			return subs.subscribe('eventsFind', makeFilterQuery(this.params && this.params.query), 200);
 		},
