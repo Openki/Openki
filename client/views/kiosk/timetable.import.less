@@ -1,23 +1,26 @@
-.kiosk {
+.kioskTimetable {
+	overflow: hidden;
+
 	.times {
 		margin-left: 12em;
 
 		div {
 			height: 2em;
+			margin-bottom: 2px;
 			position: relative;
-			top: -4px;
-			&.day{
-				padding-top: 0px;
-			}
-			&.hour{
-				height: 51.5em;
-			}
+			font-weight: bold;
 			div {
 				position: absolute;
 				text-align: center;
-				border: solid;
 				border-color: #f8f8f8; //darken(@brand-success, 80%);
 				border-width: 3px 0px 0px 0.5px;
+				border-top: solid;
+				border-left: solid;
+				border-right: solid;
+			}
+			div.hour {
+				/* Extend borders along the column */
+				height: 10000px;
 			}
 		}
 	}

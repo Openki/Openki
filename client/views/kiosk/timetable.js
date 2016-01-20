@@ -50,17 +50,18 @@ Router.map(function () {
 			var hours = {};
 			var cursor = moment(start);
 			do {
+				var month = cursor.month();
 				var day = cursor.day();
 				days[''+month+day] = {
 					moment: moment(cursor).startOf('day'),
-					relStart: Math.max(-0.01, (moment(cursor).startOf('day').toDate().getTime() - startAbs) / span),
-					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate().getTime()) / span)
+					relStart: Math.max(-0.1, (moment(cursor).startOf('day').toDate().getTime() - startAbs) / span),
+					relEnd:   Math.max(-0.1, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate().getTime()) / span)
 				};
 				var hour = cursor.hour();
 				hours[''+month+day+hour] = {
 					moment: moment(cursor).startOf('hour'),
-					relStart: Math.max(-0.01, (moment(cursor).startOf('hour').toDate().getTime() - startAbs) / span),
-					relEnd:   Math.max(-0.01, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate().getTime()) / span)
+					relStart: Math.max(-0.1, (moment(cursor).startOf('hour').toDate().getTime() - startAbs) / span),
+					relEnd:   Math.max(-0.1, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate().getTime()) / span)
 				};
 				cursor.add(1, 'hour');
 			} while(cursor.isBefore(end));
@@ -115,11 +116,8 @@ Template.kioskTimetable.helpers({
 	position: function() {
 		return "left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
 	},
-	showMonth: function(moment) {
-		return moment.format('MMMM YYYY');
-	},
 	showDay: function(moment) {
-		return moment.format('dddd Do');
+		return moment.format('LL');
 	},
 	showHour: function(moment) {
 		return moment.format('H');
