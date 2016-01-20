@@ -10,7 +10,7 @@ var makeFilterQuery = function(params) {
 	var end;
 	if (params.end) end = moment(params.end);
 	if (!end || !end.isValid()) end = moment(start).add(1, 'day');
-	
+
 	query.period = [start.toDate(), end.toDate()];
 
 	return query;
@@ -117,7 +117,7 @@ Template.kioskTimetable.helpers({
 		return "left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
 	},
 	showDay: function(moment) {
-		return moment.format('LL');
+		return moment.format('dddd, LL');
 	},
 	showHour: function(moment) {
 		return moment.format('H');
