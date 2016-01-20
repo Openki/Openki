@@ -3,7 +3,10 @@ Meteor.startup(function () {
 	applyUpdates();
 
 	var runningVersion = Version.findOne()
-	if (VERSION && (!runningVersion || runningVersion.commit !== VERSION.commit)) {
+	if (VERSION && (
+		(!runningVersion || runningVersion.complete !== VERSION.complete)
+			|| (runningVersion.commit !== VERSION.commit))
+	) {
 		var newVersion = _.extend(VERSION, {
 			activation: new Date()
 		});
