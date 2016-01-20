@@ -3,13 +3,21 @@
 		margin-left: 12em;
 
 		div {
-			height: 1.5em;
+			height: 2em;
 			position: relative;
+			top: -4px;
+			&.day{
+				padding-top: 0px;
+			}
+			&.hour{
+				height: 51.5em;
+			}
 			div {
 				position: absolute;
 				text-align: center;
-				border: 1px solid white;
-				background-color: gray;
+				border: solid;
+				border-color: #f8f8f8; //darken(@brand-success, 80%);
+				border-width: 3px 0px 0px 0.5px;
 			}
 		}
 	}
@@ -49,13 +57,17 @@
 					padding: 4px 8px;
 					line-height: 1.2em;
 					overflow: hidden;
+					&:hover {
+						z-index: 2;
+						box-shadow: 0px 5px 8px @default-shadow;
+					}
 				}
 
 				.time {
-					padding: 2px 5px;
+					padding:0px 6px;
 					display: none;
 					position: absolute;
-					top: -22px;
+					top: -20px;
 					background-color: #eee;
 					height: 1.4em;
 					overflow: hidden;
@@ -63,7 +75,7 @@
 
 				.description {
 					display: none;
-					height: 8em;
+					height: 12em;
 					background-color: @brand-bg;
 					padding: 4px 8px;
 					overflow: hidden;
@@ -73,6 +85,7 @@
 				.title:hover ~ .description {
 					display: block;
 					z-index: 2;
+					box-shadow: 0px 5px 8px @default-shadow;
 				}
 			}
 		}

@@ -6,19 +6,19 @@
 	<div class="kiosk">
 		<div class="timetable">
 			<div class="times">
-				<div>
-				{{#each months}}
-					<div style={{position}}>{{showMonth moment}}</div>
-				{{/each}}
-				</div>
+				{{!---<div>
+					{{#each months}}
+						<div class="month" style={{position}}>{{showMonth moment}}</div>
+					{{/each}}
+				</div>--}}
 				<div>
 				{{#each days}}
-					<div style={{position}}>{{showDay moment}}</div>
+					<div class="day" style={{position}}>{{showDay moment}} {{showMonth moment}}</div>
 				{{/each}}
 				</div>
 				<div>
 				{{#each hours}}
-					<div style={{position}}>{{showHour moment}}</div>
+					<div class="hour" style={{position}}>{{showHour moment}}</div>
 				{{/each}}
 				</div>
 			</div>
