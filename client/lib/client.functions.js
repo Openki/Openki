@@ -131,6 +131,15 @@ Handlebars.registerHelper('dateLong', function(date) {
 	}
 });
 
+Handlebars.registerHelper('weekNr', function(date) {
+	if (date) {
+		Session.get('timeLocale');
+		date = moment(moment(date).toDate());
+		return moment(date).week();
+	}
+});
+
+
 Handlebars.registerHelper('dateformat_calendar', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).calendar();

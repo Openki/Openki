@@ -28,6 +28,6 @@ then
 	portfile="${path}METEOR-PORT"
 	port=`cat "$portfile"`
 	mongorestore  --drop --host localhost --port "$port" --db meteor "$dump"
-else	
+else
 	mongorestore  --drop --db meteor --dbpath "$path" "$dump"
 fi

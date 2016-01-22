@@ -1,6 +1,8 @@
 <template name="introduction">
 	<div class="introduction container -introContainer about">
-		<a href="#" class="-closeIntro close"> <span class="glyphicon glyphicon-remove"> </span> </a>
+		<a href="#" class="-closeIntro" title="{{mf 'introduction.close.title' 'Hide introduction'}}">
+			<span class="glyphicon glyphicon-remove"></span>
+		</a>
 		<h3>
 			<a class="-toggleDetails">
 				{{#mf KEY='introduction.Title' SITENAME=siteName}}

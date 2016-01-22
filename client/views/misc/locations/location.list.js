@@ -6,7 +6,7 @@ Router.map(function () {
 			return Meteor.subscribe('locations', Session.get('region'));
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Location list'
+			document.title = webpagename + 'Venues list'
 		}
 	})
 });
@@ -21,7 +21,7 @@ Template.locationlist.helpers({
 
 		return locations;
 	},
-	
+
 	mayHost: function() {
 		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
 	},

@@ -5,6 +5,7 @@
 Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
 Meteor.subscribe('files');
+Meteor.subscribe('version');
 
 
 // close any verification dialogs still open
@@ -68,7 +69,7 @@ Meteor.startup(function() {
 			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
-			var short = langCandidate.substring(0, 2);
+			var short = lang.substring(0, 2);
 			if (lgs[short]) {
 				locale = short;
 			}
@@ -103,7 +104,7 @@ Meteor.startup(function() {
 Meteor.startup(function() {
 	Deps.autorun(function() {
 		var desiredLocale = Session.get('locale');
-		
+
 		mfPkg.setLocale(desiredLocale);
 
 		  // Tell moment to switch the locale

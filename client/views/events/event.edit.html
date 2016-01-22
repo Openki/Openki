@@ -151,7 +151,8 @@
 		</div>
 		{{>eventEditLocation}}
 		<div class="room">
-			<h4>{{mf 'course.event.edit.room' 'Room: (optional)'}}</h4>
+			<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
+			<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
 			<div id="editform_room" name="editform_room" class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-map-signs"></span>
@@ -168,9 +169,15 @@
 			{{#if affectedReplicaCount}}
 				<label>
 					<input type="checkbox" name="updateReplicas">
-					{{mf 'event.edit.updateReplicas' "Update {COUNT, plural, one {copy} other {# copies}}" COUNT=affectedReplicaCount}}
-					({{mf 'event.edit.updateReplicas.times' "time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}." COUNT=affectedReplicaCount}})
+					{{mf 'event.edit.updateReplicas'
+						"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+						COUNT=affectedReplicaCount
+					}}
 				</label>
+				{{mf 'event.edit.updateReplicas.times'
+					"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
+					COUNT=affectedReplicaCount
+				}}
 			{{/if}}
 		</div>
 		<div class="edit_buttons">

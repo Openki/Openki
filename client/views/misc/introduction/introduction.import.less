@@ -1,25 +1,23 @@
 .introduction{
+	.transition(background-color 1s);
 	color: @brand-primary;
-	margin-top: 10px;
-	background-color: #fafafa;
-	transition: all 1s;
+	background-color: @introduction-bg;
+	margin-top: 15px;
+	padding-top: 2px;
+	position: relative;
 
 	&:hover{
-		background-color: #f4f4f4;
-		transition: all 1s;
+		background-color: @introduction-text;
 	}
-	//opacity: 0.9;
-	padding-top: 2px;
 
-	.close{
-		position: relative;
-		right: -1px;
+	.-closeIntro {
+		font-size: 20px;
+		position: absolute;
+		right: 13px;
 		top: 7px;
-		color: grey;
-		opacity: 0.5;
-		&:hover{
-			color: red;
-			opacity: 0.8;
+
+		span.glyphicon-remove {
+			.btn-remove;
 		}
 	}
 
@@ -29,32 +27,37 @@
 
 		a {
 			text-decoration: none;
+
 			&:hover {
 				cursor: pointer;
+
 				.toggle{
 					& .showIntro{
-						color: green;
-						background-color: @brand-success;
+						background-color: @introduction-show-bg;
+						color: @introduction-show-text;
 					}
+
 					& .hideIntro{
-						color: black;
-						background-color: #ddd;
+						background-color: @default-light-grey;
+						color: @default-black;
 					}
 				}
 			}
 		}
 
 		.toggle{
+			color: @default-grey;
 			display: inline;
 			padding-left: 10px;
 			padding-right: 10px;
-			color: grey;
 		}
 	}
 
 	.content{
+		padding-bottom: 12px;
+
 		hr{
-			color: grey;
+			color: @default-grey;
 			margin-top: 0;
 		}
 
@@ -71,28 +74,28 @@
 					padding-left: 35%;
 
 					span {
+						.opacity(0.5);
 						color: grey;
-						opacity: 0.5;
-						padding-top: 5px;
 						padding-left: 105%;
+						padding-top: 5px;
 					}
 				}
 
 				span{
-					position: absolute;
-					padding-top: 5px;
+					.opacity(0.6);
 					left: -17px;
-					opacity: 0.6;
 					font-size: 23px;
+					padding-top: 5px;
+					position: absolute;
 				}
-				margin-left: 24px;
+
 				margin-bottom: 15px;
+				margin-left: 24px;
+
 				a {
 					text-decoration: underline;
 				}
 			}
 		}
-
-	padding-bottom: 12px;
 	}
 }

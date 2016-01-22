@@ -1,16 +1,17 @@
 #!/bin/sh
 ver=$(git describe --abbrev=0)
-complete=$(git describe)
+completeVer=$(git describe)
 branch=$(git rev-parse --abbrev-ref HEAD)
 commit=$(git rev-parse HEAD)
+commitShort=$(git rev-parse --short HEAD)
 timestamp=$(git log -1 --date=short --pretty=format:%cd)
-cat > version.js << EOF
+cat > server/version.js << EOF
 VERSION = {
 	"basic": "$ver",
-	"complete": "$complete",
+	"complete": "$completeVer",
 	"branch": "$branch",
 	"commit": "$commit",
-	"timestamp": "$timestamp"
+	"commitShort": "$commitShort",
+	"commitDate": "$timestamp"
 };
 EOF
-
