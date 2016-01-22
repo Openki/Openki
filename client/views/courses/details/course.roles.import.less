@@ -1,6 +1,6 @@
 .roles {
 	.grid(12);
-	background: @light-blue;
+	background: @brand-bg;
 	border-top: 3px solid @body-bg;
 	font-size: medium;
 	padding: 0;
@@ -9,9 +9,9 @@
 		.grid(12);
 		padding-bottom: 10px;
 		padding-top: 10px;
-		
+
 		a {
-			color: #333;
+			color: @default-black;
 
 			&:hover {
 				color: @brand-primary;
@@ -63,7 +63,6 @@
 	button.makeTeam {
 		.btn;
 		.btn-success;
-		.transition(0.5s);
 		margin-left: 10px;
 		padding: 3px 10px;
 
@@ -87,10 +86,6 @@
 				border: 0;
 				color: @brand-primary;
 				display: inline-block;
-			}
-
-			span.glyphicon-ok {
-				color: #5cb85c;
 			}
 
 			span.glyphicon-remove {

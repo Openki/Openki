@@ -207,23 +207,19 @@ Template.find.onCreated(function() {
 		}
 	}
 
-	// Keep old subscriptions around until the new ones are ready
-	// This avoids courses blinking out and back when we renew the subscriptions
-	// Can't wait for sub manager because we want the courses without future events to disappear
-	// as soon as that filter comes into effect. See above.
-	var courseSub = false;
-	var oldSubs = [];
-	var courseSubReady = function() {
-		instance.coursesReady.set(true);
-		_.each(oldSubs, function(sub) { sub.stop(); });
-		oldSubs = [];
-	}
-
 	// Update whenever filter changes
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
-		if (courseSub) oldSubs.push(courseSub);
-		courseSub = instance.subscribe('coursesFind', filterQuery, 36, courseSubReady);
+		var sub = subs.subscribe('coursesFind', filterQuery, 36, function() {
+			instance.coursesReady.set(true);
+		});
+
+		// Workaround: Subscription manager does not call onReady when the sub
+		// is cached and ready
+		// https://github.com/kadirahq/subs-manager/issues/7
+		Tracker.nonreactive(function() {
+			if (sub.ready()) instance.coursesReady.set(true);
+		});
 	});
 
 	// The event display reacts to changes in time as well

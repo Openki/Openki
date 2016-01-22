@@ -2,11 +2,11 @@
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt'};
 	var email = (name.replace(' ', '')+"@openki.example").toLowerCase()
-	
+
 	while (true) {
 		var user = Meteor.users.findOne({ "emails.address": email})
 		if (user) return user;
-		
+
 		user = Meteor.users.findOne({username: name})
 		if (user) return user;
 
@@ -15,7 +15,7 @@ function ensureUser(name) {
 			email: email,
 			profile: {name : name},
 		});
-		
+
 		var age = Math.floor(Math.random()*100000000000)
 		Meteor.users.update({ _id: id },{$set:{
 			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
@@ -32,13 +32,13 @@ function ensureRegion(name) {
 	while (true) {
 		var region = Regions.findOne({name: name})
 		if (region) return region._id;
-		
-		
+
+
 		var id = Regions.insert({
 			name: name,
 			timezone: "UTC+"+Math.floor(Math.random()*12)+":00"
 		});
-		
+
 		console.log("Added region: "+name+" "+id)
 	}
 }
@@ -214,7 +214,7 @@ createEventsIfNone = function(){
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
-				event.location = { _id: ensureLocation(location, event.region)._id };
+				event.location = ensureLocation(location, event.region);
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
@@ -238,7 +238,7 @@ createEventsIfNone = function(){
 				var age = Math.floor(Math.random() * 10000000000)
 				event.time_created = new Date(new Date().getTime() - age)
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25)
-				Events.insert(event)
+				Events.insert(event);
 				console.log('Added generic event ('+ n +'/' + event_count +'):  "' + event.title + '"');
 			}
 		});
@@ -271,7 +271,7 @@ createCommentsIfNone = function(){
 				var date = new Date(new Date().getTime() - age);
 				comment.time_created = date;
 				comment.time_updated = date + age * 0.77;
-				
+
 				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
 				var commenter = false;
 				if (!pickMember || Math.random() < 0.2 ){
@@ -299,11 +299,11 @@ loadTestEvents = function(){
 	_.each(testevents, function(event) {
 		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
-		
+
 		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
 		event.groups = _.map(event.groups, ensureGroup);
 
-		/* Create the events around the current Day. 
+		/* Create the events around the current Day.
 		First loaded event gets moved to current day. All events stay at original hour */
 		if (dateOffset == 0){
 			var toDay = new Date();
@@ -315,14 +315,15 @@ loadTestEvents = function(){
 			console.log("   which is "+dateOffset+" milliseconds, right?");
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
-		event.location = { _id: ensureLocation(event.location, event.region)._id };
-		delete event.location;
-		if (event.room) ensureRoom (event.location, event.room);
+		event.location = ensureLocation(event.location, event.region);
+		if (event.room) {
+			ensureRoom(event.location, event.room)
+		}
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);
 		event.time_lastedit = new Date(event.time_lastedit.$date);
-		var id = Events.insert(event);
+		Events.insert(event);
 		console.log("Loaded event:  "+event.title);
 	})
 }
@@ -358,7 +359,7 @@ function ensureGroup(short) {
 	while (true) {
 		var group = Groups.findOne({short: short})
 		if (group) return group._id;
-		
+
 		var id = Groups.insert({
 			name: short,
 			short: short,

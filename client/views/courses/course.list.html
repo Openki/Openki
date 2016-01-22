@@ -18,85 +18,114 @@
 
 
 <template name="courselist">
+	<!-- Start 'this' helper iteration -->
 	{{#each this}}
 		{{> course}}
+	<!-- Invert 'this' helper iteration -->
 	{{else}}
 		{{mf 'courses.none' 'no courses found'}}
 	{{/each}}
+	<!-- End 'this' helper iteration -->
 </template>
 
 <template name="course">
-{{#if ready}}
-<div class="courselist_course_container">
-	<a href="{{pathFor 'showCourse'}}">
-		<div class="courselist_course {{coursestate}}">
-			<div class="course_content {{coursestate}}">
-				<div class="course-name">
-					<h4>{{name}}</h4>
-				</div>
-				<div class="course_groups">
-					{{> groupList}}
-				</div>
-			</div>
-			<div class="course_categories">
-				{{> show_categories}}
-			</div>
-			<div class="courselist_course_info">
-				<!-- Start 'hasupcomingevents' helper statement -->
-				{{#if hasupcomingevents}}
-				<div class="course_eventlist">
-					<!-- Start 'course_eventlist' helper iteration -->
-					{{#each course_eventlist}}
-					<div class="course_eventlist_date">
-						<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-						{{dateformat_mini this.start}}
+	<!-- Start 'ready' helper statement -->
+	{{#if ready}}
+		<div class="courselist_course_container">
+			<a href="{{pathFor 'showCourse'}}">
+				<div class="courselist_course {{coursestate}}">
+					<div class="course_content {{coursestate}} {{#if hasupcomingevents}}hasupcomingevents{{/if}}">
+						<div class="course-name">
+							<h4>{{name}}</h4>
+						</div>
+						<div class="course_categories">
+							{{> show_categories}}
+						</div>
 					</div>
-					<div class="course_eventlist_time">
-						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-						{{timeformat this.start}}
-					</div>
-					<!-- Start 'location' helper statement -->
-					{{#if location.name}}
-					<div class="course_eventlist_location ellipsis">
-						<span class="glyphicon glyphicon-home" aria-hidden="true" style="padding-right:3px"></span>
-						{{location.name}}
-					</div>
+					<!-- Start 'hasupcomingevents' helper statement -->
+					{{#if hasupcomingevents}}
+						<div class="course_eventlist">
+							<!-- Start 'course_eventlist' helper iteration -->
+							{{#each course_eventlist}}
+								<div class="course_eventlist_date">
+									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+									{{dateformat_mini this.start}}
+								</div>
+								<div class="course_eventlist_time">
+									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+									{{timeformat this.start}}
+								</div>
+								<!-- Start 'location.name' helper statement -->
+								{{#if location.name}}
+									<div class="course_eventlist_location ellipsis">
+										<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+										<span>{{location.name}}</span>
+									</div>
+								{{/if}}
+								<!-- End 'location.name' helper statement -->
+							{{/each}}
+							<!-- End 'course_eventlist' helper iteration -->
+							<!-- Start 'course_eventlist_hasmore' helper statement -->
+							{{#if course_eventlist_hasmore}}
+								<div class="course_eventlist_hasmore">
+									+ {{course_eventlist_hasmore}}
+									&nbsp;
+									<span class="glyphicon glyphicon-calendar"></span>
+								</div>
+							{{/if}}
+							<!-- End 'course_eventlist_hasmore' helper statement -->
+						</div>
+					<!-- Invert 'hasupcomingevents' helper statement -->
+					{{else}}
+						{{> courseStatus}}
 					{{/if}}
-					<!-- End 'location' helper statement -->
-					{{/each}}
-					<!-- Start 'course_eventlist_hasmore' helper iteration -->
-					{{#if course_eventlist_hasmore}}
-					<div class="course_eventlist_hasmore">
-						+ {{course_eventlist_hasmore}}
-						&nbsp;
-						<span class="fa fa-calendar-o"></span>
+					<!-- End 'hasupcomingevents' helper statement -->
+					<div class="course_groups">
+						{{> groupList}}
 					</div>
-					{{/if}}
 				</div>
-				{{else}}
-					{{> courseStatus}}
-				{{/if}}
-			</div>
-			<div class="courselist_course_overlay">
-			</div>
+			</a>
 		</div>
-	</a>
-</div>
-{{/if}}
+	{{/if}}
+	<!-- End 'ready' helper statement -->
 </template>
 
 <template name="courseStatus">
-	<div class="team_status {{#if needsTeam}}no{{else}}yes{{#if is_team}}you{{/if}}{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsTeam}}{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}{{else}}{{#if is_team}}{{mf 'course.list.status_titles.u_are_organizer' 'You are organizer'}}{{else}}{{mf 'course.list.status_titles.has_team' 'Has a organizer-team'}}{{/if}}{{/if}}">
-		<span class="glyphicon glyphicon-bullhorn"></span>
+	<div class="course_status">
+		<div
+			class="team_status {{#if needsTeam}}no{{else}}yes{{#if is_team}}you{{/if}}{{/if}}"
+			href="#"
+			data-toggle="tooltip"
+			data-placement="right"
+			data-html="true"
+			data-original-title="{{#if needsTeam}}{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}{{else}}{{#if is_team}}{{mf 'course.list.status_titles.u_are_organizer' 'You are organizer'}}{{else}}{{mf 'course.list.status_titles.has_team' 'Has a organizer-team'}}{{/if}}{{/if}}">
+			<span class="glyphicon glyphicon-bullhorn"></span>
+		</div>
+		<!-- Start 'requiresMentor' helper statement -->
+		{{#if requiresMentor}}
+			<div
+				class="mentor_status {{#if needsMentor}}no{{else}}yes{{#if is_mentor}}you{{/if}}{{/if}}"
+				href="#"
+				data-toggle="tooltip"
+				data-placement="right"
+				data-html="true"
+				data-original-title="{{#if needsMentor}}{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}{{else}}{{#if is_mentor}}{{mf 'course.list.status_titles.u_are_mentor' 'You are mentor'}}{{else}}{{mf 'course.list.status_titles.has_mentor' 'Has a mentor'}}{{/if}}{{/if}}">
+				<span class="fa fa-graduation-cap"></span>
+			</div>
+		{{/if}}
+		<!-- End 'requiresMentor' helper statement -->
+		<!-- Start 'requiresHost' helper statement -->
+		{{#if requiresHost}}
+			<div
+				class="host_status {{#if needsHost}}no{{else}}yes{{#if is_host}}you{{/if}}{{/if}}"
+				href="#"
+				data-toggle="tooltip"
+				data-placement="right"
+				data-html="true"
+				data-original-title="{{#if needsHost}}{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}{{else}}{{#if is_host}}{{mf 'course.list.status_titles.u_are_host' 'You are host'}}{{else}}{{mf 'course.list.status_titles.has_host' 'Has a host'}}{{/if}}{{/if}}">
+				<span class="glyphicon glyphicon-home"></span>
+			</div>
+		{{/if}}
+		<!-- End 'requiresHost' helper statement -->
 	</div>
-	{{#if requiresMentor}}
-		<div class="mentor_status {{#if needsMentor}}no{{else}}yes{{#if is_mentor}}you{{/if}}{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsMentor}}{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}{{else}}{{#if is_mentor}}{{mf 'course.list.status_titles.u_are_mentor' 'You are mentor'}}{{else}}{{mf 'course.list.status_titles.has_mentor' 'Has a mentor'}}{{/if}}{{/if}}">
-			<span class="fa fa-graduation-cap"></span>
-		</div>
-	{{/if}}
-	{{#if requiresHost}}
-		<div class="host_status {{#if needsHost}}no{{else}}yes{{#if is_host}}you{{/if}}{{/if}}" href="#" data-toggle="tooltip" data-placement="right" data-html="true" data-original-title="{{#if needsHost}}{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}{{else}}{{#if is_host}}{{mf 'course.list.status_titles.u_are_host' 'You are host'}}{{else}}{{mf 'course.list.status_titles.has_host' 'Has a host'}}{{/if}}{{/if}}">
-			<span class="glyphicon glyphicon-home"></span>
-		</div>
-	{{/if}}
 </template>

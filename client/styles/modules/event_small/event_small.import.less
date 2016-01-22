@@ -15,34 +15,48 @@
 
   .event_small {
     .grid(12);
-    .transition(0.5s);
-    background: @light-blue;
+    .transition(box-shadow 0.5s);
+    background: @brand-bg;
     height: 100%;
     padding: 0;
 
     &:hover {
-      .box-shadow;
+      .box-shadow-big(@default-shadow);
     }
 
     .-eventLocationTime,
     .-eventTitle,
     .-eventDescription {
+			.word-break;
       overflow: hidden;
-      word-wrap: break-word;
     }
 
     .-eventLocationTime {
       .grid(12);
       background: @brand-success;
-      border-bottom: 1px solid #fff;
-      color: #333;
-      height: 50px;
+      border-bottom: 1px solid @default-white;
+      color: @default-black;
+      height: 55px;
       padding: 5px;
+
+			span.fa,
+			span.glyphicon {
+				margin-right: 2px;
+			}
+
+			span.fa-clock-o,
+			span.event_time {
+				margin-bottom: 5px;
+			}
+
+			span.fa-map-signs {
+				margin-left: 4px;
+			}
     }
 
     .-eventTitle {
       .grid(12);
-      color: #333;
+      color: @default-black;
       font-size: medium;
       max-height: 56px;
       padding: 5px;

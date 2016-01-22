@@ -11,10 +11,10 @@ UpdatesAvailable.renameEventFields = function() {
 			event.end = event.enddate;
 			delete event.enddate;
 		}
- 
+
 		event.end.setMonth(event.start.getMonth());
 		event.end.setDate(event.start.getDate());
-		
+
 		Events.update(event._id, event);
 	})
 }

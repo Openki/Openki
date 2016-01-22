@@ -46,12 +46,12 @@ affectedReplicaSelectors = function(event) {
 	// replicas in the past are never updated
 	var futureDate = event.start;
 	if (futureDate < new Date) futureDate = new Date;
-	
+
 	var selector = {
 		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate }
 	};
-	
+
 	var selectors;
 	if (event.replicaOf) {
 		selector.$or = [
@@ -73,7 +73,7 @@ updateEventLocation = function(eventId) {
 
 		if (typeof event.location != 'object') {
 			// This happens only at creation when the field was not initialized correctly
-			Events.update(event._id, { location: {} });
+			Events.update(event._id, { $set:{ location: {} }});
 			return false;
 		}
 
@@ -115,7 +115,7 @@ updateEventLocation = function(eventId) {
 Meteor.methods({
 	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
-		
+
 		var expectedFields = {
 			title:       String,
 			description: String,
@@ -130,14 +130,14 @@ Meteor.methods({
 			course_id:	 Match.Optional(String),
 			groups:	     Match.Optional([String]),
 		};
-		
+
 		var isNew = eventId === '';
 		if (isNew) {
 			expectedFields.region = String;
 		}
 
 		check(changes, expectedFields);
-		
+
 		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.isClient) {
@@ -147,17 +147,17 @@ Meteor.methods({
 				throw new Meteor.Error(401, "please log in");
 			}
 		}
-		
+
 		var now = new Date();
-		
+
 		changes.time_lastedit = now;
-		
+
 		var event = false;
 		if (isNew) {
 			changes.time_created = now;
 			if (changes.course_id && !mayEditEvent(user, changes)) {
 				throw new Meteor.Error(401, "not permitted");
-			}		
+			}
 
 			if (!changes.start || changes.start < now) {
 				throw new Meteor.Error(400, "Event date in the past or not provided");
@@ -210,7 +210,7 @@ Meteor.methods({
 		if (Meteor.isServer) {
 			changes.description = saneHtml(changes.description);
 		}
-		
+
 		if (changes.title) {
 		    changes.title = saneText(changes.title).substring(0, 1000);
 		    changes.slug = getSlug(changes.title);
@@ -221,7 +221,7 @@ Meteor.methods({
 			var eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
-			
+
 			if (updateReplicas) {
 				delete changes.start;
 				delete changes.end;
@@ -256,15 +256,15 @@ Meteor.methods({
 
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
-		
+
 		var user = Meteor.user()
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
-		
-		var tmp = []	
-		
+
+		var tmp = []
+
 		for(var i = 0; i < event.files.length; i++ ){
 			var fileObj = event.files[i];
 			if( fileObj._id != fileId){
@@ -323,7 +323,7 @@ eventsFind = function(filter, limit) {
 		find.start = { $lt: filter.period[1] }; // Start date before end of period
 		find.end = { $gte: filter.period[0] }; // End date after start of period
 	}
-	
+
 	if (filter.after) {
 		find.start = { $gt: filter.after };
 	}
@@ -345,11 +345,11 @@ eventsFind = function(filter, limit) {
 	if (filter.room) {
 		find.room = filter.room;
 	}
-	
+
 	if (filter.standalone) {
 		find.course_id = { $exists: false };
 	}
-	
+
 	if (filter.region) {
 		find.region = filter.region;
 	}

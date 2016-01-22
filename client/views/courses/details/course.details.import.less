@@ -9,7 +9,7 @@ p.course_description {
 }
 
 .course_event_edit {
-	border: 7px dashed @light-blue;
+	border: 7px dashed @brand-bg;
 	padding-bottom: 25px;
 
 	.toggle_duration {
@@ -18,19 +18,19 @@ p.course_description {
 	}
 }
 
-.beta_inform {
-	h1 {
-		color: #BBB;
-	}
-}
-
 .coursedetails {
 	.container;
 	padding-top: 20px;
 
+	.coursedetails_column_left,{
+		.grid(12, 8);
+	}
+	.coursedetails_column_right{
+		.grid(12, 4);
+	}
+
 	.coursedetails_column_left,
 	.coursedetails_column_right {
-		.grid(12, 6);
 		padding: 0;
 
 		&> div:first-child {
@@ -41,8 +41,8 @@ p.course_description {
 	.coursedetails_column_left {
 		padding-right: 7.5px;
 
-		@media @mobile {
-			padding: 0;
+		@media screen and (max-width: @screen-sm) {
+			padding-right: 0;
 		}
 	}
 
@@ -56,13 +56,13 @@ p.course_description {
 
 	.course_main {
 		.grid(12);
-		border: 7px dashed @light-blue;
+		border: 7px dashed @brand-bg;
 
 		&.hasupcomingevents {
 			ul.nav-tabs {
 				li.active {
 					a {
-						background: @light-blue;
+						background: @brand-bg;
 					}
 				}
 			}
@@ -80,10 +80,10 @@ p.course_description {
 			top: -7px;
 
 			div {
-				background-color: #555;
+				.opacity(0.5);
+				background-color: @default-black;
 				color: white;
 				font-weight: bold;
-				opacity: 0.6;
 				padding: 0.3em 0.7em;
 			}
 		}
@@ -119,27 +119,35 @@ p.course_description {
 			display: inline-block;
 		}
 
-		ul.nav-tabs {
-			border-bottom: none;
-
-			a {
-				color: #555;
-
-				&:hover {
-					.transition(0.5s);
-					color: @body-bg;
-				}
-			}
-
-			li.active {
-				a:hover {
-					color: #555;
-				}
-			}
+		ul.groups-list {
+			margin-bottom: 10px;
 		}
 
-		.tab-content {
-			border-top: 1px solid @brand-primary;
+		ul.nav-tabs {
+			border-bottom: 1px solid @brand-primary;
+
+			li {
+				border: 1px solid @brand-primary;
+				border-bottom: none;
+				margin: 0 2px -1px 0;
+
+				&.active {
+
+					a:hover {
+						color: @default-black;
+					}
+				}
+
+				a {
+					color: @default-black;
+					border: none;
+					margin: 0;
+
+					&:hover {
+						color: @default-white;
+					}
+				}
+			}
 		}
 
 		.edit_buttons {
@@ -186,7 +194,7 @@ p.course_description {
 		.courseDetails_participants_count {
 			.grid(12);
 			background: @brand-primary;
-			color: @body-bg;
+			color: @default-white;
 			border: 5px solid @brand-primary;
 
 			h4 {
@@ -196,7 +204,7 @@ p.course_description {
 
 		.courseDetails_mentor.mentor_status {
 			.grid(12, 3);
-			background: @light-blue;
+			background: @brand-bg;
 			height: 60px;
 
 			.yes {

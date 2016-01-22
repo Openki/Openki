@@ -1,0 +1,70 @@
+@brand-bg:                       #D8EBF4; //Used mainly for backgrounds
+@orange:                         #f98f39;
+@yellow:                         #f3f981;
+
+@default-black:                  #333;
+@default-shadow:                 rgba(88, 106, 102, 0.5);
+@default-transparent:            rgba(0, 0, 0, 0);
+@default-white:                  #fff;
+@default-grey:                   #868383;
+@default-light-grey:             #ccc;
+@brand-primary-hover:            darken(@brand-primary, 10%);
+
+
+// Group colors
+@group-bg:                       #b9e9b9;
+@group-text:                     @brand-primary;
+@group-hover-bg:                 darken(@group-bg, 10%);
+@group-hover-shadow:             lighten(@default-shadow, 80%);
+
+// Category colors
+@category-bg:                    rgba(216, 216, 216, 0.5);
+@category-bg-fallback:           #dad5d5;
+@category-text:                  @brand-primary;
+@category-hover-bg:              darken(@category-bg, 10%);
+@category-hover-bg-fallback:     darken(@category-bg-fallback, 10%);
+@category-hover-text:            @brand-primary-hover;
+@category-hover-shadow:          lighten(@default-shadow, 80%);
+
+// Location colors
+@location-bg:                    #f9c8c8;
+@location-text:                  #300;
+@location-hover-bg:              lighten(@location-bg, 6%);
+@location-hover-text:            @location-text;
+@location-hover-shadow:          @default-shadow;
+@location-description-bg:        #d8d8f1;
+@location-edit-bg:               @location-description-bg;
+@location-candidate-bg:          darken(@location-edit-bg, 5%);
+@location-candidate-hover-bg:    darken(@location-edit-bg, 10%);
+@location-candidate-hover-fill:  #ff1;
+
+// User colors
+@user-bg:                        #bcb6ff;
+@user-text:                      #4E4E1C;
+
+// Role colors
+@role-yes-bg:                    @brand-success;
+@role-yes-text:                  #407d5c;
+@role-no-bg:                     @brand-danger;
+@role-no-text:                   #751313;
+
+// Introduction colors
+@introduction-bg:                #fafafa;
+@introduction-text:              #f4f4f4;
+@introduction-show-bg:           @brand-success;
+@introduction-show-text:         @role-yes-text;
+
+// External services colors
+@google-plus:                   #dd4b39;
+@facebook:                      #3b5998;
+@github:                        @default-black;
+
+// Calendar colors
+@calendar-header-bg:            #f98f39;
+@calendar-header-text:          @default-black;
+@calendar-navigation-bg:        lighten(@calendar-header-bg, 35%);
+@calendar-btn-bg:               @calendar-header-bg;
+@calendar-btn-text:             @default-black;
+@calendar-btn-border:           darken(@calendar-btn-bg, 10%);
+@calendar-btn-hover-bg:         darken(@calendar-btn-bg, 5%);
+@calendar-btn-hover-border:     darken(@calendar-btn-border, 5%);

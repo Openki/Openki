@@ -1,12 +1,13 @@
 Template.groupName.helpers({
-	name: function() {
+	name: function(getFullName) {
 		if (!this) return;
 		var groupId = ''+this; // it's not a string?! LOL I DUNNO
 		miniSubs.subscribe('group', groupId);
 		var group = Groups.findOne(groupId);
-		if (!group) return "removed group"
+		if (!group) return "removed group";
+		if (getFullName) return group && group.name;
 		return group && group.short;
-	}
+	},
 });
 
 Template.groupName.events({

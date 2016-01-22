@@ -56,17 +56,20 @@ Meteor.methods({
 
 		if (comment.parentId) {
 			var parentComment = CourseDiscussions.findOne(comment.parentId);
+
 			if (!parentComment) {
 				throw new Meteor.Error(404, "parent comment not found");
 			}
 
 			if (parentComment.courseId !== comment.courseId) {
+
 				// I could try to mend this but why should I?
 				throw new Meteor.Error(400, "Course mismatch");
 			}
 
 			// No nesting beyond one level
 			if (parentComment.parentId) {
+
 				throw new Meteor.Error(400, "Nesting error");
 			}
 
@@ -93,11 +96,11 @@ Meteor.methods({
 		if (!mayEditPost(user, originalComment)) throw new Meteor.error(401, "you cant");
 
 		update.time_updated = new Date();
-		
+
 		CourseDiscussions.update(originalComment._id, { $set: update });
 	},
 
-	
+
 	deleteComment: function(commentId) {
 		check(commentId, String);
 
@@ -105,13 +108,14 @@ Meteor.methods({
 		if (!user) {
 			throw new Meteor.Error(401, "please log in");
 		}
-		
+
 		var comment = CourseDiscussions.findOne(commentId);
 		if (!comment) {
 			throw new Meteor.error(404, "no such comment");
 		}
 
 		var course = Courses.findOne(comment.courseId);
+
 		if (!course) {
 			throw new Meteor.Error(401, "delete not permitted");
 		}
@@ -119,7 +123,7 @@ Meteor.methods({
 		if( !mayDeletePost(user, course, comment) ) {
 			throw new Meteor.Error(401, "delete not permitted");
 		}
-		
+
 		CourseDiscussions.remove({ _id: comment._id });
 		CourseDiscussions.remove({ parentId: comment._id });
 	}

@@ -1,7 +1,7 @@
 "use strict";
 
 Template.location_edit.helpers({
-		
+
 	regions: function(){
 	  return Regions.find();
 	},
@@ -29,13 +29,13 @@ Template.location_edit.helpers({
 Template.location_edit.events({
 	'submit form.location_edit, click input.save': function (ev) {
 		ev.preventDefault()
-		
+
 
 		try {
 			if (pleaseLogin()) return;
-			
+
 			var locationId = this._id ? this._id : ''
-			var isNew = locationId === ''	
+			var isNew = locationId === ''
 
 			var changes = {
 				description: $('#editform_description').val(),
@@ -60,7 +60,7 @@ Template.location_edit.events({
 				Session.set('search', ''); // clear searchfield
 				if (err) alert("Saving the location went terribly wrong: "+err)
 				if (isNew){
-					Router.go('locationDetails', {_id: locationId}) // TODO: Slug is not included in url			
+					Router.go('locationDetails', {_id: locationId}) // TODO: Slug is not included in url
 				}
 			})
 

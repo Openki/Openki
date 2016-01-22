@@ -1,73 +1,101 @@
 .introduction{
+	.transition(background-color 1s);
 	color: @brand-primary;
-	margin-top: 10px;
-	background-color: #fafafa;
-	transition: all 1s;
+	background-color: @introduction-bg;
+	margin-top: 15px;
+	padding-top: 2px;
+	position: relative;
 
 	&:hover{
-		background-color: #f4f4f4;
-		transition: all 1s;
+		background-color: @introduction-text;
 	}
-	//opacity: 0.9;
-	padding-top: 2px;
 
-	.close{
-		position: relative;
-		right: -5px;
-		top: 2px;
-		color: grey;
-		opacity: 0.5;
-		&:hover{
-			color: red;
-			opacity: 0.8;
+	.-closeIntro {
+		font-size: 20px;
+		position: absolute;
+		right: 13px;
+		top: 7px;
+
+		span.glyphicon-remove {
+			.btn-remove;
 		}
 	}
 
-	h3{
-		margin-top: 5px;
-		margin-bottom: 6px;
-	}
+	h3 {
+		margin: 5px 40px 6px 0;
+		padding-right: 30px;
 
-	hr{
-		color: grey;
-		margin-top: 0;
-	}
+		a {
+			text-decoration: none;
 
+			&:hover {
+				cursor: pointer;
 
-	ul{
-		.list-unstyled;
-		font-size: medium;
+				.toggle{
+					& .showIntro{
+						background-color: @introduction-show-bg;
+						color: @introduction-show-text;
+					}
 
-		li{
-			.grid(8, 1.6, 1.6);
-
-			h2{
-				margin-bottom: 8px;
-				margin-top: 0px;
-				padding-left: 35%;
-
-				span {
-					color: grey;
-					opacity: 0.5;
-					padding-top: 5px;
-					padding-left: 105%;
+					& .hideIntro{
+						background-color: @default-light-grey;
+						color: @default-black;
+					}
 				}
 			}
+		}
 
-			span{
-				position: absolute;
-				padding-top: 5px;
-				left: -17px;
-				opacity: 0.6;
-				font-size: 23px;
-			}
-			margin-left: 24px;
-			margin-bottom: 15px;
-			a {
-				text-decoration: underline;
-			}
+		.toggle{
+			color: @default-grey;
+			display: inline;
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 	}
 
-	padding-bottom: 12px;
+	.content{
+		padding-bottom: 12px;
+
+		hr{
+			color: @default-grey;
+			margin-top: 0;
+		}
+
+		ul{
+			.list-unstyled;
+			font-size: medium;
+
+			li{
+				.grid(8, 1.6);
+
+				h2{
+					margin-bottom: 8px;
+					margin-top: 0px;
+					padding-left: 35%;
+
+					span {
+						.opacity(0.5);
+						color: grey;
+						padding-left: 105%;
+						padding-top: 5px;
+					}
+				}
+
+				span{
+					.opacity(0.6);
+					left: -17px;
+					font-size: 23px;
+					padding-top: 5px;
+					position: absolute;
+				}
+
+				margin-bottom: 15px;
+				margin-left: 24px;
+
+				a {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }
