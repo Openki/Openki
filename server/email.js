@@ -51,7 +51,7 @@ Meteor.methods({
 		var names = {
 			SENDER: htmlize(sender.username),
 			RECIPIENT: recipient.username,
-			ADMINS: 'admins.openki.net'
+			ADMINS: 'admins@openki.net'
 		};
 
 		mail.subject = '['+Accounts.emailTemplates.siteName+'] ' + mf('sendEmail.subject', names, 'You got a Message from {SENDER}', lg);
