@@ -155,9 +155,9 @@ Template.calendar.events({
 	'click .prevYear': mvDateHandler(-1, 'year'),
 });
 
-Template.calendar.helpers({
-	startWeekday:  function() { return this.format('ddd'); },
-	startMonthday: function() { return this.format('D.M.YY'); },
-	endWeekday: function() { return this.add(6, 'days').format('ddd'); },
-	endMonthday: function() { return this.add(6, 'days').format('D.M.YY'); },
+Template.switchDate.helpers({
+
+	endDateTo: function(date) {
+		return moment(date).add(6, 'days');
+	}
 });

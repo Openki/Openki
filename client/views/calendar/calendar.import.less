@@ -10,38 +10,43 @@
 		padding: 0;
 	}
 
-	.calendar_week {
-		.grid(12);
-		background-color: @orange;
-
-		h1 {
-			color: @default-black;
-			margin-top: 10px;
-			text-align: center;
-
-			small {
-				color: @default-black;
-			}
-		}
-	}
-
 	.switchDate {
 		.grid(12);
-		background-color: lighten(@orange, 25%);
+		background-color: @calendar-navigation-bg;
 		font-size: 32px;
 		margin-bottom: 10px;
-		padding: 0 10px;
+		padding: 0 5px;
 		text-align: center;
+
+		.calendar_week {
+			background-color: @calendar-header-bg;
+			text-align: center;
+
+			.week {
+				color: @calendar-header-text;
+				margin: 7px 0 0 0;
+				font-size: large;
+				line-height: 0.75;
+			}
+
+			.date {
+				//line-height: 1;
+				font-size: small;
+				color: @calendar-header-text;
+				margin-bottom: 3px 0;
+			}
+		}
+
 
 		&> .right {
 			float: right;
 		}
 
-		small{
+		small {
 			font-size: 12px;
 		}
 
-		button{
+		button {
 			.btn;
 			.btn-calendar;
 			float: left;
@@ -62,8 +67,8 @@
 		padding: 0 0 10px;
 
 		.date {
-			background: lighten(@orange, 25%);
-			border-left: 10px solid @orange;
+			background: @calendar-navigation-bg;
+			border-left: 10px solid @brand-primary;
 			font-size: large;
 			padding: 5px 7px 5px 9px;
 			text-align: center;
@@ -72,7 +77,7 @@
 			@media screen and (max-width: @screen-xxxs) {
 				.grid(12);
 				border-left: none;
-				border-top: 10px solid @orange;
+				border-top: 10px solid @brand-primary;
 				padding: 0.5em;
 			}
 		}

@@ -1,14 +1,5 @@
 <template name="calendar">
 	<div class="calendar">
-		<div class="calendar_week">
-			<h1>
-				{{#with startDate}}
-					{{startWeekday}} {{startMonthday}} - {{endWeekday}} {{endMonthday}}
-					&nbsp;
-					<small>({{mf "calendar.weekNumber" "Week"}} {{weekNr startDate}})</small>
-				{{/with}}
-			</h1>
-		</div>
 		{{> switchDate date=startDate}}
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
@@ -128,6 +119,16 @@
 			<button class="nextYear" aria-label="go forward one year">
 				{{mf "calendar.button.nextYear" "one year"}} <span class="fa fa-arrow-right"></span>
 			</button>
+		</div>
+		<div class="calendar_week">
+		<div class="week">
+				{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
+		</div>
+		<div class="date">
+			{{dateLong date}} - {{dateLong (endDateTo date)}}
+		</div>
+
+
 		</div>
 	</div>
 </template>

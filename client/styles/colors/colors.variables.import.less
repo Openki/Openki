@@ -60,11 +60,11 @@
 @github:                        @default-black;
 
 // Calendar colors
-@calendar-header-bg:            #f98f39;
+@calendar-header-bg:            @brand-bg; //#f98f39;  @orange; #dcd;
 @calendar-header-text:          @default-black;
-@calendar-navigation-bg:        lighten(@calendar-header-bg, 35%);
-@calendar-btn-bg:               @calendar-header-bg;
-@calendar-btn-text:             @default-black;
-@calendar-btn-border:           darken(@calendar-btn-bg, 10%);
+@calendar-navigation-bg:        @brand-bg; // lighten(@calendar-header-bg, 8%);
+@calendar-btn-bg:               @brand-primary;
+@calendar-btn-text:             @default-white;
+@calendar-btn-border:           darken(@calendar-btn-bg, 3%);
 @calendar-btn-hover-bg:         darken(@calendar-btn-bg, 5%);
 @calendar-btn-hover-border:     darken(@calendar-btn-border, 5%);
