@@ -89,16 +89,6 @@ Template.calendar.onCreated(function() {
 			.done();
 	});
 
-	// Keep old subscriptions around until the new ones are ready
-	var eventSub = false;
-	var oldSubs = [];
-	var stopOldSubs = function() {
-		if (eventSub.ready()) {
-			_.map(oldSubs, function(sub) { sub.stop(); });
-			oldSubs = [];
-		}
-	};
-
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
 
@@ -106,8 +96,7 @@ Template.calendar.onCreated(function() {
 		var limit = filter.get('start').add(1, 'week').toDate();
 
 		filterQuery.period = [start, limit];
-		if (eventSub) oldSubs.push(eventSub);
-		eventSub = instance.subscribe('eventsFind', filterQuery, stopOldSubs);
+		instance.eventSub = subs.subscribe('eventsFind', filterQuery);
 
 	});
 });

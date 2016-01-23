@@ -229,7 +229,7 @@ Template.find.onCreated(function() {
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		subs.subscribe('eventsFind', filterQuery, 10);
+		instance.subscribe('eventsFind', filterQuery, 10);
 	});
 });
 
