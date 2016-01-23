@@ -66,7 +66,11 @@ Template.calendarDay.helpers({
 	},
 	calendarDay: function(day) {
 		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd Do MMMM');
+		return moment(day.toDate()).format('dddd, Do MMMM');
+	},
+	eventsReady: function() {
+		var instance = Template.instance();
+		return instance.parentInstance().eventSub.ready();
 	}
 });
 

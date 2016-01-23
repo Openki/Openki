@@ -14,20 +14,24 @@
 		<div class="date">
 			{{calendarDay day.start}}
 		</div>
-		{{#unless hasEvents}}
-			<br>
-			{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
-		{{/unless}}
-		{{#if hasEvents}}
-			<div class="calendar_events">
-				{{#each events}}
-					{{#if past}}
-						{{> calendar_event_past}}
-					{{else}}
-						{{> calendar_event}}
-					{{/if}}
-				{{/each}}
-			</div>
+		{{#if eventsReady}}
+			{{#unless hasEvents}}
+				<br>
+				{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
+			{{/unless}}
+			{{#if hasEvents}}
+				<div class="calendar_events">
+					{{#each events}}
+						{{#if past}}
+							{{> calendar_event_past}}
+						{{else}}
+							{{> calendar_event}}
+						{{/if}}
+					{{/each}}
+				</div>
+			{{/if}}
+		{{else}}
+			{{> loadingRow}}
 		{{/if}}
 	</div>
 </template>
