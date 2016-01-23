@@ -1,7 +1,7 @@
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
-	loadingTemplate: 'loading',
+	loadingTemplate: 'loadingPage',
 });
 Router.onBeforeAction('dataNotFound');
 
