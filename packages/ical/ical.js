@@ -28,7 +28,15 @@ Router.map(function () {
 		path: 'cal/',
 		where: 'server',
 		action: function () {
-			sendIcal(eventsFind({}), this.response);
+			var filter = Filtering(EventPredicates);
+			var query = this.params.query || {};
+
+			filter
+				.add('start', moment())
+				.read(query)
+				.done();
+
+			sendIcal(eventsFind(filter.toQuery()), this.response);
 		}
 	});
 	this.route('calEvent', {
