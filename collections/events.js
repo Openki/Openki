@@ -312,7 +312,8 @@ Meteor.methods({
  *
  */
 eventsFind = function(filter, limit) {
-	var find = { $and: [] };
+	var find = {};
+	var and = [];
 	var options = {
 		sort: { start: 1 }
 	};
@@ -327,11 +328,11 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.start) {
-		find.$and.push({ end: { $gte: filter.start } });
+		and.push({ end: { $gte: filter.start } });
 	}
 
 	if (filter.end) {
-		find.$and.push({ start: { $lte: filter.end } });
+		and.push({ start: { $lte: filter.end } });
 	}
 
 	if (filter.after) {
@@ -379,11 +380,16 @@ eventsFind = function(filter, limit) {
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		searchTerms.forEach(function(searchTerm) {
-			find.$and.push({ $or: [
+			and.push({ $or: [
 				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
 			] });
 		});
 	}
+
+	if (and.length > 0) {
+		find.$and = and;
+	}
+
 	return Events.find(find, options);
 }
