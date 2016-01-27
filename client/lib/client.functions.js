@@ -26,6 +26,7 @@ mayEdit = function(user, course) {
 	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id));
 };
 
+
 /* Get a username from ID
  *
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
@@ -110,10 +111,6 @@ Handlebars.registerHelper("log", function(context) {
 	if (window.console) console.log(arguments.length > 0 ? context : this);
 });
 
-Handlebars.registerHelper("title", function() {
-	var les = Array.prototype.slice.call(arguments, 0, -1);
-	document.title = les.join("");
-});
 
 Handlebars.registerHelper('username', userName);
 

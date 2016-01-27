@@ -50,7 +50,7 @@ Meteor.publish('locationsFind', function(find, limit) {
 });
 
 Meteor.publish('discussion', function(courseId) {
-	return CourseDiscussions.find({ course_ID: courseId });
+	return CourseDiscussions.find({ courseId: courseId });
 });
 
 

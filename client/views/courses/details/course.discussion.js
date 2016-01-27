@@ -1,126 +1,175 @@
-//load template-content
+Template.discussion.onCreated(function() {
+	subs.subscribe('discussion', this.data._id);
+	this.posts = CourseDiscussions.find({
+		courseId: this.data._id,
+		parentId: { $exists: false },
+	}, {
+		sort: {time_updated: -1, time_created: -1}
+	});
+});
+
 Template.discussion.helpers({
-	post: function() {
-		//get all first-level posts
-		var posts = CourseDiscussions.find({
-			course_ID: this._id,
-			parent_ID: { $exists: false },
-			},
-			{sort: {time_updated: -1, time_created: -1}}
-		);
-		var ordered_posts = [];
-		// loop over first-level post, search each post for comments, order by most recent
-		posts.forEach(function (post){
-			ordered_posts.push(post);
-			var comments = CourseDiscussions.find({
-				parent_ID: post._id},
-				{sort: {time_created: 1}});
-			comments.forEach(function (comment){
-				ordered_posts.push(comment);
-			});
+	havePosts: function() {
+		return 0 < Template.instance().posts.count();
+	},
+
+	posts: function() {
+		return Template.instance().posts;
+	},
+
+	newPost: function() {
+		return {
+			'new': true,
+			courseId: this._id,
+			userId: Meteor.userId()
+		};
+	}
+});
+
+
+Template.post.onCreated(function() {
+	// Note that the 'discussion' subscription from the 'discussion' template
+	// covers responses as well
+	this.responses = false;
+
+	if (!this.data.new && !this.data.parentId) {
+		this.responses = CourseDiscussions.find({
+			parentId: this.data._id,
+		}, {
+			sort: {time_updated: 1, time_created: 1}
 		});
-		//return array with proper order
-		return ordered_posts;
 	}
-});
 
-
-Template.writePostDialog.helpers({
-	anonChecked: function() {
-		if (Meteor.user()) return {};
-		return { checked: 1, disabled: 1 };
-	}
-});
-
-
-Template.newPost.onCreated(function() {
-	this.writing = new ReactiveVar(false);
 	this.editing = new ReactiveVar(false);
 });
 
 
-Template.newPost.helpers({
-	writing: function() {
-		return Template.instance().writing.get();
+Template.post.helpers({
+	responses: function() {
+		return Template.instance().responses;
 	},
+
 	editing: function() {
 		return Template.instance().editing.get();
+	},
+
+	allowResponse: function() {
+		return !this.new && !this.parentId;
+	},
+
+	newResponse: function() {
+		if (this.parentId) return false;
+		return {
+			new: true,
+			parentId: this._id,
+			courseId: this.courseId,
+			userId: Meteor.userId()
+		};
 	}
 });
 
-Template.newPost.events({
-	'click button.write': function () {
-		Template.instance().writing.set(true);
+
+Template.postShow.helpers({
+	postClass: function() {
+		return this.parentId ? 'discussion-comment' : 'post';
 	},
 
-	'click button.add': function (event, instance) {
+	mayEdit: function() {
+		return mayEditPost(Meteor.user(), this);
+	},
+
+	mayDelete: function() {
+		var course = Courses.findOne(this.courseId);
+		return mayDeletePost(Meteor.user(), course, this);
+	},
+});
+
+
+Template.postEdit.onCreated(function() {
+	this.anon = new ReactiveVar(!this.data.userId);
+});
+
+
+Template.postEdit.helpers({
+	postClass: function() {
+		return this.parentId ? 'discussion-comment' : 'post';
+	},
+
+	showUserId: function() {
+		return !this.new || !Template.instance().anon.get();
+	},
+
+	anonChecked: function() {
+		if (Template.instance().anon.get()) {
+			return { checked: 1};
+		}
+		return {};
+	},
+
+	anonDisabled: function() {
+		if (Meteor.user()) return {};
+		return { disabled: 1 };
+	},
+});
+
+Template.post.events({
+	'click .-edit': function(event, instance) {
+		event.stopImmediatePropagation();
+		instance.editing.set(true);
+	},
+
+	'click button.post': function (event, instance) {
+		event.stopImmediatePropagation();
 		var comment = {
-			title: $("#post_title").val(),
-			text: $("#post_text").val()
+			title: instance.$(".-postTitle").val(),
+			text: instance.$(".-postText").val()
 		};
-		var parent_ID = this.parent && this.parent._id;
-		if (parent_ID) {
-			comment.parent_ID = parent_ID;
-			comment.course_ID = this.parent.course_ID;
+
+		var method = 'editComment';
+		if (instance.data.new) {
+			method = 'postComment';
+
+			comment.courseId = instance.data.courseId;
+
+			if (instance.data.parentId)	{
+				comment.parentId = instance.data.parentId;
+			}
+
+			comment.anon = !!instance.$('.-anon').prop('checked');
 		} else {
-			comment.course_ID = this._id;
+			comment._id = instance.data._id;
 		}
 
-		var anon = instance.$('.-anon').prop('checked');
-		Meteor.call('postComment', comment, anon, function(err, commentId) {
+		Meteor.call(method, comment, function(err, commentId) {
 			if (err) {
 				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 			} else {
-				instance.writing.set(false);
+				instance.editing.set(false);
 			}
 		});
 
 	},
 
-	'click button.cancel': function () {
-		Template.instance().writing.set(false);
-	},
-
-/*  /////////////////////////////////////////// TODO: fix comment-editing ////////////////
-	'click button.edit': function () {
-		if (pleaseLogin()) return;
-		Template.instance().editing.set(true);
-		$("#edit_text").val( this.parent.text );
-		$("#edit_title").val( this.parent.title );
-		Template.instance().editing.set(true);
-
-	},
-
-	'click button.cancelEdit': function () {
-		if (pleaseLogin()) return;
+	'click button.cancel': function() {
 		Template.instance().editing.set(false);
-		$('form[name=form_edit]').hide();
 	},
-	'click button.update': function () {
-		if (pleaseLogin()) return;
-		var comment = {
-			text: $("#edit_text").val(),
-			title: $("#edit_title").val()
 
-		};
+	'click button.delete': function (event, instance) {
+		event.stopImmediatePropagation();
+		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ))) {
+			Meteor.call('deleteComment', this._id, function(err) {
+				if (err) {
+					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
+				} else {
+					addMessage(mf('comment.delete.success', {}, 'Commend deleted successfuly.'), 'success');
+				}
+			});
+		}
+	},
+});
 
-		//var parent_ID = this.parent && this.parent._id;
-		//if (parent_ID) {
-		//comment.parent_ID = parent_ID;
-		comment.course_ID = this.parent.course_ID;
-		//} else {
-		//	comment.course_ID = this._id;
-		//}
-
-		var templateInstance = Template.instance();
-		Meteor.call('editComment', comment, this.parent._id, function(err, commentId) {
-			if (err) {
-				addMessage(mf('comment.editing.error', { ERROR: err }, 'Editing your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
-			} else {
-				templateInstance.editing.set(false);
-			}
-		});
+Template.postEdit.events({
+	'change': function(event, instance) {
+		instance.anon.set(instance.$('.-anon').prop('checked'));
 	}
-*/
-
 });

@@ -294,9 +294,11 @@ Meteor.methods({
  * filter: dictionary with filter options
  *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
- *   after: only events starting after this date
- *   ongoing: only events that are ongoing during this date
+ *   start: only events that end after this date
  *   before: only events that ended before this date
+ *   ongoing: only events that are ongoing during this date
+ *   end: only events that started before this date
+ *   after: only events starting after this date
  *   location: only events at this location (string match)
  *   room: only events in this room (string match)
  *   standalone: only events that are not attached to a course
@@ -310,7 +312,7 @@ Meteor.methods({
  *
  */
 eventsFind = function(filter, limit) {
-	var find = {};
+	var find = { $and: [] };
 	var options = {
 		sort: { start: 1 }
 	};
@@ -322,6 +324,14 @@ eventsFind = function(filter, limit) {
 	if (filter.period) {
 		find.start = { $lt: filter.period[1] }; // Start date before end of period
 		find.end = { $gte: filter.period[0] }; // End date after start of period
+	}
+
+	if (filter.start) {
+		find.$and.push({ end: { $gte: filter.start } });
+	}
+
+	if (filter.end) {
+		find.$and.push({ start: { $lte: filter.end } });
 	}
 
 	if (filter.after) {
@@ -368,14 +378,12 @@ eventsFind = function(filter, limit) {
 
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
-		var searchQueries = _.map(searchTerms, function(searchTerm) {
-			return { $or: [
+		searchTerms.forEach(function(searchTerm) {
+			find.$and.push({ $or: [
 				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
-			] }
+			] });
 		});
-
-		find.$and = searchQueries;
 	}
 	return Events.find(find, options);
 }

@@ -5,12 +5,9 @@ Router.map(function () {
 		path: 'course/:_id/:slug?',
 		template: 'coursedetails',
 		waitOn: function () {
-			return [
-				subs.subscribe('courseDetails', this.params._id),
-				subs.subscribe('discussion', this.params._id),
-			];
+			return subs.subscribe('courseDetails', this.params._id);
 		},
-		data: function () {
+		data: function() {
 			var self = this;
 			var course = Courses.findOne({_id: this.params._id});
 

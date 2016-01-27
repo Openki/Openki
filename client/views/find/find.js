@@ -2,15 +2,6 @@ function finderRoute(path) {
 	return {
 		path: path,
 		template: 'find',
-		onBeforeAction: function() {
-			// Allow setting the region in the URL by parameter '?region=Testistan'
-			if (this.params.query.region) {
-				var region = Regions.findOne({ name: this.params.query.region })
-				if (region) Session.set('region', region._id);
-			};
-
-			this.next();
-		},
 		data: function() {
 			return this.params;
 		},
@@ -187,8 +178,8 @@ Template.find.onCreated(function() {
 
 		filter
 			.clear()
-			.add('region', Session.get('region'))
 			.read(query)
+			.add('region', Session.get('region'))
 			.done();
 	});
 
@@ -221,7 +212,7 @@ Template.find.onCreated(function() {
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		subs.subscribe('eventsFind', filterQuery, 10);
+		instance.subscribe('eventsFind', filterQuery, 10);
 	});
 });
 

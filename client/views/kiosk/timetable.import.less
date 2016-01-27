@@ -57,7 +57,7 @@
 
 		.rows {
 			position: relative;
-			height: 3em;
+			height: 45px;
 			margin-left: 12em;
 			&:hover {
 				z-index: 1;
@@ -70,11 +70,14 @@
 
 				.title {
 					background-color: @brand-success;
-					height: 2.8em;
-					padding: 4px 8px;
+					height: 43px;
+					padding: 4px 12px;
 					line-height: 1.2em;
+					font-size: 28px;
 					overflow: hidden;
 					&:hover {
+						height: 70px;
+						min-width: 200px;
 						z-index: 2;
 						box-shadow: 0px 5px 8px @default-shadow;
 					}
@@ -103,6 +106,10 @@
 					display: block;
 					z-index: 2;
 					box-shadow: 0px 5px 8px @default-shadow;
+				}
+
+				.title:hover ~ .description {
+					min-width: 200px;
 				}
 			}
 		}

@@ -6,12 +6,14 @@ Assistant = {
 		if (Session.get('ShowIntro')) {
 			return true;
 		} else {
-			var routeName = Router.current().route.getName();
+			var route = Router.current().route;
+			var routeName = route && route.getName();
 			return routeName === "home";
 		}
 	},
 	openedIntro: function() {
-		var routeName = Router.current().route.getName();
+		var route = Router.current().route;
+		var routeName = route && route.getName();
 		return routeName === "home" || routeName === "find";
 	},
 	doneIntro: function() {

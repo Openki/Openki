@@ -1,137 +1,150 @@
-<template name="newPost">
-{{#if writing}}
-{{> writePostDialog}}
-{{else}} <!-- Part of 'writing' helper statement -->
-{{#if editing}}
-{{> editPostDialog}}
-{{else}} <!-- Part of 'editing' helper statement -->
-{{#if parent}}
-<button type="button" class="write" role="button">
-	<span class="fa fa-reply"></span>
-	&nbsp;
-	{{mf 'course.discussion.comment_answer' 'Answer'}}
-</button>
-
-<!--
-<button type="button" class="edit" role="button">
-	<span class="glyphicon glyphicon-edit"></span>
-	&nbsp;
-	{{mf 'course.discussion.comment_edit' 'Edit'}}
-</button>
--->
-
-{{else}} <!-- Part of 'parent' helper statement -->
-<button type="button" class="write write-comment">
-	<span class="glyphicon glyphicon-pencil"></span>
-	&nbsp;
-	{{mf 'course.discussion.write_comment' 'Write a comment'}}
-</button>
-{{/if}} <!-- End 'parent' helper statement -->
-{{/if}} <!-- End 'editing' helper statement -->
-{{/if}} <!-- End 'writing' helper statement -->
-</template>
-
-<template name="writePostDialog">
-{{#if parent}}
-<div class="write-answer-graphics">
-	<span class="fa fa-reply"></span>
-</div>
-{{/if}}
-<div class="write-post-dialog {{#if parent}}answer{{/if}}">
-	{{#unless parent}}
-	<h3>{{mf 'course.discussion.write_comment'}}</h3>
-	{{/unless}}
-	<form name="form_post">
-		<input type="text" id="post_title" placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}" />
-		<textarea id="post_text" placeholder="{{#if parent}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"></textarea>
-		{{#if parent}}
-		<button type="button" class="add">
-			{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
-		</button>
-		{{else}} <!-- Part of 'parent' helper statement -->
-		<button type="button" class="add">
-			{{mf 'course.discussion.comment_btn.write' 'Write!'}}
-		</button>
-		{{/if}} <!-- End 'parent' helper statement -->
-		<button type="button" class="cancel">
-			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
-		</button>
-		<label>
-			<input type='checkbox' class='-anon' {{anonChecked}}>
-			{{mf 'course.discussion.anon' 'Anonymous comment'}}&nbsp;
-			<span class="fa fa-user-secret"></span>&nbsp;
-		</label>
-	</form>
-</div>
-</template>
-
 <template name="discussion">
-<div class="discussion-titlebar">
-	<h4>
-		<span class="fa fa-comments"></span>
-		&nbsp;
-		{{mf 'course.title.Discussion' 'Discussion'}}
-	</h4>
-</div>
-{{#if post}}
-<div class="discussion-conversation-container">
-	{{#each post}}
-	{{#if parent_ID}}
-	<div class="discussion-conversation">
-		<div class="discussion-comment">
-			<div class="discussion-comment-info">
-				{{>iconProfilelink user_ID}}
-				<span class="comment-time-created">
-					{{fromNow time_created}}
-				</span>
-			</div>
-			<div class="discussion-comment-text">
-				<h4 class="comment-title">{{this.title}}</h4>
-				<p>{{{text}}}</p>
-			</div>
-		</div>
+	<div class="discussion-titlebar">
+		<h4>
+			<span class="fa fa-comments"></span>
+			&nbsp;
+			{{mf 'course.title.Discussion' 'Discussion'}}
+		</h4>
 	</div>
-	{{else}} <!-- Part of 'parent_ID' helper statement -->
-	<div class="discussion-conversation">
-		<div class="post">
-			<div class="post-info">
-				{{>iconProfilelink user_ID}}
-				<span class="comment-time-created">
-					{{fromNow time_created}}
-				</span>
-			</div>
-			<div class="post-text">
-				<h4 class="comment_title">{{this.title}}</h4>
-				<p>{{{text}}}</p>
-			</div>
-			<div class="post-options">
-				{{> newPost parent=this}}
-			</div>
-		</div>
+{{#if havePosts}}
+	<div class="discussion-conversation-container">
+	{{#each posts}}
+		{{> post}}
+	{{/each}}
 	</div>
-	{{/if}} <!-- End of 'parent_ID' helper statement -->
-	{{/each}} <!-- End of 'post' helper iteration -->
-</div>
-{{/if}} <!-- End of 'post' helper statement -->
-{{> newPost}}
+{{/if}}
+	{{> post newPost}}
 </template>
 
-<!--  /////////////////////////////////////////// TODO: fix comment-editing ////////////////
-<template name="editPostDialog">
-<div class="edit-post-dialog">
-	<form name="form_edit">
-		<input type="text" id="edit_title" placeholder="{{mf 'course.discussion.title_placeholder'}}"/>
-		<textarea id="edit_text" placeholder="{{mf 'course.discussion.text_placeholder'}}"></textarea>
-		<button type="button" class="update">
-			{{mf 'course.discussion.comment_btn.edit' 'Edit!'}}
-		</button>
-		<button type="button" class="cancelEdit">
-			{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
-		</button>
-	</form>
-</div>
+<template name="post">
+	{{#if editing}}
+		{{> postEdit}}
+	{{else}}
+		{{> postShow}}
+	{{/if}}
+	{{#each responses}}
+		{{> post}}
+	{{/each}}
+	{{#if allowResponse}}
+		{{> post newResponse}}
+	{{/if}}
 </template>
--->
+
+<template name="postShow">
+{{#if new}}
+	{{#if parentId}}
+	<button type="button" class="-edit" role="button">
+		<span class="fa fa-reply"></span>
+		&nbsp;
+		{{mf 'course.discussion.comment_answer' 'Answer'}}
+	</button>
+	{{else}}
+	<button type="button" class="-edit write-comment">
+		<span class="glyphicon glyphicon-pencil"></span>
+		&nbsp;
+		{{mf 'course.discussion.write_comment' 'Write a comment'}}
+	</button>
+	{{/if}}
+{{else}}
+	<div class="discussion-conversation">
+		<div class={{postClass}}>
+			<div>
+				{{>iconProfilelink userId}}
+				<span class="comment-time-created" title="{{dateformat time_created}}">
+					{{fromNow time_created}}
+				</span>
+			{{#if time_updated}}
+				<span class="comment-time-updated" title="{{dateformat time_updated}}">
+					last update:{{fromNow time_updated}}
+				</span>
+			{{/if}}
+			</div>
+			<div>
+				<h4 class="comment-title">{{this.title}}</h4>
+				<p>{{text}}</p>
+			</div>
+		{{#if mayEdit}}
+			<button type="button" class="-edit" role="button">
+				<span class="glyphicon glyphicon-edit"></span>
+				&nbsp;
+				{{mf 'course.discussion.comment_edit' 'Edit'}}
+			</button>
+		{{/if}}
+		{{#if mayDelete}}
+			<button type="button" class="btn-delete delete" role="button">
+				<span class="glyphicon glyphicon-remove"></span>
+				&nbsp;
+				{{mf 'course.details.del_btn' 'Delete'}}
+			</button>
+		{{/if}}
+		</div>
+	</div>
+{{/if}}
+</template>
+
+<template name="postEdit">
+	<div class="discussion-conversation">
+		<div class={{postClass}}>
+			<div>
+				{{#if showUserId}}{{>iconProfilelink userId}}{{/if}}
+				<span class="comment-time-created">
+				{{#if new}}
+					{{mf 'discussion.post.soon' 'soon'}}
+				{{else}}
+					{{fromNow time_created}}
+				{{/if}}
+				</span>
+			{{#if time_updated}}
+				<span class="comment-time-updated">
+					last update:{{fromNow time_updated}}
+				</span>
+			{{else}}
+				{{#unless new}}
+				<span class="comment-time-updated">
+					{{mf 'discussion.post.' 'soon'}}
+				</span>
+				{{/unless}}
+			{{/if}}
+			</div>
+			{{#if parentId}}
+			<div class="write-answer-graphics">
+				<span class="fa fa-reply"></span>
+			</div>
+			{{/if}}
+			<div class="write-post-dialog {{#if parentId}}answer{{/if}}">
+			{{#unless parentId}}
+				<h3>{{mf 'course.discussion.write_comment' "Write a comment"}}</h3>
+			{{/unless}}
+				<input type="text" class="-postTitle"
+					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
+					value="{{title}}"
+				/>
+				<textarea class="-postText" placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">{{text}}</textarea>
+				<button type="button" class="post">
+			{{#if new}}
+				{{#if parentId}}
+					{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+				{{else}}
+					{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+				{{/if}}
+			{{else}}
+					{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
+			{{/if}}
+				</button>
+				<button type="button" class="cancel">
+					{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+				</button>
+			{{#if new}}
+				<label>
+					<input type='checkbox' class='-anon' {{anonChecked}} {{anonDisabled}}>
+					{{mf 'course.discussion.anon' 'Anonymous comment'}}&nbsp;
+					<span class="fa fa-user-secret"></span>&nbsp;
+				</label>
+			{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
 
 
 <template name="iconProfilelink">

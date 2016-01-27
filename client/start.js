@@ -55,7 +55,7 @@ regionSub = Meteor.subscribe('regions', function() {
 
 // We keep two subscription manager around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsManager({ cacheLimit: 5, expireIn: 5 });
+subs = new SubsManager({ cacheLimit: 5, expireIn: 1 });
 miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
 
 
