@@ -13,6 +13,21 @@ Template.editable.onRendered(function() {
 		options.disableToolbar = true;
 	}
 
+	// UGLY The following two methods can be used to access and change
+	// template state from other templates. This is a lot of indirection and
+	// shows that I didn't think things through.
+
+	// This method yields the current content if it was edited
+	this.data.editedContent = function() {
+		if (!self.changed.get()) return false;
+		return self.data.simple ? editable.text() : editable.html();
+	}
+
+	// This method can be used to leave editing mode
+	this.data.end = function() {
+		self.changed.set(false);
+	};
+
 	// When the text changes while we are editing, the changes will be
 	// inserted as new nodes instead of replacing the other nodes.
 	// That's because Blaze doesn't know how to merge the current DOM
@@ -50,7 +65,8 @@ Template.editable.onRendered(function() {
 
 Template.editable.helpers({
 	showControls: function() {
-		return Template.instance().changed.get();
+		var instance = Template.instance();
+		return instance.data.showControls && instance.changed.get();
 	},
 
 	editableAttrs: function() {
