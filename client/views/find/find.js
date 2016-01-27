@@ -187,8 +187,8 @@ Template.find.onCreated(function() {
 
 		filter
 			.clear()
-			.add('region', Session.get('region'))
 			.read(query)
+			.add('region', Session.get('region'))
 			.done();
 	});
 
