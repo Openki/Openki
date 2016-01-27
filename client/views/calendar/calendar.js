@@ -88,8 +88,8 @@ Template.calendar.onCreated(function() {
 		filter
 			.clear()
 			.add('start', moment().startOf('week'))
-			.add('region', Session.get('region'))
 			.read(query)
+			.add('region', Session.get('region'))
 			.done();
 	});
 
