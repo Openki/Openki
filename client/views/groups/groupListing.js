@@ -13,7 +13,7 @@ Template.groupListing.onCreated(function() {
 });
 
 Template.groupListing.events({
-	'click button.admitToGroup': function(event, instance) {
+	'click button.-admitToGroup': function(event, instance) {
 		event.preventDefault();
 		var groupId = this._id;
 		var name = this.name;
@@ -27,7 +27,7 @@ Template.groupListing.events({
 		});
 	},
 
-	'click button.expelFromGroup': function(event, instance) {
+	'click button.-expelFromGroup': function(event, instance) {
 		event.preventDefault();
 		var groupId = this._id;
 		var name = this.name;

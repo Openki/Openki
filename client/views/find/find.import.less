@@ -41,8 +41,8 @@
 			.grid(12, inherit, 7);
 			padding: 0 0 0 15px;
 
-			* {
-				.transition(0.5s);
+			@media screen and (max-width: @screen-md) {
+				padding: 0;
 			}
 
 			h4,
@@ -52,7 +52,7 @@
 
 			.search_filter_header {
 				.grid(12);
-				border-bottom: 1px solid @light-blue;
+				border-bottom: 1px solid @brand-bg;
 				color: @brand-primary;
 				padding: 0;
 
@@ -80,7 +80,7 @@
 					}
 
 					.eventcaption_upcoming {
-						background: @light-blue;
+						background: @brand-bg;
 						display: inline-block;
 						height: 20px;
 						position: relative;
@@ -93,11 +93,11 @@
 							position: absolute;
 							right: 0;
 							top: 0;
-							width: 7px;
+							width: 10px;
 
 							.eventcaption_upcoming_text {
-								background: #333;
-								left: 2px;
+								background: @default-shadow;
+								left: 3px;
 								height: 1px;
 								position: absolute;
 								width: 3px;
@@ -123,8 +123,8 @@
 					}
 
 					span.checked {
-						background: @brand-danger;
-						color: #751313;
+						background: @role-no-bg;
+						color: @role-no-text;
 
 						&.glyphicon-home {
 							padding: 4px 17px 2px;
@@ -150,12 +150,13 @@
 					margin-bottom: 10px;
 
 					a.dropdown-toggle {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
+						background: @category-bg-fallback;
+						background: @category-bg;
+						color: @category-text;
 						padding: 2px 5px;
 
 						&:hover {
-							color: @brand-primary;
+							color: @category-text;
 							cursor: pointer;
 							text-decoration: none;
 						}
@@ -166,12 +167,12 @@
 					}
 
 					ul.dropdown-menu {
-						background: #ededed;
+						background: @category-bg-fallback;
 						margin-top: 6px;
 
 						li {
 							&:hover {
-								background: darken(#ededed, 5%);
+								background: @category-hover-bg-fallback;
 							}
 
 							&> * {
@@ -191,7 +192,7 @@
 						}
 
 						.show_subcategories {
-							color: rgb(177, 184, 184);
+							color: darken(@category-hover-bg-fallback, 5%);
 							padding-right: 20px;
 
 							&:hover {
@@ -222,8 +223,8 @@
 					}
 
 					span.category {
-						background: rgba(216, 216, 216, 0.5);
-						color: @brand-primary;
+						background: @category-bg;
+						color: @category-text;
 						padding: 2px 5px;
 					}
 				}
@@ -235,26 +236,21 @@
 				padding: 0;
 
 				h5 {
-					color: #333;
+					color: @default-black;
 				}
 
 				span.group {
-					background: rgba(130, 216, 130, 0.5);
-					color: @brand-primary;
+					background: @group-bg;
+					color: @group-text;
 					margin-bottom: 10px;
 					padding: 2px 5px;
 				}
 			}
 
 			span.glyphicon-remove {
-				color: lighten(@brand-danger, 20%);
-				cursor: pointer;
+				.btn-remove;
 				position: relative;
 				top: 2px;
-
-				&:hover {
-					color: @brand-danger;
-				}
 			}
 		}
 	}

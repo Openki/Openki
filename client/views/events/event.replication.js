@@ -43,11 +43,11 @@ Template.eventReplication.helpers({
 		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(affectedReplicaSelectors(this)).count();
 	},
-	
+
 	replicaDateCount: function() {
 		return Template.instance().replicaDates.get().length;
 	},
-	
+
 	replicaDates: function() {
 		return Template.instance().replicaDates.get();
 	},
@@ -74,11 +74,11 @@ var getEventFrequency = function(template) {
 
 	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
 	if (unit === undefined) return [];
-	
+
 	var eventStart = moment(template.data.start);
 	var originDay = moment(eventStart).startOf('day');
 	var eventEnd = moment(template.data.end);
-	
+
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
 	var dates = [];
@@ -104,11 +104,11 @@ Template.eventReplication.events({
 	'click .-eventReplicate': function (event, template) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
-		
+
 		var dates = getEventFrequency(template);
-		var success = true;	
+		var success = true;
 		$.each( dates, function( i,eventTime ) {
-			
+
 			/*create a new event for each time interval */
 			var replicaEvent = {
 				title: template.data.title,
@@ -124,10 +124,10 @@ Template.eventReplication.events({
 				groups: template.data.groups,
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
-		
+
 			var course_id = template.data.course_id;
 			if(course_id){
-				replicaEvent.course_id  = course_id; 
+				replicaEvent.course_id  = course_id;
 			}
 
 			var eventId = '';

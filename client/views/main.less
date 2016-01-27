@@ -5,9 +5,11 @@
 @import "../styles/bootstrap/custom.bootstrap.less";
 
 // Load Custom Variables, Mixins & Classes
+@import "../styles/colors/colors.variables.import.less";
+@import "../styles/colors/colors.mixins.import.less";
 @import "../styles/mixins/box-shadow.mixins.import.less";
+@import "../styles/mixins/browser-compability.mixins.import.less";
 @import "../styles/mixins/buttons.mixins.import.less";
-@import "../styles/mixins/flip-n-scale.mixins.import.less";
 @import "../styles/mixins/form-control-humble.mixins.import.less";
 @import "../styles/mixins/grid.mixins.import.less";
 @import "../styles/mixins/grid-offset.mixins.import.less";
@@ -38,16 +40,18 @@
 @import "events/event.editLocation.import.less";
 @import "events/event.import.less";
 @import "find/find.import.less";
-@import "frame/calendar.import.less";
-@import "frame/events.import.less";
+@import "groups/groupEdit.import.less";
 @import "groups/groups.import.less";
-@import "login/login.import.less";
+@import "kiosk/kiosk.import.less";
+@import "kiosk/timetable.import.less";
+@import "login/frame.import.less";
 @import "login/resetPassword.import.less";
 @import "../map/map.import.less";
 @import "../messages/messages.import.less";
 
 @import "misc/categories/categories.import.less";
-@import "misc/kiosk/kiosk.import.less";
+@import "misc/frame/calendar.import.less";
+@import "misc/frame/events.import.less";
 @import "misc/locations/location.import.less";
 @import "misc/static/loading.import.less";
 @import "misc/static/noscript.import.less";

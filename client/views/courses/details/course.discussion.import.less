@@ -1,6 +1,6 @@
 .discussion {
 	.grid(12);
-	background: @light-blue;
+	background: @brand-bg;
 	padding: 0;
 	margin-top: 15px;
 
@@ -94,7 +94,7 @@
 	text-align: right;
 
 	span.fa-reply {
-		.flip_n_scale(0deg, -1, -1);
+		.transform(0deg, -1, -1);
 		margin-top: 15px;
 	}
 }
@@ -142,7 +142,7 @@
 
 .post {
 	.grid(12);
-	background: @light-blue;
+	background: @brand-bg;
 	padding: 7px 0;
 
 	.post-info {
@@ -166,9 +166,8 @@
 }
 
 a.profilelink {
-	color: #333;
+	color: @default-black;
 	padding-right: 5px;
-	-moz-transition: color 1s;
 
 
 	&:hover {
@@ -176,7 +175,7 @@ a.profilelink {
 		text-decoration: none;
 
 		span.glyphicon {
-			color: #333;
+			color: @default-black;
 			position: relative;
 			top: 4px;
 		}
@@ -186,23 +185,18 @@ a.profilelink {
 		font-size: large;
 
 		&:hover {
-			color: #333;
+			color: @default-black;
 		}
 	}
 }
 
 .comment-time-created {
-	color: #6D7070;
+	color: @default-grey;
 	cursor: default;
 }
 
 button.answer {
-	background: none;
-	border: 0;
-	color: @brand-primary;
+	.btn;
+	.btn-primary;
 	padding-bottom: 5px;
-
-	&:hover {
-		color: #2B6376;
-	}
 }

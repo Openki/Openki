@@ -6,10 +6,10 @@
 	<form class="location_edit">
 		<h2>{{#if _id}}{{mf 'location.edit.edit_location' 'Edit location'}}{{else}}{{mf 'location.edit.add_location' 'Add location'}}{{/if}}</h2>
 		<p>{{mf 'location.edit.name' 'Name:'}} <input type="text" id="editform_name" size="40" value="{{#if _id}}{{name}}{{else}}{{query}}{{/if}}"/></p>
-	
+
 		<p>{{mf 'location.edit.desc' 'Desc:'}} <textarea cols="65" rows="5" id="editform_description" name="editform_description">{{description}}</textarea></p>
 
-		
+
 
 
 		<p>{{mf 'location.edit.address' 'Address:'}} <textarea cols="30" rows="2" id="editform_address" name="editform_address">{{address}}</textarea></p>
@@ -23,7 +23,7 @@
 		<p>((<label> <input type="checkbox" id="editform_publicspace" >{{mf 'location.edit.public_space' 'Public Space (everybody is allowed to host here)'}}</label> ))</p>
 
 		{{#unless _id}}
-		<p>{{mf 'location.edit.region' 'Region:'}} 
+		<p>{{mf 'location.edit.region' 'Region:'}}
 			<select name='region' class="region_select">
 				<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
 			{{#each regions}}
@@ -43,7 +43,7 @@
 			</ul>
 
 			{{mf 'location.edit.search_usr_add_host' 'Search for username to add as host:'}}<input type="text" id="search_username" size="20" /> <input type="button" class="addhost" value="Search" /><br>
-	
+
 	{{#if addHost}}
 		{{#if addHostSearch}}
 			{{>profilelink addHostSearch._id}} <input type="button" class="save_addhost" value="Add as host" /><input type="hidden" id="addhost_id" value="{{addHostSearch._id}}" />
@@ -62,14 +62,14 @@
 
 		<p>{{mf 'location.edit.max_ppl' 'Max. People'}} <input type="text" id="editform_maxpeople" size="4" value="{{maxpeople}}"></p>
 		<p>{{mf 'location.edit.max_workplace' 'Max. Workplaces'}} <input type="text" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}"></p>
-		
+
 		<p>&nbsp;</p>
-		
+
 		<p>
 			<input type="button" class="save" value="Save" />
 			<input type="button" class="cancel" value="Cancel" />
 		</p>
-		
-		
+
+
 	</form>
 </template>

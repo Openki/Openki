@@ -1,5 +1,5 @@
 #loginFrame {
-	background: @light-blue;
+	background: @brand-bg;
 	text-align: center;
 
 	& > div:first-child {
@@ -8,6 +8,11 @@
 
 	h3 {
 		margin-top: 0;
+	}
+
+	span.registering_email_instructions {
+		text-align: justify;
+		width: 100%;
 	}
 
 	button.loginLogin{
@@ -39,16 +44,49 @@
 
 	#username_warning,
 	#username_warning_not_existing,
-	#password_warning,
-	#password_warning_incorrect,
 	#login_warning {
 		color: @brand-danger;
 		margin: -10px 0 10px;
 		text-align: left;
 	}
 
+	#password_warning,
+	#password_warning_incorrect {
+		color: @brand-danger;
+		margin: 0px 0 10px;
+		text-align: left;
+	}
+
 	li.dropdown-header:hover {
 		cursor: default;
+	}
+
+	.input-group:first-child,
+	button.-forgot,
+	button.loginLogin,
+	button.loginRegister {
+		margin-bottom: 15px;
+	}
+
+	.login_email {
+		margin-top: 15px;
+	}
+
+	button.-forgot {
+		background: none;
+		border: none;
+		float: right;
+		margin-top: 5px;
+		padding-right: 0;
+
+		&:focus {
+			text-decoration: underline;
+		}
+
+		&:hover {
+			color: @brand-primary;
+			cursor: pointer;
+		}
 	}
 
 	.external_logins {
@@ -57,25 +95,35 @@
 		.loginWithService {
 			background: none;
 			border: none;
-			color: #aca7a7;
+			color: @default-grey;
 			font-size: x-large;
 
 			&:hover {
-				.fa {
-					.transition(0.5s);
-				}
-
 				.fa-google-plus-square {
-					color: #dd4b39;
+					color: @google-plus;
 				}
 
 				.fa-facebook-square {
-					color: #3B5998;
+					color: @facebook;
 				}
 
 				.fa-github-square {
-					color: #333;
+					color: @github;
 				}
+			}
+		}
+	}
+
+	.forgot_login {
+		h2 {
+			margin-top: 0;
+		}
+
+		#show_email {
+			padding-top: 10px;
+
+			span.email_instructions {
+				font-size: small;
 			}
 		}
 	}

@@ -32,7 +32,7 @@ Router.map(function() {
 Template.locationDetails.onCreated(function() {
 	var markers = new Meteor.Collection(null);
 	this.markers = markers;
-	
+
 	this.setLocation = function(location) {
 		markers.remove({ main: true });
 		if (location && location.loc) {
@@ -60,7 +60,7 @@ Template.locationDetails.onRendered(function() {
 	this.setLocation(this.data.location);
 
 	var region = Regions.findOne(instance.data.location.region);
-	instance.setRegion(region);	
+	instance.setRegion(region);
 });
 
 
@@ -90,7 +90,7 @@ Template.locationDetails.helpers({
 
 
 Template.locationDetails.events({
-	
+
 	'click input.edit': function () {
 		if (pleaseLogin()) return;
 

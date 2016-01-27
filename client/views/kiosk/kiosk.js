@@ -16,12 +16,12 @@ Router.map(function () {
 			queryOngoing.ongoing = now;
 
 			return [
-				Meteor.subscribe('eventsFind', queryFuture, 20),
-				Meteor.subscribe('eventsFind', queryOngoing),
+				subs.subscribe('eventsFind', queryFuture, 20),
+				subs.subscribe('eventsFind', queryOngoing),
 			];
 		},
 		subscriptions: function() {
-			return	Meteor.subscribe('locationNames');
+			return	subs.subscribe('locationNames');
 		},
 		data: function() {
 			var now = minuteTime.get();
@@ -65,7 +65,7 @@ Router.map(function () {
 		waitOn: function () {
 			var region = Session.get('region');
 			if (region === 'all') region = false;
-			return Meteor.subscribe('events', region);
+			return subs.subscribe('events', region);
 		},
 		data: function() {
 			var today = new Date();

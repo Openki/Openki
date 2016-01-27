@@ -1,1 +1,73 @@
-
+<template name="groupEdit">
+	<div class="groupEdit">
+		<form>
+			<div class="group_edit_header">
+				{{#if _id}}
+					<h2>{{mf 'group.edit.edit_group' 'Edit group'}}</h2>
+				{{else}}
+					<h2>{{mf 'group.edit.propose' 'Create new group'}}</h2>
+				{{/if}}
+				<h4>{{mf 'group.edit.Name' 'Name:'}}</h4>
+				<input
+					type="text"
+					id="editform_name"
+					placeholder="{{mf 'group.title.placeholder' 'Name of your group, institution, community or programm'}}"
+					size="60"
+					value="{{name}}"
+				/>
+				<h4>{{mf 'group.edit.shortName' 'Abbreviation:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-hashtag"></span>
+					</span>
+					<input
+						id="editform_short"
+						placeholder= "{{mf 'group.short.placeholder' '(max. 7 charaters)'}}">
+					{{{short}}}
+				</div>
+				<h4>{{mf 'group.edit.description' 'Description:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</span>
+					<input
+						id="editform_description"
+						placeholder= "{{mf 'group.description.placeholder' 'Describe your group.'}}">
+					{{{description}}}
+				</div>
+				<h4>{{mf 'group.edit.claim' 'Claim:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-lightbulb-o"></span>
+					</span>
+					<input
+						id="editform_claim"
+						placeholder= "{{mf 'group.claim.placeholder' 'The core idea'}}">
+						{{{claim}}}
+				</div>
+				<h4>{{mf 'group.edit.addMembers' 'Add members to your group:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-user"></span>
+					</span>
+					<input
+						type="text"
+						id="addGroupMember"
+						placeholder= "{{mf 'group.add.member.placeholder' 'type name of buddy'}}"
+						size="40"
+					/>
+				</div>
+			</div>
+			<div class="groupEditFinishbtns">
+				<button type="button" class="save">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'group.edit.save_btn' 'Save'}}
+				</button>
+				<button type="button" class="cancel">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'group.edit.cancel_btn' 'Cancel'}}
+				</button>
+			</div>
+		</form>
+	</div>
+</template>

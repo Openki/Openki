@@ -3,34 +3,39 @@
 
 	.head{
 		.grid(12);
-		background-color: #ddd;
-		height: 120px;
+		background-color: @location-bg;
+		color: @location-text;
+		height: 140px;
 		overflow: auto;
 		padding-right: 0;
 
+		h1 {
+			color: @location-text;
+		}
+
 		.description h1{
-			background-color: #333;
+			background-color: @default-black;
 			display: inline;
 		}
 
 		img {
-			height: 120px;
+			height: 140px;
 			float: right;
 		}
 	}
 
 	.body{
 		.grid(12);
+		background-color: @location-description-bg;
 		margin-top: 3px;
-		background-color: #eef;
 
 		.descriptionFrame {
 			.grid(12, 6);
 			padding: 0;
 
 			.title {
+				background-color: @location-description-bg;
 				margin-top: 10px;
-				font-weight: bold;
 			}
 		}
 
@@ -56,15 +61,15 @@
 	margin-bottom: 10px;
 
 	a {
-		background-color: #fbb;
-		color: #300;
+		background-color: @location-bg;
+		color: @location-text;
+		display: inline-block;
 		padding-left: 5px;
 		padding-right: 5px;
-		display: inline-block;
 
 		&:hover {
-			.box-shadow-s(rgba(255, 220, 220, 0.5));
-			background: rgba(240, 200, 200, 0.2);
+			.box-shadow-small(@location-hover-shadow);
+			background: @location-hover-bg;
 			text-decoration: none;
 		}
 	}
@@ -73,8 +78,24 @@
 		font-size: medium;
 	}
 	.description {
+		color: @default-black;
 		font-size: small;
-		color: black;
+	}
+}
+
+a.location_link {
+	.transition(all 0.5s);
+	background: @location-bg;
+	color: @location-text;
+	padding: 3px 4px 1px;
+
+	&:hover {
+		background: @location-hover-bg;
+		text-decoration: none;
+		.box-shadow-small(@default-shadow);
 	}
 
+	span.glyphicon-home {
+		margin-right: 2px;
+	}
 }

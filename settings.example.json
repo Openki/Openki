@@ -1,4 +1,7 @@
 {
+	"public": {
+		"siteName": "Openki-clone"
+	},
 	"service": {
 		"facebook": {
 			"appId": "567890",

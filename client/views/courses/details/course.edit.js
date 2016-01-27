@@ -27,7 +27,7 @@ Template.course_edit.helpers({
 	editingCategories: function() {
 		return Template.instance().editingCategories.get();
 	},
-	
+
 	available_roles: function() {
 		return Roles.find({'preset': { $ne: true }})
 	},
@@ -59,11 +59,11 @@ Template.course_edit.helpers({
 		var instance = Template.instance();
 		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
-	
+
 	regions: function() {
 	  return Regions.find();
 	},
-	
+
 	currentRegion: function(region) {
 		var currentRegion = Session.get('region')
 		return currentRegion && region._id == currentRegion;
@@ -82,7 +82,7 @@ Template.course_edit.events({
 		ev.preventDefault()
 		try {
 			if (pleaseLogin()) return;
-			
+
 			var courseId = this._id ? this._id : ''
 			var isNew = courseId === ''
 
@@ -97,9 +97,9 @@ Template.course_edit.events({
 				name: $('#editform_name').val(),
 				roles: roles
 			}
-			
+
 			changes.name = saneText(changes.name);
-			
+
 			if (changes.name.length == 0) {
 				alert("Please provide a title")
 				return;
@@ -118,7 +118,7 @@ Template.course_edit.events({
 				}
 				changes.groups = groups;
 			}
-			
+
 			Meteor.call("save_course", courseId, changes, function(err, courseId) {
 				if (err) {
 					addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
@@ -136,7 +136,7 @@ Template.course_edit.events({
 				}
 			})
 
-			
+
 		} catch(err) {
 			if (err instanceof String) alert(err)
 			else throw err

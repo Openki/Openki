@@ -1,4 +1,22 @@
 Template.footer.helpers({
-	version: function() { return VERSION && VERSION.basic+(VERSION.branch !== 'master' ? " "+VERSION.branch : ''); },
-	fullVersion: function() { return VERSION && VERSION.complete+' "'+VERSION.branch+'" '+VERSION.timestamp+" "+VERSION.commit; }
+	version: function() {
+		var version = Version.findOne();
+		return version && version.basic+(version.branch !== 'master' ? " "+version.branch : '');
+	},
+	fullInfo: function() {
+		var version = Version.findOne();
+		return version && version.complete+' on "'+version.branch+'" from '+version.commitDate+" - restarted: "+moment(version.lastStart).format('lll');
+	},
+	commit: function() {
+		var version = Version.findOne();
+		return version && version.commitShort;
+	},
+	deployed: function() {
+		var version = Version.findOne();
+		return version && version.activation;
+	},
+	restart: function() {
+		var version = Version.findOne();
+		return version && version.lastStart;
+	}
 });

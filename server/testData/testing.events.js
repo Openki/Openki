@@ -11,9 +11,9 @@ testevents = [
 	"createdBy" : "Sandro",
 	"time_created" : { "$date" : 1425255006913 },
 	"groups" : ["NHW"],
-	"_id" : "23pHya44bHji9SbfZ" 
+	"_id" : "23pHya44bHji9SbfZ"
 },
-{ 
+{
 	"title" : "HOSPIZ DER FAULHEIT",
 	"description" : "<h4>Offspace / Lesung / Beratung</h4><p>mit<b> Anna-Katharina Diener</b>, Schauspielerin</p><p><i><a href=\"http://www.hospizderfaulheit.net/\">hospizderfaulheit.net</a></i></p><p><i>Achtung: Dieser Event findet von Dienstag 3.März (12:00) bis Donnerstag 5.März (23:59) statt.</i></p><p>In einer feierlichen 24 Stunden Siesta gründen wir gemeinsam das Hospiz der Faulheit. Währenddessen werden wir uns in Strategien, Taktiken und diversen Praxen des Müssiggangs üben. Damit wollen wir neue Perspektiven auf die Faulheit ermöglichen und in einer positiv-subversiven Form erlebbar machen.</p><p>Weitere Informationen entnimmst Du bitte dem Programm auf <i><a>hospizderfaulheit.net</a></i></p>",
 	"location" : "Toni-Areal",
@@ -599,9 +599,9 @@ testevents = [
 	"createdBy" : "No_Boarder-No_Nation-Stop_Deportation",
 	"time_created" : { "$date" : 1425256107264 },
 	"groups" : ["NHW", "Museum für Gestaltung"],
-	"_id" : "jznGRbLBoYzoXnG5w" 
+	"_id" : "jznGRbLBoYzoXnG5w"
 },
-{ 
+{
 	"title" : "UPCYCLING",
 	"description" : "<i>Workshop</i><br /><br /><p>Tag für Tag verbrauchen wir Ressourcen dieser Welt und produzieren dabei Unmengen an Abfall. Doch nicht alle Materialien sind gleich Müll &amp; müssen auf Nimmerwiedersehen in den Kehricht wandern. Wir wollen in unserem Workshop Abfallprodukte aus einem anderen Blickwinkel betrachten &amp; neue Gebrauchsgegenstände herstellen. <br />Wie kann man zum Beispiel Fahrradschläuche zu Gürteln, Tetrapacks zu Portemonnaies oder T-shirts zu Tragetaschen upcyceln? Die Werkstätten sind geöffnet, Materialien sind alle vorhanden &amp; wer Lust hat, darf auch seinen eigenen «Müll» mitbringen &amp; aufwerten.</p>",
 	"location" : "PHZH",
@@ -725,7 +725,7 @@ testevents = [
 	"start" : { "$date" : 1425308400000 },
 	"time_created" : { "$date" : 1424922395857 },
 	"time_lastedit" : { "$date" : 1425044922996 },
-	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE" 
+	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE"
 },
 {
 	"groups" : ["Geographisch-Ethnographische Gesellschaft Zürich"],
@@ -740,7 +740,7 @@ testevents = [
 	"start" : { "$date" : 1425308400000 },
 	"time_created" : { "$date" : 1424922325857 },
 	"time_lastedit" : { "$date" : 1425045022996 },
-	"title" : "Zeitreisen durch die Kartenwerke von swisstopo" 
+	"title" : "Zeitreisen durch die Kartenwerke von swisstopo"
 },
 
 
@@ -755,7 +755,7 @@ testevents = [
 
 //////////////////////// Events whith courses  ////////////////////////
 
-{ 
+{
 	"title" : "WC-Brunnen bauen",
 	"description" : "",
 	"location" : "",
@@ -767,7 +767,7 @@ testevents = [
 	"createdBy" : "Stephan",
 	"time_created" : { "$date" : 1425505012741 },
 	"groups" : ["DIY-BE", "DIY-ZH"],
-	"_id" : "nnBXH4a44jdHjYnFD" 
+	"_id" : "nnBXH4a44jdHjYnFD"
 },
 {
 	"_id" : "o7xmFjNCqomatWMAz",
@@ -781,7 +781,7 @@ testevents = [
 	"start" : { "$date" : 1425655800000 },
 	"time_created" : { "$date" : 1425084709847 },
 	"time_lastedit" : { "$date" : 1425084844612 },
-	"title" : "Catching fish with flies!" 
+	"title" : "Catching fish with flies!"
 },
 {
 	"groups" : ["NHW","DIY-ZH"],

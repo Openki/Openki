@@ -70,23 +70,38 @@
 	.room {
 		.grid(12);
 		padding: 0;
+		margin-bottom: 20px;
+		h4 {
+			display: inline-block;
+			margin-right: 0.7em;
+		}
 	}
 
 	.update_replicas {
-		.grid(12);
-		padding: 10px 0;
+		.grid(12, 6);
+		padding: 15px 0;
+
+		input {
+			width: 0;
+			height: 0;
+			display: inline-block;
+		}
 
 		label {
+			font-size: 18px;
 			font-weight: normal;
-			vertical-align: baseline;
+			display: inline-block;
+			margin-right: 0.7em;
+			//vertical-align: baseline;
 		}
 	}
 
 	.edit_buttons {
-		.grid(12);
+		.grid(12, 6);
 		padding: 0 0 15px;
 
 		button {
+			margin-top: 10px;
 			&:first-child {
 				margin-right: 5px;
 			}
