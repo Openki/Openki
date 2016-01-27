@@ -183,7 +183,6 @@ Template.find.onCreated(function() {
 	instance.autorun(function() {
 		var data = Template.currentData();
 		var query = data.query || {};
-		delete query.region;   // region shouldn't be read from URL query parameters
 
 		filter
 			.clear()
