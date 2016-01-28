@@ -1,5 +1,8 @@
 Template.editable.onCreated(function() {
-	this.changed = new ReactiveVar(false);
+	// When not editing individual fields, mark all fields as changed
+	// from the start
+	var startChanged = !this.data.showControls;
+	this.changed = new ReactiveVar(startChanged);
 	this.editingVersion = false;
 });
 
