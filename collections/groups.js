@@ -59,6 +59,9 @@ Meteor.methods({
 			description: Match.Optional(String),
 		});
 
+		var userId = Meteor.userId();
+		if (!userId) throw new Meteor.Error(401, "please log-in");
+
 		var isNew = groupId === 'create';
 
 		// Load group from DB
@@ -66,7 +69,7 @@ Meteor.methods({
 		if (isNew) {
 			// Saving user is added as first member of the group
 			group = {
-				members: [Meteor.userId()]
+				members: [userId]
 			};
 		} else {
 			group = Groups.findOne(groupId);
