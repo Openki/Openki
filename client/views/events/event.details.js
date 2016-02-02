@@ -1,4 +1,3 @@
-"use strict";
 // routing is in /routing.js
 
 Template.event.onCreated(function() {

@@ -1,5 +1,3 @@
-"use strict";
-
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
