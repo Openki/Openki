@@ -11,7 +11,7 @@ Router.map(function () {
 
 var updateUrl = function(event, instance) {
 	var filterParams = instance.filter.toParams();
-	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
