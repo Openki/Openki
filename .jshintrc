@@ -1,5 +1,7 @@
 {
 	"laxbreak": true,
+	"browser": true,
+	"node": true,
 
 	"globals": {
 		"Meteor": false,
