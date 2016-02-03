@@ -42,6 +42,43 @@
 		"Router": false,
 
 		"moment": false,
-		"mf": false
+		"mf": false,
+
+
+// ------------- our globals ----------------- //
+
+// server/publications
+
+		"Version":true,
+		"Courses":true,
+		"coursesFind":true,
+		"Roles":true,
+		"Regions":true,
+		"Locations":true,
+		"locationsFind":true,
+		"CourseDiscussions":true,
+		"Events":true,
+		"eventsFind":true,
+		"affectedReplicaSelectors":true,
+		"privileged":true,
+		"groupsFind":true,
+		"Groups":true,
+
+// lib/functions.js
+
+		"mfPkg":true,
+		"VERSION":true,
+		"getSlug":true,
+		"search_user":true,
+		"escapeRegex":true,
+		"checkInsert":true,
+		"checkUpdateOne":true,
+		"saneHtml":true,
+		"sanitizeHtml":true,
+		"textPlain":true,
+		"htmlize":true,
+		"saneText":true
+
+
 	}
 }
