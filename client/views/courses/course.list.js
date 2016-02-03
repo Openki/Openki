@@ -34,13 +34,8 @@ Template.course.helpers({
 	},
 
 	coursestate: function() {
-		var today = new Date();
-
-		var upcoming = this.nextevent;
 		if (this.nextEvent) return 'hasupcomingevents';
-
 		if (this.lastEvent) return 'haspastevents';
-
 		return 'proposal';
 	},
 

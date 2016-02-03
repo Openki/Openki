@@ -47,6 +47,13 @@
 
 // ------------- our globals ----------------- //
 
+
+		"Router":true,
+		"Template":true,
+		"alert":true,
+		"confirm":true,
+		"webpagename":true,
+
 // server/publications
 
 		"Version":true,
@@ -77,8 +84,88 @@
 		"sanitizeHtml":true,
 		"textPlain":true,
 		"htmlize":true,
-		"saneText":true
+		"saneText":true,
+
+// client/editable/...
+
+		"MediumEditor":true,
+		"makeEditable":true,
+
+// client/lib/...
+
+		"Assistant":true,
+		"UrlTools":true,
+
+// client/lib/client.functions.js
+
+		"havingRole":true,
+		"getMember":true,
+		"mayEdit":true,
+		"userName":true,
+		"goBase":true,
+		"pleaseLogin":true,
+
+// client/map/map.js
+
+		"L":true,
+
+// client/messages/...
+
+		"ClientMessages":true,
+		"addMessage":true,
+		"removeMessage":true,
 
 
+// client/views/course/...
+
+		"courseTemplate":true,
+
+
+// client/views/events/...
+
+		"LocationTracker":true,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// client/start.js
+
+		"subs":true,
+		"miniSubs":true,
+		"minuteTime":true,
+
+
+
+
+
+
+
+
+
+
+
+
+//       categories
+
+"hasRoleUserrr":true
 	}
 }
+
+
+
