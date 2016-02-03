@@ -36,7 +36,7 @@ mayEditEvent = function(user, event) {
 		if (course) return true;
 	}
 	return false;
-}
+};
 
 affectedReplicaSelectors = function(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
@@ -45,14 +45,13 @@ affectedReplicaSelectors = function(event) {
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
-	if (futureDate < new Date) futureDate = new Date;
+	if (futureDate < new Date()) futureDate = new Date();
 
 	var selector = {
 		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate }
 	};
 
-	var selectors;
 	if (event.replicaOf) {
 		selector.$or = [
 			{ replicaOf: event.replicaOf },
@@ -63,7 +62,7 @@ affectedReplicaSelectors = function(event) {
 	}
 
 	return selector;
-}
+};
 
 // Sync location fields of the event document
 updateEventLocation = function(eventId) {
@@ -109,7 +108,7 @@ updateEventLocation = function(eventId) {
 
 		return result.nModified === 0;
 	});
-}
+};
 
 
 Meteor.methods({
@@ -218,7 +217,7 @@ Meteor.methods({
 
 		if (isNew) {
 			changes.createdBy = user._id;
-			var eventId = Events.insert(changes);
+			eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
 
@@ -240,7 +239,7 @@ Meteor.methods({
 	removeEvent: function(eventId) {
 		check(eventId, String);
 
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
@@ -257,24 +256,24 @@ Meteor.methods({
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
 
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 
-		var tmp = []
+		var tmp = [];
 
 		for(var i = 0; i < event.files.length; i++ ){
 			var fileObj = event.files[i];
 			if( fileObj._id != fileId){
 				tmp.push(fileObj);
 			}
-		};
+		}
 
 		var edits = {
 			files: tmp,
-		}
+		};
 		var upd = Events.update(eventId, { $set: edits });
 		return upd;
 	},
@@ -346,7 +345,7 @@ eventsFind = function(filter, limit) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) options.sort = { start: -1 }
+		if (!filter.after) options.sort = { start: -1 };
 	}
 
 	if (filter.location) {
@@ -392,4 +391,4 @@ eventsFind = function(filter, limit) {
 	}
 
 	return Events.find(find, options);
-}
+};

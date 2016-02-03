@@ -50,9 +50,9 @@ Router.map(function () {
 		},
 		onAfterAction: function() {
 			this.timer = Meteor.setInterval(function() {
-				Session.set('seconds', new Date);
+				Session.set('seconds', new Date());
 			}, 1000);
-			document.title = webpagename + ' Events'
+			document.title = webpagename + ' Events';
 		},
 		unload: function() {
 			Meteor.clearInterval(this.timer);
@@ -72,10 +72,10 @@ Router.map(function () {
 			return {
 				calendar_eventlist:      Events.find({start: {$gte:today}},{sort: {start: 1}}),
 				calendar_eventlist_past: Events.find({start: {$lt:today}},{sort: {start: -1}}),
-			}
+			};
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Kiosk-View'
+			document.title = webpagename + 'Kiosk-View';
 		}
 	});
 });
@@ -83,7 +83,7 @@ Router.map(function () {
 Template.kioskLayout.helpers({
 	showKioskCalendar: function() {
 		var currentIsKiosk = Router.current().route.path();
-		if (currentIsKiosk != "/kiosk/events") return true
+		if (currentIsKiosk != "/kiosk/events") return true;
 	}
 });
 
@@ -116,7 +116,7 @@ Template.kioskEventOngoing.rendered = function() {
 Template.kioskEventToday.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,
-	})
+	});
 	this.$('.course_event_desc').dotdotdot({
 		//
 	});
@@ -127,7 +127,7 @@ Template.kioskEventToday.rendered = function() {
 Template.kioskEventFuture.rendered = function() {
 	this.$('.course_event_title').dotdotdot({
 		height: 70,
-	})
+	});
 	this.$('.course_event_desc').dotdotdot({
 		height: 20,
 	});
@@ -142,7 +142,7 @@ Template.kioskLink.helpers({
 		var filterParams = Session.get('kioskFilter');
 		if (!filterParams) return;
 
-		delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		var queryString = UrlTools.paramsToQueryString(filterParams);
 
 		var options = {};

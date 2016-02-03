@@ -45,14 +45,29 @@
 		"mf": false,
 
 
-// ------------- our globals ----------------- //
 
+
+
+
+
+
+
+
+
+
+
+// ------------- our globals ----------------- //
 
 		"Router":true,
 		"Template":true,
 		"alert":true,
 		"confirm":true,
 		"webpagename":true,
+		"lgs":true,
+		"categories":true,
+		"ServiceConfiguration":true,
+		"anonId":true,
+		"Categories":true,   //shouldnt be here
 
 // server/publications
 
@@ -126,24 +141,6 @@
 		"LocationTracker":true,
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // client/start.js
 
 		"subs":true,
@@ -151,19 +148,77 @@
 		"minuteTime":true,
 
 
+// collection/courses.js
+
+		"hasRole":true,
+		"hasRoleUser":true,
+		"maySubscribe":true,
+
+// collection/discussion.js
+
+		"mayDeletePost":true,
+		"mayEditPost":true,
+
+// collection/events.js
+
+		"mayEditEvent":true,
+		"updateEventLocation":true,
+
+// collection/files.js
+
+		"FS":true,
+		"Files":true,
+
+// collection/...
+
+		"LocationCategories":true,
+		"privilegedTo":true,
+
+
+// lib/Filtering.js
+
+		"CoursePredicates":true,
+		"EventPredicates":true,
+		"Filtering":true,
+
+
+// server/lib/...
+
+		"UpdatesAvailable":true,
+		"UpdatesApplied":true,
+		"applyUpdates":true,
+		"logAsyncErrors":true,
+		"untilClean":true,
+
+
+// server/testData/...
+
+		"testCourses":true,
+		"testEvents":true,
+		"testGroups":true,
+		"testLocations":true,
+		"regions":true,
+
+
+// server/testing.createnload.data.js
+
+		"loadCoursesIfNone":true,
+		"loadLocationsIfNone":true,
+		"createEventsIfNone":true,
+		"createCommentsIfNone":true,
+		"loadTestEvents":true,
+		"loadGroupsIfNone":true,
+		"loadTestRegionsIfNone":true,
 
 
 
 
+// Packages
+
+		"GeoIP":true
 
 
 
-
-
-
-//       categories
-
-"hasRoleUserrr":true
 	}
 }
 

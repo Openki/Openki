@@ -7,7 +7,7 @@ Router.map(function() {
 		onAfterAction: function() {
 			document.title = mf('resetPassword.siteTitle', "Reset password");
 		}
-	})
+	});
 });
 
 

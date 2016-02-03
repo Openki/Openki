@@ -95,7 +95,7 @@ function createCourses(scale) {
 	}
 
 
-	_.each(testcourses, function(course) {
+	_.each(testCourses, function(course) {
 		if (!course.createdby) return; // Don't create courses that don't have a creator name
 
 		/* Replace user name with ID */
@@ -295,7 +295,7 @@ createCommentsIfNone = function(){
 
 loadTestEvents = function(){
 	var dateOffset = 0;
-	_.each(testevents, function(event) {
+	_.each(testEvents, function(event) {
 		if (!event.createdBy) return; // Don't create events that don't have a creator name
 		if (Events.findOne({_id: event._id})) return; //Don't create events that exist already
 
@@ -334,7 +334,7 @@ loadTestEvents = function(){
 
 loadGroupsIfNone = function(){
 	if (Groups.find().count() === 0) {
-		_.each (testgroups, function (group){
+		_.each (testGroups, function (group){
 			if (!group.name) return;
 			group.createdby = 'ServerScript_loadingTestgroups';
 			var age = Math.floor(Math.random()*10000000000);

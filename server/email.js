@@ -19,7 +19,7 @@ Meteor.methods({
 
 		var mail = {
 			sender: Accounts.emailTemplates.from
-		}
+		};
 
 		var recipient = Meteor.users.findOne({
 			_id: userId
@@ -28,7 +28,7 @@ Meteor.methods({
 		if (recipient && recipient.emails && recipient.emails[0] && recipient.emails[0].address){
 			mail.to = recipient.emails[0].address;
 		} else {
-			throw new Meteor.Error(401, "this user has no email")
+			throw new Meteor.Error(401, "this user has no email");
 		}
 
 		var lg = (recipient.profile.locale || 'en');
@@ -90,11 +90,16 @@ Meteor.methods({
 		}
 		moment.locale('en');
 		var version = Version.findOne();
+		var versionString = '';
 		if (version) {
 			var fullVersion = version.basic+(version.branch !== 'master' ? " "+version.branch : '');
 			var commit = version.commitShort;
 			var deployDate = moment(version.activation).format('lll');
 			var restart = moment(version.lastStart).format('lll');
+			versionString =
+				"<br>The running version is ["+Accounts.emailTemplates.siteName+"] " +fullVersion+"  @ commit " +commit
+				+"<br>It was deployed on "+deployDate+","
+				+"<br>and last restarted on " +restart+".";
 		}
 		var timeNow = new Date();
 
@@ -106,15 +111,13 @@ Meteor.methods({
 				" reports a problem on the page <a href='"+htmlize(location)+"'>"+htmlize(subject)+"</a>"
 				+"<br><br>"
 				+"Their report:<br>"
-				+"-------------------------------------------------------------------------------------"
-				+"<br><br>"+htmlize(report)+"<br><br>"
-				+"-------------------------------------------------------------------------------------"
-				+"<br><br>The running version is ["+Accounts.emailTemplates.siteName+"] " +fullVersion+"  @ commit " +commit
-				+"<br>It was deployed on "+deployDate+","
-				+"<br>and last restarted on " +restart+"."
+				+"<hr>"
+				+"<br>"+htmlize(report)+"<br>"
+				+"<hr>"
+				+"/end of report."
+				+"<br><br><small>"+versionString
 				+"<br>Now it's "+timeNow+"."
-				+"<br>See you! bye."
-				+"<br><br>/end of report."
+				+"</small><br>See you! bye."
 		});
 	}
 });

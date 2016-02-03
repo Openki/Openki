@@ -1,6 +1,6 @@
 Template.loginFrame.created = function() {
 	this.forgot = new ReactiveVar(false);
-}
+};
 
 Template.loginFrame.events({
 	'click .loginLogout': function(event){
@@ -90,7 +90,7 @@ Template.loginLogin.onRendered(function() {
 
 Template.loginLogin.created = function() {
 	this.registering = new ReactiveVar(false);
-}
+};
 
 
 Template.loginLogin.helpers({
@@ -128,7 +128,6 @@ Template.loginLogin.events({
 				email: email
 			}, function (err) {
 				if (err) {
-					console.log(err)
 					if (err.error == 400) {
 						$('#username_warning').hide(300);
 						$('#login-name').removeClass('username_warning');
