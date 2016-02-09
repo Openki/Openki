@@ -34,7 +34,7 @@ Router.map(function () {
 					if (err) {
 						addMessage(mf('group.saving.error', { ERROR: err }, 'Saving the group went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
 					} else {
-						addMessage(mf('group.saving.success', { NAME: group.short }), 'Saved change to {NAME}');
+						addMessage(mf('group.saving.success', { NAME: group.short }, 'Saved change to {NAME}'), 'success');
 					}
 				};
 
