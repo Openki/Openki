@@ -96,6 +96,7 @@ Template.editable.helpers({
 
 Template.editable.events({
 	'click .editable-store': function(event, instance) {
+		event.preventDefault();
 		instance.changed.set(false);
 		var editable = instance.$('.editable');
 		var changedText = instance.data.simple ? editable.text() : editable.html();
@@ -103,6 +104,7 @@ Template.editable.events({
 		instance.editingVersion = false;
 	},
 	'click .editable-cancel': function(event, instance) {
+		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
 		instance.editingVersion = false;
