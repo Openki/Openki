@@ -83,7 +83,8 @@ Meteor.methods({
 
 		var updates = {};
 		if (changes.short) {
-			updates.short = changes.short.substring(0, 50);
+			var short = changes.short.trim();
+			updates.short = short.substring(0, 7);
 		}
 		if (changes.hasOwnProperty('name')) {
 			updates.name = changes.name.substring(0, 200);
