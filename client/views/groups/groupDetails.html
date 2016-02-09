@@ -1,64 +1,70 @@
 <template name="groupDetails">
 	<div class="groupPage container">
 		<div class="groupPageHeader">
-		{{#if groupLogo group._id}}
-			<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
-		{{/if}}
-		{{#if isNew}}
-			<h1>{{mf 'group.details.titleNew' "Create new group"}}</h1>
-		{{else}}
-			<h1>{{mf 'group.details.title' "Courses of {GROUP}" GROUP=group.short}}</h1>
-		{{/if}}
-			<h2 style="float: left">
-				{{#if editableName}}
-					{{>editable editableName}}
-				{{else}}
-					{{group.name}}
+
+	<div class="groupEdit">
+		<form>
+			<div class="group_edit_header">
+			{{#if groupLogo group._id}}
+				<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
+			{{/if}}
+			{{#if isNew}}
+				<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
+			{{/if}}
+
+			{{#if editableName}}
+				<h4>{{#if isNew}}{{mf 'group.edit.Name' 'Name:'}}{{/if}}</h4>
+				<div class="editformName">{{>editable editableName}}</div>
+			{{else}}
+				<h2>{{group.name}}</h2>
+			{{/if}}
+
+			{{#if editableShort}}
+				{{#if isNew}}
+					<h4>{{mf 'group.edit.shortName' 'Abbreviation:'}}</h4>
 				{{/if}}
-			</h2>
-			<div class="short" style="float:left">
-				{{#if editableShort}}
-					<h4>{{>editable editableShort}}</h4>
-				{{else}}
-					{{#if group.short}}
-						<h4>{{group.short}}</h4>
-					{{/if}}
+				{{>editable editableShort}}
+			{{else}}
+				{{#if group.short}}<h4>{{group.short}}</h4>{{/if}}
+			{{/if}}
+
+			{{#if editableDescription}}
+				{{#if isNew}}<h4>{{mf 'group.edit.description' 'Description:'}}</h4>{{/if}}
+				{{>editable editableDescription}}
+			{{else}}
+				{{{group.description}}}
+			{{/if}}
+
+			{{#if editableClaim}}
+				{{#if isNew}}<h4>{{mf 'group.edit.claim' 'Claim:'}}</h4>{{/if}}
+				<h4>{{>editable editableClaim}}</h4>
+			{{else}}
+				{{#if group.claim}}
+					<h4>{{group.claim}}</h4>
 				{{/if}}
+			{{/if}}
+
+			{{#if isNew}}
+				<div class="groupEditFinishbtns">
+					<button type="button" class="save -saveGroup">
+						<span class="glyphicon glyphicon-save"></span>
+						{{mf 'group.edit.save_btn' 'Save'}}
+					</button>
+					<button type="button" class="cancel -cancelGroup">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf 'group.edit.cancel_btn' 'Cancel'}}
+					</button>
+				</div>
+			{{/if}}
 			</div>
-			<div style="clear: both"></div>
-			<div class="claim">
-				{{#if editableClaim}}
-					<h4>{{>editable editableClaim}}</h4>
-				{{else}}
-					{{#if group.claim}}
-						<h4>{{group.claim}}</h4>
-					{{/if}}
-				{{/if}}
-			</div>
-			<div class="description">
-				{{#if editableDescription}}
-					{{>editable editableDescription}}
-				{{else}}
-					{{{group.description}}}
-				{{/if}}
-			</div>
-		{{#if isNew}}
-			<div class="groupEditFinishbtns">
-				<button type="button" class="save -saveGroup">
-					<span class="glyphicon glyphicon-save"></span>
-					{{mf 'group.edit.save_btn' 'Save'}}
-				</button>
-				<button type="button" class="cancel -cancelGroup">
-					<span class="glyphicon glyphicon-remove"></span>
-					{{mf 'group.edit.cancel_btn' 'Cancel'}}
-				</button>
+		</form>
+	</div>
+
+		{{#if showCourses}}
+			<div class="groupCourses">
+				{{> find query=courseQuery}}
 			</div>
 		{{/if}}
 		</div>
-	{{#if showCourses}}
-		<div class="groupCourses">
-			{{> find query=courseQuery}}
-		</div>
-	{{/if}}
 	</div>
 </template>

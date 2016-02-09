@@ -19,12 +19,69 @@ Router.map(function () {
 
 			if (!group) return false;
 
-			return {
+			var data = {
 				group: group,
 				courseQuery: {group: this._id},
 				isNew: isNew,
 				showCourses: !isNew,
 			};
+
+			var userId = Meteor.userId();
+			var mayEdit = isNew || userId && GroupLib.isMember(userId, group._id);
+
+			if (mayEdit) {
+				var handleSaving = function(err, groupId) {
+					if (err) {
+						addMessage(mf('group.saving.error', { ERROR: err }, 'Saving the group went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+					} else {
+						addMessage(mf('group.saving.success', { NAME: group.short }), 'Saved change to {NAME}');
+					}
+				};
+
+				var showControls = !isNew;
+
+				data.editableName = makeEditable(
+					group.name,
+					true,
+					function(newName) {
+						Meteor.call("saveGroup", group._id, { name: newName }, handleSaving);
+					},
+					mf('group.name.placeholder', "Name for this group"),
+					showControls
+				);
+
+				data.editableShort = makeEditable(
+					group.short,
+					true,
+					function(newShort) {
+						Meteor.call("saveGroup", group._id, { short: newShort }, handleSaving);
+					},
+					mf('group.short.placeholder', "Short name"),
+					showControls
+				);
+
+				data.editableClaim = makeEditable(
+					group.claim,
+					true,
+					function(newClaim) {
+						Meteor.call("saveGroup", group._id, { claim: newClaim }, handleSaving);
+					},
+					mf('group.claim.placeholder', "Tell us why your group is so great"),
+					showControls
+				);
+
+				data.editableDescription = makeEditable(
+					group.description,
+					false,
+					function(newDescription) {
+						Meteor.call("saveGroup", group._id, { description: newDescription }, handleSaving);
+					},
+					mf('group.description.placeholder', "Describe the audience, the interests and activities of your group"),
+					showControls
+				);
+			}
+
+			return data;
 		},
 		onAfterAction: function() {
 			var group = Groups.findOne({_id: this.params._id});
@@ -33,67 +90,6 @@ Router.map(function () {
 			}
 		}
 	});
-});
-
-Template.groupDetails.onCreated(function() {
-	var data = this.data;
-	var group = data.group;
-	var isNew = data.isNew;
-
-	var userId = Meteor.userId();
-	var mayEdit = isNew || userId && GroupLib.isMember(userId, group._id);
-
-	if (mayEdit) {
-		var handleSaving = function(err, groupId) {
-			if (err) {
-				addMessage(mf('group.saving.error', { ERROR: err }, 'Saving the group went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
-			} else {
-				addMessage(mf('group.saving.success', { NAME: group.short }), 'Saved change to {NAME}');
-			}
-		};
-
-		var showControls = !isNew;
-
-		data.editableName = makeEditable(
-			group.name,
-			true,
-			function(newName) {
-				Meteor.call("saveGroup", group._id, { name: newName }, handleSaving);
-			},
-			mf('group.name.placeholder', "Name for this group"),
-			showControls
-		);
-
-		data.editableShort = makeEditable(
-			group.short,
-			true,
-			function(newShort) {
-				Meteor.call("saveGroup", group._id, { short: newShort }, handleSaving);
-			},
-			mf('group.short.placeholder', "Short name"),
-			showControls
-		);
-
-		data.editableClaim = makeEditable(
-			group.claim,
-			true,
-			function(newClaim) {
-				Meteor.call("saveGroup", group._id, { short: newClaim }, handleSaving);
-			},
-			mf('group.claim.placeholder', "Tell us why your group is so great"),
-			showControls
-		);
-
-		data.editableDescription = makeEditable(
-			group.description,
-			false,
-			function(newDescription) {
-				Meteor.call("saveGroup", group._id, { description: newDescription }, handleSaving);
-			},
-			mf('group.description.placeholder', "Describe the audience, the interests and activities of your group"),
-			showControls
-		);
-	}
 });
 
 Template.groupDetails.events({
