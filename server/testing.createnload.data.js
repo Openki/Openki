@@ -365,7 +365,7 @@ function ensureGroup(short) {
 			createdby: 'ServerScript_from_TestCouses',
 			description: 'Automaticaly created group by server'
 		});
-		console.log("Added group from TestCouses: "+name+"    id: "+id);
+		console.log("Added group from TestCouses: "+short+" id: "+id);
 	}
 }
 
