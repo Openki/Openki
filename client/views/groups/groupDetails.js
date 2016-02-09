@@ -1,6 +1,6 @@
 Router.map(function () {
 	this.route('groupDetails', {
-		path: 'group/:_id/:name?',
+		path: 'group/:_id/:short?',
 		waitOn: function () {
 			return [
 				subs.subscribe('group', this.params._id),
@@ -21,7 +21,7 @@ Router.map(function () {
 
 			var data = {
 				group: group,
-				courseQuery: {group: this._id},
+				courseQuery: {group: group._id},
 				isNew: isNew,
 				showCourses: !isNew,
 			};
