@@ -147,9 +147,9 @@ Meteor.methods({
 
 		var update;
 		if (join) {
-			update = { $addToSet: { 'groups': group._id } };
+			update = { $addToSet: { 'groups': groupId } };
 		} else {
-			update = { $pull: { 'groups': group._id } };
+			update = { $pull: { 'groups': group.Id } };
 		}
 
 		// Welcome to my world of platypus-typing
