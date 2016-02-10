@@ -56,7 +56,7 @@ Router.map(function () {
 					function(newShort) {
 						Meteor.call("saveGroup", group._id, { short: newShort }, handleSaving);
 					},
-					mf('group.short.placeholder', "Short name"),
+					mf('group.short.placeholder'),
 					showControls
 				);
 
@@ -66,7 +66,7 @@ Router.map(function () {
 					function(newClaim) {
 						Meteor.call("saveGroup", group._id, { claim: newClaim }, handleSaving);
 					},
-					mf('group.claim.placeholder', "Tell us why your group is so great"),
+					mf('group.claim.placeholder'),
 					showControls
 				);
 
@@ -76,7 +76,7 @@ Router.map(function () {
 					function(newDescription) {
 						Meteor.call("saveGroup", group._id, { description: newDescription }, handleSaving);
 					},
-					mf('group.description.placeholder', "Describe the audience, the interests and activities of your group"),
+					mf('group.description.placeholder'),
 					showControls
 				);
 			}
