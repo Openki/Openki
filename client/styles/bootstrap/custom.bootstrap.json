@@ -31,7 +31,7 @@
   "wells":                true,
   "close":                true,
 
-  "component-animations": true,
+  "component-animations": false,
   "dropdowns":            true,
   "modals":               true,
   "tooltip":              true,
