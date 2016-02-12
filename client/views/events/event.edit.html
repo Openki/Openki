@@ -165,8 +165,8 @@
 				/>
 			</div>
 		</div>
+		{{#if affectedReplicaCount}}
 		<div class="update_replicas">
-			{{#if affectedReplicaCount}}
 				<label>
 					<input type="checkbox" name="updateReplicas">
 					{{mf 'event.edit.updateReplicas'
@@ -178,8 +178,8 @@
 					"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
 					COUNT=affectedReplicaCount
 				}}
-			{{/if}}
 		</div>
+		{{/if}}
 		<div class="edit_buttons">
 			<button type="submit" class="saveEditEvent">
 				<span class="glyphicon glyphicon-save"></span>
