@@ -28,14 +28,13 @@ Template.location_edit.helpers({
 
 Template.location_edit.events({
 	'submit form.location_edit, click input.save': function (ev) {
-		ev.preventDefault()
-
+		ev.preventDefault();
 
 		try {
 			if (pleaseLogin()) return;
 
-			var locationId = this._id ? this._id : ''
-			var isNew = locationId === ''
+			var locationId = this._id ? this._id : '';
+			var isNew = locationId === '';
 
 			var changes = {
 				description: $('#editform_description').val(),
@@ -45,12 +44,12 @@ Template.location_edit.events({
 				maxpeople: $('#editform_maxpeople').val(),
 				maxworkplaces: $('#editform_maxworkplaces').val(),
 				hosts: Session.get("locationHosts")
-			}
+			};
 
 			if (isNew) {
-				changes.region = $('.region_select').val()
+				changes.region = $('.region_select').val();
 				if (!changes.region) {
-					alert("Please select a region"+$('.region_select').val())
+					alert("Please select a region"+$('.region_select').val());
 					return;
 				}
 			}
@@ -58,17 +57,17 @@ Template.location_edit.events({
 			Meteor.call("save_location", locationId, changes, function(err, locationId) {
 				Session.set("isEditing", false);
 				Session.set('search', ''); // clear searchfield
-				if (err) alert("Saving the location went terribly wrong: "+err)
+				if (err) alert("Saving the location went terribly wrong: "+err);
 				if (isNew){
-					Router.go('locationDetails', {_id: locationId}) // TODO: Slug is not included in url
+					Router.go('locationDetails', {_id: locationId}); // TODO: Slug is not included in url
 				}
-			})
+			});
 
 
 
 		} catch(err) {
-			if (err instanceof String) alert(err)
-			else throw err
+			if (err instanceof String) alert(err);
+			else throw err;
 		}
 	},
 
@@ -90,7 +89,7 @@ Template.location_edit.events({
 			hosts.push(new_host);
 			Session.set("locationHosts",hosts);
 		}else{
-			alert("This host ist already in list.")
+			alert("This host ist already in list.");
 		}
 	},
 

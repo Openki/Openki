@@ -47,7 +47,7 @@
 privilegedTo = function(privilege) {
 	var user = Meteor.user();
 	return privileged(user, privilege);
-}
+};
 
 privileged = function(user, privilege) {
 	// Load user object if ID was passed
@@ -60,7 +60,7 @@ privileged = function(user, privilege) {
 		&& user.privileges
 		&& user.privileges.indexOf(privilege) > -1
 	);
-}
+};
 
 Meteor.methods({
 	delete_profile: function() {

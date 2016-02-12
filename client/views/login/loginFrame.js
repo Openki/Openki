@@ -1,6 +1,6 @@
 Template.loginFrame.created = function() {
 	this.forgot = new ReactiveVar(false);
-}
+};
 
 Template.loginFrame.events({
 	'click .loginLogout': function(event){
@@ -90,7 +90,7 @@ Template.loginLogin.onRendered(function() {
 
 Template.loginLogin.created = function() {
 	this.registering = new ReactiveVar(false);
-}
+};
 
 
 Template.loginLogin.helpers({
@@ -128,17 +128,16 @@ Template.loginLogin.events({
 				email: email
 			}, function (err) {
 				if (err) {
-					console.log(err)
 					if (err.error == 400) {
 						$('#username_warning').hide(300);
-						$('#login-name').removeClass('username_warning');
+						$('#loginFrame').removeClass('username_warning');
 						$('#password_warning').show(300);
-						$('#login-password').addClass('password_warning');
+						$('#loginFrame').addClass('password_warning');
 					} else {
-						$('#password_warning').hide(300);
-						$('#login-password').removeClass('password_warning');
 						$('#username_warning').show(300);
-						$('#login-name').addClass('username_warning');
+						$('#loginFrame').addClass('username_warning');
+						$('#password_warning').hide(300);
+						$('#loginFrame').removeClass('password_warning');
 					}
 				} else {
 					instance.closeDropdown();
@@ -149,8 +148,8 @@ Template.loginLogin.events({
 			$('#password_warning_incorrect').hide(300);
 			$('#username_warning_not_existing').hide(300);
 			$('#login_warning').hide(300);
-			$('#login-name').removeClass('username_warning');
-			$('#login-password').removeClass('password_warning');
+			$('#loginFrame').removeClass('username_warning');
+			$('#loginFrame').removeClass('password_warning');
 			Template.instance().registering.set(true);
 		}
 	},
@@ -160,8 +159,8 @@ Template.loginLogin.events({
 		if(Template.instance().registering.get()){
 			$('#password_warning').hide(300);
 			$('#username_warning').hide(300);
-			$('#login-name').removeClass('username_warning');
-			$('#login-password').removeClass('password_warning');
+			$('#loginFrame').removeClass('username_warning');
+			$('#loginFrame').removeClass('password_warning');
 			Template.instance().registering.set(false);
 			return;
 		}
@@ -172,23 +171,25 @@ Template.loginLogin.events({
 				if (err.error == 400) {
 					$('#password_warning_incorrect').hide(300);
 					$('#username_warning_not_existing').hide(300);
-					$('#login-name').addClass('username_warning');
-					$('#login-password').addClass('password_warning');
+					$('#loginFrame').addClass('username_warning');
+					$('#loginFrame').addClass('password_warning');
 					$('#login_warning').show(300);
 				} else if (err.reason == 'Incorrect password') {
 					$('#login_warning').hide(300);
 					$('#username_warning_not_existing').hide(300);
-					$('#login-name').removeClass('username_warning');
-					$('#login-password').addClass('password_warning');
+					$('#loginFrame').removeClass('username_warning');
+					$('#loginFrame').addClass('password_warning');
 					$('#password_warning_incorrect').show(300);
 				} else {
 					$('#login_warning').hide(300);
 					$('#password_warning_incorrect').hide(300);
-					$('#login-password').removeClass('password_warning');
-					$('#login-name').addClass('username_warning');
+					$('#loginFrame').removeClass('password_warning');
+					$('#loginFrame').addClass('username_warning');
 					$('#username_warning_not_existing').show(300);
 				}
 			} else {
+				$('#loginFrame').removeClass('username_warning');
+				$('#loginFrame').removeClass('password_warning');
 				instance.closeDropdown();
 			}
 		});

@@ -3,7 +3,7 @@ Template.role_details.created = function() {
 };
 
 Template.role_details.helpers({
-	enrolling: function() { return Template.instance().enrolling.get() },
+	enrolling: function() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe: function() {
 		return 'roles.'+this.type+'.subscribe';
@@ -34,9 +34,13 @@ Template.role_details.events({
 	},
 
 	'click button.subscribe': function (e, template) {
+		var incognito;
 		if (template.find('.incognito')) {
-			var incognito = $(template.find('.incognito')).prop('checked');
-		} else incognito = false
+			incognito = $(template.find('.incognito')).prop('checked');
+		} else {
+			incognito = false;
+		}
+
 		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, incognito);
 
 		// Store the comment

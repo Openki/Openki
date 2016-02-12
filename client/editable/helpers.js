@@ -92,10 +92,10 @@ Template.editable.events({
 		// Moving the cursor to the end of the editable element?
 		// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
 		var selectEnd = function(el) {
-			 range = document.createRange();
+			var range = document.createRange();
 			range.selectNodeContents(el);
 			range.collapse(false);
-			selection = window.getSelection();
+			var selection = window.getSelection();
 			selection.removeAllRanges();
 			selection.addRange(range);
 		};

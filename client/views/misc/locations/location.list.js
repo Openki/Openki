@@ -6,9 +6,9 @@ Router.map(function () {
 			return Meteor.subscribe('locations', Session.get('region'));
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Venues list'
+			document.title = webpagename + 'Venues list';
 		}
-	})
+	});
 });
 
 Template.locationlist.helpers({
@@ -16,7 +16,7 @@ Template.locationlist.helpers({
 		var locations = Locations.find();
 
 		if(Meteor.userId()) {
-			Session.set("locationHosts",[Meteor.userId()]) // Variable brauchts für das New-Location-Formular. Hier wohl nicht so logisch, wo hintun?
+			Session.set("locationHosts",[Meteor.userId()]); // Variable brauchts für das New-Location-Formular. Hier wohl nicht so logisch, wo hintun?
 		}
 
 		return locations;
@@ -27,9 +27,9 @@ Template.locationlist.helpers({
 	},
 
 	region: function() {
-		var regionId = Session.get('region')
-		var regionObj = Regions.findOne(regionId)
-		var regionName = regionObj ? regionObj.name : 'all regions'
+		var regionId = Session.get('region');
+		var regionObj = Regions.findOne(regionId);
+		var regionName = regionObj ? regionObj.name : 'all regions';
 		return regionName;
 	}
 });
