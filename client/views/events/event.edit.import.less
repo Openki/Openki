@@ -6,126 +6,152 @@
 		.form-control-humble;
 	}
 
-	.date,
-	.start_time,
-	.end_time,
-	.show_duration {
-		.grid(12, 4);
-
-		@media @tablet {
-			padding: 0;
-		}
-
-		@media @mobile {
-			padding: 0;
-		}
-	}
-
-	.date {
-		padding-left: 0;
-	}
-
-	.end_time,
-	.show_duration {
-		padding-right: 0;
-	}
-
-	.description {
+	.course_event_edit_header {
 		.grid(12);
-		padding: 0;
+		border-top: dashed 7px @brand-success;
+		border-left: dashed 7px @brand-success;
+		border-right: dashed 7px @brand-success;
+		margin-top: 10px;
+		padding: 20px 30px 0px;
 
-		#edit_event_description {
-			.form-control-humble;
-			height: auto; // Reset fixed height from .form-control-humble
-			min-height: 100px;
-			max-height: 150px;
-			overflow: auto;
-		}
-	}
-
-	.region_selection {
-		.grid(12, 4);
-		padding-left: 0;
-
-		@media @tablet {
-			padding: 0;
-		}
-	}
-
-	.files {
-		.grid(12, 8);
-		padding: 0;
-
-		input#edit_files {
+		#edit_event_title {
 			height: auto;
 		}
 
-		button.eventFileUpload {
-			.btn-thin;
-			.btn-primary;
-			margin: 5px 0;
-		}
-	}
+		.date,
+		.start_time,
+		.end_time,
+		.show_duration {
+			.grid(12, 4);
 
-	.room {
-		.grid(12);
-		padding: 0;
-		margin-bottom: 20px;
-		h4 {
-			display: inline-block;
-			margin-right: 0.7em;
-		}
-	}
-
-	.update_replicas {
-		.grid(12, 6);
-		padding: 15px 0;
-
-		input {
-			width: 0;
-			height: 0;
-			display: inline-block;
-		}
-
-		label {
-			font-size: 18px;
-			font-weight: normal;
-			display: inline-block;
-			margin-right: 0.7em;
-			//vertical-align: baseline;
-		}
-	}
-
-	.edit_buttons {
-		.grid(12, 6);
-		padding: 0 0 15px;
-
-		button {
-			margin-top: 10px;
-			&:first-child {
-				margin-right: 5px;
+			@media @tablet {
+				padding: 0;
 			}
 
-			&.saveEditEvent {
-				.btn;
-				.btn-success;
+			@media @mobile {
+				padding: 0;
+			}
+		}
 
-				@media @mobile {
-					.form-control;
+		.date {
+			padding-left: 0;
+		}
+
+		.end_time,
+		.show_duration {
+			padding-right: 0;
+		}
+
+		.toggle_duration {
+			cursor: pointer;
+			padding-top: 15px;
+		}
+	}
+
+	.course_event_edit_body {
+		.grid(12);
+		border-bottom: dashed 7px @brand-bg;
+		border-left: dashed 7px @brand-bg;
+		border-right: dashed 7px @brand-bg;
+		padding: 0px 30px 20px;
+
+		.description {
+			.grid(12);
+			padding: 0;
+
+			#edit_event_description {
+				.form-control-humble;
+				height: auto; // Reset fixed height from .form-control-humble
+				min-height: 100px;
+				max-height: 150px;
+				overflow: auto;
+			}
+		}
+
+		.region_selection {
+			.grid(12, 4);
+			padding-left: 0;
+
+			@media @tablet {
+				padding: 0;
+			}
+		}
+
+		.files {
+			.grid(12, 8);
+			padding: 0;
+
+			input#edit_files {
+				height: auto;
+			}
+
+			button.eventFileUpload {
+				.btn-thin;
+				.btn-primary;
+				margin: 5px 0;
+			}
+		}
+
+		.room {
+			.grid(12);
+			padding: 0;
+			margin-bottom: 20px;
+			h4 {
+				display: inline-block;
+				margin-right: 0.7em;
+			}
+		}
+
+		.update_replicas {
+			.grid(12, 6);
+			padding: 15px 0;
+
+			input {
+				width: 0;
+				height: 0;
+				display: inline-block;
+			}
+
+			label {
+				font-size: 18px;
+				font-weight: normal;
+				display: inline-block;
+				margin-right: 0.7em;
+				//vertical-align: baseline;
+			}
+		}
+
+		.edit_buttons {
+			.grid(12, 6);
+			padding: 0 0 15px;
+
+			button {
+				margin-top: 10px;
+				&:first-child {
+					margin-right: 5px;
+				}
+
+				&.saveEditEvent {
 					.btn;
 					.btn-success;
-					margin-bottom: 10px;
+
+					@media @mobile {
+						.form-control;
+						.btn;
+						.btn-success;
+						margin-bottom: 10px;
+					}
 				}
-			}
 
-			&.cancelEditEvent {
-				.btn;
-				.btn-danger;
-
-				@media @mobile {
-					.form-control;
+				&.cancelEditEvent {
 					.btn;
 					.btn-danger;
+
+					@media @mobile {
+						.form-control;
+						.btn;
+						.btn-danger;
+					}
 				}
 			}
 		}
