@@ -1,25 +1,24 @@
 <template name="groupDetails">
 	<div class="groupPage container">
-		<div class="groupPageHeader">
+	<div class="groupPageHeader">
+
+	{{#if isNew}}
+		<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
+	{{/if}}
 
 	<div class="groupEdit">
 		<form>
 			<div class="group_edit_header">
 
+
 				<div class="editformLogo">
 					{{#if groupLogo group._id}}
 						<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
-					{{/if}}
-					{{#if isNew}}
-						<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
 					{{/if}}
 				</div>
 
 				<div class="editformName">
 					{{#if editableName}}
-						{{#if isNew}}
-							{{mf 'group.edit.Name' 'Name:'}}
-						{{/if}}
 						{{>editable editableName}}
 					{{else}}
 						{{group.name}}
@@ -28,9 +27,6 @@
 
 				<div class="editformShort">
 					{{#if editableShort}}
-						{{#if isNew}}
-							{{mf 'group.edit.shortName' 'Abbreviation:'}}
-						{{/if}}
 						{{>editable editableShort}}
 					{{else}}
 						{{#if group.short}}{{group.short}}{{/if}}
@@ -42,9 +38,6 @@
 
 				<div class="editformClaim">
 				{{#if editableClaim}}
-					{{#if isNew}}
-						{{mf 'group.edit.claim' 'Claim:'}}
-					{{/if}}
 					{{>editable editableClaim}}
 				{{else}}
 					{{#if group.claim}}
@@ -55,9 +48,6 @@
 
 				<div class="editformDescr">
 					{{#if editableDescription}}
-						{{#if isNew}}
-							<h4>{{mf 'group.edit.description' 'Description:'}}</h4>
-						{{/if}}
 						{{>editable editableDescription}}
 					{{else}}
 						{{{group.description}}}

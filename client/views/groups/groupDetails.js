@@ -46,7 +46,7 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("saveGroup", group._id, { name: newName }, handleSaving);
 					},
-					mf('group.name.placeholder', "Name for this group"),
+					mf('group.name.placeholder',  'Name of your group, institution, community or programm'),
 					showControls
 				);
 
@@ -56,7 +56,7 @@ Router.map(function () {
 					function(newShort) {
 						Meteor.call("saveGroup", group._id, { short: newShort }, handleSaving);
 					},
-					mf('group.short.placeholder'),
+					mf('group.short.placeholder', 'Abbreviation'),
 					showControls
 				);
 
@@ -66,7 +66,7 @@ Router.map(function () {
 					function(newClaim) {
 						Meteor.call("saveGroup", group._id, { claim: newClaim }, handleSaving);
 					},
-					mf('group.claim.placeholder'),
+					mf('group.claim.placeholder', 'The core idea'),
 					showControls
 				);
 
@@ -76,7 +76,7 @@ Router.map(function () {
 					function(newDescription) {
 						Meteor.call("saveGroup", group._id, { description: newDescription }, handleSaving);
 					},
-					mf('group.description.placeholder'),
+					mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
 					showControls
 				);
 			}
