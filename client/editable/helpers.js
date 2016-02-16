@@ -14,6 +14,10 @@ Template.editable.onRendered(function() {
 	if (this.data.simple) {
 		options.disableReturn = true;
 		options.toolbar = false;
+		options.placeholder = {
+			hideOnClick: false,
+			text: self.data.placeholderText
+		};
 	}
 
 	// UGLY The following two methods can be used to access and change
@@ -79,7 +83,6 @@ Template.editable.helpers({
 		if (instance.changed.get()) classes.push('changed');
 		return {
 			'class': classes.join(' '),
-			'data-placeholder':  instance.data.placeholderText,
 		};
 	},
 
