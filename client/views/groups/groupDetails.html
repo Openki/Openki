@@ -5,46 +5,66 @@
 	<div class="groupEdit">
 		<form>
 			<div class="group_edit_header">
-			{{#if groupLogo group._id}}
-				<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
-			{{/if}}
-			{{#if isNew}}
-				<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
-			{{/if}}
 
-				<div class="editformName">
-			{{#if editableName}}
-					{{#if isNew}}<h4>{{mf 'group.edit.Name' 'Name:'}}</h4>{{/if}}
-					{{>editable editableName}}
-			{{else}}
-					<h2>{{group.name}}</h2>
-			{{/if}}
+				<div class="editformLogo">
+					{{#if groupLogo group._id}}
+						<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
+					{{/if}}
+					{{#if isNew}}
+						<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
+					{{/if}}
 				</div>
 
-			{{#if editableShort}}
-				{{#if isNew}}
-					<h4>{{mf 'group.edit.shortName' 'Abbreviation:'}}</h4>
-				{{/if}}
-				{{>editable editableShort}}
-			{{else}}
-				{{#if group.short}}<h4>{{group.short}}</h4>{{/if}}
-			{{/if}}
+				<div class="editformName">
+					{{#if editableName}}
+						{{#if isNew}}
+							{{mf 'group.edit.Name' 'Name:'}}
+						{{/if}}
+						{{>editable editableName}}
+					{{else}}
+						{{group.name}}
+					{{/if}}
+				</div>
 
-			{{#if editableDescription}}
-				{{#if isNew}}<h4>{{mf 'group.edit.description' 'Description:'}}</h4>{{/if}}
-				{{>editable editableDescription}}
-			{{else}}
-				{{{group.description}}}
-			{{/if}}
+				<div class="editformShort">
+					{{#if editableShort}}
+						{{#if isNew}}
+							{{mf 'group.edit.shortName' 'Abbreviation:'}}
+						{{/if}}
+						{{>editable editableShort}}
+					{{else}}
+						{{#if group.short}}{{group.short}}{{/if}}
+					{{/if}}
+				</div>
+			</div>
 
-			{{#if editableClaim}}
-				{{#if isNew}}<h4>{{mf 'group.edit.claim' 'Claim:'}}</h4>{{/if}}
-				<h4>{{>editable editableClaim}}</h4>
-			{{else}}
-				{{#if group.claim}}
-					<h4>{{group.claim}}</h4>
+			<div class="groupEditSub">
+
+				<div class="editformClaim">
+				{{#if editableClaim}}
+					{{#if isNew}}
+						{{mf 'group.edit.claim' 'Claim:'}}
+					{{/if}}
+					{{>editable editableClaim}}
+				{{else}}
+					{{#if group.claim}}
+						{{group.claim}}
+					{{/if}}
 				{{/if}}
-			{{/if}}
+				</div>
+
+				<div class="editformDescr">
+					{{#if editableDescription}}
+						{{#if isNew}}
+							<h4>{{mf 'group.edit.description' 'Description:'}}</h4>
+						{{/if}}
+						{{>editable editableDescription}}
+					{{else}}
+						{{{group.description}}}
+					{{/if}}
+				</div>
+			</div>
+
 
 			{{#if isNew}}
 				<div class="groupEditFinishbtns">
@@ -58,7 +78,6 @@
 					</button>
 				</div>
 			{{/if}}
-			</div>
 		</form>
 	</div>
 

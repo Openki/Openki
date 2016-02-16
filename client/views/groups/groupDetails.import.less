@@ -1,15 +1,37 @@
 .groupEdit {
 	background: rgba(130, 216, 130, 0.5);
-	border: 7px solid rgba(130, 216, 130, 0.5);
-	padding: 0 0 50px;
+	//padding: 0 0 50px;
+	margin-bottom: 50px;
 
 	.group_edit_header {
 		.grid(12);
 		padding: 0;
+		background: rgba(130, 216, 130, 0.9); //random
+		font-size: x-large;
+
+		.editformLogo {
+			float: left;
+		}
 
 		.editformName {
+			float: left;
+			//min-height: 40px;
+			padding: 7px;
+		}
+
+		.editformShort {
+			float: right;
+			text-align: right;
+			padding: 7px;
+		}
+	}
+
+	.groupEditSub {
+	padding-left: 10px;
+
+		.editformClaim {
+			clear: both;
 			font-size: large;
-			min-height: 40px;
 		}
 
 		.editformDescription {
@@ -17,26 +39,23 @@
 			height: auto; // Reset fixed height from .form-control-humble()
 			max-height: 150px;
 			min-height: 100px;
-			overflow: auto;
 
 			p {
 				margin: 0;
 			}
 		}
-
-
-		.editable {
-			background: none;
-		}
-
-		#editform_short,
-		#editform_claim,
-		#addGroupMember {
-			.form-control-humble;
-		}
-
-
 	}
+
+	.editable {
+		background: none;
+	}
+
+	#editform_short,
+	#editform_claim,
+	#addGroupMember {
+		.form-control-humble;
+	}
+
 
 	.groupEditFinishbtns {
 		.grid(12);
