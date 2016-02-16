@@ -29,7 +29,7 @@
 					{{#if editableShort}}
 						{{>editable editableShort}}
 					{{else}}
-						{{#if group.short}}{{group.short}}{{/if}}
+						{{group.short}}
 					{{/if}}
 				</div>
 			</div>
@@ -40,9 +40,7 @@
 				{{#if editableClaim}}
 					{{>editable editableClaim}}
 				{{else}}
-					{{#if group.claim}}
 						{{group.claim}}
-					{{/if}}
 				{{/if}}
 				</div>
 
