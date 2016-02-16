@@ -12,12 +12,14 @@
 				<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
 			{{/if}}
 
+				<div class="editformName">
 			{{#if editableName}}
-				<h4>{{#if isNew}}{{mf 'group.edit.Name' 'Name:'}}{{/if}}</h4>
-				<div class="editformName">{{>editable editableName}}</div>
+					{{#if isNew}}<h4>{{mf 'group.edit.Name' 'Name:'}}</h4>{{/if}}
+					{{>editable editableName}}
 			{{else}}
-				<h2>{{group.name}}</h2>
+					<h2>{{group.name}}</h2>
 			{{/if}}
+				</div>
 
 			{{#if editableShort}}
 				{{#if isNew}}
