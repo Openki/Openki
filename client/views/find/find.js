@@ -101,6 +101,10 @@ Template.find.events({
 			instance.filter.done();
 			updateUrl(event, instance);
 		}
+	},
+
+	"click .-search_all_regions": function(event, template){
+		 Session.set('region', 'all');
 	}
 });
 
@@ -167,6 +171,10 @@ Template.find.helpers({
 
 	'ready': function() {
 		return Template.instance().coursesReady.get();
+	},
+
+	'allRegions': function() {
+		return (Session.get('region') == 'all');
 	}
 });
 

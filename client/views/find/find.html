@@ -156,6 +156,11 @@
 		{{else}}
 			<div style="text-align: center; margin: 2em">
 			{{mf 'find.no_courses_found' 'No Courses found.'}}
+			{{#unless allRegions}}
+				<button class="-search_all_regions">
+					{{mf 'find.search_all_regions' 'Search in all regions'}}
+				</button>
+			{{/unless}}
 			{{#if proposeNewBlurb}}
 				{{mf 'find.propose_new_course?' 'Why not propose a new one for {TERM}?' TERM=this.query.search}}
 			{{/if}}
