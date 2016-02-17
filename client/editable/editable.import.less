@@ -12,6 +12,7 @@
 		border: 1px solid @brand-primary;
 		padding: 7px;
 		background: @body-bg;
+		box-shadow: 7px 7px 7px rgba(0,0,0,.3);
 	}
 
 
@@ -43,11 +44,15 @@
 }
 
 .editable-controls {
-	margin-top: 12px;
+	z-index: 1;
+	margin-top: 5px;
+	position: absolute;
+
 
 		button {
 			.btn;
 			margin-right: 10px;
+			box-shadow: 7px 7px 7px rgba(0,0,0,.3);
 
 			@media @mobile {
 				.form-control;
