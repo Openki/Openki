@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
 // This checks client storage for a region setting. When there is no previously
 // selected region, we ask the server to do geolocation. If that fails too,
 // we just set it to 'all regions'.
-regionSub = Meteor.subscribe('regions', function() {
+Meteor.subscribe('regions', function() {
 	var useRegion = function(regionId) {
 		if (!regionId) return;
 		if (regionId == 'all') {

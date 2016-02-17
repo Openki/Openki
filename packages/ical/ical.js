@@ -10,7 +10,7 @@ function sendIcal(events, response) {
 			summary: dbevent.title,
 			location: [dbevent.location.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
 			description: textPlain(dbevent.description),
-			url: Router.routes['showEvent'].url(dbevent)
+			url: Router.routes.showEvent.url(dbevent)
 		});
 	});
 

@@ -7,4 +7,4 @@ UpdatesAvailable.renameLocationName = function() {
 			Events.update(event._id, event);
 		}
 	});
-}
+};

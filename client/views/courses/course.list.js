@@ -5,15 +5,15 @@ Router.map(function () {
 		path: 'courses',
 		template: 'coursepage',
 		waitOn: function() {
-			var region = Session.get('region')
+			var region = Session.get('region');
 			return [
 				Meteor.subscribe('coursesFind', { region: region }, 40),
 				Meteor.subscribe('coursesFind', { region: region, missingTeam: true }, 5),
 				Meteor.subscribe('coursesFind', { region: region, missingParticipants: true }, 5),
-			]
+			];
 		},
 		data: function () {
-			var region = Session.get('region')
+			var region = Session.get('region');
 			return {
 				all_courses:         coursesFind({ region: region }, 36),
 				missing_organizer: coursesFind({ region: region, missingTeam: true }, 5),
@@ -21,10 +21,10 @@ Router.map(function () {
 			};
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Courselist'
+			document.title = webpagename + 'Courselist';
 		},
-	})
-})
+	});
+});
 
 
 Template.course.helpers({
@@ -34,18 +34,15 @@ Template.course.helpers({
 	},
 
 	coursestate: function() {
-		var today = new Date();
-
-		var upcoming = this.nextevent;
 		if (this.nextEvent) return 'hasupcomingevents';
-
 		if (this.lastEvent) return 'haspastevents';
-
 		return 'proposal';
 	},
 
 	categorynames: function() {
-		return Categories.find({_id: {$in: course.categories}}).map(function(cat) { return cat.name }).join(', ')
+		return Categories.find({_id: {$in: course.categories}}).map(function(cat) {
+			return cat.name;
+		}).join(', ');
 	},
 
 
@@ -58,7 +55,7 @@ Template.course.helpers({
 	course_eventlist_hasmore: function() {
 		var today= new Date();
 		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
-		return eventcount > 1 ? (eventcount-1)  : false
+		return eventcount > 1 ? (eventcount-1)  : false;
 	},
 
 	hasupcomingevents: function() {
@@ -70,40 +67,40 @@ Template.course.helpers({
 Template.courseStatus.helpers({
 	requiresMentor: function() {
 		if (!this.roles) return false;
-		return this.roles.indexOf('mentor') != -1
+		return this.roles.indexOf('mentor') != -1;
 	},
 
 	requiresHost: function() {
 		if (!this.roles) return false;
-		return this.roles.indexOf('host') != -1
+		return this.roles.indexOf('host') != -1;
 	},
 
 	needsTeam: function() {
-		return !hasRole(this.members, 'team')
+		return !hasRole(this.members, 'team');
 	},
 
 	needsMentor: function() {
-		return !hasRole(this.members, 'mentor')
+		return !hasRole(this.members, 'mentor');
 	},
 
 	needsHost: function() {
-		return !hasRole(this.members, 'host')
+		return !hasRole(this.members, 'host');
 	},
 
 	is_host: function() {
-		return hasRoleUser(this.members, 'host', Meteor.userId())
+		return hasRoleUser(this.members, 'host', Meteor.userId());
 	},
 
 	is_team: function() {
-		return hasRoleUser(this.members, 'team', Meteor.userId())
+		return hasRoleUser(this.members, 'team', Meteor.userId());
 	},
 
 	is_mentor: function() {
-		return hasRoleUser(this.members, 'mentor', Meteor.userId())
+		return hasRoleUser(this.members, 'mentor', Meteor.userId());
 	},
 
 	is_subscriber: function() {
-		return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : ''
+		return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : '';
 	}
 
 });
@@ -131,7 +128,7 @@ Template.course.events({
 
 Template.courseStatus.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
-}
+};
 
 Template.course.rendered = function() {
 	this.$('.course-name').dotdotdot({

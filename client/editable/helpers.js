@@ -13,7 +13,7 @@ Template.editable.onRendered(function() {
 	var options = {};
 	if (this.data.simple) {
 		options.disableReturn = true;
-		options.toolbar = false;
+		options.disableToolbar = true;
 		options.placeholder = {
 			hideOnClick: false,
 			text: self.data.placeholderText
@@ -98,7 +98,7 @@ Template.editable.helpers({
 });
 
 Template.editable.events({
-	'click .editable-store': function(event, instance) {
+	'click .-editableStore': function(event, instance) {
 		event.preventDefault();
 		instance.changed.set(false);
 		var editable = instance.$('.editable');
@@ -106,7 +106,7 @@ Template.editable.events({
 		instance.data.store(changedText);
 		instance.editingVersion = false;
 	},
-	'click .editable-cancel': function(event, instance) {
+	'click .-editableCancel': function(event, instance) {
 		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
@@ -116,10 +116,10 @@ Template.editable.events({
 		// Moving the cursor to the end of the editable element?
 		// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
 		var selectEnd = function(el) {
-			 range = document.createRange();
+			var range = document.createRange();
 			range.selectNodeContents(el);
 			range.collapse(false);
-			selection = window.getSelection();
+			var selection = window.getSelection();
 			selection.removeAllRanges();
 			selection.addRange(range);
 		};

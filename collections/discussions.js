@@ -15,12 +15,12 @@ CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 mayDeletePost = function(user, course,post){
 	if (!user) return false;
 	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
-}
+};
 
 mayEditPost = function(user, post){
 	if (!user) return false;
 	return user && post.userId == user._id;
-}
+};
 
 var sanitizeComment = function(comment) {
 	return {
@@ -41,7 +41,7 @@ Meteor.methods({
 
 		var saneComment = sanitizeComment(comment);
 
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (user && !comment.anon) {
 			saneComment.userId = user._id;
 		}

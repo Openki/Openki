@@ -37,9 +37,16 @@
 		.form-control-humble;
 	}
 
-	input#login-name.username_warning,
-	input#login-password.password_warning {
-		border-color: @brand-danger;
+
+	&.password_warning {
+		input#login-password{
+			border-color: @brand-danger;
+		}
+	}
+	&.username_warning {
+		input#login-name{
+			border-color: @brand-danger;
+		}
 	}
 
 	#username_warning,
@@ -53,7 +60,6 @@
 	#password_warning,
 	#password_warning_incorrect {
 		color: @brand-danger;
-		margin: 0px 0 10px;
 		text-align: left;
 	}
 
@@ -62,22 +68,28 @@
 	}
 
 	.input-group:first-child,
-	button.-forgot,
+	button.forgot,
 	button.loginLogin,
 	button.loginRegister {
 		margin-bottom: 15px;
+	}
+
+	span.fa-lock{
+		font-size: 1.3em;
 	}
 
 	.login_email {
 		margin-top: 15px;
 	}
 
-	button.-forgot {
+	button.forgot {
 		background: none;
 		border: none;
 		float: right;
-		margin-top: 5px;
+		margin-top: 3px;
 		padding-right: 0;
+		color: grey;
+		font-size: 0.9em;
 
 		&:focus {
 			text-decoration: underline;
@@ -88,15 +100,33 @@
 			cursor: pointer;
 		}
 	}
+	&.username_warning,
+	&.password_warning {
+		button.forgot {
+			.btn;
+			.btn-default;
+			.transition(all 1.8s ease-out);
+			width: 100%;
+			margin: 15px 0;
+		}
+	}
+
 
 	.external_logins {
-		margin: 7px 0 15px;
+		padding: 5px 0;
+		margin: 15px 0;
+		background-color: darken(@brand-bg, 3%);
+
+		p {
+			margin: 3px 0 0;
+		}
 
 		.loginWithService {
 			background: none;
 			border: none;
 			color: @default-grey;
-			font-size: x-large;
+			font-size: xx-large;
+			padding: 0 9px;
 
 			&:hover {
 				.fa-google-plus-square {

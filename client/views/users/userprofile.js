@@ -31,24 +31,24 @@ Router.map(function() {
 			};
 		},
 		onAfterAction: function() {
-			var user = Meteor.users.findOne({_id: this.params._id})
+			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // wtf
-			document.title = webpagename + '' + user.username + "'s Profile"
+			document.title = webpagename + '' + user.username + "'s Profile";
 		}
-	})
-})
+	});
+});
 
 
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser: function () {
-		return this.user && this.user._id === Meteor.userId()
+		return this.user && this.user._id === Meteor.userId();
 	},
 
 	groupMember: function(group, user) {
 		return user && group && group.members && group.members.indexOf(user._id) >= 0;
 	}
-})
+});
 
 
 Template.userprofile.events({
@@ -73,7 +73,7 @@ Template.userprofile.events({
 	},
 
 	'click button.remove': function(event, template) {
-		var priv = template.$(event.target).data('priv')
+		var priv = template.$(event.target).data('priv');
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
 				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'), 'danger');
@@ -115,13 +115,11 @@ Template.emailBox.events({
 		event.preventDefault();
 		if (pleaseLogin()) return;
 
-		var send_user = Meteor.user();
-
-		var rec_user_id = this.user._id
+		var rec_user_id = this.user._id;
 		var rec_user = Meteor.users.findOne({_id:rec_user_id});
 		if(rec_user){
 			if(rec_user.username){
-				var rec_user = rec_user.username;
+				rec_user = rec_user.username;
 			}
 		}
 
@@ -153,7 +151,7 @@ Template.emailBox.events({
 });
 
 Template.userprofile.rendered = function() {
-	var currentPath = Router.current().route.path(this)
+	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a.loginButton.nav_link').addClass('active');
-}
+};

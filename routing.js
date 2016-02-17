@@ -11,20 +11,20 @@ Router.map(function () {
 
 	this.route('categorylist',{
 		onAfterAction: function() {
-			document.title = webpagename + 'Category list'
+			document.title = webpagename + 'Category list';
 		}
-	})
+	});
 
 
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
 		action: function() {
-			this.render(this.params.page_name)
+			this.render(this.params.page_name);
 		},
 		onAfterAction: function() {
-			document.title = webpagename + '' + this.params.page_name
+			document.title = webpagename + '' + this.params.page_name;
 		}
-	})
+	});
 
 });
 
@@ -56,7 +56,7 @@ Router.map(function () {
 				};
 				var course = Courses.findOne(this.params.query.courseId);
 				if (course) {
-					event.title = course.name,
+					event.title = course.name;
 					event.course_id = course._id;
 					event.region = course.region;
 					event.description = course.description;

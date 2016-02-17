@@ -1,5 +1,7 @@
 {
 	"laxbreak": true,
+	"browser": true,
+	"node": true,
 
 	"globals": {
 		"Meteor": false,
@@ -40,6 +42,185 @@
 		"Router": false,
 
 		"moment": false,
-		"mf": false
+		"mf": false,
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------- our globals ----------------- //
+
+		"Router":true,
+		"Template":true,
+		"alert":true,
+		"confirm":true,
+		"webpagename":true,
+		"lgs":true,
+		"categories":true,
+		"ServiceConfiguration":true,
+		"anonId":true,
+		"Categories":true,   //shouldnt be here
+
+// server/publications
+
+		"Version":true,
+		"Courses":true,
+		"coursesFind":true,
+		"Roles":true,
+		"Regions":true,
+		"Locations":true,
+		"locationsFind":true,
+		"CourseDiscussions":true,
+		"Events":true,
+		"eventsFind":true,
+		"affectedReplicaSelectors":true,
+		"privileged":true,
+		"groupsFind":true,
+		"Groups":true,
+
+// lib/functions.js
+
+		"mfPkg":true,
+		"VERSION":true,
+		"getSlug":true,
+		"search_user":true,
+		"escapeRegex":true,
+		"checkInsert":true,
+		"checkUpdateOne":true,
+		"saneHtml":true,
+		"sanitizeHtml":true,
+		"textPlain":true,
+		"htmlize":true,
+		"saneText":true,
+
+// client/editable/...
+
+		"MediumEditor":true,
+		"makeEditable":true,
+
+// client/lib/...
+
+		"Assistant":true,
+		"UrlTools":true,
+
+// client/lib/client.functions.js
+
+		"havingRole":true,
+		"getMember":true,
+		"mayEdit":true,
+		"userName":true,
+		"goBase":true,
+		"pleaseLogin":true,
+
+// client/map/map.js
+
+		"L":true,
+
+// client/messages/...
+
+		"ClientMessages":true,
+		"addMessage":true,
+		"removeMessage":true,
+
+
+// client/views/course/...
+
+		"courseTemplate":true,
+
+
+// client/views/events/...
+
+		"LocationTracker":true,
+
+
+// client/start.js
+
+		"subs":true,
+		"miniSubs":true,
+		"minuteTime":true,
+
+
+// collection/courses.js
+
+		"hasRole":true,
+		"hasRoleUser":true,
+		"maySubscribe":true,
+
+// collection/discussion.js
+
+		"mayDeletePost":true,
+		"mayEditPost":true,
+
+// collection/events.js
+
+		"mayEditEvent":true,
+		"updateEventLocation":true,
+
+// collection/files.js
+
+		"FS":true,
+		"Files":true,
+
+// collection/...
+
+		"LocationCategories":true,
+		"privilegedTo":true,
+
+
+// lib/Filtering.js
+
+		"CoursePredicates":true,
+		"EventPredicates":true,
+		"Filtering":true,
+
+
+// server/lib/...
+
+		"UpdatesAvailable":true,
+		"UpdatesApplied":true,
+		"applyUpdates":true,
+		"logAsyncErrors":true,
+		"untilClean":true,
+
+
+// server/testData/...
+
+		"testCourses":true,
+		"testEvents":true,
+		"testGroups":true,
+		"testLocations":true,
+		"regions":true,
+
+
+// server/testing.createnload.data.js
+
+		"loadCoursesIfNone":true,
+		"loadLocationsIfNone":true,
+		"createEventsIfNone":true,
+		"createCommentsIfNone":true,
+		"loadTestEvents":true,
+		"loadGroupsIfNone":true,
+		"loadTestRegionsIfNone":true,
+
+
+
+
+// Packages
+
+		"GeoIP":true
+
+
+
 	}
 }
+
+
+

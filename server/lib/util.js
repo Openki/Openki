@@ -4,7 +4,7 @@ logAsyncErrors = function(err, ret) {
 		console.log(err.stack);
 	}
 	return ret;
-}
+};
 
 // Repeatedly apply a function until it reports no update
 // The wrapped function will be called repeatedly until it returns true
@@ -21,4 +21,4 @@ untilClean = function(clean) {
 	// we can cache them (then the cache updates would have to be throttled) or
 	// that the clean function is broken (much more likely).
 	throw new Error("Giving up after trying to apply cleansing function "+tries+" times.");
-}
+};

@@ -1,6 +1,6 @@
 // Groups are groups, organisations, institutions, virtual or real instituts, departments or bodys...
 
-testgroups = [{
+testGroups = [{
 	'name':        	    'Dynamo',
 	'short':            'Dyn',
 	'claim':            'Jugendkulturhaus',
@@ -16,7 +16,7 @@ testgroups = [{
 	'name':             'CornerCollege',
 	'short':            'CC',
 	'claim':            '',
-	'description':      'Das Corner College ist ein offener Raum für un­regelmässig stattfindende, quasi-akademische Aktivitäten wie Workshops, Vor­träge, Lesungen, Filmvorführungen und kulinarische Versuche.',
+	'description':      'Das Corner College ist ein offener Raum für unregelmässig stattfindende, quasi-akademische Aktivitäten wie Workshops, Vorträge, Lesungen, Filmvorführungen und kulinarische Versuche.',
 	'members':          ['Stefan','Roger']
 },{
 	'name':             'Dock18',
@@ -119,4 +119,4 @@ testgroups = [{
 	'claim':            '',
 	'description':      '',
 	'members':          ['']
-}]
+}];

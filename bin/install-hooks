@@ -1,4 +1,5 @@
 #!/bin/sh
 ln -s ../../bin/update-version .git/hooks/post-checkout
 ln -s ../../bin/update-version .git/hooks/post-commit
+ln -s ../../bin/jshint .git/hooks/pre-commit
 

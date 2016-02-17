@@ -11,7 +11,7 @@ regions = [{
 	},{
 		'name':        'Englistan',
 		'_id':         'MPKEnGGC8T9XyCCRG',
-		'loc':          [40,-100.],
+		'loc':          [40,-100],
 		'timeZone':    'UTC-06:00'
 	},{
 		'name':        'Yogyakarta',
@@ -41,4 +41,4 @@ regions = [{
 		'loc':          [47.556,8.8965],
 		'timeZone':    'UTC+01:00'
 	}
-]
+];

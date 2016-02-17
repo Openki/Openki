@@ -1,5 +1,3 @@
-"use strict";
-
 Template.course_events.helpers({
 	mayAdd: function() {
 		return hasRoleUser(this.course.members, 'team', Meteor.userId());
@@ -68,13 +66,13 @@ Template.course_events.onCreated(function() {
 
 
 Template.course_events.rendered = function() {
-	var scrollableContainer = this.$(".course_events")
+	var scrollableContainer = this.$(".course_events");
 
-	if (scrollableContainer.length == 0) return; // No events
+	if (scrollableContainer.length === 0) return; // No events
 
 	scrollableContainer.scroll(function (event) {
-		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height()
-		var reactiveArea = trueHeight - 1
+		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height();
+		var reactiveArea = trueHeight - 1;
 
 		$(".fade_effect_top").fadeIn(200);
 		$(".fade_effect_bottom").fadeIn(200);

@@ -16,7 +16,7 @@ Meteor.publish ('courseDetails', function(id) {
 	return Courses.find({ _id: id });
 });
 
-Meteor.publish ('coursesFind', coursesFind);
+Meteor.publish  ('coursesFind', coursesFind);
 
 Meteor.publish ('roles', function(){
 	return Roles.find();
@@ -31,13 +31,13 @@ Meteor.publish ('regions', function(){
 Meteor.publish ('locations', function(region) {
 	check(region, String);
 	var find = {};
-	if (region != 'all') find.region = region
+	if (region != 'all') find.region = region;
 	return Locations.find(find);
 });
 
 Meteor.publish ('locationNames', function(region) {
 	var find = {};
-	if (region != 'all' && region != undefined) find.region = region
+	if (region != 'all' && region !== undefined) find.region = region;
 	return Locations.find(find);
 });
 

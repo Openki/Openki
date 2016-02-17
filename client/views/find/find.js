@@ -6,7 +6,7 @@ function finderRoute(path) {
 			return this.params;
 		},
 		onAfterAction: function() {
-			var search = this.params.query.search
+			var search = this.params.query.search;
 			if (search) {
 				document.title = webpagename + mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"');
 			} else {
@@ -27,7 +27,7 @@ var updateUrl = function(event, instance) {
 	event.preventDefault();
 
 	var filterParams = instance.filter.toParams();
-	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
@@ -37,7 +37,7 @@ var updateUrl = function(event, instance) {
 	Router.go('find', {}, options);
 
 	return true;
-}
+};
 
 Template.find.events({
 	'submit': updateUrl,
@@ -89,7 +89,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			for (i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
+			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
 			updateUrl(event, instance);
 		}
@@ -184,7 +184,7 @@ Template.find.onCreated(function() {
 	});
 
 	// When there are filters set, show the filtering pane
-	for (name in filter.toParams()) {
+	for (var name in filter.toParams()) {
 		if (hiddenFilters.indexOf(name) > -1) {
 			instance.showingFilters.set(true);
 		}
@@ -217,7 +217,7 @@ Template.find.onCreated(function() {
 });
 
 Template.find.onRendered(function() {
-	var currentPath = Router.current().route.path(this)
+	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="/"].nav_link').addClass('active');
 	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
