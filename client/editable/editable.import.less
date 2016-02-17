@@ -44,4 +44,26 @@
 
 .editable-controls {
 	margin-top: 12px;
+
+		button {
+			.btn;
+			margin-right: 10px;
+
+			@media @mobile {
+				.form-control;
+				.btn;
+				.btn-primary;
+				margin-bottom: 10px;
+			}
+
+			&.save {
+				.btn-success;
+			}
+
+			&.cancel {
+				.btn-danger;
+			}
+		}
+
+
 }
