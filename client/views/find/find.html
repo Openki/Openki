@@ -2,9 +2,9 @@
 <div class="find">
 	<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 	<div class="search">
-		<div class="search_field">
+		<div class="-searchField">
 			<div class="input-group">
-				<input type="text" id="find" class="searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
+				<input type="text" id="find" class="-searchInput" value="{{search}}" placeholder="{{mf 'find.search_placeholder' 'Everything'}}">
 				<span class="input-group-btn">
 					<button class="-findButton" type="button">
 						{{mf 'find.search_go' 'Go!'}}
@@ -12,12 +12,12 @@
 				</span>
 				<span class="input-group-btn">
 					{{#if showingFilters}}
-					<button class="filter-toggle-btn remove-filter" type="button">
+					<button class="-filterToggle remove-filter" type="button">
 						<span class="glyphicon glyphicon-filter"></span>
 						{{mf 'find.hideFilters' 'Remove filters'}}
 					</button>
 					{{else}}
-					<button class="filter-toggle-btn" type="button">
+					<button class="-filterToggle" type="button">
 						<span class="glyphicon glyphicon-filter"></span>
 						{{mf 'find.showFilters' 'Filter'}}
 					</button>
@@ -34,7 +34,7 @@
 				</h4>
 			</div>
 			<div class="search_events">
-				<div class="checkbox filterToggle">
+				<div class="checkbox -filterToggle">
 					<label>
 						<input type="checkbox" id="hasUpcomingEvent" name="hasUpcomingEvent" {{toggleChecked 'upcomingEvent'}}>
 						{{#if toggleChecked 'upcomingEvent'}}
@@ -57,7 +57,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox filterToggle">
+				<div class="checkbox -filterToggle">
 					<label>
 						<input type="checkbox" id="needsHost" name="needsHost" style="display: none" {{toggleChecked 'needsHost'}}>
 						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
@@ -69,7 +69,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox filterToggle">
+				<div class="checkbox -filterToggle">
 					<label>
 						<input type="checkbox" id="needsMentor" name="needsMentor" style="display: none" {{toggleChecked 'needsMentor'}}>
 						<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
@@ -88,13 +88,13 @@
 				<ul class="selected_categories">
 				{{#each categories}}
 					<li>
-						<span class="category">{{categoryName}}</span>
-						<span class="glyphicon glyphicon-remove removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"></span>
+						<span class="-category">{{categoryName}}</span>
+						<span class="glyphicon glyphicon-remove -removeCategoryFilter" title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"></span>
 					</li>
 				{{/each}}
 				</ul>
 				{{/if}}
-				<div class="category_select dropdown">
+				<div class="-categorySelect dropdown">
 					<input
 						class="-searchCategories dropdown-toggle"
 						data-toggle="dropdown"
@@ -103,20 +103,20 @@
 					<ul class="dropdown-menu" role="menu">
 						{{#each availableCategories}}
 							<li class="{{this}}">
-								<a class="category {{#if availableSubcategories this}}parent{{/if}}">
+								<a class="-category {{#if availableSubcategories this}}parent{{/if}}">
 									{{categoryName}}
 								</a>
 								{{#if availableSubcategories this}}
 									<small
-										class="show_subcategories {{this}}"
-										title="{{mf 'find.show_subcategories.title' 'Show/Hide subcategories'}}">
+										class="-showSubcategories {{this}}"
+										title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
 										<span class="glyphicon glyphicon-plus"></span>
 									</small>
 								{{/if}}
 							</li>
 							{{#each availableSubcategories this}}
-								<li class="subcategory {{..}}">
-									<a class="category">{{categoryName}}</a>
+								<li class="-subcategory {{..}}">
+									<a class="-category">{{categoryName}}</a>
 								</li>
 							{{/each}}
 						{{/each}}
@@ -131,7 +131,7 @@
 				</h5>
 				<span class="group_name_static">{{> groupNameStatic group}}</span>
 				&nbsp;
-				<span class="glyphicon glyphicon-remove removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
+				<span class="glyphicon glyphicon-remove -removeGroupFilter" title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}"></span>
 				<br>
 				{{else}}
 				<span class="groups_explanation">
@@ -152,8 +152,8 @@
 			<div style="text-align: center; margin: 2em">
 			{{mf 'find.no_courses_found' 'No Courses found.'}}
 			{{#unless allRegions}}
-				<button class="-search_all_regions">
-					{{mf 'find.search_all_regions' 'Search in all regions'}}
+				<button class="-searchAllRegions">
+					{{mf 'find.searchAllRegions' 'Search in all regions'}}
 				</button>
 			{{/unless}}
 			{{#if proposeNewBlurb}}

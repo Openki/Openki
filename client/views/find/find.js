@@ -41,8 +41,8 @@ var updateUrl = function(event, instance) {
 
 Template.find.events({
 	'submit': updateUrl,
-	'change .search_field': updateUrl,
-	'change .filterToggle': function(event, instance) {
+	'change .-searchField': updateUrl,
+	'change .-filterToggle': function(event, instance) {
 		instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
 		instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
 		instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
@@ -50,8 +50,8 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
-	'keyup .searchInput': _.debounce(function(event, instance) {
-		instance.filter.add('search', $('.searchInput').val()).done();
+	'keyup .-searchInput': _.debounce(function(event, instance) {
+		instance.filter.add('search', $('.-searchInput').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
@@ -72,7 +72,7 @@ Template.find.events({
 		}
 		Session.set('categorySearchResults', results);
 		if ($('.-searchCategories').val())
-			$('.category_select').addClass('open');
+			$('.-categorySelect').addClass('open');
 	}, 200),
 
 	'click .-searchCategories': function(event, instance) {
@@ -86,35 +86,35 @@ Template.find.events({
 			instance.filter.add('categories', ""+mainCategory).done();
 			updateUrl(event, instance);
 			$('.-searchCategories').val("");
-			$('.category_select').removeClass('open');
+			$('.-categorySelect').removeClass('open');
 			Session.set('categorySearchResults', categories);
 			break;
 		}
 	},
 
 	'click .-findButton': function(event, instance) {
-		instance.filter.add('search', $('.searchInput').val()).done();
+		instance.filter.add('search', $('.-searchInput').val()).done();
 		updateURL(event, instance);
 	},
 
-	'click .category': function(event, instance) {
+	'click .-category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
 		instance.showingFilters.set(true);
-		$('.category_select').removeClass('open');
+		$('.-categorySelect').removeClass('open');
 		return false;
 	},
 
-	'click .removeCategoryFilter': function(event, instance) {
+	'click .-removeCategoryFilter': function(event, instance) {
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
 	},
 
-	'click .show_subcategories': function(event, instance) {
-		$(".subcategory" + "." + this).toggle(0);
-		$(".show_subcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".show_subcategories." + this + " span").toggleClass('glyphicon-minus');
+	'click .-showSubcategories': function(event, instance) {
+		$(".-subcategory" + "." + this).toggle(0);
+		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
+		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
 		event.stopPropagation(); //makes dropdown menu stay open
 	},
 
@@ -126,13 +126,13 @@ Template.find.events({
 		return false;
 	},
 
-	'click .removeGroupFilter': function(event, instance) {
+	'click .-removeGroupFilter': function(event, instance) {
 		instance.filter.remove('group', ''+this._id).done();
 		updateUrl(event, instance);
 		return false;
 	},
 
-	'click .filter-toggle-btn': function(event, instance) {
+	'click .-filterToggle': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
@@ -143,7 +143,7 @@ Template.find.events({
 		}
 	},
 
-	"click .-search_all_regions": function(event, template){
+	"click .-searchAllRegions": function(event, template){
 		 Session.set('region', 'all');
 	}
 });

@@ -14,11 +14,11 @@
 		.grid(12);
 		padding: 0;
 
-		.search_field {
+		.-searchField {
 			.grid(12, inherit, 5);
 			padding: 0 0 15px;
 
-			input.searchInput {
+			input.-searchInput {
 				.form-control-humble;
 				font-size: large;
 				height: 38px;
@@ -30,7 +30,7 @@
 				padding: 8px 12px !important;
 			}
 
-			button.filter-toggle-btn {
+			button.-filterToggle {
 				.btn;
 				.btn-primary;
 				padding: 8px 12px !important;
@@ -146,7 +146,7 @@
 					margin-top: 0;
 				}
 
-				.category_select {
+				.-categorySelect {
 					margin-bottom: 10px;
 
 
@@ -185,13 +185,13 @@
 								background: none;
 							}
 
-							&.category.parent {
+							&.-category.parent {
 								padding-right: 3px;
 								color: @brand-primary;
 							}
 						}
 
-						.show_subcategories {
+						.-showSubcategories {
 							color: @brand-bg;
 							padding-right: 5px;
 
@@ -201,7 +201,7 @@
 						}
 					}
 
-					li.subcategory {
+					li.-subcategory {
 						display: none;
 
 						a {
@@ -220,7 +220,7 @@
 						padding: 0 3px 3px 0;
 					}
 
-					span.category {
+					span.-category {
 						background: @category-bg;
 						color: @category-text;
 						padding: 2px 5px;
