@@ -103,9 +103,15 @@
 					<ul class="dropdown-menu" role="menu">
 						{{#each availableCategories}}
 							<li class="{{this}}">
-								<a class="category">{{categoryName}}</a>
+								<a class="category {{#if availableSubcategories this}}parent{{/if}}">
+									{{categoryName}}
+								</a>
 								{{#if availableSubcategories this}}
-									<small class="show_subcategories">show</small>
+									<small
+										class="show_subcategories {{this}}"
+										title="{{mf 'find.show_subcategories.title' 'Show/Hide subcategories'}}">
+										<span class="glyphicon glyphicon-plus"></span>
+									</small>
 								{{/if}}
 							</li>
 							{{#each availableSubcategories this}}

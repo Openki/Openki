@@ -101,6 +101,7 @@ Template.find.events({
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
 		instance.showingFilters.set(true);
+		$('.category_select').removeClass('open');
 		return false;
 	},
 
@@ -112,6 +113,8 @@ Template.find.events({
 
 	'click .show_subcategories': function(event, instance) {
 		$(".subcategory" + "." + this).toggle(0);
+		$(".show_subcategories." + this + " span").toggleClass('glyphicon-plus');
+		$(".show_subcategories." + this + " span").toggleClass('glyphicon-minus');
 		event.stopPropagation(); //makes dropdown menu stay open
 	},
 
