@@ -14,7 +14,7 @@ var makeFilterQuery = function(params) {
 	query.period = [start.toDate(), end.toDate()];
 
 	return query;
-}
+};
 
 Router.map(function () {
 	this.route('kioskTimetable', {
@@ -26,8 +26,8 @@ Router.map(function () {
 		data: function() {
 			var query = makeFilterQuery(this.params.query);
 
-			var start = undefined;
-			var end = undefined;
+			var start;
+			var end;
 
 			var events = eventsFind(query, 200).fetch();
 
@@ -42,8 +42,8 @@ Router.map(function () {
 			start = moment(start).startOf('hour');
 			end   = moment(end).startOf('hour');
 
-			startAbs = start.toDate().getTime();
-			endAbs   = end.toDate().getTime();
+			var startAbs = start.toDate().getTime();
+			var endAbs   = end.toDate().getTime();
 
 			var span = endAbs - startAbs;
 			var days = {};
@@ -76,7 +76,7 @@ Router.map(function () {
 					};
 				}
 				return perLocation[id].rows;
-			}
+			};
 
 			events.forEach(function(event) {
 				event.relStart = (event.start.getTime() - startAbs) / span;

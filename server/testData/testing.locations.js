@@ -48,8 +48,8 @@ testLocations = [{
 		'fon':           ''
 	},
 	'picture':           'http://www.sgmk-ssam.ch/files/images/mechartlab/180820101294.jpg',
-	'infra2':            ['abc', 'ghi', 'jkl']
-,	'infra': {
+	'infra2':            ['abc', 'ghi', 'jkl'],
+	'infra': {
 		'projectionScreen':    '1',
 		'projector':     'false',
 		'audio':         '0',
@@ -250,5 +250,5 @@ testLocations = [{
 }
 */
 
-]
+];
 

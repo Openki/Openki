@@ -18,7 +18,7 @@ var FaIcon = function(faClass) {
 var FaCompIcon = function(opClass, icClass) {
 	return function() {
 		var cont = L.DomUtil.create('span', 'fa');
-		var op = L.DomUtil.create('i', 'fa fa-'+opClass, cont);
+		L.DomUtil.create('i', 'fa fa-'+opClass, cont);
 
 		var ic = L.DomUtil.create('i', 'fa fa-lg fa-'+icClass, cont);
 		ic.style.position = 'absolute';
@@ -151,15 +151,6 @@ Template.map.onRendered(function() {
 		instance.$('span.fa').css({ 'font-size': controlSize });
 	});
 
-	var geojsonMarkerOptions = {
-		radius: 10,
-		fillColor: "#ff7800",
-		color: "#000",
-		weight: 1.5,
-		opacity: 0.9,
-		fillOpacity: 0.6
-	};
-
 	var geojsonProposedMarkerOptions = {
 		radius: 8,
 		fillColor: "#12f",
@@ -227,7 +218,7 @@ Template.map.onRendered(function() {
 						marker.on('dragend', function(event) {
 							var marker = event.target;
 							var latLng = marker.getLatLng();
-							loc = {
+							var loc = {
 								type: "Point",
 								coordinates: [latLng.lng, latLng.lat]
 							};

@@ -1,4 +1,4 @@
-testcourses = [{
+testCourses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
 	'categories': ['sports', 'spiritual'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],
@@ -916,4 +916,4 @@ testcourses = [{
 		{'user':'Figgdien', 'roles': ['participant', 'mentor']}
 	],
 	'region':        'Englistan'
-}]
+}];

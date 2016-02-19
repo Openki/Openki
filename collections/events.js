@@ -36,7 +36,7 @@ mayEditEvent = function(user, event) {
 		if (course) return true;
 	}
 	return false;
-}
+};
 
 affectedReplicaSelectors = function(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
@@ -45,14 +45,13 @@ affectedReplicaSelectors = function(event) {
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	var futureDate = event.start;
-	if (futureDate < new Date) futureDate = new Date;
+	if (futureDate < new Date()) futureDate = new Date();
 
 	var selector = {
 		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate }
 	};
 
-	var selectors;
 	if (event.replicaOf) {
 		selector.$or = [
 			{ replicaOf: event.replicaOf },
@@ -63,7 +62,7 @@ affectedReplicaSelectors = function(event) {
 	}
 
 	return selector;
-}
+};
 
 // Sync location fields of the event document
 updateEventLocation = function(eventId) {
@@ -109,7 +108,7 @@ updateEventLocation = function(eventId) {
 
 		return result.nModified === 0;
 	});
-}
+};
 
 
 Meteor.methods({
@@ -218,7 +217,7 @@ Meteor.methods({
 
 		if (isNew) {
 			changes.createdBy = user._id;
-			var eventId = Events.insert(changes);
+			eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
 
@@ -240,7 +239,7 @@ Meteor.methods({
 	removeEvent: function(eventId) {
 		check(eventId, String);
 
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
@@ -257,24 +256,24 @@ Meteor.methods({
 	removeFile: function(eventId,fileId) {
 		check(eventId, String);
 
-		var user = Meteor.user()
+		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
 		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
 
-		var tmp = []
+		var tmp = [];
 
 		for(var i = 0; i < event.files.length; i++ ){
 			var fileObj = event.files[i];
 			if( fileObj._id != fileId){
 				tmp.push(fileObj);
 			}
-		};
+		}
 
 		var edits = {
 			files: tmp,
-		}
+		};
 		var upd = Events.update(eventId, { $set: edits });
 		return upd;
 	},
@@ -294,9 +293,11 @@ Meteor.methods({
  * filter: dictionary with filter options
  *   search: string of words to search for
  *   period: include only events that overlap the given period (list of start and end date)
- *   after: only events starting after this date
- *   ongoing: only events that are ongoing during this date
+ *   start: only events that end after this date
  *   before: only events that ended before this date
+ *   ongoing: only events that are ongoing during this date
+ *   end: only events that started before this date
+ *   after: only events starting after this date
  *   location: only events at this location (string match)
  *   room: only events in this room (string match)
  *   standalone: only events that are not attached to a course
@@ -311,6 +312,7 @@ Meteor.methods({
  */
 eventsFind = function(filter, limit) {
 	var find = {};
+	var and = [];
 	var options = {
 		sort: { start: 1 }
 	};
@@ -324,6 +326,14 @@ eventsFind = function(filter, limit) {
 		find.end = { $gte: filter.period[0] }; // End date after start of period
 	}
 
+	if (filter.start) {
+		and.push({ end: { $gte: filter.start } });
+	}
+
+	if (filter.end) {
+		and.push({ start: { $lte: filter.end } });
+	}
+
 	if (filter.after) {
 		find.start = { $gt: filter.after };
 	}
@@ -335,7 +345,7 @@ eventsFind = function(filter, limit) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) options.sort = { start: -1 }
+		if (!filter.after) options.sort = { start: -1 };
 	}
 
 	if (filter.location) {
@@ -368,14 +378,17 @@ eventsFind = function(filter, limit) {
 
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
-		var searchQueries = _.map(searchTerms, function(searchTerm) {
-			return { $or: [
+		searchTerms.forEach(function(searchTerm) {
+			and.push({ $or: [
 				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
-			] }
+			] });
 		});
-
-		find.$and = searchQueries;
 	}
+
+	if (and.length > 0) {
+		find.$and = and;
+	}
+
 	return Events.find(find, options);
-}
+};

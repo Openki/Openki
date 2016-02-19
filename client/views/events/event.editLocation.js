@@ -132,7 +132,7 @@ Template.eventEditLocation.helpers({
 		// craziness is strong with this one.
 		return function() {
 			return !location.get().loc;
-		}
+		};
 	},
 
 	allowRemoving: function() {
@@ -141,7 +141,7 @@ Template.eventEditLocation.helpers({
 
 		return function() {
 			return locationIs('own') && location.get().loc;
-		}
+		};
 	},
 
 	candidateClass: function() {
@@ -192,7 +192,7 @@ Template.eventEditLocation.events({
 			var found = JSON.parse(result.content);
 
 			markers.remove({ proposed: true });
-			if (found.length == 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
+			if (found.length === 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
 			_.each(found, function(foundLocation) {
 				var marker = {
 					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},

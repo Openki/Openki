@@ -20,10 +20,10 @@ Router.map(function() {
 		},
 		onAfterAction: function() {
 			if (!this.data()) return;
-			document.title = webpagename + this.data().location.name + " - venue-details"
+			document.title = webpagename + this.data().location.name + " - venue-details";
 		}
-	})
-})
+	});
+});
 
 
 
@@ -41,7 +41,7 @@ Template.locationDetails.onCreated(function() {
 				main: true
 			});
 		}
-	}
+	};
 
 	this.setRegion = function(region) {
 		markers.remove({ center: true });
@@ -51,7 +51,7 @@ Template.locationDetails.onCreated(function() {
 				center: true
 			});
 		}
-	}
+	};
 });
 
 Template.locationDetails.onRendered(function() {
@@ -101,7 +101,7 @@ Template.locationDetails.events({
 
 		// gehe in den edit-mode, siehe html
 
-		Session.set("locationHosts",this.hosts)
+		Session.set("locationHosts",this.hosts);
 		Session.set("isEditing", true);
 
 	},

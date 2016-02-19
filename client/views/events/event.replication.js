@@ -70,7 +70,6 @@ var getEventFrequency = function(template) {
 	var endDate   = moment(template.$('.-replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.-replicateFrequency:checked').val();
-	var diffDays = endDate.diff(startDate, "days");
 
 	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
 	if (unit === undefined) return [];
@@ -84,7 +83,7 @@ var getEventFrequency = function(template) {
 	var dates = [];
 	while(!repStart.isAfter(endDate)) {
 		var daysFromOriginal = repStart.diff(originDay, 'days');
-		if (daysFromOriginal !=0 && repStart.isAfter(now)) {
+		if (daysFromOriginal !== 0 && repStart.isAfter(now)) {
 			dates.push([
 				moment(eventStart).add(daysFromOriginal, 'days'),
 				moment(eventEnd).add(daysFromOriginal, 'days')

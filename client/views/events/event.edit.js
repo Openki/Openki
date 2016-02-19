@@ -1,5 +1,3 @@
-"use strict";
-
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
@@ -177,7 +175,7 @@ Template.eventEdit.events({
 		var eventid = template.data._id;
 		var filename = this.filename;
 		//delete the actual file
-		var fp = Files.remove(fileid);
+		Files.remove(fileid);
 
 		//hide file name
 		var rowid = "tr#row-" + fileid;

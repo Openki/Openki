@@ -11,7 +11,7 @@ Router.map(function () {
 
 var updateUrl = function(event, instance) {
 	var filterParams = instance.filter.toParams();
-	delete filterParams['region']; // HACK region is kept in the session (for bad reasons)
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
@@ -66,7 +66,11 @@ Template.calendarDay.helpers({
 	},
 	calendarDay: function(day) {
 		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd Do MMMM');
+		return moment(day.toDate()).format('dddd, Do MMMM');
+	},
+	eventsReady: function() {
+		var instance = Template.instance();
+		return instance.parentInstance().eventSub.ready();
 	}
 });
 
@@ -84,20 +88,10 @@ Template.calendar.onCreated(function() {
 		filter
 			.clear()
 			.add('start', moment().startOf('week'))
-			.add('region', Session.get('region'))
 			.read(query)
+			.add('region', Session.get('region'))
 			.done();
 	});
-
-	// Keep old subscriptions around until the new ones are ready
-	var eventSub = false;
-	var oldSubs = [];
-	var stopOldSubs = function() {
-		if (eventSub.ready()) {
-			_.map(oldSubs, function(sub) { sub.stop(); });
-			oldSubs = [];
-		}
-	};
 
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
@@ -106,8 +100,7 @@ Template.calendar.onCreated(function() {
 		var limit = filter.get('start').add(1, 'week').toDate();
 
 		filterQuery.period = [start, limit];
-		if (eventSub) oldSubs.push(eventSub);
-		eventSub = instance.subscribe('eventsFind', filterQuery, stopOldSubs);
+		instance.eventSub = subs.subscribe('eventsFind', filterQuery);
 
 	});
 });
@@ -155,9 +148,9 @@ Template.calendar.events({
 	'click .prevYear': mvDateHandler(-1, 'year'),
 });
 
-Template.calendar.helpers({
-	startWeekday:  function() { return this.format('ddd'); },
-	startMonthday: function() { return this.format('D.M.YY'); },
-	endWeekday: function() { return this.add(6, 'days').format('ddd'); },
-	endMonthday: function() { return this.add(6, 'days').format('D.M.YY'); },
+Template.switchDate.helpers({
+
+	endDateTo: function(date) {
+		return moment(date).add(6, 'days');
+	}
 });

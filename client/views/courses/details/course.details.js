@@ -1,5 +1,3 @@
-"use strict";
-
 Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id/:slug?',
@@ -60,14 +58,15 @@ Router.map(function () {
 				document.title = webpagename + 'Course: ' + course.name;
 			}
 		}
-	})
+	});
+
 	this.route('showCourseDocs', {
 		path: 'course/:_id/:slug/docs',
 		//template: 'coursedocs',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('courseDetails', this.params._id),
-			]
+			];
 		},
 		data: function () {
 			var course = Courses.findOne({_id: this.params._id});
@@ -75,29 +74,28 @@ Router.map(function () {
 				course: course
 			};
 		}
-	})
+	});
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
 		//template: 'coursehistory',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('courseDetails', this.params._id)
-			]
+			];
 		},
 		data: function () {
-			var course = Courses.findOne({_id: this.params._id})
+			var course = Courses.findOne({_id: this.params._id});
 			return {
 				course: course
 			};
 		}
-	})
-
-})
+	});
+});
 
 function loadroles(course) {
 	var userId = Meteor.userId();
 	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
-		var role = roletype.type
+		var role = roletype.type;
 		var sub = hasRoleUser(course.members, role, userId);
 		if (course.roles && course.roles.indexOf(role) !== -1) {
 			goodroles.push({
@@ -106,7 +104,7 @@ function loadroles(course) {
 				subscribed: !!sub,
 				anonsub: sub == 'anon',
 				course: course
-			})
+			});
 		}
 		return goodroles;
 	}, []);
@@ -122,7 +120,7 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 		if (upcoming) return 'hasupcomingevents';
 
-		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0
+		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0;
 		if (past) return 'haspastevents';
 
 		return 'proposal';
@@ -132,7 +130,7 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		return mobile;
 	},
 	isProposal: function() {
-		return Events.find({course_id: this.course._id}).count() == 0;
+		return Events.find({course_id: this.course._id}).count() === 0;
 	}
 });
 
@@ -161,14 +159,13 @@ Template.coursedetails.events({
 
 	'click button.edit': function () {
 		if (pleaseLogin()) return;
-		Router.go('showCourse', this, { query: {edit: 'course'} })
-
+		Router.go('showCourse', this, { query: {edit: 'course'} });
 	}
-})
+});
 
 Template.coursedetails.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
-	var currentPath = Router.current().route.path(this)
+	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('#nav_courses').addClass('active');
-}
+};

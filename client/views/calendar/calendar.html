@@ -1,14 +1,5 @@
 <template name="calendar">
 	<div class="calendar">
-		<div class="calendar_week">
-			<h1>
-				{{#with startDate}}
-					{{startWeekday}} {{startMonthday}} - {{endWeekday}} {{endMonthday}}
-					&nbsp;
-					<small>({{mf "calendar.weekNumber" "Week"}} {{weekNr startDate}})</small>
-				{{/with}}
-			</h1>
-		</div>
 		{{> switchDate date=startDate}}
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
@@ -23,20 +14,24 @@
 		<div class="date">
 			{{calendarDay day.start}}
 		</div>
-		{{#unless hasEvents}}
-			<br>
-			{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
-		{{/unless}}
-		{{#if hasEvents}}
-			<div class="calendar_events">
-				{{#each events}}
-					{{#if past}}
-						{{> calendar_event_past}}
-					{{else}}
-						{{> calendar_event}}
-					{{/if}}
-				{{/each}}
-			</div>
+		{{#if eventsReady}}
+			{{#unless hasEvents}}
+				<br>
+				{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
+			{{/unless}}
+			{{#if hasEvents}}
+				<div class="calendar_events">
+					{{#each events}}
+						{{#if past}}
+							{{> calendar_event_past}}
+						{{else}}
+							{{> calendar_event}}
+						{{/if}}
+					{{/each}}
+				</div>
+			{{/if}}
+		{{else}}
+			{{> loadingRow}}
 		{{/if}}
 	</div>
 </template>
@@ -128,6 +123,16 @@
 			<button class="nextYear" aria-label="go forward one year">
 				{{mf "calendar.button.nextYear" "one year"}} <span class="fa fa-arrow-right"></span>
 			</button>
+		</div>
+		<div class="calendar_week">
+		<div class="week">
+				{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
+		</div>
+		<div class="date">
+			{{dateLong date}} - {{dateLong (endDateTo date)}}
+		</div>
+
+
 		</div>
 	</div>
 </template>

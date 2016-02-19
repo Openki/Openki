@@ -58,29 +58,29 @@ hasRole = function(members, role) {
 			has = true;
 			return true;
 		}
-	})
+	});
 	return has;
-}
+};
 
 hasRoleUser = function(members, role, userId) {
 	var has = false;
-	var loggeduser = Meteor.user()
+	var loggeduser = Meteor.user();
 
 	members.forEach(function(member) {
 		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
-			if(member.roles.indexOf(role) !== -1) has = 'anon'
+			if(member.roles.indexOf(role) !== -1) has = 'anon';
 		}
-	})
+	});
 
 	members.forEach(function(member) {
 		if (member.user == userId) {
-			if (member.roles.indexOf(role) !== -1) has = 'subscribed'
+			if (member.roles.indexOf(role) !== -1) has = 'subscribed';
 				return true;
 		}
-	})
+	});
 
 	return has;
-}
+};
 
 maySubscribe = function(operatorId, course, userId, role) {
 	if (!userId) return false;
@@ -106,7 +106,7 @@ maySubscribe = function(operatorId, course, userId, role) {
 			var candidateRoles = ['participant', 'mentor', 'host'];
 
 			// In for a penny, in for a pound
-			for (p in candidateRoles) {
+			for (var p in candidateRoles) {
 				if (hasRoleUser(course.members, candidateRoles[p], userId)) return true;
 			}
 		}
@@ -117,15 +117,15 @@ maySubscribe = function(operatorId, course, userId, role) {
 	if (operatorId !== userId) return false;
 
 	return true;
-}
+};
 
 
 coursesFind = function(filter, limit) {
-	var find = {}
+	var find = {};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent) {
-		find['nextEvent'] = { $ne: null };
+		find.nextEvent = { $ne: null };
 	}
 
 	var mustHaveRoles = [];
@@ -172,14 +172,14 @@ coursesFind = function(filter, limit) {
 			return { $or: [
 				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
-			] }
+			] };
 		});
 
 		find.$and = searchQueries;
 	}
 	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
 	return Courses.find(find, options);
-}
+};
 
 if (Meteor.isServer) {
 	Meteor.methods({
@@ -236,7 +236,7 @@ if (Meteor.isServer) {
 			}
 
 			addRole(course, role, subscriptionId);
-			var time = new Date;
+			var time = new Date();
 			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
 		}
 	});
@@ -247,7 +247,7 @@ Meteor.methods({
 	change_comment: function(courseId, comment) {
 		check(courseId, String);
 		check(comment, String);
-		var course = Courses.findOne({_id: courseId})
+		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
 		Courses.update(
@@ -274,7 +274,7 @@ Meteor.methods({
 			if (
 				user.anonId
 			 && user.anonId.indexOf(member.user) != -1
-			 && (add || member.roles.indexOf(role) != -1)
+			 && (member.roles.indexOf(role) != -1)
 			) {
 				subscriptionId = member.user;
 			}
@@ -309,23 +309,23 @@ Meteor.methods({
 		}
 
 		var course;
-		var isNew = courseId.length == 0
+		var isNew = courseId.length === 0;
 		if (!isNew) {
-			course = Courses.findOne({_id: courseId})
-			if (!course) throw new Meteor.Error(404, "Course not found")
+			course = Courses.findOne({_id: courseId});
+			if (!course) throw new Meteor.Error(404, "Course not found");
 		}
 
- 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}})
-		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted")
+ 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
+		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 
 
 		/* Changes we want to perform */
-		var set = {}
+		var set = {};
 
 		_.each(Roles.find().fetch(), function(roletype) {
-			var type = roletype.type
-			var should_have = roletype.preset || changes.roles && changes.roles[type]
-			var have = !isNew && course.roles.indexOf(type) !== -1
+			var type = roletype.type;
+			var should_have = roletype.preset || changes.roles && changes.roles[type];
+			var have = !isNew && course.roles.indexOf(type) !== -1;
 
 			if (have && !should_have) {
 				Courses.update(
@@ -344,32 +344,32 @@ Meteor.methods({
 			}
 			if (!have && should_have) {
 				if (isNew) {
-					set.roles = set.roles || []
-					set.roles.push(type)
+					set.roles = set.roles || [];
+					set.roles.push(type);
 				} else {
 					Courses.update(
 						{ _id: courseId },
 						{ $addToSet: { roles: type }},
 						checkUpdateOne
-					)
+					);
 				}
 			}
-		})
+		});
 
 		if (changes.description) {
-			set.description = changes.description.substring(0, 640*1024) /* 640 k ought to be enough for everybody  -- Mao */
+			set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
 				set.description = saneHtml(set.description);
 			}
 		}
 
-		if (changes.categories) set.categories = changes.categories.slice(0, 20)
+		if (changes.categories) set.categories = changes.categories.slice(0, 20);
 		if (changes.name) {
 			set.name = saneText(changes.name).substring(0, 1000);
 			set.slug = getSlug(set.name);
 		}
 
-		set.time_lastedit = new Date
+		set.time_lastedit = new Date();
 		if (isNew) {
 			// You can add newly created courses to any group
 			var tested_groups = [];
@@ -383,14 +383,14 @@ Meteor.methods({
 			set.groups = tested_groups;
 
 			/* region cannot be changed */
-			var region = Regions.findOne({_id: changes.region})
+			var region = Regions.findOne({_id: changes.region});
 			if (!region) throw Meteor.error(404, 'region missing');
-			set.region = region._id
+			set.region = region._id;
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
 			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
 			set.createdby = user._id;
-			set.time_created = new Date;
+			set.time_created = new Date();
 			courseId = Courses.insert(set, checkInsert);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);

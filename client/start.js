@@ -19,7 +19,7 @@ Router.onBeforeAction(function() {
 // This checks client storage for a region setting. When there is no previously
 // selected region, we ask the server to do geolocation. If that fails too,
 // we just set it to 'all regions'.
-regionSub = Meteor.subscribe('regions', function() {
+Meteor.subscribe('regions', function() {
 	var useRegion = function(regionId) {
 		if (!regionId) return;
 		if (regionId == 'all') {
@@ -55,7 +55,7 @@ regionSub = Meteor.subscribe('regions', function() {
 
 // We keep two subscription manager around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsManager({ cacheLimit: 5, expireIn: 5 });
+subs = new SubsManager({ cacheLimit: 5, expireIn: 1 });
 miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
 
 

@@ -10,7 +10,7 @@ Router.map(function () {
 		path: 'courses/propose',
 		template: 'proposecourse',
 		onAfterAction: function() {
-			document.title = webpagename + 'Propose new course'
+			document.title = webpagename + 'Propose new course';
 		},
 		data: courseTemplate
 	});
@@ -19,7 +19,7 @@ Router.map(function () {
 
 
 Template.proposecourse.rendered = function () {
-	var currentPath = Router.current().route.path(this)
+	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="' + currentPath + '"].subnav_link').parent().parent().parent().children('a').addClass('active');
 };

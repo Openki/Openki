@@ -55,7 +55,7 @@
 
 				<div class="input-group">
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-lock"></span>
+						<span class="fa fa-lock"></span>
 					</span>
 					<input type="password" id="login-password" placeholder="{{mf 'frame.login.password' 'Password'}}">
 				</div>
@@ -66,9 +66,8 @@
 					{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 				</div>
 				{{#if showForgot}}
-					<button type="button" class="-forgot">
-						<span class="fa fa-wrench"></span>
-						{{mf 'forgot' "Oops I forgot my password"}}
+					<button type="button" class="-forgot forgot">
+						{{mf 'forgot' "... I forgot my password"}}
 					</button>
 				{{/if}}
 

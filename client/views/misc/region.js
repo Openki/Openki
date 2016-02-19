@@ -4,8 +4,8 @@ Template.region_sel.helpers({
 	},
 
 	region: function(){
-		var region = Regions.findOne(Session.get('region'))
-		return region
+		var region = Regions.findOne(Session.get('region'));
+		return region;
 	}
 });
 
@@ -15,7 +15,7 @@ Template.region_sel.events({
 		var changed = Session.get('region') !== region_id;
 
 		localStorage.setItem("region", region_id); // to survive page reload
-		Session.set('region', region_id)
+		Session.set('region', region_id);
 
 		// When the region changes, we want the content of the page to update
 		// Many pages do not change when the region changed, so we go to
@@ -27,4 +27,4 @@ Template.region_sel.events({
 		}
 		e.preventDefault();
 	}
-})
+});

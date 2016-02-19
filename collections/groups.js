@@ -37,7 +37,7 @@ groupsFind = function(filter, limit) {
 	}
 
 	return Groups.find(find);
-}
+};
 
 Meteor.methods({
 	updateGroupMembership: function(userId, groupId, join) {
@@ -51,16 +51,16 @@ Meteor.methods({
 		var sel = {
 			_id: groupId,
 			members: senderId
-		}
+		};
 
 		var user = Meteor.users.findOne({_id: userId});
 		if (!user) throw new Meteor.Error(404, "User not found");
 
 		var update;
 		if (join) {
-			update = { $addToSet: { 'members': user._id } }
+			update = { $addToSet: { 'members': user._id } };
 		} else {
-			update = { $pull: { 'members': user._id } }
+			update = { $pull: { 'members': user._id } };
 		}
 
 		Groups.update(sel, update, checkUpdateOne);

@@ -9,22 +9,22 @@ Router.map(function () {
 			];
 		},
 		data: function () {
-			var user = Meteor.user()
+			var user = Meteor.user();
 			if(user) {
 				var userdata = {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
 					groups: groupsFind({ own: true }),
-				}
+				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
-					userdata.email = user.emails[0].address
+					userdata.email = user.emails[0].address;
 					if(user.emails[0].verified){
-						userdata.verifiedEmail = 'verified'
-						userdata.verifiedEmailTrue = '1'
+						userdata.verifiedEmail = 'verified';
+						userdata.verifiedEmailTrue = '1';
 					}
-					else userdata.verifiedEmail = 'not verified'
+					else userdata.verifiedEmail = 'not verified';
 				}
 
 				return {
@@ -34,17 +34,17 @@ Router.map(function () {
 			}
 		},
 		onAfterAction: function() {
-			var user = Meteor.users.findOne()
+			var user = Meteor.users.findOne();
 			if (!user) return;
 			document.title = webpagename + 'My Profile_Settings - ' + user.username;
 		}
-	})
+	});
 });
 
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
-}
+};
 
 Template.profile.helpers({
 	editing: function() {
@@ -109,7 +109,7 @@ Template.profile.events({
 		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
 		var pass = document.getElementById('newpassword').value;
-		if (pass != "") {
+		if (pass !== "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
 				addMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
 				return;
@@ -131,12 +131,12 @@ Template.profile.events({
 		}
 	},
 	'click button.verify': function () {
-		Meteor.call('sendVerificationEmail')
+		Meteor.call('sendVerificationEmail');
 	}
 });
 
 Template.profile.rendered = function() {
-	var currentPath = Router.current().route.path(this)
+	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a.loginButton.nav_link').addClass('active');
-}
+};

@@ -16,4 +16,4 @@ UpdatesAvailable.renameDiscussionFields = function() {
 		CourseDiscussions.update(post._id, post);
 	});
 	return AllPosts.count();
-}
+};

@@ -8,9 +8,9 @@ function sendIcal(events, response) {
 			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
-			location: [dbevent.location, dbevent.room].filter(function(s) { return !!s; }).join(', '),
+			location: [dbevent.location.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
 			description: textPlain(dbevent.description),
-			url: Router.routes['showEvent'].url(dbevent)
+			url: Router.routes.showEvent.url(dbevent)
 		});
 	});
 
@@ -28,7 +28,15 @@ Router.map(function () {
 		path: 'cal/',
 		where: 'server',
 		action: function () {
-			sendIcal(eventsFind({}), this.response);
+			var filter = Filtering(EventPredicates);
+			var query = this.params.query || {};
+
+			filter
+				.add('start', moment())
+				.read(query)
+				.done();
+
+			sendIcal(eventsFind(filter.toQuery()), this.response);
 		}
 	});
 	this.route('calEvent', {
