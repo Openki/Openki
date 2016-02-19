@@ -132,7 +132,7 @@ Template.find.events({
 		return false;
 	},
 
-	'click .-filterToggle': function(event, instance) {
+	'click .-showFilters': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
