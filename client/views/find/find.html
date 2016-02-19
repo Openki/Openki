@@ -94,39 +94,27 @@
 				{{/each}}
 				</ul>
 				{{/if}}
-				<div class="category_select">
-					<div class="dropdown">
-						<a class="dropdown-toggle" id="categories_dropdown" data-toggle="dropdown">
-							<!-- {{#if categories}} -->
-							<span class="glyphicon glyphicon-plus"></span>
-							&nbsp;
-							{{mf 'find.filter.add_category' 'Add category to filter'}}
-							<!-- {{else}}
-							{{mf 'find.filter.all_categories' 'All'}}
-							{{/if}} -->
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							{{#each availableCategories}}
+				<div class="category_select dropdown">
+					<input
+						class="-searchCategories dropdown-toggle"
+						data-toggle="dropdown"
+						placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
+					/>
+					<ul class="dropdown-menu" role="menu">
+						{{#each availableCategories}}
 							<li class="{{this}}">
-								<a class="category parent">
-									{{categoryName}}
-									{{#if availableSubcategories this}}
-									{{/if}}
-								</a>
-								&nbsp;
-								<span class="fa fa-level-down show_subcategories {{this}}" title="{{mf 'find.filter.show_subcategories' 'Show subcategories'}}"
-								></span>
+								<a class="category">{{categoryName}}</a>
+								{{#if availableSubcategories this}}
+									<small class="show_subcategories">show</small>
+								{{/if}}
 							</li>
 							{{#each availableSubcategories this}}
-							<li class="subcategory {{..}}">
-								<a class="category sub">
-									{{categoryName}}
-								</a>
-							</li>
+								<li class="subcategory {{..}}">
+									<a class="category">{{categoryName}}</a>
+								</li>
 							{{/each}}
-							{{/each}}
-						</ul>
-					</div>
+						{{/each}}
+					</ul>
 				</div>
 			</div>
 			<div class="filter_groups">

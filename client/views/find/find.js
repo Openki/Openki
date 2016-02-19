@@ -55,6 +55,43 @@ Template.find.events({
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
+	'keyup .-searchCategories': _.debounce(function(event, instance) {
+		var queryRegExp = new RegExp($('.-searchCategories').val(), 'i');
+		var results = {};
+		for (var mainCategory in categories) {
+			if (mf('category.'+mainCategory).match(queryRegExp)) {
+				results[mainCategory] = [];
+			}
+			for (i = 0; i < categories[mainCategory].length; i++) {
+				var subCategory = categories[mainCategory][i];
+				if (mf('category.'+subCategory).match(queryRegExp)) {
+					if (results[mainCategory]) results[mainCategory].push(subCategory);
+					else results[subCategory] = [];
+				}
+			}
+		}
+		Session.set('categorySearchResults', results);
+		if ($('.-searchCategories').val())
+			$('.category_select').addClass('open');
+	}, 200),
+
+	'click .-searchCategories': function(event, instance) {
+		if (!$('.-searchCategories').val())
+			Session.set('categorySearchResults', categories);
+	},
+
+	'change .-searchCategories': function(event, instance) {
+		var searchResults = Session.get('categorySearchResults');
+		for (var mainCategory in searchResults) {
+			instance.filter.add('categories', ""+mainCategory).done();
+			updateUrl(event, instance);
+			$('.-searchCategories').val("");
+			$('.category_select').removeClass('open');
+			Session.set('categorySearchResults', categories);
+			break;
+		}
+	},
+
 	'click .-findButton': function(event, instance) {
 		instance.filter.add('search', $('.searchInput').val()).done();
 		updateURL(event, instance);
@@ -73,9 +110,9 @@ Template.find.events({
 		return false;
 	},
 
-	'click .show_subcategories': function(e, instance) {
+	'click .show_subcategories': function(event, instance) {
 		$(".subcategory" + "." + this).toggle(0);
-		e.stopPropagation(); //makes dropdown menu stay open
+		event.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .group': function(event, instance) {
@@ -139,11 +176,11 @@ Template.find.helpers({
 	},
 
 	'availableCategories': function() {
-		return Object.keys(categories);
+		return Object.keys(Session.get('categorySearchResults'));
 	},
 
-	'availableSubcategories': function(category) {
-		return categories[category];
+	'availableSubcategories': function(mainCategory) {
+		return Session.get('categorySearchResults')[mainCategory];
 	},
 
 	'availableGroups': function(group) {
