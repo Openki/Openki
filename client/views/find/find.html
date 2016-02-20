@@ -127,25 +127,31 @@
 							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
 						/>
 						<ul class="dropdown-menu" role="menu">
-							{{#each availableCategories}}
-								<li class="{{this}}">
-									<a class="-category {{#if availableSubcategories this}}parent{{/if}}">
-										{{categoryName}}
-									</a>
-									{{#if availableSubcategories this}}
-										<small
-											class="-showSubcategories {{this}}"
-											title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-											<span class="glyphicon glyphicon-plus"></span>
-										</small>
-									{{/if}}
-								</li>
-								{{#each availableSubcategories this}}
-									<li class="-subcategory {{..}}">
-										<a class="-category">{{categoryName}}</a>
+							{{#if availableCategories}}
+								{{#each availableCategories}}
+									<li class="{{this}}">
+										<a class="-category {{#if availableSubcategories this}}parent{{/if}}">
+											{{categoryName}}
+										</a>
+										{{#if availableSubcategories this}}
+											<small
+												class="-showSubcategories {{this}}"
+												title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
+												<span class="glyphicon glyphicon-plus"></span>
+											</small>
+										{{/if}}
 									</li>
+									{{#each availableSubcategories this}}
+										<li class="-subcategory {{..}}">
+											<a class="-category">{{categoryName}}</a>
+										</li>
+									{{/each}}
 								{{/each}}
-							{{/each}}
+							{{else}}
+								<li class="no_categories">
+									{{mf 'find.no_categories' 'No categories found.'}}
+								</li>
+							{{/if}}
 						</ul>
 					</div>
 				</div>
