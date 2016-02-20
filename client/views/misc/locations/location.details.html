@@ -64,17 +64,22 @@
 
 					{{#if loc}}
 					<div class="location_map">
-						<div>{{>map markers=markers width=300 height=300}}</div>
-						Coordinates: {{loc.coordinates.[1]}} {{loc.coordinates.[0]}}
+						{{>map markers=markers width=300 height=300}}
+						<div class="coordinates">
+							Coordinates: {{loc.coordinates.[1]}} {{loc.coordinates.[0]}}
+						</div>
 					</div>
 					{{/if}}
 
 
-					<input type="button" class="contact" value="Contact" /> <br><br>
+					<button class="-contact">
+						{{mf 'location.details.contact' 'Contact'}}
+					</button>
+					<br><br>
 					{{#if canEditLocation}}
-					{{mf 'location.details.yourHost' 'You are Host here:'}}
-					<input type="button" class="edit" value="Edit" />
-					<input type="button" class="del" value="Delete" />
+						{{mf 'location.details.youAreHost' 'You are Host here:'}}
+						<input type="button" class="edit" value="Edit" />
+						<input type="button" class="del" value="Delete" />
 					{{/if}}
 
 				</div>
