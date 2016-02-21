@@ -6,13 +6,13 @@
 			{{mf 'course.title.Discussion' 'Discussion'}}
 		</h4>
 	</div>
-{{#if havePosts}}
-	<div class="discussion-conversation-container">
-	{{#each posts}}
-		{{> post}}
-	{{/each}}
-	</div>
-{{/if}}
+	{{#if havePosts}}
+		<div class="discussion-conversation-container">
+		{{#each posts}}
+			{{> post}}
+		{{/each}}
+		</div>
+	{{/if}}
 	{{> post newPost}}
 </template>
 
@@ -31,55 +31,55 @@
 </template>
 
 <template name="postShow">
-{{#if new}}
-	{{#if parentId}}
-	<button type="button" class="-edit" role="button">
-		<span class="fa fa-reply"></span>
-		&nbsp;
-		{{mf 'course.discussion.comment_answer' 'Answer'}}
-	</button>
-	{{else}}
-	<button type="button" class="-edit write-comment">
-		<span class="glyphicon glyphicon-pencil"></span>
-		&nbsp;
-		{{mf 'course.discussion.write_comment' 'Write a comment'}}
-	</button>
-	{{/if}}
-{{else}}
-	<div class="discussion-conversation">
-		<div class={{postClass}}>
-			<div>
-				{{>iconProfilelink userId}}
-				<span class="comment-time-created" title="{{dateformat time_created}}">
-					{{fromNow time_created}}
-				</span>
-			{{#if time_updated}}
-				<span class="comment-time-updated" title="{{dateformat time_updated}}">
-					last update:{{fromNow time_updated}}
-				</span>
-			{{/if}}
-			</div>
-			<div>
-				<h4 class="comment-title">{{this.title}}</h4>
-				<p>{{text}}</p>
-			</div>
-		{{#if mayEdit}}
+	{{#if new}}
+		{{#if parentId}}
 			<button type="button" class="-edit" role="button">
-				<span class="glyphicon glyphicon-edit"></span>
+				<span class="fa fa-reply"></span>
 				&nbsp;
-				{{mf 'course.discussion.comment_edit' 'Edit'}}
+				{{mf 'course.discussion.comment_answer' 'Answer'}}
 			</button>
+		{{else}}
+		<button type="button" class="-edit write-comment">
+			<span class="glyphicon glyphicon-pencil"></span>
+			&nbsp;
+			{{mf 'course.discussion.write_comment' 'Write a comment'}}
+		</button>
 		{{/if}}
-		{{#if mayDelete}}
-			<button type="button" class="btn-delete delete" role="button">
-				<span class="glyphicon glyphicon-remove"></span>
-				&nbsp;
-				{{mf 'course.details.del_btn' 'Delete'}}
-			</button>
-		{{/if}}
+	{{else}}
+		<div class="discussion-conversation">
+			<div class={{postClass}}>
+				<div>
+					{{>iconProfilelink userId}}
+					<span class="comment-time-created" title="{{dateformat time_created}}">
+						{{fromNow time_created}}
+					</span>
+					{{#if time_updated}}
+						<span class="comment-time-updated" title="{{dateformat time_updated}}">
+							last update:{{fromNow time_updated}}
+						</span>
+					{{/if}}
+				</div>
+				<div>
+					<h4 class="comment-title">{{this.title}}</h4>
+					<p>{{text}}</p>
+				</div>
+				{{#if mayEdit}}
+					<button type="button" class="-edit" role="button">
+						<span class="glyphicon glyphicon-edit"></span>
+						&nbsp;
+						{{mf 'course.discussion.comment_edit' 'Edit'}}
+					</button>
+				{{/if}}
+				{{#if mayDelete}}
+					<button type="button" class="btn-delete delete" role="button">
+						<span class="glyphicon glyphicon-remove"></span>
+						&nbsp;
+						{{mf 'course.details.del_btn' 'Delete'}}
+					</button>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-{{/if}}
+	{{/if}}
 </template>
 
 <template name="postEdit">
