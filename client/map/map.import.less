@@ -1,12 +1,24 @@
 .mapContainer {
+	&.box {
+		width: 200px;
+		height: 200px;
+
+		span.fa {
+			font-size: 30px;
+		}
+	}
+
 	&.fullscreen {
 		bottom: 0;
-		font-size: 10vh;
 		left: 0;
 		position: fixed;
 		right: 0;
 		top: 0;
 		z-index: 9999;
+
+		span.fa {
+			font-size: 8vh;
+		}
 	}
 
 	.map {
@@ -21,7 +33,6 @@
 
 			.fa-map-marker {
 				color: black;
-				font-size: 30px;
 
 				&:hover{
 					cursor: grabbing;
