@@ -12,124 +12,118 @@
 }
 
 .course_edit {
-	background: @brand-bg;
-	border: 7px solid @brand-bg;
-	padding: 0 0 25px;
+	padding: 0;
 
-	.course_edit_header {
+	.course_edit_body {
 		.grid(12);
-		padding: 0;
+		border: 7px dashed @brand-bg;
+		margin-top: 10px;
+		padding: 20px 30px;
 
-		input#editform_name {
+		#editform_name,
+		#editform_description {
 			.form-control-humble;
-			font-size: large;
-			height: 40px;
 		}
 
 		#editform_description {
-			.form-control-humble;
-			height: auto; // Reset fixed height from .form-control-humble()
-			max-height: 150px;
+			height: auto; // Reset fixed height from .form-control-humble
 			min-height: 100px;
+			max-height: 150px;
 			overflow: auto;
-
-			p {
-				margin: 0;
-			}
-		}
-	}
-
-	#editform_categories,
-	.course_edit_roles,
-	.course_edit_region {
-		.grid(12, 4);
-		padding: 0;
-	}
-
-	ul.categories,
-	ul.subcategories,
-	ul.roles_list {
-		list-style: none;
-		padding-left: 0;
-	}
-
-	ul.categories,
-	ul.roles_list {
-
-		span.caret {
-			.transition(color 0.5s);
-			color: @default-light-grey;
-			left: 3px;
-			position: relative;
-			top: -1px;
-
-			&.active {
-				color: @default-black;
-			}
 		}
 
-		label {
-			font-weight: normal;
+		#editform_categories,
+		.course_edit_roles,
+		.course_edit_region {
+			.grid(12, 4);
+			padding: 0;
+		}
 
-			&:hover {
-				color: @brand-primary;
-				cursor: pointer;
+		ul.categories,
+		ul.subcategories,
+		ul.roles_list {
+			list-style: none;
+			padding-left: 0;
+		}
 
-				span.caret {
+		ul.categories,
+		ul.roles_list {
+
+			span.caret {
+				.transition(color 0.5s);
+				color: @default-light-grey;
+				left: 3px;
+				position: relative;
+				top: -1px;
+
+				&.active {
 					color: @default-black;
 				}
 			}
 
-			&.active {
-				color: @brand-primary;
-			}
+			label {
+				font-weight: normal;
 
-			input.checkbox {
-				margin-right: 3px;
+				&:hover {
+					color: @brand-primary;
+					cursor: pointer;
+
+					span.caret {
+						color: @default-black;
+					}
+				}
+
+				&.active {
+					color: @brand-primary;
+				}
+
+				input.checkbox {
+					margin-right: 3px;
+				}
 			}
 		}
-	}
 
-	button.editCategories {
-		.btn-thin;
-		.btn-primary;
-	}
+		button.editCategories {
+			.btn-thin;
+			.btn-primary;
+		}
 
-	ul.subcategories {
-		left: 5px;
-		position: relative;
-
-		li {
-			left: 15px;
+		ul.subcategories {
+			left: 5px;
 			position: relative;
+
+			li {
+				left: 15px;
+				position: relative;
+			}
 		}
-	}
 
-	.course_edit_region {
-		margin-bottom: 10px;
-	}
+		.course_edit_region {
+			margin-bottom: 10px;
+		}
 
-	.course_edit_finishbtns {
-		.grid(12);
-		padding: 10px 0 0;
+		.course_edit_finishbtns {
+			.grid(12);
+			padding: 10px 0 0;
 
-		button {
-			.btn;
-			margin-right: 10px;
-
-			@media @mobile {
-				.form-control;
+			button {
 				.btn;
-				.btn-primary;
-				margin-bottom: 10px;
-			}
+				margin-right: 10px;
 
-			&.save {
-				.btn-success;
-			}
+				@media @mobile {
+					.form-control;
+					.btn;
+					.btn-primary;
+					margin-bottom: 10px;
+				}
 
-			&.cancel {
-				.btn-cancel;
+				&.save {
+					.btn-success;
+				}
+
+				&.cancel {
+					.btn-cancel;
+				}
 			}
 		}
 	}
