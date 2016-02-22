@@ -64,9 +64,9 @@
 
 					{{#if loc}}
 					<div class="location_map">
-						{{>map markers=markers width=300 height=300}}
+						{{>map markers=markers}}
 						<div class="coordinates">
-							Coordinates: {{loc.coordinates.[1]}} {{loc.coordinates.[0]}}
+							{{coords}}
 						</div>
 					</div>
 					{{/if}}
