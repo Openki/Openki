@@ -120,24 +120,25 @@ Template.find.events({
 	}, 200),
 
 	'keyup .-searchCategories': _.debounce(function(event, instance) {
-		var queryRegExp = new RegExp($('.-searchCategories').val(), 'i');
+		var query = $('.-searchCategories').val();
+		var lowQuery = query.toLowerCase();
+
 		var results = {};
 		for (var mainCategory in categories) {
-			if (mf('category.'+mainCategory).match(queryRegExp)) {
+			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
 				results[mainCategory] = [];
 			}
 			for (i = 0; i < categories[mainCategory].length; i++) {
 				var subCategory = categories[mainCategory][i];
-				if (mf('category.'+subCategory).match(queryRegExp)) {
+				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
 					if (results[mainCategory]) results[mainCategory].push(subCategory);
 					else results[subCategory] = [];
 				}
 			}
 		}
 		Session.set('categorySearchResults', results);
-		if ($('.-searchCategories').val())
-			$('.-categorySelect').addClass('open');
-	}, 200),
+		if (query) $('.-categorySelect').addClass('open');
+	}, 100),
 
 	'click .-searchCategories': function(event, instance) {
 		if (!$('.-searchCategories').val())
