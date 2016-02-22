@@ -39,6 +39,70 @@ var updateUrl = function(event, instance) {
 	return true;
 };
 
+
+Template.find.onCreated(function() {
+	var instance = this;
+
+	instance.showingFilters = new ReactiveVar(false);
+	instance.coursesReady = new ReactiveVar(false); // Latch
+
+	var filter = Filtering(CoursePredicates);
+	instance.filter = filter;
+
+	// Read URL state
+	instance.autorun(function() {
+		var data = Template.currentData();
+		var query = data.query || {};
+
+		filter
+			.clear()
+			.read(query)
+			.add('region', Session.get('region'))
+			.done();
+	});
+
+	// When there are filters set, show the filtering pane
+	for (var name in filter.toParams()) {
+		if (hiddenFilters.indexOf(name) > -1) {
+			instance.showingFilters.set(true);
+		}
+	}
+
+	// Update whenever filter changes
+	instance.autorun(function() {
+		var filterQuery = filter.toQuery();
+		var sub = subs.subscribe('coursesFind', filterQuery, 36, function() {
+			instance.coursesReady.set(true);
+		});
+
+		// Workaround: Subscription manager does not call onReady when the sub
+		// is cached and ready
+		// https://github.com/kadirahq/subs-manager/issues/7
+		Tracker.nonreactive(function() {
+			if (sub.ready()) instance.coursesReady.set(true);
+		});
+	});
+
+	// The event display reacts to changes in time as well
+	instance.autorun(function() {
+		var filterQuery = filter.toQuery();
+
+		// Here we show events only when they're not attached to a course
+		filterQuery.standalone = true;
+		filterQuery.after = minuteTime.get();
+		instance.subscribe('eventsFind', filterQuery, 10);
+	});
+});
+
+
+Template.find.onRendered(function() {
+	var currentPath = Router.current().route.path(this);
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="/"].nav_link').addClass('active');
+	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
+});
+
+
 Template.find.events({
 	'submit': updateUrl,
 	'change .-searchField': updateUrl,
@@ -216,65 +280,4 @@ Template.find.helpers({
 	'allRegions': function() {
 		return (Session.get('region') == 'all');
 	}
-});
-
-Template.find.onCreated(function() {
-	var instance = this;
-
-	instance.showingFilters = new ReactiveVar(false);
-	instance.coursesReady = new ReactiveVar(false); // Latch
-
-	var filter = Filtering(CoursePredicates);
-	instance.filter = filter;
-
-	// Read URL state
-	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
-		filter
-			.clear()
-			.read(query)
-			.add('region', Session.get('region'))
-			.done();
-	});
-
-	// When there are filters set, show the filtering pane
-	for (var name in filter.toParams()) {
-		if (hiddenFilters.indexOf(name) > -1) {
-			instance.showingFilters.set(true);
-		}
-	}
-
-	// Update whenever filter changes
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
-		var sub = subs.subscribe('coursesFind', filterQuery, 36, function() {
-			instance.coursesReady.set(true);
-		});
-
-		// Workaround: Subscription manager does not call onReady when the sub
-		// is cached and ready
-		// https://github.com/kadirahq/subs-manager/issues/7
-		Tracker.nonreactive(function() {
-			if (sub.ready()) instance.coursesReady.set(true);
-		});
-	});
-
-	// The event display reacts to changes in time as well
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
-
-		// Here we show events only when they're not attached to a course
-		filterQuery.standalone = true;
-		filterQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', filterQuery, 10);
-	});
-});
-
-Template.find.onRendered(function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-	$('a[href="/"].nav_link').addClass('active');
-	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
 });
