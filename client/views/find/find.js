@@ -44,6 +44,7 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
+	instance.categorySearchResults = new ReactiveVar(false);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	var filter = Filtering(CoursePredicates);
@@ -102,6 +103,29 @@ Template.find.onRendered(function() {
 	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
 });
 
+var updateCategorySearch = function(event, instance) {
+	var query = instance.$('.-searchCategories').val();
+	if (query == '') {
+		instance.categorySearchResults.set(categories);
+		return;
+	}
+
+	var lowQuery = query.toLowerCase();
+	var results = {};
+	for (var mainCategory in categories) {
+		if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+			results[mainCategory] = [];
+		}
+		for (i = 0; i < categories[mainCategory].length; i++) {
+			var subCategory = categories[mainCategory][i];
+			if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+				if (results[mainCategory]) results[mainCategory].push(subCategory);
+				else results[subCategory] = [];
+			}
+		}
+	}
+	instance.categorySearchResults.set(results);
+}
 
 Template.find.events({
 	'submit': updateUrl,
@@ -119,68 +143,35 @@ Template.find.events({
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
-	'keyup .-searchCategories': _.debounce(function(event, instance) {
-		var query = $('.-searchCategories').val();
-		var lowQuery = query.toLowerCase();
-
-		var results = {};
-		for (var mainCategory in categories) {
-			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
-				results[mainCategory] = [];
-			}
-			for (i = 0; i < categories[mainCategory].length; i++) {
-				var subCategory = categories[mainCategory][i];
-				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
-					if (results[mainCategory]) results[mainCategory].push(subCategory);
-					else results[subCategory] = [];
-				}
-			}
-		}
-		Session.set('categorySearchResults', results);
-		if (query) $('.-categorySelect').addClass('open');
-	}, 100),
-
-	'click .-searchCategories': function(event, instance) {
-		if (!$('.-searchCategories').val())
-			Session.set('categorySearchResults', categories);
-	},
-
-	'change .-searchCategories': function(event, instance) {
-		var searchResults = Session.get('categorySearchResults');
-		for (var mainCategory in searchResults) {
-			instance.filter.add('categories', ""+mainCategory).done();
-			updateUrl(event, instance);
-			$('.-searchCategories').val("");
-			$('.-categorySelect').removeClass('open');
-			Session.set('categorySearchResults', categories);
-			break;
-		}
-	},
-
 	'click .-findButton': function(event, instance) {
 		instance.filter.add('search', $('.-searchInput').val()).done();
 		updateURL(event, instance);
+	},
+
+
+	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
+
+	'focus .-searchCategories': updateCategorySearch,
+
+	'click .-showSubcategories': function(event, instance) {
+		$(".-subcategory" + "." + this).toggle();
+		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
+		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
+		event.stopPropagation();
 	},
 
 	'click .-category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
 		instance.showingFilters.set(true);
-		$('.-categorySelect').removeClass('open');
-		return false;
+		instance.$('.-searchCategories').val('');
+		updateCategorySearch(event, instance);
 	},
 
 	'click .-removeCategoryFilter': function(event, instance) {
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
-	},
-
-	'click .-showSubcategories': function(event, instance) {
-		$(".-subcategory" + "." + this).toggle(0);
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
-		event.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .group': function(event, instance) {
@@ -244,11 +235,11 @@ Template.find.helpers({
 	},
 
 	'availableCategories': function() {
-		return Object.keys(Session.get('categorySearchResults'));
+		return Object.keys(Template.instance().categorySearchResults.get('categorySearchResults'));
 	},
 
 	'availableSubcategories': function(mainCategory) {
-		return Session.get('categorySearchResults')[mainCategory];
+		return Template.instance().categorySearchResults.get()[mainCategory];
 	},
 
 	'availableGroups': function(group) {
