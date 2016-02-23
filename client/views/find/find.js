@@ -21,7 +21,7 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'group', 'categories'];
+var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
 
 var updateUrl = function(event, instance) {
 	event.preventDefault();
@@ -177,12 +177,6 @@ Template.find.events({
 	'click .show_subcategories': function(e, instance) {
 		$(".subcategory" + "." + this).toggle(0);
 		e.stopPropagation(); //makes dropdown menu stay open
-	},
-
-	'click .-removeGroupFilter': function(event, instance) {
-		instance.filter.remove('group', ''+this._id).done();
-		updateUrl(event, instance);
-		return false;
 	},
 
 	'click .-showFilters': function(event, instance) {
