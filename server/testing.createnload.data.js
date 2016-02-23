@@ -209,7 +209,7 @@ createEventsIfNone = function(){
 
 				var random = Math.random();
 				var location;
-				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				if (random < 0.4) location = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
