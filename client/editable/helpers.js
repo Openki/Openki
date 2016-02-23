@@ -10,14 +10,15 @@ Template.editable.onCreated(function() {
 Template.editable.onRendered(function() {
 	var self = this;
 	var editable = this.$('.editable');
-	var options = {};
+	var options = {
+		placeholder: {
+			hideOnClick: false,
+			text: self.data.placeholderText
+		}
+	};
 	if (this.data.simple) {
 		options.disableReturn = true;
 		options.disableToolbar = true;
-		options.placeholder = {
-			hideOnClick: false,
-			text: self.data.placeholderText
-		};
 	}
 
 	// UGLY The following two methods can be used to access and change
