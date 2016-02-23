@@ -205,8 +205,8 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				event.groups = course.groups;
-				var random = Math.random();
 
+				var random = Math.random();
 				var location;
 				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
@@ -214,6 +214,13 @@ createEventsIfNone = function(){
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
 				event.location = ensureLocation(location, event.region);
+
+				if (location && Math.random() > 0.5) {
+					var rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
+					event.room = rooms[Math.floor(Math.random()*rooms.length)];
+					ensureRoom(event.location, event.room);
+				}
+
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
