@@ -32,15 +32,17 @@
 					<span class="glyphicon glyphicon-calendar"></span>
 					{{dateformat_mini_fullmonth start}}
 				</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-time"></span>
+				{{timeformat start}} - {{timeformat end}}
 		</div>
 		<div class="course_event_lower_section">
 			<div class="head">
 				<div class="course_event_title">
 					<h3>{{this.title}}</h3>
-					{{> groupList}}
 				</div>
-				{{#if location.name}}
-					<div class="course_event_location">
+				<div class="location">
+					{{#if location.name}}
 						{{#if location._id}}
 							<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
 								<span class="glyphicon glyphicon-home"></span>
@@ -54,27 +56,23 @@
 							<span class="fa fa-map-signs"></span>
 							{{room}}
 						{{/if}}
-					</div>
-				{{/if}}
-				{{#if location.address}}
-					<div>
+					{{/if}}
+					{{#if location.address}}
 						<span class="fa fa-map-marker"></span>
 						{{location.address}}
-					</div>
-				{{/if}}
-				<div class="course_event_time">
-					<span class="glyphicon glyphicon-time"></span>
-					{{timeformat start}} - {{timeformat end}}
+					{{/if}}
 				</div>
+				{{> groupList}}
+				<p>{{{description}}}</p>
 			</div>
 			{{#if haveLocation}}
 				<div class="mapBox">
-					{{>map markers=eventMarkers height=150}}
+					{{>map markers=eventMarkers}}
 				</div>
 			{{/if}}
 		</div>
 		<div class="event_detail_description">
-			<p>{{{description}}}</p>
+
 		</div>
 		{{#if files}}
 			<div class="event_detail_description">
@@ -130,8 +128,7 @@
 				data-placement="bottom"
 				data-html="true"
 				data-delay='{"show":"500", "hide":"0"}'
-				data-original-title="{{mf 'course.events.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}"
-				>
+				data-original-title="{{mf 'course.events.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}">
 				<span class="glyphicon glyphicon-download"></span>&nbsp;
 				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 			</button>

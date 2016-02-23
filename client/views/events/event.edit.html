@@ -11,184 +11,188 @@
 			{{/unless}}
 		{{/if}}
 
-		<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-		<input
-			type="text"
-			id="edit_event_title"
-			size="30"
-			placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
-			value="{{this.title}}"
-			name="_"
-		/>
-		<div class="date">
-			<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
-			<div class="input-group">
-				<label for="edit_event_startdate" class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</label>
-				<input
-					type="text"
-					id="edit_event_startdate"
-					value="{{localDate start}}"
-					{{disableForPast}}
-				/>
-			</div>
-		</div>
-		<div class="start_time">
-			<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input
-					type="text"
-					id="edit_event_starttime"
-					value="{{timeformat start}}"
-					size="5"
-					{{disableForPast}}
-				/>
-			</div>
-		</div>
-		<div class="end_time" style="display:inline-block">
-			<h4>
-				{{mf 'course.event.edit.time_end' 'Time end'}}
-				<small class="toggle_duration" >
-					&nbsp;&nbsp;
-					<span
-						class="fa fa-exchange"
-						href="#"
-						data-toggle="tooltip"
-						data-html="true"
-						data-original-title="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
-					</span>
-				</small>
-			</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input
-					type="text"
-					id="edit_event_endtime"
-					value="{{timeformat end}}"
-					size="5"
-				/>
-			</div>
-		</div>
-		<div class="show_duration" style="display:none">
-			<h4>
-				{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
-				<small class="toggle_duration">
-					&nbsp;&nbsp;
-					<span
-						class="fa fa-exchange"
-						href="#"
-						data-toggle="tooltip"
-						data-html="true"
-						data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
-					</span>
-				</small>
-			</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-				<input
-					type="number"
-					id="edit_event_duration"
-					value="{{timeformat Duration}}"
-					size="5"
-				/>
-			</div>
-		</div>
-		<div class="description">
-			<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-info-sign"></span>
-				</span>
-				{{>eventDescriptionEdit description}}
-			</div>
-		</div>
-
-		{{#if showRegionSelection}}
-			<div class="region_selection">
-				<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-				<div class="styled-select">
-					<select name='region' class="region_select -regionSelect">
-						<option value='' class="select_default">{{mf 'course.edit.pls_select' 'Please select'}}</option>
-						{{#each regions}}
-						<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
-						{{/each}}
-					</select>
+		<div class="course_event_edit_header">
+			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
+			<input
+				type="text"
+				id="edit_event_title"
+				size="30"
+				placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
+				value="{{this.title}}"
+				name="_"
+			/>
+			<div class="date">
+				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
+				<div class="input-group">
+					<label for="edit_event_startdate" class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</label>
+					<input
+						type="text"
+						id="edit_event_startdate"
+						value="{{localDate start}}"
+						{{disableForPast}}
+					/>
 				</div>
 			</div>
-		{{/if}}
-
-		<div class="files">
-			<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
-			<!-- <span class="glyphicon glyphicon-file"></span> -->
-			<input
-				type="file"
-				name="…"
-				value="Upload file"
-				class="eventFileInput"
-				id="edit_files"
-			/>
-			<button
-				style="display:none"
-				type="button"
-				class="eventFileUpload"
-				role="button">
-				<span class="fa fa-upload"></span>&nbsp;
-				Start Upload
-			</button>
-			<table class="file-list">
-				{{#each files}}
-					{{> eventAttachmentsEdit}}
-				{{/each}}
-			</table>
-		</div>
-		{{>eventEditLocation}}
-		<div class="room">
-			<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
-			<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
-			<div id="editform_room" name="editform_room" class="input-group">
-				<span class="input-group-addon">
-					<span class="fa fa-map-signs"></span>
-				</span>
-				<input
-					type="text"
-					id="edit_event_room"
-					size="40"
-					value="{{room}}"
-				/>
+			<div class="start_time">
+				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input
+						type="text"
+						id="edit_event_starttime"
+						value="{{timeformat start}}"
+						size="5"
+						{{disableForPast}}
+					/>
+				</div>
+			</div>
+			<div class="end_time" style="display:inline-block">
+				<h4>
+					{{mf 'course.event.edit.time_end' 'Time end'}}
+					<small class="toggle_duration" >
+						&nbsp;&nbsp;
+						<span
+							class="fa fa-exchange"
+							href="#"
+							data-toggle="tooltip"
+							data-html="true"
+							data-original-title="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
+						</span>
+					</small>
+				</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input
+						type="text"
+						id="edit_event_endtime"
+						value="{{timeformat end}}"
+						size="5"
+					/>
+				</div>
+			</div>
+			<div class="show_duration" style="display:none">
+				<h4>
+					{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
+					<small class="toggle_duration">
+						&nbsp;&nbsp;
+						<span
+							class="fa fa-exchange"
+							href="#"
+							data-toggle="tooltip"
+							data-html="true"
+							data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
+						</span>
+					</small>
+				</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-time"></span>
+					</span>
+					<input
+						type="number"
+						id="edit_event_duration"
+						value="{{timeformat Duration}}"
+						size="5"
+					/>
+				</div>
 			</div>
 		</div>
-		<div class="update_replicas">
+		<div class="course_event_edit_body">
+			<div class="description">
+				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</span>
+					{{>eventDescriptionEdit description}}
+				</div>
+			</div>
+
+			{{#if showRegionSelection}}
+				<div class="region_selection">
+					<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
+					<div class="styled-select">
+						<select name='region' class="region_select -regionSelect">
+							<option value='' class="select_default">{{mf 'course.edit.pls_select' 'Please select'}}</option>
+							{{#each regions}}
+							<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">{{name}}</option>
+							{{/each}}
+						</select>
+					</div>
+				</div>
+			{{/if}}
+
+			<div class="files">
+				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
+				<!-- <span class="glyphicon glyphicon-file"></span> -->
+				<input
+					type="file"
+					name="…"
+					value="Upload file"
+					class="eventFileInput"
+					id="edit_files"
+				/>
+				<button
+					style="display:none"
+					type="button"
+					class="eventFileUpload"
+					role="button">
+					<span class="fa fa-upload"></span>&nbsp;
+					Start Upload
+				</button>
+				<table class="file-list">
+					{{#each files}}
+						{{> eventAttachmentsEdit}}
+					{{/each}}
+				</table>
+			</div>
+			{{>eventEditLocation}}
+			<div class="room">
+				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
+				<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
+				<div id="editform_room" name="editform_room" class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-signs"></span>
+					</span>
+					<input
+						type="text"
+						id="edit_event_room"
+						size="40"
+						value="{{room}}"
+					/>
+				</div>
+			</div>
 			{{#if affectedReplicaCount}}
-				<label>
-					<input type="checkbox" name="updateReplicas">
-					{{mf 'event.edit.updateReplicas'
-						"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+			<div class="update_replicas">
+					<label>
+						<input type="checkbox" name="updateReplicas">
+						{{mf 'event.edit.updateReplicas'
+							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+							COUNT=affectedReplicaCount
+						}}
+					</label>
+					{{mf 'event.edit.updateReplicas.times'
+						"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
 						COUNT=affectedReplicaCount
 					}}
-				</label>
-				{{mf 'event.edit.updateReplicas.times'
-					"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
-					COUNT=affectedReplicaCount
-				}}
+			</div>
 			{{/if}}
-		</div>
-		<div class="edit_buttons">
-			<button type="submit" class="saveEditEvent">
-				<span class="glyphicon glyphicon-save"></span>
-				{{mf 'course.event.edit.save_btn' 'Save'}}
-			</button>
-			<button type="button" class="cancelEditEvent">
-				<span class="glyphicon glyphicon-remove"></span>
-				{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
-			</button>
+			<div class="edit_buttons">
+				<button type="submit" class="saveEditEvent">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'course.event.edit.save_btn' 'Save'}}
+				</button>
+				<button type="button" class="cancelEditEvent">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
+				</button>
+			</div>
 		</div>
 	</div>
 </form>

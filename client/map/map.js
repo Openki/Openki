@@ -146,9 +146,6 @@ Template.map.onRendered(function() {
 
 		var allowRemoving = instance.data.allowRemoving;
 		show(removeMarkerControl, allowRemoving && allowRemoving());
-
-		var controlSize = fullscreen ? '10vh' : Math.max(30, instance.data.height/10)+'px';
-		instance.$('span.fa').css({ 'font-size': controlSize });
 	});
 
 	var geojsonProposedMarkerOptions = {
@@ -299,17 +296,7 @@ Template.map.helpers({
 		if (Template.instance().fullscreen.get()) {
 			return "mapContainer fullscreen";
 		} else {
-			return "mapContainer";
-		}
-	},
-	mapStyle: function() {
-		// The font-size is specified for the icon height
-		if (!Template.instance().fullscreen.get()) {
-			return [
-				"width: "+(this.width ? ""+this.width+"px" : "100%"),
-				"height: "+this.height+"px",
-				"font-size: "+this.height/10+"px"
-			].join(';');
+			return "mapContainer box";
 		}
 	},
 

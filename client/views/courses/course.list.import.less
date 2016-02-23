@@ -13,6 +13,11 @@
 			height: 200px;
 		}
 	}
+
+	button.-search_all_regions {
+		.btn-thin;
+		.btn-primary;
+	}
 }
 
 .courselist_course_container{
@@ -38,7 +43,8 @@
 		}
 
 		&.category-focus-mode {
-			transition: (0.5s);
+			.transition(box-shadow 0.5s);
+			box-shadow: none;
 		}
 
 		&.haspastevents {
