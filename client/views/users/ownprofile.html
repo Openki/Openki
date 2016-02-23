@@ -97,8 +97,9 @@
 					</li>
 				{{/each}}
 				</ul>
-				<a href="/group/create">
+				<a href="{{pathFor 'groupDetails' _id='create'}}">
 					<button class="-createGroup createGroup">
+						<span class="fa fa-plus"></span>&nbsp;
 						{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 					</button>
 				</a>
