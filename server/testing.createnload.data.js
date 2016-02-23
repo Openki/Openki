@@ -52,6 +52,7 @@ function ensureLocation(name, regionId) {
 		location = {
 			name: name,
 			region: regionId,
+			rooms: []
 		};
 
 		var region = Regions.findOne(regionId);
@@ -215,8 +216,14 @@ createEventsIfNone = function(){
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
 				event.location = ensureLocation(location, event.region);
 
-				if (location && Math.random() > 0.5) {
-					var rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
+				var rooms;
+				if (event.location.rooms.length > 0) {
+					rooms = event.location.rooms;
+					if (Math.random() > 0.5) event.room = rooms[Math.floor(Math.random()*rooms.length)];
+				}
+
+				if (!event.room && Math.random() > 0.6) {
+					rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
 					event.room = rooms[Math.floor(Math.random()*rooms.length)];
 					ensureRoom(event.location, event.room);
 				}
