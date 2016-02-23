@@ -34,7 +34,9 @@ var updateUrl = function(event, instance) {
 	if (queryString.length) {
 		options.query = queryString;
 	}
-	Router.go('find', {}, options);
+
+	var router = Router.current();
+	Router.go(router.route.getName(), { _id: router.params._id }, options);
 
 	return true;
 };

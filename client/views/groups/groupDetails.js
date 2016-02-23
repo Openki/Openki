@@ -21,7 +21,7 @@ Router.map(function () {
 
 			var data = {
 				group: group,
-				courseQuery: {group: group._id},
+				courseQuery: _.extend(this.params.query, {group: group._id}),
 				isNew: isNew,
 				showCourses: !isNew,
 			};
