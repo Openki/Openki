@@ -52,6 +52,7 @@ function ensureLocation(name, regionId) {
 		location = {
 			name: name,
 			region: regionId,
+			rooms: []
 		};
 
 		var region = Regions.findOne(regionId);
@@ -205,15 +206,28 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				event.groups = course.groups;
-				var random = Math.random();
 
+				var random = Math.random();
 				var location;
-				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				if (random < 0.4) location = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
 				event.location = ensureLocation(location, event.region);
+
+				var rooms;
+				if (event.location.rooms.length > 0) {
+					rooms = event.location.rooms;
+					if (Math.random() > 0.5) event.room = rooms[Math.floor(Math.random()*rooms.length)];
+				}
+
+				if (!event.room && Math.random() > 0.6) {
+					rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
+					event.room = rooms[Math.floor(Math.random()*rooms.length)];
+					ensureRoom(event.location, event.room);
+				}
+
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
