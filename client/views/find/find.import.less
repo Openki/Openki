@@ -161,6 +161,21 @@
 						}
 					}
 
+					.dropdown-toggle {
+						position: relative;
+					}
+
+					.dropdown-toggle::before {
+						content: '\f107';
+						font-family: FontAwesome;
+						position: absolute;
+						left: -1em;
+					}
+
+					&.open .dropdown-toggle::before {
+						content: '\f106';
+					}
+
 					ul.dropdown-menu {
 						background: @body-bg;
 						min-width: 80%;
