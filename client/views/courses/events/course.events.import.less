@@ -6,12 +6,22 @@
 	.grid(12);
 	height: 400px;
 	margin-left: -5px;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 	padding: 0;
 	position: relative;
 
-	.course_event {
-		height: 204px;
+	.course_events_events {
+		.grid(12);
+		padding: 10px 0;
+		position: relative;
+		left: -3px;
+		width: calc(~"100% + 6px");
+
+		.event_small_container {
+			.grid(12, 12, 6);
+			padding: 0 3px 10px;
+		}
 	}
 
 	hr {
