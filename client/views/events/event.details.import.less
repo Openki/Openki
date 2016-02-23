@@ -13,22 +13,29 @@
 
 			span.date {
 				font-size: x-large;
+
+				span.glyphicon-calendar {
+					font-size: large;
+				}
+			}
+
+			span.glyphicon-time {
+				font-size: small;
 			}
 		}
 
-		ul.groups-list,
-		div.course_event_location {
-			margin-bottom: 10px;
+		.location {
+			margin-right: 5px;
+		}
+
+		.location,
+		ul.groups-list {
+			display: inline-block;
 		}
 
 		.course_event_lower_section {
 			.grid(12);
 			padding: 0;
-		}
-
-		.event_detail_description {
-			.grid(12);
-			background: @brand-bg;
 		}
 	}
 
