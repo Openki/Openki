@@ -86,7 +86,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var group = Groups.findOne({_id: this.params._id});
 			if (group) {
-				document.title = mf('group.siteTitle', { NAME: group.name }, "{NAME}") + " - " + webpagename;
+				document.title = webpagename + group.name;
 			}
 		}
 	});
