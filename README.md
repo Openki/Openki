@@ -1,4 +1,4 @@
-Openki   [![Build Status](https://travis-ci.org/schuel/hmmm.svg?branch=master)](https://travis-ci.org/schuel/hmmm)
+Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/schuel/hmmm.svg?branch=master)](https://travis-ci.org/schuel/hmmm)
 ====
 
 **Platform for open education** – built with [Meteor.js](http://meteor.com)
