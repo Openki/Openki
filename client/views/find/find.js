@@ -44,7 +44,7 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
-	instance.categorySearchResults = new ReactiveVar(false);
+	instance.categorySearchResults = new ReactiveVar(categories);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	var filter = Filtering(CoursePredicates);
@@ -151,7 +151,9 @@ Template.find.events({
 
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
-	'focus .-searchCategories': updateCategorySearch,
+	'focus .-searchCategories': function(event, instance) {
+		instance.$('.-categorySelect').addClass('open');
+	},
 
 	'click .-showSubcategories': function(event, instance) {
 		$(".-subcategory" + "." + this).toggle();

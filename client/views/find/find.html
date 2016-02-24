@@ -120,12 +120,12 @@
 						{{/each}}
 						</ul>
 					{{/if}}
-					<div class="categorySelect dropdown">
+					<div class="-categorySelect categorySelect dropdown">
 						<input
-							class="-searchCategories dropdown-toggle"
-							data-toggle="dropdown"
+							class="-searchCategories"
 							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
 						/>
+						<span class="dropdown-toggle" data-toggle="dropdown"></span>
 						<ul class="dropdown-menu" role="menu">
 							{{#if availableCategories}}
 								{{#each availableCategories}}

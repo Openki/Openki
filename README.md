@@ -1,4 +1,4 @@
-Openki/hmmm
+Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/schuel/hmmm.svg?branch=master)](https://travis-ci.org/schuel/hmmm)
 ====
 
 **Platform for open education** – built with [Meteor.js](http://meteor.com)
@@ -47,7 +47,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
-- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone` Hmmm into /some/path
+- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone` Openki into /some/path
 - `cd /some/path`
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/)  -> done.

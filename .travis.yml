@@ -1,0 +1,34 @@
+language: node_js
+
+node_js:
+  - 5.2.0
+
+services:
+  - mongodb
+
+cache:
+  directories:
+    - "$HOME/node_modules"
+    - "$HOME/.npm"
+    - "$HOME/.meteor"
+    - "src/.meteor/local/build"
+    - "src/.meteor/local/bundler-cache"
+    - "src/.meteor/local/isopacks"
+    - "src/.meteor/local/plugin-cache"
+    - "src/.meteor/local/mirrors"
+
+before_install:
+  # Download Meteor
+  - PATH=$PATH:$HOME/.meteor
+  - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
+
+  # Install chimp
+  - npm install -g chimp
+
+  # Cache Selenium & ChromeDriver
+  - chimp --browser=phantomjs --path=bin
+
+install:
+
+script:
+  - ./bin/test
