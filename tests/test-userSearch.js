@@ -1,4 +1,4 @@
-describe('User search @watch', function () {
+describe('User search', function () {
   it('finds none for nonexisting name', function () {
 		// HACK I don't really know how to access the subscription result so I'm just gonna rely on server._original
 		var found = false;
