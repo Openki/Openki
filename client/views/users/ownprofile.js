@@ -97,7 +97,9 @@ Template.profile.events({
 			document.getElementById('editform_email').value,
 			document.getElementById('privacy').checked,
 			function(err) {
-				if (!err) {
+				if (err) {
+					addMessage(mf('profile.savingError', { ERROR: err }, 'Saving your profile failed: {ERROR}'), 'danger');
+				} else {
 					addMessage(mf('profile.updated', 'Updated profile'), 'success');
 					template.editing.set(false);
 				}
