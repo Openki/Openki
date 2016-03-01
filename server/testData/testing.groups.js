@@ -24,7 +24,7 @@ testGroups = [{
 	'claim':            'Raum für Medienkulturen der Welt',
 	'description':      'Das Dock18 ist abwechselnd und von Zeit zu Zeit simultan unabhängiger Kunstraum, TV Studio, Medienlabor, Meeting Point, Bar, Club, Tanzboden und interaktiver Nährboden für verschiedene Medienkulturen der Welt.',
 },{
-	'name':        	    'Autonome Schule Zürich, Bildung für Alle',
+	'name':        	    'Autonome Schule Zürich',
 	'short':            'ASZ',
 	'claim':            'Bildung für alle',
 	'description':      'Die Autonome Schule Zürich ist ein selbstverwaltetes Bildungsprojekt in Zürich. Es werden zahlreiche Kurse kostenlos angeboten, wobei stets die Möglichkeit besteht sich an Kursen bzw. am Schulprojekt zu beteiligen. Essentiell sind dabei die Deutschkurse, welche besonders für MigrantInnen und Sans-Papiers einen hürdenfreien und emanzipatorischen Zugang zur Sprache ermöglichen.',
