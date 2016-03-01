@@ -24,6 +24,10 @@
 					{{/if}}
 				</div>
 
+				<button class="settings -settings" type="button">
+					<span class="fa fa-cog"></span> <!-- tooltip {{mf 'group.settings.title' 'Settings'}} -->
+				</button>
+
 				<div class="editformShort">
 					{{#if editableShort}}
 						{{>editable editableShort}}
@@ -67,6 +71,11 @@
 			{{/if}}
 		</form>
 	</div>
+
+	{{#if editingSettings}}
+		{{> groupSettings}}
+	{{/if}}
+
 
 		{{#if showCourses}}
 			<div class="groupCourses">

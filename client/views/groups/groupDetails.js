@@ -92,7 +92,24 @@ Router.map(function () {
 	});
 });
 
+Template.groupDetails.onCreated(function() {
+	var instance = this;
+	instance.editingSettings = new ReactiveVar(false);
+});
+
+Template.groupDetails.helpers({
+	editingSettings: function() {
+		return Template.instance().editingSettings.get();
+	}
+});
+
+
 Template.groupDetails.events({
+
+	'click .-settings' : function(event, instance) {
+		instance.editingSettings.set(true);
+	},
+
 	'click .-saveGroup': function(event, instance) {
 		if (pleaseLogin()) return false;
 

@@ -1,0 +1,85 @@
+<template name="groupSettings">
+	<div class="groupSettings">
+		{{#with group}}
+		<form>
+			<div class="settings">
+				<h2>
+					<span class="fa fa-cog"></span>
+					{{mf 'group.settings.title' 'Settings'}}
+				</h2>
+
+				<h4>{{mf 'group.settings.field.infos' 'Internal informations:'}}</h4>
+					<input
+						class= "setInfos"
+						type="text"
+						id="setInfos"
+						placeholder="{{mf 'group.settings.infos.placeholder' 'Add some notes for your group-members'}}"
+						size="60"
+						value="{{infos}}"
+					/>
+
+				<h4>{{mf 'group.settings.field.logo' 'Logo:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-rebel"></span>
+					</span>
+					<input
+						id="setLogo"
+						placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
+					/>
+					{{{logo}}}
+				</div>
+
+				<h4>{{mf 'group.settings.field.backgroundImg' 'Background Image:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-picture-o"></span>
+					</span>
+					<input
+						id="setBackgroundImage"
+						placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
+					/>
+					{{{backgroundImage}}}
+				</div>
+
+				<hr>
+				<div class="Members">
+					<h3>{{mf 'group.settings.title.Members' 'Members'}}</h3>
+					<li>
+						{{#each members}}
+							<ul>
+								<span class="glyphicon glyphicon-user"></span>
+								{{username this}}
+							</ul>
+						{{/each}}
+					</li>
+					<h4>{{mf 'group.settings.field.addMembers' 'Add a new member to your group:'}}</h4>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-user"></span>
+						</span>
+						<input
+							type="text"
+							id="AddGroupMember"
+							placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+							size="40"
+						/>
+					</div>
+				</div>
+
+				<div class="groupEditFinishbtns">
+					<button type="button" class="save">
+						<span class="glyphicon glyphicon-save"></span>
+						{{mf 'group.edit.save_btn' 'Save'}}
+					</button>
+					<button type="button" class="cancel">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf 'group.edit.cancel_btn' 'Cancel'}}
+					</button>
+				</div>
+
+			</div>
+		</form>
+		{{/with}}
+	</div>
+</template>
