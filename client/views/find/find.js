@@ -195,7 +195,7 @@ Template.find.events({
 	},
 
 	"click .-searchAllRegions": function(event, template){
-		 Session.set('region', 'all');
+		Session.set('region', 'all');
 	}
 });
 

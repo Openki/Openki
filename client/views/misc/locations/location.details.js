@@ -71,7 +71,7 @@ Template.locationDetails.onRendered(function() {
 
 Template.locationDetails.helpers({
 
-	 isEditing: function () {
+	isEditing: function () {
 		return Session.get("isEditing");
 	},
 

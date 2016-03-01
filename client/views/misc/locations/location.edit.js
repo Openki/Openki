@@ -3,7 +3,7 @@
 Template.location_edit.helpers({
 
 	regions: function(){
-	  return Regions.find();
+		return Regions.find();
 	},
 	addHost: function () {
 		return Session.get("addHost");

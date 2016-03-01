@@ -273,8 +273,8 @@ Meteor.methods({
 		_.each(course.members, function(member) {
 			if (
 				user.anonId
-			 && user.anonId.indexOf(member.user) != -1
-			 && (member.roles.indexOf(role) != -1)
+				&& user.anonId.indexOf(member.user) != -1
+				&& (member.roles.indexOf(role) != -1)
 			) {
 				subscriptionId = member.user;
 			}
@@ -295,7 +295,7 @@ Meteor.methods({
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object),
-			groups:	     Match.Optional([String])
+			groups:      Match.Optional([String])
 		});
 
 		var user = Meteor.user();
@@ -315,7 +315,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found");
 		}
 
- 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
+		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 
 

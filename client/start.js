@@ -107,7 +107,7 @@ Meteor.startup(function() {
 
 		mfPkg.setLocale(desiredLocale);
 
-		  // Tell moment to switch the locale
+		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it
 		var setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
