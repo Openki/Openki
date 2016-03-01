@@ -12,7 +12,7 @@
 			</h4>
 			<h5>
 				<a href="/profile/" >
-					<span class="glyphicon glyphicon-cog"></span>
+					<span class="fa fa-cog"></span>
 					{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
 				</a>
 			</h5>
@@ -25,8 +25,12 @@
 		{{/if}}
 
 		{{#if showPrivileges}}
-		<div class="privileges">
-			<h3>{{mf 'privileges.title' 'Administrate Privileges'}}</h3>
+		<div class="privileges settingsFrame">
+		<div class="container">
+			<h3>
+				<span class="fa fa-cog"></span>
+				{{mf 'privileges.title' 'Administrate Privileges'}}
+			</h3>
 			<ul class="privileges">
 			{{#if privileges.admin}}
 				<li class="admin">
@@ -69,10 +73,17 @@
 			{{/if}}
 			</ul>
 		</div>
+		</div>
 		{{/if}}
 
+
 		{{#if showInviteGroups}}
-			<h3>{{mf 'userprofile.groups.header' 'Edit groups'}}</h3>
+		<div class="inviteGroups settingsFrame">
+		<div class="container">
+			<h3>
+				<span class="fa fa-cog"></span>
+				{{mf 'userprofile.groups.header' 'Edit groups'}}
+			</h3>
 			{{#each inviteGroups}}
 				<div class="invite_group">
 					{{#if groupMember this ../user}}
@@ -92,7 +103,10 @@
 					{{/if}}
 				</div>
 			{{/each}}
+		</div>
+		</div>
 		{{/if}}
+
 
 		<div class="list_small">
 			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
