@@ -17,6 +17,6 @@ describe('Profile', function () {
 			"greg@openki.example",
 			false
 		);
-	}).to.throw(/e/);
+	}).to.throw(/emailExists/);
   });
 });
