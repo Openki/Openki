@@ -92,7 +92,7 @@ Meteor.publish('user', function(userId) {
 });
 
 Meteor.publish('currentUser', function() {
-  return Meteor.users.find(this.userId);
+	return Meteor.users.find(this.userId);
 });
 
 Meteor.publish('groupsFind', function(filter) {
