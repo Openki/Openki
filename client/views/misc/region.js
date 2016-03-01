@@ -1,6 +1,6 @@
 Template.region_sel.helpers({
 	regions: function(){
-	  return Regions.find();
+		return Regions.find();
 	},
 
 	region: function(){

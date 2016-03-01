@@ -142,7 +142,7 @@ function createCourses(scale) {
 /////////////////////////////// TESTING: Create Locations if non in db
 
 loadLocationsIfNone = function(){
- 	if (Locations.find().count() === 0) {
+	if (Locations.find().count() === 0) {
 		loadLocations();
 	}
 };

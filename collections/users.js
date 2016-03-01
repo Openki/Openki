@@ -2,9 +2,9 @@
 // "_id"          -> ID
 // "createdAt"    -> Date
 // "services"     -> {
-//	   password:{
+//     password: {
 //         bcrypt:       String},
-//     github:{
+//     github: {
 //         id:           Int32
 //         accessToken:  String
 //         email:        String/null

@@ -5,7 +5,7 @@ Router.configure({
 });
 Router.onBeforeAction('dataNotFound');
 
-webpagename = 'Openki - ';				  // global (document title init)
+webpagename = 'Openki - ';                  // global (document title init)
 
 Router.map(function () {
 
