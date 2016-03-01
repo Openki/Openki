@@ -27,6 +27,7 @@ Router.map(function() {
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
 				'inviteGroups': groupsFind({ own: true }),
+				'showInviteGroups': groupsFind({ own: true }).count() > 0,
 				'showPrivileges': showPrivileges
 			};
 		},
