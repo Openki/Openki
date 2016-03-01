@@ -95,6 +95,10 @@ Meteor.publish('currentUser', function() {
 	return Meteor.users.find(this.userId);
 });
 
+Meteor.publish('userSearch', function(search) {
+	return UserLib.searchPrefix(search, { fields: { username: 1 }, limit: 10 });
+});
+
 Meteor.publish('groupsFind', function(filter) {
 	// Filter function on the server doesn't have access to current user ID
 	if (filter.own) {

@@ -62,6 +62,16 @@ privileged = function(user, privilege) {
 	);
 };
 
+UserLib = {
+	searchPrefix: function(prefix, options) {
+		var prefixExp = '^' + prefix.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
+		return Meteor.users.find(
+			{ username: new RegExp(prefixExp, 'i') },
+			options
+		);
+	}
+}
+
 Meteor.methods({
 	delete_profile: function() {
 		var user = Meteor.user();
