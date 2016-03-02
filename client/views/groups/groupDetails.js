@@ -108,7 +108,8 @@ Template.groupDetails.helpers({
 Template.groupDetails.events({
 
 	'click .-settings' : function(event, instance) {
-		instance.editingSettings.set(true);
+		if (pleaseLogin()) return false
+		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
 	'click .-saveGroup': function(event, instance) {
