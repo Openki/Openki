@@ -65,11 +65,13 @@ Template.find.onCreated(function() {
 	});
 
 	// When there are filters set, show the filtering pane
-	for (var name in filter.toParams()) {
-		if (hiddenFilters.indexOf(name) > -1) {
-			instance.showingFilters.set(true);
+	instance.autorun(function() {
+		for (var name in filter.toParams()) {
+			if (hiddenFilters.indexOf(name) > -1) {
+				instance.showingFilters.set(true);
+			}
 		}
-	}
+	});
 
 	// Update whenever filter changes
 	instance.autorun(function() {
@@ -166,10 +168,9 @@ Template.find.events({
 
 	'click .-category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
-		updateUrl(event, instance);
-		instance.showingFilters.set(true);
 		instance.$('.-searchCategories').val('');
 		updateCategorySearch(event, instance);
+		updateUrl(event, instance);
 	},
 
 	'click .-removeCategoryFilter': function(event, instance) {

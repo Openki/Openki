@@ -18,7 +18,7 @@ Template.editable.onRendered(function() {
 	};
 	if (this.data.simple) {
 		options.disableReturn = true;
-		options.disableToolbar = true;
+		options.toolbar = false;
 	}
 
 	// UGLY The following two methods can be used to access and change

@@ -47,6 +47,10 @@ Template.userprofile.helpers({
 
 	groupMember: function(group, user) {
 		return user && group && group.members && group.members.indexOf(user._id) >= 0;
+	},
+
+	showInviteGroups: function() {
+		return this.inviteGroups.count && this.inviteGroups.count() > 0;
 	}
 });
 
