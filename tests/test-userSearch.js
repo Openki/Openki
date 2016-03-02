@@ -10,14 +10,13 @@ describe('User search', function () {
 		assert.isFalse(found, "no result found");
   });
 
-  it('finds greg', function () {
+  it('finds gregen', function () {
 		// HACK I don't really know how to access the subscription result so I'm just gonna rely on server._original
 		var foundGreg = false;
 		server._original.observe('users').added = function(userId) {
-			if (server._original.collections.users[userId].username === 'greg') foundGreg = true;
+			if (server._original.collections.users[userId].username === 'gregen') foundGreg = true;
 		}
-		server.subscribe('userSearch', ['greg']);
-
+		server.subscribe('userSearch', ['gregen']);
 		assert.isTrue(foundGreg);
   });
 
