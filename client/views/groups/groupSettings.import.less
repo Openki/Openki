@@ -63,10 +63,14 @@
 	.members {
 		.grid(12, 6);
 		padding: 15px;
-		font-size: large;
+		font-size: medium;
 
 		h2 {
 			padding-bottom: 20px;
+		}
+
+		.input-group {
+			margin-bottom: 10px;
 		}
 
 		ul {
@@ -74,8 +78,37 @@
 			margin-left: 0px;
 			padding-bottom: 10px;
 			li {
-				padding: 2px;
-				background-color: rgba(80, 90, 50, 0.2)
+				padding-left: 8px;
+				padding-right: 0;
+				margin-bottom: 5px;
+				margin-right: 5px;
+				background-color: rgba(80, 90, 50, 0.15);
+
+				button {
+					.btn-thin;
+					padding: 2px 6px;
+
+					&.cancel {
+						span  {
+							color: #400;
+						}
+						background-color: rgba(80, 90, 50, 0.3);
+						&:hover {
+							background-color: @brand-danger;
+						}
+					}
+
+					&.confirm {
+						span  {
+							color: #040;
+						}
+						background-color: rgba(80, 90, 50, 0.3);
+						&:hover {
+							background-color: @brand-success;
+						}
+					}
+
+				}
 			}
 		}
 	}

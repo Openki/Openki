@@ -66,7 +66,7 @@
 						<li>
 							<span class="glyphicon glyphicon-user"></span>
 							{{username this}}
-							<button type="button" class="-removeMember"><span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' "remove member"}}"></span></button>
+							<button type="button" class="-removeMember cancel"><span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' "remove member"}}"></span></button>
 						</li>
 					{{/each}}
 				</ul>
@@ -88,7 +88,7 @@
 						<li>
 							<span class="glyphicon glyphicon-user"></span>
 							{{username this._id}}
-							<button type="button" class="-addMember"><span class="glyphicon glyphicon-plus" title="{{mf 'group.settings.addMember' "add as member"}}"></span></button>
+							<button type="button" class="-addMember confirm"><span class="glyphicon glyphicon-plus" title="{{mf 'group.settings.addMember' "add as member"}}"></span></button>
 						</li>
 					{{/each}}
 				</ul>
