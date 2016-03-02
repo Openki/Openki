@@ -25,9 +25,10 @@
 					</span>
 					<input
 						id="setLogo"
+						class="-logoUrl"
+						value="{{logoUrl}}"
 						placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
 					/>
-					{{{logo}}}
 				</div>
 
 				<h4>{{mf 'group.settings.field.backgroundImg' 'Background Image:'}}</h4>
@@ -37,9 +38,10 @@
 					</span>
 					<input
 						id="setBackgroundImage"
+						class="-backgroundUrl"
+						value="{{backgroundUrl}}"
 						placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
 					/>
-					{{{backgroundImage}}}
 				</div>
 
 				<hr>
@@ -68,11 +70,11 @@
 				</div>
 
 				<div class="groupEditFinishbtns">
-					<button type="button" class="save">
+					<button type="button" class="save -saveSettings">
 						<span class="glyphicon glyphicon-save"></span>
 						{{mf 'group.edit.save_btn' 'Save'}}
 					</button>
-					<button type="button" class="cancel">
+					<button type="button" class="cancel -cancelSettings">
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf 'group.edit.cancel_btn' 'Cancel'}}
 					</button>

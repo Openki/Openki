@@ -141,5 +141,18 @@ Template.groupDetails.events({
 
 	'click .-cancelGroup': function(event, instance) {
 		Router.go('/'); // Got a better idea?
+	},
+
+	'click .-saveSettings': function(event, instance) {
+		Meteor.call("saveGroup", instance.data.group._id, {
+			logoUrl: instance.$('.-logoUrl').val(),
+			backgroundUrl: instance.$('.-backgroundUrl').val(),
+		}, function(err) {
+			if (err) {
+				addMessage(mf('group.settings.saveError', { ERROR: err }, "Error saving settings: {ERROR}"), 'danger');
+			} else {
+				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
+			}
+		});
 	}
 });

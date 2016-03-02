@@ -53,10 +53,12 @@ Meteor.methods({
 	saveGroup: function(groupId, changes) {
 		check(groupId, String);
 		check(changes, {
-			short:       Match.Optional(String),
-			name:        Match.Optional(String),
-			claim:       Match.Optional(String),
-			description: Match.Optional(String),
+			short:         Match.Optional(String),
+			name:          Match.Optional(String),
+			claim:         Match.Optional(String),
+			description:   Match.Optional(String),
+			logoUrl:       Match.Optional(String),
+			backgroundUrl: Match.Optional(String),
 		});
 
 		var userId = Meteor.userId();
@@ -78,7 +80,7 @@ Meteor.methods({
 
 		// User must be member of group to edit it
 		if (!isNew && !GroupLib.isMember(Meteor.userId(), group._id)) {
-			throw new Meteor.error(401, "Denied");
+			throw new Meteor.Error(401, "Denied");
 		}
 
 		var updates = {};
@@ -99,6 +101,12 @@ Meteor.methods({
 			}
 		}
 
+		if (changes.hasOwnProperty('logoUrl')) {
+			updates.logoUrl = changes.logoUrl.substring(0, 1000);
+		}
+		if (changes.hasOwnProperty('backgroundUrl')) {
+			updates.backgroundUrl = changes.backgroundUrl.substring(0, 1000);
+		}
 		if (isNew) {
 			return Groups.insert(_.extend(group, updates));
 		} else {
