@@ -47,14 +47,14 @@
 				<hr>
 				<div class="Members">
 					<h3>{{mf 'group.settings.title.Members' 'Members'}}</h3>
-					<li>
+					<ul>
 						{{#each members}}
-							<ul>
+							<li>
 								<span class="glyphicon glyphicon-user"></span>
 								{{username this}}
-							</ul>
+							</li>
 						{{/each}}
-					</li>
+					</ul>
 					<h4>{{mf 'group.settings.field.addMembers' 'Add a new member to your group:'}}</h4>
 					<div class="input-group">
 						<span class="input-group-addon">
