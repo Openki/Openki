@@ -119,7 +119,12 @@ Template.groupDetails.helpers({
 Template.groupSettings.helpers({
 	foundUsers: function() {
 		var instance = Template.instance();
-		return UserLib.searchPrefix(instance.userSearch.get(), { limit: 30 });
+
+		var search = instance.userSearch.get();
+		if (search == '') return false;
+
+		var group = Groups.findOne(Router.current().params._id);
+		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 });
 
