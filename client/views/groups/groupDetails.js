@@ -152,7 +152,12 @@ Template.groupDetails.events({
 				addMessage(mf('group.settings.saveError', { ERROR: err }, "Error saving settings: {ERROR}"), 'danger');
 			} else {
 				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
+				instance.editingSettings.set(false);
 			}
 		});
+	},
+
+	'click .-cancelSettings': function(event, instance) {
+		instance.editingSettings.set(false);
 	}
 });
