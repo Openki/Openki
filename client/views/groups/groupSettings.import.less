@@ -4,20 +4,21 @@
 	padding: 0;
 	background: rgba(170, 230, 170, 0.2);
 	font-size: x-large;
-	margin-bottom: 100px;
+	margin-bottom: 50px;
+
+	#setInfos,
+	#setLogo,
+	#setBackgroundImage,
+	#AddGroupMember {
+		.form-control-humble;
+	}
 
 	.settings {
-		padding: 10px;
+		.grid(12, 6);
+		padding: 15px;
 
 		.editable {
 			background: none;
-		}
-
-		#setInfos,
-		#setLogo,
-		#setBackgroundImage,
-		#AddGroupMember {
-			.form-control-humble;
 		}
 
 		.setInfos {
@@ -28,9 +29,6 @@
 				margin: 0;
 			}
 		}
-
-
-
 
 		.groupEditFinishbtns {
 			.grid(12);
@@ -54,6 +52,26 @@
 				&.cancel {
 					.btn-danger;
 				}
+			}
+		}
+	}
+
+	.members {
+		.grid(12, 6);
+		padding: 15px;
+		font-size: large;
+
+		h2 {
+			padding-bottom: 20px;
+		}
+
+		ul {
+			.list-inline;
+			margin-left: 0px;
+			padding-bottom: 10px;
+			li {
+				padding: 2px;
+				background-color: rgba(80, 90, 50, 0.2)
 			}
 		}
 	}

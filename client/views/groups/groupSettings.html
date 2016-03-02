@@ -44,31 +44,6 @@
 					/>
 				</div>
 
-				<hr>
-				<div class="Members">
-					<h3>{{mf 'group.settings.title.Members' 'Members'}}</h3>
-					<li>
-						{{#each members}}
-							<ul>
-								<span class="glyphicon glyphicon-user"></span>
-								{{username this}}
-							</ul>
-						{{/each}}
-					</li>
-					<h4>{{mf 'group.settings.field.addMembers' 'Add a new member to your group:'}}</h4>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-user"></span>
-						</span>
-						<input
-							type="text"
-							id="AddGroupMember"
-							placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
-							size="40"
-						/>
-					</div>
-				</div>
-
 				<div class="groupEditFinishbtns">
 					<button type="button" class="save -saveSettings">
 						<span class="glyphicon glyphicon-save"></span>
@@ -79,8 +54,35 @@
 						{{mf 'group.edit.cancel_btn' 'Cancel'}}
 					</button>
 				</div>
-
 			</div>
+
+			<div class="members">
+				<h2>
+					<span class="glyphicon glyphicon-user"></span>
+					{{mf 'group.settings.title.Members' 'Members'}}
+				</h2>
+				<ul>
+					{{#each members}}
+						<li>
+							<span class="glyphicon glyphicon-user"></span>
+							{{username this}}
+						</li>
+					{{/each}}
+				</ul>
+				<h4>{{mf 'group.settings.field.addMembers' 'Add a new member to your group:'}}</h4>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-user"></span>
+					</span>
+					<input
+						type="text"
+						id="AddGroupMember"
+						placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+						size="40"
+					/>
+				</div>
+			</div>
+
 		</form>
 		{{/with}}
 	</div>
