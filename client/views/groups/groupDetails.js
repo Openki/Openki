@@ -98,10 +98,29 @@ Template.groupDetails.onCreated(function() {
 	instance.editingSettings = new ReactiveVar(false);
 });
 
+Template.groupSettings.onCreated(function() {
+	var instance = this;
+	instance.userSearch = new ReactiveVar('');
+
+	instance.autorun(function() {
+		var search = instance.userSearch.get();
+		if (search == '') foundUsers = false;
+
+		Meteor.subscribe('userSearch', search);
+	});
+});
+
 Template.groupDetails.helpers({
 	editingSettings: function() {
 		return Template.instance().editingSettings.get();
 	}
+});
+
+Template.groupSettings.helpers({
+	foundUsers: function() {
+		var instance = Template.instance();
+		return UserLib.searchPrefix(instance.userSearch.get(), { limit: 30 });
+	},
 });
 
 
@@ -159,5 +178,37 @@ Template.groupDetails.events({
 
 	'click .-cancelSettings': function(event, instance) {
 		instance.editingSettings.set(false);
+	},
+
+	'click .-addMember': function(event, instance) {
+		var memberId = this._id;
+		var groupId = Router.current().params._id;
+		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
+			if (err) {
+				addMessage(mf('group.settings.addMemberError', { ERROR: err }, "Error adding member: {ERROR}"), 'danger');
+			} else {
+				addMessage(mf('group.settings.addedMember', "Added group member"), 'success');
+			}
+		});
+	},
+
+	'click .-removeMember': function(event, instance) {
+		var memberId = ''+this;
+		var groupId = Router.current().params._id;
+		console.log(memberId, groupId)
+		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
+			if (err) {
+				addMessage(mf('group.settings.removeMemberError', { ERROR: err }, "Error removing member: {ERROR}"), 'danger');
+			} else {
+				addMessage(mf('group.settings.removedMember', "Removed group member"), 'success');
+			}
+		});
+	},
+
+});
+
+Template.groupSettings.events({
+	'keyup .-userSearch': function(event, instance) {
+		instance.userSearch.set(instance.$('.-userSearch').val());
 	}
 });
