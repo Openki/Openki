@@ -19,15 +19,16 @@ Router.map(function () {
 
 			if (!group) return false;
 
+			var userId = Meteor.userId();
+			var mayEdit = isNew || userId && GroupLib.isMember(userId, group._id);
+
 			var data = {
 				group: group,
 				courseQuery: _.extend(this.params.query, {group: group._id}),
 				isNew: isNew,
 				showCourses: !isNew,
+				mayEdit: mayEdit
 			};
-
-			var userId = Meteor.userId();
-			var mayEdit = isNew || userId && GroupLib.isMember(userId, group._id);
 
 			if (mayEdit) {
 				var handleSaving = function(err, groupId) {

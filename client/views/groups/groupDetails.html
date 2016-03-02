@@ -24,9 +24,11 @@
 					{{/if}}
 				</div>
 
-				<button class="settings -settings" type="button">
-					<span class="fa fa-cog"></span> <!-- tooltip {{mf 'group.settings.title' 'Settings'}} -->
-				</button>
+				{{#if mayEdit}}
+					<button class="settings -settings" type="button">
+						<span class="fa fa-cog"></span> <!-- tooltip {{mf 'group.settings.title' 'Settings'}} -->
+					</button>
+				{{/if}}
 
 				<div class="editformShort">
 					{{#if editableShort}}
