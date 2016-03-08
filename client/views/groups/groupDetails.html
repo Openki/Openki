@@ -72,11 +72,13 @@
 				</div>
 			{{/if}}
 		</form>
+
+		{{#if editingSettings}}
+			{{> groupSettings}}
+		{{/if}}
+
 	</div>
 
-	{{#if editingSettings}}
-		{{> groupSettings}}
-	{{/if}}
 
 
 		{{#if showCourses}}
