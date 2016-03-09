@@ -1,11 +1,12 @@
 // BOX-SHADOW MIXINS
 
 .box-shadow-big(@color) {
-	box-shadow: 0px 0px 8px @color;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
-							0px 0px 8px @color;
+	box-shadow: 7px 7px 7px @color;
+	z-index: 1 !important;
+	// box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+	// 						0px 0px 8px @color;
 }
 
 .box-shadow-small(@color) {
-	box-shadow: 0px 0px 4px @color;
+	box-shadow: 6px 6px 6px @color;
 }
