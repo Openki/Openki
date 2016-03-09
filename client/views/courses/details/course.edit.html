@@ -92,10 +92,15 @@
 					</ul>
 				</div>
 
-				<div class="course_edit_intern">
+				<div class="course_edit_internal">
 					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
 					<label>
-						<input type="checkbox" name="eventIntern">{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
+						<input
+							type="checkbox"
+							class="-courseInternal"
+							{{isInternal}}
+						>
+						{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
 					</label>
 				</div>
 

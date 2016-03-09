@@ -52,6 +52,10 @@ Template.eventEdit.helpers({
 	disableForPast: function() {
 		return this.start > new Date() ? '' : 'disabled';
 	},
+
+	isInternal: function() {
+		return this.internal ? "checked" : null;
+	},
 });
 
 Template.eventDescriptionEdit.rendered = function() {
@@ -207,7 +211,8 @@ Template.eventEdit.events({
 			room: template.$('#edit_event_room').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
-			files: this.files || Array() ,
+			files: this.files || Array(),
+			internal: template.$('.-eventInternal').is(':checked'),
 		};
 
 		var fileList = template.files;

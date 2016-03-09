@@ -171,10 +171,14 @@
 				</div>
 			</div>
 
-			<div class="intern">
+			<div class="internal">
 				<label>
-					<input type="checkbox" class="radio" name="eventIntern">
-					{{mf 'event.edit.intern' 'Intern'}}
+					<input
+						type="checkbox"
+						class="-eventInternal"
+						{{isInternal}}
+					>
+					{{mf 'event.edit.intern' 'Internal'}}
 				</label>
 				{{mf 'event.edit.intern.description' '(Event will only be shown in group and location-details)'}}
 			</div>

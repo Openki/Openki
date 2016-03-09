@@ -65,7 +65,11 @@ Template.course_edit.helpers({
 	currentRegion: function(region) {
 		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
-	}
+	},
+
+	isInternal: function() {
+		return this.internal ? "checked" : null;
+	},
 });
 
 
@@ -93,7 +97,8 @@ Template.course_edit.events({
 			description: $('#editform_description').html(),
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
-			roles: roles
+			roles: roles,
+			internal: $('.-courseInternal').is(':checked'),
 		};
 
 		changes.name = saneText(changes.name);

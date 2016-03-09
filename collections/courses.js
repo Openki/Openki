@@ -14,6 +14,7 @@
 // "time_lastenrol"-> Date
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "internal"      -> Boolean
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
@@ -295,7 +296,8 @@ Meteor.methods({
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object),
-			groups:      Match.Optional([String])
+			groups:      Match.Optional([String]),
+			internal:    Match.Optional(Boolean),
 		});
 
 		var user = Meteor.user();
@@ -367,6 +369,9 @@ Meteor.methods({
 		if (changes.name) {
 			set.name = saneText(changes.name).substring(0, 1000);
 			set.slug = getSlug(set.name);
+		}
+		if (changes.internal !== undefined) {
+			set.internal = changes.internal;
 		}
 
 		set.time_lastedit = new Date();
