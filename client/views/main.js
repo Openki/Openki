@@ -4,6 +4,9 @@ Template.layout.helpers({
 			return "testWarning";
 		}
 		return false;
+	},
+	translate: function() {
+		return Router.current().route.getName() === "mfTrans";
 	}
 });
 
