@@ -111,7 +111,7 @@
 						<ul class="selected_categories">
 						{{#each categories}}
 							<li>
-								<span class="-category">{{categoryName}}</span>
+								<span class="category">{{categoryName}}</span>
 								<span
 									class="glyphicon glyphicon-remove -removeCategoryFilter"
 									title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
@@ -130,7 +130,7 @@
 							{{#if availableCategories}}
 								{{#each availableCategories}}
 									<li class="{{this}}">
-										<a class="-category {{#if availableSubcategories this}}parent{{/if}}">
+										<a class="category {{#if availableSubcategories this}}parent{{/if}}">
 											{{categoryName}}
 										</a>
 										{{#if availableSubcategories this}}
@@ -143,7 +143,7 @@
 									</li>
 									{{#each availableSubcategories this}}
 										<li class="-subcategory {{..}}">
-											<a class="-category">{{categoryName}}</a>
+											<a class="category">{{categoryName}}</a>
 										</li>
 									{{/each}}
 								{{/each}}

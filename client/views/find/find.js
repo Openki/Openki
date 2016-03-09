@@ -162,7 +162,7 @@ Template.find.events({
 		event.stopPropagation();
 	},
 
-	'click .-category': function(event, instance) {
+	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		updateUrl(event, instance);
 		instance.showingFilters.set(true);
