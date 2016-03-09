@@ -127,6 +127,7 @@ Meteor.methods({
 			host:        Match.Optional(Array),
 			replicaOf:   Match.Optional(String),
 			course_id:   Match.Optional(String),
+			internal:    Match.Optional(Boolean),
 			groups:      Match.Optional([String]),
 		};
 
