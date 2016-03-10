@@ -83,6 +83,7 @@ mediumeditor:mediumeditor@5.2.0
 meteor@1.1.10
 meteor-platform@1.2.3
 meteorhacks:inject-initial@1.0.3
+meteorhacks:ssr@2.2.0
 meteorhacks:subs-manager@1.6.2
 meteortoys:toykit@2.2.1
 minifiers@1.1.7

@@ -123,11 +123,11 @@ Meteor.methods({
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
 			files:       Match.Optional(Array),
-			mentors:	 Match.Optional(Array),
+			mentors:     Match.Optional(Array),
 			host:        Match.Optional(Array),
 			replicaOf:   Match.Optional(String),
-			course_id:	 Match.Optional(String),
-			groups:	     Match.Optional([String]),
+			course_id:   Match.Optional(String),
+			groups:      Match.Optional([String]),
 		};
 
 		var isNew = eventId === '';
@@ -211,8 +211,8 @@ Meteor.methods({
 		}
 
 		if (changes.title) {
-		    changes.title = saneText(changes.title).substring(0, 1000);
-		    changes.slug = getSlug(changes.title);
+			changes.title = saneText(changes.title).substring(0, 1000);
+			changes.slug = getSlug(changes.title);
 		}
 
 		if (isNew) {

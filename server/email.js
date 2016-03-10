@@ -101,23 +101,22 @@ Meteor.methods({
 				+"<br>It was deployed on "+deployDate+","
 				+"<br>and last restarted on " +restart+".";
 		}
-		var timeNow = new Date();
+
+		SSR.compileTemplate('messageReport', Assets.getText('messages/report.html'));
 
 		Email.send({
 			from: 'reporter@mail.openki.net',
 			to: 'admins@openki.net',
 			subject: "Report: " + subject,
-			html: "User " + reporter +
-				" reports a problem on the page <a href='"+htmlize(location)+"'>"+htmlize(subject)+"</a>"
-				+"<br><br>"
-				+"Their report:<br>"
-				+"<hr>"
-				+"<br>"+htmlize(report)+"<br>"
-				+"<hr>"
-				+"/end of report."
-				+"<br><br><small>"+versionString
-				+"<br>Now it's "+timeNow+"."
-				+"</small><br>See you! bye."
+			html: SSR.render("messageReport", {
+				reporter: reporter,
+				location: location,
+				subject: subject,
+				report: report,
+				versionString: versionString,
+				timeNow: new Date(),
+			})
 		});
 	}
+
 });

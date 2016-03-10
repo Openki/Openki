@@ -59,7 +59,7 @@ Template.course_edit.helpers({
 	},
 
 	regions: function() {
-	  return Regions.find();
+		return Regions.find();
 	},
 
 	currentRegion: function(region) {
@@ -78,7 +78,7 @@ Template.course_edit.rendered = function() {
 Template.course_edit.events({
 	'submit form, click button.save': function (ev, instance) {
 		ev.preventDefault();
-	
+
 		if (pleaseLogin()) return;
 
 		var courseId = this._id ? this._id : '';

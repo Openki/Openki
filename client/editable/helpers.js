@@ -10,7 +10,7 @@ Template.editable.onRendered(function() {
 	var options = {};
 	if (this.data.simple) {
 		options.disableReturn = true;
-		options.disableToolbar = true;
+		options.toolbar = false;
 	}
 
 	// When the text changes while we are editing, the changes will be

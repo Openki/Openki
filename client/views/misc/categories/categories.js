@@ -17,7 +17,7 @@ Template.category.helpers({
 
 Template.show_categories.events({
 	"click .category": function(event, template){
-		 template.$("[data-toggle='tooltip']").tooltip('hide');
+		template.$("[data-toggle='tooltip']").tooltip('hide');
 	}
 });
 
