@@ -113,16 +113,16 @@ Template.course.onCreated(function() {
 
 Template.course.events({
 	"mouseover a.category": function(event, template){
-		 template.$('.courselist_course').addClass('category-focus-mode');
+		 template.$('.courselist_course').addClass('elevate_child');
 	},
 	"mouseout a.category": function(event, template){
-		 template.$('.courselist_course').removeClass('category-focus-mode');
+		 template.$('.courselist_course').removeClass('elevate_child');
 	},
 	"mouseover a.group": function(event, template){
-		 template.$('.courselist_course').addClass('category-focus-mode');
+		 template.$('.courselist_course').addClass('elevate_child');
 	},
 	"mouseout a.group": function(event, template){
-		 template.$('.courselist_course').removeClass('category-focus-mode');
+		 template.$('.courselist_course').removeClass('elevate_child');
 	}
 });
 
