@@ -18,7 +18,8 @@
 
 
 	.editIcon {
-		color: gray;
+		.transition(color 0.5s);
+		color: @default-gray;
 		padding: 0.2em;
 	}
 
@@ -30,7 +31,10 @@
 
 	&.simple .editable {
 		display: inline-block;
-		min-width: 10em;
+
+		&:focus {
+			min-width: 10em;
+		}
 	}
 
 	&.rich .editable {
