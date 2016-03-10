@@ -4,7 +4,9 @@
 
 
 	.editable {
-		.transition(box-shadow @default-transition-time);
+		.transition(~"background-color @{default-transition-time},
+		              border @{default-transition-time},
+		              box-shadow @{default-transition-time}");
 		padding: 8px;
 
 		&:focus,
