@@ -4,15 +4,16 @@
 
 
 	.editable {
+		.transition(box-shadow 0.5s);
 		padding: 8px;
-	}
 
-	.editable:focus,
-	.editable.changed {
-		border: 1px solid @brand-primary;
-		padding: 7px;
-		background: @body-bg;
-		box-shadow: 7px 7px 7px rgba(0,0,0,.3);
+		&:focus,
+		&.changed {
+			.box-shadow-big(@default-shadow);
+			border: 1px solid @brand-primary;
+			background: @body-bg;
+			padding: 7px;
+		}
 	}
 
 
@@ -43,16 +44,24 @@
 	}
 }
 
+.editable:focus,
+.editable.changed {
+	& + .editIcon {
+		color: black;
+	}
+}
+
 .editable-controls {
 	z-index: 1;
-	margin-top: 5px;
+	margin-left: -8px;
+	margin-top: 15px;
 	position: absolute;
 
 
 		button {
+			.box-shadow-big(@default-shadow);
 			.btn;
-			margin-right: 10px;
-			box-shadow: 7px 7px 7px rgba(0,0,0,.3);
+			margin-right: 5px;
 
 			@media @mobile {
 				.form-control;
