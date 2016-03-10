@@ -47,19 +47,6 @@ Template.frameCalendar.helpers({
 	monthday: function() { return this.format('D'); },
 });
 
-Template.frameCalendarEvent.onRendered(function() {
-	this.$('.-eventLocationTime').dotdotdot({
-		height: 55,
-		watch : "window",
-	});
-	this.$('.-eventTitle').dotdotdot({
-		watch: "window",
-	});
-	this.$('.-eventDescription').dotdotdot({
-		watch: "window",
-	});
-});
-
 Template.frameCalendarEvent.helpers({
 	timely: function() { return moment().add(1, 'day').isAfter(this) && moment().subtract(1, 'day').isBefore(this); }
 });

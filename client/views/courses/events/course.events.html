@@ -19,7 +19,7 @@
 						<div class="course_events_events">
 							{{#each pastEvents}}
 								{{#if this}}
-									{{>course_event}}
+									{{> small_event}}
 								{{/if}}
 							{{/each}}
 						</div>
@@ -38,7 +38,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
-							{{>course_event}}
+							{{> small_event}}
 						{{/each}}
 					</div>
 				{{/if}}
@@ -57,7 +57,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each futureEvents}}
-							{{>course_event}}
+						{{> small_event}}
 						{{/each}}
 					</div>
 				{{/if}}
@@ -86,81 +86,4 @@
 			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
 	{{/if}}
-</template>
-
-
-<template name="course_event">
-	<!-- <div class="course_event">
-		<a href="{{pathFor 'showEvent'}}">
-			<div class="course_event_date">
-				<div class="container-fluid">
-					<span class="day">{{weekday start}}</span><br>
-					<span class="date">
-						<span class="glyphicon glyphicon-calendar"></span>
-						{{dateformat_mini_fullmonth start}}
-					</span>
-				</div>
-			</div>
-			<div class="course_event_lower_section">
-				<div class="container-fluid">
-					<div class="course_event_title"><h4>{{this.title}}</h4></div>
-					<div class="course_event_time">
-						<span class="glyphicon glyphicon-time"></span> {{timeformat start}}
-						{{#if location.name}}<br><span class="glyphicon glyphicon-home"></span> {{location.name}}{{/if}}
-					</div>
-				</div>
-			</div>
-			{{#if this.mentors}}
-			<p class="course_event_info">
-					<ul class="course_event_mentors">
-					{{#each this.mentors}}
-						<li><span class="icon-mini_mentor"></span>  {{username this}}</li>
-					{{/each}}
-					</ul>
-			</p>
-			{{/if}}
-			{{#if this.hosts}}
-			<p class="course_event_info"><span class="icon-mini_location"></span> ((Location name)) : {{mf 'course.events.hosted_by' 'hosted by'}} {{username host}} </p>
-			{{/if}}
-		</a>
-	</div> -->
-	<a href="{{pathFor 'showEvent'}}">
-		<div class="event_small_container">
-			<div class="event_small">
-				<div class="-eventLocationTime">
-					<span class="fa fa-clock-o"></span>
-					<span class="event_time">{{timeformat start}} - {{timeformat end}}</span>
-					<br>
-					<!-- Start 'location.name' helper statement -->
-					{{#if location.name}}
-						<!-- Start 'location._id' helper statement -->
-						{{#if location._id}}
-							<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
-								<span class="glyphicon glyphicon-home"></span>
-								{{location.name}}
-							</a>
-						<!-- Invert 'location._id' helper statement -->
-						{{else}}
-							<span class="glyphicon glyphicon-home"></span>
-							<span class="location_name">{{location.name}}</span>
-						{{/if}}
-						<!-- End 'location._id' helper statement -->
-						<!-- Start 'room' helper statement -->
-						{{#if room}}
-							<span class="fa fa-map-signs"></span>
-							<span class="location_room">{{this.room}}</span>
-						{{/if}}
-						<!-- End 'room' helper statement -->
-					{{/if}}
-					<!-- End 'location.name' helper statement -->
-				</div>
-				<div class="-eventTitle">
-					{{plain this.title}}
-				</div>
-				<div class="-eventDescription">
-					{{plain this.description}}
-				</div>
-			</div>
-		</div>
-	</a>
 </template>
