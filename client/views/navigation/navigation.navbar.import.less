@@ -34,69 +34,94 @@
 			}
 		}
 
-		.navbar-nav {
-			& > li {
-				& > a {
-					color: @brand-bg !important;
-					font-size: large;
-					padding: 15px 10px;
+		.navbar-collapse {
+			@media @mobile {
+				padding: 0;
+			}
 
-					&:hover {
-						color: @default-white !important;
-					}
+			@media @tablet {
+				padding: 0;
+			}
+			.navbar-nav {
+				& > li {
+					& > a {
+						color: @brand-bg !important;
+						font-size: large;
+						padding: 15px 10px;
 
-					span {
-						font-size: medium;
+						&:hover {
+							color: @default-white !important;
+						}
+
+						span {
+							font-size: medium;
+						}
 					}
 				}
-			}
 
-			span.caret {
-				.transform(0, -1.5, -1.5);
-				.transition(@default-transition-time);
-				bottom: 1px;
-				color: @brand-primary;
-				left: 46%;
-				position: absolute;
-			}
+				@media @mobile {
+					margin: 0;
+				}
 
-			li.dropdown.open span.caret {
-				.opacity(1);
-				color: @brand-bg;
-				z-index: 1099;
-			}
-
-			a.active {
-				&.over_content {
-					background: lighten(@brand-primary, 10%);
-
-					&:hover,
-					&:focus {
-						background: lighten(@brand-primary, 10%);
-						color: @body-bg;
-					}
-
-					span.caret {
-						.transition(color 0.3s);
-						color: lighten(@brand-primary, 10%);
-					}
+				@media @tablet {
+					margin: 0;
 				}
 
 				span.caret {
-					.opacity(1);
-					color: @default-white;
+					.transform(0, -1.5, -1.5);
+					.transition(@default-transition-time);
+					bottom: 1px;
+					color: @brand-primary;
+					left: 46%;
+					position: absolute;
+
+					@media @mobile {
+						display: none;
+					}
+
+					@media @tablet {
+						display: none;
+					}
 				}
-			}
 
-			a.loginButton {
-				cursor: pointer !important;
-			}
+				li.dropdown.open span.caret {
+					.opacity(1);
+					color: @brand-bg;
+					z-index: 1099;
+				}
 
-			.dropdown-menu {
-				border-top: none;
+				a.active {
+					&.over_content {
+						background: lighten(@brand-primary, 10%);
 
-				&.login-dropdown {
-					width: 300px;
+						&:hover,
+						&:focus {
+							background: lighten(@brand-primary, 10%);
+							color: @body-bg;
+						}
+
+						span.caret {
+							.transition(color 0.3s);
+							color: lighten(@brand-primary, 10%);
+						}
+					}
+
+					span.caret {
+						.opacity(1);
+						color: @default-white;
+					}
+				}
+
+				a.loginButton {
+					cursor: pointer !important;
+				}
+
+				.dropdown-menu {
+					border-top: none;
+
+					&.login-dropdown {
+						width: 300px;
+					}
 				}
 			}
 		}
