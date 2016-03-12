@@ -31,156 +31,154 @@
 				</span>
 			</div>
 		</div>
-		{{#if showingFilters}}
-			<div class="search_filter">
-				<div class="search_filter_header">
-					<h4>
-						<span class="glyphicon glyphicon-filter"></span>
-						{{mf 'find.search_filter.title' 'Filter search'}}
-					</h4>
-				</div>
-				<div class="search_events">
-					<div class="checkbox -filterToggle">
-						<label>
-							<input
-								type="checkbox"
-								id="hasUpcomingEvent"
-								name="hasUpcomingEvent"
-								{{toggleChecked 'upcomingEvent'}}
-							/>
-							{{#if toggleChecked 'upcomingEvent'}}
-								<div class="eventcaption_upcoming">
-									<div class="eventcaption_upcoming_box">
-										<div class="eventcaption_upcoming_text first-line"></div>
-										<div class="eventcaption_upcoming_text second-line"></div>
-										<div class="eventcaption_upcoming_text third-line"></div>
-									</div>
-								</div>
-							{{/if}}
-							{{#unless toggleChecked 'upcomingEvent'}}
-								<span class="glyphicon glyphicon-calendar"></span>
-							{{/unless}}
-							&nbsp;
-							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
-							&nbsp;
-							{{#if toggleChecked 'upcomingEvent'}}
-								<span class="glyphicon glyphicon-ok"></span>
-							{{/if}}
-						</label>
-					</div>
-					<div class="checkbox -filterToggle">
-						<label>
-							<input
-								type="checkbox"
-								id="needsHost"
-								name="needsHost"
-								style="display: none"
-								{{toggleChecked 'needsHost'}}
-							/>
-							<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
-							&nbsp;
-							{{mf 'find.needsHost' 'Looking for a host'}}
-							&nbsp;
-							{{#if toggleChecked 'needsHost'}}
-								<span class="glyphicon glyphicon-ok"></span>
-							{{/if}}
-						</label>
-					</div>
-					<div class="checkbox -filterToggle">
-						<label>
-							<input
-								type="checkbox"
-								id="needsMentor"
-								name="needsMentor"
-								style="display: none"
-								{{toggleChecked 'needsMentor'}}
-							/>
-							<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
-							&nbsp;
-							{{mf 'find.needsMentor' 'Looking for a mentor'}}
-							&nbsp;
-							{{#if toggleChecked 'needsMentor'}}
-								<span class="glyphicon glyphicon-ok"></span>
-							{{/if}}
-						</label>
-					</div>
-				</div>
-				<div class="filter_categories">
-					<h4>{{mf 'find.filter.categories' 'Categories'}}</h4>
-					{{#if categories}}
-						<ul class="selected_categories">
-						{{#each categories}}
-							<li>
-								<span class="category">{{categoryName}}</span>
-								<span
-									class="glyphicon glyphicon-remove -removeCategoryFilter"
-									title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
-								</span>
-							</li>
-						{{/each}}
-						</ul>
-					{{/if}}
-					<div class="dropdown -categorySelect categorySelect">
+		<div class="search_filter" style="{{#if showingFilters}}display:block;{{else}}display:none;{{/if}}">
+			<div class="search_filter_header">
+				<h4>
+					<span class="glyphicon glyphicon-filter"></span>
+					{{mf 'find.search_filter.title' 'Filter search'}}
+				</h4>
+			</div>
+			<div class="search_events">
+				<div class="checkbox -filterToggle">
+					<label>
 						<input
-							class="-searchCategories"
-							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
+							type="checkbox"
+							id="hasUpcomingEvent"
+							name="hasUpcomingEvent"
+							{{toggleChecked 'upcomingEvent'}}
 						/>
-						<span
-							class="dropdown-toggle"
-							data-toggle="dropdown"
-							role="button"
-							aria-expanded="false">
-						</span>
-						<ul class="dropdown-menu" role="menu">
-							{{#if availableCategories}}
-								{{#each availableCategories}}
-									<li class="{{this}}">
-										<a class="category {{#if availableSubcategories this}}parent{{/if}}">
-											{{categoryName}}
-										</a>
-										{{#if availableSubcategories this}}
-											<small
-												class="-showSubcategories {{this}}"
-												title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-												<span class="glyphicon glyphicon-plus"></span>
-											</small>
-										{{/if}}
-									</li>
-									{{#each availableSubcategories this}}
-										<li class="-subcategory {{..}}">
-											<a class="category">{{categoryName}}</a>
-										</li>
-									{{/each}}
-								{{/each}}
-							{{else}}
-								<li class="no_categories">
-									{{mf 'find.no_categories' 'No categories found.'}}
-								</li>
-							{{/if}}
-						</ul>
-					</div>
-				</div>
-				<div class="filter_groups">
-					<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
-					{{#if group}}
-						<h5>
-							{{mf 'find.filter.group' 'Showing courses in group:'}}
-						</h5>
-						<span class="group_name_static">{{> groupNameStatic group}}</span>
+						{{#if toggleChecked 'upcomingEvent'}}
+							<div class="eventcaption_upcoming">
+								<div class="eventcaption_upcoming_box">
+									<div class="eventcaption_upcoming_text first-line"></div>
+									<div class="eventcaption_upcoming_text second-line"></div>
+									<div class="eventcaption_upcoming_text third-line"></div>
+								</div>
+							</div>
+						{{/if}}
+						{{#unless toggleChecked 'upcomingEvent'}}
+							<span class="glyphicon glyphicon-calendar"></span>
+						{{/unless}}
 						&nbsp;
-						<span
-							class="glyphicon glyphicon-remove -removeGroupFilter"
-							title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}">
-						</span>
-						<br>
-					{{else}}
-						<span class="groups_explanation">
-							{{mf 'find.filter.groups.explanation' 'Click on a group to select its courses.'}}
-						</span>
-					{{/if}}
+						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+						&nbsp;
+						{{#if toggleChecked 'upcomingEvent'}}
+							<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</label>
+				</div>
+				<div class="checkbox -filterToggle">
+					<label>
+						<input
+							type="checkbox"
+							id="needsHost"
+							name="needsHost"
+							style="display: none"
+							{{toggleChecked 'needsHost'}}
+						/>
+						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
+						&nbsp;
+						{{mf 'find.needsHost' 'Looking for a host'}}
+						&nbsp;
+						{{#if toggleChecked 'needsHost'}}
+							<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</label>
+				</div>
+				<div class="checkbox -filterToggle">
+					<label>
+						<input
+							type="checkbox"
+							id="needsMentor"
+							name="needsMentor"
+							style="display: none"
+							{{toggleChecked 'needsMentor'}}
+						/>
+						<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
+						&nbsp;
+						{{mf 'find.needsMentor' 'Looking for a mentor'}}
+						&nbsp;
+						{{#if toggleChecked 'needsMentor'}}
+							<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</label>
 				</div>
 			</div>
-		{{/if}}
+			<div class="filter_categories">
+				<h4>{{mf 'find.filter.categories' 'Categories'}}</h4>
+				{{#if categories}}
+					<ul class="selected_categories">
+					{{#each categories}}
+						<li>
+							<span class="category">{{categoryName}}</span>
+							<span
+								class="glyphicon glyphicon-remove -removeCategoryFilter"
+								title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+							</span>
+						</li>
+					{{/each}}
+					</ul>
+				{{/if}}
+				<div class="dropdown -categorySelect categorySelect">
+					<input
+						class="-searchCategories"
+						placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
+					/>
+					<span
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						role="button"
+						aria-expanded="false">
+					</span>
+					<ul class="dropdown-menu" role="menu">
+						{{#if availableCategories}}
+							{{#each availableCategories}}
+								<li class="{{this}}">
+									<a class="category {{#if availableSubcategories this}}parent{{/if}}">
+										{{categoryName}}
+									</a>
+									{{#if availableSubcategories this}}
+										<small
+											class="-showSubcategories {{this}}"
+											title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
+											<span class="glyphicon glyphicon-plus"></span>
+										</small>
+									{{/if}}
+								</li>
+								{{#each availableSubcategories this}}
+									<li class="-subcategory {{..}}">
+										<a class="category">{{categoryName}}</a>
+									</li>
+								{{/each}}
+							{{/each}}
+						{{else}}
+							<li class="no_categories">
+								{{mf 'find.no_categories' 'No categories found.'}}
+							</li>
+						{{/if}}
+					</ul>
+				</div>
+			</div>
+			<div class="filter_groups">
+				<h4>{{mf 'find.filter.groups' 'Groups'}}</h4>
+				{{#if group}}
+					<h5>
+						{{mf 'find.filter.group' 'Showing courses in group:'}}
+					</h5>
+					<span class="group_name_static">{{> groupNameStatic group}}</span>
+					&nbsp;
+					<span
+						class="glyphicon glyphicon-remove -removeGroupFilter"
+						title="{{mf 'find.filter.removeGroup' 'Remove group {GROUPNAME} from filter' GROUPNAME=name}}">
+					</span>
+					<br>
+				{{else}}
+					<span class="groups_explanation">
+						{{mf 'find.filter.groups.explanation' 'Click on a group to select its courses.'}}
+					</span>
+				{{/if}}
+			</div>
+		</div>
 	</div>
 	<div class="courselist_results">
 		{{#unless ready}}
