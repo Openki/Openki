@@ -1,5 +1,5 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
+	var isMobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 768;
 	if (!isMobile) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -30,5 +30,5 @@ Template.navbar.helpers({
 Template.navbar.events({
 	'click .-clickClose': function(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
-	}
+	},
 });
