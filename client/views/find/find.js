@@ -154,7 +154,7 @@ Template.find.events({
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
 	'focus .-searchCategories': function(event, instance) {
-		instance.$('.-categorySelect').addClass('open');
+		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
 	'click .-showSubcategories': function(event, instance) {
