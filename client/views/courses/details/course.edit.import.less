@@ -1,7 +1,13 @@
 .find,
 .new_course {
 	.course_edit {
-		.grid(12)
+		.grid(12);
+
+		@media @mobile {
+			h2 {
+				margin-top: 0;
+			}
+		}
 	}
 }
 
@@ -19,6 +25,12 @@
 		border: 7px dashed @brand-bg;
 		margin-top: 10px;
 		padding: 20px 30px;
+
+		@media @mobile {
+			border: none;
+			margin-top: 0;
+			padding: 0 0 10px;
+		}
 
 		#editform_name,
 		#editform_description {

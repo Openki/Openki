@@ -66,7 +66,22 @@
 				margin-bottom: 10px;
 				padding: 0;
 
+				@media @mobile {
+					margin-bottom: 0;
+				}
+
 				.checkbox {
+					@media @mobile {
+						.form-control-humble;
+						.btn;
+						.btn-default;
+						margin-bottom: 10px;
+
+						&:last-child {
+							margin-bottom: 0;
+						}
+					}
+
 					label {
 						padding: 0;
 
@@ -142,6 +157,10 @@
 				margin-bottom: 10px;
 				padding: 0;
 
+				@media @mobile {
+					margin-bottom: 0;
+				}
+
 				h5 {
 					margin-top: 0;
 				}
@@ -156,6 +175,10 @@
 
 						&:focus {
 							border-color: @brand-bg;
+						}
+
+						@media @mobile {
+							width: 100%;
 						}
 					}
 
@@ -181,6 +204,10 @@
 						max-height: 300px;
 						overflow-x: hidden;
 						overflow-y: auto;
+
+						@media @mobile {
+							width: 100%;
+						}
 
 						li {
 							&:hover {
