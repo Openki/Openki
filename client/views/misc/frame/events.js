@@ -28,9 +28,3 @@ Router.map(function () {
 		}
 	});
 });
-
-Template.frameEvent.helpers({
-	timely: function() {
-		return moment().add(1, 'day').isAfter(this) && moment().subtract(1, 'day').isBefore(this);
-	},
-});
