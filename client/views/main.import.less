@@ -84,9 +84,8 @@ select {
 		cursor: pointer;
 	}
 
-	&:-moz-focusring {
-		color: @default-transparent; // Hack to make outline in Firefox disappear
-		text-shadow: 0 0 0 @default-shadow;
+	option.select_placeholder:hover {
+		cursor: not-allowed;
 	}
 }
 
