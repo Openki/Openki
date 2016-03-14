@@ -168,6 +168,10 @@
 				.categorySelect {
 					margin-bottom: 10px;
 
+					@media @mobile {
+						margin-bottom: 0;
+					}
+
 					input.-searchCategories {
 						border: 2px dashed @category-bg;
 						background: @body-bg;
@@ -270,6 +274,10 @@
 					li {
 						margin-bottom: 3px;
 						padding: 0 3px 3px 0;
+
+						@media @mobile {
+							display: inline-block;
+						}
 					}
 
 					span.category {
