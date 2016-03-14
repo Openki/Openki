@@ -187,10 +187,12 @@
 			{{#each results}}
 				{{> course}}
 			{{else}}
-				<div style="text-align: center; margin: 2em">
+				<div class="no_courses_found">
 				{{mf 'find.no_courses_found' 'No Courses found.'}}
 				{{#unless allRegions}}
+					<br>
 					<button class="-searchAllRegions">
+						<span class="glyphicon glyphicon-record"></span>
 						{{mf 'find.searchAllRegions' 'Search in all regions'}}
 					</button>
 				{{/unless}}
