@@ -7,18 +7,18 @@ Template.navbar.onRendered(function() {
 		this.$('.dropdown').on('hide.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
 		});
-	};
 
-	$(window).scroll(function (event) {
-		if($(window).scrollTop() > 5){
-			this.$('.navbar-container').addClass('over_content');
-			this.$('a.nav_link.active').addClass('over_content');
-		}
-		else if($(window).scrollTop() < 5){
-			this.$('.navbar-container').removeClass('over_content');
-			this.$('a.nav_link.active').removeClass('over_content');
-		}
-	});
+		$(window).scroll(function (event) {
+			if($(window).scrollTop() > 5){
+				this.$('.navbar-container').addClass('over_content');
+				this.$('a.nav_link.active').addClass('over_content');
+			}
+			else {
+				this.$('.navbar-container').removeClass('over_content');
+				this.$('a.nav_link.active').removeClass('over_content');
+			}
+		});
+	};
 });
 
 Template.navbar.helpers({
