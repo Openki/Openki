@@ -9,10 +9,8 @@ Template.region_sel.helpers({
 	},
 
 	currentRegion: function() {
-		var region = Session.get('region');
-		var thisRegion = this._id || "all";
-		if (thisRegion == region) return true;
-		else return false;
+		var region = this._id || "all";
+		return region == Session.get('region');
 	}
 });
 
