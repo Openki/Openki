@@ -306,6 +306,7 @@ Meteor.methods({
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
  *   course: only events for this course (ID)
+ *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
@@ -375,6 +376,10 @@ eventsFind = function(filter, limit) {
 
 	if (filter.course) {
 		find.course_id = filter.course;
+	}
+
+	if (filter.internal !== undefined) {
+		find.internal = filter.internal;
 	}
 
 	if (filter.search) {
