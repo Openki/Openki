@@ -47,7 +47,7 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("saveGroup", group._id, { name: newName }, handleSaving);
 					},
-					mf('group.name.placeholder',  'Name of your group, institution, community or programm'),
+					mf('group.name.placeholder',  'Name of your group, institution, community or program'),
 					showControls
 				);
 
