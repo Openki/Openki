@@ -6,6 +6,13 @@ Template.region_sel.helpers({
 	region: function(){
 		var region = Regions.findOne(Session.get('region'));
 		return region;
+	},
+
+	currentRegion: function() {
+		var region = Session.get('region');
+		var thisRegion = this._id || "all";
+		if (thisRegion == region) return true;
+		else return false;
 	}
 });
 

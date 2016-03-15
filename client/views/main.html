@@ -52,12 +52,18 @@
 		<li>
 			<a class="regionselect -clickClose" href="/region/">
 				{{mf 'menue.All regions' 'All regions'}}
+				{{#if currentRegion}}
+					<span class="glyphicon glyphicon-ok"></span>
+				{{/if}}
 			</a>
 		</li>
 		{{# each regions}}
 			<li>
 				<a href="#" class="regionselect -clickClose">
 					{{name}}
+					{{#if currentRegion}}
+						<span class="glyphicon glyphicon-ok"></span>
+					{{/if}}
 				</a>
 			</li>
 		{{/each}}
