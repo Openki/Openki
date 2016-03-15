@@ -81,7 +81,10 @@
 		{{#each lgs}}
 			<li>
 				<a href="#" class="langselect -clickClose">
-					{{this.name}}
+					{{name}}
+					{{#if currentLanguage}}
+						<span class="glyphicon glyphicon-ok"></span>
+					{{/if}}
 				</a>
 			</li>
 		{{/each}}
