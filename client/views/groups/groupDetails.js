@@ -200,7 +200,6 @@ Template.groupDetails.events({
 	'click .-removeMember': function(event, instance) {
 		var memberId = ''+this;
 		var groupId = Router.current().params._id;
-		console.log(memberId, groupId)
 		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
 			if (err) {
 				addMessage(mf('group.settings.removeMemberError', { ERROR: err }, "Error removing member: {ERROR}"), 'danger');
