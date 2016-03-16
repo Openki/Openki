@@ -6,10 +6,9 @@ describe('Frontpage', function () {
     // http://www.webdriver.io/api/protocol/url.html
     browser.url(process.env.ROOT_URL);
 
-    // Navigate to the page by by loading a route inside the browser.
+    // Navigate to the page by loading a route inside the browser.
     // http://www.webdriver.io/api/protocol/execute.html
     browser.execute(function() {
-      // This code runs in the browser (phantomjs).
       Router.go('/');
     })
 
@@ -40,7 +39,6 @@ describe('Frontpage', function () {
     // http://www.webdriver.io/api/utility/waitUntil.html
     browser.waitUntil(function() {
       var divcount = browser.selectorExecute('.courselist_course_container', function(divs) {
-        // This code runs in the browser (phantomjs).
         return divs.length;
       });
       return divcount == 6;
