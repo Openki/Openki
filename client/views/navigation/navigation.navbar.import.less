@@ -134,7 +134,7 @@
 					}
 
 					@media @mobile {
-						background: lighten(@brand-primary, 10%);
+						background: lighten(@brand-primary, 5%);
 					}
 				}
 
@@ -146,14 +146,21 @@
 					border-top: none;
 					color: @default-white !important;
 
+					span.glyphicon-ok {
+						font-size: small;
+						padding-left: 5px;
+					}
+
 					.dropdown-menu_mobile() {
 						color: @default-white;
-						margin-left: 5px;
+						border-left: 1px solid @default-white;
+						margin-left: 15px;
+						margin-top: -5px;
+						margin-bottom: 10px;
 						padding: 0;
 
 						li a {
-							font-size: large;
-							padding: 15px;
+							padding: 5px 15px;
 						}
 					}
 
