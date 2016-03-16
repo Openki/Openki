@@ -35,6 +35,7 @@
 		}
 
 		.navbar-collapse {
+			max-height: 400px;
 
 			@media @mobile {
 				padding: 0;
@@ -164,7 +165,7 @@
 						}
 					}
 
-					@media @mobile, {
+					@media @mobile {
 						.dropdown-menu_mobile;
 					}
 
@@ -173,7 +174,9 @@
 					}
 
 					&.login-dropdown {
-						width: 300px;
+						@media @mobile {
+							margin: 0;
+						}
 					}
 				}
 			}
