@@ -1,90 +1,58 @@
 .editableWrap {
-	position: relative;
 	margin: -8px;
-
-
+	position: relative;
 	.editable {
 		.transition(~"background-color @{default-transition-time},
 		              border @{default-transition-time},
 		              box-shadow @{default-transition-time}");
 		padding: 8px;
-
 		&:focus,
 		&.changed {
 			.box-shadow-big(@default-shadow);
-			border: 1px solid @brand-primary;
 			background: @body-bg;
+			border: 1px solid @brand-primary;
 			padding: 7px;
 		}
 	}
-
-
 	.editIcon {
 		.transition(color @default-transition-time);
 		color: @default-gray;
-		padding: 0.2em;
 		cursor: default;
+		padding: 0.2em;
 	}
-
 	&.rich .editIcon {
 		position: absolute;
 		right: 0;
 		top: 0;
 	}
-
 	&.simple .editable {
 		display: inline-block;
-
-		&:focus {
-			min-width: 10em;
-		}
+		&:focus { min-width: 10em; }
 	}
-
-	&.rich .editable {
-		min-height: 4ex;
-	}
+	&.rich .editable { min-height: 4ex; }
 }
 
-.editableWrap:hover {
-	.editIcon {
-		color: black;
-	}
-}
+.editableWrap:hover .editIcon { color: black; }
 
 .editable:focus,
-.editable.changed {
-	& + .editIcon {
-		color: black;
-	}
-}
+.editable.changed {	& + .editIcon { color: black; } }
 
 .editable-controls {
-	z-index: 1;
 	margin-left: -8px;
 	margin-top: 15px;
 	position: absolute;
-
-
-		button {
-			.box-shadow-big(@default-shadow);
+	z-index: 1;
+	button {
+		.box-shadow-big(@default-shadow);
+		.btn;
+		margin-right: 5px;
+		@media @mobile {
+			.form-control;
 			.btn;
-			margin-right: 5px;
-
-			@media @mobile {
-				.form-control;
-				.btn;
-				.btn-primary;
-				margin-bottom: 10px;
-			}
-
-			&.save {
-				.btn-success;
-			}
-
-			&.cancel {
-				.btn-cancel;
-			}
+			.btn-primary;
+			margin-bottom: 10px;
 		}
-
-
+		&.save { .btn-success; }
+		&.cancel { .btn-cancel; }
+	}
 }

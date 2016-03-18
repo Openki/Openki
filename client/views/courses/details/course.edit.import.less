@@ -2,138 +2,92 @@
 .new_course {
 	.course_edit {
 		.grid(12);
-
-		h2 {
-			margin-top: 0;
-		}
+		h2 { margin-top: 0; }
 	}
 }
 
-.coursedetails {
-	.course_edit {
-		.grid(12);
-	}
-}
+.coursedetails .course_edit { .grid(12); }
 
 .course_edit {
 	padding: 0;
-
 	.course_edit_body {
 		.grid(12);
 		border: 7px dashed @brand-bg;
 		margin-top: 10px;
 		padding: 20px 30px;
-
 		@media @mobile {
 			border: none;
 			margin-top: 0;
 			padding: 0 0 10px;
 		}
-
 		#editform_name,
-		#editform_description {
-			.form-control-humble;
-		}
-
+		#editform_description { .form-control-humble; }
 		#editform_description {
 			height: auto; // Reset fixed height from .form-control-humble
-			min-height: 100px;
 			max-height: 150px;
+			min-height: 100px;
 			overflow: auto;
 		}
-
 		#editform_categories,
 		.course_edit_roles,
 		.course_edit_region {
 			.grid(12, 4);
 			padding: 0;
 		}
-
 		ul.categories,
 		ul.subcategories,
 		ul.roles_list {
 			list-style: none;
 			padding-left: 0;
 		}
-
 		ul.categories,
 		ul.roles_list {
-
 			span.caret {
 				.transition(color @default-transition-time);
 				color: @default-light-grey;
 				left: 3px;
 				position: relative;
 				top: -1px;
-
-				&.active {
-					color: @default-black;
-				}
+				&.active { color: @default-black; }
 			}
-
 			label {
 				font-weight: normal;
-
 				&:hover {
 					color: @brand-primary;
 					cursor: pointer;
-
-					span.caret {
-						color: @default-black;
-					}
+					span.caret { color: @default-black; }
 				}
-
-				&.active {
-					color: @brand-primary;
-				}
-
-				input.checkbox {
-					margin-right: 3px;
-				}
+				&.active { color: @brand-primary; }
+				input.checkbox { margin-right: 3px; }
 			}
 		}
-
 		button.editCategories {
 			.btn-thin;
 			.btn-primary;
 		}
-
 		ul.subcategories {
 			left: 5px;
 			position: relative;
-
 			li {
 				left: 15px;
 				position: relative;
 			}
 		}
-
-		.course_edit_region {
-			margin-bottom: 10px;
-		}
-
+		.course_edit_region { margin-bottom: 10px; }
 		.course_edit_finishbtns {
 			.grid(12);
 			padding: 10px 0 0;
-
 			button {
 				.btn;
 				margin-right: 10px;
-
 				@media @mobile {
 					.form-control;
 					.btn;
 					.btn-primary;
 					margin-bottom: 10px;
 				}
-
-				&.save {
-					.btn-success;
-				}
-
-				&.cancel {
-					.btn-cancel;
-				}
+				&.save { .btn-success; }
+				&.cancel { .btn-cancel; }
 			}
 		}
 	}

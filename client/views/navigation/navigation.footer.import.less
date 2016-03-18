@@ -1,6 +1,6 @@
 #wrap {
-	min-height: 100%;
 	margin: 0 auto -50px;
+	min-height: 100%;
 }
 
 footer.footer {
@@ -9,34 +9,25 @@ footer.footer {
 	color: @body-bg;
 	font-size: large;
 	text-align: center;
-    //overflow: auto;
-
-	div {
-		& > a {
-			color: @body-bg;
-		}
-	}
-
+	div > a { color: @body-bg; }
 	.links {
-		word-spacing: 10px;
 		padding-top: 12px;
+		word-spacing: 10px;
 		div.long_link {
-			word-spacing: normal;
 			display: inline-block;
+			word-spacing: normal;
 		}
 	}
 	.version {
-		word-spacing: 2px;
-		margin-top: -5px;
+		color: #aaa;
 		font-size: small;
-		text-align: right;
+		margin-top: -5px;
 		position: absolute;
 		right: 8px;
-		color: #aaa;
+		text-align: right;
+		word-spacing: 2px;
 	}
 }
 
 .footer,
-.push {
-	height: 50px;
-}
+.push { height: 50px; }

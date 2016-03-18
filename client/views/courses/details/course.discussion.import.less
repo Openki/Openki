@@ -1,56 +1,35 @@
 .discussion {
 	.grid(12);
 	background: @brand-bg;
-	padding: 0;
 	margin-top: 15px;
-
-	h3 {
-		margin-top: 15px;
-	}
-
+	padding: 0;
+	h3 { margin-top: 15px; }
 	button {
 		.btn;
 		.btn-primary;
 		float: right;
-
 		&.cancel,
-		&.cancelEdit {
-			.btn-cancel;
-		}
-
-		&.write-comment {
-			.big-button-success;
-		}
-
-		&.edit {
-			.btn-success;
-		}
+		&.cancelEdit { .btn-cancel; }
+		&.write-comment { .big-button-success; }
+		&.edit { .btn-success; }
 	}
-
 	.discussion-conversation-container {
 		.grid(12);
 		border-top: 3px solid @body-bg;
 		padding-bottom: 10px;
-
 		.discussion-conversation {
 			.grid(12);
 			padding: 0;
-
 			.post-info {
 				border-top: 1px solid @body-bg;
 				padding-top: 10px;
 			}
-
-			&:first-child .post-info {
-				border-top: none;
-			}
+			&:first-child .post-info { border-top: none; }
 		}
 	}
-
 	label {
 		font-weight: inherit;
 		padding-top: 8px;
-
 		input.-anon {
 			display: inline-block;
 			height: auto;
@@ -66,25 +45,18 @@
 	background: @brand-primary;
 	border: 5px solid @brand-primary;
 	color: @body-bg;
-
-	h4 {
-		font-weight: bold;
-	}
+	h4 { font-weight: bold; }
 }
 
 .write-post-dialog,
 .edit-post-dialog {
 	.grid(12);
-
 	input,
 	textarea {
 		.form-control-humble;
 		margin-bottom: 10px;
 	}
-
-	textarea {
-		height: 60px;
-	}
+	textarea { height: 60px; }
 }
 
 .write-answer-graphics {
@@ -92,7 +64,6 @@
 	font-size: large;
 	padding: 0 15px 0 0;
 	text-align: right;
-
 	span.fa-reply {
 		.transform(0deg, -1, -1);
 		margin-top: 15px;
@@ -102,21 +73,14 @@
 .write-post-dialog {
 	border-top: 3px solid @body-bg;
 	padding-bottom: 20px;
-
 	&.answer {
 		.grid(11);
 		border-top: none;
 		padding: 10px 0 0;
 		text-align: right;
-
-		button.cancel {
-			margin-right: 0;
-		}
+		button.cancel {	margin-right: 0; }
 	}
-
-	button {
-		margin-right: 5px;
-	}
+	button { margin-right: 5px; }
 }
 
 .edit-post-dialog {
@@ -127,13 +91,11 @@
 	.grid(11);
 	.grid-offset(1);
 	padding: 10px 0 0;
-
 	.discussion-comment-info {
 		.grid(12);
 		border-top: 1px solid @body-bg;
 		padding: 10px 0 0;
 	}
-
 	.discussion-comment-text {
 		.grid(9, 8);
 		padding: 0;
@@ -144,49 +106,36 @@
 	.grid(12);
 	background: @brand-bg;
 	padding: 7px 0;
-
 	.post-info {
 		.grid(12);
 		padding: 0;
 	}
-
 	.post-text {
 		.grid(12);
 		padding: 0;
 	}
-
 	.post-options {
 		.grid(12);
 		padding: 0;
-
-		button {
-			margin-right: 5px;
-		}
+		button { margin-right: 5px; }
 	}
 }
 
 a.profilelink {
 	color: @default-black;
 	padding-right: 5px;
-
-
 	&:hover {
 		color: @brand-primary;
 		text-decoration: none;
-
 		span.glyphicon {
 			color: @default-black;
 			position: relative;
 			top: 4px;
 		}
 	}
-
 	span.glyphicon {
 		font-size: large;
-
-		&:hover {
-			color: @default-black;
-		}
+		&:hover { color: @default-black; }
 	}
 }
 
@@ -201,16 +150,13 @@ button.answer {
 	padding-bottom: 5px;
 }
 
-
-button.deleteComment  {
-
-  color: #333333;
-  background-color: #ec6d6d;
+button.deleteComment {
+	background-color: #ec6d6d;
   border-color: #e95656;
+  color: #333333;
   &:hover {
-    color: #333333;
-    background-color: #e64040;
+		background-color: #e64040;
     border-color: #e22020;
+    color: #333333;
   }
-
 }

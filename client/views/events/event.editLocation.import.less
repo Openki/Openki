@@ -1,97 +1,67 @@
 .locationFrame {
 	.grid(12);
 	padding: 0;
-
 	.locationEdit {
 		.grid(12);
 		background-color: @location-edit-bg;
 		border: 1px solid @default-light-grey;
 		overflow: auto;
 		padding: 0;
-
-		@media @mobile {
-			span.input-group-addon {
-				display: none;
-			}
-		}
-
+		@media @mobile { span.input-group-addon { display: none; } }
 		.input-group-addon:first-child {
 			border: none;
 			border-right: 1px solid @default-light-grey;
 		}
-
 		.locationSearch {
 			.grid(12, 6);
 			margin: 10px 0;
-
 			.currentLocation {
 				.locationName {
 					display: inline-block;
 					padding-bottom: 5px;
 				}
-
-				span.fa-map-marker {
-					color: darken(@brand-success, 40%);
-				}
-
+				span.fa-map-marker { color: darken(@brand-success, 40%); }
 				button.-locationChange {
 					.btn-thin;
 					.btn-primary;
 				}
 			}
-
 			.locationSearchbar {
 				padding-bottom: 5px;
-
-				input.-locationName {
-					.form-control-humble;
-				}
-
+				input.-locationName { .form-control-humble; }
 				button.-addressSearch {
 					.btn;
 					.btn-primary;
 				}
 			}
-
 			input.-locationAddress {
 				.form-control-humble;
 				margin-bottom: 5px;
 			}
-
 			ul.locationCandidates {
 				padding: 5px 0;
-
 				li.locationCandidate {
 					background-color: @location-candidate-bg;
 					list-style: none;
 					margin-bottom: 4px;
 					padding-left: 5px;
-
 					&.hover {
 						background: @location-candidate-hover-bg;
 						cursor: pointer;
 						fill: @location-candidate-hover-fill;
 					}
-
-					.address {
-						font-size: 11px;
-					}
+					.address { font-size: 11px; }
 				}
 			}
 		}
-
 		.locationMap {
 			.grid(12, 6);
 			margin: 10px 0;
 			padding-left: 0;
-
-			@media @mobile {
-				padding-left: 15px;
-			}
-
+			@media @mobile { padding-left: 15px; }
 			.mapContainer.box {
-				width: 100%;
 				height: 300px;
+				width: 100%;
 			}
 		}
 	}

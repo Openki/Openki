@@ -1,47 +1,28 @@
 .course_event_detail {
 	.container-narrow;
 	padding: 0;
-
 	.course_event {
-
 		.course_event_date {
 			.grid(12);
 			background: @brand-success;
 			border-bottom: 3px solid @body-bg;
 			padding-bottom: 10px;
 			padding-top: 10px;
-
 			span.date {
 				font-size: x-large;
-
-				span.glyphicon-calendar {
-					font-size: large;
-				}
+				span.glyphicon-calendar { font-size: large; }
 			}
-
-			span.glyphicon-time {
-				font-size: small;
-			}
+			span.glyphicon-time { font-size: small; }
 		}
-
-		.location {
-			margin-right: 5px;
-		}
-
+		.location { margin-right: 5px; }
 		.location,
-		ul.groups-list {
-			display: inline-block;
-		}
-
+		ul.groups-list { display: inline-block; }
 		.course_event_lower_section {
 			.grid(12);
 			padding: 0;
 		}
 	}
-
-	&>.course_event:hover,
-	&>.calendar_event:hover,
-	&>.calendar_event_past:hover {
-		box-shadow: none;
-	}
+	&>.course_event,
+	&>.calendar_event,
+	&>.calendar_event_past { &:hover { box-shadow: none; } }
 }

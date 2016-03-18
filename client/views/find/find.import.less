@@ -1,99 +1,65 @@
 .find {
 	.container;
-
 	h1 {
 		margin-top: 0;
-
 		@media @mobile {
 			font-size: x-large;
 			margin: 20px 0 10px;
 		}
 	}
-
 	.search {
 		.grid(12);
 		padding: 0;
-
 		.-searchField {
 			.grid(12, inherit, 5);
 			padding: 0 0 15px;
-
 			input.-searchInput {
 				.form-control-humble;
 				font-size: large;
 				height: 38px;
 			}
-
 			button.-findButton {
 				.btn;
 				.btn-success;
 				padding: 8px 12px !important;
 			}
-
 			button.-showFilters {
 				.btn;
 				.btn-primary;
 				padding: 8px 12px !important;
 			}
 		}
-
 		.search_filter {
 			.grid(12, inherit, 7);
 			padding: 0 0 0 15px;
-
-			@media screen and (max-width: @screen-md) {
-				padding: 0;
-			}
-
+			@media screen and (max-width: @screen-md) { padding: 0; }
 			h4,
-			h5 {
-				color: @brand-primary;
-			}
-
+			h5 { color: @brand-primary; }
 			.search_filter_header {
 				.grid(12);
 				border-bottom: 1px solid @brand-bg;
 				color: @brand-primary;
 				padding: 0;
-
-				h4 {
-					margin-top: 8px;
-				}
+				h4 { margin-top: 8px; }
 			}
-
 			.search_events {
 				.grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0;
-
-				@media @mobile {
-					margin-bottom: 0;
-				}
-
+				@media @mobile { margin-bottom: 0; }
 				.checkbox {
 					@media @mobile {
 						.form-control-humble;
 						.btn;
 						.btn-default;
 						margin-bottom: 10px;
-
-						&:last-child {
-							margin-bottom: 0;
-						}
+						&:last-child { margin-bottom: 0; }
 					}
-
 					label {
 						padding: 0;
-
-						&:hover {
-							color: @brand-primary;
-						}
+						&:hover { color: @brand-primary; }
 					}
-
-					input#hasUpcomingEvent {
-						display: none;
-					}
-
+					input#hasUpcomingEvent { display: none; }
 					.eventcaption_upcoming {
 						background: @brand-bg;
 						display: inline-block;
@@ -101,7 +67,6 @@
 						position: relative;
 						vertical-align: bottom;
 						width: 28px;
-
 						.eventcaption_upcoming_box {
 							background: @brand-success;
 							height: 10px;
@@ -109,41 +74,26 @@
 							right: 0;
 							top: 0;
 							width: 10px;
-
 							.eventcaption_upcoming_text {
 								background: @default-shadow;
 								left: 3px;
 								height: 1px;
 								position: absolute;
 								width: 3px;
-
-								&.first-line {
-									top: 2px;
-								}
-
-								&.second-line {
-									top: 4px;
-								}
-
-								&.third-line {
-									top: 6px;
-								}
+								&.first-line { top: 2px; }
+								&.second-line { top: 4px; }
+								&.third-line { top: 6px; }
 							}
 						}
 					}
-
 					span.glyphicon-calendar,
 					span.glyphicon-home,
-					span.fa-graduation-cap {
-						color: @brand-primary;
-					}
-
+					span.fa-graduation-cap { color: @brand-primary; }
 					span.glyphicon-home.checked {
 						background: @role-no-bg;
 						color: @role-no-text;
 						padding: 4px 17px 2px;
 					}
-
 					span.fa-graduation-cap.checked {
 						background: @role-no-bg;
 						color: @role-no-text;
@@ -151,44 +101,24 @@
 					}
 				}
 			}
-
 			.filter_categories {
 				.grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0;
-
-				@media @mobile {
-					margin-bottom: 0;
-				}
-
-				h5 {
-					margin-top: 0;
-				}
-
+				@media @mobile { margin-bottom: 0; }
+				h5 { margin-top: 0; }
 				.categorySelect {
 					margin-bottom: 10px;
-
-					@media @mobile {
-						margin-bottom: 0;
-					}
-
+					@media @mobile { margin-bottom: 0; }
 					input.-searchCategories {
-						border: 2px dashed @category-bg;
 						background: @body-bg;
+						border: 2px dashed @category-bg;
 						padding: 2px 5px;
-
-						&:focus {
-							border-color: @brand-bg;
-						}
-
-						@media @mobile {
-							width: 100%;
-						}
+						&:focus { border-color: @brand-bg; }
+						@media @mobile { width: 100%; }
 					}
-
 					.dropdown-toggle {
 						position: relative;
-
 						&::before {
 							content: '\f107';
 							font-family: FontAwesome;
@@ -196,90 +126,56 @@
 							left: -1em;
 						}
 					}
-
-					&.open .dropdown-toggle::before {
-						content: '\f106';
-					}
-
+					&.open .dropdown-toggle::before { content: '\f106'; }
 					ul.dropdown-menu {
 						background: @body-bg;
-						min-width: 80%;
 						margin-top: 0;
 						max-height: 300px;
+						min-width: 80%;
 						overflow-x: hidden;
 						overflow-y: auto;
-
-						@media @mobile {
-							width: 100%;
-						}
-
+						@media @mobile { width: 100%; }
 						li {
-							&:hover {
-								background: @category-bg;
-							}
-
+							&:hover { background: @category-bg; }
 							&.no_categories {
 								color: @category-text;
 								padding: 0px 5px;
 								text-align: center;
-
 								&:hover {
 									cursor: default;
 									background-color: @body-bg;
 								}
 							}
-
-							&> * {
-								display: inline-block;
-							}
+							& > * { display: inline-block; }
 						}
-
 						a {
 							padding: 3px 10px;
-
-							&:hover {
-								background: none;
-							}
-
+							&:hover { background: none; }
 							&.category.parent {
-								padding-right: 3px;
 								color: @brand-primary;
+								padding-right: 3px;
 							}
 						}
-
 						.-showSubcategories {
 							color: lighten(@brand-primary, 10%);
 							padding: 0 5px;
-
-							&:hover {
-								color: @brand-primary;
-							}
+							&:hover { color: @brand-primary; }
 						}
 					}
-
 					li.-subcategory {
 						display: none;
-
-						a {
-							color: @default-black;
-						}
+						a { color: @default-black; }
 					}
 				}
-
 				ul.selected_categories {
 					list-style: none;
 					margin: 0;
 					padding-left: 0;
-
 					li {
 						margin-bottom: 3px;
 						padding: 0 3px 3px 0;
-
-						@media @mobile {
-							display: inline-block;
-						}
+						@media @mobile { display: inline-block; }
 					}
-
 					span.category {
 						background: @category-bg;
 						color: @category-text;
@@ -287,17 +183,12 @@
 					}
 				}
 			}
-
 			.filter_groups {
 				.grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0;
-
-				h5 {
-					color: @default-black;
-				}
+				h5 { color: @default-black; }
 			}
-
 			span.glyphicon-remove {
 				.btn-remove;
 				position: relative;
@@ -305,12 +196,10 @@
 			}
 		}
 	}
-
 	.courselist_results {
 		.no_courses_found {
 			margin: 2em;
 			text-align: center;
-
 			button.-searchAllRegions {
 				.btn-thin;
 				.btn-primary;
@@ -318,8 +207,5 @@
 			}
 		}
 	}
-
-	.course_edit {
-		padding: 0;
-	}
+	.course_edit { padding: 0; }
 }

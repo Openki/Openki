@@ -1,6 +1,4 @@
-.login-dropdown {
-	width: 300px;
-}
+.login-dropdown { width: 300px; }
 
 #loginFrame {
 	.grid(12);
@@ -8,15 +6,10 @@
 	color: @default-black;
 	padding: 0 20px;
 	text-align: center;
-
 	.current_user {
 		.grid(12);
 		padding: 0;
-
-		h3 {
-			margin-top: 0;
-		}
-
+		h3 { margin-top: 0; }
 		a.my_profile,
 		a.settings,
 		button.loginLogout {
@@ -26,27 +19,18 @@
 			margin-bottom: 15px;
 		}
 	}
-
 	.login {
 		.grid(12);
 		padding: 0;
-
 		& > div,
-		& > button {
-			margin-bottom: 15px !important;
-		}
-
+		& > button { margin-bottom: 15px !important; }
 		input#login-name,
 		input#login-password,
-		input#login-email {
-			.form-control-humble;
-		}
-
-		span.fa-lock{
+		input#login-email { .form-control-humble; }
+		span.fa-lock {
 			font-size: large;
 			padding: 0 1px;
 		}
-
 		#username_warning,
 		#username_warning_not_existing,
 		#password_warning,
@@ -56,12 +40,10 @@
 			margin: -10px 0 10px !important;
 			text-align: left;
 		}
-
 		.registering_email_instructions {
 			margin-top: -10px;
 			text-align: justify;
 		}
-
 		button.forgot {
 			background: none;
 			border: none;
@@ -70,74 +52,41 @@
 			font-size: 0.9em;
 			margin-top: -10px;
 			padding-right: 0;
-
-			&:focus {
-				text-decoration: underline;
-			}
-
+			&:focus { text-decoration: underline; }
 			&:hover {
 				color: @brand-primary;
 				cursor: pointer;
 			}
 		}
-
 		button.loginLogin,
 		button.loginRegister{
 			.form-control;
 			.btn;
 			.btn-primary;
-
 			&.loginLoginLogin,
-			&.registering {
-				.btn-success;
-			}
+			&.registering { .btn-success; }
 		}
-
 		.external_logins {
 			background-color: darken(@brand-bg, 3%);
 			margin: 0 0 15px;
 			padding: 5px 0;
-
-			p {
-				margin: 3px 0 0;
-			}
-
+			p { margin: 3px 0 0; }
 			.loginWithService {
 				background: none;
 				border: none;
 				color: @default-gray;
 				font-size: xx-large;
 				padding: 0 9px;
-
 				&:hover {
-					.fa-google-plus-square {
-						color: @google-plus;
-					}
-
-					.fa-facebook-square {
-						color: @facebook;
-					}
-
-					.fa-github-square {
-						color: @github;
-					}
+					.fa-google-plus-square { color: @google-plus; }
+					.fa-facebook-square { color: @facebook; }
+					.fa-github-square { color: @github; }
 				}
 			}
 		}
 	}
-
-	&.password_warning {
-		input#login-password{
-			border-color: @brand-danger;
-		}
-	}
-
-	&.username_warning {
-		input#login-name{
-			border-color: @brand-danger;
-		}
-	}
-
+	&.password_warning input#login-password { border-color: @brand-danger ;}
+	&.username_warning input#login-name { border-color: @brand-danger; }
 	&.username_warning,
 	&.password_warning {
 		button.forgot {
@@ -148,48 +97,28 @@
 			margin-top: 10px;
 		}
 	}
-
-
 	.forgot_login {
 		.grid(12);
 		padding: 0;
-
-		h2 {
-			margin-top: 0;
-		}
-
+		h2 { margin-top: 0; }
 		& > p,
 		& > div,
-		& > button {
-			margin-bottom: 15px !important;
-		}
-
+		& > button { margin-bottom: 15px !important; }
 		.input-group {
 			margin-bottom: 0;
-
-			input.-loginEmail {
-				.form-control-humble;
-			}
+			input.-loginEmail { .form-control-humble; }
 		}
-
-		.email_instructions {
-			margin-top: -10px;
-		}
-
+		.email_instructions { margin-top: -10px; }
 		button.-forgotSend {
 			.form-control;
 			.btn;
 			.btn-primary;
 		}
-
 		button.-forgotClose {
 			.form-control;
 			.btn;
 			.btn-cancel;
 		}
 	}
-
-	@media @mobile {
-		padding: 20px 15px 10px;
-	}
+	@media @mobile { padding: 20px 15px 10px; }
 }
