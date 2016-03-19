@@ -9,7 +9,9 @@
 		border-bottom: none;
 		margin-top: 10px;
 		padding: 20px 30px 0px;
-		@media @mobile {
+		@media
+		@0-xxs,
+		@xxs-xs {
 			border: none;
 			margin-top: 0;
 			padding: 0;
@@ -21,8 +23,10 @@
 		.show_duration {
 			.grid(12, 4);
 			@media
-			@mobile,
-			@tablet { padding: 0; }
+			@0-xxs,
+			@xxs-xs,
+			@xs-xsm,
+			@xsm-sm { padding: 0; }
 		}
 		.date { padding-left: 0; }
 		.end_time,
@@ -37,7 +41,9 @@
 		border: dashed 7px @brand-bg;
 		border-top: none;
 		padding: 0px 30px 20px;
-		@media @mobile {
+		@media
+		@0-xxs,
+		@xxs-xs {
 			border: none;
 			padding: 0 0 10px;
 		}
@@ -55,7 +61,9 @@
 		.region_selection {
 			.grid(12, 4);
 			padding-left: 0;
-			@media @tablet { padding: 0; }
+			@media
+			@xs-xsm,
+			@xsm-sm { padding: 0; }
 		}
 		.files {
 			.grid(12, 8);
@@ -100,7 +108,9 @@
 				&.saveEditEvent {
 					.btn;
 					.btn-success;
-					@media @mobile {
+					@media
+					@0-xxs,
+					@xxs-xs {
 						.form-control;
 						.btn;
 						.btn-success;
@@ -110,7 +120,9 @@
 				&.cancelEditEvent {
 					.btn;
 					.btn-cancel;
-					@media @mobile {
+					@media
+					@0-xxs,
+					@xxs-xs {
 						.form-control;
 						.btn;
 						.btn-cancel;

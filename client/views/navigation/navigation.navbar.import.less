@@ -29,8 +29,10 @@
 		.navbar-collapse {
 			max-height: 400px;
 			@media
-			@mobile,
-			@tablet {
+			@0-xxs,
+			@xxs-xs,
+			@xs-xsm,
+			@xsm-sm {
 				box-shadow: 0 7px 7px @default-shadow;
 				padding: 0;
 			}
@@ -43,8 +45,10 @@
 					span { font-size: medium; }
 				}
 				@media
-				@mobile,
-				@tablet {
+				@0-xxs,
+				@xxs-xs,
+				@xs-xsm,
+				@xsm-sm {
 					margin: 0;
 					& > li > a { color: @default-white !important; }
 					& > li.dropdown > a::after {
@@ -66,8 +70,10 @@
 					left: 46%;
 					position: absolute;
 					@media
-					@mobile,
-					@tablet { display: none; }
+					@0-xxs,
+					@xxs-xs,
+					@xs-xsm,
+					@xsm-sm { display: none; }
 				}
 				li.dropdown.open span.caret {
 					.opacity(1);
@@ -91,7 +97,9 @@
 						.opacity(1);
 						color: @default-white;
 					}
-					@media @mobile { background: lighten(@brand-primary, 5%); }
+					@media
+					@0-xxs,
+					@xxs-xs { background: lighten(@brand-primary, 5%); }
 				}
 				a.loginButton { cursor: pointer !important; }
 				.dropdown-menu {
@@ -102,8 +110,10 @@
 						padding-left: 5px;
 					}
 					@media
-					@mobile,
-					@tablet {
+					@0-xxs,
+					@xxs-xs,
+					@xs-xsm,
+					@xsm-sm {
 						border-left: 1px solid @default-white;
 						color: @default-white;
 						margin: -5px 0 10px 15px;
@@ -112,7 +122,9 @@
 					}
 					&.login-dropdown {
 						padding-top: 15px;
-						@media @mobile {
+						@media
+						@0-xxs,
+						@xxs-xs {
 							margin: 0;
 							padding-top: 0;
 						}

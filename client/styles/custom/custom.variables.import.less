@@ -1,15 +1,18 @@
 // Most variables (like @brand-... etc.) are defined in:
 // -> /bootstrap/custom.bootstrap.import.less
 
-// Variables for nicely readable nested directives
-@mobile:                     ~"screen and (max-width: @{screen-xs})";
-@tablet:                     ~"screen and (min-width: @{screen-xs}) and (max-width: @{screen-sm})";
-@desktop:                    ~"screen and (min-width: @{screen-md}) and (max-width: @{screen-md})";
-@large-desktop:              ~"screen and (min-width: @{screen-lg}) and (max-width: @{screen-lg})";
+// Custom grid breakpoints
+@screen-xxs:     380px;
+@screen-xsm:     550px;
 
-// Custom grid breakpoints for smaller screen sizes
-@screen-xxs:                 550px;
-@screen-xxxs:                380px;
+// Variables for nicely readable nested directives
+@0-xxs:          ~"screen and (max-width: @{screen-xxs})";
+@xxs-xs:         ~"screen and (min-width: @{screen-xxs}) and (max-width: @{screen-xs})";
+@xs-xsm:         ~"screen and (min-width: @{screen-xs} and (max-width: @{screen-xsm}))";
+@xsm-sm:         ~"screen and (min-width: @{screen-xsm}) and (max-width: @{screen-sm})";
+@sm-md:          ~"screen and (min-width: @{screen-sm}) and (max-width: @{screen-md})";
+@md-lg:          ~"screen and (min-width: @{screen-md}) and (max-width: @{screen-lg})";
+@lg-infinite:    ~"screen and (min-width: @{screen-lg})";
 
 // Other values
 @default-transition-time:    0.5s;
