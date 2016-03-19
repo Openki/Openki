@@ -2,14 +2,6 @@
   .grid(4, 3, inherit, 2);
   height: 200px;
   padding: 0 3px 10px;
-  @media screen and (max-width: @screen-xsm) {
-    .grid(6);
-    padding: 0 3px 10px;
-  }
-  @media screen and (max-width: @screen-xxs) {
-    .grid(12);
-    padding: 0 3px 10px;
-  }
   .small_event {
     .grid(12);
     .transition(box-shadow @default-transition-time);
@@ -50,5 +42,17 @@
       margin-top: -3px;
       padding: 0 5px 5px;
     }
+  }
+
+	@media screen and
+	(max-width: @screen-xxs) {
+    .grid(12);
+    padding: 0 3px 10px;
+  }
+	@media screen and
+	(min-width: @screen-xxs) and
+	(max-width: @screen-xsm) {
+    .grid(6);
+    padding: 0 3px 10px;
   }
 }

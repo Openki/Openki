@@ -79,13 +79,13 @@
 				padding: 0 9px;
 				&:hover {
 					.fa-google-plus-square { color: @google-plus; }
-					.fa-facebook-square { color: @facebook; }
-					.fa-github-square { color: @github; }
+						 .fa-facebook-square { color: @facebook; }
+							 .fa-github-square { color: @github; }
 				}
 			}
 		}
 	}
-	&.password_warning input#login-password { border-color: @brand-danger ;}
+	&.password_warning input#login-password,
 	&.username_warning input#login-name { border-color: @brand-danger; }
 	&.username_warning,
 	&.password_warning {
@@ -120,7 +120,6 @@
 			.btn-cancel;
 		}
 	}
-	@media
-	@0-xxs,
-	@xxs-xs { padding: 20px 15px 10px; }
+	@media screen and
+	(max-width: @screen-xs) { padding: 20px 15px 10px; }
 }

@@ -15,9 +15,8 @@
 		border: 7px dashed @brand-bg;
 		margin-top: 10px;
 		padding: 20px 30px;
-		@media
-		@0-xxs,
-		@xxs-xs {
+		@media screen and
+		(max-width: @screen-xs) {
 			border: none;
 			margin-top: 0;
 			padding: 0 0 10px;
@@ -82,9 +81,8 @@
 			button {
 				.btn;
 				margin-right: 10px;
-				@media
-				@0-xxs,
-				@xxs-xs {
+				@media screen and
+				(max-width: @screen-xs) {
 					.form-control;
 					.btn;
 					.btn-primary;

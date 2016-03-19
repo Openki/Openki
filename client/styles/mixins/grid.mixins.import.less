@@ -10,13 +10,16 @@
 
 .grid(@xs, @sm, @md) {
 	.make-xs-column(@xs);
-	& when not (@sm = inherit) { .make-sm-column(@sm); }
+	& when not (@sm = inherit) {
+		.make-sm-column(@sm); }
 	.make-md-column(@md);
 }
 
 .grid(@xs, @sm, @md, @lg) {
 	.make-xs-column(@xs);
-	& when not (@sm = inherit) { .make-sm-column(@sm); }
-	& when not (@md = inherit) { .make-md-column(@md); }
+	& when not (@sm = inherit) {
+		.make-sm-column(@sm); }
+	& when not (@md = inherit) {
+		.make-md-column(@md); }
 	.make-lg-column(@lg);
 }

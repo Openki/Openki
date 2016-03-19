@@ -7,9 +7,8 @@
 		border: 1px solid @default-light-grey;
 		overflow: auto;
 		padding: 0;
-		@media
-		@0-xxs,
-		@xxs-xs { span.input-group-addon { display: none; } }
+		@media screen and
+		(max-width: @screen-xs) {	span.input-group-addon { display: none; }	}
 		.input-group-addon:first-child {
 			border: none;
 			border-right: 1px solid @default-light-grey;
@@ -60,9 +59,8 @@
 			.grid(12, 6);
 			margin: 10px 0;
 			padding-left: 0;
-			@media
-			@0-xxs,
-			@xxs-xs { padding-left: 15px; }
+			@media screen and
+			(max-width: @screen-xs) { padding-left: 15px; }
 			.mapContainer.box {
 				height: 300px;
 				width: 100%;

@@ -9,9 +9,8 @@
 		border-bottom: none;
 		margin-top: 10px;
 		padding: 20px 30px 0px;
-		@media
-		@0-xxs,
-		@xxs-xs {
+		@media screen and
+		(max-width: @screen-xs) {
 			border: none;
 			margin-top: 0;
 			padding: 0;
@@ -22,11 +21,8 @@
 		.end_time,
 		.show_duration {
 			.grid(12, 4);
-			@media
-			@0-xxs,
-			@xxs-xs,
-			@xs-xsm,
-			@xsm-sm { padding: 0; }
+			@media screen and
+			(max-width: @screen-sm) { padding: 0; }
 		}
 		.date { padding-left: 0; }
 		.end_time,
@@ -41,9 +37,8 @@
 		border: dashed 7px @brand-bg;
 		border-top: none;
 		padding: 0px 30px 20px;
-		@media
-		@0-xxs,
-		@xxs-xs {
+		@media screen and
+		(max-width: @screen-xs) {
 			border: none;
 			padding: 0 0 10px;
 		}
@@ -61,9 +56,9 @@
 		.region_selection {
 			.grid(12, 4);
 			padding-left: 0;
-			@media
-			@xs-xsm,
-			@xsm-sm { padding: 0; }
+			@media screen and
+			(min-width: @screen-xs) and
+			(max-width: @screen-sm) { padding: 0; }
 		}
 		.files {
 			.grid(12, 8);
@@ -108,9 +103,8 @@
 				&.saveEditEvent {
 					.btn;
 					.btn-success;
-					@media
-					@0-xxs,
-					@xxs-xs {
+					@media screen and
+					(max-width: @screen-xs) {
 						.form-control;
 						.btn;
 						.btn-success;
@@ -120,9 +114,8 @@
 				&.cancelEditEvent {
 					.btn;
 					.btn-cancel;
-					@media
-					@0-xxs,
-					@xxs-xs {
+					@media screen and
+					(max-width: @screen-xs) {
 						.form-control;
 						.btn;
 						.btn-cancel;

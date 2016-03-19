@@ -28,11 +28,8 @@
 		}
 		.navbar-collapse {
 			max-height: 400px;
-			@media
-			@0-xxs,
-			@xxs-xs,
-			@xs-xsm,
-			@xsm-sm {
+			@media screen and
+			(max-width: @screen-sm) {
 				box-shadow: 0 7px 7px @default-shadow;
 				padding: 0;
 			}
@@ -44,11 +41,8 @@
 					&:hover { color: @default-white !important; }
 					span { font-size: medium; }
 				}
-				@media
-				@0-xxs,
-				@xxs-xs,
-				@xs-xsm,
-				@xsm-sm {
+				@media screen and
+				(max-width: @screen-sm) {
 					margin: 0;
 					& > li > a { color: @default-white !important; }
 					& > li.dropdown > a::after {
@@ -69,11 +63,8 @@
 					color: @brand-primary;
 					left: 46%;
 					position: absolute;
-					@media
-					@0-xxs,
-					@xxs-xs,
-					@xs-xsm,
-					@xsm-sm { display: none; }
+					@media screen and
+					(max-width: @screen-sm) { display: none; }
 				}
 				li.dropdown.open span.caret {
 					.opacity(1);
@@ -97,9 +88,8 @@
 						.opacity(1);
 						color: @default-white;
 					}
-					@media
-					@0-xxs,
-					@xxs-xs { background: lighten(@brand-primary, 5%); }
+					@media screen and
+					(max-width: @screen-xs) { background: lighten(@brand-primary, 5%); }
 				}
 				a.loginButton { cursor: pointer !important; }
 				.dropdown-menu {
@@ -109,11 +99,8 @@
 						font-size: small;
 						padding-left: 5px;
 					}
-					@media
-					@0-xxs,
-					@xxs-xs,
-					@xs-xsm,
-					@xsm-sm {
+					@media screen and
+					(max-width: @screen-sm) {
 						border-left: 1px solid @default-white;
 						color: @default-white;
 						margin: -5px 0 10px 15px;
@@ -122,9 +109,8 @@
 					}
 					&.login-dropdown {
 						padding-top: 15px;
-						@media
-						@0-xxs,
-						@xxs-xs {
+						@media screen and
+						(max-width: @screen-xs) {
 							margin: 0;
 							padding-top: 0;
 						}

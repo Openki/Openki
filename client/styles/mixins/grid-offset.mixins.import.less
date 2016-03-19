@@ -11,13 +11,16 @@
 
 .grid-offset(@xs, @sm, @md) {
 	.make-xs-column-offset(@xs);
-	& when not (@sm = inherit) { .make-sm-column-offset(@sm); }
+	& when not (@sm = inherit) {
+		.make-sm-column-offset(@sm); }
 	.make-md-column-offset(@md);
 }
 
 .grid-offset(@xs, @sm, @md, @lg) {
 	.make-xs-column-offset(@xs);
-	& when not (@sm = inherit) { .make-sm-column-offset(@sm); }
-	& when not (@md = inherit) { .make-md-column-offset(@md); }
+	& when not (@sm = inherit) {
+		.make-sm-column-offset(@sm); }
+	& when not (@md = inherit) {
+		.make-md-column-offset(@md); }
 	.make-lg-column-offset(@lg);
 }

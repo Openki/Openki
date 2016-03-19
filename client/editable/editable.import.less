@@ -46,15 +46,14 @@
 		.box-shadow-big(@default-shadow);
 		.btn;
 		margin-right: 5px;
-		@media
-		@0-xxs,
-		@xxs-xs {
-			.form-control;
-			.btn;
-			.btn-primary;
-			margin-bottom: 10px;
-		}
 		&.save { .btn-success; }
 		&.cancel { .btn-cancel; }
+
+		@media screen and
+		(max-width: @screen-xs) {
+			.form-control;
+			.btn;
+			margin-bottom: 10px;
+		}
 	}
 }
