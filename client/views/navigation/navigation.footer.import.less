@@ -1,5 +1,7 @@
+@footer-height: 50;
+
 #wrap {
-	margin: 0 auto -50px;
+	margin: 0 auto unit((0 - @footer-height), px);
 	min-height: 100%;
 }
 
@@ -30,4 +32,4 @@ footer.footer {
 }
 
 .footer,
-.push { height: 50px; }
+.push { height: unit(@footer-height, px); }
