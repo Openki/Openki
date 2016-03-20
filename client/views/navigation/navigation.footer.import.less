@@ -14,10 +14,21 @@ footer.footer {
 	div > a { color: @body-bg; }
 	.links {
 		padding-top: 12px;
-		word-spacing: 10px;
+		& > a { padding-right: 5px; }
 		div.long_link {
 			display: inline-block;
-			word-spacing: normal;
+			padding-left: 5px;
+			span.fa-terminal { padding-right: 5px; }
+			a:hover {
+				text-decoration: none;
+				span.code_on_github { text-decoration: underline; }
+			}
+
+			@media screen and
+			(max-width: @screen-xs) {
+				span.fa-terminal { padding-right: 0; }
+				span.code_on_github { display: none; }
+			}
 		}
 	}
 	.version {
@@ -28,6 +39,9 @@ footer.footer {
 		right: 8px;
 		text-align: right;
 		word-spacing: 2px;
+
+		@media screen and
+		(max-width: @screen-xxs) { display: none; }
 	}
 }
 
