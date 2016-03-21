@@ -96,6 +96,13 @@ Router.map(function () {
 Template.groupDetails.onCreated(function() {
 	var instance = this;
 	instance.editingSettings = new ReactiveVar(false);
+
+	instance.autorun(function() {
+		// Close the settings pane when no user is logged-in
+		if (!Meteor.userId()) {
+			instance.editingSettings.set(false);
+		}
+	});
 });
 
 Template.groupSettings.onCreated(function() {
