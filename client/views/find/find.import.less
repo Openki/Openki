@@ -24,9 +24,19 @@
 				.btn-success;
 				padding: 8px 12px !important;
 			}
-			button.-showFilters {
+		}
+		button.-showFilters {
+			.btn;
+			.btn-primary;
+			padding: 8px 12px !important;
+
+			@media screen and
+			(max-width: @screen-xs) {
+				.form-control;
 				.btn;
 				.btn-primary;
+				height: 38px;
+				margin-top: 0px;
 				padding: 8px 12px !important;
 			}
 		}
@@ -34,6 +44,12 @@
 			.grid(12, inherit, 7);
 			padding: 0 0 0 15px;
 			@media screen and
+			(max-width: @screen-xs) {
+				border: 1px solid @brand-primary;
+				padding: 0 10px;
+			}
+			@media screen and
+			(min-width: @screen-sm) and
 			(max-width: @screen-md) { padding: 0; }
 			h4,
 			h5 { color: @brand-primary; }
@@ -43,13 +59,18 @@
 				color: @brand-primary;
 				padding: 0;
 				h4 { margin-top: 8px; }
+				@media screen and
+				(max-width: @screen-xs) { display: none; }
 			}
 			.search_events {
 				.grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0;
 				@media screen and
-				(max-width: @screen-xs) { margin-bottom: 0; }
+				(max-width: @screen-xs) {
+					margin-bottom: 0;
+					// margin-top: -15px;
+				 }
 				.checkbox {
 					@media screen and
 					(max-width: @screen-xs) {
@@ -206,13 +227,21 @@
 		}
 	}
 	.courselist_results {
+		@media screen and
+		(max-width: @screen-xs) { padding-top: 15px; }
 		.no_courses_found {
-			margin: 2em;
 			text-align: center;
 			button.-searchAllRegions {
 				.btn-thin;
 				.btn-primary;
 				margin-top: 10px;
+
+				@media screen and
+				(max-width: @screen-xxs) {
+					.form-control;
+					.btn;
+					.btn-primary;
+				}
 			}
 		}
 	}

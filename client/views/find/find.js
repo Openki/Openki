@@ -281,5 +281,9 @@ Template.find.helpers({
 
 	'allRegions': function() {
 		return (Session.get('region') == 'all');
+	},
+
+	'isMobile': function() {
+		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 	}
 });
