@@ -195,9 +195,10 @@
 						<span class="fa fa-dot-circle-o"></span>
 						{{mf 'find.searchAllRegions' 'Search in all regions'}}
 					</button>
+					<br>
 				{{/unless}}
 				{{#if proposeNewBlurb}}
-					{{mf 'find.propose_new_course?' 'Why not propose a new one for {TERM}?' TERM=this.query.search}}
+					{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
 				{{/if}}
 				</div>
 			{{/each}}
