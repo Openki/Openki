@@ -2,29 +2,20 @@
 
 #outer {
 	padding-top: 50px;
-	&.testWarning{
-		padding-top: 70px;
-	}
+	&.testWarning { padding-top: 70px; }
 }
 
 html,
-body {
-	height: 100%;
-}
+body { height: 100%; }
 
 #maincontent {
 	padding: 25px 0 50px 0;
-
-	&> *:first-child {
-		padding-top: 0;
+	& > *:first-child {
 		margin-top: 0;
+		padding-top: 0;
 	}
-
-	@media @mobile {
-		.find {
-			margin-top: -20px;
-		}
-	}
+	@media screen and
+	(max-width: @screen-xs) { .find { margin-top: -20px; } }
 }
 
 * {
@@ -32,61 +23,35 @@ body {
 	outline: none !important;
 }
 
-h1 {
-	color: @brand-primary;
-}
+h1 { color: @brand-primary; }
 
 .dropdown-menu {
 	.box-shadow-small(@default-shadow);
 	min-width: 0;
 	width: auto;
-
-	li {
-		cursor: pointer;
-	}
+	li { cursor: pointer; }
 }
 
 .tooltip {
 	font-size: @font-size-base;
 	white-space: nowrap;
-
-	&-inner {
-		// .box-shadow-small(@default-shadow);
-		max-width: none;
-	}
+	&-inner { max-width: none; }
 }
 
-ul.nav-tabs {
-	li {
-		a {
-			color: @default-black;
-
-			&:hover {
-				color: @body-bg;
-			}
-		}
-	}
+ul.nav-tabs li a {
+	color: @default-black;
+	&:hover { color: @body-bg; }
 }
 
-label {
-	display: block;
-}
+label { display: block; }
 
-span.glyphicon-ok {
-	color: darken(@brand-success, 20%) !important;
-}
+span.glyphicon-ok { color: darken(@brand-success, 20%) !important; }
 
 select {
 	.form-control-humble;
 	color: @default-black;
-
-	&:hover {
-		cursor: pointer;
-	}
-
-	option.select_placeholder:hover {
-		cursor: not-allowed;
-	}
+	&:hover { cursor: pointer; }
+	option.select_placeholder:hover { cursor: not-allowed; }
 }
 
 .elevate_child {
@@ -95,6 +60,4 @@ select {
 }
 
 .collapsing,
-.fade {
-	.transition-duration(0s);
-}
+.fade { .transition-duration(0s) }
