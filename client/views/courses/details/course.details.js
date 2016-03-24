@@ -126,8 +126,7 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		var mobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
-		return mobile;
+		return Session.get('screenSize') <= 480; // @screen-xs
 	},
 	isProposal: function() {
 		return Events.find({course_id: this.course._id}).count() === 0;

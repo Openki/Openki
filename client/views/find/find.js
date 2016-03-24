@@ -284,6 +284,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
+		return Session.get('screenSize') <= 480; // @screen-xs
 	}
 });
