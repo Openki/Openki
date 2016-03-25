@@ -7,8 +7,12 @@
 		background-color: @calendar-navigation-bg;
 		font-size: 32px;
 		margin-bottom: 10px;
-		padding: 0 5px;
+		padding: 0 10px;
+		position: sticky;
 		text-align: center;
+		top: 50px;
+		z-index: 2;
+		&.over_content { box-shadow: 0px 6px 2px @default-shadow }
 		.calendar_week {
 			background-color: @calendar-header-bg;
 			text-align: center;

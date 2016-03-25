@@ -48,7 +48,7 @@ Template.calendar.helpers({
 	startDate: function() {
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
-	},
+	}
 });
 
 Template.calendarDay.helpers({
@@ -106,6 +106,15 @@ Template.calendar.onCreated(function() {
 });
 
 Template.calendar.rendered = function() {
+	$(window).scroll(function (event) {
+		if($(window).scrollTop() > 5){
+			this.$('.switchDate').addClass('over_content');
+		}
+		else {
+			this.$('.switchDate').removeClass('over_content');
+		}
+	});
+
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="' + currentPath + '"].nav_link').addClass('active');
