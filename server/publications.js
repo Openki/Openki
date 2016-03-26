@@ -63,7 +63,8 @@ Meteor.publish('events', function(region) {
 });
 
 Meteor.publish('event', function(eventId) {
-	return Events.find({ _id: eventId });
+	check(eventId, String);
+	return Events.find(eventId);
 });
 
 Meteor.publish ('eventsFind', eventsFind);

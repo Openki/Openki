@@ -2,101 +2,121 @@
 	.navbar-default;
 	.navbar-fixed-top;
 	border-bottom: none;
-
 	.navbar-container {
-		max-width: 1600px;
 		margin: auto;
-	}
-
-	.navbar-brand {
-		padding: 0px;
-		> span {
-			position: relative;
-			bottom: -3px;
-			left: -3px;
-			padding-right: 15px;
-			font-size: x-large;
-		}
-		img {
-			.opacity(97);
-			display: inline-block;
-			height: 100%;
-			opacity: 0.97;
-			padding: 0 0 0 6px;
-			position: relative;
-			bottom: -1px;
-		}
-	}
-}
-
-.navbar-nav {
-	& > li {
-		& > a {
-			color: @brand-bg !important;
-			font-size: large;
-			padding: 15px 10px;
-			span {
-				font-size: medium;
-			}
-			&:hover {
-				color: @default-white !important;
+		max-width: 1600px;
+		.navbar-header {
+			&:hover * { color: @body-bg !important; }
+			a.navbar-brand {
+				padding: 0;
+				& > span {
+					bottom: -3px;
+					font-size: x-large;
+					left: -3px;
+					padding-right: 15px;
+					position: relative;
+				}
+				img {
+					.opacity(97);
+					bottom: -1px;
+					display: inline-block;
+					height: 100%;
+					padding: 0 0 0 6px;
+					position: relative;
+				}
 			}
 		}
-	}
-
-	span.caret {
-		position: absolute;
-		bottom: 1px;
-		left: 46%;
-		color: @brand-primary;
-		.transition(0.5s);
-		.transform(0, -1.5, -1.5);
-	}
-
-	li.dropdown.open span.caret {
-		.opacity(1);
-		color: @brand-bg;
-		z-index: 1099;
-	}
-
-	a.active {
-		span.caret {
-			.opacity(1);
-			color: @default-white;
-		}
-
-		&.over_content {
-			background: lighten(@brand-primary, 10%);
-
-			&:hover,
-			&:focus {
-				background: lighten(@brand-primary, 10%);
-				color: @body-bg;
+		.navbar-collapse {
+			max-height: 400px;
+			@media screen and
+			(max-width: @screen-sm) {
+				box-shadow: 0 7px 7px @default-shadow;
+				padding: 0;
 			}
-
-			span.caret {
-				color: lighten(@brand-primary, 10%);
-				.transition(0.3s);
+			.navbar-nav {
+				& > li > a {
+					color: @brand-bg !important;
+					font-size: large;
+					padding: 15px 10px;
+					&:hover { color: @default-white !important; }
+					span { font-size: medium; }
+				}
+				@media screen and
+				(max-width: @screen-sm) {
+					margin: 0;
+					& > li > a { color: @default-white !important; }
+					& > li.dropdown > a::after {
+						content: '\f107';
+						font-family: FontAwesome;
+						padding-left: 5px;
+					}
+					& > li.dropdown.open > a::after {
+						content: '\f106';
+						font-family: FontAwesome;
+						padding-left: 5px;
+					}
+				}
+				span.caret {
+					.transform(0, -1.5, -1.5);
+					.transition(@default-transition-time);
+					bottom: 1px;
+					color: @brand-primary;
+					left: 46%;
+					position: absolute;
+					@media screen and
+					(max-width: @screen-sm) { display: none; }
+				}
+				li.dropdown.open span.caret {
+					.opacity(1);
+					color: @brand-bg;
+					z-index: 1099;
+				}
+				a.active {
+					&.over_content {
+						background: lighten(@brand-primary, 10%);
+						&:hover,
+						&:focus {
+							background: lighten(@brand-primary, 10%);
+							color: @body-bg;
+						}
+						span.caret {
+							.transition(color 0.3s);
+							color: lighten(@brand-primary, 10%);
+						}
+					}
+					span.caret {
+						.opacity(1);
+						color: @default-white;
+					}
+					@media screen and
+					(max-width: @screen-xs) { background: lighten(@brand-primary, 5%); }
+				}
+				a.loginButton { cursor: pointer !important; }
+				.dropdown-menu {
+					border-top: none;
+					color: @default-white !important;
+					span.glyphicon-ok {
+						font-size: small;
+						padding-left: 5px;
+					}
+					@media screen and
+					(max-width: @screen-sm) {
+						border-left: 1px solid @default-white;
+						color: @default-white;
+						margin: -5px 0 10px 15px;
+						padding: 0;
+						li a { padding: 5px 15px; }
+					}
+					&.login-dropdown {
+						padding-top: 15px;
+						@media screen and
+						(max-width: @screen-sm) {
+							margin: 0;
+							padding-top: 0;
+						}
+					}
+				}
 			}
 		}
 	}
-
-	.dropdown-menu {
-		border-top: none;
-	}
-}
-
-.navbar-header {
-	&:hover * {
-		color: @body-bg !important;
-	}
-}
-
-
-a.loginButton {
-			cursor: pointer !important;
-	}
-
-.login-dropdown {
-	width: 300px;
 }
