@@ -94,6 +94,14 @@ Handlebars.registerHelper ("siteName", function() {
 	return "Hmmm";
 });
 
+Handlebars.registerHelper ("siteStage", function() {
+	if (Meteor.settings.public && Meteor.settings.public.siteStage) {
+		return Meteor.settings.public.siteStage;
+	}
+	return "";
+});
+
+
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;
 	Session.get('locale'); // Reactive dependency

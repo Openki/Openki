@@ -3,6 +3,7 @@
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {
 		"siteName": "Openki",
+		"siteStage": "alpha",
 		"testWarning": 1
 	}
 }
