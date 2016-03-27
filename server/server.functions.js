@@ -69,6 +69,10 @@ Meteor.methods({
 
 		if (closest) return closest._id;
 		return false;
-	}
+	},
 
+	ipToGeo: function(ip) {
+//console.log (GeoIP.lookup(ip));
+		return GeoIP.lookup(ip);
+	},
 });
