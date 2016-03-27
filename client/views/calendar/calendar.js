@@ -48,6 +48,9 @@ Template.calendar.helpers({
 	startDate: function() {
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
+	},
+	isMobile: function() {
+		return Session.get('screenSize') <= 992; // @screen-md
 	}
 });
 
