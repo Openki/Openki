@@ -33,37 +33,17 @@
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
 							 {{mf 'menue.Courses' 'Courses'}}
-							 {{routeX}}
 							 <span class="caret" id="active_caret"></span>
 						</a>
 					</li>
-					<li class="dropdown create">
-						<a class="dropdown-toggle nav_link"
-							 data-toggle="dropdown"
-							 role="button"
-							 aria-expanded="false">
+					<li>
+						<a href="{{pathFor 'proposeCourse'}}"
+							 class="nav_link -clickClose">
 							 <span class="fa fa-pencil"></span>
 							 &nbsp;
-							 {{mf 'menue.Create' 'Create'}}
+							 {{mf 'menue.ProposeCourse' 'Propose Course'}}
 							 <span class="caret"></span>
 						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a href="{{pathFor 'proposeCourse'}}"
-									 class="subnav_link -clickClose">
-									 <span class="fa fa-lightbulb-o"></span>
-									 &nbsp;
-									 {{mf 'menue.ProposeCourse' 'Propose Course'}}
-								</a>
-							</li>
-							<li>
-								<a href="{{pathFor 'showEvent' _id='create'}}"
-									 class="subnav_link -clickClose">
-									 <span class="fa fa-plus"></span>&nbsp;
-									 {{mf 'menue.CreateEvent' 'Create Event'}}
-								</a>
-							</li>
-						</ul>
 					</li>
 					<li>
 						<a href="{{pathFor 'calendar'}}"
