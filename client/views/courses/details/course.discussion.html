@@ -88,22 +88,22 @@
 			<div>
 				{{#if showUserId}}{{>iconProfilelink userId}}{{/if}}
 				<span class="comment-time-created">
-				{{#if new}}
-					{{mf 'discussion.post.soon' 'soon'}}
-				{{else}}
+				{{#unless new}}
+					<!-- {{mf 'discussion.post.soon' 'soon'}} -->
+				<!-- {{else}} -->
 					{{fromNow time_created}}
-				{{/if}}
+				{{/unless}}
 				</span>
 			{{#if time_updated}}
 				<span class="comment-time-updated">
 					last update:{{fromNow time_updated}}
 				</span>
-			{{else}}
+			<!-- {{else}}
 				{{#unless new}}
 				<span class="comment-time-updated">
 					{{mf 'discussion.post.' 'soon'}}
 				</span>
-				{{/unless}}
+				{{/unless}} -->
 			{{/if}}
 			</div>
 			{{#if parentId}}

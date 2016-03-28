@@ -21,8 +21,11 @@ Template.lang_sel.helpers({
 	short: function() {
 		var lg = lgs[Session.get('locale')];
 		if (lg) return lg.short;
-	}
+	},
 
+	currentLanguage: function() {
+		return this == lgs[Session.get('locale')];
+	}
 });
 
 Template.lang_sel.events({

@@ -111,19 +111,6 @@ Template.calendar.rendered = function() {
 	$('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
 
-Template.calendar_event.rendered = function() {
-	this.$('.-eventLocationTime').dotdotdot({
-		height: 55,
-		watch : "window",
-	});
-	this.$('.-eventTitle').dotdotdot({
-		watch: "window",
-	});
-	this.$('.-eventDescription').dotdotdot({
-		watch: "window",
-	});
-};
-
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');

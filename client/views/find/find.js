@@ -99,6 +99,13 @@ Template.find.onCreated(function() {
 
 
 Template.find.onRendered(function() {
+	this.$('.dropdown').on('show.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+	});
+
+	this.$('.dropdown').on('hide.bs.dropdown', function(e){
+		$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+	});
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="/"].nav_link').addClass('active');
@@ -154,7 +161,7 @@ Template.find.events({
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
 	'focus .-searchCategories': function(event, instance) {
-		instance.$('.-categorySelect').addClass('open');
+		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
 	'click .-showSubcategories': function(event, instance) {
@@ -164,7 +171,7 @@ Template.find.events({
 		event.stopPropagation();
 	},
 
-	'click .-category': function(event, instance) {
+	'click .category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.-searchCategories').val('');
 		updateCategorySearch(event, instance);
@@ -274,5 +281,9 @@ Template.find.helpers({
 
 	'allRegions': function() {
 		return (Session.get('region') == 'all');
+	},
+
+	'isMobile': function() {
+		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
 	}
 });
