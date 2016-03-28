@@ -83,25 +83,27 @@
 				color: @default-gray;
 				margin-top: 0;
 			}
-			ul{
+			ul {
 				.list-unstyled;
 				font-size: medium;
-				li{
+				li {
 					.grid(6, 2);
 					margin-bottom: 15px;
 					&:nth-last-child(2),
 					&:last-child { h2::after { content: none;	}	}
-					h2{
+					h2 {
 						margin-bottom: 8px;
 						margin-top: 0px;
 						text-align: center;
 						&::after {
 							.opacity(0.5);
-							content: '\f105';
-							color: grey;
+							content: '\f061';
+							color: lighten(@default-gray, 15%);
 							font-family: FontAwesome;
+							font-size: 16px;
 							position: absolute;
 							right: 0;
+							top: 6px;
 						}
 					}
 					span { .opacity(0.6);	}

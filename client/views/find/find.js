@@ -106,10 +106,10 @@ Template.find.onRendered(function() {
 	this.$('.dropdown').on('hide.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
 	});
+
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="/"].nav_link').addClass('active');
-	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
 });
 
 var updateCategorySearch = function(event, instance) {
@@ -284,6 +284,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
+		return Session.get('screenSize') <= 480; // @screen-xs
 	}
 });
