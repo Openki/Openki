@@ -250,6 +250,7 @@ createEventsIfNone = function(){
 				event.groups = course.groups;
 				event.mentors = [];
 				event.host = [];
+				event.internal = false;
 
 				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
 				var timeToGo = Math.random()-0.7;             // put 70% in the past

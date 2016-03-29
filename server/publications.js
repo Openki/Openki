@@ -93,7 +93,11 @@ Meteor.publish('user', function(userId) {
 });
 
 Meteor.publish('currentUser', function() {
-  return Meteor.users.find(this.userId);
+	return Meteor.users.find(this.userId);
+});
+
+Meteor.publish('userSearch', function(search) {
+	return UserLib.searchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });
 
 Meteor.publish('groupsFind', function(filter) {
@@ -102,7 +106,7 @@ Meteor.publish('groupsFind', function(filter) {
 		delete filter.own;
 		filter.user = this.userId;
 	}
-	return groupsFind(filter);
+	return GroupLib.find(filter);
 });
 
 Meteor.publish('group', function(groupId) {

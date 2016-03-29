@@ -153,7 +153,9 @@
 					{{/each}}
 				</table>
 			</div>
+
 			{{>eventEditLocation}}
+
 			<div class="room">
 				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
 				<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
@@ -169,6 +171,20 @@
 					/>
 				</div>
 			</div>
+
+			<div class="options">
+				<div class="checkbox">
+					<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
+						<input
+							type="checkbox"
+							class="-eventInternal"
+							{{isInternal}}
+						>
+						{{mf 'event.edit.internal' 'Internal'}}
+					</label>
+				</div>
+			</div>
+		
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>

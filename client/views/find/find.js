@@ -3,7 +3,12 @@ function finderRoute(path) {
 		path: path,
 		template: 'find',
 		data: function() {
-			return this.params;
+			var query = this.params.query;
+
+			// Add filter options for the homepage
+			return _.extend(query, {
+				internal: false
+			});
 		},
 		onAfterAction: function() {
 			var search = this.params.query.search;
@@ -21,7 +26,7 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'group', 'categories'];
+var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
 
 var updateUrl = function(event, instance) {
 	event.preventDefault();
@@ -34,7 +39,9 @@ var updateUrl = function(event, instance) {
 	if (queryString.length) {
 		options.query = queryString;
 	}
-	Router.go('find', {}, options);
+
+	var router = Router.current();
+	Router.go(router.route.getName(), { _id: router.params._id }, options);
 
 	return true;
 };
@@ -52,9 +59,7 @@ Template.find.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
+		var query = Template.currentData();
 		filter
 			.clear()
 			.read(query)
@@ -184,18 +189,9 @@ Template.find.events({
 		return false;
 	},
 
-	'click .group': function(event, instance) {
-		instance.filter.add('group', ""+this).done();
-		updateUrl(event, instance);
-		if (!instance.showingFilters.get()) instance.showingFilters.set(true);
-		window.scrollTo(0, 0);
-		return false;
-	},
-
-	'click .-removeGroupFilter': function(event, instance) {
-		instance.filter.remove('group', ''+this._id).done();
-		updateUrl(event, instance);
-		return false;
+	'click .show_subcategories': function(e, instance) {
+		$(".subcategory" + "." + this).toggle(0);
+		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .-showFilters': function(event, instance) {
