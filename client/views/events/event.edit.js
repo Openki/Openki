@@ -52,6 +52,10 @@ Template.eventEdit.helpers({
 	disableForPast: function() {
 		return this.start > new Date() ? '' : 'disabled';
 	},
+
+	internalChecked: function() {
+		return this.checked ? 'checked' : '';
+	}
 });
 
 Template.eventDescriptionEdit.rendered = function() {
@@ -208,6 +212,7 @@ Template.eventEdit.events({
 			start: start.toDate(),
 			end:   end.toDate(),
 			files: this.files || Array(),
+			internal: instance.$('.-internal').prop('checked'),
 		};
 
 		var fileList = instance.files;
