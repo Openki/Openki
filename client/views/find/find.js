@@ -114,7 +114,7 @@ Template.find.onRendered(function() {
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.-searchCategories').val();
-	if (query == '') {
+	if (query === '') {
 		instance.categorySearchResults.set(categories);
 		return;
 	}
@@ -134,7 +134,7 @@ var updateCategorySearch = function(event, instance) {
 		}
 	}
 	instance.categorySearchResults.set(results);
-}
+};
 
 Template.find.events({
 	'submit': updateUrl,

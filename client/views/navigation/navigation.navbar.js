@@ -23,7 +23,7 @@ Template.navbar.onRendered(function() {
 		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
 			$('#bs-navbar-collapse-1').scrollTop($(this).offset().top - 50);
 		}, 1));
-	};
+	}
 });
 
 Template.navbar.helpers({

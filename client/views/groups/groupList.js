@@ -18,7 +18,7 @@ Template.groupName.events({
 
 Template.groupName.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
-}
+};
 
 Template.groupNameStatic.helpers({
 	name: function() {
