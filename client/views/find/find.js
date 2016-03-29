@@ -1,7 +1,7 @@
 function finderRoute(path) {
 	return {
 		path: path,
-		template: 'find',
+		template: 'findWrap',
 		data: function() {
 			var query = this.params.query;
 
