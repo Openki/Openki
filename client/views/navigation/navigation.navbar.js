@@ -1,5 +1,5 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 768;
+	var isMobile = Session.get('screenSize') <= 768; // @screen-sm
 	if (!isMobile) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -23,7 +23,7 @@ Template.navbar.onRendered(function() {
 		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
 			$('#bs-navbar-collapse-1').scrollTop($(this).offset().top - 50);
 		}, 1));
-	};
+	}
 });
 
 Template.navbar.helpers({

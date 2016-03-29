@@ -1,9 +1,14 @@
 function finderRoute(path) {
 	return {
 		path: path,
-		template: 'find',
+		template: 'findWrap',
 		data: function() {
-			return this.params;
+			var query = this.params.query;
+
+			// Add filter options for the homepage
+			return _.extend(query, {
+				internal: false
+			});
 		},
 		onAfterAction: function() {
 			var search = this.params.query.search;
@@ -54,9 +59,7 @@ Template.find.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
+		var query = Template.currentData();
 		filter
 			.clear()
 			.read(query)
@@ -108,15 +111,15 @@ Template.find.onRendered(function() {
 	this.$('.dropdown').on('hide.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
 	});
+
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="/"].nav_link').addClass('active');
-	// this.$('#find').focus();    //-> conflict with opening keyboard on mobile
 });
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.-searchCategories').val();
-	if (query == '') {
+	if (query === '') {
 		instance.categorySearchResults.set(categories);
 		return;
 	}
@@ -136,7 +139,7 @@ var updateCategorySearch = function(event, instance) {
 		}
 	}
 	instance.categorySearchResults.set(results);
-}
+};
 
 Template.find.events({
 	'submit': updateUrl,
@@ -277,6 +280,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 480;
+		return Session.get('screenSize') <= 480; // @screen-xs
 	}
 });
