@@ -1,6 +1,11 @@
+<template name="findWrap">
+	<div class="find">
+		<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
+		{{> find}}
+	</div>
+</template>
+
 <template name="find">
-<div class="find">
-	<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 	<div class="search">
 		<div class="-searchField">
 			<div class="input-group">
@@ -247,5 +252,4 @@
 		</div>
 	{{/if}}
 	{{> course_edit newCourse}}
-</div>
 </template>

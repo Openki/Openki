@@ -37,12 +37,10 @@ function addRole(course, role, user) {
 
 
 function removeRole(course, role, user) {
-	var result = Courses.update(
+	Courses.update(
 		{ _id: course._id, 'members.user': user },
 		{ '$pull': { 'members.$.roles': role }}
 	);
-
-	if (result != 1) throw new Error("removeRole affected "+result+" documents");
 
 	// Housekeeping: Remove members that have no role left
 	Courses.update(

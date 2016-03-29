@@ -11,5 +11,5 @@ Template.layout.helpers({
 });
 
 Template.layout.rendered = function() {
-	$(window).resize(function(event){ getWindowSize() });
-}
+	$(window).resize(function(event){ getWindowSize(); });
+};

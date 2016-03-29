@@ -1,7 +1,7 @@
 function finderRoute(path) {
 	return {
 		path: path,
-		template: 'find',
+		template: 'findWrap',
 		data: function() {
 			var query = this.params.query;
 
@@ -26,7 +26,7 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'group', 'categories'];
+var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
 
 var updateUrl = function(event, instance) {
 	event.preventDefault();
@@ -39,7 +39,9 @@ var updateUrl = function(event, instance) {
 	if (queryString.length) {
 		options.query = queryString;
 	}
-	Router.go('find', {}, options);
+
+	var router = Router.current();
+	Router.go(router.route.getName(), { _id: router.params._id }, options);
 
 	return true;
 };
@@ -117,7 +119,7 @@ Template.find.onRendered(function() {
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.-searchCategories').val();
-	if (query == '') {
+	if (query === '') {
 		instance.categorySearchResults.set(categories);
 		return;
 	}
@@ -137,7 +139,7 @@ var updateCategorySearch = function(event, instance) {
 		}
 	}
 	instance.categorySearchResults.set(results);
-}
+};
 
 Template.find.events({
 	'submit': updateUrl,
@@ -187,18 +189,9 @@ Template.find.events({
 		return false;
 	},
 
-	'click .group': function(event, instance) {
-		instance.filter.add('group', ""+this).done();
-		updateUrl(event, instance);
-		if (!instance.showingFilters.get()) instance.showingFilters.set(true);
-		window.scrollTo(0, 0);
-		return false;
-	},
-
-	'click .-removeGroupFilter': function(event, instance) {
-		instance.filter.remove('group', ''+this._id).done();
-		updateUrl(event, instance);
-		return false;
+	'click .show_subcategories': function(e, instance) {
+		$(".subcategory" + "." + this).toggle(0);
+		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .-showFilters': function(event, instance) {

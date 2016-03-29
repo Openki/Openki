@@ -15,7 +15,7 @@ Router.map(function () {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
-					groups: groupsFind({ own: true }),
+					groups: GroupLib.find({ own: true }),
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
