@@ -3,7 +3,12 @@ function finderRoute(path) {
 		path: path,
 		template: 'find',
 		data: function() {
-			return this.params;
+			var query = this.params.query;
+
+			// Add filter options for the homepage
+			return _.extend(query, {
+				internal: false
+			});
 		},
 		onAfterAction: function() {
 			var search = this.params.query.search;
@@ -52,9 +57,7 @@ Template.find.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
+		var query = Template.currentData();
 		filter
 			.clear()
 			.read(query)

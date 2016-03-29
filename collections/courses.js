@@ -167,6 +167,10 @@ coursesFind = function(filter, limit) {
 		find.roles = { $all: mustHaveRoles };
 	}
 
+	if (filter.internal !== undefined) {
+		find.internal = !!filter.internal;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {

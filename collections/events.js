@@ -377,7 +377,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.internal !== undefined) {
-		find.internal = filter.internal;
+		find.internal = !!filter.internal;
 	}
 
 	if (filter.search) {
