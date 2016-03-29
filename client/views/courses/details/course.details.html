@@ -57,19 +57,16 @@
 			{{/if}}
 		</div>
 		<div class="coursedetails_column_right">
-			{{#if mobileViewport}}
+			{{#unless mobileViewport}}
+				{{> course_events}}
+			{{/unless}}
 				<div class="courseDetails_roles_container">
 						{{> roles course}}
 						{{> roles_details roles_details}}
 				</div>
+			{{#if mobileViewport}}
 				<div class="discussion">
 					{{> discussion course}}
-				</div>
-			{{else}}
-				{{> course_events}}
-				<div class="courseDetails_roles_container">
-						{{> roles course}}
-						{{> roles_details roles_details}}
 				</div>
 			{{/if}}
 		</div>
