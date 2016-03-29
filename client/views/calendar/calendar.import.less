@@ -2,39 +2,6 @@
 
 .calendar {
 	.container;
-	.switchDate {
-		.grid(12);
-		background-color: @calendar-navigation-bg;
-		font-size: 32px;
-		margin-bottom: 10px;
-		padding: 0 5px;
-		text-align: center;
-		.calendar_week {
-			background-color: @calendar-header-bg;
-			text-align: center;
-			.week {
-				color: @calendar-header-text;
-				font-size: large;
-				line-height: 0.75;
-				margin: 7px 0 0 0;
-			}
-			.date {
-				color: @calendar-header-text;
-				font-size: small;
-				margin: 3px 0;
-			}
-		}
-		& > .right { float: right; }
-		small { font-size: 12px; }
-		button {
-			.btn;
-			.btn-calendar;
-			float: left;
-			margin: 6px 3px;
-			&:first-child { margin-left: 0; }
-			&:last-child { margin-right: 0; }
-		}
-	}
 	.calendar_date {
 		.grid(12);
 		padding: 0 0 10px;
@@ -92,6 +59,44 @@
 				}
 			}
 		}
+	}
+}
+
+.switchDate {
+	.grid(12);
+	background-color: @calendar-navigation-bg;
+	font-size: 32px;
+	margin-bottom: 10px;
+	padding: 0 10px;
+	position: sticky;
+	text-align: center;
+	top: 50px;
+	z-index: 2;
+	&.over_content { box-shadow: 0px 6px 2px @default-shadow }
+	.calendar_week {
+		background-color: @calendar-header-bg;
+		text-align: center;
+		.week {
+			color: @calendar-header-text;
+			font-size: large;
+			line-height: 0.75;
+			margin: 7px 0 0 0;
+		}
+		.date {
+			color: @calendar-header-text;
+			font-size: small;
+			margin: 3px 0;
+		}
+	}
+	& > .right { float: right; }
+	small { font-size: 12px; }
+	button {
+		.btn;
+		.btn-calendar;
+		float: left;
+		margin: 6px 3px;
+		&:first-child { margin-left: 0; }
+		&:last-child { margin-right: 0; }
 	}
 }
 

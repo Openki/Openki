@@ -1,11 +1,15 @@
 <template name="calendar">
-	<div class="calendar">
+	{{#if isMobile}}
 		{{> switchDate date=startDate}}
+	{{/if}}
+	<div class="calendar">
+		{{#unless isMobile}}
+			{{> switchDate date=startDate}}
+		{{/unless}}
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>
 		{{/each}}
-		{{> switchDate date=startDate}}
 	</div>
 </template>
 
@@ -62,24 +66,30 @@
 	<div class="switchDate">
 		<div class="left">
 			<button class="prevYear" aria-label="go back one year">
-				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousYear" "one year"}}
+				<span class="fa fa-arrow-left"></span>
+				{{mf "calendar.button.previousYear" "one year"}}
 			</button>
 			<button class="prevMonth" aria-label="go back one month">
-				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousMonth" "one month"}}
+				<span class="fa fa-arrow-left"></span>
+				{{mf "calendar.button.previousMonth" "one month"}}
 			</button>
 			<button class="prevWeek" aria-label="go back one week">
-				<span class="fa fa-arrow-left"></span> {{mf "calendar.button.previousweek" "one week"}}
+				<span class="fa fa-arrow-left"></span>
+				{{mf "calendar.button.previousweek" "one week"}}
 			</button>
 		</div>
 		<div class="right">
 			<button class="nextWeek" aria-label="go forward one week">
-				{{mf "calendar.button.nextWeek" "one week"}} <span class="fa fa-arrow-right"></span>
+				{{mf "calendar.button.nextWeek" "one week"}}
+				<span class="fa fa-arrow-right"></span>
 			</button>
 			<button class="nextMonth" aria-label="go forward one month">
-				{{mf "calendar.button.nextMonth" "one month"}} <span class="fa fa-arrow-right"></span>
+				{{mf "calendar.button.nextMonth" "one month"}}
+				<span class="fa fa-arrow-right"></span>
 			</button>
 			<button class="nextYear" aria-label="go forward one year">
-				{{mf "calendar.button.nextYear" "one year"}} <span class="fa fa-arrow-right"></span>
+				{{mf "calendar.button.nextYear" "one year"}}
+				 <span class="fa fa-arrow-right"></span>
 			</button>
 		</div>
 		<div class="calendar_week">

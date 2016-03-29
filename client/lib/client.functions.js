@@ -74,6 +74,12 @@ pleaseLogin = function() {
 	return true;
 };
 
+getWindowSize = function() {
+	var screenSize = Math.max(document.documentElement.clientWidth,
+														window.innerWidth || 0);
+	Session.set('screenSize', screenSize);
+}
+
 
 
 
