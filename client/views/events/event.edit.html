@@ -169,21 +169,6 @@
 					/>
 				</div>
 			</div>
-			{{#if affectedReplicaCount}}
-			<div class="update_replicas">
-					<label>
-						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas'
-							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
-							COUNT=affectedReplicaCount
-						}}
-					</label>
-					{{mf 'event.edit.updateReplicas.times'
-						"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
-						COUNT=affectedReplicaCount
-					}}
-			</div>
-			{{/if}}
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>
@@ -193,6 +178,22 @@
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
 				</button>
+			{{#if affectedReplicaCount}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="updateReplicas">
+						{{mf 'event.edit.updateReplicas'
+							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+							COUNT=affectedReplicaCount
+						}}
+
+						<small>{{mf 'event.edit.updateReplicas.times'
+							"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+							COUNT=affectedReplicaCount
+						}}</small>
+					</label>
+				</div>
+			{{/if}}
 			</div>
 		</div>
 	</div>
