@@ -40,7 +40,7 @@ Template.course_edit.helpers({
 
 	activeCategory: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.length && selectedCategories.indexOf(this) >= 0) {
+		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
 			return 'active';
 		}
 		return '';
@@ -49,7 +49,7 @@ Template.course_edit.helpers({
 	checkCategory: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length) {
-			return selectedCategories.indexOf(this) >= 0 ? 'checked' : '';
+			return selectedCategories.indexOf(''+this) >= 0 ? 'checked' : '';
 		}
 	},
 
@@ -65,7 +65,11 @@ Template.course_edit.helpers({
 	currentRegion: function(region) {
 		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
-	}
+	},
+
+	isInternal: function() {
+		return this.internal ? "checked" : null;
+	},
 });
 
 
@@ -93,7 +97,8 @@ Template.course_edit.events({
 			description: $('#editform_description').html(),
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
-			roles: roles
+			roles: roles,
+			internal: $('.-courseInternal').is(':checked'),
 		};
 
 		changes.name = saneText(changes.name);
@@ -150,17 +155,18 @@ Template.course_edit.events({
 	},
 
 	'change .categories input': function(event, instance) {
+		var catKey = ''+this;
 		var selectedCategories = instance.selectedCategories.get();
-		var checked = instance.$('input.cat_'+this).prop('checked');
+		var checked = instance.$('input.cat_'+catKey).prop('checked');
 		if (checked) {
-			selectedCategories.push(this);
+			selectedCategories.push(catKey);
 			selectedCategories = _.uniq(selectedCategories);
 		} else {
-			selectedCategories = _.without(selectedCategories, this);
+			selectedCategories = _.without(selectedCategories, catKey);
 
-			if (categories[this]) {
+			if (categories[catKey]) {
 				// Remove all the subcategories as well
-				selectedCategories = _.difference(selectedCategories, categories[this]);
+				selectedCategories = _.difference(selectedCategories, categories[catKey]);
 			}
 		}
 

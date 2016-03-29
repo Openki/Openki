@@ -1,26 +1,24 @@
 // ======== DB-Model: ========
-// "_id"           -> ID
-// "region"        -> ID_region
-// "title"         -> String
-// "description"   -> String
+// _id             -> ID
+// region          -> ID_region
+// title           -> String
+// description     -> String
+// start:          -> Date      (Time the events starts)
+// end:            -> Date      (Time the event ends)
 //
-// start:      Time the events starts
-//
-// end:        Time the event ends
-//
-// location:   Object with location info
-//             _id:     Optional reference to a document in the Locations collection
-//                      If this is set, the fields name, loc, and address are synchronized
-//             name:    Descriptive name for the location
-//             loc:     Event location in GeoJSON format
-//             address: Address string where the event will take place
-//
-// room:       Where inside the building the event will take place
-//
-// "createdby"     -> userId
-// "time_created"  -> Date
-// "time_lastedit" -> Date
-// "course_id"     -> ID_course  (maybe list in Future)
+// location {
+//       _id:          Optional reference to a document in the Locations collection
+//                         If this is set, the fields name, loc, and address are synchronized
+//       name:         Descriptive name for the location
+//       loc:          Event location in GeoJSON format
+//       address:      Address string where the event will take place
+// }
+// room            -> String    (Where inside the building the event will take place)
+// createdby       -> userId
+// time_created    -> Date
+// time_lastedit   -> Date
+// course_id       -> ID_course  (Maybe [list] of courses in future)
+// internal        -> Boolean    (Events are only displayed when group or location-filter is active)
 // ===========================
 
 Events = new Meteor.Collection("Events");

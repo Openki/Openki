@@ -30,6 +30,10 @@ Template.loginFrame.events({
 		instance.forgot.set(false);
 		return false;
 	},
+
+	'click #loginFrame': function(event, instance) {
+		event.stopPropagation();
+	}
 });
 
 Template.loginFrame.helpers({

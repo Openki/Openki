@@ -1,99 +1,137 @@
-.introduction{
-	.transition(background-color 1s);
-	color: @brand-primary;
-	background-color: @introduction-bg;
-	margin-top: 15px;
-	padding-top: 2px;
-	position: relative;
-
-	&:hover{
-		background-color: @introduction-text;
-	}
-
-	.-closeIntro {
-		font-size: 20px;
-		position: absolute;
-		right: 13px;
-		top: 7px;
-
-		span.glyphicon-remove {
-			.btn-remove;
+.introduction_container {
+	.container;
+	.introduction {
+		.transition(background-color 1s);
+		.grid(12);
+		background-color: @introduction-bg;
+		color: @brand-primary;
+		margin-top: 15px;
+		padding-top: 2px;
+		position: relative;
+		&:hover{ background-color: @introduction-text; }
+		.-closeIntro {
+			font-size: 20px;
+			float: none;
+			position: absolute;
+			right: 13px;
+			top: 7px;
+			span.glyphicon-remove {
+				.btn-remove;
+				padding-left: 10px;
+			}
 		}
-	}
-
-	h3 {
-		margin: 5px 40px 6px 0;
-		padding-right: 30px;
-
-		a {
-			text-decoration: none;
-
-			&:hover {
-				cursor: pointer;
-
+		h3 {
+			margin: 5px 0 6px 0;
+			a.-toggleDetails {
+				text-decoration: none;
 				.toggle{
-					& .showIntro{
-						background-color: @introduction-show-bg;
-						color: @introduction-show-text;
+					color: @default-gray;
+					display: inline;
+					padding: 0 10px;
+					span.showIntro::after {
+						.opacity(0.5);
+						content: '\f107';
+						color: grey;
+						font-family: FontAwesome;
 					}
-
-					& .hideIntro{
-						background-color: @default-light-grey;
+					span.hideIntro::after {
+						.opacity(0.5);
+						content: '\f106';
+						color: grey;
+						font-family: FontAwesome;
+					}
+				}
+				&:hover {
+					cursor: pointer;
+					.toggle {
+						span.showIntro {
+							background-color: @introduction-show-bg;
+							color: @introduction-show-text;
+						}
+						span.hideIntro {
+							background-color: @default-light-grey;
+							color: @default-black;
+						}
+					}
+				}
+				@media screen and
+				(max-width: @screen-xxs) {
+					.toggle {
+						display: block;
+						padding: 10px 0;
+						span.hideIntro {
+							.form-control;
+							.btn;
+							.btn-default;
+						}
+						span.showIntro {
+							.form-control;
+							.btn;
+							.btn-success;
+						}
+					}
+					&:hover .toggle span.hideIntro {
+						background: none;
 						color: @default-black;
 					}
 				}
 			}
 		}
-
-		.toggle{
-			color: @default-grey;
-			display: inline;
-			padding-left: 10px;
-			padding-right: 10px;
-		}
-	}
-
-	.content{
-		padding-bottom: 12px;
-
-		hr{
-			color: @default-grey;
-			margin-top: 0;
-		}
-
-		ul{
-			.list-unstyled;
-			font-size: medium;
-
-			li{
-				.grid(8, 1.6);
-
-				h2{
-					margin-bottom: 8px;
-					margin-top: 0px;
-					padding-left: 35%;
-
-					span {
-						.opacity(0.5);
-						color: grey;
-						padding-left: 105%;
-						padding-top: 5px;
+		.content {
+			padding-bottom: 12px;
+			hr {
+				color: @default-gray;
+				margin-top: 0;
+			}
+			ul {
+				.list-unstyled;
+				font-size: medium;
+				li {
+					.grid(6, 2);
+					margin-bottom: 15px;
+					&:nth-last-child(2),
+					&:last-child { h2::after { content: none;	}	}
+					h2 {
+						margin-bottom: 8px;
+						margin-top: 0px;
+						text-align: center;
+						&::after {
+							.opacity(0.5);
+							content: '\f061';
+							color: lighten(@default-gray, 15%);
+							font-family: FontAwesome;
+							font-size: 16px;
+							position: absolute;
+							right: 0;
+							top: 6px;
+						}
 					}
-				}
-
-				span{
-					.opacity(0.6);
-					left: -17px;
-					font-size: 23px;
-					padding-top: 5px;
-					position: absolute;
-				}
-
-				margin-bottom: 15px;
-				margin-left: 24px;
-
-				a {
-					text-decoration: underline;
+					span { .opacity(0.6);	}
+					a {	text-decoration: underline;	}
+					@media screen and
+					(max-width: @screen-sm) {
+						&:nth-child(2),
+						&:nth-child(4) {
+							padding-bottom: 15px;
+							h2::after {	content: ''; }
+						}
+						&:nth-last-child(2),
+						&:last-child {
+							.grid(12);
+							text-align: center;
+						}
+					}
+					@media screen and
+					(max-width: @screen-xxs) {
+						.grid(12);
+						padding-bottom: 20px;
+						text-align: center;
+						h2::after {
+							content: '\f107';
+							bottom: -15px;
+							right: 47%;
+						}
+					}
 				}
 			}
 		}

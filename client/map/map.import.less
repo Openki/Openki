@@ -1,13 +1,9 @@
 .mapContainer {
 	&.box {
-		width: 200px;
 		height: 200px;
-
-		span.fa {
-			font-size: 30px;
-		}
+		width: 200px;
+		span.fa { font-size: 30px; }
 	}
-
 	&.fullscreen {
 		bottom: 0;
 		left: 0;
@@ -15,45 +11,26 @@
 		right: 0;
 		top: 0;
 		z-index: 9999;
-
-		span.fa {
-			font-size: 8vh;
-		}
+		span.fa { font-size: 8vh; }
 	}
-
 	.map {
 		height: 100%;
 		width: 100%;
 	}
-
-	.leaflet-marker-pane {
-		.leaflet-marker-icon{
-			background: none;
-			border: none;
-
-			.fa-map-marker {
-				color: black;
-
-				&:hover{
-					cursor: grabbing;
-				}
-			}
+	.leaflet-marker-pane .leaflet-marker-icon {
+		background: none;
+		border: none;
+		.fa-map-marker {
+			color: black;
+			&:hover{ cursor: grabbing; }
 		}
 	}
-
-	.leaflet-control-container {
-		.leaflet-right {
-			.leaflet-control:hover {
-				color: @brand-primary;
-				cursor: pointer;
-			}
-		}
+	.leaflet-control-container .leaflet-right .leaflet-control:hover {
+		color: @brand-primary;
+		cursor: pointer;
 	}
-
-	.leaflet-interactive {
-		&:hover {
-			cursor: pointer;
-			fill: #ff1;
-		}
+	.leaflet-interactive:hover {
+		cursor: pointer;
+		fill: #ff1;
 	}
 }

@@ -4,6 +4,12 @@ Template.layout.helpers({
 			return "testWarning";
 		}
 		return false;
+	},
+	translate: function() {
+		return Router.current().route.getName() === "mfTrans";
 	}
 });
 
+Template.layout.rendered = function() {
+	$(window).resize(function(event){ getWindowSize() });
+}

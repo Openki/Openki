@@ -53,9 +53,9 @@ Template.eventEdit.helpers({
 		return this.start > new Date() ? '' : 'disabled';
 	},
 
-	internalChecked: function() {
-		return this.checked ? 'checked' : '';
-	}
+	isInternal: function() {
+		return this.internal ? "checked" : null;
+	},
 });
 
 Template.eventDescriptionEdit.rendered = function() {
@@ -212,7 +212,7 @@ Template.eventEdit.events({
 			start: start.toDate(),
 			end:   end.toDate(),
 			files: this.files || Array(),
-			internal: instance.$('.-internal').prop('checked'),
+			internal: template.$('.-eventInternal').is(':checked'),
 		};
 
 		var fileList = instance.files;

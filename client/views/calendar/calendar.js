@@ -49,6 +49,9 @@ Template.calendar.helpers({
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
 	},
+	isMobile: function() {
+		return Session.get('screenSize') <= 992; // @screen-md
+	}
 });
 
 Template.calendarDay.helpers({
@@ -106,22 +109,18 @@ Template.calendar.onCreated(function() {
 });
 
 Template.calendar.rendered = function() {
+	$(window).scroll(function (event) {
+		if($(window).scrollTop() > 5){
+			this.$('.switchDate').addClass('over_content');
+		}
+		else {
+			this.$('.switchDate').removeClass('over_content');
+		}
+	});
+
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('a[href="' + currentPath + '"].nav_link').addClass('active');
-};
-
-Template.calendar_event.rendered = function() {
-	this.$('.-eventLocationTime').dotdotdot({
-		height: 55,
-		watch : "window",
-	});
-	this.$('.-eventTitle').dotdotdot({
-		watch: "window",
-	});
-	this.$('.-eventDescription').dotdotdot({
-		watch: "window",
-	});
 };
 
 var mvDateHandler = function(amount, unit) {
