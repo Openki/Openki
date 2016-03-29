@@ -172,16 +172,17 @@
 				</div>
 			</div>
 
-			<div class="internal">
-				<label>
-					<input
-						type="checkbox"
-						class="-eventInternal"
-						{{isInternal}}
-					>
-					{{mf 'event.edit.internal' 'Internal'}}
-				</label>
-				{{mf 'event.edit.internal.description' '(Event will only be shown in group and location-details)'}}
+			<div class="options">
+				<div class="checkbox">
+					<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
+						<input
+							type="checkbox"
+							class="-eventInternal"
+							{{isInternal}}
+						>
+						{{mf 'event.edit.internal' 'Internal'}}
+					</label>
+				</div>
 			</div>
 
 			{{#if affectedReplicaCount}}
