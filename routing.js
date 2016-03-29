@@ -60,6 +60,7 @@ Router.map(function () {
 					event.course_id = course._id;
 					event.region = course.region;
 					event.description = course.description;
+					event.internal = course.internal;
 				}
 			} else {
 				event = Events.findOne({_id: this.params._id});
