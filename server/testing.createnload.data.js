@@ -108,7 +108,7 @@ function createCourses(scale) {
 		for (var n = 0; n < scale; n++) {
 			course.name = name + (n > 0 ? ' (' + n + ')' : '');
 			course.slug = getSlug(name + ' (' + n + ')');
-
+			course.internal = !!course.internal;
 
 			// TESTING: always use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
