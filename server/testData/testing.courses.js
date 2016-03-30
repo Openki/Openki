@@ -501,7 +501,7 @@ testCourses = [{
 	]
 },{
 	'name':        'Wöchentliche Sitzung',
-	'categories': [''],
+	'categories': [],
 	'tags':       ['', ''],
 	'groups':     ['CCC-ZH'],
 	'internal':    'true',
@@ -517,7 +517,7 @@ testCourses = [{
 	]
 },{
 	'name':        'Vokü',
-	'categories': [''],
+	'categories': [],
 	'tags':       ['', ''],
 	'groups':     ['ASZ'],
 	'internal':    'true',
@@ -533,7 +533,6 @@ testCourses = [{
 	]
 },{
 	'name':        'Sonntags-Kino',
-	'categories': [''],
 	'tags':       ['', ''],
 	'groups':     ['ASZ'],
 	'internal':    'true',
