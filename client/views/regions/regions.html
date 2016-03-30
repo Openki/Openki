@@ -1,0 +1,32 @@
+<template name="region_sel">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		<span class="fa fa-dot-circle-o"></span>&nbsp;
+		{{#if region}}
+			{{region.name}}
+		{{else}}
+			{{mf 'menue.All regions' 'All regions'}}
+		{{/if}}
+		<span class="caret"></span>
+	</a>
+
+	<ul class="dropdown-menu" role="menu">
+		<li>
+			<a class="regionselect -clickClose" href="/region/">
+				{{mf 'menue.All regions' 'All regions'}}
+				{{#if currentRegion}}
+					<span class="glyphicon glyphicon-ok"></span>
+				{{/if}}
+			</a>
+		</li>
+		{{# each regions}}
+			<li>
+				<a href="#" class="regionselect -clickClose">
+					{{name}}
+					{{#if currentRegion}}
+						<span class="glyphicon glyphicon-ok"></span>
+					{{/if}}
+				</a>
+			</li>
+		{{/each}}
+	</ul>
+</template>
