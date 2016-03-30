@@ -88,18 +88,25 @@
 				"By entering an e-mail adress you allow us to send you a mail in case you forget your password."}}
 			</div>
 		{{/if}}
-		<button type="submit" class='loginLogin {{#unless registering}}loginLoginLogin{{/unless}}'>
-			<span class="glyphicon glyphicon-log-in"></span>&nbsp;
-			{{#if registering}}
-				{{mf 'login.login.back_to_login' 'Back to login'}}
-			{{else}}
-				{{mf 'login.login.submit' 'Login'}}
-			{{/if}}
-		</button>
-		<button type="submit" class='loginRegister {{#if registering}}registering{{/if}}'>
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
-			{{mf 'login.register.submit' 'Create account'}}
-		</button>
+		{{#if registering}}
+			<button type="submit" class='loginRegister registering'>
+				<span class="glyphicon glyphicon-plus"></span>&nbsp;
+				{{mf 'login.register.submit' 'Create account'}}
+			</button>
+			<button type="submit" class='loginLogin'>
+				<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+					{{mf 'login.login.back_to_login' 'Back to login'}}
+			</button>
+		{{else}}
+			<button type="submit" class='loginLogin loginLoginLogin'>
+				<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+					{{mf 'login.login.submit' 'Login'}}
+			</button>
+			<button type="submit" class='loginRegister'>
+				<span class="glyphicon glyphicon-plus"></span>&nbsp;
+				{{mf 'login.register.submit' 'Create account'}}
+			</button>
+		{{/if}}
 		{{#unless registering}}
 			<div class="external_logins">
 				<p>{{mf 'frame.login_external_services' 'Or login with:'}}</p>
