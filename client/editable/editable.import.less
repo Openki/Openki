@@ -2,6 +2,7 @@
 	margin: -8px;
 	position: relative;
 	.editable {
+		min-height: 2em;
 		.transition(~"background-color @{default-transition-time},
 		              border @{default-transition-time},
 		              box-shadow @{default-transition-time}");
@@ -14,6 +15,19 @@
 			padding: 7px;
 		}
 	}
+
+	.editable:focus,
+	.editable.changed {
+		border: 1px solid @brand-primary;
+		padding: 7px;
+		background: @body-bg;
+		box-shadow: 7px 7px 7px rgba(0,0,0,.3);
+	}
+
+	.editable:after {
+		position: static;
+	}
+
 	.editIcon {
 		.transition(color @default-transition-time);
 		color: @default-gray;
@@ -27,7 +41,12 @@
 	}
 	&.simple .editable {
 		display: inline-block;
+		min-width: 8em;
 		&:focus { min-width: 10em; }
+	}
+
+	&.rich .editable {
+		min-height: 4ex;
 	}
 	&.rich .editable { min-height: 4ex; }
 }

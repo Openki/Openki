@@ -153,7 +153,9 @@
 					{{/each}}
 				</table>
 			</div>
+
 			{{>eventEditLocation}}
+
 			<div class="room">
 				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
 				<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
@@ -169,21 +171,20 @@
 					/>
 				</div>
 			</div>
-			{{#if affectedReplicaCount}}
-			<div class="update_replicas">
-					<label>
-						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas'
-							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
-							COUNT=affectedReplicaCount
-						}}
+
+			<div class="options">
+				<div class="checkbox">
+					<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
+						<input
+							type="checkbox"
+							class="-eventInternal"
+							{{isInternal}}
+						>
+						{{mf 'event.edit.internal' 'Internal'}}
 					</label>
-					{{mf 'event.edit.updateReplicas.times'
-						"(Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}})."
-						COUNT=affectedReplicaCount
-					}}
+				</div>
 			</div>
-			{{/if}}
+		
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>
@@ -193,6 +194,22 @@
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
 				</button>
+			{{#if affectedReplicaCount}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="updateReplicas">
+						{{mf 'event.edit.updateReplicas'
+							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+							COUNT=affectedReplicaCount
+						}}
+
+						<small>{{mf 'event.edit.updateReplicas.times'
+							"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+							COUNT=affectedReplicaCount
+						}}</small>
+					</label>
+				</div>
+			{{/if}}
 			</div>
 		</div>
 	</div>

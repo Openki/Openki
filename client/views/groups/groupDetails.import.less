@@ -1,0 +1,99 @@
+.groupEdit {
+	background: rgba(130, 216, 130, 0.5);
+	margin-bottom: 50px;
+
+	.group_edit_header {
+		.grid(12);
+		padding: 0;
+		background: rgba(130, 216, 130, 0.9); //random
+		font-size: x-large;
+		border-bottom: 3px solid @default-white;
+
+		.editformLogo {
+			float: left;
+		}
+
+		.editformName {
+			float: left;
+			//min-height: 40px;
+			padding: 7px;
+		}
+
+		.editformShort {
+			float: right;
+			text-align: right;
+			padding: 7px;
+		}
+
+		button.settings {
+			border: none;
+			border: left;
+			border-width: 2px;
+			border-color: white;
+			background: none;
+			float: right;
+			padding: 7px 15px;
+			color: grey;
+			&:hover {
+				color: black;
+			}
+			margin-left: 5px;
+		}
+	}
+
+	.groupEditSub {
+	padding-left: 10px;
+	padding-bottom: 15px;
+		.editformClaim {
+			clear: both;
+			font-size: large;
+		}
+
+		.editformDescription {
+			.form-control-humble;
+			height: auto; // Reset fixed height from .form-control-humble()
+			max-height: 150px;
+			min-height: 100px;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+
+	.editable {
+		background: none;
+	}
+
+	#editform_short,
+	#editform_claim,
+	#addGroupMember {
+		.form-control-humble;
+	}
+
+
+	.groupEditFinishbtns {
+		.grid(12);
+		padding: 10px 0 0;
+
+		button {
+			.btn;
+			margin-right: 10px;
+
+			@media mobile {
+				.form-control;
+				.btn;
+				.btn-primary;
+				margin-bottom: 10px;
+			}
+
+			&.save {
+				.btn-success;
+			}
+
+			&.cancel {
+				.btn-danger;
+			}
+		}
+	}
+}
