@@ -1,4 +1,20 @@
 // TESTING: Get user object for name and create it if it doesn't exist
+
+// Select a date that is after the given date
+// For past dates a date between the original date and the present is chosen,
+// dates closer to the original date preferred.
+// For future dates, a date between the original date and double the time between now and then is chosen.
+var sometimesAfter = function(date) {
+	// Seconds between then and now
+	var spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+
+	// Quadratic dropoff: Place new date closer to the original date statistically
+	var placement = Math.random();
+	var squaredPlacement = placement * placement;
+
+	return new Date(date.getTime() + spread * squaredPlacement);
+}
+
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt';}
 	var email = (name.replace(' ', '')+"@openki.example").toLowerCase();
@@ -234,6 +250,7 @@ createEventsIfNone = function(){
 				event.groups = course.groups;
 				event.mentors = [];
 				event.host = [];
+				event.internal = false;
 
 				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
 				var timeToGo = Math.random()-0.7;             // put 70% in the past
@@ -278,12 +295,8 @@ createCommentsIfNone = function(){
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
 				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 
-				var spread = new Date(new Date().getTime() - course.time_created);
-				var age = Math.random();
-				age = Math.floor(age*spread);
-				var date = new Date(new Date().getTime() - age);
-				comment.time_created = date;
-				comment.time_updated = date + age * 0.77;
+				comment.time_created = sometimesAfter(course.time_created);
+				comment.time_updated = (Math.random() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created); ;
 
 				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
 				var commenter = false;
