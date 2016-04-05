@@ -1,32 +1,65 @@
-<template name="region_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		<span class="fa fa-dot-circle-o"></span>&nbsp;
-		{{#if region}}
-			{{region.name}}
+<template name="region_sel_outer">
+	{{#if Template.subscriptionsReady}}
+		{{#if searchingRegions}}
+			{{> region_sel}}
 		{{else}}
-			{{mf 'menue.All regions' 'All regions'}}
+			{{> regionsDisplay}}
 		{{/if}}
-		<span class="caret"></span>
+	{{/if}}
+</template>
+
+<template name="region_sel">
+	<a class="region_sel_link">
+		<span class="fa fa-dot-circle-o"></span>&nbsp;
+		<input class="-searchRegions"
+					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
+					 type="text"
+		/>
 	</a>
+	<span
+		class="dropdown-toggle"
+		data-toggle="dropdown"
+		role="button"
+		aria-expanded="false">
+	</span>
+	<span class="caret"></span>
+
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect -clickClose" href="/region/">
+			<a class="regionselect -clickClose">
 				{{mf 'menue.All regions' 'All regions'}}
 				{{#if currentRegion}}
 					<span class="glyphicon glyphicon-ok"></span>
 				{{/if}}
 			</a>
 		</li>
-		{{# each regions}}
-			<li>
-				<a href="#" class="regionselect -clickClose">
-					{{name}}
-					{{#if currentRegion}}
-						<span class="glyphicon glyphicon-ok"></span>
-					{{/if}}
-				</a>
+		{{#each countries}}
+			<li class="country">
+				<span class="flag-icon flag-icon-{{lowCountry}}"></span>
+				{{this}}
 			</li>
+			{{#each regions}}
+				<li class="region">
+					<a href="#" class="regionselect -clickClose">
+						{{name}}
+						{{#if currentRegion}}
+							<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</a>
+				</li>
+			{{/each}}
 		{{/each}}
 	</ul>
+</template>
+
+<template name="regionsDisplay">
+	<a class="-regionsDisplay">
+		<span class="fa fa-dot-circle-o"></span>&nbsp;
+		{{#if region}}
+			{{region.name}}
+		{{else}}
+			{{mf 'menue.All regions' 'All regions'}}
+		{{/if}}
+	</a>
 </template>
