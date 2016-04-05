@@ -73,6 +73,7 @@ iron:router@1.0.12
 iron:url@1.0.11
 jag:pince@0.0.9
 jquery@1.11.4
+jss:flag-icon@0.7.3
 lai:collection-extensions@0.1.4
 launch-screen@1.0.4
 less@2.5.1
