@@ -1,3 +1,60 @@
+Template.region_sel_outer.created = function(){
+	 this.subscribe("Regions");
+	 var instance = this;
+	 instance.searchingRegions = new ReactiveVar(false);
+};
+
+Template.region_sel_outer.helpers({
+	searchingRegions: function() {
+		return Template.instance().searchingRegions.get();
+	}
+});
+
+Template.regionsDisplay.helpers({
+	region: function(){
+		var region = Regions.findOne(Session.get('region'));
+		return region;
+	}
+});
+
+Template.regionsDisplay.events({
+	'click .-regionsDisplay': function(event, instance) {
+		instance.parentInstance().searchingRegions.set(true);
+	}
+});
+
+Template.region_sel.created = function(){
+	var instance = this;
+	var regions = Regions.find().fetch();
+	var results = {};
+	for (i = 0; i < regions.length; i++) {
+		var country = regions[i].country || "undefined";
+		if (!results[country]) results[country] = [];
+		results[country].push(regions[i]);
+	}
+	instance.regionSearchResults = new ReactiveVar(results);
+};
+
+Template.region_sel.rendered = function(){
+	Template.instance().$('.-searchRegions').select();
+}
+
+var updateRegionSearch = function(event, instance) {
+	var query = instance.$('.-searchRegions').val();
+	var regions = Regions.find().fetch();
+
+	var lowQuery = query.toLowerCase();
+	var results = {};
+	for (i = 0; i < regions.length; i++) {
+		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0) {
+			var country = regions[i].country || "undefined";
+			if (!results[country]) results[country] = [];
+			results[country].push(regions[i]);
+		}
+	}
+	instance.regionSearchResults.set(results);
+};
+
 Template.region_sel.helpers({
 	countries: function() {
 		return Object.keys(Template.instance().regionSearchResults.get());
@@ -19,44 +76,11 @@ Template.region_sel.helpers({
 	currentRegion: function() {
 		var region = this._id || "all";
 		return region == Session.get('region');
-	},
+	}
 });
 
-Template.region_sel_outer.created = function(){
-	 this.subscribe("Regions");
-};
-
-Template.region_sel.created = function(){
-	var instance = this;
-	var regions = Regions.find().fetch();
-	var results = {};
-	for (i = 0; i < regions.length; i++) {
-		var country = regions[i].country || "undefined";
-		if (!results[country]) results[country] = [];
-		results[country].push(regions[i]);
-	}
-	instance.regionSearchResults = new ReactiveVar(results);
-};
-
-var updateRegionSearch = function(event, instance) {
-	var query = instance.$('.-searchRegions').val();
-	var regions = Regions.find().fetch();
-
-	var lowQuery = query.toLowerCase();
-	var results = {};
-	for (i = 0; i < regions.length; i++) {
-		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0) {
-			var country = regions[i].country || "undefined";
-			if (!results[country]) results[country] = [];
-			results[country].push(regions[i]);
-		}
-	}
-	$('.-searchRegions').attr('size', $('.-searchRegions').val().length);
-	instance.regionSearchResults.set(results);
-};
-
 Template.region_sel.events({
-	'click a.regionselect': function(e){
+	'click a.regionselect': function(event, instance){
 		var region_id = this._id ? this._id : 'all';
 		var changed = Session.get('region') !== region_id;
 
@@ -71,6 +95,7 @@ Template.region_sel.events({
 			var routesToKeep = ['home', 'find', 'locations', 'calendar'];
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
+		instance.parentInstance().searchingRegions.set(false);
 		e.preventDefault();
 	},
 
@@ -78,10 +103,6 @@ Template.region_sel.events({
 
 	'focus .-searchRegions': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
-	},
-
-	'click .-searchRegions': function(event, instance) {
-		instance.$('.-searchRegions').select();
 		var regions = Regions.find().fetch();
 		var results = {};
 		for (i = 0; i < regions.length; i++) {
@@ -90,13 +111,5 @@ Template.region_sel.events({
 			results[country].push(regions[i]);
 		}
 		instance.regionSearchResults.set(results);
-	},
-
-	'blur .-searchRegions': function(event, instance) {
-		var currentRegion = Session.get('region') || "all";
-		var region = "";
-		if (currentRegion == "all") region = "All Regions";
-		else region = Regions.findOne(currentRegion).name;
-		instance.$('.-searchRegions').val(region);
 	}
 });

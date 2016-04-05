@@ -1,6 +1,10 @@
 <template name="region_sel_outer">
 	{{#if Template.subscriptionsReady}}
-		{{> region_sel}}
+		{{#if searchingRegions}}
+			{{> region_sel}}
+		{{else}}
+			{{> regionsDisplay}}
+		{{/if}}
 	{{/if}}
 </template>
 
@@ -8,10 +12,8 @@
 	<a>
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
 		<input class="-searchRegions"
-			     placeholder="{{mf 'regions.searchRegions.placeholder' 'Search for a region'}}"
 					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
 					 type="text"
-					 size=""
 		/>
 	</a>
 	<span
@@ -47,4 +49,15 @@
 			{{/each}}
 		{{/each}}
 	</ul>
+</template>
+
+<template name="regionsDisplay">
+	<a class="-regionsDisplay">
+		<span class="fa fa-dot-circle-o"></span>&nbsp;
+		{{#if region}}
+			{{region.name}}
+		{{else}}
+			{{mf 'menue.All regions' 'All regions'}}
+		{{/if}}
+	</a>
 </template>
