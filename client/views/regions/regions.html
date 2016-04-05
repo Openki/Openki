@@ -9,7 +9,7 @@
 </template>
 
 <template name="region_sel">
-	<a>
+	<a class="region_sel_link">
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
 		<input class="-searchRegions"
 					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
@@ -27,7 +27,7 @@
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect -clickClose" href="/region/">
+			<a class="regionselect -clickClose">
 				{{mf 'menue.All regions' 'All regions'}}
 				{{#if currentRegion}}
 					<span class="glyphicon glyphicon-ok"></span>
@@ -35,10 +35,12 @@
 			</a>
 		</li>
 		{{#each countries}}
-			<span class="flag-icon flag-icon-{{lowCountry}}"></span>
-			{{this}}
+			<li class="country">
+				<span class="flag-icon flag-icon-{{lowCountry}}"></span>
+				{{this}}
+			</li>
 			{{#each regions}}
-				<li>
+				<li class="region">
 					<a href="#" class="regionselect -clickClose">
 						{{name}}
 						{{#if currentRegion}}

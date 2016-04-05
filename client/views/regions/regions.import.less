@@ -1,9 +1,8 @@
 .region_sel {
 	color: @navbar-default-link-color;
 	font-size: large;
-	a {
+	a.region_sel_link {
 		height: 50px;
-		overflow-y: visible;
 		.-regionsDisplay:hover { cursor: text; }
 		input.-searchRegions {
 			background-color: @navbar-default-bg;
@@ -16,5 +15,22 @@
 		margin-top: 0 !important;
 		min-width: 150px;
 		width: 100%;
+		li.country {
+			color: @default-gray;
+			padding: 6px 15px 3px;
+			&:hover { cursor: default; }
+		}
+		li.region {
+			padding-left: 15px;
+			a {
+				border-left: 1px solid @brand-primary;
+				padding-left: 10px;
+			}
+		}
+		@media screen and
+		(max-width: @screen-sm) {
+			li.country { color: @default-black; }
+			li.region { a { border-left-color: @default-white; } }
+		}
 	}
 }
