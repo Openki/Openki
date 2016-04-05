@@ -1,6 +1,14 @@
 Template.region_sel.helpers({
+	countries: function() {
+		return Object.keys(Template.instance().regionSearchResults.get());
+	},
+
+	lowCountry: function() {
+		return this.toLowerCase();
+	},
+
 	regions: function(){
-		return Regions.find();
+		return Template.instance().regionSearchResults.get()[this];
 	},
 
 	region: function(){
@@ -11,8 +19,41 @@ Template.region_sel.helpers({
 	currentRegion: function() {
 		var region = this._id || "all";
 		return region == Session.get('region');
-	}
+	},
 });
+
+Template.region_sel_outer.created = function(){
+	 this.subscribe("Regions");
+};
+
+Template.region_sel.created = function(){
+	var instance = this;
+	var regions = Regions.find().fetch();
+	var results = {};
+	for (i = 0; i < regions.length; i++) {
+		var country = regions[i].country || "undefined";
+		if (!results[country]) results[country] = [];
+		results[country].push(regions[i]);
+	}
+	instance.regionSearchResults = new ReactiveVar(results);
+};
+
+var updateRegionSearch = function(event, instance) {
+	var query = instance.$('.-searchRegions').val();
+	var regions = Regions.find().fetch();
+
+	var lowQuery = query.toLowerCase();
+	var results = {};
+	for (i = 0; i < regions.length; i++) {
+		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0) {
+			var country = regions[i].country || "undefined";
+			if (!results[country]) results[country] = [];
+			results[country].push(regions[i]);
+		}
+	}
+	$('.-searchRegions').attr('size', $('.-searchRegions').val().length);
+	instance.regionSearchResults.set(results);
+};
 
 Template.region_sel.events({
 	'click a.regionselect': function(e){
@@ -31,5 +72,31 @@ Template.region_sel.events({
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		e.preventDefault();
+	},
+
+	'keyup .-searchRegions': _.debounce(updateRegionSearch, 100),
+
+	'focus .-searchRegions': function(event, instance) {
+		instance.$('.dropdown-toggle').dropdown('toggle');
+	},
+
+	'click .-searchRegions': function(event, instance) {
+		instance.$('.-searchRegions').select();
+		var regions = Regions.find().fetch();
+		var results = {};
+		for (i = 0; i < regions.length; i++) {
+			var country = regions[i].country || "undefined";
+			if (!results[country]) results[country] = [];
+			results[country].push(regions[i]);
+		}
+		instance.regionSearchResults.set(results);
+	},
+
+	'blur .-searchRegions': function(event, instance) {
+		var currentRegion = Session.get('region') || "all";
+		var region = "";
+		if (currentRegion == "all") region = "All Regions";
+		else region = Regions.findOne(currentRegion).name;
+		instance.$('.-searchRegions').val(region);
 	}
 });

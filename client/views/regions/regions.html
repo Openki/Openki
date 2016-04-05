@@ -1,13 +1,27 @@
+<template name="region_sel_outer">
+	{{#if Template.subscriptionsReady}}
+		{{> region_sel}}
+	{{/if}}
+</template>
+
 <template name="region_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a>
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
-		{{#if region}}
-			{{region.name}}
-		{{else}}
-			{{mf 'menue.All regions' 'All regions'}}
-		{{/if}}
-		<span class="caret"></span>
+		<input class="-searchRegions"
+			     placeholder="{{mf 'regions.searchRegions.placeholder' 'Search for a region'}}"
+					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
+					 type="text"
+					 size=""
+		/>
 	</a>
+	<span
+		class="dropdown-toggle"
+		data-toggle="dropdown"
+		role="button"
+		aria-expanded="false">
+	</span>
+	<span class="caret"></span>
+
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
@@ -18,15 +32,19 @@
 				{{/if}}
 			</a>
 		</li>
-		{{# each regions}}
-			<li>
-				<a href="#" class="regionselect -clickClose">
-					{{name}}
-					{{#if currentRegion}}
-						<span class="glyphicon glyphicon-ok"></span>
-					{{/if}}
-				</a>
-			</li>
+		{{#each countries}}
+			<span class="flag-icon flag-icon-{{lowCountry}}"></span>
+			{{this}}
+			{{#each regions}}
+				<li>
+					<a href="#" class="regionselect -clickClose">
+						{{name}}
+						{{#if currentRegion}}
+							<span class="glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</a>
+				</li>
+			{{/each}}
 		{{/each}}
 	</ul>
 </template>
