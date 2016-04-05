@@ -213,7 +213,7 @@ Template.eventEdit.events({
 			start: start.toDate(),
 			end:   end.toDate(),
 			files: this.files || Array(),
-			internal: template.$('.-eventInternal').is(':checked'),
+			internal: instance.$('.-eventInternal').is(':checked'),
 		};
 
 		var fileList = instance.files;
