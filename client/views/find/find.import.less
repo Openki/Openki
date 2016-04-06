@@ -112,7 +112,10 @@
 					}
 					span.glyphicon-calendar,
 					span.glyphicon-home,
-					span.fa-graduation-cap { color: @brand-primary; }
+					span.fa-graduation-cap {
+						.transition(all 0.3s);
+						color: @brand-primary;
+					}
 					span.glyphicon-home.checked {
 						background: @role-no-bg;
 						color: @role-no-text;
