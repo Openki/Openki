@@ -240,6 +240,14 @@ Template.find.events({
 		}
 	},
 
+	'mouseover .group': function() {
+		filterPreview(('.'+this), 0.33);
+	},
+
+	'mouseout .group': function() {
+		filterPreview(('.'+this), 1);
+	},
+
 	"click .-searchAllRegions": function(event, template){
 		Session.set('region', 'all');
 	}
