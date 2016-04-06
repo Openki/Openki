@@ -37,7 +37,7 @@ Template.region_sel.created = function(){
 
 Template.region_sel.rendered = function(){
 	Template.instance().$('.-searchRegions').select();
-}
+};
 
 var updateRegionSearch = function(event, instance) {
 	var query = instance.$('.-searchRegions').val();
@@ -53,6 +53,10 @@ var updateRegionSearch = function(event, instance) {
 		}
 	}
 	instance.regionSearchResults.set(results);
+	var regExpQuery = new RegExp(lowQuery, 'i');
+	instance.$('.regionselect').html(function() {
+	  return $(this).text().replace(regExpQuery, '<strong>$&</strong>');
+	});
 };
 
 Template.region_sel.helpers({
