@@ -232,12 +232,24 @@ Template.find.events({
 	'click .-showFilters': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
+		instance.$('.-showFilters').removeClass('alreadyOpen');
+		instance.$('.search_filter').stop().fadeTo('slow', 1);
 
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
 			updateUrl(event, instance);
+			instance.$('.-showFilters').removeClass('alreadyOpen');
 		}
+	},
+
+	'mouseover .remove-filter.alreadyOpen': function(event, instance) {
+		instance.$('.search_filter').stop().fadeTo('slow', 0.33);
+	},
+
+	'mouseout .remove-filter': function(event, instance) {
+		instance.$('.search_filter').stop().fadeTo('slow', 1);
+		instance.$('.-showFilters').addClass('alreadyOpen');
 	},
 
 	'mouseover .group': function() {
