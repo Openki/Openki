@@ -28,7 +28,11 @@
 	<ul class="dropdown-menu" role="menu">
 		<li>
 			<a class="regionselect -clickClose">
-				{{mf 'menue.All regions' 'All regions'}}
+				<span class="regionName">{{mf 'menue.All regions' 'All regions'}}</span>
+				<span class="eventsCount"
+							title="{{mf 'regions.totalEventsCount.title' 'There {COUNT, plural, one {is one upcoming event in all regions} other {are # upcoming events in all regions}}' COUNT=totalNumberOfEvents}}">
+					{{totalNumberOfEvents}}
+				</span>
 				{{#if currentRegion}}
 					<span class="glyphicon glyphicon-ok"></span>
 				{{/if}}
@@ -42,7 +46,11 @@
 			{{#each regions}}
 				<li class="region">
 					<a href="#" class="regionselect -clickClose">
-						{{name}}
+						<span class="regionName">{{name}}</span>
+						<span class="eventsCount"
+									title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=numberOfEvents REGION=this.name}}">
+							{{numberOfEvents}}
+						</span>
 						{{#if currentRegion}}
 							<span class="glyphicon glyphicon-ok"></span>
 						{{/if}}

@@ -54,7 +54,7 @@ var updateRegionSearch = function(event, instance) {
 	}
 	instance.regionSearchResults.set(results);
 	var regExpQuery = new RegExp(lowQuery, 'i');
-	instance.$('.regionselect').html(function() {
+	instance.$('.regionName').html(function() {
 	  return $(this).text().replace(regExpQuery, '<strong>$&</strong>');
 	});
 };
@@ -75,6 +75,14 @@ Template.region_sel.helpers({
 	region: function(){
 		var region = Regions.findOne(Session.get('region'));
 		return region;
+	},
+
+	totalNumberOfEvents: function() {
+		return Events.find().count();
+	},
+
+	numberOfEvents: function() {
+		return Events.find({region: this._id}).count();
 	},
 
 	currentRegion: function() {
@@ -103,12 +111,12 @@ Template.region_sel.events({
 		e.preventDefault();
 	},
 
-	'mouseover a.regionselect': function() {
+	'mouseover li.region a.regionselect': function() {
 		if (Session.get('region') == "all")
 			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 0.33);
 	},
 
-	'mouseout a.regionselect': function() {
+	'mouseout li.region a.regionselect': function() {
 		if (Session.get('region') == "all")
 			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 1);
 	},
