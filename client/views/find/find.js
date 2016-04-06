@@ -141,6 +141,10 @@ var updateCategorySearch = function(event, instance) {
 	instance.categorySearchResults.set(results);
 };
 
+var filterPreview = function(highlightClass, opacity) {
+	$('.courselist_course').not(highlightClass).stop().fadeTo('slow', opacity);
+};
+
 Template.find.events({
 	'submit': updateUrl,
 	'change .-searchField': updateUrl,
@@ -162,6 +166,29 @@ Template.find.events({
 		updateURL(event, instance);
 	},
 
+	'mouseover .-upcomingEventsFilter': function() {
+		filterPreview('.hasupcomingevents', 0.33);
+	},
+
+	'mouseout .-upcomingEventsFilter': function() {
+		filterPreview('.hasupcomingevents', 1);
+	},
+
+	'mouseover .-needsHostFilter': function() {
+		filterPreview('.needsHost', 0.33);
+	},
+
+	'mouseout .-needsHostFilter': function() {
+		filterPreview('.needsHost', 1);
+	},
+
+	'mouseover .-needsMentorFilter': function() {
+		filterPreview('.needsMentor', 0.33);
+	},
+
+	'mouseout .-needsMentorFilter': function() {
+		filterPreview('.needsMentor', 1);
+	},
 
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
@@ -181,6 +208,14 @@ Template.find.events({
 		instance.$('.-searchCategories').val('');
 		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
+	},
+
+	'mouseover .category': function() {
+		filterPreview(('.'+this), 0.33);
+	},
+
+	'mouseout .category': function() {
+		filterPreview(('.'+this), 1);
 	},
 
 	'click .-removeCategoryFilter': function(event, instance) {

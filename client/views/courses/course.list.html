@@ -33,8 +33,13 @@
 	{{#if ready}}
 		<div class="courselist_course_container">
 			<a href="{{pathFor 'showCourse'}}">
-				<div class="courselist_course {{coursestate}}">
-					<div class="course_content {{coursestate}} {{#if hasupcomingevents}}hasupcomingevents{{/if}}">
+				<div class="courselist_course
+										{{coursestate}}
+										{{#if hasupcomingevents}}hasupcomingevents{{/if}}
+										{{#if needsHost}}needsHost{{/if}}
+										{{#if needsMentor}}needsMentor{{/if}}
+										{{#each categories}}{{this}} {{/each}}">
+					<div class="course_content {{coursestate}}">
 						<div class="course-name">
 							<h4>{{name}}</h4>
 						</div>
