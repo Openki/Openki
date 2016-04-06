@@ -19,18 +19,12 @@
 			color: @default-gray;
 			padding: 6px 15px 3px;
 			&:hover { cursor: default; }
+			span.flag-icon { margin-right: 4px;	}
 		}
-		li.region {
-			padding-left: 15px;
-			a {
-				border-left: 1px solid @brand-primary;
-				padding-left: 10px;
-			}
-		}
+		li.region a { padding: 5px 15px; }
 		@media screen and
 		(max-width: @screen-sm) {
 			li.country { color: @default-black; }
-			li.region { a { border-left-color: @default-white; } }
 		}
 	}
 }
