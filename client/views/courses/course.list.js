@@ -39,6 +39,18 @@ Template.course.helpers({
 		return 'proposal';
 	},
 
+	needsMentor: function() {
+		if (!this.roles) return false;
+		else if (this.roles.indexOf('mentor') != -1)
+			return !hasRole(this.members, 'mentor');
+	},
+
+	needsHost: function() {
+		if (!this.roles) return false;
+		else if (this.roles.indexOf('host') != -1)
+			return !hasRole(this.members, 'host');
+	},
+
 	categorynames: function() {
 		return Categories.find({_id: {$in: course.categories}}).map(function(cat) {
 			return cat.name;

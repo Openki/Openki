@@ -141,6 +141,10 @@ var updateCategorySearch = function(event, instance) {
 	instance.categorySearchResults.set(results);
 };
 
+var filterPreview = function(highlightClass, opacity) {
+	$('.courselist_course').not(highlightClass).stop().fadeTo('slow', opacity);
+};
+
 Template.find.events({
 	'submit': updateUrl,
 	'change .-searchField': updateUrl,
@@ -162,6 +166,29 @@ Template.find.events({
 		updateURL(event, instance);
 	},
 
+	'mouseover .-upcomingEventsFilter': function(event, instance) {
+		filterPreview('.hasupcomingevents', 0.33);
+	},
+
+	'mouseout .-upcomingEventsFilter': function(event, instance) {
+		filterPreview('.hasupcomingevents', 1);
+	},
+
+	'mouseover .-needsHostFilter': function(event, instance) {
+		filterPreview('.needsHost', 0.33);
+	},
+
+	'mouseout .-needsHostFilter': function(event, instance) {
+		filterPreview('.needsHost', 1);
+	},
+
+	'mouseover .-needsMentorFilter': function(event, instance) {
+		filterPreview('.needsMentor', 0.33);
+	},
+
+	'mouseout .-needsMentorFilter': function(event, instance) {
+		filterPreview('.needsMentor', 1);
+	},
 
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
