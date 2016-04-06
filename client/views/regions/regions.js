@@ -103,6 +103,16 @@ Template.region_sel.events({
 		e.preventDefault();
 	},
 
+	'mouseover a.regionselect': function() {
+		if (Session.get('region') == "all")
+			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 0.33);
+	},
+
+	'mouseout a.regionselect': function() {
+		if (Session.get('region') == "all")
+			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 1);
+	},
+
 	'keyup .-searchRegions': _.debounce(updateRegionSearch, 100),
 
 	'focus .-searchRegions': function(event, instance) {
