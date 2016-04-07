@@ -28,27 +28,41 @@
 	<ul class="dropdown-menu" role="menu">
 		<li>
 			<a class="regionselect -clickClose">
-				{{mf 'menue.All regions' 'All regions'}}
+				<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
+					{{mf 'menue.All regions' 'All regions'}}
+				</span>
+				<span class="coursesCount"
+							title="{{mf 'regions.allCourses.title' 'There {COUNT, plural, =0 {no courses on} one {is one course on} other {are # courses on}} {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+					{{allCourses}}
+				</span>
+				<span class="eventsCount"
+							title="{{mf 'regions.allUpcomingEvents.title' 'There {COUNT, plural, =0 {no upcoming events on} one {is one upcoming event on} other {are # upcoming events on}} {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+					{{allUpcomingEvents}}
+				</span>
 				{{#if currentRegion}}
 					<span class="glyphicon glyphicon-ok"></span>
 				{{/if}}
 			</a>
 		</li>
-		{{#each countries}}
-			<li class="country">
-				<span class="flag-icon flag-icon-{{lowCountry}}"></span>
-				{{this}}
-			</li>
-			{{#each regions}}
-				<li class="region">
-					<a href="#" class="regionselect -clickClose">
+		{{#each regions}}
+			<li class="region">
+				<a href="#" class="regionselect -clickClose">
+					<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
 						{{name}}
-						{{#if currentRegion}}
-							<span class="glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</a>
-				</li>
-			{{/each}}
+					</span>
+					<span class="coursesCount"
+								title="{{mf 'regions.courses.title' 'There {COUNT, plural, =0 {no courses in} one {is one course in} other {are # courses in}} {REGION}' COUNT=courses REGION=this.name}}">
+						{{courses}}
+					</span>
+					<span class="eventsCount"
+								title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, =0 {no upcoming events in} one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=upcomingEvents REGION=this.name}}">
+						{{upcomingEvents}}
+					</span>
+					{{#if currentRegion}}
+						<span class="glyphicon glyphicon-ok"></span>
+					{{/if}}
+				</a>
+			</li>
 		{{/each}}
 	</ul>
 </template>

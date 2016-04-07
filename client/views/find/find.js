@@ -141,6 +141,10 @@ var updateCategorySearch = function(event, instance) {
 	instance.categorySearchResults.set(results);
 };
 
+var filterPreview = function(highlightClass, opacity) {
+	$('.courselist_course').not(highlightClass).stop().fadeTo('slow', opacity);
+};
+
 Template.find.events({
 	'submit': updateUrl,
 	'change .-searchField': updateUrl,
@@ -162,6 +166,29 @@ Template.find.events({
 		updateURL(event, instance);
 	},
 
+	'mouseover .-upcomingEventsFilter': function() {
+		filterPreview('.hasupcomingevents', 0.33);
+	},
+
+	'mouseout .-upcomingEventsFilter': function() {
+		filterPreview('.hasupcomingevents', 1);
+	},
+
+	'mouseover .-needsHostFilter': function() {
+		filterPreview('.needsHost', 0.33);
+	},
+
+	'mouseout .-needsHostFilter': function() {
+		filterPreview('.needsHost', 1);
+	},
+
+	'mouseover .-needsMentorFilter': function() {
+		filterPreview('.needsMentor', 0.33);
+	},
+
+	'mouseout .-needsMentorFilter': function() {
+		filterPreview('.needsMentor', 1);
+	},
 
 	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
 
@@ -183,6 +210,14 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
+	'mouseover .category': function() {
+		filterPreview(('.'+this), 0.33);
+	},
+
+	'mouseout .category': function() {
+		filterPreview(('.'+this), 1);
+	},
+
 	'click .-removeCategoryFilter': function(event, instance) {
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
@@ -197,12 +232,32 @@ Template.find.events({
 	'click .-showFilters': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
+		instance.$('.-showFilters').removeClass('alreadyOpen');
+		instance.$('.search_filter').stop().fadeTo('slow', 1);
 
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
 			updateUrl(event, instance);
+			instance.$('.-showFilters').removeClass('alreadyOpen');
 		}
+	},
+
+	'mouseover .remove-filter.alreadyOpen': function(event, instance) {
+		instance.$('.search_filter').stop().fadeTo('slow', 0.33);
+	},
+
+	'mouseout .remove-filter': function(event, instance) {
+		instance.$('.search_filter').stop().fadeTo('slow', 1);
+		instance.$('.-showFilters').addClass('alreadyOpen');
+	},
+
+	'mouseover .group': function() {
+		filterPreview(('.'+this), 0.33);
+	},
+
+	'mouseout .group': function() {
+		filterPreview(('.'+this), 1);
 	},
 
 	"click .-searchAllRegions": function(event, template){
