@@ -81,12 +81,20 @@ Template.region_sel.helpers({
 		return region;
 	},
 
-	totalNumberOfEvents: function() {
-		return Events.find().count();
+	allCourses: function() {
+		return Courses.find().count();
 	},
 
-	numberOfEvents: function() {
-		return Events.find({region: this._id}).count();
+	allUpcomingEvents: function() {
+		return eventsFind({ after: minuteTime.get() }).count();
+	},
+
+	courses: function() {
+		return coursesFind({ region: this._id }).count();
+	},
+
+	upcomingEvents: function() {
+		return eventsFind({ region: this._id, after: minuteTime.get() }).count();
 	},
 
 	currentRegion: function() {
