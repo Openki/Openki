@@ -68,6 +68,10 @@ Template.region_sel.helpers({
 		return this.toLowerCase();
 	},
 
+	countryName: function() {
+		return mf('country.'+this);
+	},
+
 	regions: function(){
 		return Template.instance().regionSearchResults.get()[this];
 	},
