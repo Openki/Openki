@@ -30,7 +30,7 @@
 			<a class="regionselect -clickClose">
 				<span class="regionName">{{mf 'menue.All regions' 'All regions'}}</span>
 				<span class="eventsCount"
-							title="{{mf 'regions.totalEventsCount.title' 'There {COUNT, plural, one {is one upcoming event in all regions} other {are # upcoming events in all regions}}' COUNT=totalNumberOfEvents}}">
+							title="{{mf 'regions.totalEventsCount.title' 'There {COUNT, plural, =0 {no upcoming events} one {is one upcoming event in all regions} other {are # upcoming events in all regions}}' COUNT=totalNumberOfEvents}}">
 					{{totalNumberOfEvents}}
 				</span>
 				{{#if currentRegion}}
@@ -48,7 +48,7 @@
 					<a href="#" class="regionselect -clickClose">
 						<span class="regionName">{{name}}</span>
 						<span class="eventsCount"
-									title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=numberOfEvents REGION=this.name}}">
+									title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, =0 {no upcoming events in} one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=numberOfEvents REGION=this.name}}">
 							{{numberOfEvents}}
 						</span>
 						{{#if currentRegion}}
