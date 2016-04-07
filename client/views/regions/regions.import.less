@@ -19,7 +19,10 @@
 			color: @default-gray;
 			padding: 6px 15px 3px;
 			&:hover { cursor: default; }
-			span.flag-icon { margin-right: 4px;	}
+			span.flag-icon {
+				.opacity(0.3);
+				margin-right: 4px;
+			}
 		}
 		li.region a { padding: 5px 15px; }
 		@media screen and
