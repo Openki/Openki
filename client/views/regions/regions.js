@@ -26,11 +26,9 @@ Template.regionsDisplay.events({
 Template.region_sel.created = function(){
 	var instance = this;
 	var regions = Regions.find().fetch();
-	var results = {};
+	var results = [];
 	for (i = 0; i < regions.length; i++) {
-		var country = regions[i].country || "undefined";
-		if (!results[country]) results[country] = [];
-		results[country].push(regions[i]);
+		results.push(regions[i]);
 	}
 	instance.regionSearchResults = new ReactiveVar(results);
 };
@@ -44,15 +42,13 @@ var updateRegionSearch = function(event, instance) {
 	var regions = Regions.find().fetch();
 
 	var lowQuery = query.toLowerCase();
-	var results = {};
+	var results = [];
 	for (i = 0; i < regions.length; i++) {
-		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0) {
-			var country = regions[i].country || "undefined";
-			if (!results[country]) results[country] = [];
-			results[country].push(regions[i]);
-		}
+		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0)
+			results.push(regions[i]);
 	}
 	instance.regionSearchResults.set(results);
+
 	var regExpQuery = new RegExp(lowQuery, 'i');
 	instance.$('.regionName').html(function() {
 	  return $(this).text().replace(regExpQuery, '<strong>$&</strong>');
@@ -60,20 +56,8 @@ var updateRegionSearch = function(event, instance) {
 };
 
 Template.region_sel.helpers({
-	countries: function() {
-		return Object.keys(Template.instance().regionSearchResults.get());
-	},
-
-	lowCountry: function() {
-		return this.toLowerCase();
-	},
-
-	countryName: function() {
-		return mf('country.'+this);
-	},
-
 	regions: function(){
-		return Template.instance().regionSearchResults.get()[this];
+		return Template.instance().regionSearchResults.get();
 	},
 
 	region: function(){
@@ -138,11 +122,9 @@ Template.region_sel.events({
 	'focus .-searchRegions': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 		var regions = Regions.find().fetch();
-		var results = {};
+		var results = [];
 		for (i = 0; i < regions.length; i++) {
-			var country = regions[i].country || "undefined";
-			if (!results[country]) results[country] = [];
-			results[country].push(regions[i]);
+			results.push(regions[i]);
 		}
 		instance.regionSearchResults.set(results);
 	}
