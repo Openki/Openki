@@ -1,3 +1,4 @@
 {
-	"qualifyingElement": false
+	"qualifyingElement": false,
+	"importPath": false
 }

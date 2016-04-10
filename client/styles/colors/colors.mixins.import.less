@@ -2,7 +2,9 @@
 	.transition(color @default-transition-time);
 	color: lighten(@brand-danger, 20%);
 	cursor: pointer;
-	&:hover { color: @brand-danger; }
+	&:hover {
+		color: @brand-danger;
+	}
 }
 
 .btn-calendar() {
@@ -14,5 +16,7 @@
 				border-color: @calendar-btn-hover-bg;
 							 color: @calendar-btn-text;
 	}
-	&:focus { color: darken(@calendar-btn-text, 20%); }
+	&:focus {
+		color: darken(@calendar-btn-text, 20%);
+	}
 }

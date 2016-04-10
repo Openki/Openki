@@ -1,10 +1,12 @@
-.calendar_eventlist { margin-left: -20px; }
+.calendar_eventlist {
+	margin-left: -20px;
+}
 
 .calendar {
 	.container;
 	.calendar_date {
 		.grid(12);
-		padding: 0 0 10px;
+		padding: 0px 0px 10px;
 		.date {
 			background: @calendar-navigation-bg;
 			border-left: 10px solid @brand-primary;
@@ -15,12 +17,12 @@
 		}
 		.calendar_events {
 			.grid(12);
-			margin: 0 -3px -10px;
-			padding: 10px 0 0;
+			margin: 0px -3px -10px;
+			padding: 10px 0px 0px;
 			width: calc(~"100% + 6px");
 			.small_event_container {
 				.grid(4, 3, 2);
-				padding: 0 3px 10px;
+				padding: 0px 3px 10px;
 			}
 		}
 	}
@@ -28,21 +30,21 @@
 	@media screen and
 	(max-width: @screen-xxs) {
 		.grid(12);
-		padding: 0;
+		padding: 0px;
 		.calendar_date {
 			.date {
 				.grid(12);
-				border-left: none;
+				border-left: 0px;
 				border-top: 10px solid @brand-primary;
 				padding: 0.5em;
 			}
 			.calendar_events {
-				margin: 0 0 10px;
-				padding: 10px 7px 0;
+				margin: 0px 0px 10px;
+				padding: 10px 7px 0px;
 				width: auto;
 				.small_event_container {
 					.grid(12);
-					padding: 0 3px 10px;
+					padding: 0px 3px 10px;
 				}
 			}
 		}
@@ -55,7 +57,7 @@
 			.calendar_events {
 				.small_event_container {
 					.grid(6);
-					padding: 0 3px 10px;
+					padding: 0px 3px 10px;
 				}
 			}
 		}
@@ -67,12 +69,14 @@
 	background-color: @calendar-navigation-bg;
 	font-size: 32px;
 	margin-bottom: 10px;
-	padding: 0 10px;
+	padding: 0px 10px;
 	position: sticky;
 	text-align: center;
 	top: 50px;
 	z-index: 2;
-	&.over_content { box-shadow: 0px 6px 2px @default-shadow }
+	&.over_content {
+		box-shadow: 0px 6px 2px @default-shadow;
+	}
 	.calendar_week {
 		background-color: @calendar-header-bg;
 		text-align: center;
@@ -80,23 +84,31 @@
 			color: @calendar-header-text;
 			font-size: large;
 			line-height: 0.75;
-			margin: 7px 0 0 0;
+			margin: 7px 0px 0px 0px;
 		}
 		.date {
 			color: @calendar-header-text;
 			font-size: small;
-			margin: 3px 0;
+			margin: 3px 0px;
 		}
 	}
-	& > .right { float: right; }
-	small { font-size: 12px; }
+	& > .right {
+		float: right;
+	}
+	small {
+		font-size: 12px;
+	}
 	button {
 		.btn;
 		.btn-calendar;
 		float: left;
 		margin: 6px 3px;
-		&:first-child { margin-left: 0; }
-		&:last-child { margin-right: 0; }
+		&:first-child {
+			margin-left: 0px;
+		}
+		&:last-child {
+			margin-right: 0px;
+		}
 	}
 }
 
