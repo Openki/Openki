@@ -19,7 +19,7 @@
 					position: relative;
 				}
 				& > span.stage {
-					.transform(345deg, 1, 1);
+					.rotate(345deg);
 					color: @default-black;
 					font-size: small;
 					left: 8.2em;
@@ -72,7 +72,7 @@
 					}
 				}
 				span.caret {
-					.transform(0, -1.5, -1.5);
+					.scale(-1.5, -1.5);
 					.transition(@default-transition-time);
 					bottom: 1px;
 					color: @brand-primary;
