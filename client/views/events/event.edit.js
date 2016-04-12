@@ -14,6 +14,7 @@ Template.eventEdit.onRendered(function() {
 	});
 
 	this.$("[data-toggle='tooltip']").tooltip();
+	$('a[href!="*"].nav_link').removeClass('active');
 });
 
 
@@ -51,6 +52,10 @@ Template.eventEdit.helpers({
 
 	disableForPast: function() {
 		return this.start > new Date() ? '' : 'disabled';
+	},
+
+	isInternal: function() {
+		return this.internal ? "checked" : null;
 	},
 });
 
@@ -188,30 +193,31 @@ Template.eventEdit.events({
 		});
 	},
 
-	'submit': function(event, template) {
+	'submit': function(event, instance) {
 		event.preventDefault();
 
 		if (pleaseLogin()) return;
 
-		var start = getEventStartMoment(template);
+		var start = getEventStartMoment(instance);
 		if(!start.isValid()) {
 			alert("Date format must be of the form 2015-11-30");
 			return null;
 		}
-		var end = getEventEndMoment(template);
+		var end = getEventEndMoment(instance);
 
 		var editevent = {
-			title: template.$('#edit_event_title').val(),
-			description: template.$('#edit_event_description').html(),
-			location: template.selectedLocation.get(),
-			room: template.$('#edit_event_room').val(),
+			title: instance.$('#edit_event_title').val(),
+			description: instance.$('#edit_event_description').html(),
+			location: instance.selectedLocation.get(),
+			room: instance.$('#edit_event_room').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
-			files: this.files || Array() ,
+			files: this.files || Array(),
+			internal: instance.$('.-eventInternal').is(':checked'),
 		};
 
-		var fileList = template.files;
-		template.files = null;
+		var fileList = instance.files;
+		instance.files = null;
 
 		//check if file object is stored in the template object
 		if(fileList != null){
@@ -245,7 +251,7 @@ Template.eventEdit.events({
 				editevent.region = course.region;
 				editevent.course_id = this.course_id;
 			} else {
-				editevent.region = template.selectedRegion.get();
+				editevent.region = instance.selectedRegion.get();
 
 				var groups = [];
 				if (Router.current().params.query.group) {
@@ -263,7 +269,7 @@ Template.eventEdit.events({
 			}
 		}
 
-		var updateReplicas = template.$("input[name='updateReplicas']").is(':checked');
+		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
 			if (error) {
@@ -279,7 +285,7 @@ Template.eventEdit.events({
 				if (updateReplicas) {
 					addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
 				}
-				template.parent.editing.set(false);
+				instance.parent.editing.set(false);
 			}
 		});
 	},

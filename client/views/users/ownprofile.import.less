@@ -1,86 +1,66 @@
 .profile {
 	.container;
-
 	h1 {
-		margin-top: 0;
+		margin-top: 0px;
 	}
-
-	.infos{
+	.infos {
 		.grid(12, 6);
 		margin-bottom: 20px;
 		margin-top: 15px;
-		padding: 0;
-
+		padding: 0px;
 		.description {
 			font-size: 115%;
 			padding-right: 30px;
-
 			.background {
 				background-color: @user-bg;
 				overflow: auto;
 				padding: 10px;
-
 				tr.email button {
 					.btn-thin;
 					.btn-default;
 				}
-
-				button{
+				button {
 					float: right;
 				}
 			}
 		}
-
 		p {
 			margin-bottom: 5px;
 		}
-
-		form.edit {
-			input {
-				margin-left: 5px;
-			}
+		form.edit input {
+			margin-left: 5px;
 		}
 	}
-
-	button{
+	button {
 		.btn-thin;
 		.btn-primary;
 	}
-
-	.password{
-		margin: 1em 30px 1em 0;
-
+	.password {
+		margin: 1em 30px 1em 0px;
 		form.passChange {
 			background: @user-bg;
 			padding: 10px;
-
-			label{
+			label {
 				font-weight: normal;
 				width: 12em;
 			}
 		}
-
 		button {
 			margin-top: 10px;
-
-			&.changePassConfirm{
+			&.changePassConfirm {
 				.btn-success;
 			}
 		}
 	}
-
-	.grouplist{
+	.grouplist {
 		.grid(12, 6);
-		padding: 0;
+		padding: 0px;
 	}
-
 	ul.groups {
 		list-style: none;
-		padding-left: 0;
-
+		padding-left: 0px;
 		li {
 			margin-top: 5px;
-
 			span.group {
 				background: @group-bg;
 				color: @group-text;
@@ -88,57 +68,47 @@
 			}
 		}
 	}
-
 	.translate {
 		.grid(12);
 		background-color: #ee82ee * 1.5;   // opposing the nice blue :)
 		padding: 10px;
 		text-align: center;
-
-		.fa{
+		.fa {
 			.transition(all .3s ease-out)
 		}
-
-		&:hover{
-			background-color: #ee82ee * 1.5 + #111;
-
-			.fa{
+		&:hover {
+			background-color: #ee82ee * 1.5 + #111111;
+			.fa {
 				.transition(all 1.5s ease-in);
 				font-size: 350%;
 			}
 		}
-
-		a:hover{
+		a:hover {
 			color: @default-white;
 			text-decoration: none;
 		}
 	}
-
 	.deleteFrame {
 		overflow: auto;
-		padding: 15px 0 15px 10px;
+		padding: 15px 0px 15px 10px;
 		text-align: right;
-
-		.pleaseConfirm{
+		.pleaseConfirm {
 			background-color: pink;
 			overflow: auto;
 			padding: 8px;
 		}
-
-		button{
-			.btn-danger;
+		button {
+			.btn-cancel;
 			float: right;
 			margin-left: 7px;
 		}
-
-		button.cancelDeletion{
+		button.cancelDeletion {
 			.btn-primary;
 		}
 	}
-
-	.courses{
+	.courses {
 		.grid(12);
 		margin-top: 25px;
-		padding: 0;
+		padding: 0px;
 	}
 }

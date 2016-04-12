@@ -1,28 +1,24 @@
-.course_categories {
 	ul.categories_list {
 		line-height: 23px;
 		list-style: none;
-		padding-left: 0;
-
+		margin-left: -2px;
+		padding-left: 0px;
 		li {
 			display: inline-block;
 			margin: 2px;
 			position: relative;
-
 			a.category {
-				.transition(all 0.5s);
+				.transition(all @default-transition-time);
 				background: @category-bg-fallback;
-				background: @category-bg;
+				background: @category-bg; // lesshint duplicateProperty: false
 				padding: 2px 5px;
-
 				&:hover {
 					.box-shadow-small(@category-hover-shadow);
 					background: @category-hover-bg-fallback;
-					background: @category-hover-bg;
+					background: @category-hover-bg; // lesshint duplicateProperty: false
 					color: @category-hover-text;
 					text-decoration: none;
 				}
 			}
 		}
 	}
-}

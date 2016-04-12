@@ -1,4 +1,20 @@
 // TESTING: Get user object for name and create it if it doesn't exist
+
+// Select a date that is after the given date
+// For past dates a date between the original date and the present is chosen,
+// dates closer to the original date preferred.
+// For future dates, a date between the original date and double the time between now and then is chosen.
+var sometimesAfter = function(date) {
+	// Seconds between then and now
+	var spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+
+	// Quadratic dropoff: Place new date closer to the original date statistically
+	var placement = Math.random();
+	var squaredPlacement = placement * placement;
+
+	return new Date(date.getTime() + spread * squaredPlacement);
+}
+
 function ensureUser(name) {
 	if (!name) {name = 'Serverscriptttt';}
 	var email = (name.replace(' ', '')+"@openki.example").toLowerCase();
@@ -52,6 +68,7 @@ function ensureLocation(name, regionId) {
 		location = {
 			name: name,
 			region: regionId,
+			rooms: []
 		};
 
 		var region = Regions.findOne(regionId);
@@ -107,7 +124,7 @@ function createCourses(scale) {
 		for (var n = 0; n < scale; n++) {
 			course.name = name + (n > 0 ? ' (' + n + ')' : '');
 			course.slug = getSlug(name + ' (' + n + ')');
-
+			course.internal = !!course.internal;
 
 			// TESTING: always use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
@@ -141,7 +158,7 @@ function createCourses(scale) {
 /////////////////////////////// TESTING: Create Locations if non in db
 
 loadLocationsIfNone = function(){
- 	if (Locations.find().count() === 0) {
+	if (Locations.find().count() === 0) {
 		loadLocations();
 	}
 };
@@ -205,15 +222,30 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				event.groups = course.groups;
-				var random = Math.random();
 
+				var random = Math.random();
 				var location;
-				if (random < 0.4 && random > 0.1) location = random < 0.2 ? 'Haus am See' : 'Kongresszentrum';
+				if (random < 0.4) location = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
 				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
 				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
 				else location = random < 0.95 ? 'Hub' : 'ASZ';
 				event.location = ensureLocation(location, event.region);
+
+				var rooms;
+				if (event.location.rooms.length > 0) {
+					rooms = event.location.rooms;
+					if (Math.random() > 0.5) event.room = rooms[Math.floor(Math.random()*rooms.length)];
+				}
+
+				if (!event.room && Math.random() > 0.6) {
+					rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
+					event.room = rooms[Math.floor(Math.random()*rooms.length)];
+					ensureRoom(event.location, event.room);
+				}
+
+				event.internal = Math.random() < 0.07;
+
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
@@ -264,12 +296,8 @@ createCommentsIfNone = function(){
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
 				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 
-				var spread = new Date(new Date().getTime() - course.time_created);
-				var age = Math.random();
-				age = Math.floor(age*spread);
-				var date = new Date(new Date().getTime() - age);
-				comment.time_created = date;
-				comment.time_updated = date + age * 0.77;
+				comment.time_created = sometimesAfter(course.time_created);
+				comment.time_updated = (Math.random() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created); ;
 
 				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
 				var commenter = false;

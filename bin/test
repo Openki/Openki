@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+/**
+ * Run tests on CI infrastructure.
+ *
+ * This script fires up meteor with dev-settings and runs chimp as soon as the
+ * application is ready. If any test fails, the script exits with a non-zero
+ * exit code.
+ *
+ * Test are loaded from the tests subdirectory. They must be implemented using
+ * the Mocha syntax. The Chai library is used for assertions.
+ *
+ * Chimp test runner: https://github.com/xolvio/chimp
+ * Mocha framework: https://mochajs.org/
+ * Chai assertion lib: http://chaijs.com/
+ *
+ * This script heavily borrows from xolvio automated testing best practices:
+ * https://github.com/xolvio/automated-testing-best-practices
+ */
+
+var extend = require('util')._extend,
+  exec = require('child_process').exec;
+
+function runChimp() {
+  return startProcess({
+    name: 'Chimp',
+    options: {
+      env: extend({CI: 1}, process.env)
+    },
+    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests'
+  });
+}
+
+function runMeteor(callback) {
+  return startProcess({
+    name: 'Meteor',
+    command: 'meteor --production --settings=settings.dev.json'
+  });
+}
+
+function startProcess(opts, callback) {
+  var proc = exec(
+    opts.command,
+    opts.options
+  );
+  proc.stdout.pipe(process.stdout);
+  proc.stderr.pipe(process.stderr);
+
+  return proc;
+}
+
+function runTests() {
+  var meteor = runMeteor();
+
+  meteor.stdout.on('data', function waitForMessage(data) {
+    if (data.toString().match('App running at:')) {
+      var chimp = runChimp();
+      chimp.on('close', function (code) {
+        process.exit(code);
+      });
+    }
+  });
+}
+
+runTests();

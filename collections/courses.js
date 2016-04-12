@@ -14,6 +14,7 @@
 // "time_lastenrol"-> Date
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "internal"      -> Boolean
 // ===========================
 
 Courses = new Meteor.Collection("Courses");
@@ -36,12 +37,10 @@ function addRole(course, role, user) {
 
 
 function removeRole(course, role, user) {
-	var result = Courses.update(
+	Courses.update(
 		{ _id: course._id, 'members.user': user },
 		{ '$pull': { 'members.$.roles': role }}
 	);
-
-	if (result != 1) throw new Error("removeRole affected "+result+" documents");
 
 	// Housekeeping: Remove members that have no role left
 	Courses.update(
@@ -166,6 +165,10 @@ coursesFind = function(filter, limit) {
 		find.roles = { $all: mustHaveRoles };
 	}
 
+	if (filter.internal !== undefined) {
+		find.internal = !!filter.internal;
+	}
+
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
@@ -273,8 +276,8 @@ Meteor.methods({
 		_.each(course.members, function(member) {
 			if (
 				user.anonId
-			 && user.anonId.indexOf(member.user) != -1
-			 && (member.roles.indexOf(role) != -1)
+				&& user.anonId.indexOf(member.user) != -1
+				&& (member.roles.indexOf(role) != -1)
 			) {
 				subscriptionId = member.user;
 			}
@@ -295,7 +298,8 @@ Meteor.methods({
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object),
-			groups:	     Match.Optional([String])
+			groups:      Match.Optional([String]),
+			internal:    Match.Optional(Boolean),
 		});
 
 		var user = Meteor.user();
@@ -315,7 +319,7 @@ Meteor.methods({
 			if (!course) throw new Meteor.Error(404, "Course not found");
 		}
 
- 		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
+		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
 		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
 
 
@@ -367,6 +371,9 @@ Meteor.methods({
 		if (changes.name) {
 			set.name = saneText(changes.name).substring(0, 1000);
 			set.slug = getSlug(set.name);
+		}
+		if (changes.internal !== undefined) {
+			set.internal = changes.internal;
 		}
 
 		set.time_lastedit = new Date();

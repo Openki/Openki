@@ -1,6 +1,6 @@
 // BUTTON MIXINS
 
-.btn-thin {
+.btn-thin() {
 	.btn;
 	padding: 3px 12px;
 }
@@ -9,17 +9,15 @@
 	.form-control;
 	.btn;
 	.btn-primary;
-	padding: 0;
-	border: none;
+	border: 0px;
 	border-top: 3px solid @body-bg;
-	text-align: left;
-	height: auto;
 	font-size: large;
-	padding: 10px 15px;
+	height: auto;
 	line-height: 1.1;
-
+	padding: 10px 15px;
+	text-align: left;
 	&:hover {
-		border: none;
+		border: 0px;
 		border-top: 3px solid @body-bg;
 	}
 }
@@ -28,17 +26,23 @@
 	.form-control;
 	.btn;
 	.btn-success;
-	padding: 0;
-	border: none;
+	border: 0px;
 	border-top: 3px solid @body-bg;
-	text-align: left;
-	height: auto;
 	font-size: large;
-	padding: 10px 15px;
+	height: auto;
 	line-height: 1.1;
-
+	padding: 10px 15px;
+	text-align: left;
 	&:hover {
-		border: none;
+		border: 0px;
 		border-top: 3px solid @body-bg;
+	}
+}
+
+.btn-cancel() {
+	.btn-default;
+	&:hover {
+		background: @btn-danger-bg;
+		border: 1px solid @btn-danger-border;
 	}
 }

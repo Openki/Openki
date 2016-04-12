@@ -71,7 +71,7 @@ Template.locationDetails.onRendered(function() {
 
 Template.locationDetails.helpers({
 
-	 isEditing: function () {
+	isEditing: function () {
 		return Session.get("isEditing");
 	},
 
@@ -81,6 +81,23 @@ Template.locationDetails.helpers({
 
 	markers: function() {
 		return Template.instance().markers;
+	},
+
+	coords: function() {
+		if (this.loc && this.loc.coordinates) {
+			var fmt = function(coord) {
+				var sign = '';
+				if (coord > 0) sign = '+';
+				if (coord < 0) sign = '-';
+				return sign + coord.toPrecision(6);
+			};
+			var coords = {
+				LAT: fmt(this.loc.coordinates[1]),
+				LON: fmt(this.loc.coordinates[0]),
+			};
+
+			return mf('locationDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
+		}
 	}
 });
 

@@ -1,84 +1,103 @@
 .find {
 	.container;
-
 	h1 {
-		margin-top: 0;
-
-		@media @mobile {
+		margin-top: 0px;
+		@media screen and
+		(max-width: @screen-xs) {
 			font-size: x-large;
 			margin: 20px 0 10px;
 		}
 	}
-
 	.search {
 		.grid(12);
-		padding: 0;
-
-		.search_field {
+		padding: 0px;
+		.-searchField {
 			.grid(12, inherit, 5);
 			padding: 0 0 15px;
-
-			input.searchInput {
+			input.-searchInput {
 				.form-control-humble;
 				font-size: large;
 				height: 38px;
 			}
-
 			button.-findButton {
 				.btn;
 				.btn-success;
 				padding: 8px 12px !important;
 			}
+		}
+		button.-showFilters {
+			.btn;
+			.btn-primary;
+			padding: 8px 12px !important;
 
-			button.filter-toggle-btn {
+			@media screen and
+			(max-width: @screen-xs) {
+				.form-control;
 				.btn;
 				.btn-primary;
+				height: 38px;
+				margin-top: 0px;
 				padding: 8px 12px !important;
 			}
 		}
-
 		.search_filter {
 			.grid(12, inherit, 7);
 			padding: 0 0 0 15px;
-
-			@media screen and (max-width: @screen-md) {
-				padding: 0;
+			@media screen and
+			(max-width: @screen-xs) {
+				border: 1px solid @brand-primary;
+				padding: 0 10px;
 			}
-
+			@media screen and
+			(min-width: @screen-sm) and
+			(max-width: @screen-md) {
+				padding: 0px;
+			}
 			h4,
 			h5 {
 				color: @brand-primary;
 			}
-
 			.search_filter_header {
 				.grid(12);
 				border-bottom: 1px solid @brand-bg;
 				color: @brand-primary;
-				padding: 0;
-
+				padding: 0px;
 				h4 {
 					margin-top: 8px;
 				}
+				@media screen and
+				(max-width: @screen-xs) {
+					display: none;
+				}
 			}
-
 			.search_events {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
-
+				padding: 0px;
+				@media screen and
+				(max-width: @screen-xs) {
+					margin-bottom: 0px;
+				 }
 				.checkbox {
+					@media screen and
+					(max-width: @screen-xs) {
+						.form-control-humble;
+						.btn;
+						.btn-default;
+						margin-bottom: 10px;
+						&:last-child {
+							margin-bottom: 0px;
+						}
+					}
 					label {
-						padding: 0;
-
+						padding: 0px;
 						&:hover {
 							color: @brand-primary;
 						}
 					}
-
 					input#hasUpcomingEvent {
 						display: none;
 					}
-
 					.eventcaption_upcoming {
 						background: @brand-bg;
 						display: inline-block;
@@ -86,142 +105,155 @@
 						position: relative;
 						vertical-align: bottom;
 						width: 28px;
-
 						.eventcaption_upcoming_box {
 							background: @brand-success;
 							height: 10px;
 							position: absolute;
-							right: 0;
-							top: 0;
+							right: 0px;
+							top: 0px;
 							width: 10px;
-
 							.eventcaption_upcoming_text {
 								background: @default-shadow;
-								left: 3px;
 								height: 1px;
+								left: 3px;
 								position: absolute;
 								width: 3px;
-
 								&.first-line {
 									top: 2px;
 								}
-
 								&.second-line {
 									top: 4px;
 								}
-
 								&.third-line {
 									top: 6px;
 								}
 							}
 						}
 					}
-
-					span.fa-toggle-off,
-					span.fa-toggle-on {
+					span.glyphicon-calendar,
+					span.glyphicon-home,
+					span.fa-graduation-cap {
+						.transition(all 0.3s);
 						color: @brand-primary;
 					}
-
-					span.checked {
+					span.glyphicon-home.checked {
 						background: @role-no-bg;
 						color: @role-no-text;
-
-						&.glyphicon-home {
-							padding: 4px 17px 2px;
-						}
-
-						&.fa-graduation-cap {
-							padding: 4px 15px 2px;
-						}
+						padding: 4px 17px 2px;
+					}
+					span.fa-graduation-cap.checked {
+						background: @role-no-bg;
+						color: @role-no-text;
+						padding: 4px 15px 2px;
 					}
 				}
 			}
-
 			.filter_categories {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
-
-				h5 {
-					margin-top: 0;
+				padding: 0px;
+				@media screen and
+				(max-width: @screen-xs) {
+					margin-bottom: 0px;
 				}
-
-				.category_select {
+				h5 {
+					margin-top: 0px;
+				}
+				.categorySelect {
 					margin-bottom: 10px;
-
-					a.dropdown-toggle {
-						background: @category-bg-fallback;
-						background: @category-bg;
-						color: @category-text;
+					@media screen and
+					(max-width: @screen-xs) {
+						margin-bottom: 0px;
+					}
+					input.-searchCategories {
+						background: @body-bg;
+						border: 2px dashed @category-bg;
 						padding: 2px 5px;
-
-						&:hover {
-							color: @category-text;
-							cursor: pointer;
-							text-decoration: none;
+						&:focus {
+							border-color: @brand-bg;
 						}
-
-						span.glyphicon-plus {
-								font-size: small;
+						@media screen and
+						(max-width: @screen-xs) {
+							width: 100%;
 						}
 					}
-
+					.dropdown-toggle {
+						position: relative;
+						&::before {
+							content: '\f107';
+							font-family: FontAwesome;
+							left: -1em;
+							position: absolute;
+						}
+					}
+					&.open .dropdown-toggle::before {
+						content: '\f106';
+					}
 					ul.dropdown-menu {
-						background: @category-bg-fallback;
-						margin-top: 6px;
-
+						background: @body-bg;
+						margin-top: 0px;
+						max-height: 300px;
+						min-width: 80%;
+						overflow-x: hidden;
+						overflow-y: auto;
+						@media screen and
+						(max-width: @screen-xs) {
+							width: 100%;
+						}
 						li {
 							&:hover {
-								background: @category-hover-bg-fallback;
+								background: @category-bg;
 							}
-
-							&> * {
-								color: @brand-primary;
+							&.no_categories {
+								color: @category-text;
+								padding: 0px 5px;
+								text-align: center;
+								&:hover {
+									background-color: @body-bg;
+									cursor: default;
+								}
+							}
+							& > * {
 								display: inline-block;
 							}
 						}
-
 						a {
+							padding: 3px 10px;
 							&:hover {
 								background: none;
 							}
-
 							&.category.parent {
-								padding-right: 0;
+								color: @brand-primary;
+								padding-right: 3px;
 							}
 						}
-
-						.show_subcategories {
-							color: darken(@category-hover-bg-fallback, 5%);
-							padding-right: 20px;
-
+						.-showSubcategories {
+							color: lighten(@brand-primary, 10%);
+							padding: 0 5px;
 							&:hover {
-								color: @brand-primary !important;
+								color: @brand-primary;
 							}
 						}
 					}
-
-					li.subcategory {
+					li.-subcategory {
 						display: none;
-						margin-left: 20px;
-
 						a {
-							border-left: 1px solid @brand-primary;
-							padding-left: 10px;
+							color: @default-black;
 						}
 					}
 				}
-
 				ul.selected_categories {
 					list-style: none;
-					margin: 0;
-					padding-left: 0;
-
+					margin: 0px;
+					padding-left: 0px;
 					li {
 						margin-bottom: 3px;
-						padding: 0 3px 3px 0;
+						padding: 0px 3px 3px 0px;
+						@media screen and
+						(max-width: @screen-xs) {
+							display: inline-block;
+						}
 					}
-
 					span.category {
 						background: @category-bg;
 						color: @category-text;
@@ -229,29 +261,43 @@
 					}
 				}
 			}
-
 			.filter_groups {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
-
+				padding: 0px;
 				h5 {
 					color: @default-black;
 				}
-
-				span.group {
-					background: @group-bg;
-					color: @group-text;
-					margin-bottom: 10px;
-					padding: 2px 5px;
-				}
 			}
-
 			span.glyphicon-remove {
 				.btn-remove;
 				position: relative;
 				top: 2px;
 			}
 		}
+	}
+	.courselist_results {
+		@media screen and
+		(max-width: @screen-xs) {
+			padding-top: 15px;
+		}
+		.no_courses_found {
+			text-align: center;
+			button.-searchAllRegions {
+				.btn-thin;
+				.btn-primary;
+				margin-top: 10px;
+
+				@media screen and
+				(max-width: @screen-xxs) {
+					.form-control;
+					.btn;
+					.btn-primary;
+				}
+			}
+		}
+	}
+	.course_edit {
+		padding: 0px;
 	}
 }

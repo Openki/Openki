@@ -19,8 +19,13 @@
 		</div>
 		<div id="outer" class={{testWarningClass}}>
 			{{#if showIntro}}
-			{{> introduction}}
+				{{> introduction}}
 			{{/if}}
+
+			{{#if translate}}
+				{{> translateInfo}}
+			{{/if}}
+
 			<div id="maincontent">
 				{{> yield}}
 				{{> messages}}
@@ -30,33 +35,6 @@
 	</div>
 	{{> kioskLink}}
 	{{> footer}}
-</template>
-
-<template name="region_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		<span class="glyphicon glyphicon-record"></span>&nbsp;
-		{{#if region}}
-			{{region.name}}
-		{{else}}
-			{{mf 'menue.All regions' 'All regions'}}
-		{{/if}}
-		<span class="caret"></span>
-	</a>
-
-	<ul class="dropdown-menu" role="menu">
-		<li>
-			<a class="regionselect -clickClose" href="/region/">
-				{{mf 'menue.All regions' 'All regions'}}
-			</a>
-		</li>
-		{{# each regions}}
-			<li>
-				<a href="#" class="regionselect -clickClose">
-					{{name}}
-				</a>
-			</li>
-		{{/each}}
-	</ul>
 </template>
 
 <template name="lang_sel">
@@ -70,9 +48,40 @@
 		{{#each lgs}}
 			<li>
 				<a href="#" class="langselect -clickClose">
-					{{this.name}}
+					{{name}}
+					{{#if currentLanguage}}
+						<span class="glyphicon glyphicon-ok"></span>
+					{{/if}}
 				</a>
 			</li>
 		{{/each}}
+	</ul>
+</template>
+
+<template name="translateInfo">
+	<h4>Welcome and thanks for helping with the translation of Openki.net</h4>
+	Here are some guidelines and some help:
+
+	We use a casual, every day language for the interface.
+	<ul>
+		<li> Try to sound as natural as posible.</li>
+		<li> Openki is on a first-name basis with all users.</li>
+		<li> It's totally ok to to address the user informally as if zhe was a good friend.</li>
+	</ul>
+
+	Where possible we use a gender-neutral, inclusive language.
+	<ul>
+		<li> We avoide gender-specific pronouns and try to use gender-neutral ones.</li>
+		<li> Aswell as gender-neutral titles and roles.</li>
+		<li> Whithout sounding to weird, though.</li>
+	</ul>
+
+	Some technical stuff:
+	<ul>
+		<li> Words in capital letters and brackets like {NAME} are variables. Transfer them as they are.</li>
+		<li> "Don't forget 'all' the punctuation (marks)!"...</li>
+		<li> In some languages capitalization differs from English.</li>
+		<li> Sometimes there are multiple translations in one string: e.g. one for zero (=0) one for one (=1) one for te rest (other).</li>
+		<li> # stands for a Number.</li>
 	</ul>
 </template>

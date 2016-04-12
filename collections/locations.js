@@ -83,14 +83,14 @@ Meteor.methods({
 	save_location: function(locationId, changes) {
 		check(locationId, String);
 		check(changes, {
-			description: Match.Optional(String),
-			hosts: 		 [String],
-			name:        Match.Optional(String),
-			region:      Match.Optional(String),
-			address:     Match.Optional(String),
-			route:       Match.Optional(String),
-			maxpeople:   Match.Optional(String),
-			maxworkplaces:   Match.Optional(String)
+			description:   Match.Optional(String),
+			hosts:         [String],
+			name:          Match.Optional(String),
+			region:        Match.Optional(String),
+			address:       Match.Optional(String),
+			route:         Match.Optional(String),
+			maxpeople:     Match.Optional(String),
+			maxworkplaces: Match.Optional(String)
 		});
 
 		var user = Meteor.user();

@@ -1,31 +1,28 @@
 .noscript {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
 	background: @brand-bg;
-
+	height: 100%;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 100%;
 	.noscript_message_box {
-		margin: auto;
-		width: 300px;
+		background: @brand-primary;
+		border: 3px solid @default-white;
 		height: 100px;
+		margin: auto;
 		position: relative;
 		top: calc(~"50% - 100px");
-		border: 3px solid @default-white;
-		background: @brand-primary;
-
+		width: 300px;
 		img {
 			.grid(4);
-			padding: 0;
 			height: 95px;
+			padding: 0px;
 		}
-
 		.noscript_message {
 			.grid (8);
-			padding: 15px 15px;
 			color: @default-white;
 			height: 100%;
+			padding: 15px 15px;
 		}
 	}
 }

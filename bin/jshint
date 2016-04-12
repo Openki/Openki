@@ -1,39 +1,15 @@
 #!/bin/sh
 
-wrong=""
+# bail out if jshint doesn't exist
+command jshint || exit 0;
 
-git diff --cached --name-only --diff-filter=ACM | grep "\.js$" | while read file; do
-    if ! jshint "${file}"; then
-		echo "\033[31mjshint found errors: \033[0m$file"
-        wrong="$file"
-    fi
-done
-
-[ -z "$wrong" ]
-
-
-
-
-
-
-
-
-
-exit 0
-
-
-files=$(git diff --cached --name-only --diff-filter=ACM | grep "\.js$")
-if [ -z "$files" ]; then
-    exit 0
-fi
 
 wrong=""
 
-for file in "${files}"; do
+git diff --cached --name-only --diff-filter=ACM | grep "\.js$" | (while read file; do
     if ! jshint "${file}"; then
-		echo "\033[31mjshint found errors: \033[0m$file"
+	echo "\033[31mjshint found errors: \033[0m$file"
         wrong="$file"
     fi
-done
+done && [ -z "$wrong" ])
 
-[ -z "$wrong" ]

@@ -1,5 +1,8 @@
 Template.editable.onCreated(function() {
-	this.changed = new ReactiveVar(false);
+	// When not editing individual fields, mark all fields as changed
+	// from the start
+	var startChanged = !this.data.showControls;
+	this.changed = new ReactiveVar(startChanged);
 	this.editingVersion = false;
 });
 
@@ -7,11 +10,31 @@ Template.editable.onCreated(function() {
 Template.editable.onRendered(function() {
 	var self = this;
 	var editable = this.$('.editable');
-	var options = {};
+	var options = {
+		placeholder: {
+			hideOnClick: false,
+			text: self.data.placeholderText
+		}
+	};
 	if (this.data.simple) {
 		options.disableReturn = true;
-		options.disableToolbar = true;
+		options.toolbar = false;
 	}
+
+	// UGLY The following two methods can be used to access and change
+	// template state from other templates. This is a lot of indirection and
+	// shows that I didn't think things through.
+
+	// This method yields the current content if it was edited
+	this.data.editedContent = function() {
+		if (!self.changed.get()) return false;
+		return self.data.simple ? editable.text() : editable.html();
+	}
+
+	// This method can be used to leave editing mode
+	this.data.end = function() {
+		self.changed.set(false);
+	};
 
 	// When the text changes while we are editing, the changes will be
 	// inserted as new nodes instead of replacing the other nodes.
@@ -50,7 +73,8 @@ Template.editable.onRendered(function() {
 
 Template.editable.helpers({
 	showControls: function() {
-		return Template.instance().changed.get();
+		var instance = Template.instance();
+		return instance.data.showControls && instance.changed.get();
 	},
 
 	editableAttrs: function() {
@@ -60,7 +84,6 @@ Template.editable.helpers({
 		if (instance.changed.get()) classes.push('changed');
 		return {
 			'class': classes.join(' '),
-			'data-placeholder':  instance.data.placeholderText,
 		};
 	},
 
@@ -77,6 +100,7 @@ Template.editable.helpers({
 
 Template.editable.events({
 	'click .-editableStore': function(event, instance) {
+		event.preventDefault();
 		instance.changed.set(false);
 		var editable = instance.$('.editable');
 		var changedText = instance.data.simple ? editable.text() : editable.html();
@@ -84,6 +108,7 @@ Template.editable.events({
 		instance.editingVersion = false;
 	},
 	'click .-editableCancel': function(event, instance) {
+		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
 		instance.editingVersion = false;

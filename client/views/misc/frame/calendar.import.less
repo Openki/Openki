@@ -1,7 +1,6 @@
 .frame_calendar_date {
 	.grid(12);
-	padding: 0 0 10px;
-
+	padding: 0px 0px 10px;
 	.date {
 		background: lighten(@orange, 25%);
 		border-left: 10px solid @orange;
@@ -10,17 +9,17 @@
 		text-align: center;
 		width: 100px;
 
-		@media screen and (max-width: @screen-xxxs) {
+		@media screen and
+		(max-width: @screen-xxs) {
 			.grid(12);
-			border-left: none;
+			border-left: 0px;
 			border-top: 10px solid @orange;
 			padding: 0.5em;
 		}
 	}
-
 	.frame_calendar_events {
 		.grid(12);
 		margin-bottom: -10px;
-		padding: 10px 7px 0;
+		padding: 10px 7px 0px;
 	}
 }

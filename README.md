@@ -1,18 +1,18 @@
-Openki/hmmm
+Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/schuel/hmmm.svg?branch=master)](https://travis-ci.org/schuel/hmmm)
 ====
 
-**Platform for open education** – built with [Meteor.js](http://meteor.com)
+**Platform for open education** – Free software built with [Meteor.js](http://meteor.com)
 
 An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 
-[  read on...](http://openki.net "our blog")
+[  read on...](http://about.openki.net "our blog")
 <div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
 - Demo/Playground: [test.openki.net](http://test.openki.net/?region=Englistan "runing here")
 - Live: [alpha.openki.net](https://alpha.openki.net)
-- Concept: [openki.net](http://openki.net "our blog")
+- Concept: [about.openki.net](http://about.openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
 
@@ -47,7 +47,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
-- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone` Hmmm into /some/path
+- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone` Openki into /some/path
 - `cd /some/path`
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/)  -> done.

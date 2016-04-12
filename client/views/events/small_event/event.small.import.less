@@ -1,36 +1,22 @@
-.event_small_container {
+.small_event_container {
   .grid(4, 3, inherit, 2);
   height: 200px;
-  padding: 0 3px 10px;
-
-  @media screen and (max-width: @screen-xxs) {
-    .grid(6);
-    padding: 0 3px 10px;
-  }
-
-  @media screen and (max-width: @screen-xxxs) {
+  padding: 0px 3px 10px;
+  .small_event {
     .grid(12);
-    padding: 0 3px 10px;
-  }
-
-  .event_small {
-    .grid(12);
-    .transition(box-shadow 0.5s);
+    .transition(box-shadow @default-transition-time);
     background: @brand-bg;
     height: 100%;
-    padding: 0;
-
+    padding: 0px;
     &:hover {
-      .box-shadow-big(@default-shadow);
-    }
-
+			.box-shadow-big(@default-shadow);
+		}
     .-eventLocationTime,
     .-eventTitle,
     .-eventDescription {
 			.word-break;
       overflow: hidden;
     }
-
     .-eventLocationTime {
       .grid(12);
       background: @brand-success;
@@ -38,22 +24,18 @@
       color: @default-black;
       height: 55px;
       padding: 5px;
-
 			span.fa,
 			span.glyphicon {
 				margin-right: 2px;
 			}
-
 			span.fa-clock-o,
 			span.event_time {
 				margin-bottom: 5px;
 			}
-
 			span.fa-map-signs {
 				margin-left: 4px;
 			}
     }
-
     .-eventTitle {
       .grid(12);
       color: @default-black;
@@ -61,13 +43,24 @@
       max-height: 56px;
       padding: 5px;
     }
-
     .-eventDescription {
       .grid(12);
       color: @brand-primary;
       height: 85px;
       margin-top: -3px;
-      padding: 0 5px 5px;
+      padding: 0px 5px 5px;
     }
+  }
+
+	@media screen and
+	(max-width: @screen-xxs) {
+    .grid(12);
+    padding: 0px 3px 10px;
+  }
+	@media screen and
+	(min-width: @screen-xxs) and
+	(max-width: @screen-xsm) {
+    .grid(6);
+    padding: 0px 3px 10px;
   }
 }

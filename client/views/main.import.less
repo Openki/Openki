@@ -2,7 +2,7 @@
 
 #outer {
 	padding-top: 50px;
-	&.testWarning{
+	&.testWarning {
 		padding-top: 70px;
 	}
 }
@@ -13,22 +13,21 @@ body {
 }
 
 #maincontent {
-	padding: 25px 0 50px 0;
-
-	&> *:first-child {
-		padding-top: 0;
-		margin-top: 0;
+	padding: 25px 0px 50px 0px;
+	& > *:first-child {
+		margin-top: 0px;
+		padding-top: 0px;
 	}
-
-	@media @mobile {
+	@media screen and
+	(max-width: @screen-xs) {
 		.find {
 			margin-top: -20px;
+			}
 		}
-	}
 }
 
 * {
-	border-radius: 0 !important;
+	border-radius: 0px !important;
 	outline: none !important;
 }
 
@@ -37,9 +36,9 @@ h1 {
 }
 
 .dropdown-menu {
-	min-width: 0;
+	.box-shadow-small(@default-shadow);
+	min-width: 0px;
 	width: auto;
-
 	li {
 		cursor: pointer;
 	}
@@ -48,22 +47,15 @@ h1 {
 .tooltip {
 	font-size: @font-size-base;
 	white-space: nowrap;
-
 	&-inner {
-		.box-shadow-small(@default-shadow);
 		max-width: none;
 	}
 }
 
-ul.nav-tabs {
-	li {
-		a {
-			color: @default-black;
-
-			&:hover {
-				color: @body-bg;
-			}
-		}
+ul.nav-tabs li a {
+	color: @default-black;
+	&:hover {
+		color: @body-bg;
 	}
 }
 
@@ -72,19 +64,26 @@ label {
 }
 
 span.glyphicon-ok {
-	color: darken(@brand-success, 20%);
+	color: darken(@brand-success, 20%) !important;
 }
 
 select {
 	.form-control-humble;
 	color: @default-black;
-
 	&:hover {
 		cursor: pointer;
 	}
-
-	&:-moz-focusring {
-		color: @default-transparent; // Hack to make outline in Firefox disappear
-		text-shadow: 0 0 0 @default-shadow;
+	option.select_placeholder:hover {
+		cursor: not-allowed;
 	}
+}
+
+.elevate_child {
+	.transition(box-shadow @default-transition-time) !important;
+	box-shadow: none !important;
+}
+
+.collapsing,
+.fade {
+	.transition-duration(0s);
 }

@@ -12,6 +12,9 @@ Meteor.methods({
 			// Working under the assumption that there is only one address
 			// if there was more than one address oops I accidentally your addresses
 			if (email && email.length > 3) {
+				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
+					throw new Meteor.Error('emailExists', 'Email address already in use');
+				}
 				changes.emails = [{ address: email, verified: false }];
 			} else {
 				changes.emails = [];
@@ -66,6 +69,10 @@ Meteor.methods({
 
 		if (closest) return closest._id;
 		return false;
-	}
+	},
 
+	ipToGeo: function(ip) {
+//console.log (GeoIP.lookup(ip));
+		return GeoIP.lookup(ip);
+	},
 });

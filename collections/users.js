@@ -2,9 +2,9 @@
 // "_id"          -> ID
 // "createdAt"    -> Date
 // "services"     -> {
-//	   password:{
+//     password: {
 //         bcrypt:       String},
-//     github:{
+//     github: {
 //         id:           Int32
 //         accessToken:  String
 //         email:        String/null
@@ -61,6 +61,22 @@ privileged = function(user, privilege) {
 		&& user.privileges.indexOf(privilege) > -1
 	);
 };
+
+UserLib = {
+	searchPrefix: function(prefix, options) {
+		var prefixExp = '^' + prefix.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
+		var query = { username: new RegExp(prefixExp, 'i') };
+
+		var exclude = options.exclude;
+		if (exclude !== undefined) {
+			check(exclude, [String]);
+			query._id = { $nin: exclude };
+			delete options.exclude;
+		}
+
+		return Meteor.users.find(query, options);
+	}
+}
 
 Meteor.methods({
 	delete_profile: function() {

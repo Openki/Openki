@@ -15,7 +15,7 @@ Router.map(function () {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
-					groups: groupsFind({ own: true }),
+					groups: GroupLib.find({ own: true }),
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -97,7 +97,9 @@ Template.profile.events({
 			document.getElementById('editform_email').value,
 			document.getElementById('privacy').checked,
 			function(err) {
-				if (!err) {
+				if (err) {
+					addMessage(mf('profile.savingError', { ERROR: err }, 'Saving your profile failed: {ERROR}'), 'danger');
+				} else {
 					addMessage(mf('profile.updated', 'Updated profile'), 'success');
 					template.editing.set(false);
 				}

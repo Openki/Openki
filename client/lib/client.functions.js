@@ -69,9 +69,15 @@ pleaseLogin = function() {
 	if (Meteor.userId()) return false;
 	alert(mf('Please.login', 'Please login or register'));
 	setTimeout(function(){
-		$('.loginButton').dropdown('toggle');  	//or $('.dropdown').addClass('open');
+		$('.loginButton').dropdown('toggle');    //or $('.dropdown').addClass('open');
 	},0);
 	return true;
+};
+
+getWindowSize = function() {
+	var screenSize = Math.max(document.documentElement.clientWidth,
+														window.innerWidth || 0);
+	Session.set('screenSize', screenSize);
 };
 
 
@@ -93,6 +99,14 @@ Handlebars.registerHelper ("siteName", function() {
 	}
 	return "Hmmm";
 });
+
+Handlebars.registerHelper ("siteStage", function() {
+	if (Meteor.settings.public && Meteor.settings.public.siteStage) {
+		return Meteor.settings.public.siteStage;
+	}
+	return "";
+});
+
 
 Handlebars.registerHelper ("categoryName", function(cat) {
 	cat = cat || this;

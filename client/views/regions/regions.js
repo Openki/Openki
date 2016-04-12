@@ -1,11 +1,16 @@
 Template.region_sel.helpers({
 	regions: function(){
-	  return Regions.find();
+		return Regions.find();
 	},
 
 	region: function(){
 		var region = Regions.findOne(Session.get('region'));
 		return region;
+	},
+
+	currentRegion: function() {
+		var region = this._id || "all";
+		return region == Session.get('region');
 	}
 });
 

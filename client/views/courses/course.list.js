@@ -39,6 +39,18 @@ Template.course.helpers({
 		return 'proposal';
 	},
 
+	needsMentor: function() {
+		if (!this.roles) return false;
+		else if (this.roles.indexOf('mentor') != -1)
+			return !hasRole(this.members, 'mentor');
+	},
+
+	needsHost: function() {
+		if (!this.roles) return false;
+		else if (this.roles.indexOf('host') != -1)
+			return !hasRole(this.members, 'host');
+	},
+
 	categorynames: function() {
 		return Categories.find({_id: {$in: course.categories}}).map(function(cat) {
 			return cat.name;
@@ -62,6 +74,10 @@ Template.course.helpers({
 		var today= new Date();
 		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 	},
+
+	courseRegion: function() {
+		return this.region;
+	}
 });
 
 Template.courseStatus.helpers({
@@ -113,16 +129,16 @@ Template.course.onCreated(function() {
 
 Template.course.events({
 	"mouseover a.category": function(event, template){
-		 template.$('.courselist_course').addClass('category-focus-mode');
+		 template.$('.courselist_course').addClass('elevate_child');
 	},
 	"mouseout a.category": function(event, template){
-		 template.$('.courselist_course').removeClass('category-focus-mode');
+		 template.$('.courselist_course').removeClass('elevate_child');
 	},
 	"mouseover a.group": function(event, template){
-		 template.$('.courselist_course').addClass('category-focus-mode');
+		 template.$('.courselist_course').addClass('elevate_child');
 	},
 	"mouseout a.group": function(event, template){
-		 template.$('.courselist_course').removeClass('category-focus-mode');
+		 template.$('.courselist_course').removeClass('elevate_child');
 	}
 });
 
