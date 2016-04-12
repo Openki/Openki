@@ -1,0 +1,45 @@
+.region_sel {
+	color: @navbar-default-link-color;
+	font-size: large;
+	a.region_sel_link {
+		height: 50px;
+		.-regionsDisplay:hover { cursor: text; }
+		input.-searchRegions {
+			background-color: @navbar-default-bg;
+			border: none;
+			height: 24px;
+			margin-top: -2px;
+		}
+	}
+	.dropdown-menu {
+		margin-top: 0 !important;
+		min-width: 150px;
+		width: 100%;
+		li.country {
+			color: @default-gray;
+			padding: 6px 15px 3px;
+			&:hover { cursor: default; }
+			span.flag-icon {
+				.opacity(0.3);
+				margin-right: 4px;
+			}
+		}
+		.regionselect { padding: 5px 15px; }
+		@media screen and
+		(max-width: @screen-sm) {
+			li.country { color: @default-black; }
+		}
+	}
+	.glyphicon-ok {
+		padding-right: 5px;
+	}
+	.coursesCount {
+		background: @brand-primary;
+		color: @default-white;
+		padding: 1px 5px;
+	}
+	.eventsCount {
+		background: @brand-success;
+		padding: 1px 5px;
+	}
+}

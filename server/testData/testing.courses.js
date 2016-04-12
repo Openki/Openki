@@ -499,7 +499,53 @@ testCourses = [{
 			"comment" : ""
 		}
 	]
-
+},{
+	'name':        'Wöchentliche Sitzung',
+	'categories': [],
+	'tags':       ['', ''],
+	'groups':     ['CCC-ZH'],
+	'internal':    'true',
+	'createdby':   'birdy1976',
+	'description': "<p>Wir planen die Umsetzung von Ideen und kreieren neue Projekte. Die Sitzung ist für alle die sich interessieren beim CCC mitzuwirken und schon ein ein paar veranstaltungen des CCC besucht haben.</p>",
+	'roles':      ['team', 'participant', 'host'],
+	'members': [
+		{
+			"comment" : "bin voll moti",
+			"roles" : [	"participant"],
+			"user" : "fred"
+		},
+	]
+},{
+	'name':        'Vokü',
+	'categories': [],
+	'tags':       ['', ''],
+	'groups':     ['ASZ'],
+	'internal':    'true',
+	'createdby':   'greg',
+	'description': "<p>Essen für alle für 5.- oder mehr oder weniger. Immer auch Vegan</p>",
+	'roles':      ['team', 'host'],
+	'members': [
+		{
+			"comment" : "bin voll moti",
+			"roles" : [	"host", "team"],
+			"user" : "greg"
+		},
+	]
+},{
+	'name':        'Sonntags-Kino',
+	'tags':       ['', ''],
+	'groups':     ['ASZ'],
+	'internal':    'true',
+	'createdby':   'greg',
+	'description': "<p>immer gute filme.</p>",
+	'roles':      ['team'],
+	'members': [
+		{
+			"comment" : "bin voll moti",
+			"roles" : ["team"],
+			"user" : "greg"
+		},
+	]
 },
 
 
@@ -916,4 +962,55 @@ testCourses = [{
 		{'user':'Figgdien', 'roles': ['participant', 'mentor']}
 	],
 	'region':        'Englistan'
-}];
+},{
+	'name':        'Weekly meeting',
+	'categories': [''],
+	'tags':       ['', ''],
+	'groups':     ['CCC-ZH'],
+	'internal':    'true',
+	'createdby':   'birdy1976',
+	'description': "<p>Everybody welcome that allready knows our group and what we do. We realize all kinds of projects and events from these meetings</p>",
+	'roles':      ['team', 'participant', 'host'],
+	'members': [
+		{
+			"comment" : "I'll join",
+			"roles" : [	"participant"],
+			"user" : "fred"
+		},
+	],
+	'region':        'Englistan'
+},{
+	'name':        'Vokü',
+	'categories': [''],
+	'tags':       ['', ''],
+	'groups':     ['ASZ'],
+	'internal':    'true',
+	'createdby':   'greg',
+	'description': "<p>Food not bombs Volks Kitchen, coocking togheter. write us if you want to help cooking</p>",
+	'roles':      ['team', 'host'],
+	'members': [
+		{
+			"comment" : "I'm hungry",
+			"roles" : [	"host", "team"],
+			"user" : "greg"
+		},
+	],
+	'region':        'Englistan'
+},{
+	'name':        'Sunnday-Cinema',
+	'categories': [''],
+	'tags':       ['', ''],
+	'groups':     ['ASZ'],
+	'internal':    'true',
+	'createdby':   'greg',
+	'description': "<p>One movie better than the other!</p>",
+	'roles':      ['team'],
+	'members': [
+		{
+			"comment" : "bin voll moti",
+			"roles" : ["team"],
+			"user" : "greg"
+		},
+	],
+	'region':        'Englistan'
+},];

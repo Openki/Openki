@@ -2,7 +2,8 @@
 	"testdata": 1,
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {
-		"siteName": "Hmmm"
+		"siteName": "Hmmm",
+		"siteStage": "alpha"
 	},
 	"siteEmail": "HMMM@legit.example"
 }

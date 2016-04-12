@@ -124,7 +124,7 @@ function createCourses(scale) {
 		for (var n = 0; n < scale; n++) {
 			course.name = name + (n > 0 ? ' (' + n + ')' : '');
 			course.slug = getSlug(name + ' (' + n + ')');
-
+			course.internal = !!course.internal;
 
 			// TESTING: always use same id for same course to avoid broken urls while testing
 			var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
@@ -244,13 +244,14 @@ createEventsIfNone = function(){
 					ensureRoom(event.location, event.room);
 				}
 
+				event.internal = Math.random() < 0.07;
+
 				event.course_id = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
 				event.groups = course.groups;
 				event.mentors = [];
 				event.host = [];
-				event.internal = false;
 
 				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
 				var timeToGo = Math.random()-0.7;             // put 70% in the past

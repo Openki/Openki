@@ -1,6 +1,8 @@
 {
 	"public": {
-		"siteName": "Openki-clone"
+		"siteName": "Openki-clone",
+		"testWarning": 1,
+		"siteStage": "alpha"
 	},
 	"service": {
 		"facebook": {

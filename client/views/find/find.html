@@ -59,7 +59,7 @@
 				</h4>
 			</div>
 			<div class="search_events">
-				<div class="checkbox -filterToggle">
+				<div class="checkbox -filterToggle -upcomingEventsFilter">
 					<label>
 						<input
 							type="checkbox"
@@ -87,7 +87,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox -filterToggle">
+				<div class="checkbox -filterToggle -needsHostFilter">
 					<label>
 						<input
 							type="checkbox"
@@ -105,7 +105,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox -filterToggle">
+				<div class="checkbox -filterToggle -needsMentorFilter">
 					<label>
 						<input
 							type="checkbox"
@@ -139,7 +139,7 @@
 					{{/each}}
 					</ul>
 				{{/if}}
-				<div class="dropdown -categorySelect categorySelect">
+				<div class="dropdown categorySelect">
 					<input
 						class="-searchCategories"
 						placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"

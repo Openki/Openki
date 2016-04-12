@@ -1,4 +1,9 @@
 #!/bin/sh
+
+# bail out if jshint doesn't exist
+command jshint || exit 0;
+
+
 wrong=""
 
 git diff --cached --name-only --diff-filter=ACM | grep "\.js$" | (while read file; do
