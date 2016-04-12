@@ -64,20 +64,20 @@
 			span.group {
 				background: @group-bg;
 				color: @group-text;
-				padding: 0 4px 1px;
+				padding: 0px 4px 1px;
 			}
 		}
 	}
 	.translate {
 		.grid(12);
-		background-color: #ee82ee * 1.5;   // opposing the nice blue :)
+		background-color: @translate-bg;
 		padding: 10px;
 		text-align: center;
 		.fa {
 			.transition(all .3s ease-out)
 		}
 		&:hover {
-			background-color: #ee82ee * 1.5 + #111111;
+			background-color: @translate-hover-bg;
 			.fa {
 				.transition(all 1.5s ease-in);
 				font-size: 350%;
