@@ -110,12 +110,10 @@ Template.calendar.onCreated(function() {
 
 Template.calendar.rendered = function() {
 	$(window).scroll(function (event) {
-		if($(window).scrollTop() > 5){
+		if($(window).scrollTop() > 5)
 			this.$('.switchDate').addClass('over_content');
-		}
-		else {
+		else
 			this.$('.switchDate').removeClass('over_content');
-		}
 	});
 
 	var currentPath = Router.current().route.path(this);
