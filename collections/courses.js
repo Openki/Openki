@@ -73,8 +73,12 @@ hasRoleUser = function(members, role, userId) {
 
 	members.forEach(function(member) {
 		if (member.user == userId) {
-			if (member.roles.indexOf(role) !== -1) has = 'subscribed';
-				return true;
+			if (member.roles.indexOf(role) !== -1) {
+				has = 'subscribed';
+			}
+			
+			// terminate forEach early
+			return true;
 		}
 	});
 
