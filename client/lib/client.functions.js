@@ -68,6 +68,8 @@ goBase = function() {
 pleaseLogin = function() {
 	if (Meteor.userId()) return false;
 	alert(mf('Please.login', 'Please login or register'));
+	if (Session.get('screenSize') <= 768) // @screen-sm
+		$('.collapse').collapse('show');
 	setTimeout(function(){
 		$('.loginButton').dropdown('toggle');    //or $('.dropdown').addClass('open');
 	},0);
