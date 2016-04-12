@@ -1,11 +1,13 @@
 .profile {
 	.container;
-	h1 { margin-top: 0; }
+	h1 {
+		margin-top: 0px;
+	}
 	.infos {
 		.grid(12, 6);
 		margin-bottom: 20px;
 		margin-top: 15px;
-		padding: 0;
+		padding: 0px;
 		.description {
 			font-size: 115%;
 			padding-right: 30px;
@@ -17,18 +19,24 @@
 					.btn-thin;
 					.btn-default;
 				}
-				button { float: right; }
+				button {
+					float: right;
+				}
 			}
 		}
-		p { margin-bottom: 5px; }
-		form.edit input { margin-left: 5px; }
+		p {
+			margin-bottom: 5px;
+		}
+		form.edit input {
+			margin-left: 5px;
+		}
 	}
 	button {
 		.btn-thin;
 		.btn-primary;
 	}
 	.password {
-		margin: 1em 30px 1em 0;
+		margin: 1em 30px 1em 0px;
 		form.passChange {
 			background: @user-bg;
 			padding: 10px;
@@ -39,33 +47,37 @@
 		}
 		button {
 			margin-top: 10px;
-			&.changePassConfirm{ .btn-success; }
+			&.changePassConfirm {
+				.btn-success;
+			}
 		}
 	}
 	.grouplist {
 		.grid(12, 6);
-		padding: 0;
+		padding: 0px;
 	}
 	ul.groups {
 		list-style: none;
-		padding-left: 0;
+		padding-left: 0px;
 		li {
 			margin-top: 5px;
 			span.group {
 				background: @group-bg;
 				color: @group-text;
-				padding: 0 4px 1px;
+				padding: 0px 4px 1px;
 			}
 		}
 	}
 	.translate {
 		.grid(12);
-		background-color: #ee82ee * 1.5;   // opposing the nice blue :)
+		background-color: @translate-bg;
 		padding: 10px;
 		text-align: center;
-		.fa { .transition(all .3s ease-out) }
-		&:hover{
-			background-color: #ee82ee * 1.5 + #111;
+		.fa {
+			.transition(all .3s ease-out)
+		}
+		&:hover {
+			background-color: @translate-hover-bg;
 			.fa {
 				.transition(all 1.5s ease-in);
 				font-size: 350%;
@@ -78,7 +90,7 @@
 	}
 	.deleteFrame {
 		overflow: auto;
-		padding: 15px 0 15px 10px;
+		padding: 15px 0px 15px 10px;
 		text-align: right;
 		.pleaseConfirm {
 			background-color: pink;
@@ -90,11 +102,13 @@
 			float: right;
 			margin-left: 7px;
 		}
-		button.cancelDeletion { .btn-primary; }
+		button.cancelDeletion {
+			.btn-primary;
+		}
 	}
-	.courses{
+	.courses {
 		.grid(12);
 		margin-top: 25px;
-		padding: 0;
+		padding: 0px;
 	}
 }

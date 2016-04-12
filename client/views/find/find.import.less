@@ -1,7 +1,7 @@
 .find {
 	.container;
 	h1 {
-		margin-top: 0;
+		margin-top: 0px;
 		@media screen and
 		(max-width: @screen-xs) {
 			font-size: x-large;
@@ -10,7 +10,7 @@
 	}
 	.search {
 		.grid(12);
-		padding: 0;
+		padding: 0px;
 		.-searchField {
 			.grid(12, inherit, 5);
 			padding: 0 0 15px;
@@ -50,25 +50,33 @@
 			}
 			@media screen and
 			(min-width: @screen-sm) and
-			(max-width: @screen-md) { padding: 0; }
+			(max-width: @screen-md) {
+				padding: 0px;
+			}
 			h4,
-			h5 { color: @brand-primary; }
+			h5 {
+				color: @brand-primary;
+			}
 			.search_filter_header {
 				.grid(12);
 				border-bottom: 1px solid @brand-bg;
 				color: @brand-primary;
-				padding: 0;
-				h4 { margin-top: 8px; }
+				padding: 0px;
+				h4 {
+					margin-top: 8px;
+				}
 				@media screen and
-				(max-width: @screen-xs) { display: none; }
+				(max-width: @screen-xs) {
+					display: none;
+				}
 			}
 			.search_events {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
+				padding: 0px;
 				@media screen and
 				(max-width: @screen-xs) {
-					margin-bottom: 0;
+					margin-bottom: 0px;
 				 }
 				.checkbox {
 					@media screen and
@@ -77,13 +85,19 @@
 						.btn;
 						.btn-default;
 						margin-bottom: 10px;
-						&:last-child { margin-bottom: 0; }
+						&:last-child {
+							margin-bottom: 0px;
+						}
 					}
 					label {
-						padding: 0;
-						&:hover { color: @brand-primary; }
+						padding: 0px;
+						&:hover {
+							color: @brand-primary;
+						}
 					}
-					input#hasUpcomingEvent { display: none; }
+					input#hasUpcomingEvent {
+						display: none;
+					}
 					.eventcaption_upcoming {
 						background: @brand-bg;
 						display: inline-block;
@@ -95,18 +109,24 @@
 							background: @brand-success;
 							height: 10px;
 							position: absolute;
-							right: 0;
-							top: 0;
+							right: 0px;
+							top: 0px;
 							width: 10px;
 							.eventcaption_upcoming_text {
 								background: @default-shadow;
-								left: 3px;
 								height: 1px;
+								left: 3px;
 								position: absolute;
 								width: 3px;
-								&.first-line { top: 2px; }
-								&.second-line { top: 4px; }
-								&.third-line { top: 6px; }
+								&.first-line {
+									top: 2px;
+								}
+								&.second-line {
+									top: 4px;
+								}
+								&.third-line {
+									top: 6px;
+								}
 							}
 						}
 					}
@@ -131,57 +151,77 @@
 			.filter_categories {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
+				padding: 0px;
 				@media screen and
-				(max-width: @screen-xs) { margin-bottom: 0; }
-				h5 { margin-top: 0; }
+				(max-width: @screen-xs) {
+					margin-bottom: 0px;
+				}
+				h5 {
+					margin-top: 0px;
+				}
 				.categorySelect {
 					margin-bottom: 10px;
 					@media screen and
-					(max-width: @screen-xs) { margin-bottom: 0; }
+					(max-width: @screen-xs) {
+						margin-bottom: 0px;
+					}
 					input.-searchCategories {
 						background: @body-bg;
 						border: 2px dashed @category-bg;
 						padding: 2px 5px;
-						&:focus { border-color: @brand-bg; }
+						&:focus {
+							border-color: @brand-bg;
+						}
 						@media screen and
-						(max-width: @screen-xs) { width: 100%; }
+						(max-width: @screen-xs) {
+							width: 100%;
+						}
 					}
 					.dropdown-toggle {
 						position: relative;
 						&::before {
 							content: '\f107';
 							font-family: FontAwesome;
-							position: absolute;
 							left: -1em;
+							position: absolute;
 						}
 					}
-					&.open .dropdown-toggle::before { content: '\f106'; }
+					&.open .dropdown-toggle::before {
+						content: '\f106';
+					}
 					ul.dropdown-menu {
 						background: @body-bg;
-						margin-top: 0;
+						margin-top: 0px;
 						max-height: 300px;
 						min-width: 80%;
 						overflow-x: hidden;
 						overflow-y: auto;
 						@media screen and
-						(max-width: @screen-xs) { width: 100%; }
+						(max-width: @screen-xs) {
+							width: 100%;
+						}
 						li {
-							&:hover { background: @category-bg; }
+							&:hover {
+								background: @category-bg;
+							}
 							&.no_categories {
 								color: @category-text;
 								padding: 0px 5px;
 								text-align: center;
 								&:hover {
-									cursor: default;
 									background-color: @body-bg;
+									cursor: default;
 								}
 							}
-							& > * { display: inline-block; }
+							& > * {
+								display: inline-block;
+							}
 						}
 						a {
 							padding: 3px 10px;
-							&:hover { background: none; }
+							&:hover {
+								background: none;
+							}
 							&.category.parent {
 								color: @brand-primary;
 								padding-right: 3px;
@@ -190,23 +230,29 @@
 						.-showSubcategories {
 							color: lighten(@brand-primary, 10%);
 							padding: 0 5px;
-							&:hover { color: @brand-primary; }
+							&:hover {
+								color: @brand-primary;
+							}
 						}
 					}
 					li.-subcategory {
 						display: none;
-						a { color: @default-black; }
+						a {
+							color: @default-black;
+						}
 					}
 				}
 				ul.selected_categories {
 					list-style: none;
-					margin: 0;
-					padding-left: 0;
+					margin: 0px;
+					padding-left: 0px;
 					li {
 						margin-bottom: 3px;
-						padding: 0 3px 3px 0;
+						padding: 0px 3px 3px 0px;
 						@media screen and
-						(max-width: @screen-xs) { display: inline-block; }
+						(max-width: @screen-xs) {
+							display: inline-block;
+						}
 					}
 					span.category {
 						background: @category-bg;
@@ -218,8 +264,10 @@
 			.filter_groups {
 				.grid(12, 4);
 				margin-bottom: 10px;
-				padding: 0;
-				h5 { color: @default-black; }
+				padding: 0px;
+				h5 {
+					color: @default-black;
+				}
 			}
 			span.glyphicon-remove {
 				.btn-remove;
@@ -230,7 +278,9 @@
 	}
 	.courselist_results {
 		@media screen and
-		(max-width: @screen-xs) { padding-top: 15px; }
+		(max-width: @screen-xs) {
+			padding-top: 15px;
+		}
 		.no_courses_found {
 			text-align: center;
 			button.-searchAllRegions {
@@ -247,5 +297,7 @@
 			}
 		}
 	}
-	.course_edit { padding: 0; }
+	.course_edit {
+		padding: 0px;
+	}
 }

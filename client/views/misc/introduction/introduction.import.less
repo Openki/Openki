@@ -8,10 +8,12 @@
 		margin-top: 15px;
 		padding-top: 2px;
 		position: relative;
-		&:hover{ background-color: @introduction-text; }
+		&:hover {
+			background-color: @introduction-text;
+		}
 		.-closeIntro {
-			font-size: 20px;
 			float: none;
+			font-size: 20px;
 			position: absolute;
 			right: 13px;
 			top: 7px;
@@ -21,23 +23,23 @@
 			}
 		}
 		h3 {
-			margin: 5px 0 6px 0;
+			margin: 5px 0px 6px 0px;
 			a.-toggleDetails {
 				text-decoration: none;
-				.toggle{
+				.toggle {
 					color: @default-gray;
 					display: inline;
 					padding: 0 10px;
 					span.showIntro::after {
 						.opacity(0.5);
-						content: '\f107';
 						color: grey;
+						content: '\f107';
 						font-family: FontAwesome;
 					}
 					span.hideIntro::after {
 						.opacity(0.5);
-						content: '\f106';
 						color: grey;
+						content: '\f106';
 						font-family: FontAwesome;
 					}
 				}
@@ -81,7 +83,7 @@
 			padding-bottom: 12px;
 			hr {
 				color: @default-gray;
-				margin-top: 0;
+				margin-top: 0px;
 			}
 			ul {
 				.list-unstyled;
@@ -90,30 +92,40 @@
 					.grid(6, 2);
 					margin-bottom: 15px;
 					&:nth-last-child(2),
-					&:last-child { h2::after { content: none;	}	}
+					&:last-child {
+						h2::after {
+							content: none;
+						}
+					}
 					h2 {
 						margin-bottom: 8px;
 						margin-top: 0px;
 						text-align: center;
 						&::after {
 							.opacity(0.5);
-							content: '\f061';
 							color: lighten(@default-gray, 15%);
+							content: '\f061';
 							font-family: FontAwesome;
 							font-size: 16px;
 							position: absolute;
-							right: 0;
+							right: 0px;
 							top: 6px;
 						}
 					}
-					span { .opacity(0.6);	}
-					a {	text-decoration: underline;	}
+					span {
+						.opacity(0.6);
+					}
+					a {
+						text-decoration: underline;
+					}
 					@media screen and
 					(max-width: @screen-sm) {
 						&:nth-child(2),
 						&:nth-child(4) {
 							padding-bottom: 15px;
-							h2::after {	content: ''; }
+							h2::after {
+								content: '';
+							}
 						}
 						&:nth-last-child(2),
 						&:last-child {
@@ -127,8 +139,8 @@
 						padding-bottom: 20px;
 						text-align: center;
 						h2::after {
-							content: '\f107';
 							bottom: -15px;
+							content: '\f107';
 							right: 47%;
 						}
 					}
