@@ -263,6 +263,36 @@ if (Meteor.isServer) {
 			addRole(course, role, subscriptionId);
 			var time = new Date();
 			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
+		},
+
+		remove_role: function(courseId, role) {
+			check(role, String);
+			check(courseId, String);
+
+			var user = Meteor.user();
+			if (!user) throw new Meteor.Error(401, "please log in");
+
+			var course = Courses.findOne({_id: courseId});
+			if (!course) throw new Meteor.Error(404, "Course not found");
+
+			// The subscriptionId is the user._id unless we're delisting incognito
+			var subscriptionId = false;
+
+			_.each(course.members, function(member) {
+				if (
+					user.anonId
+					&& user.anonId.indexOf(member.user) != -1
+					&& (member.roles.indexOf(role) != -1)
+				) {
+					subscriptionId = member.user;
+				}
+			});
+
+			if (!subscriptionId){
+				subscriptionId = user._id;
+			}
+
+			removeRole(course, role, subscriptionId);
 		}
 	});
 }
@@ -280,36 +310,6 @@ Meteor.methods({
 			{ $set: { 'members.$.comment': comment } },
 			checkUpdateOne
 		);
-	},
-
-	remove_role: function(courseId, role) {
-		check(role, String);
-		check(courseId, String);
-
-		var user = Meteor.user();
-		if (!user) throw new Meteor.Error(401, "please log in");
-
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		// The subscriptionId is the user._id unless we're delisting incognito
-		var subscriptionId = false;
-
-		_.each(course.members, function(member) {
-			if (
-				user.anonId
-				&& user.anonId.indexOf(member.user) != -1
-				&& (member.roles.indexOf(role) != -1)
-			) {
-				subscriptionId = member.user;
-			}
-		});
-
-		if (!subscriptionId){
-			subscriptionId = user._id;
-		}
-
-		removeRole(course, role, subscriptionId);
 	},
 
 	save_course: function(courseId, changes) {
@@ -420,7 +420,7 @@ Meteor.methods({
 			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
 			set.createdby = user._id;
 			set.time_created = new Date();
-			courseId = Courses.insert(set, checkInsert);
+			courseId = Courses.insert(set);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		}
