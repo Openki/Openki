@@ -21,12 +21,6 @@ getMember = function(members, user) {
 };
 
 
-mayEdit = function(user, course) {
-	if(!user) return false;
-	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id));
-};
-
-
 /* Get a username from ID
  *
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.

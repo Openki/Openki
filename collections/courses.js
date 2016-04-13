@@ -17,7 +17,25 @@
 // "internal"      -> Boolean
 // ===========================
 
-Courses = new Meteor.Collection("Courses");
+Course = function() {
+	this.members = [];
+	this.roles = [];
+};
+
+Course.prototype.editableBy = function(user) {
+	if (!user) return false;
+	var isNew = !this._id;
+
+	return isNew // Anybody may create a new course
+		|| privileged(user, 'admin') // Admins can edit all courses
+		|| hasRoleUser(this.members, 'team', user._id); // Team members may edit the course
+};
+
+Courses = new Meteor.Collection("Courses", {
+	transform: function(course) {
+		return _.extend(new Course(), course);
+	}
+});
 
 
 function addRole(course, role, user) {
@@ -318,14 +336,14 @@ Meteor.methods({
 
 		var course;
 		var isNew = courseId.length === 0;
-		if (!isNew) {
+		if (isNew) {
+			course = new Course();
+		} else {
 			course = Courses.findOne({_id: courseId});
 			if (!course) throw new Meteor.Error(404, "Course not found");
 		}
 
-		var mayEdit = isNew || privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
-		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
-
+		if (!course.editableBy(user)) throw new Meteor.Error(401, "edit not permitted");
 
 		/* Changes we want to perform */
 		var set = {};
@@ -333,7 +351,7 @@ Meteor.methods({
 		_.each(Roles.find().fetch(), function(roletype) {
 			var type = roletype.type;
 			var should_have = roletype.preset || changes.roles && changes.roles[type];
-			var have = !isNew && course.roles.indexOf(type) !== -1;
+			var have = course.roles.indexOf(type) !== -1;
 
 			if (have && !should_have) {
 				Courses.update(
@@ -411,9 +429,9 @@ Meteor.methods({
 	},
 
 	remove_course: function(courseId) {
-		var user = Meteor.user();
-		var mayEdit = privileged(user, 'admin') || Courses.findOne({_id: courseId, members:{$elemMatch: { user: user._id, roles: 'team' }}});
-		if (!mayEdit) throw new Meteor.Error(401, "edit not permitted");
+		var course = Courses.findOne({_id: courseId});
+		if (!course) throw new Meteor.Error(404, "no such course");
+		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, "edit not permitted");
 		Events.remove({ course_id: courseId });
 		Courses.remove(courseId);
 	},
