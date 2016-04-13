@@ -2,16 +2,24 @@
 	.grid(12);
 	background: @brand-bg;
 	margin-top: 15px;
-	padding: 0;
-	h3 { margin-top: 15px; }
+	padding: 0px;
+	h3 {
+		margin-top: 15px;
+	}
 	button {
 		.btn;
 		.btn-primary;
 		float: right;
 		&.cancel,
-		&.cancelEdit { .btn-cancel; }
-		&.write-comment { .big-button-success; }
-		&.edit { .btn-success; }
+		&.cancelEdit {
+			.btn-cancel;
+		}
+		&.write-comment {
+			.big-button-success;
+		}
+		&.edit {
+			.btn-success;
+		}
 	}
 	.discussion-conversation-container {
 		.grid(12);
@@ -19,12 +27,14 @@
 		padding-bottom: 10px;
 		.discussion-conversation {
 			.grid(12);
-			padding: 0;
+			padding: 0px;
 			.post-info {
 				border-top: 1px solid @body-bg;
 				padding-top: 10px;
 			}
-			&:first-child .post-info { border-top: none; }
+			&:first-child .post-info {
+				border-top: 0px;
+			}
 		}
 	}
 	label {
@@ -33,7 +43,7 @@
 		input.-anon {
 			display: inline-block;
 			height: auto;
-			margin: 0;
+			margin: 0px;
 			vertical-align: text-top;
 			width: auto;
 		}
@@ -45,7 +55,9 @@
 	background: @brand-primary;
 	border: 5px solid @brand-primary;
 	color: @body-bg;
-	h4 { font-weight: bold; }
+	h4 {
+		font-weight: bold;
+	}
 }
 
 .write-post-dialog,
@@ -56,16 +68,18 @@
 		.form-control-humble;
 		margin-bottom: 10px;
 	}
-	textarea { height: 60px; }
+	textarea {
+		height: 60px;
+	}
 }
 
 .write-answer-graphics {
 	.grid(1);
 	font-size: large;
-	padding: 0 15px 0 0;
+	padding: 0px 15px 0px 0px;
 	text-align: right;
 	span.fa-reply {
-		.transform(0deg, -1, -1);
+		.scale(-1, -1);
 		margin-top: 15px;
 	}
 }
@@ -75,30 +89,34 @@
 	padding-bottom: 20px;
 	&.answer {
 		.grid(11);
-		border-top: none;
+		border-top: 0px;
 		padding: 10px 0 0;
 		text-align: right;
-		button.cancel {	margin-right: 0; }
+		button.cancel {
+			margin-right: 0px;
+		}
 	}
-	button { margin-right: 5px; }
+	button {
+		margin-right: 5px;
+	}
 }
 
 .edit-post-dialog {
-	padding: 0;
+	padding: 0px;
 }
 
 .discussion-comment {
 	.grid(11);
 	.grid-offset(1);
-	padding: 10px 0 0;
+	padding: 10px 0px 0px;
 	.discussion-comment-info {
 		.grid(12);
 		border-top: 1px solid @body-bg;
-		padding: 10px 0 0;
+		padding: 10px 0px 0px;
 	}
 	.discussion-comment-text {
 		.grid(9, 8);
-		padding: 0;
+		padding: 0px;
 	}
 }
 
@@ -108,16 +126,18 @@
 	padding: 7px 0;
 	.post-info {
 		.grid(12);
-		padding: 0;
+		padding: 0px;
 	}
 	.post-text {
 		.grid(12);
-		padding: 0;
+		padding: 0px;
 	}
 	.post-options {
 		.grid(12);
-		padding: 0;
-		button { margin-right: 5px; }
+		padding: 0px;
+		button {
+			margin-right: 5px;
+		}
 	}
 }
 
@@ -135,7 +155,9 @@ a.profilelink {
 	}
 	span.glyphicon {
 		font-size: large;
-		&:hover { color: @default-black; }
+		&:hover {
+			color: @default-black;
+		}
 	}
 }
 

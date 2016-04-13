@@ -1,11 +1,6 @@
 <template name="calendar">
-	{{#if isMobile}}
 		{{> switchDate date=startDate}}
-	{{/if}}
 	<div class="calendar">
-		{{#unless isMobile}}
-			{{> switchDate date=startDate}}
-		{{/unless}}
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>

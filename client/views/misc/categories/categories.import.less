@@ -2,7 +2,7 @@
 		line-height: 23px;
 		list-style: none;
 		margin-left: -2px;
-		padding-left: 0;
+		padding-left: 0px;
 		li {
 			display: inline-block;
 			margin: 2px;
@@ -10,12 +10,12 @@
 			a.category {
 				.transition(all @default-transition-time);
 				background: @category-bg-fallback;
-				background: @category-bg;
+				background: @category-bg; // lesshint duplicateProperty: false
 				padding: 2px 5px;
 				&:hover {
 					.box-shadow-small(@category-hover-shadow);
 					background: @category-hover-bg-fallback;
-					background: @category-hover-bg;
+					background: @category-hover-bg; // lesshint duplicateProperty: false
 					color: @category-hover-text;
 					text-decoration: none;
 				}
