@@ -71,7 +71,7 @@ Template.post.helpers({
 
 Template.postShow.helpers({
 	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'post';
+		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
 
 	mayEdit: function() {
@@ -92,7 +92,7 @@ Template.postEdit.onCreated(function() {
 
 Template.postEdit.helpers({
 	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'post';
+		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
 
 	showUserId: function() {
@@ -135,7 +135,7 @@ Template.post.events({
 				comment.parentId = instance.data.parentId;
 			}
 
-			comment.anon = !!instance.$('.-anon').prop('checked');
+			comment.anon = !!instance.$('.toggleAnonymous').prop('checked');
 		} else {
 			comment._id = instance.data._id;
 		}
@@ -170,6 +170,6 @@ Template.post.events({
 
 Template.postEdit.events({
 	'change': function(event, instance) {
-		instance.anon.set(instance.$('.-anon').prop('checked'));
+		instance.anon.set(instance.$('.toggleAnonymous').prop('checked'));
 	}
 });

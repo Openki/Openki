@@ -1,184 +1,138 @@
+// Discussion styles
+// --------------------------------------------------
+
+//== Container
 .discussion {
 	.grid(12);
 	background: @brand-bg;
 	margin-top: 15px;
 	padding: 0px;
-	h3 {
-		margin-top: 15px;
-	}
-	button {
-		.btn;
-		.btn-primary;
-		float: right;
-		&.cancel,
-		&.cancelEdit {
-			.btn-cancel;
-		}
-		&.write-comment {
-			.big-button-success;
-		}
-		&.edit {
-			.btn-success;
-		}
-	}
-	.discussion-conversation-container {
-		.grid(12);
-		border-top: 3px solid @body-bg;
-		padding-bottom: 10px;
-		.discussion-conversation {
-			.grid(12);
-			padding: 0px;
-			.post-info {
-				border-top: 1px solid @body-bg;
-				padding-top: 10px;
-			}
-			&:first-child .post-info {
-				border-top: 0px;
-			}
-		}
-	}
-	label {
-		font-weight: inherit;
-		padding-top: 8px;
-		input.-anon {
-			display: inline-block;
-			height: auto;
-			margin: 0px;
-			vertical-align: text-top;
-			width: auto;
-		}
-	}
 }
 
+//== Titlebar
 .discussion-titlebar {
 	.grid(12);
 	background: @brand-primary;
 	border: 5px solid @brand-primary;
 	color: @body-bg;
-	h4 {
-		font-weight: bold;
-	}
 }
 
-.write-post-dialog,
-.edit-post-dialog {
+.discussion-heading {
+	font-weight: bold;
+}
+
+//== Conversation
+//
+//## Contains post and its replies
+.discussion-conversation {
 	.grid(12);
-	input,
-	textarea {
-		.form-control-humble;
-		margin-bottom: 10px;
-	}
-	textarea {
-		height: 60px;
-	}
+	padding-top: 10px;
 }
 
-.write-answer-graphics {
-	.grid(1);
-	font-size: large;
-	padding: 0px 15px 0px 0px;
-	text-align: right;
-	span.fa-reply {
-		.scale(-1, -1);
-		margin-top: 15px;
-	}
+//** Post
+.discussion-post {
+	.grid(12);
+	background: @brand-bg;
+	padding: 7px 0px;
 }
 
-.write-post-dialog {
-	border-top: 3px solid @body-bg;
-	padding-bottom: 20px;
-	&.answer {
-		.grid(11);
-		border-top: 0px;
-		padding: 10px 0 0;
-		text-align: right;
-		button.cancel {
-			margin-right: 0px;
-		}
-	}
-	button {
-		margin-right: 5px;
-	}
-}
-
-.edit-post-dialog {
-	padding: 0px;
-}
-
+//** Comment (Reply to a post)
 .discussion-comment {
 	.grid(11);
 	.grid-offset(1);
-	padding: 10px 0px 0px;
-	.discussion-comment-info {
-		.grid(12);
-		border-top: 1px solid @body-bg;
-		padding: 10px 0px 0px;
-	}
-	.discussion-comment-text {
-		.grid(9, 8);
-		padding: 0px;
-	}
+	padding: 7px 0px;
 }
 
-.post {
-	.grid(12);
-	background: @brand-bg;
-	padding: 7px 0;
-	.post-info {
-		.grid(12);
-		padding: 0px;
-	}
-	.post-text {
-		.grid(12);
-		padding: 0px;
-	}
-	.post-options {
-		.grid(12);
-		padding: 0px;
-		button {
-			margin-right: 5px;
-		}
-	}
-}
-
-a.profilelink {
+//** Profilelink
+.discussion-profile-link {
 	color: @default-black;
+	font-weight: bold;
 	padding-right: 5px;
 	&:hover {
 		color: @brand-primary;
 		text-decoration: none;
-		span.glyphicon {
-			color: @default-black;
-			position: relative;
-			top: 4px;
-		}
-	}
-	span.glyphicon {
-		font-size: large;
-		&:hover {
-			color: @default-black;
-		}
 	}
 }
 
+.discussion-profile-icon {
+	font-size: large;
+	position: relative;
+	top: 4px;
+	&:hover {
+		color: @default-black;
+	}
+}
+
+.discussion-profile-link:hover .discussion-profile-icon {
+	color: @default-black;
+}
+
+//** Comment time
 .comment-time-created {
 	color: @default-gray;
 	cursor: default;
 }
 
-button.answer {
-	.btn;
-	.btn-primary;
-	padding-bottom: 5px;
+//** Create & edit post/comment
+.discussion-edit {
+	.grid(12);
+	padding: 10px 0px 0px;
 }
 
-button.deleteComment {
-	background-color: #ec6d6d;
-  border-color: #e95656;
-  color: #333333;
-  &:hover {
-		background-color: #e64040;
-    border-color: #e22020;
-    color: #333333;
-  }
+.discussion-edit-title,
+.discussion-edit-text {
+	.form-control-humble;
+	margin-bottom: 10px;
+}
+
+.discussion-edit-text {
+	height: 60px;
+}
+
+.discussion-toggle-anonymous {
+	font-weight: inherit;
+	padding-top: 8px;
+}
+
+.toggleAnonymous {
+	display: inline-block;
+	height: auto;
+	margin: 0px;
+	vertical-align: text-top;
+	width: auto;
+}
+
+.discussion-save-btn,
+.discussion-cancel-btn,
+.discussion-reply-btn,
+.discussion-edit-btn,
+.discussion-delete-btn {
+	.btn;
+	float: right;
+}
+
+.discussion-save-btn,
+.discussion-edit-btn {
+	.btn-edit;
+}
+
+.discussion-cancel-btn,
+.discussion-delete-btn {
+	.btn-cancel;
+}
+
+.discussion-reply-btn {
+	.btn-success;
+}
+
+//== New post
+.discussion-new-post-btn {
+	.big-button-success;
+	margin-top: 10px;
+}
+
+.discussion-new-post {
+	.grid(12);
+	padding-bottom: 10px;
+	padding-top: 10px;
 }
