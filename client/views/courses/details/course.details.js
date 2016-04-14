@@ -19,7 +19,7 @@ Router.map(function () {
 				course: course,
 				member: member
 			};
-			if (mayEdit(Meteor.user(), course)) {
+			if (course.editableBy(Meteor.user())) {
 				data.editableName = makeEditable(
 					course.name,
 					true,
@@ -113,7 +113,7 @@ function loadroles(course) {
 
 Template.coursedetails.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
-		return mayEdit(Meteor.user(), this);
+		return this.editableBy(Meteor.user());
 	},
 	coursestate: function() {
 		var today = new Date();
