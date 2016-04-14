@@ -168,6 +168,10 @@ Template.post.events({
 	},
 });
 
+Template.postEdit.rendered = function(){
+	 Template.instance().$('.discussion-comment').slideDown();
+};
+
 Template.postEdit.events({
 	'change': function(event, instance) {
 		instance.anon.set(instance.$('.toggleAnonymous').prop('checked'));
