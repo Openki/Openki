@@ -1,6 +1,22 @@
+.course-details-component {
+	.grid(12);
+	padding: 0px;
+}
+
+.course-details-component-titlebar {
+	.grid(12);
+	background: @brand-primary;
+	border: 5px solid @brand-primary;
+	color: @body-bg;
+}
+
+.course-details-component-heading {
+	font-weight: bold;
+}
+
 p.course_description {
 	font-size: medium;
-	padding: 10px 0;
+	padding: 10px 0px;
 	.editable {
 		max-height: 300px;
 		overflow: auto;
@@ -10,31 +26,45 @@ p.course_description {
 .coursedetails {
 	.container;
 	padding-top: 20px;
-	.coursedetails_column_left { .grid(12, 8); }
-	.coursedetails_column_right { .grid(12, 4); }
+	.coursedetails_column_left {
+		.grid(12, 8);
+	}
+	.coursedetails_column_right {
+		.grid(12, 4);
+	}
 	.coursedetails_column_left,
 	.coursedetails_column_right {
-		padding: 0;
-		&> div:first-child { padding-top: 0; }
+		padding: 0px;
+		&> div:first-child {
+			padding-top: 0px;
+		}
 	}
 	.coursedetails_column_left {
 		padding-right: 7.5px;
 		@media screen and
-		(max-width: @screen-sm) { padding-right: 0; }
+		(max-width: @screen-sm) {
+			padding-right: 0px;
+		}
 	}
 	.coursedetails_column_right {
 		padding-left: 7.5px;
 		@media screen and
-		(max-width: @screen-xs) { padding: 0; }
+		(max-width: @screen-xs) {
+			padding: 0px;
+		}
 	}
 	.course_main {
 		.grid(12);
 		border: 7px dashed @brand-bg;
-		&.hasupcomingevents	ul.nav-tabs li.active a { background: @brand-bg; }
-		&.haspastevents { border-style: solid; }
+		&.hasupcomingevents	ul.nav-tabs li.active a {
+			background: @brand-bg;
+		}
+		&.haspastevents {
+			border-style: solid;
+		}
 		.courseStatus {
 			float: right;
-			padding: 0 0 0.8em 1.4em;
+			padding: 0px 0px 0.8em 1.4em;
 			position: relative;
 			right: -22px;
 			top: -7px;
@@ -48,43 +78,55 @@ p.course_description {
 		}
 		.name {
 			font-size: 30px;
-			margin-top: 20px;
 			margin-bottom: 10px;
+			margin-top: 20px;
 			min-height: 3ex;
-			padding: 0 !important;
+			padding: 0px !important;
 			&> .editable {
 				font-size: 30px;
-				padding: 0;
+				padding: 0px;
 			}
-			&> .editable-controls { font-size: medium; }
+			&> .editable-controls {
+				font-size: medium;
+			}
 		}
 		.course_categories ul {
-			margin-bottom: 0;
+			margin-bottom: 0px;
 			li {
 				margin-bottom: 10px;
-				&:first-child { margin-left: 0;}
+				&:first-child {
+					margin-left: 0px;
+				}
 			}
 		}
 		ul.groups-list,
 		ul.groups-list li,
-		ul.groups-list li a { display: inline-block; }
-		ul.groups-list { margin-bottom: 10px; }
+		ul.groups-list li a {
+			display: inline-block;
+		}
+		ul.groups-list {
+			margin-bottom: 10px;
+		}
 		ul.nav-tabs {
 			border-bottom: 1px solid @brand-primary;
 			li {
 				border: 1px dotted @brand-primary;
-				border-bottom: none;
-				margin: 0 2px -1px 0;
+				border-bottom: 0px;
+				margin: 0px 2px -1px 0px;
 				&.active {
+					border-bottom: 0px;
 					border-style: solid;
-					border-bottom: none;
-					a:hover { color: @default-black; }
+					a:hover {
+						color: @default-black;
+					}
 				}
 				a {
-					border: none;
+					border: 0px;
 					color: @default-black;
-					margin: 0;
-					&:hover { color: @default-white; }
+					margin: 0px;
+					&:hover {
+						color: @default-white;
+					}
 				}
 			}
 		}
@@ -92,8 +134,8 @@ p.course_description {
 			.grid(12);
 			background: @brand-primary;
 			border-top: 3px solid @body-bg;
-			margin: 0 0 -7px -22px;
-			padding: 10px 0;
+			margin: 0px 0px -7px -22px;
+			padding: 10px 0px;
 			text-align: center;
 			width: calc(~"100% + 44px") !important;
 			button.edit {
@@ -106,31 +148,39 @@ p.course_description {
 			}
 		}
 	}
-	button.open { margin-top: 15px; }
+	button.open {
+		margin-top: 15px;
+	}
 	button.eventEdit,
 	button.calendar_download {
 		.btn;
 		.btn-default;
 		float: right;
-		margin: 10px 5px 10px 0;
+		margin: 10px 5px 10px 0px;
 		white-space: normal;
 	}
-	button.eventEdit { .btn-success; }
+	button.eventEdit {
+		.btn-success;
+	}
 	.courseDetails_roles_container {
 		.grid(12);
-		padding: 15px 0 0;
+		padding: 15px 0px 0px;
 		.courseDetails_participants_count {
 			.grid(12);
 			background: @brand-primary;
 			border: 5px solid @brand-primary;
 			color: @default-white;
-			h4 { font-weight: bold; }
+			h4 {
+				font-weight: bold;
+			}
 		}
 		.courseDetails_mentor.mentor_status {
 			.grid(12, 3);
 			background: @brand-bg;
 			height: 60px;
-			.yes { background: @brand-success; }
+			.yes {
+				background: @brand-success;
+			}
 		}
 	}
 }

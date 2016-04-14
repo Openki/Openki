@@ -9,7 +9,7 @@
 	.form-control;
 	.btn;
 	.btn-primary;
-	border: none;
+	border: 0px;
 	border-top: 3px solid @body-bg;
 	font-size: large;
 	height: auto;
@@ -17,7 +17,7 @@
 	padding: 10px 15px;
 	text-align: left;
 	&:hover {
-		border: none;
+		border: 0px;
 		border-top: 3px solid @body-bg;
 	}
 }
@@ -26,7 +26,7 @@
 	.form-control;
 	.btn;
 	.btn-success;
-	border: none;
+	border: 0px;
 	border-top: 3px solid @body-bg;
 	font-size: large;
 	height: auto;
@@ -34,8 +34,16 @@
 	padding: 10px 15px;
 	text-align: left;
 	&:hover {
-		border: none;
+		border: 0px;
 		border-top: 3px solid @body-bg;
+	}
+}
+
+.btn-edit() {
+	.btn-default;
+	&:hover {
+		background: @btn-success-bg;
+		border: 1px solid @btn-success-border;
 	}
 }
 
@@ -45,4 +53,9 @@
 		background: @btn-danger-bg;
 		border: 1px solid @btn-danger-border;
 	}
+}
+
+.header-btn() {
+	background: none;
+	border: 0px;
 }

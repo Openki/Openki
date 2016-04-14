@@ -1,8 +1,0 @@
-{
-	"testdata": 1,
-	"admins": ["greg", "FeeLing", "IvanZ"],
-	"public": {
-		"siteName": "Openki",
-		"testWarning": 1
-	}
-}
