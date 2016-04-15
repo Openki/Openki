@@ -3,9 +3,9 @@
 }
 
 .calendar {
-	.container;
+	@extend .container;;
 	.calendar_date {
-		.grid(12);
+		@include grid(12);
 		padding: 0px 0px 10px;
 		.date {
 			background: $calendar-navigation-bg;
@@ -16,12 +16,12 @@
 			width: 250px;
 		}
 		.calendar_events {
-			.grid(12);
+			@include grid(12);
 			margin: 0px -3px -10px;
 			padding: 10px 0px 0px;
-			width: calc(~"100% + 6px");
+			width: calc(#{"100% + 6px"});
 			.small_event_container {
-				.grid(4, 3, 2);
+				@include grid(4, 3, 2);
 				padding: 0px 3px 10px;
 			}
 		}
@@ -29,11 +29,11 @@
 
 	@media screen and
 	(max-width: $screen-xxs) {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 		.calendar_date {
 			.date {
-				.grid(12);
+				@include grid(12);
 				border-left: 0px;
 				border-top: 10px solid $brand-primary;
 				padding: 0.5em;
@@ -43,7 +43,7 @@
 				padding: 10px 7px 0px;
 				width: auto;
 				.small_event_container {
-					.grid(12);
+					@include grid(12);
 					padding: 0px 3px 10px;
 				}
 			}
@@ -56,7 +56,7 @@
 		.calendar_date {
 			.calendar_events {
 				.small_event_container {
-					.grid(6);
+					@include grid(6);
 					padding: 0px 3px 10px;
 				}
 			}
@@ -65,7 +65,7 @@
 }
 
 .switchDate {
-	.grid(12);
+	@include grid(12);
 	background-color: $calendar-navigation-bg;
 	font-size: 32px;
 	margin-bottom: 10px;
@@ -100,8 +100,8 @@
 		font-size: 12px;
 	}
 	button {
-		.btn;
-		.btn-calendar;
+		@extend .btn;
+		@include btn-calendar;
 		float: left;
 		margin: 6px 3px;
 		&:first-child {
@@ -114,6 +114,6 @@
 }
 
 button.calendar_download {
-	.btn;
-	.btn-primary;
+	@extend .btn;
+	@extend .btn-primary;
 }

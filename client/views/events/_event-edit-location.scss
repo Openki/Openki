@@ -1,8 +1,8 @@
 .locationFrame {
-	.grid(12);
+	@include grid(12);
 	padding: 0px;
 	.locationEdit {
-		.grid(12);
+		@include grid(12);
 		background-color: $location-edit-bg;
 		border: 1px solid $default-light-grey;
 		overflow: auto;
@@ -18,7 +18,7 @@
 			border-right: 1px solid $default-light-grey;
 		}
 		.locationSearch {
-			.grid(12, 6);
+			@include grid(12, 6);
 			margin: 10px 0;
 			.currentLocation {
 				.locationName {
@@ -29,22 +29,22 @@
 					color: darken($brand-success, 40%);
 				}
 				button.-locationChange {
-					.btn-thin;
-					.btn-primary;
+					@include btn-thin;
+					@extend .btn-primary;
 				}
 			}
 			.locationSearchbar {
 				padding-bottom: 5px;
 				input.-locationName {
-					.form-control-humble;
+					@include form-control-humble;
 				}
 				button.-addressSearch {
-					.btn;
-					.btn-primary;
+					@extend .btn;
+					@extend .btn-primary;
 				}
 			}
 			input.-locationAddress {
-				.form-control-humble;
+				@include form-control-humble;
 				margin-bottom: 5px;
 			}
 			ul.locationCandidates {
@@ -66,7 +66,7 @@
 			}
 		}
 		.locationMap {
-			.grid(12, 6);
+			@include grid(12, 6);
 			margin: 10px 0px;
 			padding-left: 0px;
 			@media screen and

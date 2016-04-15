@@ -1,14 +1,14 @@
 .course_event_edit {
-	.grid(12);
+	@include grid(12);
 	h2 {
 		margin-top: 0px;
 	}
 	input[type='text'],
 	select {
-		.form-control-humble;
+		@include form-control-humble;
 	}
 	.course_event_edit_header {
-		.grid(12);
+		@include grid(12);
 		border: dashed 7px $brand-success;
 		border-bottom: 0px;
 		margin-top: 10px;
@@ -26,7 +26,7 @@
 		.start_time,
 		.end_time,
 		.show_duration {
-			.grid(12, 4);
+			@include grid(12, 4);
 			@media screen and
 			(max-width: $screen-sm) {
 				padding: 0px;
@@ -45,7 +45,7 @@
 		}
 	}
 	.course_event_edit_body {
-		.grid(12);
+		@include grid(12);
 		border: dashed 7px $brand-bg;
 		border-top: 0px;
 		padding: 0px 30px 20px;
@@ -55,18 +55,18 @@
 			padding: 0px 0px 10px;
 		}
 		.description {
-			.grid(12);
+			@include grid(12);
 			padding: 0px;
 			#edit_event_description {
-				.form-control-humble;
-				height: auto; // Reset fixed height from .form-control-humble
+				@include form-control-humble;
+				height: auto; // Reset fixed height from @include form-control-humble
 				max-height: 150px;
 				min-height: 100px;
 				overflow: auto;
 			}
 		}
 		.region_selection {
-			.grid(12, 4);
+			@include grid(12, 4);
 			padding-left: 0px;
 			@media screen and
 			(min-width: $screen-xs) and
@@ -75,19 +75,19 @@
 			}
 		}
 		.files {
-			.grid(12, 8);
+			@include grid(12, 8);
 			padding: 0px;
 			input#edit_files {
 				height: auto;
 			}
 			button.eventFileUpload {
-				.btn-thin;
-				.btn-primary;
+				@include btn-thin;
+				@extend .btn-primary;
 				margin: 5px 0;
 			}
 		}
 		.room {
-			.grid(12);
+			@include grid(12);
 			margin-bottom: 20px;
 			padding: 0px;
 			h4 {
@@ -97,11 +97,11 @@
 		}
 
 		.options {
-			.grid(12);
+			@include grid(12);
 		}
 
 		.edit_buttons {
-			.grid(12, 6);
+			@include grid(12, 6);
 			padding: 0px;
 			button {
 				margin-top: 10px;
@@ -109,24 +109,24 @@
 					margin-right: 5px;
 				}
 				&.saveEditEvent {
-					.btn;
-					.btn-success;
+					@extend .btn;
+					@extend .btn-success;
 					@media screen and
 					(max-width: $screen-xs) {
-						.form-control;
-						.btn;
-						.btn-success;
+						@extend .form-control;
+						@extend .btn;
+						@extend .btn-success;
 						margin-bottom: 10px;
 					}
 				}
 				&.cancelEditEvent {
-					.btn;
-					.btn-cancel;
+					@extend .btn;
+					@include btn-cancel;
 					@media screen and
 					(max-width: $screen-xs) {
-						.form-control;
-						.btn;
-						.btn-cancel;
+						@extend .form-control;
+						@extend .btn;
+						@include btn-cancel;
 					}
 				}
 			}

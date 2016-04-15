@@ -1,7 +1,7 @@
 .find,
 .new_course {
 	.course_edit {
-		.grid(12);
+		@include grid(12);
 		h2 {
 			margin-top: 0px;
 		}
@@ -9,13 +9,13 @@
 }
 
 .coursedetails .course_edit {
-	.grid(12);
+	@include grid(12);
 }
 
 .course_edit {
 	padding: 0px;
 	.course_edit_body {
-		.grid(12);
+		@include grid(12);
 		border: 7px dashed $brand-bg;
 		margin-top: 10px;
 		padding: 20px 30px;
@@ -27,10 +27,10 @@
 		}
 		#editform_name,
 		#editform_description {
-			.form-control-humble;
+			@include form-control-humble;
 		}
 		#editform_description {
-			height: auto; // Reset fixed height from .form-control-humble
+			height: auto; // Reset fixed height from @include form-control-humble
 			max-height: 150px;
 			min-height: 100px;
 			overflow: auto;
@@ -39,7 +39,7 @@
 		.course_edit_roles,
 		.course_edit_internal,
 		.course_edit_region {
-			.grid(12, 6);
+			@include grid(12, 6);
 			padding: 10px 5px 10px 0;
 		}
 		ul.categories,
@@ -53,7 +53,7 @@
 		ul.roles_list,
 		.course_edit_internal {
 			span.caret {
-				.transition(color $default-transition-time);
+				@include transition(color $default-transition-time);
 				color: $default-light-grey;
 				left: 3px;
 				position: relative;
@@ -80,8 +80,8 @@
 			}
 		}
 		button.editCategories {
-			.btn-thin;
-			.btn-primary;
+			@include btn-thin;
+			@extend .btn-primary;
 		}
 		ul.subcategories {
 			left: 5px;
@@ -95,23 +95,23 @@
 			margin-bottom: 10px;
 		}
 		.course_edit_finishbtns {
-			.grid(12);
+			@include grid(12);
 			padding: 10px 0px 0px;
 			button {
-				.btn;
+				@extend .btn;
 				margin-right: 10px;
 				@media screen and
 				(max-width: $screen-xs) {
-					.form-control;
-					.btn;
-					.btn-primary;
+					@extend .form-control;
+					@extend .btn;
+					@extend .btn-primary;
 					margin-bottom: 10px;
 				}
 				&.save {
-					.btn-success;
+					@extend .btn-success;
 				}
 				&.cancel {
-					.btn-cancel;
+					@include btn-cancel;
 				}
 			}
 		}

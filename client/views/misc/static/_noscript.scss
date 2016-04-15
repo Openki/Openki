@@ -11,10 +11,10 @@
 		height: 100px;
 		margin: auto;
 		position: relative;
-		top: calc(~"50% - 100px");
+		top: calc(#{"50% - 100px"});
 		width: 300px;
 		img {
-			.grid(4);
+			@include grid(4);
 			height: 95px;
 			padding: 0px;
 		}

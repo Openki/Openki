@@ -1,23 +1,23 @@
 .userprofile {
-	.container;
+	@extend .container;;
 	h1 {
 		margin-top: 0px;
 	}
 	.email_box {
 		textarea#emailmessage {
-			.form-control-humble;
+			@include form-control-humble;
 			height: 120px;
 		}
 		button.sendmail {
-			.btn-thin;
-			.btn-primary;
+			@include btn-thin;
+			@extend .btn-primary;
 		}
 	}
 	.settingsFrame {
-		.grid(12, 6);
+		@include grid(12, 6);
 		margin: 15px 0;
 		padding: 0px;
-		.container {
+		@extend .container; {
 			background-color: #f2f2f2;
 			margin-right: 5px;
 			padding: 7px;
@@ -41,8 +41,8 @@
 				}
 			}
 			button {
-				.btn-thin;
-				.btn-primary;
+				@include btn-thin;
+				@extend .btn-primary;
 			}
 		}
 	}
@@ -57,15 +57,15 @@
 			padding: 0 4px 1px;
 		}
 		button {
-			.btn-primary;
-			.btn-thin;
+			@extend .btn-primary;
+			@include btn-thin;
 			&:hover {
 				color: $default-white;
 			}
 		}
 	}
 	.list_small {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 	}
 }

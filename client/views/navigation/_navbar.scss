@@ -47,7 +47,7 @@
 			}
 			.navbar-nav {
 				& > li > a {
-					.transition(border-color 0.3s);
+					@include transition(border-color 0.3s);
 					font-size: large;
 					padding: 15px 10px;
 					span {
@@ -73,7 +73,7 @@
 				}
 				span.caret {
 					.scale(-1.5, -1.5);
-					.transition($default-transition-time);
+					@include transition($default-transition-time);
 					bottom: 1px;
 					color: $brand-primary;
 					left: 46%;
@@ -96,7 +96,7 @@
 							background: lighten($brand-primary, 10%);
 						}
 						span.caret {
-							.transition(color 0.3s);
+							@include transition(color 0.3s);
 							color: lighten($brand-primary, 10%);
 						}
 					}

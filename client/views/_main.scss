@@ -36,7 +36,7 @@ h1 {
 }
 
 .dropdown-menu {
-	.box-shadow-small($default-shadow);
+	@include box-shadow-small($default-shadow);
 	min-width: 0px;
 	width: auto;
 	li {
@@ -68,7 +68,7 @@ span.glyphicon-ok {
 }
 
 select {
-	.form-control-humble;
+	@include form-control-humble;
 	color: $default-black;
 	&:hover {
 		cursor: pointer;
@@ -79,11 +79,11 @@ select {
 }
 
 .elevate_child {
-	.transition(box-shadow $default-transition-time);
+	@include transition(box-shadow $default-transition-time);
 	box-shadow: none !important;
 }
 
 .collapsing,
 .fade {
-	.transition-duration(0s);
+	@include transition-duration(0s);
 }

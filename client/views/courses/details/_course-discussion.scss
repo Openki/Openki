@@ -10,7 +10,7 @@
 //
 //## Contains a post and its replies
 .discussion-conversation {
-	.grid(12);
+	@include grid(12);
 	background: $discussion-conversation-bg;
 	padding-bottom: 15px;
 	padding-top: 10px;
@@ -31,7 +31,7 @@ $discussion-thumb-width: 60;
 .discussion-thumb {
 	display: table-cell;
 	position: relative;
-	width: unit($discussion-thumb-width, px);
+	width: $discussion-thumb-width * 1px;
 }
 
 //** Icon
@@ -40,7 +40,7 @@ $discussion-thumb-width: 60;
 	position: absolute;
 	top: 0px;
 	vertical-align: text-bottom;
-	width: unit(($discussion-thumb-width - 10), px);
+	width: ($discussion-thumb-width - 10) * 1px;
 }
 
 //** Content
@@ -54,7 +54,7 @@ $discussion-thumb-width: 60;
 //** Header
 .discussion-post-header,
 .discussion-edit-header {
-	.grid(12);
+	@include grid(12);
 	border: 1px solid;
 	padding-bottom: 5px;
 	padding-top: 5px;
@@ -74,7 +74,7 @@ $discussion-thumb-width: 60;
 //** Body
 .discussion-post-body,
 .discussion-edit-body {
-	.grid(12);
+	@include grid(12);
 	padding-top: 10px;
 }
 
@@ -82,7 +82,7 @@ $discussion-thumb-width: 60;
 //
 //## How post get's displayed
 .discussion-post {
-	.grid(12);
+	@include grid(12);
 	background: $discussion-post-bg;
 	display: table;
 	padding: 7px 0px;
@@ -97,7 +97,7 @@ $discussion-thumb-width: 60;
 //** Edit & Delete buttons
 .discussion-edit-btn,
 .discussion-delete-btn {
-	.header-btn;
+	@include header-btn;
 	color: $default-gray;
 	float: right;
 	&:hover {
@@ -141,14 +141,14 @@ $discussion-thumb-width: 60;
 //## How post replies get displayed
 .discussion-comment {
 	display: table;
-	padding: 7px 0px 7px unit($discussion-thumb-width, px);
+	padding: 7px 0px 7px ($discussion-thumb-width * 1px);
 	position: relative;
 	width: 100%;
 }
 
 //** Position reply button if there are already replies
 .discussion-comment + .discussion-reply {
-	padding-left: unit(($discussion-thumb-width * 2), px);
+	padding-left: ($discussion-thumb-width * 2) * 1px;
 }
 
 //== Post edit
@@ -175,7 +175,7 @@ $discussion-thumb-width: 60;
 //** Input & Textfield
 .discussion-edit-title,
 .discussion-edit-text {
-	.form-control-humble;
+	@include form-control-humble;
 	margin-bottom: 10px;
 }
 
@@ -197,40 +197,40 @@ $discussion-thumb-width: 60;
 //** Save & Cancel buttons
 .discussion-save-btn,
 .discussion-cancel-btn {
-	.btn;
+	@extend .btn;
 	float: right;
 }
 
 //** Save button
 .discussion-save-btn {
-	.btn-success;
+	@extend .btn-success;
 	margin-right: 5px;
 }
 
 //** Cancel button
 .discussion-cancel-btn {
-	.btn-cancel;
+	@include btn-cancel;
 }
 
 //== Reply button
 .discussion-reply-btn {
-	.btn;
-	.btn-success;
+	@extend .btn;
+	@extend .btn-success;
 	margin-top: 5px;
 }
 
 .discussion-reply {
-	padding-left: unit($discussion-thumb-width, px);
+	padding-left: $discussion-thumb-width * 1px;
 }
 
 //== New post
 .discussion-post-new-btn {
-	.big-button-success;
+	@include big-button-success;
 }
 
 //** New post background frame
 .discussion-post-new {
-	.grid(12);
+	@include grid(12);
 	background: $discussion-post-new-bg;
 	border-top: 3px solid $body-bg;
 	padding-bottom: 10px;

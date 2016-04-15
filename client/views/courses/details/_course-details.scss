@@ -1,10 +1,10 @@
 .course-details-component {
-	.grid(12);
+	@include grid(12);
 	padding: 0px;
 }
 
 .course-details-component-titlebar {
-	.grid(12);
+	@include grid(12);
 	background: $brand-primary;
 	border: 5px solid $brand-primary;
 	color: $body-bg;
@@ -24,13 +24,13 @@ p.course_description {
 }
 
 .coursedetails {
-	.container;
+	@extend .container;;
 	padding-top: 20px;
 	.coursedetails_column_left {
-		.grid(12, 8);
+		@include grid(12, 8);
 	}
 	.coursedetails_column_right {
-		.grid(12, 4);
+		@include grid(12, 4);
 	}
 	.coursedetails_column_left,
 	.coursedetails_column_right {
@@ -54,7 +54,7 @@ p.course_description {
 		}
 	}
 	.course_main {
-		.grid(12);
+		@include grid(12);
 		border: 7px dashed $brand-bg;
 		&.hasupcomingevents	ul.nav-tabs li.active a {
 			background: $brand-bg;
@@ -131,20 +131,20 @@ p.course_description {
 			}
 		}
 		.edit_buttons {
-			.grid(12);
+			@include grid(12);
 			background: $brand-primary;
 			border-top: 3px solid $body-bg;
 			margin: 0px 0px -7px -22px;
 			padding: 10px 0px;
 			text-align: center;
-			width: calc(~"100% + 44px") !important;
+			width: calc(#{"100% + 44px"}) !important;
 			button.edit {
-				.btn;
-				.btn-success;
+				@extend .btn;
+				@extend .btn-success;
 			}
 			button.del {
-				.btn;
-				.btn-cancel;
+				@extend .btn;
+				@include btn-cancel;
 			}
 		}
 	}
@@ -153,20 +153,20 @@ p.course_description {
 	}
 	button.eventEdit,
 	button.calendar_download {
-		.btn;
-		.btn-default;
+		@extend .btn;
+		@extend .btn-default;
 		float: right;
 		margin: 10px 5px 10px 0px;
 		white-space: normal;
 	}
 	button.eventEdit {
-		.btn-success;
+		@extend .btn-success;
 	}
 	.courseDetails_roles_container {
-		.grid(12);
+		@include grid(12);
 		padding: 15px 0px 0px;
 		.courseDetails_participants_count {
-			.grid(12);
+			@include grid(12);
 			background: $brand-primary;
 			border: 5px solid $brand-primary;
 			color: $default-white;
@@ -175,7 +175,7 @@ p.course_description {
 			}
 		}
 		.courseDetails_mentor.mentor_status {
-			.grid(12, 3);
+			@include grid(12, 3);
 			background: $brand-bg;
 			height: 60px;
 			.yes {

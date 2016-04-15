@@ -1,11 +1,11 @@
 .roles {
-	.grid(12);
+	@include grid(12);
 	background: $brand-bg;
 	border-top: 3px solid $body-bg;
 	font-size: medium;
 	padding: 0px;
 	.member_role {
-		.grid(12);
+		@include grid(12);
 		padding-bottom: 10px;
 		padding-top: 10px;
 		a {
@@ -16,7 +16,7 @@
 		}
 	}
 	.horizontal-line {
-		.grid(12);
+		@include grid(12);
 		background: $body-bg;
 		height: 1px;
 		&:last-child {
@@ -49,8 +49,8 @@
 		}
 	}
 	button.makeTeam {
-		.btn;
-		.btn-success;
+		@extend .btn;
+		@extend .btn-success;
 		margin-left: 10px;
 		padding: 3px 10px;
 		.makeTeam_text {

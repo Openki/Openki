@@ -3,13 +3,13 @@
 }
 
 #loginFrame {
-	.grid(12);
+	@include grid(12);
 	background: $brand-bg;
 	color: $default-black;
 	padding: 0 20px;
 	text-align: center;
 	.current_user {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 		h3 {
 			margin-top: 0px;
@@ -17,14 +17,14 @@
 		a.my_profile,
 		a.settings,
 		button.loginLogout {
-			.form-control-humble;
-			.btn;
-			.btn-primary;
+			@include form-control-humble;
+			@extend .btn;
+			@extend .btn-primary;
 			margin-bottom: 15px;
 		}
 	}
 	.login {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 		& > div,
 		& > button {
@@ -33,7 +33,7 @@
 		input#login-name,
 		input#login-password,
 		input#login-email {
-			.form-control-humble;
+			@include form-control-humble;
 		}
 		span.fa-lock {
 			font-size: large;
@@ -70,12 +70,12 @@
 		}
 		button.loginLogin,
 		button.loginRegister {
-			.form-control;
-			.btn;
-			.btn-primary;
+			@extend .form-control;
+			@extend .btn;
+			@extend .btn-primary;
 			&.loginLoginLogin,
 			&.registering {
-				.btn-success;
+				@extend .btn-success;
 			}
 		}
 		.external_logins {
@@ -112,15 +112,15 @@
 	&.username_warning,
 	&.password_warning {
 		button.forgot {
-			.form-control;
-			.btn;
-			.btn-default;
-			.transition(all 0.3s ease-out);
+			@extend .form-control;
+			@extend .btn;
+			@extend .btn-default;
+			@include transition(all 0.3s ease-out);
 			margin-top: 10px;
 		}
 	}
 	.forgot_login {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 		h2 {
 			margin-top: 0px;
@@ -133,21 +133,21 @@
 		.input-group {
 			margin-bottom: 0px;
 			input.-loginEmail {
-				.form-control-humble;
+				@include form-control-humble;
 			}
 		}
 		.email_instructions {
 			margin-top: -10px;
 		}
 		button.-forgotSend {
-			.form-control;
-			.btn;
-			.btn-primary;
+			@extend .form-control;
+			@extend .btn;
+			@extend .btn-primary;
 		}
 		button.-forgotClose {
-			.form-control;
-			.btn;
-			.btn-cancel;
+			@extend .form-control;
+			@extend .btn;
+			@include btn-cancel;
 		}
 	}
 	@media screen and

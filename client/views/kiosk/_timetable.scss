@@ -1,5 +1,5 @@
 .kioskTimetable {
-	.grid(12);
+	@include grid(12);
 	margin-top: 5px;
 	overflow: hidden;
 	:hover {

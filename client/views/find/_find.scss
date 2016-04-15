@@ -1,5 +1,5 @@
 .find {
-	.container;
+	@extend .container;;
 	h1 {
 		margin-top: 0px;
 		@media screen and
@@ -9,39 +9,39 @@
 		}
 	}
 	.search {
-		.grid(12);
+		@include grid(12);
 		padding: 0px;
 		.-searchField {
-			.grid(12, inherit, 5);
+			@include grid(12, inherit, 5);
 			padding: 0 0 15px;
 			input.-searchInput {
-				.form-control-humble;
+				@include form-control-humble;
 				font-size: large;
 				height: 38px;
 			}
 			button.-findButton {
-				.btn;
-				.btn-success;
+				@extend .btn;
+				@extend .btn-success;
 				padding: 8px 12px !important;
 			}
 		}
 		button.-showFilters {
-			.btn;
-			.btn-primary;
+			@extend .btn;
+			@extend .btn-primary;
 			padding: 8px 12px !important;
 
 			@media screen and
 			(max-width: $screen-xs) {
-				.form-control;
-				.btn;
-				.btn-primary;
+				@extend .form-control;
+				@extend .btn;
+				@extend .btn-primary;
 				height: 38px;
 				margin-top: 0px;
 				padding: 8px 12px !important;
 			}
 		}
 		.search_filter {
-			.grid(12, inherit, 7);
+			@include grid(12, inherit, 7);
 			padding: 0 0 0 15px;
 			@media screen and
 			(max-width: $screen-xs) {
@@ -58,7 +58,7 @@
 				color: $brand-primary;
 			}
 			.search_filter_header {
-				.grid(12);
+				@include grid(12);
 				border-bottom: 1px solid $brand-bg;
 				color: $brand-primary;
 				padding: 0px;
@@ -71,7 +71,7 @@
 				}
 			}
 			.search_events {
-				.grid(12, 4);
+				@include grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0px;
 				@media screen and
@@ -81,9 +81,9 @@
 				.checkbox {
 					@media screen and
 					(max-width: $screen-xs) {
-						.form-control-humble;
-						.btn;
-						.btn-default;
+						@include form-control-humble;
+						@extend .btn;
+						@extend .btn-default;
 						margin-bottom: 10px;
 						&:last-child {
 							margin-bottom: 0px;
@@ -133,7 +133,7 @@
 					span.glyphicon-calendar,
 					span.glyphicon-home,
 					span.fa-graduation-cap {
-						.transition(all 0.3s);
+						@include transition(all 0.3s);
 						color: $brand-primary;
 					}
 					span.glyphicon-home.checked {
@@ -149,7 +149,7 @@
 				}
 			}
 			.filter_categories {
-				.grid(12, 4);
+				@include grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0px;
 				@media screen and
@@ -262,7 +262,7 @@
 				}
 			}
 			.filter_groups {
-				.grid(12, 4);
+				@include grid(12, 4);
 				margin-bottom: 10px;
 				padding: 0px;
 				h5 {
@@ -270,7 +270,7 @@
 				}
 			}
 			span.glyphicon-remove {
-				.btn-remove;
+				@include btn-remove;
 				position: relative;
 				top: 2px;
 			}
@@ -284,15 +284,15 @@
 		.no_courses_found {
 			text-align: center;
 			button.-searchAllRegions {
-				.btn-thin;
-				.btn-primary;
+				@include btn-thin;
+				@extend .btn-primary;
 				margin-top: 10px;
 
 				@media screen and
 				(max-width: $screen-xxs) {
-					.form-control;
-					.btn;
-					.btn-primary;
+					@extend .form-control;
+					@extend .btn;
+					@extend .btn-primary;
 				}
 			}
 		}

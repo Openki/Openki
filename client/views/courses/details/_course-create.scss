@@ -1,4 +1,4 @@
 .new_course {
-  .container-narrow;
+  @include container-narrow;
 	padding: 0px;
 }

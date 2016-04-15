@@ -3,6 +3,6 @@
 
 
 @mixin container-narrow() {
-	@extend .container;
+	@extend @extend .container;;
 	max-width: $container-sm !important;
 }

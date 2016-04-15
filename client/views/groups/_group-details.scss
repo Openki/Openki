@@ -3,7 +3,7 @@
 	margin-bottom: 50px;
 
 	.group_edit_header {
-		.grid(12);
+		@include grid(12);
 		background: rgba(130, 216, 130, 0.9);
 		border-bottom: 3px solid $default-white;
 		font-size: x-large;
@@ -48,8 +48,8 @@
 		}
 
 		.editformDescription {
-			.form-control-humble;
-			height: auto; // Reset fixed height from .form-control-humble()
+			@include form-control-humble;
+			height: auto; // Reset fixed height from @include form-control-humble()
 			max-height: 150px;
 			min-height: 100px;
 			p {
@@ -65,27 +65,27 @@
 	#editform_short,
 	#editform_claim,
 	#addGroupMember {
-		.form-control-humble;
+		@include form-control-humble;
 	}
 
 
 	.groupEditFinishbtns {
-		.grid(12);
+		@include grid(12);
 		padding: 10px 0px 0px;
 		button {
-			.btn;
+			@extend .btn;
 			margin-right: 10px;
 			@media mobile {
-				.form-control;
-				.btn;
-				.btn-primary;
+				@extend .form-control;
+				@extend .btn;
+				@extend .btn-primary;
 				margin-bottom: 10px;
 			}
 			&.save {
-				.btn-success;
+				@extend .btn-success;
 			}
 			&.cancel {
-				.btn-danger;
+				@extend .btn-danger;
 			}
 		}
 	}
