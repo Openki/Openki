@@ -3,7 +3,7 @@
 }
 
 .calendar {
-	@extend .container;;
+	@extend .container;
 	.calendar_date {
 		@include grid(12);
 		padding: 0px 0px 10px;

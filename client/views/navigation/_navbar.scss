@@ -1,6 +1,6 @@
 .navbar {
-	.navbar-default;
-	.navbar-fixed-top;
+	@extend .navbar-default;
+	@extend .navbar-fixed-top;
 	border-bottom: 0px;
 	.navbar-container {
 		margin: auto;
@@ -19,7 +19,7 @@
 					position: relative;
 				}
 				& > span.stage {
-					.rotate(345deg);
+					@include rotate(345deg);
 					color: $default-black;
 					font-size: small;
 					left: 8.2em;
@@ -29,7 +29,7 @@
 
 				}
 				img {
-					.opacity(97);
+					@include opacity(97);
 					bottom: -1px;
 					display: inline-block;
 					height: 100%;
@@ -72,7 +72,7 @@
 					}
 				}
 				span.caret {
-					.scale(-1.5, -1.5);
+					@include scale(-1.5, -1.5);
 					@include transition($default-transition-time);
 					bottom: 1px;
 					color: $brand-primary;
@@ -84,7 +84,7 @@
 					}
 				}
 				li.dropdown.open span.caret {
-					.opacity(1);
+					@include opacity(1);
 					color: $brand-bg;
 					z-index: 1099;
 				}
@@ -101,7 +101,7 @@
 						}
 					}
 					span.caret {
-						.opacity(1);
+						@include opacity(1);
 						color: $default-white;
 					}
 					@media screen and

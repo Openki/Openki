@@ -1,5 +1,5 @@
 @mixin form-control-humble() {
-	@extend @extend .form-control;
+	@extend .form-control;
 	&:focus {
 		box-shadow: none;
 	}

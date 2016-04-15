@@ -113,9 +113,9 @@
 					@extend .btn-success;
 					@media screen and
 					(max-width: $screen-xs) {
-						@extend .form-control;
-						@extend .btn;
-						@extend .btn-success;
+						@include form-control;
+						@include btn;
+						@include btn-success;
 						margin-bottom: 10px;
 					}
 				}
@@ -124,8 +124,8 @@
 					@include btn-cancel;
 					@media screen and
 					(max-width: $screen-xs) {
-						@extend .form-control;
-						@extend .btn;
+						@include form-control;
+						@include btn;
 						@include btn-cancel;
 					}
 				}

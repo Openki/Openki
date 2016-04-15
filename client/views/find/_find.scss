@@ -1,5 +1,5 @@
 .find {
-	@extend .container;;
+	@extend .container;
 	h1 {
 		margin-top: 0px;
 		@media screen and
@@ -32,9 +32,9 @@
 
 			@media screen and
 			(max-width: $screen-xs) {
-				@extend .form-control;
-				@extend .btn;
-				@extend .btn-primary;
+				@include form-control;
+				@include btn;
+				@include btn-primary;
 				height: 38px;
 				margin-top: 0px;
 				padding: 8px 12px !important;
@@ -82,8 +82,8 @@
 					@media screen and
 					(max-width: $screen-xs) {
 						@include form-control-humble;
-						@extend .btn;
-						@extend .btn-default;
+						@include btn;
+						@include btn-default;
 						margin-bottom: 10px;
 						&:last-child {
 							margin-bottom: 0px;
@@ -290,9 +290,9 @@
 
 				@media screen and
 				(max-width: $screen-xxs) {
-					@extend .form-control;
-					@extend .btn;
-					@extend .btn-primary;
+					@include form-control;
+					@include btn;
+					@include btn-primary;
 				}
 			}
 		}

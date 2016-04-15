@@ -1,30 +1,21 @@
-// GRID MIXINS
-// One-line statements powered by bootstrap mixins
+// GRID MIXIN
+// One-line statement powered by bootstrap mixins
 
-@mixin grid($xs) {
-	@include make-xs-column($xs);
-}
-
-@mixin grid($xs, $sm) {
+@mixin grid($xs, $sm: $xs, $md: $sm, $lg: $md) {
+	@if $sm == inherit {
+		$sm: $xs;
+		$md: $sm;
+		$lg: $md;
+	}
+	@if $md == inherit {
+		$md: $sm;
+		$lg: $md;
+	}
+	@if $lg == inherit {
+		$lg: $md;
+	}
 	@include make-xs-column($xs);
 	@include make-sm-column($sm);
-}
-
-@mixin grid($xs, $sm, $md) {
-	@include make-xs-column($xs);
-	@if $sm != inherit {
-		@include make-sm-column($sm);
-	}
 	@include make-md-column($md);
-}
-
-@mixin grid($xs, $sm, $md, $lg) {
-	@include make-xs-column($xs);
-	@if $sm != inherit {
-		@include make-sm-column($sm);
-	}
-	@if $md != inherit {
-		@include make-md-column($md);
-	}
 	@include make-lg-column($lg);
 }

@@ -55,7 +55,7 @@
 .course_event_past_container {
 	.course_event_date,
 	.course_event_lower_section {
-		.opacity(0.6);
+		@include opacity(0.6);
 	}
 }
 
@@ -136,7 +136,7 @@ input#edit_event_title {
 }
 
 .create-event {
-	@extend .container;;
+	@extend .container;
 }
 
 .eventReplicationMenu {

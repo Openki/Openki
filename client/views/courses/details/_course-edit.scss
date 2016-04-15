@@ -102,9 +102,9 @@
 				margin-right: 10px;
 				@media screen and
 				(max-width: $screen-xs) {
-					@extend .form-control;
-					@extend .btn;
-					@extend .btn-primary;
+					@include form-control;
+					@include btn;
+					@include btn-primary;
 					margin-bottom: 10px;
 				}
 				&.save {

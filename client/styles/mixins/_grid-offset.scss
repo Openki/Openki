@@ -1,31 +1,22 @@
-// GRID-OFFSET MIXINS
-// One-line statements powered by bootstrap mixins
+// GRID-OFFSET MIXIN
+// One-line statement powered by bootstrap mixins
 
 
-@mixin grid-offset($xs) {
-	@include make-xs-column-offset($xs);
-}
-
-@mixin grid-offset($xs, $sm) {
+@mixin grid-offset($xs, $sm: $xs, $md: $sm, $lg: $md) {
+	@if $sm == inherit {
+		$sm: $xs;
+		$md: $sm;
+		$lg: $md;
+	}
+	@if $md == inherit {
+		$md: $sm;
+		$lg: $md;
+	}
+	@if $lg == inherit {
+		$lg: $md;
+	}
 	@include make-xs-column-offset($xs);
 	@include make-sm-column-offset($sm);
-}
-
-@mixin grid-offset($xs, $sm, $md) {
-	@include make-xs-column-offset($xs);
-	@if $sm != inherit {
-		@include make-sm-column-offset($sm);
-	}
 	@include make-md-column-offset($md);
-}
-
-@mixin grid-offset($xs, $sm, $md, $lg) {
-	@include make-xs-column-offset($xs);
-	@if $sm != inherit {
-		@include make-sm-column-offset($sm);
-	}
-	@if $md != inherit {
-		@include make-md-column-offset($md);
-	}
 	@include make-lg-column-offset($lg);
 }

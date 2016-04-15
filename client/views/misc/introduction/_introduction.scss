@@ -1,5 +1,5 @@
 .introduction_container {
-	@extend .container;;
+	@extend .container;
 	.introduction {
 		@include transition(background-color 1s);
 		@include grid(12);
@@ -31,13 +31,13 @@
 					display: inline;
 					padding: 0 10px;
 					span.showIntro::after {
-						.opacity(0.5);
+						@include opacity(0.5);
 						color: grey;
 						content: '\f107';
 						font-family: FontAwesome;
 					}
 					span.hideIntro::after {
-						.opacity(0.5);
+						@include opacity(0.5);
 						color: grey;
 						content: '\f106';
 						font-family: FontAwesome;
@@ -62,14 +62,14 @@
 						display: block;
 						padding: 10px 0;
 						span.hideIntro {
-							@extend .form-control;
-							@extend .btn;
-							@extend .btn-default;
+							@include form-control;
+							@include btn;
+							@include btn-default;
 						}
 						span.showIntro {
-							@extend .form-control;
-							@extend .btn;
-							@extend .btn-success;
+							@include form-control;
+							@include btn;
+							@include btn-success;
 						}
 					}
 					&:hover .toggle span.hideIntro {
@@ -86,7 +86,7 @@
 				margin-top: 0px;
 			}
 			ul {
-				.list-unstyled;
+				@extend .list-unstyled;
 				font-size: medium;
 				li {
 					@include grid(6, 2);
@@ -102,7 +102,7 @@
 						margin-top: 0px;
 						text-align: center;
 						&::after {
-							.opacity(0.5);
+							@include opacity(0.5);
 							color: lighten($default-gray, 15%);
 							content: '\f061';
 							font-family: FontAwesome;
@@ -113,7 +113,7 @@
 						}
 					}
 					span {
-						.opacity(0.6);
+						@include opacity(0.6);
 					}
 					a {
 						text-decoration: underline;

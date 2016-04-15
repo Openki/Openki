@@ -1,13 +1,11 @@
-// Load Fonts
 @import '../styles/fonts';
 
-// Load Boostrap Variables & Mixins
 @import '{reywood:bootstrap3-sass}/bootstrap';
 
-// Load Custom Variables, Mixins & Classes
 @import '../styles/colors';
 @import '../styles/variables';
 @import '../styles/classes';
+@import '../styles/mixins/bootstrap-classes';
 @import '../styles/mixins/box-shadow';
 @import '../styles/mixins/buttons';
 @import '../styles/mixins/container-narrow';
@@ -16,13 +14,9 @@
 @import '../styles/mixins/grid-offset';
 @import '../styles/mixins/word-break';
 
-// Load General Stylesheet
-@import 'main';
+@import 'global';
 
-// Load Module Stylesheets
 @import '../views/events/small_event/event-small';
-
-// Load Template Stylesheets
 @import 'calendar/calendar';
 @import 'courses/course-list';
 @import 'courses/details/course-create';
@@ -33,7 +27,6 @@
 @import 'courses/details/course-roles';
 @import 'courses/details/course-roles-details';
 @import 'courses/events/course-events';
-
 @import '../editable/editable';
 @import 'events/event-details';
 @import 'events/event-edit';
@@ -49,7 +42,6 @@
 @import 'login/reset-password';
 @import '../map/map';
 @import '../messages/messages';
-
 @import 'misc/categories/categories';
 @import 'misc/frame/calendar-frame';
 @import 'misc/frame/events-frame';
@@ -62,5 +54,4 @@
 @import 'navigation/navbar';
 @import 'users/ownprofile';
 @import 'users/userprofile';
-// @import 'regions/regions.import.less';
 @import '../report/report';

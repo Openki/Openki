@@ -19,7 +19,7 @@
 			padding: 0px;
 		}
 		.noscript_message {
-			.grid (8);
+			@include grid(8);
 			color: $default-white;
 			height: 100%;
 			padding: 15px 15px;

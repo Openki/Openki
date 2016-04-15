@@ -1,7 +1,7 @@
 $footer-height: 50;
 
 #wrap {
-	margin: 0px auto unit((0 - $footer-height), px);
+	margin: 0px auto ((0 - $footer-height) * 1px);
 	min-height: 100%;
 }
 
@@ -61,5 +61,5 @@ footer.footer {
 
 .footer,
 .push {
-	height: unit($footer-height, px);
+	height: $footer-height * 1px;
 }

@@ -1,0 +1,21 @@
+// Temporary workaround to use bootstrap classes in media directives
+
+@mixin form-control {
+	@extend .form-control;
+}
+
+@mixin btn {
+	@extend .btn;
+}
+
+@mixin btn-primary {
+	@extend .btn-primary;
+}
+
+@mixin btn-success {
+	@extend .btn-success;
+}
+
+@mixin btn-default {
+	@extend .btn-default;
+}

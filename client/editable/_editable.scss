@@ -83,8 +83,8 @@
 
 		@media screen and
 		(max-width: $screen-xs) {
-			@extend .form-control;
-			@extend .btn;
+			@include form-control;
+			@include btn;
 			margin-bottom: 10px;
 		}
 	}

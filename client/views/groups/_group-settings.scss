@@ -35,9 +35,9 @@
 				margin-right: 10px;
 
 				@media mobile {
-					@extend .form-control;
-					@extend .btn;
-					@extend .btn-primary;
+					@include form-control;
+					@include btn;
+					@include btn-primary;
 					margin-bottom: 10px;
 				}
 				&.save {
@@ -61,7 +61,7 @@
 			margin-bottom: 10px;
 		}
 		ul {
-			.list-inline;
+			@extend .list-inline;
 			margin-left: 0px;
 			padding-bottom: 10px;
 			li {
