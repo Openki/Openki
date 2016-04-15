@@ -1,0 +1,162 @@
+.courselist_results {
+  @include grid(12);
+  margin-left: -5px;
+	padding: 0 0 10px;
+	width: calc(#{"100% + 10px"}) !important;
+	.event_results {
+		@include grid(12, 4, inherit, 3);
+		padding: 0px;
+		.course_event {
+			height: 200px;
+			margin: 8px;
+		}
+	}
+	button.-search_all_regions {
+		.btn-thin;
+		.btn-primary;
+	}
+}
+
+.courselist_course_container {
+	@include grid(6, inherit, 4, 3);
+	border: 5px solid $body-bg;
+	border-bottom-width: 15px;
+	padding: 0px;
+	@media screen and
+	(max-width: $screen-xsm) {
+		@include grid(12);
+		padding: 0px;
+	}
+	.courselist_course {
+		@include grid(12);
+		@include transition(box-shadow $default-transition-time);
+		border: 7px dashed $brand-bg;
+		height: 150px;
+		padding: 0px;
+		&:hover {
+			@include box-shadow-big($default-shadow);
+			color: $brand-primary;
+			h4 {
+				color: $brand-primary;
+			}
+		}
+		&.haspastevents {
+			border-style: solid;
+		}
+		& > a:hover {
+			text-decoration: none;
+		}
+		h4 {
+			@include transition(color $default-transition-time);
+			color: $default-black;
+		}
+		.course-name {
+			color: $default-black;
+			font-size: 22px;
+			line-height: 24px;
+			margin: 8px 0 0px;
+		}
+		.team_status,
+		.mentor_status,
+		.host_status {
+			text-align: center;
+		}
+		.yes {
+			background-color: $role-yes-bg;
+			color: $role-yes-text;
+		}
+		.no {
+			background-color: $role-no-bg;
+			color: $role-no-text;
+		}
+		.yesyou {
+			background-color: $user-bg;
+			color: $user-text;
+		}
+		.course_content {
+			@include grid(9);
+			background: $body-bg;
+			padding: 0px 0px 0px 15px;
+			&.hasupcomingevents {
+				@include grid(7.5);
+				padding: 0px 0px 0px 15px;
+			}
+			ul.categories_list {
+				margin-bottom: 0px;
+				margin-left: -2px;
+				li:nth-child(3),
+				li:nth-child(4),
+				li:nth-child(5),
+				li:nth-child(6) {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+.courselist_course,
+.course_main {
+	&.hasupcomingevents {
+		background: $brand-bg;
+		.course_content {
+			background: $brand-bg;
+		}
+	}
+}
+
+.course_status {
+	@include grid(3);
+	padding: 0px;
+	position: relative;
+	right: -7px;
+	top: -7px;
+	& > div {
+		margin-top: 3px;
+		&:first-child,
+		&.tooltip {
+			margin-top: 0px;
+		}
+	}
+}
+
+.course_eventlist {
+	@include grid(4.5);
+	background: $brand-success;
+	color: $default-black;
+	max-height: 150px;
+	padding: 3px;
+	position: relative;
+	right: -7px;
+	text-align: center;
+	top: -7px;
+	.course_eventlist_time,
+	.course_eventlist_date {
+		@include grid(12);
+		padding: 0px;
+	}
+	.course_eventlist_location {
+		.word-break;
+		padding: 0 4px;
+		span {
+			display: inline;
+		}
+		.glyphicon-home {
+			padding-right: 3px;
+		}
+	}
+}
+
+.course_groups {
+	ul.groups-list {
+		bottom: 0px;
+		margin: 0px;
+		padding: 0px 7px 7px 0px;
+		position: absolute;
+		right: 0px;
+		li {
+			float: right;
+			margin-left: 4px;
+		}
+	}
+}

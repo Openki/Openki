@@ -1,0 +1,16 @@
+.course_event .course_event_lower_section {
+	.head {
+		@include grid(12, 6);
+	}
+	.mapBox {
+		@include grid(12, 6);
+		padding-right: 0px;
+		.mapContainer.box {
+			height: 300px;
+			width: 100%;
+		}
+	}
+	.event_detail_description {
+		padding-top: 5px;
+	}
+}

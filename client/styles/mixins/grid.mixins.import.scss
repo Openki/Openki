@@ -1,0 +1,29 @@
+// GRID MIXINS
+// One-line statements powered by bootstrap mixins
+
+@mixin grid($xs)
+{ @include make-xs-column($xs); }
+
+@mixin grid($xs, $sm)
+{
+	@include make-xs-column($xs);
+	@include make-sm-column($sm);
+}
+
+@mixin grid($xs, $sm, $md)
+{
+	@include make-xs-column($xs);
+	& when not ($sm = inherit) {
+		@include make-sm-column($sm); }
+	@include make-md-column($md);
+}
+
+@mixin grid($xs, $sm, $md, $lg)
+{
+	@include make-xs-column($xs);
+	& when not ($sm = inherit) {
+		@include make-sm-column($sm); }
+	& when not ($md = inherit) {
+		@include make-md-column($md); }
+	@include make-lg-column($lg);
+}
