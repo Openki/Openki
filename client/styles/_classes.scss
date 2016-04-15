@@ -11,7 +11,7 @@
 	width: 100%;
 
 	@media screen and
-	(max-width: @screen-xs) {
+	(max-width: $screen-xs) {
 		background: none;
 	}
 }
@@ -29,7 +29,7 @@
 	width: 100%;
 
 	@media screen and
-	(max-width: @screen-xs) {
+	(max-width: $screen-xs) {
 		background: none;
 	}
 }
