@@ -15,8 +15,6 @@ accounts-github
 service-configuration
 mediumeditor:mediumeditor
 djedi:sanitize-html
-nemo64:bootstrap
-less
 accounts-facebook
 archive:jquery-dotdotdot
 ical
@@ -47,3 +45,5 @@ rzymek:moment-locale-el
 gildaspk:moment-datepicker
 rzymek:moment-locale-tr
 meteorhacks:ssr
+fourseven:scss
+reywood:bootstrap3-sass
