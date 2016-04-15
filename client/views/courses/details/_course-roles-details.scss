@@ -6,9 +6,9 @@
 		padding: 0px;
 		.enroled_as_title {
 			.grid(12);
-			background: @user-bg;
-			border-top: 3px solid @body-bg;
-			color: @default-black;
+			background: $user-bg;
+			border-top: 3px solid $body-bg;
+			color: $default-black;
 			font-size: large;
 			line-height: 1.1;
 			padding: 10px 15px;
@@ -22,9 +22,9 @@
 		}
 		.enrol_as_title {
 			.grid(12);
-			background: @brand-primary;
-			border-top: 3px solid @body-bg;
-			color: @body-bg;
+			background: $brand-primary;
+			border-top: 3px solid $body-bg;
+			color: $body-bg;
 			font-size: large;
 			line-height: 1.1;
 			padding: 10px 15px;
@@ -32,7 +32,7 @@
 		}
 		.enrol_as_options {
 			.grid(12);
-			background: @brand-bg;
+			background: $brand-bg;
 			padding: 10px 12px 11px;
 			textarea.enrol_as_comment {
 				.form-control-humble;

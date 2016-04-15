@@ -4,8 +4,8 @@
 
 #loginFrame {
 	.grid(12);
-	background: @brand-bg;
-	color: @default-black;
+	background: $brand-bg;
+	color: $default-black;
 	padding: 0 20px;
 	text-align: center;
 	.current_user {
@@ -44,7 +44,7 @@
 		#password_warning,
 		#password_warning_incorrect,
 		#login_warning {
-			color: @brand-danger;
+			color: $brand-danger;
 			margin: -10px 0 10px !important;
 			text-align: left;
 		}
@@ -64,7 +64,7 @@
 				text-decoration: underline;
 			}
 			&:hover {
-				color: @brand-primary;
+				color: $brand-primary;
 				cursor: pointer;
 			}
 		}
@@ -79,7 +79,7 @@
 			}
 		}
 		.external_logins {
-			background-color: darken(@brand-bg, 3%);
+			background-color: darken($brand-bg, 3%);
 			margin: 0px 0px 15px;
 			padding: 5px 0px;
 			p {
@@ -88,18 +88,18 @@
 			.loginWithService {
 				background: none;
 				border: 0px;
-				color: @default-gray;
+				color: $default-gray;
 				font-size: xx-large;
 				padding: 0 9px;
 				&:hover {
 					.fa-google-plus-square {
-						color: @google-plus;
+						color: $google-plus;
 					}
 					.fa-facebook-square {
-						color: @facebook;
+						color: $facebook;
 					}
 					.fa-github-square {
-						color: @github;
+						color: $github;
 					}
 				}
 			}
@@ -107,7 +107,7 @@
 	}
 	&.password_warning input#login-password,
 	&.username_warning input#login-name {
-		border-color: @brand-danger;
+		border-color: $brand-danger;
 	}
 	&.username_warning,
 	&.password_warning {
@@ -151,7 +151,7 @@
 		}
 	}
 	@media screen and
-	(max-width: @screen-sm) {
+	(max-width: $screen-sm) {
 		padding: 20px 15px 10px;
 	}
 }

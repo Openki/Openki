@@ -16,7 +16,7 @@
 			}
 			div {
 				border: solid;
-				border-color: #f5f5f5; // or darken(@brand-success, 80%) ?
+				border-color: #f5f5f5; // or darken($brand-success, 80%) ?
 				border-width: 3px 0px 0px 0.5px;
 				position: absolute;
 				text-align: center;
@@ -60,14 +60,14 @@
 					z-index: 1;
 				}
 				.title {
-					background-color: @brand-success;
+					background-color: $brand-success;
 					font-size: 28px;
 					height: 43px;
 					line-height: 1.2em;
 					overflow: hidden;
 					padding: 4px 12px;
 					&:hover {
-						box-shadow: 0px 5px 8px @default-shadow;
+						box-shadow: 0px 5px 8px $default-shadow;
 						height: 70px;
 						min-width: 200px;
 					}
@@ -82,7 +82,7 @@
 					top: -20px;
 				}
 				.description {
-					background-color: @brand-bg;
+					background-color: $brand-bg;
 					display: none;
 					height: 12em;
 					overflow: hidden;
@@ -90,7 +90,7 @@
 				}
 				.title:hover ~ .time,
 				.title:hover ~ .description {
-					box-shadow: 0px 5px 8px @default-shadow;
+					box-shadow: 0px 5px 8px $default-shadow;
 					display: block;
 					z-index: 1;
 				}

@@ -4,8 +4,8 @@
 	.course_event {
 		.course_event_date {
 			.grid(12);
-			background: @brand-success;
-			border-bottom: 3px solid @body-bg;
+			background: $brand-success;
+			border-bottom: 3px solid $body-bg;
 			padding-bottom: 10px;
 			padding-top: 10px;
 			span.date {

@@ -30,7 +30,7 @@
 .calendar_event,
 .calendar_event_past {
 	&:hover {
-		.box-shadow-big(@default-shadow);
+		.box-shadow-big($default-shadow);
 		z-index: 1029;
 	}
 }
@@ -61,14 +61,14 @@
 
 .courseEvents-titlebar {
 	.grid(12);
-	background: @brand-primary;
-	border: 5px solid @brand-primary;
-	color: @body-bg;
+	background: $brand-primary;
+	border: 5px solid $brand-primary;
+	color: $body-bg;
 	h4 {
 		font-weight: bold;
 	}
 	& > .link {
-		color: @default-black;
+		color: $default-black;
 		position: absolute;
 		right: 10px;
 		top: -1px;
@@ -76,11 +76,11 @@
 }
 
 .course_event {
-	.transition(box-shadow @default-transition-time);
+	.transition(box-shadow $default-transition-time);
 	a {
 		& > .course_event_date {
-			background: @brand-success;
-			border-bottom: 3px solid @default-white;
+			background: $brand-success;
+			border-bottom: 3px solid $default-white;
 			height: 70px;
 			padding: 10px 0;
 			white-space: nowrap;
@@ -97,8 +97,8 @@
 		}
 	}
 	& > .eventEdit_buttons {
-		background: @default-light-grey;
-		border-top: 3px solid @default-white;
+		background: $default-light-grey;
+		border-top: 3px solid $default-white;
 		padding: 10px 0;
 		text-align: center;
 		.btn-toolbar {
@@ -108,19 +108,19 @@
 	}
 	& > a,
 	& > a:hover {
-		color: @default-black;
+		color: $default-black;
 		text-decoration: none;
 	}
 }
 
 .course_event_lower_section {
-	background: @brand-bg;
+	background: $brand-bg;
 	height: calc(~"100% - 70px");
 	padding-bottom: 10px;
 }
 
 .course_event_title {
-	.transition(color @default-transition-time);
+	.transition(color $default-transition-time);
 	h3 {
 		margin: 10px 0px;
 	}
@@ -140,7 +140,7 @@ input#edit_event_title {
 }
 
 .eventReplicationMenu {
-	background: @default-light-grey;
+	background: $default-light-grey;
 	padding: 10px 0px;
 	& > div {
 		padding: 1em;

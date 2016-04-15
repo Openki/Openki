@@ -1,13 +1,13 @@
 .noscript {
-	background: @brand-bg;
+	background: $brand-bg;
 	height: 100%;
 	left: 0px;
 	position: absolute;
 	top: 0px;
 	width: 100%;
 	.noscript_message_box {
-		background: @brand-primary;
-		border: 3px solid @default-white;
+		background: $brand-primary;
+		border: 3px solid $default-white;
 		height: 100px;
 		margin: auto;
 		position: relative;
@@ -20,7 +20,7 @@
 		}
 		.noscript_message {
 			.grid (8);
-			color: @default-white;
+			color: $default-white;
 			height: 100%;
 			padding: 15px 15px;
 		}

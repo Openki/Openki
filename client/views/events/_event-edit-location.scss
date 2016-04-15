@@ -3,19 +3,19 @@
 	padding: 0px;
 	.locationEdit {
 		.grid(12);
-		background-color: @location-edit-bg;
-		border: 1px solid @default-light-grey;
+		background-color: $location-edit-bg;
+		border: 1px solid $default-light-grey;
 		overflow: auto;
 		padding: 0px;
 		@media screen and
-		(max-width: @screen-xs) {
+		(max-width: $screen-xs) {
 			span.input-group-addon {
 				display: none;
 				}
 			}
 		.input-group-addon:first-child {
 			border: 0px;
-			border-right: 1px solid @default-light-grey;
+			border-right: 1px solid $default-light-grey;
 		}
 		.locationSearch {
 			.grid(12, 6);
@@ -26,7 +26,7 @@
 					padding-bottom: 5px;
 				}
 				span.fa-map-marker {
-					color: darken(@brand-success, 40%);
+					color: darken($brand-success, 40%);
 				}
 				button.-locationChange {
 					.btn-thin;
@@ -50,14 +50,14 @@
 			ul.locationCandidates {
 				padding: 5px 0px;
 				li.locationCandidate {
-					background-color: @location-candidate-bg;
+					background-color: $location-candidate-bg;
 					list-style: none;
 					margin-bottom: 4px;
 					padding-left: 5px;
 					&.hover {
-						background: @location-candidate-hover-bg;
+						background: $location-candidate-hover-bg;
 						cursor: pointer;
-						fill: @location-candidate-hover-fill;
+						fill: $location-candidate-hover-fill;
 					}
 					.address {
 						font-size: 11px;
@@ -70,7 +70,7 @@
 			margin: 10px 0px;
 			padding-left: 0px;
 			@media screen and
-			(max-width: @screen-xs) {
+			(max-width: $screen-xs) {
 				padding-left: 15px;
 			}
 			.mapContainer.box {

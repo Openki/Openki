@@ -19,7 +19,7 @@ body {
 		padding-top: 0px;
 	}
 	@media screen and
-	(max-width: @screen-xs) {
+	(max-width: $screen-xs) {
 		.find {
 			margin-top: -20px;
 			}
@@ -32,11 +32,11 @@ body {
 }
 
 h1 {
-	color: @brand-primary;
+	color: $brand-primary;
 }
 
 .dropdown-menu {
-	.box-shadow-small(@default-shadow);
+	.box-shadow-small($default-shadow);
 	min-width: 0px;
 	width: auto;
 	li {
@@ -45,7 +45,7 @@ h1 {
 }
 
 .tooltip {
-	font-size: @font-size-base;
+	font-size: $font-size-base;
 	white-space: nowrap;
 	&-inner {
 		max-width: none;
@@ -53,9 +53,9 @@ h1 {
 }
 
 ul.nav-tabs li a {
-	color: @default-black;
+	color: $default-black;
 	&:hover {
-		color: @body-bg;
+		color: $body-bg;
 	}
 }
 
@@ -64,12 +64,12 @@ label {
 }
 
 span.glyphicon-ok {
-	color: darken(@brand-success, 20%) !important;
+	color: darken($brand-success, 20%) !important;
 }
 
 select {
 	.form-control-humble;
-	color: @default-black;
+	color: $default-black;
 	&:hover {
 		cursor: pointer;
 	}
@@ -79,7 +79,7 @@ select {
 }
 
 .elevate_child {
-	.transition(box-shadow @default-transition-time);
+	.transition(box-shadow $default-transition-time);
 	box-shadow: none !important;
 }
 

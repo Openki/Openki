@@ -16,11 +16,11 @@
 	padding: 0px;
 	.course_edit_body {
 		.grid(12);
-		border: 7px dashed @brand-bg;
+		border: 7px dashed $brand-bg;
 		margin-top: 10px;
 		padding: 20px 30px;
 		@media screen and
-		(max-width: @screen-xs) {
+		(max-width: $screen-xs) {
 			border: 0px;
 			margin-top: 0px;
 			padding: 0px 0px 10px;
@@ -53,26 +53,26 @@
 		ul.roles_list,
 		.course_edit_internal {
 			span.caret {
-				.transition(color @default-transition-time);
-				color: @default-light-grey;
+				.transition(color $default-transition-time);
+				color: $default-light-grey;
 				left: 3px;
 				position: relative;
 				top: -1px;
 				&.active {
-					color: @default-black;
+					color: $default-black;
 				}
 			}
 			label {
 				font-weight: normal;
 				&:hover {
-					color: @brand-primary;
+					color: $brand-primary;
 					cursor: pointer;
 					span.caret {
-						color: @default-black;
+						color: $default-black;
 					}
 				}
 				&.active {
-					color: @brand-primary;
+					color: $brand-primary;
 				}
 				input.checkbox {
 					margin-right: 3px;
@@ -101,7 +101,7 @@
 				.btn;
 				margin-right: 10px;
 				@media screen and
-				(max-width: @screen-xs) {
+				(max-width: $screen-xs) {
 					.form-control;
 					.btn;
 					.btn-primary;

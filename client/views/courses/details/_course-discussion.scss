@@ -11,27 +11,27 @@
 //## Contains a post and its replies
 .discussion-conversation {
 	.grid(12);
-	background: @discussion-conversation-bg;
+	background: $discussion-conversation-bg;
 	padding-bottom: 15px;
 	padding-top: 10px;
 }
 
 //** Top border for the first conversation
 .discussion > div:nth-child(3) {
-	border-top: 3px solid @body-bg;
+	border-top: 3px solid $body-bg;
 }
 
 //== Post/Comment (+ Edit)
 //
 //## These styles are used for post edit as well
 
-@discussion-thumb-width: 60;
+$discussion-thumb-width: 60;
 
 //** User icon thumbnail
 .discussion-thumb {
 	display: table-cell;
 	position: relative;
-	width: unit(@discussion-thumb-width, px);
+	width: unit($discussion-thumb-width, px);
 }
 
 //** Icon
@@ -40,7 +40,7 @@
 	position: absolute;
 	top: 0px;
 	vertical-align: text-bottom;
-	width: unit((@discussion-thumb-width - 10), px);
+	width: unit(($discussion-thumb-width - 10), px);
 }
 
 //** Content
@@ -62,11 +62,11 @@
 
 //** Profilelink
 .discussion-profile-link {
-	color: @default-black;
+	color: $default-black;
 	font-weight: bold;
 	padding-right: 5px;
 	&:hover {
-		color: @brand-primary;
+		color: $brand-primary;
 		text-decoration: none;
 	}
 }
@@ -83,25 +83,25 @@
 //## How post get's displayed
 .discussion-post {
 	.grid(12);
-	background: @discussion-post-bg;
+	background: $discussion-post-bg;
 	display: table;
 	padding: 7px 0px;
 }
 
 //** Header
 .discussion-post-header {
-	background: @discussion-post-header-bg;
-	border-color: @discussion-post-border;
+	background: $discussion-post-header-bg;
+	border-color: $discussion-post-border;
 }
 
 //** Edit & Delete buttons
 .discussion-edit-btn,
 .discussion-delete-btn {
 	.header-btn;
-	color: @default-gray;
+	color: $default-gray;
 	float: right;
 	&:hover {
-		color: @default-black;
+		color: $default-black;
 	}
 }
 
@@ -117,13 +117,13 @@
 
 //** Time
 .discussion-post-time {
-	color: @default-gray;
+	color: $default-gray;
 	cursor: default;
 }
 
 //** Content
 .discussion-post-content {
-	border-color: @discussion-post-border;
+	border-color: $discussion-post-border;
 }
 
 //** Title
@@ -141,14 +141,14 @@
 //## How post replies get displayed
 .discussion-comment {
 	display: table;
-	padding: 7px 0px 7px unit(@discussion-thumb-width, px);
+	padding: 7px 0px 7px unit($discussion-thumb-width, px);
 	position: relative;
 	width: 100%;
 }
 
 //** Position reply button if there are already replies
 .discussion-comment + .discussion-reply {
-	padding-left: unit((@discussion-thumb-width * 2), px);
+	padding-left: unit(($discussion-thumb-width * 2), px);
 }
 
 //== Post edit
@@ -157,14 +157,14 @@
 
 //** Content
 .discussion-edit-content {
-	background: @discussion-edit-bg;
-	border-color: @discussion-edit-border;
+	background: $discussion-edit-bg;
+	border-color: $discussion-edit-border;
 }
 
 //** Header
 .discussion-edit-header {
-	background: @discussion-edit-header-bg;
-	border-color: @discussion-edit-border;
+	background: $discussion-edit-header-bg;
+	border-color: $discussion-edit-border;
 }
 
 //** Body
@@ -220,7 +220,7 @@
 }
 
 .discussion-reply {
-	padding-left: unit(@discussion-thumb-width, px);
+	padding-left: unit($discussion-thumb-width, px);
 }
 
 //== New post
@@ -231,8 +231,8 @@
 //** New post background frame
 .discussion-post-new {
 	.grid(12);
-	background: @discussion-post-new-bg;
-	border-top: 3px solid @body-bg;
+	background: $discussion-post-new-bg;
+	border-top: 3px solid $body-bg;
 	padding-bottom: 10px;
 	padding-top: 10px;
 }

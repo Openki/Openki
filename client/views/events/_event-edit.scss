@@ -9,12 +9,12 @@
 	}
 	.course_event_edit_header {
 		.grid(12);
-		border: dashed 7px @brand-success;
+		border: dashed 7px $brand-success;
 		border-bottom: 0px;
 		margin-top: 10px;
 		padding: 20px 30px 0px;
 		@media screen and
-		(max-width: @screen-xs) {
+		(max-width: $screen-xs) {
 			border: 0px;
 			margin-top: 0px;
 			padding: 0px;
@@ -28,7 +28,7 @@
 		.show_duration {
 			.grid(12, 4);
 			@media screen and
-			(max-width: @screen-sm) {
+			(max-width: $screen-sm) {
 				padding: 0px;
 			}
 		}
@@ -46,11 +46,11 @@
 	}
 	.course_event_edit_body {
 		.grid(12);
-		border: dashed 7px @brand-bg;
+		border: dashed 7px $brand-bg;
 		border-top: 0px;
 		padding: 0px 30px 20px;
 		@media screen and
-		(max-width: @screen-xs) {
+		(max-width: $screen-xs) {
 			border: 0px;
 			padding: 0px 0px 10px;
 		}
@@ -69,8 +69,8 @@
 			.grid(12, 4);
 			padding-left: 0px;
 			@media screen and
-			(min-width: @screen-xs) and
-			(max-width: @screen-sm) {
+			(min-width: $screen-xs) and
+			(max-width: $screen-sm) {
 				padding: 0px;
 			}
 		}
@@ -112,7 +112,7 @@
 					.btn;
 					.btn-success;
 					@media screen and
-					(max-width: @screen-xs) {
+					(max-width: $screen-xs) {
 						.form-control;
 						.btn;
 						.btn-success;
@@ -123,7 +123,7 @@
 					.btn;
 					.btn-cancel;
 					@media screen and
-					(max-width: @screen-xs) {
+					(max-width: $screen-xs) {
 						.form-control;
 						.btn;
 						.btn-cancel;

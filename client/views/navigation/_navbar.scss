@@ -7,7 +7,7 @@
 		max-width: 1600px;
 		.navbar-header {
 			&:hover * {
-				color: @body-bg !important;
+				color: $body-bg !important;
 			}
 			a.navbar-brand {
 				padding: 0px;
@@ -20,7 +20,7 @@
 				}
 				& > span.stage {
 					.rotate(345deg);
-					color: @default-black;
+					color: $default-black;
 					font-size: small;
 					left: 8.2em;
 					position: absolute;
@@ -41,8 +41,8 @@
 		.navbar-collapse {
 			max-height: 400px;
 			@media screen and
-			(max-width: @screen-sm) {
-				box-shadow: 0 7px 7px @default-shadow;
+			(max-width: $screen-sm) {
+				box-shadow: 0 7px 7px $default-shadow;
 				padding: 0px;
 			}
 			.navbar-nav {
@@ -54,11 +54,11 @@
 						font-size: medium;
 					}
 					&:hover {
-						border-bottom-color: lighten(@brand-primary, 10%);
+						border-bottom-color: lighten($brand-primary, 10%);
 					}
 				}
 				@media screen and
-				(max-width: @screen-sm) {
+				(max-width: $screen-sm) {
 					margin: 0px;
 					& > li.dropdown > a::after {
 						content: '\f107';
@@ -73,40 +73,40 @@
 				}
 				span.caret {
 					.scale(-1.5, -1.5);
-					.transition(@default-transition-time);
+					.transition($default-transition-time);
 					bottom: 1px;
-					color: @brand-primary;
+					color: $brand-primary;
 					left: 46%;
 					position: absolute;
 					@media screen and
-					(max-width: @screen-sm) {
+					(max-width: $screen-sm) {
 						display: none;
 					}
 				}
 				li.dropdown.open span.caret {
 					.opacity(1);
-					color: @brand-bg;
+					color: $brand-bg;
 					z-index: 1099;
 				}
 				a.active {
 					&.over_content {
-						background: lighten(@brand-primary, 10%);
+						background: lighten($brand-primary, 10%);
 						&:hover,
 						&:focus {
-							background: lighten(@brand-primary, 10%);
+							background: lighten($brand-primary, 10%);
 						}
 						span.caret {
 							.transition(color 0.3s);
-							color: lighten(@brand-primary, 10%);
+							color: lighten($brand-primary, 10%);
 						}
 					}
 					span.caret {
 						.opacity(1);
-						color: @default-white;
+						color: $default-white;
 					}
 					@media screen and
-					(max-width: @screen-xs) {
-						background: lighten(@brand-primary, 5%);
+					(max-width: $screen-xs) {
+						background: lighten($brand-primary, 5%);
 					}
 				}
 				a.loginButton {
@@ -114,15 +114,15 @@
 				}
 				.dropdown-menu {
 					border-top: 0px;
-					color: @default-white !important;
+					color: $default-white !important;
 					span.glyphicon-ok {
 						font-size: small;
 						padding-left: 5px;
 					}
 					@media screen and
-					(max-width: @screen-sm) {
-						border-left: 1px solid @default-white;
-						color: @default-white;
+					(max-width: $screen-sm) {
+						border-left: 1px solid $default-white;
+						color: $default-white;
 						margin: -5px 0px 10px 15px;
 						padding: 0px;
 						li a {
@@ -132,7 +132,7 @@
 					&.login-dropdown {
 						padding-top: 15px;
 						@media screen and
-						(max-width: @screen-sm) {
+						(max-width: $screen-sm) {
 							margin: 0px;
 							padding-top: 0px;
 						}

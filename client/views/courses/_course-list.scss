@@ -19,25 +19,25 @@
 
 .courselist_course_container {
 	.grid(6, inherit, 4, 3);
-	border: 5px solid @body-bg;
+	border: 5px solid $body-bg;
 	border-bottom-width: 15px;
 	padding: 0px;
 	@media screen and
-	(max-width: @screen-xsm) {
+	(max-width: $screen-xsm) {
 		.grid(12);
 		padding: 0px;
 	}
 	.courselist_course {
 		.grid(12);
-		.transition(box-shadow @default-transition-time);
-		border: 7px dashed @brand-bg;
+		.transition(box-shadow $default-transition-time);
+		border: 7px dashed $brand-bg;
 		height: 150px;
 		padding: 0px;
 		&:hover {
-			.box-shadow-big(@default-shadow);
-			color: @brand-primary;
+			.box-shadow-big($default-shadow);
+			color: $brand-primary;
 			h4 {
-				color: @brand-primary;
+				color: $brand-primary;
 			}
 		}
 		&.haspastevents {
@@ -47,11 +47,11 @@
 			text-decoration: none;
 		}
 		h4 {
-			.transition(color @default-transition-time);
-			color: @default-black;
+			.transition(color $default-transition-time);
+			color: $default-black;
 		}
 		.course-name {
-			color: @default-black;
+			color: $default-black;
 			font-size: 22px;
 			line-height: 24px;
 			margin: 8px 0 0px;
@@ -62,20 +62,20 @@
 			text-align: center;
 		}
 		.yes {
-			background-color: @role-yes-bg;
-			color: @role-yes-text;
+			background-color: $role-yes-bg;
+			color: $role-yes-text;
 		}
 		.no {
-			background-color: @role-no-bg;
-			color: @role-no-text;
+			background-color: $role-no-bg;
+			color: $role-no-text;
 		}
 		.yesyou {
-			background-color: @user-bg;
-			color: @user-text;
+			background-color: $user-bg;
+			color: $user-text;
 		}
 		.course_content {
 			.grid(9);
-			background: @body-bg;
+			background: $body-bg;
 			padding: 0px 0px 0px 15px;
 			&.hasupcomingevents {
 				.grid(7.5);
@@ -98,9 +98,9 @@
 .courselist_course,
 .course_main {
 	&.hasupcomingevents {
-		background: @brand-bg;
+		background: $brand-bg;
 		.course_content {
-			background: @brand-bg;
+			background: $brand-bg;
 		}
 	}
 }
@@ -122,8 +122,8 @@
 
 .course_eventlist {
 	.grid(4.5);
-	background: @brand-success;
-	color: @default-black;
+	background: $brand-success;
+	color: $default-black;
 	max-height: 150px;
 	padding: 3px;
 	position: relative;

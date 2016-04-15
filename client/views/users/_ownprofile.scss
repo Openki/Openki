@@ -12,7 +12,7 @@
 			font-size: 115%;
 			padding-right: 30px;
 			.background {
-				background-color: @user-bg;
+				background-color: $user-bg;
 				overflow: auto;
 				padding: 10px;
 				tr.email button {
@@ -38,7 +38,7 @@
 	.password {
 		margin: 1em 30px 1em 0px;
 		form.passChange {
-			background: @user-bg;
+			background: $user-bg;
 			padding: 10px;
 			label {
 				font-weight: normal;
@@ -62,29 +62,29 @@
 		li {
 			margin-top: 5px;
 			span.group {
-				background: @group-bg;
-				color: @group-text;
+				background: $group-bg;
+				color: $group-text;
 				padding: 0px 4px 1px;
 			}
 		}
 	}
 	.translate {
 		.grid(12);
-		background-color: @translate-bg;
+		background-color: $translate-bg;
 		padding: 10px;
 		text-align: center;
 		.fa {
 			.transition(all .3s ease-out)
 		}
 		&:hover {
-			background-color: @translate-hover-bg;
+			background-color: $translate-hover-bg;
 			.fa {
 				.transition(all 1.5s ease-in);
 				font-size: 350%;
 			}
 		}
 		a:hover {
-			color: @default-white;
+			color: $default-white;
 			text-decoration: none;
 		}
 	}

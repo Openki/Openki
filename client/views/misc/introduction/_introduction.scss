@@ -3,13 +3,13 @@
 	.introduction {
 		.transition(background-color 1s);
 		.grid(12);
-		background-color: @introduction-bg;
-		color: @brand-primary;
+		background-color: $introduction-bg;
+		color: $brand-primary;
 		margin-top: 15px;
 		padding-top: 2px;
 		position: relative;
 		&:hover {
-			background-color: @introduction-text;
+			background-color: $introduction-text;
 		}
 		.-closeIntro {
 			float: none;
@@ -27,7 +27,7 @@
 			a.-toggleDetails {
 				text-decoration: none;
 				.toggle {
-					color: @default-gray;
+					color: $default-gray;
 					display: inline;
 					padding: 0 10px;
 					span.showIntro::after {
@@ -47,17 +47,17 @@
 					cursor: pointer;
 					.toggle {
 						span.showIntro {
-							background-color: @introduction-show-bg;
-							color: @introduction-show-text;
+							background-color: $introduction-show-bg;
+							color: $introduction-show-text;
 						}
 						span.hideIntro {
-							background-color: @default-light-grey;
-							color: @default-black;
+							background-color: $default-light-grey;
+							color: $default-black;
 						}
 					}
 				}
 				@media screen and
-				(max-width: @screen-xxs) {
+				(max-width: $screen-xxs) {
 					.toggle {
 						display: block;
 						padding: 10px 0;
@@ -74,7 +74,7 @@
 					}
 					&:hover .toggle span.hideIntro {
 						background: none;
-						color: @default-black;
+						color: $default-black;
 					}
 				}
 			}
@@ -82,7 +82,7 @@
 		.content {
 			padding-bottom: 12px;
 			hr {
-				color: @default-gray;
+				color: $default-gray;
 				margin-top: 0px;
 			}
 			ul {
@@ -103,7 +103,7 @@
 						text-align: center;
 						&::after {
 							.opacity(0.5);
-							color: lighten(@default-gray, 15%);
+							color: lighten($default-gray, 15%);
 							content: '\f061';
 							font-family: FontAwesome;
 							font-size: 16px;
@@ -119,7 +119,7 @@
 						text-decoration: underline;
 					}
 					@media screen and
-					(max-width: @screen-sm) {
+					(max-width: $screen-sm) {
 						&:nth-child(2),
 						&:nth-child(4) {
 							padding-bottom: 15px;
@@ -134,7 +134,7 @@
 						}
 					}
 					@media screen and
-					(max-width: @screen-xxs) {
+					(max-width: $screen-xxs) {
 						.grid(12);
 						padding-bottom: 20px;
 						text-align: center;

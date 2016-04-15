@@ -2,16 +2,16 @@
 	.container-narrow;
 	.head {
 		.grid(12);
-		background-color: @location-bg;
-		color: @location-text;
+		background-color: $location-bg;
+		color: $location-text;
 		height: 140px;
 		overflow: auto;
 		padding-right: 0px;
 		h1 {
-			color: @location-text;
+			color: $location-text;
 		}
 		.description h1 {
-			background-color: @default-black;
+			background-color: $default-black;
 			display: inline;
 		}
 		img {
@@ -21,14 +21,14 @@
 	}
 	.body {
 		.grid(12);
-		background-color: @location-description-bg;
+		background-color: $location-description-bg;
 		margin-top: 3px;
 		padding-right: 0px;
 		.descriptionFrame {
 			.grid(12, 6);
 			padding: 0px;
 			.title {
-				background-color: @location-description-bg;
+				background-color: $location-description-bg;
 				margin-top: 10px;
 			}
 		}

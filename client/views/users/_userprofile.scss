@@ -52,15 +52,15 @@
 			margin-top: 0px;
 		}
 		span.group {
-			background: @group-bg;
-			color: @group-text;
+			background: $group-bg;
+			color: $group-text;
 			padding: 0 4px 1px;
 		}
 		button {
 			.btn-primary;
 			.btn-thin;
 			&:hover {
-				color: @default-white;
+				color: $default-white;
 			}
 		}
 	}

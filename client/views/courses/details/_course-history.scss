@@ -19,10 +19,10 @@
 				width: 1px;
 			}
 			.timeline-start {
-				#gradient.vertical(@brand-bg;@brand-primary;0%;100%);
+				#gradient.vertical($brand-bg;$brand-primary;0%;100%);
 			}
 			.timeline-end {
-				#gradient.vertical(@brand-primary;@brand-bg;0%;100%);
+				#gradient.vertical($brand-primary;$brand-bg;0%;100%);
 			}
 		}
 		.timeline-header {
@@ -41,7 +41,7 @@
 			padding: 0px;
 			text-align: right;
 			&.active {
-				color: @default-black;
+				color: $default-black;
 			}
 		}
 		.timeline-eventline-container {
@@ -49,14 +49,14 @@
 			height: 100%;
 			padding: 0px;
 			.timeline-eventline {
-				background: @brand-primary;
+				background: $brand-primary;
 				height: 100%;
 				margin: auto;
 				width: 1px;
 			}
 			.timeline-eventpoint {
-				.transition(background-color @default-transition-time);
-				background: @brand-primary;
+				.transition(background-color $default-transition-time);
+				background: $brand-primary;
 				border-radius: 50% !important;
 				bottom: 13px;
 				height: 7px;
@@ -64,7 +64,7 @@
 				position: relative;
 				width: 7px;
 				&.active {
-					background: @brand-danger;
+					background: $brand-danger;
 				}
 			}
 		}
@@ -76,13 +76,13 @@
 	height: 20px;
 	padding: 0px;
 	&:hover a {
-		color: @default-black;
+		color: $default-black;
 		&:hover {
 			text-decoration: underline;
 		}
 	}
 	a {
-		color: @brand-primary;
+		color: $brand-primary;
 	}
 	h4 {
 		padding-top: 10px;

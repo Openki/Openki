@@ -1,9 +1,9 @@
 .fade_effect_top {
 	background: none;
-	background: -webkit-linear-gradient(@default-white, @default-transparent);
-	background: 	 -moz-linear-gradient(@default-white, @default-transparent);
-	background:			 -o-linear-gradient(@default-white, @default-transparent);
-	background:					linear-gradient(@default-white, @default-transparent);
+	background: -webkit-linear-gradient($default-white, $default-transparent);
+	background: 	 -moz-linear-gradient($default-white, $default-transparent);
+	background:			 -o-linear-gradient($default-white, $default-transparent);
+	background:					linear-gradient($default-white, $default-transparent);
 	height: 40px;
 	left: 0px;
 	position: absolute;
@@ -18,10 +18,10 @@
 
 .fade_effect_bottom {
 	background: none;
-	background: -webkit-linear-gradient(@default-transparent, @default-white);
-	background:		 -moz-linear-gradient(@default-transparent, @default-white);
-	background: 		 -o-linear-gradient(@default-transparent, @default-white);
-	background: 				linear-gradient(@default-transparent, @default-white);
+	background: -webkit-linear-gradient($default-transparent, $default-white);
+	background:		 -moz-linear-gradient($default-transparent, $default-white);
+	background: 		 -o-linear-gradient($default-transparent, $default-white);
+	background: 				linear-gradient($default-transparent, $default-white);
 	bottom: 0px;
 	height: 40px;
 	left: 0px;

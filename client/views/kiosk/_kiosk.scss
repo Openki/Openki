@@ -44,9 +44,9 @@
 			}
 			.kiosk_event_header {
 				.grid(12);
-				background: @brand-success;
-				border-bottom: 3px solid @body-bg;
-				color: @gray-base;
+				background: $brand-success;
+				border-bottom: 3px solid $body-bg;
+				color: $gray-base;
 				font-size: large;
 				padding-bottom: 10px;
 				padding-top: 10px;
@@ -66,7 +66,7 @@
 			.course_event_title {
 				.grid(12);
 				& > h3 {
-					color: @gray-base;
+					color: $gray-base;
 					margin-top: 15px;
 				}
 			}
@@ -77,11 +77,11 @@
 		&:hover {
 			text-decoration: none;
 			.calendar_event > .course_event_desc {
-				color: @brand-primary;
+				color: $brand-primary;
 			}
 		}
 		& > .calendar_event {
-			background: @brand-bg;
+			background: $brand-bg;
 			height: 216px;
 			overflow: hidden;
 			width: 100%;
@@ -116,7 +116,7 @@
 				background: rgba(200, 250, 0, 0.2);
 				.kiosk_event_date {
 					.grid(12);
-					border: 1px solid @body-bg;
+					border: 1px solid $body-bg;
 					border-radius: 1px !important;
 					padding-top: 8px;
 				}
@@ -138,8 +138,8 @@
 		font-size: 16px !important;
 	}
 	.kiosk_slim {
-		background: @brand-success;
-		border: 5px solid @body-bg;
+		background: $brand-success;
+		border: 5px solid $body-bg;
 		display: inline-block;
 		overflow: hidden;
 	}

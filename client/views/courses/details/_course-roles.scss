@@ -1,7 +1,7 @@
 .roles {
 	.grid(12);
-	background: @brand-bg;
-	border-top: 3px solid @body-bg;
+	background: $brand-bg;
+	border-top: 3px solid $body-bg;
 	font-size: medium;
 	padding: 0px;
 	.member_role {
@@ -9,15 +9,15 @@
 		padding-bottom: 10px;
 		padding-top: 10px;
 		a {
-			color: @default-black;
+			color: $default-black;
 			&:hover {
-				color: @brand-primary;
+				color: $brand-primary;
 			}
 		}
 	}
 	.horizontal-line {
 		.grid(12);
-		background: @body-bg;
+		background: $body-bg;
 		height: 1px;
 		&:last-child {
 			display: none;
@@ -33,8 +33,8 @@
 			cursor: default;
 		}
 		li {
-			background: @brand-primary;
-			color: @body-bg;
+			background: $brand-primary;
+			color: $body-bg;
 			display: inline-block;
 			font-size: small;
 			font-weight: bold;
@@ -68,11 +68,11 @@
 			button.editable-cancel {
 				background: none;
 				border: 0px;
-				color: @brand-primary;
+				color: $brand-primary;
 				display: inline-block;
 			}
 			span.glyphicon-remove {
-				color: @brand-danger;
+				color: $brand-danger;
 			}
 		}
 	}

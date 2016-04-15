@@ -1,18 +1,18 @@
-@footer-height: 50;
+$footer-height: 50;
 
 #wrap {
-	margin: 0px auto unit((0 - @footer-height), px);
+	margin: 0px auto unit((0 - $footer-height), px);
 	min-height: 100%;
 }
 
 footer.footer {
-	background: @brand-primary;
-	box-shadow: 0 -2px 2px -2px darken(@brand-primary, 3.5%);
-	color: @body-bg;
+	background: $brand-primary;
+	box-shadow: 0 -2px 2px -2px darken($brand-primary, 3.5%);
+	color: $body-bg;
 	font-size: large;
 	text-align: center;
 	div > a {
-		color: @body-bg;
+		color: $body-bg;
 	}
 	.links {
 		padding-top: 12px;
@@ -33,7 +33,7 @@ footer.footer {
 			}
 
 			@media screen and
-			(max-width: @screen-xs) {
+			(max-width: $screen-xs) {
 				span.fa-terminal {
 					padding-right: 0px;
 				}
@@ -44,7 +44,7 @@ footer.footer {
 		}
 	}
 	.version {
-		color: @default-light-grey;
+		color: $default-light-grey;
 		font-size: small;
 		margin-top: -5px;
 		position: absolute;
@@ -53,7 +53,7 @@ footer.footer {
 		word-spacing: 2px;
 
 		@media screen and
-		(max-width: @screen-xxs) {
+		(max-width: $screen-xxs) {
 			display: none;
 		}
 	}
@@ -61,5 +61,5 @@ footer.footer {
 
 .footer,
 .push {
-	height: unit(@footer-height, px);
+	height: unit($footer-height, px);
 }

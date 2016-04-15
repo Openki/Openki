@@ -8,8 +8,8 @@
 		.grid(12);
 		padding: 0px 0px 10px;
 		.date {
-			background: @calendar-navigation-bg;
-			border-left: 10px solid @brand-primary;
+			background: $calendar-navigation-bg;
+			border-left: 10px solid $brand-primary;
 			font-size: large;
 			padding: 5px 7px 5px 9px;
 			text-align: center;
@@ -28,14 +28,14 @@
 	}
 
 	@media screen and
-	(max-width: @screen-xxs) {
+	(max-width: $screen-xxs) {
 		.grid(12);
 		padding: 0px;
 		.calendar_date {
 			.date {
 				.grid(12);
 				border-left: 0px;
-				border-top: 10px solid @brand-primary;
+				border-top: 10px solid $brand-primary;
 				padding: 0.5em;
 			}
 			.calendar_events {
@@ -51,8 +51,8 @@
 	}
 
 	@media screen and
-	(min-width: @screen-xxs) and
-	(max-width: @screen-xsm) {
+	(min-width: $screen-xxs) and
+	(max-width: $screen-xsm) {
 		.calendar_date {
 			.calendar_events {
 				.small_event_container {
@@ -66,7 +66,7 @@
 
 .switchDate {
 	.grid(12);
-	background-color: @calendar-navigation-bg;
+	background-color: $calendar-navigation-bg;
 	font-size: 32px;
 	margin-bottom: 10px;
 	padding: 0px 10px;
@@ -74,21 +74,21 @@
 	width: 100%;
 	z-index: 2;
 	&.over_content {
-		box-shadow: 0px 6px 2px @default-shadow;
+		box-shadow: 0px 6px 2px $default-shadow;
 		position: fixed;
 		top: 50px;
 	}
 	.calendar_week {
-		background-color: @calendar-header-bg;
+		background-color: $calendar-header-bg;
 		text-align: center;
 		.week {
-			color: @calendar-header-text;
+			color: $calendar-header-text;
 			font-size: large;
 			line-height: 0.75;
 			margin: 7px 0px 0px 0px;
 		}
 		.date {
-			color: @calendar-header-text;
+			color: $calendar-header-text;
 			font-size: small;
 			margin: 3px 0px;
 		}

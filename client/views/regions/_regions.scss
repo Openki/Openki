@@ -1,5 +1,5 @@
 .region_sel {
-	color: @navbar-default-link-color;
+	color: $navbar-default-link-color;
 	font-size: large;
 	a.region_sel_link {
 		height: 50px;
@@ -7,7 +7,7 @@
 			cursor: text;
 		}
 		input.-searchRegions {
-			background-color: @navbar-default-bg;
+			background-color: $navbar-default-bg;
 			border: 0px;
 			height: 24px;
 			margin-top: -2px;
@@ -18,7 +18,7 @@
 		min-width: 150px;
 		width: 100%;
 		li.country {
-			color: @default-gray;
+			color: $default-gray;
 			padding: 6px 15px 3px;
 			&:hover {
 				cursor: default;
@@ -32,9 +32,9 @@
 			padding: 5px 15px;
 		}
 		@media screen and
-		(max-width: @screen-sm) {
+		(max-width: $screen-sm) {
 			li.country {
-				color: @default-black;
+				color: $default-black;
 			}
 		}
 	}
@@ -42,12 +42,12 @@
 		padding-right: 5px;
 	}
 	.coursesCount {
-		background: @brand-primary;
-		color: @default-white;
+		background: $brand-primary;
+		color: $default-white;
 		padding: 1px 5px;
 	}
 	.eventsCount {
-		background: @brand-success;
+		background: $brand-success;
 		padding: 1px 5px;
 	}
 }

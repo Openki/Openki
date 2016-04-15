@@ -32,11 +32,11 @@
 		}
 	}
 	.leaflet-control-container .leaflet-right .leaflet-control:hover {
-		color: @brand-primary;
+		color: $brand-primary;
 		cursor: pointer;
 	}
 	.leaflet-interactive:hover {
 		cursor: pointer;
-		fill: @map-lefalet-hover-fill;
+		fill: $map-lefalet-hover-fill;
 	}
 }

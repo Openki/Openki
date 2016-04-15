@@ -79,7 +79,7 @@
 						}
 						background-color: rgba(80, 90, 50, 0.3);
 						&:hover {
-							background-color: @brand-danger;
+							background-color: $brand-danger;
 						}
 					}
 					&.confirm {
@@ -88,7 +88,7 @@
 						}
 						background-color: rgba(80, 90, 50, 0.3);
 						&:hover {
-							background-color: @brand-success;
+							background-color: $brand-success;
 						}
 					}
 				}
