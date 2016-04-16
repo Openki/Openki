@@ -4,12 +4,9 @@
 @mixin grid($xs, $sm: $xs, $md: $sm, $lg: $md) {
 	@if $sm == inherit {
 		$sm: $xs;
-		$md: $sm;
-		$lg: $md;
 	}
 	@if $md == inherit {
 		$md: $sm;
-		$lg: $md;
 	}
 	@if $lg == inherit {
 		$lg: $md;
