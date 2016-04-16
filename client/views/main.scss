@@ -1,9 +1,10 @@
 @import '../styles/fonts';
 
+@import '../styles/bootstrap-variables';
+@import '../styles/variables';
 @import '{reywood:bootstrap3-sass}/bootstrap';
 
 @import '../styles/colors';
-@import '../styles/variables';
 @import '../styles/classes';
 @import '../styles/mixins/bootstrap-classes';
 @import '../styles/mixins/box-shadow';
