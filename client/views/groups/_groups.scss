@@ -1,13 +1,3 @@
-.course_main .course_groups {
-	@include grid(12);
-	padding: 0 0 10px;
-}
-
-.course-groups-list-container {
-	@include grid(12);
-	padding: 0;
-}
-
 ul.groups-list {
 	list-style: none;
 	margin-bottom: 0;

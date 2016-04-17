@@ -1,35 +1,35 @@
 <template name="findWrap">
 	<div class="find">
-		<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
+		<h1 class="find-heading">{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
 		{{> find}}
 	</div>
 </template>
 
 <template name="find">
 	<div class="search">
-		<div class="-searchField">
+		<div class="searchField">
 			<div class="input-group">
 				<input
 					type="text"
 					id="find"
-					class="-searchInput"
+					class="searchInput"
 					value="{{search}}"
 					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"
 				/>
 				<span class="input-group-btn">
-					<button class="-findButton" type="button">
+					<button class="findButton" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 				</span>
 				{{#unless isMobile}}
 					<span class="input-group-btn">
 						{{#if showingFilters}}
-							<button class="-showFilters remove-filter" type="button">
+							<button class="showFilters remove-filter" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.hideFilters' 'Remove filters'}}
 							</button>
 						{{else}}
-							<button class="-showFilters" type="button">
+							<button class="showFilters" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
@@ -40,29 +40,30 @@
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="-showFilters remove-filter" type="button">
+				<button class="showFilters remove-filter" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
 			{{else}}
-				<button class="-showFilters" type="button">
+				<button class="showFilters" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.showFilters' 'Filter'}}
 				</button>
 			{{/if}}
 		{{/if}}
-		<div class="search_filter" style="{{#if showingFilters}}display:block;{{else}}display:none;{{/if}}">
-			<div class="search_filter_header">
-				<h4>
+		<div class="filter" style="{{#if showingFilters}}display:block;{{else}}display:none;{{/if}}">
+			<div class="filter-header">
+				<h4 class="filter-heading">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.search_filter.title' 'Filter search'}}
 				</h4>
 			</div>
-			<div class="search_events">
-				<div class="checkbox -filterToggle -upcomingEventsFilter">
+			<div class="filter-course-properties">
+				<div class="checkbox toggleFilter -upcomingEventsFilter">
 					<label>
 						<input
 							type="checkbox"
+							class="filter-upcoming-events"
 							id="hasUpcomingEvent"
 							name="hasUpcomingEvent"
 							{{toggleChecked 'upcomingEvent'}}
@@ -87,7 +88,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox -filterToggle -needsHostFilter">
+				<div class="checkbox toggleFilter -needsHostFilter">
 					<label>
 						<input
 							type="checkbox"
@@ -105,7 +106,7 @@
 						{{/if}}
 					</label>
 				</div>
-				<div class="checkbox -filterToggle -needsMentorFilter">
+				<div class="checkbox toggleFilter -needsMentorFilter">
 					<label>
 						<input
 							type="checkbox"
@@ -226,9 +227,7 @@
 			{{/if}}
 			</h3><br />
 			{{#each eventResults}}
-				<!-- <div class="event_results"> -->
 					{{> small_event}}
-				<!-- </div> -->
 			{{/each}}
 		</div>
 	{{/if}}

@@ -1,27 +1,27 @@
-<template name="coursedetails">
-	<div class="coursedetails">
-		<div class="coursedetails_column_left">
+<template name="coursedetails_page">
+	<div class="coursedetails-page">
+		<div class="coursedetails-column-left">
 		{{#if edit}}
 			{{> course_edit course}}
 		{{else}}
-			<div class="course_main {{#with course}}{{coursestate}}{{/with}}">
+			<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 				{{#if isProposal}}
-					<div class="courseStatus" >
+					<div class="course-details-status">
 						<div>
 						{{mf 'course.details.tag.proposal' 'proposal'}}
 						</div>
 					</div>
 				{{/if}}
 
-				<div class="name">
+				<div class="course-details-title">
 					{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
 				</div>
 
 				{{#with course}}
-				<div class="course_categories">
+				<div class="course-details-categories">
 					{{> show_categories}}
 				</div>
-				<div class="course-groups-list-container">
+				<div class="course-details-groups">
 					{{> groupList}}
 				</div>
 				{{/with}}
@@ -30,13 +30,13 @@
 				{{> show_course_submenu}}
 				{{#with course}}
 				{{#if currentUserMayEdit}}
-				<div class="edit_buttons">
+				<div class="course-details-edit-buttons">
 					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="edit" role="button">
+						<button type="button" class="editCourse" role="button">
 							<span class="glyphicon glyphicon-edit"></span>
 							{{mf 'course.details.edit_btn' 'Edit'}}
 						</button>
-						<button type="button" class="del" role="button">
+						<button type="button" class="deleteCourse" role="button">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.details.del_btn' 'Delete'}}
 						</button>
@@ -54,7 +54,7 @@
 				{{> discussion course}}
 			{{/if}}
 		</div>
-		<div class="coursedetails_column_right">
+		<div class="coursedetails-column-right">
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
