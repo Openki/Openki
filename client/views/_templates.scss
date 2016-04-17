@@ -1,23 +1,5 @@
-@import '../styles/fonts';
+@import 'events/small_event/event-small';
 
-@import '../styles/bootstrap-variables';
-@import '../styles/variables';
-@import '{reywood:bootstrap3-sass}/bootstrap';
-
-@import '../styles/colors';
-@import '../styles/classes';
-@import '../styles/mixins/bootstrap-classes';
-@import '../styles/mixins/box-shadow';
-@import '../styles/mixins/buttons';
-@import '../styles/mixins/container-narrow';
-@import '../styles/mixins/form-control-humble';
-@import '../styles/mixins/grid';
-@import '../styles/mixins/grid-offset';
-@import '../styles/mixins/word-break';
-
-@import 'global';
-
-@import '../views/events/small_event/event-small';
 @import 'calendar/calendar';
 @import 'courses/course-list';
 @import 'courses/details/course-create';
@@ -28,7 +10,6 @@
 @import 'courses/details/course-roles';
 @import 'courses/details/course-roles-details';
 @import 'courses/events/course-events';
-@import '../editable/editable';
 @import 'events/event-details';
 @import 'events/event-edit';
 @import 'events/event-edit-location';
@@ -41,8 +22,6 @@
 @import 'kiosk/timetable';
 @import 'login/login-frame';
 @import 'login/reset-password';
-@import '../map/map';
-@import '../messages/messages';
 @import 'misc/categories/categories';
 @import 'misc/frame/calendar-frame';
 @import 'misc/frame/events-frame';
@@ -55,4 +34,3 @@
 @import 'navigation/navbar';
 @import 'users/ownprofile';
 @import 'users/userprofile';
-@import '../report/report';
