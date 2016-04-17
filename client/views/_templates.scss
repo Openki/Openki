@@ -1,15 +1,15 @@
 @import 'events/small_event/event-small';
 
 @import 'calendar/calendar';
-@import 'courses/course-list';
-@import 'courses/details/course-create';
+@import 'courses/create/course-create';
 @import 'courses/details/course-details';
-@import 'courses/details/course-discussion';
-@import 'courses/details/course-edit';
-@import 'courses/details/course-history';
-@import 'courses/details/course-roles';
-@import 'courses/details/course-roles-details';
+@import 'courses/details/discussion/course-discussion';
+@import 'courses/details/history/course-history';
+@import 'courses/details/roles/course-roles';
+@import 'courses/details/roles/course-roles-details';
+@import 'courses/edit/course-edit';
 @import 'courses/events/course-events';
+@import 'courses/list/course-list';
 @import 'events/event-details';
 @import 'events/event-edit';
 @import 'events/event-edit-location';
