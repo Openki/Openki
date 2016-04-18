@@ -21,7 +21,8 @@ Template.discussion.helpers({
 		return {
 			'new': true,
 			courseId: this._id,
-			userId: Meteor.userId()
+			userId: Meteor.userId(),
+			text: ''
 		};
 	}
 });
@@ -87,6 +88,7 @@ Template.postShow.helpers({
 
 Template.postEdit.onCreated(function() {
 	this.anon = new ReactiveVar(!this.data.userId);
+	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));
 });
 
 
@@ -110,19 +112,23 @@ Template.postEdit.helpers({
 		if (Meteor.user()) return {};
 		return { disabled: 1 };
 	},
+
+	enableWhenValid: function() {
+		return Template.instance().validComment.get() ? '' : 'disabled';
+	}
 });
 
 Template.post.events({
-	'click .-edit': function(event, instance) {
+	'click .js-edit': function(event, instance) {
 		event.stopImmediatePropagation();
 		instance.editing.set(true);
 	},
 
-	'click button.post': function (event, instance) {
+	'submit': function (event, instance) {
 		event.stopImmediatePropagation();
 		var comment = {
-			title: instance.$(".-postTitle").val(),
-			text: instance.$(".-postText").val()
+			title: instance.$(".js-post-title").val(),
+			text: instance.$(".js-post-text").val()
 		};
 
 		var method = 'editComment';
@@ -135,7 +141,7 @@ Template.post.events({
 				comment.parentId = instance.data.parentId;
 			}
 
-			comment.anon = !!instance.$('.-anon').prop('checked');
+			comment.anon = !!instance.$('.js-anon').prop('checked');
 		} else {
 			comment._id = instance.data._id;
 		}
@@ -148,6 +154,7 @@ Template.post.events({
 			}
 		});
 
+		return false;
 	},
 
 	'click button.cancel': function() {
@@ -169,7 +176,12 @@ Template.post.events({
 });
 
 Template.postEdit.events({
+	'keyup .js-post-text, change .js-post-text': function(event, instance) {
+		var text = instance.$(".js-post-text").val();
+		instance.validComment.set(CourseDiscussions.validComment(text));
+	},
+
 	'change': function(event, instance) {
-		instance.anon.set(instance.$('.-anon').prop('checked'));
+		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	}
 });

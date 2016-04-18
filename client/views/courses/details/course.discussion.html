@@ -33,13 +33,13 @@
 <template name="postShow">
 	{{#if new}}
 		{{#if parentId}}
-			<button type="button" class="-edit" role="button">
+			<button type="button" class="js-edit" role="button">
 				<span class="fa fa-reply"></span>
 				&nbsp;
 				{{mf 'course.discussion.comment_answer' 'Answer'}}
 			</button>
 		{{else}}
-		<button type="button" class="-edit write-comment">
+		<button type="button" class="js-edit write-comment">
 			<span class="glyphicon glyphicon-pencil"></span>
 			&nbsp;
 			{{mf 'course.discussion.write_comment' 'Write a comment'}}
@@ -64,7 +64,7 @@
 					<p>{{text}}</p>
 				</div>
 				{{#if mayEdit}}
-					<button type="button" class="-edit" role="button">
+					<button type="button" class="js-edit" role="button">
 						<span class="glyphicon glyphicon-edit"></span>
 						&nbsp;
 						{{mf 'course.discussion.comment_edit' 'Edit'}}
@@ -84,6 +84,7 @@
 
 <template name="postEdit">
 	<div class="discussion-conversation">
+		<form>
 		<div class={{postClass}}>
 			<div>
 				{{#if showUserId}}{{>iconProfilelink userId}}{{/if}}
@@ -115,12 +116,12 @@
 			{{#unless parentId}}
 				<h3>{{mf 'course.discussion.write_comment' "Write a comment"}}</h3>
 			{{/unless}}
-				<input type="text" class="-postTitle"
+				<input type="text" class="js-post-title"
 					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
 					value="{{title}}"
 				/>
-				<textarea class="-postText" placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">{{text}}</textarea>
-				<button type="button" class="post">
+				<textarea class="js-post-text" placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">{{text}}</textarea>
+				<button type="submit" class="post" {{enableWhenValid}}>
 			{{#if new}}
 				{{#if parentId}}
 					{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
@@ -136,13 +137,14 @@
 				</button>
 			{{#if new}}
 				<label>
-					<input type='checkbox' class='-anon' {{anonChecked}} {{anonDisabled}}>
+					<input type='checkbox' class='anon js-anon' {{anonChecked}} {{anonDisabled}}>
 					{{mf 'course.discussion.anon' 'Anonymous comment'}}&nbsp;
 					<span class="fa fa-user-secret"></span>&nbsp;
 				</label>
 			{{/if}}
 			</div>
 		</div>
+		</form>
 	</div>
 </template>
 
