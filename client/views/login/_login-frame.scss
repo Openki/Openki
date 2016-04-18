@@ -4,7 +4,7 @@
 
 #loginFrame {
 	@include grid(12);
-	background: $brand-bg;
+	background: $openki-light-blue;
 	color: $default-black;
 	padding: 0 20px;
 	text-align: center;
@@ -79,7 +79,7 @@
 			}
 		}
 		.external_logins {
-			background-color: darken($brand-bg, 3%);
+			background-color: darken($openki-light-blue, 3%);
 			margin: 0px 0px 15px;
 			padding: 5px 0px;
 			p {

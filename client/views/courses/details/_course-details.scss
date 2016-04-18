@@ -69,9 +69,9 @@ p.course_description {
 
 .course-details {
 	@include grid(12);
-	border: 7px dashed $brand-bg;
+	border: 7px dashed $openki-light-blue;
 	&.hasupcomingevents	ul.nav-tabs li.active a {
-		background: $brand-bg;
+		background: $openki-light-blue;
 	}
 	&.haspastevents {
 		border-style: solid;
@@ -194,7 +194,7 @@ p.course_description {
 	}
 	.courseDetails_mentor.mentor_status {
 		@include grid(12, 3);
-		background: $brand-bg;
+		background: $openki-light-blue;
 		height: 60px;
 		.yes {
 			background: $brand-success;

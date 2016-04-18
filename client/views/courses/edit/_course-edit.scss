@@ -16,7 +16,7 @@
 	padding: 0px;
 	.course_edit_body {
 		@include grid(12);
-		border: 7px dashed $brand-bg;
+		border: 7px dashed $openki-light-blue;
 		margin-top: 10px;
 		padding: 20px 30px;
 		@media screen and

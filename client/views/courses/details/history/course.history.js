@@ -12,9 +12,9 @@ Template.coursehistory.helpers({
 
 Template.coursehistory.events({
 	"mouseover .coursehistory-event": function(event, template){
-		$("." + this._id).addClass('active');
+		$("." + this._id).addClass('navbar-link-active');
 	},
 	"mouseout .coursehistory-event": function(event, template){
-		$("." + this._id).removeClass('active');
+		$("." + this._id).removeClass('navbar-link-active');
 	}
 });

@@ -1,6 +1,8 @@
 // Fonts
 @import 'styles/fonts';
 
+@import 'styles/openki-colors';
+
 // Bootstrap framework and overrides
 @import 'styles/bootstrap';
 @import '{reywood:bootstrap3-sass}/bootstrap';
@@ -12,6 +14,7 @@
 @import 'styles/css-icons';
 
 // Global styles
+@import 'views/layout';
 @import 'views/global';
 
 // Template styles

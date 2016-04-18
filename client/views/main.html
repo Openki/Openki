@@ -38,7 +38,7 @@
 </template>
 
 <template name="lang_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		<span class="fa fa-language"></span>&nbsp;
 		{{short}}
 		<span class="caret"></span>
@@ -50,7 +50,7 @@
 				<a href="#" class="langselect -clickClose">
 					{{name}}
 					{{#if currentLanguage}}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="checkmark"></span>
 					{{/if}}
 				</a>
 			</li>

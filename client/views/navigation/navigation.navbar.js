@@ -10,12 +10,12 @@ Template.navbar.onRendered(function() {
 
 		$(window).scroll(function (event) {
 			if($(window).scrollTop() > 5){
-				this.$('.navbar-container').addClass('over_content');
-				this.$('a.nav_link.active').addClass('over_content');
+				this.$('.navbar-container').addClass('navbar-covering-content');
+				this.$('.navbar-link-active').addClass('navbar-link-covering');
 			}
 			else {
-				this.$('.navbar-container').removeClass('over_content');
-				this.$('a.nav_link.active').removeClass('over_content');
+				this.$('.navbar-container').removeClass('navbar-covering-content');
+				this.$('.navbar-link-active').removeClass('navbar-link-covering');
 			}
 		});
 	}

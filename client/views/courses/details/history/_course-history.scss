@@ -19,10 +19,10 @@
 				width: 1px;
 			}
 			.timeline-start {
-				@include gradient-vertical($brand-bg, $brand-primary, 0%, 100%);
+				@include gradient-vertical($openki-light-blue, $brand-primary, 0%, 100%);
 			}
 			.timeline-end {
-				@include gradient-vertical($brand-primary, $brand-bg, 0%, 100%);
+				@include gradient-vertical($brand-primary, $openki-light-blue, 0%, 100%);
 			}
 		}
 		.timeline-header {

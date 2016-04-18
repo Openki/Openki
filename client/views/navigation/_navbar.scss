@@ -1,144 +1,243 @@
 .navbar {
 	@extend .navbar-default;
 	@extend .navbar-fixed-top;
-	border-bottom: 0px;
-	.navbar-container {
-		margin: auto;
-		max-width: 1600px;
-		.navbar-header {
-			&:hover * {
-				color: $body-bg !important;
-			}
-			a.navbar-brand {
-				padding: 0px;
-				& > span {
-					bottom: -3px;
-					font-size: x-large;
-					left: -3px;
-					padding-right: 15px;
-					position: relative;
-				}
-				& > span.stage {
-					@include rotate(345deg);
-					color: $default-black;
-					font-size: small;
-					left: 8.2em;
-					position: absolute;
-					top: 1.5em;
-					writing-mode: lr-tb;
+	border: 0px;
+}
 
-				}
-				img {
-					@include opacity(97);
-					bottom: -1px;
-					display: inline-block;
-					height: 100%;
-					padding: 0 0 0 6px;
-					position: relative;
-				}
-			}
-		}
-		.navbar-collapse {
-			max-height: 400px;
-			@media screen and
-			(max-width: $screen-sm) {
-				box-shadow: 0 7px 7px $default-shadow;
-				padding: 0px;
-			}
-			.navbar-nav {
-				& > li > a {
-					@include transition(border-color 0.3s);
-					font-size: large;
-					padding: 15px 10px;
-					span {
-						font-size: medium;
-					}
-					&:hover {
-						border-bottom-color: lighten($brand-primary, 10%);
-					}
-				}
-				@media screen and
-				(max-width: $screen-sm) {
-					margin: 0px;
-					& > li.dropdown > a::after {
-						content: '\f107';
-						font-family: FontAwesome;
-						padding-left: 5px;
-					}
-					& > li.dropdown.open > a::after {
-						content: '\f106';
-						font-family: FontAwesome;
-						padding-left: 5px;
-					}
-				}
-				span.caret {
-					@include scale(-1.5, -1.5);
-					@include transition($default-transition-time);
-					bottom: 1px;
-					color: $brand-primary;
-					left: 46%;
-					position: absolute;
-					@media screen and
-					(max-width: $screen-sm) {
-						display: none;
-					}
-				}
-				li.dropdown.open span.caret {
-					@include opacity(1);
-					color: $brand-bg;
-					z-index: 1099;
-				}
-				a.active {
-					&.over_content {
-						background: lighten($brand-primary, 10%);
-						&:hover,
-						&:focus {
-							background: lighten($brand-primary, 10%);
-						}
-						span.caret {
-							@include transition(color 0.3s);
-							color: lighten($brand-primary, 10%);
-						}
-					}
-					span.caret {
-						@include opacity(1);
-						color: $default-white;
-					}
-					@media screen and
-					(max-width: $screen-xs) {
-						background: lighten($brand-primary, 5%);
-					}
-				}
-				a.loginButton {
-					cursor: pointer !important;
-				}
-				.dropdown-menu {
-					border-top: 0px;
-					color: $default-white !important;
-					span.glyphicon-ok {
-						font-size: small;
-						padding-left: 5px;
-					}
-					@media screen and
-					(max-width: $screen-sm) {
-						border-left: 1px solid $default-white;
-						color: $default-white;
-						margin: -5px 0px 10px 15px;
-						padding: 0px;
-						li a {
-							padding: 5px 15px;
-						}
-					}
-					&.login-dropdown {
-						padding-top: 15px;
-						@media screen and
-						(max-width: $screen-sm) {
-							margin: 0px;
-							padding-top: 0px;
-						}
-					}
-				}
-			}
+.navbar-container {
+	@extend .container-fluid;
+	max-width: 1600px;
+}
+
+.navbar-brand {
+	position: relative;
+}
+
+.navbar-brand > img {
+	bottom: 4px;
+	display: inline-block;
+	height: 200%;
+	position: relative;
+}
+
+.site-name {
+	font-size: x-large;
+	vertical-align: top;
+}
+
+.site-stage {
+	@include rotate(345deg);
+	bottom: 2px;
+	color: $site-stage-color;
+	font-size: small;
+	position: absolute;
+	left: 105px;
+}
+
+.navbar-link {
+	@include transition(background-color $default-transition-time);
+	font-size: $navbar-default-font-size;
+	& > .caret {
+		@include scale(-1.5, -1.5);
+		@include transition(color $default-transition-time);
+		bottom: 1px;
+		color: $brand-primary;
+		left: 46%;
+		position: absolute;
+		@media (max-width: $screen-sm) {
+			display: none;
 		}
 	}
 }
+
+.nav > .open {
+	.caret {
+		@include opacity(1);
+		color: $openki-light-blue;
+		z-index: 1099;
+	}
+	& > .dropdown-menu {
+		border-top: 0px;
+	}
+}
+
+.navbar-link-active	.caret {
+	color: $navbar-default-link-color;
+}
+
+.navbar-link-covering {
+	background: $navbar-link-covering-bg;
+	& > .caret {
+		color: $navbar-link-covering-bg;
+	}
+}
+
+.navbar-collapse {
+	@media screen and
+	(max-width: $screen-sm) {
+		box-shadow: 0 7px 7px $default-shadow;
+		padding: 0px;
+	}
+}
+
+.navbar-nav {
+	@media (max-width: $screen-sm) {
+		margin: 0px;
+		& > .dropdown > a::after,
+		& > .open > a::after {
+			font-family: FontAwesome;
+			padding-left: 5px;
+		}
+		& > .dropdown > a::after {
+			content: '\f106';
+		}
+		& > .open > a::after {
+			content: '\f107';
+		}
+	}
+}
+
+// .navbar {
+// 	@extend .navbar-default;
+// 	@extend .navbar-fixed-top;
+// 	border-bottom: 0px;
+// 	.navbar-container {
+// 		margin: auto;
+// 		max-width: 1600px;
+// 		.navbar-header {
+// 			&:hover * {
+// 				color: $body-bg !important;
+// 			}
+// 			a.navbar-brand {
+// 				padding: 0px;
+// 				& > span {
+// 					bottom: -3px;
+// 					font-size: x-large;
+// 					left: -3px;
+// 					padding-right: 15px;
+// 					position: relative;
+// 				}
+// 				& > span.stage {
+// 					@include rotate(345deg);
+// 					color: $default-black;
+// 					font-size: small;
+// 					left: 8.2em;
+// 					position: absolute;
+// 					top: 1.5em;
+// 					writing-mode: lr-tb;
+//
+// 				}
+// 				img {
+// 					@include opacity(97);
+// 					bottom: -1px;
+// 					display: inline-block;
+// 					height: 100%;
+// 					padding: 0 0 0 6px;
+// 					position: relative;
+// 				}
+// 			}
+// 		}
+// 		.navbar-collapse {
+// 			max-height: 400px;
+// 			@media screen and
+// 			(max-width: $screen-sm) {
+// 				box-shadow: 0 7px 7px $default-shadow;
+// 				padding: 0px;
+// 			}
+// 			.navbar-nav {
+// 				& > li > a {
+// 					@include transition(border-color 0.3s);
+// 					font-size: large;
+// 					padding: 15px 10px;
+// 					span {
+// 						font-size: medium;
+// 					}
+// 					&:hover {
+// 						border-bottom-color: lighten($brand-primary, 10%);
+// 					}
+// 				}
+// 				@media screen and
+// 				(max-width: $screen-sm) {
+// 					margin: 0px;
+// 					& > li.dropdown > a::after {
+// 						content: '\f107';
+// 						font-family: FontAwesome;
+// 						padding-left: 5px;
+// 					}
+// 					& > li.dropdown.open > a::after {
+// 						content: '\f106';
+// 						font-family: FontAwesome;
+// 						padding-left: 5px;
+// 					}
+// 				}
+// 				span.caret {
+// 					@include scale(-1.5, -1.5);
+// 					@include transition($default-transition-time);
+// 					bottom: 1px;
+// 					color: $brand-primary;
+// 					left: 46%;
+// 					position: absolute;
+// 					@media screen and
+// 					(max-width: $screen-sm) {
+// 						display: none;
+// 					}
+// 				}
+// 				li.dropdown.open span.caret {
+// 					@include opacity(1);
+// 					color: $openki-light-blue;
+// 					z-index: 1099;
+// 				}
+// 				a.active {
+// 					&.over_content {
+// 						background: lighten($brand-primary, 10%);
+// 						&:hover,
+// 						&:focus {
+// 							background: lighten($brand-primary, 10%);
+// 						}
+// 						span.caret {
+// 							@include transition(color 0.3s);
+// 							color: lighten($brand-primary, 10%);
+// 						}
+// 					}
+// 					span.caret {
+// 						@include opacity(1);
+// 						color: $default-white;
+// 					}
+// 					@media screen and
+// 					(max-width: $screen-xs) {
+// 						background: lighten($brand-primary, 5%);
+// 					}
+// 				}
+// 				a.loginButton {
+// 					cursor: pointer !important;
+// 				}
+// 				.dropdown-menu {
+// 					border-top: 0px;
+// 					color: $default-white !important;
+// 					span.glyphicon-ok {
+// 						font-size: small;
+// 						padding-left: 5px;
+// 					}
+// 					@media screen and
+// 					(max-width: $screen-sm) {
+// 						border-left: 1px solid $default-white;
+// 						color: $default-white;
+// 						margin: -5px 0px 10px 15px;
+// 						padding: 0px;
+// 						li a {
+// 							padding: 5px 15px;
+// 						}
+// 					}
+// 					&.login-dropdown {
+// 						padding-top: 15px;
+// 						@media screen and
+// 						(max-width: $screen-sm) {
+// 							margin: 0px;
+// 							padding-top: 0px;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }

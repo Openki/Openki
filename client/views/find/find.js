@@ -113,8 +113,8 @@ Template.find.onRendered(function() {
 	});
 
 	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-	$('a[href="/"].nav_link').addClass('active');
+	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
+	$('a[href="/"].navbar-link').addClass('navbar-link-active');
 });
 
 var updateCategorySearch = function(event, instance) {

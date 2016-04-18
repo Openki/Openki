@@ -14,7 +14,7 @@ Template.eventEdit.onRendered(function() {
 	});
 
 	this.$("[data-toggle='tooltip']").tooltip();
-	$('a[href!="*"].nav_link').removeClass('active');
+	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 

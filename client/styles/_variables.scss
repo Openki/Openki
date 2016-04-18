@@ -5,7 +5,7 @@
 //
 // --------------------------------------------------
 
-$brand-bg:                       #d8ebf4;
+$openki-light-blue:                       #d8ebf4;
 $orange:                         #f98f39;
 $yellow:                         #f3f981;
 
@@ -16,6 +16,17 @@ $default-white:                  #ffffff;
 $default-gray:                   #868383;
 $default-light-grey:             #cccccc;
 $brand-primary-hover:            darken($brand-primary, 10%);
+
+// Navbar
+$site-stage-color:               $default-black;
+$navbar-link-covering-bg:        lighten($brand-primary, 10%);
+
+// Footer
+$footer-default-bg:              $navbar-default-bg;
+$footer-default-color:           $navbar-default-color;
+$footer-default-link-color:      $navbar-default-link-color;
+$footer-default-link-hover-color: $navbar-default-link-hover-color;
+$footer-default-link-hover-bg:   $navbar-link-covering-bg;
 
 
 // Group colors
@@ -69,9 +80,9 @@ $facebook:                       #3b5998;
 $github:                         $default-black;
 
 // Calendar colors
-$calendar-header-bg:             $brand-bg;
+$calendar-header-bg:             $openki-light-blue;
 $calendar-header-text:           $default-black;
-$calendar-navigation-bg:         $brand-bg;
+$calendar-navigation-bg:         $openki-light-blue;
 $calendar-btn-bg:                $brand-primary;
 $calendar-btn-text:              $default-white;
 $calendar-btn-border:            darken($calendar-btn-bg, 3%);
@@ -81,14 +92,30 @@ $calendar-btn-hover-border:      darken($calendar-btn-border, 5%);
 $map-lefalet-hover-fill:         #ffff11;
 
 // Discussion colors
-$discussion-conversation-bg:     $brand-bg;
-$discussion-post-bg:             $brand-bg;
+$discussion-conversation-bg:     $openki-light-blue;
+$discussion-post-bg:             $openki-light-blue;
 $discussion-post-header-bg:      darken($discussion-post-bg, 5%);
 $discussion-post-border:         darken($discussion-post-bg, 10%);
 $discussion-edit-bg:             lighten($default-light-grey, 10%);
 $discussion-edit-header-bg:      darken($discussion-edit-bg, 5%);
 $discussion-edit-border:         darken($discussion-edit-bg, 10%);
 $discussion-post-new-bg:         $brand-success;
+
+$checkmark-color:                darken($brand-success, 20%);
+
+$event-bg:                       $openki-light-blue;
+$event-header-bg:                $brand-success;
+$event-header-color:             $default-black;
+$event-title-color:              $default-black;
+$event-description-color:        $brand-primary;
+
+$event-small-bg:                 $event-bg;
+$event-small-header-bg:          $event-header-bg;
+$event-small-header-color:       $event-header-color;
+$event-small-title-color:        $event-title-color;
+$event-small-description-color:  $event-description-color;
+
+
 
 //== Screen breakpoints
 //
@@ -103,3 +130,8 @@ $screen-xsm:                     550px;
 //
 // --------------------------------------------------
 $default-transition-time:        0.5s;
+
+$footer-height:                  50px;
+
+$navbar-default-font-size:       large;
+$footer-default-font-size:       $navbar-default-font-size;

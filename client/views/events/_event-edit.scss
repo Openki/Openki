@@ -46,7 +46,7 @@
 	}
 	.course_event_edit_body {
 		@include grid(12);
-		border: dashed 7px $brand-bg;
+		border: dashed 7px $openki-light-blue;
 		border-top: 0px;
 		padding: 0px 30px 20px;
 		@media screen and

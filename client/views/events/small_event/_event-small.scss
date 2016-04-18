@@ -1,66 +1,68 @@
-.small_event_container {
+.event-small-container {
   @include grid(4, 3, inherit, 2);
   height: 200px;
   padding: 0px 3px 10px;
-  .small_event {
-    @include grid(12);
-    @include transition(box-shadow $default-transition-time);
-    background: $brand-bg;
-    height: 100%;
-    padding: 0px;
-    &:hover {
-			@include box-shadow-big($default-shadow);
-		}
-    .-eventLocationTime,
-    .-eventTitle,
-    .-eventDescription {
-			@include word-break;
-      overflow: hidden;
-    }
-    .-eventLocationTime {
-      @include grid(12);
-      background: $brand-success;
-      border-bottom: 1px solid $default-white;
-      color: $default-black;
-      height: 55px;
-      padding: 5px;
-			span.fa,
-			span.glyphicon {
-				margin-right: 2px;
-			}
-			span.fa-clock-o,
-			span.event_time {
-				margin-bottom: 5px;
-			}
-			span.fa-map-signs {
-				margin-left: 4px;
-			}
-    }
-    .-eventTitle {
-      @include grid(12);
-      color: $default-black;
-      font-size: medium;
-      max-height: 56px;
-      padding: 5px;
-    }
-    .-eventDescription {
-      @include grid(12);
-      color: $brand-primary;
-      height: 85px;
-      margin-top: -3px;
-      padding: 0px 5px 5px;
-    }
-  }
-
-	@media screen and
-	(max-width: $screen-xxs) {
+	@media (max-width: $screen-xxs) {
     @include grid(12);
     padding: 0px 3px 10px;
   }
-	@media screen and
-	(min-width: $screen-xxs) and
-	(max-width: $screen-xsm) {
+	@media (min-width: $screen-xxs)
+	and (max-width: $screen-xsm) {
     @include grid(6);
     padding: 0px 3px 10px;
   }
+}
+
+.event-small {
+	@include grid(12);
+	@include transition(box-shadow $default-transition-time);
+	background: $event-small-bg;
+	height: 100%;
+	padding: 0px;
+	&:hover {
+		@include box-shadow-big($default-shadow);
+	}
+}
+
+.event-small-header,
+.event-small-title,
+.event-small-description {
+	@include word-break;
+	overflow: hidden;
+}
+
+.event-small-header {
+	@include grid(12);
+	background: $event-small-header-bg;
+	border-bottom: 1px solid $body-bg;
+	color: $event-small-header-color;
+	height: 55px;
+	padding: 5px;
+	.fa,
+	.glyphicon {
+		margin-right: 2px;
+	}
+	.fa-clock-o,
+	.event-small-time {
+		margin-bottom: 5px;
+	}
+	.fa-map-signs {
+		margin-left: 4px;
+	}
+}
+
+.event-small-title {
+	@include grid(12);
+	color: $event-small-title-color;
+	font-size: medium;
+	max-height: 56px;
+	padding: 5px;
+}
+
+.event-small-description {
+	@include grid(12);
+	color: $event-small-description-color;
+	height: 85px;
+	margin-top: -3px;
+	padding: 0px 5px 5px;
 }

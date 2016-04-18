@@ -30,7 +30,7 @@
 	.courselist_course {
 		@include grid(12);
 		@include transition(box-shadow $default-transition-time);
-		border: 7px dashed $brand-bg;
+		border: 7px dashed $openki-light-blue;
 		height: 150px;
 		padding: 0px;
 		&:hover {
@@ -98,9 +98,9 @@
 .courselist_course,
 .course_main {
 	&.hasupcomingevents {
-		background: $brand-bg;
+		background: $openki-light-blue;
 		.course_content {
-			background: $brand-bg;
+			background: $openki-light-blue;
 		}
 	}
 }
