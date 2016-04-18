@@ -35,7 +35,6 @@ msgfmt:extract
 msgfmt:ui
 accounts-google
 msavin:mongol
-standard-minifiers
 bevanhunt:leaflet
 http
 rzymek:moment-locale-da
@@ -47,3 +46,5 @@ rzymek:moment-locale-el
 gildaspk:moment-datepicker
 rzymek:moment-locale-tr
 meteorhacks:ssr
+standard-minifier-css
+standard-minifier-js
