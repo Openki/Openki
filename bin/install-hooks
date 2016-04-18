@@ -1,5 +1,8 @@
 #!/bin/sh
+cd "$(dirname "$0")"/..
 ln -s ../../bin/update-version .git/hooks/post-checkout
 ln -s ../../bin/update-version .git/hooks/post-commit
+bin/update-version
+
 ln -s ../../bin/jshint .git/hooks/pre-commit
 
