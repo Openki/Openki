@@ -72,6 +72,7 @@
 // server/publications
 
 		"Version":true,
+		"Course":true,
 		"Courses":true,
 		"coursesFind":true,
 		"Roles":true,
@@ -115,7 +116,6 @@
 
 		"havingRole":true,
 		"getMember":true,
-		"mayEdit":true,
 		"userName":true,
 		"goBase":true,
 		"pleaseLogin":true,
