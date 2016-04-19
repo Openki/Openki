@@ -2,7 +2,9 @@
 	<nav class="navbar"
 		id="topnavbar"
 		role="navigation">
-		{{#if showTestWarning}} {{> testWarningTicker}} {{/if}}
+		{{#if showTestWarning}}
+			{{> testWarningTicker}}
+		{{/if}}
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-container">
 			<div class="navbar-header">
@@ -29,7 +31,7 @@
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="{{pathFor 'home'}}"
-							 class="navbar-link -clickClose -closeIntroAtHome"
+							 class="navbar-link js-nav-dropdown-close -closeIntroAtHome"
 							 id="nav_courses">
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
@@ -39,7 +41,7 @@
 					</li>
 					<li>
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="navbar-link -clickClose">
+							 class="navbar-link js-nav-dropdown-close">
 							 <span class="fa fa-pencil"></span>
 							 &nbsp;
 							 {{mf 'menue.Create' 'Create'}}
@@ -48,7 +50,7 @@
 					</li>
 					<li class="calendar_link">
 						<a href="{{pathFor 'calendar'}}"
-							 class="navbar-link -clickClose">
+							 class="navbar-link js-nav-dropdown-close">
 							 <span class="fa fa-calendar"></span>
 							 &nbsp;
 							 {{mf 'menue.Calendar' 'Calendar'}}

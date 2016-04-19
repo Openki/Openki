@@ -11,7 +11,7 @@
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect -clickClose" href="/region/">
+			<a class="regionselect js-nav-dropdown-close" href="/region/">
 				{{mf 'menue.All regions' 'All regions'}}
 				{{#if currentRegion}}
 					<span class="checkmark"></span>
@@ -20,7 +20,7 @@
 		</li>
 		{{# each regions}}
 			<li>
-				<a href="#" class="regionselect -clickClose">
+				<a href="#" class="regionselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentRegion}}
 						<span class="checkmark"></span>

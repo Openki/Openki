@@ -70,33 +70,38 @@
 	@media (max-width: $screen-xs)
 		margin-bottom: 0px
 
+.filter-course-properties-btns
+	@extend .btn-group
+
 .toggleFilter
-	@media (max-width: $screen-xs)
-		+form-control-humble
-		+btn
-		+btn-default
-		margin-bottom: 10px
-		&:last-child
-			margin-bottom: 0px
-	label
-		padding: 0px
-		&:hover
-			color: $brand-primary
-
-.filter-upcomping-events
-	display: none
-
-.filter-course-properties
-	.glyphicon-calendar,
-	.glyphicon-home,
-	.fa-graduation-cap
-		+transition(all 0.3s)
-		color: $brand-primary
-
-.checked
-	background: $role-no-bg
-	color: $role-no-text
-	padding: 4px 17px 2px
+	@extend .btn
+	@extend .btn-default
+	// @media (max-width: $screen-xs)
+	// 	+form-control-humble
+	// 	+btn
+	// 	+btn-default
+	// 	margin-bottom: 10px
+	// 	&:last-child
+	// 		margin-bottom: 0px
+	// label
+	// 	padding: 0px
+	// 	&:hover
+	// 		color: $brand-primary
+//
+// .filter-upcomping-events
+// 	display: none
+//
+// .filter-course-properties
+// 	.glyphicon-calendar,
+// 	.glyphicon-home,
+// 	.fa-graduation-cap
+// 		+transition(all 0.3s)
+// 		color: $brand-primary
+//
+// .checked
+// 	background: $role-no-bg
+// 	color: $role-no-text
+// 	padding: 4px 17px 2px
 
 .filter_categories
 	+grid(12, 4)

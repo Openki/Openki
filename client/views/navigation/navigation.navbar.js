@@ -15,7 +15,7 @@ Template.navbar.onRendered(function() {
 			}
 			else {
 				this.$('.navbar-container').removeClass('navbar-covering-content');
-				this.$('.navbar-link-active').removeClass('navbar-link-covering');
+				this.$('.navbar-link').removeClass('navbar-link-covering');
 			}
 		});
 	}
@@ -33,7 +33,7 @@ Template.navbar.helpers({
 });
 
 Template.navbar.events({
-	'click .-clickClose': function(event, instance) {
+	'click .js-nav-dropdown-close': function(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},
 });
