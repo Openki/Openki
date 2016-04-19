@@ -85,6 +85,11 @@ Template.calendar.onCreated(function() {
 		var data = Template.currentData();
 		var query = data.query || {};
 
+		// Show internal events only when a group or location is specified
+		if (!query.group && !query.location && query.internal === undefined) {
+			query.internal = false;
+		}
+
 		filter
 			.clear()
 			.add('start', moment().startOf('week'))
