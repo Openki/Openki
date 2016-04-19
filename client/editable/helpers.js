@@ -33,7 +33,7 @@ Template.editable.onRendered(function() {
 	this.data.editedContent = function() {
 		if (!self.changed.get()) return false;
 		return self.data.simple ? editable.text() : editable.html();
-	}
+	};
 
 	// This method can be used to leave editing mode
 	this.data.end = function() {
