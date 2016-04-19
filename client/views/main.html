@@ -22,13 +22,18 @@
 				{{> introduction}}
 			{{/if}}
 
+			<div id="maincontent">
 			{{#if translate}}
 				{{> translateInfo}}
-			{{/if}}
-
-			<div id="maincontent">
+				{{#if mayTranslate}}
+					{{> yield}}
+				{{else}}
+					{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}
+				{{/if}}
+			{{else}}
 				{{> yield}}
 				{{> messages}}
+			{{/if}}
 			</div>
 		</div>
 		<div class="push"></div>
