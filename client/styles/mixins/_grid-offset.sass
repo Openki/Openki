@@ -1,22 +1,17 @@
 // GRID-OFFSET MIXIN
 // One-line statement powered by bootstrap mixins
 
-
-@mixin grid-offset($xs, $sm: $xs, $md: $sm, $lg: $md)
+=grid-offset($xs, $sm: $xs, $md: $sm, $lg: $md)
 	@if $sm == inherit
 		$sm: $xs
 		$md: $sm
 		$lg: $md
-	
 	@if $md == inherit
 		$md: $sm
 		$lg: $md
-	
 	@if $lg == inherit
 		$lg: $md
-	
 	+make-xs-column-offset($xs)
 	+make-sm-column-offset($sm)
 	+make-md-column-offset($md)
 	+make-lg-column-offset($lg)
-

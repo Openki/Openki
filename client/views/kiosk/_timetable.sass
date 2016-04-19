@@ -4,7 +4,6 @@
 	overflow: hidden
 	:hover
 		text-decoration: none
-	
 	.times
 		margin-left: 12em
 		div
@@ -13,7 +12,6 @@
 			position: relative
 			&.hour
 				height: 10000px
-			
 			div
 				border: solid
 				border-color: #f5f5f5 // or darken($brand-success, 80%) ?
@@ -27,38 +25,30 @@
 					height: 0.6em
 					margin-left: -2.5px
 					position: absolute
-				
-			
-		
-	
 	.timeLines
 		border-top: 2px solid #dddddd
 		position: relative
 		z-index: 0
 		&:hover
 			z-index: 1
-		
 		.locationName
 			left: -1em
 			padding: 0 1em
 			position: absolute
 			text-align: left
 			width: 12em
-		
 		.rows
 			height: 45px
 			margin-left: 12em
 			position: relative
 			&:hover
 				z-index: 1
-			
 			.event
 				color: black
 				margin: 0.1em
 				position: absolute
 				&:hover
 					z-index: 1
-				
 				.title
 					background-color: $brand-success
 					font-size: 28px
@@ -70,8 +60,6 @@
 						box-shadow: 0px 5px 8px $default-shadow
 						height: 70px
 						min-width: 200px
-					
-				
 				.time
 					background-color: #eeeeee
 					display: none
@@ -80,24 +68,16 @@
 					padding: 0px 6px
 					position: absolute
 					top: -20px
-				
 				.description
 					background-color: $openki-light-blue
 					display: none
 					height: 12em
 					overflow: hidden
 					padding: 4px 8px
-				
 				.title:hover ~ .time,
 				.title:hover ~ .description
 					box-shadow: 0px 5px 8px $default-shadow
 					display: block
 					z-index: 1
-				
 				.title:hover ~ .description
 					min-width: 200px
-				
-			
-		
-	
-

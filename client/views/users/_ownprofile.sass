@@ -2,7 +2,6 @@
 	@extend .container
 	h1
 		margin-top: 0px
-	
 	.infos
 		+grid(12, 6)
 		margin-bottom: 20px
@@ -18,23 +17,15 @@
 				tr.email button
 					+btn-thin
 					@extend .btn-default
-				
 				button
 					float: right
-				
-			
-		
 		p
 			margin-bottom: 5px
-		
 		form.edit input
 			margin-left: 5px
-		
-	
 	button
 		+btn-thin
 		@extend .btn-primary
-	
 	.password
 		margin: 1em 30px 1em 0px
 		form.passChange
@@ -43,19 +34,13 @@
 			label
 				font-weight: normal
 				width: 12em
-			
-		
 		button
 			margin-top: 10px
 			&.changePassConfirm
 				@extend .btn-success
-			
-		
-	
 	.grouplist
 		+grid(12, 6)
 		padding: 0px
-	
 	ul.groups
 		list-style: none
 		padding-left: 0px
@@ -65,9 +50,6 @@
 				background: $group-bg
 				color: $group-text
 				padding: 0px 4px 1px
-			
-		
-	
 	.translate
 		+grid(12)
 		background-color: $translate-bg
@@ -75,19 +57,14 @@
 		text-align: center
 		.fa
 			+transition(all .3s ease-out)
-		
 		&:hover
 			background-color: $translate-hover-bg
 			.fa
 				+transition(all 1.5s ease-in)
 				font-size: 350%
-			
-		
 		a:hover
 			color: $default-white
 			text-decoration: none
-		
-	
 	.deleteFrame
 		overflow: auto
 		padding: 15px 0px 15px 10px
@@ -96,19 +73,13 @@
 			background-color: pink
 			overflow: auto
 			padding: 8px
-		
 		button
 			+btn-cancel
 			float: right
 			margin-left: 7px
-		
 		button.cancelDeletion
 			@extend .btn-primary
-		
-	
 	.courses
 		+grid(12)
 		margin-top: 25px
 		padding: 0px
-	
-

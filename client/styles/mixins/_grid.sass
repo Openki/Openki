@@ -1,18 +1,14 @@
 // GRID MIXIN
 // One-line statement powered by bootstrap mixins
 
-@mixin grid($xs, $sm: $xs, $md: $sm, $lg: $md)
+=grid($xs, $sm: $xs, $md: $sm, $lg: $md)
 	@if $sm == inherit
 		$sm: $xs
-	
 	@if $md == inherit
 		$md: $sm
-	
 	@if $lg == inherit
 		$lg: $md
-	
 	+make-xs-column($xs)
 	+make-sm-column($sm)
 	+make-md-column($md)
 	+make-lg-column($lg)
-

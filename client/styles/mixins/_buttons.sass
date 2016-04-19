@@ -1,11 +1,10 @@
 // BUTTON MIXINS
 
-@mixin btn-thin()
+=btn-thin()
 	@extend .btn
 	padding: 3px 12px
 
-
-@mixin big-button-primary()
+=big-button-primary()
 	@extend .form-control
 	@extend .btn
 	@extend .btn-primary
@@ -19,10 +18,8 @@
 	&:hover
 		border: 0px
 		border-top: 3px solid $body-bg
-	
 
-
-@mixin big-button-success()
+=big-button-success()
 	@extend .form-control
 	@extend .btn
 	@extend .btn-success
@@ -36,40 +33,31 @@
 	&:hover
 		border: 0px
 		border-top: 3px solid $body-bg
-	
 
-
-@mixin btn-edit()
+=btn-edit()
 	@extend .btn-default
 	&:hover
 		background: $btn-success-bg
 		border: 1px solid $btn-success-border
-	
 
-
-@mixin btn-cancel()
+=btn-cancel()
 	@extend .btn-default
 	&:hover
 		background: $btn-danger-bg
 		border: 1px solid $btn-danger-border
-	
 
-
-@mixin header-btn()
+=header-btn()
 	background: none
 	border: 0px
 
-
-@mixin btn-remove()
+=btn-remove()
 	+transition(color $default-transition-time)
 	color: lighten($brand-danger, 20%)
 	cursor: pointer
 	&:hover
 		color: $brand-danger
-	
 
-
-@mixin btn-calendar()
+=btn-calendar()
 	background-color: $calendar-btn-bg
 	border-color: $calendar-btn-border
 	color: $calendar-btn-text
@@ -77,8 +65,5 @@
 		background-color: $calendar-btn-hover-bg
 		border-color: $calendar-btn-hover-bg
 		color: $calendar-btn-text
-	
 	&:focus
 		color: darken($calendar-btn-text, 20%)
-	
-

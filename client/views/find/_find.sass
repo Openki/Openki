@@ -3,43 +3,34 @@
 	.course_edit
 		padding: 0px
 
-
-
 .find-heading
 	margin-top: 0px
 	@media (max-width: $screen-xs)
 		font-size: x-large
 		margin: 20px 0 10px
 
-
-
 .search
 	+grid(12)
 	padding: 0px
 
-
 .searchField
 	+grid(12, inherit, 5)
 	padding: 0 0 15px
-
 
 .searchInput
 	+form-control-humble
 	font-size: large
 	height: 38px
 
-
 .findButton
 	@extend .btn
 	@extend .btn-success
 	padding: 8px 12px !important
 
-
 .showFilters
 	@extend .btn
 	@extend .btn-primary
 	padding: 8px 12px !important
-
 	@media (max-width: $screen-xs)
 		// +form-control
 		// +btn
@@ -48,27 +39,18 @@
 		margin-top: 0px
 		padding: 8px 12px !important
 
-
-
 .filter
 	+grid(12, inherit, 7)
 	padding: 0 0 0 15px
-
 	@media (max-width: $screen-xs)
 		border: 1px solid $brand-primary
 		padding: 0 10px
-
-
 	@media (min-width: $screen-sm) and (max-width: $screen-md)
 		padding: 0px
-
-
 	span.glyphicon-remove
 		+btn-remove
 		position: relative
 		top: 2px
-
-
 
 .filter-header
 	+grid(12)
@@ -78,11 +60,8 @@
 	@media (max-width: $screen-xs)
 		display: none
 
-
-
 .filter-heading
 	margin-top: 8px
-
 
 .filter-course-properties
 	+grid(12, 4)
@@ -90,8 +69,6 @@
 	padding: 0px
 	@media (max-width: $screen-xs)
 		margin-bottom: 0px
-
-
 
 .toggleFilter
 	@media (max-width: $screen-xs)
@@ -101,19 +78,13 @@
 		margin-bottom: 10px
 		&:last-child
 			margin-bottom: 0px
-
-
 	label
 		padding: 0px
 		&:hover
 			color: $brand-primary
 
-
-
-
 .filter-upcomping-events
 	display: none
-
 
 .filter-course-properties
 	.glyphicon-calendar,
@@ -122,13 +93,10 @@
 		+transition(all 0.3s)
 		color: $brand-primary
 
-
-
 .checked
 	background: $role-no-bg
 	color: $role-no-text
 	padding: 4px 17px 2px
-
 
 .filter_categories
 	+grid(12, 4)
@@ -136,28 +104,21 @@
 	padding: 0px
 	@media (max-width: $screen-xs)
 		margin-bottom: 0px
-
 	h5
 		margin-top: 0px
-
-
 
 .categorySelect
 	margin-bottom: 10px
 	@media (max-width: $screen-xs)
 		margin-bottom: 0px
-
 	input.-searchCategories
 		background: $body-bg
 		border: 2px dashed $category-bg
 		padding: 2px 5px
 		&:focus
 			border-color: $openki-light-blue
-
 		@media (max-width: $screen-xs)
 			width: 100%
-
-
 	.dropdown-toggle
 		position: relative
 		&::before
@@ -165,11 +126,8 @@
 			font-family: FontAwesome
 			left: -1em
 			position: absolute
-
-
 	&.open .dropdown-toggle::before
 		content: '\f106'
-
 	ul.dropdown-menu
 		background: $body-bg
 		margin-top: 0px
@@ -179,11 +137,9 @@
 		overflow-y: auto
 		@media (max-width: $screen-xs)
 			width: 100%
-
 		li
 			&:hover
 				background: $category-bg
-
 			&.no_categories
 				color: $category-text
 				padding: 0px 5px
@@ -191,37 +147,24 @@
 				&:hover
 					background-color: $body-bg
 					cursor: default
-
-
 			& > *
 				display: inline-block
-
-
 		a
 			padding: 3px 10px
 			&:hover
 				background: none
-
 			&.category.parent
 				color: $brand-primary
 				padding-right: 3px
-
-
 		.-showSubcategories
 			color: lighten($brand-primary, 10%)
 			padding: 0 5px
 			&:hover
 				color: $brand-primary
-
-
-
 	li.-subcategory
 		display: none
 		a
 			color: $default-black
-
-
-
 
 ul.selected_categories
 	list-style: none
@@ -232,14 +175,10 @@ ul.selected_categories
 		padding: 0px 3px 3px 0px
 		@media (max-width: $screen-xs)
 			display: inline-block
-
-
 	span.category
 		background: $category-bg
 		color: $category-text
 		padding: 2px 5px
-
-
 
 .filter_groups
 	+grid(12, 4)
@@ -248,19 +187,15 @@ ul.selected_categories
 	h5
 		color: $default-black
 
-
-
 .courselist_results
 	@media (max-width: $screen-xs)
 		padding-top: 15px
-
 	.no_courses_found
 		text-align: center
 		button.-searchAllRegions
 			+btn-thin
 			@extend .btn-primary
 			margin-top: 10px
-
 			@media (max-width: $screen-xxs)
 				+form-control
 				+btn
