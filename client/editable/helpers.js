@@ -14,6 +14,10 @@ Template.editable.onRendered(function() {
 		placeholder: {
 			hideOnClick: false,
 			text: self.data.placeholderText
+		},
+		anchor: {
+			linkValidation: true,
+			placeholderText: mf('editable.link.placeholder', "Paste link here...")
 		}
 	};
 	if (this.data.simple) {
