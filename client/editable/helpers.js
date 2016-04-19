@@ -18,7 +18,8 @@ Template.editable.onRendered(function() {
 		anchor: {
 			linkValidation: true,
 			placeholderText: mf('editable.link.placeholder', "Paste link here...")
-		}
+		},
+		autoLink: true,
 	};
 	if (this.data.simple) {
 		options.disableReturn = true;
