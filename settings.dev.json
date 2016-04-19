@@ -3,7 +3,7 @@
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {
 		"siteName": "Hmmm",
-		"siteStage": "alpha"
+		"siteStage": "DEV"
 	},
 	"siteEmail": "HMMM@legit.example"
 }
