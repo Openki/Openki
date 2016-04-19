@@ -1,10 +1,11 @@
 <template name="locationDetails">
 	<div class="locationDetails">
 		{{#if isEditing}}
-				{{>location_edit}}
+			{{>locationEdit}}
 		{{/if}}
 
-	<!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
+		{{>locationEdit}}
+
 		{{#with location}}
 		{{#unless isEditing}}
 			<div class="location_main">
@@ -19,7 +20,7 @@
 
 				<div class="body">
 					<div class="descriptionFrame">
-						<span class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</span>
+						<span class="title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
 						<ul class='hosts'>
 							{{#each hosts}}
 								<li>
@@ -37,7 +38,7 @@
 						<span class="title">{{mf 'location.details.address' 'Address:'}}</span> {{address}}
 						{{#if route}}
 						<div>
-							<span class="title">{{mf 'location.details.how_go_there' 'How to go there:'}}</span> {{route}}
+							<span class="title">{{mf 'location.details.route' 'How to go there:'}}</span> {{route}}
 						</div>
 						{{/if}}
 						{{#if maxPeople}}
@@ -78,8 +79,8 @@
 					<br><br>
 					{{#if canEditLocation}}
 						{{mf 'location.details.youAreHost' 'You are Host here:'}}
-						<input type="button" class="edit" value="Edit" />
-						<input type="button" class="del" value="Delete" />
+						<input type="button" class="js-edit" value="Edit" />
+						<input type="button" class="js-del" value="Delete" />
 					{{/if}}
 
 				</div>
