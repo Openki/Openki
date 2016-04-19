@@ -33,7 +33,7 @@
 							 id="nav_courses">
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
-							 {{mf 'menue.Courses' 'Courses'}}
+							 {{mf 'menue.Courses' 'Find'}}
 							 <span class="caret" id="active_caret"></span>
 						</a>
 					</li>
@@ -42,7 +42,7 @@
 							 class="nav_link -clickClose">
 							 <span class="fa fa-pencil"></span>
 							 &nbsp;
-							 {{mf 'menue.ProposeCourse' 'Propose Course'}}
+							 {{mf 'menue.Create' 'Create'}}
 							 <span class="caret"></span>
 						</a>
 					</li>
@@ -77,14 +77,15 @@
 
 
 <template name="testWarningTicker">
-	<marquee bgcolor="000000"
-					 direction="left"
-					 scrollamount="5"
-					 scrolldelay="1"
-					 style="color:white;">
-					 ⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
-					 <span style = "padding-left:10em"> </span>
-					 ☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
-					 <span style = "padding-left:10em"> </span>
+	<marquee
+		bgcolor="#000"
+		direction="left"
+		scrollamount="5"
+		scrolldelay="1"
+		style="color:white;">
+			⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
+			<span style = "padding-left:10em"> </span>
+			☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
+			<span style = "padding-left:10em"> </span>
 	</marquee>
 </template>

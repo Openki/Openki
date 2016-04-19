@@ -72,7 +72,7 @@ Template.post.helpers({
 
 Template.postShow.helpers({
 	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'post';
+		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
 
 	mayEdit: function() {
@@ -94,7 +94,7 @@ Template.postEdit.onCreated(function() {
 
 Template.postEdit.helpers({
 	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'post';
+		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
 
 	showUserId: function() {
@@ -174,6 +174,10 @@ Template.post.events({
 		}
 	},
 });
+
+Template.postEdit.rendered = function(){
+	 Template.instance().$('.discussion-comment').slideDown();
+};
 
 Template.postEdit.events({
 	'keyup .js-post-text, change .js-post-text': function(event, instance) {
