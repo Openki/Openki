@@ -8,14 +8,6 @@ Router.onBeforeAction('dataNotFound');
 webpagename = 'Openki - ';                  // global (document title init)
 
 Router.map(function () {
-
-	this.route('categorylist',{
-		onAfterAction: function() {
-			document.title = webpagename + 'Category list';
-		}
-	});
-
-
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
 		action: function() {
