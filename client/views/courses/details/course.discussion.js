@@ -64,7 +64,8 @@ Template.post.helpers({
 			new: true,
 			parentId: this._id,
 			courseId: this.courseId,
-			userId: Meteor.userId()
+			userId: Meteor.userId(),
+			text: '',
 		};
 	}
 });
