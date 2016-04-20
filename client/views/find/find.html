@@ -7,29 +7,29 @@
 
 <template name="find">
 	<div class="search">
-		<div class="searchField">
+		<div class="js-search-field">
 			<div class="input-group">
 				<input
+					class="js-search-input"
 					type="text"
 					id="find"
-					class="searchInput"
 					value="{{search}}"
 					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"
 				/>
 				<span class="input-group-btn">
-					<button class="findButton" type="button">
+					<button class="js-find-btn" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 				</span>
 				{{#unless isMobile}}
 					<span class="input-group-btn">
 						{{#if showingFilters}}
-							<button class="showFilters remove-filter" type="button">
+							<button class="js-toggle-filter remove-filter" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.hideFilters' 'Remove filters'}}
 							</button>
 						{{else}}
-							<button class="showFilters" type="button">
+							<button class="js-toggle-filter" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
@@ -40,12 +40,12 @@
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="showFilters remove-filter" type="button">
+				<button class="js-toggle-filter remove-filter" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
 			{{else}}
-				<button class="showFilters" type="button">
+				<button class="js-toggle-filter" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.showFilters' 'Filter'}}
 				</button>
@@ -59,13 +59,14 @@
 				</h4>
 			</div>
 			<div class="filter-course-properties">
-				<div class="filter-course-properties-btns" data-toggle="buttons">
-					<label class="toggleFilter -upcomingEventsFilter">
+				<div class="btn-group-vertical" data-toggle="buttons">
+					<label class="js-toggle-property-filter -upcomingEventsFilter btn">
 						<input
 							type="checkbox"
 							class="filter-upcoming-events"
 							id="hasUpcomingEvent"
 							name="hasUpcomingEvent"
+							autocomplete="off"
 							{{toggleChecked 'upcomingEvent'}}
 						/>
 						{{#if toggleChecked 'upcomingEvent'}}
@@ -84,39 +85,39 @@
 						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
 						&nbsp;
 						{{#if toggleChecked 'upcomingEvent'}}
-							<span class="glyphicon glyphicon-ok"></span>
+							<span class="checkmark"></span>
 						{{/if}}
 					</label>
-					<label class="toggleFilter -needsHostFilter">
+					<label class="js-toggle-property-filter -needsHostFilter btn">
 						<input
 							type="checkbox"
 							id="needsHost"
 							name="needsHost"
-							style="display: none"
+							autocomplete="off"
 							{{toggleChecked 'needsHost'}}
 						/>
-						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
+						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}}active-property-filter-icon{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsHost' 'Looking for a host'}}
 						&nbsp;
 						{{#if toggleChecked 'needsHost'}}
-							<span class="glyphicon glyphicon-ok"></span>
+							<span class="checkmark"></span>
 						{{/if}}
 					</label>
-					<label class="toggleFilter -needsMentorFilter">
+					<label class="js-toggle-property-filter -needsMentorFilter btn">
 						<input
 							type="checkbox"
 							id="needsMentor"
 							name="needsMentor"
-							style="display: none"
+							autocomplete="off"
 							{{toggleChecked 'needsMentor'}}
 						/>
-						<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
+						<span class="fa fa-graduation-cap {{#if toggleChecked 'needsMentor'}}active-property-filter-icon{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsMentor' 'Looking for a mentor'}}
 						&nbsp;
 						{{#if toggleChecked 'needsMentor'}}
-							<span class="glyphicon glyphicon-ok"></span>
+							<span class="checkmark"></span>
 						{{/if}}
 					</label>
 				</div>

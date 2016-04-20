@@ -147,8 +147,8 @@ var filterPreview = function(highlightClass, opacity) {
 
 Template.find.events({
 	'submit': updateUrl,
-	'change .searchField': updateUrl,
-	'change .toggleFilter': function(event, instance) {
+	'change .js-search-field': updateUrl,
+	'change .js-toggle-property-filter': function(event, instance) {
 		instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
 		instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
 		instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
@@ -156,13 +156,13 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
-	'keyup .searchInput': _.debounce(function(event, instance) {
-		instance.filter.add('search', $('.searchInput').val()).done();
+	'keyup .js-search-input': _.debounce(function(event, instance) {
+		instance.filter.add('search', $('.js-search-input').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
-	'click .findButton': function(event, instance) {
-		instance.filter.add('search', $('.searchInput').val()).done();
+	'click .js-find-btn': function(event, instance) {
+		instance.filter.add('search', $('.js-search-input').val()).done();
 		updateURL(event, instance);
 	},
 
@@ -229,17 +229,17 @@ Template.find.events({
 		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
-	'click .showFilters': function(event, instance) {
+	'click .js-toggle-filter': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
-		instance.$('.showFilters').removeClass('alreadyOpen');
+		instance.$('.js-toggle-filter').removeClass('alreadyOpen');
 		instance.$('.search_filter').stop().fadeTo('slow', 1);
 
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
 			updateUrl(event, instance);
-			instance.$('.showFilters').removeClass('alreadyOpen');
+			instance.$('.js-toggle-filter').removeClass('alreadyOpen');
 		}
 	},
 
@@ -249,7 +249,7 @@ Template.find.events({
 
 	'mouseout .remove-filter': function(event, instance) {
 		instance.$('.search_filter').stop().fadeTo('slow', 1);
-		instance.$('.showFilters').addClass('alreadyOpen');
+		instance.$('.js-toggle-filter').addClass('alreadyOpen');
 	},
 
 	'mouseover .group': function() {

@@ -13,21 +13,21 @@
 	+grid(12)
 	padding: 0px
 
-.searchField
+.js-search-field
 	+grid(12, inherit, 5)
 	padding: 0 0 15px
 
-.searchInput
+.js-search-input
 	+form-control-humble
 	font-size: large
 	height: 38px
 
-.findButton
+.js-find-btn
 	@extend .btn
 	@extend .btn-success
 	padding: 8px 12px !important
 
-.showFilters
+.js-toggle-filter
 	@extend .btn
 	@extend .btn-primary
 	padding: 8px 12px !important
@@ -65,17 +65,24 @@
 
 .filter-course-properties
 	+grid(12, 4)
-	margin-bottom: 10px
-	padding: 0px
+	padding: 10px 0px
 	@media (max-width: $screen-xs)
 		margin-bottom: 0px
 
-.filter-course-properties-btns
-	@extend .btn-group
+// .filter-course-properties-btns
+// 	@extend .btn-group
 
-.toggleFilter
-	@extend .btn
-	@extend .btn-default
+.js-toggle-property-filter
+	@extend .btn-primary
+	text-align: left
+
+.active-property-filter-icon
+	background: $role-no-bg
+	color: $role-no-text
+	padding: 4px 17px 2px
+
+	// @extend .btn
+	// @extend .btn-default
 	// @media (max-width: $screen-xs)
 	// 	+form-control-humble
 	// 	+btn

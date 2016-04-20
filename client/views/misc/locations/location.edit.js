@@ -56,7 +56,7 @@ Template.location_edit.events({
 
 			Meteor.call("save_location", locationId, changes, function(err, locationId) {
 				Session.set("isEditing", false);
-				Session.set('search', ''); // clear searchfield
+				Session.set('search', ''); // clear js-search-field
 				if (err) alert("Saving the location went terribly wrong: "+err);
 				if (isNew){
 					Router.go('locationDetails', {_id: locationId}); // TODO: Slug is not included in url
