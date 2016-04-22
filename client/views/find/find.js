@@ -118,7 +118,7 @@ Template.find.onRendered(function() {
 });
 
 var updateCategorySearch = function(event, instance) {
-	var query = instance.$('.-searchCategories').val();
+	var query = instance.$('.js-search-categories').val();
 	if (query === '') {
 		instance.categorySearchResults.set(categories);
 		return;
@@ -166,59 +166,59 @@ Template.find.events({
 		updateURL(event, instance);
 	},
 
-	'mouseover .-upcomingEventsFilter': function() {
+	'mouseover .js-filter-upcoming-events': function() {
 		filterPreview('.hasupcomingevents', 0.33);
 	},
 
-	'mouseout .-upcomingEventsFilter': function() {
+	'mouseout .js-filter-upcoming-events': function() {
 		filterPreview('.hasupcomingevents', 1);
 	},
 
-	'mouseover .-needsHostFilter': function() {
+	'mouseover .js-filter-needs-host': function() {
 		filterPreview('.needsHost', 0.33);
 	},
 
-	'mouseout .-needsHostFilter': function() {
+	'mouseout .js-filter-needs-host': function() {
 		filterPreview('.needsHost', 1);
 	},
 
-	'mouseover .-needsMentorFilter': function() {
+	'mouseover .js-filter-needs-mentor': function() {
 		filterPreview('.needsMentor', 0.33);
 	},
 
-	'mouseout .-needsMentorFilter': function() {
+	'mouseout .js-filter-needs-mentor': function() {
 		filterPreview('.needsMentor', 1);
 	},
 
-	'keyup .-searchCategories': _.debounce(updateCategorySearch, 100),
+	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
 
-	'focus .-searchCategories': function(event, instance) {
+	'focus .js-search-categories': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
-	'click .-showSubcategories': function(event, instance) {
-		$(".-subcategory" + "." + this).toggle();
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
+	'click .js-toggle-subcategories': function(event, instance) {
+		$(".js-sub-category" + "." + this).toggle();
+		$(".js-toggle-subcategories." + this + " span").toggleClass('glyphicon-plus');
+		$(".js-toggle-subcategories." + this + " span").toggleClass('glyphicon-minus');
 		event.stopPropagation();
 	},
 
-	'click .category': function(event, instance) {
+	'click .js-category': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
-		instance.$('.-searchCategories').val('');
+		instance.$('.js-search-categories').val('');
 		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
 	},
 
-	'mouseover .category': function() {
+	'mouseover .js-category': function() {
 		filterPreview(('.'+this), 0.33);
 	},
 
-	'mouseout .category': function() {
+	'mouseout .js-category': function() {
 		filterPreview(('.'+this), 1);
 	},
 
-	'click .-removeCategoryFilter': function(event, instance) {
+	'click .js-remove-category-btn': function(event, instance) {
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
@@ -232,24 +232,12 @@ Template.find.events({
 	'click .js-toggle-filter': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
-		instance.$('.js-toggle-filter').removeClass('alreadyOpen');
-		instance.$('.search_filter').stop().fadeTo('slow', 1);
 
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
 			updateUrl(event, instance);
-			instance.$('.js-toggle-filter').removeClass('alreadyOpen');
 		}
-	},
-
-	'mouseover .remove-filter.alreadyOpen': function(event, instance) {
-		instance.$('.search_filter').stop().fadeTo('slow', 0.33);
-	},
-
-	'mouseout .remove-filter': function(event, instance) {
-		instance.$('.search_filter').stop().fadeTo('slow', 1);
-		instance.$('.js-toggle-filter').addClass('alreadyOpen');
 	},
 
 	'mouseover .group': function() {
@@ -260,7 +248,7 @@ Template.find.events({
 		filterPreview(('.'+this), 1);
 	},
 
-	"click .-searchAllRegions": function(event, template){
+	"click .js-all-regions-btn": function(event, template){
 		Session.set('region', 'all');
 	}
 });

@@ -7,14 +7,11 @@ ul.categories_list
 		display: inline-block
 		margin: 2px
 		position: relative
-		a.category
-			+transition(all $default-transition-time)
-			background: $category-bg-fallback
-			background: $category-bg
-			padding: 2px 5px
-			&:hover
-				+box-shadow-small($category-hover-shadow)
-				background: $category-hover-bg-fallback
-				background: $category-hover-bg
-				color: $category-hover-text
-				text-decoration: none
+
+.js-category
+	background: $category-bg
+	padding: 2px 5px
+	&:hover
+		background: $category-hover-bg
+		color: $category-hover-text
+		text-decoration: none

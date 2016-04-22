@@ -6,6 +6,37 @@
 	@extend .glyphicon-ok
 	color: $checkmark-color
 
+.remove-btn
+	@extend .glyphicon
+	@extend .glyphicon-remove
+	color: $remove-btn-color
+	&:hover
+		color: $remove-btn-hover-color
+		cursor: pointer
+
+.dropdown-menu
+	+box-shadow-big($default-shadow)
+	border-radius: 0px
+
+.input-group input:focus
+	z-index: 3
+
+.tooltip
+	font-size: $font-size-base
+	white-space: nowrap
+	&-inner
+		max-width: none
+
+.dropdown-menu
+	max-height: 300px
+	overflow-x: hidden
+	overflow-y: auto
+
+// .btn-primary
+// 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
+// 	&:hover
+// 		+gradient-vertical(darken($brand-primary, 5%), darken($brand-primary, 10%), 0%, 100%)
+
 // //This sheet contains site-wide used resets & styles
 //
 // #outer

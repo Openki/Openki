@@ -43,7 +43,7 @@
 =btn-cancel()
 	@extend .btn-default
 	&:hover
-		background: $btn-danger-bg
+		+gradient-vertical($btn-danger-gradient, $btn-danger-gradient-darker, 0%, 100%)
 		border: 1px solid $btn-danger-border
 
 =header-btn()

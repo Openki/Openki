@@ -4,6 +4,7 @@
 		padding: 0px
 
 .find-heading
+	color: $brand-primary
 	margin-top: 0px
 	@media (max-width: $screen-xs)
 		font-size: x-large
@@ -18,43 +19,34 @@
 	padding: 0 0 15px
 
 .js-search-input
-	+form-control-humble
+	@extend .form-control
 	font-size: large
-	height: 38px
 
 .js-find-btn
 	@extend .btn
-	@extend .btn-success
-	padding: 8px 12px !important
+	@extend .btn-primary
 
 .js-toggle-filter
 	@extend .btn
-	@extend .btn-primary
-	padding: 8px 12px !important
+	@extend .btn-default
 	@media (max-width: $screen-xs)
-		// +form-control
-		// +btn
-		// +btn-primary
-		height: 38px
-		margin-top: 0px
-		padding: 8px 12px !important
+		width: 100%
+
+.remove-filter
+	+btn-cancel
 
 .filter
 	+grid(12, inherit, 7)
-	padding: 0 0 0 15px
+	padding: 0px
 	@media (max-width: $screen-xs)
-		border: 1px solid $brand-primary
-		padding: 0 10px
-	@media (min-width: $screen-sm) and (max-width: $screen-md)
-		padding: 0px
-	span.glyphicon-remove
-		+btn-remove
-		position: relative
-		top: 2px
+		border: 1px solid $gray-lighter
+		margin-top: 10px
+		padding: 0px 10px
+	@media (min-width: $screen-md)
+		padding-left: 15px
 
 .filter-header
 	+grid(12)
-	border-bottom: 1px solid $openki-light-blue
 	color: $brand-primary
 	padding: 0px
 	@media (max-width: $screen-xs)
@@ -63,122 +55,95 @@
 .filter-heading
 	margin-top: 8px
 
-.filter-course-properties
-	+grid(12, 4)
-	padding: 10px 0px
+.filter-course-properties,
+.filter-categories
+	border-top: 1px solid $openki-light-blue
+	float: left
 	@media (max-width: $screen-xs)
-		margin-bottom: 0px
+		border-top-width: 0px
 
-// .filter-course-properties-btns
-// 	@extend .btn-group
+.filter-course-properties
+	padding: 10px 15px 10px 0px
+	@media (max-width: $screen-xs)
+		padding-right: 0px
+		width: 100%
+	.btn-group-vertical
+		@media (max-width: $screen-xs)
+			width: 100%
 
 .js-toggle-property-filter
-	@extend .btn-primary
+	@extend .btn-default
 	text-align: left
+	@media (max-width: $screen-xs)
+		text-align: center
 
 .active-property-filter-icon
 	background: $role-no-bg
 	color: $role-no-text
 	padding: 4px 17px 2px
 
-	// @extend .btn
-	// @extend .btn-default
-	// @media (max-width: $screen-xs)
-	// 	+form-control-humble
-	// 	+btn
-	// 	+btn-default
-	// 	margin-bottom: 10px
-	// 	&:last-child
-	// 		margin-bottom: 0px
-	// label
-	// 	padding: 0px
-	// 	&:hover
-	// 		color: $brand-primary
-//
-// .filter-upcomping-events
-// 	display: none
-//
-// .filter-course-properties
-// 	.glyphicon-calendar,
-// 	.glyphicon-home,
-// 	.fa-graduation-cap
-// 		+transition(all 0.3s)
-// 		color: $brand-primary
-//
-// .checked
-// 	background: $role-no-bg
-// 	color: $role-no-text
-// 	padding: 4px 17px 2px
-
-.filter_categories
-	+grid(12, 4)
-	margin-bottom: 10px
-	padding: 0px
-	@media (max-width: $screen-xs)
-		margin-bottom: 0px
-	h5
+.filter-categories
+	padding: 10px 0px
+	h4
+		color: $brand-primary
 		margin-top: 0px
-
-.categorySelect
-	margin-bottom: 10px
 	@media (max-width: $screen-xs)
-		margin-bottom: 0px
-	input.-searchCategories
-		background: $body-bg
-		border: 2px dashed $category-bg
-		padding: 2px 5px
-		&:focus
-			border-color: $openki-light-blue
-		@media (max-width: $screen-xs)
-			width: 100%
-	.dropdown-toggle
-		position: relative
-		&::before
-			content: '\f107'
-			font-family: FontAwesome
-			left: -1em
-			position: absolute
-	&.open .dropdown-toggle::before
-		content: '\f106'
-	ul.dropdown-menu
-		background: $body-bg
-		margin-top: 0px
-		max-height: 300px
-		min-width: 80%
-		overflow-x: hidden
-		overflow-y: auto
-		@media (max-width: $screen-xs)
-			width: 100%
-		li
-			&:hover
-				background: $category-bg
-			&.no_categories
-				color: $category-text
-				padding: 0px 5px
-				text-align: center
-				&:hover
-					background-color: $body-bg
-					cursor: default
-			& > *
-				display: inline-block
-		a
-			padding: 3px 10px
-			&:hover
-				background: none
-			&.category.parent
-				color: $brand-primary
-				padding-right: 3px
-		.-showSubcategories
-			color: lighten($brand-primary, 10%)
-			padding: 0 5px
-			&:hover
-				color: $brand-primary
-	li.-subcategory
+		padding: 0px
+		width: 100%
+
+.filter-categories-heading
+	@media (max-width: $screen-xs)
 		display: none
-		a
-			color: $default-black
 
-ul.selected_categories
+.filter-categories-select
+	margin-bottom: 10px
+	.dropdown-toggle
+		display: none
+	&::after
+		content: '\f107'
+		font-family: FontAwesome
+		position: absolute
+		right: 7px
+		top: 6px
+	&.open::after
+		content: '\f106'
+
+.js-search-categories
+	@extend .form-control
+	border: 1px dashed $category-bg
+	&:focus
+		border-style: solid
+
+.filter-no-categories-found
+	padding: 5px 10px
+	&:hover
+		background-color: $body-bg
+		cursor: default
+
+.filter-categories-dropdown
+	width: 100%
+	li
+		position: relative
+	.js-category
+		background-color: $dropdown-bg
+
+.main-category
+	color: $brand-primary !important
+
+.js-toggle-subcategories
+	color: $gray-light
+	padding: 0 5px
+	position: absolute
+	right: 10px
+	top: 5px
+	&:hover
+		color: $gray
+		cursor: pointer
+
+.js-sub-category
+	display: none
+
+.filter-selected-categories
 	list-style: none
 	margin: 0px
 	padding-left: 0px
@@ -187,28 +152,15 @@ ul.selected_categories
 		padding: 0px 3px 3px 0px
 		@media (max-width: $screen-xs)
 			display: inline-block
-	span.category
-		background: $category-bg
-		color: $category-text
-		padding: 2px 5px
-
-.filter_groups
-	+grid(12, 4)
-	margin-bottom: 10px
-	padding: 0px
-	h5
-		color: $default-black
 
 .courselist_results
 	@media (max-width: $screen-xs)
 		padding-top: 15px
-	.no_courses_found
-		text-align: center
-		button.-searchAllRegions
-			+btn-thin
-			@extend .btn-primary
-			margin-top: 10px
-			@media (max-width: $screen-xxs)
-				+form-control
-				+btn
-				+btn-primary
+
+.no-courses-found
+	text-align: center
+
+.js-all-regions-btn
+	@extend .btn
+	@extend .btn-primary
+	margin-top: 10px

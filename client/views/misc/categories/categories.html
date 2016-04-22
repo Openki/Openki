@@ -4,7 +4,7 @@
 		{{#each categories}}
 			{{> category}}
 		{{else}}
-			{{mf 'categories.no_categories' 'No categories defined!'}}
+			{{mf 'categories.filter-no-categories-found' 'No categories defined!'}}
 		{{/each}}
 		{{> course_category}}
 	</div>
@@ -43,7 +43,7 @@
 		{{#each categories}}
 			<li>
 				<a
-					class='category'
+					class='js-category'
 					href="/find?categories={{this}}"
 					data-toggle="tooltip"
 					data-html="true"
