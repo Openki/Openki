@@ -1,21 +1,21 @@
 <template name="findWrap">
 	<div class="find">
-		<h1 class="find-heading">{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
+		<h1 class="find-heading">
+			{{mf 'find.WhatLearn?' 'What do you want to learn?'}}
+		</h1>
 		{{> find}}
-	</div> <!-- .find -->
+	</div><!-- /.find -->
 </template>
 
 <template name="find">
 	<div class="search">
 		<div class="js-search-field">
 			<div class="input-group">
-				<input
-					class="js-search-input"
+				<input class="js-search-input"
 					type="text"
 					id="find"
 					value="{{search}}"
-					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"
-				/>
+					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
 				<span class="input-group-btn">
 					<button class="js-find-btn" type="button">
 						{{mf 'find.search_go' 'Go!'}}
@@ -34,8 +34,8 @@
 						{{/if}}
 					{{/unless}}
 				</span>
-			</div> <!-- .input-group -->
-		</div> <!-- .search -->
+			</div><!-- /.input-group -->
+		</div><!-- /.search -->
 		{{#if isMobile}}
 			{{#if showingFilters}}
 				<button class="js-toggle-filter remove-filter" type="button">
@@ -55,25 +55,23 @@
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.search_filter.title' 'Filter search'}}
 				</h4>
-			</div> <!-- .filter-header -->
+			</div><!-- /.filter-header -->
 			<div class="filter-course-properties">
 				<div class="btn-group-vertical" data-toggle="buttons">
 					<label class="js-toggle-property-filter js-filter-upcoming-events btn">
-						<input
+						<input id="hasUpcomingEvent"
 							type="checkbox"
-							id="hasUpcomingEvent"
 							name="hasUpcomingEvent"
 							autocomplete="off"
-							{{toggleChecked 'upcomingEvent'}}
-						/>
+							{{toggleChecked 'upcomingEvent'}}/>
 						{{#if toggleChecked 'upcomingEvent'}}
 							<div class="eventcaption_upcoming">
 								<div class="eventcaption_upcoming_box">
 									<div class="eventcaption_upcoming_text first-line"></div>
 									<div class="eventcaption_upcoming_text second-line"></div>
 									<div class="eventcaption_upcoming_text third-line"></div>
-								</div> <!-- .eventcaption_upcoming_box -->
-							</div> <!-- .eventcaption_upcoming -->
+								</div><!-- /.eventcaption_upcoming_box -->
+							</div><!-- /.eventcaption_upcoming -->
 						{{/if}}
 						{{#unless toggleChecked 'upcomingEvent'}}
 							<span class="glyphicon glyphicon-calendar"></span>
@@ -86,13 +84,11 @@
 						{{/if}}
 					</label>
 					<label class="js-toggle-property-filter js-filter-needs-host btn">
-						<input
+						<input id="needsHost"
 							type="checkbox"
-							id="needsHost"
 							name="needsHost"
 							autocomplete="off"
-							{{toggleChecked 'needsHost'}}
-						/>
+							{{toggleChecked 'needsHost'}}/>
 						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}}active-property-filter-icon{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsHost' 'Looking for a host'}}
@@ -102,13 +98,11 @@
 						{{/if}}
 					</label>
 					<label class="js-toggle-property-filter js-filter-needs-mentor btn">
-						<input
+						<input id="needsMentor"
 							type="checkbox"
-							id="needsMentor"
 							name="needsMentor"
 							autocomplete="off"
-							{{toggleChecked 'needsMentor'}}
-						/>
+							{{toggleChecked 'needsMentor'}}/>
 						<span class="fa fa-graduation-cap {{#if toggleChecked 'needsMentor'}}active-property-filter-icon{{/if}}"></span>
 						&nbsp;
 						{{mf 'find.needsMentor' 'Looking for a mentor'}}
@@ -117,8 +111,8 @@
 							<span class="checkmark"></span>
 						{{/if}}
 					</label>
-				</div> <!-- .btn-group-vertical -->
-			</div> <!-- .filter-course-properties -->
+				</div><!-- /.btn-group-vertical -->
+			</div><!-- /.filter-course-properties -->
 			<div class="filter-categories">
 				<h4 class="filter-categories-heading">
 					{{mf 'find.filter.categories' 'Categories'}}
@@ -128,8 +122,7 @@
 					{{#each categories}}
 						<li>
 							<a class="js-category" href="#">{{categoryName}}</a>
-							<span
-								class="remove-btn js-remove-category-btn"
+							<span class="remove-btn js-remove-category-btn"
 								title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 							</span>
 						</li>
@@ -137,13 +130,10 @@
 					</ul>
 				{{/if}}
 				<div class="dropdown filter-categories-select">
-					<input
-						class="js-search-categories"
+					<input class="js-search-categories"
 						placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
-						type="text"
-					/>
-					<button
-						class="dropdown-toggle"
+						type="text"/>
+					<button	class="dropdown-toggle"
 						data-toggle="dropdown"
 						role="button"
 						aria-expanded="false">
@@ -177,10 +167,10 @@
 							</span>
 						{{/if}}
 					</ul>
-				</div> <!-- .filter-categories-select -->
-			</div> <!-- .filter-categories -->
-		</div> <!-- .filter -->
-	</div> <!-- .search -->
+				</div><!-- /.filter-categories-select -->
+			</div><!-- /.filter-categories -->
+		</div><!-- /.filter -->
+	</div><!-- /.search -->
 	<div class="courselist_results">
 		{{#unless ready}}
 			{{> loadingPage}}
@@ -201,10 +191,10 @@
 				{{#if proposeNewBlurb}}
 					{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
 				{{/if}}
-				</div> <!-- .no-courses-found -->
+			</div><!-- /.no-courses-found -->
 			{{/each}}
 		{{/unless}}
-	</div> <!-- .courselist_results -->
+	</div><!-- /.courselist_results -->
 	{{#if eventResults.count}}
 		<div class="courselist_results">
 			<hr>
@@ -228,7 +218,7 @@
 			{{#each eventResults}}
 					{{> small_event}}
 			{{/each}}
-		</div> <!-- .courselist_results -->
+		</div><!-- /.courselist_results -->
 	{{/if}}
 	{{> course_edit newCourse}}
 </template>

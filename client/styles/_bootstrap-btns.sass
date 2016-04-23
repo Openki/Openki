@@ -1,50 +1,13 @@
-// @each $variant in default, primary, success, warning, danger
-// 	.btn-#{$variant}
-// 		+gradient-vertical($btn-#{$variant}-bg, darken($btn-#{$variant}-bg, 5%), 0%, 100%)
-// 		&:hover
-// 			+gradient-vertical(darken($btn-#{$variant}-bg, 5%), darken($btn-#{$variant}-bg, 10%), 0%, 100%)
+$btn-default-bg-colors: (default: $btn-default-bg, dark: darken($btn-default-bg, 5%), darker: darken($btn-default-bg, 10%), darkest: darken($btn-default-bg, 15%))
+$btn-primary-bg-colors: (default: $btn-primary-bg, dark: darken($btn-primary-bg, 5%), darker: darken($btn-primary-bg, 10%), darkest: darken($btn-primary-bg, 15%))
+$btn-success-bg-colors: (default: $btn-success-bg, dark: darken($btn-success-bg, 5%), darker: darken($btn-success-bg, 10%), darkest: darken($btn-success-bg, 15%))
+$btn-warning-bg-colors: (default: $btn-warning-bg, dark: darken($btn-warning-bg, 5%), darker: darken($btn-warning-bg, 10%), darkest: darken($btn-warning-bg, 15%))
+$btn-danger-bg-colors: (default: $btn-danger-bg, dark: darken($btn-danger-bg, 5%), darker: darken($btn-danger-bg, 10%), darkest: darken($btn-danger-bg, 15%))
 
-$btn-default-gradient: darken($btn-default-bg, 5%)
-$btn-default-gradient-dark: darken($btn-default-bg, 10%)
-$btn-default-gradient-darker: darken($btn-default-bg, 15%)
+$btn-bg-colors: (default: $btn-default-bg-colors, primary: $btn-primary-bg-colors, success: $btn-success-bg-colors, warning: $btn-warning-bg-colors, danger: $btn-danger-bg-colors)
 
-$btn-primary-gradient: darken($brand-primary, 5%)
-$btn-primary-gradient-dark: darken($brand-primary, 10%)
-$btn-primary-gradient-darker: darken($brand-primary, 15%)
-
-$btn-success-gradient: darken($brand-success, 5%)
-$btn-success-gradient-dark: darken($brand-success, 10%)
-$btn-success-gradient-darker: darken($brand-success, 15%)
-
-$btn-warning-gradient: darken($brand-warning, 5%)
-$btn-warning-gradient-dark: darken($brand-warning, 10%)
-$btn-warning-gradient-darker: darken($brand-warning, 15%)
-
-$btn-danger-gradient: darken($brand-danger, 5%)
-$btn-danger-gradient-dark: darken($brand-danger, 10%)
-$btn-danger-gradient-darker: darken($brand-danger, 15%)
-
-.btn-default
-	+gradient-vertical($btn-default-bg, $btn-default-gradient-dark, 0%, 100%)
-	&:hover
-		+gradient-vertical($btn-default-gradient, $btn-default-gradient-darker, 0%, 100%)
-
-.btn-primary
-	+gradient-vertical($brand-primary, $btn-primary-gradient-dark, 0%, 100%)
-	&:hover
-		+gradient-vertical($btn-primary-gradient, $btn-primary-gradient-darker, 0%, 100%)
-
-.btn-success
-	+gradient-vertical($brand-success, $btn-success-gradient-dark, 0%, 100%)
-	&:hover
-		+gradient-vertical($btn-success-gradient, $btn-success-gradient-darker, 0%, 100%)
-
-.btn-warning
-	+gradient-vertical($brand-warning, $btn-warning-gradient-dark, 0%, 100%)
-	&:hover
-		+gradient-vertical($btn-warning-gradient, $btn-warning-gradient-darker, 0%, 100%)
-
-.btn-danger
-	+gradient-vertical($brand-danger, $btn-danger-gradient-dark, 0%, 100%)
-	&:hover
-		+gradient-vertical($btn-danger-gradient, $btn-danger-gradient-darker, 0%, 100%)
+@each $btn-variant, $bg-color in $btn-bg-colors
+	.btn-#{$btn-variant}
+		+gradient-vertical(map-get($bg-color, default), map-get($bg-color, darker), 0%, 100%)
+		&:hover
+			+gradient-vertical(map-get($bg-color, dark), map-get($bg-color, darkest), 0%, 100%)

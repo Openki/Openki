@@ -5,14 +5,14 @@ Template.layout.onCreated(function() {
 
 Template.layout.onRendered(function() {
 	if (!this.openedIntro.get()) {
-		this.$('.content').hide();
+		this.$('.introduction-content').hide();
 	}
 	var instance = this;
 	this.autorun(function() {
 		if (instance.openedIntro.get()) {
-			instance.$('.content').slideDown(400);
+			instance.$('.introduction-content').slideDown(400);
 		} else {
-			instance.$('.content').slideUp(400);
+			instance.$('.introduction-content').slideUp(400);
 		}
 	});
 });
@@ -53,20 +53,12 @@ Template.layout.events({
 		}
 	},
 
-	"click .-closeIntro": function(event, instance) {
+	"click .js-introduction-close-btn": function(event, instance) {
 		instance.showIntro.set(false);
 		Assistant.doneIntro();
 	},
 
-/*	"click .-introContainer": function(event, instance) {
-		event.stopImmediatePropagation();
-	},
-
-	"click #wrap": function(event, instance) {
-		instance.showIntro.set(false);
-	},
-*/
-	"click .-toggleDetails": function(event, instance) {
+	"click .js-introduction-toggle-btn": function(event, instance) {
 		instance.openedIntro.set(!instance.openedIntro.get());
 	}
 });

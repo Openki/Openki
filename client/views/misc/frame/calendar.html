@@ -1,21 +1,21 @@
 <template name="frameCalendar">
 	{{#each this}}
-		<div class="frame_calendar_date">
+		<div class="frame-calendar-date-events">
 			{{#with date}}
-				<div class="date">
+				<div class="frame-calendar-date">
 					{{weekday}}
 					{{monthday}}.
-				</div>
+				</div><!-- /.frame-calendar-date -->
 			{{/with}}
-			<div class="frame_calendar_events">
+			<div class="frame-calendar-events">
 				{{#each dayEvents}}
 					{{> small_event}}
 				{{else}}
-					<div style="text-align: center">
+					<div class="frame-calendar-no-events">
 						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
-					</div>
+					</div><!-- /.frame-calendar-no-events -->
 				{{/each}}
-			</div>
-		</div>
+			</div><!-- /.frame-calendar-events -->
+		</div><!-- /.frame-calendar-date-events -->
 	{{/each}}
 </template>

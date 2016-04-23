@@ -1,30 +1,27 @@
 <template name="introduction">
-	<div class="introduction_container">
-		<div class="introduction about">
-			<a href="#" class="-closeIntro" title="{{mf 'introduction.close.title' 'Close introduction'}}">
-				<span class="glyphicon glyphicon-remove"></span>
-			</a>
+	<div class="introduction-container">
+		<div class="introduction">
 			<h3>
-				<a class="-toggleDetails">
 					{{#mf KEY='introduction.Title' SITENAME=siteName}}
 					What does {SITENAME} do for you?
 					{{/mf}}
-					<div class="toggle">
-						{{#if openedIntro}}
-							<span class="hideIntro">
-								{{mf 'introduction.toggle.hide' 'hide'}}
-							</span>
-						{{else}}
-							<span class="showIntro">
-								{{mf 'introduction.toggle.show' 'show'}}
-							</span>
-						{{/if}}
-					</div>
-				</a>
+					{{#if openedIntro}}
+						<button class="js-introduction-toggle-btn introduction-hide-btn">
+							{{mf 'introduction.toggle.hide' 'Hide'}}
+						</button>
+					{{else}}
+						<button class="js-introduction-toggle-btn introduction-show-btn">
+							{{mf 'introduction.toggle.show' 'Show'}}
+						</button>
+					{{/if}}
+					<a class="js-introduction-close-btn"
+						href="#"
+						title="{{mf 'introduction.close.title' 'Close introduction'}}">
+						<span class="remove-btn"></span>
+					</a>
 			</h3>
-			<div class="content">
-				<hr>
-				<ul>
+			<div class="introduction-content">
+				<ul class="introduction-steps">
 					<li>
 						<h2><span class="fa fa-lightbulb-o"></span></h2>
 						{{mf 'introduction.1_teachOrLearn' 'You want to learn somethig, or teach others.'}}
@@ -47,13 +44,13 @@
 					</li>
 					<li>
 						{{mf 'introduction.more' 'More infos:'}} <br>
-						<a href="/FAQ">{{mf 'main.faq_link' 'FAQ'}}</a>, <br>
-						<a href="https://vimeo.com/openki/">{{mf 'main.video_link' 'Video'}}</a>, <br>
-						<a href="/about" >{{mf 'main.about_link' 'About'}}</a>, <br>
+						<a href="/FAQ">{{mf 'main.faq_link' 'FAQ'}}</a><br>
+						<a href="https://vimeo.com/openki/">{{mf 'main.video_link' 'Video'}}</a><br>
+						<a href="/about" >{{mf 'main.about_link' 'About'}}</a><br>
 						<a href="http://about.openki.net">{{mf 'main.concept_link' 'Concept'}}</a>
 					</li>
 				</ul>
-			</div>
-		</div>
-	</div>
+			</div><!-- /.introduction-content -->
+		</div><!-- /.introduction -->
+	</div><!-- /.introduction-container -->
 </template>

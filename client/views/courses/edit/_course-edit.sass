@@ -1,14 +1,14 @@
 .find,
 .new_course
-	.course_edit
+	.course-edit
 		+grid(12)
 		h2
 			margin-top: 0px
 
-.coursedetails .course_edit
+.coursedetails .course-edit
 	+grid(12)
 
-.course_edit
+.course-edit
 	padding: 0px
 	.course_edit_body
 		+grid(12)
@@ -21,9 +21,9 @@
 			padding: 0px 0px 10px
 		#editform_name,
 		#editform_description
-			+form-control-humble
+			@extend .form-control
 		#editform_description
-			height: auto // Reset fixed height from +form-control-humble
+			height: auto // Reset fixed height from @extend .form-control
 			max-height: 150px
 			min-height: 100px
 			overflow: auto

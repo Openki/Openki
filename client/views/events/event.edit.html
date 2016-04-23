@@ -13,54 +13,47 @@
 
 		<div class="course_event_edit_header">
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-			<input
-				type="text"
-				id="edit_event_title"
-				size="30"
-				placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
-				value="{{this.title}}"
+			<input id="edit_event_title"
 				name="_"
-			/>
+				placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
+				size="30"
+				type="text"
+				value="{{this.title}}"/>
 			<div class="date">
 				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
 				<div class="input-group">
 					<label for="edit_event_startdate" class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"></span>
 					</label>
-					<input
+					<input id="edit_event_startdate"
 						type="text"
-						id="edit_event_startdate"
 						value="{{localDate start}}"
-						{{disableForPast}}
-					/>
-				</div>
-			</div>
+						{{disableForPast}}/>
+				</div><!-- /.input-group -->
+			</div><!-- /.date -->
 			<div class="start_time">
 				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input
-						type="text"
-						id="edit_event_starttime"
-						value="{{timeformat start}}"
+					<input id="edit_event_starttime"
 						size="5"
-						{{disableForPast}}
-					/>
-				</div>
-			</div>
+						type="text"
+						value="{{timeformat start}}"
+						{{disableForPast}}/>
+				</div><!-- /.input-group -->
+			</div><!-- /.start_time -->
 			<div class="end_time" style="display:inline-block">
 				<h4>
 					{{mf 'course.event.edit.time_end' 'Time end'}}
 					<small class="toggle_duration" >
 						&nbsp;&nbsp;
-						<span
-							class="fa fa-exchange"
-							href="#"
-							data-toggle="tooltip"
+						<span class="fa fa-exchange"
 							data-html="true"
-							data-original-title="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
+							data-original-title="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}"
+							data-toggle="tooltip"
+							href="#">
 						</span>
 					</small>
 				</h4>
@@ -68,25 +61,22 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input
-						type="text"
-						id="edit_event_endtime"
-						value="{{timeformat end}}"
+					<input id="edit_event_endtime"
 						size="5"
-					/>
-				</div>
-			</div>
+						type="text"
+						value="{{timeformat end}}"/>
+				</div><!-- /.input-group -->
+			</div><!-- /.end_time -->
 			<div class="show_duration" style="display:none">
 				<h4>
 					{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
 					<small class="toggle_duration">
 						&nbsp;&nbsp;
-						<span
-							class="fa fa-exchange"
-							href="#"
-							data-toggle="tooltip"
+						<span class="fa fa-exchange"
 							data-html="true"
-							data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
+							data-original-title="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}"
+							data-toggle="tooltip"
+							href="#">
 						</span>
 					</small>
 				</h4>
@@ -185,7 +175,7 @@
 					</label>
 				</div>
 			</div>
-		
+
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>

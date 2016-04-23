@@ -1,169 +1,162 @@
-<template name='loginFrame'>
-	<div id="loginFrame">
+<template name='userFrame'>
+	<div class="user-frame">
 		{{#if currentUser}}
-			<div class="current_user">
+			<div class="ownuser-frame">
 				<h3>
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 				</h3>
-				<a class="my_profile" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<button href="{{pathFor 'userprofile' _id=currentUser._id}}" role="button">
 					<span class="glyphicon glyphicon-share-alt"></span>
 					{{mf 'login.frame.profile' 'Visit my profile'}}
-				</a>
-				<a class="settings" href="{{pathFor 'profile'}}">
+				</button>
+				<button href="{{pathFor 'profile'}}" role="button">
 					<span class="glyphicon glyphicon-cog"></span>
 					{{mf 'login.frame.settings' 'Account settings'}}
-				</a>
-				<button href="#" class="loginLogout">
+				</button>
+				<button class="js-logout-btn"
+					href="#"
+					role="button">
 					<span class="glyphicon glyphicon-log-out"></span>
 					{{mf 'login.logout' 'Logout'}}
 				</button>
-			</div>
+			</div><!-- /.ownuser-frame -->
 		{{/if}}
 		{{#if forgot}}
-			{{> loginForgot}}
+			{{> forgotPwdFrame}}
 		{{/if}}
 		{{#if login}}
-			{{> loginLogin}}
+			{{> loginFrame}}
 		{{/if}}
-	</div>
+	</div><!-- /.user-frame -->
 </template>
 
-<template name="loginLogin">
+<template name="loginFrame">
 	<form>
-	<div class="login">
-		<div class="input-group">
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-user"></span>
-			</span>
-			<input
-				type="text"
-				id="login-name"
-				placeholder="{{mf 'frame.login.usernameOrEmail' 'Username or Email'}}"
-			/>
-		</div>
-		<div id="username_warning_not_existing" style="display:none">
-			{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
-		</div>
-		<div id="username_warning" style="display:none">
-			{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
-			{{mf 'login.username.choose_another' 'Please choose another one.'}}
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">
-				<span class="fa fa-lock"></span>
-			</span>
-			<input
-				type="password"
-				id="login-password"
-				placeholder="{{mf 'frame.login.password' 'Password'}}"
-			/>
-		</div>
-		<div id="password_warning_incorrect" style="display:none">
-			{{mf 'login.password.password_incorrect' 'Incorrect password'}}
-		</div>
-		<div id="password_warning" style="display:none">
-			{{mf 'login.password.no_password' 'Please enter a password to register.'}}
-		</div>
-		<div id="login_warning" style="display:none">
-			{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
-		</div>
-		{{#if showForgot}}
-			<button type="button" class="-forgot forgot">
-				{{mf 'forgot' "I forgot my password"}}
-			</button>
-		{{/if}}
-		{{#if showEmail}}
+		<div class="login">
 			<div class="input-group">
 				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-envelope"></span>
+					<span class="glyphicon glyphicon-user"></span>
 				</span>
-				<input
-					type="email"
-					id="login-email"
-					class="-loginEmail"
-					placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
-				/>
+				<input id="login-name"
+					type="text"
+					placeholder="{{mf 'frame.login.usernameOrEmail' 'Username or Email'}}"/>
+			</div><!-- /.input-group -->
+			<div id="username_warning_not_existing" style="display:none">
+				{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
+			</div><!-- /#username_warning_not_existing -->
+			<div id="username_warning" style="display:none">
+				{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
+				{{mf 'login.username.choose_another' 'Please choose another one.'}}
+			</div><!-- /#username_warning -->
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-lock"></span>
+				</span>
+				<input id="login-password"
+					placeholder="{{mf 'frame.login.password' 'Password'}}"
+					type="password"/>
+			</div><!-- /.input-group -->
+			<div id="password_warning_incorrect" style="display:none">
+				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
 			</div>
-			<div class="registering_email_instructions">
-				{{mf 'registering.email.instructions'
-				"By entering an e-mail adress you allow us to send you a mail in case you forget your password."}}
+			<div id="password_warning" style="display:none">
+				{{mf 'login.password.no_password' 'Please enter a password to register.'}}
 			</div>
-		{{/if}}
-		{{#if registering}}
-			<button type="submit" class='loginRegister registering'>
-				<span class="glyphicon glyphicon-plus"></span>&nbsp;
-				{{mf 'login.register.submit' 'Create account'}}
-			</button>
-			<button type="submit" class='loginLogin'>
-				<span class="glyphicon glyphicon-log-in"></span>&nbsp;
-					{{mf 'login.login.back_to_login' 'Back to login'}}
-			</button>
-		{{else}}
-			<button type="submit" class='loginLogin loginLoginLogin'>
-				<span class="glyphicon glyphicon-log-in"></span>&nbsp;
-					{{mf 'login.login.submit' 'Login'}}
-			</button>
-			<button type="submit" class='loginRegister'>
-				<span class="glyphicon glyphicon-plus"></span>&nbsp;
-				{{mf 'login.register.submit' 'Create account'}}
-			</button>
-		{{/if}}
-		{{#unless registering}}
-			<div class="external_logins">
-				<p>{{mf 'frame.login_external_services' 'Or login with:'}}</p>
-				<button
-					class="loginWithService"
-					data-service='Google'
-					title="Login with Google+">
-					<span class="fa fa-google-plus-square"></span>
-				</button>
-				<button
-					class="loginWithService"
-					data-service='Facebook'
-					title="Login with Facebook">
-					<span class="fa fa-facebook-square"></span>
-				</button>
-				<button
-					class="loginWithService"
-					data-service='Github'
-					title="Login with Github">
-					<span class="fa fa-github-square"></span>
-				</button>
+			<div id="login_warning" style="display:none">
+				{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
 			</div>
-		{{/unless}}
-	</div>
+			{{#if showForgot}}
+				<a class="js-forgot-pwd-btn"
+					href="#"
+					type="button"
+					role="button">
+					{{mf 'forgot' "I forgot my password"}}
+				</a>
+			{{/if}}
+			{{#if showEmail}}
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-envelope"></span>
+					</span>
+					<input class="js-login-email"
+						type="email"
+						id="login-email"
+						placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
+				</div><!-- /.input-group -->
+				<div class="register-mail-info">
+					{{mf 'registering.email.instructions'
+					"By entering an e-mail adress you allow us to send you a mail in case you forget your password."}}
+				</div><!-- /.registering_email_instructions -->
+			{{/if}}
+			{{#if registering}}
+				<button class='js-register-btn' type="submit">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
+					{{mf 'login.register.submit' 'Create account'}}
+				</button>
+				<button class='js-login-btn' type="submit">
+					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+						{{mf 'login.login.back_to_login' 'Back to login'}}
+				</button>
+			{{else}}
+				<button class='js-login-btn' type="submit">
+					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+						{{mf 'login.login.submit' 'Login'}}
+				</button>
+				<button class='js-register-btn' type="submit">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
+					{{mf 'login.register.submit' 'Create account'}}
+				</button>
+			{{/if}}
+			{{#unless registering}}
+				<div class="external-service-login">
+					<span>{{mf 'frame.login_external_services' 'Or login with:'}}</span>
+					<button class="js-external-service-login-btn"
+						data-service='Google'
+						title="Login with Google+">
+						<span class="fa fa-google-plus-square"></span>
+					</button>
+					<button class="js-external-service-login-btn"
+						data-service='Facebook'
+						title="Login with Facebook">
+						<span class="fa fa-facebook-square"></span>
+					</button>
+					<button class="js-external-service-login-btn"
+						data-service='Github'
+						title="Login with Github">
+						<span class="fa fa-github-square"></span>
+					</button>
+				</div><!-- /.external-service-login -->
+			{{/unless}}
+		</div><!-- /.login -->
 	</form>
 </template>
 
-<template name="loginForgot">
+<template name="forgotPwdFrame">
 	<div class="forgot_login">
-		<h2>{{mf 'forgot.title' "Password reset"}}</h2>
 		<p>
 			{{mf 'forgot.explanation'
 			"We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
 		</p>
 		<div class="input-group">
 			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-envelope"></span>
+				<span class="fa fa-envelope"></span>
 			</span>
-			<input
+			<input class="js-login-email"
 				type="email"
 				id="login-email"
-				class="-loginEmail"
-				placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
-			/>
+				placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
 		</div>
 		{{#unless validEmail}}
-			<div class="email_instructions">
+			<div class="forgot-pwd-mail-info">
 				{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
-			</div>
+			</div><!-- /.forgot-pwd-mail-info -->
 		{{/unless}}
-		<button type="button" class="-forgotSend" {{disableForInvalidEmail}}>
-			<span class="glyphicon glyphicon-envelope"></span>
+		<button class="js-reset-pwd-btn" type="button" {{disableForInvalidEmail}}>
+			<span class="fa fa-envelope"></span>
 			{{mf 'forgot.send' 'Reset my password'}}
 		</button>
-		<button type="button" class="-forgotClose">
-			<span class="fa fa-close"></span>
+		<button class="js-reset-pwd-close-btn" type="button">
+			<span class="glyphicon glyphicon-remove"></span>
 			{{mf 'forgot.close' 'Never mind'}}
 		</button>
 	</div>

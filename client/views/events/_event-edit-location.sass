@@ -28,12 +28,12 @@
 			.locationSearchbar
 				padding-bottom: 5px
 				input.-locationName
-					+form-control-humble
+					@extend .form-control
 				button.-addressSearch
 					@extend .btn
 					@extend .btn-primary
 			input.-locationAddress
-				+form-control-humble
+				@extend .form-control
 				margin-bottom: 5px
 			ul.locationCandidates
 				padding: 5px 0px

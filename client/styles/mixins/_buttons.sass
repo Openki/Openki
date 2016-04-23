@@ -43,7 +43,7 @@
 =btn-cancel()
 	@extend .btn-default
 	&:hover
-		+gradient-vertical($btn-danger-gradient, $btn-danger-gradient-darker, 0%, 100%)
+		+gradient-vertical(map-get($btn-danger-bg-colors, dark), map-get($btn-danger-bg-colors, darkest), 0%, 100%)
 		border: 1px solid $btn-danger-border
 
 =header-btn()
@@ -67,3 +67,7 @@
 		color: $calendar-btn-text
 	&:focus
 		color: darken($calendar-btn-text, 20%)
+
+=btn-reset()
+	background: none
+	border: 0px

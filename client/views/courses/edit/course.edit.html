@@ -1,5 +1,5 @@
 <template name="course_edit">
-	<div class="course_edit">
+	<div class="course-edit">
 		<form>
 			{{#if _id}}
 				<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
@@ -12,16 +12,13 @@
 			{{/if}}
 			<div class="course_edit_body">
 				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
-				<input
-					type="text"
-					id="editform_name"
+				<input id="editform_name"
 					placeholder="{{mf 'course.title.placeholder' 'what do you want to learn?'}}"
 					size="40"
-					value="{{name}}"
-				/>
+					type="text"
+					value="{{name}}"/>
 				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>
-				<div
-					id="editform_description"
+				<div id="editform_description"
 					data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
 					{{{description}}}
 				</div>
@@ -33,14 +30,12 @@
 								{{#each availableCategories}}
 									<li class="{{activeCategory}}">
 										<label class="{{this}}">
-											<input
-												type='checkbox'
-												class='checkbox cat_{{this}}'
+											<input class='checkbox cat_{{this}}'
 												name='{{this}}'
-												value="1"
-												{{checkCategory}}
 												style="display: inline"
-											/>
+												type='checkbox'
+												value="1"
+												{{checkCategory}}/>
 											{{categoryName}}
 											<span class="caret {{activeCategory}}"></span>
 										</label>
@@ -49,13 +44,11 @@
 												<li>
 													<div class="checkbox">
 														<label class="{{this}}">
-															<input
-																type='checkbox'
-																class='checkbox_sub cat_{{this}}'
+															<input class='checkbox_sub cat_{{this}}'
 																name='{{this}}'
+																type='checkbox'
 																value="1"
-																{{checkCategory}}
-															/>
+																{{checkCategory}}/>
 															{{categoryName}}
 														</label>
 													</div>
@@ -74,7 +67,7 @@
 						{{#unless categories}}
 							{{mf 'course.edit.no.categories' 'No categories'}}
 						{{/unless}}
-						<button type="button" class="editCategories" role="button">
+						<button class="editCategories" type="button" role="button">
 							<span class="glyphicon glyphicon-edit"></span>
 							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
 						</button>
@@ -90,7 +83,7 @@
 							</li>
 						{{/each}}
 					</ul>
-				</div>
+				</div><!-- /.course_edit_roles -->
 
 				<div class="course_edit_internal">
 					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
@@ -102,7 +95,7 @@
 						>
 						{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
 					</label>
-				</div>
+				</div><!-- /.course_edit_internal -->
 
 				<div class="course_edit_region">
 					{{#unless _id}}
@@ -118,7 +111,7 @@
 							{{/each}}
 						</select>
 					{{/unless}}
-				</div>
+				</div><!-- /.course_edit_region -->
 				<div class="course_edit_finishbtns">
 					<button type="button" class="save">
 						<span class="glyphicon glyphicon-save"></span>
@@ -128,7 +121,7 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf 'course.edit.cancel_btn' 'Cancel'}}
 					</button>
-				</div>
+				</div><!-- /.course_edit_finishbtns -->
 			</div>
 		</form>
 	</div>
@@ -137,25 +130,21 @@
 <template name="courseEditRole">
 	<div class="checkbox">
 		<label class="{{role.type}}">
-			<input
-				type="checkbox"
-				class='-roleselection {{role.type}}'
+			<input class='-roleselection {{role.type}}'
 				name='{{role.type}}'
-				{{checkRole}}
-			/>
+				type="checkbox"
+				{{checkRole}}/>
 			<span class="{{role.icon}}"></span>
 			{{mf roleDescription}}
 		</label>
 		{{#if checkRole}}
 			<label style="margin-left: 2em; display: true">
-				<input
-					type="checkbox"
-					class='-enrol {{role.type}}'
+				<input class='-enrol {{role.type}}'
 					name='{{role.type}}'
-					{{hasRole}}
-				/>
+					type="checkbox"
+					{{hasRole}}/>
 				{{mf roleSubscription}}
 			</label>
 		{{/if}}
-	</div>
+	</div><!-- /.checkbox -->
 </template>

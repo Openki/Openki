@@ -1,6 +1,7 @@
 *
 	outline: none !important
 
+
 .checkmark
 	@extend .glyphicon
 	@extend .glyphicon-ok
@@ -18,6 +19,11 @@
 	+box-shadow-big($default-shadow)
 	border-radius: 0px
 
+input[type="text"],
+input[type="password"],
+input[type="email"]
+	@extend .form-control
+
 .input-group input:focus
 	z-index: 3
 
@@ -26,11 +32,6 @@
 	white-space: nowrap
 	&-inner
 		max-width: none
-
-.dropdown-menu
-	max-height: 300px
-	overflow-x: hidden
-	overflow-y: auto
 
 // .btn-primary
 // 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
@@ -107,7 +108,7 @@
 //
 //
 // select
-// 	+form-control-humble
+// 	@extend .form-control
 // 	color: $default-black
 // 	&:hover
 // 		cursor: pointer

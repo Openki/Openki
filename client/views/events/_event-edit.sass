@@ -4,7 +4,7 @@
 		margin-top: 0px
 	input[type='text'],
 	select
-		+form-control-humble
+		@extend .form-control
 	.course_event_edit_header
 		+grid(12)
 		border: dashed 7px $brand-success
@@ -44,8 +44,8 @@
 			+grid(12)
 			padding: 0px
 			#edit_event_description
-				+form-control-humble
-				height: auto // Reset fixed height from +form-control-humble
+				@extend .form-control
+				height: auto // Reset fixed height from @extend .form-control
 				max-height: 150px
 				min-height: 100px
 				overflow: auto

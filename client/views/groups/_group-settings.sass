@@ -8,7 +8,7 @@
 	#setLogo,
 	#setBackgroundImage,
 	#AddGroupMember
-		+form-control-humble
+		@extend .form-control
 	h2
 		margin-top: 8px
 	.settings
@@ -17,7 +17,7 @@
 		.editable
 			background: none
 		.setInfos
-			height: auto // Reset fixed height from +form-control-humble()
+			height: auto // Reset fixed height from @extend .form-control()
 			max-height: 150px
 			min-height: 40px
 			p

@@ -34,8 +34,8 @@
 			clear: both
 			font-size: large
 		.editformDescription
-			+form-control-humble
-			height: auto // Reset fixed height from +form-control-humble()
+			@extend .form-control
+			height: auto // Reset fixed height from @extend .form-control()
 			max-height: 150px
 			min-height: 100px
 			p
@@ -45,7 +45,7 @@
 	#editform_short,
 	#editform_claim,
 	#addGroupMember
-		+form-control-humble
+		@extend .form-control
 	.groupEditFinishbtns
 		+grid(12)
 		padding: 10px 0px 0px
