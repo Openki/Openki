@@ -1,4 +1,18 @@
-// BUTTON MIXINS
+// Button mixins
+// --------------------------------------------------
+
+// Reset mixin to remove default button styles
+=btn-reset()
+	background: none
+	border: 0px
+	padding: 0px
+
+// Cancel/Delete button style, turning red when beeing hovered over
+=btn-cancel()
+	@extend .btn-default
+	&:hover
+		+gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%)
+		border: 1px solid $btn-danger-border
 
 =btn-thin()
 	@extend .btn
@@ -34,17 +48,7 @@
 		border: 0px
 		border-top: 3px solid $body-bg
 
-=btn-edit()
-	@extend .btn-default
-	&:hover
-		background: $btn-success-bg
-		border: 1px solid $btn-success-border
 
-=btn-cancel()
-	@extend .btn-default
-	&:hover
-		+gradient-vertical(map-get($btn-danger-bg-colors, dark), map-get($btn-danger-bg-colors, darkest), 0%, 100%)
-		border: 1px solid $btn-danger-border
 
 =header-btn()
 	background: none
@@ -67,7 +71,3 @@
 		color: $calendar-btn-text
 	&:focus
 		color: darken($calendar-btn-text, 20%)
-
-=btn-reset()
-	background: none
-	border: 0px
