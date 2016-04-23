@@ -1,14 +1,28 @@
 // GRID MIXIN
 // One-line statement powered by bootstrap mixins
 
-=grid($xs, $sm: $xs, $md: $sm, $lg: $md)
-	@if $sm == inherit
-		$sm: $xs
-	@if $md == inherit
-		$md: $sm
-	@if $lg == inherit
-		$lg: $md
-	+make-xs-column($xs)
-	+make-sm-column($sm)
-	+make-md-column($md)
-	+make-lg-column($lg)
+=grid($screen-sizes...)
+	@for $i from 1 through length($screen-sizes)
+		@if nth($screen-sizes, $i) == inherit
+			@if $i == 2
+				+make-sm-column(nth($screen-sizes, $i - 1))
+			@else if $i == 3
+				+make-md-column(nth($screen-sizes, $i - 1))
+		@else if nth($screen-sizes, $i) != 12
+			@if $i == 1
+				+make-xs-column(nth($screen-sizes, $i))
+			@else if $i == 2
+				+make-sm-column(nth($screen-sizes, $i))
+			@else if $i == 3
+				+make-md-column(nth($screen-sizes, $i))
+			@else if $i == 4
+				+make-lg-column(nth($screen-sizes, $i))
+		@else if $i == length($screen-sizes)
+			@if $i == 1
+				+make-xs-column(nth($screen-sizes, $i))
+			@else if $i == 2
+				+make-sm-column(nth($screen-sizes, $i))
+			@else if $i == 3
+				+make-md-column(nth($screen-sizes, $i))
+			@else if $i == 4
+				+make-lg-column(nth($screen-sizes, $i))
