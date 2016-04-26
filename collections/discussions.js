@@ -29,6 +29,10 @@ var sanitizeComment = function(comment) {
 	};
 };
 
+CourseDiscussions.validComment = function(text) {
+	return text.trim().length > 0;
+};
+
 Meteor.methods({
 	postComment: function(comment) {
 		check(comment, {
@@ -40,6 +44,10 @@ Meteor.methods({
 		});
 
 		var saneComment = sanitizeComment(comment);
+
+		if (!CourseDiscussions.validComment(saneComment.text)) {
+			throw new Meteor.Error(400, "Invalid comment");
+		}
 
 		var user = Meteor.user();
 		if (user && !comment.anon) {

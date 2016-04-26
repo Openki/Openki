@@ -38,7 +38,7 @@
 			<div class="discussion-reply">
 				<button
 					type="button"
-					class="-edit discussion-reply-btn"
+					class="js-edit discussion-reply-btn"
 					role="button">
 					<span class="fa fa-reply"></span>
 					&nbsp;
@@ -48,7 +48,7 @@
 		{{else}}
 			<button
 				type="button"
-				class="-edit discussion-post-new-btn">
+				class="js-edit discussion-post-new-btn">
 				<span class="glyphicon glyphicon-pencil"></span>
 				&nbsp;
 				{{mf 'course.discussion.write_comment' 'Write a comment'}}
@@ -77,15 +77,15 @@
 							type="button"
 							class="discussion-delete-btn delete"
 							role="button">
-							<span class="glyphicon glyphicon-remove"></span>
+							<span class="glyphicon glyphicon-remove" title="{{mf 'course.details.del_btn' 'Delete'}}"></span>
 						</button>
 					{{/if}}
 					{{#if mayEdit}}
 						<button
 							type="button"
-							class="-edit discussion-edit-btn"
+							class="js-edit discussion-edit-btn"
 							role="button">
-							<span class="glyphicon glyphicon-edit"></span>
+							<span class="glyphicon glyphicon-edit" title="{{mf 'course.discussion.comment_edit' 'Edit'}}"></span>
 						</button>
 					{{/if}}
 				</div>
@@ -106,6 +106,7 @@
 	<div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
 		{{> profileIcon userId}}
 		<div class="discussion-edit-content">
+			<form>
 			<div class="discussion-edit-header">
 				{{#if showUserId}}
 					{{> profileLink userId}}
@@ -126,12 +127,12 @@
 			<div class="discussion-edit-body">
 				<input
 					type="text"
-					class="-postTitle discussion-edit-title"
+					class="js-post-title discussion-edit-title"
 					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
 					value="{{title}}"
 				/>
 				<textarea
-					class="-postText discussion-edit-text"
+					class="js-post-text discussion-edit-text"
 					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">
 					{{text}}
 				</textarea>
@@ -141,8 +142,8 @@
 					{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
 				</button>
 				<button
-					type="button"
-					class="discussion-save-btn post">
+					type="submit"
+					class="discussion-save-btn">
 					{{#if new}}
 						{{#if parentId}}
 							{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
@@ -157,7 +158,7 @@
 					<label class="discussion-toggle-anonymous">
 						<input
 							type='checkbox'
-							class='toggleAnonymous'
+							class='toggleAnonymous js-anon'
 							{{anonChecked}}
 							{{anonDisabled}}
 						/>
@@ -165,6 +166,7 @@
 					</label>
 				{{/if}}
 			</div>
+			</form>
 		</div>
 	</div>
 </template>

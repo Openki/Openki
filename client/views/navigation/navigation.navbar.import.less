@@ -6,27 +6,24 @@
 		margin: auto;
 		max-width: 1600px;
 		.navbar-header {
-			&:hover * {
-				color: @body-bg !important;
-			}
 			a.navbar-brand {
+				position: relative;
 				padding: 0px;
-				& > span {
+				.brand {
 					bottom: -3px;
 					font-size: x-large;
 					left: -3px;
 					padding-right: 15px;
 					position: relative;
 				}
-				& > span.stage {
+				.stage {
 					.rotate(345deg);
 					color: @default-black;
 					font-size: small;
-					left: 8.2em;
 					position: absolute;
-					top: 1.5em;
-					writing-mode: lr-tb;
-
+					right: 0.5em;
+					top: 1.6em;
+					font-weight: bold;
 				}
 				img {
 					.opacity(97);

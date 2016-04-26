@@ -7,6 +7,10 @@ Template.layout.helpers({
 	},
 	translate: function() {
 		return Router.current().route.getName() === "mfTrans";
+	},
+
+	mayTranslate: function() {
+		return !!Meteor.user();
 	}
 });
 
