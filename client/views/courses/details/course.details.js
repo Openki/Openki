@@ -133,12 +133,14 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 	}
 });
 
+
 Template.show_course_submenu.helpers({
 	hasFiles: function() {
 		var withFiles = {course_id: this.course._id, files: {$exists: 1, $not: {$size: 0}}};
 		return !!Events.findOne(withFiles);
 	},
 });
+
 
 Template.coursedetails.events({
 	'click button.del': function () {
@@ -162,9 +164,54 @@ Template.coursedetails.events({
 	}
 });
 
+
 Template.coursedetails.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
 	$('#nav_courses').addClass('active');
 };
+
+
+var expandible = function(template) {
+	template.onCreated(function() {
+		this.expanded = new ReactiveVar();
+	});
+	template.helpers({
+		'expanded': function() {
+			return Template.instance().expanded.get();
+		}
+	});
+	template.events({
+		'click .js-expand': function(event, instance) {
+			instance.expanded.set(true);
+		},
+		'click .js-collapse': function(event, instance) {
+			instance.expanded.set(false);
+		},
+	});
+};
+
+expandible(Template.courseGroupRemove);
+Template.courseGroupRemove.helpers(groupNameHelpers);
+Template.courseGroupRemove.helpers({
+	'mayPromote': function() {
+		var user = Meteor.user();
+		return user && user.mayPromoteWith(this);
+	}
+});
+
+Template.courseGroupRemove.events({
+	'click .js-remove': function(event, instance) {
+		Meteor.call('groupPromotesCourse', instance.data._id, false, function(error) {
+			if (error) {
+				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
+			} else {
+				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
+				instance.expanded.set(false);
+			}
+		});
+	}
+});
+
+expandible(Template.courseGroupMakeEditor);

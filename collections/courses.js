@@ -15,11 +15,13 @@
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
+// editors         -> list of user and gorup id allowed to edit the course, calculated from members and groups
 // ===========================
 
 Course = function() {
 	this.members = [];
 	this.roles = [];
+	this.groupEditors = [];
 };
 
 Course.prototype.editableBy = function(user) {
@@ -28,7 +30,7 @@ Course.prototype.editableBy = function(user) {
 
 	return isNew // Anybody may create a new course
 		|| privileged(user, 'admin') // Admins can edit all courses
-		|| hasRoleUser(this.members, 'team', user._id); // Team members may edit the course
+		|| _.intersect(user.badges, this.editors).length > 0;
 };
 
 Courses = new Meteor.Collection("Courses", {
@@ -45,12 +47,12 @@ function addRole(course, role, user) {
 		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
 	);
 
-	var result = Courses.update(
+	Courses.update(
 		{ _id: course._id, 'members.user': user },
 		{ '$addToSet': { 'members.$.roles': role }}
 	);
 
-	if (result != 1) throw new Error("addRole affected "+result+" documents");
+	updateEditors(course._id);
 }
 
 
@@ -65,6 +67,8 @@ function removeRole(course, role, user) {
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
 	);
+
+	updateEditors(course._id);
 }
 
 hasRole = function(members, role) {
@@ -138,6 +142,34 @@ maySubscribe = function(operatorId, course, userId, role) {
 	if (operatorId !== userId) return false;
 
 	return true;
+};
+
+
+// Update list of editors
+updateEditors = function(courseId) {
+	untilClean(function() {
+		var course = Courses.findOne(courseId);
+		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
+
+		var editors = course.groupEditors.slice();
+
+		course.members.forEach(function(member) {
+			if (member.roles.indexOf('team') >= 0) {
+				editors.push(member.user);
+			}
+		});
+
+		// We have to use the Mongo collection API because Meteor does not
+		// expose the modification counter
+		var rawCourses = Courses.rawCollection();
+		var result = Meteor.wrapAsync(rawCourses.update, rawCourses)(
+			{ _id: course._id },
+			{ $set: { editors: editors } },
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
 };
 
 
@@ -452,5 +484,12 @@ Meteor.methods({
 				lastEvent: lastEvent
 			} });
 		});
-	}
+	},
+
+	// Recalculate the editors field
+	updateEditors: function(selector) {
+		Courses.find(selector).forEach(function(course) {
+			updateEditors(course._id);
+		});
+	},
 });

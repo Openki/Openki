@@ -22,10 +22,9 @@
 					{{> show_categories}}
 				</div>
 				<div class="course-groups-list-container">
-					{{> groupList}}
+					{{> courseGroupList}}
 				</div>
 				{{/with}}
-				{{> groupListing course}}
 
 				{{> show_course_submenu}}
 				{{#with course}}
@@ -120,4 +119,60 @@
 			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
 		</p>
 	</div>
+</template>
+
+
+<template name="courseGroupList">
+	<ul class="groups-list">
+		{{#each groups}}
+		<li>
+			{{> groupName}}
+			<ul style="display: inline">
+			{{> courseGroupRemove}}
+			{{> courseGroupMakeEditor}}
+			</ul>
+		</li>
+		{{/each}}
+	</ul>
+</template>
+
+
+<template name="courseGroupRemove">
+	{{#if mayPromote}}
+	<li style="position: relative">
+		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove' "Remove {NAME} from list of promoters" NAME=name}}"></span>
+		{{#if expanded}}
+			<div style="position: absolute; border: 3px red; z-index: 2;">
+				{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
+				<button type="button" class="js-remove">
+					{{mf 'course.group.confirmRemoveButton' "Delist"}}
+				</button>
+				<button type="button" class="js-collapse">
+					{{mf 'course.group.confirmRemoveClose' "Forget it"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+	{{/if}}
+</template>
+
+
+<template name="courseGroupMakeEditor">
+	{{#if mayAddOrg}}
+	<li>
+		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' "Add as editors"}}"></span>
+		{{#if expanded}}
+			<div style="position: absolute; border: 3px red">
+				{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
+				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
+				<button type="button" class="js-remove">
+					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+				</button>
+				<button type="button" class="js-collapse">
+					{{mf 'course.group.confirmOrgClose' "Forget it"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+	{{/if}}
 </template>
