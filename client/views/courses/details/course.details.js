@@ -175,19 +175,19 @@ Template.coursedetails.rendered = function() {
 
 var expandible = function(template) {
 	template.onCreated(function() {
-		this.expanded = new ReactiveVar();
+		this.expander = Random.id();
 	});
 	template.helpers({
 		'expanded': function() {
-			return Template.instance().expanded.get();
+			return Session.equals('verify', Template.instance().expander);
 		}
 	});
 	template.events({
 		'click .js-expand': function(event, instance) {
-			instance.expanded.set(true);
+			Session.set('verify', instance.expander);
 		},
 		'click .js-collapse': function(event, instance) {
-			instance.expanded.set(false);
+			Session.set('verify', false);
 		},
 	});
 };
@@ -197,21 +197,43 @@ Template.courseGroupRemove.helpers(groupNameHelpers);
 Template.courseGroupRemove.helpers({
 	'mayPromote': function() {
 		var user = Meteor.user();
-		return user && user.mayPromoteWith(this);
+		return user && user.mayPromoteWith(this.groupId);
 	}
 });
 
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
-		Meteor.call('groupPromotesCourse', instance.data._id, false, function(error) {
+		Meteor.call('groupPromotesCourse', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
 				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
 			} else {
 				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
-				instance.expanded.set(false);
+				Session.set('verify', false);
 			}
 		});
 	}
 });
 
+
 expandible(Template.courseGroupMakeEditor);
+Template.courseGroupMakeEditor.helpers(groupNameHelpers);
+Template.courseGroupMakeEditor.helpers({
+	'mayMakeEditor': function() {
+		// Show the option if the user is an editor by themselves and the group is not yet in editors
+		return this.course.editableBy(Meteor.user())
+		    && this.course.groupEditors.indexOf(this.groupId) === -1;
+	},
+});
+
+Template.courseGroupRemove.events({
+	'click .js-makeEditor': function(event, instance) {
+		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
+			if (error) {
+				addMessage(mf('course.group.makeEditorFailed', "Failed to give group editing rights"), 'danger');
+			} else {
+				addMessage(mf('course.group.groupMadeEditor', "Group members can now edit the course"), 'success');
+				Session.set('verify', false);
+			}
+		});
+	}
+});
