@@ -84,8 +84,11 @@ Meteor.methods({
 		}
 
 		var updates = {};
-		if (changes.short) {
+		if (changes.short !== undefined) {
 			var short = changes.short.trim();
+			if (short.length === 0) {
+				short = ''+(group.name || changes.name);
+			}
 			updates.short = short.substring(0, 7);
 		}
 		if (changes.hasOwnProperty('name')) {
@@ -107,6 +110,10 @@ Meteor.methods({
 		if (changes.hasOwnProperty('backgroundUrl')) {
 			updates.backgroundUrl = changes.backgroundUrl.substring(0, 1000);
 		}
+
+		// Don't update nothing
+		if (Object.getOwnPropertyNames(updates).length === 0) return;
+
 		if (isNew) {
 			return Groups.insert(_.extend(group, updates));
 		} else {
