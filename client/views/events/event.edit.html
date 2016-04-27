@@ -84,15 +84,13 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input
+					<input id="edit_event_duration"
 						type="number"
-						id="edit_event_duration"
 						value="{{timeformat Duration}}"
-						size="5"
-					/>
-				</div>
-			</div>
-		</div>
+						size="5"/>
+				</div><!-- /.input-group -->
+			</div><!-- /.show_duration -->
+		</div><!-- /.course_event_edit_header -->
 		<div class="course_event_edit_body">
 			<div class="description">
 				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
@@ -101,8 +99,8 @@
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</span>
 					{{>eventDescriptionEdit description}}
-				</div>
-			</div>
+				</div><!-- /.input-group -->
+			</div><!-- /.description -->
 
 			{{#if showRegionSelection}}
 				<div class="region_selection">
@@ -117,24 +115,20 @@
 							</option>
 						{{/each}}
 					</select>
-				</div>
+				</div><!-- /.region_selection -->
 			{{/if}}
 
 			<div class="files">
 				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
-				<!-- <span class="glyphicon glyphicon-file"></span> -->
-				<input
-					type="file"
-					name="…"
-					value="Upload file"
-					class="eventFileInput"
+				<input class="eventFileInput"
 					id="edit_files"
-				/>
-				<button
+					name="…"
+					type="file"
+					value="Upload file"/>
+				<button class="eventFileUpload"
+					role="button"
 					style="display:none"
-					type="button"
-					class="eventFileUpload"
-					role="button">
+					type="button">
 					<span class="fa fa-upload"></span>&nbsp;
 					Start Upload
 				</button>
@@ -143,14 +137,14 @@
 						{{> eventAttachmentsEdit}}
 					{{/each}}
 				</table>
-			</div>
+			</div><!-- /.files -->
 
 			{{>eventEditLocation}}
 
 			<div class="room">
 				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
 				<span class="addintion"> {{mf '_inputField.optional' '(optional)'}}</span>
-				<div id="editform_room" name="editform_room" class="input-group">
+				<div class="input-group" id="editform_room" name="editform_room">
 					<span class="input-group-addon">
 						<span class="fa fa-map-signs"></span>
 					</span>
@@ -160,21 +154,19 @@
 						size="40"
 						value="{{room}}"
 					/>
-				</div>
-			</div>
+				</div><!-- /.input-group -->
+			</div><!-- /.room -->
 
 			<div class="options">
 				<div class="checkbox">
 					<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
-						<input
+						<input class="-eventInternal"
 							type="checkbox"
-							class="-eventInternal"
-							{{isInternal}}
-						>
+							{{isInternal}}/>
 						{{mf 'event.edit.internal' 'Internal'}}
 					</label>
-				</div>
-			</div>
+				</div><!-- /.checkbox -->
+			</div><!-- /.options -->
 
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
@@ -185,45 +177,44 @@
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
 				</button>
-			{{#if affectedReplicaCount}}
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas'
-							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
-							COUNT=affectedReplicaCount
-						}}
+				{{#if affectedReplicaCount}}
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="updateReplicas">
+							{{mf 'event.edit.updateReplicas'
+								"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+								COUNT=affectedReplicaCount
+							}}
 
-						<small>{{mf 'event.edit.updateReplicas.times'
-							"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
-							COUNT=affectedReplicaCount
-						}}</small>
-					</label>
-				</div>
-			{{/if}}
-			</div>
-		</div>
-	</div>
+							<small>{{mf 'event.edit.updateReplicas.times'
+								"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+								COUNT=affectedReplicaCount
+							}}</small>
+						</label>
+					</div><!-- /.checkbox -->
+				{{/if}}
+			</div><!-- /.edit_buttons -->
+		</div><!-- /.course_event_edit_body -->
+	</div><!-- /.course_event_edit -->
 	</form>
 </template>
 
 <template name="eventDescriptionEdit">
-	<div
-		id="edit_event_description"
+	<div id="edit_event_description"
 		data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
 		{{{this}}}
-	</div>
+	</div><!-- /#edit_event_description -->
 </template>
 
 <template name="eventAttachmentsEdit">
 	<tr id="row-{{_id}}">
-	<td style="padding-right:5px;">
-		<a href="{{file}}" target="_blank">{{filename}}</a>
-	</td>
-	<td>
-		<button role="button" class="fileDelete close" type="button">
-			<span class="glyphicon glyphicon-remove"></span>
-		</button>
-	</td>
-</tr>
+		<td style="padding-right:5px;">
+			<a href="{{file}}" target="_blank">{{filename}}</a>
+		</td>
+		<td>
+			<button class="fileDelete close" role="button" type="button">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+		</td>
+	</tr>
 </template>

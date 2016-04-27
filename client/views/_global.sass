@@ -6,6 +6,7 @@
 	@extend .glyphicon
 	@extend .glyphicon-ok
 	color: $checkmark-color
+	padding-left: 5px
 
 .remove-btn
 	@extend .glyphicon
@@ -18,6 +19,10 @@
 .dropdown-menu
 	+box-shadow-big($default-shadow)
 	border-radius: 0px
+	> li > a
+		padding-left: 12px
+		&:hover
+			cursor: pointer
 
 input[type="text"],
 input[type="password"],
@@ -33,6 +38,8 @@ input[type="email"]
 	&-inner
 		max-width: none
 
+.select
+	@extend .form-control
 // .btn-primary
 // 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
 // 	&:hover

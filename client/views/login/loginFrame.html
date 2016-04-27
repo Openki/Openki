@@ -5,14 +5,14 @@
 				<h3>
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 				</h3>
-				<button href="{{pathFor 'userprofile' _id=currentUser._id}}" role="button">
+				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					<span class="glyphicon glyphicon-share-alt"></span>
 					{{mf 'login.frame.profile' 'Visit my profile'}}
-				</button>
-				<button href="{{pathFor 'profile'}}" role="button">
+				</a>
+				<a href="{{pathFor 'profile'}}">
 					<span class="glyphicon glyphicon-cog"></span>
 					{{mf 'login.frame.settings' 'Account settings'}}
-				</button>
+				</a>
 				<button class="js-logout-btn"
 					href="#"
 					role="button">

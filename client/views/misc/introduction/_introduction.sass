@@ -23,20 +23,17 @@
 .introduction-show-btn,
 .introduction-hide-btn
 	@extend .btn
+	@extend .btn-link
 	margin-left: 10px
 	&::after
 		color: $gray-light
 		font-family: FontAwesome
 
-.introduction-show-btn
-	@extend .btn-success
-	&::after
-		content: '\f107'
+.introduction-show-btn::after
+	content: '\f107'
 
-.introduction-hide-btn
-	@extend .btn-default
-	&::after
-		content: '\f106'
+.introduction-hide-btn::after
+	content: '\f106'
 
 .introduction-content
 	+grid(12)

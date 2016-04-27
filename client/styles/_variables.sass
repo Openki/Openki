@@ -3,7 +3,7 @@
 
 //== Colors
 //
-// --------------------------------------------------
+// Based on variables from _base-colors and _bootstrap
 
 $orange:                         #f98f39
 $yellow:                         #f3f981
@@ -16,16 +16,20 @@ $default-gray:                   #868383
 $default-light-grey:             #cccccc
 $brand-primary-hover:            darken($brand-primary, 10%)
 
-// Navbar
+// == Navbar
 $site-stage-color:               $default-black
 $navbar-link-covering-bg:        lighten($brand-primary, 10%)
+$navbar-default-font-size:       large
 
-// Footer
+
+// ==Footer
 $footer-default-bg:              $navbar-default-bg
 $footer-default-color:           $navbar-default-color
 $footer-default-link-color:      $navbar-default-link-color
 $footer-default-link-hover-color: $navbar-default-link-hover-color
 $footer-default-link-hover-bg:   $navbar-link-covering-bg
+$footer-height:                  50px
+$footer-default-font-size:       $navbar-default-font-size
 
 
 // Group colors
@@ -129,8 +133,3 @@ $screen-xsm:                     550px
 //
 // --------------------------------------------------
 $default-transition-time:        0.5s
-
-$footer-height:                  50px
-
-$navbar-default-font-size:       large
-$footer-default-font-size:       $navbar-default-font-size

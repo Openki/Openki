@@ -104,6 +104,7 @@ Template.find.onCreated(function() {
 
 
 Template.find.onRendered(function() {
+	this.$(".js-remove-category-btn").tooltip();
 	this.$('.dropdown').on('show.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 	});
@@ -198,8 +199,8 @@ Template.find.events({
 
 	'click .js-toggle-subcategories': function(event, instance) {
 		$(".js-sub-category" + "." + this).toggle();
-		$(".js-toggle-subcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".js-toggle-subcategories." + this + " span").toggleClass('glyphicon-minus');
+		$(".js-toggle-subcategories." + this + " span").toggleClass('fa-angle-down');
+		$(".js-toggle-subcategories." + this + " span").toggleClass('fa-angle-up');
 		event.stopPropagation();
 	},
 
@@ -318,8 +319,8 @@ Template.find.helpers({
 		return Template.instance().coursesReady.get();
 	},
 
-	'allRegions': function() {
-		return (Session.get('region') == 'all');
+	'regionSelected': function() {
+		return (Session.get('region') != 'all');
 	},
 
 	'isMobile': function() {

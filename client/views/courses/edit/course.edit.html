@@ -51,14 +51,14 @@
 																{{checkCategory}}/>
 															{{categoryName}}
 														</label>
-													</div>
+													</div><!-- /.checkbox -->
 												</li>
 											{{/each}}
 										</ul>
 									</li>
 								{{/each}}
 							</ul>
-						</div>
+						</div><!-- /#edit_categories -->
 					{{else}}
 						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
 						{{#if categories}}
@@ -72,7 +72,7 @@
 							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
 						</button>
 					{{/if}}
-				</div>
+				</div><!-- /#editform_categories -->
 
 				<div class="course_edit_roles">
 					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
@@ -122,9 +122,9 @@
 						{{mf 'course.edit.cancel_btn' 'Cancel'}}
 					</button>
 				</div><!-- /.course_edit_finishbtns -->
-			</div>
+			</div><!-- /.course_edit_body -->
 		</form>
-	</div>
+	</div><!-- /.course_edit -->
 </template>
 
 <template name="courseEditRole">

@@ -2,9 +2,9 @@
 // --------------------------------------------------
 
 // Define percentage of how much btn-bg should get darkened for each step
-$level-dark: 5%
-$level-darker: 10%
-$level-darkest: 15%
+$level-dark: 3%
+$level-darker: 6%
+$level-darkest: 9%
 
 // Map darkening steps
 $btn-default-bg-color-steps: (default: $btn-default-bg, dark: darken($btn-default-bg, $level-dark), darker: darken($btn-default-bg, $level-darker), darkest: darken($btn-default-bg, $level-darkest))
@@ -22,3 +22,10 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
 		+gradient-vertical(map-get($btn-bg-color-steps, default), map-get($btn-bg-color-steps, darker))
 		&:hover
 			+gradient-vertical(map-get($btn-bg-color-steps, dark), map-get($btn-bg-color-steps, darkest))
+
+.btn-default
+	&.active
+		+gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest))
+
+.btn
+	+transition(border-color 0.15s ease-in-out)

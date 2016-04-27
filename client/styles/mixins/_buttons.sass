@@ -14,6 +14,12 @@
 		+gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%)
 		border: 1px solid $btn-danger-border
 
+=btn-go()
+	@extend .btn-default
+	&:hover
+		+gradient-vertical(map-get($btn-success-bg-color-steps, dark), map-get($btn-success-bg-color-steps, darkest), 0%, 100%)
+		border: 1px solid $btn-success-border
+
 =btn-thin()
 	@extend .btn
 	padding: 3px 12px

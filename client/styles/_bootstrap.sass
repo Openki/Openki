@@ -147,8 +147,8 @@ $table-border-color:            #ddd
 $btn-font-weight:                normal
 
 $btn-default-color:              #333
-$btn-default-bg:                 #f5f4f4
-$btn-default-border:             #ccc
+$btn-default-bg:                 #ffffff // #f5f4f4
+$btn-default-border:             lighten($openki-blue, 40%) // #ccc lighten($openki-light-blue, 1%)
 
 $btn-primary-color:              #fff
 $btn-primary-bg:                 $brand-primary
@@ -167,8 +167,8 @@ $btn-warning-bg:                 $brand-warning
 $btn-warning-border:             darken($btn-warning-bg, 5%)
 
 $btn-danger-color:               #333
-$btn-danger-bg:                  $brand-danger
-$btn-danger-border:              darken($brand-danger, 5%)
+$btn-danger-bg:                  lighten($brand-danger, 5%)
+$btn-danger-border:              darken($btn-danger-bg, 5%)
 
 $btn-link-disabled-color:        $gray-light
 
@@ -528,7 +528,7 @@ $tooltip-bg:                  $brand-primary
 $tooltip-opacity:             1
 
 //** Tooltip arrow width
-$tooltip-arrow-width:         5px
+$tooltip-arrow-width:         4px
 //** Tooltip arrow color
 $tooltip-arrow-color:         $tooltip-bg
 
