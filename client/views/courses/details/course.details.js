@@ -225,7 +225,7 @@ Template.courseGroupMakeEditor.helpers({
 	},
 });
 
-Template.courseGroupRemove.events({
+Template.courseGroupMakeEditor.events({
 	'click .js-makeEditor': function(event, instance) {
 		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {

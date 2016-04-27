@@ -30,7 +30,7 @@ Course.prototype.editableBy = function(user) {
 
 	return isNew // Anybody may create a new course
 		|| privileged(user, 'admin') // Admins can edit all courses
-		|| _.intersect(user.badges, this.editors).length > 0;
+		|| _.intersection(user.badges, this.editors).length > 0;
 };
 
 Courses = new Meteor.Collection("Courses", {
@@ -484,6 +484,42 @@ Meteor.methods({
 				lastEvent: lastEvent
 			} });
 		});
+	},
+
+	groupPromotesCourse: function(courseId, groupId, enable) {
+		var course = Courses.findOne(courseId);
+		if (!course) throw new Meteor.Error(404, "Course not found");
+
+		var group = Groups.findOne(groupId);
+		if (!group) throw new Meteor.Error(404, "Group not found");
+
+		var user = Meteor.user();
+		if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
+
+		var update = {};
+		var op = enable ? '$addToSet' : '$pull';
+		update[op] = { 'groups': group._id };
+
+		Courses.update(course._id, update);
+		if (Meteor.isServer) updateEditors(course._id);
+	},
+
+	groupEditing: function(courseId, groupId, enable) {
+		var course = Courses.findOne(courseId);
+		if (!course) throw new Meteor.Error(404, "Course not found");
+
+		var group = Groups.findOne(groupId);
+		if (!group) throw new Meteor.Error(404, "Group not found");
+
+		var user = Meteor.user();
+		if (!user || !user.mayEdit(course)) throw new Meteor.Error(401, "Not permitted");
+
+		var update = {};
+		var op = enable ? '$addToSet' : '$pull';
+		update[op] = { 'groupEditors': group._id };
+
+		Courses.update(course._id, update);
+		if (Meteor.isServer) updateEditors(course._id);
 	},
 
 	// Recalculate the editors field
