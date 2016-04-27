@@ -7,7 +7,7 @@
 			{{mf 'categories.filter-no-categories-found' 'No categories defined!'}}
 		{{/each}}
 		{{> course_category}}
-	</div>
+	</div><!-- /.courselist -->
 </template>
 
 <template name="category">
@@ -28,7 +28,7 @@
 				{{/each}}
 			</ul>
 		</p>
-	</div>
+	</div><!-- /.categorylist -->
 </template>
 
 <template name="course_by_category">
@@ -36,18 +36,15 @@
 	<br />
 </template>
 
-
-
 <template name="show_categories">
 	<ul class="categories_list">
 		{{#each categories}}
 			<li>
-				<a
-					class='js-category'
-					href="/find?categories={{this}}"
-					data-toggle="tooltip"
+				<a class='js-category'
 					data-html="true"
-					data-original-title="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}">
+					data-original-title="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
+					data-toggle="tooltip"
+					href="/find?categories={{this}}">
 					{{categoryName}}
 				</a>
 			</li>

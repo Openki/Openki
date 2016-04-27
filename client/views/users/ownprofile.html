@@ -9,35 +9,46 @@
 					<div class="background">
 						{{#if editing}}
 							<form class="edit">
-								<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
-								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
-								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
-								<button type="submit" class="save">{{mf 'profile.input.save' "Save"}}</button>
-								<button class="editCancel">{{mf 'profile.input.cancel' 'Cancel'}}</button>
+								<p>{{mf 'profile.input.username' 'Username:'}}
+									<input type="text" id="editform_username" value="{{user.name}}"/>
+								</p>
+								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}
+									<input type="text" id="editform_email" value="{{user.email}}"/>
+								</p>
+								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}}
+									<input type="checkbox" id="privacy" />
+								</p>
+								<button type="submit" class="save">
+									{{mf 'profile.input.save' "Save"}}
+								</button>
+								<button class="editCancel">
+									{{mf 'profile.input.cancel' 'Cancel'}}
+								</button>
 							</form>
 						{{else}}
 							<table class="table table-hover">
 								<tr class="name">
-									<td>{{mf 'profile.username' 'Username:'}}</td> <td>{{user.name}}</td>
+									<td>{{mf 'profile.username' 'Username:'}}</td>
+									<td>{{user.name}}</td>
 								</tr>
 								{{#if user.have_email}}
-								<tr class="email">
-									<td>
-										{{mf 'profile.email' 'E-Mail:'}}
-									</td>
-									<td>
-										{{user.email}}
-										<span class="descr_small"> {{verifiedEmail}} </span>
-										&nbsp;
-										{{#unless user.veryfiedEmailTrue}}
-										<button class="verify">
-											<span class="glyphicon glyphicon-ok-circle"></span>
+									<tr class="email">
+										<td>
+											{{mf 'profile.email' 'E-Mail:'}}
+										</td>
+										<td>
+											{{user.email}}
+											<span class="descr_small"> {{verifiedEmail}} </span>
 											&nbsp;
-											{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-										</button>
-										{{/unless}}
-									</td>
-								</tr>
+											{{#unless user.veryfiedEmailTrue}}
+											<button class="verify">
+												<span class="glyphicon glyphicon-ok-circle"></span>
+												&nbsp;
+												{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+											</button>
+											{{/unless}}
+										</td>
+									</tr>
 								{{/if}}
 								<tr class="privacy">
 									<td> {{mf 'profile.privacySettings' 'Privacy settings:'}}</td>
@@ -57,8 +68,8 @@
 							</table>
 							<button class="edit">{{mf 'profile.edit' 'Edit'}}</button>
 						{{/if}}
-					</div>
-				</div>
+					</div><!-- /.background -->
+				</div><!-- /.description -->
 				<div class="password">
 					{{#if changingPass}}
 						<form class="passChange">
@@ -74,14 +85,18 @@
 								{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
 								<input type="password" id="newpassword_confirm" value=""/>
 							</label>
-							<button type="submit" class="save changePassConfirm">{{mf 'profile.changePass' 'Change my password'}}</button>
-							<button class="changePassCancel">{{mf 'profile.changePassCancel' 'Cancel'}}</button>
+							<button type="submit" class="save changePassConfirm">
+								{mf 'profile.changePass' 'Change my password'}}
+							</button>
+							<button class="changePassCancel">
+								{{mf 'profile.changePassCancel' 'Cancel'}}
+							</button>
 						</form>
 					{{else}}
 						<button class="changePass">{{mf 'profile.changePass' 'Change my password'}}</button>
-				{{/if}}
-				</div>
-			</div>
+					{{/if}}
+				</div><!-- /.password -->
+			</div><!-- /.infos -->
 			<div class="groupList">
 				<h3> {{mf 'profile.groups' 'My groups:'}}</h3>
 				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
@@ -91,11 +106,11 @@
 				other {member of # groups:}}
 				{{/mf}}
 				<ul class="groups">
-				{{#each user.groups}}
-					<li>
-						<span class="group">{{name}}</span>
-					</li>
-				{{/each}}
+					{{#each user.groups}}
+						<li>
+							<span class="group">{{name}}</span>
+						</li>
+					{{/each}}
 				</ul>
 				<a href="{{pathFor 'groupDetails' _id='create'}}">
 					<button class="-createGroup createGroup">
@@ -103,29 +118,35 @@
 						{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 					</button>
 				</a>
-			</div>
+			</div><!-- /.groupList -->
 			<div class="deleteFrame">
 				{{#if verifyDelete}}
 					<div class="pleaseConfirm">
 						{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
-						<button class="verifycancel cancelDeletion">{{mf 'profile.deletecancel' 'Cancel'}}</button>
-						<button class="confirmdelete">{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}</button>
-					</div>
+						<button class="verifycancel cancelDeletion">
+							{{mf 'profile.deletecancel' 'Cancel'}}
+						</button>
+						<button class="confirmdelete">
+							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
+						</button>
+					</div><!-- /.pleaseConfirm -->
 				{{else}}
-					<button class="delete">{{mf 'profile.delete' 'Delete my account'}}</button>
+					<button class="delete">
+						{{mf 'profile.delete' 'Delete my account'}}
+					</button>
 				{{/if}}
-			</div>
+			</div><!-- /.deleteFrame -->
 			<div class="translate">
 				<a href="/translate">
 					<i class="fa fa-language"></i>
 					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 				</a>
-			</div>
+			</div><!-- /.translate -->
 			<div class="list_small courses">
 				<hr>
 				<h3>{{mf 'profile.my_courses' 'My Courses:'}}</h3>
 				{{> courselist courses}}
-			</div>
+			</div><!-- /.list_small -->
 		{{/unless}}
-	</div>
+	</div><!-- /.profile -->
 </template>

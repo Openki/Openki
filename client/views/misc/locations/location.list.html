@@ -1,32 +1,26 @@
 <template name="locationlist">
 	<div class="locationlist">
 		<h1>{{mf 'locations.list.title' 'Locations'}}</h1>
-	Publically visible locations in {{region}}:    <!-- TODO: -->
+		Publically visible locations in {{region}}:    <!-- TODO: -->
 		<div class="">
 			{{#each locations}}
 				{{> location}}
 			{{else}}
 				no locations
 			{{/each}}
-
 			{{> location_edit}}
 		</div>
-	</div>
+	</div><!-- /.locationlist -->
 </template>
-
-
 
 <template name="location">
 	<div class="locationlist_location location">
 		<a href="{{pathFor 'locationDetails'}}">
 			<div class="name"> {{name}}</div>
 			<div class="description">{{description}} </div>
-
 			{{#if mayHost}}
-			<div class="mylocation">You can host here</div>
+				<div class="mylocation">You can host here</div>
 			{{/if}}
 		</a>
-	</div>
+	</div><!-- /.locationlist_location -->
 </template>
-
-

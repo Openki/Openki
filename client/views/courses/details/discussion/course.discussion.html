@@ -6,17 +6,17 @@
 				&nbsp;
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
-		</div>
+		</div><!-- /.course-details-component-titlebar -->
 		{{> post newPost}}
 		{{#if havePosts}}
 			{{#each posts}}
 				<div class="discussion-conversation">
 					{{> post}}
-				</div>
+				</div><!-- /.discussion-conversation -->
 			{{/each}}
 		{{/if}}
-	</div>
-</template>
+	</div><!-- /.course-details-component.discussion -->
+</template><!-- /discussion -->
 
 <template name="post">
 	{{#if editing}}
@@ -30,25 +30,22 @@
 	{{#if allowResponse}}
 		{{> post newResponse}}
 	{{/if}}
-</template>
+</template><!-- /post -->
 
 <template name="postShow">
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button
-					type="button"
-					class="-edit discussion-reply-btn"
-					role="button">
+				<button class="-edit discussion-reply-btn"
+					role="button"
+					type="button">
 					<span class="fa fa-reply"></span>
 					&nbsp;
 					{{mf 'course.discussion.comment_answer' 'Answer'}}
 				</button>
-			</div>
+			</div><!-- /.discussion-reply -->
 		{{else}}
-			<button
-				type="button"
-				class="-edit discussion-post-new-btn">
+			<button class="-edit discussion-post-new-btn" type="button">
 				<span class="glyphicon glyphicon-pencil"></span>
 				&nbsp;
 				{{mf 'course.discussion.write_comment' 'Write a comment'}}
@@ -60,35 +57,31 @@
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
 					{{> profileLink userId}}
-					<span
-						class="discussion-post-time"
+					<span class="discussion-post-time"
 						title="{{dateformat time_created}}">
 						{{fromNow time_created}}
 					</span>
 					{{#if time_updated}}
-						<span
-							class="comment-time-updated"
+						<span class="comment-time-updated"
 							title="{{dateformat time_updated}}">
 							last update:{{fromNow time_updated}}
 						</span>
 					{{/if}}
 					{{#if mayDelete}}
-						<button
-							type="button"
-							class="discussion-delete-btn delete"
-							role="button">
+						<button class="discussion-delete-btn delete"
+							role="button"
+							type="button">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
 					{{/if}}
 					{{#if mayEdit}}
-						<button
-							type="button"
-							class="-edit discussion-edit-btn"
-							role="button">
+						<button class="-edit discussion-edit-btn"
+							role="button"
+							type="button">
 							<span class="glyphicon glyphicon-edit"></span>
 						</button>
 					{{/if}}
-				</div>
+				</div><!-- /.disucssion-post-header -->
 				<div class="discussion-post-body">
 					{{#if this.title}}
 						<h4 class="discussion-post-title">
@@ -96,11 +89,11 @@
 						</h4>
 					{{/if}}
 					<p>{{text}}</p>
-				</div>
-			</div>
-		</div>
+				</div><!-- /.discussion-post-body -->
+			</div><!-- /.discussion-post-content -->
+		</div><!-- /{{postClass}} -->
 	{{/if}}
-</template>
+</template><!-- /postShow -->
 
 <template name="postEdit">
 	<div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
@@ -122,27 +115,20 @@
 						last update:{{fromNow time_updated}}
 					</span>
 				{{/if}}
-			</div>
+			</div><!-- /.discussion-edit-header -->
 			<div class="discussion-edit-body">
-				<input
-					type="text"
-					class="-postTitle discussion-edit-title"
+				<input class="-postTitle discussion-edit-title"
 					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
-					value="{{title}}"
-				/>
-				<textarea
-					class="-postText discussion-edit-text"
+					type="text"
+					value="{{title}}"/>
+				<textarea	class="-postText discussion-edit-text"
 					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">
 					{{text}}
 				</textarea>
-				<button
-					type="button"
-					class="discussion-cancel-btn cancel">
+				<button class="discussion-cancel-btn cancel" type="button">
 					{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
 				</button>
-				<button
-					type="button"
-					class="discussion-save-btn post">
+				<button	class="discussion-save-btn post" type="button">
 					{{#if new}}
 						{{#if parentId}}
 							{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
@@ -155,26 +141,22 @@
 				</button>
 				{{#if new}}
 					<label class="discussion-toggle-anonymous">
-						<input
+						<input class='toggleAnonymous'
 							type='checkbox'
-							class='toggleAnonymous'
 							{{anonChecked}}
-							{{anonDisabled}}
-						/>
+							{{anonDisabled}}/>
 						{{mf 'course.discussion.anon' 'Anonymous comment'}}
 					</label>
 				{{/if}}
-			</div>
-		</div>
-	</div>
-</template>
+			</div><!-- /.discussion-edit-body -->
+		</div><!-- /.discussion-edit-content -->
+	</div><!-- /{{postClass}} -->
+</template><!-- /postEdit -->
 
 
 <template name="profileLink">
 	{{#if this}}
-		<a
-			class="discussion-profile-link"
-			href="/user/{{this}}/{{username this}}">
+		<a class="discussion-profile-link" href="/user/{{this}}/{{username this}}">
 			{{username this}}
 		</a>
 	{{else}}
@@ -182,22 +164,18 @@
 			Anonymous
 		</span>
 	{{/if}}
-</template>
+</template><!-- /profileLink -->
 
 <template name="profileIcon">
 	<div class="discussion-thumb">
 		{{#if this}}
 			<a href="/user/{{this}}/{{username this}}">
-				<img
-					class="discussion-profile-icon"
-					src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
-				/>
+				<img class="discussion-profile-icon"
+					src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
 			</a>
 		{{else}}
-			<img
-				class="discussion-profile-icon"
-				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
-			/>
+			<img class="discussion-profile-icon"
+				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
 		{{/if}}
-	</div>
-</template>
+	</div><!-- /.discussion-thumb -->
+</template><!-- /profileIcon -->

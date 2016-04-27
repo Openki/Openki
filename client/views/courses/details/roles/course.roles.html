@@ -11,16 +11,16 @@
 				}
 			{{/mf}}
 		</h4>
-	</div>
+	</div><!-- /.courseDetails_participants_count -->
 	{{#if members}}
-	<div class="roles">
-		{{#each members}}
-		{{> member_roles member=this course=..}}
-		<div class="horizontal-line"></div>
-		{{/each}}
-	</div>
+		<div class="roles">
+			{{#each members}}
+				{{> member_roles member=this course=..}}
+				<div class="horizontal-line"></div>
+			{{/each}}
+		</div><!-- /.roles -->
 	{{/if}}
-</template>
+</template><!-- /roles -->
 
 <template name="member_roles">
 	<div class="member_role">
@@ -29,11 +29,11 @@
 		{{#if hasRoles}}
 		<ul class='roles_list'>
 			{{#each member.roles}}
-			<li class='{{this}}'>
-				<span class="{{rolelist_icon this}}"></span>
-				&nbsp;
-				<span class="role_short">{{mf roleShort}}</span>
-			</li>
+				<li class='{{this}}'>
+					<span class="{{rolelist_icon this}}"></span>
+					&nbsp;
+					<span class="role_short">{{mf roleShort}}</span>
+				</li>
 			{{/each}}
 		</ul>
 		{{/if}}
@@ -47,15 +47,15 @@
 		</button>
 		{{/if}}
 		{{#if editableMessage}}
-		<div class="member_comment">
-			{{> editable editableMessage}}
-		</div>
+			<div class="member_comment">
+				{{> editable editableMessage}}
+			</div><!-- /.member_comment -->
 		{{else}}
-		{{#if member.comment}}
-		<div class="member_comment">
-				{{member.comment}}
-		</div>
+			{{#if member.comment}}
+				<div class="member_comment">
+						{{member.comment}}
+				</div><!-- /.member_comment -->
+			{{/if}}
 		{{/if}}
-		{{/if}}
-	</div>
-</template>
+	</div><!-- /.member_role -->
+</template><!-- /member_roles -->

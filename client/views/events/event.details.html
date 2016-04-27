@@ -9,7 +9,7 @@
 			</p>
 		{{/if}}
 		{{> event}}
-	</div>
+	</div><!-- /.course_event_detail -->
 </template>
 
 <template name="eventNotFound">
@@ -35,12 +35,12 @@
 				&nbsp;
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
-		</div>
+		</div><!-- /.course_event_date -->
 		<div class="course_event_lower_section">
 			<div class="head">
 				<div class="course_event_title">
 					<h3>{{this.title}}</h3>
-				</div>
+				</div><!-- /.course_event_title -->
 				<div class="location">
 					{{#if location.name}}
 						{{#if location._id}}
@@ -61,19 +61,19 @@
 						<span class="fa fa-map-marker"></span>
 						{{location.address}}
 					{{/if}}
-				</div>
+				</div><!-- /.location -->
 				{{> groupList}}
 				<p>{{{description}}}</p>
-			</div>
+			</div><!-- /.head -->
 			{{#if haveLocation}}
 				<div class="mapBox">
 					{{>map markers=eventMarkers}}
-				</div>
+				</div><!-- /.mapBox -->
 			{{/if}}
-		</div>
+		</div><!-- /.course_event_lower_section -->
 		<div class="event_detail_description">
 
-		</div>
+		</div><!-- /.event_detail_description -->
 		{{#if files}}
 			<div class="event_detail_description">
 				<p>Related Files:</p>
@@ -82,65 +82,63 @@
 						{{> eventAttachments}}
 					{{/each}}
 				</ul>
-			</div>
+			</div><!-- /.event_detail_description -->
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="eventEdit_buttons">
 				<div class="btn-toolbar" role="toolbar">
 					<div class="btn-group" role="group">
-						<button type="button" class="eventEdit btn btn-success" role="button">
+						<button class="eventEdit btn btn-success" type="button" role="button">
 							<span class="glyphicon glyphicon-edit"></span>
 							{{mf 'course.details.edit_btn' 'Edit'}}
 						</button>
 						{{#if replicating}}
-							<button type="button" class="-closeReplication btn btn-warning" role="button">
+							<button class="-closeReplication btn btn-warning" type="button" role="button">
 								<span class="glyphicon glyphicon-minus"></span>
 								{{mf 'course.details.repl_menu_btn'}}
 							</button>
 						{{else}}
-							<button type="button" class="-openReplication btn btn-warning" role="button">
+							<button class="-openReplication btn btn-warning" type="button" role="button">
 								<span class="glyphicon glyphicon-plus"></span>
 								{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 							</button>
 						{{/if}}
-					</div>
+					</div><!-- /.btn-group -->
 					<div class="btn-group" role="group">
-						<button type="button" class="eventDelete btn btn-danger" role="button">
+						<button class="eventDelete btn btn-danger" type="button" role="button">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.details.del_btn' 'Delete'}}
 						</button>
-					</div>
-				</div>
-			</div>
+					</div><!-- /.btn-group -->
+				</div><!-- /.btn-toolbar -->
+			</div><!-- /.eventEdit_buttons -->
 			{{#if replicating}}
 				{{>eventReplication}}
 			{{/if}}
 		{{/if}}
-	</div>
+	</div><!-- /.course_event -->
 	{{> groupListing}}
 	<div class="event_options">
 		<a href="{{pathFor 'calEvent' this}}">
-			<button
-				type="button"
-				class="calendar_download"
-				href="#"
-				data-toggle="tooltip"
-				data-placement="top"
-				data-html="true"
+			<button class="calendar_download"
 				data-delay='{"show":"500", "hide":"0"}'
-				data-original-title="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}">
+				data-original-title="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}"
+				data-placement="top"
+				data-toggle="tooltip"
+				href="#"
+				type="button">
 				<span class="glyphicon glyphicon-download"></span>&nbsp;
 				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 			</button>
 		</a>
 		{{> report}}
-	</div>
+	</div><!-- /.event_options -->
 </template>
 
 <template name="eventAttachments">
-<li>
-	<p>
-		<a href="{{file}}" target="_blank">{{filename}}</a>
-	</p>
-</li>
+	<li>
+		<p>
+			<a href="{{file}}" target="_blank">{{filename}}</a>
+		</p>
+	</li>
 </template>

@@ -2,23 +2,23 @@
 	<div class="introduction-container">
 		<div class="introduction">
 			<h3>
-					{{#mf KEY='introduction.Title' SITENAME=siteName}}
-					What does {SITENAME} do for you?
-					{{/mf}}
-					{{#if openedIntro}}
-						<button class="js-introduction-toggle-btn introduction-hide-btn">
-							{{mf 'introduction.toggle.hide' 'Hide'}}
-						</button>
-					{{else}}
-						<button class="js-introduction-toggle-btn introduction-show-btn">
-							{{mf 'introduction.toggle.show' 'Show'}}
-						</button>
-					{{/if}}
-					<a class="js-introduction-close-btn"
-						href="#"
-						title="{{mf 'introduction.close.title' 'Close introduction'}}">
-						<span class="remove-btn"></span>
-					</a>
+				{{#mf KEY='introduction.Title' SITENAME=siteName}}
+				What does {SITENAME} do for you?
+				{{/mf}}
+				{{#if openedIntro}}
+					<button class="js-introduction-toggle-btn introduction-hide-btn">
+						{{mf 'introduction.toggle.hide' 'Hide'}}
+					</button>
+				{{else}}
+					<button class="js-introduction-toggle-btn introduction-show-btn">
+						{{mf 'introduction.toggle.show' 'Show'}}
+					</button>
+				{{/if}}
+				<a class="js-introduction-close-btn"
+					href="#"
+					title="{{mf 'introduction.close.title' 'Close introduction'}}">
+					<span class="remove-btn"></span>
+				</a>
 			</h3>
 			<div class="introduction-content">
 				<ul class="introduction-steps">

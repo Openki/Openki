@@ -3,8 +3,8 @@
 		{{#each this}}
 			{{> role_details}}
 		{{/each}}
-	</div>
-</template>
+	</div><!-- /.roles_details -->
+</template><!-- /roles_details -->
 
 <template name="role_details">
 	<div class="role_details role_{{roletype.type}}">
@@ -15,13 +15,13 @@
 			<button class="unsubscribe" name="{{roletype.type}}">
 				{{mf 'course.roles.retract' 'Retract'}}
 			</button>
-		</div>
+		</div><!-- /.enroled_as_title -->
 	{{else}}
 		{{#if enrolling}}
 		<div class="enrol_as_title">
 			<span class="{{roletype.icon}}"></span>&nbsp;
 			{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}
-		</div>
+		</div><!-- /.enrol_as_title -->
 		<div class="enrol_as_options">
 			{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
 			<textarea class='enrol_as_comment'>{{../../member.comment}}</textarea>
@@ -31,7 +31,7 @@
 					<input type="checkbox" class="incognito" value="1" />
 					{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
 				</label>
-			</div>
+			</div><!-- /.checkbox -->
 			{{/if}}
 			<div class="enrol_as_buttons">
 				<button class="subscribe">
@@ -42,16 +42,16 @@
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'course.roles.cancelenrol'  'Cancel'}}
 				</button>
-			</div>
-		</div>
+			</div><!-- /.enrol_as_buttons -->
+		</div><!-- /.enrol_as_options -->
 		{{else}}
-		{{#if maySubscribe roletype.type}}
-		<button type="button" class="enrol" name="participant">
-			<span class="{{roletype.icon}}"></span>&nbsp;
-			{{#with roletype}}{{mf roleSubscribe}}{{/with}}
-		</button>
-		{{/if}}
+			{{#if maySubscribe roletype.type}}
+				<button class="enrol" type="button" name="participant">
+					<span class="{{roletype.icon}}"></span>&nbsp;
+					{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+				</button>
+			{{/if}}
 		{{/if}}
 	{{/if}}
-	</div>
-</template>
+	</div><!-- /.role_details -->
+</template><!-- /role_details -->

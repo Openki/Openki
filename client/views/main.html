@@ -6,9 +6,9 @@
 				<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png" alt="Openki logo">
 				<div class="noscript-message">
 					Please enable javascript
-				</div>
-			</div>
-		</div>
+				</div><!-- /.noscript-message -->
+			</div><!-- /.noscript-message-container -->
+		</div><!-- /.noscript -->
 	</noscript>
 </head>
 
@@ -16,7 +16,7 @@
 	<div id="wrap">
 		<div id="topBar">
 			{{> navbar}}
-		</div>
+		</div><!-- #topBar -->
 		<div id="outer" class={{testWarningClass}}>
 			{{#if showIntro}}
 				{{> introduction}}
@@ -29,16 +29,20 @@
 			<div id="maincontent">
 				{{> yield}}
 				{{> messages}}
-			</div>
-		</div>
+			</div><!-- /#maincontent -->
+		</div><!-- /.{{testWarningClass}} -->
 		<div class="push"></div>
-	</div>
+	</div><!-- /#wrap -->
 	{{> kioskLink}}
 	{{> footer}}
 </template>
 
 <template name="lang_sel">
-	<a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a class="navbar-link dropdown-toggle"
+		aria-expanded="false"
+		data-toggle="dropdown"
+		href="#"
+		role="button">
 		<span class="fa fa-language"></span>&nbsp;
 		{{short}}
 		<span class="caret"></span>

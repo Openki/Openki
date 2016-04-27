@@ -1,18 +1,18 @@
 <template name='loginButton'>
-{{#if loginServicesConfigured}}
-	<a class="loginButton dropdown-toggle navbar-link"
-		data-toggle="dropdown"
-		role="button" 
-		aria-expanded="false">
-	{{#if currentUser}}
-		<span class="glyphicon glyphicon-user"></span>&nbsp;
-		{{currentUser.username}}
-		<span class="caret"></span>
-	{{else}}
-		<span class="fa fa-sign-in"></span>&nbsp;
-		{{mf 'login.navig.unlogged' 'Login/Register'}}
-		<span class="caret"></span>
+	{{#if loginServicesConfigured}}
+		<a class="loginButton dropdown-toggle navbar-link"
+			aria-expanded="false"
+			data-toggle="dropdown"
+			role="button">
+		{{#if currentUser}}
+			<span class="glyphicon glyphicon-user"></span>&nbsp;
+			{{currentUser.username}}
+			<span class="caret"></span>
+		{{else}}
+			<span class="fa fa-sign-in"></span>&nbsp;
+			{{mf 'login.navig.unlogged' 'Login/Register'}}
+			<span class="caret"></span>
+		{{/if}}
+		</a>
 	{{/if}}
-	</a>
-{{/if}}
 </template>

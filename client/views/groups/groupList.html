@@ -1,20 +1,19 @@
 <template name="groupList">
 	<ul class="groups-list">
 		{{#each groups}}
-		<li>
-			{{> groupName}}
-		</li>
+			<li>
+				{{> groupName}}
+			</li>
 		{{/each}}
 	</ul>
 </template>
 
 <template name="groupName">
-	<a
-		class="group"
+	<a class="group"
 		href="{{pathFor 'groupDetails' _id=this}}"
-		data-toggle="tooltip"
 		data-html="true"
-		data-original-title="{{mf 'groupList.show_courses' 'Show all courses of '}} {{name 'full'}}">
+		data-original-title="{{mf 'groupList.show_courses' 'Show all courses of '}} {{name 'full'}}"
+		data-toggle="tooltip">
 		{{name}}
 	</a>
 </template>
