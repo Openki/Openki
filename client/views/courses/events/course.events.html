@@ -19,7 +19,7 @@
 						<div class="course_events_events">
 							{{#each pastEvents}}
 								{{#if this}}
-									{{> small_event}}
+									{{> eventSmall}}
 								{{/if}}
 							{{/each}}
 						</div><!-- /.course_events_events -->
@@ -38,7 +38,7 @@
 					</div><!-- /.courseEvents-titlebar -->
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
-							{{> small_event}}
+							{{> eventSmall}}
 						{{/each}}
 					</div><!-- /.course_events_events -->
 				{{/if}}
@@ -57,7 +57,7 @@
 					</div><!-- /.courseEvents-titlebar -->
 					<div class="course_events_events">
 						{{#each futureEvents}}
-							{{> small_event}}
+							{{> eventSmall}}
 						{{/each}}
 					</div><!-- /.course_events_events -->
 				{{/if}}

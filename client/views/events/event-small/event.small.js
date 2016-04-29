@@ -1,4 +1,4 @@
-Template.small_event.events({
+Template.eventSmall.events({
 	"mouseover .js-location-link": function(event, template){
 		template.$('.event-small').addClass('elevate_child');
 	},
@@ -7,7 +7,7 @@ Template.small_event.events({
 	}
 });
 
-Template.small_event.rendered = function() {
+Template.eventSmall.rendered = function() {
 	this.$('.event-small-header').dotdotdot({
 		height: 55,
 		watch : "window",
