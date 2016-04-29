@@ -1,3 +1,4 @@
+/*
 describe('Frontpage', function () {
   beforeEach(function() {
     // This instructs the webdriver to load the given page. Note that this is
@@ -54,3 +55,4 @@ describe('Frontpage', function () {
     expect(titles[5]).to.equal('Web Design mit HTML und Phyton/PHP');
   });
 });
+/*
