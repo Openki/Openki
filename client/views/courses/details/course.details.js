@@ -1,7 +1,7 @@
 Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id/:slug?',
-		template: 'coursedetails_page',
+		template: 'courseDetailsPage',
 		waitOn: function () {
 			return subs.subscribe('courseDetails', this.params._id);
 		},
@@ -111,7 +111,7 @@ function loadroles(course) {
 }
 
 
-Template.coursedetails_page.helpers({    // more helpers in course.roles.js
+Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
 		return this.editableBy(Meteor.user());
 	},
@@ -133,14 +133,14 @@ Template.coursedetails_page.helpers({    // more helpers in course.roles.js
 	}
 });
 
-Template.show_course_submenu.helpers({
+Template.courseDetailsSubmenu.helpers({
 	hasFiles: function() {
 		var withFiles = {course_id: this.course._id, files: {$exists: 1, $not: {$size: 0}}};
 		return !!Events.findOne(withFiles);
 	},
 });
 
-Template.coursedetails_page.events({
+Template.courseDetailsPage.events({
 	'click .deleteCourse': function () {
 		var self = this;
 		if (pleaseLogin()) return;
@@ -162,7 +162,7 @@ Template.coursedetails_page.events({
 	}
 });
 
-Template.coursedetails_page.rendered = function() {
+Template.courseDetailsPage.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');

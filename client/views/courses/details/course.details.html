@@ -1,6 +1,6 @@
-<template name="coursedetails_page">
-	<div class="coursedetails-page">
-		<div class="coursedetails-column-left">
+<template name="courseDetailsPage">
+	<div class="course-details-page">
+		<div class="course-details-column-left">
 			{{#if edit}}
 				{{> course_edit course}}
 			{{else}}
@@ -27,7 +27,7 @@
 					{{/with}}
 					{{> groupListing course}}
 
-					{{> show_course_submenu}}
+					{{> courseDetailsSubmenu}}
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 						<div class="course-details-edit-buttons">
@@ -54,22 +54,22 @@
 				{{> discussion course}}
 			{{/if}}
 		</div><!-- /.course-details-column-left -->
-		<div class="coursedetails-column-right">
+		<div class="course-details-column-right">
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-			<div class="courseDetails_roles_container">
+			<div class="course-details-roles-container">
 					{{> roles course}}
 					{{> roles_details roles_details}}
-			</div><!-- /.courseDetails_roles_container -->
+			</div><!-- /.course-details-roles-container -->
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
-		</div><!-- /.coursedetails-column-right -->
-	</div><!-- /.coursedetails-page -->
-</template><!-- /coursedetails-page -->
+		</div><!-- /.course-details-column-right -->
+	</div><!-- /.course-details-page -->
+</template>
 
-<template name="show_course_submenu">
+<template name="courseDetailsSubmenu">
 	<div>
 		<nav>
 			<ul class="nav nav-tabs">
@@ -97,7 +97,7 @@
 		</nav>
 		<div class="tab-content">
 			<div class="tab-pane active" id="description">
-				{{> course_description}}
+				{{> courseDetailsDescription}}
 			</div><!-- /.tab-pane#description -->
 		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
@@ -109,12 +109,12 @@
 			</div><!-- /.tab-pane#history -->
 		</div><!-- /.tab-content -->
 	</div>
-</template><!-- /show_course_submenu -->
+</template>
 
-<template name="course_description">
+<template name="courseDetailsDescription">
 	<div>
-		<p class="course_description">
+		<p class="course-details-description">
 			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
 		</p>
 	</div>
-</template><!-- /course_description -->
+</template>
