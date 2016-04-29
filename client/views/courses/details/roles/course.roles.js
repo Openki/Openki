@@ -1,8 +1,8 @@
-Template.role_details.created = function() {
+Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);
 };
 
-Template.role_details.helpers({
+Template.courseRole.helpers({
 	enrolling: function() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe: function() {
@@ -26,14 +26,14 @@ Template.role_details.helpers({
 	}
 });
 
-Template.role_details.events({
-	'click button.enrol': function(e, template) {
+Template.courseRole.events({
+	'click .js-role-enrol-btn': function(e, template) {
 		if (pleaseLogin()) return;
 		template.enrolling.set(true);
 		return false;
 	},
 
-	'click button.subscribe': function (e, template) {
+	'click .js-role-subscribe-btn': function (e, template) {
 		var incognito;
 		if (template.find('.incognito')) {
 			incognito = $(template.find('.incognito')).prop('checked');
@@ -44,18 +44,18 @@ Template.role_details.events({
 		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, incognito);
 
 		// Store the comment
-		var comment = $(template.find('.enrol_as_comment')).val();
+		var comment = $(template.find('.course-role-enrol-comment')).val();
 		Meteor.call("change_comment", this.course._id, comment);
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click button.cancel': function (e, template) {
+	'click .js-role-enrol-cancel-btn': function (e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click button.unsubscribe': function () {
+	'click .js-role-unsubscribe-btn': function () {
 		Meteor.call('remove_role', this.course._id, this.roletype.type);
 		return false;
 	}

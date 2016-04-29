@@ -1,0 +1,57 @@
+.course-roles
+	+grid(12)
+	padding: 0px
+
+.course-role
+	+grid(12)
+	padding: 0px
+
+.course-role-title
+	+grid(12)
+	background: $user-bg
+	border-top: 3px solid $body-bg
+	color: $default-black
+	font-size: large
+	line-height: 1.1
+	padding: 10px 15px
+	vertical-align: middle
+	width: 100%
+
+.js-role-unsubscribe-btn
+	+btn-thin
+	@extend .btn-primary
+	margin: -10px 0px -5px 5px
+
+.course-role-title-enrol
+	+grid(12)
+	background: $brand-primary
+	border-top: 3px solid $body-bg
+	color: $body-bg
+	font-size: large
+	line-height: 1.1
+	padding: 10px 15px
+	width: 100%
+
+.course-role-enrol-options
+	+grid(12)
+	background: $openki-light-blue
+	padding: 10px 12px 11px
+
+.course-role-enrol-comment
+	@extend .form-control
+	margin-top: 5px
+
+.course-role-enrol-btns
+	+grid(12)
+	padding: 13px 0px 0px
+
+.js-role-subscribe-btn
+	@extend .btn
+	@extend .btn-primary
+
+.js-role-enrole-cancel-btn
+	@extend .btn
+	+btn-cancel
+
+.js-role-enrol-btn
+	+big-button-success
