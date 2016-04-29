@@ -9,10 +9,11 @@
 </template>
 
 <template name="groupName">
-	<a class="group"
+	<a class="js-group-label"
 		href="{{pathFor 'groupDetails' _id=this}}"
 		data-html="true"
-		data-original-title="{{mf 'groupList.show_courses' 'Show all courses of '}} {{name 'full'}}"
+		data-original-title="
+			{{mf 'groupList.show_courses' 'Show all courses of '}} {{name 'full'}}"
 		data-toggle="tooltip">
 		{{name}}
 	</a>

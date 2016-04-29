@@ -33,7 +33,7 @@ Template.course.helpers({
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
-	coursestate: function() {
+	courseState: function() {
 		if (this.nextEvent) return 'hasupcomingevents';
 		if (this.lastEvent) return 'haspastevents';
 		return 'proposal';
@@ -64,13 +64,13 @@ Template.course.helpers({
 	},
 
 
-	course_eventlist_hasmore: function() {
+	moreEvents: function() {
 		var today= new Date();
 		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
 		return eventcount > 1 ? (eventcount-1)  : false;
 	},
 
-	hasupcomingevents: function() {
+	hasUpcomingEvents: function() {
 		var today= new Date();
 		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
 	},
@@ -103,15 +103,15 @@ Template.courseStatus.helpers({
 		return !hasRole(this.members, 'host');
 	},
 
-	is_host: function() {
+	userIsHost: function() {
 		return hasRoleUser(this.members, 'host', Meteor.userId());
 	},
 
-	is_team: function() {
+	userInTeam: function() {
 		return hasRoleUser(this.members, 'team', Meteor.userId());
 	},
 
-	is_mentor: function() {
+	userIsMenteor: function() {
 		return hasRoleUser(this.members, 'mentor', Meteor.userId());
 	},
 
@@ -128,17 +128,17 @@ Template.course.onCreated(function() {
 });
 
 Template.course.events({
-	"mouseover a.category": function(event, template){
-		 template.$('.courselist_course').addClass('elevate_child');
+	"mouseover .js-category-label": function(event, template){
+		 template.$('.course').addClass('elevate_child');
 	},
-	"mouseout a.category": function(event, template){
-		 template.$('.courselist_course').removeClass('elevate_child');
+	"mouseout .js-category-label": function(event, template){
+		 template.$('.course').removeClass('elevate_child');
 	},
-	"mouseover a.group": function(event, template){
-		 template.$('.courselist_course').addClass('elevate_child');
+	"mouseover .js-group-label": function(event, template){
+		 template.$('.course').addClass('elevate_child');
 	},
-	"mouseout a.group": function(event, template){
-		 template.$('.courselist_course').removeClass('elevate_child');
+	"mouseout .js-group-label": function(event, template){
+		 template.$('.course').removeClass('elevate_child');
 	}
 });
 

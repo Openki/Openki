@@ -15,12 +15,12 @@ Template.category.helpers({
 	}
 });
 
-Template.show_categories.events({
-	"click .js-category": function(event, template){
+Template.showCategories.events({
+	"click .js-category-label": function(event, template){
 		template.$("[data-toggle='tooltip']").tooltip('hide');
 	}
 });
 
-Template.show_categories.rendered = function() {
+Template.showCategories.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 };

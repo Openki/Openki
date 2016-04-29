@@ -11,7 +11,7 @@ Template.groupName.helpers({
 });
 
 Template.groupName.events({
-	"click .group": function(event, template){
+	"click .js-group-label": function(event, template){
 		template.$("[data-toggle='tooltip']").tooltip('hide');
 	}
 });

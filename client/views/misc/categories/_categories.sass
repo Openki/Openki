@@ -1,4 +1,4 @@
-ul.categories_list
+.categories-list
 	line-height: 23px
 	list-style: none
 	margin-left: -2px
@@ -8,10 +8,11 @@ ul.categories_list
 		margin: 2px
 		position: relative
 
-.js-category
+.js-category-label
 	background: $category-bg
 	padding: 2px 5px
 	&:hover
+		+box-shadow-small($category-hover-shadow)
 		background: $category-hover-bg
 		color: $category-hover-text
 		text-decoration: none

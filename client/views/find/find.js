@@ -143,7 +143,7 @@ var updateCategorySearch = function(event, instance) {
 };
 
 var filterPreview = function(highlightClass, opacity) {
-	$('.courselist_course').not(highlightClass).stop().fadeTo('slow', opacity);
+	$('.course').not(highlightClass).stop().fadeTo('slow', opacity);
 };
 
 Template.find.events({
@@ -204,18 +204,18 @@ Template.find.events({
 		event.stopPropagation();
 	},
 
-	'click .js-category': function(event, instance) {
+	'click .js-category-label': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.js-search-categories').val('');
 		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
 	},
 
-	'mouseover .js-category': function() {
+	'mouseover .js-category-label': function() {
 		filterPreview(('.'+this), 0.33);
 	},
 
-	'mouseout .js-category': function() {
+	'mouseout .js-category-label': function() {
 		filterPreview(('.'+this), 1);
 	},
 

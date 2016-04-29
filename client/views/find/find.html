@@ -119,7 +119,7 @@
 					<ul class="filter-selected-categories">
 					{{#each categories}}
 						<li>
-							<a class="js-category" href="#">{{categoryName}}</a>
+							<a class="js-category-label" href="#">{{categoryName}}</a>
 							<span class="remove-btn js-remove-category-btn"
 								data-toggle="tooltip"
 								data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
@@ -142,7 +142,7 @@
 						{{#if availableCategories}}
 							{{#each availableCategories}}
 								<li class="{{this}}">
-									<a class="js-category {{#if availableSubcategories this}}main-category{{/if}}">
+									<a class="js-category-label {{#if availableSubcategories this}}main-category{{/if}}">
 										{{categoryName}}
 										{{#if availableSubcategories this}}
 											<small class="js-toggle-subcategories {{this}}"
@@ -154,7 +154,7 @@
 								</li>
 								{{#each availableSubcategories this}}
 									<li class="js-sub-category {{..}}">
-										<a class="js-category" href="#">{{categoryName}}</a>
+										<a class="js-category-label" href="#">{{categoryName}}</a>
 									</li>
 								{{/each}}
 							{{/each}}

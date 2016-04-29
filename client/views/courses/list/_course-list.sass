@@ -3,17 +3,8 @@
 	margin-left: -5px
 	padding: 0 0 10px
 	width: calc(#{"100% + 10px"}) !important
-	.event_results
-		+grid(12, 4, inherit, 3)
-		padding: 0px
-		.course_event
-			height: 200px
-			margin: 8px
-	button.-search_all_regions
-		+btn-thin
-		@extend .btn-primary
 
-.courselist_course_container
+.course-container
 	+grid(6, inherit, 4, 3)
 	border: 5px solid $body-bg
 	border-bottom-width: 15px
@@ -21,66 +12,73 @@
 	@media (max-width: $screen-xsm)
 		+grid(12)
 		padding: 0px
-	.courselist_course
-		+grid(12)
-		+transition(box-shadow $default-transition-time)
-		border: 7px dashed $openki-light-blue
-		height: 150px
-		padding: 0px
-		&:hover
-			+box-shadow-big($default-shadow)
-			color: $brand-primary
-			h4
-				color: $brand-primary
-		&.haspastevents
-			border-style: solid
-		& > a:hover
-			text-decoration: none
-		h4
-			+transition(color $default-transition-time)
-			color: $default-black
-		.course-name
-			color: $default-black
-			font-size: 22px
-			line-height: 24px
-			margin: 8px 0 0px
-		.team_status,
-		.mentor_status,
-		.host_status
-			text-align: center
-		.yes
-			background-color: $role-yes-bg
-			color: $role-yes-text
-		.no
-			background-color: $role-no-bg
-			color: $role-no-text
-		.yesyou
-			background-color: $user-bg
-			color: $user-text
-		.course_content
-			+grid(9)
-			background: $body-bg
-			padding: 0px 0px 0px 15px
-			&.hasupcomingevents
-				+grid(7.5)
-				padding: 0px 0px 0px 15px
-			ul.categories_list
-				margin-bottom: 0px
-				margin-left: -2px
-				li:nth-child(3),
-				li:nth-child(4),
-				li:nth-child(5),
-				li:nth-child(6)
-					display: none
 
-.courselist_course,
+.course
+	+grid(12)
+	+transition(box-shadow $default-transition-time)
+	border: 7px dashed $openki-light-blue
+	height: 150px
+	padding: 0px
+	&:hover
+		+box-shadow-big($default-shadow)
+		color: $brand-primary
+		h4
+			color: $brand-primary
+	&.haspastevents
+		border-style: solid
+	& > a:hover
+		text-decoration: none
+	h4
+		+transition(color $default-transition-time)
+		color: $default-black
+
+.course-name
+	color: $default-black
+	font-size: 22px
+	line-height: 24px
+	margin: 8px 0 0px
+
+.course-status-team,
+.course-status-mentor,
+.course-status-host
+	text-align: center
+
+.role-needed
+	background-color: $role-needed-bg
+	color: $role-needed-text
+
+.role-occupied
+	background-color: $role-occupied-bg
+	color: $role-occupied-text
+
+.role-occupied-by-user
+	background-color: $user-bg
+	color: $user-text
+
+.course-content
+	+grid(9)
+	background: $body-bg
+	padding: 0px 0px 0px 15px
+	&.hasupcomingevents
+		+grid(7.5)
+		padding: 0px 0px 0px 15px
+	.categories-list
+		margin-bottom: 0px
+		margin-left: -2px
+		li:nth-child(3),
+		li:nth-child(4),
+		li:nth-child(5),
+		li:nth-child(6)
+			display: none
+
+.course,
 .course_main
 	&.hasupcomingevents
 		background: $openki-light-blue
-		.course_content
+		.course-content
 			background: $openki-light-blue
 
-.course_status
+.course-status
 	+grid(3)
 	padding: 0px
 	position: relative
@@ -92,7 +90,7 @@
 		&.tooltip
 			margin-top: 0px
 
-.course_eventlist
+.course-eventlist
 	+grid(4.5)
 	background: $brand-success
 	color: $default-black
@@ -102,23 +100,21 @@
 	right: -7px
 	text-align: center
 	top: -7px
-	.course_eventlist_time,
-	.course_eventlist_date
-		+grid(12)
-		padding: 0px
-	.course_eventlist_location
-		+word-break
-		padding: 0 4px
-		span
-			display: inline
-		.glyphicon-home
-			padding-right: 3px
 
-.course_categories .js-category:hover
-	+box-shadow-small($category-hover-shadow)
+.course-eventlist-time,
+.course-eventlist-date
+	+grid(12)
+	padding: 0px
 
-.course_groups
-	ul.groups-list
+.course-eventlist-location
+	+word-break
+	padding: 0 4px
+	span
+		display: inline
+	.glyphicon-home
+		padding-right: 3px
+
+.course-groups .groups-list
 		bottom: 0px
 		margin: 0px
 		padding: 0px 7px 7px 0px

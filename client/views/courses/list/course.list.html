@@ -27,89 +27,130 @@
 
 <template name="course">
 	{{#if ready}}
-		<div class="courselist_course_container">
+		<div class="course-container">
 			<a href="{{pathFor 'showCourse'}}">
-				<div class="courselist_course
-										{{coursestate}}
-										{{#if hasupcomingevents}}hasupcomingevents{{/if}}
-										{{#if needsHost}}needsHost{{/if}}
-										{{#if needsMentor}}needsMentor{{/if}}
-										{{#each categories}}{{this}} {{/each}}
-										{{#each this.groups}}{{this}} {{/each}}
-										{{courseRegion}}">
-					<div class="course_content {{coursestate}}">
+				<div class="course
+					{{courseState}}
+					{{#if hasUpcomingEvents}}haspcomingevents{{/if}}
+					{{#if needsHost}}needsHost{{/if}}
+					{{#if needsMentor}}needsMentor{{/if}}
+					{{#each categories}}{{this}} {{/each}}
+					{{#each this.groups}}{{this}} {{/each}}
+					{{courseRegion}}">
+					<div class="course-content {{courseState}}">
 						<div class="course-name">
 							<h4>{{name}}</h4>
 						</div><!-- /.course-name -->
-						<div class="course_categories">
-							{{> show_categories}}
-						</div><!-- /.course_categories -->
-					</div><!-- /.course_content -->
-					{{#if hasupcomingevents}}
-						<div class="course_eventlist">
+						<div class="course-categories">
+							{{> showCategories}}
+						</div><!-- /.course-categories -->
+					</div><!-- /.course-content -->
+					{{#if hasUpcomingEvents}}
+						<div class="course-eventlist">
 							{{#each course_eventlist}}
-								<div class="course_eventlist_date">
+								<div class="course-eventlist-date">
 									<span class="fa fa-calendar" aria-hidden="true"></span>
 									{{dateformat_mini this.start}}
-								</div><!-- course_eventlist_date -->
-								<div class="course_eventlist_time">
+								</div><!-- /.course-eventlist-date -->
+								<div class="course-eventlist-time">
 									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
 									{{timeformat this.start}}
-								</div><!-- /.course_evntlist_time -->
-								<!-- Start 'location.name' helper statement -->
+								</div><!-- /.course-eventlist-time -->
 								{{#if location.name}}
-									<div class="course_eventlist_location ellipsis">
+									<div class="course-eventlist-location">
 										<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 										<span>{{location.name}}</span>
-									</div>
-								{{/if}} <!-- /location.name -->
+									</div><!-- /.course-eventlist-location -->
+								{{/if}}
 							{{/each}}
-							{{#if course_eventlist_hasmore}}
-								<div class="course_eventlist_hasmore">
-									+ {{course_eventlist_hasmore}}
+							{{#if moreEvents}}
+								<div class="course-eventlist-hasmore">
+									+ {{moreEvents}}
 									&nbsp;
 									<span class="glyphicon glyphicon-calendar"></span>
-								</div><!-- /.course_eventlist_hasmore -->
+								</div><!-- /.course-eventlist-hasmore -->
 							{{/if}}
-						</div><!-- /.course_eventlist -->
+						</div><!-- /.course-eventlist -->
 					{{else}}
 						{{> courseStatus}}
 					{{/if}}
-					<div class="course_groups">
+					<div class="course-groups">
 						{{> groupList}}
-					</div><!-- /.course_groups -->
-				</div><!-- /.courselist_course -->
+					</div><!-- /.course-groups -->
+				</div><!-- /.course -->
 			</a>
-		</div><!-- /.courselist_course_container -->
+		</div><!-- /.course-container -->
 	{{/if}}
 </template>
 
 <template name="courseStatus">
-	<div class="course_status">
-		<div class="team_status {{#if needsTeam}}no{{else}}yes{{#if is_team}}you{{/if}}{{/if}}"
+	<div class="course-status">
+		<div class="course-status-team
+				{{#if needsTeam}}
+					role-needed
+				{{else}}
+					role-occupied{{#if userInTeam}}-by-user{{/if}}
+				{{/if}}"
 			data-toggle="tooltip"
 			data-placement="right"
-			data-original-title="{{#if needsTeam}}{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}{{else}}{{#if is_team}}{{mf 'course.list.status_titles.u_are_organizer' 'You are organizer'}}{{else}}{{mf 'course.list.status_titles.has_team' 'Has a organizer-team'}}{{/if}}{{/if}}"
+			data-original-title="
+				{{#if needsTeam}}
+					{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}
+				{{else}}
+					{{#if userInTeam}}
+						{{mf 'course.list.status_titles.u_are_organizer' 'You are organizer'}}
+					{{else}}
+						{{mf 'course.list.status_titles.has_team' 'Has a organizer-team'}}
+					{{/if}}
+				{{/if}}"
 			href="#">
 			<span class="glyphicon glyphicon-bullhorn"></span>
-		</div><!-- /.course_status -->
+		</div><!-- /.team-status -->
 		{{#if requiresMentor}}
-			<div class="mentor_status {{#if needsMentor}}no{{else}}yes{{#if is_mentor}}you{{/if}}{{/if}}"
+			<div class="course-status-mentor
+					{{#if needsMentor}}
+						role-needed
+					{{else}}
+						role-occupied{{#if userIsMenteor}}-by-user{{/if}}
+					{{/if}}"
 				data-toggle="tooltip"
 				data-placement="right"
-				data-original-title="{{#if needsMentor}}{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}{{else}}{{#if is_mentor}}{{mf 'course.list.status_titles.u_are_mentor' 'You are mentor'}}{{else}}{{mf 'course.list.status_titles.has_mentor' 'Has a mentor'}}{{/if}}{{/if}}"
+				data-original-title="
+					{{#if needsMentor}}
+						{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}
+					{{else}}
+						{{#if userIsMenteor}}
+							{{mf 'course.list.status_titles.u_are_mentor' 'You are mentor'}}
+						{{else}}
+							{{mf 'course.list.status_titles.has_mentor' 'Has a mentor'}}
+						{{/if}}
+					{{/if}}"
 				href="#">
 				<span class="fa fa-graduation-cap"></span>
-			</div><!-- /.mentor_status -->
+			</div><!-- /.course-status-mentor -->
 		{{/if}}
 		{{#if requiresHost}}
-			<div class="host_status {{#if needsHost}}no{{else}}yes{{#if is_host}}you{{/if}}{{/if}}"
+			<div class="course-status-host
+					{{#if needsHost}}
+						role-needed
+					{{else}}
+						role-occupied{{#if userIsHost}}-by-user{{/if}}
+					{{/if}}"
 				data-toggle="tooltip"
 				data-placement="right"
-				data-original-title="{{#if needsHost}}{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}{{else}}{{#if is_host}}{{mf 'course.list.status_titles.u_are_host' 'You are host'}}{{else}}{{mf 'course.list.status_titles.has_host' 'Has a host'}}{{/if}}{{/if}}"
+				data-original-title="
+					{{#if needsHost}}
+						{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}
+					{{else}}
+						{{#if userIsHost}}
+							{{mf 'course.list.status_titles.u_are_host' 'You are host'}}
+						{{else}}
+							{{mf 'course.list.status_titles.has_host' 'Has a host'}}
+						{{/if}}
+					{{/if}}"
 				href="#">
 				<span class="glyphicon glyphicon-home"></span>
-			</div><!-- /.host_status -->
+			</div><!-- /.course-status-host -->
 		{{/if}}
-	</div><!-- /.course_status -->
+	</div><!-- /.course-status -->
 </template>
