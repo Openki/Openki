@@ -72,7 +72,7 @@
 							{{/if}}
 						</div><!-- /.course-eventlist -->
 					{{else}}
-						{{> courseStatus}}
+						{{> courseRolesStatus}}
 					{{/if}}
 					<div class="course-groups">
 						{{> groupList}}
@@ -83,9 +83,9 @@
 	{{/if}}
 </template>
 
-<template name="courseStatus">
-	<div class="course-status">
-		<div class="course-status-team
+<template name="courseRolesStatus">
+	<div class="course-roles-status">
+		<div class="course-roles-status-team
 				{{#if needsTeam}}
 					role-needed
 				{{else}}
@@ -107,7 +107,7 @@
 			<span class="glyphicon glyphicon-bullhorn"></span>
 		</div><!-- /.team-status -->
 		{{#if requiresMentor}}
-			<div class="course-status-mentor
+			<div class="course-roles-status-mentor
 					{{#if needsMentor}}
 						role-needed
 					{{else}}
@@ -127,10 +127,10 @@
 					{{/if}}"
 				href="#">
 				<span class="fa fa-graduation-cap"></span>
-			</div><!-- /.course-status-mentor -->
+			</div><!-- /.course-roles-status-mentor -->
 		{{/if}}
 		{{#if requiresHost}}
-			<div class="course-status-host
+			<div class="course-roles-status-host
 					{{#if needsHost}}
 						role-needed
 					{{else}}
@@ -150,7 +150,7 @@
 					{{/if}}"
 				href="#">
 				<span class="glyphicon glyphicon-home"></span>
-			</div><!-- /.course-status-host -->
+			</div><!-- /.course-roles-status-host -->
 		{{/if}}
-	</div><!-- /.course-status -->
+	</div><!-- /.course-roles-status -->
 </template>

@@ -1,4 +1,4 @@
-Template.member_roles.helpers({
+Template.courseMember.helpers({
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
@@ -40,24 +40,24 @@ Template.member_roles.helpers({
 	}
 });
 
-Template.roles.helpers({
+Template.courseMembers.helpers({
 	howManyEnrolled: function() {
 		return this.members.length;
 	}
 });
 
 
-Template.member_roles.events({
-	'click button.makeTeam': function(e, template) {
+Template.courseMember.events({
+	'click .js-add-to-team-btn': function(e, template) {
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
-	'mouseover button.makeTeam': function(e, template) {
-		$('.makeTeam_text.' + this.member.user).show(0);
-		$('.makeTeamPlus.' + this.member.user).hide(0);
+	'mouseover .js-add-to-team-btn': function(e, template) {
+		$('.add-to-team-btn-txt.' + this.member.user).show(0);
+		$('.add-to-team-btn-plus.' + this.member.user).hide(0);
 	},
-	'mouseout button.makeTeam': function(e, template) {
-		$('.makeTeam_text.' + this.member.user).hide(0);
-		$('.makeTeamPlus.' + this.member.user).show(0);
+	'mouseout .js-add-to-team-btn': function(e, template) {
+		$('.add-to-team-btn-txt.' + this.member.user).hide(0);
+		$('.add-to-team-btn-plus.' + this.member.user).show(0);
 	}
 });

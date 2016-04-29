@@ -80,7 +80,7 @@ Template.course.helpers({
 	}
 });
 
-Template.courseStatus.helpers({
+Template.courseRolesStatus.helpers({
 	requiresMentor: function() {
 		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1;
@@ -142,7 +142,7 @@ Template.course.events({
 	}
 });
 
-Template.courseStatus.rendered = function() {
+Template.courseRolesStatus.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 };
 
