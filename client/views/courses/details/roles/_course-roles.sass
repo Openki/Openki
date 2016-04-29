@@ -18,9 +18,7 @@
 	width: 100%
 
 .js-role-unsubscribe-btn
-	+btn-thin
-	@extend .btn-primary
-	margin: -10px 0px -5px 5px
+	vertical-align: bottom
 
 .course-role-title-enrol
 	+grid(12)
@@ -45,12 +43,14 @@
 	+grid(12)
 	padding: 13px 0px 0px
 
-.js-role-subscribe-btn
+.js-role-subscribe-btn,
+.js-role-enrol-cancel-btn
 	@extend .btn
-	@extend .btn-primary
 
-.js-role-enrole-cancel-btn
-	@extend .btn
+.js-role-subscribe-btn
+	@extend .btn-success
+
+.js-role-enrol-cancel-btn
 	+btn-cancel
 
 .js-role-enrol-btn

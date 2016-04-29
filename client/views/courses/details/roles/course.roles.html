@@ -12,8 +12,13 @@
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				{{#with roletype}}{{mf roleSubscribed}}{{/with}}
-				<button class="js-role-unsubscribe-btn" name="{{roletype.type}}">
-					{{mf 'course.roles.retract' 'Retract'}}
+				<button class="js-role-unsubscribe-btn remove-btn"
+					data-toggle="tooltip"
+					data-original-title="{{mf 'course.roles.retract' 'Retract'}}"
+					href="#"
+					name="{{roletype.type}}"
+					role="button"
+					type="button">
 				</button>
 			</div><!-- /.course-role-title -->
 		{{else}}

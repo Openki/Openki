@@ -79,9 +79,9 @@
 					</label>
 					<label class="js-toggle-property-filter js-filter-needs-host btn">
 						<input id="needsHost"
-							type="checkbox"
-							name="needsHost"
 							autocomplete="off"
+							name="needsHost"
+							type="checkbox"
 							{{toggleChecked 'needsHost'}}/>
 						<div class="toggle-property-filter-icon">
 							<span class="glyphicon glyphicon-home"></span>
@@ -95,9 +95,9 @@
 					</label>
 					<label class="js-toggle-property-filter js-filter-needs-mentor btn">
 						<input id="needsMentor"
-							type="checkbox"
-							name="needsMentor"
 							autocomplete="off"
+							name="needsMentor"
+							type="checkbox"
 							{{toggleChecked 'needsMentor'}}/>
 						<div class="toggle-property-filter-icon">
 							<span class="fa fa-graduation-cap"></span>
@@ -120,10 +120,10 @@
 					{{#each categories}}
 						<li>
 							<a class="js-category-label" href="#">{{categoryName}}</a>
-							<span class="remove-btn js-remove-category-btn"
+							<button class="remove-btn js-remove-category-btn"
 								data-toggle="tooltip"
 								data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
-							</span>
+							</button>
 						</li>
 					{{/each}}
 					</ul>

@@ -11,7 +11,10 @@
 .remove-btn
 	@extend .glyphicon
 	@extend .glyphicon-remove
+	background-color: transparent
+	border: 0px
 	color: $remove-btn-color
+	padding: 0px
 	&:hover
 		color: $remove-btn-hover-color
 		cursor: pointer
@@ -40,6 +43,11 @@ input[type="email"]
 
 .select
 	@extend .form-control
+
+a,
+.btn-link
+	&:hover
+		text-decoration: none
 // .btn-primary
 // 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
 // 	&:hover
