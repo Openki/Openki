@@ -175,7 +175,13 @@ Template.coursedetails.rendered = function() {
 
 var expandible = function(template) {
 	template.onCreated(function() {
-		this.expander = Random.id();
+		var expander = Random.id(); // Token to keep track of which Expandible is open
+		this.expander = expander;
+		this.collapse = function() {
+			if (Session.equals('verify', expander)) {
+				Session.set('verify', false);
+			}
+		};
 	});
 	template.helpers({
 		'expanded': function() {
@@ -208,7 +214,7 @@ Template.courseGroupRemove.events({
 				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
 			} else {
 				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
-				Session.set('verify', false);
+				instance.collapse();
 			}
 		});
 	}
@@ -232,7 +238,7 @@ Template.courseGroupMakeEditor.events({
 				addMessage(mf('course.group.makeEditorFailed', "Failed to give group editing rights"), 'danger');
 			} else {
 				addMessage(mf('course.group.groupMadeEditor', "Group members can now edit the course"), 'success');
-				Session.set('verify', false);
+				instance.collapse();
 			}
 		});
 	}
