@@ -134,7 +134,35 @@
 			</ul>
 		</li>
 		{{/each}}
+		{{> courseGroupAdd}}
 	</ul>
+</template>
+
+
+<template name="courseGroupAdd">
+	{{#if groupsToAdd}}
+	<li style="position: relative">
+		<span class="glyphicon glyphicon-plus js-expand" title="{{mf 'course.group.add' "Promote this course with one of my groups."}}"></span>
+		{{#if expanded}}
+		<div style="position: absolute; z-index: 2;">
+			{{mf 'course.group.addText' "Add a group as promoter?"}}
+			<button type="button" class="js-collapse">
+				{{mf 'course.group.confirmAddClose' "Forget it"}}
+			</button>
+			<ul>
+			{{#each groupsToAdd}}
+				<li>
+					{{mf 'course.group.confirmAdd' 'Promote this course with group "{NAME}"!' NAME=name}}
+					<button type="button" class="js-add" value="{{this}}">
+						{{mf 'course.group.confirmAddButton' "Promote"}}
+					</button>
+				</li>
+			{{/each}}
+			</ul>
+		</div>
+		{{/if}}
+	</li>
+	{{/if}}
 </template>
 
 
@@ -143,7 +171,7 @@
 	<li style="position: relative">
 		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove' "Remove {NAME} from list of promoters" NAME=name}}"></span>
 		{{#if expanded}}
-			<div style="position: absolute; border: 3px red; z-index: 2;">
+			<div style="position: absolute; z-index: 2;">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
 				<button type="button" class="js-remove">
 					{{mf 'course.group.confirmRemoveButton' "Delist"}}

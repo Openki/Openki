@@ -198,6 +198,31 @@ var expandible = function(template) {
 	});
 };
 
+
+expandible(Template.courseGroupAdd);
+Template.courseGroupAdd.helpers(groupNameHelpers);
+Template.courseGroupAdd.helpers({
+	'groupsToAdd': function() {
+		var user = Meteor.user();
+		return _.difference(user.groups, this.groups);
+	}
+});
+
+
+Template.courseGroupAdd.events({
+	'click .js-add': function(event, instance) {
+		Meteor.call('groupPromotesCourse', instance.data._id, event.target.value, true, function(error) {
+			if (error) {
+				addMessage(mf('course.group.addFailed', "Failed to add group to course"), 'danger');
+			} else {
+				addMessage(mf('course.group.addedGroup', "Added your group to the list of promoters"), 'success');
+				instance.collapse();
+			}
+		});
+	}
+});
+
+
 expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(groupNameHelpers);
 Template.courseGroupRemove.helpers({
