@@ -147,7 +147,7 @@
 	<li style="position: relative">
 		<span class="glyphicon glyphicon-plus js-expand" title="{{mf 'course.group.add' "Promote this course with one of my groups."}}"></span>
 		{{#if expanded}}
-		<div style="position: absolute; z-index: 2;">
+		<div style="background-color: white; position: absolute; z-index: 2;">
 			{{mf 'course.group.addText' "Add a group as promoter?"}}
 			<button type="button" class="js-collapse">
 				{{mf 'course.group.confirmAddClose' "Forget it"}}
@@ -174,7 +174,7 @@
 	<li style="position: relative">
 		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove' "Remove {NAME} from list of promoters" NAME=name}}"></span>
 		{{#if expanded}}
-			<div style="position: absolute; z-index: 2;">
+			<div style="background-color: white; position: absolute; z-index: 2;">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
 				<button type="button" class="js-remove">
 					{{mf 'course.group.confirmRemoveButton' "Delist"}}
@@ -194,7 +194,7 @@
 	<li style="position: relative">
 		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' "Add as editors"}}"></span>
 		{{#if expanded}}
-			<div style="position: absolute; border: 3px red; z-index: 2">
+			<div style="background-color: white; position: absolute; border: 3px red; z-index: 2">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
 				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
 				<button type="button" class="js-makeEditor">
