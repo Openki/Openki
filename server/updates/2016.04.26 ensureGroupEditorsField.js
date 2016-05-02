@@ -1,3 +1,3 @@
-UpdatesAvailable.ensureGroupEditorsField = function() {
-	return Courses.update({ groupEditors: null }, { $set: { groupEditors: [] } }, { multi: true });
+UpdatesAvailable.ensureGroupOrganizersField = function() {
+	return Courses.update({ groupOrganizers: null }, { $set: { groupOrganizers: [] } }, { multi: true });
 };

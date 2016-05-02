@@ -77,8 +77,8 @@ Meteor.startup(function () {
 	// Resync location cache in events
 	Meteor.call('updateEventLocation', {}, logAsyncErrors);
 
-	// Update list of editors per course
-	Meteor.call('updateEditors', {}, logAsyncErrors);
+	// Update list of organizers per course
+	Meteor.call('updateOrganizers', {}, logAsyncErrors);
 
 	// Update List of badges per user
 	Meteor.call('updateBadges', {}, logAsyncErrors);

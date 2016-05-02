@@ -128,12 +128,12 @@
 		{{#each groups}}
 		<li>
 			{{> groupName}}
-			{{#if isEditor}}
+			{{#if isOrganizer}}
 				<span class="glyphicon glyphicon-bullhorn"></span>
 			{{/if}}
 			<ul style="display: inline">
 			{{> courseGroupRemove groupId=this course=..}}
-			{{> courseGroupMakeEditor groupId=this course=..}}
+			{{> courseGroupMakeOrganizer groupId=this course=..}}
 			</ul>
 		</li>
 		{{/each}}
@@ -189,15 +189,15 @@
 </template>
 
 
-<template name="courseGroupMakeEditor">
-	{{#if mayMakeEditor}}
+<template name="courseGroupMakeOrganizer">
+	{{#if mayMakeOrganizer}}
 	<li style="position: relative">
 		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' "Add as editors"}}"></span>
 		{{#if expanded}}
 			<div style="background-color: white; position: absolute; border: 3px red; z-index: 2">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
 				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
-				<button type="button" class="js-makeEditor">
+				<button type="button" class="js-makeOrganizer">
 					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
 				</button>
 				<button type="button" class="js-collapse">

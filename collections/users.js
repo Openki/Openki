@@ -53,7 +53,7 @@ User.prototype.mayPromoteWith = function(group) {
 };
 
 User.prototype.mayEdit = function(course) {
-	return _.intersection(this.badges, course.editors).length > 0;
+	return _.intersection(this.badges, course.organizers).length > 0;
 };
 
 Meteor.users._transform = function(user) {

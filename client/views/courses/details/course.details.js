@@ -173,10 +173,10 @@ Template.coursedetails.rendered = function() {
 };
 
 Template.courseGroupList.helpers({
-	'isEditor': function() {
+	'isOrganizer': function() {
 		console.log(this)
 		console.log(Template.instance().data)
-		return Template.instance().data.groupEditors.indexOf(_id(this)) >= 0;
+		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
 	},
 });
 
@@ -253,23 +253,23 @@ Template.courseGroupRemove.events({
 });
 
 
-expandible(Template.courseGroupMakeEditor);
-Template.courseGroupMakeEditor.helpers(groupNameHelpers);
-Template.courseGroupMakeEditor.helpers({
-	'mayMakeEditor': function() {
-		// Show the option if the user is an editor by themselves and the group is not yet in editors
+expandible(Template.courseGroupMakeOrganizer);
+Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
+Template.courseGroupMakeOrganizer.helpers({
+	'mayMakeOrganizer': function() {
+		// Show the option if the user is an organizer by themselves and the group is not yet in organizers
 		return this.course.editableBy(Meteor.user())
-			&& this.course.groupEditors.indexOf(this.groupId) === -1;
+			&& this.course.groupOrganizers.indexOf(this.groupId) === -1;
 	},
 });
 
-Template.courseGroupMakeEditor.events({
-	'click .js-makeEditor': function(event, instance) {
+Template.courseGroupMakeOrganizer.events({
+	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.makeEditorFailed', "Failed to give group editing rights"), 'danger');
+				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
 			} else {
-				addMessage(mf('course.group.groupMadeEditor', "Group members can now edit the course"), 'success');
+				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit the course"), 'success');
 				instance.collapse();
 			}
 		});
