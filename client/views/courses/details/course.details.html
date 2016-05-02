@@ -128,6 +128,9 @@
 		{{#each groups}}
 		<li>
 			{{> groupName}}
+			{{#if isEditor}}
+				<span class="glyphicon glyphicon-bullhorn"></span>
+			{{/if}}
 			<ul style="display: inline">
 			{{> courseGroupRemove groupId=this course=..}}
 			{{> courseGroupMakeEditor groupId=this course=..}}

@@ -172,6 +172,13 @@ Template.coursedetails.rendered = function() {
 	$('#nav_courses').addClass('active');
 };
 
+Template.courseGroupList.helpers({
+	'isEditor': function() {
+		console.log(this)
+		console.log(Template.instance().data)
+		return Template.instance().data.groupEditors.indexOf(_id(this)) >= 0;
+	},
+});
 
 var expandible = function(template) {
 	template.onCreated(function() {
@@ -252,7 +259,7 @@ Template.courseGroupMakeEditor.helpers({
 	'mayMakeEditor': function() {
 		// Show the option if the user is an editor by themselves and the group is not yet in editors
 		return this.course.editableBy(Meteor.user())
-		    && this.course.groupEditors.indexOf(this.groupId) === -1;
+			&& this.course.groupEditors.indexOf(this.groupId) === -1;
 	},
 });
 
