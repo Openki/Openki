@@ -346,6 +346,7 @@ loadTestEvents = function(){
 		if (event.room) {
 			ensureRoom(event.location, event.room);
 		}
+		event.internal = !!event.internal;
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);

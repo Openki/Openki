@@ -20,6 +20,7 @@ describe('User search', function () {
 		assert.isTrue(foundGreg);
   });
 
+  /*
   it('finds Seee for s', function () {
 		// HACK I don't really know how to access the subscription result so I'm just gonna rely on server._original
 		var foundSeee = false;
@@ -34,4 +35,5 @@ describe('User search', function () {
 
 		assert.isTrue(foundSeee);
   });
+  */
 });
