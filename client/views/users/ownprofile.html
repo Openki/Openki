@@ -93,7 +93,7 @@
 				<ul class="groups">
 				{{#each user.groups}}
 					<li>
-						<span class="group">{{name}}</span>
+						<span class="group">{{> groupName _id}}</span>  &nbsp; &nbsp; {{name}}
 					</li>
 				{{/each}}
 				</ul>
