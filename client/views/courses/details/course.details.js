@@ -174,8 +174,6 @@ Template.coursedetails.rendered = function() {
 
 Template.courseGroupList.helpers({
 	'isOrganizer': function() {
-		console.log(this)
-		console.log(Template.instance().data)
 		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
 	},
 });
