@@ -177,7 +177,7 @@
 <template name="courseGroupRemove">
 	{{#if mayPromote}}
 	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove' "Remove {NAME} from list of promoters" NAME=name}}"></span>
+		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove.confirm' 'Remove {NAME} from list of promoters' NAME=name}}">{{mf 'course.group.remove' 'Remove'}}</span>
 		{{#if expanded}}
 			<div style="background-color: white; position: absolute; z-index: 2;">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
@@ -197,7 +197,7 @@
 <template name="courseGroupMakeOrganizer">
 	{{#if mayMakeOrganizer}}
 	<li style="position: relative">
-		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' "Add as editors"}}"></span>
+		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}">make editor</span>
 		{{#if expanded}}
 			<div style="background-color: white; position: absolute; border: 3px red; z-index: 2">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
