@@ -220,7 +220,7 @@ Template.eventEdit.events({
 		instance.files = null;
 
 		//check if file object is stored in the template object
-		if(fileList != null){
+		if (fileList !== null) {
 			var tmp = [];
 			if(this.files){
 				$.each( this.files, function( i,fileObj ){
