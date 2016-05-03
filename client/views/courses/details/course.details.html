@@ -148,27 +148,25 @@
 
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
-	<li style="position: relative">
-		<span class="glyphicon glyphicon-plus js-expand" title="{{mf 'course.group.add' "Promote this course with one of my groups."}}"></span>
-		{{#if expanded}}
-		<div style="background-color: white; position: absolute; z-index: 2;">
-			{{mf 'course.group.addText' "Add a group as promoter?"}}
-			<button type="button" class="js-collapse">
-				{{mf 'course.group.confirmAddClose' "Forget it"}}
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
-			<ul>
-			{{#each groupsToAdd}}
-				<li>
-					{{mf 'course.group.confirmAdd' 'Promote this course with group "{NAME}"!' NAME=name}}
-					<button type="button" class="js-add" value="{{this}}">
-						{{mf 'course.group.confirmAddButton' "Promote"}}
-					</button>
-				</li>
-			{{/each}}
+
+			<ul class="dropdown-menu">
+				{{#each groupsToAdd}}
+					<li>
+						<span class="group">{{> groupName}}</span>
+						<button type="button" class="js-add" value="{{this}}">
+							{{mf 'course.group.confirmAddButton' "Promote"}}
+						</button>
+					</li>
+				{{/each}}
+				<button type="button" class="js-collapse">
+					{{mf 'course.group.confirmAddClose' "Forget it"}}
+				</button>
 			</ul>
 		</div>
-		{{/if}}
-	</li>
 	{{/if}}
 </template>
 
