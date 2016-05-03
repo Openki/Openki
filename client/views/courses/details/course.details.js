@@ -196,6 +196,7 @@ var expandible = function(template) {
 	template.events({
 		'click .js-expand': function(event, instance) {
 			Session.set('verify', instance.expander);
+			event.stopPropagation();
 		},
 		'click .js-collapse': function(event, instance) {
 			Session.set('verify', false);
