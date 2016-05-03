@@ -131,10 +131,15 @@
 			{{#if isOrganizer}}
 				<span class="glyphicon glyphicon-bullhorn"></span>
 			{{/if}}
-			<ul style="display: inline">
-			{{> courseGroupRemove groupId=this course=..}}
-			{{> courseGroupMakeOrganizer groupId=this course=..}}
-			</ul>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" style="display: inline">
+					<li>{{> courseGroupRemove groupId=this course=..}}</li>
+					<li>{{> courseGroupMakeOrganizer groupId=this course=..}}</li>
+				</ul>
+			</div>
 		</li>
 		{{/each}}
 		{{> courseGroupAdd}}
