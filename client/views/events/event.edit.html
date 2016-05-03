@@ -155,7 +155,9 @@
 				</table>
 			</div>
 
-			{{>eventEditLocation}}
+			{{#if showLocationSelection}}
+				{{>eventEditLocation}}
+			{{/if}}
 
 			<div class="room">
 				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>

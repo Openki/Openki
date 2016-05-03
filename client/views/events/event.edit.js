@@ -50,6 +50,11 @@ Template.eventEdit.helpers({
 		return currentRegion && region._id == currentRegion;
 	},
 
+	showLocationSelection: function(region) {
+		var selectedRegion = Template.instance().selectedRegion.get();
+		return selectedRegion && selectedRegion !== 'all';
+	},
+
 	disableForPast: function() {
 		return this.start > new Date() ? '' : 'disabled';
 	},
