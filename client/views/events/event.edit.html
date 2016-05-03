@@ -23,16 +23,11 @@
 			/>
 			<div class="date">
 				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
-				<div class="input-group">
-					<label for="edit_event_startdate" class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</label>
-					<input
-						type="text"
-						id="edit_event_startdate"
-						value="{{localDate start}}"
-						{{disableForPast}}
-					/>
+				<div class="input-group date" style="width: 100%">
+					<span class="input-group-addon">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</span>
+					<input type="text" value="{{localDate start}}" class="form-control js-eventStartDate" {{disableForPast}}>
 				</div>
 			</div>
 			<div class="start_time">

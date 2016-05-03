@@ -8,9 +8,19 @@ Template.eventEdit.onCreated(function() {
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
 
-	this.$('#edit_event_startdate').datepicker({
+	this.$('.js-eventStartDate').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
-		format: 'L',
+		language: moment.locale(),
+		autoclose: true,
+		startDate: new Date(),
+		format: {
+			toDisplay: function(date) {
+				return moment(date).format('L');
+			},
+			toValue: function(date) {
+				return moment(date, 'L').toDate();
+			}
+		}
 	});
 
 	this.$("[data-toggle='tooltip']").tooltip();
@@ -76,7 +86,7 @@ var readDateTime = function(dateStr, timeStr) {
 
 var getEventStartMoment = function(template) {
 	return readDateTime(
-		template.$('#edit_event_startdate').val(),
+		template.$('.js-eventStartDate').val(),
 		template.$('#edit_event_starttime').val()
 	);
 };
@@ -205,7 +215,8 @@ Template.eventEdit.events({
 
 		var start = getEventStartMoment(instance);
 		if(!start.isValid()) {
-			alert("Date format must be of the form 2015-11-30");
+			var exampleDate = moment().format('L');
+			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
 			return null;
 		}
 		var end = getEventEndMoment(instance);
