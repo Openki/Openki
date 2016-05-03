@@ -488,6 +488,10 @@ Meteor.methods({
 	},
 
 	groupPromotesCourse: function(courseId, groupId, enable) {
+		check(courseId, String);
+		check(groupId, String);
+		check(enable, Boolean);
+
 		var course = Courses.findOne(courseId);
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
@@ -498,14 +502,21 @@ Meteor.methods({
 		if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
 
 		var update = {};
-		var op = enable ? '$addToSet' : '$pull';
-		update[op] = { 'groups': group._id };
+		if (enable) {
+			update.$addToSet = { 'groups': group._id };
+		} else {
+			update.$pull = { 'groups': group._id, groupOrganizers: group._id };
+		}
 
 		Courses.update(course._id, update);
 		if (Meteor.isServer) updateEditors(course._id);
 	},
 
 	groupEditing: function(courseId, groupId, enable) {
+		check(courseId, String);
+		check(groupId, String);
+		check(enable, Boolean);
+
 		var course = Courses.findOne(courseId);
 		if (!course) throw new Meteor.Error(404, "Course not found");
 
