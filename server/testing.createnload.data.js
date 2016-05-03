@@ -146,6 +146,7 @@ function createCourses(scale) {
 				course.region = Math.random() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
 			course.groups = _.map(course.groups, ensureGroup);
+			course.groupOrganizers = [];
 			Courses.insert(course);
 			console.log("Added course: "+course.name);
 		}
