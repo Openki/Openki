@@ -4,6 +4,7 @@
 // "categories"    -> [ID_categories]
 // "tags"          -> List of Strings  (not used)
 // "groups"        -> List ID_groups
+// groupOrganizers List of group ID that are allowed to edit the course
 // "description"   -> String
 // "slug"          -> String
 // "region"        -> ID_region
@@ -15,7 +16,7 @@
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
-// editors         -> list of user and gorup id allowed to edit the course, calculated from members and groups
+// editors         List of user and group id allowed to edit the course, calculated from members and groupOrganizers
 // ===========================
 
 Course = function() {
@@ -151,7 +152,7 @@ updateEditors = function(courseId) {
 		var course = Courses.findOne(courseId);
 		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
 
-		var editors = course.groupEditors.slice();
+		var editors = course.groupOrganizers.slice();
 
 		course.members.forEach(function(member) {
 			if (member.roles.indexOf('team') >= 0) {
@@ -516,7 +517,7 @@ Meteor.methods({
 
 		var update = {};
 		var op = enable ? '$addToSet' : '$pull';
-		update[op] = { 'groupEditors': group._id };
+		update[op] = { 'groupOrganizers': group._id };
 
 		Courses.update(course._id, update);
 		if (Meteor.isServer) updateEditors(course._id);
