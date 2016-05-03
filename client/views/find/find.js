@@ -198,8 +198,8 @@ Template.find.events({
 
 	'click .-showSubcategories': function(event, instance) {
 		$(".-subcategory" + "." + this).toggle();
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
+		$(".-showSubcategories." + this + " span").toggleClass('fa-angle-down');
+		$(".-showSubcategories." + this + " span").toggleClass('fa-angle-up');
 		event.stopPropagation();
 	},
 
