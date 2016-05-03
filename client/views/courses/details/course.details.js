@@ -172,9 +172,32 @@ Template.coursedetails.rendered = function() {
 	$('#nav_courses').addClass('active');
 };
 
+
 Template.courseGroupList.helpers({
 	'isOrganizer': function() {
 		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
+	},
+	'tools': function() {
+		var tools = [];
+		var user = Meteor.user();
+		var groupId = String(this);
+		var course = Template.parentData();
+		if (user && user.mayPromoteWith(groupId)) {
+			tools.push({
+				toolTemplate: Template.courseGroupRemove,
+				groupId: groupId,
+				course: course,
+			});
+		}
+		if (user && course.editableBy(user)) {
+			var hasOrgRights = course.groupOrganizers.indexOf(groupId) > -1;
+			tools.push({
+				toolTemplate: hasOrgRights ? Template.courseGroupRemoveOrganizer : Template.courseGroupMakeOrganizer,
+				groupId: groupId,
+				course: course,
+			});
+		}
+		return tools;
 	},
 });
 
@@ -231,13 +254,6 @@ Template.courseGroupAdd.events({
 
 expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(groupNameHelpers);
-Template.courseGroupRemove.helpers({
-	'mayPromote': function() {
-		var user = Meteor.user();
-		return user && user.mayPromoteWith(this.groupId);
-	}
-});
-
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('groupPromotesCourse', instance.data.course._id, instance.data.groupId, false, function(error) {
@@ -254,14 +270,6 @@ Template.courseGroupRemove.events({
 
 expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
-Template.courseGroupMakeOrganizer.helpers({
-	'mayMakeOrganizer': function() {
-		// Show the option if the user is an organizer by themselves and the group is not yet in organizers
-		return this.course.editableBy(Meteor.user())
-			&& this.course.groupOrganizers.indexOf(this.groupId) === -1;
-	},
-});
-
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
@@ -269,6 +277,22 @@ Template.courseGroupMakeOrganizer.events({
 				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
 			} else {
 				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit the course"), 'success');
+				instance.collapse();
+			}
+		});
+	}
+});
+
+
+expandible(Template.courseGroupRemoveOrganizer);
+Template.courseGroupRemoveOrganizer.helpers(groupNameHelpers);
+Template.courseGroupRemoveOrganizer.events({
+	'click .js-removeOrganizer': function(event, instance) {
+		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, false, function(error) {
+			if (error) {
+				addMessage(mf('course.group.removeOrganizerFailed', "Failed to remove organizer status"), 'danger');
+			} else {
+				addMessage(mf('course.group.removedOrganizer', "Removed editing rights"), 'success');
 				instance.collapse();
 			}
 		});
