@@ -38,6 +38,7 @@
 			<input
 				type="text"
 				id="login-name"
+				class="js-login-name"
 				placeholder="{{mf 'frame.login.usernameOrEmail' 'Username or Email'}}"
 			/>
 		</div>
@@ -55,6 +56,7 @@
 			<input
 				type="password"
 				id="login-password"
+				class="js-login-password"
 				placeholder="{{mf 'frame.login.password' 'Password'}}"
 			/>
 		</div>
@@ -80,7 +82,8 @@
 				<input
 					type="email"
 					id="login-email"
-					class="-loginEmail"
+					class="js-login-email"
+					value="{{transEmail}}"
 					placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 				/>
 			</div>
@@ -149,7 +152,7 @@
 			<input
 				type="email"
 				id="login-email"
-				class="-loginEmail"
+				class="js-login-email"
 				placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 			/>
 		</div>
