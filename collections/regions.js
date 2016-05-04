@@ -8,15 +8,3 @@
 Regions = new Meteor.Collection("Regions");
 if (Meteor.isServer) Regions._ensureIndex({loc : "2dsphere"});
 
-
-Regions.allow({
-	update: function (userId, doc, fieldNames, modifier) {
-		return userId && false;
-	},
-	insert: function (userId, doc) {
-		return userId && false;
-	},
-	remove: function (userId, doc) {
-		return userId && false;
-	}
-});
