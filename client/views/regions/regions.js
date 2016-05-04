@@ -23,41 +23,45 @@ Template.regionsDisplay.events({
 	}
 });
 
-Template.region_sel.created = function(){
-	var instance = this;
-	var regions = Regions.find().fetch();
-	var results = [];
-	for (i = 0; i < regions.length; i++) {
-		results.push(regions[i]);
-	}
-	instance.regionSearchResults = new ReactiveVar(results);
-};
+Template.region_sel.onCreated(function() {
+	this.regionSearch = new ReactiveVar('');
+});
 
 Template.region_sel.rendered = function(){
 	Template.instance().$('.-searchRegions').select();
 };
 
 var updateRegionSearch = function(event, instance) {
-	var query = instance.$('.-searchRegions').val();
-	var regions = Regions.find().fetch();
-
-	var lowQuery = query.toLowerCase();
-	var results = [];
-	for (i = 0; i < regions.length; i++) {
-		if (regions[i].name.toLowerCase().indexOf(lowQuery) >= 0)
-			results.push(regions[i]);
-	}
-	instance.regionSearchResults.set(results);
-
-	var regExpQuery = new RegExp(lowQuery, 'i');
-	instance.$('.regionName').html(function() {
-	  return $(this).text().replace(regExpQuery, '<strong>$&</strong>');
-	});
+	var search = instance.$('.-searchRegions').val();
+	search = String(search).trim();
+	instance.regionSearch.set(search);
 };
 
 Template.region_sel.helpers({
-	regions: function(){
-		return Template.instance().regionSearchResults.get();
+	regions: function() {
+		var search = Template.instance().regionSearch.get();
+		var query = {};
+		if (search !== '') query = { name: new RegExp(search, 'i') };
+
+		return Regions.find(query);
+	},
+
+	regionNameMarked: function() {
+		var search = Template.instance().regionSearch.get();
+		var name = this.name;
+		if (search === '') return name;
+		var match = name.match(new RegExp(search, 'i'));
+
+		// To add markup we have to escape all the parts separately
+		var marked;
+		if (match) {
+			var term = match[0];
+			var parts = name.split(term);
+			marked = _.map(parts, Blaze._escape).join('<strong>'+Blaze._escape(term)+'</strong>');
+		} else {
+			marked = Blaze._escape(name);
+		}
+		return Spacebars.SafeString(marked);
 	},
 
 	region: function(){
@@ -117,11 +121,6 @@ Template.region_sel.events({
 
 	'focus .-searchRegions': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
-		var regions = Regions.find().fetch();
-		var results = [];
-		for (i = 0; i < regions.length; i++) {
-			results.push(regions[i]);
-		}
-		instance.regionSearchResults.set(results);
+		updateRegionSearch(event, instance);
 	}
 });
