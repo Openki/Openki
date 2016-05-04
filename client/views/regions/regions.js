@@ -77,10 +77,6 @@ Template.region_sel.helpers({
 		return coursesFind({ region: this._id }).count();
 	},
 
-	upcomingEvents: function() {
-		return eventsFind({ region: this._id, after: minuteTime.get() }).count();
-	},
-
 	currentRegion: function() {
 		var region = this._id || "all";
 		return region == Session.get('region');
