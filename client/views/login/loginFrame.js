@@ -15,7 +15,7 @@ Template.loginFrame.events({
 
 	'click .-forgotSend': function(event, instance) {
 		Accounts.forgotPassword({
-			email: instance.$('.-loginEmail').val()
+			email: instance.$('.js-login-email').val()
 		}, function(err) {
 			if (err) {
 				addMessage(mf('forgot.failedSending', "We were unable to send a mail to this address!"), 'danger');
@@ -73,8 +73,8 @@ Template.loginForgot.helpers({
 
 
 Template.loginForgot.events({
-	'change .-loginEmail, keyup .-loginEmail': function(event, instance) {
-		instance.loginEmail.set("" + instance.$('.-loginEmail').val());
+	'change .js-login-email, keyup .js-login-email': function(event, instance) {
+		instance.loginEmail.set("" + instance.$('.js-login-email').val());
 	},
 });
 
@@ -84,7 +84,7 @@ Template.loginLogin.onRendered(function() {
 	var instance = this;
 	var dropdownElm = $(".login-dropdown").parent();
 	dropdownElm.on("shown.bs.dropdown", function() {
-		$('#login-name').focus();
+		$('.js-login-name').focus();
 	});
 	instance.closeDropdown = function() {
 		dropdownElm.find("[data-toggle='dropdown']").dropdown('toggle');
@@ -94,6 +94,7 @@ Template.loginLogin.onRendered(function() {
 
 Template.loginLogin.created = function() {
 	this.registering = new ReactiveVar(false);
+	this.transEmail = ''; // Temp storage for email addresses enterd into the user name field
 };
 
 
@@ -111,6 +112,10 @@ Template.loginLogin.helpers({
 		return instance.registering.get();
 	},
 
+	transEmail: function() {
+		return Template.instance().transEmail;
+	},
+
 	validEmail: validEmail,
 
 	disableForInvalidEmail: function() {
@@ -122,10 +127,13 @@ Template.loginLogin.helpers({
 Template.loginLogin.events({
 	'click .loginRegister': function(event, instance){
 		event.preventDefault();
+
+		var nameField =  instance.$('.js-login-name');
+		var name = nameField.val();
+
 		if (instance.registering.get()) {
-			var name = instance.find('#login-name').value;
-			var password = instance.find('#login-password').value;
-			var email = instance.$('.-loginEmail').val();
+			var password = instance.find('.js-login-password').value;
+			var email = instance.$('.js-login-email').val();
 			Accounts.createUser({
 				username: name,
 				password: password,
@@ -147,14 +155,23 @@ Template.loginLogin.events({
 					instance.closeDropdown();
 				}
 			});
-		}
-		else {
+		} else {
 			$('#password_warning_incorrect').hide(300);
 			$('#username_warning_not_existing').hide(300);
 			$('#login_warning').hide(300);
 			$('#loginFrame').removeClass('username_warning');
 			$('#loginFrame').removeClass('password_warning');
+
 			Template.instance().registering.set(true);
+
+			// Sometimes people register with their email address in the first field
+			// Move entered username over to email field if it contains a @
+			var emailField = instance.$('.js-login-email');
+			var atPos = name.indexOf('@');
+			if (atPos > -1) {
+				nameField.val(name.substr(0, atPos));
+				instance.transEmail = name;
+			}
 		}
 	},
 
@@ -168,8 +185,8 @@ Template.loginLogin.events({
 			Template.instance().registering.set(false);
 			return;
 		}
-		var name = instance.find('#login-name').value;
-		var password = instance.find('#login-password').value;
+		var name = instance.find('.js-login-name').value;
+		var password = instance.find('.js-login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
 				if (err.error == 400) {
