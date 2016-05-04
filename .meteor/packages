@@ -43,8 +43,8 @@ es5-shim
 okgrow:router-autoscroll
 meteorhacks:subs-manager
 rzymek:moment-locale-el
-gildaspk:moment-datepicker
 rzymek:moment-locale-tr
 meteorhacks:ssr
 standard-minifier-css
 standard-minifier-js
+rajit:bootstrap3-datepicker

@@ -40,7 +40,7 @@ check@1.2.1
 coffeescript@1.0.17
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.5
-ddp-client@1.2.7
+ddp-client@1.2.6
 ddp-common@1.2.5
 ddp-rate-limiter@1.0.4
 ddp-server@1.2.6
@@ -56,7 +56,6 @@ facebook@1.2.6
 fastclick@1.0.11
 fortawesome:fontawesome@4.5.0
 geojson-utils@1.0.8
-gildaspk:moment-datepicker@0.0.2
 github@1.1.8
 google@1.1.11
 html-tools@1.0.9
@@ -89,7 +88,7 @@ meteorhacks:subs-manager@1.6.4
 meteortoys:toykit@2.2.1
 minifier-css@1.1.11
 minifier-js@1.1.11
-minimongo@1.0.16
+minimongo@1.0.15
 mobile-status-bar@1.0.12
 modules@0.6.1
 modules-runtime@0.6.3
@@ -99,7 +98,7 @@ mongo-id@1.0.4
 mongo-livedata@1.0.12
 msavin:mongol@1.6.2
 msgfmt:core@2.0.0-preview.19
-msgfmt:extract@2.0.1
+msgfmt:extract@2.0.0
 msgfmt:ui@2.0.0-preview.10
 nemo64:bootstrap@3.3.5_2
 nemo64:bootstrap-data@3.3.5
@@ -113,6 +112,7 @@ okgrow:router-autoscroll@0.1.8
 ordered-dict@1.0.7
 promise@0.6.7
 raix:eventemitter@0.1.3
+rajit:bootstrap3-datepicker@1.5.1
 random@1.0.9
 rate-limit@1.0.4
 reactive-dict@1.1.7
