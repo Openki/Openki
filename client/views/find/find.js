@@ -98,7 +98,7 @@ Template.find.onCreated(function() {
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', filterQuery, 10);
+		instance.subscribe('eventsFind', filterQuery, 12);
 	});
 });
 
@@ -306,7 +306,7 @@ Template.find.helpers({
 		var filterQuery = Template.instance().filter.toQuery();
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		return eventsFind(filterQuery, 10);
+		return eventsFind(filterQuery, 12);
 	},
 
 	'proposeNewBlurb': function() {

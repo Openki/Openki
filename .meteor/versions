@@ -40,7 +40,7 @@ check@1.2.1
 coffeescript@1.0.17
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.5
-ddp-client@1.2.7
+ddp-client@1.2.6
 ddp-common@1.2.5
 ddp-rate-limiter@1.0.4
 ddp-server@1.2.6
@@ -91,7 +91,7 @@ meteorhacks:subs-manager@1.6.4
 meteortoys:toykit@2.2.1
 minifier-css@1.1.11
 minifier-js@1.1.11
-minimongo@1.0.16
+minimongo@1.0.15
 mobile-status-bar@1.0.12
 modules@0.6.1
 modules-runtime@0.6.3
@@ -101,7 +101,7 @@ mongo-id@1.0.4
 mongo-livedata@1.0.12
 msavin:mongol@1.6.2
 msgfmt:core@2.0.0-preview.19
-msgfmt:extract@2.0.1
+msgfmt:extract@2.0.0
 msgfmt:ui@2.0.0-preview.10
 nicolaslopezj:router-layer@0.0.11
 npm-bcrypt@0.8.5
@@ -127,6 +127,7 @@ rzymek:moment-locale-da@2.12.0
 rzymek:moment-locale-de@2.12.0
 rzymek:moment-locale-el@2.12.0
 rzymek:moment-locale-es@2.12.0
+rzymek:moment-locale-fa@2.12.0
 rzymek:moment-locale-fr@2.12.0
 rzymek:moment-locale-it@2.12.0
 rzymek:moment-locale-ja@2.12.0
