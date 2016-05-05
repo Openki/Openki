@@ -63,33 +63,42 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	'click button.edit': function() {
+	'click .js-profile-info-edit-btn': function(event, template) {
 		Template.instance().editing.set(true);
+		template.$("[data-toggle='tooltip']").tooltip('hide');
 	},
-	'click button.editCancel': function() {
+
+	'click .js-profile-info-cancel-btn': function() {
 		Template.instance().editing.set(false);
 		return false;
 	},
-	'click button.changePass': function() {
+
+	'click .js-change-pwd-btn': function() {
 		Template.instance().changingPass.set(true);
 	},
-	'click button.changePassCancel': function() {
+
+	'click .js-change-pwd-cancel-btn': function() {
 		Template.instance().changingPass.set(false);
 		return false;
 	},
-	'click button.delete': function () {
+
+	'click .js-profile-delete-btn': function (event, template) {
 		Session.set('verify', 'delete');
+		template.$("[data-toggle='tooltip']").tooltip('hide');
 	},
-	'click button.confirmdelete': function () {
+
+	'click .js-profile-delete-confirm-btn': function () {
 		Meteor.call('delete_profile', function() {
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		Session.set('verify', false);
 	},
-	'click .verifycancel': function () {
+
+	'click .js-profile-delete-cancel-btn': function () {
 		Session.set('verify', false);
 	},
-	'submit .edit': function(event) {
+
+	'submit .profile-info-edit': function(event) {
 		event.preventDefault();
 		var template = Template.instance();
 		Meteor.call('update_userdata',
@@ -106,7 +115,8 @@ Template.profile.events({
 			}
 		);
 	},
-	'submit .passChange': function(event) {
+
+	'submit .change-pwd': function(event) {
 		event.preventDefault();
 		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
@@ -132,12 +142,14 @@ Template.profile.events({
 			}
 		}
 	},
-	'click button.verify': function () {
+
+	'click .js-verify-mail-btn': function () {
 		Meteor.call('sendVerificationEmail');
 	}
 });
 
 Template.profile.rendered = function() {
+	$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	$('a.loginButton.navbar-link').addClass('navbar-link-active');

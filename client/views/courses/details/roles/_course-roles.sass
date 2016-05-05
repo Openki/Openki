@@ -2,33 +2,38 @@
 	+grid(12)
 	padding: 0px
 
-.course-role
+.course-role,
+.course-role-enrol
 	+grid(12)
+	+transition-property(#{"box-shadow, margin"})
+	+transition-duration(0.3s)
 	padding: 0px
 
-.course-role-title
-	+grid(12)
-	background: $user-bg
-	border-top: 3px solid $body-bg
-	color: $default-black
-	font-size: large
-	line-height: 1.1
-	padding: 10px 15px
-	vertical-align: middle
-	width: 100%
-
-.js-role-unsubscribe-btn
-	vertical-align: bottom
-
+.course-role-title,
 .course-role-title-enrol
 	+grid(12)
-	background: $brand-primary
-	border-top: 3px solid $body-bg
-	color: $body-bg
+	margin-top: 3px
 	font-size: large
 	line-height: 1.1
 	padding: 10px 15px
 	width: 100%
+
+.course-role-title
+	background: $user-bg
+	color: $default-black
+
+.course-role-title-enrol
+	background: $brand-success
+
+.js-role-unsubscribe-btn
+	+btn-thin
+	+btn-cancel
+	font-size: medium
+	margin-left: 5px
+
+.course-role-enrol
+	+box-shadow-big($default-shadow)
+	margin-bottom: 10px
 
 .course-role-enrol-options
 	+grid(12)

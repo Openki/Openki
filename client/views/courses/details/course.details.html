@@ -15,6 +15,24 @@
 
 					<div class="course-details-title">
 						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+						{{#with course}}
+							{{#if currentUserMayEdit}}
+									<button class="js-delete-course-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'course.details.del_btn' 'Delete course'}}"
+										type="button"
+										role="button">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<button class="js-edit-course-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'course.details.edit_btn' 'Edit course'}}"
+										type="button"
+										role="button">
+										<span class="glyphicon glyphicon-edit"></span>
+									</button>
+							{{/if}}
+						{{/with}}
 					</div><!-- /.course-details-title -->
 
 					{{#with course}}
@@ -23,27 +41,11 @@
 					</div><!-- /.course-details-categories -->
 					<div class="course-details-groups">
 						{{> groupList}}
+						{{> groupListing course}}
 					</div><!-- /.course-details-groups -->
 					{{/with}}
-					{{> groupListing course}}
 
 					{{> courseDetailsSubmenu}}
-					{{#with course}}
-						{{#if currentUserMayEdit}}
-						<div class="course-details-edit-buttons">
-							<div class="btn-group" role="group" aria-label="...">
-								<button class="editCourse" type="button" role="button">
-									<span class="glyphicon glyphicon-edit"></span>
-									{{mf 'course.details.edit_btn' 'Edit'}}
-								</button>
-								<button class="deleteCourse" type="button" role="button">
-									<span class="glyphicon glyphicon-remove"></span>
-									{{mf 'course.details.del_btn' 'Delete'}}
-								</button>
-							</div><!-- /.btn-group -->
-						</div><!-- /.course-details-edit-buttons -->
-						{{/if}}
-					{{/with}}
 				</div><!-- /.course-details -->
 				{{> report}}
 			{{/if}}

@@ -87,6 +87,35 @@
 		position: relative
 		top: 2px
 
+.eventcaption_upcoming
+	background: $openki-light-blue
+	display: inline-block
+	height: 20px
+	position: relative
+	vertical-align: bottom
+	width: 28px
+
+.eventcaption_upcoming_box
+	background: $brand-success
+	height: 10px
+	position: absolute
+	right: 0px
+	top: 0px
+	width: 10px
+
+.eventcaption_upcoming_text
+	background: $default-shadow
+	height: 1px
+	left: 3px
+	position: absolute
+	width: 3px
+	&.first-line
+		top: 2px
+	&.second-line
+		top: 4px
+	&.third-line
+		top: 6px
+
 .eventcaption_upcoming,
 .toggle-property-filter-icon
 	+opacity(0.7)
@@ -145,6 +174,7 @@
 	overflow-y: auto
 	.js-category-label
 		background-color: $dropdown-bg
+		box-shadow: none
 		position: relative
 
 .main-category

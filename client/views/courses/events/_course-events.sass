@@ -117,3 +117,23 @@ input#edit_event_title
 	padding: 10px 0px
 	& > div
 		padding: 1em
+
+.fade_effect_top
+	+gradient-vertical($body-bg, transparent)
+	height: 40px
+	left: 0px
+	position: absolute
+	top: 0px
+	width: 100%
+	@media (max-width: $screen-xs)
+		background: none
+
+.fade_effect_bottom
+	+gradient-vertical(transparent, $body-bg)
+	bottom: 0px
+	height: 40px
+	left: 0px
+	position: absolute
+	width: 100%
+	@media (max-width: $screen-xs)
+		background: none

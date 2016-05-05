@@ -1,7 +1,7 @@
 <template name="groupList">
 	<ul class="groups-list">
 		{{#each groups}}
-			<li>
+			<li class="group">
 				{{> groupName}}
 			</li>
 		{{/each}}
@@ -19,6 +19,13 @@
 	</a>
 </template>
 
-<template name="groupNameStatic">
-	{{name}}
+<template name="groupNameFull">
+	<a class="js-group-label"
+		href="{{pathFor 'groupDetails' _id=this}}"
+		data-html="true"
+		data-original-title="
+			{{mf 'groupListFull.show_courses' 'Show all courses of this group'}}"
+		data-toggle="tooltip">
+		{{name}}
+	</a>
 </template>

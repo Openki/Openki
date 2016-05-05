@@ -76,7 +76,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.remove': function(event, template) {
+	'click .js-remove-privilege-btn': function(event, template) {
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
@@ -100,7 +100,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.expelFromGroup': function(event, template) {
+	'click button.js-group-expel-btn': function(event, template) {
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
@@ -115,6 +115,14 @@ Template.userprofile.events({
 });
 
 Template.emailBox.events({
+	'change .js-send-own-adress': function (event, instance) {
+		instance.$('.js-send-own-adress + .checkmark').toggle();
+	},
+
+	'change .js-receive-copy': function (event, instance) {
+		instance.$('.js-receive-copy + .checkmark').toggle();
+	},
+
 	'submit form.sendMail': function (event, template) {
 		event.preventDefault();
 		if (pleaseLogin()) return;
@@ -155,6 +163,7 @@ Template.emailBox.events({
 });
 
 Template.userprofile.rendered = function() {
+	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	if (this.data.user._id == Meteor.userId())

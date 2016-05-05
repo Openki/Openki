@@ -21,26 +21,21 @@
 .course-details-page
 	@extend .container
 	padding-top: 20px
-	button.open
-		margin-top: 15px
-	button.eventEdit,
-	button.calendar_download
+	.js-events-download-btn
 		@extend .btn
 		@extend .btn-default
 		float: right
 		margin: 10px 5px 10px 0px
 		white-space: normal
-	button.eventEdit
-		@extend .btn-success
 
 .course-details-column-left
-	+grid(12, 8)
+	+grid(12, inherit, 8)
 	padding-right: 7.5px
 	@media (max-width: $screen-sm)
 		padding-right: 0px
 
 .course-details-column-right
-	+grid(12, 4)
+	+grid(12, inherit, 4)
 	padding-left: 7.5px
 	@media (max-width: $screen-xs)
 		padding: 0px
@@ -53,8 +48,6 @@
 .course-details
 	+grid(12)
 	border: 7px dashed $openki-light-blue
-	&.hasupcomingevents	ul.nav-tabs li.active a
-		background: $openki-light-blue
 	&.haspastevents
 		border-style: solid
 	ul.groups-list,
@@ -63,23 +56,9 @@
 		display: inline-block
 	ul.groups-list
 		margin-bottom: 10px
-	ul.nav-tabs
-		border-bottom: 1px solid $brand-primary
-		li
-			border: 1px dotted $brand-primary
-			border-bottom: 0px
-			margin: 0px 2px -1px 0px
-			&.active
-				border-bottom: 0px
-				border-style: solid
-				a:hover
-					color: $default-black
-			a
-				border: 0px
-				color: $default-black
-				margin: 0px
-				&:hover
-					color: $default-white
+
+.nav-tabs a
+		color: $default-black
 
 .course-details-status
 	float: right
@@ -105,6 +84,8 @@
 		padding: 0px
 	&> .editable-controls
 		font-size: medium
+	& > *
+		display: inline-block
 
 .course-details-categories ul
 	margin-bottom: 0px
@@ -120,20 +101,14 @@
 .course-details-groups
 	+grid(12)
 	padding: 0
+	.dropdown
+		display: inline-block
 
-.course-details-edit-buttons
-	+grid(12)
-	background: $brand-primary
-	border-top: 3px solid $body-bg
-	margin: 0px 0px -7px -22px
-	padding: 10px 0px
-	text-align: center
-	width: calc(#{"100% + 44px"}) !important
-
-.editCourse
-	@extend .btn
-	@extend .btn-success
-
-.deleteCourse
-	@extend .btn
-	+btn-cancel
+.js-edit-course-btn,
+.js-delete-course-btn
+	+header-btn
+	color: $default-gray
+	float: right
+	font-size: large
+	&:hover
+		color: $default-black
