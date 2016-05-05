@@ -1,19 +1,19 @@
-Template.loginFrame.created = function() {
+Template.userFrame.created = function() {
 	this.forgot = new ReactiveVar(false);
 };
 
-Template.loginFrame.events({
-	'click .loginLogout': function(event){
+Template.userFrame.events({
+	'click .js-logout-btn': function(event){
 		event.preventDefault();
 		Meteor.logout();
 	},
 
-	'click .-forgot': function(event, instance) {
+	'click .js-forgot-pwd-btn': function(event, instance) {
 		instance.forgot.set(true);
 		return false;
 	},
 
-	'click .-forgotSend': function(event, instance) {
+	'click .js-reset-pwd-btn': function(event, instance) {
 		Accounts.forgotPassword({
 			email: instance.$('.js-login-email').val()
 		}, function(err) {
@@ -26,17 +26,17 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .-forgotClose': function(event, instance) {
+	'click .js-reset-pwd-close-btn': function(event, instance) {
 		instance.forgot.set(false);
 		return false;
 	},
 
-	'click #loginFrame': function(event, instance) {
+	'click .user-frame': function(event, instance) {
 		event.stopPropagation();
 	}
 });
 
-Template.loginFrame.helpers({
+Template.userFrame.helpers({
 	username: function() {
 		return Meteor.user() && Meteor.user().username;
 	},
@@ -51,7 +51,7 @@ Template.loginFrame.helpers({
 });
 
 
-Template.loginForgot.onCreated(function() {
+Template.forgotPwdFrame.onCreated(function() {
 	this.loginEmail = new ReactiveVar("");
 });
 
@@ -63,7 +63,7 @@ var validEmail = function() {
 };
 
 
-Template.loginForgot.helpers({
+Template.forgotPwdFrame.helpers({
 	validEmail: validEmail,
 
 	disableForInvalidEmail: function() {
@@ -72,7 +72,7 @@ Template.loginForgot.helpers({
 });
 
 
-Template.loginForgot.events({
+Template.forgotPwdFrame.events({
 	'change .js-login-email, keyup .js-login-email': function(event, instance) {
 		instance.loginEmail.set("" + instance.$('.js-login-email').val());
 	},
@@ -80,7 +80,7 @@ Template.loginForgot.events({
 
 
 
-Template.loginLogin.onRendered(function() {
+Template.loginFrame.onRendered(function() {
 	var instance = this;
 	var dropdownElm = $(".login-dropdown").parent();
 	dropdownElm.on("shown.bs.dropdown", function() {
@@ -92,13 +92,13 @@ Template.loginLogin.onRendered(function() {
 });
 
 
-Template.loginLogin.created = function() {
+Template.loginFrame.created = function() {
 	this.registering = new ReactiveVar(false);
 	this.transEmail = ''; // Temp storage for email addresses enterd into the user name field
 };
 
 
-Template.loginLogin.helpers({
+Template.loginFrame.helpers({
 	registering: function() {
 		return Template.instance().registering.get();
 	},
@@ -124,8 +124,8 @@ Template.loginLogin.helpers({
 });
 
 
-Template.loginLogin.events({
-	'click .loginRegister': function(event, instance){
+Template.loginFrame.events({
+	'click .js-register-btn': function(event, instance){
 		event.preventDefault();
 
 		var nameField =  instance.$('.js-login-name');
@@ -142,14 +142,14 @@ Template.loginLogin.events({
 				if (err) {
 					if (err.error == 400) {
 						$('#username_warning').hide(300);
-						$('#loginFrame').removeClass('username_warning');
+						$('.user-frame').removeClass('username_warning');
 						$('#password_warning').show(300);
-						$('#loginFrame').addClass('password_warning');
+						$('.user-frame').addClass('password_warning');
 					} else {
 						$('#username_warning').show(300);
-						$('#loginFrame').addClass('username_warning');
+						$('.user-frame').addClass('username_warning');
 						$('#password_warning').hide(300);
-						$('#loginFrame').removeClass('password_warning');
+						$('.user-frame').removeClass('password_warning');
 					}
 				} else {
 					instance.closeDropdown();
@@ -159,9 +159,8 @@ Template.loginLogin.events({
 			$('#password_warning_incorrect').hide(300);
 			$('#username_warning_not_existing').hide(300);
 			$('#login_warning').hide(300);
-			$('#loginFrame').removeClass('username_warning');
-			$('#loginFrame').removeClass('password_warning');
-
+			$('.user-frame').removeClass('username_warning');
+			$('.user-frame').removeClass('password_warning');
 			Template.instance().registering.set(true);
 
 			// Sometimes people register with their email address in the first field
@@ -175,13 +174,13 @@ Template.loginLogin.events({
 		}
 	},
 
-	'submit form, click .loginLogin': function(event, instance){
+	'submit form, click .js-login-btn': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
 			$('#password_warning').hide(300);
 			$('#username_warning').hide(300);
-			$('#loginFrame').removeClass('username_warning');
-			$('#loginFrame').removeClass('password_warning');
+			$('.user-frame').removeClass('username_warning');
+			$('.user-frame').removeClass('password_warning');
 			Template.instance().registering.set(false);
 			return;
 		}
@@ -192,31 +191,31 @@ Template.loginLogin.events({
 				if (err.error == 400) {
 					$('#password_warning_incorrect').hide(300);
 					$('#username_warning_not_existing').hide(300);
-					$('#loginFrame').addClass('username_warning');
-					$('#loginFrame').addClass('password_warning');
+					$('.user-frame').addClass('username_warning');
+					$('.user-frame').addClass('password_warning');
 					$('#login_warning').show(300);
 				} else if (err.reason == 'Incorrect password') {
 					$('#login_warning').hide(300);
 					$('#username_warning_not_existing').hide(300);
-					$('#loginFrame').removeClass('username_warning');
-					$('#loginFrame').addClass('password_warning');
+					$('.user-frame').removeClass('username_warning');
+					$('.user-frame').addClass('password_warning');
 					$('#password_warning_incorrect').show(300);
 				} else {
 					$('#login_warning').hide(300);
 					$('#password_warning_incorrect').hide(300);
-					$('#loginFrame').removeClass('password_warning');
-					$('#loginFrame').addClass('username_warning');
+					$('.user-frame').removeClass('password_warning');
+					$('.user-frame').addClass('username_warning');
 					$('#username_warning_not_existing').show(300);
 				}
 			} else {
-				$('#loginFrame').removeClass('username_warning');
-				$('#loginFrame').removeClass('password_warning');
+				$('.user-frame').removeClass('username_warning');
+				$('.user-frame').removeClass('password_warning');
 				instance.closeDropdown();
 			}
 		});
 	},
 
-	'click .loginWithService': function(event, instance) {
+	'click .js-external-service-login-btn': function(event, instance) {
 		event.preventDefault();
 
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;

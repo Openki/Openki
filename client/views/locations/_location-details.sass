@@ -1,0 +1,40 @@
+.locationDetails
+	+container-narrow
+	.head
+		+grid(12)
+		background-color: $location-bg
+		color: $location-text
+		height: 140px
+		overflow: auto
+		padding-right: 0px
+		h1
+			color: $location-text
+		.description h1
+			background-color: $default-black
+			display: inline
+		img
+			float: right
+			height: 90px
+	.body
+		+grid(12)
+		background-color: $location-description-bg
+		margin-top: 3px
+		padding-right: 0px
+		.descriptionFrame
+			+grid(12, 6)
+			padding: 0px
+			.title
+				background-color: $location-description-bg
+				margin-top: 10px
+		.location_map
+			+grid(12, 6)
+			padding: 0px
+			.mapContainer.box
+				float: right
+				height: 300px
+				width: 300px
+			.coordinates
+				float: right
+		button.-contact
+			@extend .btn
+			@extend .btn-default

@@ -1,0 +1,188 @@
+<template name="discussion">
+	<div class="course-details-component discussion">
+		<div class="course-details-component-titlebar">
+			<h4 class="course-details-component-heading">
+				<span class="fa fa-comments"></span>
+				&nbsp;
+				{{mf 'course.title.Discussion' 'Discussion'}}
+			</h4>
+		</div><!-- /.course-details-component-titlebar -->
+		{{> post newPost}}
+		{{#if havePosts}}
+			{{#each posts}}
+				<div class="discussion-conversation">
+					{{> post}}
+				</div><!-- /.discussion-conversation -->
+			{{/each}}
+		{{/if}}
+	</div><!-- /.course-details-component.discussion -->
+</template><!-- /discussion -->
+
+<template name="post">
+	{{#if editing}}
+		{{> postEdit}}
+	{{else}}
+		{{> postShow}}
+	{{/if}}
+	{{#each responses}}
+		{{> post}}
+	{{/each}}
+	{{#if allowResponse}}
+		{{> post newResponse}}
+	{{/if}}
+</template><!-- /post -->
+
+<template name="postShow">
+	{{#if new}}
+		{{#if parentId}}
+			<div class="discussion-reply">
+				<button class="js-edit discussion-reply-btn"
+					type="button"
+					role="button">
+					<span class="fa fa-reply"></span>
+					&nbsp;
+					{{mf 'course.discussion.comment_answer' 'Answer'}}
+				</button>
+			</div><!-- /.discussion-reply -->
+		{{else}}
+			<button class="js-edit discussion-post-new-btn"
+				type="button">
+				<span class="glyphicon glyphicon-pencil"></span>
+				&nbsp;
+				{{mf 'course.discussion.write_comment' 'Write a comment'}}
+			</button>
+		{{/if}}
+	{{else}}
+		<div class="{{postClass}}">
+			{{> profileIcon userId}}
+			<div class="discussion-post-content">
+				<div class="discussion-post-header">
+					{{> profileLink userId}}
+					<span class="discussion-post-time"
+						title="{{dateformat time_created}}">
+						{{fromNow time_created}}
+					</span>
+					{{#if time_updated}}
+						<span class="comment-time-updated"
+							title="{{dateformat time_updated}}">
+							last update:{{fromNow time_updated}}
+						</span>
+					{{/if}}
+					{{#if mayDelete}}
+						<button class="discussion-delete-btn delete"
+							data-toggle="tooltip"
+							data-original-title="{{mf 'discussion.deleteComment' 'Delete comment'}}"
+							role="button"
+							type="button">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					{{/if}}
+					{{#if mayEdit}}
+						<button class="js-edit discussion-edit-btn"
+							data-toggle="tooltip"
+							data-original-title="{{mf 'discussion.editComment' 'Edit comment'}}"
+							role="button"
+							type="button">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+					{{/if}}
+				</div><!-- /.disucssion-post-header -->
+				<div class="discussion-post-body">
+					{{#if this.title}}
+						<h4 class="discussion-post-title">
+							{{this.title}}
+						</h4>
+					{{/if}}
+					<p>{{text}}</p>
+				</div><!-- /.discussion-post-body -->
+			</div><!-- /.discussion-post-content -->
+		</div><!-- /{{postClass}} -->
+	{{/if}}
+</template><!-- /postShow -->
+
+<template name="postEdit">
+	<div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
+		{{> profileIcon userId}}
+		<div class="discussion-edit-content">
+			<form>
+			<div class="discussion-edit-header">
+				{{#if showUserId}}
+					{{> profileLink userId}}
+				{{else}}
+					<strong>{{mf 'discussion.anonymous' 'Anonymous'}}</strong>
+				{{/if}}
+				<span class="discussion-post-time">
+					{{#unless new}}
+						{{fromNow time_created}}
+					{{/unless}}
+				</span>
+				{{#if time_updated}}
+					<span class="comment-time-updated">
+						last update:{{fromNow time_updated}}
+					</span>
+				{{/if}}
+			</div><!-- /.discussion-edit-header -->
+			<div class="discussion-edit-body">
+				<input class="js-post-title discussion-edit-title"
+					type="text"
+					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
+					value="{{title}}"/>
+				<textarea class="js-post-text discussion-edit-text"
+					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">
+					{{text}}
+				</textarea>
+				<button class="discussion-cancel-btn cancel" type="button">
+					{{mf 'course.discussion.comment_btn.cancel' 'Cancel'}}
+				</button>
+				<button class="discussion-save-btn"
+					type="submit">
+					{{#if new}}
+						{{#if parentId}}
+							{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+						{{else}}
+							{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+						{{/if}}
+					{{else}}
+							{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
+					{{/if}}
+				</button>
+				{{#if new}}
+					<label class="discussion-toggle-anonymous">
+						<input class='toggleAnonymous js-anon'
+							type='checkbox'
+							{{anonChecked}}
+							{{anonDisabled}}/>
+						{{mf 'course.discussion.anon' 'Anonymous comment'}}
+					</label>
+				{{/if}}
+			</div><!-- /.discussion-edit-body -->
+			</form>
+		</div><!-- /.discussion-edit-content -->
+	</div><!-- /{{postClass}} -->
+</template><!-- /postEdit -->
+
+<template name="profileLink">
+	{{#if this}}
+		<a class="profilelink" href="/user/{{this}}/{{username this}}">
+			{{username this}}
+		</a>
+	{{else}}
+		<span class="profilelink">
+			Anonymous
+		</span>
+	{{/if}}
+</template><!-- /profileLink -->
+
+<template name="profileIcon">
+	<div class="discussion-thumb">
+		{{#if this}}
+			<a href="/user/{{this}}/{{username this}}">
+				<img class="discussion-profile-icon"
+					src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
+			</a>
+		{{else}}
+			<img class="discussion-profile-icon"
+				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
+		{{/if}}
+	</div><!-- /.discussion-thumb -->
+</template><!-- /profileIcon -->

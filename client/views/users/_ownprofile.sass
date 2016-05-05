@@ -1,0 +1,106 @@
+.profile-info-container
+	+grid(12)
+
+.profile-info
+	+grid(12)
+	background-color: $user-bg
+	border-top-left-radius: 6px
+	border-top-right-radius: 6px
+	padding: 15px
+	table
+		font-size: large
+		margin-bottom: 10px
+		width: 100%
+
+.profile-info-edit
+	label .checkmark
+		display: none
+	.active .checkmark
+		display: inline
+
+.profile-info-save-btn,
+.js-profile-info-cancel-btn
+	@extend .btn
+
+.profile-info-save-btn
+	@extend .btn-success
+
+.js-profile-info-cancel-btn
+	+btn-cancel
+	margin-left: 5px
+
+.profile-info-edit .btn-group label
+	@extend .btn-default
+
+.js-profile-info-edit-btn,
+.js-profile-delete-btn
+	+header-btn
+	color: $default-gray
+	float: right
+	font-size: large
+	&:hover
+		color: $default-black
+
+.js-change-pwd-btn
+	@extend .btn
+	@extend .btn-default
+	margin-top: 10px
+
+.js-verify-mail-btn
+	@extend .btn
+	@extend .btn-primary
+
+.change-pwd
+	+grid(12)
+	padding: 0px
+
+.change-pwd-btn,
+.js-change-pwd-cancel-btn
+	@extend .btn
+
+.change-pwd-btn
+	@extend .btn-success
+
+.js-change-pwd-cancel-btn
+	+btn-cancel
+	margin-left: 5px
+
+.profile-delete-confirmation
+	+grid(12)
+	background-color: pink
+	border: 2px solid $brand-danger
+	margin-top: 15px
+	overflow: auto
+	padding: 15px
+
+.js-profile-delete-cancel-btn,
+.js-profile-delete-confirm-btn
+	@extend .btn
+	margin-top: 10px
+
+.js-profile-delete-cancel-btn
+	@extend .btn-default
+
+.js-profile-delete-confirm-btn
+	+btn-cancel
+
+.translate-link
+	+grid(12)
+	a
+		@extend .btn
+		@extend .btn-success
+		@extend .btn-lg
+		border-top-left-radius: 0px
+		border-top-right-radius: 0px
+		width: 100%
+
+.profile-groups-list
+	+grid(12)
+	.groups
+		@extend .list-unstyled
+		li
+			margin-bottom: 10px
+
+.create-group-btn
+	@extend .btn
+	@extend .btn-success

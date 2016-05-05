@@ -1,0 +1,139 @@
+#edit_event_description
+	padding: 6px 10px
+
+.course_events
+	+grid(12)
+	height: 400px
+	margin-left: -5px
+	overflow-x: hidden
+	overflow-y: auto
+	padding: 0px
+	position: relative
+	.course_events_events
+		+grid(12)
+		left: -3px
+		padding: 10px 0
+		position: relative
+		width: calc(#{"100% + 6px"})
+		.event-small-container
+			+grid(12, 12, 6)
+			padding: 0px 3px 10px
+	hr
+		clear: both
+		margin-bottom: 0px
+
+.course_event,
+.calendar_event,
+.calendar_event_past
+	&:hover
+		+box-shadow-big($default-shadow)
+		z-index: 1029
+
+.course_events_fadebox
+	height: 415px
+	position: relative
+	.fade_effect_top,
+	.fade_effect_bottom
+		margin-left: -5px
+		width: calc(#{"100% + 5px"})
+		z-index: 2
+
+.course_event_container,
+.course_event_past_container
+	+grid(12, 6)
+	padding: 5px
+
+.course_event_past_container
+	.course_event_date,
+	.course_event_lower_section
+		+opacity(0.6)
+
+.courseEvents-titlebar
+	+grid(12)
+	background: $brand-primary
+	border: 5px solid $brand-primary
+	color: $body-bg
+	h4
+		font-weight: bold
+	& > .link
+		color: $default-black
+		position: absolute
+		right: 10px
+		top: -1px
+
+.course_event
+	+transition(box-shadow $default-transition-time)
+	a
+		& > .course_event_date
+			background: $brand-success
+			border-bottom: 3px solid $default-white
+			height: 70px
+			padding: 10px 0
+			white-space: nowrap
+		.course_event_date span.date
+			font-size: large
+		& > .course_event_time
+			font-size: medium
+			padding: 0px 0px 10px
+		.course_event_time > span
+			font-size: small
+
+	& > .eventEdit_buttons
+		background: $default-light-grey
+		border-top: 3px solid $default-white
+		padding: 10px 0
+		text-align: center
+		.btn-toolbar
+			margin: auto
+			width: 90%
+
+	& > a,
+	& > a:hover
+		color: $default-black
+		text-decoration: none
+
+.course_event_lower_section
+	background: $openki-light-blue
+	height: calc(#{"100% - 70px"})
+	padding-bottom: 10px
+
+.course_event_title
+	+transition(color $default-transition-time)
+	h3
+		margin: 10px 0px
+
+input#edit_event_title
+	font-size: large
+
+.event_options
+	+grid(12)
+	padding: 15px 0px 0px
+
+.create-event
+	@extend .container
+
+.eventReplicationMenu
+	background: $default-light-grey
+	padding: 10px 0px
+	& > div
+		padding: 1em
+
+.fade_effect_top
+	+gradient-vertical($body-bg, transparent)
+	height: 40px
+	left: 0px
+	position: absolute
+	top: 0px
+	width: 100%
+	@media (max-width: $screen-xs)
+		background: none
+
+.fade_effect_bottom
+	+gradient-vertical(transparent, $body-bg)
+	bottom: 0px
+	height: 40px
+	left: 0px
+	position: absolute
+	width: 100%
+	@media (max-width: $screen-xs)
+		background: none

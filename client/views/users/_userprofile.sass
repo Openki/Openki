@@ -1,0 +1,57 @@
+.profile
+	+container-narrow
+	padding: 0px
+	h1
+		+grid(12)
+		margin-top: 0px
+
+.profile-it-is-you
+	+grid(12)
+
+.profile-send-email
+	+grid(12)
+	textarea
+		@extend .form-control
+		height: 120px
+		margin-bottom: 15px
+	label
+		@extend .btn-default
+	.checkmark
+		display: none
+	button
+		@extend .btn
+		@extend .btn-success
+		float: right
+
+.profile-settings-container
+	+grid(12, 6)
+	margin: 15px 0
+
+.profile-settings
+	+grid(12)
+	padding: 0px
+	.list-group
+		margin-bottom: 0px
+
+.js-remove-privilege-btn,
+.js-group-expel-btn
+	+header-btn
+	color: $default-gray
+	float: right
+	padding: 0px
+	&:hover
+		color: $default-black
+
+.profile-course-list-heading
+	+grid(12)
+
+.profile-course-list
+	+grid(12)
+	margin-left: -5px
+	width: calc(#{"100% + 10px"}) !important
+	.course-container
+		+grid(6)
+		padding: 0px
+		@media (max-width: $screen-xsm)
+			+grid(12)
+			padding: 0px

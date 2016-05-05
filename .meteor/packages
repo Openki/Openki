@@ -15,8 +15,6 @@ accounts-github
 service-configuration
 mediumeditor:mediumeditor
 djedi:sanitize-html
-nemo64:bootstrap
-less
 accounts-facebook
 archive:jquery-dotdotdot
 ical
@@ -48,3 +46,6 @@ meteorhacks:ssr
 standard-minifier-css
 standard-minifier-js
 rajit:bootstrap3-datepicker
+matb33:bootstrap-glyphicons
+fourseven:scss@=3.2.0
+reywood:bootstrap3-sass@=3.3.5_1

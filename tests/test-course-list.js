@@ -32,21 +32,21 @@ describe('Frontpage', function () {
     // test-case needs to wait again for those elements it wants to run
     // assertions against.
     // http://www.webdriver.io/api/utility/waitForExist.html
-    browser.waitForExist('.courselist_course_container');
+    browser.waitForExist('.course-container');
   });
 
   it('should list 6 courses for unauthenticated user (Testistan)', function () {
     // Wait until all courses have loaded.
     // http://www.webdriver.io/api/utility/waitUntil.html
     browser.waitUntil(function() {
-      var divcount = browser.selectorExecute('.courselist_course_container', function(divs) {
+      var divcount = browser.selectorExecute('.course-container', function(divs) {
         return divs.length;
       });
       return divcount == 6;
     });
 
     // Then collect data and assert stuff.
-    var titles = browser.getText('.courselist_course_container h4');
+    var titles = browser.getText('.course-container h4');
     expect(titles[0]).to.equal('Deutschkurse');
     expect(titles[1]).to.equal('Elektronik');
     expect(titles[2]).to.equal('Schweissen');

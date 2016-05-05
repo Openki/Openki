@@ -1,0 +1,50 @@
+<template name="coursehistory">
+	<div class="timeline-pre">
+		<div class="timeline-start-container">
+			<div class="timeline-start"></div>
+		</div><!-- /.timeline-start-container -->
+		<div class="timeline-header"></div>
+	</div><!-- /.timeline-pre -->
+
+	{{#each events_list_past}}
+	<div class="timeline">
+		<div class="timeline-eventdate {{this._id}}">
+			{{dateformat_mini_fullmonth start}}
+		</div><!-- /.timeline-eventdate -->
+		<div class="timeline-eventline-container">
+			<div class="timeline-eventline"></div>
+			<div class="timeline-eventpoint {{this._id}}"></div>
+		</div><!-- /.timeline-eventline-container -->
+	</div><!-- /.timeline -->
+	<div class="coursehistory-event">
+		<span class="fa fa-calendar-o"></span>
+		&nbsp;
+		<a href="{{pathFor 'showEvent'}}">
+			{{this.title}}
+		</a>
+	</div><!-- /.coursehistory-event -->
+	{{/each}}
+
+	{{#with course}}
+	<div class="timeline">
+		<div class="timeline-eventdate {{this._id}}">
+			{{dateformat_mini_fullmonth time_created}}
+		</div><!-- /.timeline-eventdate -->
+		<div class="timeline-eventline-container">
+			<div class="timeline-eventline"></div>
+			<div class="timeline-eventpoint {{this._id}}"></div>
+		</div><!-- /.timeline-eventline-container -->
+	</div><!-- /.timeline -->
+	<div class="coursehistory-event">
+		{{mf 'course.history.created_by' 'Course created by:'}}
+		{{>profilelink createdby}}
+	</div><!-- /.coursehistory-event -->
+	{{/with}}
+
+	<div class="timeline-post">
+		<div class="timeline-end-container">
+			<div class="timeline-end"></div>
+		</div><!-- /.timeline-end-container -->
+		<div class="timeline-footer"></div>
+	</div><!-- /.timeline-post -->
+</template><!-- /coursehistory -->
