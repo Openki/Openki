@@ -1,32 +1,60 @@
 <template name="profile">
 	<div class="profile">
-		<h1 class="name">{{mf 'profile.my_profile' 'My profile'}}</h1>
+		<h1>{{mf 'profile.my_profile' 'My profile'}}</h1>
 		{{#unless user}}
 			<p>{{mf 'profile.not_logged_in' "You're not logged in..."}}</p>
 		{{else}}
-			<div class="infos">
-				<div class="description">
-					<div class="background">
-						{{#if editing}}
-							<form class="edit">
-								<p>{{mf 'profile.input.username' 'Username:'}}
+			<div class="profile-info-container">
+				<div class="profile-info">
+					{{#unless editing}}
+						<button class="js-profile-delete-btn"
+							data-original-title="{{mf 'profile.delete' 'Delete my account'}}"
+							data-toggle="tooltip"
+							role="button"
+							type="button">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+						<button class="js-profile-info-edit-btn"
+							data-original-title="{{mf 'profile.edit' 'Edit profile info'}}"
+							data-toggle="tooltip"
+							role="button"
+							type="button">
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+						</button>
+					{{/unless}}
+					{{#if editing}}
+						<form class="profile-info-edit">
+							<div class="form-group">
+								<label for="editform_username">
+									{{mf 'profile.input.username' 'Username:'}}
 									<input type="text" id="editform_username" value="{{user.name}}"/>
-								</p>
-								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="editform_email">
+									{{mf 'profile.input.email' 'E-Mail (optional):'}}
 									<input type="text" id="editform_email" value="{{user.email}}"/>
-								</p>
-								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}}
-									<input type="checkbox" id="privacy" />
-								</p>
-								<button type="submit" class="save">
-									{{mf 'profile.input.save' "Save"}}
-								</button>
-								<button class="editCancel">
-									{{mf 'profile.input.cancel' 'Cancel'}}
-								</button>
-							</form>
-						{{else}}
-							<table class="table table-hover">
+								</label>
+							</div>
+							<div class="form-group">
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn {{#if user.privacy}}active{{/if}}">
+										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
+										<span class="checkmark"></span>
+										<input type="checkbox" id="privacy"/>
+									</label>
+								</div>
+							</div>
+							<button type="submit" class="profile-info-save-btn">
+								{{mf 'profile.input.save' "Save"}}
+							</button>
+							<button class="js-profile-info-cancel-btn">
+								{{mf 'profile.input.cancel' 'Cancel'}}
+							</button>
+						</form>
+					{{else}}
+						<table>
+							<tbody>
 								<tr class="name">
 									<td>{{mf 'profile.username' 'Username:'}}</td>
 									<td>{{user.name}}</td>
@@ -41,7 +69,7 @@
 											<span class="descr_small"> {{verifiedEmail}} </span>
 											&nbsp;
 											{{#unless user.veryfiedEmailTrue}}
-											<button class="verify">
+											<button class="js-verify-mail-btn">
 												<span class="glyphicon glyphicon-ok-circle"></span>
 												&nbsp;
 												{{mf 'profile.verifymail' 'Verify my E-Mail'}}
@@ -65,88 +93,97 @@
 										{{/if}}
 									</td>
 								</tr>
-							</table>
-							<button class="edit">{{mf 'profile.edit' 'Edit'}}</button>
-						{{/if}}
-					</div><!-- /.background -->
-				</div><!-- /.description -->
-				<div class="password">
+							</tbody>
+						</table>
+					{{/if}}
 					{{#if changingPass}}
-						<form class="passChange">
-							<label>
-								{{mf 'profile.input.oldPassword' 'Your current password'}}
-								<input type="password" id="oldpassword" value=""/>
-							</label>
-							<label>
-								{{mf 'profile.input.newPassword' 'New password'}}
-								<input type="password" id="newpassword" value=""/>
-							</label>
-							<label>
-								{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-								<input type="password" id="newpassword_confirm" value=""/>
-							</label>
-							<button type="submit" class="save changePassConfirm">
-								{mf 'profile.changePass' 'Change my password'}}
+						<form class="change-pwd">
+							<div class="form-group">
+								<label for="oldpassword">
+									{{mf 'profile.input.oldPassword' 'Your current password'}}
+									<input type="password" id="oldpassword" value=""/>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="newpassword">
+									{{mf 'profile.input.newPassword' 'New password'}}
+									<input type="password" id="newpassword" value=""/>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="newpassword_confirm">
+									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+									<input type="password" id="newpassword_confirm" value=""/>
+								</label>
+							</div>
+							<button type="submit" class="change-pwd-btn">
+								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
-							<button class="changePassCancel">
+							<button class="js-change-pwd-cancel-btn">
 								{{mf 'profile.changePassCancel' 'Cancel'}}
 							</button>
 						</form>
 					{{else}}
-						<button class="changePass">{{mf 'profile.changePass' 'Change my password'}}</button>
+						{{#unless editing}}
+							<button class="js-change-pwd-btn">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+								&nbsp;
+								{{mf 'profile.changePass' 'Change my password'}}
+							</button>
+						{{/unless}}
 					{{/if}}
-				</div><!-- /.password -->
-			</div><!-- /.infos -->
-			<div class="groupList">
-				<h3> {{mf 'profile.groups' 'My groups:'}}</h3>
-				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
-				You are {NUM_GROUPS, plural,
-				=0 {not member of any group}
-				=1 {member of the group:}
-				other {member of # groups:}}
-				{{/mf}}
-				<ul class="groups">
-					{{#each user.groups}}
-						<li>
-							<span class="group">{{name}}</span>
-						</li>
-					{{/each}}
-				</ul>
-				<a href="{{pathFor 'groupDetails' _id='create'}}">
-					<button class="-createGroup createGroup">
-						<span class="fa fa-plus"></span>&nbsp;
-						{{mf 'profile.createNewGroup.button' 'Create a new group'}}
-					</button>
-				</a>
-			</div><!-- /.groupList -->
-			<div class="deleteFrame">
-				{{#if verifyDelete}}
-					<div class="pleaseConfirm">
-						{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
-						<button class="verifycancel cancelDeletion">
-							{{mf 'profile.deletecancel' 'Cancel'}}
-						</button>
-						<button class="confirmdelete">
-							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
-						</button>
-					</div><!-- /.pleaseConfirm -->
-				{{else}}
-					<button class="delete">
-						{{mf 'profile.delete' 'Delete my account'}}
-					</button>
-				{{/if}}
-			</div><!-- /.deleteFrame -->
-			<div class="translate">
+					{{#if verifyDelete}}
+						<div class="profile-delete-confirmation">
+							{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
+							<button class="js-profile-delete-confirm-btn">
+								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
+							</button>
+							<button class="js-profile-delete-cancel-btn">
+								{{mf 'profile.deletecancel' 'Cancel'}}
+							</button>
+						</div><!-- /.profile-delete-confirmation -->
+					{{/if}}
+				</div><!-- /.profile-info -->
+			</div><!-- /.profile-info-container -->
+			<div class="translate-link">
 				<a href="/translate">
-					<i class="fa fa-language"></i>
+					<i class="fa fa-language" aria-hidden="true"></i>
 					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 				</a>
-			</div><!-- /.translate -->
-			<div class="list_small courses">
+			</div><!-- /.translate-link -->
+			<div class="profile-groups-list">
 				<hr>
-				<h3>{{mf 'profile.my_courses' 'My Courses:'}}</h3>
+				<h3> {{mf 'profile.groups' 'My groups'}}</h3>
+				<h5>
+					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
+					You are {NUM_GROUPS, plural,
+					=0 {not member of any group}
+					=1 {member of the group:}
+					other {member of # groups:}}
+					{{/mf}}
+				</h5>
+				<ul class="groups">
+					{{#each user.groups}}
+						{{#with this._id}}
+							<li>
+								{{> groupNameFull}}
+							</li>
+						{{/with}}
+					{{/each}}
+				</ul>
+				<a class="create-group-btn"
+					href="{{pathFor 'groupDetails' _id='create'}}">
+					<span class="fa fa-plus"></span>&nbsp;
+					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
+				</a>
+			</div><!-- /.profile-groups-list -->
+			<div class="profile-course-list-heading">
+				<hr>
+				<h3>{{mf 'profile.my_courses' 'My Courses'}}</h3>
+			</div>
+			<div class="profile-course-list">
 				{{> courselist courses}}
-			</div><!-- /.list_small -->
+			</div><!-- /.profile-course-list -->
 		{{/unless}}
 	</div><!-- /.profile -->
 </template>

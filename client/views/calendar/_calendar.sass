@@ -1,8 +1,47 @@
 .calendar_eventlist
 	margin-left: -20px
 
+.switchDate
+	+grid(12)
+	background-color: $calendar-navigation-bg
+	box-shadow: 0px 6px 2px $default-shadow
+	font-size: 32px
+	margin-bottom: 10px
+	padding: 0px 10px
+	position: fixed
+	text-align: center
+	top: 50px
+	width: 100%
+	z-index: 2
+	.calendar_week
+		background-color: $calendar-header-bg
+		text-align: center
+		.week
+			color: $calendar-header-text
+			font-size: large
+			line-height: 0.75
+			margin: 7px 0px 0px 0px
+		.date
+			color: $calendar-header-text
+			font-size: small
+			margin: 3px 0px
+	& > .right
+		float: right
+	small
+		font-size: 12px
+	button
+		@extend .btn
+		@extend .btn-default
+		float: left
+		margin: 6px 3px
+		&:first-child
+			margin-left: 0px
+		&:last-child
+			margin-right: 0px
+
 .calendar
 	@extend .container
+	padding-top: 50px
 	.calendar_date
 		+grid(12)
 		padding: 0px 0px 10px
@@ -44,45 +83,6 @@
 					+grid(6)
 					padding: 0px 3px 10px
 
-.switchDate
-	+grid(12)
-	background-color: $calendar-navigation-bg
-	font-size: 32px
-	margin-bottom: 10px
-	padding: 0px 10px
-	text-align: center
-	width: 100%
-	z-index: 2
-	&.over_content
-		box-shadow: 0px 6px 2px $default-shadow
-		position: fixed
-		top: 50px
-	.calendar_week
-		background-color: $calendar-header-bg
-		text-align: center
-		.week
-			color: $calendar-header-text
-			font-size: large
-			line-height: 0.75
-			margin: 7px 0px 0px 0px
-		.date
-			color: $calendar-header-text
-			font-size: small
-			margin: 3px 0px
-	& > .right
-		float: right
-	small
-		font-size: 12px
-	button
-		@extend .btn
-		+btn-calendar
-		float: left
-		margin: 6px 3px
-		&:first-child
-			margin-left: 0px
-		&:last-child
-			margin-right: 0px
-
-button.calendar_download
+.js-events-download-btn
 	@extend .btn
 	@extend .btn-primary

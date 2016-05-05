@@ -126,7 +126,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 480; // @screen-xs
+		return Session.get('screenSize') <= 768; // @screen-sm
 	},
 	isProposal: function() {
 		return Events.find({course_id: this.course._id}).count() === 0;
@@ -141,7 +141,7 @@ Template.courseDetailsSubmenu.helpers({
 });
 
 Template.courseDetailsPage.events({
-	'click .deleteCourse': function () {
+	'click .js-delete-course-btn': function () {
 		var self = this;
 		if (pleaseLogin()) return;
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
@@ -156,7 +156,7 @@ Template.courseDetailsPage.events({
 		}
 	},
 
-	'click .editCourse': function () {
+	'click .js-edit-course-btn': function () {
 		if (pleaseLogin()) return;
 		Router.go('showCourse', this, { query: {edit: 'course'} });
 	}

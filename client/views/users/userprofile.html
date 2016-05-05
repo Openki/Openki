@@ -5,143 +5,152 @@
 </template>
 
 <template name="userprofile">
-	<div class="userprofile">
+	<div class="profile">
 		<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}</h1>
 			{{#if ownuser}}
-				<h4>
-					{{mf 'profile.its_you' "It's you!"}}&nbsp;
-				</h4>
-				<h5>
-					<a href="/profile/" >
-						<span class="fa fa-cog"></span>
-						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
-					</a>
-				</h5>
-			{{else}}
-				<div class="row">
-					<div class="col-sm-4">
-						{{>emailBox}}
-					</div>
+				<div class="profile-it-is-you">
+					<h4>
+						{{mf 'profile.its_you' "It's you!"}}&nbsp;
+					</h4>
+					<h5>
+						<a href="/profile/" >
+							<span class="fa fa-cog"></span>
+							{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
+						</a>
+					</h5>
 				</div>
+			{{else}}
+				{{>emailBox}}
 			{{/if}}
 
 		{{#if showPrivileges}}
-			<div class="privileges settingsFrame">
-				<div class="container">
+			<div class="profile-settings-container">
+				<div class="profile-settings">
 					<h3>
 						<span class="fa fa-cog"></span>
 						{{mf 'privileges.title' 'Administrate Privileges'}}
 					</h3>
-					<ul class="privileges">
+					<div class="list-group">
 						{{#if privileges.admin}}
-							<li class="admin">
-								<span class="glyphicon glyphicon-ok"></span>
-								&nbsp;
-								<span class="granted">
-									{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
-								</span>
+							<li class="list-group-item list-group-item-success">
+								{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
 								{{#if alterPrivileges}}
-									<button class="remove" data-priv='admin'>
-										{{mf 'privilege.remove' 'Remove privilege'}}
+									<button class="js-remove-privilege-btn"
+										data-original-title="{{mf 'privilege.remove' 'Remove privilege'}}"
+										data-toggle="tooltip"
+										data-priv="admin"
+										role="button"
+										type="button">
+										<span class="glyphicon glyphicon-remove"></span>
 									</button>
 								{{/if}}
 							</li>
 						{{else}}
 							{{#if alterPrivileges}}
-								<li class="admin">
-									<button class="giveAdmin">
-										<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+									<button class="giveAdmin list-group-item" type="button">
 										{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
 									</button>
-								</li>
 							{{/if}}
 						{{/if}}
 
 						{{#if privileges.upload}}
-							<li class="admin">
-								<span class="glyphicon glyphicon-ok"></span>
-								&nbsp;
-								<span class="granted">{{mf 'privilege.has.upload' 'Upload allowed'}}</span>
+							<li class="list-group-item list-group-item-success">
+								{{mf 'privilege.has.upload' 'Upload allowed'}}
 								{{#if alterPrivileges}}
-									<button class="remove" data-priv='upload'>
-										{{mf 'privilege.remove'}}
+									<button class="js-remove-privilege-btn"
+										data-original-title="{{mf 'privilege.remove'}}"
+										data-toggle="tooltip"
+										data-priv="upload"
+										role="button"
+										type="button">
+										<span class="glyphicon glyphicon-remove"></span>
 									</button>
 								{{/if}}
 							</li>
 						{{else}}
 							{{#if alterPrivileges}}
-								<li class="admin">
-									<button class="giveUpload">
-										<span class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+									<button class="giveUpload list-group-item" type="button">
 										{{mf 'privilege.add.upload' 'Grant upload privilege'}}
 									</button>
-								</li>
 							{{/if}}
 						{{/if}}
-					</ul>
-				</div>
-			</div><!-- /.privileges -->
+					</div><!-- /.list-group -->
+				</div><!-- /.privileges -->
+			</div><!-- /.profile-settings-container -->
 		{{/if}}
 
 		{{#if showInviteGroups}}
-		<div class="inviteGroups settingsFrame">
-			<div class="container">
-				<h3>
-					<span class="fa fa-cog"></span>
-					{{mf 'userprofile.groups.header' 'Edit groups'}}
-				</h3>
-				{{#each inviteGroups}}
-					<div class="invite_group">
-						{{#if groupMember this ../user}}
-							{{mf 'profile.group.member' 'Member of group '}}
-							<span class="group">{{name}}</span>
-							&nbsp;
-							<button class="expelFromGroup">
-								{{mf 'profile.group.expel' 'Expel'}}
-							</button>
-						{{else}}
-							<button class="draftIntoGroup">
-								<span class="fa fa-user-plus"></span>
-								&nbsp;
-								{{mf 'profile.group.draft' 'Draft into group '}}
-								{{name}}
-							</button>
-						{{/if}}
-					</div><!-- /.invite_group -->
-				{{/each}}
-			</div>
-		</div><!-- /.inviteGroups -->
+			<div class="profile-settings-container">
+				<div class="profile-settings">
+					<h3>
+						<span class="fa fa-cog"></span>
+						{{mf 'userprofile.groups.header' 'Edit groups'}}
+					</h3>
+					<div class="list-group">
+						{{#each inviteGroups}}
+								{{#if groupMember this ../user}}
+								<li class="list-group-item list-group-item-success">
+									{{mf 'profile.group.member' 'Member of group '}}
+									<span class="group">{{name}}</span>
+									&nbsp;
+									<button class="js-group-expel-btn"
+										data-original-title="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}"
+										data-toggle="tooltip"
+										role="button"
+										type="button">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+								</li>
+								{{else}}
+									<button class="draftIntoGroup list-group-item">
+										{{mf 'profile.group.draft' 'Draft into group '}}
+										{{name}}
+									</button>
+								{{/if}}
+						{{/each}}
+					</div><!-- /.list-group -->
+				</div><!-- /.inviteGroups -->
+			</div><!-- /.profile-settings-container -->
 		{{/if}}
 
-		<div class="list_small">
-			<h3>{{mf 'profile.courses' "{NAME}'s Courses:" NAME=this.user.username}}</h3>
+		<div class="profile-course-list-heading">
+			<hr>
+			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
+		</div>
+		<div class="profile-course-list">
 			{{> courselist involvedIn}}
-		</div><!-- /.list_small -->
+		</div><!-- /.profile-course-list -->
 	</div><!-- /.userprofile -->
 </template>
 
 <template name="emailBox">
-	<div class="email_box">
+	<div class="profile-send-email">
 		<form class="sendMail">
 			<h4>{{mf 'profile.mail.content' 'Your message:'}}</h4>
 			<textarea id="emailmessage"
 				placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
 				rows="3">
 			</textarea>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" id="sendOwnAdress">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn">
+					<input class="js-send-own-adress"
+						id="sendOwnAdress"
+						type="checkbox"/>
 					{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
+					<span class="checkmark"></span>
 				</label>
-				<label>
-					<input type="checkbox" id="receiveCopy">
+				<label class="btn">
+					<input class="js-receive-copy"
+						id="receiveCopy"
+						type="checkbox"/>
 					{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
+					<span class="checkmark"></span>
 				</label>
 			</div>
-			<button type="submit" class="sendmail">
+			<button type="submit">
 				<span class="glyphicon glyphicon-send"></span>&nbsp;
 				{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
 			</button>
 		</form>
-	</div><!-- /.email_box -->
+	</div><!-- /.profile-send-email -->
 </template>

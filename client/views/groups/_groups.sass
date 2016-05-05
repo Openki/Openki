@@ -1,18 +1,20 @@
-ul.groups-list
+.groups-list
 	list-style: none
 	margin-bottom: 0
 	padding-left: 0
-	li
-		display: inline-block
-		a
-			+transition(all $default-transition-time)
-			background: $group-bg
-			color: $group-text
-			padding: 0 4px 1px
-			&:hover
-				+box-shadow-small($group-hover-shadow)
-				background: $group-hover-bg
-				text-decoration: none
+
+.group
+	display: inline-block
+
+.js-group-label
+	+transition(all $default-transition-time)
+	background: $group-bg
+	color: $group-text
+	padding: 0 4px 1px
+	&:hover
+		+box-shadow-small($group-hover-shadow)
+		background: $group-hover-bg
+		text-decoration: none
 
 .group_name_static
 	background: $group-bg
@@ -23,28 +25,28 @@ ul.groups-list
 .course-groups-manage
 	+grid(12)
 	padding: 0 0 10px
-	a.dropdown-toggle
-		+btn-thin
-		@extend .btn-primary
-	ul.groups-options
-		top: 80%
-		li
-			padding: 3px
+
+.js-manage-groups-btn
+	@extend .btn
+	@extend .btn-default
+
+ul.groups-options
+	white-space: nowrap
+	li
+		padding: 3px
+		button
+			background: none
+			border: none
+			&.-admitToGroup
+				text-align: left
+				// width: 100%
+			&.js-group-expel-btn
+				+btn-remove
+			span.glyphicon-remove
+				position: relative
+				top: 2px
+		&.part-of-group
+			padding: 3px 10px
 			&:hover
-				background: $brand-primary
-				color: $body-bg
-			button
-				background: none
-				border: none
-				&.-admitToGroup
-					text-align: left
-					width: 100%
-				&.-expelFromGroup +btn-remove
-				span.glyphicon-remove
-					position: relative
-					top: 2px
-			&.part-of-group
-				padding: 3px 10px
-				&:hover
-					background: $openki-light-blue
-					color: $default-black
+				background: $openki-light-blue
+				color: $default-black

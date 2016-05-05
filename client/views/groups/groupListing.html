@@ -1,24 +1,25 @@
 <template name="groupListing">
 	{{#if available}}
-		<div class="course-groups-manage">
-			<a class="dropdown-toggle"
+		<div class="dropdown">
+			<button class="js-manage-groups-btn dropdown-toggle"
 				aria-expanded="false"
 				data-toggle="dropdown"
 				href="#"
+				role="button"
 				type="button">
 				{{mf 'groups.listing.manage_groups' "Manage groups"}}
 				<span class="caret"></span>
-			</a>
+			</button>
 			<ul class="dropdown-menu groups-options" role="menu">
 				{{#each available}}
 					{{#if inGroup this ..}}
 						{{> groupListEntry}}
 					{{else}}
-						<li>{{> groupListAdd}}</li>
+						{{> groupListAdd}}
 					{{/if}}
 				{{/each}}
 			</ul>
-		</div><!-- /.course-groups-manage -->
+		</div>
 	{{/if}}
 </template>
 
@@ -35,7 +36,7 @@
 <template name="groupListEntry">
 	<li class="part-of-group">
 		{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
-		<button class="-expelFromGroup"
+		<button class="js-group-expel-btn"
 			data-html="true"
 			data-original-title="{{mf 'groupListing.expel' 'Expel from this group'}}"
 			data-placement="top"

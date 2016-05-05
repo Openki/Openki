@@ -1,7 +1,15 @@
 // Grid mixin
-//
-// One-line grid statement powered by bootstrap mixins
 // --------------------------------------------------
+//
+// ## Example:
+// .example-div
+//   +grid(12, 6, inherit, 3)
+//
+// ==> Is equal to:
+// .example-div
+//   +make-sm-column(6)
+//   +make-md-column(6)
+//   +make-lg-column(3)
 
 =grid($args...)
 	@for $i from 1 through length($args)
@@ -17,7 +25,7 @@
 		// Skip the value '12', as it's default for unstated
 		// smaller screen sizes.
 		// E.g.: +make-sm-column(6) automatically behaves as
-		//       a +make-xs-column(12)
+		//       a +make-xs-column(12) too
 		@else if nth($args, $i) != 12
 			@if $i == 1
 				+make-xs-column(nth($args, $i))

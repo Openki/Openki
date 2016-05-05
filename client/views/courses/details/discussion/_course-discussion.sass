@@ -37,14 +37,6 @@ $discussion-thumb-width: 60
 	padding-bottom: 5px
 	padding-top: 5px
 
-.discussion-profile-link
-	color: $default-black
-	font-weight: bold
-	padding-right: 5px
-	&:hover
-		color: $brand-primary
-		text-decoration: none
-
 .discussion-post-body,
 .discussion-edit-body
 	+grid(12)
@@ -59,6 +51,8 @@ $discussion-thumb-width: 60
 .discussion-post-header
 	background: $discussion-post-header-bg
 	border-color: $discussion-post-border
+	.profilelink
+		font-weight: bold
 
 .discussion-edit-btn,
 .discussion-delete-btn
@@ -146,7 +140,6 @@ $discussion-thumb-width: 60
 
 .discussion-post-new
 	+grid(12)
-	background: $discussion-post-new-bg
-	border-top: 3px solid $body-bg
+	background-color: $brand-success
 	padding-bottom: 10px
 	padding-top: 10px

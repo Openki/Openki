@@ -69,6 +69,8 @@
 					{{/if}}
 					{{#if mayDelete}}
 						<button class="discussion-delete-btn delete"
+							data-toggle="tooltip"
+							data-original-title="{{mf 'discussion.deleteComment' 'Delete comment'}}"
 							role="button"
 							type="button">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -76,6 +78,8 @@
 					{{/if}}
 					{{#if mayEdit}}
 						<button class="-edit discussion-edit-btn"
+							data-toggle="tooltip"
+							data-original-title="{{mf 'discussion.editComment' 'Edit comment'}}"
 							role="button"
 							type="button">
 							<span class="glyphicon glyphicon-edit"></span>
@@ -156,11 +160,11 @@
 
 <template name="profileLink">
 	{{#if this}}
-		<a class="discussion-profile-link" href="/user/{{this}}/{{username this}}">
+		<a class="profilelink" href="/user/{{this}}/{{username this}}">
 			{{username this}}
 		</a>
 	{{else}}
-		<span class="discussion-profile-link">
+		<span class="profilelink">
 			Anonymous
 		</span>
 	{{/if}}

@@ -177,3 +177,7 @@ Template.postEdit.events({
 		instance.anon.set(instance.$('.toggleAnonymous').prop('checked'));
 	}
 });
+
+Template.postShow.rendered = function(){
+	this.$("[data-toggle='tooltip']").tooltip();
+};

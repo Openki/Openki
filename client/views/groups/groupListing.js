@@ -25,9 +25,10 @@ Template.groupListing.events({
 				addMessage(mf('course.edit.groupAdded', { NAME: name }, 'Added group {NAME}'), 'success');
 			}
 		});
+		event.stopPropagation();
 	},
 
-	'click button.-expelFromGroup': function(event, instance) {
+	'click button.js-group-expel-btn': function(event, instance) {
 		event.preventDefault();
 		var groupId = this._id;
 		var name = this.name;
@@ -39,6 +40,7 @@ Template.groupListing.events({
 				addMessage(mf('course.edit.groupRemoved', { NAME: name }, 'Expelled from group {NAME}'), 'success');
 			}
 		});
+		event.stopPropagation();
 	},
 });
 
