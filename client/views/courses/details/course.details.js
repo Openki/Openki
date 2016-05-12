@@ -233,7 +233,7 @@ Template.courseGroupAdd.helpers(groupNameHelpers);
 Template.courseGroupAdd.helpers({
 	'groupsToAdd': function() {
 		var user = Meteor.user();
-		return _.difference(user.groups, this.groups);
+		return user && _.difference(user.groups, this.groups);
 	}
 });
 
