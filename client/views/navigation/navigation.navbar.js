@@ -29,7 +29,19 @@ Template.navbar.onRendered(function() {
 Template.navbar.helpers({
 	showTestWarning: function() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
-	}
+	},
+
+	connected: function() {
+		return Meteor.status().status === 'connected';
+	},
+
+	connecting: function() {
+		return Meteor.status().status === 'connecting';
+	},
+
+	notConnected: function() {
+		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
+	},
 });
 
 Template.navbar.events({
