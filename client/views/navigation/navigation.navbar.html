@@ -17,10 +17,20 @@
 					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand -toggleIntro" href="/">
+					{{#if connecting}}
+						<i class="fa fa-circle-o-notch fa-3x fa-spin fa-fw" title="{{mf 'status.connecting' "Connecting to server"}}"></i>
+						<span class="sr-only">{{mf 'status.connecting'}}</span>
+					{{/if}}
+					{{#if notConnected}}
+						<i class="fa fa-circle-o-notch fa-3x fa-fw" title="{{mf 'status.notConnected' "No connection to server"}}"></i>
+						<span class="sr-only">{{mf 'status.notConnected'}}</span>
+					{{/if}}
+					{{#if connected}}
 					<img
 						src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
 						alt="Openki logo"
 					/>
+					{{/if}}
 					<span class="brand">{{siteName}}</span>
 					<span class="stage">{{siteStage}}</span>
 				</a>
