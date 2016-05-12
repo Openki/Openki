@@ -156,7 +156,7 @@
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
 
-			<ul class="dropdown-menu">
+			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
 						<span class="group">{{> groupName}}</span>
@@ -194,9 +194,9 @@
 
 <template name="courseGroupMakeOrganizer">
 	<li style="position: relative">
-		<span class="fa fa-plus js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}">make editor</span>
+		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}"> make editor</span>
 		{{#if expanded}}
-			<div style="background-color: white; position: absolute; border: 3px red; z-index: 2">
+			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
 				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
 				<button type="button" class="js-makeOrganizer">
@@ -214,7 +214,7 @@
 	<li style="position: relative">
 		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeorg' "Remove organizer status for '{NAME}'" NAME=name}}">no editing</span>
 		{{#if expanded}}
-			<div style="background-color: white; z-index: 2">
+			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
 				<button type="button" class="js-removeOrganizer">
 					{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
