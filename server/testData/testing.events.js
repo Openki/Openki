@@ -725,7 +725,8 @@ testEvents = [
 	"start" : { "$date" : 1425308400000 },
 	"time_created" : { "$date" : 1424922395857 },
 	"time_lastedit" : { "$date" : 1425044922996 },
-	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE"
+	"title" : "NACHHALTIGKEIT IN DER GRUNDSCHULE",
+	"internal" : true
 },
 {
 	"groups" : ["Geographisch-Ethnographische Gesellschaft Zürich"],
@@ -740,7 +741,8 @@ testEvents = [
 	"start" : { "$date" : 1425308400000 },
 	"time_created" : { "$date" : 1424922325857 },
 	"time_lastedit" : { "$date" : 1425045022996 },
-	"title" : "Zeitreisen durch die Kartenwerke von swisstopo"
+	"title" : "Zeitreisen durch die Kartenwerke von swisstopo",
+	"internal" : true
 },
 
 

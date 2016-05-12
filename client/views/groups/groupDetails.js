@@ -120,7 +120,7 @@ Template.groupSettings.onCreated(function() {
 Template.groupDetails.helpers({
 	editingSettings: function() {
 		return Template.instance().editingSettings.get();
-	}
+	},
 });
 
 Template.groupSettings.helpers({
@@ -132,6 +132,19 @@ Template.groupSettings.helpers({
 
 		var group = Groups.findOne(Router.current().params._id);
 		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
+	},
+
+	kioskEventURL: function() {
+		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
+	},
+	kioskTimetableURL: function() {
+		return Router.routes.kioskTimetable.url({}, { query: {group: this._id} });
+	},
+	frameEventsURL: function() {
+		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
+	},
+	frameCalendarURL: function() {
+		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
 	},
 });
 

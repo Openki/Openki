@@ -159,9 +159,9 @@
 									</a>
 									{{#if availableSubcategories this}}
 										<small
-											class="-showSubcategories {{this}}"
+											class="-showSubcategories show-subcategories {{this}}"
 											title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-											<span class="glyphicon glyphicon-plus"></span>
+											<span class="fa fa-angle-down"></span>
 										</small>
 									{{/if}}
 								</li>
@@ -199,7 +199,7 @@
 					<br>
 				{{/unless}}
 				{{#if proposeNewBlurb}}
-					{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
+					{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.search}}
 				{{/if}}
 				</div>
 			{{/each}}
@@ -227,7 +227,7 @@
 			</h3><br />
 			{{#each eventResults}}
 				<!-- <div class="event_results"> -->
-					{{> small_event}}
+					{{> small_event_withDate}}
 				<!-- </div> -->
 			{{/each}}
 		</div>

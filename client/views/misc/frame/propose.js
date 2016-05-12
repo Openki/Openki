@@ -1,0 +1,26 @@
+Router.map(function () {
+	this.route('framePropose', {
+		path: '/frame/propose',
+		template: 'course_edit',
+		layoutTemplate: 'frameLayout',
+		waitOn: function () {
+			this.filter = Filtering(EventPredicates).read(this.params.query).done();
+
+			var filterParams = this.filter.toParams();
+			filterParams.after = minuteTime.get();
+
+			var limit = parseInt(this.params.query.count, 10) || 6;
+
+			return Meteor.subscribe('eventsFind', filterParams, limit*2);
+		},
+
+		data: function() {
+			regions = Regions.find();
+			return regions;
+		},
+
+		onAfterAction: function() {
+			document.title = webpagename + ' Propose';
+		}
+	});
+});

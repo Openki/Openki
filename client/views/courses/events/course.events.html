@@ -2,29 +2,6 @@
 	{{#if haveEvents}}
 		<div class="course_events_fadebox">
 			<div class="course_events">
-				{{#if havePastEvents}}
-					<div name="past_events">
-						<div class="courseEvents-titlebar">
-							<h4>
-								<span class="glyphicon glyphicon-calendar"></span>
-								{{mf 'course.events.pastList' 'Previous events'}}
-							</h4>
-							{{#if haveFutureEvents}}
-								<a href="#future_events" class="link">
-									<span class="glyphicon glyphicon-arrow-down"></span>
-									{{mf 'course.events.futureListLink' 'future events'}}
-								</a>
-							{{/if}}
-						</div>
-						<div class="course_events_events">
-							{{#each pastEvents}}
-								{{#if this}}
-									{{> small_event}}
-								{{/if}}
-							{{/each}}
-						</div>
-					</div>
-				{{/if}}
 				<hr class="now" id="future_events">
 				{{#if haveOngoingEvents}}
 					<div class="courseEvents-titlebar">
@@ -38,7 +15,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
-							{{> small_event}}
+							{{> small_event_withDate}}
 						{{/each}}
 					</div>
 				{{/if}}
@@ -57,7 +34,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each futureEvents}}
-						{{> small_event}}
+						{{> small_event_withDate}}
 						{{/each}}
 					</div>
 				{{/if}}

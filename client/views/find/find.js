@@ -36,9 +36,12 @@ var updateUrl = function(event, instance) {
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
+
 	if (queryString.length) {
 		options.query = queryString;
 	}
+
+	RouterAutoscroll.cancelNext();
 
 	var router = Router.current();
 	Router.go(router.route.getName(), { _id: router.params._id }, options);
@@ -98,7 +101,7 @@ Template.find.onCreated(function() {
 		// Here we show events only when they're not attached to a course
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', filterQuery, 10);
+		instance.subscribe('eventsFind', filterQuery, 12);
 	});
 });
 
@@ -198,8 +201,8 @@ Template.find.events({
 
 	'click .-showSubcategories': function(event, instance) {
 		$(".-subcategory" + "." + this).toggle();
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-plus');
-		$(".-showSubcategories." + this + " span").toggleClass('glyphicon-minus');
+		$(".-showSubcategories." + this + " span").toggleClass('fa-angle-down');
+		$(".-showSubcategories." + this + " span").toggleClass('fa-angle-up');
 		event.stopPropagation();
 	},
 
@@ -317,7 +320,7 @@ Template.find.helpers({
 		var filterQuery = Template.instance().filter.toQuery();
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		return eventsFind(filterQuery, 10);
+		return eventsFind(filterQuery, 12);
 	},
 
 	'proposeNewBlurb': function() {

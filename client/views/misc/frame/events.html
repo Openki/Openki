@@ -1,13 +1,11 @@
 <template name="frameLayout">
-	{{> yield}}
+	<div class="banner">
+		{{> yield}}
+	</div>
 </template>
 
 <template name="frameEvents">
-  <div class="banner">
-		<!-- Start 'this' helper iteration -->
-		{{#each this}}
-			{{> small_event}}
-		{{/each}}
-		<!-- End 'this' helper iteration -->
-  </div>
+	{{#each this}}
+		{{> small_event_withDate}}
+	{{/each}}
 </template>
