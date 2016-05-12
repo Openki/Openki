@@ -1,11 +1,11 @@
 <template name="introduction">
 	<div class="introduction_container">
 		<div class="introduction about">
-			<a href="#" class="-closeIntro" title="{{mf 'introduction.close.title' 'Close introduction'}}">
+			<a href="#" class="js-hide-intro close-intro" title="{{mf 'introduction.close.title' "Don't show this anymore"}}">
 				<span class="glyphicon glyphicon-remove"></span>
 			</a>
 			<h3>
-				<a class="-toggleDetails">
+				<a class="toggle-details js-toggle-details">
 					{{#mf KEY='introduction.Title' SITENAME=siteName}}
 					What does {SITENAME} do for you?
 					{{/mf}}
