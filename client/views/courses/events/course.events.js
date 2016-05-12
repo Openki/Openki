@@ -64,7 +64,6 @@ Template.course_events.rendered = function() {
 			$(".fade_effect_top").fadeOut(200);
 		}
 	});
-	scrollableContainer.scrollTop(this.$("hr.now").offset().top-scrollableContainer.offset().top); //halp
 };
 
 Template.course.rendered = function() {
