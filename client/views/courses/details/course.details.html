@@ -165,9 +165,6 @@
 						</button>
 					</li>
 				{{/each}}
-				<button type="button" class="js-collapse">
-					{{mf 'course.group.confirmAddClose' "Forget it"}}
-				</button>
 			</ul>
 		</div>
 	{{/if}}
@@ -182,9 +179,6 @@
 				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
 				<button type="button" class="js-remove">
 					{{mf 'course.group.confirmRemoveButton' "Delist"}}
-				</button>
-				<button type="button" class="js-collapse">
-					{{mf 'course.group.confirmRemoveClose' "Forget it"}}
 				</button>
 			</div>
 		{{/if}}
@@ -202,9 +196,6 @@
 				<button type="button" class="js-makeOrganizer">
 					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
 				</button>
-				<button type="button" class="js-collapse">
-					{{mf 'course.group.confirmOrgClose' "Forget it"}}
-				</button>
 			</div>
 		{{/if}}
 	</li>
@@ -218,9 +209,6 @@
 				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
 				<button type="button" class="js-removeOrganizer">
 					{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
-				</button>
-				<button type="button" class="js-collapse">
-					{{mf 'course.group.confirmRemoveOrgClose' "Forget it"}}
 				</button>
 			</div>
 		{{/if}}
