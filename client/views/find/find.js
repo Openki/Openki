@@ -36,9 +36,12 @@ var updateUrl = function(event, instance) {
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
+
 	if (queryString.length) {
 		options.query = queryString;
 	}
+
+	RouterAutoscroll.cancelNext();
 
 	var router = Router.current();
 	Router.go(router.route.getName(), { _id: router.params._id }, options);
