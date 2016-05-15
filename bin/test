@@ -26,7 +26,7 @@ function runChimp() {
     options: {
       env: extend({CI: 1}, process.env)
     },
-    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests'
+    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests --webdriverio.waitforTimeout=5000'
   });
 }
 
