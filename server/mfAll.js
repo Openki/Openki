@@ -3794,13 +3794,13 @@ mfPkg.syncAll({
       "revisionId": "jFjP5HdRKs6Rtxgva"
     },
     "course.details.repl_btn": {
-      "_id": "JQGfJSdCwwG9jZydW",
       "key": "course.details.repl_btn",
       "lang": "de",
-      "text": "Veranstaltungen erstellen",
+      "text": "{COUNT, plural, one {Veranstaltung} other {# Veranstaltungen}} erstellen",
       "ctime": 1434199757719,
-      "mtime": 1434199757719,
-      "revisionId": "RwpG5rQmYywAJQZQ9"
+      "mtime": 1463405642804,
+      "revisionId": "KrsjTDq4s8XEyqroF",
+      "_id": "JQGfJSdCwwG9jZydW"
     },
     "course.details.repl_menu_btn": {
       "_id": "GmQRA4xPdctYM6zua",
@@ -24321,6 +24321,629 @@ mfPkg.syncAll({
       "fuzzy": true
     }
   },
+  "hu": {
+    "categories.title.categories": {
+      "key": "categories.title.categories",
+      "lang": "hu",
+      "text": "Kategóriák",
+      "ctime": 1463403789110,
+      "mtime": 1463403789110,
+      "revisionId": "eNxD6XP6DYDecSZa4",
+      "_id": "gxgoeswA3EjZHSvt8"
+    },
+    "category.artistry": {
+      "key": "category.artistry",
+      "lang": "hu",
+      "text": "Művészeti technikák",
+      "ctime": 1463405050525,
+      "mtime": 1463405817436,
+      "revisionId": "PMJDmAEqxRXADcbjQ",
+      "_id": "CufeJDSWqRQQbY4Df"
+    },
+    "category.biology": {
+      "key": "category.biology",
+      "lang": "hu",
+      "text": "Biológia",
+      "ctime": 1463405040289,
+      "mtime": 1463405040289,
+      "revisionId": "WDGSCffkPvds5fpuB",
+      "_id": "DQXYaWyWfrosuJLk6"
+    },
+    "category.chemistry": {
+      "key": "category.chemistry",
+      "lang": "hu",
+      "text": "Kémia",
+      "ctime": 1463405476246,
+      "mtime": 1463405476246,
+      "revisionId": "FFvvFk6FxSpmmGsHh",
+      "_id": "wu6Y87TeSayHRZzq8"
+    },
+    "category.computer": {
+      "key": "category.computer",
+      "lang": "hu",
+      "text": "Számitástechnika",
+      "ctime": 1463405280615,
+      "mtime": 1463405280615,
+      "revisionId": "RjMsSJuiDpCKMvewQ",
+      "_id": "GdGWyMEvnowbKGs94"
+    },
+    "category.construction": {
+      "key": "category.construction",
+      "lang": "hu",
+      "text": "Építészet",
+      "ctime": 1463405734004,
+      "mtime": 1463405734004,
+      "revisionId": "BNqd55NnG9rwoKSwR",
+      "_id": "xMMn69WkZTbpTo4qC"
+    },
+    "category.cooking": {
+      "key": "category.cooking",
+      "lang": "hu",
+      "text": "Főzés",
+      "ctime": 1463405260022,
+      "mtime": 1463405260022,
+      "revisionId": "cDW7o6mJyiP4jTcFs",
+      "_id": "ag28XabLjM6ruCA7m"
+    },
+    "category.culture": {
+      "key": "category.culture",
+      "lang": "hu",
+      "text": "Kultúra",
+      "ctime": 1463405246174,
+      "mtime": 1463405246174,
+      "revisionId": "TsfDJDZSwS7wev3Ea",
+      "_id": "v7zW4nNhaXoFXMoyB"
+    },
+    "category.dance": {
+      "key": "category.dance",
+      "lang": "hu",
+      "text": "Tánc",
+      "ctime": 1463405082789,
+      "mtime": 1463405082789,
+      "revisionId": "H88qnHtMeHvfEm3iC",
+      "_id": "tBS6B3j74ubTPgrzg"
+    },
+    "category.design": {
+      "key": "category.design",
+      "lang": "hu",
+      "text": "Design",
+      "ctime": 1463405175727,
+      "mtime": 1463405175727,
+      "revisionId": "bkQPik6r8hvBY29DK",
+      "_id": "6jQstBdPdrzYWQ26H"
+    },
+    "category.electronics": {
+      "key": "category.electronics",
+      "lang": "hu",
+      "text": "Elektronika / Elektromosság",
+      "ctime": 1463405233499,
+      "mtime": 1463405233499,
+      "revisionId": "gCmTbg9S9smovgGC4",
+      "_id": "z9umB76WN7CJqnszq"
+    },
+    "category.experimental": {
+      "key": "category.experimental",
+      "lang": "hu",
+      "text": "Experimentális",
+      "ctime": 1463405295277,
+      "mtime": 1463405295277,
+      "revisionId": "kibehKmbESXDXCGkg",
+      "_id": "6Bc64sYLrZEgTD4Xw"
+    },
+    "category.fabric": {
+      "key": "category.fabric",
+      "lang": "hu",
+      "text": "Műanyagok / Anyagok",
+      "ctime": 1463405723952,
+      "mtime": 1463405723952,
+      "revisionId": "5W24H7PJXtz5EqnwT",
+      "_id": "rv6TvuZETdKF596Ne"
+    },
+    "category.film": {
+      "key": "category.film",
+      "lang": "hu",
+      "text": "Film",
+      "ctime": 1463405302579,
+      "mtime": 1463405302579,
+      "revisionId": "cCub9vGsBG64hZFHR",
+      "_id": "ehuGhjBHa9LECCf2G"
+    },
+    "category.fineart": {
+      "key": "category.fineart",
+      "lang": "hu",
+      "text": "Művészet",
+      "ctime": 1463405327686,
+      "mtime": 1463405327686,
+      "revisionId": "foweDpC8EkDBuyeDf",
+      "_id": "HjjRL32TQQcitrjNh"
+    },
+    "category.gardening": {
+      "key": "category.gardening",
+      "lang": "hu",
+      "text": "Kertészet / Földművelés",
+      "ctime": 1463405600618,
+      "mtime": 1463405600618,
+      "revisionId": "QdgpszsuogsgQERbZ",
+      "_id": "Jp5eRCZRsTScH7ZCD"
+    },
+    "category.geography": {
+      "key": "category.geography",
+      "lang": "hu",
+      "text": "Földrajz",
+      "ctime": 1463405492264,
+      "mtime": 1463405492264,
+      "revisionId": "k9sdQ9DeoG7nGCSEm",
+      "_id": "GLxDEmm8R5yC3na4Q"
+    },
+    "category.handicraft": {
+      "key": "category.handicraft",
+      "lang": "hu",
+      "text": "Kézmű",
+      "ctime": 1463405826563,
+      "mtime": 1463405826563,
+      "revisionId": "XD7qYzvvgeyQ4xT7G",
+      "_id": "qmSwkKwdzt7GnQyqG"
+    },
+    "category.history": {
+      "key": "category.history",
+      "lang": "hu",
+      "text": "Történelem",
+      "ctime": 1463405836050,
+      "mtime": 1463405836050,
+      "revisionId": "hYofEsL9qTQba7Fwn",
+      "_id": "pKFiTGDQk7sX82KW4"
+    },
+    "category.internet": {
+      "key": "category.internet",
+      "lang": "hu",
+      "text": "Internet",
+      "ctime": 1463405845772,
+      "mtime": 1463405845772,
+      "revisionId": "5kvm7zSPD52KfP3c6",
+      "_id": "DS6Kk8DfvT2WnSd8p"
+    },
+    "category.languages": {
+      "key": "category.languages",
+      "lang": "hu",
+      "text": "Nyelvek",
+      "ctime": 1463405855659,
+      "mtime": 1463405855659,
+      "revisionId": "Jg2ZaLuiqDqe8Rdxj",
+      "_id": "6RTkq3DtogY6xa4Rm"
+    },
+    "category.lawbusiness": {
+      "key": "category.lawbusiness",
+      "lang": "hu",
+      "text": "Jog és Közgazdaság",
+      "ctime": 1463405872379,
+      "mtime": 1463405872380,
+      "revisionId": "CqLEHkxyPM5jzDn6x",
+      "_id": "Sgxxbh9GanjKaCPST"
+    },
+    "category.martialarts": {
+      "key": "category.martialarts",
+      "lang": "hu",
+      "text": "Harcművészetek",
+      "ctime": 1463406011336,
+      "mtime": 1463406011336,
+      "revisionId": "9ypRWb5zy6i7KS8Sv",
+      "_id": "4J5afSZtN8uqbBdpq"
+    },
+    "category.mathematics": {
+      "key": "category.mathematics",
+      "lang": "hu",
+      "text": "Matematika",
+      "ctime": 1463405994560,
+      "mtime": 1463405994560,
+      "revisionId": "LdpnWZstpLTxJBYgA",
+      "_id": "Yy2YZb6dkmR86zcru"
+    },
+    "course.discussion.anon": {
+      "key": "course.discussion.anon",
+      "lang": "hu",
+      "text": "Anoním kommentár",
+      "ctime": 1463404463641,
+      "mtime": 1463404463641,
+      "revisionId": "iCe2REmmRK3rFvPnE",
+      "_id": "kbTMjWcDYpB62mu4f"
+    },
+    "course.discussion.comment_btn.cancel": {
+      "key": "course.discussion.comment_btn.cancel",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463402527224,
+      "mtime": 1463402527224,
+      "revisionId": "R3z8p7m5zrdBjPs2o",
+      "_id": "PRD6tN7JACXPP2A6X"
+    },
+    "course.discussion.text_placeholder": {
+      "key": "course.discussion.text_placeholder",
+      "lang": "hu",
+      "text": "Kommentárod",
+      "ctime": 1463403416563,
+      "mtime": 1463403416563,
+      "revisionId": "P2tpzmYB8hcQvk8hf",
+      "_id": "5DeWsrGDWGZFkL6jz"
+    },
+    "course.discussion.text_placeholder_answer": {
+      "key": "course.discussion.text_placeholder_answer",
+      "lang": "hu",
+      "text": "Válszod",
+      "ctime": 1463403389555,
+      "mtime": 1463403389555,
+      "revisionId": "pu2iF3BnSHK9kGYge",
+      "_id": "2EPuLYYZoHKBijszT"
+    },
+    "course.edit.cancel_btn": {
+      "key": "course.edit.cancel_btn",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463404968200,
+      "mtime": 1463404968200,
+      "revisionId": "6z7LNYK6LS22sT8gg",
+      "_id": "adYTtsT5CmPMpAca9"
+    },
+    "course.edit.categories": {
+      "key": "course.edit.categories",
+      "lang": "hu",
+      "text": "Kategóriák:",
+      "ctime": 1463404985157,
+      "mtime": 1463404985157,
+      "revisionId": "L7rf45ByX2auhHgFC",
+      "_id": "qqCsFGLk7FLborFG7"
+    },
+    "course.edit.save_btn": {
+      "key": "course.edit.save_btn",
+      "lang": "hu",
+      "text": "Mentés",
+      "ctime": 1463403823296,
+      "mtime": 1463403823296,
+      "revisionId": "HLA7M9CjkeN2dF4aG",
+      "_id": "SZskGoACgekDHmBdF"
+    },
+    "course.event.edit.cancel_btn": {
+      "key": "course.event.edit.cancel_btn",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463402534177,
+      "mtime": 1463402534177,
+      "revisionId": "dynHCZijJpJTZFdW2",
+      "_id": "ntcxPcjHQQB3vqEuD"
+    },
+    "event.edit.locationAddressPlaceholder": {
+      "key": "event.edit.locationAddressPlaceholder",
+      "lang": "hu",
+      "text": "Cím",
+      "ctime": 1463404303270,
+      "mtime": 1463404303270,
+      "revisionId": "mRsoghNySGAbaBtGk",
+      "_id": "7iSGJq4dBmk7iYDyW"
+    },
+    "event.edit.locationChange": {
+      "key": "event.edit.locationChange",
+      "lang": "hu",
+      "text": "Helyszínt változtatok",
+      "ctime": 1463405006259,
+      "mtime": 1463405006259,
+      "revisionId": "hkt8PwN4Mc7bTwJHn",
+      "_id": "aitgW4DJ6EZHxMp3u"
+    },
+    "event.windowtitle": {
+      "key": "event.windowtitle",
+      "lang": "hu",
+      "text": "{DATE} {EVENT}",
+      "ctime": 1463403264036,
+      "mtime": 1463403264036,
+      "revisionId": "q3uzZy5SKW2Peiona",
+      "_id": "gkuAdQvNYkXm5bowv"
+    },
+    "find.filter.categories": {
+      "key": "find.filter.categories",
+      "lang": "hu",
+      "text": "Kategóriák",
+      "ctime": 1463402612793,
+      "mtime": 1463402612793,
+      "revisionId": "yADmQNiuJXAHEWBLS",
+      "_id": "vTdbmF4jGZsdc9hpz"
+    },
+    "frameCalendar.nothingOnThisDay": {
+      "key": "frameCalendar.nothingOnThisDay",
+      "lang": "hu",
+      "text": "Nyugi, ma semmi sem történt.",
+      "ctime": 1463403774586,
+      "mtime": 1463403774586,
+      "revisionId": "KSejBXNxmQR5xWC9K",
+      "_id": "mSCNSszSn7oF7MXR2"
+    },
+    "introduction.1_teachOrLearn": {
+      "key": "introduction.1_teachOrLearn",
+      "lang": "hu",
+      "text": "Tanulnál vagy tanítanál valamit.",
+      "ctime": 1463403706452,
+      "mtime": 1463403706452,
+      "revisionId": "yhNKxHpLtxfbWqDAx",
+      "_id": "hW7dZDEH6AMJoLwWe"
+    },
+    "introduction.3_enrole": {
+      "key": "introduction.3_enrole",
+      "lang": "hu",
+      "text": "Bárki jelentkezhet résztvevőként, mentorként vagy vendéglátóként.",
+      "ctime": 1463404146069,
+      "mtime": 1463404146069,
+      "revisionId": "5wXv7TCSqNDMEJTAW",
+      "_id": "BmRQMjqrxseSPdFJR"
+    },
+    "location.details.address": {
+      "key": "location.details.address",
+      "lang": "hu",
+      "text": "Cím:",
+      "ctime": 1463403656664,
+      "mtime": 1463403656664,
+      "revisionId": "ReL8gbSC7wgteht7L",
+      "_id": "TSQffbaD4HATPegns"
+    },
+    "location.details.max_ppl": {
+      "key": "location.details.max_ppl",
+      "lang": "hu",
+      "text": "Maximális létszám:",
+      "ctime": 1463403622253,
+      "mtime": 1463403622253,
+      "revisionId": "ab3fxxdpnX8NsH6dZ",
+      "_id": "iqQMoMHxizMhLj3Fe"
+    },
+    "location.edit.address": {
+      "key": "location.edit.address",
+      "lang": "hu",
+      "text": "Cím:",
+      "ctime": 1463404321869,
+      "mtime": 1463404321869,
+      "revisionId": "q6CCvL57gPKSnHdPW",
+      "_id": "aGth54mPnCrf2KuB6"
+    },
+    "main.faq_link": {
+      "key": "main.faq_link",
+      "lang": "hu",
+      "text": "Gyakori kérdések",
+      "ctime": 1463404042986,
+      "mtime": 1463404042986,
+      "revisionId": "BAkY4vXa7rb8YsLfY",
+      "_id": "eroexqmDD2aHzgZie"
+    },
+    "main.video_link": {
+      "key": "main.video_link",
+      "lang": "hu",
+      "text": "Videó",
+      "ctime": 1463403744957,
+      "mtime": 1463403744957,
+      "revisionId": "wp5pYrd2jJPqCuyEc",
+      "_id": "hcZTrhZ8bY5Yimx7B"
+    },
+    "menue.All regions": {
+      "key": "menue.All regions",
+      "lang": "hu",
+      "text": "Összes régió",
+      "ctime": 1463402016576,
+      "mtime": 1463402016576,
+      "revisionId": "ak5LFoyHStkZ5iKhy",
+      "_id": "Ps7sT9Docxtjrvqby"
+    },
+    "menue.Calendar": {
+      "key": "menue.Calendar",
+      "lang": "hu",
+      "text": "Naptár",
+      "ctime": 1463405017512,
+      "mtime": 1463405017512,
+      "revisionId": "ZT6qoXKtF586YwtEb",
+      "_id": "zPEQHPDRisDPPpEe3"
+    },
+    "menue.Testpage2": {
+      "key": "menue.Testpage2",
+      "lang": "hu",
+      "text": "Összes adat rendszeresen törlődik.",
+      "ctime": 1463404373839,
+      "mtime": 1463404373839,
+      "revisionId": "zvTBtCQiDLij3npqq",
+      "_id": "MsZHiqCwCmZF3LkQq"
+    },
+    "profile.changePass": {
+      "key": "profile.changePass",
+      "lang": "hu",
+      "text": "Jelszavat változtatok",
+      "ctime": 1463404633005,
+      "mtime": 1463404633005,
+      "revisionId": "2pKgBTqYjDctNn5xy",
+      "_id": "bwRJDveAvuHgn3B5a"
+    },
+    "profile.changePassCancel": {
+      "key": "profile.changePassCancel",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463402543629,
+      "mtime": 1463402543629,
+      "revisionId": "GatoDz8PRSTYHR3ij",
+      "_id": "d5XjHAAMvHGTJSJRv"
+    },
+    "profile.delete": {
+      "key": "profile.delete",
+      "lang": "hu",
+      "text": "Törlöm a fiókomat",
+      "ctime": 1463404668429,
+      "mtime": 1463404682012,
+      "revisionId": "SiXZ3tYA7cJGovBEn",
+      "_id": "fXhhRNApg2xdEgyr2"
+    },
+    "profile.delete.confirm.button": {
+      "key": "profile.delete.confirm.button",
+      "lang": "hu",
+      "text": "Törlöm a fiókomat és a profilomat.",
+      "ctime": 1463404790590,
+      "mtime": 1463404790590,
+      "revisionId": "hKA6jr2mmMpaHHpHo",
+      "_id": "FB7bDoxkiDmSD5XNQ"
+    },
+    "profile.deletecancel": {
+      "key": "profile.deletecancel",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463402556970,
+      "mtime": 1463402556970,
+      "revisionId": "tKBH6AExYsKef9SjG",
+      "_id": "f3SrmkquMPMkjWERT"
+    },
+    "profile.deleted": {
+      "key": "profile.deleted",
+      "lang": "hu",
+      "text": "Fiökod törlődött",
+      "ctime": 1463403462665,
+      "mtime": 1463403462665,
+      "revisionId": "TTX5SNNkA2ReJGun8",
+      "_id": "FgeL7fF4BCenWkoZR"
+    },
+    "profile.email": {
+      "key": "profile.email",
+      "lang": "hu",
+      "text": "E-Mail:",
+      "ctime": 1463404803956,
+      "mtime": 1463404803956,
+      "revisionId": "RvGwNQZrQLWnEnotv",
+      "_id": "v6rfxBA6EYrWrLA3G"
+    },
+    "profile.group.drafted": {
+      "key": "profile.group.drafted",
+      "lang": "hu",
+      "text": "Csoporthoz hozzáadva: {NAME}",
+      "ctime": 1463404871419,
+      "mtime": 1463404871419,
+      "revisionId": "FCCZqv6gfjfsxkLNx",
+      "_id": "6GGHqwM3PYnwWQM2t"
+    },
+    "profile.group.member": {
+      "key": "profile.group.member",
+      "lang": "hu",
+      "text": "Csoporttag",
+      "ctime": 1463404893204,
+      "mtime": 1463404893204,
+      "revisionId": "rptWB4g7hQR9ifd3n",
+      "_id": "TP9nGGgH7ibzbptXQ"
+    },
+    "profile.groups": {
+      "key": "profile.groups",
+      "lang": "hu",
+      "text": "Csoportjaim:",
+      "ctime": 1463404924723,
+      "mtime": 1463404924723,
+      "revisionId": "iDvysnAJMF2xZG6v4",
+      "_id": "TxtCRfbn3FcrJrDn6"
+    },
+    "profile.input.cancel": {
+      "key": "profile.input.cancel",
+      "lang": "hu",
+      "text": "Visszavonom",
+      "ctime": 1463404960815,
+      "mtime": 1463404960815,
+      "revisionId": "9ZLvoWJms92tZ7LPi",
+      "_id": "dku9cpWF2xi8rKww2"
+    },
+    "profile.input.oldPassword": {
+      "key": "profile.input.oldPassword",
+      "lang": "hu",
+      "text": "Aktuális jelszavad",
+      "ctime": 1463403404057,
+      "mtime": 1463403404057,
+      "revisionId": "urB2Bjt62zJHYpFWP",
+      "_id": "bFwLW5Fqxsr3vByCC"
+    },
+    "profile.input.save": {
+      "key": "profile.input.save",
+      "lang": "hu",
+      "text": "Mentés",
+      "ctime": 1463403832258,
+      "mtime": 1463403832258,
+      "revisionId": "GH4tFWrYFFEDvZTQZ",
+      "_id": "Kzuyo4zLZ94Xbhjid"
+    },
+    "profile.mail.content": {
+      "key": "profile.mail.content",
+      "lang": "hu",
+      "text": "Üzeneted:",
+      "ctime": 1463403327820,
+      "mtime": 1463403327820,
+      "revisionId": "gB9THhHYfdpsv9XH9",
+      "_id": "4tapjSnmGEqyz6953"
+    },
+    "profile.mail.sent": {
+      "key": "profile.mail.sent",
+      "lang": "hu",
+      "text": "Üzeneted elküldve",
+      "ctime": 1463403344238,
+      "mtime": 1463403344238,
+      "revisionId": "sh3CFsAzgMzsXg3ze",
+      "_id": "kGdB6oc7txRFnm4jS"
+    },
+    "profile.not_logged_in": {
+      "key": "profile.not_logged_in",
+      "lang": "hu",
+      "text": "Nem vagy bejelentkezve...",
+      "ctime": 1463403479166,
+      "mtime": 1463403479166,
+      "revisionId": "FR86QJF85SgKXD3Yp",
+      "_id": "SQtpYoTQuLKsX8sFH"
+    },
+    "profile.passwordChangedSuccess": {
+      "key": "profile.passwordChangedSuccess",
+      "lang": "hu",
+      "text": "Jeleszavad sikeresen megváltoztattad.",
+      "ctime": 1463403499820,
+      "mtime": 1463403499820,
+      "revisionId": "iTWCvgKXartsSxnro",
+      "_id": "euYPtnT7gEQsRE5Ju"
+    },
+    "profile.passwordShort": {
+      "key": "profile.passwordShort",
+      "lang": "hu",
+      "text": "Most ez komoly? Bocs, de a kívánt jelszó túl rövid.",
+      "ctime": 1463404532539,
+      "mtime": 1463404564535,
+      "revisionId": "dec6LjwKZYrmTExXw",
+      "_id": "yRnatk9iiWzNwoCHD"
+    },
+    "profile.users_profile_page": {
+      "key": "profile.users_profile_page",
+      "lang": "hu",
+      "text": "{NAME} profilja",
+      "ctime": 1463403079793,
+      "mtime": 1463403079793,
+      "revisionId": "JTbieTEcFkoK9pXok",
+      "_id": "FHQSvt9YP7mLL7ES9"
+    },
+    "roles.host.description": {
+      "key": "roles.host.description",
+      "lang": "hu",
+      "text": "egy vendéglátó aki rendelkezésre állít egy helyiséget",
+      "ctime": 1463404286214,
+      "mtime": 1463404286214,
+      "revisionId": "W3Xdi3SGbJZvHM32w",
+      "_id": "hxQ5HFoav32EPhALG"
+    },
+    "roles.mentor.description": {
+      "key": "roles.mentor.description",
+      "lang": "hu",
+      "text": "egy mentor",
+      "ctime": 1463404231439,
+      "mtime": 1463404231439,
+      "revisionId": "WZX9BErGAANhJY8uK",
+      "_id": "PS8mjQ4zBwsGWHYYq"
+    },
+    "sendEmail.subject": {
+      "key": "sendEmail.subject",
+      "lang": "hu",
+      "text": "Üzenetet kaptál, feladó: {SENDER}",
+      "ctime": 1463403560606,
+      "mtime": 1463403560606,
+      "revisionId": "Azioe87FRFRkyZurN",
+      "_id": "pxkPJkQooYnS96sYP"
+    }
+  },
   "it": {
     "main.concept_link": {
       "_id": "X9Jfy6yJGBkvCgWrG",
@@ -26328,6 +26951,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1463401242706,
-  "updatedAt": 1463222449143
+  "exportedAt": 1463417515989,
+  "updatedAt": 1463406011336
 });
