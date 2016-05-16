@@ -19,6 +19,7 @@ boilerplate-generator@1.0.8
 caching-compiler@1.0.4
 caching-html-compiler@1.0.6
 callback-hook@1.0.8
+ccorcos:subs-cache@0.1.0
 cfs:access-point@0.1.49
 cfs:base-package@0.0.30
 cfs:collection@0.5.5
@@ -84,7 +85,6 @@ meteor@1.1.14
 meteor-platform@1.2.6
 meteorhacks:inject-initial@1.0.4
 meteorhacks:ssr@2.2.0
-meteorhacks:subs-manager@1.6.4
 meteortoys:toykit@2.2.1
 minifier-css@1.1.11
 minifier-js@1.1.11

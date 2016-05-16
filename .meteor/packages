@@ -41,7 +41,6 @@ rzymek:moment-locale-da
 rzymek:moment-locale-ja
 es5-shim
 router-autoscroll
-meteorhacks:subs-manager
 rzymek:moment-locale-el
 rzymek:moment-locale-tr
 meteorhacks:ssr
@@ -50,3 +49,4 @@ standard-minifier-js
 rajit:bootstrap3-datepicker
 rzymek:moment-locale-fa
 prng
+ccorcos:subs-cache
