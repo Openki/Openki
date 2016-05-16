@@ -120,7 +120,13 @@ Template.loginLogin.helpers({
 
 	disableForInvalidEmail: function() {
 		return validEmail() ? '' : 'disabled';
-	}
+	},
+
+	loginUsernamePlaceholder: function() {
+		return Template.instance().registering.get()
+			? mf('frame.login.username', 'Username')
+			: mf('frame.login.usernameOrEmail', 'Username or Email');
+	},
 });
 
 
