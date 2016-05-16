@@ -45,9 +45,9 @@ bevanhunt:leaflet
 http
 es5-shim
 router-autoscroll
-meteorhacks:subs-manager
 meteorhacks:ssr
 standard-minifier-css
 standard-minifier-js
 rajit:bootstrap3-datepicker
 prng
+ccorcos:subs-cache
