@@ -11,7 +11,7 @@ An interactive web-platform in development with the ambition to facilitate a bar
 <div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
 
 - Demo/Playground: [sandbox.openki.net](http://sandbox.openki.net/?region=Englistan "runing here")
-- Live: [alpha.openki.net](https://alpha.openki.net)
+- Live: [openki.net](https://openki.net)
 - Concept: [about.openki.net](http://about.openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
