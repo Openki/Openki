@@ -1,4 +1,3 @@
-/*
 describe('Frontpage', function () {
   beforeEach(function() {
     // This instructs the webdriver to load the given page. Note that this is
@@ -35,24 +34,24 @@ describe('Frontpage', function () {
     browser.waitForExist('.courselist_course_container');
   });
 
-  it('should list 6 courses for unauthenticated user (Testistan)', function () {
+  it('should list 7 courses for unauthenticated user (Testistan)', function () {
     // Wait until all courses have loaded.
     // http://www.webdriver.io/api/utility/waitUntil.html
     browser.waitUntil(function() {
       var divcount = browser.selectorExecute('.courselist_course_container', function(divs) {
         return divs.length;
       });
-      return divcount == 6;
+      return divcount == 7;
     });
 
     // Then collect data and assert stuff.
     var titles = browser.getText('.courselist_course_container h4');
-    expect(titles[0]).to.equal('Deutschkurse');
-    expect(titles[1]).to.equal('Elektronik');
-    expect(titles[2]).to.equal('Schweissen');
-    expect(titles[3]).to.equal('Aikido');
-    expect(titles[4]).to.equal('Sprachaustausch');
-    expect(titles[5]).to.equal('Web Design mit HTML und Phyton/PHP');
+    expect(titles[0]).to.equal('Sprachaustausch');
+    expect(titles[1]).to.equal('Game Design mit Unity');
+    expect(titles[2]).to.equal('Aikido');
+    expect(titles[3]).to.equal('Open Lab');
+    expect(titles[4]).to.equal('Ubuntu auf Mac (dual-Boot)');
+    expect(titles[5]).to.equal('Lerne Russisch in 2 Stunden');
+    expect(titles[6]).to.equal('Meteor.js Workshop');
   });
 });
-/*
