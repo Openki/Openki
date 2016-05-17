@@ -182,6 +182,8 @@ Meteor.methods({
 				changes.end = changes.start;
 			}
 
+			changes.internal = !!changes.internal;
+
 			// Synthesize event document because the code below relies on it
 			event = { course_id: changes.course_id };
 
