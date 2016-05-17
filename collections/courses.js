@@ -29,7 +29,7 @@
 Course = function() {
 	this.members = [];
 	this.roles = [];
-	this.groupEditors = [];
+	this.groupOrganizers = [];
 };
 
 Course.prototype.editableBy = function(user) {
