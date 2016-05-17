@@ -116,20 +116,15 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		return this.editableBy(Meteor.user());
 	},
 	coursestate: function() {
-		var today = new Date();
-		var upcoming = Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
-		if (upcoming) return 'hasupcomingevents';
-
-		var past = Events.find({course_id: this._id, start: {$lt:today}}).count() > 0;
-		if (past) return 'haspastevents';
-
+		if (this.nextEvent) return 'hasupcomingevents';
+		if (this.lastEvent) return 'haspastevents';
 		return 'proposal';
 	},
 	mobileViewport: function() {
 		return Session.get('screenSize') <= 480; // @screen-xs
 	},
 	isProposal: function() {
-		return Events.find({course_id: this.course._id}).count() === 0;
+		return !this.course.nextEvent;
 	}
 });
 
