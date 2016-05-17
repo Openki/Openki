@@ -9,16 +9,16 @@
 					<div class="background">
 						{{#if editing}}
 							<form class="edit">
-								<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
-								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
+								<p>{{mf 'profile.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
+								<p>{{mf 'profile.email' 'E-Mail:'}} {{mf '_inputField.optional'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
 								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input
 									type="checkbox"
 									id="privacy"
 									title="{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}"
 									checked={{user.privacy}}
 								/></p>
-								<button type="submit" class="save">{{mf 'profile.input.save' "Save"}}</button>
-								<button class="editCancel">{{mf 'profile.input.cancel' 'Cancel'}}</button>
+								<button type="submit" class="save">{{mf '_button.save'}}</button>
+								<button class="editCancel">{{mf '_button.cancel'}}</button>
 							</form>
 						{{else}}
 							<table class="table table-hover">
@@ -29,6 +29,7 @@
 								<tr class="email">
 									<td>
 										{{mf 'profile.email' 'E-Mail:'}}
+										 {{mf '_inputField.optional'}}
 									</td>
 									<td>
 										{{user.email}}
@@ -45,7 +46,7 @@
 								</tr>
 								{{/if}}
 								<tr class="privacy">
-									<td> {{mf 'profile.privacySettings' 'Privacy settings:'}}</td>
+									<td> {{mf 'profile.toggle.highprivacy' 'High privacy:'}}</td>
 									<td>
 										{{#if user.privacy}}
 											{{mf 'profile.privacyOn' 'on'}} &nbsp;
@@ -60,7 +61,7 @@
 									</td>
 								</tr>
 							</table>
-							<button class="edit">{{mf 'profile.edit' 'Edit'}}</button>
+							<button class="edit">{{mf '_button.edit'}}</button>
 						{{/if}}
 					</div>
 				</div>
@@ -80,7 +81,7 @@
 								<input type="password" id="newpassword_confirm" value=""/>
 							</label>
 							<button type="submit" class="save changePassConfirm">{{mf 'profile.changePass' 'Change my password'}}</button>
-							<button class="changePassCancel">{{mf 'profile.changePassCancel' 'Cancel'}}</button>
+							<button class="changePassCancel">{{mf '_button.cancel'}}</button>
 						</form>
 					{{else}}
 						<button class="changePass">{{mf 'profile.changePass' 'Change my password'}}</button>
@@ -113,7 +114,7 @@
 				{{#if verifyDelete}}
 					<div class="pleaseConfirm">
 						{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
-						<button class="verifycancel cancelDeletion">{{mf 'profile.deletecancel' 'Cancel'}}</button>
+						<button class="verifycancel cancelDeletion">{{mf '_button.cancel'}}</button>
 						<button class="confirmdelete">{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}</button>
 					</div>
 				{{else}}
