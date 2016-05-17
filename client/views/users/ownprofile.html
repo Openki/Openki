@@ -11,7 +11,12 @@
 							<form class="edit">
 								<p>{{mf 'profile.input.username' 'Username:'}}<input type="text" id="editform_username" value="{{user.name}}"/></p>
 								<p>{{mf 'profile.input.email' 'E-Mail (optional):'}}<input type="text" id="editform_email" value="{{user.email}}"/></p>
-								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input type="checkbox" id="privacy" /></p>
+								<p>{{mf 'profile.toggle.highprivacy' 'High privacy:'}} <input
+									type="checkbox"
+									id="privacy"
+									title="{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}"
+									checked={{user.privacy}}
+								/></p>
 								<button type="submit" class="save">{{mf 'profile.input.save' "Save"}}</button>
 								<button class="editCancel">{{mf 'profile.input.cancel' 'Cancel'}}</button>
 							</form>
@@ -43,10 +48,10 @@
 									<td> {{mf 'profile.privacySettings' 'Privacy settings:'}}</td>
 									<td>
 										{{#if user.privacy}}
-											{{mf 'profile.privacyOn' 'on'}}
+											{{mf 'profile.privacyOn' 'on'}} &nbsp;
 											<span class="fa fa-user-secret"></span>
 										{{else}}
-											{{mf 'profile.privacyOff' 'off'}}
+											{{mf 'profile.privacyOff' 'off'}} &nbsp;
 											<span class="fa-stack">
 												<i class="fa fa-user-secret fa-stack-1x"></i>
 												<i class="fa fa-ban fa-stack-2x text-danger"></i>
