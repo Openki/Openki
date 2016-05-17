@@ -16,8 +16,15 @@
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
-// editors         List of user and group id allowed to edit the course, calculated from members and groupOrganizers
-// ===========================
+
+/** Calculated fields
+  *
+  * editors: List of user and group id allowed to edit the course, calculated from members and groupOrganizers
+  * futureEvents: count of events still in the future for this course
+  * nextEvent: next upcoming event object, only includes the _id and start field
+  * lastEvent: most recent event object, only includes the _id and start field
+  */
+
 
 Course = function() {
 	this.members = [];
@@ -472,17 +479,24 @@ Meteor.methods({
 	// Update the nextEvent field for the courses matching the selector
 	updateNextEvent: function(selector) {
 		Courses.find(selector).forEach(function(course) {
+			var futureEvents = Events.find(
+				{course_id: course._id, start: {$gt: new Date()}}
+			).count();
+
 			var nextEvent = Events.findOne(
 				{course_id: course._id, start: {$gt: new Date()}},
 				{sort: {start: 1}, fields: {start: 1, _id: 1}}
 			);
+
 			var lastEvent = Events.findOne(
 				{course_id: course._id, start: {$lt: new Date()}},
 				{sort: {start: -1}, fields: {start: 1, _id: 1}}
 			);
+
 			Courses.update(course._id, { $set: {
+				futureEvents: futureEvents,
 				nextEvent: nextEvent,
-				lastEvent: lastEvent
+				lastEvent: lastEvent,
 			} });
 		});
 	},

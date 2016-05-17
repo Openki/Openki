@@ -28,11 +28,6 @@ Router.map(function () {
 
 
 Template.course.helpers({
-	ready: function() {
-		var instance = Template.instance;
-		return !instance.eventSub || instance.eventSub.ready();
-	},
-
 	coursestate: function() {
 		if (this.nextEvent) return 'hasupcomingevents';
 		if (this.lastEvent) return 'haspastevents';
@@ -51,33 +46,9 @@ Template.course.helpers({
 			return !hasRole(this.members, 'host');
 	},
 
-	categorynames: function() {
-		return Categories.find({_id: {$in: course.categories}}).map(function(cat) {
-			return cat.name;
-		}).join(', ');
+	additionalEvents: function() {
+		return Math.max(this.futureEvents - 1, 0);
 	},
-
-
-	course_eventlist: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}, {sort: {start: 1}, limit: 1});
-	},
-
-
-	course_eventlist_hasmore: function() {
-		var today= new Date();
-		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
-		return eventcount > 1 ? (eventcount-1)  : false;
-	},
-
-	hasupcomingevents: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
-	},
-
-	courseRegion: function() {
-		return this.region;
-	}
 });
 
 Template.courseStatus.helpers({
@@ -121,11 +92,6 @@ Template.courseStatus.helpers({
 
 });
 
-Template.course.onCreated(function() {
-	if (this.data.nextEvent) {
-		this.eventSub = miniSubs.subscribe('event', this.data.nextEvent._id);
-	}
-});
 
 Template.course.events({
 	"mouseover a.category": function(event, template){
