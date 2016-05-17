@@ -50,7 +50,7 @@ Router.map(function () {
 		path: 'cal/course/:_id',
 		where: 'server',
 		action: function () {
-			sendIcal(Events.find({ course_id: this.params._id }), this.response);
+			sendIcal(Events.find({ courseId: this.params._id }), this.response);
 		}
 	});
 });

@@ -15,7 +15,7 @@ var sometimesAfter = function(date) {
 	var squaredPlacement = placement * placement;
 
 	return new Date(date.getTime() + spread * squaredPlacement);
-}
+};
 
 function ensureUser(name) {
 	var prng = Prng("ensureUser");
@@ -259,7 +259,7 @@ createEventsIfNone = function(){
 
 				event.internal = prng() < 0.07;
 
-				event.course_id = course._id;
+				event.courseId = course._id;
 				event.title = course.name + ' ' + _.sample(words);
 				event.description =  words.slice(0, 10 + Math.floor(prng() * 30)).join(' ');
 				event.groups = course.groups;
@@ -312,7 +312,7 @@ createCommentsIfNone = function(){
 				comment.text =  words.slice(0, 10 + Math.floor(prng() * 30)).join(' ');
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created); ;
+				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
 
 				var pickMember = course.members[Math.floor(prng()*courseMembers)];
 				var commenter = false;
