@@ -235,6 +235,7 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				event.groups = course.groups;
+				event.groupOrganizers = [];
 
 				var random = prng();
 				var location;
@@ -278,7 +279,10 @@ createEventsIfNone = function(){
 				if (prng() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
 				event.start = date;
 				event.end = new Date(date.getTime() + (1000*60*60*2));
-				event.createdby = 'ServerScript';
+
+				var members = course.members;
+				var randomMember = members[Math.floor(Math.random()*members.length)];
+				event.createdby = ensureUser(randomMember && randomMember.user || 'Serverscript')._id;
 				var age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -344,6 +348,7 @@ loadTestEvents = function(){
 
 		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
 		event.groups = _.map(event.groups, ensureGroup);
+		event.groupOrganizers = [];
 
 		/* Create the events around the current Day.
 		First loaded event gets moved to current day. All events stay at original hour */

@@ -19,6 +19,17 @@
 // time_lastedit   -> Date
 // courseId        -> course._id of parent course, optional
 // internal        -> Boolean    (Events are only displayed when group or location-filter is active)
+
+// groups          -> list of group._id that promote this event
+// groupOrganizers -> list of group._id that are allowed to edit the course
+
+/** Calculated fields
+  *
+  * courseGroups: list of group._id inherited from course (if courseId is set)
+  * allGroups: all groups that promote this course, both inherited from course and set on the event itself
+  * editors: list of user and group _id that are allowed to edit the event
+  */
+
 // ===========================
 
 Events = new Meteor.Collection("Events");
@@ -99,6 +110,55 @@ updateEventLocation = function(eventId) {
 		var result = Meteor.wrapAsync(r.update, r)(
 			{ _id: event._id },
 			update,
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
+};
+
+
+/** @summary recalculate the group-related fields of an event
+  * @param {eventId} the event to update
+  */
+updateEventGroups = function(eventId) {
+	untilClean(function() {
+		var event = Events.findOne(eventId);
+		if (!event) return true; // Nothing was successfully updated, we're done.
+
+		// The creator of the event as well as any groups listed as organizers
+		// are allowed to edit.
+		var editors = event.groupOrganizers.slice(); // Clone
+		if (event.createdby) editors.push(event.createdby);
+
+		// If an event has a parent course, it inherits all groups and all editors from it.
+		var courseGroups = [];
+		if (event.courseId) {
+			course = Courses.findOne(event.courseId);
+			if (!course) throw new Exception("Missing course " + event.courseId + " for event " + event._id);
+
+			courseGroups = course.groups;
+			editors = _.union(editors, course.editors);
+		}
+
+		var update = {
+			editors: editors
+		};
+
+		// The course groups are only inherited if the event lies in the future
+		// Past events keep their list of groups even if it changes for the course
+		var historical = event.start < new Date();
+		if (historical) {
+			update.allGroups = _.union(event.groups, event.courseGroups);
+		} else {
+			update.courseGroups = courseGroups;
+			update.allGroups = _.union(event.groups, courseGroups);
+		}
+
+		var r = Events.rawCollection();
+		var result = Meteor.wrapAsync(r.update, r)(
+			{ _id: event._id },
+			{ $set: update },
 			{ fullResult: true }
 		);
 
@@ -216,6 +276,7 @@ Meteor.methods({
 
 		if (isNew) {
 			changes.createdBy = user._id;
+			changes.groupOrganizers = [];
 			eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
@@ -227,6 +288,9 @@ Meteor.methods({
 				Events.update(affectedReplicaSelectors(event), { $set: changes }, { multi: true });
 			}
 		}
+
+		Meteor.call('updateEventLocation', eventId);
+		Meteor.call('updateEventGroups', eventId);
 
 		// the assumption is that all replicas have the same course if any
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
@@ -283,7 +347,15 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach(function(event) {
 			updateEventLocation(event._id);
 		});
-	}
+	},
+
+	// Update the group-related fields of events matching the selector
+	updateEventGroups: function(selector) {
+		var idOnly = { fields: { _id: 1 } };
+		Events.find(selector, idOnly).forEach(function(event) {
+			updateEventGroups(event._id);
+		});
+	},
 });
 
 

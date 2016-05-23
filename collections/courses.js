@@ -178,6 +178,9 @@ updateEditors = function(courseId) {
 
 		return result.nModified === 0;
 	});
+
+	// At some point we'll have to figure out a proper caching hierarchy
+	Meteor.call('updateEventGroups', { courseId: courseId });
 };
 
 
