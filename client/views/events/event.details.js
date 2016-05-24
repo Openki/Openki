@@ -96,7 +96,7 @@ Template.eventDisplay.events({
 
 Template.eventGroupList.helpers({
 	'isOrganizer': function() {
-		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
+		return Template.instance().data.editors.indexOf(_id(this)) >= 0;
 	},
 	'tools': function() {
 		var tools = [];
@@ -115,7 +115,7 @@ Template.eventGroupList.helpers({
 					event: event,
 				});
 			}
-			if (event.editableBy(user)) {
+			if (ownGroup && event.editableBy(user)) {
 				var hasOrgRights = event.groupOrganizers.indexOf(groupId) > -1;
 				tools.push({
 					toolTemplate: hasOrgRights ? Template.eventGroupRemoveOrganizer : Template.eventGroupMakeOrganizer,
