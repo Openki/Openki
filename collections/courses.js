@@ -363,12 +363,20 @@ UpdateMethods = {
 			if (!group) throw new Meteor.Error(404, "Group not found");
 
 			var user = Meteor.user();
-			if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
+			if (!user) throw new Meteor.Error(401, "not permitted");
+
+			var mayPromote = user.mayPromoteWith(group._id);
+			var mayEdit = doc.editableBy(user);
 
 			var update = {};
 			if (enable) {
+				// The user is allowed to add the group if she is part of the group
+				if (!mayPromote) throw new Meteor.Error(401, "not permitted");
 				update.$addToSet = { 'groups': group._id };
 			} else {
+				// The user is allowed to remove the group if she is part of the group
+				// or if she has editing rights on the course
+				if (!mayPromote && !mayEdit) throw new Meteor.Error(401, "not permitted");
 				update.$pull = { 'groups': group._id, groupOrganizers: group._id };
 			}
 

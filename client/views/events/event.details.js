@@ -108,7 +108,7 @@ Template.eventGroupList.helpers({
 			// Groups may be adopted from the course, these cannot be removed
 			var ownGroup = event.groups.indexOf(groupId) >= 0;
 
-			if (ownGroup && user.mayPromoteWith(groupId)) {
+			if (ownGroup && (user.mayPromoteWith(groupId) || event.editableBy(user))) {
 				tools.push({
 					toolTemplate: Template.eventGroupRemove,
 					groupId: groupId,
