@@ -117,8 +117,6 @@ Template.eventReplication.events({
 				start: eventTime[0].toDate(),
 				end: eventTime[1].toDate(),
 				files: template.data.files  || [],
-				mentors: template.data.mentors  ||  [],
-				host: template.data.host ||  [],
 				region: template.data.region || Session.get('region'),
 				groups: template.data.groups,
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
