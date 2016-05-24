@@ -60,7 +60,7 @@ function addRole(course, role, user) {
 		{ '$addToSet': { 'members.$.roles': role }}
 	);
 
-	updateEditors(course._id);
+	Courses.updateGroups(course._id);
 }
 
 
@@ -76,7 +76,7 @@ function removeRole(course, role, user) {
 		{ $pull: { members: { roles: { $size: 0 } }}}
 	);
 
-	updateEditors(course._id);
+	Courses.updateGroups(course._id);
 }
 
 hasRole = function(members, role) {
@@ -154,7 +154,7 @@ maySubscribe = function(operatorId, course, userId, role) {
 
 
 // Update list of editors
-updateEditors = function(courseId) {
+Courses.updateGroups = function(courseId) {
 	untilClean(function() {
 		var course = Courses.findOne(courseId);
 		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
@@ -180,7 +180,7 @@ updateEditors = function(courseId) {
 	});
 
 	// At some point we'll have to figure out a proper caching hierarchy
-	Meteor.call('updateEventGroups', { courseId: courseId });
+	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
 
@@ -339,6 +339,74 @@ if (Meteor.isServer) {
 		}
 	});
 }
+
+
+// The code to update the groups and groupOrganizers field must do the same
+// thing for Courses and Events. So we parameterize the methods
+// with a collection passed as argument on construction.
+UpdateMethods = {
+	/** Create an update method for the groups field
+	  *
+	  * @param {Object} collection - the collection the changes will be applied to when the method is called
+	  * @return {function} A function that can be used as meteor method
+	  */
+	Promote: function(collection) {
+		return function(docId, groupId, enable) {
+			check(docId, String);
+			check(groupId, String);
+			check(enable, Boolean);
+
+			var doc = collection.findOne(docId);
+			if (!doc) throw new Meteor.Error(404, "Doc not found");
+
+			var group = Groups.findOne(groupId);
+			if (!group) throw new Meteor.Error(404, "Group not found");
+
+			var user = Meteor.user();
+			if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
+
+			var update = {};
+			if (enable) {
+				update.$addToSet = { 'groups': group._id };
+			} else {
+				update.$pull = { 'groups': group._id, groupOrganizers: group._id };
+			}
+
+			collection.update(doc._id, update);
+			if (Meteor.isServer) collection.updateGroups(doc._id);
+        };
+	},
+
+	/** Create an update method for the groupOrganizers field
+	  *
+	  * @param {Object} collection - the collection the changes will be applied to when the method is called
+	  * @return {function} A function that can be used as meteor method
+	  */
+    Editing: function(collection) {
+		return function(docId, groupId, enable) {
+			check(docId, String);
+			check(groupId, String);
+			check(enable, Boolean);
+
+			var doc = collection.findOne(docId);
+			if (!doc) throw new Meteor.Error(404, "Doc not found");
+
+			var group = Groups.findOne(groupId);
+			if (!group) throw new Meteor.Error(404, "Group not found");
+
+			var user = Meteor.user();
+			if (!user || !user.mayEdit(doc)) throw new Meteor.Error(401, "Not permitted");
+
+			var update = {};
+			var op = enable ? '$addToSet' : '$pull';
+			update[op] = { 'groupOrganizers': group._id };
+
+			collection.update(doc._id, update);
+			if (Meteor.isServer) collection.updateGroups(doc._id);
+		};
+	},
+};
+
 
 Meteor.methods({
 
@@ -504,57 +572,31 @@ Meteor.methods({
 		});
 	},
 
-	groupPromotesCourse: function(courseId, groupId, enable) {
-		check(courseId, String);
-		check(groupId, String);
-		check(enable, Boolean);
 
-		var course = Courses.findOne(courseId);
-		if (!course) throw new Meteor.Error(404, "Course not found");
+	/** Add or remove a group from the groups list
+	  *
+	  * @param {String} courseId - The course to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'course.promote': UpdateMethods.Promote(Courses),
 
-		var group = Groups.findOne(groupId);
-		if (!group) throw new Meteor.Error(404, "Group not found");
 
-		var user = Meteor.user();
-		if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
+	/** Add or remove a group from the groupOrganizers list
+	  *
+	  * @param {String} courseId - The course to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'course.editing': UpdateMethods.Editing(Courses),
 
-		var update = {};
-		if (enable) {
-			update.$addToSet = { 'groups': group._id };
-		} else {
-			update.$pull = { 'groups': group._id, groupOrganizers: group._id };
-		}
-
-		Courses.update(course._id, update);
-		if (Meteor.isServer) updateEditors(course._id);
-	},
-
-	groupEditing: function(courseId, groupId, enable) {
-		check(courseId, String);
-		check(groupId, String);
-		check(enable, Boolean);
-
-		var course = Courses.findOne(courseId);
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		var group = Groups.findOne(groupId);
-		if (!group) throw new Meteor.Error(404, "Group not found");
-
-		var user = Meteor.user();
-		if (!user || !user.mayEdit(course)) throw new Meteor.Error(401, "Not permitted");
-
-		var update = {};
-		var op = enable ? '$addToSet' : '$pull';
-		update[op] = { 'groupOrganizers': group._id };
-
-		Courses.update(course._id, update);
-		if (Meteor.isServer) updateEditors(course._id);
-	},
 
 	// Recalculate the editors field
-	updateEditors: function(selector) {
+	'course.updateGroups': function(selector) {
 		Courses.find(selector).forEach(function(course) {
-			updateEditors(course._id);
+			Courses.updateGroups(course._id);
 		});
 	},
 });

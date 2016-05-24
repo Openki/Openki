@@ -235,7 +235,7 @@ Template.courseGroupAdd.helpers({
 
 Template.courseGroupAdd.events({
 	'click .js-add': function(event, instance) {
-		Meteor.call('groupPromotesCourse', instance.data._id, event.target.value, true, function(error) {
+		Meteor.call('course.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
 				addMessage(mf('course.group.addFailed', "Failed to add group to course"), 'danger');
 			} else {
@@ -251,7 +251,7 @@ expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(groupNameHelpers);
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
-		Meteor.call('groupPromotesCourse', instance.data.course._id, instance.data.groupId, false, function(error) {
+		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
 				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
 			} else {
@@ -267,7 +267,7 @@ expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
-		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
+		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {
 				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
 			} else {
@@ -283,7 +283,7 @@ expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(groupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
-		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, false, function(error) {
+		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
 				addMessage(mf('course.group.removeOrganizerFailed', "Failed to remove organizer status"), 'danger');
 			} else {

@@ -78,7 +78,7 @@ Meteor.startup(function () {
 	Meteor.call('updateEventLocation', {}, logAsyncErrors);
 
 	// Update list of organizers per course
-	Meteor.call('updateEditors', {}, logAsyncErrors);
+	Meteor.call('course.updateGroups', {}, logAsyncErrors);
 
 	// Update List of badges per user
 	Meteor.call('updateBadges', {}, logAsyncErrors);

@@ -46,12 +46,28 @@
 
 User = function() {};
 
+
+/** Check whether the user may promote things with the given group
+  *
+  * @param {String/Object} group - The group to check, this may be an Id or a group object
+  * @returns {Boolean}
+  *
+  * The user must be a member of the group to be allowed to promote things with it.
+  */
 User.prototype.mayPromoteWith = function(group) {
 	var groupId = _id(group);
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
 
+
+/** Check whether the user may edit the course.
+  *
+  * @param {Object} course - The course or event to check editing rights for
+  * @return {Boolean}
+  *
+  * Because events use the same fields the method works for events as well.
+  */
 User.prototype.mayEdit = function(course) {
 	return _.intersection(this.badges, course.editors).length > 0;
 };

@@ -121,7 +121,7 @@ updateEventLocation = function(eventId) {
 /** @summary recalculate the group-related fields of an event
   * @param {eventId} the event to update
   */
-updateEventGroups = function(eventId) {
+Events.updateGroups = function(eventId) {
 	untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
@@ -290,7 +290,7 @@ Meteor.methods({
 		}
 
 		Meteor.call('updateEventLocation', eventId);
-		Meteor.call('updateEventGroups', eventId);
+		Meteor.call('event.updateGroups', eventId);
 
 		// the assumption is that all replicas have the same course if any
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
@@ -350,12 +350,32 @@ Meteor.methods({
 	},
 
 	// Update the group-related fields of events matching the selector
-	updateEventGroups: function(selector) {
+	'event.updateGroups': function(selector) {
 		var idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach(function(event) {
-			updateEventGroups(event._id);
+			Events.updateGroups(event._id);
 		});
 	},
+
+
+	/** Add or remove a group from the groups list
+	  *
+	  * @param {String} eventId - The event to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'event.promote': UpdateMethods.Promote(Events),
+
+
+	/** Add or remove a group from the groupOrganizers list
+	  *
+	  * @param {String} eventId - The event to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'event.editing': UpdateMethods.Editing(Events),
 });
 
 
