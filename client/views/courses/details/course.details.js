@@ -196,34 +196,9 @@ Template.courseGroupList.helpers({
 	},
 });
 
-var expandible = function(template) {
-	template.onCreated(function() {
-		var expander = Random.id(); // Token to keep track of which Expandible is open
-		this.expander = expander;
-		this.collapse = function() {
-			if (Session.equals('verify', expander)) {
-				Session.set('verify', false);
-			}
-		};
-	});
-	template.helpers({
-		'expanded': function() {
-			return Session.equals('verify', Template.instance().expander);
-		}
-	});
-	template.events({
-		'click .js-expand': function(event, instance) {
-			Session.set('verify', instance.expander);
-			event.stopPropagation();
-		},
-		'click .js-collapse': function(event, instance) {
-			Session.set('verify', false);
-		},
-	});
-};
 
 
-expandible(Template.courseGroupAdd);
+TemplateMixins.Expandible(Template.courseGroupAdd);
 Template.courseGroupAdd.helpers(groupNameHelpers);
 Template.courseGroupAdd.helpers({
 	'groupsToAdd': function() {
@@ -247,7 +222,7 @@ Template.courseGroupAdd.events({
 });
 
 
-expandible(Template.courseGroupRemove);
+TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(groupNameHelpers);
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
@@ -263,7 +238,7 @@ Template.courseGroupRemove.events({
 });
 
 
-expandible(Template.courseGroupMakeOrganizer);
+TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
@@ -279,7 +254,7 @@ Template.courseGroupMakeOrganizer.events({
 });
 
 
-expandible(Template.courseGroupRemoveOrganizer);
+TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(groupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
