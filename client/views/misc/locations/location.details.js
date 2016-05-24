@@ -15,7 +15,7 @@ Router.map(function() {
 
 			return {
 				'location': location,
-				'eventsCursor': eventsFind ({location : this.params._id})
+				'eventsCursor': eventsFind ({location: this.params._id, after: minuteTime.get()}, 12)
 			};
 		},
 		onAfterAction: function() {
