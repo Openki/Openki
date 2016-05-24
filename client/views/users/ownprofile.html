@@ -1,10 +1,14 @@
 <template name="profile">
 	<div class="profile">
-		<h1 class="name">{{mf 'profile.my_profile' 'My profile'}}</h1>
+		<h1 class="name">{{mf 'login.frame.settings'}}</h1>
 		{{#unless user}}
 			<p>{{mf 'profile.not_logged_in' "You're not logged in..."}}</p>
 		{{else}}
+		<a class="my_profile" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+			{{mf 'login.frame.profile' 'Visit my profile'}}
+		</a>
 			<div class="infos">
+				<h3> {{mf 'profile.infos' 'My infos:'}}</h3>
 				<div class="description">
 					<div class="background">
 						{{#if editing}}
