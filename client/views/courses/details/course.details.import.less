@@ -99,42 +99,6 @@ p.course_description {
 				}
 			}
 		}
-		ul.groups-list,
-		ul.groups-list li,
-		ul.groups-list li a {
-			display: inline-block;
-		}
-		ul.groups-list {
-			margin-bottom: 10px;
-
-			button.group-add {
-				padding: 0;
-				border-style: none;
-			}
-
-			.dropdown-menu {
-				span {
-					white-space: nowrap;
-				}
-				padding: 10px;
-			}
-
-			.group-editor {
-				//background-color: white;
-				padding: 5px;
-				width: 170px;
-				z-index: 2;
-			}
-
-			.group-add {
-				padding: 2px 5px 5px 5px;
-				margin-left: -3px;
-				background-color: @group-bg;
-				color: @group-text;
-			}
-
-
-		}
 
 		.no-btn-style {
 			border: none;
@@ -216,5 +180,41 @@ p.course_description {
 				background: @brand-success;
 			}
 		}
+	}
+}
+
+
+ul.groups-list,
+ul.groups-list li,
+ul.groups-list li a {
+	display: inline-block;
+}
+ul.groups-list {
+	margin-bottom: 10px;
+
+	button.group-add {
+		padding: 0;
+		border-style: none;
+	}
+
+	.dropdown-menu {
+		span {
+			white-space: nowrap;
+		}
+		padding: 10px;
+	}
+
+	.group-editor {
+		//background-color: white;
+		padding: 5px;
+		width: 170px;
+		z-index: 2;
+	}
+
+	.group-add {
+		padding: 2px 5px 5px 5px;
+		margin-left: -3px;
+		background-color: @group-bg;
+		color: @group-text;
 	}
 }

@@ -212,7 +212,7 @@ Template.courseGroupAdd.events({
 	'click .js-add': function(event, instance) {
 		Meteor.call('course.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.addFailed', "Failed to add group to course"), 'danger');
+				addMessage(mf('course.group.addFailed', "Failed to add group"), 'danger');
 			} else {
 				addMessage(mf('course.group.addedGroup', "Added your group to the list of promoters"), 'success');
 				instance.collapse();
@@ -228,7 +228,7 @@ Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
+				addMessage(mf('course.group.removeFailed', "Failed to remove group"), 'danger');
 			} else {
 				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
 				instance.collapse();
@@ -246,7 +246,7 @@ Template.courseGroupMakeOrganizer.events({
 			if (error) {
 				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
 			} else {
-				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit the course"), 'success');
+				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit this"), 'success');
 				instance.collapse();
 			}
 		});

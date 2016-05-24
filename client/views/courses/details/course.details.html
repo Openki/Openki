@@ -188,7 +188,7 @@
 
 <template name="courseGroupMakeOrganizer">
 	<li style="position: relative">
-		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}"> make editor</span>
+		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addOrg' 'Add {NAME} as editors' NAME=name}}"> {{mf 'course.group.addOrgText' "Give editing rights"}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
@@ -203,7 +203,7 @@
 
 <template name="courseGroupRemoveOrganizer">
 	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeorg' "Remove organizer status for '{NAME}'" NAME=name}}">no editing</span>
+		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeOrg' "Remove organizer status for '{NAME}'" NAME=name}}"> {{mf 'course.group.removeOrgText' "Remove editing rights"}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
