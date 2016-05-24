@@ -57,20 +57,19 @@ Template.eventDisplay.helpers({
 
 Template.event.events({
 	'click button.eventDelete': function () {
-		if (pleaseLogin()) return;
-		if (confirm('Delete event "'+this.title+'"?')) {
-			var title = this.title;
-			var course = this.courseId;
-			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
-				if (eventRemoved) {
+		var title = this.title;
+		var course = this.courseId;
+		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
+			Meteor.call('removeEvent', this._id, function (error) {
+				if (error) {
+					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
+				} else {
 					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
 					if (course) {
 						Router.go('showCourse', { _id: course });
 					} else {
 						Router.go('/');
 					}
-				} else {
-					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
 				}
 			});
 			Template.instance().editing.set(false);
