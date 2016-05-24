@@ -205,11 +205,11 @@
 
 
 <template name="eventGroupRemove">
-	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove.confirm' NAME=name}}">{{mf 'course.group.remove' 'Remove'}}</span>
+	<li>
+		<span class="js-expand"><span class="fa fa-remove"></span>{{mf 'course.group.remove' 'Remove'}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveText' NAME=name}}{{/with}}
+				{{#with groupId}}{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}{{/with}}
 				<button type="button" class="js-remove">
 					{{mf 'course.group.confirmRemoveButton'}}
 				</button>
@@ -220,11 +220,11 @@
 
 
 <template name="eventGroupMakeOrganizer">
-	<li style="position: relative">
-		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addOrg' NAME=name}}"> {{mf 'course.group.addOrgText'}}</span>
+	<li>
+		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText'}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmOrgText' NAME=name}}{{/with}}
+				{{#with groupId}}{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}{{/with}}
 				{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
 				<button type="button" class="js-makeOrganizer">
 					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
@@ -235,11 +235,11 @@
 </template>
 
 <template name="eventGroupRemoveOrganizer">
-	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeorg' NAME=name}}"> {{mf 'course.group.removeOrgText' NAME=name}}</span>
+	<li>
+		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' NAME=name}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' NAME=name}}{{/with}}
+				{{#with groupId}}{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}{{/with}}
 				<button type="button" class="js-removeOrganizer">
 					{{mf 'course.group.confimRemoveOrgButton'}}
 				</button>
