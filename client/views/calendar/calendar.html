@@ -1,11 +1,15 @@
 <template name="calendar">
-		{{> switchDate date=startDate}}
+	{{> switchDate date=startDate}}
 	<div class="calendar">
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>
 		{{/each}}
-		<button type="button" class="btn btn-default"> {{mf 'menue.CreateEvent'}}</button>
+		<a href="/event/create">
+			<button type="button" class="btn btn-default">
+				{{mf 'menue.CreateEvent'}}
+			</button>
+		</a>
 	</div>
 </template>
 
