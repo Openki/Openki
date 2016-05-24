@@ -1,6 +1,6 @@
 Template.course_events.helpers({
 	mayAdd: function() {
-		return hasRoleUser(this.course.members, 'team', Meteor.userId());
+		return this.course.editableBy(Meteor.user());
 	},
 
 	haveEvents: function() {
