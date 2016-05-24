@@ -81,7 +81,7 @@ Meteor.startup(function () {
 	Meteor.call('course.updateGroups', {}, logAsyncErrors);
 
 	// Update List of badges per user
-	Meteor.call('updateBadges', {}, logAsyncErrors);
+	Meteor.call('user.updateBadges', {}, logAsyncErrors);
 
 
 	// Keep the nextEvent entry updated

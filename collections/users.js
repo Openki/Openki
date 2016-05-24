@@ -111,8 +111,10 @@ UserLib = {
 	}
 };
 
+Users = {};
+
 // Update list of groups and badges
-updateBadges = function(userId) {
+Users.updateBadges = function(userId) {
 	untilClean(function() {
 		var user = Meteor.users.findOne(userId);
 		if (!user) return true;
@@ -174,9 +176,9 @@ Meteor.methods({
 	},
 
 	// Recalculate the groups and badges field
-	updateBadges: function(selector) {
+	'user.updateBadges': function(selector) {
 		Meteor.users.find(selector).forEach(function(user) {
-			updateBadges(user._id);
+			Users.updateBadges(user._id);
 		});
 	},
 });
