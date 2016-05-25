@@ -61,17 +61,6 @@ User.prototype.mayPromoteWith = function(group) {
 };
 
 
-/** Check whether the user may edit the course.
-  *
-  * @param {Object} course - The course or event to check editing rights for
-  * @return {Boolean}
-  *
-  * Because events use the same fields the method works for events as well.
-  */
-User.prototype.mayEdit = function(course) {
-	return _.intersection(this.badges, course.editors).length > 0;
-};
-
 Meteor.users._transform = function(user) {
 	return _.extend(new User(), user);
 };

@@ -32,6 +32,12 @@ Course = function() {
 	this.groupOrganizers = [];
 };
 
+
+/** Check whether a user may edit the course.
+  *
+  * @param {Object} user
+  * @return {Boolean}
+  */
 Course.prototype.editableBy = function(user) {
 	if (!user) return false;
 	var isNew = !this._id;
@@ -403,7 +409,7 @@ UpdateMethods = {
 			if (!group) throw new Meteor.Error(404, "Group not found");
 
 			var user = Meteor.user();
-			if (!user || !user.mayEdit(doc)) throw new Meteor.Error(401, "Not permitted");
+			if (!user || !doc.editableBy(user)) throw new Meteor.Error(401, "Not permitted");
 
 			var update = {};
 			var op = enable ? '$addToSet' : '$pull';
