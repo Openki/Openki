@@ -55,17 +55,15 @@ Template.course.helpers({
 		}).join(', ');
 	},
 
-
 	course_eventlist: function() {
 		var today= new Date();
 		return Events.find({course_id: this._id, start: {$gt:today}}, {sort: {start: 1}, limit: 1});
 	},
 
-
-	moreEvents: function() {
-		var today= new Date();
+	course_eventlist_hasmore: function() {
+		var today = new Date();
 		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
-		return eventcount > 1 ? (eventcount-1)  : false;
+		return eventcount > 1 ? (eventcount-1) : false;
 	},
 
 	hasUpcomingEvents: function() {
@@ -75,7 +73,11 @@ Template.course.helpers({
 
 	courseRegion: function() {
 		return this.region;
-	}
+	},
+
+	additionalEvents: function() {
+		return Math.max(this.futureEvents - 1, 0);
+	},
 });
 
 Template.courseRolesStatus.helpers({
@@ -119,11 +121,6 @@ Template.courseRolesStatus.helpers({
 
 });
 
-Template.course.onCreated(function() {
-	if (this.data.nextEvent) {
-		this.eventSub = miniSubs.subscribe('event', this.data.nextEvent._id);
-	}
-});
 
 Template.course.events({
 	"mouseover .js-category-label": function(event, template){

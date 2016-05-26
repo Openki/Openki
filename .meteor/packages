@@ -26,6 +26,12 @@ rzymek:moment-locale-es
 rzymek:moment-locale-fr
 rzymek:moment-locale-it
 rzymek:moment-locale-zh-tw
+rzymek:moment-locale-da
+rzymek:moment-locale-ja
+rzymek:moment-locale-fa
+rzymek:moment-locale-el
+rzymek:moment-locale-tr
+rzymek:moment-locale-hu
 servicelocale:geoip
 fortawesome:fontawesome
 msgfmt:core
@@ -35,13 +41,8 @@ accounts-google
 msavin:mongol
 bevanhunt:leaflet
 http
-rzymek:moment-locale-da
-rzymek:moment-locale-ja
 es5-shim
-okgrow:router-autoscroll
-meteorhacks:subs-manager
-rzymek:moment-locale-el
-rzymek:moment-locale-tr
+router-autoscroll
 meteorhacks:ssr
 standard-minifier-css
 standard-minifier-js
@@ -49,4 +50,5 @@ rajit:bootstrap3-datepicker
 matb33:bootstrap-glyphicons
 fourseven:scss@=3.2.0
 reywood:bootstrap3-sass@=3.3.5_1
-rzymek:moment-locale-fa
+prng
+ccorcos:subs-cache

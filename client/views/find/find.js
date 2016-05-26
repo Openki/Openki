@@ -36,9 +36,12 @@ var updateUrl = function(event, instance) {
 	var queryString = UrlTools.paramsToQueryString(filterParams);
 
 	var options = {};
+
 	if (queryString.length) {
 		options.query = queryString;
 	}
+
+	RouterAutoscroll.cancelNext();
 
 	var router = Router.current();
 	Router.go(router.route.getName(), { _id: router.params._id }, options);
@@ -81,13 +84,6 @@ Template.find.onCreated(function() {
 		var filterQuery = filter.toQuery();
 		var sub = subs.subscribe('coursesFind', filterQuery, 36, function() {
 			instance.coursesReady.set(true);
-		});
-
-		// Workaround: Subscription manager does not call onReady when the sub
-		// is cached and ready
-		// https://github.com/kadirahq/subs-manager/issues/7
-		Tracker.nonreactive(function() {
-			if (sub.ready()) instance.coursesReady.set(true);
 		});
 	});
 

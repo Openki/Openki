@@ -116,7 +116,7 @@
 			{{/if}}
 
 			<div class="files">
-				<h4>{{mf 'course.event.edit.files' 'Files: (optional)'}}</h4>
+				<h4>{{mf 'course.event.edit.files' 'Files:'}} {{mf '_inputField.optional'}}</h4>
 				<input class="eventFileInput"
 					id="edit_files"
 					name="…"
@@ -170,11 +170,11 @@
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>
-					{{mf 'course.event.edit.save_btn' 'Save'}}
+					{{mf '_button.save'}}
 				</button>
 				<button type="button" class="cancelEditEvent">
 					<span class="glyphicon glyphicon-remove"></span>
-					{{mf 'course.event.edit.cancel_btn' 'Cancel'}}
+					{{mf '_button.cancel'}}
 				</button>
 				{{#if affectedReplicaCount}}
 					<div class="checkbox">

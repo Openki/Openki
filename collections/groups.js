@@ -144,7 +144,8 @@ Meteor.methods({
 			update = { $pull: { 'members': user._id } };
 		}
 
-		Groups.update(sel, update, checkUpdateOne);
+		Groups.update(sel, update);
+		if (Meteor.isServer) Meteor.call('updateBadges', user._id);
 	},
 
 	/* Update listing of a course or an event in a group. */

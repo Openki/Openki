@@ -5,6 +5,11 @@
 			{{> calendarDay day=this filter=filter}}
 			<hr>
 		{{/each}}
+		<a href="/event/create">
+			<button type="button" class="btn btn-default">
+				{{mf 'menue.CreateEvent'}}
+			</button>
+		</a>
 	</div><!-- /.calendar -->
 </template>
 
@@ -16,7 +21,7 @@
 		{{#if eventsReady}}
 			{{#unless hasEvents}}
 				<br>
-				{{mf 'calendar.noCoursesThisDay' "There are no courses on this day"}}
+				{{mf 'calendar.noCoursesThisDay' "There are no events on this day"}}
 			{{/unless}}
 			{{#if hasEvents}}
 				<div class="calendar_events">

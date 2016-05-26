@@ -4,6 +4,7 @@
 // "categories"    -> [ID_categories]
 // "tags"          -> List of Strings  (not used)
 // "groups"        -> List ID_groups
+// groupOrganizers List of group ID that are allowed to edit the course
 // "description"   -> String
 // "slug"          -> String
 // "region"        -> ID_region
@@ -15,11 +16,20 @@
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
-// ===========================
+
+/** Calculated fields
+  *
+  * editors: List of user and group id allowed to edit the course, calculated from members and groupOrganizers
+  * futureEvents: count of events still in the future for this course
+  * nextEvent: next upcoming event object, only includes the _id and start field
+  * lastEvent: most recent event object, only includes the _id and start field
+  */
+
 
 Course = function() {
 	this.members = [];
 	this.roles = [];
+	this.groupOrganizers = [];
 };
 
 Course.prototype.editableBy = function(user) {
@@ -28,7 +38,7 @@ Course.prototype.editableBy = function(user) {
 
 	return isNew // Anybody may create a new course
 		|| privileged(user, 'admin') // Admins can edit all courses
-		|| hasRoleUser(this.members, 'team', user._id); // Team members may edit the course
+		|| _.intersection(user.badges, this.editors).length > 0;
 };
 
 Courses = new Meteor.Collection("Courses", {
@@ -45,12 +55,12 @@ function addRole(course, role, user) {
 		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
 	);
 
-	var result = Courses.update(
+	Courses.update(
 		{ _id: course._id, 'members.user': user },
 		{ '$addToSet': { 'members.$.roles': role }}
 	);
 
-	if (result != 1) throw new Error("addRole affected "+result+" documents");
+	updateEditors(course._id);
 }
 
 
@@ -65,6 +75,8 @@ function removeRole(course, role, user) {
 		{ _id: course._id },
 		{ $pull: { members: { roles: { $size: 0 } }}}
 	);
+
+	updateEditors(course._id);
 }
 
 hasRole = function(members, role) {
@@ -138,6 +150,34 @@ maySubscribe = function(operatorId, course, userId, role) {
 	if (operatorId !== userId) return false;
 
 	return true;
+};
+
+
+// Update list of editors
+updateEditors = function(courseId) {
+	untilClean(function() {
+		var course = Courses.findOne(courseId);
+		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
+
+		var editors = course.groupOrganizers.slice();
+
+		course.members.forEach(function(member) {
+			if (member.roles.indexOf('team') >= 0) {
+				editors.push(member.user);
+			}
+		});
+
+		// We have to use the Mongo collection API because Meteor does not
+		// expose the modification counter
+		var rawCourses = Courses.rawCollection();
+		var result = Meteor.wrapAsync(rawCourses.update, rawCourses)(
+			{ _id: course._id },
+			{ $set: { editors: editors } },
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
 };
 
 
@@ -439,18 +479,79 @@ Meteor.methods({
 	// Update the nextEvent field for the courses matching the selector
 	updateNextEvent: function(selector) {
 		Courses.find(selector).forEach(function(course) {
+			var futureEvents = Events.find(
+				{course_id: course._id, start: {$gt: new Date()}}
+			).count();
+
 			var nextEvent = Events.findOne(
 				{course_id: course._id, start: {$gt: new Date()}},
 				{sort: {start: 1}, fields: {start: 1, _id: 1}}
 			);
+
 			var lastEvent = Events.findOne(
 				{course_id: course._id, start: {$lt: new Date()}},
 				{sort: {start: -1}, fields: {start: 1, _id: 1}}
 			);
+
 			Courses.update(course._id, { $set: {
+				futureEvents: futureEvents,
 				nextEvent: nextEvent,
-				lastEvent: lastEvent
+				lastEvent: lastEvent,
 			} });
 		});
-	}
+	},
+
+	groupPromotesCourse: function(courseId, groupId, enable) {
+		check(courseId, String);
+		check(groupId, String);
+		check(enable, Boolean);
+
+		var course = Courses.findOne(courseId);
+		if (!course) throw new Meteor.Error(404, "Course not found");
+
+		var group = Groups.findOne(groupId);
+		if (!group) throw new Meteor.Error(404, "Group not found");
+
+		var user = Meteor.user();
+		if (!user || !user.mayPromoteWith(group._id)) throw new Meteor.Error(401, "Not permitted");
+
+		var update = {};
+		if (enable) {
+			update.$addToSet = { 'groups': group._id };
+		} else {
+			update.$pull = { 'groups': group._id, groupOrganizers: group._id };
+		}
+
+		Courses.update(course._id, update);
+		if (Meteor.isServer) updateEditors(course._id);
+	},
+
+	groupEditing: function(courseId, groupId, enable) {
+		check(courseId, String);
+		check(groupId, String);
+		check(enable, Boolean);
+
+		var course = Courses.findOne(courseId);
+		if (!course) throw new Meteor.Error(404, "Course not found");
+
+		var group = Groups.findOne(groupId);
+		if (!group) throw new Meteor.Error(404, "Group not found");
+
+		var user = Meteor.user();
+		if (!user || !user.mayEdit(course)) throw new Meteor.Error(401, "Not permitted");
+
+		var update = {};
+		var op = enable ? '$addToSet' : '$pull';
+		update[op] = { 'groupOrganizers': group._id };
+
+		Courses.update(course._id, update);
+		if (Meteor.isServer) updateEditors(course._id);
+	},
+
+	// Recalculate the editors field
+	updateEditors: function(selector) {
+		Courses.find(selector).forEach(function(course) {
+			updateEditors(course._id);
+		});
+	},
 });

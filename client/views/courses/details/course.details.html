@@ -34,17 +34,14 @@
 							{{/if}}
 						{{/with}}
 					</div><!-- /.course-details-title -->
-
 					{{#with course}}
-					<div class="course-details-categories">
-						{{> showCategories}}
-					</div><!-- /.course-details-categories -->
-					<div class="course-details-groups">
-						{{> groupList}}
-						{{> groupListing course}}
-					</div><!-- /.course-details-groups -->
+						<div class="course-details-categories">
+							{{> showCategories}}
+						</div><!-- /.course-details-categories -->
+						<div class="course-details-groups">
+							{{> courseGroupList}}
+						</div>
 					{{/with}}
-
 					{{> courseDetailsSubmenu}}
 				</div><!-- /.course-details -->
 				{{> report}}
@@ -119,4 +116,98 @@
 			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
 		</p>
 	</div>
+</template>
+
+
+<template name="courseGroupList">
+	<ul class="groups-list">
+		{{#each groups}}
+		<li>
+			{{> groupName}}
+			{{#if isOrganizer}}
+				<span class="glyphicon glyphicon-bullhorn group-add"></span>
+			{{/if}}
+			{{#if tools}}
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle group-add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+				{{#each tools}}
+					<li>{{> toolTemplate}}</li>
+				{{/each}}
+				</ul>
+			</div>
+			{{/if}}
+		</li>
+		{{/each}}
+		{{> courseGroupAdd}}
+	</ul>
+</template>
+
+
+<template name="courseGroupAdd">
+	{{#if groupsToAdd}}
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
+			</button>
+
+			<ul class="dropdown-menu group-editor">
+				{{#each groupsToAdd}}
+					<li>
+						<span class="group">{{> groupName}}</span>
+						<button type="button" class="js-add" value="{{this}}">
+							{{mf 'course.group.confirmAddButton' "Promote"}}
+						</button>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+</template>
+
+
+<template name="courseGroupRemove">
+	<li style="position: relative">
+		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove.confirm' 'Remove {NAME} from list of promoters' NAME=name}}">{{mf 'course.group.remove' 'Remove'}}</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
+				<button type="button" class="js-remove">
+					{{mf 'course.group.confirmRemoveButton' "Delist"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+</template>
+
+
+<template name="courseGroupMakeOrganizer">
+	<li style="position: relative">
+		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}"> make editor</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
+				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
+				<button type="button" class="js-makeOrganizer">
+					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+</template>
+
+<template name="courseGroupRemoveOrganizer">
+	<li style="position: relative">
+		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeorg' "Remove organizer status for '{NAME}'" NAME=name}}">no editing</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
+				<button type="button" class="js-removeOrganizer">
+					{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
 </template>

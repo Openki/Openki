@@ -7,20 +7,6 @@ Template.course_events.helpers({
 		return Template.instance().haveEvents();
 	},
 
-	pastEvents:  function() {
-		var events = Template.instance().pastEvents().fetch();
-		events.reverse(); // eventsFind() is too smart for us
-
-		// HACK Add a balancing element if the count is uneven because the past events should stack up from the bottom
-		if (events.length % 2 == 1) events.unshift(false);
-
-		return events;
-	},
-
-	havePastEvents: function() {
-		return Template.instance().pastEvents().count() > 0;
-	},
-
 	ongoingEvents: function() {
 		return Template.instance().ongoingEvents();
 	},
@@ -43,16 +29,10 @@ Template.course_events.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
 
-	instance.autorun(function() {
-		subs.subscribe('eventsForCourse', courseId);
-	});
+	subs.subscribe('eventsForCourse', courseId);
 
 	instance.haveEvents = function() {
-		return eventsFind({ course: courseId }).count() > 0;
-	};
-
-	instance.pastEvents = function() {
-		return eventsFind({ course: courseId, before: minuteTime.get() });
+		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
 	};
 
 	instance.ongoingEvents = function() {
@@ -60,7 +40,7 @@ Template.course_events.onCreated(function() {
 	};
 
 	instance.futureEvents = function() {
-		return eventsFind({ course: courseId, after: minuteTime.get() });
+		return eventsFind({ course: courseId, after: minuteTime.get() }, 4);
 	};
 });
 
@@ -84,7 +64,6 @@ Template.course_events.rendered = function() {
 			$(".fade_effect_top").fadeOut(200);
 		}
 	});
-	scrollableContainer.scrollTop(this.$("hr.now").offset().top-scrollableContainer.offset().top); //halp
 };
 
 Template.course.rendered = function() {

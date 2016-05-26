@@ -22,8 +22,6 @@
 // ===========================
 
 Events = new Meteor.Collection("Events");
-if (Meteor.isServer) Events._ensureIndex({loc : "2dsphere"});
-
 
 mayEditEvent = function(user, event) {
 	if (!user) return false;
@@ -181,6 +179,8 @@ Meteor.methods({
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;
 			}
+
+			changes.internal = !!changes.internal;
 
 			// Synthesize event document because the code below relies on it
 			event = { course_id: changes.course_id };

@@ -18,7 +18,7 @@
 			{{> navbar}}
 		</div><!-- #topBar -->
 		<div id="outer" class={{testWarningClass}}>
-			{{#if showIntro}}
+			{{#if shownIntro}}
 				{{> introduction}}
 			{{/if}}
 
@@ -28,7 +28,7 @@
 				{{#if mayTranslate}}
 					{{> yield}}
 				{{else}}
-					{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}
+					<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
 				{{/if}}
 			{{else}}
 				{{> yield}}
@@ -68,8 +68,8 @@
 </template>
 
 <template name="translateInfo">
-	<h4>Welcome and thanks for helping with the translation of Openki.net</h4>
-	<p>Here are some guidelines and some help: </p>
+	<h4>Welcome and thanks for helping with the translation of Openki</h4>
+	<p>Here are some guidelines and some help, please read them carefully before you start to translate.</p>
 
 	We use a casual, every day language for the interface.
 	<ul>
@@ -81,16 +81,20 @@
 	Where possible we use a gender-neutral, inclusive language.
 	<ul>
 		<li> We avoid gender-specific pronouns and try to use gender-neutral ones...</li>
-		<li> as well as use gender-neutral titles and roles</li>
-		<li> without sounding too weird though.</li>
+		<li> As well we use gender-neutral titles and roles</li>
+		<li> ...without sounding too weird though.</li>
 	</ul>
 
 	Some technical stuff:
 	<ul>
-		<li> Words in capital letters and brackets like {NAME} are variables. Transfer them as they are.</li>
+		<li> Words in capital letters in brackets like <code>{NAME}</code> are variables. Transfer them as they are.</li>
 		<li> "Don't forget 'all' the punctuation (marks)!"...</li>
-		<li> In some languages capitalization differs from English.</li>
-		<li> Sometimes there are multiple translations in one string: e.g. one for zero (=0) one for one (=1) one for te rest (other).</li>
+		<li> In some languages capitalization differs from English. Otherwise transfer them too.</li>
+		<li> Sometimes there are multiple translations in one string. Ex. when there is <code>no participant</code>, but <code>1 participant</code> and <code>2 participants</code>.<br>
+		So we need a translation for each case. One for zero (=0), one for one (=1), one for te rest (other). The used syntax is as follows: <br>
+		<code>Create {COUNT, plural, one {event} other {# events}}</code> becomes: <br>
+		<code>Erstelle {COUNT, plural, one {Veranstaltung} other {# Veranstaltungen}}</code></li>
 		<li> # stands for a Number.</li>
+		<li> There are no save-buttons. Strings get saved as you move to the next one or away from the translation page</li>
 	</ul>
 </template>

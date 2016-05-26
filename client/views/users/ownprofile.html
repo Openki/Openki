@@ -32,13 +32,14 @@
 							</div>
 							<div class="form-group">
 								<label for="editform_email">
-									{{mf 'profile.input.email' 'E-Mail (optional):'}}
+									{{mf 'profile.email' 'E-Mail:'}} {{mf '_inputField.optional'}}
 									<input type="text" id="editform_email" value="{{user.email}}"/>
 								</label>
 							</div>
 							<div class="form-group">
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn {{#if user.privacy}}active{{/if}}">
+									<label class="btn {{#if user.privacy}}active{{/if}}"
+										title="{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}">
 										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
 										<span class="checkmark"></span>
 										<input type="checkbox" id="privacy"/>
@@ -63,6 +64,8 @@
 									<tr class="email">
 										<td>
 											{{mf 'profile.email' 'E-Mail:'}}
+											&nbsp;
+											{{mf '_inputField.optional'}}
 										</td>
 										<td>
 											{{user.email}}
@@ -79,13 +82,13 @@
 									</tr>
 								{{/if}}
 								<tr class="privacy">
-									<td> {{mf 'profile.privacySettings' 'Privacy settings:'}}</td>
+									<td> {{mf 'profile.toggle.highprivacy' 'High privacy:'}}</td>
 									<td>
 										{{#if user.privacy}}
-											{{mf 'profile.privacyOn' 'on'}}
+											{{mf 'profile.privacyOn' 'on'}} &nbsp;
 											<span class="fa fa-user-secret"></span>
 										{{else}}
-											{{mf 'profile.privacyOff' 'off'}}
+											{{mf 'profile.privacyOff' 'off'}} &nbsp;
 											<span class="fa-stack">
 												<i class="fa fa-user-secret fa-stack-1x"></i>
 												<i class="fa fa-ban fa-stack-2x text-danger"></i>
@@ -139,7 +142,7 @@
 								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
 							</button>
 							<button class="js-profile-delete-cancel-btn">
-								{{mf 'profile.deletecancel' 'Cancel'}}
+								{{mf '_button.cancel'}}
 							</button>
 						</div><!-- /.profile-delete-confirmation -->
 					{{/if}}

@@ -72,8 +72,16 @@ Meteor.startup(function () {
 		}
 	}
 
-	// On startup, resync location cache in events
+	/* Initialize cache-fields on startup */
+
+	// Resync location cache in events
 	Meteor.call('updateEventLocation', {}, logAsyncErrors);
+
+	// Update list of organizers per course
+	Meteor.call('updateEditors', {}, logAsyncErrors);
+
+	// Update List of badges per user
+	Meteor.call('updateBadges', {}, logAsyncErrors);
 
 
 	// Keep the nextEvent entry updated

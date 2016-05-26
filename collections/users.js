@@ -40,8 +40,25 @@
 // "profile"      -> {name: String, locale: Lang}
 // "privileges"   -> [upload, admin]
 // "lastLogin"    -> Date
+// groups         -> List of groups the user is a member of, calculated by updateBadges()
+// badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()
 // ===========================
 
+User = function() {};
+
+User.prototype.mayPromoteWith = function(group) {
+	var groupId = _id(group);
+	if (!groupId) return false;
+	return this.groups.indexOf(groupId) >= 0;
+};
+
+User.prototype.mayEdit = function(course) {
+	return _.intersection(this.badges, course.editors).length > 0;
+};
+
+Meteor.users._transform = function(user) {
+	return _.extend(new User(), user);
+};
 
 
 privilegedTo = function(privilege) {
@@ -76,7 +93,35 @@ UserLib = {
 
 		return Meteor.users.find(query, options);
 	}
-}
+};
+
+// Update list of groups and badges
+updateBadges = function(userId) {
+	untilClean(function() {
+		var user = Meteor.users.findOne(userId);
+		if (!user) return true;
+
+		var groups = [];
+		Groups.find({ members: user._id }).forEach(function(group) {
+			groups.push(group._id);
+		});
+
+		var badges = groups.slice();
+		badges.push(user._id);
+
+		var rawUsers = Meteor.users.rawCollection();
+		var result = Meteor.wrapAsync(rawUsers.update, rawUsers)(
+			{ _id: user._id },
+			{ $set: {
+				groups: groups,
+				badges: badges,
+			} },
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
+};
 
 Meteor.methods({
 	delete_profile: function() {
@@ -110,5 +155,12 @@ Meteor.methods({
 				checkUpdateOne
 			);
 		}
-	}
+	},
+
+	// Recalculate the groups and badges field
+	updateBadges: function(selector) {
+		Meteor.users.find(selector).forEach(function(user) {
+			updateBadges(user._id);
+		});
+	},
 });

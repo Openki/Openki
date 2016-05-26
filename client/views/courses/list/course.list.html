@@ -16,15 +16,6 @@
 	</div><!-- /.container-fluid -->
 </template>
 
-
-<template name="courselist">
-	{{#each this}}
-		{{> course}}
-	{{else}}
-		{{mf 'courses.none' 'no courses found'}}
-	{{/each}}
-</template>
-
 <template name="course">
 	{{#if ready}}
 		<div class="course-container">

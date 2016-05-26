@@ -32,7 +32,7 @@
 		font-size: large
 		padding: 0 1px
 
-.register-mail-info
+.registering-disclaimer
 	margin-top: -10px
 	text-align: justify
 
@@ -74,11 +74,8 @@
 	+btn-reset
 	color: $default-gray
 	font-size: xx-large
-	padding: 0 9px
-	&:hover
-		@each $service, $color in $external-servies
-			.fa-#{$service}-square
-				color: $color
+	padding: 0px 9px
+	&:hover,
 	&:focus
 		@each $service, $color in $external-servies
 			.fa-#{$service}-square
@@ -119,3 +116,7 @@
 
 .js-reset-pwd-close-btn
 	+btn-cancel
+
+.registering_disclaimer
+	margin-top: -10px
+	text-align: justify
