@@ -1,11 +1,11 @@
 Template.layout.onRendered(function() {
-	if (!this.openedIntro.get()) {
+	if (!Assistant.openedIntro()) {
 		this.$('.introduction-content').hide();
 	}
 
 	var instance = this;
 	this.autorun(function() {
-		if (instance.openedIntro.get()) {
+		if (Assistant.openedIntro()) {
 			instance.$('.introduction-content').slideDown(400);
 		} else {
 			instance.$('.introduction-content').slideUp(400);
