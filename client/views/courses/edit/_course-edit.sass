@@ -13,7 +13,12 @@
 	top: $navbar-height
 
 .course-edit
+	+grid(12)
 	padding: 0px
+	@media (max-width: $screen-xs)
+		padding: 0px 15px
+	h2
+		margin-top: 0px
 	.course_edit_body
 		+grid(12)
 		border: 7px dashed $openki-light-blue
@@ -21,7 +26,7 @@
 		padding: 20px 30px
 		@media (max-width: $screen-xs)
 			border: 0px
-			margin-top: 0px
+			margin: 0px
 			padding: 0px 0px 10px
 		#editform_name,
 		#editform_description
@@ -75,18 +80,14 @@
 				position: relative
 		.course_edit_region
 			margin-bottom: 10px
-		.course_edit_finishbtns
-			+grid(12)
-			padding: 10px 0px 0px
-			button
-				@extend .btn
-				margin-right: 10px
-				@media (max-width: $screen-xs)
-					+form-control
-					+btn
-					+btn-primary
-					margin-bottom: 10px
-				&.save
-					@extend .btn-success
-				&.cancel
-					+btn-cancel
+
+.course_edit_finishbtns
+	+grid(12)
+	padding: 10px 0px 0px
+	button
+		@extend .btn
+		margin-right: 10px
+		&.save
+			@extend .btn-success
+		&.cancel
+			+btn-cancel
