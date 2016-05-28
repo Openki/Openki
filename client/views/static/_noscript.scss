@@ -15,10 +15,8 @@
   position: relative;
   top: calc(#{"50% - 100px"});
   width: 300px;
-
   img {
     @include grid(4);
-
     height: 95px;
     padding: 0px;
   }
@@ -26,7 +24,6 @@
 
 .noscript-message {
   @include grid(8);
-
   color: $default-white;
   height: 100%;
   padding: 15px 15px;

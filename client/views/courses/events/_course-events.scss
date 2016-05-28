@@ -4,29 +4,23 @@
 
 .course_events {
   @include grid(12);
-
   height: 400px;
   margin-left: -5px;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0px;
   position: relative;
-
   .course_events_events {
     @include grid(12);
-
     left: -3px;
     padding: 10px 0;
     position: relative;
     width: calc(#{"100% + 6px"});
-
     .event-small-withDate-container {
       @include grid(12, 12, 6);
-
       padding: 0px 3px 10px;
     }
   }
-
   hr {
     clear: both;
     margin-bottom: 0px;
@@ -38,7 +32,6 @@
 .calendar_event_past {
   &:hover {
     @include box-shadow-big($default-shadow);
-
     z-index: 1029;
   }
 }
@@ -46,7 +39,6 @@
 .course_events_fadebox {
   height: 415px;
   position: relative;
-
   .fade_effect_top,
   .fade_effect_bottom {
     margin-left: -5px;
@@ -58,7 +50,6 @@
 .course_event_container,
 .course_event_past_container {
   @include grid(12, 6);
-
   padding: 5px;
 }
 
@@ -71,15 +62,12 @@
 
 .courseEvents-titlebar {
   @include grid(12);
-
   background: $brand-primary;
   border: 5px solid $brand-primary;
   color: $body-bg;
-
   h4 {
     font-weight: bold;
   }
-
   & > .link {
     color: $default-black;
     position: absolute;
@@ -90,7 +78,6 @@
 
 .course_event {
   @include transition(box-shadow $default-transition-time);
-
   a {
     & > .course_event_date {
       background: $brand-success;
@@ -99,33 +86,27 @@
       padding: 10px 0;
       white-space: nowrap;
     }
-
     .course_event_date span.date {
       font-size: large;
     }
-
     & > .course_event_time {
       font-size: medium;
       padding: 0px 0px 10px;
     }
-
     .course_event_time > span {
       font-size: small;
     }
   }
-
   & > .eventEdit_buttons {
     background: $default-light-grey;
     border-top: 3px solid $default-white;
     padding: 10px 0;
     text-align: center;
-
     .btn-toolbar {
       margin: auto;
       width: 90%;
     }
   }
-
   & > a,
   & > a:hover {
     color: $default-black;
@@ -141,7 +122,6 @@
 
 .course_event_title {
   @include transition(color $default-transition-time);
-
   h3 {
     margin: 10px 0px;
   }
@@ -153,7 +133,6 @@ input#edit_event_title {
 
 .event_options {
   @include grid(12);
-
   padding: 15px 0px 0px;
 }
 
@@ -164,7 +143,6 @@ input#edit_event_title {
 .eventReplicationMenu {
   background: $default-light-grey;
   padding: 10px 0px;
-
   & > div {
     padding: 1em;
   }
@@ -172,13 +150,11 @@ input#edit_event_title {
 
 .fade_effect_top {
   @include gradient-vertical($body-bg, transparent);
-
   height: 40px;
   left: 0px;
   position: absolute;
   top: 0px;
   width: 100%;
-
   @media (max-width: $screen-xs) {
     background: none;
   }
@@ -186,13 +162,11 @@ input#edit_event_title {
 
 .fade_effect_bottom {
   @include gradient-vertical(transparent, $body-bg);
-
   bottom: 0px;
   height: 40px;
   left: 0px;
   position: absolute;
   width: 100%;
-
   @media (max-width: $screen-xs) {
     background: none;
   }

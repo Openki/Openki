@@ -1,14 +1,11 @@
 .navbar {
   @extend .navbar-default;
-
   @extend .navbar-fixed-top;
-
   border: 0px;
 }
 
 .navbar-container {
   @extend .container-fluid;
-
   max-width: 1600px;
 }
 
@@ -30,7 +27,6 @@
 
 .site-stage {
   @include rotate(345deg);
-
   bottom: 2px;
   color: $site-stage-color;
   font-size: small;
@@ -45,19 +41,14 @@
 
 .navbar-link {
   @include transition(background-color $default-transition-time);
-
   font-size: $navbar-default-font-size;
-
   & > .caret {
     @include scale(-1.5, -1.5);
-
     @include transition(color $default-transition-time);
-
     bottom: 1px;
     color: $brand-primary;
     left: 46%;
     position: absolute;
-
     @media (max-width: $screen-sm) {
       display: none;
     }
@@ -67,11 +58,9 @@
 .nav > .open {
   .caret {
     @include opacity(1);
-
     color: $dropdown-bg;
     z-index: 1099;
   }
-
   & > .dropdown-menu {
     border-top: 0px;
   }
@@ -81,11 +70,8 @@
   color: $navbar-default-link-color;
 }
 
-.navbar-link-covering {}
-
 .navbar-nav > li > a.navbar-link-covering:focus {
   background: $navbar-link-covering-bg;
-
   & > .caret {
     color: transparent;
   }
@@ -98,7 +84,6 @@
 .navbar-nav > .calendar-link > .navbar-link-covering,
 .navbar-nav > .calendar-link > .navbar-link-covering:focus {
   background-color: transparent;
-
   & > .caret {
     color: $calendar-navigation-bg;
   }
@@ -106,7 +91,6 @@
 
 .login-link {
   height: $navbar-height;
-
   & > a > .caret {
     bottom: 2px;
   }
@@ -122,17 +106,14 @@
 .navbar-nav {
   @media (max-width: $screen-sm) {
     margin: 0px;
-
     & > .dropdown > a::after,
     & > .open > a::after {
       font-family: FontAwesome;
       padding-left: 5px;
     }
-
     & > .dropdown > a::after {
       content: "";
     }
-
     & > .open > a::after {
       content: "";
     }

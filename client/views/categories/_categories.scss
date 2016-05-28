@@ -3,7 +3,6 @@
   list-style: none;
   margin-left: -2px;
   padding-left: 0px;
-
   li {
     display: inline-block;
     margin: 2px;
@@ -13,13 +12,10 @@
 
 .js-category-label {
   @include transition(box-shadow $default-transition-time);
-
   background: $category-bg;
   padding: 2px 5px;
-
   &:hover {
     @include box-shadow-small($category-hover-shadow);
-
     background: $category-hover-bg;
     color: $category-hover-text;
     text-decoration: none;

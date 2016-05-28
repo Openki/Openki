@@ -1,25 +1,19 @@
 .editableWrap {
   margin: -8px;
   position: relative;
-
   .editable {
     @include transition-property(#{"background-color, border, box-shadow"});
-
     @include transition-duration($default-transition-time);
-
     min-height: 2em;
     padding: 8px;
-
     &:focus,
     &.changed {
       @include box-shadow-big($default-shadow);
-
       background: $body-bg;
       border: 1px solid $brand-primary;
       padding: 7px;
     }
   }
-
   .editable:focus,
   .editable.changed {
     background: $body-bg;
@@ -27,38 +21,30 @@
     box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
     padding: 7px;
   }
-
   .editable:after {
     position: static;
   }
-
   .editIcon {
     @include transition(color $default-transition-time);
-
     color: $default-gray;
     cursor: default;
     padding: 0.2em;
   }
-
   &.rich .editIcon {
     position: absolute;
     right: 0px;
     top: 0px;
   }
-
   &.simple .editable {
     display: inline-block;
     min-width: 8em;
-
     &:focus {
       min-width: 10em;
     }
   }
-
   &.rich .editable {
     min-height: 4ex;
   }
-
   &.rich .editable {
     min-height: 4ex;
   }
@@ -80,27 +66,19 @@
   margin-top: 15px;
   position: absolute;
   z-index: 1;
-
   button {
     @include box-shadow-big($default-shadow);
-
     @extend .btn;
-
     margin-right: 5px;
-
     &.save {
       @extend .btn-success;
     }
-
     &.cancel {
       @include btn-cancel;
     }
-
     @media (max-width: $screen-xs) {
       @include form-control;
-
       @include btn;
-
       margin-bottom: 10px;
     }
   }

@@ -1,6 +1,5 @@
 .find {
   @extend .container;
-
   .course-edit {
     padding: 0px;
   }
@@ -9,7 +8,6 @@
 .find-heading {
   color: $brand-primary;
   margin-top: 0px;
-
   @media (max-width: $screen-xs) {
     font-size: x-large;
     margin: 20px 0 10px;
@@ -18,33 +16,27 @@
 
 .search {
   @include grid(12);
-
   padding: 0px;
 }
 
 .js-search-field {
   @include grid(12, inherit, 5);
-
   padding: 0 0 15px;
 }
 
 .js-search-input {
   @extend .form-control;
-
   font-size: large;
 }
 
 .js-find-btn {
   @extend .btn;
-
   @extend .btn-success;
 }
 
 .js-toggle-filter {
   @extend .btn;
-
   @extend .btn-default;
-
   @media (max-width: $screen-xs) {
     width: 100%;
   }
@@ -56,15 +48,12 @@
 
 .filter {
   @include grid(12, inherit, 7);
-
   padding: 0px;
-
   @media (max-width: $screen-xs) {
     border: 1px solid $gray-lighter;
     margin-top: 10px;
     padding: 0px 10px;
   }
-
   @media (min-width: $screen-md) {
     padding-left: 15px;
   }
@@ -72,10 +61,8 @@
 
 .filter-header {
   @include grid(12);
-
   color: $brand-primary;
   padding: 0px;
-
   @media (max-width: $screen-xs) {
     display: none;
   }
@@ -89,7 +76,6 @@
 .filter-categories {
   border-top: 1px solid $openki-light-blue;
   float: left;
-
   @media (max-width: $screen-xs) {
     border-top-width: 0px;
   }
@@ -97,12 +83,10 @@
 
 .filter-course-properties {
   padding: 10px 15px 10px 0px;
-
   @media (max-width: $screen-xs) {
     padding-right: 0px;
     width: 100%;
   }
-
   .btn-group-vertical {
     @media (max-width: $screen-xs) {
       width: 100%;
@@ -112,9 +96,7 @@
 
 .js-toggle-property-filter {
   @extend .btn-default;
-
   text-align: left;
-
   @media (max-width: $screen-xs) {
     text-align: center;
   }
@@ -126,7 +108,6 @@
   display: inline-block;
   text-align: center;
   width: 28px;
-
   & > .glyphicon {
     position: relative;
     top: 2px;
@@ -157,15 +138,12 @@
   left: 3px;
   position: absolute;
   width: 3px;
-
   &.first-line {
     top: 2px;
   }
-
   &.second-line {
     top: 4px;
   }
-
   &.third-line {
     top: 6px;
   }
@@ -174,7 +152,6 @@
 .eventcaption_upcoming,
 .toggle-property-filter-icon {
   @include opacity(0.7);
-
   @include transition(opacity 0.15s);
 }
 
@@ -187,12 +164,10 @@
 
 .filter-categories {
   padding: 10px 0px;
-
   @media (max-width: $screen-xs) {
     padding: 0px;
     width: 100%;
   }
-
   h4 {
     color: $brand-primary;
     margin-top: 0px;
@@ -207,11 +182,9 @@
 
 .filter-categories-select {
   margin-bottom: 10px;
-
   .dropdown-toggle {
     display: none;
   }
-
   &::after {
     // fa-angle-down
     content: "";
@@ -220,7 +193,6 @@
     right: 7px;
     top: 6px;
   }
-
   &.open::after {
     // fa-angle-up
     content: "";
@@ -229,9 +201,7 @@
 
 .js-search-categories {
   @extend .form-control;
-
   border: 1px dashed $category-bg;
-
   &:focus {
     border-style: solid;
   }
@@ -239,7 +209,6 @@
 
 .filter-no-categories-found {
   padding: 5px 10px;
-
   &:hover {
     background-color: $body-bg;
     cursor: default;
@@ -251,7 +220,6 @@
   min-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-
   .js-category-label {
     background-color: $dropdown-bg;
     box-shadow: none;
@@ -266,7 +234,6 @@
 .js-toggle-subcategories {
   color: $dropdown-link-color;
   padding: 0 5px;
-
   &:hover {
     color: $gray;
     cursor: pointer;
@@ -283,11 +250,9 @@
   list-style: none;
   margin: 0px;
   padding-left: 0px;
-
   li {
     margin-bottom: 3px;
     padding: 0px 3px 3px 0px;
-
     @media (max-width: $screen-xs) {
       display: inline-block;
     }
@@ -308,12 +273,10 @@
   max-width: 400px;
   padding: 15px;
   text-align: center;
-
   .fa-exclamation-circle {
     color: $brand-warning;
     padding-right: 5px;
   }
-
   .btn-group {
     margin-top: 10px;
   }
@@ -321,6 +284,5 @@
 
 .js-all-regions-btn {
   @extend .btn;
-
   @include btn-go;
 }

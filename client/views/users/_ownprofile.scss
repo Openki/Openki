@@ -4,12 +4,10 @@
 
 .profile-info {
   @include grid(12);
-
   background-color: $user-bg;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   padding: 15px;
-
   table {
     font-size: large;
     margin-bottom: 10px;
@@ -21,7 +19,6 @@
   label .checkmark {
     display: none;
   }
-
   .active .checkmark {
     display: inline;
   }
@@ -38,7 +35,6 @@
 
 .js-profile-info-cancel-btn {
   @include btn-cancel;
-
   margin-left: 5px;
 }
 
@@ -49,11 +45,9 @@
 .js-profile-info-edit-btn,
 .js-profile-delete-btn {
   @include header-btn;
-
   color: $default-gray;
   float: right;
   font-size: large;
-
   &:hover {
     color: $default-black;
   }
@@ -61,21 +55,17 @@
 
 .js-change-pwd-btn {
   @extend .btn;
-
   @extend .btn-default;
-
   margin-top: 10px;
 }
 
 .js-verify-mail-btn {
   @extend .btn;
-
   @extend .btn-primary;
 }
 
 .change-pwd {
   @include grid(12);
-
   padding: 0px;
 }
 
@@ -90,13 +80,11 @@
 
 .js-change-pwd-cancel-btn {
   @include btn-cancel;
-
   margin-left: 5px;
 }
 
 .profile-delete-confirmation {
   @include grid(12);
-
   background-color: pink;
   border: 2px solid $brand-danger;
   margin-top: 15px;
@@ -107,7 +95,6 @@
 .js-profile-delete-cancel-btn,
 .js-profile-delete-confirm-btn {
   @extend .btn;
-
   margin-top: 10px;
 }
 
@@ -121,14 +108,10 @@
 
 .translate-link {
   @include grid(12);
-
   a {
     @extend .btn;
-
     @extend .btn-success;
-
     @extend .btn-lg;
-
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     width: 100%;
@@ -137,10 +120,8 @@
 
 .profile-groups-list {
   @include grid(12);
-
   .groups {
     @extend .list-unstyled;
-
     li {
       margin-bottom: 10px;
     }
@@ -149,6 +130,5 @@
 
 .create-group-btn {
   @extend .btn;
-
   @extend .btn-success;
 }

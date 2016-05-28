@@ -11,37 +11,29 @@
 // Cancel/Delete button style, turning red when beeing hovered over
 @mixin btn-cancel {
   @extend .btn-default;
-
   &:hover {
     @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
-
     border: 1px solid $btn-danger-border;
   }
 }
 
 @mixin btn-go {
   @extend .btn-default;
-
   &:hover {
     @include gradient-vertical(map-get($btn-success-bg-color-steps, dark), map-get($btn-success-bg-color-steps, darkest), 0%, 100%);
-
     border: 1px solid $btn-success-border;
   }
 }
 
 @mixin btn-thin {
   @extend .btn;
-
   padding: 3px 12px;
 }
 
 @mixin big-button-primary {
   @extend .form-control;
-
   @extend .btn;
-
   @extend .btn-primary;
-
   border: 0px;
   margin-top: 3px;
   font-size: large;
@@ -49,7 +41,6 @@
   line-height: 1.1;
   padding: 10px 15px;
   text-align: left;
-
   &:hover {
     border: 0px;
     margin-top: 3px;
@@ -58,11 +49,8 @@
 
 @mixin big-button-success {
   @extend .form-control;
-
   @extend .btn;
-
   @extend .btn-success;
-
   border: 0px;
   margin-top: 3px;
   font-size: large;
@@ -70,7 +58,6 @@
   line-height: 1.1;
   padding: 10px 15px;
   text-align: left;
-
   &:hover {
     border: 0px;
     margin-top: 3px;
@@ -84,10 +71,8 @@
 
 @mixin btn-remove {
   @include transition(color $default-transition-time);
-
   color: lighten($brand-danger, 20%);
   cursor: pointer;
-
   &:hover {
     color: $brand-danger;
   }
@@ -97,13 +82,11 @@
   background-color: $calendar-btn-bg;
   border-color: $calendar-btn-border;
   color: $calendar-btn-text;
-
   &:hover {
     background-color: $calendar-btn-hover-bg;
     border-color: $calendar-btn-hover-bg;
     color: $calendar-btn-text;
   }
-
   &:focus {
     color: darken($calendar-btn-text, 20%);
   }

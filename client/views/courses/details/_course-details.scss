@@ -1,12 +1,10 @@
 .course-details-component {
   @include grid(12);
-
   padding: 0px;
 }
 
 .course-details-component-titlebar {
   @include grid(12);
-
   background: $brand-primary;
   border: 5px solid $brand-primary;
   color: $body-bg;
@@ -19,7 +17,6 @@
 .course-details-description {
   font-size: medium;
   padding: 10px 0px;
-
   .editable {
     max-height: 300px;
     overflow: auto;
@@ -28,14 +25,11 @@
 
 .course-details-page {
   @extend .container;
-
   padding-top: 20px;
 
   .js-events-download-btn {
     @extend .btn;
-
     @extend .btn-default;
-
     float: right;
     margin: 10px 5px 10px 0px;
     white-space: normal;
@@ -44,7 +38,6 @@
 
 .course-details-column-left {
   @include grid(12, inherit, 8);
-
   padding-right: 7.5px;
 
   @media (max-width: $screen-sm) {
@@ -54,9 +47,7 @@
 
 .course-details-column-right {
   @include grid(12, inherit, 4);
-
   padding-left: 7.5px;
-
   @media (max-width: $screen-xs) {
     padding: 0px;
   }
@@ -71,19 +62,15 @@
 
 .course-details {
   @include grid(12);
-
   border: 7px dashed $openki-light-blue;
-
   &.haspastevents {
     border-style: solid;
   }
-
   ul.groups-list,
   ul.groups-list li,
   ul.groups-list li a {
     display: inline-block;
   }
-
   ul.groups-list {
     margin-bottom: 10px;
   }
@@ -99,10 +86,8 @@
   position: relative;
   right: -22px;
   top: -7px;
-
   div {
     @include opacity(0.5);
-
     background-color: $default-black;
     color: white;
     font-weight: bold;
@@ -116,16 +101,13 @@
   margin-top: 20px;
   min-height: 3ex;
   padding: 0px !important;
-
   & > .editable {
     font-size: 30px;
     padding: 0px;
   }
-
   & > .editable-controls {
     font-size: medium;
   }
-
   & > * {
     display: inline-block;
   }
@@ -133,10 +115,8 @@
 
 .course-details-categories ul {
   margin-bottom: 0px;
-
   li {
     margin-bottom: 10px;
-
     &:first-child {
       margin-left: 0px;
     }
@@ -145,15 +125,12 @@
 
 .course_main .course-groups {
   @include grid(12);
-
   padding: 0 0 10px;
 }
 
 .course-details-groups {
   @include grid(12);
-
   padding: 0;
-
   .dropdown {
     display: inline-block;
   }
@@ -162,11 +139,9 @@
 .js-edit-course-btn,
 .js-delete-course-btn {
   @include header-btn;
-
   color: $default-gray;
   float: right;
   font-size: large;
-
   &:hover {
     color: $default-black;
   }

@@ -1,6 +1,5 @@
 .courselist_results {
   @include grid(12);
-
   margin-left: -5px;
   padding: 0 0 10px;
   width: calc(#{"100% + 10px"}) !important;
@@ -8,48 +7,36 @@
 
 .course-container {
   @include grid(6, inherit, 4, 3);
-
   border: 5px solid $body-bg;
   border-bottom-width: 15px;
   padding: 0px;
-
   @media (max-width: $screen-xsm) {
     @include grid(12);
-
     padding: 0px;
   }
 }
 
 .course {
   @include grid(12);
-
   @include transition(box-shadow $default-transition-time);
-
   border: 7px dashed $openki-light-blue;
   height: 150px;
   padding: 0px;
-
   &:hover {
     @include box-shadow-big($default-shadow);
-
     color: $brand-primary;
-
     h4 {
       color: $brand-primary;
     }
   }
-
   &.haspastevents {
     border-style: solid;
   }
-
   & > a:hover {
     text-decoration: none;
   }
-
   h4 {
     @include transition(color $default-transition-time);
-
     color: $default-black;
   }
 }
@@ -84,20 +71,15 @@
 
 .course-content {
   @include grid(9);
-
   background: $body-bg;
   padding: 0px 0px 0px 15px;
-
   &.hasupcomingevents {
     @include grid(7.5);
-
     padding: 0px 0px 0px 15px;
   }
-
   .categories-list {
     margin-bottom: 0px;
     margin-left: -2px;
-
     li:nth-child(3),
     li:nth-child(4),
     li:nth-child(5),
@@ -111,7 +93,6 @@
 .course_main {
   &.hasupcomingevents {
     background: $openki-light-blue;
-
     .course-content {
       background: $openki-light-blue;
     }
@@ -120,15 +101,12 @@
 
 .course-roles-status {
   @include grid(3);
-
   padding: 0px;
   position: relative;
   right: -7px;
   top: -7px;
-
   & > div {
     margin-top: 3px;
-
     &:first-child,
     &.tooltip {
       margin-top: 0px;
@@ -138,7 +116,6 @@
 
 .course-eventlist {
   @include grid(4.5);
-
   background: $brand-success;
   color: $default-black;
   max-height: 150px;
@@ -152,19 +129,15 @@
 .course-eventlist-time,
 .course-eventlist-date {
   @include grid(12);
-
   padding: 0px;
 }
 
 .course-eventlist-location {
   @include word-break;
-
   padding: 0 4px;
-
   span {
     display: inline;
   }
-
   .glyphicon-home {
     padding-right: 3px;
   }

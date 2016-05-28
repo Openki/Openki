@@ -4,7 +4,6 @@
 
 .switchDate {
   @include grid(12);
-
   background-color: $calendar-navigation-bg;
   box-shadow: 0px 6px 2px $default-shadow;
   font-size: 32px;
@@ -15,45 +14,35 @@
   top: 50px;
   width: 100%;
   z-index: 2;
-
   .calendar_week {
     background-color: $calendar-header-bg;
     text-align: center;
-
     .week {
       color: $calendar-header-text;
       font-size: large;
       line-height: 0.75;
       margin: 7px 0px 0px 0px;
     }
-
     .date {
       color: $calendar-header-text;
       font-size: small;
       margin: 3px 0px;
     }
   }
-
   & > .right {
     float: right;
   }
-
   small {
     font-size: 12px;
   }
-
   button {
     @extend .btn;
-
     @extend .btn-default;
-
     float: left;
     margin: 6px 3px;
-
     &:first-child {
       margin-left: 0px;
     }
-
     &:last-child {
       margin-right: 0px;
     }
@@ -62,14 +51,10 @@
 
 .calendar {
   @extend .container;
-
   padding-top: 50px;
-
   .calendar_date {
     @include grid(12);
-
     padding: 0px 0px 10px;
-
     .date {
       background: $calendar-navigation-bg;
       border-left: 10px solid $brand-primary;
@@ -78,17 +63,13 @@
       text-align: center;
       width: 250px;
     }
-
     .calendar_events {
       @include grid(12);
-
       margin: 0px -3px -10px;
       padding: 10px 0px 0px;
       width: calc(#{"100% + 6px"});
-
       .event-small-container {
         @include grid(4, 3, 2);
-
         padding: 0px 3px 10px;
       }
     }
@@ -96,26 +77,20 @@
 
   @media (max-width: $screen-xxs) {
     @include grid(12);
-
     padding: 0px;
-
     .calendar_date {
       .date {
         @include grid(12);
-
         border-left: 0px;
         border-top: 10px solid $brand-primary;
         padding: 0.5em;
       }
-
       .calendar_events {
         margin: 0px 0px 10px;
         padding: 10px 7px 0px;
         width: auto;
-
         .event-small-container {
           @include grid(12);
-
           padding: 0px 3px 10px;
         }
       }
@@ -127,7 +102,6 @@
       .calendar_events {
         .event-small-container {
           @include grid(6);
-
           padding: 0px 3px 10px;
         }
       }
@@ -137,6 +111,5 @@
 
 .js-events-download-btn {
   @extend .btn;
-
   @extend .btn-primary;
 }

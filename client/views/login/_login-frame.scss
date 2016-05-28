@@ -5,10 +5,8 @@
 
 .user-frame {
   @include grid(12);
-
   padding: 0 20px;
   text-align: center;
-
   @media (max-width: $screen-sm) {
     padding: 20px 15px 10px;
   }
@@ -16,36 +14,27 @@
 
 .ownuser-frame {
   @include grid(12);
-
   padding: 0px;
-
   h3 {
     margin-top: 0px;
   }
-
   a,
   button {
     @extend .form-control;
-
     @extend .btn;
-
     @extend .btn-default;
-
     margin-bottom: 15px;
   }
 }
 
 .login {
   @include grid(12);
-
   padding: 0px;
-
   & > div,
   & > button,
   & > a {
     margin-bottom: 15px !important;
   }
-
   .fa-lock {
     font-size: large;
     padding: 0 1px;
@@ -71,11 +60,9 @@
   display: block;
   margin-top: -10px;
   text-align: right;
-
   &:focus {
     text-decoration: underline;
   }
-
   &:hover {
     color: $brand-primary;
     cursor: pointer;
@@ -85,7 +72,6 @@
 .js-login-btn,
 .js-register-btn {
   @extend .form-control;
-
   @extend .btn;
 }
 
@@ -104,11 +90,9 @@
 
 .js-external-service-login-btn {
   @include btn-reset;
-
   color: $default-gray;
   font-size: xx-large;
   padding: 0px 9px;
-
   &:hover,
   &:focus {
     @each $service, $color in $external-servies {
@@ -134,9 +118,7 @@
 
 .forgot_login {
   @include grid(12);
-
   padding: 0px;
-
   & > p,
   & > div,
   & > button {
@@ -156,7 +138,6 @@
 .js-reset-pwd-btn,
 .js-reset-pwd-close-btn {
   @extend .form-control;
-
   @extend .btn;
 }
 

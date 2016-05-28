@@ -7,21 +7,15 @@
     $md: $sm;
     $lg: $md;
   }
-
   @if $md == inherit {
     $md: $sm;
     $lg: $md;
   }
-
   @if $lg == inherit {
     $lg: $md;
   }
-
   @include make-xs-column-offset($xs);
-
   @include make-sm-column-offset($sm);
-
   @include make-md-column-offset($md);
-
   @include make-lg-column-offset($lg);
 }

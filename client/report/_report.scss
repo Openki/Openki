@@ -1,13 +1,9 @@
 button.report {
   @extend .btn;
-
   @extend .btn-default;
-
   margin-top: 15px;
-
   @media (max-width: $screen-xs) {
     @include grid(12);
-
     margin-bottom: 15px;
   }
 }

@@ -1,84 +1,63 @@
 .event-small-withDate-container {
   @include grid(4, 3, inherit, 2);
-
   height: 220px;
   padding: 0px 3px 10px;
-
   @media (max-width: $screen-xxs) {
     @include grid(12);
-
     padding: 0px 3px 10px;
   }
-
   @media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
     @include grid(6);
-
     padding: 0px 3px 10px;
   }
-
   .event-small {
     @include grid(12);
-
     @include transition(box-shadow $default-transition-time);
-
     background: $event-small-bg;
     height: 100%;
     padding: 0px;
-
     &:hover {
       @include box-shadow-big($default-shadow);
     }
   }
-
   .event-small-header,
   .event-small-title,
   .event-small-description {
     @include word-break;
-
     overflow: hidden;
   }
-
   .event-small-header {
     @include grid(12);
-
     background: $event-small-header-bg;
     border-bottom: 1px solid $body-bg;
     color: $event-small-header-color;
     height: 75px;
     padding: 5px;
-
     .fa,
     .glyphicon {
       margin-right: 2px;
     }
-
     .event-small-date {
       font-weight: bold;
     }
-
     .fa-clock-o,
     .event-small-date,
     .event-small-time {
       margin-bottom: 5px;
     }
-
     .fa-map-signs {
       margin-left: 4px;
     }
   }
-
   .event-small-title {
     @include grid(12);
-
     color: $event-small-title-color;
     font-size: medium;
     max-height: 56px;
     padding: 5px;
   }
-
   .event-small-description {
     @include grid(12);
-
     color: $event-small-description-color;
     height: 85px;
     margin-top: -3px;

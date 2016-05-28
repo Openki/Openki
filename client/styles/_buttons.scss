@@ -20,7 +20,6 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
 @each $btn-variant, $btn-bg-color-steps in $all-btn-bg-color-steps {
   .btn-#{$btn-variant} {
     @include gradient-vertical(map-get($btn-bg-color-steps, default), map-get($btn-bg-color-steps, darker));
-
     &:hover {
       @include gradient-vertical(map-get($btn-bg-color-steps, dark), map-get($btn-bg-color-steps, darkest));
     }
@@ -32,10 +31,8 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
 
 .btn {
   @include transition(border-color 0.15s ease-in-out);
-
   @media (max-width: $screen-xs) {
     width: 100%;
-
     & + .btn {
       margin-top: 10px;
     }
@@ -45,12 +42,10 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
 .btn-group {
   @media (max-width: $screen-xs) {
     width: 100%;
-
     & > .btn,
     & > button {
       border-radius: 4px !important;
     }
-
     & + button {
       margin-top: 10px;
     }
@@ -72,7 +67,6 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
   button + li {
     border-top-color: $btn-default-border;
   }
-
   button:hover + li,
   button:hover + button {
     border-top-color: #8dc3d6;
@@ -85,12 +79,9 @@ $all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-pr
 
 button.list-group-item {
   @include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
-
   border-color: $btn-default-border;
-
   &:hover {
     @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
-
     border-color: #8dc3d6;
   }
 }
