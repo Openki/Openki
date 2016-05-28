@@ -8,14 +8,14 @@ Template.small_event_withDate.events({
 });
 
 Template.small_event_withDate.rendered = function() {
-	this.$('.-eventLocationTime').dotdotdot({
+	this.$('.event-small-header').dotdotdot({
 		height: 75,
 		watch : "window",
 	});
-	this.$('.-eventTitle').dotdotdot({
+	this.$('.event-small-title').dotdotdot({
 		watch: "window",
 	});
-	this.$('.-eventDescription').dotdotdot({
+	this.$('.event-small-description').dotdotdot({
 		watch: "window",
 	});
 };

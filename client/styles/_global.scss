@@ -1,0 +1,174 @@
+* {
+  outline: none !important;
+}
+
+.checkmark {
+  @extend .glyphicon;
+  @extend .glyphicon-ok;
+  color: $checkmark-color;
+  padding-left: 5px;
+}
+
+.profilelink {
+  color: $default-black;
+  padding-right: 5px;
+  &:hover {
+    color: $brand-primary;
+    text-decoration: none;
+  }
+}
+
+.remove-btn {
+  @extend .glyphicon;
+  @extend .glyphicon-remove;
+  background-color: transparent;
+  border: 0px;
+  color: $default-gray;
+  padding: 0px;
+  &:hover {
+    color: $default-black;
+    cursor: pointer;
+  }
+}
+
+.dropdown-menu {
+  @include box-shadow-big($default-shadow);
+  border-radius: 0px;
+  > li > a {
+    padding-left: 12px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  @extend .form-control;
+}
+
+.input-group input:focus {
+  z-index: 3;
+}
+
+.tooltip {
+  font-size: $font-size-base;
+  white-space: nowrap;
+  &-inner {
+    max-width: none;
+  }
+}
+
+a,
+.btn-link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.elevate_child {
+  @include transition(box-shadow $default-transition-time);
+  box-shadow: none !important;
+}
+
+.collapsing,
+.fade {
+  @include transition-duration(0s);
+}
+
+// .btn-primary
+// 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
+// 	&:hover
+// 		+gradient-vertical(darken($brand-primary, 5%), darken($brand-primary, 10%), 0%, 100%)
+
+// //This sheet contains site-wide used resets & styles
+//
+// #outer
+// 	padding-top: 50px
+// 	&.testWarning
+// 		padding-top: 70px
+//
+//
+//
+// html,
+// body
+// 	height: 100%
+//
+//
+// #maincontent
+// 	padding: 25px 0px 50px 0px
+// 	& > *:first-child
+// 		margin-top: 0px
+// 		padding-top: 0px
+//
+// 	@media screen and
+// 	(max-width: $screen-xs)
+// 		.find
+// 			margin-top: -20px
+//
+//
+//
+//
+// *
+// 	border-radius: 0px !important
+// 	outline: none !important
+//
+//
+// h1
+// 	color: $brand-primary
+//
+//
+// .dropdown-menu
+// 	+box-shadow-small($default-shadow)
+// 	min-width: 0px
+// 	width: auto
+// 	li
+// 		cursor: pointer
+//
+//
+//
+// .tooltip
+// 	font-size: $font-size-base
+// 	white-space: nowrap
+// 	&-inner
+// 		max-width: none
+//
+//
+//
+// ul.nav-tabs li a
+// 	color: $default-black
+// 	&:hover
+// 		color: $body-bg
+//
+//
+//
+// label
+// 	display: block
+//
+//
+// span.glyphicon-ok
+// 	color: darken($brand-success, 20%) !important
+//
+//
+// select
+// 	@extend .form-control
+// 	color: $default-black
+// 	&:hover
+// 		cursor: pointer
+//
+// 	option.select_placeholder:hover
+// 		cursor: not-allowed
+//
+//
+//
+// .elevate_child
+// 	+transition(box-shadow $default-transition-time)
+// 	box-shadow: none !important
+//
+//
+// .collapsing,
+// .fade
+// 	+transition-duration(0s)
+//

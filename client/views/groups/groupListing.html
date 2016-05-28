@@ -1,28 +1,31 @@
 <template name="groupListing">
-{{#if available}}
-<div class="course-groups-manage">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
-		{{mf 'groups.listing.manage_groups' "Manage groups"}}
-		<span class="caret"></span>
-	</a>
-	<ul class="dropdown-menu groups-options" role="menu">
-		{{#each available}}
-		{{#if inGroup this ..}}
-			{{> groupListEntry}}
-		{{else}}
-		<li>
-			{{> groupListAdd}}
-		</li>
-		{{/if}}
-		{{/each}}
-	</ul>
-</div>
-{{/if}}
+	{{#if available}}
+		<div class="dropdown">
+			<button class="js-manage-groups-btn dropdown-toggle"
+				aria-expanded="false"
+				data-toggle="dropdown"
+				href="#"
+				role="button"
+				type="button">
+				{{mf 'groups.listing.manage_groups' "Manage groups"}}
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu groups-options" role="menu">
+				{{#each available}}
+					{{#if inGroup this ..}}
+						{{> groupListEntry}}
+					{{else}}
+						{{> groupListAdd}}
+					{{/if}}
+				{{/each}}
+			</ul>
+		</div>
+	{{/if}}
 </template>
 
 <template name="groupListAdd">
 	<li>
-		<button role="menuitem" class="-admitToGroup">
+		<button class="-admitToGroup" role="menuitem">
 			<span class="glyhpicon glyphicon-plus"></span>
 			&nbsp;
 			{{mf 'groupListing.admit' 'Admit to "{NAME}"' NAME=name}}
@@ -33,13 +36,12 @@
 <template name="groupListEntry">
 	<li class="part-of-group">
 		{{mf 'groupListing.partOfGroup' 'Part of {NAME}' NAME=name}}
-		<button
-			role="menuitem"
-			class="-expelFromGroup"
-			data-toggle="tooltip"
-			data-original-title="{{mf 'groupListing.expel' 'Expel from this group'}}"
+		<button class="js-group-expel-btn"
 			data-html="true"
-			data-placement="top">
+			data-original-title="{{mf 'groupListing.expel' 'Expel from this group'}}"
+			data-placement="top"
+			data-toggle="tooltip"
+			role="menuitem">
 			<span class="glyphicon glyphicon-remove"></span>
 		</button>
 	</li>

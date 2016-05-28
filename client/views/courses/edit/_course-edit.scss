@@ -1,0 +1,123 @@
+.find,
+.new_course {
+  .course-edit {
+    @include grid(12);
+    h2 {
+      margin-top: 0px;
+    }
+  }
+}
+
+.coursedetails .course-edit {
+  @include grid(12);
+}
+
+#new-course {
+  position: absolute;
+  top: $navbar-height;
+}
+
+.course-edit {
+  @include grid(12);
+  padding: 0px;
+  @media (max-width: $screen-xs) {
+    padding: 0px 15px;
+  }
+  h2 {
+    margin-top: 0px;
+  }
+  .course_edit_body {
+    @include grid(12);
+    border: 7px dashed $openki-light-blue;
+    margin-top: 10px;
+    padding: 20px 30px;
+    @media (max-width: $screen-xs) {
+      border: 0px;
+      margin: 0px;
+      padding: 0px 0px 10px;
+    }
+    #editform_name,
+    #editform_description {
+      @extend .form-control;
+    }
+    #editform_description {
+      height: auto;
+      max-height: 150px;
+      min-height: 100px;
+      overflow: auto;
+    }
+    #editform_categories,
+    .course_edit_roles,
+    .course_edit_internal,
+    .course_edit_region {
+      @include grid(12, 6);
+      padding: 10px 5px 10px 0;
+    }
+    ul.categories,
+    ul.subcategories,
+    ul.roles_list {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul.categories,
+    ul.roles_list,
+    .course_edit_internal {
+      span.caret {
+        @include transition(color $default-transition-time);
+        color: $default-light-grey;
+        left: 3px;
+        position: relative;
+        top: -1px;
+        &.active {
+          color: $default-black;
+        }
+      }
+      label {
+        font-weight: normal;
+        &:hover {
+          color: $brand-primary;
+          cursor: pointer;
+          span.caret {
+            color: $default-black;
+          }
+        }
+        &.active {
+          color: $brand-primary;
+        }
+        input.checkbox {
+          margin-right: 3px;
+        }
+      }
+    }
+    button.editCategories {
+      @include btn-thin;
+      @extend .btn-primary;
+    }
+    ul.subcategories {
+      left: 5px;
+      position: relative;
+      li {
+        left: 15px;
+        position: relative;
+      }
+    }
+    .course_edit_region {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.course_edit_finishbtns {
+  @include grid(12);
+  padding: 10px 0px 0px;
+  button {
+    @extend .btn;
+    margin-right: 10px;
+    &.save {
+      @extend .btn-success;
+    }
+    &.cancel {
+      @include btn-cancel;
+    }
+  }
+}

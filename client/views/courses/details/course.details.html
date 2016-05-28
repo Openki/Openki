@@ -1,77 +1,74 @@
-<template name="coursedetails">
-	<div class="coursedetails">
-		<div class="coursedetails_column_left">
-		{{#if edit}}
-			{{> course_edit course}}
-		{{else}}
-			<div class="course_main {{#with course}}{{coursestate}}{{/with}}">
-				{{#if isProposal}}
-					<div class="courseStatus">
-						<div>
-						{{mf 'course.details.tag.proposal' 'proposal'}}
+<template name="courseDetailsPage">
+	<div class="course-details-page">
+		<div class="course-details-column-left">
+			{{#if edit}}
+				{{> course_edit course}}
+			{{else}}
+				<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+					{{#if isProposal}}
+						<div class="course-details-status">
+							<div>
+							{{mf 'course.details.tag.proposal' 'proposal'}}
+							</div>
+						</div><!-- /.course-details-status -->
+					{{/if}}
+
+					<div class="course-details-title">
+						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+						{{#with course}}
+							{{#if currentUserMayEdit}}
+									<button class="js-delete-course-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'course.details.del_btn' 'Delete course'}}"
+										type="button"
+										role="button">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<button class="js-edit-course-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'course.details.edit_btn' 'Edit course'}}"
+										type="button"
+										role="button">
+										<span class="glyphicon glyphicon-edit"></span>
+									</button>
+							{{/if}}
+						{{/with}}
+					</div><!-- /.course-details-title -->
+					{{#with course}}
+						<div class="course-details-categories">
+							{{> showCategories}}
+						</div><!-- /.course-details-categories -->
+						<div class="course-details-groups">
+							{{> courseGroupList}}
 						</div>
-					</div>
-				{{/if}}
-
-				<div class="name">
-					{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-				</div>
-
-				{{#with course}}
-				<div class="course_categories">
-					{{> show_categories}}
-				</div>
-				<div class="course-groups-list-container">
-					{{> courseGroupList}}
-				</div>
-				{{/with}}
-
-				{{> show_course_submenu}}
-				{{#with course}}
-				{{#if currentUserMayEdit}}
-				<div class="edit_buttons">
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="edit" role="button">
-							<span class="glyphicon glyphicon-edit"></span>
-							{{mf '_button.edit'}}
-						</button>
-						<button type="button" class="del" role="button">
-							<span class="glyphicon glyphicon-remove"></span>
-							{{mf '_button.delete'}}
-						</button>
-					</div>
-				</div>
-				{{/if}}
-				{{/with}}
-			</div>
-			{{> report}}
-		{{/if}}
+					{{/with}}
+					{{> courseDetailsSubmenu}}
+				</div><!-- /.course-details -->
+				{{> report}}
+			{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
 			{{#if mobileViewport}}
 				{{> course_events}}
 			{{else}}
 				{{> discussion course}}
 			{{/if}}
-		</div>
-		<div class="coursedetails_column_right">
+		</div><!-- /.course-details-column-left -->
+		<div class="course-details-column-right">
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-				<div class="courseDetails_roles_container">
-						{{> roles course}}
-						{{> roles_details roles_details}}
-				</div>
+			<div class="course-details-component">
+					{{> courseMembers course}}
+					{{> courseRoles roles_details}}
+			</div><!-- /.course-details-roles-container -->
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
-		</div>
-	</div>
+		</div><!-- /.course-details-column-right -->
+	</div><!-- /.course-details-page -->
 </template>
 
-
-
-
-<template name="show_course_submenu">
+<template name="courseDetailsSubmenu">
 	<div>
 		<nav>
 			<ul class="nav nav-tabs">
@@ -81,14 +78,14 @@
 						{{mf 'course.subnav.descr' 'Description'}}
 					</a>
 				</li>
-			{{#if hasFiles}}
-				<li role="presentation">
-					<a href="#docs" data-toggle="tab">
-						<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-						{{mf 'course.subnav.docs' 'Docs'}}
-					</a>
-				</li>
-			{{/if}}
+				{{#if hasFiles}}
+					<li role="presentation">
+						<a href="#docs" data-toggle="tab">
+							<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+							{{mf 'course.subnav.docs' 'Docs'}}
+						</a>
+					</li>
+				{{/if}}
 				<li role="presentation">
 					<a href="#history" data-toggle="tab">
 						<span class="fa fa-history"></span>&nbsp;
@@ -99,23 +96,23 @@
 		</nav>
 		<div class="tab-content">
 			<div class="tab-pane active" id="description">
-				{{> course_description}}
-			</div>
+				{{> courseDetailsDescription}}
+			</div><!-- /.tab-pane#description -->
 		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
 				{{> coursedocs}}
-			</div>
+			</div><!-- /.tab-pane#docs -->
 		{{/if}}
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
-			</div>
-		</div>
+			</div><!-- /.tab-pane#history -->
+		</div><!-- /.tab-content -->
 	</div>
 </template>
 
-<template name="course_description">
+<template name="courseDetailsDescription">
 	<div>
-		<p class="course_description">
+		<p class="course-details-description">
 			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
 		</p>
 	</div>

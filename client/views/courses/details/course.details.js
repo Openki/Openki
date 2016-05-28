@@ -1,7 +1,7 @@
 Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id/:slug?',
-		template: 'coursedetails',
+		template: 'courseDetailsPage',
 		waitOn: function () {
 			return subs.subscribe('courseDetails', this.params._id);
 		},
@@ -111,7 +111,7 @@ function loadroles(course) {
 }
 
 
-Template.coursedetails.helpers({    // more helpers in course.roles.js
+Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {
 		return this.editableBy(Meteor.user());
 	},
@@ -121,24 +121,22 @@ Template.coursedetails.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 480; // @screen-xs
+		return Session.get('screenSize') <= 768; // @screen-sm
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
 	}
 });
 
-
-Template.show_course_submenu.helpers({
+Template.courseDetailsSubmenu.helpers({
 	hasFiles: function() {
 		var withFiles = {course_id: this.course._id, files: {$exists: 1, $not: {$size: 0}}};
 		return !!Events.findOne(withFiles);
 	},
 });
 
-
-Template.coursedetails.events({
-	'click button.del': function () {
+Template.courseDetailsPage.events({
+	'click .js-delete-course-btn': function () {
 		var self = this;
 		if (pleaseLogin()) return;
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
@@ -153,18 +151,17 @@ Template.coursedetails.events({
 		}
 	},
 
-	'click button.edit': function () {
+	'click .js-edit-course-btn': function () {
 		if (pleaseLogin()) return;
 		Router.go('showCourse', this, { query: {edit: 'course'} });
 	}
 });
 
-
-Template.coursedetails.rendered = function() {
+Template.courseDetailsPage.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-	$('#nav_courses').addClass('active');
+	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
+	$('#nav_courses').addClass('navbar-link-active');
 };
 
 

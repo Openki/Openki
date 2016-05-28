@@ -10,7 +10,7 @@ describe('Frontpage', function () {
     // http://www.webdriver.io/api/protocol/execute.html
     browser.execute(function() {
       Router.go('/');
-    })
+    });
 
     // According to the testing docs, it should be possible to wait until all
     // subscriptions become ready at this point. However, for some reason that
@@ -31,21 +31,21 @@ describe('Frontpage', function () {
     // test-case needs to wait again for those elements it wants to run
     // assertions against.
     // http://www.webdriver.io/api/utility/waitForExist.html
-    browser.waitForExist('.courselist_course_container');
+    browser.waitForExist('.course-container');
   });
 
   it('should list 7 courses for unauthenticated user (Testistan)', function () {
     // Wait until all courses have loaded.
     // http://www.webdriver.io/api/utility/waitUntil.html
     browser.waitUntil(function() {
-      var divcount = browser.selectorExecute('.courselist_course_container', function(divs) {
+      var divcount = browser.selectorExecute('.course-container', function(divs) {
         return divs.length;
       });
       return divcount == 7;
     });
 
     // Then collect data and assert stuff.
-    var titles = browser.getText('.courselist_course_container h4');
+    var titles = browser.getText('.course-container h4');
     expect(titles[0]).to.equal('Sprachaustausch');
     expect(titles[1]).to.equal('Game Design mit Unity');
     expect(titles[2]).to.equal('Aikido');

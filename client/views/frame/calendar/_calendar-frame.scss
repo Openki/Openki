@@ -1,0 +1,29 @@
+.frame-calendar-date-events {
+  @include grid(12);
+  padding: 0px 0px 10px;
+}
+
+.frame-calendar-date {
+  background: lighten($orange, 25%);
+  border-left: 10px solid $orange;
+  font-size: large;
+  padding: 5px 7px 5px 9px;
+  text-align: center;
+  width: 100px;
+  @media (max-width: $screen-xxs) {
+    @include grid(12);
+    border-left: 0px;
+    border-top: 10px solid $orange;
+    padding: 0.5em;
+  }
+}
+
+.frame-calendar-events {
+  @include grid(12);
+  margin-bottom: -10px;
+  padding: 10px 7px 0px;
+}
+
+.frame-calendar-no-events {
+  text-align: center;
+}

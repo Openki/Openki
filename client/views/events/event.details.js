@@ -15,7 +15,7 @@ Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
 	this.locationTracker.setLocation(this.data.location);
 	this.$("[data-toggle='tooltip']").tooltip();
-	$('a[href!="*"].nav_link').removeClass('active');
+	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 
