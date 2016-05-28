@@ -7,14 +7,49 @@ $level-darker: 6%;
 $level-darkest: 9%;
 
 // Map darkening steps
-$btn-default-bg-color-steps: (default: $btn-default-bg, dark: darken($btn-default-bg, $level-dark), darker: darken($btn-default-bg, $level-darker), darkest: darken($btn-default-bg, $level-darkest));
-$btn-primary-bg-color-steps: (default: $btn-primary-bg, dark: darken($btn-primary-bg, $level-dark), darker: darken($btn-primary-bg, $level-darker), darkest: darken($btn-primary-bg, $level-darkest));
-$btn-success-bg-color-steps: (default: $btn-success-bg, dark: darken($btn-success-bg, $level-dark), darker: darken($btn-success-bg, $level-darker), darkest: darken($btn-success-bg, $level-darkest));
-$btn-warning-bg-color-steps: (default: $btn-warning-bg, dark: darken($btn-warning-bg, $level-dark), darker: darken($btn-warning-bg, $level-darker), darkest: darken($btn-warning-bg, $level-darkest));
-$btn-danger-bg-color-steps: (default: $btn-danger-bg, dark: darken($btn-danger-bg, $level-dark), darker: darken($btn-danger-bg, $level-darker), darkest: darken($btn-danger-bg, $level-darkest));
+$btn-default-bg-color-steps: (
+	default: $btn-default-bg,
+	dark: darken($btn-default-bg, $level-dark),
+	darker: darken($btn-default-bg, $level-darker),
+	darkest: darken($btn-default-bg, $level-darkest)
+);
+
+$btn-primary-bg-color-steps: (
+	default: $btn-primary-bg,
+	dark: darken($btn-primary-bg, $level-dark),
+	darker: darken($btn-primary-bg, $level-darker),
+	darkest: darken($btn-primary-bg, $level-darkest)
+);
+
+$btn-success-bg-color-steps: (
+	default: $btn-success-bg,
+	dark: darken($btn-success-bg, $level-dark),
+	darker: darken($btn-success-bg, $level-darker),
+	darkest: darken($btn-success-bg, $level-darkest)
+);
+
+$btn-warning-bg-color-steps: (
+	default: $btn-warning-bg,
+	dark: darken($btn-warning-bg, $level-dark),
+	darker: darken($btn-warning-bg, $level-darker),
+	darkest: darken($btn-warning-bg, $level-darkest)
+);
+
+$btn-danger-bg-color-steps: (
+	default: $btn-danger-bg,
+	dark: darken($btn-danger-bg, $level-dark),
+	darker: darken($btn-danger-bg, $level-darker),
+	darkest: darken($btn-danger-bg, $level-darkest)
+);
 
 // Map maps containing darkening steps according to btn-variant
-$all-btn-bg-color-steps: (default: $btn-default-bg-color-steps, primary: $btn-primary-bg-color-steps, success: $btn-success-bg-color-steps, warning: $btn-warning-bg-color-steps, danger: $btn-danger-bg-color-steps);
+$all-btn-bg-color-steps: (
+	default: $btn-default-bg-color-steps,
+	primary: $btn-primary-bg-color-steps,
+	success: $btn-success-bg-color-steps,
+	warning: $btn-warning-bg-color-steps,
+	danger: $btn-danger-bg-color-steps
+);
 
 // Iterate over button variants and their darkening steps and apply gradient backgrounds for each one
 @each $btn-variant, $btn-bg-color-steps in $all-btn-bg-color-steps {

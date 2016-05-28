@@ -74,7 +74,11 @@ $introduction-show-bg: $brand-success;
 $introduction-show-text: $role-occupied-text;
 
 // External services colors
-$external-servies: (google-plus: #dd4b39, facebook: #3b5998, github: $default-black);
+$external-servies: (
+	google-plus: #dd4b39,
+	facebook: #3b5998,
+	github: $default-black
+);
 
 // Calendar colors
 $calendar-header-bg: $openki-light-blue;
