@@ -1,0 +1,94 @@
+.profile {
+  @include container-narrow;
+
+  padding: 0px;
+
+  h1 {
+    @include grid(12);
+
+    margin-top: 0px;
+  }
+}
+
+.profile-it-is-you {
+  @include grid(12);
+}
+
+.profile-send-email {
+  @include grid(12);
+
+  textarea {
+    @extend .form-control;
+
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  label {
+    @extend .btn-default;
+  }
+
+  .checkmark {
+    display: none;
+  }
+
+  button {
+    @extend .btn;
+
+    @extend .btn-success;
+
+    float: right;
+  }
+}
+
+.profile-settings-container {
+  @include grid(12, 6);
+
+  margin: 15px 0;
+}
+
+.profile-settings {
+  @include grid(12);
+
+  padding: 0px;
+
+  .list-group {
+    margin-bottom: 0px;
+  }
+}
+
+.js-remove-privilege-btn,
+.js-group-expel-btn {
+  @include header-btn;
+
+  color: $default-gray;
+  float: right;
+  padding: 0px;
+
+  &:hover {
+    color: $default-black;
+  }
+}
+
+.profile-course-list-heading {
+  @include grid(12);
+}
+
+.profile-course-list {
+  @include grid(12);
+
+  margin-left: -5px;
+  width: calc(#{"100% + 10px"}) !important;
+
+  .course-container {
+    @include grid(6);
+
+    padding: 0px;
+
+    @media (max-width: $screen-xsm) {
+      @include grid(12);
+
+      padding: 0px;
+    }
+  }
+}

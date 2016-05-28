@@ -56,7 +56,7 @@ es5-shim@4.5.10
 facebook@1.2.6
 fastclick@1.0.11
 fortawesome:fontawesome@4.5.0
-fourseven:scss@3.2.0
+fourseven:scss@3.4.3
 geojson-utils@1.0.8
 github@1.1.8
 google@1.1.11
@@ -120,7 +120,7 @@ reactive-dict@1.1.7
 reactive-var@1.0.9
 reload@1.1.8
 retry@1.0.7
-reywood:bootstrap3-sass@3.3.5_1
+reywood:bootstrap3-sass@3.3.5_2
 routepolicy@1.0.10
 router-autoscroll@0.1.8
 rzymek:moment-locale-ar@2.12.0

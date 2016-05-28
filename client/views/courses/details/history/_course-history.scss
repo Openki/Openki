@@ -1,0 +1,118 @@
+#history {
+  @include grid(12);
+
+  padding: 0px 0px 10px;
+}
+
+.timeline-pre,
+.timeline-post {
+  @include grid(12);
+
+  height: 30px;
+  padding: 0px;
+}
+
+.timeline-start-container,
+.timeline-end-container {
+  @include grid(1);
+
+  @include grid-offset(0, 3);
+
+  height: 100%;
+  padding: 0px;
+}
+
+.timeline-start,
+.timeline-end {
+  height: 100%;
+  margin: auto;
+  width: 1px;
+}
+
+.timeline-start {
+  @include gradient-vertical($openki-light-blue, $brand-primary, 0%, 100%);
+}
+
+.timeline-end {
+  @include gradient-vertical($brand-primary, $openki-light-blue, 0%, 100%);
+}
+
+.timeline-header {
+  @include grid(8);
+
+  height: 100%;
+  padding: 0px;
+}
+
+.timeline {
+  @include grid(4);
+
+  height: 20px;
+  padding: 0px;
+}
+
+.timeline-eventdate {
+  @include grid(9);
+
+  color: rgb(109, 112, 112);
+  padding: 0px;
+  text-align: right;
+
+  &.active {
+    color: $default-black;
+  }
+}
+
+.timeline-eventline-container {
+  @include grid(3);
+
+  height: 100%;
+  padding: 0px;
+}
+
+.timeline-eventline {
+  background: $brand-primary;
+  height: 100%;
+  margin: auto;
+  width: 1px;
+}
+
+.timeline-eventpoint {
+  @include transition(background-color $default-transition-time);
+
+  background: $brand-primary;
+  border-radius: 50% !important;
+  bottom: 13px;
+  height: 7px;
+  margin: auto;
+  position: relative;
+  width: 7px;
+
+  &.active {
+    background: $brand-danger;
+  }
+}
+
+.coursehistory-event {
+  @include grid(8);
+
+  height: 20px;
+  padding: 0px;
+
+  &:hover a {
+    color: $default-black;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  a {
+    color: $brand-primary;
+  }
+
+  h4 {
+    padding-top: 10px;
+    text-align: center;
+  }
+}

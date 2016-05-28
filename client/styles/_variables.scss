@@ -1,0 +1,129 @@
+// Variables
+//
+// Based on variables from base-colors and bootstrap
+// --------------------------------------------------
+
+// == Colors
+$orange: #f98f39;
+$yellow: #f3f981;
+
+$default-black: #333333;
+$default-shadow: rgba(88, 106, 102, 0.5);
+$default-white: #ffffff;
+$default-gray: #868383;
+$default-light-grey: #cccccc;
+$brand-primary-hover: darken($brand-primary, 10%);
+
+// == Navbar
+$site-stage-color: $default-black;
+$navbar-link-covering-bg: lighten($brand-primary, 10%);
+$navbar-default-font-size: large;
+
+// ==Footer
+$footer-default-bg: $navbar-default-bg;
+$footer-default-color: $navbar-default-color;
+$footer-default-link-color: $navbar-default-link-color;
+$footer-default-link-hover-color: $navbar-default-link-hover-color;
+$footer-default-link-hover-bg: $navbar-link-covering-bg;
+$footer-height: 50px;
+$footer-default-font-size: $navbar-default-font-size;
+
+// Group colors
+$group-bg: #b9e9b9;
+$group-text: $brand-primary;
+$group-hover-bg: darken($group-bg, 10%);
+$group-hover-shadow: $default-shadow;
+
+// Category colors
+$category-bg: rgba(216, 216, 216, 0.5);
+$category-bg-fallback: #dad5d5;
+$category-text: $brand-primary;
+$category-hover-bg: darken($category-bg, 10%);
+$category-hover-bg-fallback: darken($category-bg-fallback, 10%);
+$category-hover-text: $brand-primary-hover;
+$category-hover-shadow: $default-shadow;
+
+// Location colors
+$location-bg: #d0e0bb;
+$location-text: #330000;
+$location-hover-bg: darken($location-bg, 4%);
+$location-hover-text: $location-text;
+$location-hover-shadow: $default-shadow;
+$location-description-bg: #eeeeff;
+$location-edit-bg: $location-description-bg;
+$location-candidate-bg: darken($location-edit-bg, 5%);
+$location-candidate-hover-bg: darken($location-edit-bg, 10%);
+$location-candidate-hover-fill: #ffff11;
+
+// User colors
+$user-bg: #bcb6ff;
+$user-text: #4e4e1c;
+$translate-bg: #ffc3ff;
+$translate-hover-bg: #ffd4ff;
+
+// Role colors
+$role-occupied-bg: $brand-success;
+$role-occupied-text: #407d5c;
+$role-needed-bg: $brand-danger;
+$role-needed-text: #751313;
+
+// Introduction colors
+$introduction-bg: #fafafa;
+$introduction-text: #f4f4f4;
+$introduction-show-bg: $brand-success;
+$introduction-show-text: $role-occupied-text;
+
+// External services colors
+$external-servies: (google-plus: #dd4b39, facebook: #3b5998, github: $default-black);
+
+// Calendar colors
+$calendar-header-bg: $openki-light-blue;
+$calendar-header-text: $default-black;
+$calendar-navigation-bg: $openki-light-blue;
+$calendar-btn-bg: $brand-primary;
+$calendar-btn-text: $default-white;
+$calendar-btn-border: darken($calendar-btn-bg, 3%);
+$calendar-btn-hover-bg: darken($calendar-btn-bg, 5%);
+$calendar-btn-hover-border: darken($calendar-btn-border, 5%);
+
+$map-lefalet-hover-fill: #ffff11;
+
+// Discussion colors
+$discussion-conversation-bg: $openki-light-blue;
+$discussion-post-bg: $openki-light-blue;
+$discussion-post-header-bg: darken($discussion-post-bg, 5%);
+$discussion-post-border: darken($discussion-post-bg, 10%);
+$discussion-edit-bg: lighten($default-light-grey, 10%);
+$discussion-edit-header-bg: darken($discussion-edit-bg, 5%);
+$discussion-edit-border: darken($discussion-edit-bg, 10%);
+$discussion-post-new-bg: $brand-success;
+
+$checkmark-color: darken($brand-success, 20%);
+$remove-btn-color: lighten($gray-light, 15%);
+$remove-btn-hover-color: $brand-danger;
+
+$event-bg: $openki-light-blue;
+$event-header-bg: $brand-success;
+$event-header-color: $default-black;
+$event-title-color: $default-black;
+$event-description-color: $brand-primary;
+
+$event-small-bg: $event-bg;
+$event-small-header-bg: $event-header-bg;
+$event-small-header-color: $event-header-color;
+$event-small-title-color: $event-title-color;
+$event-small-description-color: $event-description-color;
+
+//== Screen breakpoints
+//
+// --------------------------------------------------
+//** Smaller than $screen-xs
+$screen-xxs: 380px;
+
+//** Between $screen-xs and $screen-sm
+$screen-xsm: 550px;
+
+//== Default values
+//
+// --------------------------------------------------
+$default-transition-time: 0.5s;

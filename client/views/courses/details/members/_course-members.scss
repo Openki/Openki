@@ -1,0 +1,92 @@
+.course-members {
+  @include grid(12);
+
+  background: $openki-light-blue;
+  border-top: 3px solid $body-bg;
+  font-size: medium;
+  padding: 0px;
+}
+
+.course-member {
+  @include grid(12);
+
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.horizontal-line {
+  @include grid(12);
+
+  background: $body-bg;
+  height: 1px;
+
+  &:last-child {
+    display: none;
+  }
+}
+
+.course-member-roles {
+  display: inline-block;
+  list-style: none;
+  margin-bottom: 0px;
+  margin-left: 10px;
+  padding-left: 0px;
+
+  &:hover {
+    cursor: default;
+  }
+
+  li {
+    background: $brand-primary;
+    color: $body-bg;
+    display: inline-block;
+    font-size: small;
+    font-weight: bold;
+    padding: 5px 10px;
+    vertical-align: middle;
+
+    &.participant {
+      display: none;
+    }
+  }
+}
+
+.role-short {
+  text-transform: uppercase;
+}
+
+.js-add-to-team-btn {
+  @extend .btn;
+
+  @extend .btn-success;
+
+  margin-left: 10px;
+  padding: 3px 10px;
+}
+
+.add-to-team-btn-txt {
+  display: none;
+}
+
+.course-member-comment {
+  display: block;
+  padding-top: 10px;
+
+  .editable {
+    padding-left: 0px !important;
+  }
+
+  .editable-controls {
+    .editable-store,
+    .editable-cancel {
+      background: none;
+      border: 0px;
+      color: $brand-primary;
+      display: inline-block;
+    }
+
+    .glyphicon-remove {
+      color: $brand-danger;
+    }
+  }
+}
