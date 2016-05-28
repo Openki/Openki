@@ -16,8 +16,8 @@
 @import "events/event-edit-location";
 @import "events/event";
 @import "find/find";
-@import "frame/calendar-frame";
-@import "frame/events-frame";
+@import "frame/calendar/calendar-frame";
+@import "frame/events/events-frame";
 @import "groups/group-details";
 @import "groups/group-settings";
 @import "groups/groups";
@@ -28,8 +28,8 @@
 @import "login/reset-password";
 @import "locations/location";
 @import "locations/location-details";
-@import "static/loading";
-@import "static/noscript";
+@import "static/loading/loading";
+@import "static/noscript/noscript";
 @import "navigation/footer";
 @import "navigation/navbar";
 @import "users/ownprofile";
