@@ -88,7 +88,6 @@ Meteor.startup(function() {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	var acceptLangs = Array.prototype.slice.call(navigator.languages);
 	for (var i in navigator.languages || []) {
 		if (useLocale(navigator.languages[i])) return;
 	}
