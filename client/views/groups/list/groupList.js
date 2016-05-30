@@ -1,4 +1,3 @@
-
 Template.groupName.helpers(groupNameHelpers);
 
 Template.groupName.events({
@@ -11,14 +10,7 @@ Template.groupName.rendered = function() {
 	this.$("[data-toggle='tooltip']").tooltip();
 };
 
-Template.groupNameFull.helpers({
-	name: function() {
-		if (!this) return;
-		var group = subbedGroup(this);
-		if (!group) return mf('group.missing', "Group does not exist");
-		return group.name;
-	},
-});
+Template.groupNameFull.helpers(groupNameHelpers);
 
 Template.groupNameFull.events({
 	"click .js-group-label": function(event, template){
