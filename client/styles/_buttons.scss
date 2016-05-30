@@ -1,0 +1,122 @@
+// Gradient button backgrounds
+// --------------------------------------------------
+
+// Define percentage of how much btn-bg should get darkened for each step
+$level-dark: 3%;
+$level-darker: 6%;
+$level-darkest: 9%;
+
+// Map darkening steps
+$btn-default-bg-color-steps: (
+	default: $btn-default-bg,
+	dark: darken($btn-default-bg, $level-dark),
+	darker: darken($btn-default-bg, $level-darker),
+	darkest: darken($btn-default-bg, $level-darkest)
+);
+
+$btn-primary-bg-color-steps: (
+	default: $btn-primary-bg,
+	dark: darken($btn-primary-bg, $level-dark),
+	darker: darken($btn-primary-bg, $level-darker),
+	darkest: darken($btn-primary-bg, $level-darkest)
+);
+
+$btn-success-bg-color-steps: (
+	default: $btn-success-bg,
+	dark: darken($btn-success-bg, $level-dark),
+	darker: darken($btn-success-bg, $level-darker),
+	darkest: darken($btn-success-bg, $level-darkest)
+);
+
+$btn-warning-bg-color-steps: (
+	default: $btn-warning-bg,
+	dark: darken($btn-warning-bg, $level-dark),
+	darker: darken($btn-warning-bg, $level-darker),
+	darkest: darken($btn-warning-bg, $level-darkest)
+);
+
+$btn-danger-bg-color-steps: (
+	default: $btn-danger-bg,
+	dark: darken($btn-danger-bg, $level-dark),
+	darker: darken($btn-danger-bg, $level-darker),
+	darkest: darken($btn-danger-bg, $level-darkest)
+);
+
+// Map maps containing darkening steps according to btn-variant
+$all-btn-bg-color-steps: (
+	default: $btn-default-bg-color-steps,
+	primary: $btn-primary-bg-color-steps,
+	success: $btn-success-bg-color-steps,
+	warning: $btn-warning-bg-color-steps,
+	danger: $btn-danger-bg-color-steps
+);
+
+// Iterate over button variants and their darkening steps and apply gradient backgrounds for each one
+@each $btn-variant, $btn-bg-color-steps in $all-btn-bg-color-steps {
+  .btn-#{$btn-variant} {
+    @include gradient-vertical(map-get($btn-bg-color-steps, default), map-get($btn-bg-color-steps, darker));
+    &:hover {
+      @include gradient-vertical(map-get($btn-bg-color-steps, dark), map-get($btn-bg-color-steps, darkest));
+    }
+  }
+}
+
+// Change default button styles
+// --------------------------------------------------
+
+.btn {
+  @include transition(border-color 0.15s ease-in-out);
+  @media (max-width: $screen-xs) {
+    width: 100%;
+    & + .btn {
+      margin-top: 10px;
+    }
+  }
+}
+
+.btn-group {
+  @media (max-width: $screen-xs) {
+    width: 100%;
+    & > .btn,
+    & > button {
+      border-radius: 4px !important;
+    }
+    & + button {
+      margin-top: 10px;
+    }
+  }
+}
+
+.btn-primary:focus {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
+}
+
+// Gradient background for active default btn
+.btn-default.active {
+  @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
+}
+
+// Style list-group
+// --------------------------------------------------
+.list-group {
+  button + li {
+    border-top-color: $btn-default-border;
+  }
+  button:hover + li,
+  button:hover + button {
+    border-top-color: #8dc3d6;
+  }
+}
+
+.list-group-item {
+  @include transition(border-color 0.15s ease-in-out);
+}
+
+button.list-group-item {
+  @include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
+  border-color: $btn-default-border;
+  &:hover {
+    @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
+    border-color: #8dc3d6;
+  }
+}

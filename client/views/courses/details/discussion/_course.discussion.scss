@@ -1,0 +1,180 @@
+.discussion {
+  margin-top: 15px;
+}
+
+.discussion-conversation {
+  @include grid(12);
+  background: $discussion-conversation-bg;
+  padding-bottom: 15px;
+  padding-top: 10px;
+}
+
+.discussion > div:nth-child(3) {
+  border-top: 3px solid $body-bg;
+}
+
+$discussion-thumb-width: 60;
+
+.discussion-thumb {
+  display: table-cell;
+  position: relative;
+  width: $discussion-thumb-width * 1px;
+}
+
+.discussion-profile-icon {
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  vertical-align: text-bottom;
+  width: ($discussion-thumb-width - 10) * 1px;
+}
+
+.discussion-post-content,
+.discussion-edit-content {
+  border: 1px solid;
+  display: table-cell;
+  padding: 0px;
+}
+
+.discussion-post-header,
+.discussion-edit-header {
+  @include grid(12);
+  border: 1px solid;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.discussion-post-body,
+.discussion-edit-body {
+  @include grid(12);
+  padding-top: 10px;
+}
+
+.discussion-post {
+  @include grid(12);
+  background: $discussion-post-bg;
+  display: table;
+  padding: 7px 0px;
+}
+
+.discussion-post-header {
+  background: $discussion-post-header-bg;
+  border-color: $discussion-post-border;
+  .profilelink {
+    font-weight: bold;
+  }
+}
+
+.discussion-edit-btn,
+.discussion-delete-btn {
+  @include header-btn;
+  color: $default-gray;
+  float: right;
+  &:hover {
+    color: $default-black;
+  }
+}
+
+.discussion-edit-btn {
+  margin-right: -5px;
+}
+
+.discussion-delete-btn {
+  margin-right: -10px;
+}
+
+.discussion-post-time {
+  color: $default-gray;
+  cursor: default;
+}
+
+.discussion-post-content {
+  border-color: $discussion-post-border;
+}
+
+.discussion-post-title {
+  margin-top: 0px;
+}
+
+.discussion-post-title + p {
+  padding-top: 0px;
+}
+
+.discussion-comment {
+  display: table;
+  padding: 7px 0px 7px ($discussion-thumb-width * 1px);
+  position: relative;
+  width: 100%;
+}
+
+.discussion-comment + .discussion-reply {
+  padding-left: $discussion-thumb-width * 2 * 1px;
+}
+
+.discussion-edit-content {
+  background: $discussion-edit-bg;
+  border-color: $discussion-edit-border;
+}
+
+.discussion-edit-header {
+  background: $discussion-edit-header-bg;
+  border-color: $discussion-edit-border;
+}
+
+.discussion-edit-body {
+  padding-bottom: 10px;
+}
+
+.discussion-edit-title,
+.discussion-edit-text {
+  @extend .form-control;
+  margin-bottom: 10px;
+}
+
+.discussion-edit-text {
+  height: 60px;
+}
+
+.discussion-toggle-anonymous {
+  font-weight: inherit;
+}
+
+.toggleAnonymous {
+  vertical-align: bottom;
+}
+
+.discussion-save-btn,
+.discussion-cancel-btn {
+  @extend .btn;
+  float: right;
+}
+
+.discussion-save-btn {
+  @extend .btn-success;
+  margin-right: 5px;
+}
+
+.discussion-cancel-btn {
+  @include btn-cancel;
+}
+
+.discussion-reply-btn {
+  @extend .btn;
+  @extend .btn-success;
+  margin-top: 5px;
+}
+
+.discussion-reply {
+  padding-left: $discussion-thumb-width * 1px;
+}
+
+.discussion-post-new-btn {
+  @include big-button-success;
+}
+
+.discussion-post-new {
+  @include grid(12);
+  background-color: $brand-success;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}

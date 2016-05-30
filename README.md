@@ -6,7 +6,7 @@ Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.or
 An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
-
+<br>
 Beside longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
 [  read on...](http://about.openki.net "our blog")
