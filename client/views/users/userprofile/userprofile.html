@@ -118,7 +118,9 @@
 			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
 		</div>
 		<div class="profile-course-list">
-			{{> courselist involvedIn}}
+			{{#each involvedIn}}
+				{{> course}}
+			{{/each}}
 		</div><!-- /.profile-course-list -->
 	</div><!-- /.userprofile -->
 </template>

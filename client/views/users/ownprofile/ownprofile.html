@@ -59,7 +59,6 @@
 					{{else}}
 						<table>
 							<tbody>
->>>>>>> style-rework
 								<tr class="name">
 									<td>{{mf 'profile.username' 'Username:'}}</td>
 									<td>{{user.name}}</td>
@@ -189,7 +188,9 @@
 				<h3>{{mf 'profile.my_courses' 'My Courses'}}</h3>
 			</div>
 			<div class="profile-course-list">
-				{{> courselist courses}}
+				{{#each courses}}
+					{{> course}}
+				{{/each}}
 			</div><!-- /.profile-course-list -->
 		{{/unless}}
 	</div><!-- /.profile -->
