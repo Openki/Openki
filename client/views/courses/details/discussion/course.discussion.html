@@ -128,9 +128,8 @@
 					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
 					value="{{title}}"/>
 				<textarea class="js-post-text discussion-edit-text"
-					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}">
-					{{text}}
-				</textarea>
+					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
+					>{{text}}</textarea>
 				<button class="discussion-cancel-btn cancel" type="button">
 					{{mf '_button.cancel'}}
 				</button>
