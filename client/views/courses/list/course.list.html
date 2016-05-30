@@ -22,7 +22,6 @@
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course
 					{{courseState}}
-					{{#if hasUpcomingEvents}}haspcomingevents{{/if}}
 					{{#if needsHost}}needsHost{{/if}}
 					{{#if needsMentor}}needsMentor{{/if}}
 					{{#each categories}}{{this}} {{/each}}
@@ -37,31 +36,7 @@
 						</div><!-- /.course-categories -->
 					</div><!-- /.course-content -->
 					{{#if hasUpcomingEvents}}
-						<div class="course-eventlist">
-							{{#each course_eventlist}}
-								<div class="course-eventlist-date">
-									<span class="fa fa-calendar" aria-hidden="true"></span>
-									{{dateformat_mini this.start}}
-								</div><!-- /.course-eventlist-date -->
-								<div class="course-eventlist-time">
-									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-									{{timeformat this.start}}
-								</div><!-- /.course-eventlist-time -->
-								{{#if location.name}}
-									<div class="course-eventlist-location">
-										<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-										<span>{{location.name}}</span>
-									</div><!-- /.course-eventlist-location -->
-								{{/if}}
-							{{/each}}
-							{{#if moreEvents}}
-								<div class="course-eventlist-hasmore">
-									+ {{moreEvents}}
-									&nbsp;
-									<span class="glyphicon glyphicon-calendar"></span>
-								</div><!-- /.course-eventlist-hasmore -->
-							{{/if}}
-						</div><!-- /.course-eventlist -->
+						{{> courseEventlist}}
 					{{else}}
 						{{> courseRolesStatus}}
 					{{/if}}
@@ -72,6 +47,35 @@
 			</a>
 		</div><!-- /.course-container -->
 	{{/if}}
+</template>
+
+<template name="courseEventlist">
+	<div class="course-eventlist">
+		{{#with nextEvent}}
+			<div class="course-eventlist-date">
+				<span class="fa fa-calendar" aria-hidden="true"></span>
+				{{dateformat_mini this.start}}
+			</div><!-- /.course-eventlist-date -->
+			<div class="course-eventlist-time">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				{{timeformat this.start}}
+			</div><!-- /.course-eventlist-time -->
+			{{this.description}}
+			{{#if this.location.name}}
+				<div class="course-eventlist-location">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span>{{this.location.name}}</span>
+				</div><!-- /.course-eventlist-location -->
+			{{/if}}
+		{{/with}}
+		{{#if additionalEvents}}
+			<div class="course-eventlist-hasmore">
+				+ {{additionalEvents}}
+				&nbsp;
+				<span class="glyphicon glyphicon-calendar"></span>
+			</div><!-- /.course-eventlist-hasmore -->
+		{{/if}}
+	</div><!-- /.course-eventlist -->
 </template>
 
 <template name="courseRolesStatus">

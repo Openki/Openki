@@ -55,28 +55,18 @@ Template.course.helpers({
 		}).join(', ');
 	},
 
-	course_eventlist: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}, {sort: {start: 1}, limit: 1});
-	},
-
-	course_eventlist_hasmore: function() {
-		var today = new Date();
-		var eventcount = Events.find({course_id: this._id, start: {$gt:today}}).count();
-		return eventcount > 1 ? (eventcount-1) : false;
-	},
-
 	hasUpcomingEvents: function() {
-		var today= new Date();
-		return Events.find({course_id: this._id, start: {$gt:today}}).count() > 0;
+		return this.nextEvent;
 	},
 
 	courseRegion: function() {
 		return this.region;
-	},
+	}
+});
 
-	additionalEvents: function() {
-		return Math.max(this.futureEvents - 1, 0);
+Template.courseEventlist.helpers({
+	additionalEvents: function(){
+		return Math.max(this.futureEvents -1, 0);
 	},
 });
 
