@@ -31,7 +31,7 @@ Template.eventEdit.onRendered(function() {
 Template.eventEdit.helpers({
 
 	hasParentCourse: function() {
-		return !! this.course_id;
+		return !! this.courseId;
 	},
 
 	localDate: function(date) {
@@ -51,7 +51,7 @@ Template.eventEdit.helpers({
 		// You can select the region for events that are new and not associated
 		// with a course
 		if (this._id) return false;
-		if (this.course_id) return false;
+		if (this.courseId) return false;
 		return true;
 	},
 
@@ -262,10 +262,10 @@ Template.eventEdit.events({
 				return;
 			}
 
-			if (this.course_id) {
-				var course = Courses.findOne(this.course_id);
+			if (this.courseId) {
+				var course = Courses.findOne(this.courseId);
 				editevent.region = course.region;
-				editevent.course_id = this.course_id;
+				editevent.courseId = this.courseId;
 			} else {
 				editevent.region = instance.selectedRegion.get();
 

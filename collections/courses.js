@@ -472,7 +472,7 @@ Meteor.methods({
 		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "no such course");
 		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, "edit not permitted");
-		Events.remove({ course_id: courseId });
+		Events.remove({ courseId: courseId });
 		Courses.remove(courseId);
 	},
 
@@ -480,17 +480,17 @@ Meteor.methods({
 	updateNextEvent: function(selector) {
 		Courses.find(selector).forEach(function(course) {
 			var futureEvents = Events.find(
-				{course_id: course._id, start: {$gt: new Date()}}
+				{courseId: course._id, start: {$gt: new Date()}}
 			).count();
 
 			var nextEvent = Events.findOne(
-				{course_id: course._id, start: {$gt: new Date()}},
-				{sort: {start: 1}, fields: {start: 1, _id: 1, location: 1}}
+				{ courseId: course._id, start: {$gt: new Date()} },
+				{ sort: {start: 1}, fields: {start: 1, _id: 1, location: 1} }
 			);
 
 			var lastEvent = Events.findOne(
-				{course_id: course._id, start: {$lt: new Date()}},
-				{sort: {start: -1}, fields: {start: 1, _id: 1, location: 1}}
+				{ courseId: course._id, start: {$lt: new Date()} },
+				{ sort: {start: -1}, fields: {start: 1, _id: 1, location: 1} }
 			);
 
 			Courses.update(course._id, { $set: {

@@ -124,9 +124,9 @@ Template.eventReplication.events({
 				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 
-			var course_id = template.data.course_id;
-			if(course_id){
-				replicaEvent.course_id  = course_id;
+			var courseId = template.data.courseId;
+			if (courseId) {
+				replicaEvent.courseId = courseId;
 			}
 
 			var eventId = '';

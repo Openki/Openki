@@ -21,7 +21,7 @@ Template.eventDisplay.onRendered(function() {
 
 Template.eventPage.helpers({
 	course: function() {
-		var courseId = this.course_id;
+		var courseId = this.courseId;
 		if (courseId) {
 			// Very bad?
 			Template.instance().subscribe('courseDetails', courseId);
@@ -60,7 +60,7 @@ Template.event.events({
 		if (pleaseLogin()) return;
 		if (confirm('Delete event "'+this.title+'"?')) {
 			var title = this.title;
-			var course = this.course_id;
+			var course = this.courseId;
 			Meteor.call('removeEvent', this._id, function (error, eventRemoved){
 				if (eventRemoved) {
 					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');

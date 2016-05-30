@@ -173,6 +173,8 @@
 
 		"LocationCategories":true,
 		"privilegedTo":true,
+		"UserLib": true,
+		"GroupLib": true,
 
 
 // lib/Filtering.js
