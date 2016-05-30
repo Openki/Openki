@@ -1,6 +1,6 @@
 .profile-link {
 	@include grid(12);
-	padding: 0px;
+	margin-bottom: 10px;
 }
 
 .profile-info-container {
@@ -9,7 +9,8 @@
 
 .profile-info {
   @include grid(12);
-  background-color: $user-bg;
+	border: 3px solid $user-bg;
+	border-bottom: none;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   padding: 15px;
