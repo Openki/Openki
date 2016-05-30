@@ -1,36 +1,39 @@
-@import "events/event-small/event.small";
-@import "events/small_event_withDate/small_event_withDate";
+// Views stylesheet imports
+// --------------------------------------------------
 @import "calendar/calendar";
+
 @import "categories/categories";
-@import "courses/create/course.create";
-@import "courses/details/course.details";
-@import "courses/details/discussion/course.discussion";
-@import "courses/details/history/course.history";
-@import "courses/details/members/course.members";
-@import "courses/details/roles/course.roles";
-@import "courses/edit/course.edit";
-@import "courses/events/course.events";
-@import "courses/list/course.list";
-@import "events/event";
-@import "events/details/event.details";
-@import "events/edit/event.edit";
-@import "events/editLocation/event.editLocation";
+
+@import "courses/courses";
+
+@import "events/events";
+
 @import "find/find";
-@import "frame/calendar/frame.calendar";
-@import "frame/events/frame.events";
+
+@import "frames/calendar/frame.calendar";
+@import "frames/events/frame.events";
+
 @import "groups/groups";
 @import "groups/details/group.details";
 @import "groups/settings/group.settings";
+
 @import "introduction/introduction";
+
 @import "kiosk/kiosk";
+
 @import "login/frame/loginFrame";
 @import "login/resetPassword/resetPassword";
+
 @import "locations/location";
 @import "locations/details/location.details";
+
 @import "static/loading/loading";
 @import "static/noscript/noscript";
+
 @import "timetable/timetable";
+
 @import "navigation/footer/footer";
 @import "navigation/navbar/navbar";
+
 @import "users/ownprofile/ownprofile";
 @import "users/userprofile/userprofile";
