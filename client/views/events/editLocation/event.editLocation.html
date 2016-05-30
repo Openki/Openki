@@ -1,0 +1,69 @@
+<template name="eventEditLocation">
+	<div class="locationFrame">
+		<h4>{{mf 'course.event.edit.location' 'Location:'}}</h4>
+		<div class="locationEdit input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-home"></span>
+			</span>
+			<div class="locationSearch">
+				{{#if locationIsPreset}}
+					<div class="currentLocation">
+						<div class="locationName">
+							<span class="fa fa-map-marker"></span>&nbsp;
+							{{location.name}}
+							{{#if location.address}}
+								<br>
+								{{location.address}}
+							{{/if}}
+							&nbsp;
+						</div><!-- /.locationName -->
+						<button type="button" class="-locationChange">
+							{{mf 'event.edit.locationChange' "Change location"}}
+						</button>
+					</div><!-- /.currentLocation -->
+				{{else}}
+					<div class="locationSearchbar input-group">
+						<input class="-locationName"
+							placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"
+							type="text"
+							value="{{location.name}}"/>
+						<span class="input-group-btn">
+							<button type="submit" class="-addressSearch">
+								<span class="glyphicon glyphicon-search"></span>
+								&nbsp;
+								{{mf 'event.edit.addressSearch' "Search"}}
+							</button>
+						</span>
+					</div><!-- /.locationSearchbar -->
+					{{#if searching}}
+					<input class="-locationAddress"
+						placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"
+						size="40"
+						type="text"
+						value="{{location.address}}"/>
+					{{/if}}
+					{{#if haveLocationCandidates}}
+						{{#if searching}}
+							{{mf 'event.edit.locations.proposed' 'Matching locations:'}}
+						{{else}}
+							{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
+						{{/if}}
+						<ul class="locationCandidates">
+							{{#each locationCandidates}}
+								<li class='{{candidateClass}}'>
+									{{name}}
+									<div class="address">{{address}}</div>
+								</li>
+							{{/each}}
+						</ul>
+					{{else}}
+						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+					{{/if}}
+				{{/if}}
+			</div><!-- /.locationSearch -->
+			<div class="locationMap">
+				{{>map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+			</div><!-- /.locationMap -->
+		</div><!-- /.locationEdit -->
+	</div><!-- /.locationFrame -->
+</template>

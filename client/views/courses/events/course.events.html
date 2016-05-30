@@ -2,6 +2,30 @@
 	{{#if haveEvents}}
 		<div class="course_events_fadebox">
 			<div class="course_events">
+				{{#if havePastEvents}}
+					<div name="past_events">
+						<div class="courseEvents-titlebar">
+							<h4>
+								<span class="glyphicon glyphicon-calendar"></span>
+								{{mf 'course.events.pastList' 'Previous events'}}
+							</h4>
+							{{#if haveFutureEvents}}
+								<a href="#future_events" class="link">
+									<span class="glyphicon glyphicon-arrow-down"></span>
+									{{mf 'course.events.futureListLink' 'future events'}}
+								</a>
+							{{/if}}
+						</div><!-- /.courseEvents-titlebar -->
+						<div class="course_events_events">
+							{{#each pastEvents}}
+								{{#if this}}
+									{{> small_event_withDate}}
+								{{/if}}
+							{{/each}}
+						</div><!-- /.course_events_events -->
+					</div><!-- /.past_events -->
+				{{/if}}
+				<hr class="now" id="future_events">
 				{{#if haveOngoingEvents}}
 					<div class="courseEvents-titlebar">
 						<h4>{{mf 'course.events.ongoinglist' 'Ongoing events'}}</h4>
@@ -11,12 +35,12 @@
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div>
+					</div><!-- /.courseEvents-titlebar -->
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
 							{{> small_event_withDate}}
 						{{/each}}
-					</div>
+					</div><!-- /.course_events_events -->
 				{{/if}}
 				{{#if haveFutureEvents}}
 					<div class="courseEvents-titlebar">
@@ -30,27 +54,25 @@
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div>
+					</div><!-- /.courseEvents-titlebar -->
 					<div class="course_events_events">
 						{{#each futureEvents}}
 						{{> small_event_withDate}}
 						{{/each}}
-					</div>
+					</div><!-- /.course_events_events -->
 				{{/if}}
-			</div>
+			</div><!-- /.course_events -->
 			<div class="fade_effect_top" style="display:none"></div>
 			<div class="fade_effect_bottom"></div>
-		</div>
+		</div><!-- /.course_events_fadebox -->
 		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button
-				type="button"
-				class="calendar_download"
-				href="#"
-				data-toggle="tooltip"
-				data-placement="top"
-				data-html="true"
+			<button class="js-events-download-btn"
 				data-delay='{"show":"500", "hide":"0"}'
-				data-original-title="{{mf 'course.events.download.tooltip'}}">
+				data-original-title="{{mf 'course.events.download.tooltip'}}"
+				data-placement="top"
+				data-toggle="tooltip"
+				href="#"
+				type="button">
 				<span class="fa fa-download"></span>&nbsp;
 				{{mf 'course.download_cal' 'Download events to my calendar'}}
 			</button>

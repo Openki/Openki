@@ -3,12 +3,17 @@
 		{{#each messages}}
 			{{> message}}
 		{{/each}}
-	</div>
+	</div><!-- /.messages -->
 </template>
 
 <template name="message">
 	<div class="alert alert-{{type}} alert-dismissible" role="alert">
 		{{message}}
-		<button type="button" class="close" data-dismiss="alert" aria-label="{{mf 'message.close' 'Close message'}}"><span aria-hidden="true">&times;</span></button>
-	</div>
+		<button class="close"
+			aria-label="{{mf 'message.close' 'Close message'}}"
+			data-dismiss="alert"
+			type="button" >
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div><!-- /.alert -->
 </template>

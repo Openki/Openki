@@ -5,5 +5,5 @@ categories = {
 	humanities: [ 'languages', 'history', 'sociology', 'politics', 'philosophy', 'lawbusiness' ],
 	culture:    [ 'literature', 'theatre', 'music', 'dance', 'fineart', 'design', 'photography', 'film', 'cooking', 'subculture' ],
 	computer:   [ 'internet', 'programming', 'operating' ],
-	'♥undefined♥': [ 'experimental', 'spiritual' ]
+	misc:       [ '♥undefined♥', 'experimental', 'spiritual']
 };

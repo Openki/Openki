@@ -1,0 +1,16 @@
+// Courses stylesheet imports
+// --------------------------------------------------
+
+@import "create/course.create";
+
+@import "details/course.details";
+@import "details/discussion/course.discussion";
+@import "details/history/course.history";
+@import "details/members/course.members";
+@import "details/roles/course.roles";
+
+@import "edit/course.edit";
+
+@import "events/course.events";
+
+@import "list/course.list";

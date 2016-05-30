@@ -2,13 +2,13 @@
 	<meta name="viewport" content="width=device-width,  user-scalable=no">
 	<noscript>
 		<div class="noscript">
-			<div class="noscript_message_box">
+			<div class="noscript-message-container">
 				<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png" alt="Openki logo">
-				<div class="noscript_message">
+				<div class="noscript-message">
 					Please enable javascript
-				</div>
-			</div>
-		</div>
+				</div><!-- /.noscript-message -->
+			</div><!-- /.noscript-message-container -->
+		</div><!-- /.noscript -->
 	</noscript>
 </head>
 
@@ -16,7 +16,7 @@
 	<div id="wrap">
 		<div id="topBar">
 			{{> navbar}}
-		</div>
+		</div><!-- #topBar -->
 		<div id="outer" class={{testWarningClass}}>
 			{{#if shownIntro}}
 				{{> introduction}}
@@ -34,16 +34,20 @@
 				{{> yield}}
 				{{> messages}}
 			{{/if}}
-			</div>
-		</div>
+			</div><!-- /#maincontent -->
+		</div><!-- /.{{testWarningClass}} -->
 		<div class="push"></div>
-	</div>
+	</div><!-- /#wrap -->
 	{{> kioskLink}}
 	{{> footer}}
 </template>
 
 <template name="lang_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a class="navbar-link dropdown-toggle"
+		aria-expanded="false"
+		data-toggle="dropdown"
+		href="#"
+		role="button">
 		<span class="fa fa-language"></span>&nbsp;
 		{{short}}
 		<span class="caret"></span>
@@ -52,10 +56,10 @@
 	<ul class="dropdown-menu" role="menu">
 		{{#each lgs}}
 			<li>
-				<a href="#" class="langselect -clickClose">
+				<a href="#" class="langselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentLanguage}}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="checkmark"></span>
 					{{/if}}
 				</a>
 			</li>
@@ -71,13 +75,13 @@
 	<ul>
 		<li> Try to sound as natural as possible.</li>
 		<li> Openki is on a first-name basis with all users.</li>
-		<li> It's totally ok to to address the user informally as if they were a good friend.</li>
+		<li> It's totally ok to address the user informally as if they were a good friend.</li>
 	</ul>
 
 	Where possible we use a gender-neutral, inclusive language.
 	<ul>
 		<li> We avoid gender-specific pronouns and try to use gender-neutral ones...</li>
-		<li> As well we use gender-neutral titles and roles</li>
+		<li> As well we use gender-neutral titles and roles.</li>
 		<li> ...without sounding too weird though.</li>
 	</ul>
 
@@ -91,6 +95,6 @@
 		<code>Create {COUNT, plural, one {event} other {# events}}</code> becomes: <br>
 		<code>Erstelle {COUNT, plural, one {Veranstaltung} other {# Veranstaltungen}}</code></li>
 		<li> # stands for a Number.</li>
-		<li> There are no save-buttons. Strings get saved as you move to the next one or away from the translation page</li>
+		<li> There are no save-buttons. Strings get saved as you move to the next one or away from the translation page.</li>
 	</ul>
 </template>
