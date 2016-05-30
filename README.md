@@ -40,6 +40,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
+- :white_large_square: White-labeling for groups, locations and regions
 - :closed_lock_with_key: Privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :mailbox: Privat messaging
@@ -54,9 +55,9 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone https://github.com/schuel/hmmm.git` Openki into /some/path.
 - `cd /some/path/hmmm`
 - Run `meteor --settings settings.dev.json`
-- Browse to [localhost:3000](http://localhost:3000/)  -> done.
+- Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
-#### Technical documentation
+#### Documentation
 - The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
