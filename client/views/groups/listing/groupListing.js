@@ -43,7 +43,3 @@ Template.groupListing.events({
 		event.stopPropagation();
 	},
 });
-
-Template.groupListEntry.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-};

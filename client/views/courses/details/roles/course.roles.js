@@ -60,7 +60,3 @@ Template.courseRole.events({
 		return false;
 	}
 });
-
-Template.courseRole.onRendered = function(){
-	this.$("[data-toggle='tooltip']").tooltip();
-};

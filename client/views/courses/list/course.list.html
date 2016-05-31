@@ -86,9 +86,8 @@
 				{{else}}
 					role-occupied{{#if userInTeam}}-by-user{{/if}}
 				{{/if}}"
-			data-toggle="tooltip"
-			data-placement="right"
-			data-original-title="
+			data-tooltip-direction="e"
+			data-tooltip="
 				{{#if needsTeam}}
 					{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}
 				{{else}}
@@ -108,9 +107,8 @@
 					{{else}}
 						role-occupied{{#if userIsMenteor}}-by-user{{/if}}
 					{{/if}}"
-				data-toggle="tooltip"
-				data-placement="right"
-				data-original-title="
+				data-tooltip-direction="e"
+				data-tooltip="
 					{{#if needsMentor}}
 						{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}
 					{{else}}
@@ -131,9 +129,8 @@
 					{{else}}
 						role-occupied{{#if userIsHost}}-by-user{{/if}}
 					{{/if}}"
-				data-toggle="tooltip"
-				data-placement="right"
-				data-original-title="
+				data-tooltip-direction="e"
+				data-tooltip="
 					{{#if needsHost}}
 						{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}
 					{{else}}

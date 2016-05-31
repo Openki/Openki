@@ -23,7 +23,6 @@ Template.eventEdit.onRendered(function() {
 		}
 	});
 
-	this.$("[data-toggle='tooltip']").tooltip();
 	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
@@ -312,7 +311,7 @@ Template.eventEdit.events({
 	},
 
 	'click .toggle_duration': function(event, template){
-		template.$("[data-toggle='tooltip']").tooltip('hide');
+		$(".tooltip").removeClass("show");
 		template.$('.end_time').slideToggle(600);
 		template.$('.show_duration').slideToggle(600);
 	},

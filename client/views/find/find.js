@@ -100,7 +100,6 @@ Template.find.onCreated(function() {
 
 
 Template.find.onRendered(function() {
-	this.$(".js-remove-category-btn").tooltip();
 	this.$('.dropdown').on('show.bs.dropdown', function(e){
 		$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 	});
@@ -216,6 +215,7 @@ Template.find.events({
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
+		$(".tooltip").removeClass("show");
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;

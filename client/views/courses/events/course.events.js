@@ -66,10 +66,6 @@ Template.course_events.rendered = function() {
 	});
 };
 
-Template.course.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-};
-
 Template.course_events.events({
 	'click button.eventEdit': function () {
 		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
