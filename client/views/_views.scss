@@ -21,12 +21,12 @@
 
 @import "kiosk/kiosk";
 
-@import "login/frame/loginFrame";
+@import "login/frame/login.frame";
 @import "login/resetPassword/resetPassword";
 
 @import "locations/location";
-// @import "locations/details/location.details";
-// 
+@import "locations/details/location.details";
+
 @import "static/loading/loading";
 @import "static/noscript/noscript";
 
