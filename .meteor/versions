@@ -39,6 +39,7 @@ cfs:upload-http@0.0.20
 cfs:worker@0.1.4
 check@1.2.1
 coffeescript@1.0.17
+cosmos:browserify@0.5.1
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.5
 ddp-client@1.2.7
@@ -48,6 +49,7 @@ ddp-server@1.2.6
 deps@1.0.12
 diff-sequence@1.0.5
 djedi:sanitize-html@1.11.3
+djedi:sanitize-html-client@1.11.3
 ecmascript@0.4.3
 ecmascript-runtime@0.2.10
 ejson@1.0.11
@@ -100,7 +102,7 @@ mongo@1.1.7
 mongo-id@1.0.4
 mongo-livedata@1.0.12
 msavin:mongol@1.6.2
-msgfmt:core@2.0.0-preview.19
+msgfmt:core@2.0.0-preview.22
 msgfmt:extract@2.0.2
 msgfmt:ui@2.0.0-preview.10
 nicolaslopezj:router-layer@0.0.11
