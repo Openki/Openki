@@ -61,14 +61,6 @@ select:hover {
   z-index: 3;
 }
 
-.tooltip {
-  font-size: $font-size-base;
-  white-space: nowrap;
-  &-inner {
-    max-width: none;
-  }
-}
-
 a,
 .btn-link {
   &:hover {
