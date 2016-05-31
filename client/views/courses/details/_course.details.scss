@@ -26,6 +26,7 @@
 
 .course-details-page {
   @extend .container;
+	margin-left: auto !important;
   padding-top: 20px;
 
 	.eventEdit,
