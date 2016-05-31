@@ -168,7 +168,7 @@
 
 <template name="courseGroupRemove">
 	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.remove.confirm' 'Remove {NAME} from list of promoters' NAME=name}}">{{mf 'course.group.remove' 'Remove'}}</span>
+		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.remove' 'Remove'}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
@@ -183,7 +183,7 @@
 
 <template name="courseGroupMakeOrganizer">
 	<li style="position: relative">
-		<span class="glyphicon glyphicon-bullhorn js-expand" title="{{mf 'course.group.addorg' 'Add {NAME} as editors' NAME=name}}"> make editor</span>
+		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText' "Give editing rights"}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
@@ -198,7 +198,7 @@
 
 <template name="courseGroupRemoveOrganizer">
 	<li style="position: relative">
-		<span class="fa fa-remove js-expand" title="{{mf 'course.group.removeorg' "Remove organizer status for '{NAME}'" NAME=name}}">no editing</span>
+		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' "Remove editing rights"}}</span>
 		{{#if expanded}}
 			<div class="group-editor">
 				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}

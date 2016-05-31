@@ -103,7 +103,55 @@ groupNameHelpers = {
 };
 
 
-
+TemplateMixins = {
+	/** Setup expand/collaps logic for a template
+	*
+	* @param {Object} template
+	*
+	* This mixin extends the given template with an `expanded` helper and
+	* two click handlers `js-expand` and `js-close`. Only one expandible template
+	* can be open at a time, so don't nest them.
+	*
+	* Example:
+	* <template name="pushIt">
+	*   <div>
+	*     {{#if expanded}}
+	*       All this content hiding here.
+	*       Now close it again!
+	*       <button type="button" class="js-collapse">CLOSE IT!</button>
+	*     {{else}}
+	*       Press the button!
+	*       <button type="button" class="js-expand">OPEN IT!</button>
+	*     {{/if}}
+	*   </div>
+	* </template>
+	*/
+	Expandible: function(template) {
+		template.onCreated(function() {
+			var expander = Random.id(); // Token to keep track of which Expandible is open
+			this.expander = expander;
+			this.collapse = function() {
+				if (Session.equals('verify', expander)) {
+					Session.set('verify', false);
+				}
+			};
+		});
+		template.helpers({
+			'expanded': function() {
+				return Session.equals('verify', Template.instance().expander);
+			}
+		});
+		template.events({
+			'click .js-expand': function(event, instance) {
+				Session.set('verify', instance.expander);
+				event.stopPropagation();
+			},
+			'click .js-collapse': function(event, instance) {
+				Session.set('verify', false);
+			},
+		});
+	}
+};
 
 
 /*************** HandleBars Helpers ***********************/

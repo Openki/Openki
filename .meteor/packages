@@ -6,7 +6,6 @@
 accounts-password
 accounts-base
 email
-spiderable
 standard-app-packages
 check
 iron:router
@@ -53,3 +52,4 @@ ccorcos:subs-cache
 fourseven:scss
 reywood:bootstrap3-sass
 lookback:tooltips
+ongoworks:spiderable

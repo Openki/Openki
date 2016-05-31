@@ -173,7 +173,7 @@ Template.courseGroupList.helpers({
 		var user = Meteor.user();
 		var groupId = String(this);
 		var course = Template.parentData();
-		if (user && user.mayPromoteWith(groupId)) {
+		if (user && user.mayPromoteWith(groupId) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
 				groupId: groupId,
@@ -192,34 +192,9 @@ Template.courseGroupList.helpers({
 	},
 });
 
-var expandible = function(template) {
-	template.onCreated(function() {
-		var expander = Random.id(); // Token to keep track of which Expandible is open
-		this.expander = expander;
-		this.collapse = function() {
-			if (Session.equals('verify', expander)) {
-				Session.set('verify', false);
-			}
-		};
-	});
-	template.helpers({
-		'expanded': function() {
-			return Session.equals('verify', Template.instance().expander);
-		}
-	});
-	template.events({
-		'click .js-expand': function(event, instance) {
-			Session.set('verify', instance.expander);
-			event.stopPropagation();
-		},
-		'click .js-collapse': function(event, instance) {
-			Session.set('verify', false);
-		},
-	});
-};
 
 
-expandible(Template.courseGroupAdd);
+TemplateMixins.Expandible(Template.courseGroupAdd);
 Template.courseGroupAdd.helpers(groupNameHelpers);
 Template.courseGroupAdd.helpers({
 	'groupsToAdd': function() {
@@ -231,9 +206,9 @@ Template.courseGroupAdd.helpers({
 
 Template.courseGroupAdd.events({
 	'click .js-add': function(event, instance) {
-		Meteor.call('groupPromotesCourse', instance.data._id, event.target.value, true, function(error) {
+		Meteor.call('course.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.addFailed', "Failed to add group to course"), 'danger');
+				addMessage(mf('course.group.addFailed', "Failed to add group"), 'danger');
 			} else {
 				addMessage(mf('course.group.addedGroup', "Added your group to the list of promoters"), 'success');
 				instance.collapse();
@@ -243,13 +218,13 @@ Template.courseGroupAdd.events({
 });
 
 
-expandible(Template.courseGroupRemove);
+TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(groupNameHelpers);
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
-		Meteor.call('groupPromotesCourse', instance.data.course._id, instance.data.groupId, false, function(error) {
+		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeFailed', "Failed to remove group from course"), 'danger');
+				addMessage(mf('course.group.removeFailed', "Failed to remove group"), 'danger');
 			} else {
 				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
 				instance.collapse();
@@ -259,15 +234,15 @@ Template.courseGroupRemove.events({
 });
 
 
-expandible(Template.courseGroupMakeOrganizer);
+TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
-		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, true, function(error) {
+		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {
 				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
 			} else {
-				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit the course"), 'success');
+				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit this"), 'success');
 				instance.collapse();
 			}
 		});
@@ -275,11 +250,11 @@ Template.courseGroupMakeOrganizer.events({
 });
 
 
-expandible(Template.courseGroupRemoveOrganizer);
+TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(groupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
-		Meteor.call('groupEditing', instance.data.course._id, instance.data.groupId, false, function(error) {
+		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
 				addMessage(mf('course.group.removeOrganizerFailed', "Failed to remove organizer status"), 'danger');
 			} else {

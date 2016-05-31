@@ -46,15 +46,20 @@
 
 User = function() {};
 
+
+/** Check whether the user may promote things with the given group
+  *
+  * @param {String/Object} group - The group to check, this may be an Id or a group object
+  * @returns {Boolean}
+  *
+  * The user must be a member of the group to be allowed to promote things with it.
+  */
 User.prototype.mayPromoteWith = function(group) {
 	var groupId = _id(group);
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
 
-User.prototype.mayEdit = function(course) {
-	return _.intersection(this.badges, course.editors).length > 0;
-};
 
 Meteor.users._transform = function(user) {
 	return _.extend(new User(), user);
@@ -95,8 +100,10 @@ UserLib = {
 	}
 };
 
+Users = {};
+
 // Update list of groups and badges
-updateBadges = function(userId) {
+Users.updateBadges = function(userId) {
 	untilClean(function() {
 		var user = Meteor.users.findOne(userId);
 		if (!user) return true;
@@ -158,9 +165,9 @@ Meteor.methods({
 	},
 
 	// Recalculate the groups and badges field
-	updateBadges: function(selector) {
+	'user.updateBadges': function(selector) {
 		Meteor.users.find(selector).forEach(function(user) {
-			updateBadges(user._id);
+			Users.updateBadges(user._id);
 		});
 	},
 });

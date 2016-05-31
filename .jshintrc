@@ -161,7 +161,6 @@
 
 // collection/events.js
 
-		"mayEditEvent":true,
 		"updateEventLocation":true,
 
 // collection/files.js
