@@ -1,0 +1,76 @@
+.course-roles {
+  @include grid(12);
+  padding: 0px;
+}
+
+.course-role,
+.course-role-enrol {
+  @include grid(12);
+  @include transition-property(#{"box-shadow, margin"});
+  @include transition-duration(0.3s);
+  padding: 0px;
+}
+
+.course-role-title,
+.course-role-title-enrol {
+  @include grid(12);
+  margin-top: 3px;
+  font-size: large;
+  line-height: 1.1;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.course-role-title {
+  background: $user-bg;
+  color: $default-black;
+}
+
+.course-role-title-enrol {
+  background: $brand-success;
+}
+
+.js-role-unsubscribe-btn {
+  @include btn-thin;
+  @include btn-cancel;
+  font-size: medium;
+  margin-left: 5px;
+}
+
+.course-role-enrol {
+  @include box-shadow-big($default-shadow);
+  margin-bottom: 10px;
+}
+
+.course-role-enrol-options {
+  @include grid(12);
+  background: $openki-light-blue;
+  padding: 10px 12px 11px;
+}
+
+.course-role-enrol-comment {
+  @extend .form-control;
+  margin-top: 5px;
+}
+
+.course-role-enrol-btns {
+  @include grid(12);
+  padding: 13px 0px 0px;
+}
+
+.js-role-subscribe-btn,
+.js-role-enrol-cancel-btn {
+  @extend .btn;
+}
+
+.js-role-subscribe-btn {
+  @extend .btn-success;
+}
+
+.js-role-enrol-cancel-btn {
+  @include btn-cancel;
+}
+
+.js-role-enrol-btn {
+  @include big-button-success;
+}

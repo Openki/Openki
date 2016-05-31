@@ -1,0 +1,254 @@
+<template name="eventPage">
+	<div class="course_event_detail" id="coursedetails">
+		{{#if course}}
+			<p>
+				<a href="{{pathFor 'showCourse' _id=course._id}}">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+				</a>
+			</p>
+		{{/if}}
+		{{> event}}
+	</div><!-- /.course_event_detail -->
+</template>
+
+<template name="eventNotFound">
+	<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place."}}</h4>
+</template>
+
+<template name="event">
+	{{#if editing}}
+		{{> eventEdit}}
+	{{else}}
+		{{> eventDisplay}}
+	{{/if}}
+</template>
+
+<template name="eventDisplay">
+	<div class="course_event">
+		<div class="course_event_date">
+				<span class="day">{{weekday start}}</span><br>
+				<span class="date">
+					<span class="glyphicon glyphicon-calendar"></span>
+					{{dateformat_mini_fullmonth start}}
+				</span>
+				&nbsp;
+				<span class="glyphicon glyphicon-time"></span>
+				{{timeformat start}} - {{timeformat end}}
+		</div><!-- /.course_event_date -->
+		<div class="course_event_lower_section">
+			<div class="head">
+				<div class="course_event_title">
+					<h3>{{this.title}}</h3>
+				</div><!-- /.course_event_title -->
+				<div class="location">
+					{{#if location.name}}
+						{{#if location._id}}
+							<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
+								<span class="glyphicon glyphicon-home"></span>
+								{{location.name}}
+							</a>
+						{{else}}
+							<span class="glyphicon glyphicon-home"></span>
+							{{location.name}}
+						{{/if}}
+						{{#if room}}
+							<span class="fa fa-map-signs"></span>
+							{{room}}
+						{{/if}}
+					{{/if}}
+					{{#if location.address}}
+						<span class="fa fa-map-marker"></span>
+						{{location.address}}
+					{{/if}}
+				</div>
+
+				{{> eventGroupList}}
+
+				<p>{{{description}}}</p>
+			</div><!-- /.head -->
+			{{#if haveLocation}}
+				<div class="mapBox">
+					{{>map markers=eventMarkers}}
+				</div><!-- /.mapBox -->
+			{{/if}}
+		</div><!-- /.course_event_lower_section -->
+		<div class="event_detail_description">
+
+		</div><!-- /.event_detail_description -->
+		{{#if files}}
+			<div class="event_detail_description">
+				<p>Related Files:</p>
+				<ul style="list-style-type:none">
+					{{#each files}}
+						{{> eventAttachments}}
+					{{/each}}
+				</ul>
+			</div><!-- /.event_detail_description -->
+		{{/if}}
+		{{#if mayEdit}}
+			<div class="eventEdit_buttons">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group" role="group">
+						<button class="eventEdit btn btn-success" type="button" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							{{mf '_button.edit'}}
+						</button>
+						{{#if replicating}}
+							<button class="-closeReplication btn btn-warning" type="button" role="button">
+								<span class="glyphicon glyphicon-minus"></span>
+								{{mf 'course.details.repl_menu_btn'}}
+							</button>
+						{{else}}
+							<button class="-openReplication btn btn-warning" type="button" role="button">
+								<span class="glyphicon glyphicon-plus"></span>
+								{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+							</button>
+						{{/if}}
+					</div><!-- /.btn-group -->
+					<div class="btn-group" role="group">
+						<button class="eventDelete btn btn-danger" type="button" role="button">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf '_button.delete'}}
+						</button>
+					</div><!-- /.btn-group -->
+				</div><!-- /.btn-toolbar -->
+			</div><!-- /.eventEdit_buttons -->
+			{{#if replicating}}
+				{{>eventReplication}}
+			{{/if}}
+		{{/if}}
+<<<<<<< HEAD:client/views/events/event.details.html
+	</div>
+=======
+	</div><!-- /.course_event -->
+	{{> groupListing}}
+>>>>>>> master:client/views/events/details/event.details.html
+	<div class="event_options">
+		<a href="{{pathFor 'calEvent' this}}">
+			<button class="js-events-download-btn"
+				data-delay='{"show":"500", "hide":"0"}'
+				data-original-title="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}"
+				data-placement="top"
+				data-toggle="tooltip"
+				href="#"
+				type="button">
+				<span class="glyphicon glyphicon-download"></span>&nbsp;
+				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
+			</button>
+		</a>
+		{{> report}}
+	</div><!-- /.event_options -->
+</template>
+
+<template name="eventAttachments">
+	<li>
+		<p>
+			<a href="{{file}}" target="_blank">{{filename}}</a>
+		</p>
+	</li>
+</template>
+
+
+
+<!-- COPYPASTA WARNING
+    Below are slightly modified templates from course.details.html.
+    Where possible, the original translation keys have been kept.
+
+    Most of what is in these templates could be generalized across courses and
+    events. It's the pesky translation strings where I think we'll run into
+    trouble when we try to unite them.
+-->
+
+<template name="eventGroupList">
+	<ul class="groups-list">
+		{{#each allGroups}}
+		<li>
+			{{> groupName}}
+			{{#if isOrganizer}}
+				<span class="glyphicon glyphicon-bullhorn group-add"></span>
+			{{/if}}
+			{{#if tools}}
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle group-add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+				{{#each tools}}
+					<li>{{> toolTemplate}}</li>
+				{{/each}}
+				</ul>
+			</div>
+			{{/if}}
+		</li>
+		{{/each}}
+		{{> eventGroupAdd}}
+	</ul>
+</template>
+
+
+<template name="eventGroupAdd">
+	{{#if groupsToAdd}}
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
+			</button>
+
+			<ul class="dropdown-menu group-editor">
+				{{#each groupsToAdd}}
+					<li>
+						<span class="group">{{> groupName}}</span>
+						<button type="button" class="js-add" value="{{this}}">
+							{{mf 'course.group.confirmAddButton'}}
+						</button>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+</template>
+
+
+<template name="eventGroupRemove">
+	<li>
+		<span class="js-expand"><span class="fa fa-remove"></span>{{mf 'course.group.remove' 'Remove'}}</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}{{/with}}
+				<button type="button" class="js-remove">
+					{{mf 'course.group.confirmRemoveButton'}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+</template>
+
+
+<template name="eventGroupMakeOrganizer">
+	<li>
+		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText'}}</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}{{/with}}
+				{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
+				<button type="button" class="js-makeOrganizer">
+					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+</template>
+
+<template name="eventGroupRemoveOrganizer">
+	<li>
+		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' NAME=name}}</span>
+		{{#if expanded}}
+			<div class="group-editor">
+				{{#with groupId}}{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}{{/with}}
+				<button type="button" class="js-removeOrganizer">
+					{{mf 'course.group.confimRemoveOrgButton'}}
+				</button>
+			</div>
+		{{/if}}
+	</li>
+</template>

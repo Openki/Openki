@@ -1,0 +1,36 @@
+<template name="eventSmall">
+	<a href="{{pathFor 'showEvent'}}">
+		<div class="event-small-container">
+			<div class="event-small">
+				<div class="event-small-header">
+					<span class="fa fa-clock-o"></span>
+					<span class="event-small-time">
+						{{timeformat start}} - {{timeformat end}}
+					</span>
+					<br>
+					{{#if location.name}}
+						{{#if location._id}}
+							<a class="js-location-link" href="{{pathFor 'locationDetails' data=location}}">
+								<span class="glyphicon glyphicon-home"></span>
+								{{location.name}}
+							</a>
+						{{else}}
+							<span class="glyphicon glyphicon-home"></span>
+							<span>{{location.name}}</span>
+						{{/if}}
+						{{#if room}}
+							<span class="fa fa-map-signs"></span>
+							<span>{{this.room}}</span>
+						{{/if}}
+					{{/if}}
+				</div>
+				<div class="event-small-title">
+					{{plain this.title}}
+				</div>
+				<div class="event-small-description">
+					{{plain this.description}}
+				</div>
+			</div>
+		</div>
+	</a>
+</template>

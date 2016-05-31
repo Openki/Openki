@@ -10,14 +10,14 @@
 				{{mf 'menue.CreateEvent'}}
 			</button>
 		</a>
-	</div>
+	</div><!-- /.calendar -->
 </template>
 
 <template name="calendarDay">
 	<div class="calendar_date">
 		<div class="date">
 			{{calendarDay day.start}}
-		</div>
+		</div><!-- /.date -->
 		{{#if eventsReady}}
 			{{#unless hasEvents}}
 				<br>
@@ -29,15 +29,15 @@
 						{{#if past}}
 							{{> calendar_event_past}}
 						{{else}}
-							{{> small_event}}
+							{{> eventSmall}}
 						{{/if}}
 					{{/each}}
-				</div>
+				</div><!-- /.calendar_events -->
 			{{/if}}
 		{{else}}
 			{{> loadingRow}}
 		{{/if}}
-	</div>
+	</div><!-- /.calendar_date -->
 </template>
 
 <template name="calendar_event_past">
@@ -77,7 +77,7 @@
 				<span class="fa fa-arrow-left"></span>
 				{{mf "calendar.button.previousweek" "one week"}}
 			</button>
-		</div>
+		</div><!-- /.left -->
 		<div class="right">
 			<button class="nextWeek" aria-label="go forward one week">
 				{{mf "calendar.button.nextWeek" "one week"}}
@@ -91,16 +91,14 @@
 				{{mf "calendar.button.nextYear" "one year"}}
 				 <span class="fa fa-arrow-right"></span>
 			</button>
-		</div>
+		</div><!-- /.right -->
 		<div class="calendar_week">
-		<div class="week">
-				{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
-		</div>
-		<div class="date">
-			{{dateLong date}} - {{dateLong (endDateTo date)}}
-		</div>
-
-
-		</div>
-	</div>
+			<div class="week">
+					{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
+			</div><!-- /.week -->
+			<div class="date">
+				{{dateLong date}} - {{dateLong (endDateTo date)}}
+			</div><!-- /.date -->
+		</div><!-- /.calendar_week -->
+	</div><!-- /.switchDate -->
 </template>

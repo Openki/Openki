@@ -2,13 +2,13 @@
 	<meta name="viewport" content="width=device-width,  user-scalable=no">
 	<noscript>
 		<div class="noscript">
-			<div class="noscript_message_box">
-				<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png" alt="Openki logo">
-				<div class="noscript_message">
+			<div class="noscript-message-container">
+				<img src="/logo/openki.png" alt="Openki logo">
+				<div class="noscript-message">
 					Please enable javascript
-				</div>
-			</div>
-		</div>
+				</div><!-- /.noscript-message -->
+			</div><!-- /.noscript-message-container -->
+		</div><!-- /.noscript -->
 	</noscript>
 </head>
 
@@ -16,7 +16,7 @@
 	<div id="wrap">
 		<div id="topBar">
 			{{> navbar}}
-		</div>
+		</div><!-- #topBar -->
 		<div id="outer" class={{testWarningClass}}>
 			{{#if shownIntro}}
 				{{> introduction}}
@@ -34,16 +34,20 @@
 				{{> yield}}
 				{{> messages}}
 			{{/if}}
-			</div>
-		</div>
+			</div><!-- /#maincontent -->
+		</div><!-- /.{{testWarningClass}} -->
 		<div class="push"></div>
-	</div>
+	</div><!-- /#wrap -->
 	{{> kioskLink}}
 	{{> footer}}
 </template>
 
 <template name="lang_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a class="navbar-link dropdown-toggle"
+		aria-expanded="false"
+		data-toggle="dropdown"
+		href="#"
+		role="button">
 		<span class="fa fa-language"></span>&nbsp;
 		{{short}}
 		<span class="caret"></span>
@@ -52,10 +56,10 @@
 	<ul class="dropdown-menu" role="menu">
 		{{#each lgs}}
 			<li>
-				<a href="#" class="langselect -clickClose">
+				<a href="#" class="langselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentLanguage}}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="checkmark"></span>
 					{{/if}}
 				</a>
 			</li>

@@ -6,7 +6,7 @@ Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.or
 An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
-
+<br>
 Beside longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
 [  read on...](http://about.openki.net "our blog")
@@ -40,6 +40,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
+- :white_large_square: White-labeling for groups, locations and regions
 - :closed_lock_with_key: Privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :mailbox: Privat messaging
@@ -54,9 +55,9 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone https://github.com/schuel/hmmm.git` Openki into /some/path.
 - `cd /some/path/hmmm`
 - Run `meteor --settings settings.dev.json`
-- Browse to [localhost:3000](http://localhost:3000/)  -> done.
+- Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
-#### Technical documentation
+#### Documentation
 - The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License

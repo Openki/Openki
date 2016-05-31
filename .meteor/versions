@@ -41,7 +41,7 @@ check@1.2.1
 coffeescript@1.0.17
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.5
-ddp-client@1.2.6
+ddp-client@1.2.7
 ddp-common@1.2.5
 ddp-rate-limiter@1.0.4
 ddp-server@1.2.6
@@ -56,6 +56,7 @@ es5-shim@4.5.10
 facebook@1.2.6
 fastclick@1.0.11
 fortawesome:fontawesome@4.5.0
+fourseven:scss@3.4.3
 geojson-utils@1.0.8
 github@1.1.8
 google@1.1.11
@@ -80,6 +81,8 @@ less@2.6.0
 livedata@1.0.18
 localstorage@1.0.9
 logging@1.0.12
+matb33:bootstrap-base@10.0.0
+matb33:bootstrap-glyphicons@10.0.0
 mediumeditor:mediumeditor@5.2.0
 meteor@1.1.14
 meteor-platform@1.2.6
@@ -88,7 +91,7 @@ meteorhacks:ssr@2.2.0
 meteortoys:toykit@2.2.1
 minifier-css@1.1.11
 minifier-js@1.1.11
-minimongo@1.0.15
+minimongo@1.0.16
 mobile-status-bar@1.0.12
 modules@0.6.1
 modules-runtime@0.6.3
@@ -98,16 +101,15 @@ mongo-id@1.0.4
 mongo-livedata@1.0.12
 msavin:mongol@1.6.2
 msgfmt:core@2.0.0-preview.19
-msgfmt:extract@2.0.0
+msgfmt:extract@2.0.2
 msgfmt:ui@2.0.0-preview.10
-nemo64:bootstrap@3.3.5_2
-nemo64:bootstrap-data@3.3.5
 nicolaslopezj:router-layer@0.0.11
 npm-bcrypt@0.8.5
 npm-mongo@1.4.43
 oauth@1.1.10
 oauth2@1.1.9
 observe-sequence@1.0.11
+ongoworks:spiderable@1.0.7
 ordered-dict@1.0.7
 prng@0.0.0
 promise@0.6.7
@@ -119,6 +121,7 @@ reactive-dict@1.1.7
 reactive-var@1.0.9
 reload@1.1.8
 retry@1.0.7
+reywood:bootstrap3-sass@3.3.5_2
 routepolicy@1.0.10
 router-autoscroll@0.1.8
 rzymek:moment-locale-ar@2.12.0
@@ -139,7 +142,6 @@ session@1.1.5
 sha@1.0.7
 spacebars@1.0.11
 spacebars-compiler@1.0.11
-spiderable@1.0.13
 srp@1.0.8
 standard-app-packages@1.0.9
 standard-minifier-css@1.0.6

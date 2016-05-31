@@ -1,0 +1,57 @@
+.course_event_detail {
+  @include container-narrow;
+  padding: 0px;
+  .course_event {
+    .course_event_date {
+      @include grid(12);
+      background: $brand-success;
+      border-bottom: 3px solid $body-bg;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      span.date {
+        font-size: x-large;
+        span.glyphicon-calendar {
+          font-size: large;
+        }
+      }
+      span.glyphicon-time {
+        font-size: small;
+      }
+    }
+    .location {
+      margin-right: 5px;
+    }
+    .location,
+    ul.groups-list {
+      display: inline-block;
+    }
+    .course_event_lower_section {
+      @include grid(12);
+      padding: 0px;
+    }
+  }
+  & > .course_event,
+  & > .calendar_event,
+  & > .calendar_event_past {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.course_event .course_event_lower_section {
+  .head {
+    @include grid(12, 6);
+  }
+  .mapBox {
+    @include grid(12, 6);
+    padding-right: 0px;
+    .mapContainer.box {
+      height: 300px;
+      width: 100%;
+    }
+  }
+  .event_detail_description {
+    padding-top: 5px;
+  }
+}
