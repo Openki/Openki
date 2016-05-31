@@ -1,3 +1,4 @@
+
 .course-details-component {
   @include grid(12);
   padding: 0px;
@@ -27,13 +28,21 @@
   @extend .container;
   padding-top: 20px;
 
+	.eventEdit,
   .js-events-download-btn {
     @extend .btn;
-    @extend .btn-default;
-    float: right;
-    margin: 10px 5px 10px 0px;
+		margin-bottom: 10px;
     white-space: normal;
+		width: 100%;
   }
+
+	.eventEdit {
+		@extend .btn-success;
+	}
+
+	.js-events-download-btn {
+		@extend .btn-default;
+	}
 }
 
 .course-details-column-left {

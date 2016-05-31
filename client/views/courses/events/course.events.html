@@ -1,4 +1,10 @@
 <template name="course_events">
+	{{#if mayAdd}}
+		<button type="button" class="eventEdit">
+			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			{{mf 'course.events.addButton' 'Add event'}}
+		</button>
+	{{/if}}
 	{{#if haveEvents}}
 		<div class="course_events_fadebox">
 			<div class="course_events">
@@ -77,11 +83,5 @@
 				{{mf 'course.download_cal' 'Download events to my calendar'}}
 			</button>
 		</a>
-	{{/if}}
-	{{#if mayAdd}}
-		<button type="button" class="eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
-			{{mf 'course.events.addButton' 'Add event'}}
-		</button>
 	{{/if}}
 </template>
