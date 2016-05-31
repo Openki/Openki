@@ -49,6 +49,14 @@ select {
   @extend .form-control;
 }
 
+select:hover {
+	cursor: pointer;
+}
+
+.select_placeholder:hover {
+	cursor: not-allowed;
+}
+
 .input-group input:focus {
   z-index: 3;
 }
