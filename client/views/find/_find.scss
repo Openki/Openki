@@ -10,7 +10,7 @@
   margin-top: 0px;
   @media (max-width: $screen-xs) {
     font-size: x-large;
-    margin: 20px 0 10px;
+    margin: 0 0 10px;
   }
 }
 
@@ -44,14 +44,20 @@
 
 .remove-filter {
   @include btn-cancel;
+	@media (max-width: $screen-xs) {
+		@extend .btn-danger;
+	}
 }
 
 .filter {
   @include grid(12, inherit, 7);
   padding: 0px;
   @media (max-width: $screen-xs) {
-    border: 1px solid $gray-lighter;
-    margin-top: 10px;
+		@include grid(12);
+		background: $gray-lighter;
+    border: 1px solid $btn-default-border;
+		border-radius: 4px;
+    margin-top: 5px;
     padding: 0px 10px;
   }
   @media (min-width: $screen-md) {
@@ -97,9 +103,6 @@
 .js-toggle-property-filter {
   @extend .btn-default;
   text-align: left;
-  @media (max-width: $screen-xs) {
-    text-align: center;
-  }
 }
 
 .toggle-property-filter-icon {

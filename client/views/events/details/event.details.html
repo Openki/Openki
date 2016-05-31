@@ -185,7 +185,12 @@
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button class="btn btn-default dropdown-toggle no-btn-style"
+				aria-expanded="false"
+				aria-haspopup="true"
+				data-toggle="dropdown"
+				role="button"
+				type="button">
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
 
