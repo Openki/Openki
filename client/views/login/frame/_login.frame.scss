@@ -1,6 +1,10 @@
 .login-dropdown {
+	background-color: $gray-lighter;
   padding-top: 20px;
   width: 300px;
+	@media (max-width: $screen-xs) {
+		padding: 0px;
+	}
 }
 
 .user-frame {
@@ -8,7 +12,7 @@
   padding: 0 20px;
   text-align: center;
   @media (max-width: $screen-sm) {
-    padding: 20px 15px 10px;
+    padding: 15px;
   }
 }
 
@@ -30,10 +34,15 @@
 .login {
   @include grid(12);
   padding: 0px;
+	@media (max-width: $screen-xs) {
+		background-color: $gray-lighter;
+		border-radius: 4px;
+		padding: 15px 15px 0;
+	}
   & > div,
   & > button,
   & > a {
-    margin-bottom: 15px !important;
+    margin-bottom: 15px;
   }
   .fa-lock {
     font-size: large;
@@ -77,6 +86,9 @@
 
 .js-login-btn {
   @extend .btn-default;
+	@media (max-width: $screen-xs) {
+		margin-bottom: 5px !important;
+	}
 }
 
 .js-register-btn {
@@ -101,6 +113,13 @@
       }
     }
   }
+	@media (max-width: $screen-xs) {
+		@each $service, $color in $external-servies {
+      .fa-#{$service}-square {
+        color: $color;
+      }
+    }
+	}
 }
 
 .password_warning #login-password,
