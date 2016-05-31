@@ -116,19 +116,21 @@
 					<h4 class="filter-categories-heading">
 						{{mf 'find.filter.categories' 'Categories'}}
 					</h4>
-					{{#if categories}}
-						<ul class="filter-selected-categories">
-						{{#each categories}}
-							<li>
-								<a class="js-category-label" href="#">{{categoryName}}</a>
-								<button class="remove-btn js-remove-category-btn"
-									data-toggle="tooltip"
-									data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
-								</button>
-							</li>
-						{{/each}}
-						</ul>
-					{{/if}}
+					{{#unless isMobile}}
+						{{#if categories}}
+							<ul class="filter-selected-categories">
+							{{#each categories}}
+								<li>
+									<a class="js-category-label" href="#">{{categoryName}}</a>
+									<button class="remove-btn js-remove-category-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									</button>
+								</li>
+							{{/each}}
+							</ul>
+						{{/if}}
+					{{/unless}}
 					<div class="dropdown filter-categories-select">
 						<input class="js-search-categories"
 							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
@@ -167,6 +169,21 @@
 							{{/if}}
 						</ul>
 					</div>
+					{{#if isMobile}}
+						{{#if categories}}
+							<ul class="filter-selected-categories">
+							{{#each categories}}
+								<li>
+									<a class="js-category-label" href="#">{{categoryName}}</a>
+									<button class="remove-btn js-remove-category-btn"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									</button>
+								</li>
+							{{/each}}
+							</ul>
+						{{/if}}
+					{{/if}}
 				</div>
 			</div>
 		{{/if}}

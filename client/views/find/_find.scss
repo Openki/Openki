@@ -43,10 +43,7 @@
 }
 
 .remove-filter {
-  @include btn-cancel;
-	@media (max-width: $screen-xs) {
-		@extend .btn-danger;
-	}
+	@include btn-cancel;
 }
 
 .filter {
@@ -185,11 +182,11 @@
 
 .filter-categories-select {
   margin-bottom: 10px;
+	padding: 0;
   .dropdown-toggle {
     display: none;
   }
   &::after {
-    // fa-angle-down
     content: "";
     font-family: FontAwesome;
     position: absolute;
@@ -197,7 +194,6 @@
     top: 6px;
   }
   &.open::after {
-    // fa-angle-up
     content: "";
   }
 }
@@ -252,12 +248,20 @@
 .filter-selected-categories {
   list-style: none;
   margin: 0px;
-  padding-left: 0px;
+  padding: 0px;
+	@media (max-width: $screen-xs) {
+		border: 1px solid $brand-success;
+		border-radius: 4px;
+		margin-bottom: 10px;
+		padding: 5px;
+	}
   li {
     margin-bottom: 3px;
     padding: 0px 3px 3px 0px;
     @media (max-width: $screen-xs) {
       display: inline-block;
+			margin: 5px 0px;
+			padding-bottom: 0px;
     }
   }
 }
