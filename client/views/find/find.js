@@ -214,11 +214,6 @@ Template.find.events({
 		return false;
 	},
 
-	'click .show_subcategories': function(e, instance) {
-		$(".subcategory" + "." + this).toggle(0);
-		e.stopPropagation(); //makes dropdown menu stay open
-	},
-
 	'click .js-toggle-filter': function(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
