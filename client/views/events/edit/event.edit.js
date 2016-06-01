@@ -311,7 +311,7 @@ Template.eventEdit.events({
 	},
 
 	'click .toggle_duration': function(event, template){
-		$(".tooltip").removeClass("show");
+		Tooltips.hide();
 		template.$('.end_time').slideToggle(600);
 		template.$('.show_duration').slideToggle(600);
 	},

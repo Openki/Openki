@@ -8,21 +8,7 @@
 						{{timeformat start}} - {{timeformat end}}
 					</span>
 					<br>
-					{{#if location.name}}
-						{{#if location._id}}
-							<a class="js-location-link" href="{{pathFor 'locationDetails' data=location}}">
-								<span class="glyphicon glyphicon-home"></span>
-								{{location.name}}
-							</a>
-						{{else}}
-							<span class="glyphicon glyphicon-home"></span>
-							<span>{{location.name}}</span>
-						{{/if}}
-						{{#if room}}
-							<span class="fa fa-map-signs"></span>
-							<span>{{this.room}}</span>
-						{{/if}}
-					{{/if}}
+					{{> locationLink}}
 				</div>
 				<div class="event-small-title">
 					{{plain this.title}}

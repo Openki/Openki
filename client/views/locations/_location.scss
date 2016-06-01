@@ -24,18 +24,3 @@
     font-size: small;
   }
 }
-
-.js-location-link {
-  @include transition(all $default-transition-time);
-  background: $location-bg;
-  color: $location-text;
-  padding: 3px 4px 1px;
-  &:hover {
-    @include box-shadow-small($default-shadow);
-    background: $location-hover-bg;
-    text-decoration: none;
-  }
-  span.glyphicon-home {
-    margin-right: 2px;
-  }
-}

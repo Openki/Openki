@@ -33,6 +33,7 @@ $group-bg: #b9e9b9;
 $group-text: $brand-primary;
 $group-hover-bg: darken($group-bg, 10%);
 $group-hover-shadow: $default-shadow;
+$group-hover-text: $group-text;
 
 // Category colors
 $category-bg: rgba(216, 216, 216, 0.5);

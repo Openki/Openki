@@ -14,9 +14,3 @@ Template.category.helpers({
 		return courses_by_category;
 	}
 });
-
-Template.showCategories.events({
-	"click .js-category-label": function(event, template){
-		$(".tooltip").removeClass("show");
-	}
-});

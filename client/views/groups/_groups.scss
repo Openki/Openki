@@ -16,6 +16,7 @@
   &:hover {
     @include box-shadow-small($group-hover-shadow);
     background: $group-hover-bg;
+		color: $group-hover-text;
     text-decoration: none;
   }
 }

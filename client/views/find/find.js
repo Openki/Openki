@@ -207,7 +207,6 @@ Template.find.events({
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
-		$(".tooltip").removeClass("show");
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;

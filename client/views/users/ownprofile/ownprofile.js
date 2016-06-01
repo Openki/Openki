@@ -64,8 +64,8 @@ Template.profile.helpers({
 
 Template.profile.events({
 	'click .js-profile-info-edit-btn': function(event, template) {
+		Tooltips.hide();
 		Template.instance().editing.set(true);
-		$(".tooltip").removeClass("show");
 	},
 
 	'click .js-profile-info-cancel-btn': function() {
@@ -84,7 +84,6 @@ Template.profile.events({
 
 	'click .js-profile-delete-btn': function (event, template) {
 		Session.set('verify', 'delete');
-		$(".tooltip").removeClass("show");
 	},
 
 	'click .js-profile-delete-confirm-btn': function () {

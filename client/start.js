@@ -10,6 +10,8 @@ Meteor.subscribe('version');
 
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
+	Tooltips.hide();
+	
 	Session.set('verify', false);
 
 	this.next();

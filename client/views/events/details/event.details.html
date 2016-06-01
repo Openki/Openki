@@ -42,21 +42,7 @@
 					<h3>{{this.title}}</h3>
 				</div><!-- /.course_event_title -->
 				<div class="location">
-					{{#if location.name}}
-						{{#if location._id}}
-							<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
-								<span class="glyphicon glyphicon-home"></span>
-								{{location.name}}
-							</a>
-						{{else}}
-							<span class="glyphicon glyphicon-home"></span>
-							{{location.name}}
-						{{/if}}
-						{{#if room}}
-							<span class="fa fa-map-signs"></span>
-							{{room}}
-						{{/if}}
-					{{/if}}
+					{{> locationLink}}
 					{{#if location.address}}
 						<span class="fa fa-map-marker"></span>
 						{{location.address}}
