@@ -2,7 +2,7 @@
 /**
  * Run tests on CI infrastructure.
  *
- * This script fires up meteor with dev-settings and runs chimp as soon as the
+ * This script fires up meteor with ci-settings and runs chimp as soon as the
  * application is ready. If any test fails, the script exits with a non-zero
  * exit code.
  *
@@ -26,14 +26,14 @@ function runChimp() {
     options: {
       env: extend({CI: 1}, process.env)
     },
-    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests'
+    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests --webdriverio.waitforTimeout=5000'
   });
 }
 
 function runMeteor(callback) {
   return startProcess({
     name: 'Meteor',
-    command: 'meteor --production --settings=settings.dev.json'
+    command: 'meteor --production --settings=settings.ci.json'
   });
 }
 

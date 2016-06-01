@@ -1,5 +1,9 @@
 <template name="region_sel">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	<a class="navbar-link dropdown-toggle"
+		aria-expanded="false"
+		data-toggle="dropdown"
+		href="#"
+		role="button">
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
 		{{#if region}}
 			{{region.name}}
@@ -11,19 +15,19 @@
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect -clickClose" href="/region/">
+			<a class="regionselect js-nav-dropdown-close" href="/region/">
 				{{mf 'menue.All regions' 'All regions'}}
 				{{#if currentRegion}}
-					<span class="glyphicon glyphicon-ok"></span>
+					<span class="checkmark"></span>
 				{{/if}}
 			</a>
 		</li>
 		{{# each regions}}
 			<li>
-				<a href="#" class="regionselect -clickClose">
+				<a href="#" class="regionselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentRegion}}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="checkmark"></span>
 					{{/if}}
 				</a>
 			</li>

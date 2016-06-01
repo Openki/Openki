@@ -47,7 +47,7 @@ Meteor.methods({
 	autoSelectRegion: function() {
 		var ip = this.connection.clientAddress;
 
-		if (ip.indexOf('127') === 0) {
+		if (ip && ip.indexOf('127') === 0) {
 			return '9JyFCoKWkxnf8LWPh'; // use Testistan for localhost
 		}
 		if (Meteor.settings.testdata) {

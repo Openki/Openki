@@ -1,0 +1,157 @@
+
+.course-details-component {
+  @include grid(12);
+  padding: 0px;
+}
+
+.course-details-component-titlebar {
+  @include grid(12);
+  background: $brand-primary;
+  border: 5px solid $brand-primary;
+  color: $body-bg;
+}
+
+.course-details-component-heading {
+  font-weight: bold;
+}
+
+.course-details-description {
+  font-size: medium;
+  padding: 10px 0px;
+  .editable {
+    max-height: 300px;
+    overflow: auto;
+  }
+}
+
+.course-details-page {
+  @extend .container;
+  padding-top: 20px;
+
+	.eventEdit,
+  .js-events-download-btn {
+    @extend .btn;
+		margin-bottom: 10px;
+    white-space: normal;
+		width: 100%;
+  }
+
+	.eventEdit {
+		@extend .btn-success;
+	}
+
+	.js-events-download-btn {
+		@extend .btn-default;
+	}
+}
+
+.course-details-column-left {
+  @include grid(12, inherit, 8);
+  padding-right: 7.5px;
+
+  @media (max-width: $screen-sm) {
+    padding-right: 0px;
+  }
+}
+
+.course-details-column-right {
+  @include grid(12, inherit, 4);
+  padding-left: 7.5px;
+  @media (max-width: $screen-xs) {
+    padding: 0px;
+  }
+}
+
+.course-details-column-left,
+.course-details-column-right {
+  & > div:first-child {
+    padding-top: 0px;
+  }
+}
+
+.course-details {
+  @include grid(12);
+  border: 7px dashed $openki-light-blue;
+  &.haspastevents {
+    border-style: solid;
+  }
+  ul.groups-list,
+  ul.groups-list li,
+  ul.groups-list li a {
+    display: inline-block;
+  }
+  ul.groups-list {
+    margin-bottom: 10px;
+  }
+}
+
+.nav-tabs a {
+  color: $default-black;
+}
+
+.course-details-status {
+  float: right;
+  padding: 0px 0px 0.8em 1.4em;
+  position: relative;
+  right: -22px;
+  top: -7px;
+  div {
+    @include opacity(0.5);
+    background-color: $default-black;
+    color: white;
+    font-weight: bold;
+    padding: 0.3em 0.7em;
+  }
+}
+
+.course-details-title {
+  font-size: 30px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  min-height: 3ex;
+  padding: 0px !important;
+  & > .editable {
+    font-size: 30px;
+    padding: 0px;
+  }
+  & > .editable-controls {
+    font-size: medium;
+  }
+  & > * {
+    display: inline-block;
+  }
+}
+
+.course-details-categories ul {
+  margin-bottom: 0px;
+  li {
+    margin-bottom: 10px;
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+}
+
+.course_main .course-groups {
+  @include grid(12);
+  padding: 0 0 10px;
+}
+
+.course-details-groups {
+  @include grid(12);
+  padding: 0;
+  .dropdown {
+    display: inline-block;
+  }
+}
+
+.js-edit-course-btn,
+.js-delete-course-btn {
+  @include header-btn;
+  color: $default-gray;
+  float: right;
+  font-size: large;
+  &:hover {
+    color: $default-black;
+  }
+}

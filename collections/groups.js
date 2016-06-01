@@ -115,10 +115,13 @@ Meteor.methods({
 		if (Object.getOwnPropertyNames(updates).length === 0) return;
 
 		if (isNew) {
-			return Groups.insert(_.extend(group, updates));
+			groupId = Groups.insert(_.extend(group, updates));
+			Meteor.call('user.updateBadges', userId);
 		} else {
-			return Groups.update(group._id, { $set: updates });
+			Groups.update(group._id, { $set: updates });
 		}
+
+		return groupId;
 	},
 
 	updateGroupMembership: function(userId, groupId, join) {
@@ -144,7 +147,8 @@ Meteor.methods({
 			update = { $pull: { 'members': user._id } };
 		}
 
-		Groups.update(sel, update, checkUpdateOne);
+		Groups.update(sel, update);
+		if (Meteor.isServer) Meteor.call('user.updateBadges', user._id);
 	},
 
 	/* Update listing of a course or an event in a group. */

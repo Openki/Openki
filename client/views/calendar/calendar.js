@@ -9,6 +9,55 @@ Router.map(function () {
 	});
 });
 
+Template.calendar.onCreated(function() {
+	var instance = this;
+
+	var filter = Filtering(EventPredicates);
+	instance.filter = filter;
+
+	// Read URL state
+	instance.autorun(function() {
+		var data = Template.currentData();
+		var query = data.query || {};
+
+		// Show internal events only when a group or location is specified
+		if (!query.group && !query.location && query.internal === undefined) {
+			query.internal = false;
+		}
+
+		filter
+			.clear()
+			.add('start', moment().startOf('week'))
+			.read(query)
+			.add('region', Session.get('region'))
+			.done();
+	});
+
+	instance.autorun(function() {
+		var filterQuery = filter.toQuery();
+
+		var start = filter.get('start').toDate();
+		var limit = filter.get('start').add(1, 'week').toDate();
+
+		filterQuery.period = [start, limit];
+		instance.eventSub = subs.subscribe('eventsFind', filterQuery);
+
+	});
+});
+
+Template.calendar.rendered = function() {
+	$(window).scroll(function (event) {
+		if($(window).scrollTop() > 5)
+			this.$('.switchDate').addClass('over_content');
+		else
+			this.$('.switchDate').removeClass('over_content');
+	});
+
+	var currentPath = Router.current().route.path(this);
+	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
+	$('a[href="' + currentPath + '"].nav_link').addClass('active');
+};
+
 var updateUrl = function(event, instance) {
 	var filterParams = instance.filter.toParams();
 	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
@@ -119,8 +168,8 @@ Template.calendar.rendered = function() {
 	});
 
 	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-	$('a[href="' + currentPath + '"].nav_link').addClass('active');
+	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
+	$('a[href="' + currentPath + '"].navbar-link').addClass('navbar-link-active');
 };
 
 var mvDateHandler = function(amount, unit) {

@@ -17,24 +17,38 @@
 // createdby       -> userId
 // time_created    -> Date
 // time_lastedit   -> Date
-// course_id       -> ID_course  (Maybe [list] of courses in future)
+// courseId        -> course._id of parent course, optional
 // internal        -> Boolean    (Events are only displayed when group or location-filter is active)
+
+// groups          -> list of group._id that promote this event
+// groupOrganizers -> list of group._id that are allowed to edit the course
+
+/** Calculated fields
+  *
+  * courseGroups: list of group._id inherited from course (if courseId is set)
+  * allGroups: all groups that promote this course, both inherited from course and set on the event itself
+  * editors: list of user and group _id that are allowed to edit the event
+  */
+
 // ===========================
 
-Events = new Meteor.Collection("Events");
-if (Meteor.isServer) Events._ensureIndex({loc : "2dsphere"});
-
-
-mayEditEvent = function(user, event) {
-	if (!user) return false;
-	if (event.createdBy == user._id) return true;
-	if (privileged(user, 'admin')) return true;
-	if (event.course_id) {
-		var course = Courses.findOne({_id: event.course_id, members: {$elemMatch: { user: user._id, roles: 'team' }}});
-		if (course) return true;
-	}
-	return false;
+// Unreasonable HACK: Because Event is a browser API class we can't use that name
+OEvent = function() {
+	this.editors = [];
 };
+
+OEvent.prototype.editableBy = function(user) {
+	if (!user) return false;
+	if (privileged(user, 'admin')) return true;
+	return _.intersection(user.badges, this.editors).length > 0;
+};
+
+Events = new Meteor.Collection("Events", {
+	transform: function(event) {
+		return _.extend(new OEvent(), event);
+	}
+});
+
 
 affectedReplicaSelectors = function(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
@@ -109,6 +123,55 @@ updateEventLocation = function(eventId) {
 };
 
 
+/** @summary recalculate the group-related fields of an event
+  * @param {eventId} the event to update
+  */
+Events.updateGroups = function(eventId) {
+	untilClean(function() {
+		var event = Events.findOne(eventId);
+		if (!event) return true; // Nothing was successfully updated, we're done.
+
+		// The creator of the event as well as any groups listed as organizers
+		// are allowed to edit.
+		var editors = event.groupOrganizers.slice(); // Clone
+		if (event.createdby) editors.push(event.createdby);
+
+		// If an event has a parent course, it inherits all groups and all editors from it.
+		var courseGroups = [];
+		if (event.courseId) {
+			course = Courses.findOne(event.courseId);
+			if (!course) throw new Exception("Missing course " + event.courseId + " for event " + event._id);
+
+			courseGroups = course.groups;
+			editors = _.union(editors, course.editors);
+		}
+
+		var update = {
+			editors: editors
+		};
+
+		// The course groups are only inherited if the event lies in the future
+		// Past events keep their list of groups even if it changes for the course
+		var historical = event.start < new Date();
+		if (historical) {
+			update.allGroups = _.union(event.groups, event.courseGroups);
+		} else {
+			update.courseGroups = courseGroups;
+			update.allGroups = _.union(event.groups, courseGroups);
+		}
+
+		var r = Events.rawCollection();
+		var result = Meteor.wrapAsync(r.update, r)(
+			{ _id: event._id },
+			{ $set: update },
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
+};
+
+
 Meteor.methods({
 	saveEvent: function(eventId, changes, updateReplicas) {
 		check(eventId, String);
@@ -121,17 +184,15 @@ Meteor.methods({
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
 			files:       Match.Optional(Array),
-			mentors:     Match.Optional(Array),
-			host:        Match.Optional(Array),
-			replicaOf:   Match.Optional(String),
-			course_id:   Match.Optional(String),
 			internal:    Match.Optional(Boolean),
-			groups:      Match.Optional([String]),
 		};
 
 		var isNew = eventId === '';
 		if (isNew) {
-			expectedFields.region = String;
+			expectedFields.courseId  = Match.Optional(String);
+			expectedFields.region    = String;
+			expectedFields.replicaOf = Match.Optional(String);
+			expectedFields.groups    = Match.Optional([String]);
 		}
 
 		check(changes, expectedFields);
@@ -153,48 +214,42 @@ Meteor.methods({
 		var event = false;
 		if (isNew) {
 			changes.time_created = now;
-			if (changes.course_id && !mayEditEvent(user, changes)) {
-				throw new Meteor.Error(401, "not permitted");
+			if (changes.courseId) {
+				var course = Courses.findOne(changes.courseId);
+				if (!course) throw new Meteor.Error(404, "course not found");
+				if (!course.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 			}
 
 			if (!changes.start || changes.start < now) {
 				throw new Meteor.Error(400, "Event date in the past or not provided");
 			}
 
-			if (changes.course_id) {
-				// Inherit groups from the course
-				var course = Courses.findOne(changes.course_id);
-				changes.groups = course.groups;
-			} else {
-				var tested_groups = [];
-				if (changes.groups) {
-					tested_groups = _.map(changes.groups, function(groupId) {
-						var group = Groups.findOne(groupId);
-						if (!group) throw new Meteor.Error(404, "no group with id "+groupId);
-						return group._id;
-					});
-				}
-				changes.groups = tested_groups;
+			var tested_groups = [];
+			if (changes.groups) {
+				tested_groups = _.map(changes.groups, function(groupId) {
+					var group = Groups.findOne(groupId);
+					if (!group) throw new Meteor.Error(404, "no group with id "+groupId);
+					return group._id;
+				});
 			}
+			changes.groups = tested_groups;
 
 			// Coerce faulty end dates
 			if (!changes.end || changes.end < changes.start) {
 				changes.end = changes.start;
 			}
 
+			changes.internal = !!changes.internal;
+
 			// Synthesize event document because the code below relies on it
-			event = { course_id: changes.course_id };
-
+			event = _.extend(new OEvent(), { courseId: changes.courseId, editors: [user._id] });
 		} else {
-
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
-			if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
-
-			// Not allowed to update
-			delete changes.replicaOf;
-			delete changes.groups;
 		}
+
+		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
+
 
 		// Don't allow moving past events or moving events into the past
 		if (!changes.start || changes.start < now) {
@@ -216,6 +271,7 @@ Meteor.methods({
 
 		if (isNew) {
 			changes.createdBy = user._id;
+			changes.groupOrganizers = [];
 			eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
@@ -228,8 +284,11 @@ Meteor.methods({
 			}
 		}
 
+		Meteor.call('updateEventLocation', eventId);
+		Meteor.call('event.updateGroups', eventId);
+
 		// the assumption is that all replicas have the same course if any
-		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
+		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
 
 		return eventId;
 	},
@@ -242,13 +301,11 @@ Meteor.methods({
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
-		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
 		Events.remove(eventId);
 
-		if (event.course_id) Meteor.call('updateNextEvent', event.course_id);
-
-		return Events.findOne({id:eventId}) === undefined;
+		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
 	},
 
 
@@ -259,7 +316,7 @@ Meteor.methods({
 		if (!user) throw new Meteor.Error(401, "please log in");
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
-		if (!mayEditEvent(user, event)) throw new Meteor.Error(401, "not permitted");
+		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
 		var tmp = [];
 
@@ -283,7 +340,35 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach(function(event) {
 			updateEventLocation(event._id);
 		});
-	}
+	},
+
+	// Update the group-related fields of events matching the selector
+	'event.updateGroups': function(selector) {
+		var idOnly = { fields: { _id: 1 } };
+		Events.find(selector, idOnly).forEach(function(event) {
+			Events.updateGroups(event._id);
+		});
+	},
+
+
+	/** Add or remove a group from the groups list
+	  *
+	  * @param {String} eventId - The event to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'event.promote': UpdateMethods.Promote(Events),
+
+
+	/** Add or remove a group from the groupOrganizers list
+	  *
+	  * @param {String} eventId - The event to update
+	  * @param {String} groupId - The group to add or remove
+	  * @param {Boolean} add - Whether to add or remove the group
+	  *
+	  */
+	'event.editing': UpdateMethods.Editing(Events),
 });
 
 
@@ -357,7 +442,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.standalone) {
-		find.course_id = { $exists: false };
+		find.courseId = { $exists: false };
 	}
 
 	if (filter.region) {
@@ -373,7 +458,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.course) {
-		find.course_id = filter.course;
+		find.courseId = filter.course;
 	}
 
 	if (filter.internal !== undefined) {

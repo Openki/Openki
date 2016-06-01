@@ -53,10 +53,10 @@ Meteor.subscribe('regions', function() {
 });
 
 
-// We keep two subscription manager around. One is for the regular subscriptions like list of courses,
+// We keep two subscription caches around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsManager({ cacheLimit: 5, expireIn: 1 });
-miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
+subs = new SubsCache({ cacheLimit: 5, expireAfter: 1 });
+miniSubs = new SubsCache({ cacheLimit: 50, expireAfter: 1 });
 
 
 // Try to guess a sensible language
@@ -88,7 +88,6 @@ Meteor.startup(function() {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	var acceptLangs = Array.prototype.slice.call(navigator.languages);
 	for (var i in navigator.languages || []) {
 		if (useLocale(navigator.languages[i])) return;
 	}
