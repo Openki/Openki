@@ -41,9 +41,7 @@
 		{{#each categories}}
 			<li>
 				<a class='js-category-label'
-					data-html="true"
-					data-original-title="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
-					data-toggle="tooltip"
+					data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
 					href="/find?categories={{this}}">
 					{{categoryName}}
 				</a>

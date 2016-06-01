@@ -14,13 +14,3 @@ Template.category.helpers({
 		return courses_by_category;
 	}
 });
-
-Template.showCategories.events({
-	"click .js-category-label": function(event, template){
-		template.$("[data-toggle='tooltip']").tooltip('hide');
-	}
-});
-
-Template.showCategories.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-};

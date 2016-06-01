@@ -1,9 +1,9 @@
 Template.small_event_withDate.events({
-	"mouseover a.-locationLink": function(event, template){
-		template.$('.small_event').addClass('elevate_child');
+	"mouseover .js-location-link": function(event, template){
+		template.$('.event-small').addClass('elevate_child');
 	},
-	"mouseout a.-locationLink": function(event, template){
-		template.$('.small_event').removeClass('elevate_child');
+	"mouseout .js-location-link": function(event, template){
+		template.$('.event-small').removeClass('elevate_child');
 	}
 });
 

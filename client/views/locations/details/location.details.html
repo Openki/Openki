@@ -7,8 +7,7 @@
 	<!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
 		{{#with location}}
 		{{#unless isEditing}}
-			<div class="location_main">
-				<div class="head">
+				<div class="location-details-header">
 					<img src="{{picture}}">
 
 					<h1 class="name">{{name}}</h1>
@@ -17,7 +16,7 @@
 					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, {{!--> show_locationcategories--}}</p>
 				</div>
 
-				<div class="body">
+				<div class="location-details-body">
 					<div class="descriptionFrame">
 						<span class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</span>
 						<ul class='hosts'>
@@ -83,7 +82,6 @@
 					{{/if}}
 
 				</div>
-			</div>
 		{{/unless}}
 		{{/with}}
 

@@ -121,6 +121,7 @@ Template.postEdit.helpers({
 
 Template.post.events({
 	'click .js-edit': function(event, instance) {
+		Tooltips.hide();
 		event.stopImmediatePropagation();
 		instance.editing.set(true);
 	},
@@ -163,6 +164,7 @@ Template.post.events({
 	},
 
 	'click button.delete': function (event, instance) {
+		Tooltips.hide();
 		event.stopImmediatePropagation();
 		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ))) {
 			Meteor.call('deleteComment', this._id, function(err) {
@@ -190,7 +192,3 @@ Template.postEdit.events({
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	}
 });
-
-Template.postShow.rendered = function(){
-	this.$("[data-toggle='tooltip']").tooltip();
-};

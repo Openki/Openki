@@ -1,5 +1,6 @@
 <template name="frameLayout">
 	{{> yield}}
+	{{> tooltips}}
 </template>
 
 <template name="frameEvents">
@@ -7,5 +8,5 @@
 		{{#each this}}
 			{{> small_event_withDate}}
 		{{/each}}
-  </div><!-- /.frame-events -->
+  </div>
 </template>
