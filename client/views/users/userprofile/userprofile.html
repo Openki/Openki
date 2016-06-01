@@ -36,8 +36,7 @@
 								{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
 								{{#if alterPrivileges}}
 									<button class="js-remove-privilege-btn"
-										data-original-title="{{mf 'privilege.remove' 'Remove privilege'}}"
-										data-toggle="tooltip"
+										data-tooltip="{{mf 'privilege.remove' 'Remove privilege'}}"
 										data-priv="admin"
 										role="button"
 										type="button">
@@ -58,8 +57,7 @@
 								{{mf 'privilege.has.upload' 'Upload allowed'}}
 								{{#if alterPrivileges}}
 									<button class="js-remove-privilege-btn"
-										data-original-title="{{mf 'privilege.remove'}}"
-										data-toggle="tooltip"
+										data-tooltip="{{mf 'privilege.remove'}}"
 										data-priv="upload"
 										role="button"
 										type="button">
@@ -94,8 +92,7 @@
 									<span class="group">{{name}}</span>
 									&nbsp;
 									<button class="js-group-expel-btn"
-										data-original-title="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}"
-										data-toggle="tooltip"
+										data-tooltip="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}"
 										role="button"
 										type="button">
 										<span class="glyphicon glyphicon-remove"></span>

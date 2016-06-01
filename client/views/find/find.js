@@ -100,15 +100,6 @@ Template.find.onCreated(function() {
 
 
 Template.find.onRendered(function() {
-	this.$(".js-remove-category-btn").tooltip();
-	this.$('.dropdown').on('show.bs.dropdown', function(e){
-		$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-	});
-
-	this.$('.dropdown').on('hide.bs.dropdown', function(e){
-		$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-	});
-
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	$('a[href="/"].navbar-link').addClass('navbar-link-active');
@@ -216,14 +207,10 @@ Template.find.events({
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
+		$(".tooltip").removeClass("show");
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
-	},
-
-	'click .show_subcategories': function(e, instance) {
-		$(".subcategory" + "." + this).toggle(0);
-		e.stopPropagation(); //makes dropdown menu stay open
 	},
 
 	'click .js-toggle-filter': function(event, instance) {

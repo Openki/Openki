@@ -127,10 +127,6 @@ Template.course.events({
 	}
 });
 
-Template.courseRolesStatus.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-};
-
 Template.course.rendered = function() {
 	this.$('.course-name').dotdotdot({
 		height: 60,

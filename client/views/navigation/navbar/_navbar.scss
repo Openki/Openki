@@ -92,8 +92,12 @@
 .login-link {
   height: $navbar-height;
   & > a > .caret {
-    bottom: 2px;
+    bottom: 1px;
   }
+}
+
+.nav > .login-link.open .caret {
+	color: $gray-lighter;
 }
 
 .navbar-collapse {

@@ -10,7 +10,7 @@
   margin-top: 0px;
   @media (max-width: $screen-xs) {
     font-size: x-large;
-    margin: 20px 0 10px;
+    margin: 0 0 10px;
   }
 }
 
@@ -43,15 +43,18 @@
 }
 
 .remove-filter {
-  @include btn-cancel;
+	@include btn-cancel;
 }
 
 .filter {
   @include grid(12, inherit, 7);
   padding: 0px;
   @media (max-width: $screen-xs) {
-    border: 1px solid $gray-lighter;
-    margin-top: 10px;
+		@include grid(12);
+		background: $gray-lighter;
+    border: 1px solid $btn-default-border;
+		border-radius: 4px;
+    margin-top: 5px;
     padding: 0px 10px;
   }
   @media (min-width: $screen-md) {
@@ -97,9 +100,6 @@
 .js-toggle-property-filter {
   @extend .btn-default;
   text-align: left;
-  @media (max-width: $screen-xs) {
-    text-align: center;
-  }
 }
 
 .toggle-property-filter-icon {
@@ -182,11 +182,11 @@
 
 .filter-categories-select {
   margin-bottom: 10px;
+	padding: 0;
   .dropdown-toggle {
     display: none;
   }
   &::after {
-    // fa-angle-down
     content: "";
     font-family: FontAwesome;
     position: absolute;
@@ -194,7 +194,6 @@
     top: 6px;
   }
   &.open::after {
-    // fa-angle-up
     content: "";
   }
 }
@@ -249,12 +248,20 @@
 .filter-selected-categories {
   list-style: none;
   margin: 0px;
-  padding-left: 0px;
+  padding: 0px;
+	@media (max-width: $screen-xs) {
+		border: 1px solid $brand-success;
+		border-radius: 4px;
+		margin-bottom: 10px;
+		padding: 5px;
+	}
   li {
     margin-bottom: 3px;
     padding: 0px 3px 3px 0px;
     @media (max-width: $screen-xs) {
       display: inline-block;
+			margin: 5px 0px;
+			padding-bottom: 0px;
     }
   }
 }

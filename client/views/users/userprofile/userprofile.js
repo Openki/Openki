@@ -163,7 +163,6 @@ Template.emailBox.events({
 });
 
 Template.userprofile.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	if (this.data.user._id == Meteor.userId())
