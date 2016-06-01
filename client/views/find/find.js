@@ -100,8 +100,6 @@ Template.find.onCreated(function() {
 
 
 Template.find.onRendered(function() {
-	this.$(".js-remove-category-btn").tooltip();
-
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	$('a[href="/"].navbar-link').addClass('navbar-link-active');
@@ -209,6 +207,7 @@ Template.find.events({
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
+		$(".tooltip").removeClass("show");
 		instance.filter.remove('categories', ''+this).done();
 		updateUrl(event, instance);
 		return false;
