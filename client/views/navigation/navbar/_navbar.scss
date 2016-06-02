@@ -123,3 +123,10 @@
     }
   }
 }
+
+.kiosk,
+.kioskTimetable {
+	.navbar-link > .caret {
+		display: none;
+	}
+}
