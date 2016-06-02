@@ -119,6 +119,10 @@ $event-small-header-color: $event-header-color;
 $event-small-title-color: $event-title-color;
 $event-small-description-color: $event-description-color;
 
+$translate-trans: $checkmark-color;
+$translate-fuzzy: $openki-yellow;
+$translate-untrans: darken($brand-danger, 15%);
+
 //== Screen breakpoints
 //
 // --------------------------------------------------
