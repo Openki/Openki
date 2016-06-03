@@ -84,7 +84,9 @@
 }
 
 .navbar-link-active .nav-marker-caret {
-	opacity: 1;
+	@media (min-width: $screen-sm) {
+		opacity: 1;
+	}
 }
 
 .navbar-covering {
@@ -111,20 +113,8 @@
 
 .navbar .navbar-nav {
 	.dropdown-menu {
-		background-color:lighten($navbar-default-bg, 10%);
-		border: 0;
 		padding-top: 10px;
 		z-index: -1;
-		& > li {
-		 	& > a {
-				@include transition(text-shadow $default-transition-time);
-				color: white;
-				&:hover {
-					background-color: $brand-primary;
-					text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
-				}
-			}
-		}
 	}
 	& > .open > .navbar-link {
 		&:hover,
@@ -133,7 +123,7 @@
 			box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
 		}
 		.nav-marker-bar {
-			background-color: lighten($navbar-default-bg, 10%);
+			background-color: $dropdown-bg;
 			opacity: 1;
 		}
 	}

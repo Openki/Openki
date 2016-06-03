@@ -226,21 +226,15 @@
   }
 }
 
-.main-category {
-  color: darken($brand-primary, 10%) !important;
-}
-
 .js-toggle-subcategories {
-  color: $dropdown-link-color;
   padding: 0 5px;
   &:hover {
-    color: $gray;
     cursor: pointer;
   }
 }
 
 .js-sub-category {
-  border-left: 1px solid $openki-light-blue;
+  border-left: 1px solid $dropdown-link-hover-bg;
   display: none;
   margin-left: 10px;
 }

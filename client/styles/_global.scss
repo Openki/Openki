@@ -7,6 +7,7 @@
   @extend .glyphicon-ok;
   color: $checkmark-color;
   padding-left: 5px;
+	text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
 }
 
 .profilelink {
@@ -76,6 +77,20 @@ a,
 .collapsing,
 .fade {
   @include transition-duration(0s);
+}
+
+.dropdown-menu {
+	border: 0;
+	& > li {
+		& > a,
+		& > a.drodown-item-main {
+			@include transition-property(#{"text-shadow"});
+			@include transition-duration($default-transition-time);
+		}
+		& > a.dropdown-item-main {
+			color: darken($brand-primary, 10%);
+		}
+	}
 }
 
 // .btn-primary

@@ -19,6 +19,9 @@ $site-stage-color: $default-black;
 $navbar-link-covering-bg: lighten($navbar-default-bg, 10%);
 $navbar-default-font-size: large;
 
+// == Login
+$login-bg: $openki-light-blue;
+
 // ==Footer
 $footer-default-bg: $navbar-default-bg;
 $footer-default-color: $navbar-default-color;

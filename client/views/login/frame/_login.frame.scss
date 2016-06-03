@@ -1,19 +1,12 @@
-.login-dropdown {
-	background-color: $gray-lighter;
-  padding-top: 20px;
+.navbar .navbar-nav .dropdown-menu.login-dropdown {
+	padding: 15px 0 0;
   width: 300px;
-	@media (max-width: $screen-xs) {
-		padding: 0px;
-	}
 }
 
 .user-frame {
   @include grid(12);
-  padding: 0 20px;
+	padding: 0;
   text-align: center;
-  @media (max-width: $screen-sm) {
-    padding: 15px;
-  }
 }
 
 .ownuser-frame {
@@ -33,12 +26,7 @@
 
 .login {
   @include grid(12);
-  padding: 0px;
-	@media (max-width: $screen-xs) {
-		background-color: $gray-lighter;
-		border-radius: 4px;
-		padding: 15px 15px 0;
-	}
+	padding: 0 15px;
   & > div,
   & > button,
   & > a {
@@ -137,7 +125,7 @@
 
 .forgot_login {
   @include grid(12);
-  padding: 0px;
+  padding: 0 15px;
   & > p,
   & > div,
   & > button {
