@@ -37,6 +37,9 @@
     .show_duration {
       padding-right: 0px;
     }
+		#edit_event_duration {
+			@extend .form-control;
+		}
     .toggle_duration {
       cursor: pointer;
       padding-top: 15px;
