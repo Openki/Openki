@@ -46,7 +46,7 @@
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
 							 {{mf 'menue.Courses' 'Find'}}
-							 <span class="caret" id="active_caret"></span>
+							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
 					<li>
@@ -55,16 +55,17 @@
 							 <i class="fa fa-pencil" aria-hidden="true"></i>
 							 &nbsp;
 							 {{mf 'menue.Create' 'Create'}}
-							 <span class="caret"></span>
+							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="calendar-link">
+					<li>
 						<a href="{{pathFor 'calendar'}}"
-							 class="navbar-link js-nav-dropdown-close">
+							 class="navbar-link calendar-link js-nav-dropdown-close">
 							 <i class="fa fa-calendar" aria-hidden="true"></i>
 							 &nbsp;
 							 {{mf 'menue.Calendar' 'Calendar'}}
-							 <span class="caret"></span>
+							 <div class="nav-marker-caret"></div>
+							 <div class="nav-marker-bar"></div>
 						</a>
 					</li>
 				</ul>

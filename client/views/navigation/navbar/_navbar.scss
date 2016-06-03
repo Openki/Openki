@@ -1,7 +1,12 @@
 .navbar {
   @extend .navbar-default;
   @extend .navbar-fixed-top;
+	@include transition(box-shadow $default-transition-time);
   border: 0px;
+}
+
+.navbar-covering {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-container {
@@ -21,11 +26,13 @@
 }
 
 .site-name {
+	@include transition(text-shadow $default-transition-time);
   font-size: x-large;
   vertical-align: top;
 }
 
 .site-stage {
+	@include transition(text-shadow $default-transition-time);
   @include rotate(345deg);
   bottom: 2px;
   color: $site-stage-color;
@@ -35,98 +42,103 @@
   left: 105px;
 }
 
-.navbar-brand:hover > .site-stage {
-  color: $default-white;
+.navbar-brand:hover {
+	text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+	& > .site-stage {
+	  color: $default-white;
+	}
 }
 
 .navbar-link {
-  @include transition(background-color $default-transition-time);
+	@include transition-property(#{"background-color, box-shadow, text-shadow"});
+  @include transition-duration($default-transition-time);
   font-size: $navbar-default-font-size;
-  & > .caret {
-    @include scale(-1.5, -1.5);
-    @include transition(color $default-transition-time);
-    bottom: 1px;
-    color: $brand-primary;
-    left: 46%;
-    position: absolute;
-    @media (max-width: $screen-sm) {
-      display: none;
-    }
-  }
+	&:hover {
+		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+	}
 }
 
-.nav > .open {
-  .caret {
-    @include opacity(1);
-    color: $dropdown-bg;
-    z-index: 1099;
-  }
-  & > .dropdown-menu {
-    border-top: 0px;
-  }
+.nav-marker-bar {
+	@include transition-property(#{"background-color, opacity"});
+	@include transition-duration($default-transition-time);
+	background-color: transparent;
+	bottom: -6px;
+	height: 6px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	width: 100%;
 }
 
-.navbar-link-active .caret {
-  color: $navbar-default-link-color;
+.nav-marker-caret {
+	@include transition(opacity $default-transition-time);
+	border: 5px solid;
+	border-color:  transparent transparent $body-bg transparent;
+	box-shadow: 0 5px 5px -5px #fff;
+	bottom: 0;
+	height: 0;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	width: 0;
 }
 
-.navbar-nav > li > a.navbar-link-covering:focus {
-  background: $navbar-link-covering-bg;
-  & > .caret {
-    color: transparent;
-  }
+.navbar-link-active .nav-marker-caret {
+	opacity: 1;
 }
 
-.navbar-nav > .calendar-link > .navbar-link-active > .caret {
-  color: $calendar-navigation-bg;
+.navbar-covering {
+	.nav-marker-caret {
+		opacity: 0;
+	}
+	.navbar-link-active,
+	.navbar-nav > li > .navbar-link-active:hover,
+	.navbar-nav > li > .navbar-link-active:focus {
+		background-color: lighten($navbar-default-bg, 10%);
+		box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
+	}
 }
 
-.navbar-nav > .calendar-link > .navbar-link-covering,
-.navbar-nav > .calendar-link > .navbar-link-covering:focus {
-  background-color: transparent;
-  & > .caret {
-    color: $calendar-navigation-bg;
-  }
+.calendar-link.navbar-link-active {
+	& > .nav-marker-caret {
+		border-bottom-color: $calendar-navigation-bg;
+	}
+	&.navbar-link-covering > .nav-marker-bar {
+		background-color: $calendar-navigation-bg;
+		opacity: 1;
+	}
 }
 
-.login-link {
-  height: $navbar-height;
-  & > a > .caret {
-    bottom: 1px;
-  }
-}
-
-.nav > .login-link.open .caret {
-	color: $gray-lighter;
-}
-
-.navbar-collapse {
-  @media (max-width: $screen-sm) {
-    box-shadow: 0 7px 7px $default-shadow;
-    padding: 0px;
-  }
-}
-
-.navbar-nav {
-  @media (max-width: $screen-sm) {
-    margin: 0px;
-    & > .dropdown > a::after,
-    & > .open > a::after {
-      font-family: FontAwesome;
-      padding-left: 5px;
-    }
-    & > .dropdown > a::after {
-      content: "";
-    }
-    & > .open > a::after {
-      content: "";
-    }
-  }
-}
-
-.kiosk,
-.kioskTimetable {
-	.navbar-link > .caret {
-		display: none;
+.navbar .navbar-nav {
+	.dropdown-menu {
+		background-color:lighten($navbar-default-bg, 10%);
+		border: 0;
+		padding-top: 10px;
+		z-index: -1;
+		& > li {
+		 	& > a {
+				@include transition(text-shadow $default-transition-time);
+				color: white;
+				&:hover {
+					background-color: $brand-primary;
+					text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+				}
+			}
+		}
+	}
+	& > .open > .navbar-link {
+		&:hover,
+		&:focus {
+			background-color: lighten($navbar-default-bg, 10%);
+			box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
+		}
+		.nav-marker-bar {
+			background-color: lighten($navbar-default-bg, 10%);
+			opacity: 1;
+		}
+	}
+	& > .login-link.open > .navbar-link {
+		background-color: lighten($navbar-default-bg, 10%);
+		box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
 	}
 }

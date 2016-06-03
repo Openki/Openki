@@ -395,7 +395,7 @@ $navbar-default-border: darken($navbar-default-bg, 6.5%);
 // Navbar links
 $navbar-default-link-color: #fff;
 $navbar-default-link-hover-color: $navbar-default-link-color;
-$navbar-default-link-hover-bg: transparent;
+$navbar-default-link-hover-bg: $navbar-default-bg;
 $navbar-default-link-active-color: $navbar-default-link-color;
 $navbar-default-link-active-bg: $navbar-default-bg;
 $navbar-default-link-disabled-color: #ccc;

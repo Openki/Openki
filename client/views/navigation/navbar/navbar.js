@@ -10,11 +10,11 @@ Template.navbar.onRendered(function() {
 
 		$(window).scroll(function (event) {
 			if($(window).scrollTop() > 5){
-				this.$('.navbar-container').addClass('navbar-covering-content');
+				this.$('.navbar').addClass('navbar-covering');
 				this.$('.navbar-link-active').addClass('navbar-link-covering');
 			}
 			else {
-				this.$('.navbar-container').removeClass('navbar-covering-content');
+				this.$('.navbar').removeClass('navbar-covering');
 				this.$('.navbar-link').removeClass('navbar-link-covering');
 			}
 		});

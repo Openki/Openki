@@ -160,13 +160,6 @@ Template.calendar.onCreated(function() {
 });
 
 Template.calendar.rendered = function() {
-	$(window).scroll(function (event) {
-		if($(window).scrollTop() > 5)
-			this.$('.switchDate').addClass('over_content');
-		else
-			this.$('.switchDate').removeClass('over_content');
-	});
-
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	$('a[href="' + currentPath + '"].navbar-link').addClass('navbar-link-active');

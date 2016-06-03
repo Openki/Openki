@@ -13,9 +13,8 @@
   text-align: center;
   top: 50px;
   width: 100%;
-  z-index: 2;
+	z-index: 1010;
   .calendar_week {
-    background-color: $calendar-header-bg;
     text-align: center;
     .week {
       color: $calendar-header-text;

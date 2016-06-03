@@ -4,15 +4,15 @@
 			aria-expanded="false"
 			data-toggle="dropdown"
 			role="button">
-		{{#if currentUser}}
-			<span class="glyphicon glyphicon-user"></span>&nbsp;
-			{{currentUser.username}}
-			<span class="caret"></span>
-		{{else}}
-			<span class="fa fa-sign-in"></span>&nbsp;
-			{{mf 'login.navig.unlogged' 'Login/Register'}}
-			<span class="caret"></span>
-		{{/if}}
+			{{#if currentUser}}
+				<span class="glyphicon glyphicon-user"></span>&nbsp;
+				{{currentUser.username}}
+			{{else}}
+				<span class="fa fa-sign-in"></span>&nbsp;
+				{{mf 'login.navig.unlogged' 'Login/Register'}}
+			{{/if}}
+			<div class="nav-marker-caret"></div>
+			<div class="nav-marker-bar"></div>
 		</a>
 	{{/if}}
 </template>
