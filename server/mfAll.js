@@ -48,23 +48,22 @@ mfPkg.syncAll({
       "revisionId": "NfCJg7yjDZz4rCqAn"
     },
     "menue.Courses": {
-      "_id": "mPAffW7HNFYC98Ly8",
       "key": "menue.Courses",
       "lang": "ar",
-      "text": "الدورات",
+      "text": "أيجاد",
       "ctime": 1429058888813,
-      "mtime": 1429058888813,
-      "revisionId": "rsqaRBfKLZ4qNdjGb",
-      "fuzzy": true
+      "mtime": 1464805622988,
+      "revisionId": "ujwizGYubFLadTEdj",
+      "_id": "mPAffW7HNFYC98Ly8"
     },
     "menue.Create": {
-      "_id": "r6hznW88EmBZezpxY",
       "key": "menue.Create",
       "lang": "ar",
-      "text": "خلق",
+      "text": "أنشاء",
       "ctime": 1429058926630,
-      "mtime": 1429058926630,
-      "revisionId": "SgAKrKWfR3zrcy95L"
+      "mtime": 1464805638690,
+      "revisionId": "HhdtH9zJxHFAze6MF",
+      "_id": "r6hznW88EmBZezpxY"
     },
     "profile.its_you": {
       "_id": "nhSBY9h9XfP9YkQ3b",
@@ -11409,13 +11408,58 @@ mfPkg.syncAll({
       "revisionId": "mwqkoWP99st4fA2t6"
     },
     "Profile.translate_this_page": {
-      "_id": "ZzbqYpHReF9DWQJYD",
       "key": "Profile.translate_this_page",
       "lang": "el",
-      "text": "Βοηθήστε μας στη μετάφραση αυτής της σελίδας εδώ",
+      "text": "Βοήθησε μας στη μετάφραση της πλατφόρμας",
       "ctime": 1448108188774,
-      "mtime": 1448108188774,
-      "revisionId": "j2doz7xg3Pe24LBM4"
+      "mtime": 1464990441584,
+      "revisionId": "GszckQBNnb2nqaihr",
+      "_id": "ZzbqYpHReF9DWQJYD"
+    },
+    "_button.cancel": {
+      "key": "_button.cancel",
+      "lang": "el",
+      "text": "Ακύρωση",
+      "ctime": 1464986832025,
+      "mtime": 1464986832025,
+      "revisionId": "tXCm9EWYebgLWbB8c",
+      "_id": "cfu5SfjbZMiswbGzM"
+    },
+    "_button.delete": {
+      "key": "_button.delete",
+      "lang": "el",
+      "text": "Διαγραφή",
+      "ctime": 1464986837689,
+      "mtime": 1464986837689,
+      "revisionId": "6pSvYEFbKsMcpGsAs",
+      "_id": "RqBynTT6pDqzFMTgk"
+    },
+    "_button.edit": {
+      "key": "_button.edit",
+      "lang": "el",
+      "text": "Επεξεργασία",
+      "ctime": 1464986810505,
+      "mtime": 1464986810505,
+      "revisionId": "kqL3QwJYhGLTbwgvs",
+      "_id": "T6mx5y8iA6DekS5id"
+    },
+    "_button.save": {
+      "key": "_button.save",
+      "lang": "el",
+      "text": "Αποθήκευση",
+      "ctime": 1464986843540,
+      "mtime": 1464986843540,
+      "revisionId": "EFnqWYsix7A44d7y5",
+      "_id": "6QJuvHmMzuHcsMNeQ"
+    },
+    "_inputField.optional": {
+      "key": "_inputField.optional",
+      "lang": "el",
+      "text": "(προαιρετικό)",
+      "ctime": 1464986849883,
+      "mtime": 1464986849883,
+      "revisionId": "DjXhzH24nc3XzPKjT",
+      "_id": "8MmR9Mcw4mjfqPSva"
     },
     "backToKiosk": {
       "_id": "gjZAfinauwzEPvE33",
@@ -11426,6 +11470,60 @@ mfPkg.syncAll({
       "mtime": 1448200022722,
       "revisionId": "zTsZfZhEjeLCmTR7q"
     },
+    "calendar.button.nextMonth": {
+      "key": "calendar.button.nextMonth",
+      "lang": "el",
+      "text": "ένας μήνας",
+      "ctime": 1464986871106,
+      "mtime": 1464986871106,
+      "revisionId": "ctMHv2QunSHW7PRHf",
+      "_id": "2ib2Kq7nwsGTavCyk"
+    },
+    "calendar.button.nextWeek": {
+      "key": "calendar.button.nextWeek",
+      "lang": "el",
+      "text": "μία εβδομάδα",
+      "ctime": 1464986882921,
+      "mtime": 1464986882921,
+      "revisionId": "SkPCBig7A7w9d8roZ",
+      "_id": "8uSQ9fBvAFLWBxkar"
+    },
+    "calendar.button.nextYear": {
+      "key": "calendar.button.nextYear",
+      "lang": "el",
+      "text": "ένας χρόνος",
+      "ctime": 1464986888498,
+      "mtime": 1464986888498,
+      "revisionId": "PYbW2EzThLjzNJpGJ",
+      "_id": "mw5kAqDjunbpQKRKq"
+    },
+    "calendar.button.previousMonth": {
+      "key": "calendar.button.previousMonth",
+      "lang": "el",
+      "text": "ένας μήνας",
+      "ctime": 1464986911485,
+      "mtime": 1464986911485,
+      "revisionId": "rkA9Pfavynf38oYeS",
+      "_id": "h5s6N2jFa7mzFzQEk"
+    },
+    "calendar.button.previousYear": {
+      "key": "calendar.button.previousYear",
+      "lang": "el",
+      "text": "ένας χρόνος",
+      "ctime": 1464986918646,
+      "mtime": 1464986918646,
+      "revisionId": "fk4hPKPD9T3ZoomXC",
+      "_id": "tdBfgKx3eNDPNasw2"
+    },
+    "calendar.button.previousweek": {
+      "key": "calendar.button.previousweek",
+      "lang": "el",
+      "text": "μία εβδομάδα",
+      "ctime": 1464986924325,
+      "mtime": 1464986924325,
+      "revisionId": "5JDi6DNaH9fcd88nA",
+      "_id": "smWGkJtbanAP7EGms"
+    },
     "calendar.noCoursesThisDay": {
       "_id": "SAigDjEnDigj3YQZk",
       "key": "calendar.noCoursesThisDay",
@@ -11434,6 +11532,15 @@ mfPkg.syncAll({
       "ctime": 1448200104240,
       "mtime": 1448200104240,
       "revisionId": "ZTn3W8gMHTpkJs8o7"
+    },
+    "calendar.weekNumber": {
+      "key": "calendar.weekNumber",
+      "lang": "el",
+      "text": "Εβδομάδα",
+      "ctime": 1464986931283,
+      "mtime": 1464986931283,
+      "revisionId": "gcoqu2cjkzBi3iyDS",
+      "_id": "HbtbfnW7zjJvfDvZB"
     },
     "categories.no_categories": {
       "_id": "9atg67zFw4Zt6xLsn",
@@ -11452,6 +11559,15 @@ mfPkg.syncAll({
       "ctime": 1448201611895,
       "mtime": 1448201611895,
       "revisionId": "kE6s9zRiJoREfXAKq"
+    },
+    "categories.show_courses": {
+      "key": "categories.show_courses",
+      "lang": "el",
+      "text": "Εμφάνιση όλων των μαθημάτων σε",
+      "ctime": 1464987017493,
+      "mtime": 1464987017493,
+      "revisionId": "rFPCQgMLH5Dpbnf6N",
+      "_id": "yEFJhbf3NENKqgQwu"
     },
     "categories.title.categories": {
       "_id": "W9iKKEXyC2X63BNQE",
@@ -11579,6 +11695,15 @@ mfPkg.syncAll({
       "mtime": 1448108246257,
       "revisionId": "2irDJEp4ut46RFoKr"
     },
+    "category.gardening": {
+      "key": "category.gardening",
+      "lang": "el",
+      "text": "Κηπουρική / Γεωργία",
+      "ctime": 1464987074828,
+      "mtime": 1464987074828,
+      "revisionId": "xyoGuRXKzxYDmMtHi",
+      "_id": "io3vCGKfbStsy3xEk"
+    },
     "category.geography": {
       "_id": "wcfs2BNEwnbWuXkaT",
       "key": "category.geography",
@@ -11588,6 +11713,15 @@ mfPkg.syncAll({
       "mtime": 1448106482930,
       "revisionId": "yGNZYLqYrxuKfZKsb"
     },
+    "category.handicraft": {
+      "key": "category.handicraft",
+      "lang": "el",
+      "text": "Χειροτεχνία",
+      "ctime": 1464987093115,
+      "mtime": 1464987093115,
+      "revisionId": "MbufGPQQZpaX4jYaC",
+      "_id": "r8gd8h59uQoNJcYno"
+    },
     "category.history": {
       "_id": "Prfnc8R3sh9DdTD4p",
       "key": "category.history",
@@ -11596,6 +11730,15 @@ mfPkg.syncAll({
       "ctime": 1448105783224,
       "mtime": 1448105783224,
       "revisionId": "tydoEchjFZtmTEsBv"
+    },
+    "category.humanities": {
+      "key": "category.humanities",
+      "lang": "el",
+      "text": "Τέχνες & Ανθρωπιστικές Επιστήμες",
+      "ctime": 1464987110056,
+      "mtime": 1464987110056,
+      "revisionId": "PzBGtrqt4Tx9pe9ia",
+      "_id": "vsxim9AWnEr8Bcm5o"
     },
     "category.internet": {
       "_id": "8NtDquLvN3yb5yn2T",
@@ -11659,6 +11802,24 @@ mfPkg.syncAll({
       "ctime": 1448199634333,
       "mtime": 1448199634333,
       "revisionId": "iuWv3ARjonDB35ajX"
+    },
+    "category.metalwood": {
+      "key": "category.metalwood",
+      "lang": "el",
+      "text": "Ξύλο / Μέταλλο",
+      "ctime": 1464992099344,
+      "mtime": 1464992099344,
+      "revisionId": "azH8cK3DSzFLJkpw5",
+      "_id": "fxccAT39XHHFDGRuN"
+    },
+    "category.misc": {
+      "key": "category.misc",
+      "lang": "el",
+      "text": "Διάφορα",
+      "ctime": 1464987121466,
+      "mtime": 1464987121466,
+      "revisionId": "YvnnPpGNxYmZFnuJQ",
+      "_id": "t2sPctxyFHgioDydg"
     },
     "category.music": {
       "_id": "GwHyyJ4fmWzEg4Hv7",
@@ -11777,6 +11938,15 @@ mfPkg.syncAll({
       "mtime": 1448106748353,
       "revisionId": "6Bx8Q7pF4RBNsMY6a"
     },
+    "category.♥undefined♥": {
+      "key": "category.♥undefined♥",
+      "lang": "el",
+      "text": "♥Εκτός κατηγοριών♥",
+      "ctime": 1464990184033,
+      "mtime": 1464990184033,
+      "revisionId": "yKQH4c9gWcNrtjneQ",
+      "_id": "HrSLSLXECrmdWJWjQ"
+    },
     "comment.editing.error": {
       "_id": "TvrgoxQHLhvTXBDHg",
       "key": "comment.editing.error",
@@ -11787,13 +11957,13 @@ mfPkg.syncAll({
       "revisionId": "BPnBbMhvvu47aAjtJ"
     },
     "course.description.placeholder": {
-      "_id": "AS3YMSGk4NnrvYHMF",
       "key": "course.description.placeholder",
       "lang": "el",
-      "text": "Περιέγραψε την ιδέα σου, ώστε περισσότερος κόσμος να την βρει και να ξέρει τι να περιμένει.",
+      "text": "Περιέγραψε την ιδέα σου, ώστε περισσότερος κόσμος να την ανακαλύψει και να ξέρει τι να περιμένει.",
       "ctime": 1448108042572,
-      "mtime": 1448108042572,
-      "revisionId": "NwycKggTCoFmSHMT2"
+      "mtime": 1464987197180,
+      "revisionId": "ezz677qGghhvnvaeY",
+      "_id": "AS3YMSGk4NnrvYHMF"
     },
     "course.detail.remove": {
       "_id": "d6yXMLje7TF8KAe7N",
@@ -11805,22 +11975,22 @@ mfPkg.syncAll({
       "revisionId": "6h3w5w6Cyhi8LFjig"
     },
     "course.details.del_btn": {
-      "_id": "ae3wPuPiLp3PzA693",
       "key": "course.details.del_btn",
       "lang": "el",
-      "text": "Διαγραφή",
+      "text": "Διαγραφή μαθήματος",
       "ctime": 1448107772740,
-      "mtime": 1448107772740,
-      "revisionId": "NoSyA2tpsddyYWWTr"
+      "mtime": 1464990195218,
+      "revisionId": "gi4WJ4rTr88P4sxip",
+      "_id": "ae3wPuPiLp3PzA693"
     },
     "course.details.edit_btn": {
-      "_id": "Kiqrowe7FKxoQD5Qm",
       "key": "course.details.edit_btn",
       "lang": "el",
-      "text": "Επεξεργασία",
+      "text": "Επεξεργασία μαθήματος",
       "ctime": 1448105868340,
-      "mtime": 1448105868340,
-      "revisionId": "gNFpBYjjaJfBMEBcF"
+      "mtime": 1464987939096,
+      "revisionId": "xB4wNADtnrKsCH6eQ",
+      "_id": "Kiqrowe7FKxoQD5Qm"
     },
     "course.details.repl_btn": {
       "_id": "buvniBRCeF7GECymZ",
@@ -11894,6 +12064,15 @@ mfPkg.syncAll({
       "mtime": 1448201563725,
       "revisionId": "xgaxHvkBZA4EBRWps"
     },
+    "course.discussion.comment_btn.update": {
+      "key": "course.discussion.comment_btn.update",
+      "lang": "el",
+      "text": "Ανανέωσε το σχόλιο μου!",
+      "ctime": 1464988566785,
+      "mtime": 1464988566785,
+      "revisionId": "AJhmfqHSbmrcKTHw4",
+      "_id": "9Kr6ySnCioPW4D3JH"
+    },
     "course.discussion.comment_btn.write": {
       "_id": "mYpNtq3evHsekvoAE",
       "key": "course.discussion.comment_btn.write",
@@ -11922,13 +12101,13 @@ mfPkg.syncAll({
       "revisionId": "JxtLqeLoF8rZQZkoA"
     },
     "course.discussion.text_placeholder_answer": {
-      "_id": "Ls5yJeJStdhoWzNw4",
       "key": "course.discussion.text_placeholder_answer",
       "lang": "el",
-      "text": "Η απάντηση σας",
+      "text": "Η απάντηση σου",
       "ctime": 1448106148438,
-      "mtime": 1448106148438,
-      "revisionId": "pWa2maXBiZgZ79W9G"
+      "mtime": 1464987488021,
+      "revisionId": "87e4dEQFjZXhyeiC2",
+      "_id": "Ls5yJeJStdhoWzNw4"
     },
     "course.discussion.title_placeholder": {
       "_id": "uva57owrH44qYgx2K",
@@ -12020,6 +12199,24 @@ mfPkg.syncAll({
       "mtime": 1448105393857,
       "revisionId": "RMreQtqziPScn4k6f"
     },
+    "course.edit.intern": {
+      "key": "course.edit.intern",
+      "lang": "el",
+      "text": "Εσωτερικό μάθημα:",
+      "ctime": 1464988208762,
+      "mtime": 1464988208762,
+      "revisionId": "hoB9uYh3EqJmPuQog",
+      "_id": "jtLbgMJhc7FiXhhKb"
+    },
+    "course.edit.internDescription": {
+      "key": "course.edit.internDescription",
+      "lang": "el",
+      "text": "Εμφάνιση του μαθήματος μόνο σε ομάδα ή τοποθεσία",
+      "ctime": 1464988256409,
+      "mtime": 1464990549672,
+      "revisionId": "ec8JGAEKb4JvbP4LA",
+      "_id": "Z2jM7HPehKsoqRunb"
+    },
     "course.edit.needs.role": {
       "_id": "6qJFxmpZyokGJggo2",
       "key": "course.edit.needs.role",
@@ -12039,31 +12236,31 @@ mfPkg.syncAll({
       "revisionId": "muinxBKg5vn5gEssm"
     },
     "course.edit.pls_select": {
-      "_id": "Zd4Shrg5WPENNog69",
       "key": "course.edit.pls_select",
       "lang": "el",
-      "text": "Παρακαλώ επιλέξτε",
+      "text": "Παρακαλώ επέλεξε",
       "ctime": 1448105314953,
-      "mtime": 1448105314953,
-      "revisionId": "mdsQMpciFn33QP6yu"
+      "mtime": 1464987500863,
+      "revisionId": "xuEyzFsSSLPBYLjyM",
+      "_id": "Zd4Shrg5WPENNog69"
     },
     "course.edit.pls_select_region": {
-      "_id": "Zi9k8YuCLYFPcyufJ",
       "key": "course.edit.pls_select_region",
       "lang": "el",
-      "text": "Παρακαλώ επιλέξτε περιοχή",
+      "text": "Παρακαλώ επέλεξε περιοχή",
       "ctime": 1448200168336,
-      "mtime": 1448200168336,
-      "revisionId": "S3QWPBhBcrSgHKKhe"
+      "mtime": 1464987507425,
+      "revisionId": "gY9cywaJgvQ2qNdPH",
+      "_id": "Zi9k8YuCLYFPcyufJ"
     },
     "course.edit.propose": {
-      "_id": "qTugNj45dsB4nPk2s",
       "key": "course.edit.propose",
       "lang": "el",
-      "text": "Προτείνετε νέο μάθημα",
+      "text": "Πρότεινε νέο μάθημα",
       "ctime": 1448105811538,
-      "mtime": 1448105811538,
-      "revisionId": "rSSXSrFHhurPdAZbg"
+      "mtime": 1464987525932,
+      "revisionId": "axqPqzJ5jTriMEa8i",
+      "_id": "qTugNj45dsB4nPk2s"
     },
     "course.edit.region": {
       "_id": "zYmHBf54r2NDbBhhS",
@@ -12174,13 +12371,13 @@ mfPkg.syncAll({
       "revisionId": "ZxMnRuePPBeAZZ42c"
     },
     "course.event.edit.room": {
-      "_id": "a73nkoEavct3eKwgo",
       "key": "course.event.edit.room",
       "lang": "el",
-      "text": "Αίθουσα: (προαιρετικό)",
+      "text": "Αίθουσα:",
       "ctime": 1448105077615,
-      "mtime": 1448105077615,
-      "revisionId": "7uY3fveWFQMN9QTNR"
+      "mtime": 1464988672588,
+      "revisionId": "9LFQnCbMiX5HygeYu",
+      "_id": "a73nkoEavct3eKwgo"
     },
     "course.event.edit.save_btn": {
       "_id": "bhFQLPq3QphRuxqhD",
@@ -12250,13 +12447,13 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "course.events.ongoinglist": {
-      "_id": "SdQHfEaxe6vssBY4N",
       "key": "course.events.ongoinglist",
       "lang": "el",
-      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σας έχουν απορριφθεί.",
+      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σου έχουν απορριφθεί.",
       "ctime": 1448200682367,
-      "mtime": 1448200682367,
-      "revisionId": "zfK5zGdY6Yb3Txqqx"
+      "mtime": 1464987529886,
+      "revisionId": "oA4or87PXHWtRrC4t",
+      "_id": "SdQHfEaxe6vssBY4N"
     },
     "course.events.pastList": {
       "_id": "LXs7QwDfsCHDQb9fn",
@@ -12287,6 +12484,42 @@ mfPkg.syncAll({
       "mtime": 1448201242585,
       "revisionId": "EFzTSDqpnsazZPYZG"
     },
+    "course.group.addText": {
+      "key": "course.group.addText",
+      "lang": "el",
+      "text": "Πρόσθεση ομάδας",
+      "ctime": 1464986779712,
+      "mtime": 1464986779712,
+      "revisionId": "nBBQrTNXcpmJQ6aia",
+      "_id": "vmuDRPKAP9P3ct2Ae"
+    },
+    "course.group.confirmAddButton": {
+      "key": "course.group.confirmAddButton",
+      "lang": "el",
+      "text": "Αναβάθμιση",
+      "ctime": 1464987221620,
+      "mtime": 1464987221620,
+      "revisionId": "PTikp4jMr9nfFhXCw",
+      "_id": "ruqEfSEDHiFP8QK9w"
+    },
+    "course.group.groupMadeOrganizer": {
+      "key": "course.group.groupMadeOrganizer",
+      "lang": "el",
+      "text": "Τα μέλη της ομάδας έχουν τώρα δικαίωμα επεξεργασίας",
+      "ctime": 1464989191957,
+      "mtime": 1464989191957,
+      "revisionId": "K9ocZ2n3Hu5epQKzZ",
+      "_id": "ADsgbYxE7cKp49ana"
+    },
+    "course.group.remove": {
+      "key": "course.group.remove",
+      "lang": "el",
+      "text": "Αφαίρεση",
+      "ctime": 1464987240065,
+      "mtime": 1464987240065,
+      "revisionId": "QpYssCMhswLBwg3da",
+      "_id": "KeEJiTGxgTm8e2Mna"
+    },
     "course.history.created_by": {
       "_id": "u94uS37epc7H57mLy",
       "key": "course.history.created_by",
@@ -12314,14 +12547,23 @@ mfPkg.syncAll({
       "mtime": 1448199749232,
       "revisionId": "2QkFMqPFK7uiNhDBq"
     },
+    "course.list.status_titles.has_team": {
+      "key": "course.list.status_titles.has_team",
+      "lang": "el",
+      "text": "Έχει οργανωτική ομάδα",
+      "ctime": 1464987261049,
+      "mtime": 1464987261049,
+      "revisionId": "ZGPc27u5v72h8eEGa",
+      "_id": "aqoitmYCaKuqNaCtR"
+    },
     "course.list.status_titles.needs_host": {
-      "_id": "9nKKuKpahwFwj7Nro",
       "key": "course.list.status_titles.needs_host",
       "lang": "el",
-      "text": "Χρειάζεται&nbsp;a&nbsp;οικοδεσπότη",
+      "text": "Χρειάζεται οικοδεσπότη",
       "ctime": 1448107371558,
-      "mtime": 1448107371558,
-      "revisionId": "8mNxNQYEj4BYBFP2q"
+      "mtime": 1464987246641,
+      "revisionId": "mfcmngeHAdazqw3k3",
+      "_id": "9nKKuKpahwFwj7Nro"
     },
     "course.list.status_titles.needs_mentor": {
       "_id": "yG54wjq32SCFndunt",
@@ -12342,22 +12584,22 @@ mfPkg.syncAll({
       "revisionId": "hByuq5e9EJ7beSgKn"
     },
     "course.list.status_titles.u_are_host": {
-      "_id": "nsfZJ6kSEqS6kwZK5",
       "key": "course.list.status_titles.u_are_host",
       "lang": "el",
-      "text": "Είστε οικοδεσπότης",
+      "text": "Είσαι οικοδεσπότης",
       "ctime": 1448199616057,
-      "mtime": 1448199616057,
-      "revisionId": "qkE5r6A5z8nBwiRaB"
+      "mtime": 1464987547413,
+      "revisionId": "qt5PT5gxZ4vL5iejC",
+      "_id": "nsfZJ6kSEqS6kwZK5"
     },
     "course.list.status_titles.u_are_mentor": {
-      "_id": "GrF3kwD2CbgJR43xw",
       "key": "course.list.status_titles.u_are_mentor",
       "lang": "el",
-      "text": "Είστε μέντορας",
+      "text": "Είσαι μέντορας",
       "ctime": 1448200004695,
-      "mtime": 1448200004695,
-      "revisionId": "Fyhy4tRyH6e9Je9aY"
+      "mtime": 1464987551915,
+      "revisionId": "AuWpY6HhJ7GntgNQF",
+      "_id": "GrF3kwD2CbgJR43xw"
     },
     "course.list.status_titles.u_are_organizer": {
       "_id": "kcphGzr6SiCKZwsZZ",
@@ -12376,6 +12618,15 @@ mfPkg.syncAll({
       "ctime": 1448199788830,
       "mtime": 1448199788830,
       "revisionId": "tJ98HHwEdtD5Nr2Qt"
+    },
+    "course.propose.EventInfo": {
+      "key": "course.propose.EventInfo",
+      "lang": "el",
+      "text": "Αν θες να δημοσιεύσεις μία μεμονωμένη συνάντηση, χρησιμοποίησε αυτή τη φόρμα:",
+      "ctime": 1464988487858,
+      "mtime": 1464988487858,
+      "revisionId": "yFru2wyXShPWhyuS2",
+      "_id": "qSAQhY8KsJGosn3PD"
     },
     "course.roles.enrol": {
       "_id": "qpm3ECsFGmFuMhzCJ",
@@ -12405,13 +12656,13 @@ mfPkg.syncAll({
       "revisionId": "ByW9a7SdueHQfY9iE"
     },
     "course.roles.leave_message": {
-      "_id": "SZNnJoCYcibBAqLG5",
       "key": "course.roles.leave_message",
       "lang": "el",
-      "text": "Αφήστε ένα μήνυμα/επιθυμία/ενδιαφέρον εδώ:",
+      "text": "Άφησε ένα μήνυμα/επιθυμία/ενδιαφέρον εδώ:",
       "ctime": 1448107845799,
-      "mtime": 1448107845799,
-      "revisionId": "4XRoacyGikB4CmaPN"
+      "mtime": 1464987567190,
+      "revisionId": "gRMQKks3CRFqe2vGn",
+      "_id": "SZNnJoCYcibBAqLG5"
     },
     "course.roles.maketeam": {
       "_id": "zg7tvavtFLBG2dhoJ",
@@ -12504,13 +12755,13 @@ mfPkg.syncAll({
       "revisionId": "mooCsAEEpwTra9bzF"
     },
     "course.title.placeholder": {
-      "_id": "H8roN9oKrHxgk3mCm",
       "key": "course.title.placeholder",
       "lang": "el",
-      "text": "τι θα θέλατε να μάθετε;",
+      "text": "τι θα ήθελες να μάθεις;",
       "ctime": 1448105660012,
-      "mtime": 1448105660012,
-      "revisionId": "ApyaShT6T5H8xorPG"
+      "mtime": 1464987576777,
+      "revisionId": "akriq5xjFesq3LLXP",
+      "_id": "H8roN9oKrHxgk3mCm"
     },
     "courses.all": {
       "_id": "q2s8ikvt6xD3sEkcc",
@@ -12531,13 +12782,22 @@ mfPkg.syncAll({
       "revisionId": "3DYXDhX4vdWxu9rzm"
     },
     "courses.none": {
-      "_id": "QHBNyiwTMeEPJBH5q",
       "key": "courses.none",
       "lang": "el",
-      "text": "δεν βρέθηκαν μαθήματα",
+      "text": "δε βρέθηκαν μαθήματα",
       "ctime": 1448199797104,
-      "mtime": 1448199797104,
-      "revisionId": "bSadCFegKyXss3QQG"
+      "mtime": 1464989084703,
+      "revisionId": "zDZTcjW6WWniCxzT4",
+      "_id": "QHBNyiwTMeEPJBH5q"
+    },
+    "discussion.anonymous": {
+      "key": "discussion.anonymous",
+      "lang": "el",
+      "text": "Ανώνυμος",
+      "ctime": 1464988610369,
+      "mtime": 1464988610369,
+      "revisionId": "tLmzpyFKMCHmQ5SdR",
+      "_id": "EMbiRj7ZNAc3AjEDH"
     },
     "editable.add_text": {
       "_id": "RF2MNMJJgngcrkMcy",
@@ -12557,14 +12817,23 @@ mfPkg.syncAll({
       "mtime": 1448200422471,
       "revisionId": "C8mP3fs5Lff8MGpZd"
     },
+    "editable.link.placeholder": {
+      "key": "editable.link.placeholder",
+      "lang": "el",
+      "text": "Επικόλληση σύνδεσμου εδώ...",
+      "ctime": 1464989140119,
+      "mtime": 1464989140119,
+      "revisionId": "tQSiMDC7aSiNm7uSk",
+      "_id": "wrMHw2YNDhuExNr4E"
+    },
     "editable.sorrychanged": {
-      "_id": "DScCuFH9B2TQsgb9n",
       "key": "editable.sorrychanged",
       "lang": "el",
-      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σας έχουν απορριφθεί.",
+      "text": "Λυπάμαι, κάποιος άλλος μόλις το άλλαξε αυτό. Οι αλλαγές σου έχουν απορριφθεί.",
       "ctime": 1448200666966,
-      "mtime": 1448200666966,
-      "revisionId": "M5PAQ6m9oNHKDZ3EW"
+      "mtime": 1464987587169,
+      "revisionId": "jCDB25XzDuNgjQdhB",
+      "_id": "DScCuFH9B2TQsgb9n"
     },
     "editable.store": {
       "_id": "TPPpwNRGvFdv7Y3a3",
@@ -12583,6 +12852,78 @@ mfPkg.syncAll({
       "ctime": 1448108380034,
       "mtime": 1448108380034,
       "revisionId": "P6kg5A2eMiH94jLbA"
+    },
+    "event.edit.addressSearch": {
+      "key": "event.edit.addressSearch",
+      "lang": "el",
+      "text": "Αναζήτηση",
+      "ctime": 1464987310318,
+      "mtime": 1464987310318,
+      "revisionId": "6yvPY5m4hHHMzuqx5",
+      "_id": "nQKJt3EhQvHZGroQS"
+    },
+    "event.edit.internal": {
+      "key": "event.edit.internal",
+      "lang": "el",
+      "text": "Εσωτερικό",
+      "ctime": 1464987315884,
+      "mtime": 1464987315884,
+      "revisionId": "hRz62AP4nyHjpSuGB",
+      "_id": "z3otoGBfPkeReDGcq"
+    },
+    "event.edit.internal.description": {
+      "key": "event.edit.internal.description",
+      "lang": "el",
+      "text": "Η συνάντηση θα εμφανίζεται μόνο στις λεπτομέρειες της ομάδας και της τοποθεσίας",
+      "ctime": 1464988295825,
+      "mtime": 1464988295825,
+      "revisionId": "AKTQzPuwhWzNSynxr",
+      "_id": "GAjdJCEr8qvEqzmuT"
+    },
+    "event.edit.locationAddressPlaceholder": {
+      "key": "event.edit.locationAddressPlaceholder",
+      "lang": "el",
+      "text": "Διεύθυνση",
+      "ctime": 1464987326177,
+      "mtime": 1464987326177,
+      "revisionId": "yxQoF6QQ3jHviQjGm",
+      "_id": "KATHXX9eecsaPkm5D"
+    },
+    "event.edit.locationChange": {
+      "key": "event.edit.locationChange",
+      "lang": "el",
+      "text": "Αλλαγή τοποθεσίας",
+      "ctime": 1464987336915,
+      "mtime": 1464987336915,
+      "revisionId": "5hxyPgF9dMHzafQCY",
+      "_id": "JwfNvwX4Xd9nqHnWt"
+    },
+    "event.edit.locationNamePlaceholder": {
+      "key": "event.edit.locationNamePlaceholder",
+      "lang": "el",
+      "text": "Που;",
+      "ctime": 1464987340915,
+      "mtime": 1464987340915,
+      "revisionId": "YgAm84Pj5KwCYEpb6",
+      "_id": "NCaEsmz7aczQ8PkGX"
+    },
+    "event.edit.locations.foundnone": {
+      "key": "event.edit.locations.foundnone",
+      "lang": "el",
+      "text": "Δεν βρέθηκαν τοποθεσίες",
+      "ctime": 1464987350020,
+      "mtime": 1464987350020,
+      "revisionId": "bRGBQ4bpRBMgg3XRB",
+      "_id": "JzQCiYBbWrb53awz9"
+    },
+    "event.removeConfirm": {
+      "key": "event.removeConfirm",
+      "lang": "el",
+      "text": "Διαγραφή συνάντησης {TITLE};",
+      "ctime": 1464989990867,
+      "mtime": 1464989990867,
+      "revisionId": "TEqSKu7bRZwnh6H6B",
+      "_id": "ArczzNRmdXCP8Bjto"
     },
     "event.removed": {
       "_id": "MviWXxhM9DeiG4xrS",
@@ -12629,6 +12970,24 @@ mfPkg.syncAll({
       "mtime": 1448199127276,
       "revisionId": "tYSdtbEothwmJ2ZSF"
     },
+    "event.replication.repeat": {
+      "key": "event.replication.repeat",
+      "lang": "el",
+      "text": "Επανάληψη",
+      "ctime": 1464987365891,
+      "mtime": 1464987365891,
+      "revisionId": "b38gShXvzmW5rhA94",
+      "_id": "nnAFi8dqn4TuiG7b2"
+    },
+    "event.title.placeholder": {
+      "key": "event.title.placeholder",
+      "lang": "el",
+      "text": "Βάλε έναν ωραίο τίτλο εδώ",
+      "ctime": 1464989306192,
+      "mtime": 1464989306192,
+      "revisionId": "oAQ9szKWzejTauejA",
+      "_id": "RWoJtxcLHqcnLTc3B"
+    },
     "event.windowtitle": {
       "_id": "yZJwjRhk2oJt7GYD5",
       "key": "event.windowtitle",
@@ -12664,6 +13023,15 @@ mfPkg.syncAll({
       "ctime": 1448200059168,
       "mtime": 1448200059168,
       "revisionId": "ePYGHwaT2coa5qXFb"
+    },
+    "find.filter-no-categories-found": {
+      "key": "find.filter-no-categories-found",
+      "lang": "el",
+      "text": "Δε βρέθηκαν κατηγορίες",
+      "ctime": 1464989203672,
+      "mtime": 1464989203672,
+      "revisionId": "3uTTSnCLuS7QGHN66",
+      "_id": "5XYhcinAiry5Jppiq"
     },
     "find.filter.add_category": {
       "_id": "8AGDKJxzXvbeQR5Bq",
@@ -12775,6 +13143,24 @@ mfPkg.syncAll({
       "revisionId": "6JjgZ4BNRDG8Amyci",
       "fuzzy": true
     },
+    "find.searchAllRegions": {
+      "key": "find.searchAllRegions",
+      "lang": "el",
+      "text": "Αναζήτηση σε όλες τις περιοχές",
+      "ctime": 1464988600370,
+      "mtime": 1464988600370,
+      "revisionId": "5q5comdh7rneRCvZR",
+      "_id": "BrkrhdC9XowrdnFrL"
+    },
+    "find.searchCategories.placeholder": {
+      "key": "find.searchCategories.placeholder",
+      "lang": "el",
+      "text": "Πρόσθεση κατηγορίας",
+      "ctime": 1464987393953,
+      "mtime": 1464987393953,
+      "revisionId": "Hd5xH4gmWGt5jCBtx",
+      "_id": "tNZFTirmPZFiboicQ"
+    },
     "find.search_filter.title": {
       "_id": "N8aE5edvfL8nXYHAs",
       "key": "find.search_filter.title",
@@ -12838,6 +13224,24 @@ mfPkg.syncAll({
       "mtime": 1448201340842,
       "revisionId": "LkeiBHZYc54d6JSBp"
     },
+    "forgot": {
+      "key": "forgot",
+      "lang": "el",
+      "text": "Ξέχασα τον κωδικό μου",
+      "ctime": 1464990047250,
+      "mtime": 1464990047250,
+      "revisionId": "mM9o4KTtkkewTpdnt",
+      "_id": "PbNT4EZNtnfLoDr3Y"
+    },
+    "forgot.close": {
+      "key": "forgot.close",
+      "lang": "el",
+      "text": "Δεν πειράζει",
+      "ctime": 1464987411197,
+      "mtime": 1464987411197,
+      "revisionId": "hN3KNTuq4AXzWjiTq",
+      "_id": "3LnBisH6jL9dXYN87"
+    },
     "frame.login.email": {
       "_id": "5X4pty3Tp6EiR5BEe",
       "key": "frame.login.email",
@@ -12855,6 +13259,15 @@ mfPkg.syncAll({
       "ctime": 1448106194776,
       "mtime": 1448106194776,
       "revisionId": "ejJJje4m5PBFbwTzD"
+    },
+    "frame.login.username": {
+      "key": "frame.login.username",
+      "lang": "el",
+      "text": "Όνομα χρήστη",
+      "ctime": 1464987418201,
+      "mtime": 1464987418201,
+      "revisionId": "xEkezPq75oW46dALw",
+      "_id": "sMqAAKPFs8Fi9MxKf"
     },
     "frame.login.usernameOrEmail": {
       "_id": "CPfTRKwgZvd8S9M98",
@@ -12883,6 +13296,159 @@ mfPkg.syncAll({
       "mtime": 1448199119440,
       "revisionId": "mJdHw4EmhBBr59KRW"
     },
+    "group.claim.placeholder": {
+      "key": "group.claim.placeholder",
+      "lang": "el",
+      "text": "Η βασική ιδέα",
+      "ctime": 1464987625369,
+      "mtime": 1464987625369,
+      "revisionId": "6RkTcYjiExeSdqu2A",
+      "_id": "55SwqnFxSZhieapEi"
+    },
+    "group.create.success": {
+      "key": "group.create.success",
+      "lang": "el",
+      "text": "Η ομάδα δημιουργήθηκε",
+      "ctime": 1464987633627,
+      "mtime": 1464987633627,
+      "revisionId": "pegrg68nJFd4qht7u",
+      "_id": "DCfALevb3dcaqZGA7"
+    },
+    "group.description.placeholder": {
+      "key": "group.description.placeholder",
+      "lang": "el",
+      "text": "Περιέγραψε το κοινό, τα ενδιαφέροντα και της δραστηριότητες της ομάδας σου.",
+      "ctime": 1464987665369,
+      "mtime": 1464987665369,
+      "revisionId": "jCQqHhHh8Ko6ei9kL",
+      "_id": "eRPv3j4AxgSvSwXqp"
+    },
+    "group.details.titleNew": {
+      "key": "group.details.titleNew",
+      "lang": "el",
+      "text": "Δημιουργία νέας ομάδας",
+      "ctime": 1464987644539,
+      "mtime": 1464987644539,
+      "revisionId": "m4xD6SwNcyrLTwxp4",
+      "_id": "CDb4hzgvEX6cbQw2o"
+    },
+    "group.edit.cancel_btn": {
+      "key": "group.edit.cancel_btn",
+      "lang": "el",
+      "text": "Ακύρωση",
+      "ctime": 1464987669123,
+      "mtime": 1464987669123,
+      "revisionId": "M2x6zk5Yhtc7eSG69",
+      "_id": "7766vBAjEo9Nj8ZRX"
+    },
+    "group.edit.save_btn": {
+      "key": "group.edit.save_btn",
+      "lang": "el",
+      "text": "Αποθήκευση",
+      "ctime": 1464987673695,
+      "mtime": 1464987673695,
+      "revisionId": "DbdcAyFnHJNw7YJay",
+      "_id": "4RKuaY5f2xAjfe8yA"
+    },
+    "group.missing": {
+      "key": "group.missing",
+      "lang": "el",
+      "text": "Η ομάδα δεν υπάρχει",
+      "ctime": 1464987682497,
+      "mtime": 1464987682497,
+      "revisionId": "AYbmRdW7JzvCGfFR8",
+      "_id": "tdNXBK3G2ejgm6yPq"
+    },
+    "group.settings.addMember": {
+      "key": "group.settings.addMember",
+      "lang": "el",
+      "text": "πρόσθεση ως μέλος",
+      "ctime": 1464988307275,
+      "mtime": 1464988307275,
+      "revisionId": "y2bewanauCXySp2cb",
+      "_id": "iuY7yixtGrSfopjEn"
+    },
+    "group.settings.field.addMembers": {
+      "key": "group.settings.field.addMembers",
+      "lang": "el",
+      "text": "Πρόσθεσε ένα νέο μέλος στην ομάδα σου:",
+      "ctime": 1464987706039,
+      "mtime": 1464987706039,
+      "revisionId": "fGY9qabYoF9HTWkhD",
+      "_id": "Jfv3FtiRLyvZmkZA8"
+    },
+    "group.settings.field.infos": {
+      "key": "group.settings.field.infos",
+      "lang": "el",
+      "text": "Εσωτερικές πληροφορίες:",
+      "ctime": 1464988629875,
+      "mtime": 1464988629875,
+      "revisionId": "PtXfZPLMWTqirf5hu",
+      "_id": "DXHq2w9jMGWYSX4Bm"
+    },
+    "group.settings.removeFromGroup": {
+      "key": "group.settings.removeFromGroup",
+      "lang": "el",
+      "text": "διαγραφή μέλους",
+      "ctime": 1464987719715,
+      "mtime": 1464987719715,
+      "revisionId": "Zx9h9cJJxWRyBnYeA",
+      "_id": "Xc7niNm5d2sgoqYMD"
+    },
+    "group.settings.removedMember": {
+      "key": "group.settings.removedMember",
+      "lang": "el",
+      "text": "Μέλος ομάδας διαγράφηκε",
+      "ctime": 1464987729901,
+      "mtime": 1464987729901,
+      "revisionId": "Xg62iGtLGHKsE8P5X",
+      "_id": "CmTFRCpxpDEfZqBxv"
+    },
+    "group.settings.saved": {
+      "key": "group.settings.saved",
+      "lang": "el",
+      "text": "Οι ρυθμίσεις αποθηκεύτηκαν",
+      "ctime": 1464989227226,
+      "mtime": 1464989227226,
+      "revisionId": "N9knMnwgKuzaDY4vK",
+      "_id": "mX68HPXmfa5H7uWDq"
+    },
+    "group.settings.title": {
+      "key": "group.settings.title",
+      "lang": "el",
+      "text": "Ρυθμίσεις",
+      "ctime": 1464988346198,
+      "mtime": 1464988346198,
+      "revisionId": "4NFK9traZxMpjuvtm",
+      "_id": "uQydxD9cXo4zYmP4Y"
+    },
+    "group.settings.title.Members": {
+      "key": "group.settings.title.Members",
+      "lang": "el",
+      "text": "Μέλη",
+      "ctime": 1464987739981,
+      "mtime": 1464987739981,
+      "revisionId": "w9csxgNJmKiyEJx3k",
+      "_id": "e8CjJwXcjWkLRwYAq"
+    },
+    "group.short.placeholder": {
+      "key": "group.short.placeholder",
+      "lang": "el",
+      "text": "Συντόμευση",
+      "ctime": 1464989113254,
+      "mtime": 1464989113254,
+      "revisionId": "ENL42MfjKvTXegQry",
+      "_id": "bemEMHyijEwZPzJZJ"
+    },
+    "groupListFull.show_courses": {
+      "key": "groupListFull.show_courses",
+      "lang": "el",
+      "text": "Εμφάνιση όλων των μαθημάτων αυτής της ομάδας",
+      "ctime": 1464992053568,
+      "mtime": 1464992053568,
+      "revisionId": "dJqjMDNbgkjrkW2uo",
+      "_id": "tuChpPTYzinyKRb56"
+    },
     "groupListing.partOfGroup": {
       "_id": "jTp5YsdziJxSuG4Zi",
       "key": "groupListing.partOfGroup",
@@ -12900,6 +13466,42 @@ mfPkg.syncAll({
       "ctime": 1448106263493,
       "mtime": 1448106263493,
       "revisionId": "4z4722h9bKFNpsFiR"
+    },
+    "introduction.5_takePlace": {
+      "key": "introduction.5_takePlace",
+      "lang": "el",
+      "text": "Το μάθημα γίνεται!",
+      "ctime": 1464987760492,
+      "mtime": 1464987760492,
+      "revisionId": "xxbzNag89ypY4kE6Q",
+      "_id": "w7JAsbA7vcczfaeL5"
+    },
+    "introduction.more": {
+      "key": "introduction.more",
+      "lang": "el",
+      "text": "Περισσότερες πληροφορίες:",
+      "ctime": 1464987771731,
+      "mtime": 1464987771731,
+      "revisionId": "uFossqfdqtTCj5xQ2",
+      "_id": "fyioeL8h47yGi8wJx"
+    },
+    "introduction.toggle.hide": {
+      "key": "introduction.toggle.hide",
+      "lang": "el",
+      "text": "Απόκρυψη",
+      "ctime": 1464987778281,
+      "mtime": 1464987778281,
+      "revisionId": "bW4K8FJ4gmssnPZCz",
+      "_id": "9gF7R4gPSJPgKkAZL"
+    },
+    "introduction.toggle.show": {
+      "key": "introduction.toggle.show",
+      "lang": "el",
+      "text": "Εμφάνιση",
+      "ctime": 1464987793174,
+      "mtime": 1464987793175,
+      "revisionId": "HxBpZbDZ4FBmuKwqe",
+      "_id": "5Dkh4SexvsZ3BRgS6"
     },
     "kiosk.future": {
       "_id": "bHgzQYQ4fSBvNJ9RZ",
@@ -12928,6 +13530,15 @@ mfPkg.syncAll({
       "mtime": 1448105848460,
       "revisionId": "htmcPmzEt3LghQQjN"
     },
+    "language.german": {
+      "key": "language.german",
+      "lang": "el",
+      "text": "Γερμανικά",
+      "ctime": 1464987808067,
+      "mtime": 1464987808067,
+      "revisionId": "iafsxAYsXAtrR8ifh",
+      "_id": "sGKaw7okaF267dZtg"
+    },
     "loading.loading": {
       "_id": "3YFsJtkKg43gs7fbz",
       "key": "loading.loading",
@@ -12945,6 +13556,15 @@ mfPkg.syncAll({
       "ctime": 1448106096099,
       "mtime": 1448106096099,
       "revisionId": "rjFHzF2TgLEk9Huaj"
+    },
+    "location.details.contact": {
+      "key": "location.details.contact",
+      "lang": "el",
+      "text": "Επαφή",
+      "ctime": 1464987819727,
+      "mtime": 1464987819727,
+      "revisionId": "P9pi2dstHEWnWqJXM",
+      "_id": "xxHwJcacHB2W3Z9Cq"
     },
     "location.details.created_by": {
       "_id": "Wc3g3WSAg8rXrRw9C",
@@ -12983,13 +13603,13 @@ mfPkg.syncAll({
       "revisionId": "KRDErGnD6CfaRL8Gk"
     },
     "location.details.how_go_there": {
-      "_id": "WYLYsx5YG7zFQtoav",
       "key": "location.details.how_go_there",
       "lang": "el",
-      "text": "Πώς να πάτε εκεί:",
+      "text": "Πώς να πας εκεί:",
       "ctime": 1448200130121,
-      "mtime": 1448200130121,
-      "revisionId": "fjSstycdCnMYXERiQ"
+      "mtime": 1464987830715,
+      "revisionId": "K3KDfFL8iZ56QbWWj",
+      "_id": "WYLYsx5YG7zFQtoav"
     },
     "location.details.last_edited": {
       "_id": "WGQYEnXMze6M7i6tc",
@@ -13035,6 +13655,24 @@ mfPkg.syncAll({
       "ctime": 1448107170874,
       "mtime": 1448107170874,
       "revisionId": "WKxLHRMnow3qWZTtX"
+    },
+    "location.details.youAreHost": {
+      "key": "location.details.youAreHost",
+      "lang": "el",
+      "text": "Είσαι οικοδεσπότης εδώ:",
+      "ctime": 1464990136179,
+      "mtime": 1464990136179,
+      "revisionId": "WKhRSQgpPST9izTAE",
+      "_id": "tq3b8zvJBDWMvn6DJ"
+    },
+    "location.details.yourHost": {
+      "key": "location.details.yourHost",
+      "lang": "el",
+      "text": "Είσαι οικοδεσπότης εδώ:",
+      "ctime": 1464990131168,
+      "mtime": 1464990131168,
+      "revisionId": "jmPLFay9vK4q5R4ix",
+      "_id": "KpfYDBTcDwRdX4DNM"
     },
     "location.edit.add_location": {
       "_id": "XNSBSzmRoid7zQ92W",
@@ -13109,13 +13747,13 @@ mfPkg.syncAll({
       "revisionId": "nxxzqtwYHDXRiEqD5"
     },
     "location.edit.pls_select": {
-      "_id": "btZxdwcd83ByeJPWD",
       "key": "location.edit.pls_select",
       "lang": "el",
-      "text": "Παρακαλώ επιλέξτε",
+      "text": "Παρακαλώ επέλεξε",
       "ctime": 1448105636773,
-      "mtime": 1448105636773,
-      "revisionId": "uPYKwZocD8NjtJ7Xn"
+      "mtime": 1464988894358,
+      "revisionId": "8tWXigAyKkYifLYom",
+      "_id": "btZxdwcd83ByeJPWD"
     },
     "location.edit.public_space": {
       "_id": "kYzeLKdxW2HKBXG84",
@@ -13235,13 +13873,13 @@ mfPkg.syncAll({
       "revisionId": "CW74dZRmFPb6TCQBh"
     },
     "login.login.warning": {
-      "_id": "yzbJH8jvfY4GcbDE3",
       "key": "login.login.warning",
       "lang": "el",
-      "text": "Παρακαλώ εισάγετε το όνομα χρήστη ή email και κωδικό για να συνδεθείτε.",
+      "text": "Παρακαλώ βάλε το όνομα χρήστη ή email και κωδικό για να συνδεθείς.",
       "ctime": 1448199910770,
-      "mtime": 1448199910770,
-      "revisionId": "iXLEzbgZKSaxK3NA4"
+      "mtime": 1464988872908,
+      "revisionId": "f7fFxLAYzGyoAaf2o",
+      "_id": "yzbJH8jvfY4GcbDE3"
     },
     "login.logout": {
       "_id": "QHPs7KuhuDR4kpxmW",
@@ -13262,13 +13900,13 @@ mfPkg.syncAll({
       "revisionId": "CgHEZrAx5EFNhXXCC"
     },
     "login.password.no_password": {
-      "_id": "DK6k8oEAaQ4qXRdNs",
       "key": "login.password.no_password",
       "lang": "el",
-      "text": "Παρακαλώ εισάγεται έναν κωδικό για να εγγραφείτε.",
+      "text": "Παρακαλώ βάλε έναν κωδικό για να εγγραφείς.",
       "ctime": 1448199325820,
-      "mtime": 1448199325820,
-      "revisionId": "kxWjxXDtMN4YmogHc"
+      "mtime": 1464988857934,
+      "revisionId": "JkSSoeY5X9Pi7hEKP",
+      "_id": "DK6k8oEAaQ4qXRdNs"
     },
     "login.password.password_incorrect": {
       "_id": "y7ezi7c7Xgrkn5Hem",
@@ -13289,13 +13927,13 @@ mfPkg.syncAll({
       "revisionId": "eLdbsKYf8aDxkSE4L"
     },
     "login.username.choose_another": {
-      "_id": "NSbvNBAWn3pDbyEKS",
       "key": "login.username.choose_another",
       "lang": "el",
-      "text": "Παρακαλώ επιλέξτε πάλι",
+      "text": "Παρακαλώ επέλεξε άλλο.",
       "ctime": 1448199778877,
-      "mtime": 1448199778877,
-      "revisionId": "DfhaH8Ebr34Nsy2r7"
+      "mtime": 1464988907154,
+      "revisionId": "wcNXpzHkgsr9Kyzrt",
+      "_id": "NSbvNBAWn3pDbyEKS"
     },
     "login.username.username_exists": {
       "_id": "anfsgCsJwJkQ7AMxy",
@@ -13333,6 +13971,15 @@ mfPkg.syncAll({
       "mtime": 1448106454689,
       "revisionId": "NBapzhjevzebpmreh"
     },
+    "main.concept_link": {
+      "key": "main.concept_link",
+      "lang": "el",
+      "text": "Ιδέα",
+      "ctime": 1464989268429,
+      "mtime": 1464989268429,
+      "revisionId": "aAa6KYqPtgjfhLAX6",
+      "_id": "86PzxDq5dHRHC2bDo"
+    },
     "main.faq_link": {
       "_id": "5qx857c5rLBNiJTcx",
       "key": "main.faq_link",
@@ -13350,6 +13997,24 @@ mfPkg.syncAll({
       "ctime": 1448108214115,
       "mtime": 1448108214115,
       "revisionId": "Np5BkbZWupLcxxbfG"
+    },
+    "map.fullscreen": {
+      "key": "map.fullscreen",
+      "lang": "el",
+      "text": "μεγάλος χάρτης",
+      "ctime": 1464990353309,
+      "mtime": 1464990353309,
+      "revisionId": "tfr5Ts2JBtWjZpZ49",
+      "_id": "jYnhZR3NNp83C6ohm"
+    },
+    "map.fullscreenClose": {
+      "key": "map.fullscreenClose",
+      "lang": "el",
+      "text": "κλείσιμο",
+      "ctime": 1464988502107,
+      "mtime": 1464988502107,
+      "revisionId": "n46BjApFDuKsPdiYQ",
+      "_id": "iBEpqfoTveLjSqjRr"
     },
     "menue.All regions": {
       "_id": "FL2Xx77NFjPpCCGGr",
@@ -13370,14 +14035,13 @@ mfPkg.syncAll({
       "revisionId": "R5t84uPvScgAEkdhG"
     },
     "menue.Courses": {
-      "_id": "5ZbCSjBTE7Gpq2XFH",
       "key": "menue.Courses",
       "lang": "el",
-      "text": "Μαθήματα",
+      "text": "Αναζήτηση",
       "ctime": 1448105381236,
-      "mtime": 1448105381236,
-      "revisionId": "NdaduXq3uSRvtDQih",
-      "fuzzy": true
+      "mtime": 1464987970217,
+      "revisionId": "EPHXTYK4WjdivKXYk",
+      "_id": "5ZbCSjBTE7Gpq2XFH"
     },
     "menue.Create": {
       "_id": "M9auDb5WH95XiWvpw",
@@ -13437,6 +14101,33 @@ mfPkg.syncAll({
       "mtime": 1448107416878,
       "revisionId": "SaErYCXg8fEyqmHFF"
     },
+    "navigation.footer.about.title": {
+      "key": "navigation.footer.about.title",
+      "lang": "el",
+      "text": "Για το openki",
+      "ctime": 1464986733484,
+      "mtime": 1464986733484,
+      "revisionId": "zEAPHwZTWmSdatauh",
+      "_id": "9YBgd4JpeiZ692dg3"
+    },
+    "navigation.footer.concept.title": {
+      "key": "navigation.footer.concept.title",
+      "lang": "el",
+      "text": "Η ιδέα πίσω από το openki",
+      "ctime": 1464989240867,
+      "mtime": 1464989240867,
+      "revisionId": "GrbnjPFsWQHYCQJA7",
+      "_id": "vMgoZ2iGKqGFhYGvF"
+    },
+    "navigation.footer.faq.title": {
+      "key": "navigation.footer.faq.title",
+      "lang": "el",
+      "text": "Συχνές ερωτήσεις",
+      "ctime": 1464990017452,
+      "mtime": 1464990017452,
+      "revisionId": "CGoWdBEQdRWAXyLjs",
+      "_id": "ziyAocKh79pLqsNXh"
+    },
     "noUser_placeholder": {
       "_id": "WCT6yRYDXeCft3L4m",
       "key": "noUser_placeholder",
@@ -13481,6 +14172,33 @@ mfPkg.syncAll({
       "ctime": 1448199669881,
       "mtime": 1448199669881,
       "revisionId": "2bogQYqRQXHtT5ZZK"
+    },
+    "notFound.visitStartPage": {
+      "key": "notFound.visitStartPage",
+      "lang": "el",
+      "text": "Πήγαινε στην αρχική σελίδα",
+      "ctime": 1464990030847,
+      "mtime": 1464990030847,
+      "revisionId": "mCJRS7GB5uSdJQpGu",
+      "_id": "Whe6TmNELo52aNZxS"
+    },
+    "passwordReset.label.confirm": {
+      "key": "passwordReset.label.confirm",
+      "lang": "el",
+      "text": "Επιβεβαίωση",
+      "ctime": 1464989952748,
+      "mtime": 1464989952748,
+      "revisionId": "MdYnSTRmFEWQsbNA3",
+      "_id": "ZmbWJS8Dbn2canbaa"
+    },
+    "passwordReset.label.password": {
+      "key": "passwordReset.label.password",
+      "lang": "el",
+      "text": "Κωδικός",
+      "ctime": 1464988519919,
+      "mtime": 1464988519919,
+      "revisionId": "jdWDg8auouRFazbiu",
+      "_id": "fbQPiwBpqxMCXg7uP"
     },
     "privilege.errorAdding": {
       "_id": "zDGSSQ3NdJ4YW5XJp",
@@ -13528,13 +14246,13 @@ mfPkg.syncAll({
       "revisionId": "TEyWo7eQ3mJZxBX7N"
     },
     "privileges.title": {
-      "_id": "ct6NosQyKbvz6gG6q",
       "key": "privileges.title",
       "lang": "el",
-      "text": "Προνόμια",
+      "text": "Προνόμια διαχείρισης",
       "ctime": 1448199685087,
-      "mtime": 1448199685087,
-      "revisionId": "LQsJpqYZQTpdGLPfu"
+      "mtime": 1464987932317,
+      "revisionId": "Eft2xaxZwPCWLq9u6",
+      "_id": "ct6NosQyKbvz6gG6q"
     },
     "profile.changePass": {
       "_id": "hpQx8GCZRa8n6Jve2",
@@ -13562,6 +14280,15 @@ mfPkg.syncAll({
       "ctime": 1448107355942,
       "mtime": 1448107355942,
       "revisionId": "FFk4gvcjP3uKXawxX"
+    },
+    "profile.createNewGroup.button": {
+      "key": "profile.createNewGroup.button",
+      "lang": "el",
+      "text": "Δημιουργία νέας ομάδας",
+      "ctime": 1464988578280,
+      "mtime": 1464988578280,
+      "revisionId": "JRMo3PiHGkm4xcL6z",
+      "_id": "bc2bzLoNa87BtZGns"
     },
     "profile.delete": {
       "_id": "jmwmoooXgFWbxSycj",
@@ -13600,13 +14327,13 @@ mfPkg.syncAll({
       "revisionId": "TrLRZAEwFfLXxA6by"
     },
     "profile.edit": {
-      "_id": "Kx9p6WEcTmQetdCpg",
       "key": "profile.edit",
       "lang": "el",
-      "text": "Επεξεργασία",
+      "text": "Επεξεργασία προφίλ",
       "ctime": 1448106252391,
-      "mtime": 1448106252391,
-      "revisionId": "yfZfsr28499KD6uz7"
+      "mtime": 1464990207247,
+      "revisionId": "bqCjSshBwaEiwEc2K",
+      "_id": "Kx9p6WEcTmQetdCpg"
     },
     "profile.email": {
       "_id": "65h84C9Sq8ydWCFMA",
@@ -13625,6 +14352,33 @@ mfPkg.syncAll({
       "ctime": 1448107162292,
       "mtime": 1448107162292,
       "revisionId": "M4NTqhPM2AdH9ncEL"
+    },
+    "profile.groupMembership": {
+      "key": "profile.groupMembership",
+      "lang": "el",
+      "text": "{NUM_GROUPS, plural,\n\t\t\t\t\t=0 {Δεν είσαι μέλος καμίας ομάδας}\n\t\t\t\t\t=1 {Είσαι μέλος της ομάδας:}\n\t\t\t\t\tother {Είσαι μέλος # ομάδων:}}",
+      "ctime": 1464990343134,
+      "mtime": 1464990343134,
+      "revisionId": "YbXA5N453nBiu9Efv",
+      "_id": "3n7o7a2eGceW8WAxw"
+    },
+    "profile.groups": {
+      "key": "profile.groups",
+      "lang": "el",
+      "text": "Οι ομάδες μου",
+      "ctime": 1464988553682,
+      "mtime": 1464988553682,
+      "revisionId": "nuzJKJGPoYKPCQa35",
+      "_id": "QjjWG6uMMBLBQMY3t"
+    },
+    "profile.highprivacy": {
+      "key": "profile.highprivacy",
+      "lang": "el",
+      "text": "Υψηλή προστασία δεδομένων:",
+      "ctime": 1464990465423,
+      "mtime": 1464990465423,
+      "revisionId": "ZAwCnDSdXnoCAB8xG",
+      "_id": "TwGnCfdfDfDLupZ2b"
     },
     "profile.input.cancel": {
       "_id": "hvwYh5zYLcuLw2SHn",
@@ -13743,14 +14497,23 @@ mfPkg.syncAll({
       "mtime": 1448105651415,
       "revisionId": "Z34xuny7bQdvXri8B"
     },
+    "profile.mail.to_user": {
+      "key": "profile.mail.to_user",
+      "lang": "el",
+      "text": "Περιγραφή:",
+      "ctime": 1464988591421,
+      "mtime": 1464988591421,
+      "revisionId": "xwMpjttKYRCP9y65z",
+      "_id": "BqkBiBmy3csk2qvJb"
+    },
     "profile.my_courses": {
-      "_id": "TPgiLp7GeF9DYCB4Y",
       "key": "profile.my_courses",
       "lang": "el",
-      "text": "Τα μαθήματα μου:",
+      "text": "Τα μαθήματα μου",
       "ctime": 1448107206043,
-      "mtime": 1448107206043,
-      "revisionId": "HEcK5ZkPYe9QMWRZy"
+      "mtime": 1464987896829,
+      "revisionId": "DxLn7MqA5cn3gTXcW",
+      "_id": "TPgiLp7GeF9DYCB4Y"
     },
     "profile.my_profile": {
       "_id": "zjpfHuacfePMwXSL6",
@@ -13807,13 +14570,13 @@ mfPkg.syncAll({
       "revisionId": "mskDrdBraZbfysPDN"
     },
     "profile.preferenceslink": {
-      "_id": "XRsaq8FKFTB6eubuC",
       "key": "profile.preferenceslink",
       "lang": "el",
-      "text": "Πατ",
+      "text": "Επέλεξε εδώ για να αλλάξεις τις προτιμήσεις σου",
       "ctime": 1448199065177,
-      "mtime": 1448199065177,
-      "revisionId": "ZQCgBgu3vc5BFQS9H"
+      "mtime": 1464989049260,
+      "revisionId": "DC7tDHHppQuip7JTa",
+      "_id": "XRsaq8FKFTB6eubuC"
     },
     "profile.privacy.off": {
       "_id": "GibFxHpEvKcSqjCbH",
@@ -13834,13 +14597,22 @@ mfPkg.syncAll({
       "revisionId": "vRSyJNQNywzrPJarx"
     },
     "profile.toggle.highprivacy": {
-      "_id": "qYn6DvsX8w7hbxNJq",
       "key": "profile.toggle.highprivacy",
       "lang": "el",
-      "text": "Υψηλή προστασία προσ. δεδομένων:",
+      "text": "Υψηλή προστασία δεδομένων",
       "ctime": 1448200544874,
-      "mtime": 1448200544874,
-      "revisionId": "GjbotX9gNxeDs9raJ"
+      "mtime": 1464987891373,
+      "revisionId": "vSsmzPKcP2Xw2BH34",
+      "_id": "qYn6DvsX8w7hbxNJq"
+    },
+    "profile.updated": {
+      "key": "profile.updated",
+      "lang": "el",
+      "text": "Το προφίλ ανανεώθηκε",
+      "ctime": 1464990116434,
+      "mtime": 1464990116434,
+      "revisionId": "9vdbBMfPDGcQvWNuy",
+      "_id": "9rehfTbJ3JMB7QAGt"
     },
     "profile.username": {
       "_id": "ooZDJBFW8mtNySMZz",
@@ -13868,6 +14640,15 @@ mfPkg.syncAll({
       "ctime": 1448105747918,
       "mtime": 1448105747918,
       "revisionId": "RM6CkCc3Z5yqtXgKk"
+    },
+    "region.greece.athens": {
+      "key": "region.greece.athens",
+      "lang": "el",
+      "text": "Αθήνα",
+      "ctime": 1464989257908,
+      "mtime": 1464989257908,
+      "revisionId": "kdTM2gCqjQpTTexD9",
+      "_id": "5kYcPx6M5MfACKMb5"
     },
     "report.cancel": {
       "_id": "Bv6w9wX93zAECNEvM",
@@ -13924,22 +14705,49 @@ mfPkg.syncAll({
       "revisionId": "6EtfuScnmyD5H4ekd"
     },
     "report.text": {
-      "_id": "vzgD8Z6ypDPQPFmQb",
       "key": "report.text",
       "lang": "el",
-      "text": "Παρακαλώ εξηγήστε ποιό είναι το πρόβλημα.",
+      "text": "Παρακαλώ περιέγραψε το πρόβλημα.",
       "ctime": 1448199443662,
-      "mtime": 1448199443662,
-      "revisionId": "vAqAsWQKwkyh7iTSp"
+      "mtime": 1464988882838,
+      "revisionId": "Jw7bqhhx2QFgaqj3m",
+      "_id": "vzgD8Z6ypDPQPFmQb"
+    },
+    "resetPassword.close": {
+      "key": "resetPassword.close",
+      "lang": "el",
+      "text": "Δεν πειράζει",
+      "ctime": 1464990057896,
+      "mtime": 1464990057896,
+      "revisionId": "Y8pvy7aQCce9PYqKM",
+      "_id": "BBpngtAL76vRhTGg3"
+    },
+    "resetPassword.placeholder.confirmPassword": {
+      "key": "resetPassword.placeholder.confirmPassword",
+      "lang": "el",
+      "text": "Πληκτρολόγησε το πάλι",
+      "ctime": 1464988542151,
+      "mtime": 1464988542152,
+      "revisionId": "Np3mEYvqw4ddbAnJM",
+      "_id": "QZQ2A9pMA8guCWD5p"
+    },
+    "resetPassword.placeholder.enterNewPassword": {
+      "key": "resetPassword.placeholder.enterNewPassword",
+      "lang": "el",
+      "text": "Βάλε το νέο σου κωδικό",
+      "ctime": 1464990009156,
+      "mtime": 1464990009156,
+      "revisionId": "JwKHgszdQpMr68Tun",
+      "_id": "A6nuLBmwHbQhaGRNi"
     },
     "roles.host.description": {
-      "_id": "MBGZkgotZhksEoc2M",
       "key": "roles.host.description",
       "lang": "el",
-      "text": "ένας οικοδεσπότης που παρέχει αίθουσα",
+      "text": "έναν οικοδεσπότη που παρέχει αίθουσα",
       "ctime": 1448106528544,
-      "mtime": 1448106528544,
-      "revisionId": "2xCPo9cJ58SeoqMJA"
+      "mtime": 1464988109177,
+      "revisionId": "ztcJ545iZuKLf3kW9",
+      "_id": "MBGZkgotZhksEoc2M"
     },
     "roles.host.short": {
       "_id": "6EEWDgoiDRcnhtFju",
@@ -13960,13 +14768,13 @@ mfPkg.syncAll({
       "revisionId": "qMx7sPo7zxAsLCfAX"
     },
     "roles.mentor.description": {
-      "_id": "xdHJGjxqS8fw5EMWn",
       "key": "roles.mentor.description",
       "lang": "el",
-      "text": "ένας μέντορας",
+      "text": "ένα μέντορας",
       "ctime": 1448107474176,
-      "mtime": 1448107474176,
-      "revisionId": "Jzr8w9Ba9DfbtesuK"
+      "mtime": 1464988101526,
+      "revisionId": "TKTakSQKCXTwG5Hhs",
+      "_id": "xdHJGjxqS8fw5EMWn"
     },
     "roles.mentor.short": {
       "_id": "ALBnLphFSWJ5qYyKS",
@@ -14086,22 +14894,22 @@ mfPkg.syncAll({
       "revisionId": "w7wkwSYdo62hf9SQD"
     },
     "startpage.windowtitle": {
-      "_id": "MdsDwybzhR9kgr7pb",
       "key": "startpage.windowtitle",
       "lang": "el",
-      "text": "Τι θα θέλατε να μάθετε;",
+      "text": "Τι θα ήθελες να μάθεις;",
       "ctime": 1448107741672,
-      "mtime": 1448107741672,
-      "revisionId": "ssnN3jDNsBkHtSF2c"
+      "mtime": 1464989064594,
+      "revisionId": "XhM3j4nSrWPrXYhog",
+      "_id": "MdsDwybzhR9kgr7pb"
     },
     "userprofile.groups.header": {
-      "_id": "DmusdkwjzxkKbC7As",
       "key": "userprofile.groups.header",
       "lang": "el",
-      "text": "Ομάδες",
+      "text": "Επεξεργασία ομάδων",
       "ctime": 1448105853299,
-      "mtime": 1448105853299,
-      "revisionId": "JdDnmypnB7dJwYEHz"
+      "mtime": 1464987867134,
+      "revisionId": "kYYLYDQJ25v77T8DB",
+      "_id": "DmusdkwjzxkKbC7As"
     },
     "userprofile.sendmail-btn": {
       "_id": "pgPS2FDpGD8dQxb4a",
@@ -28174,6 +28982,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1464739189335,
-  "updatedAt": 1464716620379
+  "exportedAt": 1465027749432,
+  "updatedAt": 1464992099344
 });
