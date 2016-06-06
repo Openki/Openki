@@ -21,6 +21,6 @@ footer {
 .footer-deployed-version {
   color: $default-light-grey;
   font-size: small;
-  right: 15px;
-  position: absolute;
+  float: right;
+  padding: 0.3em;
 }

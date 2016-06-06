@@ -1,5 +1,9 @@
 <template name="footer">
 	<footer class="footer">
+					<span title="{{fullInfo}}" class="footer-deployed-version">
+						{{version}} {{commit}} <br>
+						{{mf "footer.deployedAt" "deployed:"}} {{dateformat deployed}}
+					</span>
 		<!-- <div class="footer-container"> -->
 					<a class="footer-link"
 						href="/about"
@@ -24,12 +28,6 @@
 							{{mf 'main.github_link' 'Source-Code'}}
 						</span>
 					</a>
-				<!-- <li>
-					<span title="{{fullInfo}}" class="footer-deployed-version">
-						{{version}} {{commit}} <br>
-						{{mf "footer.deployedAt" "deployed:"}} {{dateformat deployed}}
-					</span>
-				</li> -->
 		<!-- </div> -->
 	</footer>
 </template>
