@@ -454,7 +454,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.group) {
-		find.groups = filter.group;
+		find.allGroups = filter.group;
 	}
 
 	if (filter.course) {
