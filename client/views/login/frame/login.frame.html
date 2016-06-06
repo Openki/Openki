@@ -40,7 +40,7 @@
 				<input class="js-login-name"
 					id="login-name"
 					type="text"
-					placeholder="{{mf 'frame.login.usernameOrEmail' 'Username or Email'}}"/>
+					placeholder={{loginNamePlaceholder}}>
 			</div><!-- /.input-group -->
 			<div id="username_warning_not_existing" style="display:none">
 				{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
@@ -80,6 +80,7 @@
 					<input class="js-login-email"
 						type="email"
 						id="login-email"
+						value={{transEmail}}
 						placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
 				</div><!-- /.input-group -->
 				<div class="registering-disclaimer">
