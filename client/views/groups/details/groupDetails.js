@@ -111,9 +111,9 @@ Template.groupSettings.onCreated(function() {
 
 	instance.autorun(function() {
 		var search = instance.userSearch.get();
-		if (search == '') foundUsers = false;
-
-		Meteor.subscribe('userSearch', search);
+		if (search.length > 0) {
+			Meteor.subscribe('userSearch', search);
+		}
 	});
 });
 
