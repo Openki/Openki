@@ -1,35 +1,31 @@
 <template name="footer">
 	<footer class="footer">
-		<!-- <div class="footer-container"> -->
-					<a class="footer-link"
-						href="/about"
-						title="{{mf 'navigation.footer.about.title' 'About openki'}}">
-						{{mf 'main.about_link' 'About'}}
-					</a>
-					<a class="footer-link"
-						href="http://about.openki.net"
-						title="{{mf 'navigation.footer.concept.title' 'The concept behind openki'}}">
-						{{mf 'main.concept_link' 'Concept'}}
-					</a>
-					<a class="footer-link"
-						href="/FAQ"
-						title="{{mf 'navigation.footer.faq.title' 'Frequently asked questions'}}">
-						{{mf 'main.faq_link' 'FAQ'}}
-					</a>
-					<a class="footer-link"
-						href="https://github.com/schuel/hmmm/"
-						title="{{mf 'navigation.footer.code.title' 'Show code on github'}}">
-						<span class="fa fa-code"></span>
-						<span class="code_on_github">
-							{{mf 'main.github_link' 'Source-Code'}}
-						</span>
-					</a>
-				<!-- <li>
-					<span title="{{fullInfo}}" class="footer-deployed-version">
-						{{version}} {{commit}} <br>
-						{{mf "footer.deployedAt" "deployed:"}} {{dateformat deployed}}
-					</span>
-				</li> -->
-		<!-- </div> -->
+		<span title="{{fullInfo}}" class="footer-deployed-version">
+			{{version}} {{commit}} <br>
+			{{mf "footer.deployedAt" "deployed:"}} {{dateformat deployed}}
+		</span>
+		<a class="footer-link"
+			href="/about"
+			title="{{mf 'navigation.footer.about.title' 'About openki'}}">
+			{{mf 'main.about_link' 'About'}}
+		</a>
+		<a class="footer-link"
+			href="http://about.openki.net"
+			title="{{mf 'navigation.footer.concept.title' 'The concept behind openki'}}">
+			{{mf 'main.concept_link' 'Concept'}}
+		</a>
+		<a class="footer-link"
+			href="/FAQ"
+			title="{{mf 'navigation.footer.faq.title' 'Frequently asked questions'}}">
+			{{mf 'main.faq_link' 'FAQ'}}
+		</a>
+		<a class="footer-link"
+			href="https://github.com/schuel/hmmm/"
+			title="{{mf 'navigation.footer.code.title' 'Show code on github'}}">
+			<span class="fa fa-code"></span>
+			<span class="code_on_github">
+				{{mf 'main.github_link' 'Source-Code'}}
+			</span>
+		</a>
 	</footer>
 </template>
