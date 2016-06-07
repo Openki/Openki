@@ -129,13 +129,20 @@ Meteor.methods({
 		check(groupId, String);
 
 		var senderId = Meteor.userId();
-		if (!senderId) return;
+		if (!senderId) throw new Meteor.Error("Not permitted");
 
 		// Only current members of the group may draft other people into it
+		// We build a selector that only finds the group if the sender is a
+		// member of it.
 		var sel = {
 			_id: groupId,
 			members: senderId
 		};
+
+		// This check is not strictly necessary when the update uses the same
+		// selector. It generates an error message though, whereas the update is
+		// blind to that.
+		if (!Groups.findOne(sel)) throw new Meteor.Error("No permitted");
 
 		var user = Meteor.users.findOne({_id: userId});
 		if (!user) throw new Meteor.Error(404, "User not found");
@@ -147,7 +154,11 @@ Meteor.methods({
 			update = { $pull: { 'members': user._id } };
 		}
 
+		// By using the restrictive selector that checks group membership we can
+		// avoid the unlikely race condition where a user is not member anymore
+		// but can still add somebody else to the group.
 		Groups.update(sel, update);
+
 		if (Meteor.isServer) Meteor.call('user.updateBadges', user._id);
 	},
 
