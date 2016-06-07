@@ -1,17 +1,23 @@
-.navbar .navbar-nav .dropdown-menu.login-dropdown {
-	padding: 15px 0 0;
-  width: 300px;
+.navbar .navbar-nav > .dropdown > .login-dropdown.login-dropdown,
+.navbar .navbar-nav > .open > .login-dropdown.login-dropdown {
+	@media (min-width: $screen-sm) {
+		padding-top: 15px;
+	  width: 300px;
+	}
 }
 
 .user-frame {
   @include grid(12);
 	padding: 0;
   text-align: center;
+	@media (max-width: $screen-sm) {
+		background-color: $dropdown-bg;
+		padding: 15px 15px 0;
+	}
 }
 
 .ownuser-frame {
   @include grid(12);
-  padding: 0px;
   h3 {
     margin-top: 0px;
   }
@@ -26,7 +32,6 @@
 
 .login {
   @include grid(12);
-	padding: 0 15px;
   & > div,
   & > button,
   & > a {
@@ -120,6 +125,7 @@
   .js-forgot-pwd-btn::before {
     content: "";
     font-family: FontAwesome;
+		padding-right: 5px;
   }
 }
 

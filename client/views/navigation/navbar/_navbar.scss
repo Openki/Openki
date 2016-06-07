@@ -9,6 +9,12 @@
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
+#bs-navbar-collapse-1 {
+	@media (max-width: $screen-sm) {
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+	}
+}
+
 .navbar-container {
   @extend .container-fluid;
   max-width: 1600px;
@@ -55,6 +61,9 @@
   font-size: $navbar-default-font-size;
 	&:hover {
 		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+	}
+	@media (max-width: $screen-sm) {
+		border-bottom: 1px solid $navbar-default-border;
 	}
 }
 
@@ -112,23 +121,37 @@
 }
 
 .navbar .navbar-nav {
-	.dropdown-menu {
-		padding-top: 10px;
-		z-index: -1;
+	&:first-child,
+	&:last-child {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+	& > .open > .dropdown-menu {
+		@media (min-width: $screen-sm) {
+			padding-top: 10px;
+			z-index: -1;
+		}
+		@media (max-width: $screen-sm) {
+			background-color: $dropdown-bg;
+			box-shadow: 0 0px 5px rgba(0, 0, 0, .3) inset;
+			padding: 10px 0;
+			& > li > a {
+				color: $dropdown-link-color;
+			}
+		}
 	}
 	& > .open > .navbar-link {
+		&,
 		&:hover,
 		&:focus {
 			background-color: lighten($navbar-default-bg, 10%);
 			box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
 		}
-		.nav-marker-bar {
-			background-color: $dropdown-bg;
-			opacity: 1;
+		@media (min-width: $screen-sm) {
+			.nav-marker-bar {
+				background-color: $dropdown-bg;
+				opacity: 1;
+			}
 		}
-	}
-	& > .login-link.open > .navbar-link {
-		background-color: lighten($navbar-default-bg, 10%);
-		box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
 	}
 }
