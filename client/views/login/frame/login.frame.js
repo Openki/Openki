@@ -99,6 +99,13 @@ Template.loginFrame.created = function() {
 
 
 Template.loginFrame.helpers({
+	loginNamePlaceholder: function() {
+		if (Template.instance().registering.get()) {
+			return mf('frame.login.username', 'Username');
+		}
+		return mf('frame.login.usernameOrEmail', 'Username or Email')
+	},
+
 	registering: function() {
 		return Template.instance().registering.get();
 	},
