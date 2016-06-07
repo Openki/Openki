@@ -13,7 +13,7 @@
 .timeline-start-container,
 .timeline-end-container {
   @include grid(1);
-  @include grid-offset(0, 3);
+  @include make-xs-column-offset(3);
   height: 100%;
   padding: 0px;
 }
