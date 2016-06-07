@@ -27,6 +27,10 @@ Template.navbar.onRendered(function() {
 				scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
 			});
 		}, 1));
+		this.$('.dropdown').on('hide.bs.dropdown', function(e){
+			var container = $('#bs-navbar-collapse-1');
+			container.scrollTop(0);
+		});
 	}
 });
 
