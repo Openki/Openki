@@ -21,7 +21,11 @@ Template.navbar.onRendered(function() {
 	}
 	else {
 		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
-			$('#bs-navbar-collapse-1').scrollTop($(this).offset().top - 50);
+			var container = $('#bs-navbar-collapse-1');
+			var scrollTo = $(this);
+			container.animate({
+				scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+			});
 		}, 1));
 	}
 });
