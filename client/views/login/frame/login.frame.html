@@ -19,7 +19,7 @@
 					<span class="glyphicon glyphicon-log-out"></span>
 					{{mf 'login.logout' 'Logout'}}
 				</button>
-			</div><!-- /.ownuser-frame -->
+			</div>
 		{{/if}}
 		{{#if forgot}}
 			{{> forgotPwdFrame}}
@@ -27,7 +27,7 @@
 		{{#if login}}
 			{{> loginFrame}}
 		{{/if}}
-	</div><!-- /.user-frame -->
+	</div>
 </template>
 
 <template name="loginFrame">
@@ -41,14 +41,14 @@
 					id="login-name"
 					type="text"
 					placeholder={{loginNamePlaceholder}}>
-			</div><!-- /.input-group -->
+			</div>
 			<div id="username_warning_not_existing" style="display:none">
 				{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
-			</div><!-- /#username_warning_not_existing -->
+			</div>
 			<div id="username_warning" style="display:none">
 				{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
 				{{mf 'login.username.choose_another' 'Please choose another one.'}}
-			</div><!-- /#username_warning -->
+			</div>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-lock"></span>
@@ -57,7 +57,7 @@
 					id="login-password"
 					placeholder="{{mf 'frame.login.password' 'Password'}}"
 					type="password"/>
-			</div><!-- /.input-group -->
+			</div>
 			<div id="password_warning_incorrect" style="display:none">
 				{{mf 'login.password.password_incorrect' 'Incorrect password'}}
 			</div>
@@ -82,7 +82,7 @@
 						id="login-email"
 						value={{transEmail}}
 						placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
-				</div><!-- /.input-group -->
+				</div>
 			{{/if}}
 			{{#if registering}}
 				<button class='js-register-btn' type="submit">
@@ -120,8 +120,8 @@
 						title="Login with Github">
 						<span class="fa fa-github-square"></span>
 					</button>
-				</div><!-- /.external-service-login -->
-		</div><!-- /.login -->
+				</div>
+		</div>
 	</form>
 </template>
 
@@ -143,7 +143,7 @@
 		{{#unless validEmail}}
 			<div class="forgot-pwd-mail-info">
 				{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
-			</div><!-- /.forgot-pwd-mail-info -->
+			</div>
 		{{/unless}}
 		<button class="js-reset-pwd-btn" type="button" {{disableForInvalidEmail}}>
 			<span class="fa fa-envelope"></span>

@@ -39,8 +39,8 @@
 						type="text"
 						value="{{timeformat start}}"
 						{{disableForPast}}/>
-				</div><!-- /.input-group -->
-			</div><!-- /.start_time -->
+				</div>
+			</div>
 			<div class="end_time" style="display:inline-block">
 				<h4>
 					{{mf 'course.event.edit.time_end' 'Time end'}}
@@ -60,8 +60,8 @@
 						size="5"
 						type="text"
 						value="{{timeformat end}}"/>
-				</div><!-- /.input-group -->
-			</div><!-- /.end_time -->
+				</div>
+			</div>
 			<div class="show_duration" style="display:none">
 				<h4>
 					{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
@@ -81,9 +81,9 @@
 						type="number"
 						value="{{timeformat Duration}}"
 						size="5"/>
-				</div><!-- /.input-group -->
-			</div><!-- /.show_duration -->
-		</div><!-- /.course_event_edit_header -->
+				</div>
+			</div>
+		</div>
 		<div class="course_event_edit_body">
 			<div class="description">
 				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
@@ -92,8 +92,8 @@
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</span>
 					{{>eventDescriptionEdit description}}
-				</div><!-- /.input-group -->
-			</div><!-- /.description -->
+				</div>
+			</div>
 
 			{{#if showRegionSelection}}
 				<div class="region_selection">
@@ -108,7 +108,7 @@
 							</option>
 						{{/each}}
 					</select>
-				</div><!-- /.region_selection -->
+				</div>
 			{{/if}}
 
 			<div class="files">
@@ -130,7 +130,7 @@
 						{{> eventAttachmentsEdit}}
 					{{/each}}
 				</table>
-			</div><!-- /.files -->
+			</div>
 
 			{{#if showLocationSelection}}
 				{{>eventEditLocation}}
@@ -149,8 +149,8 @@
 						size="40"
 						value="{{room}}"
 					/>
-				</div><!-- /.input-group -->
-			</div><!-- /.room -->
+				</div>
+			</div>
 
 			<div class="options">
 				<div class="checkbox">
@@ -160,8 +160,8 @@
 							{{isInternal}}/>
 						{{mf 'event.edit.internal' 'Internal'}}
 					</label>
-				</div><!-- /.checkbox -->
-			</div><!-- /.options -->
+				</div>
+			</div>
 
 			<div class="edit_buttons">
 				<button type="submit" class="saveEditEvent">
@@ -186,11 +186,11 @@
 								COUNT=affectedReplicaCount
 							}}</small>
 						</label>
-					</div><!-- /.checkbox -->
+					</div>
 				{{/if}}
-			</div><!-- /.edit_buttons -->
-		</div><!-- /.course_event_edit_body -->
-	</div><!-- /.course_event_edit -->
+			</div>
+		</div>
+	</div>
 	</form>
 </template>
 
@@ -198,7 +198,7 @@
 	<div id="edit_event_description"
 		data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
 		{{{this}}}
-	</div><!-- /#edit_event_description -->
+	</div>
 </template>
 
 <template name="eventAttachmentsEdit">

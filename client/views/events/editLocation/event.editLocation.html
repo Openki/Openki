@@ -16,11 +16,11 @@
 								{{location.address}}
 							{{/if}}
 							&nbsp;
-						</div><!-- /.locationName -->
+						</div>
 						<button type="button" class="-locationChange">
 							{{mf 'event.edit.locationChange' "Change location"}}
 						</button>
-					</div><!-- /.currentLocation -->
+					</div>
 				{{else}}
 					<div class="locationSearchbar input-group">
 						<input class="-locationName"
@@ -34,7 +34,7 @@
 								{{mf 'event.edit.addressSearch' "Search"}}
 							</button>
 						</span>
-					</div><!-- /.locationSearchbar -->
+					</div>
 					{{#if searching}}
 					<input class="-locationAddress"
 						placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"
@@ -60,10 +60,10 @@
 						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
 					{{/if}}
 				{{/if}}
-			</div><!-- /.locationSearch -->
+			</div>
 			<div class="locationMap">
 				{{>map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
-			</div><!-- /.locationMap -->
-		</div><!-- /.locationEdit -->
-	</div><!-- /.locationFrame -->
+			</div>
+		</div>
+	</div>
 </template>

@@ -4,16 +4,16 @@
 		<div class="row container-fluid">
 			<h1>{{mf 'courses.missingorg' 'Courses missing organizer(-team)'}}</h1>
 			{{> courselist missing_organizer}}
-		</div><!-- /.row -->
+		</div>
 		<div class="row container-fluid">
 			<h1>{{mf 'courses.missingsubs' 'Courses that are still looking for participants'}}</h1>
 			{{> courselist missing_subscribers}}
-		</div><!-- /.row -->
+		</div>
 		<div class="row container-fluid">
 			<h1>{{mf 'courses.all' 'All courses'}}</h1>
 			{{> courselist all_courses}}
-		</div><!-- /.row -->
-	</div><!-- /.container-fluid -->
+		</div>
+	</div>
 </template>
 
 <template name="course">
@@ -30,11 +30,11 @@
 					<div class="course-content {{courseState}}">
 						<div class="course-name">
 							<h4>{{name}}</h4>
-						</div><!-- /.course-name -->
+						</div>
 						<div class="course-categories">
 							{{> showCategories}}
-						</div><!-- /.course-categories -->
-					</div><!-- /.course-content -->
+						</div>
+					</div>
 					{{#if hasUpcomingEvents}}
 						{{> courseEventlist}}
 					{{else}}
@@ -42,10 +42,10 @@
 					{{/if}}
 					<div class="course-groups">
 						{{> groupList}}
-					</div><!-- /.course-groups -->
-				</div><!-- /.course -->
+					</div>
+				</div>
 			</a>
-		</div><!-- /.course-container -->
+		</div>
 	{{/if}}
 </template>
 
@@ -55,17 +55,17 @@
 			<div class="course-eventlist-date">
 				<span class="fa fa-calendar" aria-hidden="true"></span>
 				{{dateformat_mini this.start}}
-			</div><!-- /.course-eventlist-date -->
+			</div>
 			<div class="course-eventlist-time">
 				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
 				{{timeformat this.start}}
-			</div><!-- /.course-eventlist-time -->
+			</div>
 			{{this.description}}
 			{{#if this.location.name}}
 				<div class="course-eventlist-location">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>{{this.location.name}}</span>
-				</div><!-- /.course-eventlist-location -->
+				</div>
 			{{/if}}
 		{{/with}}
 		{{#if additionalEvents}}
@@ -73,9 +73,9 @@
 				+ {{additionalEvents}}
 				&nbsp;
 				<span class="glyphicon glyphicon-calendar"></span>
-			</div><!-- /.course-eventlist-hasmore -->
+			</div>
 		{{/if}}
-	</div><!-- /.course-eventlist -->
+	</div>
 </template>
 
 <template name="courseRolesStatus">
@@ -98,7 +98,7 @@
 				{{/if}}"
 			href="#">
 			<span class="glyphicon glyphicon-bullhorn"></span>
-		</div><!-- /.team-status -->
+		</div>
 		{{#if requiresMentor}}
 			<div class="course-roles-status-mentor
 					{{#if needsMentor}}
@@ -118,7 +118,7 @@
 					{{/if}}"
 				href="#">
 				<span class="fa fa-graduation-cap"></span>
-			</div><!-- /.course-roles-status-mentor -->
+			</div>
 		{{/if}}
 		{{#if requiresHost}}
 			<div class="course-roles-status-host
@@ -139,7 +139,7 @@
 					{{/if}}"
 				href="#">
 				<span class="glyphicon glyphicon-home"></span>
-			</div><!-- /.course-roles-status-host -->
+			</div>
 		{{/if}}
-	</div><!-- /.course-roles-status -->
+	</div>
 </template>

@@ -10,7 +10,7 @@
 							<div>
 							{{mf 'course.details.tag.proposal' 'proposal'}}
 							</div>
-						</div><!-- /.course-details-status -->
+						</div>
 					{{/if}}
 
 					<div class="course-details-title">
@@ -31,17 +31,17 @@
 									</button>
 							{{/if}}
 						{{/with}}
-					</div><!-- /.course-details-title -->
+					</div>
 					{{#with course}}
 						<div class="course-details-categories">
 							{{> showCategories}}
-						</div><!-- /.course-details-categories -->
+						</div>
 						<div class="course-details-groups">
 							{{> courseGroupList}}
 						</div>
 					{{/with}}
 					{{> courseDetailsSubmenu}}
-				</div><!-- /.course-details -->
+				</div>
 				{{> report}}
 			{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
@@ -50,7 +50,7 @@
 			{{else}}
 				{{> discussion course}}
 			{{/if}}
-		</div><!-- /.course-details-column-left -->
+		</div>
 		<div class="course-details-column-right">
 			{{#unless mobileViewport}}
 				{{> course_events}}
@@ -58,12 +58,12 @@
 			<div class="course-details-component">
 					{{> courseMembers course}}
 					{{> courseRoles roles_details}}
-			</div><!-- /.course-details-roles-container -->
+			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
-		</div><!-- /.course-details-column-right -->
-	</div><!-- /.course-details-page -->
+		</div>
+	</div>
 </template>
 
 <template name="courseDetailsSubmenu">
@@ -95,16 +95,16 @@
 		<div class="tab-content">
 			<div class="tab-pane active" id="description">
 				{{> courseDetailsDescription}}
-			</div><!-- /.tab-pane#description -->
+			</div>
 		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
 				{{> coursedocs}}
-			</div><!-- /.tab-pane#docs -->
+			</div>
 		{{/if}}
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
-			</div><!-- /.tab-pane#history -->
-		</div><!-- /.tab-content -->
+			</div>
+		</div>
 	</div>
 </template>
 

@@ -5,7 +5,7 @@
 				<div class="frame-calendar-date">
 					{{weekday}}
 					{{monthday}}.
-				</div><!-- /.frame-calendar-date -->
+				</div>
 			{{/with}}
 			<div class="frame-calendar-events">
 				{{#each dayEvents}}
@@ -13,10 +13,10 @@
 				{{else}}
 					<div class="frame-calendar-no-events">
 						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
-					</div><!-- /.frame-calendar-no-events -->
+					</div>
 				{{/each}}
-			</div><!-- /.frame-calendar-events -->
-		</div><!-- /.frame-calendar-date-events -->
+			</div>
+		</div>
 	{{/each}}
 	{{> tooltips}}
 </template>

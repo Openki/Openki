@@ -13,7 +13,7 @@
 			<div class="course_edit_body">
 				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
 				<input id="editform_name"
-					placeholder="{{mf 'course.title.placeholder' 'what do you want to learn?'}}"
+					placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
 					size="40"
 					type="text"
 					value="{{name}}"/>
@@ -51,14 +51,14 @@
 																{{checkCategory}}/>
 															{{categoryName}}
 														</label>
-													</div><!-- /.checkbox -->
+													</div>
 												</li>
 											{{/each}}
 										</ul>
 									</li>
 								{{/each}}
 							</ul>
-						</div><!-- /#edit_categories -->
+						</div>
 					{{else}}
 						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
 						{{#if categories}}
@@ -72,7 +72,7 @@
 							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
 						</button>
 					{{/if}}
-				</div><!-- /#editform_categories -->
+				</div>
 
 				<div class="course_edit_roles">
 					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
@@ -83,7 +83,7 @@
 							</li>
 						{{/each}}
 					</ul>
-				</div><!-- /.course_edit_roles -->
+				</div>
 
 				<div class="course_edit_internal">
 					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
@@ -95,7 +95,7 @@
 						>
 						{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
 					</label>
-				</div><!-- /.course_edit_internal -->
+				</div>
 
 				<div class="course_edit_region">
 					{{#unless _id}}
@@ -111,7 +111,7 @@
 							{{/each}}
 						</select>
 					{{/unless}}
-				</div><!-- /.course_edit_region -->
+				</div>
 				<div class="course_edit_finishbtns">
 					<button type="button" class="save">
 						<span class="glyphicon glyphicon-save"></span>
@@ -121,10 +121,10 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf '_button.cancel'}}
 					</button>
-				</div><!-- /.course_edit_finishbtns -->
-			</div><!-- /.course_edit_body -->
+				</div>
+			</div>
 		</form>
-	</div><!-- /.course_edit -->
+	</div>
 </template>
 
 <template name="courseEditRole">
@@ -146,5 +146,5 @@
 				{{mf roleSubscription}}
 			</label>
 		{{/if}}
-	</div><!-- /.checkbox -->
+	</div>
 </template>

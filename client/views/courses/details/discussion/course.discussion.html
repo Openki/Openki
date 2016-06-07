@@ -6,17 +6,17 @@
 				&nbsp;
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
-		</div><!-- /.course-details-component-titlebar -->
+		</div>
 		{{> post newPost}}
 		{{#if havePosts}}
 			{{#each posts}}
 				<div class="discussion-conversation">
 					{{> post}}
-				</div><!-- /.discussion-conversation -->
+				</div>
 			{{/each}}
 		{{/if}}
-	</div><!-- /.course-details-component.discussion -->
-</template><!-- /discussion -->
+	</div>
+</template>
 
 <template name="post">
 	{{#if editing}}
@@ -30,7 +30,7 @@
 	{{#if allowResponse}}
 		{{> post newResponse}}
 	{{/if}}
-</template><!-- /post -->
+</template>
 
 <template name="postShow">
 	{{#if new}}
@@ -43,7 +43,7 @@
 					&nbsp;
 					{{mf 'course.discussion.comment_answer' 'Answer'}}
 				</button>
-			</div><!-- /.discussion-reply -->
+			</div>
 		{{else}}
 			<button class="js-edit discussion-post-new-btn"
 				type="button">
@@ -84,7 +84,7 @@
 							<span class="glyphicon glyphicon-edit"></span>
 						</button>
 					{{/if}}
-				</div><!-- /.disucssion-post-header -->
+				</div>
 				<div class="discussion-post-body">
 					{{#if this.title}}
 						<h4 class="discussion-post-title">
@@ -92,11 +92,11 @@
 						</h4>
 					{{/if}}
 					<p>{{text}}</p>
-				</div><!-- /.discussion-post-body -->
-			</div><!-- /.discussion-post-content -->
-		</div><!-- /{{postClass}} -->
+				</div>
+			</div>
+		</div>
 	{{/if}}
-</template><!-- /postShow -->
+</template>
 
 <template name="postEdit">
 	<div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
@@ -119,7 +119,7 @@
 						last update:{{fromNow time_updated}}
 					</span>
 				{{/if}}
-			</div><!-- /.discussion-edit-header -->
+			</div>
 			<div class="discussion-edit-body">
 				<input class="js-post-title discussion-edit-title"
 					type="text"
@@ -152,11 +152,11 @@
 						{{mf 'course.discussion.anon' 'Anonymous comment'}}
 					</label>
 				{{/if}}
-			</div><!-- /.discussion-edit-body -->
+			</div>
 			</form>
-		</div><!-- /.discussion-edit-content -->
-	</div><!-- /{{postClass}} -->
-</template><!-- /postEdit -->
+		</div>
+	</div>
+</template>
 
 <template name="profileLink">
 	{{#if this}}
@@ -168,7 +168,7 @@
 			Anonymous
 		</span>
 	{{/if}}
-</template><!-- /profileLink -->
+</template>
 
 <template name="profileIcon">
 	<div class="discussion-thumb">
@@ -181,5 +181,5 @@
 			<img class="discussion-profile-icon"
 				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
 		{{/if}}
-	</div><!-- /.discussion-thumb -->
-</template><!-- /profileIcon -->
+	</div>
+</template>
