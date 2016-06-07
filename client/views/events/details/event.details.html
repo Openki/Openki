@@ -9,7 +9,7 @@
 			</p>
 		{{/if}}
 		{{> event}}
-	</div><!-- /.course_event_detail -->
+	</div>
 </template>
 
 <template name="eventNotFound">
@@ -35,12 +35,12 @@
 				&nbsp;
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
-		</div><!-- /.course_event_date -->
+		</div>
 		<div class="course_event_lower_section">
 			<div class="head">
 				<div class="course_event_title">
 					<h3>{{this.title}}</h3>
-				</div><!-- /.course_event_title -->
+				</div>
 				<div class="location">
 					{{> locationLink}}
 					{{#if location.address}}
@@ -52,16 +52,16 @@
 				{{> eventGroupList}}
 
 				<p>{{{description}}}</p>
-			</div><!-- /.head -->
+			</div>
 			{{#if haveLocation}}
 				<div class="mapBox">
 					{{>map markers=eventMarkers}}
-				</div><!-- /.mapBox -->
+				</div>
 			{{/if}}
-		</div><!-- /.course_event_lower_section -->
+		</div>
 		<div class="event_detail_description">
 
-		</div><!-- /.event_detail_description -->
+		</div>
 		{{#if files}}
 			<div class="event_detail_description">
 				<p>Related Files:</p>
@@ -70,7 +70,7 @@
 						{{> eventAttachments}}
 					{{/each}}
 				</ul>
-			</div><!-- /.event_detail_description -->
+			</div>
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="eventEdit_buttons">
@@ -91,15 +91,15 @@
 								{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 							</button>
 						{{/if}}
-					</div><!-- /.btn-group -->
+					</div>
 					<div class="btn-group" role="group">
 						<button class="eventDelete btn btn-danger" type="button" role="button">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.delete'}}
 						</button>
-					</div><!-- /.btn-group -->
-				</div><!-- /.btn-toolbar -->
-			</div><!-- /.eventEdit_buttons -->
+					</div>
+				</div>
+			</div>
 			{{#if replicating}}
 				{{>eventReplication}}
 			{{/if}}
@@ -116,7 +116,7 @@
 			</button>
 		</a>
 		{{> report}}
-	</div><!-- /.event_options -->
+	</div>
 </template>
 
 <template name="eventAttachments">

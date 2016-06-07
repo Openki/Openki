@@ -11,14 +11,14 @@
 				}
 			{{/mf}}
 		</h4>
-	</div><!-- /.course-members-count -->
+	</div>
 	{{#if members}}
 		<div class="course-members">
 			{{#each members}}
 				{{> courseMember member=this course=..}}
 				<div class="horizontal-line"></div>
 			{{/each}}
-		</div><!-- /.roles -->
+		</div>
 	{{/if}}
 </template>
 
@@ -49,13 +49,13 @@
 		{{#if editableMessage}}
 			<div class="course-member-comment">
 				{{> editable editableMessage}}
-			</div><!-- /.course-member-comment -->
+			</div>
 		{{else}}
 			{{#if member.comment}}
 				<div class="course-member-comment">
 						{{member.comment}}
-				</div><!-- /.course-member-comment -->
+				</div>
 			{{/if}}
 		{{/if}}
-	</div><!-- /.course-member -->
+	</div>
 </template>

@@ -40,19 +40,19 @@
 				</b>
 				{{> lang_sel}}
 			</h1>
-		</div><!-- /.kiosk_header -->
+		</div>
 
 		{{#if now.count}}
 			<div class="kiosk_events_ongoing_container">
 				<div class="kiosk_events_ongoing_title">
 					<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=now.count}}</h3>
-				</div><!-- /.kiosk_events_ongoing_title -->
+				</div>
 				<div class="kiosk_events_ongoing">
 					{{#each now}}
 						{{> kioskEventOngoing}}
 					{{/each}}
-				</div><!-- /.kiosk_events_ongoing -->
-			</div><!-- /.kiosk_events_ongoing_container -->
+				</div>
+			</div>
 		{{/if}}
 
 		{{#if today.count}}
@@ -60,13 +60,13 @@
 			<div class="kiosk_events_title">
 				<hr>
 				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h3>
-			</div><!-- /.kiosk_events_title -->
+			</div>
 			<div class="kiosk_events">
 				{{#each today}}
 					{{> kioskEventToday}}
 				{{/each}}
-			</div><!-- /.kiosk_events -->
-		</div><!-- /.kiosk_events_container -->
+			</div>
+		</div>
 		{{/if}}
 
 		{{#if future.count}}
@@ -74,17 +74,17 @@
 			<div class="kiosk_events_title">
 				<hr>
 				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
-			</div><!-- /.kiosk_events_title -->
+			</div>
 			<div class="kiosk_events">
 				{{#each future}}
 					{{> kioskEventFuture}}
 				{{else}}
 					{{mf 'kiosk.noFutureEvents' 'There are no future events'}}
 				{{/each}}
-			</div><!-- /.kiosk_events -->
-		</div><!-- /.kiosk_events_container -->
+			</div>
+		</div>
 		{{/if}}
-	</div><!-- /.kiosk -->
+	</div>
 </template>
 
 <template name="locationDisplay">
@@ -100,7 +100,7 @@
 			{{/unless}}
 			{{this.room}}
 		{{/if}}
-	</div><!-- /.kiosk_event_home -->
+	</div>
 </template>
 
 <template name="kioskEventOngoing">
@@ -108,16 +108,16 @@
 		<div class="calendar_event">
 			<div class="statingIn">
 				{{mf 'kiosk.started' 'Started'}} {{dateformat_fromnow start}}
-			</div><!-- /.statingIn -->
+			</div>
 			<div class="kiosk_event_header">
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
 				{{>locationDisplay}}
-			</div><!-- /.kiosk_event_header -->
+			</div>
 			<div class="course_event_title ellipsis">
 				<h3>{{plain this.title}}</h3>
-			</div><!-- /.course)event_title -->
-		</div><!-- /.calendar_event -->
+			</div>
+		</div>
 	</a>
 </template>
 
@@ -126,21 +126,21 @@
 		<div class="calendar_event today">
 			<div class="statingIn">
 				{{dateformat_fromnow start}}
-			</div><!-- /.statingIn -->
+			</div>
 			<div class="kiosk_event_header">
 				<div class="kiosk_event_date">
 					<span class="glyphicon glyphicon-time"></span>
 					{{timeformat start}} - {{timeformat end}}
-				</div><!-- /.kiosk_event_date -->
+				</div>
 				{{>locationDisplay}}
-			</div><!-- /.kiosk_event_header -->
+			</div>
 			<div class="course_event_title">
 				<h3>{{plain this.title}}</h3>
-			</div><!-- /.course_event_title -->
+			</div>
 			<div class="course_event_desc">
 				<p>{{plain this.description}}</p>
-			</div><!-- /.course_event_desc -->
-		</div><!-- /.calendar_event -->
+			</div>
+		</div>
 	</a>
 </template>
 
@@ -153,16 +153,16 @@
 					{{dateformat start}} <br>
 					<span class="glyphicon glyphicon-time"></span>
 					{{timeformat start}}
-				</div><!-- /.kiosk_event_date -->
+				</div>
 				{{>locationDisplay}}
-			</div><!-- /.kiosk_event_header -->
+			</div>
 			<div class="course_event_title">
 				<h3>{{plain this.title}}</h3>
-			</div><!-- /.course_event_title -->
+			</div>
 			<div class="course_event_desc">
 				<p>{{plain this.description}}</p>
-			</div><!-- /.course_event_desc -->
-		</div><!-- /.calendar_event -->
+			</div>
+		</div>
 	</a>
 </template>
 
@@ -176,8 +176,8 @@
 			<span class="fa fa-circle"> </span>
 			<div class="text">
 				{{mf 'backToKiosk' 'Return to overview'}}
-			</div><!-- /.text -->
+			</div>
 		</a>
-	</div><!-- /.backToKioskLink -->
+	</div>
 {{/if}}
 </template>

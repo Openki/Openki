@@ -21,15 +21,15 @@
 									{{mf 'course.events.futureListLink' 'future events'}}
 								</a>
 							{{/if}}
-						</div><!-- /.courseEvents-titlebar -->
+						</div>
 						<div class="course_events_events">
 							{{#each pastEvents}}
 								{{#if this}}
 									{{> small_event_withDate}}
 								{{/if}}
 							{{/each}}
-						</div><!-- /.course_events_events -->
-					</div><!-- /.past_events -->
+						</div>
+					</div>
 				{{/if}}
 				<hr class="now" id="future_events">
 				{{#if haveOngoingEvents}}
@@ -41,12 +41,12 @@
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div><!-- /.courseEvents-titlebar -->
+					</div>
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
 							{{> small_event_withDate}}
 						{{/each}}
-					</div><!-- /.course_events_events -->
+					</div>
 				{{/if}}
 				{{#if haveFutureEvents}}
 					<div class="courseEvents-titlebar">
@@ -60,17 +60,17 @@
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div><!-- /.courseEvents-titlebar -->
+					</div>
 					<div class="course_events_events">
 						{{#each futureEvents}}
 						{{> small_event_withDate}}
 						{{/each}}
-					</div><!-- /.course_events_events -->
+					</div>
 				{{/if}}
-			</div><!-- /.course_events -->
+			</div>
 			<div class="fade_effect_top" style="display:none"></div>
 			<div class="fade_effect_bottom"></div>
-		</div><!-- /.course_events_fadebox -->
+		</div>
 		<a href="/cal/course/{{course._id}}" target="_blank">
 			<button class="js-events-download-btn"
 				data-tooltip="{{mf 'course.events.download.tooltip'}}"

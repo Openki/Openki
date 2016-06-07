@@ -25,7 +25,7 @@
 							id="setLogo"
 							placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
 							value="{{logoUrl}}"/>
-					</div><!-- /.input-group -->
+					</div>
 
 					<h4>{{mf 'group.settings.field.backgroundImg' 'Background Image:'}} (not working yet)</h4>
 					<div class="input-group">
@@ -36,7 +36,7 @@
 							id="setBackgroundImage"
 							placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
 							value="{{backgroundUrl}}"/>
-					</div><!-- /.input-group -->
+					</div>
 
 					<div class="groupEditFinishbtns">
 						<button class="save -saveSettings" type="button">
@@ -47,8 +47,8 @@
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.cancel'}}
 						</button>
-					</div><!-- /.groupEditFinishbtns -->
-				</div><!-- /.settings -->
+					</div>
+				</div>
 
 				<div class="members">
 					<h2>
@@ -76,7 +76,7 @@
 							placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
 							size="40"
 							type="text"/>
-					</div><!-- /.input-group -->
+					</div>
 					<ul>
 						{{#each foundUsers}}
 							<li>
@@ -88,7 +88,7 @@
 							</li>
 						{{/each}}
 					</ul>
-				</div><!-- /.members -->
+				</div>
 
 			<div class="link-infos">
 				<h2>
@@ -103,5 +103,5 @@
 
 		</form>
 		{{/with}}
-	</div><!-- /.groupSettings -->
+	</div>
 </template>
