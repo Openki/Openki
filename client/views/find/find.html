@@ -1,5 +1,5 @@
 <template name="findWrap">
-	<div class="find">
+	<div class="find container">
 		<h1 class="find-heading">
 			{{mf 'find.WhatLearn?' 'What do you want to learn?'}}
 		</h1>
@@ -75,7 +75,7 @@
 							&nbsp;
 							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
 							{{#if toggleChecked 'upcomingEvent'}}
-								<span class="checkmark"></span>
+								<span class="checkmark glyphicon glyphicon-ok"></span>
 							{{/if}}
 						</label>
 						<label class="js-toggle-property-filter js-filter-needs-host btn">
@@ -91,7 +91,7 @@
 							{{mf 'find.needsHost' 'Looking for a host'}}
 							&nbsp;
 							{{#if toggleChecked 'needsHost'}}
-								<span class="checkmark"></span>
+								<span class="checkmark glyphicon glyphicon-ok"></span>
 							{{/if}}
 						</label>
 						<label class="js-toggle-property-filter js-filter-needs-mentor btn">
@@ -107,7 +107,7 @@
 							{{mf 'find.needsMentor' 'Looking for a mentor'}}
 							&nbsp;
 							{{#if toggleChecked 'needsMentor'}}
-								<span class="checkmark"></span>
+								<span class="checkmark glyphicon glyphicon-ok"></span>
 							{{/if}}
 						</label>
 					</div>
@@ -122,7 +122,7 @@
 							{{#each categories}}
 								<li>
 									<a class="js-category-label" href="#">{{categoryName}}</a>
-									<button class="remove-btn js-remove-category-btn"
+									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
 										data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 									</button>
 								</li>
@@ -174,7 +174,7 @@
 							{{#each categories}}
 								<li>
 									<a class="js-category-label" href="#">{{categoryName}}</a>
-									<button class="remove-btn js-remove-category-btn"
+									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
 										data-toggle="tooltip"
 										data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 									</button>

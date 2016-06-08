@@ -48,8 +48,7 @@
 	}
 }
 
-.calendar {
-  @extend .container;
+.calendar-container {
   padding-top: 50px;
   .calendar_date {
     @include grid(12);

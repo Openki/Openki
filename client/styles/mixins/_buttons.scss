@@ -31,7 +31,6 @@
 }
 
 @mixin big-button-primary {
-  @extend .form-control;
   @extend .btn;
   @extend .btn-primary;
   border: 0;
@@ -41,6 +40,7 @@
 	margin-top: 3px;
   padding: 10px 15px;
   text-align: left;
+	width: 100%;
   &:hover {
     border: 0;
     margin-top: 3px;
@@ -48,7 +48,6 @@
 }
 
 @mixin big-button-success {
-  @extend .form-control;
   @extend .btn;
   @extend .btn-success;
   border: 0;
@@ -58,6 +57,7 @@
 	margin-top: 3px;
   padding: 10px 15px;
   text-align: left;
+	width: 100%;
   &:hover {
     border: 0;
     margin-top: 3px;

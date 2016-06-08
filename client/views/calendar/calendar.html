@@ -1,6 +1,6 @@
 <template name="calendar">
 	{{> switchDate date=startDate}}
-	<div class="calendar">
+	<div class="calendar-container container">
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>
