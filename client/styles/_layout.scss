@@ -4,7 +4,7 @@ body {
 }
 
 #wrap {
-  margin: 0px auto (0 - $footer-height);
+  margin: 0 auto (0 - $footer-height);
   min-height: 100%;
 }
 
@@ -18,9 +18,9 @@ body {
 }
 
 #maincontent {
-  padding: 25px 0px 50px 0px;
+  padding: 25px 0 50px;
   & > *:first-child {
-    margin-top: 0px;
-    padding-top: 0px;
+    margin-top: 0;
+    padding-top: 0;
   }
 }

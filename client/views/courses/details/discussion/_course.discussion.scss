@@ -22,9 +22,9 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-profile-icon {
-  left: 0px;
+  left: 0;
   position: absolute;
-  top: 0px;
+  top: 0;
   vertical-align: text-bottom;
   width: ($discussion-thumb-width - 10) * 1px;
 }
@@ -33,7 +33,7 @@ $discussion-thumb-width: 60;
 .discussion-edit-content {
   border: 1px solid;
   display: table-cell;
-  padding: 0px;
+  padding: 0;
 }
 
 .discussion-post-header,
@@ -54,7 +54,7 @@ $discussion-thumb-width: 60;
   @include grid(12);
   background: $discussion-post-bg;
   display: table;
-  padding: 7px 0px;
+  padding: 7px 0;
 }
 
 .discussion-post-header {
@@ -93,16 +93,16 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-title {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .discussion-post-title + p {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .discussion-comment {
   display: table;
-  padding: 7px 0px 7px ($discussion-thumb-width * 1px);
+  padding: 7px 0 7px ($discussion-thumb-width * 1px);
   position: relative;
   width: 100%;
 }

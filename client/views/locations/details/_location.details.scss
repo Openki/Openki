@@ -9,7 +9,7 @@
 	color: $location-text;
 	height: 140px;
 	overflow: auto;
-	padding-right: 0px;
+	padding-right: 0;
 	h1 {
 		color: $location-text;
 	}
@@ -27,10 +27,10 @@
 	@include grid(12);
 	background-color: $location-description-bg;
 	margin-top: 3px;
-	padding-right: 0px;
+	padding-right: 0;
 	.descriptionFrame {
 		@include grid(12, 6);
-		padding: 0px;
+		padding: 0;
 		.title {
 			background-color: $location-description-bg;
 			margin-top: 10px;
@@ -38,7 +38,7 @@
 	}
 	.location_map {
 		@include grid(12, 6);
-		padding: 0px;
+		padding: 0;
 		.mapContainer.box {
 			float: right;
 			height: 300px;
@@ -48,7 +48,7 @@
 			float: right;
 		}
 	}
-	button.-contact {
+	.-contact {
 		@extend .btn;
 		@extend .btn-default;
 	}

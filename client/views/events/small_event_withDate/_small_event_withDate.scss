@@ -1,21 +1,21 @@
 .event-small-withDate-container {
   @include grid(4, 3, inherit, 2);
   height: 220px;
-  padding: 0px 3px 10px;
+  padding: 0 3px 10px;
   @media (max-width: $screen-xxs) {
     @include grid(12);
-    padding: 0px 3px 10px;
+    padding: 0 3px 10px;
   }
   @media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
     @include grid(6);
-    padding: 0px 3px 10px;
+    padding: 0 3px 10px;
   }
   .event-small {
     @include grid(12);
     @include transition(box-shadow $default-transition-time);
     background: $event-small-bg;
     height: 100%;
-    padding: 0px;
+    padding: 0;
     &:hover {
       @include box-shadow-big($default-shadow);
     }
@@ -61,6 +61,6 @@
     color: $event-small-description-color;
     height: 85px;
     margin-top: -3px;
-    padding: 0px 5px 5px;
+    padding: 0 5px 5px;
   }
 }

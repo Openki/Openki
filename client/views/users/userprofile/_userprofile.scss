@@ -1,9 +1,9 @@
 .profile {
   @include container-narrow;
-  padding: 0px;
+  padding: 0;
   h1 {
     @include grid(12);
-    margin-top: 0px;
+    margin-top: 0;
   }
 }
 
@@ -38,9 +38,9 @@
 
 .profile-settings {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
   .list-group {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 }
 
@@ -49,7 +49,7 @@
   @include header-btn;
   color: $default-gray;
   float: right;
-  padding: 0px;
+  padding: 0;
   &:hover {
     color: $default-black;
   }
@@ -62,13 +62,13 @@
 .profile-course-list {
   @include grid(12);
   margin-left: -5px;
-  width: calc(#{"100% + 10px"}) !important;
+  width: calc(#{'100% + 10px'}) !important;
   .course-container {
     @include grid(6);
-    padding: 0px;
+    padding: 0;
     @media (max-width: $screen-xsm) {
       @include grid(12);
-      padding: 0px;
+      padding: 0;
     }
   }
 }

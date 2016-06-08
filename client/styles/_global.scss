@@ -22,9 +22,9 @@
   @extend .glyphicon;
   @extend .glyphicon-remove;
   background-color: transparent;
-  border: 0px;
+  border: 0;
   color: $default-gray;
-  padding: 0px;
+  padding: 0;
   &:hover {
     color: $default-black;
     cursor: pointer;
@@ -33,7 +33,7 @@
 
 .dropdown-menu {
   @include box-shadow-big($default-shadow);
-  border-radius: 0px;
+  border: 0;
   > li > a {
     padding-left: 12px;
     &:hover {
@@ -42,9 +42,9 @@
   }
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
 select {
   @extend .form-control;
 }
@@ -78,20 +78,6 @@ a,
   @include transition-duration(0s);
 }
 
-.dropdown-menu {
-	border: 0;
-	& > li {
-		& > a,
-		& > a.drodown-item-main {
-			@include transition-property(#{"text-shadow"});
-			@include transition-duration($default-transition-time);
-		}
-		& > a.dropdown-item-main {
-			color: darken($brand-primary, 10%);
-		}
-	}
-}
-
 // .btn-primary
 // 	+gradient-vertical($brand-primary, darken($brand-primary, 5%), 0%, 100%)
 // 	&:hover
@@ -112,10 +98,10 @@ a,
 //
 //
 // #maincontent
-// 	padding: 25px 0px 50px 0px
+// 	padding: 25px 0 50px 0
 // 	& > *:first-child
-// 		margin-top: 0px
-// 		padding-top: 0px
+// 		margin-top: 0
+// 		padding-top: 0
 //
 // 	@media screen and
 // 	(max-width: $screen-xs)
@@ -126,7 +112,7 @@ a,
 //
 //
 // *
-// 	border-radius: 0px !important
+// 	border-radius: 0 !important
 // 	outline: none !important
 //
 //
@@ -136,7 +122,7 @@ a,
 //
 // .dropdown-menu
 // 	+box-shadow-small($default-shadow)
-// 	min-width: 0px
+// 	min-width: 0
 // 	width: auto
 // 	li
 // 		cursor: pointer

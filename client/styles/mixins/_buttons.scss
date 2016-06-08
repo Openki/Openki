@@ -4,8 +4,8 @@
 // Reset mixin to remove default button styles
 @mixin btn-reset {
   background: none;
-  border: 0px;
-  padding: 0px;
+  border: 0;
+  padding: 0;
 }
 
 // Cancel/Delete button style, turning red when beeing hovered over
@@ -34,15 +34,15 @@
   @extend .form-control;
   @extend .btn;
   @extend .btn-primary;
-  border: 0px;
-  margin-top: 3px;
+  border: 0;
   font-size: large;
   height: auto;
   line-height: 1.1;
+	margin-top: 3px;
   padding: 10px 15px;
   text-align: left;
   &:hover {
-    border: 0px;
+    border: 0;
     margin-top: 3px;
   }
 }
@@ -51,22 +51,22 @@
   @extend .form-control;
   @extend .btn;
   @extend .btn-success;
-  border: 0px;
-  margin-top: 3px;
+  border: 0;
   font-size: large;
   height: auto;
   line-height: 1.1;
+	margin-top: 3px;
   padding: 10px 15px;
   text-align: left;
   &:hover {
-    border: 0px;
+    border: 0;
     margin-top: 3px;
   }
 }
 
 @mixin header-btn {
   background: none;
-  border: 0px;
+  border: 0;
 }
 
 @mixin btn-remove {

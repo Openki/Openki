@@ -7,11 +7,11 @@
     }
   }
   &.fullscreen {
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     position: fixed;
-    right: 0px;
-    top: 0px;
+    right: 0;
+    top: 0;
     z-index: 9999;
     span.fa {
       font-size: 8vh;
@@ -23,9 +23,9 @@
   }
   .leaflet-marker-pane .leaflet-marker-icon {
     background: none;
-    border: 0px;
+    border: 0;
     .fa-map-marker {
-      color: black;
+      color: #000;
       &:hover {
         cursor: grabbing;
       }

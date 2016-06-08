@@ -19,7 +19,7 @@
 .ownuser-frame {
   @include grid(12);
   h3 {
-    margin-top: 0px;
+    margin-top: 0;
   }
   a,
   button {
@@ -97,7 +97,7 @@
   @include btn-reset;
   color: $default-gray;
   font-size: xx-large;
-  padding: 0px 9px;
+  padding: 0 9px;
   &:hover,
   &:focus {
     @each $service, $color in $external-servies {
@@ -123,7 +123,7 @@
 .username_warning,
 .password_warning {
   .js-forgot-pwd-btn::before {
-    content: "";
+    content: '';
     font-family: FontAwesome;
 		padding-right: 5px;
   }

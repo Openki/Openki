@@ -65,7 +65,7 @@ $all-btn-bg-color-steps: (
 // --------------------------------------------------
 
 .btn {
-  @include transition(border-color 0.15s ease-in-out);
+  @include transition(border-color .15s ease-in-out);
   @media (max-width: $screen-xs) {
     width: 100%;
     & + .btn {
@@ -88,7 +88,7 @@ $all-btn-bg-color-steps: (
 }
 
 .btn-primary:focus {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(56, 130, 156, .6);
 }
 
 // Gradient background for active default btn
@@ -109,7 +109,7 @@ $all-btn-bg-color-steps: (
 }
 
 .list-group-item {
-  @include transition(border-color 0.15s ease-in-out);
+  @include transition(border-color .15s ease-in-out);
 }
 
 button.list-group-item {

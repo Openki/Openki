@@ -31,14 +31,11 @@
 		@else if nth($args, $i) != 12 {
 			@if $i == 1 {
 				@include make-xs-column(nth($args, $i));
-			}
-			@else if $i == 2 {
+			} @else if $i == 2 {
 				@include make-sm-column(nth($args, $i));
-			}
-			@else if $i == 3 {
+			} @else if $i == 3 {
 				@include make-md-column(nth($args, $i));
-			}
-			@else if $i == 4 {
+			} @else if $i == 4 {
 				@include make-lg-column(nth($args, $i));
 			}
 		}
@@ -48,14 +45,11 @@
 		@else if $i == length($args) {
 			@if $i == 1 {
 				@include make-xs-column(nth($args, $i));
-			}
-			@else if $i == 2 {
+			} @else if $i == 2 {
 				@include make-sm-column(nth($args, $i));
-			}
-			@else if $i == 3 {
+			} @else if $i == 3 {
 				@include make-md-column(nth($args, $i));
-			}
-			@else if $i == 4 {
+			} @else if $i == 4 {
 				@include make-lg-column(nth($args, $i));
 			}
 		}

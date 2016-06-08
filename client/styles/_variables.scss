@@ -7,11 +7,11 @@
 $orange: #f98f39;
 $yellow: #f3f981;
 
-$default-black: #333333;
-$default-shadow: rgba(88, 106, 102, 0.4);
-$default-white: #ffffff;
+$default-black: #333;
+$default-shadow: rgba(88, 106, 102, .4);
+$default-white: #fff;
 $default-gray: #868383;
-$default-light-grey: #cccccc;
+$default-light-grey: #ccc;
 $brand-primary-hover: darken($brand-primary, 10%);
 
 // == Navbar
@@ -39,7 +39,7 @@ $group-hover-shadow: $default-shadow;
 $group-hover-text: $group-text;
 
 // Category colors
-$category-bg: rgba(216, 216, 216, 0.5);
+$category-bg: rgba(216, 216, 216, .5);
 $category-bg-fallback: #dad5d5;
 $category-text: $brand-primary;
 $category-hover-bg: darken($category-bg, 10%);
@@ -49,15 +49,15 @@ $category-hover-shadow: $default-shadow;
 
 // Location colors
 $location-bg: #d0e0bb;
-$location-text: #330000;
+$location-text: #300;
 $location-hover-bg: darken($location-bg, 4%);
 $location-hover-text: $location-text;
 $location-hover-shadow: $default-shadow;
-$location-description-bg: #eeeeff;
+$location-description-bg: #eef;
 $location-edit-bg: $location-description-bg;
 $location-candidate-bg: darken($location-edit-bg, 5%);
 $location-candidate-hover-bg: darken($location-edit-bg, 10%);
-$location-candidate-hover-fill: #ffff11;
+$location-candidate-hover-fill: #ff1;
 
 // User colors
 $user-bg: #bcb6ff;
@@ -94,7 +94,7 @@ $calendar-btn-border: darken($calendar-btn-bg, 3%);
 $calendar-btn-hover-bg: darken($calendar-btn-bg, 5%);
 $calendar-btn-hover-border: darken($calendar-btn-border, 5%);
 
-$map-lefalet-hover-fill: #ffff11;
+$map-lefalet-hover-fill: #ff1;
 
 // Discussion colors
 $discussion-conversation-bg: $openki-light-blue;
@@ -138,4 +138,4 @@ $screen-xsm: 550px;
 //== Default values
 //
 // --------------------------------------------------
-$default-transition-time: 0.5s;
+$default-transition-time: .5s;

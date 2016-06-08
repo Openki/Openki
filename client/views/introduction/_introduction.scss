@@ -14,7 +14,7 @@
   }
   h3 {
     color: $brand-primary;
-    margin: 5px 0px 6px 0px;
+    margin: 5px 0 6px;
   }
 }
 
@@ -37,18 +37,18 @@
 }
 
 .introduction-show-btn::after {
-  content: "";
+  content: '';
 }
 
 .introduction-hide-btn::after {
-  content: "";
+  content: '';
 }
 
 .introduction-content {
   @include grid(12);
   border-top: 1px solid $default-light-grey;
   margin-top: 5px;
-  padding: 12px 0px;
+  padding: 12px 0;
 }
 
 .introduction-steps {
@@ -62,7 +62,7 @@
       &:nth-child(4) {
         padding-bottom: 15px;
         h2::after {
-          content: "";
+          content: '';
         }
       }
       &:nth-last-child(2),
@@ -77,22 +77,22 @@
       text-align: center;
       h2::after {
         bottom: -15px;
-        content: "";
+        content: '';
         right: 47%;
       }
     }
     h2 {
       margin-bottom: 8px;
-      margin-top: 0px;
+      margin-top: 0;
       text-align: center;
       &::after {
-        @include opacity(0.5);
+        @include opacity(.5);
         color: lighten($default-gray, 15%);
-        content: "";
+        content: '';
         font-family: FontAwesome;
         font-size: 16px;
         position: absolute;
-        right: 0px;
+        right: 0;
         top: 6px;
       }
       &:nth-last-child(2),
@@ -103,7 +103,7 @@
       }
     }
     .fa {
-      @include opacity(0.6);
+      @include opacity(.6);
       color: $brand-primary;
     }
   }

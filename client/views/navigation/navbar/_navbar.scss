@@ -2,16 +2,25 @@
   @extend .navbar-default;
   @extend .navbar-fixed-top;
 	@include transition(box-shadow $default-transition-time);
-  border: 0px;
+  border: 0;
 }
 
 .navbar-covering {
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	.nav-marker-caret {
+		opacity: 0;
+	}
+	.navbar-link-active,
+	.navbar-nav > li > .navbar-link-active:hover,
+	.navbar-nav > li > .navbar-link-active:focus {
+		background-color: lighten($navbar-default-bg, 10%);
+		box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	}
 }
 
 #bs-navbar-collapse-1 {
 	@media (max-width: $screen-sm) {
-		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
 	}
 }
 
@@ -44,23 +53,23 @@
   color: $site-stage-color;
   font-size: small;
   font-weight: bold;
-  position: absolute;
   left: 105px;
+	position: absolute;
 }
 
 .navbar-brand:hover {
-	text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	& > .site-stage {
 	  color: $default-white;
 	}
 }
 
 .navbar-link {
-	@include transition-property(#{"background-color, box-shadow, text-shadow"});
+	@include transition-property(#{'background-color, box-shadow, text-shadow'});
   @include transition-duration($default-transition-time);
   font-size: $navbar-default-font-size;
 	&:hover {
-		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+		text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	}
 	@media (max-width: $screen-sm) {
 		border-bottom: 1px solid $navbar-default-border;
@@ -68,7 +77,7 @@
 }
 
 .nav-marker-bar {
-	@include transition-property(#{"background-color, opacity"});
+	@include transition-property(#{'background-color, opacity'});
 	@include transition-duration($default-transition-time);
 	background-color: transparent;
 	bottom: -6px;
@@ -82,9 +91,9 @@
 .nav-marker-caret {
 	@include transition(opacity $default-transition-time);
 	border: 5px solid;
-	border-color:  transparent transparent $body-bg transparent;
-	box-shadow: 0 5px 5px -5px #fff;
+	border-color:  transparent transparent $body-bg;
 	bottom: 0;
+	box-shadow: 0 5px 5px -5px #fff;
 	height: 0;
 	left: 50%;
 	opacity: 0;
@@ -95,18 +104,6 @@
 .navbar-link-active .nav-marker-caret {
 	@media (min-width: $screen-sm) {
 		opacity: 1;
-	}
-}
-
-.navbar-covering {
-	.nav-marker-caret {
-		opacity: 0;
-	}
-	.navbar-link-active,
-	.navbar-nav > li > .navbar-link-active:hover,
-	.navbar-nav > li > .navbar-link-active:focus {
-		background-color: lighten($navbar-default-bg, 10%);
-		box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
 	}
 }
 
@@ -133,7 +130,7 @@
 		}
 		@media (max-width: $screen-sm) {
 			background-color: $dropdown-bg;
-			box-shadow: 0 0px 5px rgba(0, 0, 0, .3) inset;
+			box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
 			padding: 10px 0;
 			& > li > a {
 				color: $dropdown-link-color;
@@ -145,7 +142,7 @@
 		&:hover,
 		&:focus {
 			background-color: lighten($navbar-default-bg, 10%);
-			box-shadow: 0 0px 5px rgba(0, 0, 0, .3);
+			box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 		}
 		@media (min-width: $screen-sm) {
 			.nav-marker-bar {

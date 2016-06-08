@@ -1,22 +1,22 @@
 .course-roles {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
 }
 
 .course-role,
 .course-role-enrol {
   @include grid(12);
-  @include transition-property(#{"box-shadow, margin"});
-  @include transition-duration(0.3s);
-  padding: 0px;
+  @include transition-property(#{'box-shadow, margin'});
+  @include transition-duration(.3s);
+  padding: 0;
 }
 
 .course-role-title,
 .course-role-title-enrol {
   @include grid(12);
-  margin-top: 3px;
-  font-size: large;
-  line-height: 1.1;
+	font-size: large;
+	line-height: 1.1;
+	margin-top: 3px;
   padding: 10px 15px;
   width: 100%;
 }
@@ -55,7 +55,7 @@
 
 .course-role-enrol-btns {
   @include grid(12);
-  padding: 13px 0px 0px;
+  padding: 13px 0 0;
 }
 
 .js-role-subscribe-btn,
