@@ -1,7 +1,15 @@
 .find {
-  .course-edit {
-    padding: 0;
-  }
+	.course-edit {
+		@include grid(12, inherit, 9);
+		@include make-md-column-offset(1.5);
+		@include make-row;
+		@media (max-width: $screen-md) {
+			width: calc(#{'100% + 30px'}) !important;
+		}
+	  h2 {
+	    margin-top: 0;
+	  }
+	}
 }
 
 .find-heading {
@@ -15,7 +23,7 @@
 
 .search {
   @include grid(12);
-  padding: 0;
+	@include make-row;
 }
 
 .js-search-field {
@@ -249,12 +257,6 @@
 			margin: 5px 0;
 			padding-bottom: 0;
     }
-  }
-}
-
-.courselist_results {
-  @media (max-width: $screen-xs) {
-    padding-top: 15px;
   }
 }
 

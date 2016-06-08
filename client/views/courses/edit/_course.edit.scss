@@ -1,13 +1,3 @@
-.find,
-.new_course {
-  .course-edit {
-    @include grid(12);
-    h2 {
-      margin-top: 0;
-    }
-  }
-}
-
 .coursedetails .course-edit {
   @include grid(12);
 }
