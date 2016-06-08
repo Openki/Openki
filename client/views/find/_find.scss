@@ -2,10 +2,7 @@
 	.course-edit {
 		@include grid(12, inherit, 9);
 		@include make-md-column-offset(1.5);
-		@include make-row;
-		@media (max-width: $screen-md) {
-			width: calc(#{'100% + 30px'}) !important;
-		}
+		padding: 0;
 	  h2 {
 	    margin-top: 0;
 	  }
@@ -23,7 +20,7 @@
 
 .search {
   @include grid(12);
-	@include make-row;
+	padding: 0;
 }
 
 .js-search-field {

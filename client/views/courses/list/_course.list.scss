@@ -1,9 +1,8 @@
 .courselist {
   @include grid(12);
-  @include make-row;
-	margin-left: -20px;
-  padding-bottom: 10px;
-  width: calc(#{'100% + 40px'});
+	margin-left: -5px;
+  padding: 0 0 10px;
+  width: calc(#{'100% + 10px'});
 	@media (max-width: $screen-xs) {
     padding-top: 15px;
   }
