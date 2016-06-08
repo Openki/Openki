@@ -2,8 +2,8 @@ footer {
   background: $footer-default-bg;
   color: $footer-default-color;
   font-size: $footer-default-font-size;
-  text-align: center;
   position: relative;
+	text-align: center;
 }
 
 .footer-link {
@@ -20,7 +20,7 @@ footer {
 
 .footer-deployed-version {
   color: $default-light-grey;
-  font-size: small;
   float: right;
-  padding: 0.3em;
+	font-size: small;
+  padding: .3em;
 }

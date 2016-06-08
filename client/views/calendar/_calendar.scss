@@ -5,10 +5,10 @@
 .switchDate {
   @include grid(12);
   background-color: $calendar-navigation-bg;
-  box-shadow: 0px 6px 2px $default-shadow;
+  box-shadow: 0 6px 2px $default-shadow;
   font-size: 32px;
   margin-bottom: 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
   position: fixed;
   text-align: center;
   top: 50px;
@@ -19,13 +19,13 @@
     .week {
       color: $calendar-header-text;
       font-size: large;
-      line-height: 0.75;
-      margin: 7px 0px 0px 0px;
+      line-height: .75;
+      margin: 7px 0 0;
     }
     .date {
       color: $calendar-header-text;
       font-size: small;
-      margin: 3px 0px;
+      margin: 3px 0;
     }
   }
   & > .right {
@@ -40,10 +40,10 @@
     float: left;
     margin: 6px 3px;
     &:first-child {
-      margin-left: 0px;
+      margin-left: 0;
     }
     &:last-child {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 }
@@ -53,7 +53,7 @@
   padding-top: 50px;
   .calendar_date {
     @include grid(12);
-    padding: 0px 0px 10px;
+    padding: 0 0 10px;
     .date {
       background: $calendar-navigation-bg;
       border-left: 10px solid $brand-primary;
@@ -64,33 +64,33 @@
     }
     .calendar_events {
       @include grid(12);
-      margin: 0px -3px -10px;
-      padding: 10px 0px 0px;
-      width: calc(#{"100% + 6px"});
+      margin: 0 -3px -10px;
+      padding: 10px 0 0;
+      width: calc(#{'100% + 6px'});
       .event-small-container {
         @include grid(4, 3, 2);
-        padding: 0px 3px 10px;
+        padding: 0 3px 10px;
       }
     }
   }
 
   @media (max-width: $screen-xxs) {
     @include grid(12);
-    padding: 0px;
+    padding: 0;
     .calendar_date {
       .date {
         @include grid(12);
-        border-left: 0px;
+        border-left: 0;
         border-top: 10px solid $brand-primary;
-        padding: 0.5em;
+        padding: .5em;
       }
       .calendar_events {
-        margin: 0px 0px 10px;
-        padding: 10px 7px 0px;
+        margin: 0 0 10px;
+        padding: 10px 7px 0;
         width: auto;
         .event-small-container {
           @include grid(12);
-          padding: 0px 3px 10px;
+          padding: 0 3px 10px;
         }
       }
     }
@@ -101,7 +101,7 @@
       .calendar_events {
         .event-small-container {
           @include grid(6);
-          padding: 0px 3px 10px;
+          padding: 0 3px 10px;
         }
       }
     }

@@ -2,7 +2,7 @@
   margin: -8px;
   position: relative;
   .editable {
-    @include transition-property(#{"background-color, border, box-shadow"});
+    @include transition-property(#{'background-color, border, box-shadow'});
     @include transition-duration($default-transition-time);
     min-height: 2em;
     padding: 8px;
@@ -18,7 +18,7 @@
   .editable.changed {
     background: $body-bg;
     border: 1px solid $brand-primary;
-    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
     padding: 7px;
   }
   .editable:after {
@@ -28,12 +28,12 @@
     @include transition(color $default-transition-time);
     color: $default-gray;
     cursor: default;
-    padding: 0.2em;
+    padding: .2em;
   }
   &.rich .editIcon {
     position: absolute;
-    right: 0px;
-    top: 0px;
+    right: 0;
+    top: 0;
   }
   &.simple .editable {
     display: inline-block;
@@ -41,9 +41,6 @@
     &:focus {
       min-width: 10em;
     }
-  }
-  &.rich .editable {
-    min-height: 4ex;
   }
   &.rich .editable {
     min-height: 4ex;
@@ -67,8 +64,8 @@
   position: absolute;
   z-index: 1;
   button {
+		@extend .btn;
     @include box-shadow-big($default-shadow);
-    @extend .btn;
     margin-right: 5px;
     &.save {
       @extend .btn-success;

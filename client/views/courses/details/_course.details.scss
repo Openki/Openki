@@ -1,7 +1,7 @@
 
 .course-details-component {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
 }
 
 .course-details-component-titlebar {
@@ -17,7 +17,7 @@
 
 .course-details-description {
   font-size: medium;
-  padding: 10px 0px;
+  padding: 10px 0;
   .editable {
     max-height: 300px;
     overflow: auto;
@@ -51,7 +51,7 @@
   padding-right: 7.5px;
 
   @media (max-width: $screen-sm) {
-    padding-right: 0px;
+    padding-right: 0;
   }
 }
 
@@ -59,14 +59,14 @@
   @include grid(12, inherit, 4);
   padding-left: 7.5px;
   @media (max-width: $screen-xs) {
-    padding: 0px;
+    padding: 0;
   }
 }
 
 .course-details-column-left,
 .course-details-column-right {
   & > div:first-child {
-    padding-top: 0px;
+    padding-top: 0;
   }
 }
 
@@ -76,12 +76,12 @@
   &.haspastevents {
     border-style: solid;
   }
-  ul.groups-list,
-  ul.groups-list li,
-  ul.groups-list li a {
+  .groups-list,
+  .groups-list li,
+  .groups-list li a {
     display: inline-block;
   }
-  ul.groups-list {
+  .groups-list {
     margin-bottom: 10px;
   }
 }
@@ -92,16 +92,16 @@
 
 .course-details-status {
   float: right;
-  padding: 0px 0px 0.8em 1.4em;
+  padding: 0 0 .8em 1.4em;
   position: relative;
   right: -22px;
   top: -7px;
   div {
-    @include opacity(0.5);
+    @include opacity(.5);
     background-color: $default-black;
     color: white;
     font-weight: bold;
-    padding: 0.3em 0.7em;
+    padding: .3em .7em;
   }
 }
 
@@ -110,10 +110,10 @@
   margin-bottom: 10px;
   margin-top: 20px;
   min-height: 3ex;
-  padding: 0px !important;
+  padding: 0 !important;
   & > .editable {
     font-size: 30px;
-    padding: 0px;
+    padding: 0;
   }
   & > .editable-controls {
     font-size: medium;
@@ -124,11 +124,11 @@
 }
 
 .course-details-categories ul {
-  margin-bottom: 0px;
+  margin-bottom: 0;
   li {
     margin-bottom: 10px;
     &:first-child {
-      margin-left: 0px;
+      margin-left: 0;
     }
   }
 }

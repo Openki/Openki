@@ -1,13 +1,13 @@
 .find {
   @extend .container;
   .course-edit {
-    padding: 0px;
+    padding: 0;
   }
 }
 
 .find-heading {
   color: $brand-primary;
-  margin-top: 0px;
+  margin-top: 0;
   @media (max-width: $screen-xs) {
     font-size: x-large;
     margin: 0 0 10px;
@@ -16,7 +16,7 @@
 
 .search {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
 }
 
 .js-search-field {
@@ -48,14 +48,14 @@
 
 .filter {
   @include grid(12, inherit, 7);
-  padding: 0px;
+  padding: 0;
   @media (max-width: $screen-xs) {
 		@include grid(12);
 		background: $gray-lighter;
     border: 1px solid $btn-default-border;
 		border-radius: 4px;
     margin-top: 5px;
-    padding: 0px 10px;
+    padding: 0 10px;
   }
   @media (min-width: $screen-md) {
     padding-left: 15px;
@@ -65,7 +65,7 @@
 .filter-header {
   @include grid(12);
   color: $brand-primary;
-  padding: 0px;
+  padding: 0;
   @media (max-width: $screen-xs) {
     display: none;
   }
@@ -80,14 +80,14 @@
   border-top: 1px solid $openki-light-blue;
   float: left;
   @media (max-width: $screen-xs) {
-    border-top-width: 0px;
+    border-top-width: 0;
   }
 }
 
 .filter-course-properties {
-  padding: 10px 15px 10px 0px;
+  padding: 10px 15px 10px 0;
   @media (max-width: $screen-xs) {
-    padding-right: 0px;
+    padding-right: 0;
     width: 100%;
   }
   .btn-group-vertical {
@@ -127,8 +127,8 @@
   background: $brand-success;
   height: 10px;
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 0;
+  top: 0;
   width: 10px;
 }
 
@@ -151,8 +151,8 @@
 
 .eventcaption_upcoming,
 .toggle-property-filter-icon {
-  @include opacity(0.7);
-  @include transition(opacity 0.15s);
+  @include opacity(.7);
+  @include transition(opacity .15s);
 }
 
 .js-toggle-property-filter:hover > .eventcaption_upcoming,
@@ -163,14 +163,14 @@
 }
 
 .filter-categories {
-  padding: 10px 0px;
+  padding: 10px 0;
   @media (max-width: $screen-xs) {
-    padding: 0px;
+    padding: 0;
     width: 100%;
   }
   h4 {
     color: $brand-primary;
-    margin-top: 0px;
+    margin-top: 0;
   }
 }
 
@@ -187,14 +187,14 @@
     display: none;
   }
   &::after {
-    content: "";
+    content: '';
     font-family: FontAwesome;
     position: absolute;
     right: 7px;
     top: 6px;
   }
   &.open::after {
-    content: "";
+    content: '';
   }
 }
 
@@ -241,8 +241,8 @@
 
 .filter-selected-categories {
   list-style: none;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 	@media (max-width: $screen-xs) {
 		border: 1px solid $brand-success;
 		border-radius: 4px;
@@ -251,11 +251,11 @@
 	}
   li {
     margin-bottom: 3px;
-    padding: 0px 3px 3px 0px;
+    padding: 0 3px 3px 0;
     @media (max-width: $screen-xs) {
       display: inline-block;
-			margin: 5px 0px;
-			padding-bottom: 0px;
+			margin: 5px 0;
+			padding-bottom: 0;
     }
   }
 }

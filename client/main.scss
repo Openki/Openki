@@ -2,32 +2,32 @@
 // --------------------------------------------------
 
 // Fonts
-@import "styles/fonts";
+@import 'styles/fonts';
 
 // Base colors
-@import "styles/base-colors";
+@import 'styles/base-colors';
 
 // Bootstrap framework and overrides
-@import "styles/bootstrap";
+@import 'styles/bootstrap';
 
 // Variables
-@import "styles/variables";
+@import 'styles/variables';
 
 // Mixins
-@import "styles/mixins";
+@import 'styles/mixins';
 
 // Main layout
-@import "styles/layout";
+@import 'styles/layout';
 
 // Global styles
-@import "styles/global";
+@import 'styles/global';
 
-@import "styles/buttons";
-@import "styles/tooltips";
+@import 'styles/buttons';
+@import 'styles/tooltips';
 
 // Template styles
-@import "editable/editable";
-@import "map/map";
-@import "messages/messages";
-@import "report/report";
-@import "views/views";
+@import 'editable/editable';
+@import 'map/map';
+@import 'messages/messages';
+@import 'report/report';
+@import 'views/views';

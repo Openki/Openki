@@ -10,7 +10,7 @@
 .profile-info {
   @include grid(12);
 	border: 3px solid $user-bg;
-	border-bottom: none;
+	border-bottom: 0;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   padding: 15px;
@@ -72,7 +72,7 @@
 
 .change-pwd {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
 }
 
 .change-pwd-btn,
@@ -118,8 +118,8 @@
     @extend .btn;
     @extend .btn-success;
     @extend .btn-lg;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     width: 100%;
   }
 }

@@ -38,16 +38,15 @@
   @extend .btn-default;
 }
 
-ul.groups-options {
+.groups-options {
   white-space: nowrap;
   li {
     padding: 3px;
     button {
       background: none;
-      border: none;
+      border: 0;
       &.-admitToGroup {
         text-align: left;
-        // width: 100%
       }
       &.js-group-expel-btn {
         @include btn-remove;

@@ -3,7 +3,7 @@
   background: $openki-light-blue;
   border-top: 3px solid $body-bg;
   font-size: medium;
-  padding: 0px;
+  padding: 0;
 }
 
 .course-member {
@@ -24,9 +24,9 @@
 .course-member-roles {
   display: inline-block;
   list-style: none;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-left: 10px;
-  padding-left: 0px;
+  padding-left: 0;
   &:hover {
     cursor: default;
   }
@@ -63,13 +63,13 @@
   display: block;
   padding-top: 10px;
   .editable {
-    padding-left: 0px !important;
+    padding-left: 0 !important;
   }
   .editable-controls {
     .editable-store,
     .editable-cancel {
       background: none;
-      border: 0px;
+      border: 0;
       color: $brand-primary;
       display: inline-block;
     }

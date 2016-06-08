@@ -1,19 +1,19 @@
 .locationFrame {
   @include grid(12);
-  padding: 0px;
+  padding: 0;
   .locationEdit {
     @include grid(12);
     background-color: $location-edit-bg;
     border: 1px solid $default-light-grey;
     overflow: auto;
-    padding: 0px;
+    padding: 0;
     @media (max-width: $screen-xs) {
       span.input-group-addon {
         display: none;
       }
     }
     .input-group-addon:first-child {
-      border: 0px;
+      border: 0;
       border-right: 1px solid $default-light-grey;
     }
     .locationSearch {
@@ -47,7 +47,7 @@
         margin-bottom: 5px;
       }
       ul.locationCandidates {
-        padding: 5px 0px;
+        padding: 5px 0;
         li.locationCandidate {
           background-color: $location-candidate-bg;
           list-style: none;
@@ -66,8 +66,8 @@
     }
     .locationMap {
       @include grid(12, 6);
-      margin: 10px 0px;
-      padding-left: 0px;
+      margin: 10px 0;
+      padding-left: 0;
       @media (max-width: $screen-xs) {
         padding-left: 15px;
       }

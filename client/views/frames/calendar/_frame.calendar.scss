@@ -1,6 +1,6 @@
 .frame-calendar-date-events {
   @include grid(12);
-  padding: 0px 0px 10px;
+  padding: 0 0 10px;
 }
 
 .frame-calendar-date {
@@ -12,16 +12,16 @@
   width: 100px;
   @media (max-width: $screen-xxs) {
     @include grid(12);
-    border-left: 0px;
+    border-left: 0;
     border-top: 10px solid $orange;
-    padding: 0.5em;
+    padding: .5em;
   }
 }
 
 .frame-calendar-events {
   @include grid(12);
   margin-bottom: -10px;
-  padding: 10px 7px 0px;
+  padding: 10px 7px 0;
 }
 
 .frame-calendar-no-events {
