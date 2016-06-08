@@ -68,10 +68,13 @@ $all-btn-bg-color-steps: (
   @include transition(border-color .15s ease-in-out);
   @media (max-width: $screen-xs) {
     width: 100%;
-    & + .btn {
-      margin-top: 10px;
-    }
   }
+}
+
+button + button {
+	@media (max-width: $screen-xs) {
+		margin-top: 10px;
+	}
 }
 
 .btn-group {
