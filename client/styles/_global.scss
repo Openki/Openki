@@ -15,12 +15,6 @@
 .dropdown-menu {
   @include box-shadow-big($default-shadow);
   border: 0;
-  > li > a {
-    padding-left: 12px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
 }
 
 select:hover {

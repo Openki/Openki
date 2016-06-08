@@ -144,7 +144,8 @@
 							{{#if availableCategories}}
 								{{#each availableCategories}}
 									<li class="{{this}}">
-										<a class="js-category-label {{#if availableSubcategories this}}drodown-item-main{{/if}}">
+										<a class="js-category-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+											href="#">
 											{{categoryName}}
 											{{#if availableSubcategories this}}
 												<small class="js-toggle-subcategories {{this}}"
