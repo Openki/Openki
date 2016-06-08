@@ -128,7 +128,8 @@
 	<div class="profile-send-email">
 		<form class="sendMail">
 			<h4>{{mf 'profile.mail.content' 'Your message:'}}</h4>
-			<textarea id="emailmessage"
+			<textarea class="form-control"
+				id="emailmessage"
 				placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
 				rows="3">
 			</textarea>
@@ -148,7 +149,7 @@
 					<span class="checkmark"></span>
 				</label>
 			</div>
-			<button type="submit">
+			<button class="btn" type="submit">
 				<span class="glyphicon glyphicon-send"></span>&nbsp;
 				{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
 			</button>

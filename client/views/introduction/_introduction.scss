@@ -27,7 +27,6 @@
 
 .introduction-show-btn,
 .introduction-hide-btn {
-  @extend .btn;
   @extend .btn-link;
   margin-left: 10px;
   &::after {

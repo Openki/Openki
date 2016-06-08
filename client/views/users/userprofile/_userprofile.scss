@@ -10,7 +10,6 @@
 .profile-send-email {
   @include grid(12);
   textarea {
-    @extend .form-control;
     height: 120px;
     margin-bottom: 15px;
   }
@@ -21,7 +20,6 @@
     display: none;
   }
   button {
-    @extend .btn;
     @extend .btn-success;
     float: right;
   }

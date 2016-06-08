@@ -5,15 +5,15 @@
 				<h3>
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 				</h3>
-				<a href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<a class="btn form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					<span class="glyphicon glyphicon-share-alt"></span>
 					{{mf 'login.frame.profile' 'Visit my profile'}}
 				</a>
-				<a href="{{pathFor 'profile'}}">
+				<a class="btn form-control" href="{{pathFor 'profile'}}">
 					<span class="glyphicon glyphicon-cog"></span>
 					{{mf 'login.frame.settings' 'Account settings'}}
 				</a>
-				<button class="js-logout-btn"
+				<button class="btn js-logout-btn form-control"
 					href="#"
 					role="button">
 					<span class="glyphicon glyphicon-log-out"></span>
@@ -37,7 +37,7 @@
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-user"></span>
 				</span>
-				<input class="js-login-name"
+				<input class="js-login-name form-control"
 					id="login-name"
 					type="text"
 					placeholder={{loginNamePlaceholder}}>
@@ -53,7 +53,7 @@
 				<span class="input-group-addon">
 					<span class="fa fa-lock"></span>
 				</span>
-				<input class="js-login-password"
+				<input class="js-login-password form-control"
 					id="login-password"
 					placeholder="{{mf 'frame.login.password' 'Password'}}"
 					type="password"/>
@@ -77,7 +77,7 @@
 					<span class="input-group-addon">
 						<span class="fa fa-envelope"></span>
 					</span>
-					<input class="js-login-email"
+					<input class="js-login-email form-control"
 						type="email"
 						id="login-email"
 						value={{transEmail}}
@@ -85,20 +85,24 @@
 				</div>
 			{{/if}}
 			{{#if registering}}
-				<button class='js-register-btn' type="submit">
+				<button class='btn js-register-btn form-control'
+				 	type="submit">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
-				<button class='js-login-btn' type="submit">
+				<button class='btn js-login-btn form-control'
+				 	type="submit">
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 						{{mf 'login.login.back_to_login' 'Back to login'}}
 				</button>
 			{{else}}
-				<button class='js-login-btn' type="submit">
+				<button class='btn js-login-btn form-control'
+				 	type="submit">
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 						{{mf 'login.login.submit' 'Login'}}
 				</button>
-				<button class='js-register-btn' type="submit">
+				<button class='btn js-register-btn form-control'
+				 	type="submit">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
@@ -135,7 +139,7 @@
 			<span class="input-group-addon">
 				<span class="fa fa-envelope"></span>
 			</span>
-			<input class="js-login-email"
+			<input class="js-login-email form-control"
 				type="email"
 				id="login-email"
 				placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
@@ -145,11 +149,14 @@
 				{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
 			</div>
 		{{/unless}}
-		<button class="js-reset-pwd-btn" type="button" {{disableForInvalidEmail}}>
+		<button class="btn js-reset-pwd-btn form-control"
+			type="button"
+			{{disableForInvalidEmail}}>
 			<span class="fa fa-envelope"></span>
 			{{mf 'forgot.send' 'Reset my password'}}
 		</button>
-		<button class="js-reset-pwd-close-btn" type="button">
+		<button class="btn js-reset-pwd-close-btn form-control"
+			type="button">
 			<span class="glyphicon glyphicon-remove"></span>
 			{{mf 'forgot.close' 'Never mind'}}
 		</button>

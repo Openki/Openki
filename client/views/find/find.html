@@ -11,23 +11,23 @@
 	<div class="search">
 		<div class="js-search-field">
 			<div class="input-group">
-				<input class="js-search-input"
+				<input class="js-search-input form-control"
 					type="text"
 					id="find"
 					value="{{search}}"
 					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
 				<span class="input-group-btn">
-					<button class="js-find-btn" type="button">
+					<button class="btn js-find-btn" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 					{{#unless isMobile}}
 						{{#if showingFilters}}
-							<button class="js-toggle-filter remove-filter" type="button">
+							<button class="btn js-toggle-filter remove-filter" type="button">
 								<span class="glyphicon glyphicon-remove"></span>
 								{{mf 'find.hideFilters' 'Remove all filters'}}
 							</button>
 						{{else}}
-							<button class="js-toggle-filter" type="button">
+							<button class="btn js-toggle-filter" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
@@ -38,12 +38,12 @@
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="js-toggle-filter remove-filter" type="button">
+				<button class="btn js-toggle-filter remove-filter" type="button">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
 			{{else}}
-				<button class="js-toggle-filter" type="button">
+				<button class="btn js-toggle-filter" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.showFilters' 'Filter'}}
 				</button>
@@ -131,7 +131,7 @@
 						{{/if}}
 					{{/unless}}
 					<div class="dropdown filter-categories-select">
-						<input class="js-search-categories"
+						<input class="js-search-categories form-control"
 							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
 							type="text"/>
 						<button	class="dropdown-toggle"
@@ -199,13 +199,17 @@
 					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
 					<div class="btn-group">
 						{{#if regionSelected}}
-							<button class="js-all-regions-btn">
+							<button class="btn js-all-regions-btn"
+								role="button"
+								type="button">
 								<span class="fa fa-dot-circle-o"></span>
 								{{mf 'find.searchAllRegions' 'Search in all regions'}}
 							</button>
 						{{/if}}
 						{{#if showingFilters}}
-							<button class="js-toggle-filter remove-filter" role="button">
+							<button class="btn js-toggle-filter remove-filter"
+								role="button"
+								type="button">
 								<span class="glyphicon glyphicon-remove"></span>
 								{{mf 'find.hideFilters'}}
 							</button>

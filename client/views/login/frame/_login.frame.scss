@@ -23,8 +23,6 @@
   }
   a,
   button {
-    @extend .form-control;
-    @extend .btn;
     @extend .btn-default;
     margin-bottom: 15px;
   }
@@ -69,12 +67,6 @@
     color: $brand-primary;
     cursor: pointer;
   }
-}
-
-.js-login-btn,
-.js-register-btn {
-  @extend .form-control;
-  @extend .btn;
 }
 
 .js-login-btn {
@@ -139,19 +131,9 @@
   }
 }
 
-.js-login-email {
-  @extend .form-control;
-}
-
 .forgot-pwd-mail-info {
   display: inline-block;
   margin-top: -10px;
-}
-
-.js-reset-pwd-btn,
-.js-reset-pwd-close-btn {
-  @extend .form-control;
-  @extend .btn;
 }
 
 .js-reset-pwd-btn {

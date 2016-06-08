@@ -127,7 +127,6 @@ $discussion-thumb-width: 60;
 
 .discussion-edit-title,
 .discussion-edit-text {
-  @extend .form-control;
   margin-bottom: 10px;
 }
 
@@ -145,7 +144,6 @@ $discussion-thumb-width: 60;
 
 .discussion-save-btn,
 .discussion-cancel-btn {
-  @extend .btn;
   float: right;
 }
 
@@ -159,7 +157,6 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-reply-btn {
-  @extend .btn;
   @extend .btn-success;
   margin-top: 5px;
 }

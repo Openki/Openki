@@ -23,12 +23,12 @@
 					</div>
 				{{else}}
 					<div class="locationSearchbar input-group">
-						<input class="-locationName"
+						<input class="-locationName form-control"
 							placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"
 							type="text"
 							value="{{location.name}}"/>
 						<span class="input-group-btn">
-							<button type="submit" class="-addressSearch">
+							<button type="submit" class="btn -addressSearch">
 								<span class="glyphicon glyphicon-search"></span>
 								&nbsp;
 								{{mf 'event.edit.addressSearch' "Search"}}
@@ -36,7 +36,7 @@
 						</span>
 					</div>
 					{{#if searching}}
-					<input class="-locationAddress"
+					<input class="-locationAddress form-control"
 						placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"
 						size="40"
 						type="text"

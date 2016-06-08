@@ -34,18 +34,18 @@
   small {
     font-size: 12px;
   }
-  button {
-    @extend .btn;
-    @extend .btn-default;
-    float: left;
-    margin: 6px 3px;
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+}
+
+.switch-date-btn {
+	@extend .btn-default;
+	float: left;
+	margin: 6px 3px;
+	&:first-child {
+		margin-left: 0;
+	}
+	&:last-child {
+		margin-right: 0;
+	}
 }
 
 .calendar {
@@ -109,6 +109,5 @@
 }
 
 .js-events-download-btn {
-  @extend .btn;
   @extend .btn-primary;
 }

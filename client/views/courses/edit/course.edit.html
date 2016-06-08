@@ -12,13 +12,15 @@
 			{{/if}}
 			<div class="course_edit_body">
 				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
-				<input id="editform_name"
+				<input class="form-control"
+					id="editform_name"
 					placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
 					size="40"
 					type="text"
 					value="{{name}}"/>
 				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>
-				<div id="editform_description"
+				<div class="form-control"
+					id="editform_description"
 					data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
 					{{{description}}}
 				</div>
@@ -100,7 +102,7 @@
 				<div class="course_edit_region">
 					{{#unless _id}}
 						<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-						<select name='region' class="region_select">
+						<select class="region_select form-control" name='region'>
 							<option value='' disabled selected class="select_placeholder">
 								{{mf 'course.edit.pls_select_region' 'Please select a region'}}
 							</option>
@@ -113,11 +115,11 @@
 					{{/unless}}
 				</div>
 				<div class="course_edit_finishbtns">
-					<button type="button" class="save">
+					<button type="button" class="btn save">
 						<span class="glyphicon glyphicon-save"></span>
 						{{mf 'course.edit.save_btn' 'Save'}}
 					</button>
-					<button type="button" class="cancel">
+					<button type="button" class="btn cancel">
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf '_button.cancel'}}
 					</button>

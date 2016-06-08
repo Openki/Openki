@@ -34,16 +34,11 @@
       }
       .locationSearchbar {
         padding-bottom: 5px;
-        input.-locationName {
-          @extend .form-control;
-        }
         button.-addressSearch {
-          @extend .btn;
           @extend .btn-primary;
         }
       }
       input.-locationAddress {
-        @extend .form-control;
         margin-bottom: 5px;
       }
       ul.locationCandidates {

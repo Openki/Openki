@@ -49,18 +49,12 @@
 }
 
 .course-role-enrol-comment {
-  @extend .form-control;
   margin-top: 5px;
 }
 
 .course-role-enrol-btns {
   @include grid(12);
   padding: 13px 0 0;
-}
-
-.js-role-subscribe-btn,
-.js-role-enrol-cancel-btn {
-  @extend .btn;
 }
 
 .js-role-subscribe-btn {

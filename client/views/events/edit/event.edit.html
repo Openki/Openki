@@ -13,7 +13,8 @@
 
 		<div class="course_event_edit_header">
 			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-			<input id="edit_event_title"
+			<input class="form-control"
+				id="edit_event_title"
 				name="_"
 				placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 				size="30"
@@ -25,7 +26,10 @@
 					<span class="input-group-addon">
 						<i class="glyphicon glyphicon-calendar"></i>
 					</span>
-					<input type="text" value="{{localDate start}}" class="form-control js-eventStartDate" {{disableForPast}}>
+					<input class="form-control js-eventStartDate"
+						type="text"
+						value="{{localDate start}}"
+						{{disableForPast}}/>
 				</div>
 			</div>
 			<div class="start_time">
@@ -34,7 +38,8 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input id="edit_event_starttime"
+					<input class="form-control"
+						id="edit_event_starttime"
 						size="5"
 						type="text"
 						value="{{timeformat start}}"
@@ -56,7 +61,8 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input id="edit_event_endtime"
+					<input class="form-control"
+						id="edit_event_endtime"
 						size="5"
 						type="text"
 						value="{{timeformat end}}"/>
@@ -77,7 +83,8 @@
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-time"></span>
 					</span>
-					<input id="edit_event_duration"
+					<input class="form-control"
+						id="edit_event_duration"
 						type="number"
 						value="{{timeformat Duration}}"
 						size="5"/>
@@ -98,7 +105,8 @@
 			{{#if showRegionSelection}}
 				<div class="region_selection">
 					<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-					<select name='region' class="region_select -regionSelect">
+					<select class="region_select -regionSelect form-control"
+						name='region'>
 						<option value='' disabled selected class="select_placeholder">
 							{{mf 'course.edit.pls_select' 'Please select'}}
 						</option>
@@ -143,12 +151,11 @@
 					<span class="input-group-addon">
 						<span class="fa fa-map-signs"></span>
 					</span>
-					<input
-						type="text"
+					<input class="form-control"
 						id="edit_event_room"
 						size="40"
-						value="{{room}}"
-					/>
+						type="text"
+						value="{{room}}"/>
 				</div>
 			</div>
 
@@ -164,11 +171,11 @@
 			</div>
 
 			<div class="edit_buttons">
-				<button type="submit" class="saveEditEvent">
+				<button type="submit" class="btn saveEditEvent">
 					<span class="glyphicon glyphicon-save"></span>
 					{{mf '_button.save'}}
 				</button>
-				<button type="button" class="cancelEditEvent">
+				<button type="button" class="btn cancelEditEvent">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf '_button.cancel'}}
 				</button>
@@ -195,7 +202,8 @@
 </template>
 
 <template name="eventDescriptionEdit">
-	<div id="edit_event_description"
+	<div class="form-control"
+		id="edit_event_description"
 		data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
 		{{{this}}}
 	</div>

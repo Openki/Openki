@@ -3,10 +3,6 @@
   h2 {
     margin-top: 0;
   }
-  input[type='text'],
-  select {
-    @extend .form-control;
-  }
   .course_event_edit_header {
     @include grid(12);
     border: dashed 7px $brand-success;
@@ -37,9 +33,6 @@
     .show_duration {
       padding-right: 0;
     }
-		#edit_event_duration {
-			@extend .form-control;
-		}
     .toggle_duration {
       cursor: pointer;
       padding-top: 15px;
@@ -58,7 +51,6 @@
       @include grid(12);
       padding: 0;
       #edit_event_description {
-        @extend .form-control;
         height: auto;
         max-height: 150px;
         min-height: 100px;
@@ -105,11 +97,9 @@
           margin-right: 5px;
         }
         &.saveEditEvent {
-          @extend .btn;
           @extend .btn-success;
         }
         &.cancelEditEvent {
-          @extend .btn;
           @include btn-cancel;
         }
       }

@@ -64,7 +64,6 @@
   position: absolute;
   z-index: 1;
   button {
-		@extend .btn;
     @include box-shadow-big($default-shadow);
     margin-right: 5px;
     &.save {
@@ -72,11 +71,6 @@
     }
     &.cancel {
       @include btn-cancel;
-    }
-    @media (max-width: $screen-xs) {
-      @include form-control;
-      @include btn;
-      margin-bottom: 10px;
     }
   }
 }

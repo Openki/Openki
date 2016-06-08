@@ -9,7 +9,7 @@
 					</h2>
 
 					<h4>{{mf 'group.settings.field.infos' 'Internal informations:'}}</h4>
-						<input class= "setInfos"
+						<input class= "setInfos form-control"
 							id="setInfos"
 							placeholder="{{mf 'group.settings.infos.placeholder' 'Add some notes for your group-members'}}"
 							size="60"
@@ -21,7 +21,7 @@
 						<span class="input-group-addon">
 							<span class="fa fa-rebel"></span>
 						</span>
-						<input class="-logoUrl"
+						<input class="-logoUrl form-control"
 							id="setLogo"
 							placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
 							value="{{logoUrl}}"/>
@@ -32,18 +32,18 @@
 						<span class="input-group-addon">
 							<span class="fa fa-picture-o"></span>
 						</span>
-						<input class="-backgroundUrl"
+						<input class="-backgroundUrl form-control"
 							id="setBackgroundImage"
 							placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
 							value="{{backgroundUrl}}"/>
 					</div>
 
 					<div class="groupEditFinishbtns">
-						<button class="save -saveSettings" type="button">
+						<button class="btn save -saveSettings" type="button">
 							<span class="glyphicon glyphicon-save"></span>
 							{{mf 'group.edit.save_btn' 'Save'}}
 						</button>
-						<button class="cancel -cancelSettings" type="button">
+						<button class="btn cancel -cancelSettings" type="button">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.cancel'}}
 						</button>
@@ -71,7 +71,7 @@
 						<span class="input-group-addon">
 							<span class="fa fa-user"></span>
 						</span>
-						<input class="-userSearch"
+						<input class="-userSearch form-control"
 							id="AddGroupMember"
 							placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
 							size="40"

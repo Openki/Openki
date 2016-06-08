@@ -27,7 +27,8 @@
 				</div>
 				<div class="course-role-enrol-options">
 					{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
-					<textarea class='course-role-enrol-comment'>{{../../member.comment}}</textarea>
+					<textarea class='course-role-enrol-comment form-control'
+						>{{../../member.comment}}</textarea>
 					{{#if privacyEnabled}}
 						<div class="checkbox">
 							<label>
@@ -37,11 +38,11 @@
 						</div>
 					{{/if}}
 					<div class="course-role-enrol-btns">
-						<button class="js-role-subscribe-btn">
+						<button class="btn js-role-subscribe-btn">
 							<span class="glyphicon glyphicon-ok"></span>
 							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
-						<button class="js-role-enrol-cancel-btn">
+						<button class="btn js-role-enrol-cancel-btn">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
 						</button>

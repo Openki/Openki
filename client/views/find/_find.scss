@@ -25,21 +25,15 @@
 }
 
 .js-search-input {
-  @extend .form-control;
   font-size: large;
 }
 
 .js-find-btn {
-  @extend .btn;
   @extend .btn-success;
 }
 
 .js-toggle-filter {
-  @extend .btn;
   @extend .btn-default;
-  @media (max-width: $screen-xs) {
-    width: 100%;
-  }
 }
 
 .remove-filter {
@@ -199,7 +193,6 @@
 }
 
 .js-search-categories {
-  @extend .form-control;
   border: 1px dashed $category-bg;
   &:focus {
     border-style: solid;
@@ -284,6 +277,5 @@
 }
 
 .js-all-regions-btn {
-  @extend .btn;
   @include btn-go;
 }

@@ -1,6 +1,6 @@
 <template name="course_events">
 	{{#if mayAdd}}
-		<button type="button" class="eventEdit">
+		<button type="button" class="btn eventEdit">
 			<span class="glyphicon glyphicon-plus"></span>&nbsp;
 			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
@@ -72,7 +72,7 @@
 			<div class="fade_effect_bottom"></div>
 		</div>
 		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button class="js-events-download-btn"
+			<button class="btn js-events-download-btn"
 				data-tooltip="{{mf 'course.events.download.tooltip'}}"
 				href="#"
 				type="button">

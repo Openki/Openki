@@ -36,7 +36,7 @@
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button class="js-edit discussion-reply-btn"
+				<button class="js-edit btn discussion-reply-btn"
 					type="button"
 					role="button">
 					<span class="fa fa-reply"></span>
@@ -121,17 +121,17 @@
 				{{/if}}
 			</div>
 			<div class="discussion-edit-body">
-				<input class="js-post-title discussion-edit-title"
+				<input class="js-post-title discussion-edit-title form-control"
 					type="text"
 					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
 					value="{{title}}"/>
-				<textarea class="js-post-text discussion-edit-text"
+				<textarea class="js-post-text discussion-edit-text form-control"
 					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
 					>{{text}}</textarea>
-				<button class="discussion-cancel-btn cancel" type="button">
+				<button class="btn discussion-cancel-btn cancel" type="button">
 					{{mf '_button.cancel'}}
 				</button>
-				<button class="discussion-save-btn"
+				<button class="btn discussion-save-btn"
 					type="submit">
 					{{#if new}}
 						{{#if parentId}}

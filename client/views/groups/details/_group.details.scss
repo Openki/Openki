@@ -41,7 +41,6 @@
       font-size: large;
     }
     .editformDescription {
-      @extend .form-control;
       height: auto;
       max-height: 150px;
       min-height: 100px;
@@ -53,20 +52,12 @@
   .editable {
     background: none;
   }
-  #editform_short,
-  #editform_claim,
-  #addGroupMember {
-    @extend .form-control;
-  }
   .groupEditFinishbtns {
     @include grid(12);
     padding: 10px 0 0;
     button {
-      @extend .btn;
       margin-right: 10px;
       @media mobile {
-        @include form-control;
-        @include btn;
         @include btn-primary;
         margin-bottom: 10px;
       }

@@ -30,11 +30,6 @@
   }
 }
 
-.profile-info-save-btn,
-.js-profile-info-cancel-btn {
-  @extend .btn;
-}
-
 .profile-info-save-btn {
   @extend .btn-success;
 }
@@ -60,24 +55,17 @@
 }
 
 .js-change-pwd-btn {
-  @extend .btn;
   @extend .btn-default;
   margin-top: 10px;
 }
 
 .js-verify-mail-btn {
-  @extend .btn;
   @extend .btn-primary;
 }
 
 .change-pwd {
   @include grid(12);
   padding: 0;
-}
-
-.change-pwd-btn,
-.js-change-pwd-cancel-btn {
-  @extend .btn;
 }
 
 .change-pwd-btn {
@@ -100,7 +88,6 @@
 
 .js-profile-delete-cancel-btn,
 .js-profile-delete-confirm-btn {
-  @extend .btn;
   margin-top: 10px;
 }
 
@@ -115,7 +102,6 @@
 .translate-link {
   @include grid(12);
   a {
-    @extend .btn;
     @extend .btn-success;
     @extend .btn-lg;
     border-top-left-radius: 0;
@@ -135,6 +121,5 @@
 }
 
 .create-group-btn {
-  @extend .btn;
   @extend .btn-success;
 }
