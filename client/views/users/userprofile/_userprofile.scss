@@ -1,10 +1,6 @@
-.profile {
-  @include container-narrow;
-  padding: 0;
-  h1 {
-    @include grid(12);
-    margin-top: 0;
-  }
+.profile-username {
+  @include grid(12);
+  margin-top: 0;
 }
 
 .profile-it-is-you {

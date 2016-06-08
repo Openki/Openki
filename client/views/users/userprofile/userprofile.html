@@ -5,8 +5,10 @@
 </template>
 
 <template name="userprofile">
-	<div class="profile">
-		<h1>{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}</h1>
+	<div class="container-sm">
+		<h1 class="profile-username">
+			{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
+		</h1>
 			{{#if ownuser}}
 				<div class="profile-it-is-you">
 					<h4>

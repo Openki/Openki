@@ -1,9 +1,9 @@
 .translate-info {
-	@include container-narrow;
+	@extend .container-sm;
 }
 
 #mfTransContainer {
-	@include container-narrow;
+	@extend .container-sm;
 	a {
 		color: darken($brand-primary, 10%);
 		font-weight: bold;

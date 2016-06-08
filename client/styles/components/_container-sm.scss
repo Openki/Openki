@@ -1,0 +1,5 @@
+// Narrow container on bigger screen size
+.container-sm {
+	@extend .container;
+	max-width: $container-sm;
+}
