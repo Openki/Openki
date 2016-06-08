@@ -123,3 +123,14 @@ button.list-group-item {
     border-color: #8dc3d6;
   }
 }
+
+.remove-btn {
+  background-color: transparent;
+  border: 0;
+  color: $default-gray;
+  padding: 0;
+  &:hover {
+    color: $default-black;
+    cursor: pointer;
+  }
+}

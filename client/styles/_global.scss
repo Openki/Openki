@@ -12,17 +12,6 @@
   }
 }
 
-.remove-btn {
-  background-color: transparent;
-  border: 0;
-  color: $default-gray;
-  padding: 0;
-  &:hover {
-    color: $default-black;
-    cursor: pointer;
-  }
-}
-
 .dropdown-menu {
   @include box-shadow-big($default-shadow);
   border: 0;
