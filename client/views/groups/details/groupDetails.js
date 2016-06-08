@@ -96,13 +96,6 @@ Router.map(function () {
 Template.groupDetails.onCreated(function() {
 	var instance = this;
 	instance.editingSettings = new ReactiveVar(false);
-
-	instance.autorun(function() {
-		// Close the settings pane when no user is logged-in
-		if (!Meteor.userId()) {
-			instance.editingSettings.set(false);
-		}
-	});
 });
 
 Template.groupSettings.onCreated(function() {
@@ -119,7 +112,7 @@ Template.groupSettings.onCreated(function() {
 
 Template.groupDetails.helpers({
 	editingSettings: function() {
-		return Template.instance().editingSettings.get();
+		return this.mayEdit && Template.instance().editingSettings.get();
 	},
 });
 
@@ -128,7 +121,7 @@ Template.groupSettings.helpers({
 		var instance = Template.instance();
 
 		var search = instance.userSearch.get();
-		if (search == '') return false;
+		if (search === '') return false;
 
 		var group = Groups.findOne(Router.current().params._id);
 		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
@@ -152,7 +145,7 @@ Template.groupSettings.helpers({
 Template.groupDetails.events({
 
 	'click .-settings' : function(event, instance) {
-		if (pleaseLogin()) return false
+		if (pleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
