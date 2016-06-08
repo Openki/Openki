@@ -80,9 +80,8 @@
   @extend .btn-success;
 }
 
-.external-service-login span {
+.external-service-login > span {
   display: block;
-  padding-bottom: 5px;
 }
 
 .js-external-service-login-btn {
