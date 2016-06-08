@@ -1,7 +1,9 @@
 .find {
   @extend .container;
   .course-edit {
-    padding: 0;
+		@include container-narrow;
+		float: none;
+		padding: 0;
   }
 }
 
