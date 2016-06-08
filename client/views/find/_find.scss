@@ -230,10 +230,13 @@
   }
 }
 
-.js-sub-category {
+.dropdown-menu > .js-sub-category {
   border-left: 1px solid $dropdown-link-hover-bg;
   display: none;
-  margin-left: 10px;
+  margin-left: 20px;
+	& > a {
+		padding-left: 15px;
+	}
 }
 
 .filter-selected-categories {
