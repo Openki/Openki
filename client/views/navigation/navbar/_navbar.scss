@@ -118,9 +118,14 @@
 			background-color: $dropdown-bg;
 			box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
 			padding: 0;
-			& > li > a {
-				border-bottom: 1px solid darken($dropdown-bg, 10%);
-				color: $dropdown-link-color;
+			& > li {
+				& > a {
+					border-bottom: 1px solid darken($dropdown-bg, 10%);
+					color: $dropdown-link-color;
+				}
+				&:last-child > a {
+					border-bottom: 0;
+				}
 			}
 		}
 	}
