@@ -107,7 +107,7 @@
 .profile-groups-list {
   @include grid(12);
   .groups {
-    @extend .list-unstyled;
+    @include list-unstyled;
     li {
       margin-bottom: 10px;
     }

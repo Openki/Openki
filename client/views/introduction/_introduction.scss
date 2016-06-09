@@ -47,7 +47,7 @@
 }
 
 .introduction-steps {
-  @extend .list-unstyled;
+  @include list-unstyled;
   font-size: medium;
   li {
     @include grid(6, 2);
