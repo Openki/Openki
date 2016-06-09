@@ -93,8 +93,11 @@ Template.loginFrame.onRendered(function() {
 
 
 Template.loginFrame.created = function() {
+	var instance = this;
+
 	this.registering = new ReactiveVar(false);
 	this.transEmail = ''; // Temp storage for email addresses enterd into the user name field
+	this.warnings = new ReactiveVar(false);
 };
 
 
@@ -103,7 +106,7 @@ Template.loginFrame.helpers({
 		if (Template.instance().registering.get()) {
 			return mf('frame.login.username', 'Username');
 		}
-		return mf('frame.login.usernameOrEmail', 'Username or Email')
+		return mf('frame.login.usernameOrEmail', 'Username or Email');
 	},
 
 	registering: function() {
@@ -127,6 +130,30 @@ Template.loginFrame.helpers({
 
 	disableForInvalidEmail: function() {
 		return validEmail() ? '' : 'disabled';
+	},
+
+	hasWarnings: function() {
+		return Template.instance().warnings.get();
+	},
+
+	emptyLogin: function() {
+		return Template.instance().warnings.get() == 'Match failed';
+	},
+
+	incorrectPassword: function() {
+		return Template.instance().warnings.get() == 'Incorrect password';
+	},
+
+	userNotFound:function() {
+		return Template.instance().warnings.get() == 'User not found';
+	},
+
+	userAlreadyExists: function() {
+		return Template.instance().warnings.get() == 'Username already exists.';
+	},
+
+	noPasswordProvided: function() {
+		return Template.instance().warnings.get() == 'Password may not be empty';
 	},
 
 	loginUsernamePlaceholder: function() {
@@ -153,27 +180,13 @@ Template.loginFrame.events({
 				email: email
 			}, function (err) {
 				if (err) {
-					if (err.error == 400) {
-						$('#username_warning').hide(300);
-						$('.user-frame').removeClass('username_warning');
-						$('#password_warning').show(300);
-						$('.user-frame').addClass('password_warning');
-					} else {
-						$('#username_warning').show(300);
-						$('.user-frame').addClass('username_warning');
-						$('#password_warning').hide(300);
-						$('.user-frame').removeClass('password_warning');
-					}
+					instance.warnings.set(err.reason);
 				} else {
 					instance.closeDropdown();
 				}
 			});
 		} else {
-			$('#password_warning_incorrect').hide(300);
-			$('#username_warning_not_existing').hide(300);
-			$('#login_warning').hide(300);
-			$('.user-frame').removeClass('username_warning');
-			$('.user-frame').removeClass('password_warning');
+			Template.instance().warnings.set(false);
 			Template.instance().registering.set(true);
 
 			// Sometimes people register with their email address in the first field
@@ -190,10 +203,7 @@ Template.loginFrame.events({
 	'submit form, click .js-login-btn': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
-			$('#password_warning').hide(300);
-			$('#username_warning').hide(300);
-			$('.user-frame').removeClass('username_warning');
-			$('.user-frame').removeClass('password_warning');
+			Template.instance().warnings.set(false);
 			Template.instance().registering.set(false);
 			return;
 		}
@@ -201,28 +211,8 @@ Template.loginFrame.events({
 		var password = instance.find('.js-login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-				if (err.error == 400) {
-					$('#password_warning_incorrect').hide(300);
-					$('#username_warning_not_existing').hide(300);
-					$('.user-frame').addClass('username_warning');
-					$('.user-frame').addClass('password_warning');
-					$('#login_warning').show(300);
-				} else if (err.reason == 'Incorrect password') {
-					$('#login_warning').hide(300);
-					$('#username_warning_not_existing').hide(300);
-					$('.user-frame').removeClass('username_warning');
-					$('.user-frame').addClass('password_warning');
-					$('#password_warning_incorrect').show(300);
-				} else {
-					$('#login_warning').hide(300);
-					$('#password_warning_incorrect').hide(300);
-					$('.user-frame').removeClass('password_warning');
-					$('.user-frame').addClass('username_warning');
-					$('#username_warning_not_existing').show(300);
-				}
+				instance.warnings.set(err.reason);
 			} else {
-				$('.user-frame').removeClass('username_warning');
-				$('.user-frame').removeClass('password_warning');
 				instance.closeDropdown();
 			}
 		});

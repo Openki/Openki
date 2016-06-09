@@ -13,6 +13,10 @@
   padding: 3px 12px;
 }
 
+@mixin btn-base {
+	@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
+}
+
 @mixin btn-lg {
 	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
 }
@@ -20,7 +24,7 @@
 @mixin btn-sm {
   @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
 	@media (max-width: $screen-xs) {
-		@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
+		@include btn-base;
 	}
 }
 

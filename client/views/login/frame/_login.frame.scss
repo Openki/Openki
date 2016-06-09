@@ -9,7 +9,6 @@
 .user-frame {
   @include grid(12);
 	padding: 0;
-  // text-align: center;
 	@media (max-width: $screen-sm) {
 		background-color: $dropdown-bg;
 		padding-top: 15px;
