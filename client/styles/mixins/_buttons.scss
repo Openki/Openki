@@ -17,6 +17,10 @@
 	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
 }
 
+@mixin btn-sm {
+  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
+}
+
 @mixin big-button-primary {
   @extend .btn;
   @extend .btn-primary;
