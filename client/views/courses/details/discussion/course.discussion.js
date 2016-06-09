@@ -159,7 +159,7 @@ Template.post.events({
 		return false;
 	},
 
-	'click button.cancel': function() {
+	'click .js-discussion-cancel-btn': function() {
 		Template.instance().editing.set(false);
 	},
 

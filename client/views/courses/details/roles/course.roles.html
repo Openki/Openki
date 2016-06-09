@@ -12,7 +12,7 @@
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
-				<button class="js-role-unsubscribe-btn"
+				<button class="js-role-unsubscribe-btn btn-cancel"
 					name="{{roletype.type}}"
 					role="button"
 					type="button">
@@ -42,7 +42,7 @@
 							<span class="glyphicon glyphicon-ok"></span>
 							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
-						<button class="btn js-role-enrol-cancel-btn">
+						<button class="btn btn-cancel js-role-enrol-cancel-btn">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
 						</button>
