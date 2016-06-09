@@ -69,5 +69,8 @@
     &.save {
       @extend .btn-success;
     }
+    &.cancel {
+      @include btn-cancel;
+    }
   }
 }

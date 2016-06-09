@@ -143,13 +143,17 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-save-btn,
-.js-discussion-cancel-btn {
+.discussion-cancel-btn {
   float: right;
 }
 
 .discussion-save-btn {
   @extend .btn-success;
   margin-right: 5px;
+}
+
+.discussion-cancel-btn {
+  @include btn-cancel;
 }
 
 .discussion-reply-btn {

@@ -40,6 +40,10 @@
   @extend .btn-default;
 }
 
+.remove-filter {
+	@include btn-cancel;
+}
+
 .filter {
   @include grid(12, inherit, 7);
   padding: 0;

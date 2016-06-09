@@ -32,6 +32,7 @@
 
 .js-role-unsubscribe-btn {
   @include btn-thin;
+  @include btn-cancel;
   font-size: medium;
   margin-left: 5px;
 }
@@ -58,6 +59,10 @@
 
 .js-role-subscribe-btn {
   @extend .btn-success;
+}
+
+.js-role-enrol-cancel-btn {
+  @include btn-cancel;
 }
 
 .js-role-enrol-btn {

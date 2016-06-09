@@ -134,12 +134,3 @@ button.list-group-item {
     cursor: pointer;
   }
 }
-
-// Cancel/Delete button style, turning red when beeing hovered over
-.btn-cancel {
-  @extend .btn-default;
-  &:hover {
-    @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
-    border: 1px solid $btn-danger-border;
-  }
-}

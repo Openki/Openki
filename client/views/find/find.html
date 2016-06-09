@@ -22,7 +22,7 @@
 					</button>
 					{{#unless isMobile}}
 						{{#if showingFilters}}
-							<button class="btn btn-cancel js-toggle-filter" type="button">
+							<button class="btn js-toggle-filter remove-filter" type="button">
 								<span class="glyphicon glyphicon-remove"></span>
 								{{mf 'find.hideFilters' 'Remove all filters'}}
 							</button>
@@ -38,7 +38,7 @@
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="btn btn-cancel js-toggle-filter" type="button">
+				<button class="btn js-toggle-filter remove-filter" type="button">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
@@ -208,7 +208,7 @@
 							</button>
 						{{/if}}
 						{{#if showingFilters}}
-							<button class="btn btn-cancel js-toggle-filter"
+							<button class="btn js-toggle-filter remove-filter"
 								role="button"
 								type="button">
 								<span class="glyphicon glyphicon-remove"></span>

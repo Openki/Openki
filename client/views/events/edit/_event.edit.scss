@@ -99,6 +99,9 @@
         &.saveEditEvent {
           @extend .btn-success;
         }
+        &.cancelEditEvent {
+          @include btn-cancel;
+        }
       }
     }
   }

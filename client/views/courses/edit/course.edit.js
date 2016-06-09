@@ -142,7 +142,7 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click .js-course-edit-cancel-btn': function(event) {
+	'click button.cancel': function(event) {
 		if (this._id) {
 			Router.go('showCourse', this);
 		} else {

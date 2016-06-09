@@ -35,6 +35,7 @@
 }
 
 .js-profile-info-cancel-btn {
+  @include btn-cancel;
   margin-left: 5px;
 }
 
@@ -72,6 +73,7 @@
 }
 
 .js-change-pwd-cancel-btn {
+  @include btn-cancel;
   margin-left: 5px;
 }
 
@@ -91,6 +93,10 @@
 
 .js-profile-delete-cancel-btn {
   @extend .btn-default;
+}
+
+.js-profile-delete-confirm-btn {
+  @include btn-cancel;
 }
 
 .translate-link {

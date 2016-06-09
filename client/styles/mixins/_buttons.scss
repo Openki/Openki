@@ -8,6 +8,15 @@
   padding: 0;
 }
 
+// Cancel/Delete button style, turning red when beeing hovered over
+@mixin btn-cancel {
+  @extend .btn-default;
+  &:hover {
+    @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
+    border: 1px solid $btn-danger-border;
+  }
+}
+
 @mixin btn-go {
   @extend .btn-default;
   &:hover {
