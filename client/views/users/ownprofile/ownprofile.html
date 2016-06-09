@@ -53,7 +53,7 @@
 									</label>
 								</div>
 							</div>
-							<button class="btn profile-info-save-btn" type="submit">
+							<button class="btn btn-save profile-info-save-btn" type="submit">
 								{{mf 'profile.input.save' "Save"}}
 							</button>
 							<button class="btn btn-cancel js-profile-info-cancel-btn">
@@ -79,7 +79,7 @@
 											<span class="descr_small"> {{verifiedEmail}} </span>
 											&nbsp;
 											{{#unless user.veryfiedEmailTrue}}
-											<button class="btn js-verify-mail-btn">
+											<button class="btn btn-go js-verify-mail-btn">
 												<span class="glyphicon glyphicon-ok-circle"></span>
 												&nbsp;
 												{{mf 'profile.verifymail' 'Verify my E-Mail'}}
@@ -126,7 +126,7 @@
 									<input type="password" id="newpassword_confirm" value=""/>
 								</label>
 							</div>
-							<button class="btn btn-default change-pwd-btn" type="submit">
+							<button class="btn btn-save" type="submit">
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
 							<button class="btn btn-cancel js-change-pwd-cancel-btn">
@@ -135,7 +135,7 @@
 						</form>
 					{{else}}
 						{{#unless editing}}
-							<button class="btn js-change-pwd-btn">
+							<button class="btn btn-default js-change-pwd-btn">
 								<i class="fa fa-lock" aria-hidden="true"></i>
 								&nbsp;
 								{{mf 'profile.changePass' 'Change my password'}}
@@ -156,7 +156,7 @@
 				</div>
 			</div>
 			<div class="translate-link">
-				<a class="btn" href="/translate">
+				<a class="btn btn-go" href="/translate">
 					<i class="fa fa-language" aria-hidden="true"></i>
 					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 				</a>
@@ -181,7 +181,7 @@
 						{{/with}}
 					{{/each}}
 				</ul>
-				<a class="btn create-group-btn"
+				<a class="btn btn-add"
 					href="{{pathFor 'groupDetails' _id='create'}}">
 					<span class="fa fa-plus"></span>&nbsp;
 					{{mf 'profile.createNewGroup.button' 'Create a new group'}}

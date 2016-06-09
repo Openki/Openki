@@ -8,15 +8,15 @@ Template.report.helpers({
 });
 
 Template.report.events({
-	'click .js-report-btn': function(event, instance) {
+	'click .js-report': function(event, instance) {
 		event.preventDefault();
 		instance.state.set('reporting');
 	},
-	'click .cancel': function(event, instance) {
+	'click .js-report-cancel': function(event, instance) {
 		event.preventDefault();
 		instance.state.set('');
 	},
-	'click .send': function(event, instance) {
+	'click .js-report-send': function(event, instance) {
 		event.preventDefault();
 		Meteor.call('report', document.title, window.location.href, instance.$('.report').val(), function(error, result) {
 			if (error) {

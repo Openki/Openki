@@ -17,7 +17,7 @@
 					value="{{search}}"
 					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
 				<span class="input-group-btn">
-					<button class="btn js-find-btn" type="button">
+					<button class="btn btn-go js-find-btn" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 					{{#unless isMobile}}
@@ -200,7 +200,7 @@
 					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
 					<div class="btn-group">
 						{{#if regionSelected}}
-							<button class="btn btn-go js-all-regions-btn"
+							<button class="btn btn-default js-all-regions-btn"
 								role="button"
 								type="button">
 								<span class="fa fa-dot-circle-o"></span>

@@ -32,10 +32,6 @@
   font-size: large;
 }
 
-.js-find-btn {
-  @extend .btn-success;
-}
-
 .filter {
   @include grid(12, inherit, 7);
   padding: 0;

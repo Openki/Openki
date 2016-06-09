@@ -1,6 +1,4 @@
 .navbar {
-  @extend .navbar-default;
-  @extend .navbar-fixed-top;
 	@include transition(box-shadow $default-transition-time);
   border: 0;
 }

@@ -66,8 +66,5 @@
   button {
     @include box-shadow-big($default-shadow);
     margin-right: 5px;
-    &.save {
-      @extend .btn-success;
-    }
   }
 }

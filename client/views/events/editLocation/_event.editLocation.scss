@@ -27,16 +27,12 @@
         span.fa-map-marker {
           color: darken($brand-success, 40%);
         }
-        button.-locationChange {
-          @include btn-thin;
-          @extend .btn-primary;
+        .-locationChange {
+          @include btn-sm;
         }
       }
       .locationSearchbar {
         padding-bottom: 5px;
-        button.-addressSearch {
-          @extend .btn-primary;
-        }
       }
       input.-locationAddress {
         margin-bottom: 5px;

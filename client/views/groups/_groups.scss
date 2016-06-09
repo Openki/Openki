@@ -44,7 +44,7 @@
         text-align: left;
       }
       &.js-group-expel-btn {
-        @include btn-remove;
+        @include icon-btn-remove;
       }
       span.glyphicon-remove {
         position: relative;

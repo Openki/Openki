@@ -62,7 +62,7 @@
 						{{#unless categories}}
 							{{mf 'course.edit.no.categories' 'No categories'}}
 						{{/unless}}
-						<button class="editCategories" type="button" role="button">
+						<button class="btn btn-edit editCategories" type="button" role="button">
 							<span class="glyphicon glyphicon-edit"></span>
 							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
 						</button>
@@ -104,11 +104,11 @@
 					{{/unless}}
 				</div>
 				<div class="course_edit_finishbtns">
-					<button type="button" class="btn save">
+					<button type="button" class="btn btn-save js-course-edit-save">
 						<span class="glyphicon glyphicon-save"></span>
 						{{mf 'course.edit.save_btn' 'Save'}}
 					</button>
-					<button type="button" class="btn btn-cancel js-course-edit-cancel-btn">
+					<button type="button" class="btn btn-cancel js-course-edit-cancel">
 						<span class="glyphicon glyphicon-remove"></span>
 						{{mf '_button.cancel'}}
 					</button>

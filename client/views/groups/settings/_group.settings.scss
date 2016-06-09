@@ -26,16 +26,6 @@
       padding: 20px 0;
       button {
         margin-right: 10px;
-        @media mobile {
-          @include btn-primary;
-          margin-bottom: 10px;
-        }
-        &.save {
-          @extend .btn-success;
-        }
-        &.cancel {
-          @extend .btn-danger;
-        }
       }
     }
   }
@@ -60,24 +50,23 @@
         padding-left: 8px;
         padding-right: 0;
         button {
-          @include btn-thin;
           padding: 2px 6px;
-          &.cancel {
+          &.js-member-remove-btn {
+						background-color: rgba(80, 90, 50, .3);
+						&:hover {
+							background-color: $brand-danger;
+						}
             span {
               color: #400;
             }
-            background-color: rgba(80, 90, 50, .3);
-            &:hover {
-              background-color: $brand-danger;
-            }
           }
-          &.confirm {
+          &.js-member-add-btn {
+						background-color: rgba(80, 90, 50, .3);
+						&:hover {
+							background-color: $brand-success;
+						}
             span {
               color: #040;
-              background-color: rgba(80, 90, 50, .3);
-            }
-            &:hover {
-              background-color: $brand-success;
             }
           }
         }

@@ -148,12 +148,10 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-save-btn {
-  @extend .btn-success;
   margin-right: 5px;
 }
 
 .discussion-reply-btn {
-  @extend .btn-success;
   margin-top: 5px;
 }
 
@@ -162,7 +160,10 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-new-btn {
-  @include big-button-success;
+  @include btn-lg;
+	text-align: left;
+	margin-top: 3px;
+	width: 100%;
 }
 
 .discussion-post-new {

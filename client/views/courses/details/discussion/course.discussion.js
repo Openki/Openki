@@ -120,7 +120,7 @@ Template.postEdit.helpers({
 });
 
 Template.post.events({
-	'click .js-edit': function(event, instance) {
+	'click .js-discussion-edit': function(event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		instance.editing.set(true);

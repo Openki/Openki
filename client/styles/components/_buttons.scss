@@ -135,8 +135,17 @@ button.list-group-item {
   }
 }
 
+.btn-go,
+.btn-add,
+.btn-edit,
+.btn-save {
+	@extend .btn-success;
+}
+
 // Cancel/Delete button style, turning red when beeing hovered over
-.btn-cancel {
+.btn-cancel,
+.btn-delete,
+.btn-remove {
   @extend .btn-default;
   &:hover {
     @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
@@ -144,10 +153,8 @@ button.list-group-item {
   }
 }
 
-.btn-go {
-  @extend .btn-default;
-  &:hover {
-    @include gradient-vertical(map-get($btn-success-bg-color-steps, dark), map-get($btn-success-bg-color-steps, darkest), 0%, 100%);
-    border: 1px solid $btn-success-border;
-  }
+.btn-sm {
+	@media (max-width: $screen-xs) {
+		@include btn-base;
+	}
 }

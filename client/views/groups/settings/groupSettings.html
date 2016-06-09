@@ -39,11 +39,11 @@
 					</div>
 
 					<div class="groupEditFinishbtns">
-						<button class="btn save -saveSettings" type="button">
+						<button class="btn btn-save js-group-edit-save" type="button">
 							<span class="glyphicon glyphicon-save"></span>
 							{{mf 'group.edit.save_btn' 'Save'}}
 						</button>
-						<button class="btn cancel -cancelSettings" type="button">
+						<button class="btn btn-cancel js-group-edit-cancel" type="button">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.cancel'}}
 						</button>
@@ -60,7 +60,7 @@
 							<li>
 								<span class="glyphicon glyphicon-user"></span>
 								{{username this}}
-								<button class="-removeMember cancel" type="button">
+								<button class="js-member-remove-btn btn" type="button">
 									<span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' "remove member"}}"></span>
 								</button>
 							</li>
@@ -82,7 +82,7 @@
 							<li>
 								<span class="glyphicon glyphicon-user"></span>
 								{{username this._id}}
-								<button type="button" class="-addMember confirm">
+								<button type="button" class="btn js-member-add-btn">
 									<span class="glyphicon glyphicon-plus" title="{{mf 'group.settings.addMember' "add as member"}}"></span>
 								</button>
 							</li>

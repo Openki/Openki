@@ -40,8 +40,7 @@
       padding: 10px 5px 10px 0;
     }
     .editCategories {
-			@extend .btn-primary;
-      @include btn-thin;
+			@include btn-sm;
     }
     .course_edit_region {
       margin-bottom: 10px;
@@ -54,8 +53,5 @@
   padding: 10px 0 0;
   button {
     margin-right: 10px;
-    &.save {
-      @extend .btn-success;
-    }
   }
 }

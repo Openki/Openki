@@ -17,13 +17,6 @@
 
 .ownuser-frame {
   @include grid(12);
-  h3 {
-    margin-top: 0;
-  }
-  a,
-  button {
-    margin-bottom: 15px;
-  }
 }
 
 .login {
@@ -43,10 +36,6 @@
 	text-align: right;
 }
 
-.js-register-btn {
-  @extend .btn-success;
-}
-
 .external-service-login {
 	text-align: center;
 }
@@ -55,22 +44,21 @@
 	background: none;
 	border: 0;
   color: $default-gray;
-  font-size: xx-large;
   padding: 0 9px;
-  &:hover,
-  &:focus {
-    @each $service, $color in $external-servies {
-      .fa-#{$service}-square {
-        color: $color;
-      }
-    }
-  }
-	@media (max-width: $screen-xs) {
-		@each $service, $color in $external-servies {
-      .fa-#{$service}-square {
-        color: $color;
-      }
-    }
+	.fa {
+		font-size: xx-large;
+	}
+}
+
+@each $service, $color in $external-servies {
+	.fa-#{$service}-square {
+		&:hover,
+		&:focus {
+			color: $color;
+		}
+		@media (max-width: $screen-xs) {
+			color: $color;
+		}
 	}
 }
 
@@ -82,10 +70,6 @@
 .forgot-pwd-mail-info {
   display: inline-block;
   margin-top: -10px;
-}
-
-.js-reset-pwd-btn {
-  @extend .btn-success;
 }
 
 .registering_disclaimer {

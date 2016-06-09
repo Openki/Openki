@@ -71,8 +71,6 @@
         height: auto;
       }
       .eventFileUpload {
-				@extend .btn-primary;
-        @include btn-thin;
         margin: 5px 0;
       }
     }
@@ -95,9 +93,6 @@
         margin-top: 10px;
         &:first-child {
           margin-right: 5px;
-        }
-        &.saveEditEvent {
-          @extend .btn-success;
         }
       }
     }

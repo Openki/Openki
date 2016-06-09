@@ -149,7 +149,7 @@ Template.groupDetails.events({
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
-	'click .-saveGroup': function(event, instance) {
+	'click .js-group-save': function(event, instance) {
 		if (pleaseLogin()) return false;
 
 		var group = {};
@@ -176,11 +176,11 @@ Template.groupDetails.events({
 
 	},
 
-	'click .-cancelGroup': function(event, instance) {
+	'click .js-group-cancel': function(event, instance) {
 		Router.go('/'); // Got a better idea?
 	},
 
-	'click .-saveSettings': function(event, instance) {
+	'click .js-group-edit-save': function(event, instance) {
 		Meteor.call("saveGroup", instance.data.group._id, {
 			logoUrl: instance.$('.-logoUrl').val(),
 			backgroundUrl: instance.$('.-backgroundUrl').val(),
@@ -194,11 +194,11 @@ Template.groupDetails.events({
 		});
 	},
 
-	'click .-cancelSettings': function(event, instance) {
+	'click .js-group-edit-cancel': function(event, instance) {
 		instance.editingSettings.set(false);
 	},
 
-	'click .-addMember': function(event, instance) {
+	'click .js-member-add-btn': function(event, instance) {
 		var memberId = this._id;
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
@@ -210,7 +210,7 @@ Template.groupDetails.events({
 		});
 	},
 
-	'click .-removeMember': function(event, instance) {
+	'click .js-member-remove-btn': function(event, instance) {
 		var memberId = ''+this;
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {

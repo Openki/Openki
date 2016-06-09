@@ -1,9 +1,11 @@
+@import "translate.mixins";
+
 .translate-info {
-	@extend .container-sm;
+	@include container-sm;
 }
 
 #mfTransContainer {
-	@extend .container-sm;
+	@include container-sm;
 	a {
 		color: darken($brand-primary, 10%);
 		font-weight: bold;
@@ -92,10 +94,6 @@ div.mfTransGraph {
 	width: auto;
 }
 
-#mfTransNewSubmit {
-	@extend .btn;
-	@extend .btn-success;
-}
 #mfTransLang {
-	@extend .container;
+	@include container;
 }

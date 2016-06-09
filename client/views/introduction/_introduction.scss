@@ -23,7 +23,7 @@
 
 .introduction-show-btn,
 .introduction-hide-btn {
-  @extend .btn-link;
+	@include btn-sm;
   margin-left: 10px;
   &::after {
     color: $gray-light;

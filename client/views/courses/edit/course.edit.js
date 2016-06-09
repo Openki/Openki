@@ -80,7 +80,7 @@ Template.course_edit.rendered = function() {
 
 
 Template.course_edit.events({
-	'submit form, click button.save': function (ev, instance) {
+	'submit form, click js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
 		if (pleaseLogin()) return;
@@ -142,7 +142,7 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click .js-course-edit-cancel-btn': function(event) {
+	'click .js-course-edit-cancel': function(event) {
 		if (this._id) {
 			Router.go('showCourse', this);
 		} else {

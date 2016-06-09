@@ -30,10 +30,6 @@
   }
 }
 
-.profile-info-save-btn {
-  @extend .btn-success;
-}
-
 .js-profile-info-cancel-btn {
   margin-left: 5px;
 }
@@ -53,17 +49,9 @@
   margin-top: 10px;
 }
 
-.js-verify-mail-btn {
-  @extend .btn-primary;
-}
-
 .change-pwd {
   @include grid(12);
   padding: 0;
-}
-
-.change-pwd-btn {
-  @extend .btn-success;
 }
 
 .js-change-pwd-cancel-btn {
@@ -87,7 +75,6 @@
 .translate-link {
   @include grid(12);
   a {
-    @extend .btn-success;
     @include btn-lg;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -103,8 +90,4 @@
       margin-bottom: 10px;
     }
   }
-}
-
-.create-group-btn {
-  @extend .btn-success;
 }

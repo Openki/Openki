@@ -31,9 +31,9 @@
 }
 
 .js-role-unsubscribe-btn {
-  @include btn-thin;
   font-size: medium;
   margin-left: 5px;
+	padding: 3px 12px;
 }
 
 .course-role-enrol {
@@ -56,10 +56,9 @@
   padding: 13px 0 0;
 }
 
-.js-role-subscribe-btn {
-  @extend .btn-success;
-}
-
 .js-role-enrol-btn {
-  @include big-button-success;
+	@include btn-lg;
+	text-align: left;
+	margin-top: 3px;
+	width: 100%;
 }

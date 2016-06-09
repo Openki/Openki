@@ -1,9 +1,0 @@
-// Temporary workaround to use bootstrap classes in media directives
-
-@mixin btn-primary {
-  @extend .btn-primary;
-}
-
-@mixin btn-success {
-  @extend .btn-success;
-}

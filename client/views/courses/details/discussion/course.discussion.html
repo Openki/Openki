@@ -36,7 +36,7 @@
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button class="js-edit btn discussion-reply-btn"
+				<button class="js-discussion-edit btn btn-add discussion-reply-btn"
 					type="button"
 					role="button">
 					<span class="fa fa-reply"></span>
@@ -45,7 +45,7 @@
 				</button>
 			</div>
 		{{else}}
-			<button class="js-edit discussion-post-new-btn"
+			<button class="btn btn-add discussion-post-new-btn js-discussion-edit"
 				type="button">
 				<span class="glyphicon glyphicon-pencil"></span>
 				&nbsp;
@@ -77,7 +77,7 @@
 						</button>
 					{{/if}}
 					{{#if mayEdit}}
-						<button class="js-edit discussion-edit-btn"
+						<button class="js-discussion-edit discussion-edit-btn"
 							data-tooltip="{{mf '_button.edit'}}"
 							role="button"
 							type="button">
@@ -131,7 +131,7 @@
 				<button class="btn btn-cancel js-discussion-cancel-btn" type="button">
 					{{mf '_button.cancel'}}
 				</button>
-				<button class="btn discussion-save-btn"
+				<button class="btn btn-save discussion-save-btn"
 					type="submit">
 					{{#if new}}
 						{{#if parentId}}

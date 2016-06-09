@@ -57,16 +57,6 @@
     padding: 10px 0 0;
     button {
       margin-right: 10px;
-      @media mobile {
-        @include btn-primary;
-        margin-bottom: 10px;
-      }
-      &.save {
-        @extend .btn-success;
-      }
-      &.cancel {
-        @extend .btn-danger;
-      }
     }
   }
 }
