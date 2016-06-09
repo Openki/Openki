@@ -13,6 +13,10 @@
   padding: 3px 12px;
 }
 
+@mixin btn-lg {
+	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
+}
+
 @mixin big-button-primary {
   @extend .btn;
   @extend .btn-primary;
