@@ -8,14 +8,6 @@
   padding: 0;
 }
 
-@mixin btn-go {
-  @extend .btn-default;
-  &:hover {
-    @include gradient-vertical(map-get($btn-success-bg-color-steps, dark), map-get($btn-success-bg-color-steps, darkest), 0%, 100%);
-    border: 1px solid $btn-success-border;
-  }
-}
-
 @mixin btn-thin {
   @extend .btn;
   padding: 3px 12px;
