@@ -43,10 +43,6 @@
 	text-align: right;
 }
 
-.js-forgot-pwd-btn {
-	@include btn-sm;
-}
-
 .js-register-btn {
   @extend .btn-success;
 }

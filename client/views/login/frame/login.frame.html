@@ -33,7 +33,7 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group">
+			<div class="form-group {{#if userNotFound}}has-error{{/if}}{{#if userAlreadyExists}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-user"></span>
@@ -55,7 +55,7 @@
 					</span>
 				{{/if}}
 			</div>
-			<div class="form-group">
+			<div class="form-group {{#if incorrectPassword}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}{{#if noPasswordProvided}}has-error{{/if}}">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-lock"></span>
@@ -108,7 +108,7 @@
 				</div>
 			{{else}}
 				<div class="form-group forgot-pwd-btn-container">
-					<button class="btn btn-default js-forgot-pwd-btn"
+					<button class="btn btn-default {{#if incorrectPassword}}form-control{{else}}btn-sm{{/if}} js-forgot-pwd-btn"
 						type="button"
 						role="button">
 						{{mf 'forgot' "I forgot my password"}}
