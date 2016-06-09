@@ -71,7 +71,7 @@ $all-btn-bg-color-steps: (
   }
 }
 
-button + button {
+button + button:not(.js-external-service-login-btn) {
 	@media (max-width: $screen-xs) {
 		margin-top: 10px;
 	}

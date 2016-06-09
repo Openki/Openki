@@ -9,7 +9,7 @@
 .user-frame {
   @include grid(12);
 	padding: 0;
-  text-align: center;
+  // text-align: center;
 	@media (max-width: $screen-sm) {
 		background-color: $dropdown-bg;
 		padding-top: 15px;
@@ -29,11 +29,11 @@
 
 .login {
   @include grid(12);
-  & > div,
-  & > button,
-  & > a {
-    margin-bottom: 15px;
-  }
+  // & > div,
+  // & > button,
+  // & > a {
+  //   margin-bottom: 15px;
+  // }
   .fa-lock {
     font-size: large;
     padding: 0 1px;
@@ -55,35 +55,25 @@
   text-align: left;
 }
 
-.js-forgot-pwd-btn {
-  display: block;
-  margin-top: -10px;
-  text-align: right;
-  &:focus {
-    text-decoration: underline;
-  }
-  &:hover {
-    color: $brand-primary;
-    cursor: pointer;
-  }
+.forgot-pwd-btn-container {
+	text-align: right;
 }
 
-.js-login-btn {
-	@media (max-width: $screen-xs) {
-		margin-bottom: 5px !important;
-	}
+.js-forgot-pwd-btn {
+	@include btn-sm;
 }
 
 .js-register-btn {
   @extend .btn-success;
 }
 
-.external-service-login > span {
-  display: block;
+.external-service-login {
+	text-align: center;
 }
 
 .js-external-service-login-btn {
-  @include btn-reset;
+	background: none;
+	border: 0;
   color: $default-gray;
   font-size: xx-large;
   padding: 0 9px;
@@ -121,11 +111,6 @@
 .forgot_login {
   @include grid(12);
   padding: 0 15px;
-  & > p,
-  & > div,
-  & > button {
-    margin-bottom: 15px !important;
-  }
 }
 
 .forgot-pwd-mail-info {
