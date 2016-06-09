@@ -28,38 +28,31 @@
 					{{#if editingCategories}}
 						<div id="edit_categories">
 							<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
-							<ul class='categories'>
 								{{#each availableCategories}}
-									<li class="{{activeCategory}}">
-										<label class="{{this}}">
-											<input class='checkbox cat_{{this}}'
+									<div class="checkbox">
+										<label class="{{isChecked}}">
+											<input class='js-category-checkbox cat_{{this}}'
 												name='{{this}}'
-												style="display: inline"
 												type='checkbox'
 												value="1"
 												{{checkCategory}}/>
 											{{categoryName}}
-											<span class="caret {{activeCategory}}"></span>
+											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
 										</label>
-										<ul class='subcategories'>
-											{{#each availableSubcategories this}}
-												<li>
-													<div class="checkbox">
-														<label class="{{this}}">
-															<input class='checkbox_sub cat_{{this}}'
-																name='{{this}}'
-																type='checkbox'
-																value="1"
-																{{checkCategory}}/>
-															{{categoryName}}
-														</label>
-													</div>
-												</li>
-											{{/each}}
-										</ul>
-									</li>
+									</div>
+									{{#each availableSubcategories this}}
+										<div class="checkbox checkbox-sub">
+											<label class="{{isChecked}}">
+												<input class='js-category-checkbox cat_{{this}}'
+													name='{{this}}'
+													type='checkbox'
+													value="1"
+													{{checkCategory}}/>
+												{{categoryName}}
+											</label>
+										</div>
+									{{/each}}
 								{{/each}}
-							</ul>
 						</div>
 					{{else}}
 						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
@@ -78,25 +71,21 @@
 
 				<div class="course_edit_roles">
 					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
-					<ul class="roles_list">
-						{{#each available_roles}}
-							<li>
-								{{> courseEditRole selected=../roles role=this members=../members}}
-							</li>
-						{{/each}}
-					</ul>
+					{{#each available_roles}}
+						{{> courseEditRole selected=../roles role=this members=../members}}
+					{{/each}}
 				</div>
 
 				<div class="course_edit_internal">
 					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
-					<label>
-						<input
-							type="checkbox"
-							class="-courseInternal"
-							{{isInternal}}
-						>
-						{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
-					</label>
+					<div class="checkbox">
+						<label>
+							<input class="-courseInternal"
+								type="checkbox"
+								{{isInternal}}/>
+							{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
+						</label>
+					</div>
 				</div>
 
 				<div class="course_edit_region">
@@ -136,17 +125,19 @@
 				name='{{role.type}}'
 				type="checkbox"
 				{{checkRole}}/>
-			<span class="{{role.icon}}"></span>
+			<i class="{{role.icon}} fa-fw"></i>
 			{{mf roleDescription}}
 		</label>
-		{{#if checkRole}}
-			<label style="margin-left: 2em; display: block">
+	</div>
+	{{#if checkRole}}
+		<div class="checkbox checkbox-sub">
+			<label>
 				<input class='-enrol {{role.type}}'
 					name='{{role.type}}'
 					type="checkbox"
 					{{hasRole}}/>
 				{{mf roleSubscription}}
 			</label>
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 </template>

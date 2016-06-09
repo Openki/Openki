@@ -39,53 +39,9 @@
       @include grid(12, 6);
       padding: 10px 5px 10px 0;
     }
-    ul.categories,
-    .subcategories,
-    .roles_list {
-      list-style: none;
-      padding-left: 0;
-    }
-    ul.categories,
-    .roles_list,
-    .course_edit_internal {
-      span.caret {
-        @include transition(color $default-transition-time);
-        color: $default-light-grey;
-        left: 3px;
-        position: relative;
-        top: -1px;
-        &.active {
-          color: $default-black;
-        }
-      }
-      label {
-        font-weight: normal;
-        &:hover {
-          color: $brand-primary;
-          cursor: pointer;
-          span.caret {
-            color: $default-black;
-          }
-        }
-        &.active {
-          color: $brand-primary;
-        }
-        input.checkbox {
-          margin-right: 3px;
-        }
-      }
-    }
     .editCategories {
 			@extend .btn-primary;
       @include btn-thin;
-    }
-    .subcategories {
-      left: 5px;
-      position: relative;
-      li {
-        left: 15px;
-        position: relative;
-      }
     }
     .course_edit_region {
       margin-bottom: 10px;

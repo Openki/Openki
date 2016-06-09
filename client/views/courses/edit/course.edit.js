@@ -38,10 +38,10 @@ Template.course_edit.helpers({
 		return 'roles.'+this.type+'.subscribe';
 	},
 
-	activeCategory: function() {
+	isChecked: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
-			return 'active';
+			return 'checkbox-checked';
 		}
 		return '';
 	},
@@ -154,7 +154,7 @@ Template.course_edit.events({
 		Template.instance().editingCategories.set(true);
 	},
 
-	'change .categories input': function(event, instance) {
+	'change .js-category-checkbox': function(event, instance) {
 		var catKey = ''+this;
 		var selectedCategories = instance.selectedCategories.get();
 		var checked = instance.$('input.cat_'+catKey).prop('checked');
