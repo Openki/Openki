@@ -28,11 +28,6 @@
 
 .login {
   @include grid(12);
-  // & > div,
-  // & > button,
-  // & > a {
-  //   margin-bottom: 15px;
-  // }
   .fa-lock {
     font-size: large;
     padding: 0 1px;
@@ -42,16 +37,6 @@
 .registering-disclaimer {
   margin-top: -10px;
   text-align: justify;
-}
-
-#username_warning,
-#username_warning_not_existing,
-#password_warning,
-#password_warning_incorrect,
-#login_warning {
-  color: $brand-danger;
-  margin: (-10px) 0 10px !important;
-  text-align: left;
 }
 
 .forgot-pwd-btn-container {
@@ -91,20 +76,6 @@
       }
     }
 	}
-}
-
-.password_warning #login-password,
-.username_warning #login-name {
-  border-color: $brand-danger;
-}
-
-.username_warning,
-.password_warning {
-  .js-forgot-pwd-btn::before {
-    content: '';
-    font-family: FontAwesome;
-		padding-right: 5px;
-  }
 }
 
 .forgot_login {
