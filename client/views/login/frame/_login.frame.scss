@@ -139,10 +139,6 @@
   @extend .btn-success;
 }
 
-.js-reset-pwd-close-btn {
-  @include btn-cancel;
-}
-
 .registering_disclaimer {
   margin-top: -10px;
   text-align: justify;
