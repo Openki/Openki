@@ -45,7 +45,7 @@
 							</div>
 							<div class="form-group">
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn {{#if user.privacy}}active{{/if}}"
+									<label class="btn btn-default {{#if user.privacy}}active{{/if}}"
 										title="{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}">
 										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
 										<span class="checkmark glyphicon glyphicon-ok"></span>
@@ -126,7 +126,7 @@
 									<input type="password" id="newpassword_confirm" value=""/>
 								</label>
 							</div>
-							<button class="btn change-pwd-btn" type="submit">
+							<button class="btn btn-default change-pwd-btn" type="submit">
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
 							<button class="btn btn-cancel js-change-pwd-cancel-btn">
@@ -148,7 +148,7 @@
 							<button class="btn btn-cancel js-profile-delete-confirm-btn">
 								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
 							</button>
-							<button class="btn js-profile-delete-cancel-btn">
+							<button class="btn btn-default js-profile-delete-cancel-btn">
 								{{mf '_button.cancel'}}
 							</button>
 						</div>

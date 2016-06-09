@@ -8,7 +8,7 @@ Template.report.helpers({
 });
 
 Template.report.events({
-	'click ._openReport': function(event, instance) {
+	'click .js-report-btn': function(event, instance) {
 		event.preventDefault();
 		instance.state.set('reporting');
 	},
@@ -29,4 +29,3 @@ Template.report.events({
 		instance.state.set('sending');
 	}
 });
-

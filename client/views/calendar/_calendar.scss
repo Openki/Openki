@@ -37,7 +37,6 @@
 }
 
 .switch-date-btn {
-	@extend .btn-default;
 	float: left;
 	margin: 6px 3px;
 	&:first-child {
@@ -105,8 +104,4 @@
       }
     }
   }
-}
-
-.js-events-download-btn {
-  @extend .btn-primary;
 }

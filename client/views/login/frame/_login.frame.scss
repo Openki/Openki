@@ -23,7 +23,6 @@
   }
   a,
   button {
-    @extend .btn-default;
     margin-bottom: 15px;
   }
 }
@@ -70,7 +69,6 @@
 }
 
 .js-login-btn {
-  @extend .btn-default;
 	@media (max-width: $screen-xs) {
 		margin-bottom: 5px !important;
 	}

@@ -36,10 +36,6 @@
   @extend .btn-success;
 }
 
-.js-toggle-filter {
-  @extend .btn-default;
-}
-
 .filter {
   @include grid(12, inherit, 7);
   padding: 0;
@@ -92,7 +88,6 @@
 }
 
 .js-toggle-property-filter {
-  @extend .btn-default;
   text-align: left;
 }
 

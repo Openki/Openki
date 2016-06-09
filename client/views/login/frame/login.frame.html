@@ -5,15 +5,15 @@
 				<h3>
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 				</h3>
-				<a class="btn form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 					<span class="glyphicon glyphicon-share-alt"></span>
 					{{mf 'login.frame.profile' 'Visit my profile'}}
 				</a>
-				<a class="btn form-control" href="{{pathFor 'profile'}}">
+				<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
 					<span class="glyphicon glyphicon-cog"></span>
 					{{mf 'login.frame.settings' 'Account settings'}}
 				</a>
-				<button class="btn js-logout-btn form-control"
+				<button class="btn btn-default js-logout-btn form-control"
 					href="#"
 					role="button">
 					<span class="glyphicon glyphicon-log-out"></span>
@@ -90,13 +90,13 @@
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
-				<button class='btn js-login-btn form-control'
+				<button class='btn btn-default js-login-btn form-control'
 				 	type="submit">
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 						{{mf 'login.login.back_to_login' 'Back to login'}}
 				</button>
 			{{else}}
-				<button class='btn js-login-btn form-control'
+				<button class='btn btn-default js-login-btn form-control'
 				 	type="submit">
 					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 						{{mf 'login.login.submit' 'Login'}}

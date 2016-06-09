@@ -38,10 +38,6 @@
   margin-left: 5px;
 }
 
-.profile-info-edit .btn-group label {
-  @extend .btn-default;
-}
-
 .js-profile-info-edit-btn,
 .js-profile-delete-btn {
   @include header-btn;
@@ -54,7 +50,6 @@
 }
 
 .js-change-pwd-btn {
-  @extend .btn-default;
   margin-top: 10px;
 }
 
@@ -87,10 +82,6 @@
 .js-profile-delete-cancel-btn,
 .js-profile-delete-confirm-btn {
   margin-top: 10px;
-}
-
-.js-profile-delete-cancel-btn {
-  @extend .btn-default;
 }
 
 .translate-link {
