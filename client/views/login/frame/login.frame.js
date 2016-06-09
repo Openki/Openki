@@ -97,9 +97,8 @@ Template.loginFrame.created = function() {
 
 	this.registering = new ReactiveVar(false);
 	this.transEmail = ''; // Temp storage for email addresses enterd into the user name field
-	this.warnings = new ReactiveVar(false);
+	this.activeWarning = new ReactiveVar(false);
 };
-
 
 Template.loginFrame.helpers({
 	loginNamePlaceholder: function() {
@@ -124,27 +123,27 @@ Template.loginFrame.helpers({
 	},
 
 	hasWarnings: function() {
-		return Template.instance().warnings.get();
+		return Template.instance().activeWarning.get();
 	},
 
 	emptyLogin: function() {
-		return Template.instance().warnings.get() == 'Match failed';
+		return Template.instance().activeWarning.get() == 'Match failed';
 	},
 
 	incorrectPassword: function() {
-		return Template.instance().warnings.get() == 'Incorrect password';
+		return Template.instance().activeWarning.get() == 'Incorrect password';
 	},
 
 	userNotFound:function() {
-		return Template.instance().warnings.get() == 'User not found';
+		return Template.instance().activeWarning.get() == 'User not found';
 	},
 
 	userAlreadyExists: function() {
-		return Template.instance().warnings.get() == 'Username already exists.';
+		return Template.instance().activeWarning.get() == 'Username already exists.';
 	},
 
 	noPasswordProvided: function() {
-		return Template.instance().warnings.get() == 'Password may not be empty';
+		return Template.instance().activeWarning.get() == 'Password may not be empty';
 	},
 
 	loginUsernamePlaceholder: function() {
@@ -171,13 +170,13 @@ Template.loginFrame.events({
 				email: email
 			}, function (err) {
 				if (err) {
-					instance.warnings.set(err.reason);
+					instance.activeWarning.set(err.reason);
 				} else {
 					instance.closeDropdown();
 				}
 			});
 		} else {
-			Template.instance().warnings.set(false);
+			Template.instance().activeWarning.set(false);
 			Template.instance().registering.set(true);
 
 			// Sometimes people register with their email address in the first field
@@ -194,7 +193,7 @@ Template.loginFrame.events({
 	'submit form, click .js-login-btn': function(event, instance){
 		event.preventDefault();
 		if(Template.instance().registering.get()){
-			Template.instance().warnings.set(false);
+			Template.instance().activeWarning.set(false);
 			Template.instance().registering.set(false);
 			return;
 		}
@@ -202,7 +201,7 @@ Template.loginFrame.events({
 		var password = instance.find('.js-login-password').value;
 		Meteor.loginWithPassword(name, password, function(err) {
 			if (err) {
-				instance.warnings.set(err.reason);
+				instance.activeWarning.set(err.reason);
 			} else {
 				instance.closeDropdown();
 			}
