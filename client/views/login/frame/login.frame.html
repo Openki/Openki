@@ -79,16 +79,7 @@
 					</span>
 				{{/if}}
 			</div>
-			{{#if showForgot}}
-				<div class="form-group forgot-pwd-btn-container">
-					<button class="btn btn-default js-forgot-pwd-btn"
-						type="button"
-						role="button">
-						{{mf 'forgot' "I forgot my password"}}
-					</button>
-				</div>
-			{{/if}}
-			{{#if showEmail}}
+			{{#if registering}}
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon">
@@ -101,8 +92,6 @@
 							placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
 					</div>
 				</div>
-			{{/if}}
-			{{#if registering}}
 				<div class="form-group">
 					<button class='btn js-register-btn form-control'
 					 	type="submit">
@@ -118,6 +107,13 @@
 					</button>
 				</div>
 			{{else}}
+				<div class="form-group forgot-pwd-btn-container">
+					<button class="btn btn-default js-forgot-pwd-btn"
+						type="button"
+						role="button">
+						{{mf 'forgot' "I forgot my password"}}
+					</button>
+				</div>
 				<div class="form-group">
 					<button class='btn btn-default js-login-btn form-control'
 					 	type="submit">

@@ -113,15 +113,6 @@ Template.loginFrame.helpers({
 		return Template.instance().registering.get();
 	},
 
-	showForgot: function() {
-		return !Template.instance().registering.get();
-	},
-
-	showEmail: function() {
-		var instance = Template.instance();
-		return instance.registering.get();
-	},
-
 	transEmail: function() {
 		return Template.instance().transEmail;
 	},
