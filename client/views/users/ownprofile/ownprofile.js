@@ -146,9 +146,3 @@ Template.profile.events({
 		Meteor.call('sendVerificationEmail');
 	}
 });
-
-Template.profile.rendered = function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('a.loginButton.navbar-link').addClass('navbar-link-active');
-};

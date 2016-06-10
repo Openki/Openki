@@ -98,13 +98,6 @@ Template.find.onCreated(function() {
 	});
 });
 
-
-Template.find.onRendered(function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('a[href="/"].navbar-link').addClass('navbar-link-active');
-});
-
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.js-search-categories').val();
 	if (query === '') {

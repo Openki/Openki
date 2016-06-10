@@ -15,11 +15,3 @@ Router.map(function () {
 		data: courseTemplate
 	});
 });
-
-
-
-Template.proposecourse.rendered = function () {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('a[href="' + currentPath + '"].navbar-link').addClass('navbar-link-active');
-};
