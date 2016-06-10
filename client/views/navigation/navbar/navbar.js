@@ -49,12 +49,6 @@ Template.navbar.helpers({
 
 	notConnected: function() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
-	},
-
-	currentRoute: function() {
-		console.log(this);
-		return this;
-		// return Router.current().route.path(Template.instance());
 	}
 });
 
