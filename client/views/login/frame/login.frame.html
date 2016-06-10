@@ -2,9 +2,9 @@
 	<div class="user-frame">
 		{{#if currentUser}}
 			<div class="ownuser-frame">
-				<h4>
+				<h3>
 					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-				</h4>
+				</h3>
 				<div class="form-group">
 					<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 						<span class="glyphicon glyphicon-share-alt"></span>

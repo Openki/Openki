@@ -17,6 +17,10 @@
 
 .ownuser-frame {
   @include grid(12);
+	h3 {
+		text-align: center;
+		margin: 0 0 15px;
+	}
 }
 
 .login {
