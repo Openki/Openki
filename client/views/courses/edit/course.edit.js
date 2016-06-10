@@ -80,7 +80,7 @@ Template.course_edit.rendered = function() {
 
 
 Template.course_edit.events({
-	'submit form, click js-course-edit-save': function (ev, instance) {
+	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
 		if (pleaseLogin()) return;
