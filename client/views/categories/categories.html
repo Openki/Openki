@@ -2,12 +2,16 @@
 	<ul class="categories-list">
 		{{#each categories}}
 			<li>
-				<a class='js-category-label'
-					data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
-					href="/find?categories={{this}}">
-					{{categoryName}}
-				</a>
+				{{> categoryLabel}}
 			</li>
 		{{/each}}
 	</ul>
+</template>
+
+<template name="categoryLabel">
+	<a class='category-label js-category-label'
+		data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
+		href="/find?categories={{this}}">
+		{{categoryName}}
+	</a>
 </template>

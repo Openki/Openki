@@ -10,7 +10,7 @@
   }
 }
 
-.js-category-label {
+.category-label {
   @include transition(box-shadow $default-transition-time);
   background: $category-bg;
   padding: 2px 5px;
