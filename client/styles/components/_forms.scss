@@ -1,7 +1,6 @@
 .checkbox > label {
 	&:hover,
 	&.checkbox-checked {
-		color: $brand-primary;
 		i {
 			color: $default-black;
 		}

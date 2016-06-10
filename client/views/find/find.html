@@ -121,7 +121,7 @@
 							<ul class="filter-selected-categories">
 							{{#each categories}}
 								<li>
-									<a class="js-category-label" href="#">{{categoryName}}</a>
+									{{> categoryLabel}}
 									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
 										data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 									</button>

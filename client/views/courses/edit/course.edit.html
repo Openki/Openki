@@ -36,7 +36,7 @@
 												type='checkbox'
 												value="1"
 												{{checkCategory}}/>
-											{{categoryName}}
+											{{> categoryLabel}}
 											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
 										</label>
 									</div>
@@ -48,7 +48,7 @@
 													type='checkbox'
 													value="1"
 													{{checkCategory}}/>
-												{{categoryName}}
+												{{> categoryLabel}}
 											</label>
 										</div>
 									{{/each}}
