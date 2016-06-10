@@ -134,6 +134,9 @@
 			background-color: lighten($navbar-default-bg, 10%);
 			box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 		}
+		> .nav-marker-caret {
+			opacity: 0;
+		}
 		@media (min-width: $screen-sm) {
 			.nav-marker-bar {
 				background-color: $dropdown-bg;
