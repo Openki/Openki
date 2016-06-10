@@ -31,9 +31,7 @@
 						<div class="course-name">
 							<h4>{{name}}</h4>
 						</div>
-						<div class="course-categories">
-							{{> showCategories}}
-						</div>
+						{{> courseCategories}}
 					</div>
 					{{#if hasUpcomingEvents}}
 						{{> courseEventlist}}
