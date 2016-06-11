@@ -8,7 +8,7 @@ courseTemplate = function() {
 Router.map(function () {
 	this.route('proposeCourse', {
 		path: 'courses/propose',
-		template: 'proposecourse',
+		template: 'proposeCourse',
 		onAfterAction: function() {
 			document.title = webpagename + 'Propose new course';
 		},
@@ -18,7 +18,7 @@ Router.map(function () {
 
 
 
-Template.proposecourse.rendered = function () {
+Template.proposeCourse.rendered = function () {
 	var currentPath = Router.current().route.path(this);
 	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
 	$('a[href="' + currentPath + '"].navbar-link').addClass('navbar-link-active');
