@@ -58,6 +58,7 @@
 
 .js-role-enrol-btn {
 	@include btn-lg;
+	border-radius: 3px;
 	text-align: left;
 	margin-top: 3px;
 	width: 100%;
