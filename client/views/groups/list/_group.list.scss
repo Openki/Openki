@@ -1,0 +1,21 @@
+.groups-list {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+	> li {
+		display: inline-block;;
+	}
+}
+
+.js-group-label {
+  @include transition(all $default-transition-time);
+  background: $group-bg;
+  color: $group-text;
+  padding: 0 4px 1px;
+  &:hover {
+    @include box-shadow-small($group-hover-shadow);
+    background: $group-hover-bg;
+		color: $group-hover-text;
+    text-decoration: none;
+  }
+}
