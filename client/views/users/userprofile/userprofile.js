@@ -100,7 +100,8 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.js-group-expel-btn': function(event, template) {
+	'click .js-group-expel-btn': function(event, template) {
+		Tooltips.hide();
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
