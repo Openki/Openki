@@ -17,16 +17,12 @@
 						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
 						{{#with course}}
 							{{#if currentUserMayEdit}}
-									<button class="js-delete-course-btn"
-										data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}"
-										type="button"
-										role="button">
+									<button type="button" class="js-delete-course-btn"
+										data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}">
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
-									<button class="js-edit-course-btn"
-										data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}"
-										type="button"
-										role="button">
+									<button type="button" class="js-edit-course-btn"
+										data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}">
 										<span class="glyphicon glyphicon-edit"></span>
 									</button>
 							{{/if}}
@@ -127,7 +123,10 @@
 			{{/if}}
 			{{#if tools}}
 			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button type="button" class="btn btn-default dropdown-toggle group-add"
+					aria-expanded="false"
+					aria-haspopup="true"
+					data-toggle="dropdown">
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -147,7 +146,10 @@
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style"
+				aria-expanded="false"
+				aria-haspopup="true"
+				data-toggle="dropdown">
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
 

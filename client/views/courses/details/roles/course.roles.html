@@ -12,10 +12,8 @@
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
-				<button class="js-role-unsubscribe-btn btn btn-cancel"
-					name="{{roletype.type}}"
-					role="button"
-					type="button">
+				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
+					name="{{roletype.type}}">
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
@@ -38,11 +36,11 @@
 						</div>
 					{{/if}}
 					<div class="course-role-enrol-btns">
-						<button class="btn btn-save js-role-subscribe-btn">
+						<button type="button" class="btn btn-save js-role-subscribe-btn">
 							<span class="glyphicon glyphicon-ok"></span>
 							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
-						<button class="btn btn-cancel js-role-enrol-cancel-btn">
+						<button type="button" class="btn btn-cancel js-role-enrol-cancel-btn">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
 						</button>
@@ -50,7 +48,7 @@
 				</div>
 			{{else}}
 				{{#if maySubscribe roletype.type}}
-					<button class="btn btn-add js-role-enrol-btn" type="button" name="participant">
+					<button type="button" class="btn btn-add js-role-enrol-btn" name="participant">
 						<span class="{{roletype.icon}}"></span>&nbsp;
 						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 					</button>

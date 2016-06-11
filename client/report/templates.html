@@ -10,17 +10,17 @@
 					name="report"
 					placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}">
 				</textarea>
-				<button class='btn btn-save js-report-send'>
+				<button type="button" class='btn btn-save js-report-send'>
 					<span class="glyphicon glyphicon-ok"></span>
 					{{mf 'report.report' 'Send report'}}
 				</button>
-				<button class='btn btn-cancel js-report-cancel'>
+				<button type="button" class='btn btn-cancel js-report-cancel'>
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'report.cancel' 'Nevermind'}}
 				</button>
 			</div>
 		{{else}}
-			<button class="btn btn-default js-report" type="button">
+			<button type="button" class="btn btn-default js-report">
 				<span class="glyphicon glyphicon-warning-sign"></span>
 				{{mf 'report.open' 'Report problem'}}
 			</button>

@@ -36,17 +36,14 @@
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button class="js-discussion-edit btn btn-add discussion-reply-btn"
-					type="button"
-					role="button">
+				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn">
 					<span class="fa fa-reply"></span>
 					&nbsp;
 					{{mf 'course.discussion.comment_answer' 'Answer'}}
 				</button>
 			</div>
 		{{else}}
-			<button class="btn btn-add discussion-post-new-btn js-discussion-edit"
-				type="button">
+			<button type="button" class="btn btn-add discussion-post-new-btn js-discussion-edit">
 				<span class="glyphicon glyphicon-pencil"></span>
 				&nbsp;
 				{{mf 'course.discussion.write_comment' 'Write a comment'}}
@@ -69,18 +66,14 @@
 						</span>
 					{{/if}}
 					{{#if mayDelete}}
-						<button class="discussion-delete-btn delete"
-							data-tooltip="{{mf '_button.delete'}}"
-							role="button"
-							type="button">
+						<button type="button" class="discussion-delete-btn delete"
+							data-tooltip="{{mf '_button.delete'}}">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button>
 					{{/if}}
 					{{#if mayEdit}}
-						<button class="js-discussion-edit discussion-edit-btn"
-							data-tooltip="{{mf '_button.edit'}}"
-							role="button"
-							type="button">
+						<button type="button" class="js-discussion-edit discussion-edit-btn"
+							data-tooltip="{{mf '_button.edit'}}">
 							<span class="glyphicon glyphicon-edit"></span>
 						</button>
 					{{/if}}
@@ -128,11 +121,10 @@
 				<textarea class="js-post-text discussion-edit-text form-control"
 					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
 					>{{text}}</textarea>
-				<button class="btn btn-cancel js-discussion-cancel-btn" type="button">
+				<button type="button" class="btn btn-cancel js-discussion-cancel-btn">
 					{{mf '_button.cancel'}}
 				</button>
-				<button class="btn btn-save discussion-save-btn"
-					type="submit">
+				<button type="submit" class="btn btn-save discussion-save-btn">
 					{{#if new}}
 						{{#if parentId}}
 							{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}

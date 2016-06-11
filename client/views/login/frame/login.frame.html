@@ -18,9 +18,7 @@
 					</a>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-default js-logout-btn form-control"
-						href="#"
-						role="button">
+					<button type="button" class="btn btn-default js-logout-btn form-control">
 						<span class="glyphicon glyphicon-log-out"></span>
 						{{mf 'login.logout' 'Logout'}}
 					</button>
@@ -99,37 +97,31 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<button class='btn btn-add js-register-btn form-control'
-					 	type="submit">
+					<button type="submit" class='btn btn-add js-register-btn form-control'>
 						<span class="glyphicon glyphicon-plus"></span>&nbsp;
 						{{mf 'login.register.submit' 'Create account'}}
 					</button>
 				</div>
 				<div class="form-group">
-					<button class='btn btn-default js-login-btn form-control'
-					 	type="submit">
+					<button type="submit" class='btn btn-default js-login-btn form-control'>
 						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 							{{mf 'login.login.back_to_login' 'Back to login'}}
 					</button>
 				</div>
 			{{else}}
 				<div class="form-group forgot-pwd-btn-container">
-					<button class="btn btn-default {{#if incorrectPassword}}form-control{{else}}btn-sm{{/if}} js-forgot-pwd-btn"
-						type="button"
-						role="button">
+					<button type="button" class="btn btn-default {{#if incorrectPassword}}form-control{{else}}btn-sm{{/if}} js-forgot-pwd-btn">
 						{{mf 'forgot' "I forgot my password"}}
 					</button>
 				</div>
 				<div class="form-group">
-					<button class='btn btn-default js-login-btn form-control'
-					 	type="submit">
+					<button type="submit" class='btn btn-default js-login-btn form-control'>
 						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 							{{mf 'login.login.submit' 'Login'}}
 					</button>
 				</div>
 				<div class="form-group">
-					<button class='btn btn-add js-register-btn form-control'
-					 	type="submit">
+					<button type="submit" class='btn btn-add js-register-btn form-control'>
 						<span class="glyphicon glyphicon-plus"></span>&nbsp;
 						{{mf 'login.register.submit' 'Create account'}}
 					</button>
@@ -137,17 +129,17 @@
 			{{/if}}
 				<div class="form-group external-service-login">
 					<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
-					<button class="js-external-service-login-btn"
+					<button type="button" class="js-external-service-login-btn"
 						data-service='Google'
 						title="Login with Google+">
 						<span class="fa fa-google-plus-square"></span>
 					</button>
-					<button class="js-external-service-login-btn"
+					<button type="button" class="js-external-service-login-btn"
 						data-service='Facebook'
 						title="Login with Facebook">
 						<span class="fa fa-facebook-square"></span>
 					</button>
-					<button class="js-external-service-login-btn"
+					<button type="button" class="js-external-service-login-btn"
 						data-service='Github'
 						title="Login with Github">
 						<span class="fa fa-github-square"></span>
@@ -181,16 +173,14 @@
 			{{/unless}}
 		</div>
 		<div class="form-group">
-			<button class="btn btn-save js-reset-pwd-btn form-control"
-				type="button"
+			<button type="button" class="btn btn-save js-reset-pwd-btn form-control"
 				{{disableForInvalidEmail}}>
 				<span class="fa fa-envelope"></span>
 				{{mf 'forgot.send' 'Reset my password'}}
 			</button>
 		</div>
 		<div class="form-group">
-			<button class="btn btn-cancel js-reset-pwd-close-btn form-control"
-				type="button">
+			<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
 				<span class="glyphicon glyphicon-remove"></span>
 				{{mf 'forgot.close' 'Never mind'}}
 			</button>

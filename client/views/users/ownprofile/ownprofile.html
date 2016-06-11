@@ -10,16 +10,12 @@
 			<div class="profile-info-container">
 				<div class="profile-info">
 					{{#unless editing}}
-						<button class="js-profile-delete-btn"
-							data-tooltip="{{mf 'profile.delete' 'Delete my account'}}"
-							role="button"
-							type="button">
+						<button type="button" class="js-profile-delete-btn"
+							data-tooltip="{{mf 'profile.delete' 'Delete my account'}}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 						</button>
-						<button class="js-profile-info-edit-btn"
-							data-tooltip="{{mf 'profile.edit' 'Edit profile info'}}"
-							role="button"
-							type="button">
+						<button type="button" class="js-profile-info-edit-btn"
+							data-tooltip="{{mf 'profile.edit' 'Edit profile info'}}">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 						</button>
 					{{/unless}}
@@ -53,10 +49,10 @@
 									</label>
 								</div>
 							</div>
-							<button class="btn btn-save profile-info-save-btn" type="submit">
+							<button type="submit" class="btn btn-save profile-info-save-btn">
 								{{mf 'profile.input.save' "Save"}}
 							</button>
-							<button class="btn btn-cancel js-profile-info-cancel-btn">
+							<button type="button" class="btn btn-cancel js-profile-info-cancel-btn">
 								{{mf '_button.cancel'}}
 							</button>
 						</form>
@@ -79,7 +75,7 @@
 											<span class="descr_small"> {{verifiedEmail}} </span>
 											&nbsp;
 											{{#unless user.veryfiedEmailTrue}}
-											<button class="btn btn-go js-verify-mail-btn">
+											<button type="button" class="btn btn-go js-verify-mail-btn">
 												<span class="glyphicon glyphicon-ok-circle"></span>
 												&nbsp;
 												{{mf 'profile.verifymail' 'Verify my E-Mail'}}
@@ -126,16 +122,16 @@
 									<input type="password" id="newpassword_confirm" value=""/>
 								</label>
 							</div>
-							<button class="btn btn-save" type="submit">
+							<button type="submit" class="btn btn-save">
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
-							<button class="btn btn-cancel js-change-pwd-cancel-btn">
+							<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
 								{{mf '_button.cancel'}}
 							</button>
 						</form>
 					{{else}}
 						{{#unless editing}}
-							<button class="btn btn-default js-change-pwd-btn">
+							<button type="button" class="btn btn-default js-change-pwd-btn">
 								<i class="fa fa-lock" aria-hidden="true"></i>
 								&nbsp;
 								{{mf 'profile.changePass' 'Change my password'}}
@@ -145,10 +141,10 @@
 					{{#if verifyDelete}}
 						<div class="profile-delete-confirmation">
 							{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
-							<button class="btn btn-cancel js-profile-delete-confirm-btn">
+							<button type="button" class="btn btn-cancel js-profile-delete-confirm-btn">
 								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
 							</button>
-							<button class="btn btn-default js-profile-delete-cancel-btn">
+							<button type="button" class="btn btn-default js-profile-delete-cancel-btn">
 								{{mf '_button.cancel'}}
 							</button>
 						</div>

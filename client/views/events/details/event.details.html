@@ -76,24 +76,24 @@
 			<div class="eventEdit_buttons">
 				<div class="btn-toolbar" role="toolbar">
 					<div class="btn-group" role="group">
-						<button class="eventEdit btn btn-edit" type="button" role="button">
+						<button type="button" class="eventEdit btn btn-edit">
 							<span class="glyphicon glyphicon-edit"></span>
 							{{mf '_button.edit'}}
 						</button>
 						{{#if replicating}}
-							<button class="-closeReplication btn btn-warning" type="button" role="button">
+							<button type="button" class="-closeReplication btn btn-warning">
 								<span class="glyphicon glyphicon-minus"></span>
 								{{mf 'course.details.repl_menu_btn'}}
 							</button>
 						{{else}}
-							<button class="-openReplication btn btn-warning" type="button" role="button">
+							<button type="button" class="-openReplication btn btn-warning">
 								<span class="glyphicon glyphicon-plus"></span>
 								{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 							</button>
 						{{/if}}
 					</div>
 					<div class="btn-group" role="group">
-						<button class="eventDelete btn btn-delete" type="button" role="button">
+						<button type="button" class="eventDelete btn btn-delete">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.delete'}}
 						</button>
@@ -107,10 +107,8 @@
 	</div>
 	<div class="event_options">
 		<a href="{{pathFor 'calEvent' this}}">
-			<button class="btn btn-default js-events-download-btn"
-				data-tooltip="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}"
-				href="#"
-				type="button">
+			<button type="button" class="btn btn-default js-events-download-btn"
+				data-tooltip="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}">
 				<span class="glyphicon glyphicon-download"></span>&nbsp;
 				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 			</button>
@@ -148,7 +146,10 @@
 			{{/if}}
 			{{#if tools}}
 			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button type="button" class="btn btn-default dropdown-toggle group-add"
+					aria-expanded="false"
+					aria-haspopup="true"
+					data-toggle="dropdown">
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -168,12 +169,10 @@
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group">
-			<button class="btn btn-default dropdown-toggle no-btn-style"
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style"
 				aria-expanded="false"
 				aria-haspopup="true"
-				data-toggle="dropdown"
-				role="button"
-				type="button">
+				data-toggle="dropdown">
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
 

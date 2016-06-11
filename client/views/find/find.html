@@ -17,17 +17,17 @@
 					value="{{search}}"
 					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
 				<span class="input-group-btn">
-					<button class="btn btn-go js-find-btn" type="button">
+					<button type="button" class="btn btn-go js-find-btn">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
 					{{#unless isMobile}}
 						{{#if showingFilters}}
-							<button class="btn btn-cancel js-toggle-filter" type="button">
+							<button type="button" class="btn btn-cancel js-toggle-filter">
 								<span class="glyphicon glyphicon-remove"></span>
 								{{mf 'find.hideFilters' 'Remove all filters'}}
 							</button>
 						{{else}}
-							<button class="btn btn-default js-toggle-filter" type="button">
+							<button type="button" class="btn btn-default js-toggle-filter">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
@@ -38,12 +38,12 @@
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="btn btn-cancel js-toggle-filter" type="button">
+				<button type="button" class="btn btn-cancel js-toggle-filter">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
 			{{else}}
-				<button class="btn btn-default js-toggle-filter" type="button">
+				<button type="button" class="btn btn-default js-toggle-filter">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.showFilters' 'Filter'}}
 				</button>
@@ -122,7 +122,7 @@
 							{{#each categories}}
 								<li>
 									{{> categoryLabel}}
-									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+									<button type="button" class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
 										data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 									</button>
 								</li>
@@ -134,10 +134,9 @@
 						<input class="js-search-categories form-control"
 							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
 							type="text"/>
-						<button	class="dropdown-toggle"
+						<button	type="button" class="dropdown-toggle"
 							aria-expanded="false"
-							data-toggle="dropdown"
-							role="button">
+							data-toggle="dropdown">
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu filter-categories-dropdown" role="menu">
@@ -175,9 +174,8 @@
 							{{#each categories}}
 								<li>
 									<a class="js-category-label" href="#">{{categoryName}}</a>
-									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
-										data-toggle="tooltip"
-										data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									<button type="button" class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+										data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
 									</button>
 								</li>
 							{{/each}}
@@ -200,17 +198,13 @@
 					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
 					<div class="btn-group">
 						{{#if regionSelected}}
-							<button class="btn btn-default js-all-regions-btn"
-								role="button"
-								type="button">
+							<button type="button" class="btn btn-default js-all-regions-btn">
 								<span class="fa fa-dot-circle-o"></span>
 								{{mf 'find.searchAllRegions' 'Search in all regions'}}
 							</button>
 						{{/if}}
 						{{#if showingFilters}}
-							<button class="btn btn-cancel js-toggle-filter"
-								role="button"
-								type="button">
+							<button type="button" class="btn btn-cancel js-toggle-filter">
 								<span class="glyphicon glyphicon-remove"></span>
 								{{mf 'find.hideFilters'}}
 							</button>
