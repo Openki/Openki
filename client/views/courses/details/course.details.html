@@ -1,44 +1,50 @@
 <template name="courseDetailsPage">
-	<div class="course-details-container container">
+	<div class="container">
 		<div class="course-details-column-left">
 			{{#if edit}}
-				{{> course_edit course}}
-			{{else}}
-				<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-					{{#if isProposal}}
-						<div class="course-details-status">
-							<div>
-							{{mf 'course.details.tag.proposal' 'proposal'}}
-							</div>
-						</div>
-					{{/if}}
-
-					<div class="course-details-title">
-						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-						{{#with course}}
-							{{#if currentUserMayEdit}}
-									<button type="button" class="js-delete-course-btn"
-										data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-									<button type="button" class="js-edit-course-btn"
-										data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}">
-										<span class="glyphicon glyphicon-edit"></span>
-									</button>
-							{{/if}}
-						{{/with}}
-					</div>
-					{{#with course}}
-						<div class="course-details-categories">
-							{{> courseCategories}}
-						</div>
-						<div class="course-details-groups">
-							{{> courseGroupList}}
-						</div>
-					{{/with}}
-					{{> courseDetailsSubmenu}}
+				<div class="course-details-component">
+					{{> course_edit course}}
 				</div>
-				{{> report}}
+			{{else}}
+				<div class="course-details-component">
+					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+						{{#if isProposal}}
+							<div class="course-details-status">
+								<div>
+								{{mf 'course.details.tag.proposal' 'proposal'}}
+								</div>
+							</div>
+						{{/if}}
+
+						<div class="course-details-title">
+							{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+							{{#with course}}
+								{{#if currentUserMayEdit}}
+										<button type="button" class="js-delete-course-btn"
+											data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+										<button type="button" class="js-edit-course-btn"
+											data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}">
+											<span class="glyphicon glyphicon-edit"></span>
+										</button>
+								{{/if}}
+							{{/with}}
+						</div>
+						{{#with course}}
+							<div class="course-details-categories">
+								{{> courseCategories}}
+							</div>
+							<div class="course-details-groups">
+								{{> courseGroupList}}
+							</div>
+						{{/with}}
+						{{> courseDetailsSubmenu}}
+					</div>
+				</div>
+				<div class="course-details-component">
+					{{> report}}
+				</div>
 			{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
 			{{#if mobileViewport}}

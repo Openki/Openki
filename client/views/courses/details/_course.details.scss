@@ -1,6 +1,12 @@
 .course-details-component {
   @include grid(12);
   padding: 0;
+	& + .course-details-component {
+		margin-top: 15px;
+	}
+	& > .btn {
+		width: 100%;
+	}
 }
 
 .course-details-component-titlebar {
@@ -23,31 +29,19 @@
   }
 }
 
-.course-details-container {
-  padding-top: 20px;
-
-	.eventEdit,
-  .js-events-download-btn {
-		margin-bottom: 10px;
-    white-space: normal;
-		width: 100%;
-  }
-}
-
 .course-details-column-left {
   @include grid(12, inherit, 8);
-  padding-right: 7.5px;
-
-  @media (max-width: $screen-sm) {
-    padding-right: 0;
+  padding: 0 7.5px 0 0;
+	@media (max-width: $screen-md) {
+    padding: 0;
   }
 }
 
 .course-details-column-right {
   @include grid(12, inherit, 4);
-  padding-left: 7.5px;
-  @media (max-width: $screen-xs) {
-    padding: 0;
+  padding: 0 0 0 7.5px;
+	@media (max-width: $screen-md) {
+    padding: 15px 0 0;
   }
 }
 

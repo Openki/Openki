@@ -28,11 +28,13 @@ $btn-success-bg-color-steps: (
 	darkest: darken($btn-success-bg, $level-darkest)
 );
 
+$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
+
 $btn-warning-bg-color-steps: (
-	default: $btn-warning-bg,
-	dark: darken($btn-warning-bg, $level-dark),
-	darker: darken($btn-warning-bg, $level-darker),
-	darkest: darken($btn-warning-bg, $level-darkest)
+	default: $btn-warning-bg-custom,
+	dark: darken($btn-warning-bg-custom, $level-dark),
+	darker: darken($btn-warning-bg-custom, $level-darker),
+	darkest: darken($btn-warning-bg-custom, $level-darkest)
 );
 
 $btn-danger-bg-color-steps: (
@@ -137,9 +139,12 @@ button.list-group-item {
 
 .btn-go,
 .btn-add,
-.btn-edit,
 .btn-save {
 	@extend .btn-success;
+}
+
+.btn-edit {
+	@extend .btn-default;
 }
 
 // Cancel/Delete button style, turning red when beeing hovered over

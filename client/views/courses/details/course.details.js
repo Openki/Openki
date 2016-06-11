@@ -121,7 +121,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 768; // @screen-sm
+		return Session.get('screenSize') <= 992; // @screen-md
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;

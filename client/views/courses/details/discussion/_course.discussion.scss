@@ -1,7 +1,3 @@
-.discussion {
-  margin-top: 15px;
-}
-
 .discussion-conversation {
   @include grid(12);
   background: $discussion-conversation-bg;

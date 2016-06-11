@@ -21,3 +21,14 @@
 .warn-block {
 	@extend .help-block;
 }
+
+.form-actions {
+	@extend .clearfix;
+	margin-bottom: $form-group-margin-bottom;
+	.btn {
+		float: right;
+	}
+	.btn + .btn {
+		margin-right: 5px;
+	}
+}
