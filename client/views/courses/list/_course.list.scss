@@ -21,10 +21,11 @@
 
 .course {
   @include grid(12);
-  @include transition(box-shadow $default-transition-time);
   border: 7px dashed $openki-light-blue;
   height: 150px;
   padding: 0;
+	transition-duration: $default-transition-time;
+	transition-property: #{'box-shadow opacity'};
   &:hover {
     @include box-shadow-big($default-shadow);
     color: $brand-primary;
@@ -42,6 +43,10 @@
     @include transition(color $default-transition-time);
     color: $default-black;
   }
+}
+
+.filter-no-match {
+	opacity: .33;
 }
 
 .course-name {
