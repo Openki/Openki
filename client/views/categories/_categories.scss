@@ -14,6 +14,9 @@
 	background: $category-bg;
 	color: $brand-primary;
   padding: 2px 5px;
+	& + .remove-btn {
+		margin-left: 5px;
+	}
 }
 
 .js-category-label {
