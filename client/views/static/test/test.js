@@ -6,32 +6,33 @@ Router.map(function () {
 });
 
 Template.ipTest.onCreated(function() {
-	this.ip = new ReactiveVar('');
+	instance = this;
+	instance.result = new ReactiveVar({});
+	instance.error = new ReactiveVar(false);
+
+	Meteor.call('closestRegion', false, function(error, result) {
+		instance.error.set(error);
+		instance.result.set(result);
+	});
 });
 
 
 Template.ipTest.helpers({
-	GeoData: function() {
-		return Template.instance().ip.get() || '';
+	result: function() {
+		return Template.instance().result.get();
 	},
-	SessionGeoData: function() {
-		return Session.get('ip');
+
+	error: function() {
+		return Template.instance().error.get();
 	},
 });
 
 Template.ipTest.events({
-	'click .-testIp': function(event, template) {
+	'submit': function(event, instance) {
 		event.preventDefault();
-		var ip = template.$('.-ip').val();
-		Meteor.call('ipToGeo', ip, function(error, geoData) {
-			if (error || geoData === null) {
-				addMessage('error', 'danger');
-			} else {
-				addMessage('SUCCESS:  country: '+geoData.country+', region: '+geoData.region+', city: '+geoData.city, 'success');
-
-				template.ip.set(geoData);
-				Session.set('ip', geoData);
-			}
+		Meteor.call('closestRegion', instance.$('.js-address').val(), function(error, result) {
+			instance.error.set(error);
+			instance.result.set(result);
 		});
 	},
 });
