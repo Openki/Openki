@@ -110,7 +110,7 @@
 				</div>
 			{{else}}
 				<div class="form-group forgot-pwd-btn-container">
-					<button type="button" class="btn btn-default {{#if incorrectPassword}}form-control{{else}}btn-sm{{/if}} js-forgot-pwd-btn">
+					<button type="button" class="btn {{#if incorrectPassword}}btn-warning form-control{{else}}btn-default btn-sm{{/if}} js-forgot-pwd-btn">
 						{{mf 'forgot' "I forgot my password"}}
 					</button>
 				</div>
