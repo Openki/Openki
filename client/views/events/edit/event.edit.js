@@ -23,8 +23,6 @@ Template.eventEdit.onRendered(function() {
 			}
 		}
 	});
-
-	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 

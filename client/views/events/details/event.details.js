@@ -14,7 +14,6 @@ Template.eventDisplay.onCreated(function() {
 Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
 	this.locationTracker.setLocation(this.data.location);
-	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 
