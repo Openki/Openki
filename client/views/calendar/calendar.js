@@ -52,10 +52,6 @@ Template.calendar.rendered = function() {
 		else
 			this.$('.switchDate').removeClass('over_content');
 	});
-
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].nav_link').removeClass('active');
-	$('a[href="' + currentPath + '"].nav_link').addClass('active');
 };
 
 var updateUrl = function(event, instance) {
@@ -158,12 +154,6 @@ Template.calendar.onCreated(function() {
 
 	});
 });
-
-Template.calendar.rendered = function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('a[href="' + currentPath + '"].navbar-link').addClass('navbar-link-active');
-};
 
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {

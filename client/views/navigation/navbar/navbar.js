@@ -49,7 +49,7 @@ Template.navbar.helpers({
 
 	notConnected: function() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
-	},
+	}
 });
 
 Template.navbar.events({

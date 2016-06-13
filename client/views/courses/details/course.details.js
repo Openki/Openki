@@ -157,12 +157,6 @@ Template.courseDetailsPage.events({
 	}
 });
 
-Template.courseDetailsPage.rendered = function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('#nav_courses').addClass('navbar-link-active');
-};
-
 
 Template.courseGroupList.helpers({
 	'isOrganizer': function() {
