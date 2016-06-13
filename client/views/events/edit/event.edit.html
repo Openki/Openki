@@ -154,32 +154,40 @@
 				</div>
 			</div>
 
-			<div class="checkbox">
-				<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
-					<input type="checkbox" class="-eventInternal" {{isInternal}}/>
-					{{mf 'event.edit.internal' 'Internal'}}
-				</label>
-			</div>
+			<div class="form-group">
+				<div class="form-group-element">
+					<div class="checkbox">
+						<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
+							<input type="checkbox" class="-eventInternal" {{isInternal}}/>
+							{{mf 'event.edit.internal' 'Internal'}}
 
-			{{#if affectedReplicaCount}}
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="updateReplicas">
-						{{mf 'event.edit.updateReplicas'
-							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
-							COUNT=affectedReplicaCount
-						}}
-
-						<span class="warn-block">
-							<i class="fa fa-warning" aria-hidden="true"></i>
-							{{mf 'event.edit.updateReplicas.times'
-								"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
-								COUNT=affectedReplicaCount
-							}}
+						</label>
+						<span class="help-block">
+							{{mf 'event.edit.internal.description' 'Internal events are only shown in group and location-details'}}
 						</span>
-					</label>
+					</div>
 				</div>
-			{{/if}}
+				{{#if affectedReplicaCount}}
+					<div class="form-group-element">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="updateReplicas">
+								{{mf 'event.edit.updateReplicas'
+									"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+									COUNT=affectedReplicaCount
+								}}
+							</label>
+							<span class="warn-block">
+								<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
+									{{mf 'event.edit.updateReplicas.times'
+									"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+									COUNT=affectedReplicaCount
+								}}
+							</span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
 
 			<div class="form-actions">
 				<button type="button" class="btn btn-cancel js-event-edit-cancel-btn">

@@ -44,6 +44,11 @@
 	}
 }
 
-.form-group-element > h3 {
-	margin-top: 0;
+.form-group,
+.form-group-element {
+	& > h3,
+	& > .checkbox:nth-child(2),
+	& > .checkbox:first-child {
+		margin-top: 0;
+	}
 }
