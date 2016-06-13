@@ -138,3 +138,7 @@
     color: $default-black;
   }
 }
+
+.coursedetails .course-edit {
+  @include grid(12);
+}
