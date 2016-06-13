@@ -41,7 +41,7 @@
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="{{pathFor 'home'}}"
-							 class="navbar-link js-nav-dropdown-close -closeIntroAtHome"
+							 class="{{activeClass 'home'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
 							 id="nav_courses">
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
@@ -51,7 +51,7 @@
 					</li>
 					<li>
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="navbar-link js-nav-dropdown-close">
+							 class="{{activeClass 'proposeCourse'}} navbar-link js-nav-dropdown-close">
 							 <i class="fa fa-pencil" aria-hidden="true"></i>
 							 &nbsp;
 							 {{mf 'menue.Create' 'Create'}}
@@ -60,7 +60,7 @@
 					</li>
 					<li>
 						<a href="{{pathFor 'calendar'}}"
-							 class="navbar-link calendar-link js-nav-dropdown-close">
+							 class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
 							 <i class="fa fa-calendar" aria-hidden="true"></i>
 							 &nbsp;
 							 {{mf 'menue.Calendar' 'Calendar'}}
