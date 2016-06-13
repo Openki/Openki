@@ -27,9 +27,6 @@
         span.fa-map-marker {
           color: darken($brand-success, 40%);
         }
-        .-locationChange {
-          @include btn-sm;
-        }
       }
       .locationSearchbar {
         padding-bottom: 5px;
