@@ -21,7 +21,7 @@
 
 .course {
   @include grid(12);
-  border: 7px dashed $openki-light-blue;
+  border: 7px dashed $openki-blue-lighter;
   height: 150px;
   padding: 0;
 	transition-duration: $default-transition-time;
@@ -100,9 +100,9 @@
 .course,
 .course_main {
   &.hasupcomingevents {
-    background: $openki-light-blue;
+    background: $openki-blue-lighter;
     .course-content {
-      background: $openki-light-blue;
+      background: $openki-blue-lighter;
     }
   }
 }

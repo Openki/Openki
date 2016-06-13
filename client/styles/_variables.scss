@@ -20,7 +20,7 @@ $navbar-link-covering-bg: lighten($navbar-default-bg, 10%);
 $navbar-default-font-size: large;
 
 // == Login
-$login-bg: $openki-light-blue;
+$login-bg: $openki-blue-lighter;
 
 // ==Footer
 $footer-default-bg: $navbar-default-bg;
@@ -85,9 +85,9 @@ $external-servies: (
 );
 
 // Calendar colors
-$calendar-header-bg: $openki-light-blue;
+$calendar-header-bg: $openki-blue-lighter;
 $calendar-header-text: $default-black;
-$calendar-navigation-bg: $openki-light-blue;
+$calendar-navigation-bg: $openki-blue-lighter;
 $calendar-btn-bg: $brand-primary;
 $calendar-btn-text: $default-white;
 $calendar-btn-border: darken($calendar-btn-bg, 3%);
@@ -97,8 +97,8 @@ $calendar-btn-hover-border: darken($calendar-btn-border, 5%);
 $map-lefalet-hover-fill: #ff1;
 
 // Discussion colors
-$discussion-conversation-bg: $openki-light-blue;
-$discussion-post-bg: $openki-light-blue;
+$discussion-conversation-bg: $openki-blue-lighter;
+$discussion-post-bg: $openki-blue-lighter;
 $discussion-post-header-bg: darken($discussion-post-bg, 5%);
 $discussion-post-border: darken($discussion-post-bg, 10%);
 $discussion-edit-bg: lighten($default-light-grey, 10%);
@@ -110,7 +110,7 @@ $checkmark-color: darken($brand-success, 20%);
 $remove-btn-color: lighten($gray-light, 15%);
 $remove-btn-hover-color: $brand-danger;
 
-$event-bg: $openki-light-blue;
+$event-bg: $openki-blue-lighter;
 $event-header-bg: $brand-success;
 $event-header-color: $default-black;
 $event-title-color: $default-black;

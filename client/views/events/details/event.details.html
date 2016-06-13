@@ -1,5 +1,5 @@
 <template name="eventPage">
-	<div class="container-sm" id="coursedetails">
+	<div class="container-sm">
 		{{#if course}}
 			<p>
 				<a href="{{pathFor 'showCourse' _id=course._id}}">
@@ -25,8 +25,8 @@
 </template>
 
 <template name="eventDisplay">
-	<div class="course_event">
-		<div class="course_event_date">
+	<div class="event-details-component">
+		<div class="event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
 					<span class="glyphicon glyphicon-calendar"></span>
@@ -36,7 +36,7 @@
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
 		</div>
-		<div class="course_event_lower_section">
+		<div class="event-details-body">
 			<div class="head">
 				<div class="course_event_title">
 					<h3>{{this.title}}</h3>
@@ -59,9 +59,6 @@
 				</div>
 			{{/if}}
 		</div>
-		<div class="event_detail_description">
-
-		</div>
 		{{#if files}}
 			<div class="event_detail_description">
 				<p>Related Files:</p>
@@ -72,47 +69,40 @@
 				</ul>
 			</div>
 		{{/if}}
+		{{#if replicating}}
+			{{>eventReplication}}
+		{{/if}}
 		{{#if mayEdit}}
-			<div class="eventEdit_buttons">
-				<div class="btn-toolbar" role="toolbar">
-					<div class="btn-group" role="group">
-						<button type="button" class="eventEdit btn btn-edit">
-							<span class="glyphicon glyphicon-edit"></span>
-							{{mf '_button.edit'}}
-						</button>
-						{{#if replicating}}
-							<button type="button" class="-closeReplication btn btn-warning">
-								<span class="glyphicon glyphicon-minus"></span>
-								{{mf 'course.details.repl_menu_btn'}}
-							</button>
-						{{else}}
-							<button type="button" class="-openReplication btn btn-warning">
-								<span class="glyphicon glyphicon-plus"></span>
-								{{mf 'course.details.repl_menu_btn' 'Repeat'}}
-							</button>
-						{{/if}}
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="eventDelete btn btn-delete">
-							<span class="glyphicon glyphicon-remove"></span>
-							{{mf '_button.delete'}}
-						</button>
-					</div>
-				</div>
+			<div class="actions">
+				<button type="button" class="eventDelete btn btn-delete">
+					<i class="fa fa-trash fa-fw"></i>
+					{{mf '_button.delete'}}
+				</button>
+				<button type="button" class="eventEdit btn btn-edit">
+					<i class="fa fa-edit fa-fw"></i>
+					{{mf '_button.edit'}}
+				</button>
+				{{#if replicating}}
+					<button type="button" class="-closeReplication btn btn-cancel">
+						<i class="fa fa-minus fa-fw"></i>
+						{{mf 'course.details.repl_menu_btn'}}
+					</button>
+				{{else}}
+					<button type="button" class="-openReplication btn btn-add">
+						<i class="fa fa-plus fa-fw"></i>
+						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+					</button>
+				{{/if}}
 			</div>
-			{{#if replicating}}
-				{{>eventReplication}}
-			{{/if}}
 		{{/if}}
 	</div>
-	<div class="event_options">
-		<a href="{{pathFor 'calEvent' this}}">
-			<button type="button" class="btn btn-default"
-				data-tooltip="{{mf 'event.detail.download.tooltip' 'Download as vCalendar for your favorite calendar application'}}">
-				<span class="glyphicon glyphicon-download"></span>&nbsp;
-				{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
-			</button>
+	<div class="event-details-component">
+		<a class="btn btn-default" href="{{pathFor 'calEvent' this}}" role="button">
+			<i class="fa fa-download fa-fw"></i>
+			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
+	</div>
+	<div class="event-details-component">
 		{{> report}}
 	</div>
 </template>

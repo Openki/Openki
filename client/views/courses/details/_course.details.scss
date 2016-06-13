@@ -54,10 +54,16 @@
 
 .course-details {
   @include grid(12);
-  border: 7px dashed $openki-light-blue;
+  border: 7px dashed $openki-blue-lighter;
   &.haspastevents {
     border-style: solid;
   }
+	&.hasupcomingevents {
+		background: $openki-blue-lighter;
+		.nav-tabs > .active > a {
+			background: $openki-blue-lighter;
+		}
+	}
   .groups-list,
   .groups-list li,
   .groups-list li a {
@@ -128,17 +134,7 @@
   }
 }
 
-.js-edit-course-btn,
-.js-delete-course-btn {
-  @include header-btn;
-  color: $default-gray;
-  float: right;
-  font-size: large;
-  &:hover {
-    color: $default-black;
-  }
-}
-
-.coursedetails .course-edit {
-  @include grid(12);
+.nav-tabs > li > a:hover {
+	background-color: $openki-blue-light;
+	color: $default-white;
 }

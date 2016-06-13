@@ -1,34 +1,34 @@
-.course_event {
-  .course_event_date {
-    @include grid(12);
-    background: $brand-success;
-    border-bottom: 3px solid $body-bg;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    .date {
-      font-size: x-large;
-      .glyphicon-calendar {
-        font-size: large;
-      }
-    }
-    .glyphicon-time {
-      font-size: small;
-    }
-  }
-  .location {
+.event-details-body {
+	@include grid(12);
+	background: $openki-blue-lighter;
+  height: calc(#{'100% - 70px'});
+	padding: 0;
+	.location {
     margin-right: 5px;
   }
   .location,
   .groups-list {
     display: inline-block;
   }
-  .course_event_lower_section {
-    @include grid(12);
-    padding: 0;
-  }
 }
 
-.course_event .course_event_lower_section {
+.event-details-header {
+	@include grid(12);
+	background: $brand-success;
+	border-bottom: 3px solid $body-bg;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	.date {
+		font-size: x-large;
+		.glyphicon-calendar {
+			font-size: large;
+		}
+	}
+	.glyphicon-time {
+		font-size: small;
+	}
+}
+.event-details-body {
   .head {
     @include grid(12, 6);
   }
@@ -43,4 +43,13 @@
   .event_detail_description {
     padding-top: 5px;
   }
+}
+
+.event-details-component {
+	@include grid(12);
+	@include make-row-self;
+	margin-bottom: 15px;
+	& > .btn {
+		width: 100%;
+	}
 }

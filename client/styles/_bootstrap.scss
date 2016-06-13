@@ -244,7 +244,7 @@ $cursor-disabled: not-allowed;
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-$dropdown-bg: $openki-light-blue;
+$dropdown-bg: $openki-blue-lighter;
 
 //** Dropdown menu `border-color`.
 $dropdown-border: $brand-primary;
@@ -920,7 +920,7 @@ $page-header-border-color: $gray-lighter;
 $dl-horizontal-offset: $component-offset-horizontal;
 
 //** Horizontal line color.
-$hr-border: $openki-light-blue;
+$hr-border: $openki-blue-lighter;
 
 // Import bootstrap framework
 @import '{reywood:bootstrap3-sass}/bootstrap';

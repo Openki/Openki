@@ -21,7 +21,7 @@
 
 .event-edit-body {
 	@include grid(12);
-	border: dashed 7px $openki-light-blue;
+	border: dashed 7px $openki-blue-lighter;
 	border-top: 0;
 	padding: 0 30px 10px;
 	@media (max-width: $screen-xs) {

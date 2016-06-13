@@ -18,18 +18,6 @@
 
 						<div class="course-details-title">
 							{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-							{{#with course}}
-								{{#if currentUserMayEdit}}
-										<button type="button" class="js-delete-course-btn"
-											data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-										<button type="button" class="js-edit-course-btn"
-											data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}">
-											<span class="glyphicon glyphicon-edit"></span>
-										</button>
-								{{/if}}
-							{{/with}}
 						</div>
 						{{#with course}}
 							<div class="course-details-categories">
@@ -41,6 +29,20 @@
 						{{/with}}
 						{{> courseDetailsSubmenu}}
 					</div>
+					{{#with course}}
+						{{#if currentUserMayEdit}}
+							<div class="actions">
+								<button type="button" class="btn btn-delete js-delete-course-btn">
+									<i class="fa fa-trash fa-fw"></i>
+									{{mf '_button.delete'}}
+								</button>
+								<button type="button" class="btn btn-edit js-edit-course-btn">
+									<i class="fa fa-edit fa-fw"></i>
+									{{mf '_button.edit'}}
+								</button>
+							</div>
+						{{/if}}
+					{{/with}}
 				</div>
 				<div class="course-details-component">
 					{{> report}}
@@ -69,7 +71,6 @@
 </template>
 
 <template name="courseDetailsSubmenu">
-	<div>
 		<nav>
 			<ul class="nav nav-tabs">
 				<li role="presentation" class='active'>
@@ -107,7 +108,6 @@
 				{{> coursehistory}}
 			</div>
 		</div>
-	</div>
 </template>
 
 <template name="courseDetailsDescription">

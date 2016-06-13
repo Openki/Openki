@@ -1,5 +1,6 @@
 .report {
+	@include grid(12);
   background: $btn-warning-bg-custom;
 	border: 1px solid $btn-warning-border;
-	padding: 15px 15px 0;
+	padding-top: 15px;
 }

@@ -48,7 +48,7 @@
 
 .course_event_past_container {
   .course_event_date,
-  .course_event_lower_section {
+  .event-details-body {
     @include opacity(.6);
   }
 }
@@ -90,27 +90,21 @@
       font-size: small;
     }
   }
-  & > .eventEdit_buttons {
-    background: $default-light-grey;
-    border-top: 3px solid $default-white;
-    padding: 10px 0;
-    text-align: center;
-    .btn-toolbar {
-      margin: auto;
-      width: 90%;
-    }
-  }
+  // & > .eventEdit_buttons {
+  //   background: $default-light-grey;
+  //   border-top: 3px solid $default-white;
+  //   padding: 10px 0;
+  //   text-align: center;
+  //   .btn-toolbar {
+  //     margin: auto;
+  //     width: 90%;
+  //   }
+  // }
   & > a,
   & > a:hover {
     color: $default-black;
     text-decoration: none;
   }
-}
-
-.course_event_lower_section {
-  background: $openki-light-blue;
-  height: calc(#{'100% - 70px'});
-  padding-bottom: 10px;
 }
 
 .course_event_title {
@@ -122,19 +116,6 @@
 
 input#eventEditTitle {
   font-size: large;
-}
-
-.event_options {
-  @include grid(12);
-  padding: 15px 0 0;
-}
-
-.eventReplicationMenu {
-  background: $default-light-grey;
-  padding: 10px 0;
-  & > div {
-    padding: 1em;
-  }
 }
 
 .fade_effect_top {

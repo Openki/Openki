@@ -50,7 +50,7 @@
 
 .filter-header {
   @include grid(12);
-	border-bottom: 1px solid $openki-light-blue;
+	border-bottom: 1px solid $openki-blue-lighter;
   color: $brand-primary;
   padding: 0;
   @media (max-width: $screen-xs) {
@@ -98,7 +98,7 @@
 }
 
 .eventcaption_upcoming {
-  background: $openki-light-blue;
+  background: $openki-blue-lighter;
   display: inline-block;
   height: 20px;
   position: relative;
