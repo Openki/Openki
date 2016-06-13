@@ -26,11 +26,7 @@
 			{{#if hasEvents}}
 				<div class="calendar_events">
 					{{#each events}}
-						{{#if past}}
-							{{> calendar_event_past}}
-						{{else}}
-							{{> eventSmall}}
-						{{/if}}
+						{{> eventSmall}}
 					{{/each}}
 				</div>
 			{{/if}}
@@ -38,28 +34,6 @@
 			{{> loadingRow}}
 		{{/if}}
 	</div>
-</template>
-
-<template name="calendar_event_past">
-	<a href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event_past no-padding col-xs-12 col-sm-4 col-md-3 col-lg-2" style='overflow: hidden'>
-			<div class="course_event_date">
-				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-				{{dateformat_withday start}}
-			</div>
-			<div class="course_event_time">
-				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-				{{timeformat start}} - {{timeformat end}} &nbsp;&nbsp;&nbsp; {{this.location}}, {{this.room}}
-			</div>
-			<div class="course_event_title">
-				<h4>{{this.title}}</h4>
-			</div>
-			<div class="course_event_desc ellipsis">
-				<p>{{plain description}}</p>
-			</div>
-			<div class="grey_out"></div>
-		</div>
-	</a>
 </template>
 
 <template name="switchDate">
