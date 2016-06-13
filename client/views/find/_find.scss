@@ -50,9 +50,11 @@
 
 .filter-header {
   @include grid(12);
+	border-bottom: 1px solid $openki-light-blue;
   color: $brand-primary;
   padding: 0;
   @media (max-width: $screen-xs) {
+		border: 0;
     display: none;
   }
 }
@@ -63,11 +65,7 @@
 
 .filter-course-properties,
 .filter-categories {
-  border-top: 1px solid $openki-light-blue;
   float: left;
-  @media (max-width: $screen-xs) {
-    border-top-width: 0;
-  }
 }
 
 .filter-course-properties {
