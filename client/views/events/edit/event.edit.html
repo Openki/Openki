@@ -1,6 +1,6 @@
 <template name="eventEdit">
 	<form>
-	<div class="course_event_edit">
+	<div class="event-edit">
 		{{#if _id}}
 			<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
 		{{else}}
@@ -11,188 +11,185 @@
 			{{/unless}}
 		{{/if}}
 
-		<div class="course_event_edit_header">
-			<h4>{{mf 'course.event.edit.title' 'Event title:'}}</h4>
-			<input class="form-control"
-				id="edit_event_title"
-				name="_"
-				placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
-				size="30"
-				type="text"
-				value="{{this.title}}"/>
-			<div class="date">
-				<h4>{{mf 'course.event.edit.date_start' 'Date'}}</h4>
-				<div class="input-group date" style="width: 100%">
-					<span class="input-group-addon">
-						<i class="glyphicon glyphicon-calendar"></i>
-					</span>
-					<input class="form-control js-eventStartDate"
-						type="text"
-						value="{{localDate start}}"
-						{{disableForPast}}/>
-				</div>
+		<div class="event-edit-header">
+			<div class="form-group">
+				<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
+				<input type="text" class="form-control input-lg" id="eventEditTitle"
+					name="_"
+					placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
+					size="30"
+					value="{{this.title}}"/>
 			</div>
-			<div class="start_time">
-				<h4>{{mf 'course.event.edit.time_start' 'Time start'}}</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-time"></span>
-					</span>
-					<input class="form-control"
-						id="edit_event_starttime"
-						size="5"
-						type="text"
-						value="{{timeformat start}}"
-						{{disableForPast}}/>
-				</div>
-			</div>
-			<div class="end_time" style="display:inline-block">
-				<h4>
-					{{mf 'course.event.edit.time_end' 'Time end'}}
-					<small class="toggle_duration" >
-						&nbsp;&nbsp;
-						<span class="fa fa-exchange"
-							data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}"
-							href="#">
+			<div class="form-group">
+				<div class="form-group-element">
+					<label>{{mf 'course.event.edit.date_start' 'Date'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="glyphicon glyphicon-calendar"></i>
 						</span>
-					</small>
-				</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-time"></span>
-					</span>
-					<input class="form-control"
-						id="edit_event_endtime"
-						size="5"
-						type="text"
-						value="{{timeformat end}}"/>
+						<input type="text" class="form-control js-event-start-date"
+							value="{{localDate start}}"
+							{{disableForPast}}/>
+					</div>
 				</div>
-			</div>
-			<div class="show_duration" style="display:none">
-				<h4>
-					{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
-					<small class="toggle_duration">
-						&nbsp;&nbsp;
-						<span class="fa fa-exchange"
-							data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}"
-							href="#">
+				<div class="form-group-element">
+					<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
 						</span>
-					</small>
-				</h4>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-time"></span>
-					</span>
-					<input class="form-control"
-						id="edit_event_duration"
-						type="number"
-						value="{{timeformat Duration}}"
-						size="5"/>
+						<input type="text" class="form-control" id="editEventStartTime"
+							size="5"
+							value="{{timeformat start}}"
+							{{disableForPast}}/>
+					</div>
+				</div>
+				<div class="form-group-element">
+					{{#if showDuration}}
+						<label>
+							{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
+							&nbsp;
+							<button type="button" class="js-toggle-duration btn-icon"
+								data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
+								<span class="fa fa-exchange"></span>
+							</button>
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+							<input type="number" class="form-control" id="editEventDuration"
+								value="{{timeformat Duration}}"
+								size="5"/>
+						</div>
+					{{else}}
+						<label>
+							{{mf 'course.event.edit.time_end' 'Time end'}}
+							&nbsp;
+							<button type="button" class="js-toggle-duration btn-icon"
+								data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
+								<span class="fa fa-exchange"></span>
+							</button>
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-time"></span>
+							</span>
+							<input type="text" class="form-control"	id="editEventEndTime"
+								size="5"
+								value="{{timeformat end}}"/>
+						</div>
+					{{/if}}
 				</div>
 			</div>
 		</div>
-		<div class="course_event_edit_body">
-			<div class="description">
-				<h4>{{mf 'course.event.edit.desc' 'Description:'}}</h4>
+		<div class="event-edit-body">
+			<div class="form-group">
+				<label>{{mf 'course.event.edit.desc' 'Description'}}</label>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</span>
-					{{>eventDescriptionEdit description}}
+					{{> eventDescriptionEdit description}}
 				</div>
 			</div>
 
-			{{#if showRegionSelection}}
-				<div class="region_selection">
-					<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-					<select class="region_select -regionSelect form-control"
-						name='region'>
-						<option value='' disabled selected class="select_placeholder">
-							{{mf 'course.edit.pls_select' 'Please select'}}
-						</option>
-						{{#each regions}}
-							<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
-								{{name}}
+			<div class="form-group">
+				{{#if showRegionSelection}}
+					<div class="region_selection form-group-element">
+						<label>{{mf 'course.edit.region' 'Region'}}</label>
+						<select class="region_select js-select-region form-control"
+							name='region'>
+							<option value='' disabled selected class="select_placeholder">
+								{{mf 'course.edit.pls_select' 'Please select'}}
 							</option>
-						{{/each}}
-					</select>
-				</div>
-			{{/if}}
+							{{#each regions}}
+								<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
+									{{name}}
+								</option>
+							{{/each}}
+						</select>
+					</div>
+				{{/if}}
 
-			<div class="files">
-				<h4>{{mf 'course.event.edit.files' 'Files:'}} {{mf '_inputField.optional'}}</h4>
-				<input class="eventFileInput"
-					id="edit_files"
-					name="…"
-					type="file"
-					value="Upload file"/>
-				<button type="button" class="btn btn-go eventFileUpload"
-					style="display:none">
-					<span class="fa fa-upload"></span>&nbsp;
-					Start Upload
-				</button>
-				<table class="file-list">
-					{{#each files}}
-						{{> eventAttachmentsEdit}}
-					{{/each}}
-				</table>
+				<div class="event-edit-files form-group-element">
+					<label>
+						{{mf 'course.event.edit.files' 'Files'}}
+						<small> {{mf '_inputField.optional'}}</small>
+					</label>
+						<input type="file" class="eventFileInput"	id="eventEditFiles"
+							name="…"
+							value="Upload file"/>
+					<button type="button" class="btn btn-default js-event-upload-file"
+						style="display:none">
+						<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
+						{{mf 'event.edit.startUpload' 'Start Upload'}}
+					</button>
+					<table class="table table-hover file-list">
+						<tbody>
+							{{#each files}}
+								{{> eventAttachmentsEdit}}
+							{{/each}}
+						</tbody>
+					</table>
+				</div>
 			</div>
 
 			{{#if showLocationSelection}}
 				{{>eventEditLocation}}
 			{{/if}}
 
-			<div class="room">
-				<h4>{{mf 'course.event.edit.room' 'Room:'}}</h4>
-				<span class="addintion"> {{mf '_inputField.optional'}}</span>
+			<div class="form-group">
+				<label>
+					{{mf 'course.event.edit.room' 'Room'}}
+					<small> {{mf '_inputField.optional'}}</small>
+				</label>
 				<div class="input-group" id="editform_room" name="editform_room">
 					<span class="input-group-addon">
 						<span class="fa fa-map-signs"></span>
 					</span>
-					<input class="form-control"
-						id="edit_event_room"
+					<input type="text" class="form-control"	id="eventEditRoom"
 						size="40"
-						type="text"
 						value="{{room}}"/>
 				</div>
 			</div>
 
-			<div class="options">
-				<div class="checkbox">
-					<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
-						<input class="-eventInternal"
-							type="checkbox"
-							{{isInternal}}/>
-						{{mf 'event.edit.internal' 'Internal'}}
-					</label>
-				</div>
+			<div class="checkbox">
+				<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
+					<input type="checkbox" class="-eventInternal" {{isInternal}}/>
+					{{mf 'event.edit.internal' 'Internal'}}
+				</label>
 			</div>
 
-			<div class="edit_buttons">
-				<button type="submit" class="btn btn-save">
-					<span class="glyphicon glyphicon-save"></span>
-					{{mf '_button.save'}}
-				</button>
+			{{#if affectedReplicaCount}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="updateReplicas">
+						{{mf 'event.edit.updateReplicas'
+							"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
+							COUNT=affectedReplicaCount
+						}}
+
+						<span class="warn-block">
+							<i class="fa fa-warning" aria-hidden="true"></i>
+							{{mf 'event.edit.updateReplicas.times'
+								"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+								COUNT=affectedReplicaCount
+							}}
+						</span>
+					</label>
+				</div>
+			{{/if}}
+
+			<div class="form-actions">
 				<button type="button" class="btn btn-cancel js-event-edit-cancel-btn">
 					<span class="glyphicon glyphicon-remove"></span>
 					{{mf '_button.cancel'}}
 				</button>
-				{{#if affectedReplicaCount}}
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="updateReplicas">
-							{{mf 'event.edit.updateReplicas'
-								"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
-								COUNT=affectedReplicaCount
-							}}
-
-							<small>{{mf 'event.edit.updateReplicas.times'
-								"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
-								COUNT=affectedReplicaCount
-							}}</small>
-						</label>
-					</div>
-				{{/if}}
+				<button type="submit" class="btn btn-save">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf '_button.save'}}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -200,8 +197,8 @@
 </template>
 
 <template name="eventDescriptionEdit">
-	<div class="form-control"
-		id="edit_event_description"
+	<div class="form-control editable-textarea"
+		id="eventEditDescription"
 		data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
 		{{{this}}}
 	</div>
@@ -209,12 +206,15 @@
 
 <template name="eventAttachmentsEdit">
 	<tr id="row-{{_id}}">
-		<td style="padding-right:5px;">
-			<a href="{{file}}" target="_blank">{{filename}}</a>
+		<td>
+			<a href="{{file}}" target="_blank">
+				<i class="fa fa-file fa-fw" aria-hidden="true"></i>{{filename}}
+			</a>
 		</td>
 		<td>
-			<button type="button" class="fileDelete close">
-				<span class="glyphicon glyphicon-remove"></span>
+			<button type="button" class="js-delete-file close"
+				data-tooltip="{{mf 'event.edit.removeFile' 'Remove attached file'}}">
+				&times;
 			</button>
 		</td>
 	</tr>

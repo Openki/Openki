@@ -1,6 +1,6 @@
 .locationFrame {
-  @include grid(12);
-  padding: 0;
+  // @include grid(12);
+  // padding: 0;
   .locationEdit {
     @include grid(12);
     background-color: $location-edit-bg;

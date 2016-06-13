@@ -1,7 +1,3 @@
-#edit_event_description {
-  padding: 6px 10px;
-}
-
 .course_events {
   @include grid(12);
   height: 400px;
@@ -124,7 +120,7 @@
   }
 }
 
-input#edit_event_title {
+input#eventEditTitle {
   font-size: large;
 }
 

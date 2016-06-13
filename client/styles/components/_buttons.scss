@@ -68,15 +68,6 @@ $all-btn-bg-color-steps: (
 
 .btn {
   @include transition(border-color .15s ease-in-out);
-  @media (max-width: $screen-xs) {
-    width: 100%;
-  }
-}
-
-button + button:not(.js-external-service-login-btn) {
-	@media (max-width: $screen-xs) {
-		margin-top: 10px;
-	}
 }
 
 .btn-group {
@@ -101,31 +92,6 @@ button + button:not(.js-external-service-login-btn) {
   @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
 }
 
-// Style list-group
-// --------------------------------------------------
-.list-group {
-  button + li {
-    border-top-color: $btn-default-border;
-  }
-  button:hover + li,
-  button:hover + button {
-    border-top-color: #8dc3d6;
-  }
-}
-
-.list-group-item {
-  @include transition(border-color .15s ease-in-out);
-}
-
-button.list-group-item {
-  @include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
-  border-color: $btn-default-border;
-  &:hover {
-    @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
-    border-color: #8dc3d6;
-  }
-}
-
 .remove-btn {
   background-color: transparent;
   border: 0;
@@ -137,7 +103,10 @@ button.list-group-item {
   }
 }
 
-.btn-go,
+.btn-go {
+	@extend .btn-primary;
+}
+
 .btn-add,
 .btn-save {
 	@extend .btn-success;
@@ -162,4 +131,12 @@ button.list-group-item {
 	@media (max-width: $screen-xs) {
 		@include btn-base;
 	}
+}
+
+.btn-icon {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: $font-size-small;
+	padding: 0;
 }

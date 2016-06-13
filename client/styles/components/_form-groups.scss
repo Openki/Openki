@@ -1,0 +1,57 @@
+.form-group {
+	@include clearfix;
+}
+
+.form-group > label,
+.form-group > .form-group-element > label {
+	font-size: large;
+	font-weight: normal;
+}
+
+.form-group > .form-group-element {
+	@media (min-width: $screen-sm) {
+		// Automatically split form-group into equally big elements
+		// one element
+		&:nth-child(1):nth-last-child(1) {
+			@include grid(12);
+			padding: 0;
+		}
+		// two elements
+		&:nth-child(1):nth-last-child(2),
+		&:nth-child(2):nth-last-child(1) {
+			@include grid(12, 6);
+		}
+		// three elements
+		&:nth-child(1):nth-last-child(3),
+		&:nth-child(2):nth-last-child(2),
+		&:nth-child(3):nth-last-child(1) {
+			@include grid(12, 4);
+		}
+		&:nth-child(1):nth-last-child(2),
+		&:nth-child(1):nth-last-child(3) {
+			padding: 0 7.5px 0 0;
+		}
+		&:nth-child(2):nth-last-child(2) {
+			padding: 0 7.5px;
+		}
+		&:nth-child(3):nth-last-child(1) {
+			padding: 0 0 0 7.5px;
+		}
+	}
+	@media (max-width: $screen-sm) {
+		& + .form-group-element {
+			margin-top: 15px;
+		}
+	}
+}
+
+.form-actions {
+	@include clearfix;
+	margin-bottom: $form-group-margin-bottom;
+	.btn {
+		float: right;
+	}
+	.btn + .btn {
+		margin-right: 5px;
+	}
+}
