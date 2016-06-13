@@ -29,19 +29,19 @@
 		}
 		&:nth-child(1):nth-last-child(2),
 		&:nth-child(1):nth-last-child(3) {
-			padding: 0 7.5px 0 0;
+			padding: 0 ($grid-gutter-width / 4) 0 0;
 		}
 		&:nth-child(2):nth-last-child(2) {
-			padding: 0 7.5px;
+			padding: 0 ($grid-gutter-width / 4);
 		}
 		&:nth-child(2):nth-last-child(1),
 		&:nth-child(3):nth-last-child(1) {
-			padding: 0 0 0 7.5px;
+			padding: 0 0 0 ($grid-gutter-width / 4);
 		}
 	}
 	@media (max-width: $screen-sm) {
 		& + .form-group-element {
-			margin-top: 15px;
+			margin-top: $form-group-margin-bottom;
 		}
 	}
 }
