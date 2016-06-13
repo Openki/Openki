@@ -1,11 +1,10 @@
 <template name="groupDetails">
-	<div class="groupPage container">
+	<div class="container">
 		{{#if isNew}}
 			<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
 		{{/if}}
-		<div class="groupEdit">
-			<form>
-				<div class="group_edit_header">
+		<div class="details-page-component group-details">
+				<div class="details-page-header group-details-header">
 					<div class="editformLogo">
 						{{#if groupLogo group._id}}
 							<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
@@ -19,53 +18,56 @@
 						{{/if}}
 					</div>
 					{{#if mayEdit}}
-						<button type="button" class="settings -settings">
-							<span class="fa fa-cog"></span> <!-- tooltip {{mf 'group.settings.title' 'Settings'}} -->
+						<button type="button" class="settings close -settings">
+							<i class="fa fa-cog" aria-hidden="true"
+								data-tooltip="{{mf 'group.settings.title' 'Group settings'}}">
+							</i>
 						</button>
 					{{/if}}
 					<div class="editformShort">
 						{{#if editableShort}}
-							{{>editable editableShort}}
+							{{> editable editableShort}}
 						{{else}}
 							{{group.short}}
 						{{/if}}
 					</div>
 				</div>
-				<div class="groupEditSub">
-					<div class="editformClaim">
+				<div class="groupEditSub details-page-body">
+					<div class="details-page-content">
 						{{#if editableClaim}}
-							{{>editable editableClaim}}
+							<div class="editformClaim">
+								{{> editable editableClaim}}
+							</div>
 						{{else}}
-								{{group.claim}}
+							<h4>{{group.claim}}</h4>
 						{{/if}}
-					</div>
-					<div class="editformDescr">
-						{{#if editableDescription}}
-							{{>editable editableDescription}}
-						{{else}}
-							{{{group.description}}}
-						{{/if}}
+							{{#if editableDescription}}
+								<div class="editformDescr">
+									{{> editable editableDescription}}
+								</div>
+							{{else}}
+								<p>{{{group.description}}}</p>
+							{{/if}}
 					</div>
 				</div>
 				{{#if isNew}}
-					<div class="groupEditFinishbtns">
-						<button type="button" class="btn btn-save js-group-save">
-							<span class="glyphicon glyphicon-save"></span>
-							{{mf '_button.save'}}
-						</button>
+					<div class="actions">
 						<button type="button" class="btn btn-cancel js-group-cancel">
 							<span class="glyphicon glyphicon-remove"></span>
 							{{mf '_button.cancel'}}
 						</button>
+						<button type="button" class="btn btn-save js-group-save">
+							<span class="glyphicon glyphicon-save"></span>
+							{{mf '_button.save'}}
+						</button>
 					</div>
 				{{/if}}
-			</form>
 			{{#if editingSettings}}
 				{{> groupSettings}}
 			{{/if}}
 		</div>
 		{{#if showCourses}}
-			<div class="find groupCourses">
+			<div class="details-page-component find">
 				{{> find courseQuery}}
 			</div>
 		{{/if}}

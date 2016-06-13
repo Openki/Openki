@@ -2,11 +2,11 @@
 	<div class="container">
 		<div class="course-details-column-left">
 			{{#if edit}}
-				<div class="course-details-component">
+				<div class="details-page-component">
 					{{> course_edit course}}
 				</div>
 			{{else}}
-				<div class="course-details-component">
+				<div class="details-page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						{{#if isProposal}}
 							<div class="course-details-status">
@@ -44,7 +44,7 @@
 						{{/if}}
 					{{/with}}
 				</div>
-				<div class="course-details-component">
+				<div class="details-page-component">
 					{{> report}}
 				</div>
 			{{/if}}
@@ -59,7 +59,7 @@
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-			<div class="course-details-component">
+			<div class="details-page-component">
 					{{> courseMembers course}}
 					{{> courseRoles roles_details}}
 			</div>

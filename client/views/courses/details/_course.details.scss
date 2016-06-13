@@ -1,14 +1,3 @@
-.course-details-component {
-  @include grid(12);
-  padding: 0;
-	& + .course-details-component {
-		margin-top: 15px;
-	}
-	& > .btn {
-		width: 100%;
-	}
-}
-
 .course-details-component-titlebar {
   @include grid(12);
   background: $brand-primary;

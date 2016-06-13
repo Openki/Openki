@@ -1,6 +1,6 @@
 <template name="course_events">
 	{{#if mayAdd}}
-	<div class="course-details-component">
+	<div class="details-page-component">
 		<button type="button" class="btn btn-add eventEdit">
 			<span class="glyphicon glyphicon-plus"></span>&nbsp;
 			{{mf 'course.events.addButton' 'Add event'}}
@@ -8,7 +8,7 @@
 	</div>
 	{{/if}}
 	{{#if haveEvents}}
-	<div class="course-details-component">
+	<div class="details-page-component">
 		<div class="course_events_fadebox">
 			<div class="course_events">
 				{{#if havePastEvents}}
@@ -75,7 +75,7 @@
 			<div class="fade_effect_bottom"></div>
 		</div>
 	</div>
-	<div class="course-details-component">
+	<div class="details-page-component">
 		<a class="btn btn-default" href="/cal/course/{{course._id}}"
 			data-tooltip="{{mf 'course.events.download.tooltip'}}"
 			role="button"

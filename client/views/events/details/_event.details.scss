@@ -15,7 +15,6 @@
 .event-details-header {
 	@include grid(12);
 	background: $brand-success;
-	border-bottom: 3px solid $body-bg;
 	padding-bottom: 10px;
 	padding-top: 10px;
 	.date {
@@ -28,28 +27,7 @@
 		font-size: small;
 	}
 }
-.event-details-body {
-  .head {
-    @include grid(12, 6);
-  }
-  .mapBox {
-    @include grid(12, 6);
-    padding-right: 0;
-    .mapContainer.box {
-      height: 300px;
-      width: 100%;
-    }
-  }
-  .event_detail_description {
-    padding-top: 5px;
-  }
-}
 
-.event-details-component {
-	@include grid(12);
-	@include make-row-self;
-	margin-bottom: 15px;
-	& > .btn {
-		width: 100%;
-	}
+.event-files-list {
+	@include list-unstyled;
 }

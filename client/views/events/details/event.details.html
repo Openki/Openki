@@ -25,7 +25,7 @@
 </template>
 
 <template name="eventDisplay">
-	<div class="event-details-component">
+	<div class="details-page-component">
 		<div class="event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
@@ -36,11 +36,9 @@
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
 		</div>
-		<div class="event-details-body">
-			<div class="head">
-				<div class="course_event_title">
-					<h3>{{this.title}}</h3>
-				</div>
+		<div class="details-page-body event-details-body">
+			<div class="details-page-content">
+				<h3>{{this.title}}</h3>
 				<div class="location">
 					{{> locationLink}}
 					{{#if location.address}}
@@ -54,15 +52,15 @@
 				<p>{{{description}}}</p>
 			</div>
 			{{#if haveLocation}}
-				<div class="mapBox">
+				<div class="details-page-map">
 					{{>map markers=eventMarkers}}
 				</div>
 			{{/if}}
 		</div>
 		{{#if files}}
-			<div class="event_detail_description">
-				<p>Related Files:</p>
-				<ul style="list-style-type:none">
+			<div class="details-page-addition">
+				<h4>Related Files:</h4>
+				<ul class="event-files-list">
 					{{#each files}}
 						{{> eventAttachments}}
 					{{/each}}
@@ -96,22 +94,21 @@
 			</div>
 		{{/if}}
 	</div>
-	<div class="event-details-component">
+	<div class="details-page-component">
 		<a class="btn btn-default" href="{{pathFor 'calEvent' this}}" role="button">
 			<i class="fa fa-download fa-fw"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
 	</div>
-	<div class="event-details-component">
+	<div class="details-page-component">
 		{{> report}}
 	</div>
 </template>
 
 <template name="eventAttachments">
 	<li>
-		<p>
-			<a href="{{file}}" target="_blank">{{filename}}</a>
-		</p>
+		<i class="fa fa-file fa-fw" aria-hidden="true"></i>
+		<a href="{{file}}" target="_blank">{{filename}}</a>
 	</li>
 </template>
 

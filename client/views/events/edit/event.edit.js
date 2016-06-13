@@ -182,9 +182,8 @@ Template.eventEdit.events({
 					template.$('button.js-event-upload-file').hide(50);
 
 					var fileHtml = '<tr id="row-' + fileObj._id + '">';
-					fileHtml += '<td>';
+					fileHtml += '<td><i class="fa fa-file fa-fw" aria-hidden="true"></i>';
 					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">';
-					fileHtml += '<i class="fa fa-file fa-fw" aria-hidden="true"></i>';
 					fileHtml += fileObj.original.name + '</a>';
 					fileHtml += '</td><td><button type="button" class="js-delete-file close"';
 					fileHtml += 'data-tooltip="' + mf('event.edit.removeFile') + '">';
