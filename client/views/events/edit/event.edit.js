@@ -151,13 +151,13 @@ var updateTimes = function(template, updateEnd) {
 };
 
 Template.eventEdit.events({
-	'change .eventFileInput': function(event, template) {
-		template.$('button.js-event-upload-file').toggle(300);
+	'change .js-event-add-file': function(event, template) {
+		template.$('.js-event-upload-file').toggle(300);
 	},
 
-	'click button.js-event-upload-file': function(event, template) {
+	'click .js-event-upload-file': function(event, template) {
 
-		var fileEvent = $('.eventFileInput')[0].files;
+		var fileEvent = $('.js-event-add-file')[0].files;
 
 		//FS.Utility.eachFile(fileEvent, function(file) {
 		$.each( fileEvent, function(i,file){
