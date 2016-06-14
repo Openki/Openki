@@ -1,6 +1,6 @@
 Template.course_events.helpers({
 	mayAdd: function() {
-		return hasRoleUser(this.course.members, 'team', Meteor.userId());
+		return this.course.editableBy(Meteor.user());
 	},
 
 	haveEvents: function() {
@@ -64,11 +64,6 @@ Template.course_events.rendered = function() {
 			$(".fade_effect_top").fadeOut(200);
 		}
 	});
-	scrollableContainer.scrollTop(this.$("hr.now").offset().top-scrollableContainer.offset().top); //halp
-};
-
-Template.course.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
 };
 
 Template.course_events.events({

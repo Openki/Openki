@@ -1,0 +1,61 @@
+<template name="courseMembers">
+	<div class="course-details-component-titlebar">
+		<h4 class="course-details-component-heading">
+			<span class="fa fa-users"></span>
+			&nbsp;
+			{{#mf KEY='course.dtails.paticipants.title' NUM=howManyEnrolled}}
+				{NUM, plural,
+					=0 {No participants yet}
+					one {1 Participant}
+					other {# Participants}
+				}
+			{{/mf}}
+		</h4>
+	</div>
+	{{#if members}}
+		<div class="course-members">
+			{{#each members}}
+				{{> courseMember member=this course=..}}
+				<div class="horizontal-line"></div>
+			{{/each}}
+		</div>
+	{{/if}}
+</template>
+
+<template name="courseMember">
+	<div class="course-member">
+		<span class="glyphicon glyphicon-user"></span>&nbsp;
+		{{> profilelink member.user}}
+		{{#if hasRoles}}
+		<ul class='course-member-roles'>
+			{{#each member.roles}}
+				<li class='{{this}}'>
+					<span class="{{rolelist_icon this}}"></span>
+					&nbsp;
+					<span class="role-short">{{mf roleShort}}</span>
+				</li>
+			{{/each}}
+		</ul>
+		{{/if}}
+		{{#if maySubscribe}}
+		<button class='btn btn-add js-add-to-team-btn'>
+			<span class="glyphicon glyphicon-plus add-to-team-btn-plus {{member.user}}"></span>
+			<span class="add-to-team-btn-txt {{member.user}}">
+				<span class="glyphicon glyphicon-bullhorn"></span>&nbsp;
+				{{mf 'course.roles.maketeam' 'Add to team'}}
+			</span>
+		</button>
+		{{/if}}
+		{{#if editableMessage}}
+			<div class="course-member-comment">
+				{{> editable editableMessage}}
+			</div>
+		{{else}}
+			{{#if member.comment}}
+				<div class="course-member-comment">
+						{{member.comment}}
+				</div>
+			{{/if}}
+		{{/if}}
+	</div>
+</template>

@@ -104,7 +104,7 @@ Template.editable.helpers({
 });
 
 Template.editable.events({
-	'click .-editableStore': function(event, instance) {
+	'click .js-editable-save': function(event, instance) {
 		event.preventDefault();
 		instance.changed.set(false);
 		var editable = instance.$('.editable');
@@ -112,7 +112,7 @@ Template.editable.events({
 		instance.data.store(changedText);
 		instance.editingVersion = false;
 	},
-	'click .-editableCancel': function(event, instance) {
+	'click .js-editable-cancel': function(event, instance) {
 		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
@@ -132,4 +132,3 @@ Template.editable.events({
 		selectEnd(instance.$('.editable')[0]);
 	}
 });
-

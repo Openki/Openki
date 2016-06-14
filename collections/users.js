@@ -40,8 +40,30 @@
 // "profile"      -> {name: String, locale: Lang}
 // "privileges"   -> [upload, admin]
 // "lastLogin"    -> Date
+// groups         -> List of groups the user is a member of, calculated by updateBadges()
+// badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()
 // ===========================
 
+User = function() {};
+
+
+/** Check whether the user may promote things with the given group
+  *
+  * @param {String/Object} group - The group to check, this may be an Id or a group object
+  * @returns {Boolean}
+  *
+  * The user must be a member of the group to be allowed to promote things with it.
+  */
+User.prototype.mayPromoteWith = function(group) {
+	var groupId = _id(group);
+	if (!groupId) return false;
+	return this.groups.indexOf(groupId) >= 0;
+};
+
+
+Meteor.users._transform = function(user) {
+	return _.extend(new User(), user);
+};
 
 
 privilegedTo = function(privilege) {
@@ -76,7 +98,37 @@ UserLib = {
 
 		return Meteor.users.find(query, options);
 	}
-}
+};
+
+Users = {};
+
+// Update list of groups and badges
+Users.updateBadges = function(userId) {
+	untilClean(function() {
+		var user = Meteor.users.findOne(userId);
+		if (!user) return true;
+
+		var groups = [];
+		Groups.find({ members: user._id }).forEach(function(group) {
+			groups.push(group._id);
+		});
+
+		var badges = groups.slice();
+		badges.push(user._id);
+
+		var rawUsers = Meteor.users.rawCollection();
+		var result = Meteor.wrapAsync(rawUsers.update, rawUsers)(
+			{ _id: user._id },
+			{ $set: {
+				groups: groups,
+				badges: badges,
+			} },
+			{ fullResult: true }
+		);
+
+		return result.nModified === 0;
+	});
+};
 
 Meteor.methods({
 	delete_profile: function() {
@@ -110,5 +162,12 @@ Meteor.methods({
 				checkUpdateOne
 			);
 		}
-	}
+	},
+
+	// Recalculate the groups and badges field
+	'user.updateBadges': function(selector) {
+		Meteor.users.find(selector).forEach(function(user) {
+			Users.updateBadges(user._id);
+		});
+	},
 });

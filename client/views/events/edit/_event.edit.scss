@@ -1,0 +1,100 @@
+.course_event_edit {
+  @include grid(12);
+  h2 {
+    margin-top: 0;
+  }
+  .course_event_edit_header {
+    @include grid(12);
+    border: dashed 7px $brand-success;
+    border-bottom: 0;
+    margin-top: 10px;
+    padding: 20px 30px 0;
+    @media (max-width: $screen-xs) {
+      border: 0;
+      margin-top: 0;
+      padding: 0;
+    }
+    #edit_event_title {
+      height: auto;
+    }
+    .date,
+    .start_time,
+    .end_time,
+    .show_duration {
+      @include grid(12, 4);
+      @media (max-width: $screen-sm) {
+        padding: 0;
+      }
+    }
+    .date {
+      padding-left: 0;
+    }
+    .end_time,
+    .show_duration {
+      padding-right: 0;
+    }
+    .toggle_duration {
+      cursor: pointer;
+      padding-top: 15px;
+    }
+  }
+  .course_event_edit_body {
+    @include grid(12);
+    border: dashed 7px $openki-light-blue;
+    border-top: 0;
+    padding: 0 30px 20px;
+    @media (max-width: $screen-xs) {
+      border: 0;
+      padding: 0 0 10px;
+    }
+    .description {
+      @include grid(12);
+      padding: 0;
+      #edit_event_description {
+        height: auto;
+        max-height: 150px;
+        min-height: 100px;
+        overflow: auto;
+      }
+    }
+    .region_selection {
+      @include grid(12, 4);
+      padding-left: 0;
+      @media (min-width: $screen-xs) and (max-width: $screen-sm) {
+        padding: 0;
+      }
+    }
+    .files {
+      @include grid(12, 8);
+      padding: 0;
+      #edit_files {
+        height: auto;
+      }
+      .eventFileUpload {
+        margin: 5px 0;
+      }
+    }
+    .room {
+      @include grid(12);
+      margin-bottom: 20px;
+      padding: 0;
+      h4 {
+        display: inline-block;
+        margin-right: .7em;
+      }
+    }
+    .options {
+      @include grid(12);
+    }
+    .edit_buttons {
+      @include grid(12, 6);
+      padding: 0;
+      button {
+        margin-top: 10px;
+        &:first-child {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

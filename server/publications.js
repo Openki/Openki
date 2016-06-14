@@ -70,7 +70,7 @@ Meteor.publish('event', function(eventId) {
 Meteor.publish ('eventsFind', eventsFind);
 
 Meteor.publish('eventsForCourse', function(courseId) {
-	return Events.find({course_id: courseId});
+	return Events.find({courseId: courseId});
 });
 
 Meteor.publish('affectedReplica', function(eventId) {

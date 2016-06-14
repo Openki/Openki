@@ -1,0 +1,199 @@
+<template name='userFrame'>
+	<div class="user-frame">
+		{{#if currentUser}}
+			<div class="ownuser-frame">
+				<h3>
+					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+				</h3>
+				<div class="form-group">
+					<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+						<span class="glyphicon glyphicon-share-alt"></span>
+						{{mf 'login.frame.profile' 'Visit my profile'}}
+					</a>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+						<span class="glyphicon glyphicon-cog"></span>
+						{{mf 'login.frame.settings' 'Account settings'}}
+					</a>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-default js-logout-btn form-control"
+						href="#"
+						role="button">
+						<span class="glyphicon glyphicon-log-out"></span>
+						{{mf 'login.logout' 'Logout'}}
+					</button>
+				</div>
+			</div>
+		{{/if}}
+		{{#if forgot}}
+			{{> forgotPwdFrame}}
+		{{/if}}
+		{{#if login}}
+			{{> loginFrame}}
+		{{/if}}
+	</div>
+</template>
+
+<template name="loginFrame">
+	<form>
+		<div class="login">
+			<div class="form-group {{#if userNotFound}}has-error{{/if}}{{#if userAlreadyExists}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-user"></span>
+					</span>
+					<input class="js-login-name form-control"
+						id="login-name"
+						type="text"
+						placeholder={{loginNamePlaceholder}}>
+				</div>
+				{{#if hasWarnings}}
+					<span class="warn-block">
+						{{#if userNotFound}}
+							{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
+						{{/if}}
+						{{#if userAlreadyExists}}
+							{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
+							{{mf 'login.username.choose_another' 'Please choose another one.'}}
+						{{/if}}
+					</span>
+				{{/if}}
+			</div>
+			<div class="form-group {{#if incorrectPassword}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}{{#if noPasswordProvided}}has-error{{/if}}">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-lock"></span>
+					</span>
+					<input class="js-login-password form-control"
+						id="login-password"
+						placeholder="{{mf 'frame.login.password' 'Password'}}"
+						type="password"/>
+				</div>
+				{{#if hasWarnings}}
+					<span class="warn-block">
+						{{#if incorrectPassword}}
+							{{mf 'login.password.password_incorrect' 'Incorrect password'}}
+						{{/if}}
+						{{#if emptyLogin}}
+							{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
+						{{/if}}
+						{{#if noPasswordProvided}}
+							{{mf 'login.warning.noPasswordProvided' 'Please enter a password to register.'}}
+						{{/if}}
+					</span>
+				{{/if}}
+			</div>
+			{{#if registering}}
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-envelope"></span>
+						</span>
+						<input class="js-login-email form-control"
+							type="email"
+							id="login-email"
+							value={{transEmail}}
+							placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class='btn btn-add js-register-btn form-control'
+					 	type="submit">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;
+						{{mf 'login.register.submit' 'Create account'}}
+					</button>
+				</div>
+				<div class="form-group">
+					<button class='btn btn-default js-login-btn form-control'
+					 	type="submit">
+						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+							{{mf 'login.login.back_to_login' 'Back to login'}}
+					</button>
+				</div>
+			{{else}}
+				<div class="form-group forgot-pwd-btn-container">
+					<button class="btn btn-default {{#if incorrectPassword}}form-control{{else}}btn-sm{{/if}} js-forgot-pwd-btn"
+						type="button"
+						role="button">
+						{{mf 'forgot' "I forgot my password"}}
+					</button>
+				</div>
+				<div class="form-group">
+					<button class='btn btn-default js-login-btn form-control'
+					 	type="submit">
+						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+							{{mf 'login.login.submit' 'Login'}}
+					</button>
+				</div>
+				<div class="form-group">
+					<button class='btn btn-add js-register-btn form-control'
+					 	type="submit">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;
+						{{mf 'login.register.submit' 'Create account'}}
+					</button>
+				</div>
+			{{/if}}
+				<div class="form-group external-service-login">
+					<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
+					<button class="js-external-service-login-btn"
+						data-service='Google'
+						title="Login with Google+">
+						<span class="fa fa-google-plus-square"></span>
+					</button>
+					<button class="js-external-service-login-btn"
+						data-service='Facebook'
+						title="Login with Facebook">
+						<span class="fa fa-facebook-square"></span>
+					</button>
+					<button class="js-external-service-login-btn"
+						data-service='Github'
+						title="Login with Github">
+						<span class="fa fa-github-square"></span>
+					</button>
+				</div>
+		</div>
+	</form>
+</template>
+
+<template name="forgotPwdFrame">
+	<div class="forgot_login">
+		<p>
+			{{mf 'forgot.explanation'
+			"We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
+		</p>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-envelope"></span>
+				</span>
+				<input class="js-login-email form-control"
+					aria-describedby="forgotPwdMailHelp"
+					id="login-email"
+					type="email"
+					placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
+			</div>
+			{{#unless validEmail}}
+				<span id="forgotPwdMailHelp" class="help-block">
+					{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
+				</span>
+			{{/unless}}
+		</div>
+		<div class="form-group">
+			<button class="btn btn-save js-reset-pwd-btn form-control"
+				type="button"
+				{{disableForInvalidEmail}}>
+				<span class="fa fa-envelope"></span>
+				{{mf 'forgot.send' 'Reset my password'}}
+			</button>
+		</div>
+		<div class="form-group">
+			<button class="btn btn-cancel js-reset-pwd-close-btn form-control"
+				type="button">
+				<span class="glyphicon glyphicon-remove"></span>
+				{{mf 'forgot.close' 'Never mind'}}
+			</button>
+		</div>
+	</div>
+</template>

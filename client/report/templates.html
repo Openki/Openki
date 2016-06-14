@@ -1,26 +1,29 @@
 <template name='report'>
 	<form>
-	{{#if sending}}
-		<div>{{mf 'report.sending' 'Report is being sent…'}}</div>
-	{{/if}}
-	{{#if reporting}}
-		{{mf 'report.text' 'Please tell us what is wrong.'}}
-		<div>
-			<textarea name="report" class="report" placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
-			<button class='send'>
-				<span class="glyphicon glyphicon-ok"></span>
-				{{mf 'report.report' 'Send report'}}
+		{{#if sending}}
+			<div>{{mf 'report.sending' 'Report is being sent…'}}</div>
+		{{/if}}
+		{{#if reporting}}
+			{{mf 'report.text' 'Please tell us what is wrong.'}}
+			<div>
+				<textarea class="report"
+					name="report"
+					placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}">
+				</textarea>
+				<button class='btn btn-save js-report-send'>
+					<span class="glyphicon glyphicon-ok"></span>
+					{{mf 'report.report' 'Send report'}}
+				</button>
+				<button class='btn btn-cancel js-report-cancel'>
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'report.cancel' 'Nevermind'}}
+				</button>
+			</div>
+		{{else}}
+			<button class="btn btn-default js-report" type="button">
+				<span class="glyphicon glyphicon-warning-sign"></span>
+				{{mf 'report.open' 'Report problem'}}
 			</button>
-			<button class='cancel'>
-				<span class="glyphicon glyphicon-remove"></span>
-				{{mf 'report.cancel' 'Nevermind'}}
-			</button>
-		</div>
-	{{else}}
-		<button type="button" class="report _openReport">
-			<span class="glyphicon glyphicon-warning-sign"></span>
-			{{mf 'report.open' 'Report problem'}}
-		</button>
-	{{/if}}
+		{{/if}}
 	</form>
 </template>

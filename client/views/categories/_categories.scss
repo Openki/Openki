@@ -1,0 +1,28 @@
+.course-categories {
+  line-height: 23px;
+  list-style: none;
+  margin-left: -2px;
+  padding-left: 0;
+  li {
+    display: inline-block;
+    margin: 2px;
+    position: relative;
+  }
+}
+
+.category-label {
+	background: $category-bg;
+	color: $brand-primary;
+  padding: 2px 5px;
+}
+
+.js-category-label {
+	@extend .category-label;
+  @include transition(box-shadow $default-transition-time);
+  &:hover {
+    @include box-shadow-small($category-hover-shadow);
+    background: $category-hover-bg;
+    color: $category-hover-text;
+    text-decoration: none;
+  }
+}

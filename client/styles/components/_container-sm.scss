@@ -1,0 +1,7 @@
+// Narrow container
+.container-sm {
+	@include container-fixed;
+	@media (min-width: $screen-sm-min) {
+		 width: $container-sm;
+	}
+}

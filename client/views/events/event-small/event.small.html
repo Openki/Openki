@@ -1,0 +1,22 @@
+<template name="eventSmall">
+	<a href="{{pathFor 'showEvent'}}">
+		<div class="event-small-container">
+			<div class="event-small">
+				<div class="event-small-header">
+					<span class="fa fa-clock-o"></span>
+					<span class="event-small-time">
+						{{timeformat start}} - {{timeformat end}}
+					</span>
+					<br>
+					{{> locationLink}}
+				</div>
+				<div class="event-small-title">
+					{{plain this.title}}
+				</div>
+				<div class="event-small-description">
+					{{plain this.description}}
+				</div>
+			</div>
+		</div>
+	</a>
+</template>

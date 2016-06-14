@@ -1,0 +1,22 @@
+<template name="frameCalendar">
+	{{#each this}}
+		<div class="frame-calendar-date-events">
+			{{#with date}}
+				<div class="frame-calendar-date">
+					{{weekday}}
+					{{monthday}}.
+				</div>
+			{{/with}}
+			<div class="frame-calendar-events">
+				{{#each dayEvents}}
+					{{> eventSmall}}
+				{{else}}
+					<div class="frame-calendar-no-events">
+						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	{{/each}}
+	{{> tooltips}}
+</template>

@@ -43,36 +43,75 @@ Meteor.methods({
 
 
 ////////  Geo-IP    find nearest region to IP of user
+var closestRegion = function(address) {
+	check(address, String);
+
+	var maxDistance = 200000; // meters
+	var result = { address: address };
+
+    if (address && address.indexOf('127.') === 0) {
+		result.message = 'Using Testistan for localhost';
+        result.region = Regions.findOne('9JyFCoKWkxnf8LWPh');
+		return result;
+    }
+
+	result.lookup = GeoIP.lookup(address);
+
+    if (Meteor.settings.testdata) {
+		result.message = 'Deployed with testdata, using Spilistan region';
+        result.region = Regions.findOne('EZqQLGL4PtFCxCNrp');
+		return result;
+	}
+
+	if (!result.lookup) {
+		result.message = "No result for GeoIP lookup";
+		return result;
+	}
+
+	result.region = Regions.findOne({
+		loc: { $near: {
+			$geometry: {type: "Point", coordinates: result.lookup.ll.reverse()},
+			$maxDistance: maxDistance
+		}}
+	});
+
+	result.lookup = GeoIP.lookup(address);
+
+	if (!result.lookup) {
+		result.message = "No result for GeoIP lookup";
+		return result;
+	}
+
+	result.region = Regions.findOne({
+		loc: { $near: {
+			$geometry: {type: "Point", coordinates: result.lookup.ll.reverse()},
+			$maxDistance: maxDistance
+		}}
+	});
+
+	if (result.region) {
+		result.message = "Found region " + result.region.name + ".";
+	} else {
+		result.message = "No region within " + maxDistance/1000 + " km.";
+	}
+
+	return result;
+};
+
+
 Meteor.methods({
 	autoSelectRegion: function() {
-		var ip = this.connection.clientAddress;
+		var connectingFrom = this.connection.clientAddress;
+		if (!connectingFrom) return false;
 
-		if (ip.indexOf('127') === 0) {
-			return '9JyFCoKWkxnf8LWPh'; // use Testistan for localhost
-		}
-		if (Meteor.settings.testdata) {
-			return 'EZqQLGL4PtFCxCNrp';  // use Spilistan if deployed with testdata
-		}
-
-		var geo = GeoIP.lookup(ip);
-
-		if (!geo) {
-			return false;
-		}
-
-		var closest = Regions.findOne({
-			loc: { $near: {
-				$geometry: {type: "Point", coordinates: geo.ll.reverse()},
-				$maxDistance: 200000 // meters
-			}}
-		});
-
-		if (closest) return closest._id;
-		return false;
+		var closest = closestRegion(connectingFrom);
+		return closest.region && closest.region._id;
 	},
 
-	ipToGeo: function(ip) {
-//console.log (GeoIP.lookup(ip));
-		return GeoIP.lookup(ip);
+	closestRegion: function(address) {
+		if (!address) {
+			address = this.connection.clientAddress;
+		}
+		return closestRegion(address);
 	},
 });

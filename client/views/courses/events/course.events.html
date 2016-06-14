@@ -1,7 +1,36 @@
 <template name="course_events">
+	{{#if mayAdd}}
+		<button type="button" class="btn btn-add eventEdit">
+			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			{{mf 'course.events.addButton' 'Add event'}}
+		</button>
+	{{/if}}
 	{{#if haveEvents}}
 		<div class="course_events_fadebox">
 			<div class="course_events">
+				{{#if havePastEvents}}
+					<div name="past_events">
+						<div class="courseEvents-titlebar">
+							<h4>
+								<span class="glyphicon glyphicon-calendar"></span>
+								{{mf 'course.events.pastList' 'Previous events'}}
+							</h4>
+							{{#if haveFutureEvents}}
+								<a href="#future_events" class="link">
+									<span class="glyphicon glyphicon-arrow-down"></span>
+									{{mf 'course.events.futureListLink' 'future events'}}
+								</a>
+							{{/if}}
+						</div>
+						<div class="course_events_events">
+							{{#each pastEvents}}
+								{{#if this}}
+									{{> small_event_withDate}}
+								{{/if}}
+							{{/each}}
+						</div>
+					</div>
+				{{/if}}
 				<hr class="now" id="future_events">
 				{{#if haveOngoingEvents}}
 					<div class="courseEvents-titlebar">
@@ -43,24 +72,13 @@
 			<div class="fade_effect_bottom"></div>
 		</div>
 		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button
-				type="button"
-				class="calendar_download"
+			<button class="btn btn-default js-events-download-btn"
+				data-tooltip="{{mf 'course.events.download.tooltip'}}"
 				href="#"
-				data-toggle="tooltip"
-				data-placement="top"
-				data-html="true"
-				data-delay='{"show":"500", "hide":"0"}'
-				data-original-title="{{mf 'course.events.download.tooltip'}}">
+				type="button">
 				<span class="fa fa-download"></span>&nbsp;
 				{{mf 'course.download_cal' 'Download events to my calendar'}}
 			</button>
 		</a>
-	{{/if}}
-	{{#if mayAdd}}
-		<button type="button" class="eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
-			{{mf 'course.events.addButton' 'Add event'}}
-		</button>
 	{{/if}}
 </template>
