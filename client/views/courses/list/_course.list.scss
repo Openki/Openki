@@ -4,7 +4,7 @@
   padding-bottom: 10px;
 	width: auto;
 	@media (min-width: $screen-xsm) {
-		margin: (($grid-gutter-width / 4) * -1);
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
 	}
 }
 
@@ -13,7 +13,7 @@
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
   @media (min-width: $screen-xsm) {
 		@include grid(6, inherit, 4, 3);
-		padding: ($grid-gutter-width / 4);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
   }
 }
 
