@@ -1,7 +1,4 @@
 Meteor.methods({
-	insert_userdata: function(username, email, password){
-		Accounts.createUser({username:username, email:email, password:password});
-	},
 	update_userdata: function(username, email, privacy) {
 		var user = Meteor.user();
 
