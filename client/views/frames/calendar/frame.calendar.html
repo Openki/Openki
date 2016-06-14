@@ -1,4 +1,5 @@
 <template name="frameCalendar">
+	<div class="container-fluid">
 	{{#each this}}
 		<div class="frame-calendar-date-events">
 			{{#with date}}
@@ -18,5 +19,6 @@
 			</div>
 		</div>
 	{{/each}}
+</div>
 	{{> tooltips}}
 </template>

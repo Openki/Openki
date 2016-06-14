@@ -6,35 +6,42 @@
 				{{mf 'login.frame.profile' 'Visit my profile'}}
 			</a>
 			{{#if editing}}
-				<div class="details-page-form">
-					<form class="profile-info-edit">
+				<div class="details-form">
+					<form class="form-horizontal profile-info-edit">
 						<div class="form-group">
-							<label for="editform_username">
-								{{mf 'profile.input.username' 'Username:'}}
+							<label for="editform_username" class="control-label">
+								{{mf 'profile.input.username' 'Username'}}
 							</label>
+							<div class="control-input">
 								<input class="form-control"
 									id="editform_username"
 									type="text"
 									value="{{user.name}}"/>
+								</div>
 						</div>
 						<div class="form-group">
-							<label for="editform_email">
-								{{mf 'profile.email' 'E-Mail:'}} {{mf '_inputField.optional'}}
+							<label for="editform_email" class="control-label">
+								{{mf 'profile.email' 'E-Mail'}} {{mf '_inputField.optional'}}
 							</label>
+							<div class="control-input">
 								<input class="form-control"
 									id="editform_email"
 									type="text"
 									value="{{user.email}}"/>
+							</div>
 						</div>
 						<div class="form-group">
-							<div class="btn-group" data-toggle="buttons">
-								<label class="btn btn-default {{#if user.privacy}}active{{/if}}"
-									title="{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}">
-									<i class="fa fa-user-secret fa-fw" aria-hidden="true"></i>
-									{{mf 'profile.toggle.highprivacy' 'High privacy'}}
-									<span class="checkmark glyphicon glyphicon-ok"></span>
-									<input type="checkbox" id="privacy"/>
-								</label>
+							<div class="control-btn">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="privacy" {{privacyChecked}}/>
+										<i class="fa fa-user-secret fa-fw" aria-hidden="true"></i>
+										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
+										<span class="help-block">
+											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}
+										</span>
+									</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-actions">
@@ -48,54 +55,91 @@
 					</form>
 				</div>
 			{{else}}
-				<div class="details-page-body profile-info">
-					<div class="details-page-content">
-						<table>
-							<tbody>
-								<tr class="name">
-									<td>{{mf 'profile.username' 'Username:'}}</td>
-									<td>{{user.name}}</td>
-								</tr>
-								{{#if user.have_email}}
-									<tr class="email">
-										<td>
-											{{mf 'profile.email' 'E-Mail:'}}
-											&nbsp;
-											{{mf '_inputField.optional'}}
-										</td>
-										<td>
-											{{user.email}}
-											<span class="descr_small"> {{verifiedEmail}} </span>
-											&nbsp;
-											{{#unless user.veryfiedEmailTrue}}
-											<button type="button" class="btn btn-go js-verify-mail-btn">
-												<span class="glyphicon glyphicon-ok-circle"></span>
-												&nbsp;
-												{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-											</button>
-											{{/unless}}
-										</td>
-									</tr>
+				<div class="details-body profile-info">
+					<div class="details-content">
+						<div class="details-info-group">
+							<div class="details-info-label">
+								{{mf 'profile.username' 'Username'}}
+							</div>
+							<div class="details-info-data">
+								{{user.name}}
+							</div>
+						</div>
+						{{#if user.have_email}}
+							<div class="details-info-group">
+								<div class="details-info-label">
+									{{mf 'profile.email' 'E-Mail'}} {{mf '_inputField.optional'}}
+								</div>
+								<div class="details-info-data">
+									{{user.email}}
+									<small> {{verifiedEmail}} </small>
+								</div>
+							</div>
+						{{/if}}
+						{{#unless user.veryfiedEmailTrue}}
+						<div class="details-info-group">
+							<div class="details-info-btn">
+								<button type="button" class="btn btn-success js-verify-mail-btn">
+									<i class="fa fa-check-circle-o fa-lg"></i>
+									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+								</button>
+							</div>
+						</div>
+						{{/unless}}
+						<div class="details-info-group">
+							<div class="details-info-label">
+								{{mf 'profile.highprivacy' 'High privacy'}}
+							</div>
+							<div class="details-info-data">
+								{{#if user.privacy}}
+								<span class="fa fa-user-secret"></span>
+									{{mf 'profile.privacyOn' 'on'}}
+								{{else}}
+									{{mf 'profile.privacyOff' 'off'}}
 								{{/if}}
-								<tr class="privacy">
-									<td> {{mf 'profile.highprivacy' 'High privacy:'}}</td>
-									<td>
-										{{#if user.privacy}}
-											{{mf 'profile.privacyOn' 'on'}} &nbsp;
-											<span class="fa fa-user-secret"></span>
-										{{else}}
-											{{mf 'profile.privacyOff' 'off'}} &nbsp;
-											<span class="fa-stack">
-												<i class="fa fa-user-secret fa-stack-1x"></i>
-												<i class="fa fa-ban fa-stack-2x text-danger"></i>
-											</span>
-										{{/if}}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+							</div>
+						</div>
 					</div>
 				</div>
+				{{#if changingPass}}
+				<div class="details-form">
+					<form class="form-horizontal" id="changePwd">
+						<div class="form-group">
+							<label for="oldpassword" class="control-label">
+								{{mf 'profile.input.oldPassword' 'Your current password'}}
+							</label>
+							<div class="control-input">
+								<input type="password" class="form-control" id="oldpassword" value=""/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="newpassword" class="control-label">
+								{{mf 'profile.input.newPassword' 'New password'}}
+							</label>
+							<div class="control-input">
+								<input type="password" class="form-control" id="newpassword" value=""/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="newpassword_confirm" class="control-label">
+								{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+							</label>
+							<div class="control-input">
+								<input type="password" class="form-control" id="newpassword_confirm" value=""/>
+							</div>
+						</div>
+						<div class="form-actions">
+							<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
+								{{mf '_button.cancel'}}
+							</button>
+							<button type="submit" class="btn btn-save">
+								<i class="fa fa-lock fa-fw" aria-hidden="true"></i>
+								{{mf 'profile.changePass' 'Change my password'}}
+							</button>
+						</div>
+					</form>
+				</div>
+				{{/if}}
 				<div class="actions">
 					{{#unless verifyDelete}}
 						<button type="button" class="btn btn-delete js-profile-delete-btn"
@@ -117,42 +161,9 @@
 					{{/unless}}
 				</div>
 			{{/if}}
-			{{#if changingPass}}
-			<div class="details-page-form">
-				<form id="changePwd">
-					<div class="form-group">
-						<label for="oldpassword">
-							{{mf 'profile.input.oldPassword' 'Your current password'}}
-						</label>
-						<input type="password" class="form-control" id="oldpassword" value=""/>
-					</div>
-					<div class="form-group">
-						<label for="newpassword">
-							{{mf 'profile.input.newPassword' 'New password'}}
-						</label>
-						<input type="password" class="form-control" id="newpassword" value=""/>
-					</div>
-					<div class="form-group">
-						<label for="newpassword_confirm">
-							{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-						</label>
-						<input type="password" class="form-control" id="newpassword_confirm" value=""/>
-					</div>
-					<div class="form-actions">
-						<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
-							{{mf '_button.cancel'}}
-						</button>
-						<button type="submit" class="btn btn-save">
-							<i class="fa fa-lock fa-fw" aria-hidden="true"></i>
-							{{mf 'profile.changePass' 'Change my password'}}
-						</button>
-					</div>
-				</form>
-			</div>
-			{{/if}}
 			{{#if verifyDelete}}
 				<div class="profile-delete-confirmation">
-					{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}} <br>
+					<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 					<div class="form-actions">
 						<button type="button" class="btn btn-default js-profile-delete-cancel-btn">
 							{{mf '_button.cancel'}}
@@ -166,7 +177,7 @@
 			{{/if}}
 		</div>
 		<div class="details-page-component">
-				<a class="btn btn-go translate-link" href="/translate">
+				<a class="btn btn-success translate-link" href="/translate">
 					<i class="fa fa-language" aria-hidden="true"></i>
 					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 				</a>

@@ -43,14 +43,22 @@
 	}
 }
 
-.form-group > label,
-.form-group > .form-group-element > label {
-	font-size: large;
-	font-weight: normal;
-}
-
 .label-lg,
 .form-group > .label-lg,
 .form-group > .form-group-element > .label-lg {
 	font-size: x-large;
+	font-weight: normal;
+}
+
+.control-label {
+	@include grid(12, 3);
+}
+
+.control-input {
+	@include grid(12, 9);
+}
+
+.control-btn {
+	@include grid(12, 9);
+	@include make-sm-column-offset(3);
 }

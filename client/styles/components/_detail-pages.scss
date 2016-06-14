@@ -18,7 +18,7 @@
 	}
 }
 
-.details-page-header {
+.details-header {
 	padding: 10px $form-group-margin-bottom;
 	& > h3 {
 		margin-top: 0;
@@ -28,12 +28,12 @@
 	}
 }
 
-.details-page-body {
+.details-body {
 	@include clearfix;
 	margin-top: 3px;
 }
 
-.details-page-content {
+%details-content {
 	padding: ($grid-gutter-width / 2);
 	& > h3,
 	& > h4 {
@@ -44,13 +44,17 @@
 	}
 }
 
-.details-page-body > .details-page-content {
+.details-content {
+	@extend %details-content;
+}
+
+.details-body > .details-content {
 	&:nth-last-child(2) {
 		@include grid(12, 6);
 	}
 }
 
-.details-page-map {
+.details-map {
 	@include grid(12, 6);
 	@media (min-width: $screen-sm) {
 		padding-right: 0;
@@ -70,7 +74,7 @@
 	}
 }
 
-.details-page-form {
+.details-form {
 	background-color: lighten($brand-success, 10%);
 	border-color: $brand-success;
 	border-style: solid;
@@ -87,7 +91,7 @@
 	}
 }
 
-.details-page-form > .details-page-form-element {
+.details-form > .details-form-element {
 	padding: 0;
 	&:nth-child(1):nth-last-child(2),
 	&:nth-child(2):nth-last-child(1) {
@@ -106,7 +110,7 @@
 	}
 }
 
-.details-page-addition {
+.details-addition {
 	background-color: $gray-lighter;
 	border-color: darken($gray-lighter, 3%);
 	border-style: solid;
@@ -119,4 +123,30 @@
 	& > *:last-child {
 		margin-bottom: 0;
 	}
+}
+
+.details-info-group {
+	@include make-row;
+	margin-bottom: $form-group-margin-bottom;
+}
+
+.details-info-label {
+	@include grid(12, 3);
+	font-weight: bold;
+	@media (min-width: $screen-sm) {
+		padding-top: 7px;
+		text-align: right;
+	}
+}
+
+.details-info-data {
+	@include grid(12, 9);
+	@media (min-width: $screen-sm) {
+		padding-top: 7px;
+	}
+}
+
+.details-info-btn {
+	@include grid(12, 9);
+	@include make-sm-column-offset(3);
 }

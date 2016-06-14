@@ -26,7 +26,7 @@
 
 <template name="eventDisplay">
 	<div class="details-page-component">
-		<div class="details-page-header event-details-header">
+		<div class="details-header event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
 					<span class="glyphicon glyphicon-calendar"></span>
@@ -36,8 +36,8 @@
 				<span class="glyphicon glyphicon-time"></span>
 				{{timeformat start}} - {{timeformat end}}
 		</div>
-		<div class="details-page-body event-details-body">
-			<div class="details-page-content">
+		<div class="details-body event-details-body">
+			<div class="details-content">
 				<h3>{{this.title}}</h3>
 				<div class="location">
 					{{> locationLink}}
@@ -52,13 +52,13 @@
 				<p>{{{description}}}</p>
 			</div>
 			{{#if haveLocation}}
-				<div class="details-page-map">
+				<div class="details-map">
 					{{>map markers=eventMarkers}}
 				</div>
 			{{/if}}
 		</div>
 		{{#if files}}
-			<div class="details-page-addition">
+			<div class="details-addition">
 				<h4>Related Files:</h4>
 				<ul class="event-files-list">
 					{{#each files}}

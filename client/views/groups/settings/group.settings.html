@@ -1,8 +1,8 @@
 <template name="groupSettings">
 	<form>
 		{{#with group}}
-			<div class="details-page-form group-settings">
-				<div class="details-page-form-element settings">
+			<div class="details-form group-settings">
+				<div class="details-form-element settings">
 					<h3>
 						<span class="fa fa-cog"></span>
 						{{mf 'group.settings.title' 'Settings'}}
@@ -57,7 +57,7 @@
 					</div>
 				</div>
 
-				<div class="details-page-form-element members">
+				<div class="details-form-element members">
 					<h3>
 						<span class="glyphicon glyphicon-user"></span>
 						{{mf 'group.settings.title.Members' 'Members'}}
@@ -99,7 +99,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="details-page-addition">
+			<div class="details-addition">
 				<h3>
 					<span class="glyphicon glyphicon-link"></span>
 					{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}

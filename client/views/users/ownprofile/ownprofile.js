@@ -59,6 +59,10 @@ Template.profile.helpers({
 
 	groupCount: function() {
 		return this.user.groups.count();
+	},
+
+	privacyChecked: function() {
+		if (this.user.privacy) return 'checked';
 	}
 });
 

@@ -3,24 +3,10 @@
 	border: 1px solid lighten($user-bg, 2%);
 }
 
-.profile-info-edit {
-  label .checkmark {
-    display: none;
-  }
-  .active .checkmark {
-    display: inline;
-  }
-}
-
 .profile-delete-confirmation {
   background-color: pink;
   border: 1px solid $brand-danger;
   padding: 15px 15px 0;
-}
-
-.js-profile-delete-cancel-btn,
-.js-profile-delete-confirm-btn {
-  margin-top: 10px;
 }
 
 .translate-link {
@@ -28,7 +14,6 @@
 }
 
 .profile-groups-list {
-  @include grid(12);
   .groups {
     @include list-unstyled;
     li {

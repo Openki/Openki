@@ -6,7 +6,7 @@
 		{{#with location}}
 			{{#unless isEditing}}
 			<div class="details-page-component">
-				<div class="details-page-header location-details-header">
+				<div class="details-header location-details-header">
 					{{#if picture}}
 						<img src="{{picture}}">
 					{{/if}}
@@ -14,8 +14,8 @@
 					<p>{{description}} </p>
 					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
 				</div>
-				<div class="details-page-body location-details-body">
-					<div class="details-page-content">
+				<div class="details-body location-details-body">
+					<div class="details-content">
 						<span class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</span>
 						<ul class='hosts'>
 							{{#each hosts}}
@@ -65,7 +65,7 @@
 					</div>
 
 					{{#if loc}}
-					<div class="details-page-map">
+					<div class="details-map">
 						{{> map markers=markers}}
 						<div class="coordinates">
 							{{coords}}
