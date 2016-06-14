@@ -102,6 +102,8 @@ var closestRegion = function(address) {
 Meteor.methods({
 	autoSelectRegion: function() {
 		var connectingFrom = this.connection.clientAddress;
+		if (!connectingFrom) return false;
+
 		var closest = closestRegion(connectingFrom);
 		return closest.region && closest.region._id;
 	},
