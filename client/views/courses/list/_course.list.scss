@@ -1,21 +1,22 @@
 .courselist {
-  @include grid(12);
-	margin-left: -5px;
+	@include grid(12);
+	@include make-row;
   padding: 0 0 10px;
-  width: calc(#{'100% + 10px'});
+	width: auto;
 	@media (max-width: $screen-xs) {
     padding-top: 15px;
   }
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1);
+	}
 }
 
 .course-container {
-  @include grid(6, inherit, 4, 3);
-  border: 5px solid $body-bg;
-  border-bottom-width: 15px;
-  padding: 0;
-  @media (max-width: $screen-xsm) {
-    @include grid(12);
-    padding: 0;
+	@include grid(12);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
+  @media (min-width: $screen-xsm) {
+		@include grid(6, inherit, 4, 3);
+		padding: ($grid-gutter-width / 4);
   }
 }
 
