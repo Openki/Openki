@@ -51,6 +51,12 @@ Template.userprofile.helpers({
 
 	showInviteGroups: function() {
 		return this.inviteGroups.count && this.inviteGroups.count() > 0;
+	},
+
+	showSettings: function() {
+		var showPrivileges = Template.instance().data.showPrivileges;
+		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
+		return showPrivileges || showInviteGroups;
 	}
 });
 

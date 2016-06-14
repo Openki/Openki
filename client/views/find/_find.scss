@@ -1,14 +1,3 @@
-.find {
-	.course-edit {
-		@include grid(12, inherit, 9);
-		@include make-md-column-offset(1.5);
-		padding: 0;
-	  h2 {
-	    margin-top: 0;
-	  }
-	}
-}
-
 .find-heading {
   color: $brand-primary;
   margin-top: 0;
@@ -19,7 +8,7 @@
 }
 
 .search {
-  @include grid(12);
+	@include grid(12);
 	padding: 0;
 }
 

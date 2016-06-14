@@ -2,12 +2,6 @@
 	@include clearfix;
 }
 
-.form-group > label,
-.form-group > .form-group-element > label {
-	font-size: large;
-	font-weight: normal;
-}
-
 .form-group > .form-group-element {
 	@media (min-width: $screen-sm) {
 		// Automatically split form-group into equally big elements
@@ -46,9 +40,23 @@
 
 .form-group,
 .form-group-element {
-	& > h3,
+	& > .list-group {
+		margin-bottom: 0;
+	}
 	& > .checkbox:nth-child(2),
 	& > .checkbox:first-child {
 		margin-top: 0;
 	}
+}
+
+.form-group > label,
+.form-group > .form-group-element > label {
+	font-size: large;
+	font-weight: normal;
+}
+
+.label-lg,
+.form-group > .label-lg,
+.form-group > .form-group-element > .label-lg {
+	font-size: x-large;
 }

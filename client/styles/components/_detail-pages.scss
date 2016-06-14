@@ -1,10 +1,10 @@
 .details-page-component {
-	@include grid(12);
-	@include make-row-self;
 	& + .details-page-component {
 		margin-top: 15px;
 	}
-	& > h2 {
+	& > h2,
+	& > h3 {
+		margin-bottom: $form-group-margin-bottom;
 		margin-top: 0;
 	}
 	& > .btn {
@@ -13,12 +13,13 @@
 	& > .frame-events {
 		padding: 0;
 	}
+	& > .form-group:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .details-page-header {
-	@include grid(12);
-	padding-bottom: $form-group-margin-bottom;
-	padding-top: $form-group-margin-bottom;
+	padding: 10px $form-group-margin-bottom;
 	& > h3 {
 		margin-top: 0;
 	}
@@ -28,14 +29,12 @@
 }
 
 .details-page-body {
-	@include grid(12);
-	@include make-row-self;
+	@include clearfix;
 	margin-top: 3px;
 }
 
 .details-page-content {
-	padding-bottom: ($grid-gutter-width / 2);
-	padding-top: ($grid-gutter-width / 2);
+	padding: ($grid-gutter-width / 2);
 	& > h3,
 	& > h4 {
 		margin-top: 0;
@@ -46,9 +45,6 @@
 }
 
 .details-page-body > .details-page-content {
-	&:nth-last-child(1) {
-		@include grid(12);
-	}
 	&:nth-last-child(2) {
 		@include grid(12, 6);
 	}
@@ -75,28 +71,27 @@
 }
 
 .details-page-form {
-	@include grid(12);
-	padding-top: ($grid-gutter-width / 2);
 	background-color: lighten($brand-success, 10%);
 	border-color: $brand-success;
 	border-style: solid;
 	border-width: 1px;
+	padding: ($grid-gutter-width / 2);
 	& > h3 {
 		margin-top: 0;
+	}
+	& > form > *:last-child {
+		margin-bottom: 0;
+	}
+	& + .form-group {
+		margin-top: $form-group-margin-bottom;
 	}
 }
 
 .details-page-form > .details-page-form-element {
-	// one element
-	&:nth-child(1):nth-last-child(1) {
-		@include grid(12);
-		@include make-row-self;
-	}
-	// two elements
+	padding: 0;
 	&:nth-child(1):nth-last-child(2),
 	&:nth-child(2):nth-last-child(1) {
 		@include grid(12, 6);
-		@include make-row-self;
 	}
 	@media (min-width: $screen-sm) {
 		&:nth-child(1):nth-last-child(2) {
@@ -112,13 +107,11 @@
 }
 
 .details-page-addition {
-	@include grid(12);
 	background-color: $gray-lighter;
 	border-color: darken($gray-lighter, 3%);
 	border-style: solid;
 	border-width: 1px 1px;
-	padding-bottom: $form-group-margin-bottom;
-	padding-top: $form-group-margin-bottom;
+	padding: $form-group-margin-bottom;
 	& > h3,
 	& > h4 {
 		margin-top: 0;

@@ -1,8 +1,8 @@
 .course-details-component-titlebar {
-  @include grid(12);
   background: $brand-primary;
   border: 5px solid $brand-primary;
   color: $body-bg;
+	padding: 0 ($grid-gutter-width / 2);
 }
 
 .course-details-component-heading {
@@ -20,17 +20,17 @@
 
 .course-details-column-left {
   @include grid(12, inherit, 8);
-  padding: 0 7.5px 0 0;
-	@media (max-width: $screen-md) {
-    padding: 0;
+	padding: 0;
+	@media (min-width: $screen-md) {
+		padding: 0 7.5px 0 0;
   }
 }
 
 .course-details-column-right {
   @include grid(12, inherit, 4);
-  padding: 0 0 0 7.5px;
-	@media (max-width: $screen-md) {
-    padding: 15px 0 0;
+	padding: 15px 0 0;
+	@media (min-width: $screen-md) {
+		padding: 0 0 0 7.5px;
   }
 }
 
@@ -42,9 +42,7 @@
 }
 
 .course-details {
-  @include grid(12);
-	padding-bottom: ($grid-gutter-width / 2);
-	padding-top: ($grid-gutter-width / 2);
+	padding: ($grid-gutter-width / 2);
   border: $course-border-width dashed $openki-blue-lighter;
   &.haspastevents {
     border-style: solid;
@@ -106,14 +104,7 @@
   }
 }
 
-.course_main .course-groups {
-  @include grid(12);
-  padding: 0 0 10px;
-}
-
 .course-details-groups {
-  @include grid(12);
-  padding: 0;
   .dropdown {
     display: inline-block;
   }

@@ -1,8 +1,6 @@
 .event-details-body {
-	@include grid(12);
 	background: $openki-blue-lighter;
   height: calc(#{'100% - 70px'});
-	padding: 0;
 	.location {
     margin-right: 5px;
   }
@@ -13,10 +11,7 @@
 }
 
 .event-details-header {
-	@include grid(12);
 	background: $brand-success;
-	padding-bottom: 10px;
-	padding-top: 10px;
 	.date {
 		font-size: x-large;
 		.glyphicon-calendar {

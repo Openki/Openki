@@ -1,11 +1,8 @@
 .courselist {
-	@include grid(12);
-	@include make-row;
-  padding: 0 0 10px;
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+  padding-bottom: 10px;
 	width: auto;
-	@media (max-width: $screen-xs) {
-    padding-top: 15px;
-  }
 	@media (min-width: $screen-xsm) {
 		margin: (($grid-gutter-width / 4) * -1);
 	}
@@ -21,10 +18,9 @@
 }
 
 .course {
-  @include grid(12);
   border: $course-border-width dashed $openki-blue-lighter;
   height: 150px;
-  padding: 0;
+	position: relative;
 	transition-duration: $default-transition-time;
 	transition-property: #{'box-shadow opacity'};
   &:hover {
@@ -98,8 +94,7 @@
   }
 }
 
-.course,
-.course_main {
+.course {
   &.hasupcomingevents {
     background: $openki-blue-lighter;
     .course-content {
@@ -152,12 +147,11 @@
   }
 }
 
-.course-groups .groups-list {
-  bottom: 0;
+.course > .groups-list {
+  bottom: $course-border-width;
   margin: 0;
-  padding: 0 7px 7px 0;
   position: absolute;
-  right: 0;
+  right: $course-border-width;
   li {
     float: right;
     margin-left: 4px;

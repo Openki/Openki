@@ -1,4 +1,5 @@
 %actions {
+	@include clearfix;
 	.btn {
 		float: right;
 	}
@@ -9,7 +10,6 @@
 
 .actions {
 	@extend %actions;
-	@include grid(12);
 	background-color: $gray-lighter;
 	border-color: darken($gray-lighter, 3%);
 	border-style: solid;
@@ -20,6 +20,5 @@
 
 .form-actions {
 	@extend %actions;
-	@include clearfix;
 	margin-bottom: $form-group-margin-bottom;
 }

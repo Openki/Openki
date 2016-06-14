@@ -115,7 +115,7 @@ Template.profile.events({
 		);
 	},
 
-	'submit .change-pwd': function(event) {
+	'submit #changePwd': function(event) {
 		event.preventDefault();
 		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
