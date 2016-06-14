@@ -11,7 +11,7 @@
 
 .course-details-description {
   font-size: medium;
-  padding: 10px 0;
+  margin-bottom: 0;
   .editable {
     max-height: 300px;
     overflow: auto;
@@ -43,15 +43,15 @@
 
 .course-details {
   @include grid(12);
-  border: 7px dashed $openki-blue-lighter;
+	padding-bottom: ($grid-gutter-width / 2);
+	padding-top: ($grid-gutter-width / 2);
+  border: $course-border-width dashed $openki-blue-lighter;
   &.haspastevents {
     border-style: solid;
   }
 	&.hasupcomingevents {
 		background: $openki-blue-lighter;
-		.nav-tabs > .active > a {
-			background: $openki-blue-lighter;
-		}
+		border-width: 0;
 	}
   .groups-list,
   .groups-list li,
@@ -61,10 +61,9 @@
   .groups-list {
     margin-bottom: 10px;
   }
-}
-
-.nav-tabs a {
-  color: $default-black;
+	& > h2 {
+		margin-top: 0;
+	}
 }
 
 .course-details-status {
@@ -85,9 +84,6 @@
 .course-details-title {
   font-size: 30px;
   margin-bottom: 10px;
-  margin-top: 20px;
-  min-height: 3ex;
-  padding: 0 !important;
   & > .editable {
     font-size: 30px;
     padding: 0;
@@ -123,7 +119,6 @@
   }
 }
 
-.nav-tabs > li > a:hover {
-	background-color: $openki-blue-light;
-	color: $default-white;
+.files-license-info {
+	padding: 0 8px;
 }

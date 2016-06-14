@@ -8,17 +8,13 @@
 			{{else}}
 				<div class="details-page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-						{{#if isProposal}}
-							<div class="course-details-status">
-								<div>
-								{{mf 'course.details.tag.proposal' 'proposal'}}
-								</div>
+						{{#if editableName}}
+							<div class="course-details-title">
+								{{>editable editableName}}
 							</div>
+						{{else}}
+							<h2>{{course.name}}</h2>
 						{{/if}}
-
-						<div class="course-details-title">
-							{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
-						</div>
 						{{#with course}}
 							<div class="course-details-categories">
 								{{> courseCategories}}
@@ -111,11 +107,13 @@
 </template>
 
 <template name="courseDetailsDescription">
-	<div>
-		<p class="course-details-description">
-			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-		</p>
-	</div>
+	<p class="course-details-description">
+		{{#if editableDescription}}
+			{{>editable editableDescription}}
+		{{else}}
+			{{{course.description}}}
+		{{/if}}
+	</p>
 </template>
 
 
