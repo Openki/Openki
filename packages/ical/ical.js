@@ -46,14 +46,14 @@ Router.map(function () {
 		}
 	});
 	this.route('calEvent', {
-		path: 'cal/event/:_id',
+		path: 'cal/event/:_id.ics',
 		where: 'server',
 		action: function () {
 			sendIcal(Events.find({ _id: this.params._id }), this.response);
 		}
 	});
 	this.route('calCourse', {
-		path: 'cal/course/:_id',
+		path: 'cal/course/:_id.ics',
 		where: 'server',
 		action: function () {
 			sendIcal(Events.find({ courseId: this.params._id }), this.response);
