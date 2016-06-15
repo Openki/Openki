@@ -49,6 +49,32 @@ var closestRegion = function(address) {
 	var maxDistance = 200000; // meters
 	var result = { address: address };
 
+    if (address && address.indexOf('127.') === 0) {
+		result.message = 'Using Testistan for localhost';
+        result.region = Regions.findOne('9JyFCoKWkxnf8LWPh');
+		return result;
+    }
+
+	result.lookup = GeoIP.lookup(address);
+
+    if (Meteor.settings.testdata) {
+		result.message = 'Deployed with testdata, using Spilistan region';
+        result.region = Regions.findOne('EZqQLGL4PtFCxCNrp');
+		return result;
+	}
+
+	if (!result.lookup) {
+		result.message = "No result for GeoIP lookup";
+		return result;
+	}
+
+	result.region = Regions.findOne({
+		loc: { $near: {
+			$geometry: {type: "Point", coordinates: result.lookup.ll.reverse()},
+			$maxDistance: maxDistance
+		}}
+	});
+
 	result.lookup = GeoIP.lookup(address);
 
 	if (!result.lookup) {
@@ -76,6 +102,8 @@ var closestRegion = function(address) {
 Meteor.methods({
 	autoSelectRegion: function() {
 		var connectingFrom = this.connection.clientAddress;
+		if (!connectingFrom) return false;
+
 		var closest = closestRegion(connectingFrom);
 		return closest.region && closest.region._id;
 	},
