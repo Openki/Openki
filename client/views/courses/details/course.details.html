@@ -71,21 +71,19 @@
 			<ul class="nav nav-tabs">
 				<li role="presentation" class='active'>
 					<a href="#description" data-toggle="tab">
-						<span class="fa fa-info"></span>&nbsp;
+						<i class="fa fa-info fa-fw"></i>
 						{{mf 'course.subnav.descr' 'Description'}}
 					</a>
 				</li>
-				{{#if hasFiles}}
-					<li role="presentation">
-						<a href="#docs" data-toggle="tab">
-							<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-							{{mf 'course.subnav.docs' 'Docs'}}
-						</a>
-					</li>
-				{{/if}}
+				<li role="presentation">
+					<a href="#docs" data-toggle="tab">
+						<i class="fa fa-folder-open fa-fw"></i>
+						{{mf 'course.subnav.docs' 'Docs'}}
+					</a>
+				</li>
 				<li role="presentation">
 					<a href="#history" data-toggle="tab">
-						<span class="fa fa-history"></span>&nbsp;
+						<i class="fa fa-history fa-fw"></i>
 						{{mf 'course.subnav.history' 'History'}}
 					</a>
 				</li>
@@ -95,11 +93,9 @@
 			<div class="tab-pane active" id="description">
 				{{> courseDetailsDescription}}
 			</div>
-		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
 				{{> coursedocs}}
 			</div>
-		{{/if}}
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
 			</div>

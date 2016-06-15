@@ -33,7 +33,7 @@
 	margin-top: 3px;
 }
 
-%details-content {
+.details-content {
 	padding: ($grid-gutter-width / 2);
 	& > h3,
 	& > h4 {
@@ -44,28 +44,18 @@
 	}
 }
 
-.details-content {
-	@extend %details-content;
-}
-
-.details-body > .details-content {
-	&:nth-last-child(2) {
-		@include grid(12, 6);
-	}
-}
-
 .details-map {
-	@include grid(12, 6);
+	height: 300px;
+	padding: $form-group-margin-bottom 0;
+	width: 100%;
 	@media (min-width: $screen-sm) {
-		padding-right: 0;
+		width: 300px;
+		float: right;
+		padding: 0 0 $form-group-margin-bottom $form-group-margin-bottom;
 	}
 	.mapContainer.box {
-		height: 300px;
-		padding-bottom: $form-group-margin-bottom;
+		height: 100%;
 		width: 100%;
-		@media (min-width: $screen-sm) {
-			padding: 0;
-		}
 	}
 	.coordinates {
 		font-weight: bold;

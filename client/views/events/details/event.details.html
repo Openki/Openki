@@ -49,13 +49,15 @@
 
 				{{> eventGroupList}}
 
-				<p>{{{description}}}</p>
+				<p>
+					{{#if haveLocation}}
+						<div class="details-map">
+							{{>map markers=eventMarkers}}
+						</div>
+					{{/if}}
+					{{{description}}}
+				</p>
 			</div>
-			{{#if haveLocation}}
-				<div class="details-map">
-					{{>map markers=eventMarkers}}
-				</div>
-			{{/if}}
 		</div>
 		{{#if files}}
 			<div class="details-addition">

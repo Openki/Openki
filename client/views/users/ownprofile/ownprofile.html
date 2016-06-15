@@ -80,7 +80,7 @@
 						<div class="details-info-group">
 							<div class="details-info-btn">
 								<button type="button" class="btn btn-success js-verify-mail-btn">
-									<i class="fa fa-check-circle-o fa-lg"></i>
+									<i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i>
 									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
 								</button>
 							</div>
@@ -92,7 +92,7 @@
 							</div>
 							<div class="details-info-data">
 								{{#if user.privacy}}
-								<span class="fa fa-user-secret"></span>
+									<i class="fa fa-user-secret" aria-hidden="true"></i>
 									{{mf 'profile.privacyOn' 'on'}}
 								{{else}}
 									{{mf 'profile.privacyOff' 'off'}}
@@ -133,7 +133,6 @@
 								{{mf '_button.cancel'}}
 							</button>
 							<button type="submit" class="btn btn-save">
-								<i class="fa fa-lock fa-fw" aria-hidden="true"></i>
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
 						</div>
@@ -169,7 +168,6 @@
 							{{mf '_button.cancel'}}
 						</button>
 						<button type="button" class="btn btn-delete js-profile-delete-confirm-btn">
-							<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
 							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
 						</button>
 					</div>

@@ -37,8 +37,8 @@
 	& > .list-group {
 		margin-bottom: 0;
 	}
-	& > .checkbox:nth-child(2),
-	& > .checkbox:first-child {
+	& > .radio:nth-child(2),
+	& > .checkbox:nth-child(2) {
 		margin-top: 0;
 	}
 }

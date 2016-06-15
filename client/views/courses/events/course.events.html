@@ -2,7 +2,7 @@
 	{{#if mayAdd}}
 	<div class="details-page-component">
 		<button type="button" class="btn btn-add eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			<i class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></i>
 			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
 	</div>
@@ -77,10 +77,9 @@
 	</div>
 	<div class="details-page-component">
 		<a class="btn btn-default" href="/cal/course/{{course._id}}"
-			data-tooltip="{{mf 'course.events.download.tooltip'}}"
 			role="button"
 			target="_blank">
-			<span class="fa fa-download"></span>&nbsp;
+			<i class="fa fa-arrow-down" aria-hidden="true"></i>
 			{{mf 'course.download_cal' 'Download events to my calendar'}}
 		</a>
 	</div>

@@ -45,10 +45,13 @@
 			{{#if replicaDateCount}}
 				<div class="form-group-element">
 					<label>{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}</label>
-					<ul>
-					{{#each replicaDates}}
-						<li>{{localDate this}}</li>
-					{{/each}}
+					<ul class="fa-ul">
+						{{#each replicaDates}}
+							<li>
+								<i class="fa-li fa fa-calendar-plus-o" aria-hidden="true"></i>
+								{{localDate this}}
+							</li>
+						{{/each}}
 					</ul>
 					<div class="input-group">
 						<button type="button" class="-eventReplicate btn btn-save">

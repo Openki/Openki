@@ -160,11 +160,10 @@
 						<label title="{{mf 'event.edit.internal.description' 'Event will only be shown in group and location-details'}}">
 							<input type="checkbox" class="-eventInternal" {{isInternal}}/>
 							{{mf 'event.edit.internal' 'Internal'}}
-
+							<span class="help-block">
+								{{mf 'event.edit.internal.description' 'Internal events are only shown in group and location-details'}}
+							</span>
 						</label>
-						<span class="help-block">
-							{{mf 'event.edit.internal.description' 'Internal events are only shown in group and location-details'}}
-						</span>
 					</div>
 				</div>
 				{{#if affectedReplicaCount}}
@@ -176,14 +175,14 @@
 									"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
 									COUNT=affectedReplicaCount
 								}}
+								<span class="warn-block">
+									<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
+										{{mf 'event.edit.updateReplicas.times'
+										"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
+										COUNT=affectedReplicaCount
+									}}
+								</span>
 							</label>
-							<span class="warn-block">
-								<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-									{{mf 'event.edit.updateReplicas.times'
-									"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
-									COUNT=affectedReplicaCount
-								}}
-							</span>
 						</div>
 					</div>
 				{{/if}}
@@ -191,11 +190,10 @@
 
 			<div class="form-actions">
 				<button type="button" class="btn btn-cancel js-event-edit-cancel-btn">
-					<span class="glyphicon glyphicon-remove"></span>
 					{{mf '_button.cancel'}}
 				</button>
 				<button type="submit" class="btn btn-save">
-					<span class="glyphicon glyphicon-save"></span>
+					<i class="fa fa-download fa-fw" aria-hidden="true"></i>
 					{{mf '_button.save'}}
 				</button>
 			</div>

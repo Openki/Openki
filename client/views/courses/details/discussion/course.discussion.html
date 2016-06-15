@@ -136,13 +136,15 @@
 					{{/if}}
 				</button>
 				{{#if new}}
-					<label class="discussion-toggle-anonymous">
-						<input class='toggleAnonymous js-anon'
-							type='checkbox'
-							{{anonChecked}}
-							{{anonDisabled}}/>
-						{{mf 'course.discussion.anon' 'Anonymous comment'}}
-					</label>
+					<div class="checkbox">
+						<label class="discussion-toggle-anonymous">
+							<input class='toggleAnonymous js-anon'
+								type='checkbox'
+								{{anonChecked}}
+								{{anonDisabled}}/>
+							{{mf 'course.discussion.anon' 'Anonymous comment'}}
+						</label>
+					</div>
 				{{/if}}
 			</div>
 			</form>

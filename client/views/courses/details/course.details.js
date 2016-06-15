@@ -129,10 +129,10 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 });
 
 Template.courseDetailsSubmenu.helpers({
-	hasFiles: function() {
-		var withFiles = { courseId: this.course._id, files: {$exists: 1, $not: {$size: 0}} };
-		return !!Events.findOne(withFiles);
-	},
+	// hasFiles: function() {
+	// 	var withFiles = { courseId: this.course._id, files: {$exists: 1, $not: {$size: 0}} };
+	// 	return !!Events.findOne(withFiles);
+	// },
 });
 
 Template.courseDetailsPage.events({
