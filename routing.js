@@ -1,3 +1,7 @@
+msgfmt.init('en', {
+	disableIntlPolyfill: true
+});
+
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
