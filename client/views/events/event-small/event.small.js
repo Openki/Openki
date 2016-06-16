@@ -1,5 +1,4 @@
 Template.eventSmall.onCreated(function() {
-	this.headerHeight = new ReactiveVar();
 	if (Template.currentData().withDate) {
 		this.headerHeight = 75;
 	} else {
