@@ -1,5 +1,5 @@
 <template name="calendar">
-	{{> switchDate date=startDate}}
+	{{> calendarNavigation date=startDate}}
 	<div class="calendar-container container">
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
@@ -14,30 +14,28 @@
 </template>
 
 <template name="calendarDay">
-	<div class="calendar_date">
-		<div class="date">
-			{{calendarDay day.start}}
-		</div>
-		{{#if eventsReady}}
-			{{#unless hasEvents}}
-				<br>
-				{{mf 'calendar.noCoursesThisDay' "There are no events on this day"}}
-			{{/unless}}
-			{{#if hasEvents}}
-				<div class="calendar_events">
-					{{#each events}}
-						{{> eventSmall}}
-					{{/each}}
-				</div>
-			{{/if}}
-		{{else}}
-			{{> loadingRow}}
-		{{/if}}
+	<div class="calendar-date">
+		{{calendarDay day.start}}
 	</div>
+	{{#if eventsReady}}
+		{{#unless hasEvents}}
+			<br>
+			{{mf 'calendar.noCoursesThisDay' "There are no events on this day"}}
+		{{/unless}}
+		{{#if hasEvents}}
+			<div class="calendar-events">
+				{{#each events}}
+					{{> eventSmall}}
+				{{/each}}
+			</div>
+		{{/if}}
+	{{else}}
+		{{> loadingRow}}
+	{{/if}}
 </template>
 
-<template name="switchDate">
-	<div class="switchDate">
+<template name="calendarNavigation">
+	<div class="calendar-navigation">
 		<div class="left">
 			<button type="button" class="btn btn-default switch-date-btn prevYear"
 				aria-label="go back one year">
@@ -72,7 +70,7 @@
 				 <span class="fa fa-arrow-right"></span>
 			</button>
 		</div>
-		<div class="calendar_week">
+		<div class="calendar-week">
 			<div class="week">
 					{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
 			</div>

@@ -1,8 +1,4 @@
-.calendar_eventlist {
-  margin-left: -20px;
-}
-
-.switchDate {
+.calendar-navigation {
   @include grid(12);
   background-color: $calendar-navigation-bg;
   box-shadow: 0 6px 2px $default-shadow;
@@ -14,20 +10,7 @@
   top: 50px;
   width: 100%;
 	z-index: 1010;
-  .calendar_week {
-    text-align: center;
-    .week {
-      color: $calendar-header-text;
-      font-size: large;
-      line-height: .75;
-      margin: 7px 0 0;
-    }
-    .date {
-      color: $calendar-header-text;
-      font-size: small;
-      margin: 3px 0;
-    }
-  }
+
   & > .right {
     float: right;
   }
@@ -47,61 +30,48 @@
 	}
 }
 
+.calendar-week {
+	text-align: center;
+	.week {
+		color: $calendar-header-text;
+		font-size: large;
+		line-height: .75;
+		margin: 7px 0 0;
+	}
+	.date {
+		color: $calendar-header-text;
+		font-size: small;
+		margin: 3px 0;
+	}
+}
+
 .calendar-container {
   padding-top: 50px;
-  .calendar_date {
-    @include grid(12);
-    padding: 0 0 10px;
-    .date {
-      background: $calendar-navigation-bg;
-      border-left: 10px solid $brand-primary;
-      font-size: large;
-      padding: 5px 7px 5px 9px;
-      text-align: center;
-      width: 250px;
-    }
-    .calendar_events {
-      @include grid(12);
-      margin: 0 -3px -10px;
-      padding: 10px 0 0;
-      width: calc(#{'100% + 6px'});
-      .event-small-container {
-        @include grid(4, 3, 2);
-        padding: 0 3px 10px;
-      }
-    }
-  }
+}
 
-  @media (max-width: $screen-xxs) {
-    @include grid(12);
-    padding: 0;
-    .calendar_date {
-      .date {
-        @include grid(12);
-        border-left: 0;
-        border-top: 10px solid $brand-primary;
-        padding: .5em;
-      }
-      .calendar_events {
-        margin: 0 0 10px;
-        padding: 10px 7px 0;
-        width: auto;
-        .event-small-container {
-          @include grid(12);
-          padding: 0 3px 10px;
-        }
-      }
-    }
-  }
+.calendar-date {
+	background: $calendar-navigation-bg;
+	border-left: 10px solid $brand-primary;
+	box-shadow: 1px 5px 5px rgba(0, 0, 0, .3);
+	font-size: large;
+	padding: 5px 7px 5px 9px;
+	text-align: center;
+	width: 250px;
 
-  @media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
-    .calendar_date {
-      .calendar_events {
-        .event-small-container {
-          @include grid(6);
-          padding: 0 3px 10px;
-        }
-      }
-    }
-  }
+	@media (max-width: $screen-xxs) {
+		@include grid(12);
+		border-left: 0;
+		border-top: 10px solid $brand-primary;
+		padding: .5em;
+	}
+}
+
+.calendar-events {
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	padding: 10px 0;
+	position: relative;
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	}
 }

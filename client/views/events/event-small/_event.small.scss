@@ -1,6 +1,6 @@
 .event-small-container {
 	@include grid(12);
-	padding: ($grid-gutter-width / 4) ($grid-gutter-width /2);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .container-fluid .event-small-container {
@@ -10,6 +10,17 @@
 	}
 	@media (min-width: $screen-xsm) {
 		@include grid(4, 3, inherit, 2);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	}
+}
+
+.container .event-small-container {
+	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
+		@include grid(6);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	}
+	@media (min-width: $screen-sm) {
+		@include grid(4, inherit, 3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
