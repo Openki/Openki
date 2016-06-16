@@ -124,7 +124,7 @@ $all-btn-bg-color-steps: (
 .btn-remove {
   @extend .btn-default;
   &:hover {
-    @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
+    @extend .btn-danger;
     border: 1px solid $btn-danger-border;
   }
 }
