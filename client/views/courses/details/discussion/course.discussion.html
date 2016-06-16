@@ -114,27 +114,17 @@
 				{{/if}}
 			</div>
 			<div class="discussion-edit-body">
-				<input class="js-post-title discussion-edit-title form-control"
-					type="text"
-					placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
-					value="{{title}}"/>
-				<textarea class="js-post-text discussion-edit-text form-control"
-					placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
-					>{{text}}</textarea>
-				<button type="button" class="btn btn-cancel js-discussion-cancel-btn">
-					{{mf '_button.cancel'}}
-				</button>
-				<button type="submit" class="btn btn-save discussion-save-btn">
-					{{#if new}}
-						{{#if parentId}}
-							{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
-						{{else}}
-							{{mf 'course.discussion.comment_btn.write' 'Write!'}}
-						{{/if}}
-					{{else}}
-							{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
-					{{/if}}
-				</button>
+				<div class="form-group">
+					<input class="js-post-title discussion-edit-title form-control"
+						type="text"
+						placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}}"
+						value="{{title}}"/>
+				</div>
+				<div class="form-group">
+					<textarea class="js-post-text discussion-edit-text form-control"
+						placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
+						>{{text}}</textarea>
+				</div>
 				{{#if new}}
 					<div class="checkbox">
 						<label class="discussion-toggle-anonymous">
@@ -146,6 +136,22 @@
 						</label>
 					</div>
 				{{/if}}
+				<div class="form-actions">
+					<button type="button" class="btn btn-cancel js-discussion-cancel-btn">
+						{{mf '_button.cancel'}}
+					</button>
+					<button type="submit" class="btn btn-save discussion-save-btn">
+						{{#if new}}
+							{{#if parentId}}
+								{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+							{{else}}
+								{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+							{{/if}}
+						{{else}}
+								{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
+						{{/if}}
+					</button>
+				</div>
 			</div>
 			</form>
 		</div>

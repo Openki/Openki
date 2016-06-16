@@ -1,8 +1,6 @@
 .discussion-conversation {
-  @include grid(12);
   background: $discussion-conversation-bg;
-  padding-bottom: 15px;
-  padding-top: 10px;
+  padding: 15px ($grid-gutter-width / 2) 10px;
 }
 
 .discussion > div:nth-child(3) {
@@ -34,23 +32,20 @@ $discussion-thumb-width: 60;
 
 .discussion-post-header,
 .discussion-edit-header {
-  @include grid(12);
   border: 1px solid;
-  padding-bottom: 5px;
-  padding-top: 5px;
+  padding: 5px ($grid-gutter-width / 2);
 }
 
 .discussion-post-body,
 .discussion-edit-body {
-  @include grid(12);
-  padding-top: 10px;
+  padding: 10px ($grid-gutter-width / 2) 0;
 }
 
 .discussion-post {
-  @include grid(12);
   background: $discussion-post-bg;
   display: table;
   padding: 7px 0;
+	width: 100%;
 }
 
 .discussion-post-header {
@@ -117,40 +112,6 @@ $discussion-thumb-width: 60;
   border-color: $discussion-edit-border;
 }
 
-.discussion-edit-body {
-  padding-bottom: 10px;
-}
-
-.discussion-edit-title,
-.discussion-edit-text {
-  margin-bottom: 10px;
-}
-
-.discussion-edit-text {
-  height: 60px;
-}
-
-.discussion-toggle-anonymous {
-  font-weight: inherit;
-}
-
-.toggleAnonymous {
-  vertical-align: bottom;
-}
-
-.discussion-save-btn,
-.js-discussion-cancel-btn {
-  float: right;
-}
-
-.discussion-save-btn {
-  margin-right: 5px;
-}
-
-.discussion-reply-btn {
-  margin-top: 5px;
-}
-
 .discussion-reply {
   padding-left: $discussion-thumb-width * 1px;
 }
@@ -163,8 +124,8 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-new {
-  @include grid(12);
   background-color: $brand-success;
-  padding-bottom: 10px;
-  padding-top: 10px;
+	margin-top: 3px;
+	padding: 10px ($grid-gutter-width / 2);
+	width: 100%;
 }
