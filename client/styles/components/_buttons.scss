@@ -75,12 +75,12 @@ $all-btn-bg-color-steps: (
 .btn-group {
   @media (max-width: $screen-xs) {
     width: 100%;
-    & > .btn,
-    & > button {
+    & > .btn {
       border-radius: 4px !important;
-    }
-    & + button {
-      margin-top: 10px;
+			width: 100%;
+			& + .btn {
+				margin-top: 10px;
+			}
     }
   }
 }

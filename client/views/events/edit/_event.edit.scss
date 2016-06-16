@@ -1,32 +1,26 @@
 .event-edit {
-  @include grid(12);
-	padding: 0;
   h2 {
     margin-top: 0;
   }
 }
 
 .event-edit-header {
-	@include grid(12);
-	border: dashed 7px $brand-success;
-	border-bottom: 0;
 	margin-top: 10px;
-	padding: 20px 30px 0;
-	@media (max-width: $screen-xs) {
-		border: 0;
-		margin-top: 0;
-		padding: 0;
+	@media (min-width: $screen-xs) {
+		border-color: $brand-success;
+		border-style: dashed;
+		border-width: 7px 7px 0;
+		padding: 20px 30px 0;
 	}
 }
 
 .event-edit-body {
-	@include grid(12);
-	border: dashed 7px $openki-blue-lighter;
-	border-top: 0;
-	padding: 0 30px 10px;
-	@media (max-width: $screen-xs) {
-		border: 0;
-		padding: 0 0 10px;
+	padding-bottom: 10px;
+	@media (min-width: $screen-xs) {
+		border-color: $brand-success;
+		border-style: dashed;
+		border-width: 0 7px 7px;
+		padding: 0 30px 10px;
 	}
 }
 

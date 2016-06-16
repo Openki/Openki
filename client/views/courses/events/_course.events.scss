@@ -90,16 +90,6 @@
       font-size: small;
     }
   }
-  // & > .eventEdit_buttons {
-  //   background: $default-light-grey;
-  //   border-top: 3px solid $default-white;
-  //   padding: 10px 0;
-  //   text-align: center;
-  //   .btn-toolbar {
-  //     margin: auto;
-  //     width: 90%;
-  //   }
-  // }
   & > a,
   & > a:hover {
     color: $default-black;
@@ -119,25 +109,25 @@ input#eventEditTitle {
 }
 
 .fade_effect_top {
-  @include gradient-vertical($body-bg, transparent);
+  background: none;
   height: 40px;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
-  @media (max-width: $screen-xs) {
-    background: none;
+  @media (min-width: $screen-xs) {
+		@include gradient-vertical($body-bg, transparent);
   }
 }
 
 .fade_effect_bottom {
-  @include gradient-vertical(transparent, $body-bg);
+  background: none;
   bottom: 0;
   height: 40px;
   left: 0;
   position: absolute;
   width: 100%;
-  @media (max-width: $screen-xs) {
-    background: none;
+  @media (min-width: $screen-xs) {
+		@include gradient-vertical(transparent, $body-bg);
   }
 }

@@ -1,9 +1,9 @@
 .introduction {
+	@include clearfix;
   @include transition(background-color 1s);
-  @include grid(12);
   background-color: $introduction-bg;
   margin-top: 15px;
-  padding-top: 2px;
+  padding: 2px ($grid-gutter-width / 2) 0;
   position: relative;
   &:hover {
     background-color: $introduction-text;
@@ -40,10 +40,9 @@
 }
 
 .introduction-content {
-  @include grid(12);
   border-top: 1px solid $default-light-grey;
   margin-top: 5px;
-  padding: 12px 0;
+  padding: 12px ($grid-gutter-width / 2);
 }
 
 .introduction-steps {

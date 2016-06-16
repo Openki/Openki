@@ -5,12 +5,10 @@
 }
 
 .course-edit-body {
-  border: 7px dashed $openki-blue-lighter;
-  margin-top: 10px;
-  padding: 20px 30px 10px;
-  @media (max-width: $screen-xs) {
-    border: 0;
-    margin: 0;
-    padding: 0 0 10px;
+  padding-bottom: 10px;
+  @media (min-width: $screen-xs) {
+		border: 7px dashed $openki-blue-lighter;
+		margin-top: 10px;
+	  padding: 20px 30px 10px;
   }
 }
