@@ -56,7 +56,7 @@ $all-btn-bg-color-steps: (
 // Iterate over button variants and their darkening steps and apply gradient backgrounds for each one
 @each $btn-variant, $btn-bg-color-steps in $all-btn-bg-color-steps {
   .btn-#{$btn-variant} {
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     @include gradient-vertical(map-get($btn-bg-color-steps, default), map-get($btn-bg-color-steps, darker));
     &:hover {
       @include gradient-vertical(map-get($btn-bg-color-steps, dark), map-get($btn-bg-color-steps, darkest));
