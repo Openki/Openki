@@ -8,8 +8,8 @@
 }
 
 .search {
-	@include clearfix;
-	width: 100%;
+	@include grid(12);
+	padding: 0;
 }
 
 .js-search-field {
