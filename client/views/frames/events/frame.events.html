@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 		<div class="frame-events">
 			{{#each this}}
-				{{> small_event_withDate}}
+				{{> eventSmall data=this withDate=true}}
 			{{/each}}
 		</div>
 	</div>

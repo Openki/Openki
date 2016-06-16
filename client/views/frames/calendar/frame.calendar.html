@@ -9,7 +9,7 @@
 			{{/with}}
 			<div class="frame-calendar-date-events">
 				{{#each dayEvents}}
-					{{> eventSmall}}
+					{{> eventSmall data=this withDate=false}}
 				{{else}}
 					<div class="frame-calendar-no-events">
 						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}

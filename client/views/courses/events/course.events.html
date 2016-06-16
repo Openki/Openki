@@ -28,7 +28,7 @@
 						<div class="course_events_events">
 							{{#each pastEvents}}
 								{{#if this}}
-									{{> small_event_withDate}}
+									{{> eventSmall data=this withDate=true}}
 								{{/if}}
 							{{/each}}
 						</div>
@@ -47,7 +47,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each ongoingEvents}}
-							{{> small_event_withDate}}
+							{{> eventSmall data=this withDate=true}}
 						{{/each}}
 					</div>
 				{{/if}}
@@ -66,7 +66,7 @@
 					</div>
 					<div class="course_events_events">
 						{{#each futureEvents}}
-						{{> small_event_withDate}}
+						{{> eventSmall data=this withDate=true}}
 						{{/each}}
 					</div>
 				{{/if}}

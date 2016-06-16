@@ -61,6 +61,13 @@
   }
 }
 
+.event-small-with-date {
+	height: 220px;
+	.event-small-header {
+		height: 75px;
+	}
+}
+
 .event-small-title {
   color: $event-small-title-color;
   font-size: medium;
