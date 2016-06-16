@@ -1,13 +1,11 @@
 #history {
-  @include grid(12);
-  padding: 0 0 10px;
+	@include clearfix;
+  padding-bottom: 10px;
 }
 
 .timeline-pre,
 .timeline-post {
-  @include grid(12);
   height: 30px;
-  padding: 0;
 }
 
 .timeline-start-container,
