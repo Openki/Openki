@@ -23,6 +23,7 @@
 
 .filter {
   @include grid(12, inherit, 7);
+	margin-top: $form-group-margin-bottom;
   padding: 0;
   @media (max-width: $screen-xs) {
 		@include grid(12);
