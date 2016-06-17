@@ -20,11 +20,14 @@
 					<button type="button" class="btn btn-success js-find-btn">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
-					{{#unless isMobile}}
 						{{#if showingFilters}}
 							<button type="button" class="btn btn-cancel js-toggle-filter">
-								<span class="glyphicon glyphicon-remove"></span>
-								{{mf 'find.hideFilters' 'Remove all filters'}}
+								{{#if isMobile}}
+									<span class="glyphicon glyphicon-filter"></span>
+								{{else}}
+									<span class="glyphicon glyphicon-remove"></span>
+									{{mf 'find.hideFilters' 'Remove all filters'}}
+								{{/if}}
 							</button>
 						{{else}}
 							<button type="button" class="btn btn-default js-toggle-filter">
@@ -32,23 +35,9 @@
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
 						{{/if}}
-					{{/unless}}
 				</span>
 			</div>
 		</div>
-		{{#if isMobile}}
-			{{#if showingFilters}}
-				<button type="button" class="btn btn-cancel js-toggle-filter">
-					<span class="glyphicon glyphicon-remove"></span>
-					{{mf 'find.hideFilters' 'Remove filters'}}
-				</button>
-			{{else}}
-				<button type="button" class="btn btn-default js-toggle-filter">
-					<span class="glyphicon glyphicon-filter"></span>
-					{{mf 'find.showFilters' 'Filter'}}
-				</button>
-			{{/if}}
-		{{/if}}
 		{{#if showingFilters}}
 			<div class="filter">
 				<div class="filter-header">
