@@ -1,6 +1,6 @@
 <template name="eventSmall">
-	<a href="{{#with data}}{{pathFor 'showEvent'}}{{/with}}">
-		<div class="event-small-container">
+	<div class="event-small-container">
+		<a href="{{#with data}}{{pathFor 'showEvent'}}{{/with}}">
 			<div class="event-small {{#if withDate}}event-small-with-date{{/if}}">
 				<div class="event-small-header">
 					{{#if withDate}}
@@ -20,8 +20,8 @@
 					{{plain data.description}}
 				</div>
 			</div>
-		</div>
-	</a>
+		</a>
+	</div>
 </template>
 
 <template name="eventSmallDate">
