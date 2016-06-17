@@ -5,6 +5,7 @@
 }
 
 .group-details-header {
+	@include clearfix;
 	background-color: rgba(130, 216, 130, .9);
 	font-size: x-large;
 	.editformLogo {

@@ -65,6 +65,7 @@
 }
 
 .details-form {
+	@include clearfix;
 	background-color: lighten($brand-success, 10%);
 	border-color: $brand-success;
 	border-style: solid;

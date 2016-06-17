@@ -3,14 +3,12 @@
     margin-top: 8px;
   }
   .settings {
-		@include grid(12, 6);
     .editable {
       background: none;
     }
   }
 
   .members {
-		@include grid(12, 6);
     ul {
 			@include list-unstyled;
       li {
