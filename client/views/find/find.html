@@ -8,32 +8,34 @@
 </template>
 
 <template name="find">
-	<div class="search">
-		<div class="js-search-field">
-			<div class="input-group">
-				<input class="js-search-input form-control"
-					type="text"
-					id="find"
-					value="{{search}}"
-					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-success js-find-btn">
-						{{mf 'find.search_go' 'Go!'}}
-					</button>
-					{{#unless isMobile}}
-						{{#if showingFilters}}
-							<button type="button" class="btn btn-cancel js-toggle-filter">
-								<span class="glyphicon glyphicon-remove"></span>
-								{{mf 'find.hideFilters' 'Remove all filters'}}
-							</button>
-						{{else}}
-							<button type="button" class="btn btn-default js-toggle-filter">
-								<span class="glyphicon glyphicon-filter"></span>
-								{{mf 'find.showFilters' 'Filter'}}
-							</button>
-						{{/if}}
-					{{/unless}}
-				</span>
+	<div class="details-page-component">
+		<div class="search">
+			<div class="js-search-field">
+				<div class="input-group">
+					<input class="js-search-input form-control"
+						type="text"
+						id="find"
+						value="{{search}}"
+						placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-success js-find-btn">
+							{{mf 'find.search_go' 'Go!'}}
+						</button>
+						{{#unless isMobile}}
+							{{#if showingFilters}}
+								<button type="button" class="btn btn-cancel js-toggle-filter">
+									<span class="glyphicon glyphicon-remove"></span>
+									{{mf 'find.hideFilters' 'Remove all filters'}}
+								</button>
+							{{else}}
+								<button type="button" class="btn btn-default js-toggle-filter">
+									<span class="glyphicon glyphicon-filter"></span>
+									{{mf 'find.showFilters' 'Filter'}}
+								</button>
+							{{/if}}
+						{{/unless}}
+					</span>
+				</div>
 			</div>
 		</div>
 		{{#if isMobile}}
@@ -186,64 +188,70 @@
 			</div>
 		{{/if}}
 	</div>
-	<div class="courselist">
-		{{#unless ready}}
-			{{> loadingPage}}
-		{{else}}
-			{{#each results}}
-				{{> course}}
+	<div class="details-page-component">
+		<div class="courselist">
+			{{#unless ready}}
+				{{> loadingPage}}
 			{{else}}
-				<div class="no-courses-found">
-					<span class="fa fa-exclamation-circle"></span>
-					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
-					<div class="btn-group">
-						{{#if regionSelected}}
-							<button type="button" class="btn btn-default js-all-regions-btn">
-								<span class="fa fa-dot-circle-o"></span>
-								{{mf 'find.searchAllRegions' 'Search in all regions'}}
-							</button>
-						{{/if}}
-						{{#if showingFilters}}
-							<button type="button" class="btn btn-cancel js-toggle-filter">
-								<span class="glyphicon glyphicon-remove"></span>
-								{{mf 'find.hideFilters'}}
-							</button>
+				{{#each results}}
+					{{> course}}
+				{{else}}
+					<div class="no-courses-found">
+						<span class="fa fa-exclamation-circle"></span>
+						{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
+						<div class="btn-group">
+							{{#if regionSelected}}
+								<button type="button" class="btn btn-default js-all-regions-btn">
+									<span class="fa fa-dot-circle-o"></span>
+									{{mf 'find.searchAllRegions' 'Search in all regions'}}
+								</button>
+							{{/if}}
+							{{#if showingFilters}}
+								<button type="button" class="btn btn-cancel js-toggle-filter">
+									<span class="glyphicon glyphicon-remove"></span>
+									{{mf 'find.hideFilters'}}
+								</button>
+							{{/if}}
+						</div>
+						{{#if proposeNewBlurb}}
+							{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
+							{{log this}}
 						{{/if}}
 					</div>
-					{{#if proposeNewBlurb}}
-						{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
-						{{log this}}
-					{{/if}}
-				</div>
-			{{/each}}
-		{{/unless}}
+				{{/each}}
+			{{/unless}}
+		</div>
 	</div>
 	{{#if eventResults.count}}
-		<div class="courselist">
-			<hr>
-			<h3>
-			{{#if results.count}}
-				{{#mf KEY='find.events.aditional_results' EVENTS=eventResults.count}}
-					{EVENTS, plural,
-						one {In addition, we found this event}
-						other {In addition, we found these # events}
-					}
-				{{/mf}}
-			{{else}}
-				{{#mf KEY='find.events.results_if_no_courses' EVENTS=eventResults.count}}
-					{EVENTS, plural,
-						one {All we found is this one event}
-						other {Yet # Events have been found}
-					}
-				{{/mf}}
-			{{/if}}
-			</h3><br />
-			{{#each eventResults}}
-					{{> eventSmall data=this withDate=true}}
-			{{/each}}
+		<div class="details-page-component">
+			<div class="courselist">
+				<hr>
+				<h3>
+				{{#if results.count}}
+					{{#mf KEY='find.events.aditional_results' EVENTS=eventResults.count}}
+						{EVENTS, plural,
+							one {In addition, we found this event}
+							other {In addition, we found these # events}
+						}
+					{{/mf}}
+				{{else}}
+					{{#mf KEY='find.events.results_if_no_courses' EVENTS=eventResults.count}}
+						{EVENTS, plural,
+							one {All we found is this one event}
+							other {Yet # Events have been found}
+						}
+					{{/mf}}
+				{{/if}}
+				</h3><br />
+				{{#each eventResults}}
+						{{> eventSmall data=this withDate=true}}
+				{{/each}}
+			</div>
 		</div>
 	{{/if}}
-	<div class="container-sm">
-		{{> course_edit newCourse}}
+	<div class="details-page-component">
+		<div class="container-sm">
+			{{> course_edit newCourse}}
+		</div>
 	</div>
 </template>

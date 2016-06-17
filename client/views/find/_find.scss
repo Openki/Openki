@@ -14,7 +14,7 @@
 
 .js-search-field {
   @include grid(12, inherit, 5);
-  padding: 0 0 15px;
+  padding: 0;
 }
 
 .js-search-input {
