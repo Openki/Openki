@@ -121,11 +121,16 @@ $all-btn-bg-color-steps: (
 .btn-cancel,
 .btn-delete,
 .btn-remove {
-  @extend .btn-default;
-  &:hover {
-    @extend .btn-danger;
-    border: 1px solid $btn-danger-border;
-  }
+	@include gradient-vertical(map-get($btn-danger-bg-color-steps, default), map-get($btn-danger-bg-color-steps, darker));
+	border: 1px solid $btn-danger-border;
+	@media (min-width: $screen-xs) {
+		@include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
+		border: 1px solid $btn-default-border;
+		&:hover {
+			@include gradient-vertical(map-get($btn-danger-bg-color-steps, default), map-get($btn-danger-bg-color-steps, darker));
+			border: 1px solid $btn-danger-border;
+		}
+	}
 }
 
 .btn-sm {
