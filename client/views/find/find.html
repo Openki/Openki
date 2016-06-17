@@ -9,33 +9,31 @@
 
 <template name="find">
 	<div class="details-page-component">
-		<div class="search">
-			<div class="js-search-field">
-				<div class="input-group">
-					<input class="js-search-input form-control"
-						type="text"
-						id="find"
-						value="{{search}}"
-						placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-success js-find-btn">
-							{{mf 'find.search_go' 'Go!'}}
-						</button>
-						{{#unless isMobile}}
-							{{#if showingFilters}}
-								<button type="button" class="btn btn-cancel js-toggle-filter">
-									<span class="glyphicon glyphicon-remove"></span>
-									{{mf 'find.hideFilters' 'Remove all filters'}}
-								</button>
-							{{else}}
-								<button type="button" class="btn btn-default js-toggle-filter">
-									<span class="glyphicon glyphicon-filter"></span>
-									{{mf 'find.showFilters' 'Filter'}}
-								</button>
-							{{/if}}
-						{{/unless}}
-					</span>
-				</div>
+		<div class="js-search-field">
+			<div class="input-group">
+				<input class="js-search-input form-control"
+					type="text"
+					id="find"
+					value="{{search}}"
+					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-success js-find-btn">
+						{{mf 'find.search_go' 'Go!'}}
+					</button>
+					{{#unless isMobile}}
+						{{#if showingFilters}}
+							<button type="button" class="btn btn-cancel js-toggle-filter">
+								<span class="glyphicon glyphicon-remove"></span>
+								{{mf 'find.hideFilters' 'Remove all filters'}}
+							</button>
+						{{else}}
+							<button type="button" class="btn btn-default js-toggle-filter">
+								<span class="glyphicon glyphicon-filter"></span>
+								{{mf 'find.showFilters' 'Filter'}}
+							</button>
+						{{/if}}
+					{{/unless}}
+				</span>
 			</div>
 		</div>
 		{{#if isMobile}}
@@ -54,7 +52,7 @@
 		{{#if showingFilters}}
 			<div class="filter">
 				<div class="filter-header">
-					<h4 class="filter-heading">
+					<h4>
 						<span class="glyphicon glyphicon-filter"></span>
 						{{mf 'find.search_filter.title' 'Filter search'}}
 					</h4>

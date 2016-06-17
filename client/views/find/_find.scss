@@ -7,11 +7,6 @@
   }
 }
 
-.search {
-	@include grid(12);
-	padding: 0;
-}
-
 .js-search-field {
   @include grid(12, inherit, 5);
   padding: 0;
@@ -25,15 +20,8 @@
   @include grid(12, inherit, 7);
 	margin-top: $form-group-margin-bottom;
   padding: 0;
-  @media (max-width: $screen-xs) {
-		@include grid(12);
-		background: $gray-lighter;
-    border: 1px solid $btn-default-border;
-		border-radius: 4px;
-    margin-top: 5px;
-    padding: 0 10px;
-  }
   @media (min-width: $screen-md) {
+		margin-top: 0;
     padding-left: 15px;
   }
 }
@@ -42,14 +30,9 @@
 	border-bottom: 1px solid $openki-blue-lighter;
   color: $brand-primary;
 	width: 100%;
-  @media (max-width: $screen-xs) {
-		border: 0;
-    display: none;
-  }
-}
-
-.filter-heading {
-  margin-top: 8px;
+	& > h4 {
+		margin-top: 0;
+	}
 }
 
 .filter-course-properties,
