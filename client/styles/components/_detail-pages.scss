@@ -1,4 +1,5 @@
 .details-page-component {
+	@include clearfix;
 	& + .details-page-component {
 		margin-top: 15px;
 	}
