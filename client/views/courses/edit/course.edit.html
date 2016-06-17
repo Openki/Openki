@@ -12,7 +12,7 @@
 			{{/if}}
 			<div class="course-edit-body">
 				<div class="form-group">
-					<label>{{mf 'course.edit.title' 'Title:'}}</label>
+					<label>{{mf 'course.edit.title' 'Title'}}</label>
 					<input class="form-control input-lg"
 						id="editform_name"
 						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
@@ -21,7 +21,7 @@
 						value="{{name}}"/>
 				</div>
 				<div class="form-group">
-					<label>{{mf 'course.edit.description' 'Description:'}}</label>
+					<label>{{mf 'course.edit.description' 'Description'}}</label>
 					<div class="input-group">
 						<span class="input-group-addon">
 							<span class="glyphicon glyphicon-info-sign"></span>
@@ -36,7 +36,7 @@
 				<div class="form-group">
 					<div class="form-group-element">
 						{{#if editingCategories}}
-							<label>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</label>
+							<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
 							{{#each availableCategories}}
 								<div class="checkbox">
 									<label class="{{isChecked}}">
@@ -63,7 +63,7 @@
 								{{/each}}
 							{{/each}}
 						{{else}}
-							<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
+							<h4>{{mf 'course.edit.categories' 'Categories'}}</h4>
 							{{#if categories}}
 								{{>courseCategories}}
 							{{/if}}
@@ -84,7 +84,7 @@
 					</div>
 					{{#unless _id}}
 						<div class="form-group-element">
-							<label>{{mf 'course.edit.region' 'Region:'}}</label>
+							<label>{{mf 'course.edit.region' 'Region'}}</label>
 							<select class="region_select form-control" name='region'>
 								<option value='' disabled selected class="select_placeholder">
 									{{mf 'course.edit.pls_select_region' 'Please select a region'}}
@@ -100,7 +100,7 @@
 				</div>
 
 				<div class="form-group">
-					<label>{{mf 'course.edit.intern' 'Internal course:'}}</label>
+					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
 					<div class="checkbox">
 						<label>
 							<input class="-courseInternal"
