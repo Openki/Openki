@@ -192,7 +192,7 @@ Handlebars.registerHelper("log", function(context) {
 Handlebars.registerHelper('username', userName);
 
 
-Handlebars.registerHelper('lang', function() {
+Handlebars.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
