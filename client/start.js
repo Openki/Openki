@@ -45,12 +45,10 @@ Meteor.subscribe('regions', function() {
 	if (useRegion(UrlTools.queryParam('region'))) return;
 	if (useRegion(localStorage.getItem("region"))) return;
 
-	// Ask server to place us
+	// Give up and ask the server to place us
+	useRegion('all');
 	Meteor.call('autoSelectRegion', function(error, regionId) {
-		if (useRegion(regionId)) return;
-
-		// Give up
-		useRegion('all');
+		useRegion(regionId);
 	});
 });
 
