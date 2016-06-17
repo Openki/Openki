@@ -1,14 +1,14 @@
 <template name="frameLayout">
-	{{> yield}}
+	<div class="frame-events-fluid">
+		{{> yield}}
+	</div>
 	{{> tooltips}}
 </template>
 
 <template name="frameEvents">
-	<div class="container-fluid">
-		<div class="frame-events">
-			{{#each this}}
-				{{> eventSmall data=this withDate=true}}
-			{{/each}}
-		</div>
+	<div class="frame-events">
+		{{#each this}}
+			{{> eventSmall data=this withDate=true}}
+		{{/each}}
 	</div>
 </template>
