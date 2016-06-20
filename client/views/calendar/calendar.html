@@ -1,6 +1,11 @@
 <template name="calendar">
 	{{> calendarNavigation date=startDate}}
 	<div class="calendar-container container">
+		<a href="/event/create">
+			<button type="button" class="btn btn-add">
+				{{mf 'menue.CreateEvent'}}
+			</button>
+		</a>
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>

@@ -1,5 +1,5 @@
 <template name="introduction">
-	<div class="container">
+	<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
 		<div class="introduction">
 			<h3>
 				{{#mf KEY='introduction.Title' SITENAME=siteName}}
