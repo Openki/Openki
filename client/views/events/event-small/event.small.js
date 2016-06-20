@@ -1,9 +1,5 @@
 Template.eventSmall.onCreated(function() {
-	if (Template.currentData().withDate) {
-		this.headerHeight = 75;
-	} else {
-		this.headerHeight = 55;
-	}
+	this.headerHeight = Template.currentData().withDate ? 75 : 55;
 });
 
 Template.eventSmall.events({
