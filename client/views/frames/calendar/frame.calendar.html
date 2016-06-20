@@ -2,9 +2,8 @@
 	<div class="frame-events-fluid">
 		{{#each this}}
 			{{#with date}}
-				<div class="frame-calendar-date">
-					{{weekday}}
-					{{monthday}}.
+				<div class="calendar-date">
+					{{calendarDay this}}
 				</div>
 			{{/with}}
 			<div class="frame-calendar-date-events">

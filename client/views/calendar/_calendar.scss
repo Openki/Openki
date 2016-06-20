@@ -51,18 +51,16 @@
 
 .calendar-date {
 	background: $calendar-navigation-bg;
-	border-left: 10px solid $brand-primary;
-	box-shadow: 1px 5px 5px rgba(0, 0, 0, .3);
+	border-color: $brand-primary;
+	border-style: solid;
+	border-width: 10px 0 0;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
 	font-size: large;
 	padding: 5px 7px 5px 9px;
 	text-align: center;
-	width: 250px;
-
-	@media (max-width: $screen-xxs) {
-		@include grid(12);
-		border-left: 0;
-		border-top: 10px solid $brand-primary;
-		padding: .5em;
+	@media (min-width: $screen-xxs) {
+		border-width: 0 0 0 10px;
+		width: 250px;
 	}
 }
 
