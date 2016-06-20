@@ -50,6 +50,13 @@
 	font-weight: normal;
 }
 
+.form-group > label,
+.form-group-element > label,
+.details-info-label {
+	color: darken($brand-primary, 10%);
+	font-weight: normal;
+}
+
 .control-label {
 	@include grid(12, 3);
 }
