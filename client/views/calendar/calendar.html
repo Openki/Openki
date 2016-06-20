@@ -1,19 +1,15 @@
 <template name="calendar">
 	{{> calendarNavigation date=startDate}}
 	<div class="calendar-container container">
-		<a href="/event/create">
-			<button type="button" class="btn btn-add">
-				{{mf 'menue.CreateEvent'}}
-			</button>
+		<a href="/event/create" class="btn btn-add" role="button">
+			{{mf 'menue.CreateEvent'}}
 		</a>
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>
 		{{/each}}
-		<a href="/event/create">
-			<button type="button" class="btn btn-add">
-				{{mf 'menue.CreateEvent'}}
-			</button>
+		<a href="/event/create" class="btn btn-add" role="button">
+			{{mf 'menue.CreateEvent'}}
 		</a>
 	</div>
 </template>

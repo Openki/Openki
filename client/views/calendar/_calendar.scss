@@ -47,6 +47,9 @@
 
 .calendar-container {
   padding-top: 50px;
+	& > a:first-child {
+		margin-bottom: 15px;
+	}
 }
 
 .calendar-date {
