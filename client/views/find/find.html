@@ -230,9 +230,7 @@
 					{{/mf}}
 				{{/if}}
 				</h3><br />
-				{{#each eventResults}}
-						{{> eventSmall data=this withDate=true}}
-				{{/each}}
+				{{> eventSmallList eventsList=eventResults withDate=true}}
 			</div>
 		</div>
 	{{/if}}

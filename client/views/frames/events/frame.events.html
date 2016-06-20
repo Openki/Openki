@@ -7,8 +7,6 @@
 
 <template name="frameEvents">
 	<div class="frame-events">
-		{{#each this}}
-			{{> eventSmall data=this withDate=true}}
-		{{/each}}
+		{{> eventSmallList eventsList=this withDate=true}}
 	</div>
 </template>

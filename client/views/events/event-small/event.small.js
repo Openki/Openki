@@ -1,5 +1,5 @@
-Template.eventSmall.onCreated(function() {
-	this.headerHeight = Template.currentData().withDate ? 75 : 55;
+Template.eventSmallList.onCreated(function() {
+	this.headerHeight = this.data.withDate ? 75 : 55;
 });
 
 Template.eventSmall.events({
@@ -11,9 +11,15 @@ Template.eventSmall.events({
 	}
 });
 
+Template.eventSmall.helpers({
+	withDate: function(){
+		return Template.instance().parentInstance().data.withDate;
+	}
+});
+
 Template.eventSmall.rendered = function() {
 	this.$('.event-small-header').dotdotdot({
-		height: this.headerHeight,
+		height: this.parentInstance().headerHeight,
 		watch : "window",
 	});
 	this.$('.event-small-title').dotdotdot({

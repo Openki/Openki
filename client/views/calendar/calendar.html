@@ -24,9 +24,7 @@
 		{{/unless}}
 		{{#if hasEvents}}
 			<div class="calendar-events">
-				{{#each events}}
-					{{> eventSmall data=this withDate=false}}
-				{{/each}}
+				{{> eventSmallList eventsList=events withDate=false}}
 			</div>
 		{{/if}}
 	{{else}}
