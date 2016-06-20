@@ -1,5 +1,4 @@
 .frame-calendar-date {
-	@include make-row;
 	background: lighten($orange, 25%);
 	border-color: $orange;
 	border-style: solid;
