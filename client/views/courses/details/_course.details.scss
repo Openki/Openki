@@ -109,8 +109,7 @@
 		}
 	}
   .groups-list,
-  .groups-list li,
-  .groups-list li a {
+  .groups-list > li {
     display: inline-block;
   }
   .groups-list {
@@ -162,4 +161,16 @@
   .dropdown {
     display: inline-block;
   }
+}
+
+.js-add-group {
+	@include btn-sm;
+}
+
+.group-tool-dialog {
+	padding: 10px 15px;
+	& > .btn {
+		margin-top: 10px;
+		width: 100%;
+	}
 }
