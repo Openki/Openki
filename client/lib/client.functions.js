@@ -76,9 +76,9 @@ getWindowSize = function() {
 	Session.set('screenSize', screenSize);
 };
 
-
-
-
+showServerError = function(message, err) {
+	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
+}
 
 var subbedGroup = function(group) {
 	var groupId = ''+group; // it's not a string?! LOL I DUNNO

@@ -26,7 +26,7 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+								showServerError('Saving the course went wrong.', err);
 							} else {
 								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
 							}
