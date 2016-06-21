@@ -32,11 +32,11 @@
 					{{mf 'menue.All regions' 'All regions'}}
 				</span>
 				<span class="coursesCount"
-							title="{{mf 'regions.allCourses.title' 'There {COUNT, plural, =0 {no courses on} one {is one course on} other {are # courses on}} {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+						title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 					{{allCourses}}
 				</span>
 				<span class="eventsCount"
-							title="{{mf 'regions.allUpcomingEvents.title' 'There {COUNT, plural, =0 {no upcoming events on} one {is one upcoming event on} other {are # upcoming events on}} {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+						title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 					{{allUpcomingEvents}}
 				</span>
 				{{#if currentRegion}}
@@ -51,11 +51,11 @@
 						{{regionNameMarked}}
 					</span>
 					<span class="coursesCount"
-								title="{{mf 'regions.courses.title' 'There {COUNT, plural, =0 {no courses in} one {is one course in} other {are # courses in}} {REGION}' COUNT=courseCount REGION=this.name}}">
+							title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 						{{courseCount}}
 					</span>
 					<span class="eventsCount"
-								title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, =0 {no upcoming events in} one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=futureEventCount REGION=this.name}}">
+							title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 						{{futureEventCount}}
 					</span>
 					{{#if currentRegion}}
