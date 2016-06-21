@@ -128,27 +128,29 @@
 <template name="eventGroupList">
 	<ul class="groups-list">
 		{{#each allGroups}}
-		<li>
-			{{> groupName}}
-			{{#if isOrganizer}}
-				<span class="glyphicon glyphicon-bullhorn group-add"></span>
-			{{/if}}
-			{{#if tools}}
-			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add"
-					aria-expanded="false"
-					aria-haspopup="true"
-					data-toggle="dropdown">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-				{{#each tools}}
-					<li>{{> toolTemplate}}</li>
-				{{/each}}
-				</ul>
-			</div>
-			{{/if}}
-		</li>
+			<li>
+				{{> groupName}}
+				{{#if isOrganizer}}
+					<span class="group-label-addon">
+						<i class="glyphicon glyphicon-bullhorn fa-fw"></i>
+					</span>
+				{{/if}}
+				{{#if tools}}
+					<div class="dropdown">
+						<button type="button" class="group-label-addon-btn dropdown-toggle"
+							aria-expanded="false"
+							aria-haspopup="true"
+							data-toggle="dropdown">
+							<i class="fa fa-caret-down fa-fw"></i>
+						</button>
+							<ul class="dropdown-menu">
+							{{#each tools}}
+								<li>{{> toolTemplate}}</li>
+							{{/each}}
+						</ul>
+					</div>
+				{{/if}}
+			</li>
 		{{/each}}
 		{{> eventGroupAdd}}
 	</ul>
@@ -157,21 +159,22 @@
 
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle no-btn-style"
+		<div class="dropdown">
+			<button type="button" class="group-label-btn dropdown-toggle"
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
+				<i class="fa fa-plus fa-fw" title="{{mf 'course.group.addText' 'Add a group'}}"></i>
 			</button>
-
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
-						<span class="group">{{> groupName}}</span>
-						<button type="button" class="js-add" value="{{this}}">
-							{{mf 'course.group.confirmAddButton'}}
-						</button>
+						<a href="#">
+							{{> groupName}}&nbsp;
+							<button type="button" class="btn btn-add js-add-group" value="{{this}}">
+								{{mf 'course.group.confirmAddButton'}}
+							</button>
+						</a>
 					</li>
 				{{/each}}
 			</ul>
@@ -181,45 +184,54 @@
 
 
 <template name="eventGroupRemove">
-	<li>
-		<span class="js-expand"><span class="fa fa-remove"></span>{{mf 'course.group.remove' 'Remove'}}</span>
+		<a href="#" class="js-expand">
+			<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+			{{mf 'course.group.remove' 'Remove'}}
+		</a>
 		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}{{/with}}
-				<button type="button" class="js-remove">
+			<div class="group-tool-dialog">
+				{{#with groupId}}
+					{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
+				{{/with}}
+				<button type="button" class="btn btn-remove js-remove">
 					{{mf 'course.group.confirmRemoveButton'}}
 				</button>
 			</div>
 		{{/if}}
-	</li>
 </template>
 
 
 <template name="eventGroupMakeOrganizer">
-	<li>
-		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText'}}</span>
-		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}{{/with}}
-				{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
-				<button type="button" class="js-makeOrganizer">
-					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
-				</button>
-			</div>
-		{{/if}}
-	</li>
+	<a href="#" class="js-expand">
+		<i class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></i>
+		{{mf 'course.group.addOrgText'}}
+	</a>
+	{{#if expanded}}
+		<div class="group-tool-dialog">
+			{{#with groupId}}
+				{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}
+			{{/with}}
+			{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
+			<button type="button" class="btn btn-add js-makeOrganizer">
+				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+			</button>
+		</div>
+	{{/if}}
 </template>
 
 <template name="eventGroupRemoveOrganizer">
-	<li>
-		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' NAME=name}}</span>
-		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}{{/with}}
-				<button type="button" class="js-removeOrganizer">
-					{{mf 'course.group.confimRemoveOrgButton'}}
-				</button>
-			</div>
-		{{/if}}
-	</li>
+	<a href="#" class="js-expand">
+		<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+		{{mf 'course.group.removeOrgText' NAME=name}}
+	</a>
+	{{#if expanded}}
+		<div class="group-tool-dialog">
+			{{#with groupId}}
+				{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}
+			{{/with}}
+			<button type="button" class="btn btn-remove js-removeOrganizer">
+				{{mf 'course.group.confimRemoveOrgButton'}}
+			</button>
+		</div>
+	{{/if}}
 </template>

@@ -2,20 +2,67 @@
   list-style: none;
   margin-bottom: 0;
   padding-left: 0;
-	> li {
+	> li,
+	> .dropdown,
+	> li > .dropdown {
 		display: inline-block;;
 	}
 }
 
-.js-group-label {
-  @include transition(all $default-transition-time);
-  background: $group-bg;
+%group-label {
+	@include transition(all $default-transition-time);
+	background: $group-bg;
   color: $group-text;
+	&:hover,
+	&:focus {
+		@include box-shadow-small($group-hover-shadow);
+		background: $group-hover-bg;
+		color: $group-hover-text;
+	}
+}
+
+.js-group-label {
+	@extend %group-label;
   padding: 0 4px 1px;
   &:hover {
-    @include box-shadow-small($group-hover-shadow);
-    background: $group-hover-bg;
-		color: $group-hover-text;
     text-decoration: none;
   }
+}
+
+.group-label-addon {
+	background: $group-bg;
+  color: $group-text;
+	padding: 1px 1px 0;
+	vertical-align: middle;
+}
+
+.group-label-addon-btn {
+	@extend %group-label;
+	border-color: darken($group-bg, 5%);
+	border-style: solid;
+	border-width: 0 0 0 1px;
+	padding: 0 1px;
+	&:hover,
+	&:focus {
+		border-color: $group-bg;
+	}
+}
+
+.group-label-btn {
+	@extend %group-label;
+	border: 0;
+	padding: 0 3px;
+}
+
+
+.js-add-group {
+	@include btn-sm;
+}
+
+.group-tool-dialog {
+	padding: 10px 15px;
+	& > .btn {
+		margin-top: 10px;
+		width: 100%;
+	}
 }

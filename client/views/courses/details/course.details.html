@@ -8,22 +8,30 @@
 			{{else}}
 				<div class="details-page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-						{{#if editableName}}
-							<div class="course-details-title">
-								{{>editable editableName}}
-							</div>
-						{{else}}
-							<h2>{{course.name}}</h2>
-						{{/if}}
-						{{#with course}}
-							<div class="course-details-categories">
-								{{> courseCategories}}
-							</div>
-							<div class="course-details-groups">
-								{{> courseGroupList}}
-							</div>
-						{{/with}}
-						{{> courseDetailsSubmenu}}
+						<div class="details-header">
+							{{#if editableName}}
+								<div class="course-details-title">
+									{{>editable editableName}}
+								</div>
+							{{else}}
+								<h2>{{course.name}}</h2>
+							{{/if}}
+							{{#with course}}
+								{{#if categories}}
+									<div class="course-details-categories">
+										{{> courseCategories}}
+									</div>
+								{{/if}}
+								{{#if groups}}
+									<div class="course-details-groups">
+										{{> courseGroupList}}
+									</div>
+								{{/if}}
+							{{/with}}
+						</div>
+						<div class="course-details-content">
+							{{> courseDetailsSubmenu}}
+						</div>
 					</div>
 					{{#with course}}
 						{{#if currentUserMayEdit}}
@@ -56,8 +64,8 @@
 				{{> course_events}}
 			{{/unless}}
 			<div class="details-page-component">
-					{{> courseMembers course}}
-					{{> courseRoles roles_details}}
+				{{> courseMembers course}}
+				{{> courseRoles roles_details}}
 			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
@@ -67,39 +75,39 @@
 </template>
 
 <template name="courseDetailsSubmenu">
-		<nav>
-			<ul class="nav nav-tabs">
-				<li role="presentation" class='active'>
-					<a href="#description" data-toggle="tab">
-						<i class="fa fa-info fa-fw"></i>
-						{{mf 'course.subnav.descr' 'Description'}}
-					</a>
-				</li>
-				<li role="presentation">
-					<a href="#docs" data-toggle="tab">
-						<i class="fa fa-folder-open fa-fw"></i>
-						{{mf 'course.subnav.docs' 'Docs'}}
-					</a>
-				</li>
-				<li role="presentation">
-					<a href="#history" data-toggle="tab">
-						<i class="fa fa-history fa-fw"></i>
-						{{mf 'course.subnav.history' 'History'}}
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="tab-content">
-			<div class="tab-pane active" id="description">
-				{{> courseDetailsDescription}}
-			</div>
-			<div class="tab-pane" id="docs">
-				{{> coursedocs}}
-			</div>
-			<div class="tab-pane" id="history">
-				{{> coursehistory}}
-			</div>
+	<nav class="course-details-nav">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class='active'>
+				<a href="#description" data-toggle="tab">
+					<i class="fa fa-info fa-fw"></i>
+					{{mf 'course.subnav.descr' 'Description'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#docs" data-toggle="tab">
+					<i class="fa fa-folder-open fa-fw"></i>
+					{{mf 'course.subnav.docs' 'Docs'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#history" data-toggle="tab">
+					<i class="fa fa-history fa-fw"></i>
+					{{mf 'course.subnav.history' 'History'}}
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="tab-content">
+		<div class="tab-pane active" id="description">
+			{{> courseDetailsDescription}}
 		</div>
+		<div class="tab-pane" id="docs">
+			{{> coursedocs}}
+		</div>
+		<div class="tab-pane" id="history">
+			{{> coursehistory}}
+		</div>
+	</div>
 </template>
 
 <template name="courseDetailsDescription">
@@ -116,27 +124,29 @@
 <template name="courseGroupList">
 	<ul class="groups-list">
 		{{#each groups}}
-		<li>
-			{{> groupName}}
-			{{#if isOrganizer}}
-				<span class="glyphicon glyphicon-bullhorn group-add"></span>
-			{{/if}}
-			{{#if tools}}
-			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add"
-					aria-expanded="false"
-					aria-haspopup="true"
-					data-toggle="dropdown">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-				{{#each tools}}
-					<li>{{> toolTemplate}}</li>
-				{{/each}}
-				</ul>
-			</div>
-			{{/if}}
-		</li>
+			<li>
+				{{> groupName}}
+				{{#if isOrganizer}}
+					<span class="group-label-addon">
+						<i class="glyphicon glyphicon-bullhorn fa-fw"></i>
+					</span>
+				{{/if}}
+				{{#if tools}}
+					<div class="dropdown">
+						<button type="button" class="group-label-addon-btn dropdown-toggle"
+							aria-expanded="false"
+							aria-haspopup="true"
+							data-toggle="dropdown">
+							<i class="fa fa-caret-down fa-fw"></i>
+						</button>
+						<ul class="dropdown-menu">
+							{{#each tools}}
+								<li>{{> toolTemplate}}</li>
+							{{/each}}
+						</ul>
+					</div>
+				{{/if}}
+			</li>
 		{{/each}}
 		{{> courseGroupAdd}}
 	</ul>
@@ -145,21 +155,22 @@
 
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle no-btn-style"
+		<div class="dropdown">
+			<button type="button" class="group-label-btn dropdown-toggle"
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
+				<i class="fa fa-plus fa-fw" title="{{mf 'course.group.addText' 'Add a group'}}"></i>
 			</button>
-
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
-						<span class="group">{{> groupName}}</span>
-						<button type="button" class="js-add" value="{{this}}">
-							{{mf 'course.group.confirmAddButton' "Promote"}}
-						</button>
+						<a href="#">
+							{{> groupName}}&nbsp;
+							<button type="button" class="btn btn-add js-add-group" value="{{this}}">
+								{{mf 'course.group.confirmAddButton' "Promote"}}
+							</button>
+						</a>
 					</li>
 				{{/each}}
 			</ul>
@@ -169,45 +180,54 @@
 
 
 <template name="courseGroupRemove">
-	<li style="position: relative">
-		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.remove' 'Remove'}}</span>
-		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
-				<button type="button" class="js-remove">
-					{{mf 'course.group.confirmRemoveButton' "Delist"}}
-				</button>
-			</div>
-		{{/if}}
-	</li>
+	<a href="#" class="js-expand">
+		<i class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></i>
+		{{mf 'course.group.remove' 'Remove'}}
+	</a>
+	{{#if expanded}}
+		<div class="group-tool-dialog">
+			{{#with groupId}}
+				{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
+			{{/with}}
+			<button type="button" class="btn btn-remove js-remove">
+				{{mf 'course.group.confirmRemoveButton' "Delist"}}
+			</button>
+		</div>
+	{{/if}}
 </template>
 
 
 <template name="courseGroupMakeOrganizer">
-	<li style="position: relative">
-		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText' "Give editing rights"}}</span>
-		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
-				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
-				<button type="button" class="js-makeOrganizer">
-					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
-				</button>
-			</div>
-		{{/if}}
-	</li>
+	<a href="#" class="js-expand">
+		<i class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></i>
+		{{mf 'course.group.addOrgText' "Give editing rights"}}
+	</a>
+	{{#if expanded}}
+		<div class="group-tool-dialog">
+			{{#with groupId}}
+				{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
+			{{/with}}
+			{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
+			<button type="button" class="btn btn-add js-makeOrganizer">
+				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+			</button>
+		</div>
+	{{/if}}
 </template>
 
 <template name="courseGroupRemoveOrganizer">
-	<li style="position: relative">
-		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' "Remove editing rights"}}</span>
-		{{#if expanded}}
-			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
-				<button type="button" class="js-removeOrganizer">
-					{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
-				</button>
-			</div>
-		{{/if}}
-	</li>
+	<a href="#" class="js-expand">
+		<i class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></i>
+		{{mf 'course.group.removeOrgText' "Remove editing rights"}}
+	</a>
+	{{#if expanded}}
+		<div class="group-tool-dialog">
+			{{#with groupId}}
+				{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
+			{{/with}}
+			<button type="button" class="btn btn-remove js-removeOrganizer">
+				{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
+			</button>
+		</div>
+	{{/if}}
 </template>
