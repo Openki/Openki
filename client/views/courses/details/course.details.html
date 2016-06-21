@@ -8,22 +8,26 @@
 			{{else}}
 				<div class="details-page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-						{{#if editableName}}
-							<div class="course-details-title">
-								{{>editable editableName}}
-							</div>
-						{{else}}
-							<h2>{{course.name}}</h2>
-						{{/if}}
-						{{#with course}}
-							<div class="course-details-categories">
-								{{> courseCategories}}
-							</div>
-							<div class="course-details-groups">
-								{{> courseGroupList}}
-							</div>
-						{{/with}}
-						{{> courseDetailsSubmenu}}
+						<div class="details-header">
+							{{#if editableName}}
+								<div class="course-details-title">
+									{{>editable editableName}}
+								</div>
+							{{else}}
+								<h2>{{course.name}}</h2>
+							{{/if}}
+							{{#with course}}
+								<div class="course-details-categories">
+									{{> courseCategories}}
+								</div>
+								<div class="course-details-groups">
+									{{> courseGroupList}}
+								</div>
+							{{/with}}
+						</div>
+						<div class="course-details-content">
+							{{> courseDetailsSubmenu}}
+						</div>
 					</div>
 					{{#with course}}
 						{{#if currentUserMayEdit}}
@@ -67,39 +71,39 @@
 </template>
 
 <template name="courseDetailsSubmenu">
-		<nav>
-			<ul class="nav nav-tabs">
-				<li role="presentation" class='active'>
-					<a href="#description" data-toggle="tab">
-						<i class="fa fa-info fa-fw"></i>
-						{{mf 'course.subnav.descr' 'Description'}}
-					</a>
-				</li>
-				<li role="presentation">
-					<a href="#docs" data-toggle="tab">
-						<i class="fa fa-folder-open fa-fw"></i>
-						{{mf 'course.subnav.docs' 'Docs'}}
-					</a>
-				</li>
-				<li role="presentation">
-					<a href="#history" data-toggle="tab">
-						<i class="fa fa-history fa-fw"></i>
-						{{mf 'course.subnav.history' 'History'}}
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="tab-content">
-			<div class="tab-pane active" id="description">
-				{{> courseDetailsDescription}}
-			</div>
-			<div class="tab-pane" id="docs">
-				{{> coursedocs}}
-			</div>
-			<div class="tab-pane" id="history">
-				{{> coursehistory}}
-			</div>
+	<nav class="course-details-nav">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class='active'>
+				<a href="#description" data-toggle="tab">
+					<i class="fa fa-info fa-fw"></i>
+					{{mf 'course.subnav.descr' 'Description'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#docs" data-toggle="tab">
+					<i class="fa fa-folder-open fa-fw"></i>
+					{{mf 'course.subnav.docs' 'Docs'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#history" data-toggle="tab">
+					<i class="fa fa-history fa-fw"></i>
+					{{mf 'course.subnav.history' 'History'}}
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="tab-content">
+		<div class="tab-pane active" id="description">
+			{{> courseDetailsDescription}}
 		</div>
+		<div class="tab-pane" id="docs">
+			{{> coursedocs}}
+		</div>
+		<div class="tab-pane" id="history">
+			{{> coursehistory}}
+		</div>
+	</div>
 </template>
 
 <template name="courseDetailsDescription">

@@ -21,6 +21,7 @@
 
 .details-header {
 	padding: 10px $form-group-margin-bottom;
+	& > h2,
 	& > h3 {
 		margin-top: 0;
 	}
