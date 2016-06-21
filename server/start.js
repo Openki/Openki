@@ -75,7 +75,7 @@ Meteor.startup(function () {
 	// On startup, resync location cache in events
 	Meteor.call('updateEventLocation', {}, logAsyncErrors);
 
-	Meteor.call('updateRegionEventCount', {}, logAsyncErrors);
+	Meteor.call('updateRegionCounters', {}, logAsyncErrors);
 
 	// Keep the nextEvent entry updated
 	// On startup do a full scan to catch stragglers
@@ -85,7 +85,7 @@ Meteor.startup(function () {
 			// Update nextEvent for courses where it expired
 			Meteor.call('updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
 
-			Meteor.call('updateRegionEventCount', {}, logAsyncErrors);
+			Meteor.call('updateRegionCounters', {}, logAsyncErrors);
 		},
 		60*1000 // Check every minute
 	);

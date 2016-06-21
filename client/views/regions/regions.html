@@ -51,11 +51,11 @@
 						{{regionNameMarked}}
 					</span>
 					<span class="coursesCount"
-								title="{{mf 'regions.courses.title' 'There {COUNT, plural, =0 {no courses in} one {is one course in} other {are # courses in}} {REGION}' COUNT=courses REGION=this.name}}">
-						{{courses}}
+								title="{{mf 'regions.courses.title' 'There {COUNT, plural, =0 {no courses in} one {is one course in} other {are # courses in}} {REGION}' COUNT=courseCount REGION=this.name}}">
+						{{courseCount}}
 					</span>
 					<span class="eventsCount"
-								title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, =0 {no upcoming events in} one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=upcomingEvents REGION=this.name}}">
+								title="{{mf 'regions.eventCount.title' 'There {COUNT, plural, =0 {no upcoming events in} one {is one upcoming event in} other {are # upcoming events in}} {REGION}' COUNT=futureEventCount REGION=this.name}}">
 						{{futureEventCount}}
 					</span>
 					{{#if currentRegion}}

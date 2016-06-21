@@ -70,11 +70,15 @@ Template.region_sel.helpers({
 	},
 
 	allCourses: function() {
-		return Courses.find().count();
+		return _.reduce(Regions.find().fetch(), function(acc, region) {
+			return acc + region.courseCount;
+		}, 0);
 	},
 
 	allUpcomingEvents: function() {
-		return eventsFind({ after: minuteTime.get() }).count();
+		return _.reduce(Regions.find().fetch(), function(acc, region) {
+			return acc + region.futureEventCount;
+		}, 0);
 	},
 
 	courses: function() {

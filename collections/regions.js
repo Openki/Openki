@@ -9,15 +9,20 @@
 Regions = new Meteor.Collection("Regions");
 if (Meteor.isServer) Regions._ensureIndex({loc : "2dsphere"});
 
-updateRegionEventCount = function(regionId) {
+// We don't use untilClean() here because consistency doesn't matter
+updateRegionCounters = function(regionId) {
+	var courseCount = Courses.find({ region: regionId }).count();
 	var futureEventCount = Events.find({ region: regionId, start: { $gte: new Date() } }).count();
-	Regions.update(regionId, { $set: { futureEventCount: futureEventCount } });
+	Regions.update(regionId, { $set: {
+		courseCount: courseCount,
+		futureEventCount: futureEventCount
+	} });
 };
 
 Meteor.methods({
-	'updateRegionEventCount': function(selector) {
+	'updateRegionCounters': function(selector) {
 		Regions.find(selector).forEach(function(region) {
-			updateRegionEventCount(region._id);
+			updateRegionCounters(region._id);
 		});
 	}
 });
