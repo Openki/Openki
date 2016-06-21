@@ -1,0 +1,10 @@
+{
+	"testdata": 1,
+	"prng": "static",
+	"admins": ["greg", "FeeLing", "IvanZ"],
+	"public": {
+		"siteName": "Hmmm",
+		"siteStage": "DEV"
+	},
+	"siteEmail": "HMMM@legit.example"
+}

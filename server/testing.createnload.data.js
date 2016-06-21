@@ -5,17 +5,21 @@
 // dates closer to the original date preferred.
 // For future dates, a date between the original date and double the time between now and then is chosen.
 var sometimesAfter = function(date) {
+	var prng = Prng("sometimesAfter");
+
 	// Seconds between then and now
 	var spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
 
 	// Quadratic dropoff: Place new date closer to the original date statistically
-	var placement = Math.random();
+	var placement = prng();
 	var squaredPlacement = placement * placement;
 
 	return new Date(date.getTime() + spread * squaredPlacement);
-}
+};
 
 function ensureUser(name) {
+	var prng = Prng("ensureUser");
+
 	if (!name) {name = 'Serverscriptttt';}
 	var email = (name.replace(' ', '')+"@openki.example").toLowerCase();
 
@@ -32,7 +36,7 @@ function ensureUser(name) {
 			profile: {name : name},
 		});
 
-		var age = Math.floor(Math.random()*100000000000);
+		var age = Math.floor(prng()*100000000000);
 		Meteor.users.update({ _id: id },{$set:{
 			services : {"password" : {"bcrypt" : "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq"}},  //every password is set to "greg". cause creating passwords takes too long
 			createdAt: new Date(new Date().getTime()-age),
@@ -45,6 +49,8 @@ function ensureUser(name) {
 }
 
 function ensureRegion(name) {
+	var prng = Prng("ensureRegion");
+
 	while (true) {
 		var region = Regions.findOne({name: name});
 		if (region) return region._id;
@@ -52,7 +58,7 @@ function ensureRegion(name) {
 
 		var id = Regions.insert({
 			name: name,
-			timezone: "UTC+"+Math.floor(Math.random()*12)+":00"
+			timezone: "UTC+"+Math.floor(prng()*12)+":00"
 		});
 
 		console.log("Added region: "+name+" "+id);
@@ -60,6 +66,8 @@ function ensureRegion(name) {
 }
 
 function ensureLocation(name, regionId) {
+	var prng = Prng("ensureLocation");
+
 	while (true) {
 		var location = Locations.findOne({name: name, region:regionId});
 
@@ -72,8 +80,8 @@ function ensureLocation(name, regionId) {
 		};
 
 		var region = Regions.findOne(regionId);
-		var lat = region.loc.coordinates[1] + Math.pow(Math.random(), 2) * 0.02 * (Math.random() > 0.5 ? 1 : -1);
-		var lon = region.loc.coordinates[0] + Math.pow(Math.random(), 2) * 0.02 * (Math.random() > 0.5 ? 1 : -1);
+		var lat = region.loc.coordinates[1] + Math.pow(prng(), 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
+		var lon = region.loc.coordinates[0] + Math.pow(prng(), 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
 		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
 
 		// TESTING: always use same id for same location to avoid broken urls while testing
@@ -83,7 +91,7 @@ function ensureLocation(name, regionId) {
 
 		location._id = m5.digest('hex').substring(0, 8);
 
-		var age = Math.floor(Math.random()*80000000000);
+		var age = Math.floor(prng()*80000000000);
 		location.time_created = new Date(new Date().getTime()-age);
 		location.time_lastedit = new Date(new Date().getTime()-age*0.25);
 
@@ -104,11 +112,12 @@ loadCoursesIfNone = function(scale) {
 };
 
 function createCourses(scale) {
+	var prng = Prng("createCourses");
 
 	// Make a number that looks like a human chose it, favouring 2 and 5
 	function humandistrib() {
 		var factors = [0,0,1,2,2,3,5,5];
-		return factors[Math.floor(Math.random()*factors.length)] * (Math.random() > 0.7 ? humandistrib() : 1) + (Math.random() > 0.5 ? humandistrib() : 0);
+		return factors[Math.floor(prng()*factors.length)] * (prng() > 0.7 ? humandistrib() : 1) + (prng() > 0.5 ? humandistrib() : 0);
 	}
 
 
@@ -132,10 +141,10 @@ function createCourses(scale) {
 			m5.update(course.description);
 			course._id = m5.digest('hex').substring(0, 8);
 
-			//course.subscribers_min = Math.random() > 0.3 ? undefined : humandistrib()
-			//course.subscribers_max = Math.random() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*Math.random())
-			course.date = Math.random() > 0.50 ? new Date(new Date().getTime()+((Math.random()-0.25)*8000000000)) : false;
-			var age = Math.floor(Math.random()*80000000000);
+			//course.subscribers_min = prng() > 0.3 ? undefined : humandistrib()
+			//course.subscribers_max = prng() > 0.5 ? undefined : course.subscribers_min + Math.floor(course.subscribers_min*prng())
+			course.date = prng() > 0.50 ? new Date(new Date().getTime()+((prng()-0.25)*8000000000)) : false;
+			var age = Math.floor(prng()*80000000000);
 			course.time_created = new Date(new Date().getTime()-age);
 			course.time_lastedit = new Date(new Date().getTime()-age*0.25);
 			course.time_lastenrol = new Date(new Date().getTime()-age*0.15);
@@ -143,9 +152,10 @@ function createCourses(scale) {
 				course.region = ensureRegion(course.region);
 			} else {
 				/* place in random test region, Spilistan or Testistan */
-				course.region = Math.random() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
+				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
 			course.groups = _.map(course.groups, ensureGroup);
+			course.groupOrganizers = [];
 			Courses.insert(course);
 			console.log("Added course: "+course.name);
 		}
@@ -174,12 +184,13 @@ function ensureLocationCategory(name){
 
 // TESTING:
 function loadLocations(){
+	var prng = Prng("loadLocations");
 
 	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')];
 	_.each(testLocations, function(locationData) {
 		if (!locationData.name) return;      // Don't create locations that don't have a name
 
-		locationData.region = Math.random() > 0.85 ? testRegions[0] : testRegions[1];
+		locationData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
 		var location = ensureLocation(locationData.name, locationData.region._id);
 
@@ -197,8 +208,8 @@ function loadLocations(){
 //		if (!location.hosts) location.hosts = [];
 //		location.hosts = [ensureUser(location.hosts[0])._id];
 
-//		location.maxWorkplaces = Math.random() > 0.3 ? undefined : humandistrib()
-//		location.maxPeople = Math.random() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*Math.random())
+//		location.maxWorkplaces = prng() > 0.3 ? undefined : humandistrib()
+//		location.maxPeople = prng() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*prng())
 
 		Locations.update(location._id, location);
 	});
@@ -211,10 +222,12 @@ function loadLocations(){
 /////////////////////////////// TESTING: Create generic events if not in db
 
 createEventsIfNone = function(){
+	var prng = Prng("createEventsIfNone");
+
 	//Events.remove({});
 	if (Events.find().count() === 0) {
 		Courses.find().forEach(function(course) {
-			var event_count =  Math.floor(Math.pow(Math.random() * 1.6, 10));
+			var event_count =  Math.floor(Math.pow(prng() * 1.6, 10));
 			for (var n = 0; n < event_count; n++) {
 				var event = {};
 				var description = course.description;
@@ -222,8 +235,9 @@ createEventsIfNone = function(){
 				var words = _.shuffle(description.split(' '));
 				event.region = course.region;
 				event.groups = course.groups;
+				event.groupOrganizers = [];
 
-				var random = Math.random();
+				var random = prng();
 				var location;
 				if (random < 0.4) location = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
 				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
@@ -235,38 +249,41 @@ createEventsIfNone = function(){
 				var rooms;
 				if (event.location.rooms.length > 0) {
 					rooms = event.location.rooms;
-					if (Math.random() > 0.5) event.room = rooms[Math.floor(Math.random()*rooms.length)];
+					if (prng() > 0.5) event.room = rooms[Math.floor(prng()*rooms.length)];
 				}
 
-				if (!event.room && Math.random() > 0.6) {
+				if (!event.room && prng() > 0.6) {
 					rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
-					event.room = rooms[Math.floor(Math.random()*rooms.length)];
+					event.room = rooms[Math.floor(prng()*rooms.length)];
 					ensureRoom(event.location, event.room);
 				}
 
-				event.internal = Math.random() < 0.07;
+				event.internal = prng() < 0.07;
 
-				event.course_id = course._id;
+				event.courseId = course._id;
 				event.title = course.name + ' ' + _.sample(words);
-				event.description =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
+				event.description =  words.slice(0, 10 + Math.floor(prng() * 30)).join(' ');
 				event.groups = course.groups;
 				event.mentors = [];
 				event.host = [];
 
 				var spread = 1000*60*60*24*365*1.24;              // cause it's millis  1.2 Years
-				var timeToGo = Math.random()-0.7;             // put 70% in the past
+				var timeToGo = prng()-0.7;             // put 70% in the past
 				if (timeToGo >= 0.05) {                           // 75% of the remaining in future
 					timeToGo = Math.pow((timeToGo-0.05)*5, 2);     // exponential function in order to decrease occurrence in time
 				}
 				timeToGo = Math.floor(timeToGo*spread);
 				var date = new Date(new Date().getTime() + timeToGo);
 				var hour = date.getHours();
-				if (Math.random() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
-				if (Math.random() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
+				if (prng() > 0.2 && hour < 8 || hour > 21) date.setHours(hour + 12);
+				if (prng() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15); // quarter-hours' precision
 				event.start = date;
 				event.end = new Date(date.getTime() + (1000*60*60*2));
-				event.createdby = 'ServerScript';
-				var age = Math.floor(Math.random() * 10000000000);
+
+				var members = course.members;
+				var randomMember = members[Math.floor(Math.random()*members.length)];
+				event.createdby = ensureUser(randomMember && randomMember.user || 'Serverscript')._id;
+				var age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
 				Events.insert(event);
@@ -280,11 +297,13 @@ createEventsIfNone = function(){
 
 
 createCommentsIfNone = function(){
+	var prng = Prng("createCommentsIfNone");
+
 	//Events.remove({});
 	if (CourseDiscussions.find().count() === 0) {
 		var userCount = Meteor.users.find().count();
 		Courses.find().forEach(function(course) {
-			var comment_count =  Math.floor(Math.pow(Math.random() * 2, 4));
+			var comment_count =  Math.floor(Math.pow(prng() * 2, 4));
 			var courseMembers = course.members.length;
 			for (var n = 0; n < comment_count; n++) {
 				var comment = {};
@@ -294,15 +313,15 @@ createCommentsIfNone = function(){
 
 				comment.courseId = course._id;
 				comment.title = _.sample(words) + ' ' + _.sample(words) + ' ' + _.sample(words);
-				comment.text =  words.slice(0, 10 + Math.floor(Math.random() * 30)).join(' ');
+				comment.text =  words.slice(0, 10 + Math.floor(prng() * 30)).join(' ');
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = (Math.random() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created); ;
+				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
 
-				var pickMember = course.members[Math.floor(Math.random()*courseMembers)];
+				var pickMember = course.members[Math.floor(prng()*courseMembers)];
 				var commenter = false;
-				if (!pickMember || Math.random() < 0.2 ){
-					commenter = Meteor.users.findOne({}, {skip: Math.floor(Math.random()*userCount)})._id;
+				if (!pickMember || prng() < 0.2 ){
+					commenter = Meteor.users.findOne({}, {skip: Math.floor(prng()*userCount)})._id;
 				} else {
 					commenter = pickMember.user;
 				}
@@ -329,6 +348,7 @@ loadTestEvents = function(){
 
 		event.createdBy = ensureUser(event.createdby)._id;  // Replace user name with ID
 		event.groups = _.map(event.groups, ensureGroup);
+		event.groupOrganizers = [];
 
 		/* Create the events around the current Day.
 		First loaded event gets moved to current day. All events stay at original hour */
@@ -346,6 +366,7 @@ loadTestEvents = function(){
 		if (event.room) {
 			ensureRoom(event.location, event.room);
 		}
+		event.internal = !!event.internal;
 		event.start = new Date(event.start.$date+dateOffset);
 		event.end = new Date(event.end.$date+dateOffset);
 		event.time_created = new Date(event.time_created.$date);
@@ -361,11 +382,13 @@ loadTestEvents = function(){
 
 
 loadGroupsIfNone = function(){
+	var prng = Prng("loadGroupsIfNone");
+
 	if (Groups.find().count() === 0) {
 		_.each (testGroups, function (group){
 			if (!group.name) return;
 			group.createdby = 'ServerScript_loadingTestgroups';
-			var age = Math.floor(Math.random()*10000000000);
+			var age = Math.floor(prng()*10000000000);
 			group.time_created = new Date(new Date().getTime()-age);
 			group.time_lastedit = new Date(new Date().getTime()-age*0.25);
 				// TESTING: always use same id for same group to avoid broken urls while testing

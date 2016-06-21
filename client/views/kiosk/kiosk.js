@@ -1,7 +1,6 @@
 Router.map(function () {
-	this.route('kiosk', {
+	this.route('kioskEvents', {
 		path: '/kiosk/events',
-		template: 'kioskEvents',
 		layoutTemplate: 'kioskLayout',
 		waitOn: function () {
 			var now = minuteTime.get(); // Time dependency so this will be reactively updated

@@ -9,7 +9,7 @@
 </template>
 
 <template name="region_sel">
-	<a class="region_sel_link">
+	<a class="navbar-link">
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
 		<input class="-searchRegions"
 					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
@@ -22,12 +22,13 @@
 		role="button"
 		aria-expanded="false">
 	</span>
-	<span class="caret"></span>
+	<div class="nav-marker-caret"></div>
+	<div class="nav-marker-bar"></div>
 
 
 	<ul class="dropdown-menu" role="menu">
 		<li>
-			<a class="regionselect -clickClose">
+			<a class="regionselect js-nav-dropdown-close" href="#">
 				<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
 					{{mf 'menue.All regions' 'All regions'}}
 				</span>
@@ -40,13 +41,13 @@
 					{{allUpcomingEvents}}
 				</span>
 				{{#if currentRegion}}
-					<span class="glyphicon glyphicon-ok"></span>
+					<span class="checkmark glyphicon glyphicon-ok"></span>
 				{{/if}}
 			</a>
 		</li>
 		{{#each regions}}
 			<li class="region">
-				<a href="#" class="regionselect -clickClose">
+				<a href="#" class="regionselect js-nav-dropdown-close">
 					<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
 						{{regionNameMarked}}
 					</span>
@@ -59,7 +60,7 @@
 						{{futureEventCount}}
 					</span>
 					{{#if currentRegion}}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
 			</li>

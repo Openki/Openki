@@ -49,7 +49,7 @@ Router.map(function () {
 				var course = Courses.findOne(this.params.query.courseId);
 				if (course) {
 					event.title = course.name;
-					event.course_id = course._id;
+					event.courseId = course._id;
 					event.region = course.region;
 					event.description = course.description;
 					event.internal = course.internal;

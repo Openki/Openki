@@ -1,0 +1,23 @@
+<template name="coursedocs">
+<div class="course-docs">
+	{{#each eventsWithFiles}}
+		{{#if this.files}}
+			{{#each files}}
+			<div style="float:left; margin-right:20px;">
+				{{> eventDocs}}
+			</div>
+			<div>
+				{{dateformat_mini_fullmonth ../start}}
+			</div>
+			{{/each}}
+		{{/if}}
+	{{/each}}
+	<p> If not differently indicated these files are licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons BY-SA </a> </p>
+</div>
+</template>
+
+<template name="eventDocs">
+	<p>
+		<a href="{{file}}" target="_blank">{{filename}}</a>
+	</p>
+</template>

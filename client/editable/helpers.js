@@ -14,7 +14,12 @@ Template.editable.onRendered(function() {
 		placeholder: {
 			hideOnClick: false,
 			text: self.data.placeholderText
-		}
+		},
+		anchor: {
+			linkValidation: true,
+			placeholderText: mf('editable.link.placeholder', "Paste link here...")
+		},
+		autoLink: true,
 	};
 	if (this.data.simple) {
 		options.disableReturn = true;
@@ -29,7 +34,7 @@ Template.editable.onRendered(function() {
 	this.data.editedContent = function() {
 		if (!self.changed.get()) return false;
 		return self.data.simple ? editable.text() : editable.html();
-	}
+	};
 
 	// This method can be used to leave editing mode
 	this.data.end = function() {
@@ -99,7 +104,7 @@ Template.editable.helpers({
 });
 
 Template.editable.events({
-	'click .-editableStore': function(event, instance) {
+	'click .js-editable-save': function(event, instance) {
 		event.preventDefault();
 		instance.changed.set(false);
 		var editable = instance.$('.editable');
@@ -107,7 +112,7 @@ Template.editable.events({
 		instance.data.store(changedText);
 		instance.editingVersion = false;
 	},
-	'click .-editableCancel': function(event, instance) {
+	'click .js-editable-cancel': function(event, instance) {
 		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
@@ -127,4 +132,3 @@ Template.editable.events({
 		selectEnd(instance.$('.editable')[0]);
 	}
 });
-

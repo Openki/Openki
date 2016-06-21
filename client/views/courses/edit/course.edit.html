@@ -1,0 +1,143 @@
+<template name="course_edit">
+	<div class="course-edit">
+		<form>
+			{{#if _id}}
+				<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+			{{else}}
+				<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
+				<span class="fa fa-info"></span>
+				&nbsp;
+				{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
+				<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
+			{{/if}}
+			<div class="course_edit_body">
+				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
+				<input class="form-control"
+					id="editform_name"
+					placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+					size="40"
+					type="text"
+					value="{{name}}"/>
+				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>
+				<div class="form-control"
+					id="editform_description"
+					data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
+					{{{description}}}
+				</div>
+				<div id='editform_categories'>
+					{{#if editingCategories}}
+						<div id="edit_categories">
+							<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
+								{{#each availableCategories}}
+									<div class="checkbox">
+										<label class="{{isChecked}}">
+											<input class='js-category-checkbox cat_{{this}}'
+												name='{{this}}'
+												type='checkbox'
+												value="1"
+												{{checkCategory}}/>
+											{{> categoryLabel}}
+											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+										</label>
+									</div>
+									{{#each availableSubcategories this}}
+										<div class="checkbox checkbox-sub">
+											<label class="{{isChecked}}">
+												<input class='js-category-checkbox cat_{{this}}'
+													name='{{this}}'
+													type='checkbox'
+													value="1"
+													{{checkCategory}}/>
+												{{> categoryLabel}}
+											</label>
+										</div>
+									{{/each}}
+								{{/each}}
+						</div>
+					{{else}}
+						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
+						{{#if categories}}
+							{{>courseCategories}}
+						{{/if}}
+						{{#unless categories}}
+							{{mf 'course.edit.no.categories' 'No categories'}}
+						{{/unless}}
+						<button class="btn btn-edit editCategories" type="button" role="button">
+							<span class="glyphicon glyphicon-edit"></span>
+							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
+						</button>
+					{{/if}}
+				</div>
+
+				<div class="course_edit_roles">
+					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
+					{{#each available_roles}}
+						{{> courseEditRole selected=../roles role=this members=../members}}
+					{{/each}}
+				</div>
+
+				<div class="course_edit_internal">
+					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
+					<div class="checkbox">
+						<label>
+							<input class="-courseInternal"
+								type="checkbox"
+								{{isInternal}}/>
+							{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
+						</label>
+					</div>
+				</div>
+
+				<div class="course_edit_region">
+					{{#unless _id}}
+						<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
+						<select class="region_select form-control" name='region'>
+							<option value='' disabled selected class="select_placeholder">
+								{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+							</option>
+							{{#each regions}}
+								<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
+									{{name}}
+								</option>
+							{{/each}}
+						</select>
+					{{/unless}}
+				</div>
+				<div class="course_edit_finishbtns">
+					<button type="button" class="btn btn-save js-course-edit-save">
+						<span class="glyphicon glyphicon-save"></span>
+						{{mf 'course.edit.save_btn' 'Save'}}
+					</button>
+					<button type="button" class="btn btn-cancel js-course-edit-cancel">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf '_button.cancel'}}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="courseEditRole">
+	<div class="checkbox">
+		<label class="{{role.type}}">
+			<input class='-roleselection {{role.type}}'
+				name='{{role.type}}'
+				type="checkbox"
+				{{checkRole}}/>
+			<i class="{{role.icon}} fa-fw"></i>
+			{{mf roleDescription}}
+		</label>
+	</div>
+	{{#if checkRole}}
+		<div class="checkbox checkbox-sub">
+			<label>
+				<input class='-enrol {{role.type}}'
+					name='{{role.type}}'
+					type="checkbox"
+					{{hasRole}}/>
+				{{mf roleSubscription}}
+			</label>
+		</div>
+	{{/if}}
+</template>

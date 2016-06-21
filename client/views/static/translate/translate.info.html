@@ -1,0 +1,35 @@
+<template name="translateInfo">
+	<div class="translate-info">
+		<h4>Welcome and thanks for helping with the translation of Openki</h4>
+		<p>Here are some guidelines and some help.<br>
+			Please read them carefully before you start to translate.</p>
+
+		We use a casual, every day language for the interface.
+		<ul>
+			<li> Try to sound as natural as possible.</li>
+			<li> Translate the meaning and formulate it in your own way. When it sounds strange just rephrase it. If a word gets lost and the content stays the same, even better.</li>
+			<li> Openki is on a first-name basis with all users.</li>
+			<li> It's totally okay to address the user informally as if they were a good friend.</li>
+		</ul>
+
+		Where possible we use a gender-neutral, inclusive language.
+		<ul>
+			<li> We avoid gender-specific pronouns and try to use gender-neutral ones...</li>
+			<li> As well we use gender-neutral titles and roles.</li>
+			<li> ...without sounding too weird though.</li>
+		</ul>
+
+		Some technical stuff:
+		<ul>
+			<li> Words in capital letters in brackets like <code>{NAME}</code> are variables. Transfer them as they are.</li>
+			<li> "Don't forget 'all' the punctuation (marks)!"...</li>
+			<li> In some languages capitalization differs from English. Otherwise transfer them too.</li>
+			<li> Sometimes there are multiple translations in one string. Ex. when there is <code>no participant</code>, but <code>1 participant</code> and <code>2 participants</code>.<br>
+			So we need a translation for each case. One for zero (=0), one for one (=1), one for the rest (other). The used syntax is as follows:<br>
+			<code>Create {COUNT, plural, one {event} other {# events}}</code> becomes:<br>
+			<code>Erstelle {COUNT, plural, one {Veranstaltung} other {# Veranstaltungen}}</code></li>
+			<li> # stands for a Number.</li>
+			<li> There are no save-buttons. Strings get saved as you move to the next one or away from the translation page.</li>
+		</ul>
+	</div>
+</template>

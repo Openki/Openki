@@ -964,7 +964,7 @@ testCourses = [{
 	'region':        'Englistan'
 },{
 	'name':        'Weekly meeting',
-	'categories': [''],
+	'categories': [],
 	'tags':       ['', ''],
 	'groups':     ['CCC-ZH'],
 	'internal':    'true',
@@ -981,7 +981,7 @@ testCourses = [{
 	'region':        'Englistan'
 },{
 	'name':        'Vokü',
-	'categories': [''],
+	'categories': [],
 	'tags':       ['', ''],
 	'groups':     ['ASZ'],
 	'internal':    'true',
@@ -998,7 +998,7 @@ testCourses = [{
 	'region':        'Englistan'
 },{
 	'name':        'Sunnday-Cinema',
-	'categories': [''],
+	'categories': [],
 	'tags':       ['', ''],
 	'groups':     ['ASZ'],
 	'internal':    'true',

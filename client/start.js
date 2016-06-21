@@ -10,6 +10,12 @@ Meteor.subscribe('version');
 
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
+	Tooltips.hide();
+
+	var currentPath = Router.current().route.path(this);
+	$('.navbar-link[href!="' + currentPath + '"]').removeClass('navbar-link-active');
+	$('.navbar-link[href="' + currentPath + '"]').addClass('navbar-link-active');
+
 	Session.set('verify', false);
 
 	this.next();
@@ -43,20 +49,18 @@ Meteor.subscribe('regions', function() {
 	if (useRegion(UrlTools.queryParam('region'))) return;
 	if (useRegion(localStorage.getItem("region"))) return;
 
-	// Ask server to place us
+	// Give up and ask the server to place us
+	useRegion('all');
 	Meteor.call('autoSelectRegion', function(error, regionId) {
-		if (useRegion(regionId)) return;
-
-		// Give up
-		useRegion('all');
+		useRegion(regionId);
 	});
 });
 
 
-// We keep two subscription manager around. One is for the regular subscriptions like list of courses,
+// We keep two subscription caches around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsManager({ cacheLimit: 5, expireIn: 1 });
-miniSubs = new SubsManager({ cacheLimit: 150, expireIn: 1 });
+subs = new SubsCache({ cacheLimit: 5, expireAfter: 1 });
+miniSubs = new SubsCache({ cacheLimit: 50, expireAfter: 1 });
 
 
 // Try to guess a sensible language
@@ -88,7 +92,6 @@ Meteor.startup(function() {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	var acceptLangs = Array.prototype.slice.call(navigator.languages);
 	for (var i in navigator.languages || []) {
 		if (useLocale(navigator.languages[i])) return;
 	}

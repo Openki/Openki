@@ -1,0 +1,62 @@
+.groups-list {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.group {
+  display: inline-block;
+}
+
+.js-group-label {
+  @include transition(all $default-transition-time);
+  background: $group-bg;
+  color: $group-text;
+  padding: 0 4px 1px;
+  &:hover {
+    @include box-shadow-small($group-hover-shadow);
+    background: $group-hover-bg;
+		color: $group-hover-text;
+    text-decoration: none;
+  }
+}
+
+.group_name_static {
+  background: $group-bg;
+  color: $group-text;
+  margin-bottom: 10px;
+  padding: 2px 5px;
+}
+
+.course-groups-manage {
+  @include grid(12);
+  padding: 0 0 10px;
+}
+
+.groups-options {
+  white-space: nowrap;
+  li {
+    padding: 3px;
+    button {
+      background: none;
+      border: 0;
+      &.-admitToGroup {
+        text-align: left;
+      }
+      &.js-group-expel-btn {
+        @include icon-btn-remove;
+      }
+      span.glyphicon-remove {
+        position: relative;
+        top: 2px;
+      }
+    }
+    &.part-of-group {
+      padding: 3px 10px;
+      &:hover {
+        background: $openki-light-blue;
+        color: $default-black;
+      }
+    }
+  }
+}

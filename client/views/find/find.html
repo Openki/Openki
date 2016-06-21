@@ -1,73 +1,70 @@
 <template name="findWrap">
-	<div class="find">
-		<h1>{{mf 'find.WhatLearn?' 'What do you want to learn?'}}</h1>
+	<div class="find container">
+		<h1 class="find-heading">
+			{{mf 'find.WhatLearn?' 'What do you want to learn?'}}
+		</h1>
 		{{> find}}
 	</div>
 </template>
 
 <template name="find">
 	<div class="search">
-		<div class="-searchField">
+		<div class="js-search-field">
 			<div class="input-group">
-				<input
+				<input class="js-search-input form-control"
 					type="text"
 					id="find"
-					class="-searchInput"
 					value="{{search}}"
-					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"
-				/>
+					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
 				<span class="input-group-btn">
-					<button class="-findButton" type="button">
+					<button class="btn btn-go js-find-btn" type="button">
 						{{mf 'find.search_go' 'Go!'}}
 					</button>
-				</span>
-				{{#unless isMobile}}
-					<span class="input-group-btn">
+					{{#unless isMobile}}
 						{{#if showingFilters}}
-							<button class="-showFilters remove-filter" type="button">
-								<span class="glyphicon glyphicon-filter"></span>
-								{{mf 'find.hideFilters' 'Remove filters'}}
+							<button class="btn btn-cancel js-toggle-filter" type="button">
+								<span class="glyphicon glyphicon-remove"></span>
+								{{mf 'find.hideFilters' 'Remove all filters'}}
 							</button>
 						{{else}}
-							<button class="-showFilters" type="button">
+							<button class="btn btn-default js-toggle-filter" type="button">
 								<span class="glyphicon glyphicon-filter"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
 						{{/if}}
-					</span>
-				{{/unless}}
+					{{/unless}}
+				</span>
 			</div>
 		</div>
 		{{#if isMobile}}
 			{{#if showingFilters}}
-				<button class="-showFilters remove-filter" type="button">
-					<span class="glyphicon glyphicon-filter"></span>
+				<button class="btn btn-cancel js-toggle-filter" type="button">
+					<span class="glyphicon glyphicon-remove"></span>
 					{{mf 'find.hideFilters' 'Remove filters'}}
 				</button>
 			{{else}}
-				<button class="-showFilters" type="button">
+				<button class="btn btn-default js-toggle-filter" type="button">
 					<span class="glyphicon glyphicon-filter"></span>
 					{{mf 'find.showFilters' 'Filter'}}
 				</button>
 			{{/if}}
 		{{/if}}
-		<div class="search_filter" style="{{#if showingFilters}}display:block;{{else}}display:none;{{/if}}">
-			<div class="search_filter_header">
-				<h4>
-					<span class="glyphicon glyphicon-filter"></span>
-					{{mf 'find.search_filter.title' 'Filter search'}}
-				</h4>
-			</div>
-			<div class="search_events">
-				<div class="checkbox -filterToggle -upcomingEventsFilter">
-					<label>
-						<input
-							type="checkbox"
-							id="hasUpcomingEvent"
-							name="hasUpcomingEvent"
-							{{toggleChecked 'upcomingEvent'}}
-						/>
-						{{#if toggleChecked 'upcomingEvent'}}
+		{{#if showingFilters}}
+			<div class="filter">
+				<div class="filter-header">
+					<h4 class="filter-heading">
+						<span class="glyphicon glyphicon-filter"></span>
+						{{mf 'find.search_filter.title' 'Filter search'}}
+					</h4>
+				</div>
+				<div class="filter-course-properties">
+					<div class="btn-group-vertical" data-toggle="buttons">
+						<label class="js-toggle-property-filter js-filter-upcoming-events btn btn-default">
+							<input id="hasUpcomingEvent"
+								type="checkbox"
+								name="hasUpcomingEvent"
+								autocomplete="off"
+								{{toggleChecked 'upcomingEvent'}}/>
 							<div class="eventcaption_upcoming">
 								<div class="eventcaption_upcoming_box">
 									<div class="eventcaption_upcoming_text first-line"></div>
@@ -75,138 +72,160 @@
 									<div class="eventcaption_upcoming_text third-line"></div>
 								</div>
 							</div>
-						{{/if}}
-						{{#unless toggleChecked 'upcomingEvent'}}
-							<span class="glyphicon glyphicon-calendar"></span>
-						{{/unless}}
-						&nbsp;
-						{{mf 'find.with_upcoming_events' 'With upcoming events'}}
-						&nbsp;
-						{{#if toggleChecked 'upcomingEvent'}}
-							<span class="glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</label>
+							&nbsp;
+							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
+							{{#if toggleChecked 'upcomingEvent'}}
+								<span class="checkmark glyphicon glyphicon-ok"></span>
+							{{/if}}
+						</label>
+						<label class="js-toggle-property-filter js-filter-needs-host btn btn-default">
+							<input id="needsHost"
+								autocomplete="off"
+								name="needsHost"
+								type="checkbox"
+								{{toggleChecked 'needsHost'}}/>
+							<div class="toggle-property-filter-icon">
+								<span class="glyphicon glyphicon-home"></span>
+							</div>
+							&nbsp;
+							{{mf 'find.needsHost' 'Looking for a host'}}
+							&nbsp;
+							{{#if toggleChecked 'needsHost'}}
+								<span class="checkmark glyphicon glyphicon-ok"></span>
+							{{/if}}
+						</label>
+						<label class="js-toggle-property-filter js-filter-needs-mentor btn btn-default">
+							<input id="needsMentor"
+								autocomplete="off"
+								name="needsMentor"
+								type="checkbox"
+								{{toggleChecked 'needsMentor'}}/>
+							<div class="toggle-property-filter-icon">
+								<span class="fa fa-graduation-cap"></span>
+							</div>
+							&nbsp;
+							{{mf 'find.needsMentor' 'Looking for a mentor'}}
+							&nbsp;
+							{{#if toggleChecked 'needsMentor'}}
+								<span class="checkmark glyphicon glyphicon-ok"></span>
+							{{/if}}
+						</label>
+					</div>
 				</div>
-				<div class="checkbox -filterToggle -needsHostFilter">
-					<label>
-						<input
-							type="checkbox"
-							id="needsHost"
-							name="needsHost"
-							style="display: none"
-							{{toggleChecked 'needsHost'}}
-						/>
-						<span class="glyphicon glyphicon-home {{#if toggleChecked 'needsHost'}} checked{{/if}}"></span>
-						&nbsp;
-						{{mf 'find.needsHost' 'Looking for a host'}}
-						&nbsp;
-						{{#if toggleChecked 'needsHost'}}
-							<span class="glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</label>
-				</div>
-				<div class="checkbox -filterToggle -needsMentorFilter">
-					<label>
-						<input
-							type="checkbox"
-							id="needsMentor"
-							name="needsMentor"
-							style="display: none"
-							{{toggleChecked 'needsMentor'}}
-						/>
-						<span class="fa fa-graduation-cap{{#if toggleChecked 'needsMentor'}} checked{{/if}}"></span>
-						&nbsp;
-						{{mf 'find.needsMentor' 'Looking for a mentor'}}
-						&nbsp;
-						{{#if toggleChecked 'needsMentor'}}
-							<span class="glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</label>
-				</div>
-			</div>
-			<div class="filter_categories">
-				<h4>{{mf 'find.filter.categories' 'Categories'}}</h4>
-				{{#if categories}}
-					<ul class="selected_categories">
-					{{#each categories}}
-						<li>
-							<span class="category">{{categoryName}}</span>
-							<span
-								class="glyphicon glyphicon-remove -removeCategoryFilter"
-								title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
-							</span>
-						</li>
-					{{/each}}
-					</ul>
-				{{/if}}
-				<div class="dropdown categorySelect">
-					<input
-						class="-searchCategories"
-						placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
-					/>
-					<span
-						class="dropdown-toggle"
-						data-toggle="dropdown"
-						role="button"
-						aria-expanded="false">
-					</span>
-					<ul class="dropdown-menu" role="menu">
-						{{#if availableCategories}}
-							{{#each availableCategories}}
-								<li class="{{this}}">
-									<a class="category {{#if availableSubcategories this}}parent{{/if}}">
-										{{categoryName}}
-									</a>
-									{{#if availableSubcategories this}}
-										<small
-											class="-showSubcategories {{this}}"
-											title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-											<span class="glyphicon glyphicon-plus"></span>
-										</small>
-									{{/if}}
+				<div class="filter-categories">
+					<h4 class="filter-categories-heading">
+						{{mf 'find.filter.categories' 'Categories'}}
+					</h4>
+					{{#unless isMobile}}
+						{{#if categories}}
+							<ul class="filter-selected-categories">
+							{{#each categories}}
+								<li>
+									{{> categoryLabel}}
+									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+										data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									</button>
 								</li>
-								{{#each availableSubcategories this}}
-									<li class="-subcategory {{..}}">
-										<a class="category">{{categoryName}}</a>
-									</li>
-								{{/each}}
 							{{/each}}
-						{{else}}
-							<li class="no_categories">
-								{{mf 'find.no_categories' 'No categories found.'}}
-							</li>
+							</ul>
 						{{/if}}
-					</ul>
+					{{/unless}}
+					<div class="dropdown filter-categories-select">
+						<input class="js-search-categories form-control"
+							placeholder="{{mf 'find.searchCategories.placeholder' 'Add category'}}"
+							type="text"/>
+						<button	class="dropdown-toggle"
+							aria-expanded="false"
+							data-toggle="dropdown"
+							role="button">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu filter-categories-dropdown" role="menu">
+							{{#if availableCategories}}
+								{{#each availableCategories}}
+									<li class="{{this}}">
+										<a class="js-category-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+											href="#">
+											{{categoryName}}
+											{{#if availableSubcategories this}}
+												<small class="js-toggle-subcategories {{this}}"
+													title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
+													<span class="fa fa-angle-down"></span>
+												</small>
+											{{/if}}
+										</a>
+									</li>
+									{{#each availableSubcategories this}}
+										<li class="js-sub-category {{..}}">
+											<a class="js-category-label" href="#">{{categoryName}}</a>
+										</li>
+									{{/each}}
+								{{/each}}
+							{{else}}
+								<span class="filter-no-categories-found">
+									<span class="fa fa-exclamation"></span>
+									{{mf 'find.filter-no-categories-found' 'No categories found.'}}
+								</span>
+							{{/if}}
+						</ul>
+					</div>
+					{{#if isMobile}}
+						{{#if categories}}
+							<ul class="filter-selected-categories">
+							{{#each categories}}
+								<li>
+									<a class="js-category-label" href="#">{{categoryName}}</a>
+									<button class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+										data-toggle="tooltip"
+										data-original-title="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									</button>
+								</li>
+							{{/each}}
+							</ul>
+						{{/if}}
+					{{/if}}
 				</div>
 			</div>
-		</div>
+		{{/if}}
 	</div>
-	<div class="courselist_results">
+	<div class="courselist">
 		{{#unless ready}}
 			{{> loadingPage}}
 		{{else}}
 			{{#each results}}
 				{{> course}}
 			{{else}}
-				<div class="no_courses_found">
-				{{mf 'find.no_courses_found' 'No Courses found.'}}
-				{{#unless allRegions}}
-					<br>
-					<button class="-searchAllRegions">
-						<span class="fa fa-dot-circle-o"></span>
-						{{mf 'find.searchAllRegions' 'Search in all regions'}}
-					</button>
-					<br>
-				{{/unless}}
-				{{#if proposeNewBlurb}}
-					{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
-				{{/if}}
+				<div class="no-courses-found">
+					<span class="fa fa-exclamation-circle"></span>
+					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
+					<div class="btn-group">
+						{{#if regionSelected}}
+							<button class="btn btn-default js-all-regions-btn"
+								role="button"
+								type="button">
+								<span class="fa fa-dot-circle-o"></span>
+								{{mf 'find.searchAllRegions' 'Search in all regions'}}
+							</button>
+						{{/if}}
+						{{#if showingFilters}}
+							<button class="btn btn-cancel js-toggle-filter"
+								role="button"
+								type="button">
+								<span class="glyphicon glyphicon-remove"></span>
+								{{mf 'find.hideFilters'}}
+							</button>
+						{{/if}}
+					</div>
+					{{#if proposeNewBlurb}}
+						{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=this.query.search}}
+						{{log this}}
+					{{/if}}
 				</div>
 			{{/each}}
 		{{/unless}}
 	</div>
 	{{#if eventResults.count}}
-		<div class="courselist_results">
+		<div class="courselist">
 			<hr>
 			<h3>
 			{{#if results.count}}
@@ -226,9 +245,7 @@
 			{{/if}}
 			</h3><br />
 			{{#each eventResults}}
-				<!-- <div class="event_results"> -->
-					{{> small_event}}
-				<!-- </div> -->
+					{{> small_event_withDate}}
 			{{/each}}
 		</div>
 	{{/if}}

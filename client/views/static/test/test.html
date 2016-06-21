@@ -1,0 +1,41 @@
+<template name="ipTest">
+	<div class="container ipTest">
+		Hi, enter here the ip-address to be tested:
+
+		<form>
+			<input class="js-address" placeholder="127.0.0.1" value="{{result.address}}">
+			<button class="btn js-test" type="submit">
+				<span class="glyphicon glyphicon-ok"></span>
+				Test
+			</button>
+		</form>
+
+		<hr>
+
+	{{#if error}}
+		<div style="color: red">{{error}}</div>
+	{{else}}
+		<div>Lookup result: {{result.message}}</div>
+	{{/if}}
+
+	{{#if result.lookup}}
+		<h3>GeoIP</h3>
+		Country: {{result.lookup.country}} <br>
+		Region: {{result.lookup.region}} <br>
+		City: {{result.lookup.city}} <br>
+		Lat, Long: {{result.lookup.ll.[0]}}, {{result.lookup.ll.[1]}}<br>
+		Metro: {{result.lookup.metro}} <br>
+		range: {{result.lookup.range}}
+	{{else}}
+		<div>No GeoIP result.</div>
+	{{/if}}
+
+	{{#if result.region}}
+		<h3>Detected region</h3>
+		<div>Id: {{result.region._id}}</div>
+		<div>Name: {{result.region.name}}</div>
+	{{else}}
+		<div>No region found</div>
+	{{/if}}
+	</div>
+</template>

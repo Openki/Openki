@@ -1,0 +1,21 @@
+<template name="categoryLabel">
+	<span class="category-label">
+		{{categoryName}}
+	</span>
+</template>
+
+<template name="categoryLabelLinked">
+	<a class='js-category-label'
+		data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
+		href="/find?categories={{this}}">
+		{{categoryName}}
+	</a>
+</template>
+
+<template name="courseCategories">
+	<ul class="course-categories">
+		{{#each categories}}
+			<li>{{> categoryLabelLinked}}</li>
+		{{/each}}
+	</ul>
+</template>
