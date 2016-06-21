@@ -17,12 +17,16 @@
 								<h2>{{course.name}}</h2>
 							{{/if}}
 							{{#with course}}
-								<div class="course-details-categories">
-									{{> courseCategories}}
-								</div>
-								<div class="course-details-groups">
-									{{> courseGroupList}}
-								</div>
+								{{#if categories}}
+									<div class="course-details-categories">
+										{{> courseCategories}}
+									</div>
+								{{/if}}
+								{{#if groups}}
+									<div class="course-details-groups">
+										{{> courseGroupList}}
+									</div>
+								{{/if}}
 							{{/with}}
 						</div>
 						<div class="course-details-content">
