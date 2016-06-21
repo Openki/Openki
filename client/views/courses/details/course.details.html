@@ -64,8 +64,8 @@
 				{{> course_events}}
 			{{/unless}}
 			<div class="details-page-component">
-					{{> courseMembers course}}
-					{{> courseRoles roles_details}}
+				{{> courseMembers course}}
+				{{> courseRoles roles_details}}
 			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
@@ -124,27 +124,27 @@
 <template name="courseGroupList">
 	<ul class="groups-list">
 		{{#each groups}}
-		<li>
-			{{> groupName}}
-			{{#if isOrganizer}}
-				<span class="glyphicon glyphicon-bullhorn group-add"></span>
-			{{/if}}
-			{{#if tools}}
-			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add"
-					aria-expanded="false"
-					aria-haspopup="true"
-					data-toggle="dropdown">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-				{{#each tools}}
-					<li>{{> toolTemplate}}</li>
-				{{/each}}
-				</ul>
-			</div>
-			{{/if}}
-		</li>
+			<li>
+				{{> groupName}}
+				{{#if isOrganizer}}
+					<span class="glyphicon glyphicon-bullhorn group-add"></span>
+				{{/if}}
+				{{#if tools}}
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle group-add"
+							aria-expanded="false"
+							aria-haspopup="true"
+							data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							{{#each tools}}
+								<li>{{> toolTemplate}}</li>
+							{{/each}}
+						</ul>
+					</div>
+				{{/if}}
+			</li>
 		{{/each}}
 		{{> courseGroupAdd}}
 	</ul>
@@ -160,7 +160,6 @@
 				data-toggle="dropdown">
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
-
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
@@ -178,10 +177,15 @@
 
 <template name="courseGroupRemove">
 	<li style="position: relative">
-		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.remove' 'Remove'}}</span>
+		<span class="js-expand">
+			<span class="fa fa-remove"></span>
+			{{mf 'course.group.remove' 'Remove'}}
+		</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}{{/with}}
+				{{#with groupId}}
+					{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
+				{{/with}}
 				<button type="button" class="js-remove">
 					{{mf 'course.group.confirmRemoveButton' "Delist"}}
 				</button>
@@ -193,10 +197,15 @@
 
 <template name="courseGroupMakeOrganizer">
 	<li style="position: relative">
-		<span class="js-expand"><span class="glyphicon glyphicon-bullhorn"></span> {{mf 'course.group.addOrgText' "Give editing rights"}}</span>
+		<span class="js-expand">
+			<span class="glyphicon glyphicon-bullhorn"></span>
+			{{mf 'course.group.addOrgText' "Give editing rights"}}
+		</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}{{/with}}
+				{{#with groupId}}
+					{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
+				{{/with}}
 				{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
 				<button type="button" class="js-makeOrganizer">
 					{{mf 'course.group.confimOrgButton' "Give editing rights"}}
@@ -208,10 +217,15 @@
 
 <template name="courseGroupRemoveOrganizer">
 	<li style="position: relative">
-		<span class="js-expand"><span class="fa fa-remove"></span> {{mf 'course.group.removeOrgText' "Remove editing rights"}}</span>
+		<span class="js-expand">
+			<span class="fa fa-remove"></span>
+			{{mf 'course.group.removeOrgText' "Remove editing rights"}}
+		</span>
 		{{#if expanded}}
 			<div class="group-editor">
-				{{#with groupId}}{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}{{/with}}
+				{{#with groupId}}
+					{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
+				{{/with}}
 				<button type="button" class="js-removeOrganizer">
 					{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
 				</button>
