@@ -125,6 +125,5 @@ Template.region_sel.events({
 
 	'focus .-searchRegions': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
-		updateRegionSearch(event, instance);
 	}
 });
