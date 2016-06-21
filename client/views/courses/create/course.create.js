@@ -8,7 +8,7 @@ courseTemplate = function() {
 Router.map(function () {
 	this.route('proposeCourse', {
 		path: 'courses/propose',
-		template: 'proposecourse',
+		template: 'proposeCourse',
 		onAfterAction: function() {
 			document.title = webpagename + 'Propose new course';
 		},

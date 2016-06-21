@@ -1,23 +1,15 @@
-.course-roles {
-  @include grid(12);
-  padding: 0;
-}
-
 .course-role,
 .course-role-enrol {
-  @include grid(12);
   @include transition-property(#{'box-shadow, margin'});
   @include transition-duration(.3s);
-  padding: 0;
 }
 
 .course-role-title,
 .course-role-title-enrol {
-  @include grid(12);
 	font-size: large;
 	line-height: 1.1;
 	margin-top: 3px;
-  padding: 10px 15px;
+  padding: 10px ($grid-gutter-width / 2);
   width: 100%;
 }
 
@@ -42,8 +34,7 @@
 }
 
 .course-role-enrol-options {
-  @include grid(12);
-  background: $openki-light-blue;
+  background: $openki-blue-lighter;
   padding: 10px 12px 11px;
 }
 
@@ -52,12 +43,12 @@
 }
 
 .course-role-enrol-btns {
-  @include grid(12);
-  padding: 13px 0 0;
+  padding-top: 13px;
 }
 
 .js-role-enrol-btn {
 	@include btn-lg;
+	border-radius: 3px;
 	text-align: left;
 	margin-top: 3px;
 	width: 100%;

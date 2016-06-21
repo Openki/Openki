@@ -1,41 +1,67 @@
 // Views stylesheet imports
 // --------------------------------------------------
+
+// Calendar
 @import 'calendar/calendar';
 
+// Categories
 @import 'categories/categories';
 
-@import 'courses/courses';
+// Courses
+@import 'courses/details/course.details';
+@import 'courses/details/discussion/course.discussion';
+@import 'courses/details/history/course.history';
+@import 'courses/details/members/course.members';
+@import 'courses/details/roles/course.roles';
+@import 'courses/edit/course.edit';
+@import 'courses/events/course.events';
+@import 'courses/list/course.list';
 
-@import 'events/events';
+// Events
+@import 'events/details/event.details';
+@import 'events/edit/event.edit';
+@import 'events/editLocation/event.editLocation';
+@import 'events/event-small/event.small';
 
+// Find
 @import 'find/find';
 
+// Frames
 @import 'frames/calendar/frame.calendar';
 @import 'frames/events/frame.events';
 
-@import 'groups/groups';
+// Groups
 @import 'groups/details/group.details';
+@import 'groups/list/group.list';
 @import 'groups/settings/group.settings';
 
+// Introduction
 @import 'introduction/introduction';
 
+// Kiosk
 @import 'kiosk/kiosk';
 
-@import 'login/frame/login.frame';
-@import 'login/resetPassword/resetPassword';
-
+// Locations
 @import 'locations/location';
 @import 'locations/details/location.details';
 @import 'locations/link/location.link';
 
+// Login
+@import 'login/frame/login.frame';
+@import 'login/resetPassword/resetPassword';
+
+// Navigation
+@import 'navigation/footer/footer';
+@import 'navigation/navbar/navbar';
+
+// Static
 @import 'static/loading/loading';
 @import 'static/noscript/noscript';
 @import 'static/translate/translate.info';
 
+// Timetable
 @import 'timetable/timetable';
 
-@import 'navigation/footer/footer';
-@import 'navigation/navbar/navbar';
-
+// Users
 @import 'users/ownprofile/ownprofile';
 @import 'users/userprofile/userprofile';

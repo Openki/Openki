@@ -121,18 +121,11 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 768; // @screen-sm
+		return Session.get('screenSize') <= 992; // @screen-md
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
 	}
-});
-
-Template.courseDetailsSubmenu.helpers({
-	hasFiles: function() {
-		var withFiles = { courseId: this.course._id, files: {$exists: 1, $not: {$size: 0}} };
-		return !!Events.findOne(withFiles);
-	},
 });
 
 Template.courseDetailsPage.events({

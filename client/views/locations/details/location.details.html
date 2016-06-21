@@ -3,21 +3,19 @@
 		{{#if isEditing}}
 				{{>location_edit}}
 		{{/if}}
-
-	<!-- copied from example to coursedetails to here... could be set in template-controller write into this. nicht global in session ->variable in template -->
 		{{#with location}}
-		{{#unless isEditing}}
-				<div class="location-details-header">
-					<img src="{{picture}}">
-
-					<h1 class="name">{{name}}</h1>
-					<span class="description"> {{description}} </span>
-
-					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, {{!--> show_locationcategories--}}</p>
+			{{#unless isEditing}}
+			<div class="details-page-component">
+				<div class="details-header location-details-header">
+					{{#if picture}}
+						<img src="{{picture}}">
+					{{/if}}
+					<h3>{{name}}</h3>
+					<p>{{description}} </p>
+					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
 				</div>
-
-				<div class="location-details-body">
-					<div class="descriptionFrame">
+				<div class="details-body location-details-body">
+					<div class="details-content">
 						<span class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</span>
 						<ul class='hosts'>
 							{{#each hosts}}
@@ -59,11 +57,16 @@
 							<span class="title">{{mf 'location.details.specials' 'Specials:'}}</span> {{specials}}
 						</div>
 						{{/if}}
+						<div class="form-group">
+							<button type="button" class="btn btn-default -contact">
+								{{mf 'location.details.contact' 'Contact'}}
+							</button>
+						</div>
 					</div>
 
 					{{#if loc}}
-					<div class="location_map">
-						{{>map markers=markers}}
+					<div class="details-map">
+						{{> map markers=markers}}
 						<div class="coordinates">
 							{{coords}}
 						</div>
@@ -71,22 +74,30 @@
 					{{/if}}
 
 
-					<button class="btn btn-default -contact">
-						{{mf 'location.details.contact' 'Contact'}}
-					</button>
-					<br><br>
-					{{#if canEditLocation}}
-						{{mf 'location.details.youAreHost' 'You are Host here:'}}
-						<input type="button" class="edit" value="Edit" />
-						<input type="button" class="del" value="Delete" />
-					{{/if}}
+
+
 
 				</div>
-		{{/unless}}
+				<!-- {{#if canEditLocation}} -->
+					<div class="actions">
+						<!-- {{mf 'location.details.youAreHost' 'You are Host here:'}} -->
+						<button type="button" class="btn btn-delete js-location-delete">
+							<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+							{{mf '_button.delete'}}
+						</button>
+						<button type="button" class="btn btn-edit js-location-edit">
+							<i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+							{{mf '_button.edit'}}
+						</button>
+					</div>
+				<!-- {{/if}} -->
+			</div>
+			{{/unless}}
 		{{/with}}
-
+		<div class="details-page-component">
 			<h2> Upcoming events: </h2>
 			{{> frameEvents eventsCursor}}
+		</div>
 
 	</div>
 </template>

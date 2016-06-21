@@ -1,48 +1,48 @@
 <template name="courseDetailsPage">
-	<div class="course-details-container container">
+	<div class="container">
 		<div class="course-details-column-left">
 			{{#if edit}}
-				{{> course_edit course}}
+				<div class="details-page-component">
+					{{> course_edit course}}
+				</div>
 			{{else}}
-				<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-					{{#if isProposal}}
-						<div class="course-details-status">
-							<div>
-							{{mf 'course.details.tag.proposal' 'proposal'}}
+				<div class="details-page-component">
+					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+						{{#if editableName}}
+							<div class="course-details-title">
+								{{>editable editableName}}
 							</div>
-						</div>
-					{{/if}}
-
-					<div class="course-details-title">
-						{{#if editableName}}{{>editable editableName}}{{else}}{{course.name}}{{/if}}
+						{{else}}
+							<h2>{{course.name}}</h2>
+						{{/if}}
 						{{#with course}}
-							{{#if currentUserMayEdit}}
-									<button class="js-delete-course-btn"
-										data-tooltip="{{mf 'course.details.del_btn' 'Delete course'}}"
-										type="button"
-										role="button">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-									<button class="js-edit-course-btn"
-										data-tooltip="{{mf 'course.details.edit_btn' 'Edit course'}}"
-										type="button"
-										role="button">
-										<span class="glyphicon glyphicon-edit"></span>
-									</button>
-							{{/if}}
+							<div class="course-details-categories">
+								{{> courseCategories}}
+							</div>
+							<div class="course-details-groups">
+								{{> courseGroupList}}
+							</div>
 						{{/with}}
+						{{> courseDetailsSubmenu}}
 					</div>
 					{{#with course}}
-						<div class="course-details-categories">
-							{{> courseCategories}}
-						</div>
-						<div class="course-details-groups">
-							{{> courseGroupList}}
-						</div>
+						{{#if currentUserMayEdit}}
+							<div class="actions">
+								<button type="button" class="btn btn-delete js-delete-course-btn">
+									<i class="fa fa-trash fa-fw"></i>
+									{{mf '_button.delete'}}
+								</button>
+								<button type="button" class="btn btn-edit js-edit-course-btn">
+									<i class="fa fa-edit fa-fw"></i>
+									{{mf '_button.edit'}}
+								</button>
+							</div>
+						{{/if}}
 					{{/with}}
-					{{> courseDetailsSubmenu}}
 				</div>
-				{{> report}}
+				<div class="details-page-component">
+					{{> report}}
+				</div>
 			{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
 			{{#if mobileViewport}}
@@ -55,7 +55,7 @@
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-			<div class="course-details-component">
+			<div class="details-page-component">
 					{{> courseMembers course}}
 					{{> courseRoles roles_details}}
 			</div>
@@ -67,26 +67,23 @@
 </template>
 
 <template name="courseDetailsSubmenu">
-	<div>
 		<nav>
 			<ul class="nav nav-tabs">
 				<li role="presentation" class='active'>
 					<a href="#description" data-toggle="tab">
-						<span class="fa fa-info"></span>&nbsp;
+						<i class="fa fa-info fa-fw"></i>
 						{{mf 'course.subnav.descr' 'Description'}}
 					</a>
 				</li>
-				{{#if hasFiles}}
-					<li role="presentation">
-						<a href="#docs" data-toggle="tab">
-							<span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-							{{mf 'course.subnav.docs' 'Docs'}}
-						</a>
-					</li>
-				{{/if}}
+				<li role="presentation">
+					<a href="#docs" data-toggle="tab">
+						<i class="fa fa-folder-open fa-fw"></i>
+						{{mf 'course.subnav.docs' 'Docs'}}
+					</a>
+				</li>
 				<li role="presentation">
 					<a href="#history" data-toggle="tab">
-						<span class="fa fa-history"></span>&nbsp;
+						<i class="fa fa-history fa-fw"></i>
 						{{mf 'course.subnav.history' 'History'}}
 					</a>
 				</li>
@@ -96,24 +93,23 @@
 			<div class="tab-pane active" id="description">
 				{{> courseDetailsDescription}}
 			</div>
-		{{#if hasFiles}}
 			<div class="tab-pane" id="docs">
 				{{> coursedocs}}
 			</div>
-		{{/if}}
 			<div class="tab-pane" id="history">
 				{{> coursehistory}}
 			</div>
 		</div>
-	</div>
 </template>
 
 <template name="courseDetailsDescription">
-	<div>
-		<p class="course-details-description">
-			{{#if editableDescription}}{{>editable editableDescription}}{{else}}{{{course.description}}}{{/if}}
-		</p>
-	</div>
+	<p class="course-details-description">
+		{{#if editableDescription}}
+			{{>editable editableDescription}}
+		{{else}}
+			{{{course.description}}}
+		{{/if}}
+	</p>
 </template>
 
 
@@ -127,7 +123,10 @@
 			{{/if}}
 			{{#if tools}}
 			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle group-add" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button type="button" class="btn btn-default dropdown-toggle group-add"
+					aria-expanded="false"
+					aria-haspopup="true"
+					data-toggle="dropdown">
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -147,7 +146,10 @@
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle no-btn-style" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-default dropdown-toggle no-btn-style"
+				aria-expanded="false"
+				aria-haspopup="true"
+				data-toggle="dropdown">
 				<span class="glyphicon glyphicon-plus" title="{{mf 'course.group.addText' 'Add a group'}}"></span>
 			</button>
 

@@ -1,16 +1,16 @@
 <template name="introduction">
-	<div class="container">
+	<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
 		<div class="introduction">
 			<h3>
 				{{#mf KEY='introduction.Title' SITENAME=siteName}}
 				What does {SITENAME} do for you?
 				{{/mf}}
 				{{#if openedIntro}}
-					<button class="btn btn-default js-introduction-toggle-btn introduction-hide-btn">
+					<button type="button" class="btn btn-default js-introduction-toggle-btn introduction-hide-btn">
 						{{mf 'introduction.toggle.hide' 'Hide'}}
 					</button>
 				{{else}}
-					<button class="btn btn-default js-introduction-toggle-btn introduction-show-btn">
+					<button type="button" class="btn btn-default js-introduction-toggle-btn introduction-show-btn">
 						{{mf 'introduction.toggle.show' 'Show'}}
 					</button>
 				{{/if}}

@@ -7,8 +7,6 @@
 }
 
 .user-frame {
-  @include grid(12);
-	padding: 0;
 	@media (max-width: $screen-sm) {
 		background-color: $dropdown-bg;
 		padding-top: 15px;
@@ -16,7 +14,7 @@
 }
 
 .ownuser-frame {
-  @include grid(12);
+  padding: 0 ($grid-gutter-width / 2);
 	h3 {
 		text-align: center;
 		margin: 0 0 15px;
@@ -24,7 +22,7 @@
 }
 
 .login {
-  @include grid(12);
+  padding: 0 ($grid-gutter-width / 2);
   .fa-lock {
     font-size: large;
     padding: 0 1px;
@@ -67,8 +65,7 @@
 }
 
 .forgot_login {
-  @include grid(12);
-  padding: 0 15px;
+  padding: 0 ($grid-gutter-width / 2);
 }
 
 .forgot-pwd-mail-info {

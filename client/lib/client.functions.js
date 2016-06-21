@@ -192,6 +192,11 @@ Handlebars.registerHelper("log", function(context) {
 Handlebars.registerHelper('username', userName);
 
 
+Handlebars.registerHelper('currentLocale', function() {
+	return Session.get('locale');
+});
+
+
 Handlebars.registerHelper('dateformat', function(date) {
 	Session.get('timeLocale');
 	if (date) return moment(date).format('L');

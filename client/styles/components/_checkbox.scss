@@ -12,12 +12,8 @@
 }
 
 .checkbox-sub {
-	margin-left: 15px;
+	margin-left: 20px;
 	& + .checkbox:not(.checkbox-sub) {
 		margin-top: 5px;
 	}
-}
-
-.warn-block {
-	@extend .help-block;
 }

@@ -44,7 +44,7 @@ table.mfTrans {
 				background-color: lighten($translate-untrans, 15%);
 			}
 			td:last-child {
-				background-color: $openki-light-blue;
+				background-color: $openki-blue-lighter;
 			}
 		}
 		th:first-child,
@@ -67,7 +67,7 @@ table.mfTrans {
 			color: black;
 		}
 		th:last-child {
-			background-color: lighten($openki-light-blue, 5%);
+			background-color: lighten($openki-blue-lighter, 5%);
 		}
 	}
 }

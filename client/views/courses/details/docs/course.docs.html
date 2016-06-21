@@ -1,23 +1,38 @@
 <template name="coursedocs">
-<div class="course-docs">
-	{{#each eventsWithFiles}}
-		{{#if this.files}}
-			{{#each files}}
-			<div style="float:left; margin-right:20px;">
-				{{> eventDocs}}
-			</div>
-			<div>
-				{{dateformat_mini_fullmonth ../start}}
-			</div>
-			{{/each}}
-		{{/if}}
-	{{/each}}
-	<p> If not differently indicated these files are licensed under <a href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons BY-SA </a> </p>
-</div>
+	{{#if hasFiles}}
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Filename</th>
+					<th>Uploaded</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each eventsWithFiles}}
+					{{#if this.files}}
+						{{#each files}}
+							<tr>
+								<td>{{> eventDocs}}</td>
+								<td>{{dateformat_mini_fullmonth ../start}}</td>
+							</tr>
+						{{/each}}
+					{{/if}}
+				{{/each}}
+			</tbody>
+		</table>
+		<span class="files-info">{{mf 'course.docs.licensing'
+			'If not differently indicated these files are licensed under'}}
+			<a href='http://creativecommons.org/licenses/by-sa/4.0/deed.{{currentLocale}}'>
+				<i class="fa fa-creative-commons" aria-hidden="true"></i>
+				Creative Commons BY-SA
+			</a>
+		</span>
+	{{else}}
+		{{mf 'course.docs.noFiles' 'This course has no documents attached.'}}
+	{{/if}}
 </template>
 
 <template name="eventDocs">
-	<p>
-		<a href="{{file}}" target="_blank">{{filename}}</a>
-	</p>
+	<i class="fa fa-file fa-fw" aria-hidden="true"></i>
+	<a href="{{file}}" target="_blank">{{filename}}</a>
 </template>
