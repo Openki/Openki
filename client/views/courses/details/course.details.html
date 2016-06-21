@@ -74,6 +74,42 @@
 	</div>
 </template>
 
+<template name="courseDetailsSubmenu">
+	<nav class="course-details-nav">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class='active'>
+				<a href="#description" data-toggle="tab">
+					<i class="fa fa-info fa-fw"></i>
+					{{mf 'course.subnav.descr' 'Description'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#docs" data-toggle="tab">
+					<i class="fa fa-folder-open fa-fw"></i>
+					{{mf 'course.subnav.docs' 'Docs'}}
+				</a>
+			</li>
+			<li role="presentation">
+				<a href="#history" data-toggle="tab">
+					<i class="fa fa-history fa-fw"></i>
+					{{mf 'course.subnav.history' 'History'}}
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="tab-content">
+		<div class="tab-pane active" id="description">
+			{{> courseDetailsDescription}}
+		</div>
+		<div class="tab-pane" id="docs">
+			{{> coursedocs}}
+		</div>
+		<div class="tab-pane" id="history">
+			{{> coursehistory}}
+		</div>
+	</div>
+</template>
+
 <template name="courseDetailsDescription">
 	<p class="course-details-description">
 		{{#if editableDescription}}
