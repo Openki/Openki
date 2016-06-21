@@ -108,13 +108,6 @@
 			}
 		}
 	}
-  .groups-list,
-  .groups-list > li {
-    display: inline-block;
-  }
-  .groups-list {
-    margin-bottom: 10px;
-  }
 }
 
 .course-details-status {
@@ -155,22 +148,4 @@
       margin-left: 0;
     }
   }
-}
-
-.course-details-groups {
-  .dropdown {
-    display: inline-block;
-  }
-}
-
-.js-add-group {
-	@include btn-sm;
-}
-
-.group-tool-dialog {
-	padding: 10px 15px;
-	& > .btn {
-		margin-top: 10px;
-		width: 100%;
-	}
 }

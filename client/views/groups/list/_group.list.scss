@@ -2,7 +2,9 @@
   list-style: none;
   margin-bottom: 0;
   padding-left: 0;
-	> li {
+	> li,
+	> .dropdown,
+	> li > .dropdown {
 		display: inline-block;;
 	}
 }
@@ -50,4 +52,17 @@
 	@extend %group-label;
 	border: 0;
 	padding: 0 3px;
+}
+
+
+.js-add-group {
+	@include btn-sm;
+}
+
+.group-tool-dialog {
+	padding: 10px 15px;
+	& > .btn {
+		margin-top: 10px;
+		width: 100%;
+	}
 }

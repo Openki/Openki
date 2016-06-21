@@ -186,12 +186,12 @@
 	</a>
 	{{#if expanded}}
 		<div class="group-tool-dialog">
-		{{#with groupId}}
-			{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
-		{{/with}}
-		<button type="button" class="btn btn-remove js-remove">
-			{{mf 'course.group.confirmRemoveButton' "Delist"}}
-		</button>
+			{{#with groupId}}
+				{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
+			{{/with}}
+			<button type="button" class="btn btn-remove js-remove">
+				{{mf 'course.group.confirmRemoveButton' "Delist"}}
+			</button>
 		</div>
 	{{/if}}
 </template>
