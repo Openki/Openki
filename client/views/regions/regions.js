@@ -93,6 +93,7 @@ Template.region_sel.helpers({
 
 Template.region_sel.events({
 	'click a.regionselect': function(event, instance){
+		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
 		var changed = Session.get('region') !== region_id;
 
@@ -108,7 +109,6 @@ Template.region_sel.events({
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.parentInstance().searchingRegions.set(false);
-		e.preventDefault();
 	},
 
 	'mouseover li.region a.regionselect': function() {
