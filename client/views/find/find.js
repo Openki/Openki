@@ -210,6 +210,11 @@ Template.find.events({
 		instance.$('.js-search-categories').val('');
 		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
+		window.scrollTo(0, 0);
+	},
+
+	'click .js-group-label': function(event, instance) {
+		window.scrollTo(0, 0);
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
