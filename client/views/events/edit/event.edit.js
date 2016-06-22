@@ -312,10 +312,7 @@ Template.eventEdit.events({
 
 	'click .js-toggle-duration': function(event, instance){
 		Tooltips.hide();
-		$('.label-duration').toggle();
-		$('.input-group-duration').toggle();
-		$('.label-time-end').toggle();
-		$('.input-group-time-end').toggle();
+		$('.time-end > *').toggle();
 	},
 
 	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
