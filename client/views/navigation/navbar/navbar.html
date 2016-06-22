@@ -41,7 +41,7 @@
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="{{pathFor 'home'}}"
-							 class="{{activeClass 'home'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
+							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
 							 id="nav_courses">
 							 <span class="fa fa-lightbulb-o"></span>
 							 &nbsp;
@@ -76,7 +76,7 @@
 					<li class="dropdown lang_sel">
 						{{> lang_sel}}
 					</li>
-					<li class="dropdown login-link">
+					<li class="dropdown login-link {{activeClass 'profile'}}">
 						{{> loginButton}}
 						<div class="dropdown-menu login-dropdown">
 							{{> userFrame}}
