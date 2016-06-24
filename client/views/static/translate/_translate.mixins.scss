@@ -1,6 +1,6 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/variables';
-@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
+@import '{}/client/styles/mixins/bootstrap/clearfix';
+@import '{}/client/styles/mixins/bootstrap/grid';
 
 @mixin container {
 	@include container-fixed;

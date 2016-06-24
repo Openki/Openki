@@ -1,5 +1,5 @@
 @import '{}/client/styles/variables';
-@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
+@import '{}/client/styles/mixins/bootstrap/grid';
 
 .kioskTimetable {
 	@include make-xs-column(12);
