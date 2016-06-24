@@ -1,4 +1,5 @@
 .nav-tabs > li {
+	z-index: 99;
 	& > a {
 		color: $default-black;
 		&:hover {
@@ -15,10 +16,7 @@
 	}
 }
 
-.tab-pane {
-	background: lighten($openki-blue-lighter, 5%);
-	border-color: $brand-primary;
-	border-style: solid;
-	border-width: 0 1px 1px;
+.tab-content {
+	background-color: lighten($openki-blue-lighter, 5%);
 	padding: 15px;
 }

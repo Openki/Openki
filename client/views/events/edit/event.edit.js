@@ -1,7 +1,6 @@
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
-	instance.showDuration = new ReactiveVar(false);
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.location || {});
 });
@@ -69,10 +68,6 @@ Template.eventEdit.helpers({
 
 	isInternal: function() {
 		return this.internal ? "checked" : null;
-	},
-
-	showDuration: function() {
-		return Template.instance().showDuration.get();
 	}
 });
 
@@ -317,11 +312,7 @@ Template.eventEdit.events({
 
 	'click .js-toggle-duration': function(event, instance){
 		Tooltips.hide();
-		if (!instance.showDuration.get()) {
-			instance.showDuration.set(true);
-		} else {
-			instance.showDuration.set(false);
-		}
+		$('.time-end > *').toggle();
 	},
 
 	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {

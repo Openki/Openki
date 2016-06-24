@@ -44,42 +44,39 @@
 							{{disableForPast}}/>
 					</div>
 				</div>
-				<div class="form-group-element">
-					{{#if showDuration}}
-						<label>
-							{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
-							&nbsp;
-							<button type="button" class="js-toggle-duration btn-icon"
-								data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
-								<span class="fa fa-exchange"></span>
-							</button>
-						</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-time"></span>
-							</span>
-							<input type="number" class="form-control" id="editEventDuration"
-								value="{{timeformat Duration}}"
-								size="5"/>
-						</div>
-					{{else}}
-						<label>
-							{{mf 'course.event.edit.time_end' 'Time end'}}
-							&nbsp;
-							<button type="button" class="js-toggle-duration btn-icon"
-								data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
-								<span class="fa fa-exchange"></span>
-							</button>
-						</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-time"></span>
-							</span>
-							<input type="text" class="form-control"	id="editEventEndTime"
-								size="5"
-								value="{{timeformat end}}"/>
-						</div>
-					{{/if}}
+				<div class="form-group-element time-end">
+					<label style="display:none">
+						{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
+						&nbsp;
+						<button type="button" class="js-toggle-duration btn-icon"
+							data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
+							<span class="fa fa-exchange"></span>
+						</button>
+					</label>
+					<div class="input-group" style="display:none">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
+						</span>
+						<input type="number" class="form-control" id="editEventDuration"
+							value="{{timeformat Duration}}"
+							size="5"/>
+					</div>
+					<label>
+						{{mf 'course.event.edit.time_end' 'Time end'}}
+						&nbsp;
+						<button type="button" class="js-toggle-duration btn-icon"
+							data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
+							<span class="fa fa-exchange"></span>
+						</button>
+					</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-time"></span>
+						</span>
+						<input type="text" class="form-control"	id="editEventEndTime"
+							size="5"
+							value="{{timeformat end}}"/>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -22,25 +22,28 @@
 					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
 				</div>
 				<div class="course-role-enrol-options">
-					{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
-					<textarea class='course-role-enrol-comment form-control'
-						>{{../../member.comment}}</textarea>
+					<div class="form-group">
+						<label>
+							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
+						</label>
+						<textarea class='form-control'
+							>{{../../member.comment}}</textarea>
+					</div>
 					{{#if privacyEnabled}}
 						<div class="checkbox">
 							<label>
-								<input class="incognito" type="checkbox" value="1" />
+								<input class="incognito" type="checkbox" value="1"/>
 								{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
 							</label>
 						</div>
 					{{/if}}
-					<div class="course-role-enrol-btns">
-						<button type="button" class="btn btn-save js-role-subscribe-btn">
-							<span class="glyphicon glyphicon-ok"></span>
-							{{mf 'course.roles.enrol' 'Enroll'}}
-						</button>
+					<div class="form-actions">
 						<button type="button" class="btn btn-cancel js-role-enrol-cancel-btn">
-							<span class="glyphicon glyphicon-remove"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
+						</button>
+						<button type="button" class="btn btn-save js-role-subscribe-btn">
+							<i class="glyphicon glyphicon-fire fa-fw"></i>
+							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
 					</div>
 				</div>

@@ -34,16 +34,9 @@
 }
 
 .course-role-enrol-options {
+	@include clearfix;
   background: $openki-blue-lighter;
-  padding: 10px 12px 11px;
-}
-
-.course-role-enrol-comment {
-  margin-top: 5px;
-}
-
-.course-role-enrol-btns {
-  padding-top: 13px;
+  padding: 15px 15px 0;
 }
 
 .js-role-enrol-btn {

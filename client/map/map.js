@@ -125,11 +125,18 @@ Template.map.onRendered(function() {
 	instance.autorun(function() {
 		var fullscreen = instance.fullscreen.get();
 		var mini = instance.data.mini;
+
 		var show = function(control, show) {
-			if (show) {
-				map.addControl(control);
-			} else {
-				map.removeControl(control);
+			if (control.shown === undefined) control.shown = false;
+			var show = !!show;
+
+			if (control.shown !== show) {
+				control.shown = show;
+				if (show) {
+					map.addControl(control);
+				} else {
+					map.removeControl(control);
+				}
 			}
 		};
 

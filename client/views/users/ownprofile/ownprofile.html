@@ -175,43 +175,43 @@
 			{{/if}}
 		</div>
 		<div class="details-page-component">
-				<a class="btn btn-success translate-link" href="/translate">
-					<i class="fa fa-language" aria-hidden="true"></i>
-					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
-				</a>
-			</div>
-			<div class="profile-groups-list">
-				<hr>
-				<h3> {{mf 'profile.groups' 'My groups'}}</h3>
-				<h5>
-					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
-					You are {NUM_GROUPS, plural,
-					=0 {not member of any group}
-					=1 {member of the group:}
-					other {member of # groups:}}
-					{{/mf}}
-				</h5>
-				<ul class="groups">
-					{{#each user.groups}}
-						{{#with this._id}}
-							<li>
-								{{> groupNameFull}}
-							</li>
-						{{/with}}
-					{{/each}}
-				</ul>
-				<a class="btn btn-add"
-					href="{{pathFor 'groupDetails' _id='create'}}">
-					<span class="fa fa-plus"></span>&nbsp;
-					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
-				</a>
-			</div>
-
+			<a class="btn btn-success translate-link" href="/translate">
+				<i class="fa fa-language" aria-hidden="true"></i>
+				{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
+			</a>
+		</div>
+		<div class="profile-groups-list details-page-component">
+			<hr>
+			<h3> {{mf 'profile.groups' 'My groups'}}</h3>
+			<h5>
+				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
+				You are {NUM_GROUPS, plural,
+				=0 {not member of any group}
+				=1 {member of the group:}
+				other {member of # groups:}}
+				{{/mf}}
+			</h5>
+			<ul class="groups">
+				{{#each user.groups}}
+					{{#with this._id}}
+						<li>
+							{{> groupNameFull}}
+						</li>
+					{{/with}}
+				{{/each}}
+			</ul>
+			<a class="btn btn-add"
+				href="{{pathFor 'groupDetails' _id='create'}}">
+				<span class="fa fa-plus"></span>&nbsp;
+				{{mf 'profile.createNewGroup.button' 'Create a new group'}}
+			</a>
+		</div>
+		<div class="details-page-component">
 			<div class="course-list">
 				{{#each courses}}
 					{{> course}}
 				{{/each}}
 			</div>
-		<!-- </div> -->
+		</div>
 	</div>
 </template>
