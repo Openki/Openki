@@ -13,9 +13,11 @@
 	margin-top: 15px;
 	padding: 2px ($grid-gutter-width / 2) 0;
 	position: relative;
+
 	&:hover {
 		background-color: $introduction-text;
 	}
+
 	h3 {
 		color: $brand-primary;
 		margin: 5px 0 6px;
@@ -24,6 +26,7 @@
 
 .calendar-introduction {
 	margin-top: 60px;
+
 	& + #maincontent .container {
 		padding-top: 0;
 	}
@@ -40,6 +43,7 @@
 .introduction-hide-btn {
 	@include btn-sm;
 	margin-left: 10px;
+
 	&::after {
 		color: $gray-light;
 		font-family: FontAwesome;
@@ -63,38 +67,46 @@
 .introduction-steps {
 	@include list-unstyled;
 	font-size: medium;
+
 	li {
 		@include make-xs-column(6);
 		@include make-sm-column(2);
 		margin-bottom: 15px;
+
 		@media (max-width: $screen-sm) {
 			&:nth-child(2),
 			&:nth-child(4) {
 				padding-bottom: 15px;
+
 				h2::after {
 					content: '';
 				}
 			}
+
 			&:nth-last-child(2),
 			&:last-child {
 				@include make-xs-column(12);
 				text-align: center;
 			}
 		}
+
 		@media (max-width: $screen-xxs) {
 			@include make-xs-column(12);
 			padding-bottom: 20px;
 			text-align: center;
+
 			h2::after {
 				bottom: -15px;
 				content: '';
 				right: 47%;
 			}
 		}
+
 		h2 {
 			margin-bottom: 8px;
 			margin-top: 0;
 			text-align: center;
+
 			&::after {
 				@include opacity(.5);
 				color: lighten($default-gray, 15%);
@@ -105,6 +117,7 @@
 				right: 0;
 				top: 6px;
 			}
+
 			&:nth-last-child(2),
 			&:last-child {
 				h2::after {
@@ -112,6 +125,7 @@
 				}
 			}
 		}
+		
 		.fa {
 			@include opacity(.6);
 			color: $brand-primary;

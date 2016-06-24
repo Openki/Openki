@@ -8,6 +8,7 @@
 			color: $default-black;
 		}
 	}
+
 	.fa-angle-down {
 		@include transition(color $default-transition-time);
 		color: $default-light-grey;
@@ -16,6 +17,7 @@
 
 .checkbox-sub {
 	margin-left: 20px;
+
 	& + .checkbox:not(.checkbox-sub) {
 		margin-top: 5px;
 	}

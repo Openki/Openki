@@ -4,20 +4,25 @@
 
 .details-page-component {
 	@include clearfix;
+
 	& + .details-page-component {
 		margin-top: 15px;
 	}
+
 	& > h2,
 	& > h3 {
 		margin-bottom: $form-group-margin-bottom;
 		margin-top: 0;
 	}
+
 	& > .btn:first-child {
 		width: 100%;
 	}
+
 	& > .frame-events {
 		padding: 0;
 	}
+
 	& > .form-group:last-child {
 		margin-bottom: 0;
 	}
@@ -25,10 +30,12 @@
 
 .details-header {
 	padding: 10px $form-group-margin-bottom;
+
 	& > h2,
 	& > h3 {
 		margin-top: 0;
 	}
+
 	& > *:last-child {
 		margin-bottom: 0;
 	}
@@ -41,10 +48,12 @@
 
 .details-content {
 	padding: ($grid-gutter-width / 2);
+
 	& > h3,
 	& > h4 {
 		margin-top: 0;
 	}
+
 	& > *:last-child {
 		margin-bottom: 0;
 	}
@@ -54,15 +63,18 @@
 	height: 300px;
 	padding: $form-group-margin-bottom 0;
 	width: 100%;
+
 	@media (min-width: $screen-sm) {
 		width: 300px;
 		float: right;
 		padding: 0 0 $form-group-margin-bottom $form-group-margin-bottom;
 	}
+
 	.mapContainer.box {
 		height: 100%;
 		width: 100%;
 	}
+
 	.coordinates {
 		font-weight: bold;
 		margin: 5px 5px 5px 0;
@@ -77,12 +89,15 @@
 	border-style: solid;
 	border-width: 1px;
 	padding: ($grid-gutter-width / 2);
+
 	& > h3 {
 		margin-top: 0;
 	}
+
 	& > form > *:last-child {
 		margin-bottom: 0;
 	}
+
 	& + .form-group {
 		margin-top: $form-group-margin-bottom;
 	}
@@ -94,14 +109,17 @@
 		@include make-sm-column(6);
 		padding: 0;
 	}
+
 	@media (min-width: $screen-sm) {
 		&:nth-child(1):nth-last-child(2) {
 			padding-right: ($grid-gutter-width / 2);
 		}
+
 		&:nth-child(2):nth-last-child(1) {
 			padding-left: ($grid-gutter-width / 2);
 		}
 	}
+
 	& > h3 {
 		margin-top: 0;
 	}
@@ -113,10 +131,12 @@
 	border-style: solid;
 	border-width: 1px 1px;
 	padding: $form-group-margin-bottom;
+
 	& > h3,
 	& > h4 {
 		margin-top: 0;
 	}
+
 	& > *:last-child {
 		margin-bottom: 0;
 	}
@@ -130,6 +150,7 @@
 .details-info-label {
 	@include make-sm-column(3);
 	font-weight: bold;
+	
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
 		text-align: right;
@@ -138,6 +159,7 @@
 
 .details-info-data {
 	@include make-sm-column(9);
+	
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
 	}

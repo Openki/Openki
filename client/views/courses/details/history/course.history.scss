@@ -54,6 +54,7 @@
 	color: rgb(109, 112, 112);
 	padding: 0;
 	text-align: right;
+
 	&.active {
 		color: $default-black;
 	}
@@ -81,6 +82,7 @@
 	margin: auto;
 	position: relative;
 	width: 7px;
+
 	&.active {
 		background: $brand-danger;
 	}
@@ -90,15 +92,19 @@
 	@include make-xs-column(8);
 	height: 20px;
 	padding: 0;
+
 	&:hover a {
 		color: $default-black;
+		
 		&:hover {
 			text-decoration: underline;
 		}
 	}
+	
 	a {
 		color: $brand-primary;
 	}
+	
 	h4 {
 		padding-top: 10px;
 		text-align: center;

@@ -7,6 +7,7 @@
 	button + li {
 		border-top-color: $btn-default-border;
 	}
+	
 	button:hover + li,
 	button:hover + button {
 		border-top-color: #8dc3d6;
@@ -20,6 +21,7 @@
 button.list-group-item {
 	@include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
 	border-color: $btn-default-border;
+	
 	&:hover {
 		@include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
 		border-color: #8dc3d6;

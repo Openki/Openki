@@ -10,6 +10,7 @@
 .profilelink {
 	color: $default-black;
 	padding-right: 5px;
+
 	&:hover {
 		color: $brand-primary;
 		text-decoration: none;
@@ -19,6 +20,7 @@
 .dropdown-menu {
 	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 	border: 0;
+
 	& > li > a:focus {
 		background-color: darken($dropdown-bg, 5%);
 		color: $dropdown-link-color;

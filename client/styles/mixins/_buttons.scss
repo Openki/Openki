@@ -30,6 +30,7 @@
 	@include transition(color $default-transition-time);
 	color: lighten($brand-danger, 20%);
 	cursor: pointer;
+	
 	&:hover {
 		color: $brand-danger;
 	}

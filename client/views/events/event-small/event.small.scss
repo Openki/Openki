@@ -13,6 +13,7 @@
 		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-xsm) {
 		@include make-xs-column(4);
 		@include make-sm-column(3);
@@ -26,6 +27,7 @@
 		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-sm) {
 		@include make-xs-column(4);
 		@include make-md-column(3);
@@ -38,6 +40,7 @@
 		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-sm) {
 		@include make-xs-column(4);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
@@ -56,6 +59,7 @@
 	background: $event-small-bg;
 	height: 200px;
 	position: relative;
+
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 	}
@@ -74,14 +78,17 @@
 	color: $event-small-header-color;
 	height: 55px;
 	padding: 5px;
+
 	.fa,
 	.glyphicon {
 		margin-right: 2px;
 	}
+
 	.fa-clock-o,
 	.event-small-time {
 		margin-bottom: 5px;
 	}
+
 	.fa-map-signs {
 		margin-left: 4px;
 	}
@@ -89,6 +96,7 @@
 
 .event-small-with-date {
 	height: 220px;
+
 	.event-small-header {
 		height: 75px;
 	}

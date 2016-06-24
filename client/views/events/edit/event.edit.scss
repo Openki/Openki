@@ -8,6 +8,7 @@
 
 .event-edit-header {
 	margin-top: 10px;
+	
 	@media (min-width: $screen-xs) {
 		border-color: $brand-success;
 		border-style: dashed;
@@ -18,6 +19,7 @@
 
 .event-edit-body {
 	padding-bottom: 10px;
+	
 	@media (min-width: $screen-xs) {
 		border-color: $brand-success;
 		border-style: dashed;

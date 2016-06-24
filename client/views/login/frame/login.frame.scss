@@ -17,6 +17,7 @@
 
 .ownuser-frame {
 	padding: 0 ($grid-gutter-width / 2);
+
 	h3 {
 		text-align: center;
 		margin: 0 0 15px;
@@ -25,6 +26,7 @@
 
 .login {
 	padding: 0 ($grid-gutter-width / 2);
+
 	.fa-lock {
 		font-size: large;
 		padding: 0 1px;
@@ -49,6 +51,7 @@
 	border: 0;
 	color: $default-gray;
 	padding: 0 9px;
+
 	.fa {
 		font-size: xx-large;
 	}
@@ -60,6 +63,7 @@
 		&:focus {
 			color: $color;
 		}
+		
 		@media (max-width: $screen-xs) {
 			color: $color;
 		}

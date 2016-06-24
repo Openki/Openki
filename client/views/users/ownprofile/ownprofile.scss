@@ -21,6 +21,7 @@
 .profile-groups-list {
 	.groups {
 		@include list-unstyled;
+		
 		li {
 			margin-bottom: 10px;
 		}

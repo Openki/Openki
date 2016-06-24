@@ -4,10 +4,12 @@
 .editableWrap {
 	margin: -8px;
 	position: relative;
+
 	.editable {
 		min-height: 2em;
 		outline: none;
 		padding: 8px;
+
 		&:focus,
 		&.changed {
 			box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
@@ -16,6 +18,7 @@
 			padding: 7px;
 		}
 	}
+
 	.editable:focus,
 	.editable.changed {
 		background: $body-bg;
@@ -23,27 +26,33 @@
 		box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
 		padding: 7px;
 	}
+
 	.editable:after {
 		position: static;
 	}
+
 	.editIcon {
 		@include transition(color $default-transition-time);
 		color: $default-gray;
 		cursor: default;
 		padding: .2em;
 	}
+
 	&.rich .editIcon {
 		position: absolute;
 		right: 0;
 		top: 0;
 	}
+
 	&.simple .editable {
 		display: inline-block;
 		min-width: 8em;
+
 		&:focus {
 			min-width: 10em;
 		}
 	}
+
 	&.rich .editable {
 		min-height: 4ex;
 	}
@@ -65,6 +74,7 @@
 	margin-top: 15px;
 	position: absolute;
 	z-index: 1;
+
 	button {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 		margin-right: 5px;

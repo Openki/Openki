@@ -4,10 +4,12 @@
 	&.box {
 		height: 200px;
 		width: 200px;
+
 		span.fa {
 			font-size: 30px;
 		}
 	}
+
 	&.fullscreen {
 		bottom: 0;
 		left: 0;
@@ -15,28 +17,35 @@
 		right: 0;
 		top: 0;
 		z-index: 9999;
+
 		span.fa {
 			font-size: 8vh;
 		}
 	}
+
 	.map {
 		height: 100%;
 		width: 100%;
 	}
+
 	.leaflet-marker-pane .leaflet-marker-icon {
 		background: none;
 		border: 0;
+
 		.fa-map-marker {
 			color: #000;
+
 			&:hover {
 				cursor: grabbing;
 			}
 		}
 	}
+
 	.leaflet-control-container .leaflet-right .leaflet-control:hover {
 		color: $brand-primary;
 		cursor: pointer;
 	}
+
 	.leaflet-interactive:hover {
 		cursor: pointer;
 		fill: $map-lefalet-hover-fill;

@@ -5,10 +5,12 @@
 	background: $body-bg;
 	width: 100%;
 	z-index: 1029;
+
 	img {
 		height: 1.2em;
 		vertical-align: -.3em;
 	}
+
 	i {
 		color: $brand-success;
 	}
@@ -16,6 +18,7 @@
 
 .loading-page {
 	padding-top: 10% 5px 5px;
+
 	h1 {
 		text-align: center;
 	}
@@ -24,6 +27,7 @@
 .loading-row {
 	padding: 15px 5px;
 	position: static;
+	
 	h1 {
 		font-size: large;
 	}

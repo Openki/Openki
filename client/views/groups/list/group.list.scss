@@ -6,6 +6,7 @@
 	list-style: none;
 	margin-bottom: 0;
 	padding-left: 0;
+
 	> li,
 	> .dropdown,
 	> li > .dropdown {
@@ -17,6 +18,7 @@
 	@include transition(all $default-transition-time);
 	background: $group-bg;
 	color: $group-text;
+
 	&:hover,
 	&:focus {
 		background: $group-hover-bg;
@@ -28,6 +30,7 @@
 .js-group-label {
 	@extend %group-label;
 	padding: 0 4px 1px;
+
 	&:hover {
 		text-decoration: none;
 	}
@@ -46,6 +49,7 @@
 	border-style: solid;
 	border-width: 0 0 0 1px;
 	padding: 0 1px;
+
 	&:hover,
 	&:focus {
 		border-color: $group-bg;
@@ -65,6 +69,7 @@
 
 .group-tool-dialog {
 	padding: 10px 15px;
+	
 	& > .btn {
 		margin-top: 10px;
 		width: 100%;

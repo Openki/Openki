@@ -12,17 +12,20 @@
 	overflow-y: auto;
 	padding: 0;
 	position: relative;
+
 	.course_events_events {
 		@include make-xs-column(12);
 		left: -3px;
 		padding: 10px 0;
 		position: relative;
 		width: calc(#{'100% + 6px'});
+
 		.event-small-withDate-container {
 			@include make-md-column(6);
 			padding: 0 3px 10px;
 		}
 	}
+
 	hr {
 		clear: both;
 		margin: 0;
@@ -40,6 +43,7 @@
 .course_events_fadebox {
 	height: 415px;
 	position: relative;
+
 	.fade_effect_top,
 	.fade_effect_bottom {
 		margin-left: -5px;
@@ -65,9 +69,11 @@
 	background: $brand-primary;
 	border: 5px solid $brand-primary;
 	color: $body-bg;
+
 	h4 {
 		font-weight: bold;
 	}
+
 	& > .link {
 		color: $default-black;
 		position: absolute;
@@ -78,6 +84,7 @@
 
 .course_event {
 	@include transition(box-shadow $default-transition-time);
+
 	a {
 		& > .course_event_date {
 			background: $brand-success;
@@ -86,17 +93,21 @@
 			padding: 10px 0;
 			white-space: nowrap;
 		}
+
 		.course_event_date .date {
 			font-size: large;
 		}
+
 		& > .course_event_time {
 			font-size: medium;
 			padding: 0 0 10px;
 		}
+
 		.course_event_time > span {
 			font-size: small;
 		}
 	}
+
 	& > a,
 	& > a:hover {
 		color: $default-black;
@@ -106,6 +117,7 @@
 
 .course_event_title {
 	@include transition(color $default-transition-time);
+	
 	h3 {
 		margin: 10px 0;
 	}
@@ -122,6 +134,7 @@ input#eventEditTitle {
 	position: absolute;
 	top: 0;
 	width: 100%;
+	
 	@media (min-width: $screen-xs) {
 		@include gradient-vertical($body-bg, transparent);
 	}
@@ -134,6 +147,7 @@ input#eventEditTitle {
 	left: 0;
 	position: absolute;
 	width: 100%;
+	
 	@media (min-width: $screen-xs) {
 		@include gradient-vertical(transparent, $body-bg);
 	}

@@ -2,14 +2,17 @@
 
 .nav-tabs > li {
 	z-index: 99;
+	
 	& > a {
 		color: $default-black;
+		
 		&:hover {
 			background-color: $openki-blue-light;
 			border-bottom-width: 2px;
 			color: $default-white;
 		}
 	}
+	
 	&.active > a,
 	&.active > a:hover,
 	&.active > a:focus {
