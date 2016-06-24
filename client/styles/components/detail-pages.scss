@@ -1,6 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-@import '{}/client/styles/mixins/grid';
 @import '{}/client/styles/variables';
 
 .details-page-component {
@@ -92,7 +91,7 @@
 .details-form > .details-form-element {
 	&:nth-child(1):nth-last-child(2),
 	&:nth-child(2):nth-last-child(1) {
-		@include grid(12, 6);
+		@include make-sm-column(6);
 		padding: 0;
 	}
 	@media (min-width: $screen-sm) {
@@ -129,7 +128,7 @@
 }
 
 .details-info-label {
-	@include grid(12, 3);
+	@include make-sm-column(3);
 	font-weight: bold;
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
@@ -138,13 +137,13 @@
 }
 
 .details-info-data {
-	@include grid(12, 9);
+	@include make-sm-column(9);
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
 	}
 }
 
 .details-info-btn {
-	@include grid(12, 9);
+	@include make-sm-column(9);
 	@include make-sm-column-offset(3);
 }

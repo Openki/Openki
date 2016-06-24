@@ -1,49 +1,52 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-@import '{}/client/styles/mixins/grid';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{}/client/styles/mixins/word-break';
 @import '{}/client/styles/variables';
 
 .event-small-container {
-	@include grid(12);
+	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .frame-events-fluid .event-small-container {
 	@media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 	@media (min-width: $screen-xsm) {
-		@include grid(4, 3, inherit, 2);
+		@include make-xs-column(4);
+		@include make-sm-column(3);
+		@include make-lg-column(2);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container .event-small-container {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 	@media (min-width: $screen-sm) {
-		@include grid(4, inherit, 3);
+		@include make-xs-column(4);
+		@include make-md-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container-sm .event-small-container {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 	@media (min-width: $screen-sm) {
-		@include grid(4);
+		@include make-xs-column(4);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .course_events .event-small-container {
 	@media (min-width: $screen-xs) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }

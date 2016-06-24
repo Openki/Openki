@@ -1,25 +1,25 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{}/client/styles/variables';
-@import '{}/client/styles/mixins/grid';
 
 
 .course_events {
-  @include grid(12);
+	@include make-xs-column(12);
   height: 400px;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
   position: relative;
   .course_events_events {
-    @include grid(12);
+		@include make-xs-column(12);
     left: -3px;
     padding: 10px 0;
     position: relative;
     width: calc(#{'100% + 6px'});
     .event-small-withDate-container {
-      @include grid(12, 12, 6);
+			@include make-md-column(6);
       padding: 0 3px 10px;
     }
   }
@@ -49,7 +49,7 @@
 
 .course_event_container,
 .course_event_past_container {
-  @include grid(12, 6);
+	@include make-sm-column(6);
   padding: 5px;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .courseEvents-titlebar {
-  @include grid(12);
+	@include make-xs-column(12);
   background: $brand-primary;
   border: 5px solid $brand-primary;
   color: $body-bg;

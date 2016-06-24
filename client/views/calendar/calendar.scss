@@ -1,9 +1,10 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-@import '{}/client/styles/mixins/grid';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
+
 @import '{}/client/styles/variables';
 
 .calendar-navigation {
-  @include grid(12);
+	@include make-xs-column(12);
   background-color: $calendar-navigation-bg;
   box-shadow: 0 6px 2px $default-shadow;
   font-size: 32px;

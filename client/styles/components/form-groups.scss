@@ -1,6 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-@import '{}/client/styles/mixins/grid';
 @import '{}/client/styles/variables';
 
 
@@ -14,13 +13,13 @@
 		// two elements
 		&:nth-child(1):nth-last-child(2),
 		&:nth-child(2):nth-last-child(1) {
-			@include grid(12, 6);
+			@include make-sm-column(6);
 		}
 		// three elements
 		&:nth-child(1):nth-last-child(3),
 		&:nth-child(2):nth-last-child(2),
 		&:nth-child(3):nth-last-child(1) {
-			@include grid(12, 4);
+			@include make-sm-column(4);
 		}
 		&:nth-child(1):nth-last-child(2),
 		&:nth-child(1):nth-last-child(3) {
@@ -64,14 +63,14 @@
 }
 
 .control-label {
-	@include grid(12, 3);
+	@include make-sm-column(3);
 }
 
 .control-input {
-	@include grid(12, 9);
+	@include make-sm-column(9);
 }
 
 .control-btn {
-	@include grid(12, 9);
+	@include make-sm-column(9);
 	@include make-sm-column-offset(3);
 }

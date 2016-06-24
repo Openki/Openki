@@ -1,9 +1,9 @@
-@import '{}/client/styles/mixins/grid';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{}/client/styles/variables';
 
 .locationFrame {
   .locationEdit {
-    @include grid(12);
+		@include make-xs-column(12);
     background-color: $location-edit-bg;
     border: 1px solid $default-light-grey;
     overflow: auto;
@@ -18,7 +18,7 @@
       border-right: 1px solid $default-light-grey;
     }
     .locationSearch {
-      @include grid(12, 6);
+			@include make-sm-column(6);
       margin: 10px 0;
       .currentLocation {
         .locationName {
@@ -54,7 +54,7 @@
       }
     }
     .locationMap {
-      @include grid(12, 6);
+			@include make-sm-column(6);
       margin: 10px 0;
       padding-left: 0;
       @media (max-width: $screen-xs) {

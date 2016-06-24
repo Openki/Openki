@@ -1,6 +1,6 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
-@import '{}/client/styles/mixins/grid';
 @import '{}/client/styles/variables';
 
 .find-heading {
@@ -13,7 +13,8 @@
 }
 
 .js-search-field {
-  @include grid(12, inherit, 5);
+	@include make-xs-column(12);
+	@include make-md-column(5);
   padding: 0;
 }
 
@@ -22,7 +23,8 @@
 }
 
 .filter {
-  @include grid(12, inherit, 7);
+	@include make-xs-column(12);
+	@include make-md-column(7);
 	margin-top: $form-group-margin-bottom;
   padding: 0;
   @media (min-width: $screen-md) {

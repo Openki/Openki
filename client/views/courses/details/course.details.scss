@@ -1,5 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
-@import '{}/client/styles/mixins/grid';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{}/client/styles/variables';
 
 .course-details-component-titlebar {
@@ -23,7 +23,8 @@
 }
 
 .course-details-column-left {
-  @include grid(12, inherit, 8);
+	@include make-sm-column(12);
+	@include make-md-column(8);
 	padding: 0;
 	@media (min-width: $screen-md) {
 		padding: 0 7.5px 0 0;
@@ -31,7 +32,8 @@
 }
 
 .course-details-column-right {
-  @include grid(12, inherit, 4);
+	@include make-sm-column(12);
+	@include make-md-column(4);
 	padding: 15px 0 0;
 	@media (min-width: $screen-md) {
 		padding: 0 0 0 7.5px;

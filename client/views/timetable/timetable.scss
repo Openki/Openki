@@ -1,8 +1,8 @@
 @import '{}/client/styles/variables';
-@import '{}/client/styles/mixins/grid';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 
 .kioskTimetable {
-  @include grid(12);
+	@include make-xs-column(12);
   margin-top: 5px;
   overflow: hidden;
   &:hover {

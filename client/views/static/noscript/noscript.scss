@@ -1,5 +1,5 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 @import '{}/client/styles/variables';
-@import '{}/client/styles/mixins/grid';
 
 .noscript {
   background: $openki-blue-lighter;
@@ -19,14 +19,14 @@
   top: calc(#{'50% - 100px'});
   width: 300px;
   img {
-    @include grid(4);
+		@include make-xs-column(4);
     height: 95px;
     padding: 0;
   }
 }
 
 .noscript-message {
-  @include grid(8);
+	@include make-xs-column(8);
   color: $default-white;
   height: 100%;
   padding: 15px;
