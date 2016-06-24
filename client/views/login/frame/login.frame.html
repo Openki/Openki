@@ -48,7 +48,7 @@
 						placeholder={{loginNamePlaceholder}}>
 				</div>
 				{{#if hasWarnings}}
-					<span class="warn-block">
+					<span class="help-block">
 						{{#if userNotFound}}
 							{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
 						{{/if}}
@@ -70,7 +70,7 @@
 						type="password"/>
 				</div>
 				{{#if hasWarnings}}
-					<span class="warn-block">
+					<span class="help-block">
 						{{#if incorrectPassword}}
 							{{mf 'login.password.password_incorrect' 'Incorrect password'}}
 						{{/if}}
