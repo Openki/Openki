@@ -1,6 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
 @import '{}/client/styles/variables';
-@import '{}/client/styles/mixins/box-shadow';
 
 
 .checkmark {
@@ -18,7 +17,7 @@
 }
 
 .dropdown-menu {
-  @include box-shadow-big($default-shadow);
+  box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
   border: 0;
 	& > li > a:focus {
 		background-color: darken($dropdown-bg, 5%);

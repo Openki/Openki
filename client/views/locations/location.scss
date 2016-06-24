@@ -1,4 +1,3 @@
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/variables';
 
 .location {
@@ -10,8 +9,8 @@
     padding-left: 5px;
     padding-right: 5px;
     &:hover {
-      @include box-shadow-small($location-hover-shadow);
-      background: $location-hover-bg;
+			background: $location-hover-bg;
+			box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $location-hover-shadow;
       text-decoration: none;
     }
   }

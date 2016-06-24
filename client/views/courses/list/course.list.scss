@@ -2,7 +2,6 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
 @import '{}/client/styles/mixins/grid';
 @import '{}/client/styles/mixins/word-break';
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/variables';
 
 .courselist {
@@ -41,7 +40,7 @@
 	transition-duration: $default-transition-time;
 	transition-property: #{'box-shadow opacity'};
   &:hover {
-    @include box-shadow-big($default-shadow);
+    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
     color: $brand-primary;
     h4 {
       color: $brand-primary;

@@ -1,6 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/mixins/buttons';
 @import '{}/client/styles/variables';
 
@@ -35,7 +34,7 @@
 }
 
 .course-role-enrol {
-  @include box-shadow-big($default-shadow);
+  box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
   margin-bottom: 10px;
 }
 

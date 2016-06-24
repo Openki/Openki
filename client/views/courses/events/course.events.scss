@@ -3,7 +3,6 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
 @import '{}/client/styles/variables';
 @import '{}/client/styles/mixins/grid';
-@import '{}/client/styles/mixins/box-shadow';
 
 
 .course_events {
@@ -33,7 +32,7 @@
 .calendar_event,
 .calendar_event_past {
   &:hover {
-    @include box-shadow-big($default-shadow);
+    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
     z-index: 1029;
   }
 }

@@ -1,5 +1,4 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/variables';
 
 .editableWrap {
@@ -11,7 +10,7 @@
     padding: 8px;
     &:focus,
     &.changed {
-      @include box-shadow-big($default-shadow);
+      box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
       background: $body-bg;
       border: 1px solid $brand-primary;
       padding: 7px;
@@ -67,7 +66,7 @@
   position: absolute;
   z-index: 1;
   button {
-    @include box-shadow-big($default-shadow);
+    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
     margin-right: 5px;
   }
 }

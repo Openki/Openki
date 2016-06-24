@@ -10,10 +10,10 @@ $orange: #f98f39;
 $yellow: #f3f981;
 
 $default-black: #333;
-$default-shadow: rgba(88, 106, 102, .4);
 $default-white: #fff;
 $default-gray: #868383;
 $default-light-grey: #ccc;
+$default-shadow: rgba(88, 106, 102, .4);
 $brand-primary-hover: darken($brand-primary, 10%);
 
 // == Navbar
@@ -129,6 +129,17 @@ $event-small-description-color: $event-description-color;
 $translate-trans: $checkmark-color;
 $translate-fuzzy: $openki-yellow;
 $translate-untrans: darken($brand-danger, 15%);
+
+// Box Shadows
+
+
+$shadow-lg-offset-x: 2px;
+$shadow-lg-offset-y: 5px;
+$shadow-lg-blur: 8px;
+
+$shadow-sm-offset-x: 1px;
+$shadow-sm-offset-y: 2px;
+$shadow-sm-blur: 4px;
 
 //== Screen breakpoints
 //

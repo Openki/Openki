@@ -1,11 +1,10 @@
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/variables';
 
 
 .tooltip {
-	@include box-shadow-small($default-shadow);
 	background: $brand-primary;
 	border-radius: 4px;
+	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	color: $body-bg;
 	font-size: $font-size-base;
 	opacity: 0;

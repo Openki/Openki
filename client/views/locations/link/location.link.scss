@@ -1,5 +1,4 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-@import '{}/client/styles/mixins/box-shadow';
 @import '{}/client/styles/variables';
 
 .js-location-link {
@@ -8,7 +7,7 @@
   color: $location-text;
   padding: 3px 4px 1px;
   &:hover {
-    @include box-shadow-small($default-shadow);
+    box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
     background: $location-hover-bg;
 		color: $location-hover-text;
     text-decoration: none;
