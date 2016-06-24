@@ -1,0 +1,16 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
+@import '{}/client/styles/variables';
+
+.frame-calendar-date-events {
+  @include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	padding: 10px 0;
+	width: auto;
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	}
+}
+
+.frame-calendar-no-events {
+  text-align: center;
+}

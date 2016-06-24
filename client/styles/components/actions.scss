@@ -1,0 +1,26 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
+@import '{}/client/styles/variables';
+
+%actions {
+	@include clearfix;
+	.btn {
+		float: right;
+	}
+	.btn + .btn {
+		margin-right: 5px;
+	}
+}
+
+.actions {
+	@extend %actions;
+	background-color: $gray-lighter;
+	border-color: darken($gray-lighter, 3%);
+	border-style: solid;
+	border-width: 1px;
+	padding: 10px;
+}
+
+.form-actions {
+	@extend %actions;
+	margin-bottom: $form-group-margin-bottom;
+}

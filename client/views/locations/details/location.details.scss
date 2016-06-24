@@ -1,0 +1,15 @@
+@import '{}/client/styles/variables';
+
+.location-details-header {
+	background-color: $location-bg;
+	color: $location-text;
+	img {
+		float: right;
+		height: 90px;
+		padding-left: ($grid-gutter-width / 2);
+	}
+}
+
+.location-details-body {
+	background-color: $location-description-bg;
+}

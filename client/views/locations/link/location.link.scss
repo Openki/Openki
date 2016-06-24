@@ -1,0 +1,19 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+@import '{}/client/styles/mixins/box-shadow';
+@import '{}/client/styles/variables';
+
+.js-location-link {
+  @include transition(all $default-transition-time);
+  background: $location-bg;
+  color: $location-text;
+  padding: 3px 4px 1px;
+  &:hover {
+    @include box-shadow-small($default-shadow);
+    background: $location-hover-bg;
+		color: $location-hover-text;
+    text-decoration: none;
+  }
+  .glyphicon-home {
+    margin-right: 2px;
+  }
+}

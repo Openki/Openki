@@ -1,3 +1,7 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/variables';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
+
 @mixin container {
 	@include container-fixed;
 	@media (min-width: $screen-sm-min) {

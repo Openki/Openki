@@ -1,0 +1,30 @@
+@import '{}/client/styles/mixins/list-unstyled';
+@import '{}/client/styles/variables';
+
+.event-details-body {
+	background: $openki-blue-lighter;
+  height: calc(#{'100% - 70px'});
+	.location {
+    margin-right: 5px;
+  }
+  .groups-list {
+    margin-bottom: 10px;
+  }
+}
+
+.event-details-header {
+	background: $brand-success;
+	.date {
+		font-size: x-large;
+		.glyphicon-calendar {
+			font-size: large;
+		}
+	}
+	.glyphicon-time {
+		font-size: small;
+	}
+}
+
+.event-files-list {
+	@include list-unstyled;
+}
