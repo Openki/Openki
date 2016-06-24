@@ -1,3 +1,10 @@
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
+@import '{}/client/styles/mixins/grid';
+@import '{}/client/styles/mixins/word-break';
+@import '{}/client/styles/mixins/box-shadow';
+@import '{}/client/styles/variables';
+
 .courselist {
 	@include clearfix;
 	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
