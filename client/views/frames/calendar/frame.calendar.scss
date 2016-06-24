@@ -1,5 +1,5 @@
-@import '{}/client/styles/mixins/bootstrap/clearfix';
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/bootstrap/clearfix';
 
 .frame-calendar-date-events {
   @include clearfix;

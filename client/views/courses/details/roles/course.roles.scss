@@ -1,7 +1,7 @@
-@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
-@import '{}/client/styles/mixins/bootstrap/clearfix';
-@import '{}/client/styles/mixins/buttons';
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/buttons';
+@import '{}/client/styles/mixins/bootstrap/clearfix';
+@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
 
 .course-role,
 .course-role-enrol {

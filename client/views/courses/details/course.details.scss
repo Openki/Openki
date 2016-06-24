@@ -1,6 +1,6 @@
-@import '{}/client/styles/mixins/bootstrap/opacity';
-@import '{}/client/styles/mixins/bootstrap/grid';
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/bootstrap/grid';
+@import '{}/client/styles/mixins/bootstrap/opacity';
 
 .course-details-component-titlebar {
   background: $brand-primary;

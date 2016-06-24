@@ -1,7 +1,7 @@
-@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
-@import '{}/client/styles/mixins/bootstrap/grid';
-@import '{}/client/styles/mixins/word-break';
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/word-break';
+@import '{}/client/styles/mixins/bootstrap/grid';
+@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
 
 .event-small-container {
 	@include make-xs-column(12);

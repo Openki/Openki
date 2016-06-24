@@ -1,7 +1,7 @@
+@import '{}/client/styles/variables';
+@import '{}/client/styles/components/buttons';
 @import '{}/client/styles/mixins/bootstrap/gradients';
 @import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
-@import '{}/client/styles/components/buttons';
-@import '{}/client/styles/variables';
 
 .list-group {
   button + li {

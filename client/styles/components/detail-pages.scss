@@ -1,6 +1,6 @@
-@import '{}/client/styles/mixins/bootstrap/clearfix';
-@import '{}/client/styles/mixins/bootstrap/grid';
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/bootstrap/grid';
+@import '{}/client/styles/mixins/bootstrap/clearfix';
 
 .details-page-component {
 	@include clearfix;

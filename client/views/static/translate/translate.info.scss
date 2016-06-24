@@ -1,6 +1,6 @@
-@import '{}/client/styles/mixins/bootstrap/grid';
 @import "translate.mixins";
 @import '{}/client/styles/variables';
+@import '{}/client/styles/mixins/bootstrap/grid';
 
 .translate-info {
 	@include container-sm;
