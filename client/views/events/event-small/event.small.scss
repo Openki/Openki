@@ -52,39 +52,39 @@
 }
 
 .event-small {
-  @include transition(box-shadow $default-transition-time);
-  background: $event-small-bg;
-  height: 200px;
+	@include transition(box-shadow $default-transition-time);
+	background: $event-small-bg;
+	height: 200px;
 	position: relative;
-  &:hover {
-    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-  }
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	}
 }
 
 .event-small-header,
 .event-small-title,
 .event-small-description {
-  @include word-break;
-  overflow: hidden;
+	@include word-break;
+	overflow: hidden;
 }
 
 .event-small-header {
-  background: $event-small-header-bg;
-  border-bottom: 1px solid $body-bg;
-  color: $event-small-header-color;
-  height: 55px;
-  padding: 5px;
-  .fa,
-  .glyphicon {
-    margin-right: 2px;
-  }
-  .fa-clock-o,
-  .event-small-time {
-    margin-bottom: 5px;
-  }
-  .fa-map-signs {
-    margin-left: 4px;
-  }
+	background: $event-small-header-bg;
+	border-bottom: 1px solid $body-bg;
+	color: $event-small-header-color;
+	height: 55px;
+	padding: 5px;
+	.fa,
+	.glyphicon {
+		margin-right: 2px;
+	}
+	.fa-clock-o,
+	.event-small-time {
+		margin-bottom: 5px;
+	}
+	.fa-map-signs {
+		margin-left: 4px;
+	}
 }
 
 .event-small-with-date {
@@ -95,15 +95,15 @@
 }
 
 .event-small-title {
-  color: $event-small-title-color;
-  font-size: medium;
-  max-height: 56px;
-  padding: 5px;
+	color: $event-small-title-color;
+	font-size: medium;
+	max-height: 56px;
+	padding: 5px;
 }
 
 .event-small-description {
-  color: $event-small-description-color;
-  height: 85px;
-  margin-top: -3px;
-  padding: 0 5px 5px;
+	color: $event-small-description-color;
+	height: 85px;
+	margin-top: -3px;
+	padding: 0 5px 5px;
 }

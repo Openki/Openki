@@ -3,22 +3,22 @@
 
 
 .checkmark {
-  color: $checkmark-color;
-  padding-left: 5px;
+	color: $checkmark-color;
+	padding-left: 5px;
 }
 
 .profilelink {
-  color: $default-black;
-  padding-right: 5px;
-  &:hover {
-    color: $brand-primary;
-    text-decoration: none;
-  }
+	color: $default-black;
+	padding-right: 5px;
+	&:hover {
+		color: $brand-primary;
+		text-decoration: none;
+	}
 }
 
 .dropdown-menu {
-  box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-  border: 0;
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	border: 0;
 	& > li > a:focus {
 		background-color: darken($dropdown-bg, 5%);
 		color: $dropdown-link-color;
@@ -34,7 +34,7 @@ select:hover {
 }
 
 .input-group input:focus {
-  z-index: 3;
+	z-index: 3;
 }
 
 .input-lg {
@@ -43,17 +43,17 @@ select:hover {
 
 a,
 .btn-link {
-  &:hover {
-    text-decoration: none;
-  }
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 .elevate_child {
-  @include transition(box-shadow $default-transition-time);
-  box-shadow: none !important;
+	@include transition(box-shadow $default-transition-time);
+	box-shadow: none !important;
 }
 
 .collapsing,
 .fade {
-  @include transition-duration(0s);
+	@include transition-duration(0s);
 }

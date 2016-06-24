@@ -4,7 +4,7 @@
 .navbar .navbar-nav > .open > .login-dropdown.login-dropdown {
 	@media (min-width: $screen-sm) {
 		padding-top: 15px;
-	  width: 300px;
+		width: 300px;
 	}
 }
 
@@ -16,7 +16,7 @@
 }
 
 .ownuser-frame {
-  padding: 0 ($grid-gutter-width / 2);
+	padding: 0 ($grid-gutter-width / 2);
 	h3 {
 		text-align: center;
 		margin: 0 0 15px;
@@ -24,16 +24,16 @@
 }
 
 .login {
-  padding: 0 ($grid-gutter-width / 2);
-  .fa-lock {
-    font-size: large;
-    padding: 0 1px;
-  }
+	padding: 0 ($grid-gutter-width / 2);
+	.fa-lock {
+		font-size: large;
+		padding: 0 1px;
+	}
 }
 
 .registering-disclaimer {
-  margin-top: -10px;
-  text-align: justify;
+	margin-top: -10px;
+	text-align: justify;
 }
 
 .forgot-pwd-btn-container {
@@ -47,8 +47,8 @@
 .js-external-service-login-btn {
 	background: none;
 	border: 0;
-  color: $default-gray;
-  padding: 0 9px;
+	color: $default-gray;
+	padding: 0 9px;
 	.fa {
 		font-size: xx-large;
 	}
@@ -67,15 +67,15 @@
 }
 
 .forgot_login {
-  padding: 0 ($grid-gutter-width / 2);
+	padding: 0 ($grid-gutter-width / 2);
 }
 
 .forgot-pwd-mail-info {
-  display: inline-block;
-  margin-top: -10px;
+	display: inline-block;
+	margin-top: -10px;
 }
 
 .registering_disclaimer {
-  margin-top: -10px;
-  text-align: justify;
+	margin-top: -10px;
+	text-align: justify;
 }

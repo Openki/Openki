@@ -2,68 +2,68 @@
 @import '{}/client/styles/mixins/bootstrap/grid';
 
 .locationFrame {
-  .locationEdit {
+	.locationEdit {
 		@include make-xs-column(12);
-    background-color: $location-edit-bg;
-    border: 1px solid $default-light-grey;
-    overflow: auto;
-    padding: 0;
-    @media (max-width: $screen-xs) {
-      span.input-group-addon {
-        display: none;
-      }
-    }
-    .input-group-addon:first-child {
-      border: 0;
-      border-right: 1px solid $default-light-grey;
-    }
-    .locationSearch {
+		background-color: $location-edit-bg;
+		border: 1px solid $default-light-grey;
+		overflow: auto;
+		padding: 0;
+		@media (max-width: $screen-xs) {
+			span.input-group-addon {
+				display: none;
+			}
+		}
+		.input-group-addon:first-child {
+			border: 0;
+			border-right: 1px solid $default-light-grey;
+		}
+		.locationSearch {
 			@include make-sm-column(6);
-      margin: 10px 0;
-      .currentLocation {
-        .locationName {
-          display: inline-block;
-          padding-bottom: 5px;
-        }
-        span.fa-map-marker {
-          color: darken($brand-success, 40%);
-        }
-      }
-      .locationSearchbar {
-        padding-bottom: 5px;
-      }
-      input.-locationAddress {
-        margin-bottom: 5px;
-      }
-      ul.locationCandidates {
-        padding: 5px 0;
-        li.locationCandidate {
-          background-color: $location-candidate-bg;
-          list-style: none;
-          margin-bottom: 4px;
-          padding-left: 5px;
-          &.hover {
-            background: $location-candidate-hover-bg;
-            cursor: pointer;
-            fill: $location-candidate-hover-fill;
-          }
-          .address {
-            font-size: 11px;
-          }
-        }
-      }
-    }
-    .locationMap {
+			margin: 10px 0;
+			.currentLocation {
+				.locationName {
+					display: inline-block;
+					padding-bottom: 5px;
+				}
+				span.fa-map-marker {
+					color: darken($brand-success, 40%);
+				}
+			}
+			.locationSearchbar {
+				padding-bottom: 5px;
+			}
+			input.-locationAddress {
+				margin-bottom: 5px;
+			}
+			ul.locationCandidates {
+				padding: 5px 0;
+				li.locationCandidate {
+					background-color: $location-candidate-bg;
+					list-style: none;
+					margin-bottom: 4px;
+					padding-left: 5px;
+					&.hover {
+						background: $location-candidate-hover-bg;
+						cursor: pointer;
+						fill: $location-candidate-hover-fill;
+					}
+					.address {
+						font-size: 11px;
+					}
+				}
+			}
+		}
+		.locationMap {
 			@include make-sm-column(6);
-      margin: 10px 0;
-      padding-left: 0;
-      @media (max-width: $screen-xs) {
-        padding-left: 15px;
-      }
-      .mapContainer.box {
-        height: 300px;
-        width: 100%;
-      }
-    }
-  }
+			margin: 10px 0;
+			padding-left: 0;
+			@media (max-width: $screen-xs) {
+				padding-left: 15px;
+			}
+			.mapContainer.box {
+				height: 300px;
+				width: 100%;
+			}
+		}
+	}
 }

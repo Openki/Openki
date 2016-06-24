@@ -5,8 +5,8 @@
 
 .course-role,
 .course-role-enrol {
-  @include transition-property(#{'box-shadow, margin'});
-  @include transition-duration(.3s);
+	@include transition-property(#{'box-shadow, margin'});
+	@include transition-duration(.3s);
 }
 
 .course-role-title,
@@ -14,34 +14,34 @@
 	font-size: large;
 	line-height: 1.1;
 	margin-top: 3px;
-  padding: 10px ($grid-gutter-width / 2);
-  width: 100%;
+	padding: 10px ($grid-gutter-width / 2);
+	width: 100%;
 }
 
 .course-role-title {
-  background: $user-bg;
-  color: $default-black;
+	background: $user-bg;
+	color: $default-black;
 }
 
 .course-role-title-enrol {
-  background: $brand-success;
+	background: $brand-success;
 }
 
 .js-role-unsubscribe-btn {
-  font-size: medium;
-  margin-left: 5px;
+	font-size: medium;
+	margin-left: 5px;
 	padding: 3px 12px;
 }
 
 .course-role-enrol {
-  box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-  margin-bottom: 10px;
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	margin-bottom: 10px;
 }
 
 .course-role-enrol-options {
 	@include clearfix;
-  background: $openki-blue-lighter;
-  padding: 15px 15px 0;
+	background: $openki-blue-lighter;
+	padding: 15px 15px 0;
 }
 
 .js-role-enrol-btn {

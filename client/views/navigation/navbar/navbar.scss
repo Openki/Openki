@@ -3,7 +3,7 @@
 
 .navbar {
 	@include transition(box-shadow $default-transition-time);
-  border: 0;
+	border: 0;
 }
 
 #bs-navbar-collapse-1 {
@@ -13,34 +13,34 @@
 }
 
 .navbar-container {
-  max-width: 1600px;
+	max-width: 1600px;
 }
 
 .navbar-brand {
-  position: relative;
+	position: relative;
 }
 
 .navbar-brand > img {
-  bottom: 5px;
-  display: inline-block;
-  height: 200%;
-  position: relative;
+	bottom: 5px;
+	display: inline-block;
+	height: 200%;
+	position: relative;
 }
 
 .site-name {
 	@include transition(text-shadow $default-transition-time);
-  font-size: x-large;
-  vertical-align: top;
+	font-size: x-large;
+	vertical-align: top;
 }
 
 .site-stage {
 	@include transition(text-shadow $default-transition-time);
-  @include rotate(345deg);
-  bottom: 2px;
-  color: $site-stage-color;
-  font-size: small;
-  font-weight: bold;
-  left: 105px;
+	@include rotate(345deg);
+	bottom: 2px;
+	color: $site-stage-color;
+	font-size: small;
+	font-weight: bold;
+	left: 105px;
 	position: absolute;
 }
 
@@ -54,8 +54,8 @@
 
 .navbar-link {
 	@include transition-property(#{'background-color, box-shadow, text-shadow'});
-  @include transition-duration($default-transition-time);
-  font-size: $navbar-default-font-size;
+	@include transition-duration($default-transition-time);
+	font-size: $navbar-default-font-size;
 	&:hover {
 		text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	}
@@ -79,7 +79,7 @@
 .nav-marker-caret {
 	@include transition(opacity $default-transition-time);
 	border: 5px solid;
-	border-color:  transparent transparent $body-bg;
+	border-color:	transparent transparent $body-bg;
 	bottom: 0;
 	box-shadow: 0 5px 5px -5px #fff;
 	height: 0;

@@ -2,7 +2,7 @@
 @import '{}/client/styles/mixins/bootstrap/clearfix';
 
 .frame-calendar-date-events {
-  @include clearfix;
+	@include clearfix;
 	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
 	padding: 10px 0;
 	width: auto;
@@ -12,5 +12,5 @@
 }
 
 .frame-calendar-no-events {
-  text-align: center;
+	text-align: center;
 }

@@ -7,7 +7,7 @@
 .courselist {
 	@include clearfix;
 	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
-  padding-bottom: 10px;
+	padding-bottom: 10px;
 	width: auto;
 	@media (min-width: $screen-xsm) {
 		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
@@ -20,12 +20,12 @@
 }
 
 .container .course-container {
-  @media (min-width: $screen-xsm) {
+	@media (min-width: $screen-xsm) {
 		@include make-xs-column(6);
 		@include make-md-column(4);
 		@include make-lg-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-  }
+	}
 }
 
 .container-sm .course-container {
@@ -36,28 +36,28 @@
 }
 
 .course {
-  border: $course-border-width dashed $openki-blue-lighter;
-  height: 150px;
+	border: $course-border-width dashed $openki-blue-lighter;
+	height: 150px;
 	position: relative;
 	transition-duration: $default-transition-time;
 	transition-property: #{'box-shadow opacity'};
-  &:hover {
-    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-    color: $brand-primary;
-    h4 {
-      color: $brand-primary;
-    }
-  }
-  &.haspastevents {
-    border-style: solid;
-  }
-  & > a:hover {
-    text-decoration: none;
-  }
-  h4 {
-    @include transition(color $default-transition-time);
-    color: $default-black;
-  }
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+		color: $brand-primary;
+		h4 {
+			color: $brand-primary;
+		}
+	}
+	&.haspastevents {
+		border-style: solid;
+	}
+	& > a:hover {
+		text-decoration: none;
+	}
+	h4 {
+		@include transition(color $default-transition-time);
+		color: $default-black;
+	}
 }
 
 .filter-no-match {
@@ -65,113 +65,113 @@
 }
 
 .course-name {
-  color: $default-black;
-  font-size: 22px;
-  line-height: 24px;
-  margin: 8px 0 0;
+	color: $default-black;
+	font-size: 22px;
+	line-height: 24px;
+	margin: 8px 0 0;
 }
 
 .course-roles-status-team,
 .course-roles-status-mentor,
 .course-roles-status-host {
-  text-align: center;
+	text-align: center;
 }
 
 .role-needed {
-  background-color: $role-needed-bg;
-  color: $role-needed-text;
+	background-color: $role-needed-bg;
+	color: $role-needed-text;
 }
 
 .role-occupied {
-  background-color: $role-occupied-bg;
-  color: $role-occupied-text;
+	background-color: $role-occupied-bg;
+	color: $role-occupied-text;
 }
 
 .role-occupied-by-user {
-  background-color: $user-bg;
-  color: $user-text;
+	background-color: $user-bg;
+	color: $user-text;
 }
 
 .course-content {
 	@include make-xs-column(9);
-  background: $body-bg;
-  padding: 0 0 0 15px;
-  &.hasupcomingevents {
+	background: $body-bg;
+	padding: 0 0 0 15px;
+	&.hasupcomingevents {
 		@include make-xs-column(7.5);
-    padding: 0 0 0 15px;
-  }
-  .course-categories {
-    margin-bottom: 0;
-    margin-left: -2px;
-    li:nth-child(3),
-    li:nth-child(4),
-    li:nth-child(5),
-    li:nth-child(6) {
-      display: none;
-    }
-  }
+		padding: 0 0 0 15px;
+	}
+	.course-categories {
+		margin-bottom: 0;
+		margin-left: -2px;
+		li:nth-child(3),
+		li:nth-child(4),
+		li:nth-child(5),
+		li:nth-child(6) {
+			display: none;
+		}
+	}
 }
 
 .course {
-  &.hasupcomingevents {
-    background: $openki-blue-lighter;
-    .course-content {
-      background: $openki-blue-lighter;
-    }
-  }
+	&.hasupcomingevents {
+		background: $openki-blue-lighter;
+		.course-content {
+			background: $openki-blue-lighter;
+		}
+	}
 }
 
 .course-roles-status {
 	@include make-xs-column(3);
-  padding: 0;
-  position: relative;
-  right: -7px;
-  top: -7px;
-  & > div {
-    margin-top: 3px;
-    &:first-child,
-    &.tooltip {
-      margin-top: 0;
-    }
-  }
+	padding: 0;
+	position: relative;
+	right: -7px;
+	top: -7px;
+	& > div {
+		margin-top: 3px;
+		&:first-child,
+		&.tooltip {
+			margin-top: 0;
+		}
+	}
 }
 
 .course-eventlist {
 	@include make-xs-column(4.5);
-  background: $brand-success;
-  color: $default-black;
-  max-height: 150px;
-  padding: 3px;
-  position: relative;
-  right: -7px;
-  text-align: center;
-  top: -7px;
+	background: $brand-success;
+	color: $default-black;
+	max-height: 150px;
+	padding: 3px;
+	position: relative;
+	right: -7px;
+	text-align: center;
+	top: -7px;
 }
 
 .course-eventlist-time,
 .course-eventlist-date {
 	@include make-xs-column(12);
-  padding: 0;
+	padding: 0;
 }
 
 .course-eventlist-location {
-  @include word-break;
-  padding: 0 4px;
-  span {
-    display: inline;
-  }
-  .glyphicon-home {
-    padding-right: 3px;
-  }
+	@include word-break;
+	padding: 0 4px;
+	span {
+		display: inline;
+	}
+	.glyphicon-home {
+		padding-right: 3px;
+	}
 }
 
 .course > .groups-list {
-  bottom: $course-border-width;
-  margin: 0;
-  position: absolute;
-  right: $course-border-width;
-  li {
-    float: right;
-    margin-left: 4px;
-  }
+	bottom: $course-border-width;
+	margin: 0;
+	position: absolute;
+	right: $course-border-width;
+	li {
+		float: right;
+		margin-left: 4px;
+	}
 }

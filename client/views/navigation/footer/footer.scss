@@ -1,28 +1,28 @@
 @import '{}/client/styles/variables';
 
 footer {
-  background: $footer-default-bg;
-  color: $footer-default-color;
-  font-size: $footer-default-font-size;
-  position: relative;
+	background: $footer-default-bg;
+	color: $footer-default-color;
+	font-size: $footer-default-font-size;
+	position: relative;
 	text-align: center;
 }
 
 .footer-link {
-  color: $footer-default-link-color;
-  padding: 10px 15px 15px;
-  position: relative;
-  top: 10px;
-  &:hover {
-    background: $footer-default-link-hover-bg;
-    color: $footer-default-link-hover-color;
-    text-decoration: none;
-  }
+	color: $footer-default-link-color;
+	padding: 10px 15px 15px;
+	position: relative;
+	top: 10px;
+	&:hover {
+		background: $footer-default-link-hover-bg;
+		color: $footer-default-link-hover-color;
+		text-decoration: none;
+	}
 }
 
 .footer-deployed-version {
-  color: $default-light-grey;
-  float: right;
+	color: $default-light-grey;
+	float: right;
 	font-size: small;
-  padding: .3em;
+	padding: .3em;
 }

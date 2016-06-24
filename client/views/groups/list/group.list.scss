@@ -3,9 +3,9 @@
 @import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
 
 .groups-list {
-  list-style: none;
-  margin-bottom: 0;
-  padding-left: 0;
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
 	> li,
 	> .dropdown,
 	> li > .dropdown {
@@ -16,7 +16,7 @@
 %group-label {
 	@include transition(all $default-transition-time);
 	background: $group-bg;
-  color: $group-text;
+	color: $group-text;
 	&:hover,
 	&:focus {
 		background: $group-hover-bg;
@@ -27,15 +27,15 @@
 
 .js-group-label {
 	@extend %group-label;
-  padding: 0 4px 1px;
-  &:hover {
-    text-decoration: none;
-  }
+	padding: 0 4px 1px;
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 .group-label-addon {
 	background: $group-bg;
-  color: $group-text;
+	color: $group-text;
 	padding: 1px 1px 0;
 	vertical-align: middle;
 }

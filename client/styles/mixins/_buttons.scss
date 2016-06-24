@@ -22,15 +22,15 @@
 }
 
 @mixin header-btn {
-  background: none;
-  border: 0;
+	background: none;
+	border: 0;
 }
 
 @mixin icon-btn-remove {
-  @include transition(color $default-transition-time);
-  color: lighten($brand-danger, 20%);
-  cursor: pointer;
-  &:hover {
-    color: $brand-danger;
-  }
+	@include transition(color $default-transition-time);
+	color: lighten($brand-danger, 20%);
+	cursor: pointer;
+	&:hover {
+		color: $brand-danger;
+	}
 }

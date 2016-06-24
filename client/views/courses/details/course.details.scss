@@ -3,23 +3,23 @@
 @import '{}/client/styles/mixins/bootstrap/opacity';
 
 .course-details-component-titlebar {
-  background: $brand-primary;
-  border: 5px solid $brand-primary;
-  color: $body-bg;
+	background: $brand-primary;
+	border: 5px solid $brand-primary;
+	color: $body-bg;
 	padding: 0 ($grid-gutter-width / 2);
 }
 
 .course-details-component-heading {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .course-details-description {
-  font-size: medium;
-  margin-bottom: 0;
-  .editable {
-    max-height: 300px;
-    overflow: auto;
-  }
+	font-size: medium;
+	margin-bottom: 0;
+	.editable {
+		max-height: 300px;
+		overflow: auto;
+	}
 }
 
 .course-details-column-left {
@@ -28,7 +28,7 @@
 	padding: 0;
 	@media (min-width: $screen-md) {
 		padding: 0 7.5px 0 0;
-  }
+	}
 }
 
 .course-details-column-right {
@@ -37,14 +37,14 @@
 	padding: 15px 0 0;
 	@media (min-width: $screen-md) {
 		padding: 0 0 0 7.5px;
-  }
+	}
 }
 
 .course-details-column-left,
 .course-details-column-right {
-  & > div:first-child {
-    padding-top: 0;
-  }
+	& > div:first-child {
+		padding-top: 0;
+	}
 }
 
 .course-details-nav {
@@ -89,10 +89,10 @@
 			padding: 15px (15px + $course-border-width);
 		}
 	}
-  &.haspastevents {
+	&.haspastevents {
 		& > .details-header {
-	    border-style: solid;
-	  }
+			border-style: solid;
+		}
 		.course-details-nav {
 			border-left: $course-border-width solid $openki-blue-lighter;
 			border-right: $course-border-width solid $openki-blue-lighter;
@@ -119,41 +119,41 @@
 }
 
 .course-details-status {
-  float: right;
-  padding: 0 0 .8em 1.4em;
-  position: relative;
-  right: -22px;
-  top: -7px;
-  div {
-    @include opacity(.5);
-    background-color: $default-black;
-    color: white;
-    font-weight: bold;
-    padding: .3em .7em;
-  }
+	float: right;
+	padding: 0 0 .8em 1.4em;
+	position: relative;
+	right: -22px;
+	top: -7px;
+	div {
+		@include opacity(.5);
+		background-color: $default-black;
+		color: white;
+		font-weight: bold;
+		padding: .3em .7em;
+	}
 }
 
 .course-details-title {
-  font-size: 30px;
-  margin-bottom: 10px;
-  & > .editable {
-    font-size: 30px;
-    padding: 0;
-  }
-  & > .editable-controls {
-    font-size: medium;
-  }
-  & > * {
-    display: inline-block;
-  }
+	font-size: 30px;
+	margin-bottom: 10px;
+	& > .editable {
+		font-size: 30px;
+		padding: 0;
+	}
+	& > .editable-controls {
+		font-size: medium;
+	}
+	& > * {
+		display: inline-block;
+	}
 }
 
 .course-details-categories ul {
-  margin-bottom: 0;
-  li {
-    margin-bottom: 10px;
-    &:first-child {
-      margin-left: 0;
-    }
-  }
+	margin-bottom: 0;
+	li {
+		margin-bottom: 10px;
+		&:first-child {
+			margin-left: 0;
+		}
+	}
 }

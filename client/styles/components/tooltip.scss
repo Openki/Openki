@@ -12,7 +12,7 @@
 	pointer-events: none;
 	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	transition: opacity .1s ease-out;
-  white-space: nowrap;
+	white-space: nowrap;
 	z-index: 1001;
 	&::after {
 		border-color: $brand-primary transparent transparent;
@@ -24,9 +24,9 @@
 		position: absolute;
 		width: 0;
 	}
-  &-inner {
-    max-width: none;
-  }
+	&-inner {
+		max-width: none;
+	}
 	&.hide {
 		opacity: 0;
 	}

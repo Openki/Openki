@@ -4,23 +4,23 @@
 
 .calendar-navigation {
 	@include make-xs-column(12);
-  background-color: $calendar-navigation-bg;
-  box-shadow: 0 6px 2px $default-shadow;
-  font-size: 32px;
-  margin-bottom: 10px;
-  padding: 0 10px;
-  position: fixed;
-  text-align: center;
-  top: 50px;
-  width: 100%;
+	background-color: $calendar-navigation-bg;
+	box-shadow: 0 6px 2px $default-shadow;
+	font-size: 32px;
+	margin-bottom: 10px;
+	padding: 0 10px;
+	position: fixed;
+	text-align: center;
+	top: 50px;
+	width: 100%;
 	z-index: 1010;
 
-  & > .right {
-    float: right;
-  }
-  small {
-    font-size: 12px;
-  }
+	& > .right {
+		float: right;
+	}
+	small {
+		font-size: 12px;
+	}
 }
 
 .switch-date-btn {
@@ -50,7 +50,7 @@
 }
 
 .calendar-container {
-  padding-top: 50px;
+	padding-top: 50px;
 	& > a:first-child {
 		margin-bottom: 15px;
 	}
