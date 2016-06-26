@@ -1,8 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
-
 
 .course-details-component-titlebar {
 	background: $brand-primary;
@@ -170,10 +168,10 @@
 
 .course-details-categories ul {
 	margin-bottom: 0;
-	
+
 	li {
 		margin-bottom: 10px;
-		
+
 		&:first-child {
 			margin-left: 0;
 		}

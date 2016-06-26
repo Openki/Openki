@@ -1,9 +1,7 @@
 @import '{}/client/styles/variables';
 @import '{}/client/styles/mixins/word-break';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
 
 .event-small-container {
 	@include make-xs-column(12);

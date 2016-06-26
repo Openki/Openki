@@ -1,12 +1,8 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
 
 #history {
 	@include clearfix;
@@ -99,16 +95,16 @@
 
 	&:hover a {
 		color: $default-black;
-		
+
 		&:hover {
 			text-decoration: underline;
 		}
 	}
-	
+
 	a {
 		color: $brand-primary;
 	}
-	
+
 	h4 {
 		padding-top: 10px;
 		text-align: center;

@@ -1,9 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
-
 
 .form-group {
 	@include clearfix;
@@ -48,7 +45,7 @@
 	& > .list-group {
 		margin-bottom: 0;
 	}
-	
+
 	& > .radio:nth-child(2),
 	& > .checkbox:nth-child(2) {
 		margin-top: 0;

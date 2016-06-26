@@ -1,6 +1,5 @@
 @import '{}/client/styles/variables';
 
-
 .tooltip {
 	background: $brand-primary;
 	border-radius: 4px;
@@ -14,7 +13,7 @@
 	transition: opacity .1s ease-out;
 	white-space: nowrap;
 	z-index: 1001;
-	
+
 	&::after {
 		border-color: $brand-primary transparent transparent;
 		border-style: solid;
@@ -25,15 +24,15 @@
 		position: absolute;
 		width: 0;
 	}
-	
+
 	&-inner {
 		max-width: none;
 	}
-	
+
 	&.hide {
 		opacity: 0;
 	}
-	
+
 	&.show {
 		opacity: 1;
 	}

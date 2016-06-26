@@ -1,7 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 
-
 .kioskTimetable {
 	@include make-xs-column(12);
 	margin-top: 5px;

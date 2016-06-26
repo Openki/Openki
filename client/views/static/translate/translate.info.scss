@@ -2,7 +2,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 
-
 .translate-info {
 	@include container-sm;
 }
@@ -93,11 +92,11 @@ div.mfTransGraph {
 	&.trans {
 		background-color: $translate-trans;
 	}
-	
+
 	&.fuzzy {
 		background-color: $translate-fuzzy;
 	}
-	
+
 	&.untrans {
 		background-color: $translate-untrans;
 	}

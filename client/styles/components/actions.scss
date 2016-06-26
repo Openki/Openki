@@ -1,14 +1,13 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
 
-
 %actions {
 	@include clearfix;
-	
+
 	.btn {
 		float: right;
 	}
-	
+
 	.btn + .btn {
 		margin-right: 5px;
 	}

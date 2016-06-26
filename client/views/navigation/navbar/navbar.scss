@@ -1,7 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
 
-
 .navbar {
 	@include transition(box-shadow $default-transition-time);
 	border: 0;
@@ -164,11 +163,11 @@
 
 .navbar-covering {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-	
+
 	.nav-marker-caret {
 		opacity: 0;
 	}
-	
+
 	.navbar-link-active,
 	.navbar-nav > li > .navbar-link-active:hover,
 	.navbar-nav > li > .navbar-link-active:focus {

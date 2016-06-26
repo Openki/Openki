@@ -1,13 +1,8 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
-
 
 .course_events {
 	@include make-xs-column(12);
@@ -121,7 +116,7 @@
 
 .course_event_title {
 	@include transition(color $default-transition-time);
-	
+
 	h3 {
 		margin: 10px 0;
 	}
@@ -138,7 +133,7 @@ input#eventEditTitle {
 	position: absolute;
 	top: 0;
 	width: 100%;
-	
+
 	@media (min-width: $screen-xs) {
 		@include gradient-vertical($body-bg, transparent);
 	}
@@ -151,7 +146,7 @@ input#eventEditTitle {
 	left: 0;
 	position: absolute;
 	width: 100%;
-	
+
 	@media (min-width: $screen-xs) {
 		@include gradient-vertical(transparent, $body-bg);
 	}

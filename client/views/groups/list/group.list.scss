@@ -2,7 +2,6 @@
 @import '{}/client/styles/mixins/buttons';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
 
-
 .groups-list {
 	list-style: none;
 	margin-bottom: 0;
@@ -70,7 +69,7 @@
 
 .group-tool-dialog {
 	padding: 10px 15px;
-	
+
 	& > .btn {
 		margin-top: 10px;
 		width: 100%;

@@ -1,10 +1,7 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
 
 .find-heading {
 	color: $brand-primary;
@@ -78,7 +75,7 @@
 	display: inline-block;
 	text-align: center;
 	width: 28px;
-	
+
 	& > .glyphicon {
 		position: relative;
 		top: 2px;

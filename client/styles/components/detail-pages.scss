@@ -1,8 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
 
 .details-page-component {
 	@include clearfix;
@@ -152,7 +150,7 @@
 .details-info-label {
 	@include make-sm-column(3);
 	font-weight: bold;
-	
+
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
 		text-align: right;
@@ -161,7 +159,7 @@
 
 .details-info-data {
 	@include make-sm-column(9);
-	
+
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
 	}

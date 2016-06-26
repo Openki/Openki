@@ -1,8 +1,5 @@
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/buttons';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
-
 
 // Button mixins
 // --------------------------------------------------
@@ -32,7 +29,7 @@
 	@include transition(color $default-transition-time);
 	color: lighten($brand-danger, 20%);
 	cursor: pointer;
-	
+
 	&:hover {
 		color: $brand-danger;
 	}

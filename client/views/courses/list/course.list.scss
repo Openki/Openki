@@ -1,11 +1,8 @@
 @import '{}/client/styles/variables';
 @import '{}/client/styles/mixins/word-break';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
 
 .courselist {
 	@include clearfix;
@@ -187,7 +184,7 @@
 	margin: 0;
 	position: absolute;
 	right: $course-border-width;
-	
+
 	li {
 		float: right;
 		margin-left: 4px;

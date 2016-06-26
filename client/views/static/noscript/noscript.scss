@@ -1,7 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 
-
 .noscript {
 	background: $openki-blue-lighter;
 	height: 100%;
@@ -19,7 +18,7 @@
 	position: relative;
 	top: calc(#{'50% - 100px'});
 	width: 300px;
-	
+
 	img {
 		@include make-xs-column(4);
 		height: 95px;

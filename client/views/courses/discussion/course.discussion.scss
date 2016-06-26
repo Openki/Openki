@@ -1,7 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{}/client/styles/mixins/buttons';
 
-
 .discussion-conversation {
 	background: $discussion-conversation-bg;
 	padding: 15px ($grid-gutter-width / 2) 10px;
@@ -55,7 +54,7 @@ $discussion-thumb-width: 60;
 .discussion-post-header {
 	background: $discussion-post-header-bg;
 	border-color: $discussion-post-border;
-	
+
 	.profilelink {
 		font-weight: bold;
 	}
@@ -66,7 +65,7 @@ $discussion-thumb-width: 60;
 	@include header-btn;
 	color: $default-gray;
 	float: right;
-	
+
 	&:hover {
 		color: $default-black;
 	}

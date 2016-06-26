@@ -1,7 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
 
-
 .locationFrame {
 	.locationEdit {
 		@include make-xs-column(12);
@@ -58,7 +57,7 @@
 						cursor: pointer;
 						fill: $location-candidate-hover-fill;
 					}
-					
+
 					.address {
 						font-size: 11px;
 					}
@@ -69,11 +68,11 @@
 			@include make-sm-column(6);
 			margin: 10px 0;
 			padding-left: 0;
-			
+
 			@media (max-width: $screen-xs) {
 				padding-left: 15px;
 			}
-			
+
 			.mapContainer.box {
 				height: 300px;
 				width: 100%;

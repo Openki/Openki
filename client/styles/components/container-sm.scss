@@ -1,13 +1,11 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
 
 // Narrow container
 .container-sm {
 	@include container-fixed;
-	
+
 	@media (min-width: $screen-sm-min) {
 		 width: $container-sm;
 	}
