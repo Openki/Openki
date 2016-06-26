@@ -1,7 +1,9 @@
 @import '{}/client/styles/variables';
 @import '{}/client/styles/components/buttons';
-@import '{}/client/styles/mixins/bootstrap/gradients';
-@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
+
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+
 
 .list-group {
 	button + li {

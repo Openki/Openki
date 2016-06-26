@@ -1,5 +1,6 @@
 
-@import '{}/client/styles/mixins/bootstrap/gradients';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
+
 $btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
 
 // Gradient button backgrounds

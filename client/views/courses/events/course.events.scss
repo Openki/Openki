@@ -1,8 +1,12 @@
 @import '{}/client/styles/variables';
-@import '{}/client/styles/mixins/bootstrap/grid';
-@import '{}/client/styles/mixins/bootstrap/opacity';
-@import '{}/client/styles/mixins/bootstrap/gradients';
-@import '{}/client/styles/mixins/bootstrap/vendor-prefixes';
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
+
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/opacity';
+
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/gradients';
+
+@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+
 
 
 .course_events {

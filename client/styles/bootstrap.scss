@@ -5,7 +5,7 @@ $icon-font-path: '/packages/reywood_bootstrap3-sass/assets/fonts/bootstrap/' !de
 }
 
 // Bootstrap variables
-@import 'bootstrap-variables';
+@import 'bootstrap/bootstrap-variables';
 
 // Bootstrap framework
 $bootstrap-sass-asset-helper: false;
@@ -58,5 +58,5 @@ $bootstrap-sass-asset-helper: false;
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/responsive-utilities";
 
 // Overrides
-@import 'gradient-buttons';
+@import 'bootstrap/overrides/gradient-buttons';
 @import '{}/client/views/navigation/navbar/navbar';
