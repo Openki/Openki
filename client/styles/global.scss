@@ -16,6 +16,10 @@
 	}
 }
 
+.datepicker-dropdown.datepicker-orient-top:after {
+	border-top-color: $dropdown-bg;
+}
+
 .dropdown-menu {
 	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 	border: 0;
