@@ -1,8 +1,6 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/grid';
-
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
-
 
 .calendar-navigation {
 	@include make-xs-column(12);
@@ -85,7 +83,7 @@
 	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
 	padding: 10px 0;
 	position: relative;
-	
+
 	@media (min-width: $screen-xsm) {
 		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
 	}
