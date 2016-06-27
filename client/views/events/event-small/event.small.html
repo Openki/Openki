@@ -1,8 +1,17 @@
+<template name="eventSmallList">
+	{{#each eventsList}}
+		{{> eventSmall}}
+	{{/each}}
+</template>
+
 <template name="eventSmall">
-	<a href="{{pathFor 'showEvent'}}">
-		<div class="event-small-container">
-			<div class="event-small">
+	<div class="event-small-container">
+		<a href="{{pathFor 'showEvent'}}">
+			<div class="event-small {{#if withDate}}event-small-with-date{{/if}}">
 				<div class="event-small-header">
+					{{#if withDate}}
+						{{> eventSmallDate}}
+					{{/if}}
 					<span class="fa fa-clock-o"></span>
 					<span class="event-small-time">
 						{{timeformat start}} - {{timeformat end}}
@@ -11,12 +20,21 @@
 					{{> locationLink}}
 				</div>
 				<div class="event-small-title">
-					{{plain this.title}}
+					{{plain title}}
 				</div>
 				<div class="event-small-description">
-					{{plain this.description}}
+					{{plain description}}
 				</div>
 			</div>
-		</div>
-	</a>
+		</a>
+	</div>
+</template>
+
+<template name="eventSmallDate">
+	<span class="fa fa-calendar"></span>
+	<span class="event-small-date">
+		{{weekday_short start}}
+		{{dateformat_mini_fullmonth start}}
+	</span>
+	<br>
 </template>

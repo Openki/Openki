@@ -1,14 +1,3 @@
-.find {
-	.course-edit {
-		@include grid(12, inherit, 9);
-		@include make-md-column-offset(1.5);
-		padding: 0;
-	  h2 {
-	    margin-top: 0;
-	  }
-	}
-}
-
 .find-heading {
   color: $brand-primary;
   margin-top: 0;
@@ -18,14 +7,9 @@
   }
 }
 
-.search {
-  @include grid(12);
-	padding: 0;
-}
-
 .js-search-field {
   @include grid(12, inherit, 5);
-  padding: 0 0 15px;
+  padding: 0;
 }
 
 .js-search-input {
@@ -34,40 +18,26 @@
 
 .filter {
   @include grid(12, inherit, 7);
+	margin-top: $form-group-margin-bottom;
   padding: 0;
-  @media (max-width: $screen-xs) {
-		@include grid(12);
-		background: $gray-lighter;
-    border: 1px solid $btn-default-border;
-		border-radius: 4px;
-    margin-top: 5px;
-    padding: 0 10px;
-  }
   @media (min-width: $screen-md) {
+		margin-top: 0;
     padding-left: 15px;
   }
 }
 
 .filter-header {
-  @include grid(12);
+	border-bottom: 1px solid $openki-blue-lighter;
   color: $brand-primary;
-  padding: 0;
-  @media (max-width: $screen-xs) {
-    display: none;
-  }
-}
-
-.filter-heading {
-  margin-top: 8px;
+	width: 100%;
+	& > h4 {
+		margin-top: 0;
+	}
 }
 
 .filter-course-properties,
 .filter-categories {
-  border-top: 1px solid $openki-light-blue;
   float: left;
-  @media (max-width: $screen-xs) {
-    border-top-width: 0;
-  }
 }
 
 .filter-course-properties {
@@ -100,7 +70,7 @@
 }
 
 .eventcaption_upcoming {
-  background: $openki-light-blue;
+  background: $openki-blue-lighter;
   display: inline-block;
   height: 20px;
   position: relative;

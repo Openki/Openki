@@ -1,27 +1,11 @@
 .frame-calendar-date-events {
-  @include grid(12);
-  padding: 0 0 10px;
-}
-
-.frame-calendar-date {
-  background: lighten($orange, 25%);
-  border-left: 10px solid $orange;
-  font-size: large;
-  padding: 5px 7px 5px 9px;
-  text-align: center;
-  width: 100px;
-  @media (max-width: $screen-xxs) {
-    @include grid(12);
-    border-left: 0;
-    border-top: 10px solid $orange;
-    padding: .5em;
-  }
-}
-
-.frame-calendar-events {
-  @include grid(12);
-  margin-bottom: -10px;
-  padding: 10px 7px 0;
+  @include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	padding: 10px 0;
+	width: auto;
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	}
 }
 
 .frame-calendar-no-events {

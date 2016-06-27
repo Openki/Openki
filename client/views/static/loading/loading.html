@@ -1,7 +1,7 @@
 <template name="loadingPage">
 	<div class="loading-page">
 		<h1>
-			<img src="/spinner.gif">
+			<i class="fa fa-circle-o-notch fa-spin fa-fw" title="{{mf 'loading.loading'}}"></i>
 			{{mf 'loading.loading' 'Loading...'}}
 		</h1>
 	</div>
@@ -10,7 +10,8 @@
 <template name="loadingRow">
 	<div class="loading-row">
 		<h1>
-			<img src="/spinner.gif">
+			<i class="fa fa-circle-o-notch fa-spin fa-fw" title="{{mf 'loading.loading'}}"></i>
+			<span class="sr-only">{{mf 'loading.loading'}}</span>
 			{{mf 'loading.loading'}}
 		</h1>
 	</div>

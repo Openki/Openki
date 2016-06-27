@@ -1,30 +1,38 @@
 .courselist {
-  @include grid(12);
-	margin-left: -5px;
-  padding: 0 0 10px;
-  width: calc(#{'100% + 10px'});
-	@media (max-width: $screen-xs) {
-    padding-top: 15px;
-  }
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+  padding-bottom: 10px;
+	width: auto;
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	}
 }
 
 .course-container {
-  @include grid(6, inherit, 4, 3);
-  border: 5px solid $body-bg;
-  border-bottom-width: 15px;
-  padding: 0;
-  @media (max-width: $screen-xsm) {
-    @include grid(12);
-    padding: 0;
+	@include grid(12);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
+}
+
+.container .course-container {
+  @media (min-width: $screen-xsm) {
+		@include grid(6, inherit, 4, 3);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
   }
 }
 
+.container-sm .course-container {
+	@media (min-width: $screen-xsm) {
+		@include grid(6);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	}
+}
+
 .course {
-  @include grid(12);
-  @include transition(box-shadow $default-transition-time);
-  border: 7px dashed $openki-light-blue;
+  border: $course-border-width dashed $openki-blue-lighter;
   height: 150px;
-  padding: 0;
+	position: relative;
+	transition-duration: $default-transition-time;
+	transition-property: #{'box-shadow opacity'};
   &:hover {
     @include box-shadow-big($default-shadow);
     color: $brand-primary;
@@ -42,6 +50,10 @@
     @include transition(color $default-transition-time);
     color: $default-black;
   }
+}
+
+.filter-no-match {
+	opacity: .33;
 }
 
 .course-name {
@@ -92,12 +104,11 @@
   }
 }
 
-.course,
-.course_main {
+.course {
   &.hasupcomingevents {
-    background: $openki-light-blue;
+    background: $openki-blue-lighter;
     .course-content {
-      background: $openki-light-blue;
+      background: $openki-blue-lighter;
     }
   }
 }
@@ -146,12 +157,11 @@
   }
 }
 
-.course-groups .groups-list {
-  bottom: 0;
+.course > .groups-list {
+  bottom: $course-border-width;
   margin: 0;
-  padding: 0 7px 7px 0;
   position: absolute;
-  right: 0;
+  right: $course-border-width;
   li {
     float: right;
     margin-left: 4px;

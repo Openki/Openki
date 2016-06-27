@@ -49,6 +49,15 @@ Template.navbar.helpers({
 
 	notConnected: function() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
+	},
+
+	activeClass: function(linkRoute) {
+		var routeName = Router.current().route.getName();
+		if (routeName === linkRoute) {
+			return 'navbar-link-active';
+		} else {
+			return '';
+		}
 	}
 });
 

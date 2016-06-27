@@ -2,7 +2,8 @@
 // --------------------------------------------------
 
 $openki-blue: #38829c;
-$openki-light-blue: #d8ebf4;
+$openki-blue-light: lighten($openki-blue, 10%);
+$openki-blue-lighter: #d8ebf4;
 $openki-green: #c1f2ae;
 $openki-red: #ec6d6d;
 $openki-yellow: #f9e744;

@@ -48,9 +48,9 @@ Template.calendar.onCreated(function() {
 Template.calendar.rendered = function() {
 	$(window).scroll(function (event) {
 		if($(window).scrollTop() > 5)
-			this.$('.switchDate').addClass('over_content');
+			this.$('.calendar-navigation').addClass('over_content');
 		else
-			this.$('.switchDate').removeClass('over_content');
+			this.$('.calendar-navigation').removeClass('over_content');
 	});
 };
 
@@ -179,8 +179,7 @@ Template.calendar.events({
 	'click .prevYear': mvDateHandler(-1, 'year'),
 });
 
-Template.switchDate.helpers({
-
+Template.calendarNavigation.helpers({
 	endDateTo: function(date) {
 		return moment(date).add(6, 'days');
 	}

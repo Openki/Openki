@@ -8,7 +8,7 @@ Template.eventEdit.onCreated(function() {
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
 
-	this.$('.js-eventStartDate').datepicker({
+	this.$('.js-event-start-date').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		language: moment.locale(),
 		autoclose: true,
@@ -22,8 +22,6 @@ Template.eventEdit.onRendered(function() {
 			}
 		}
 	});
-
-	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 
@@ -70,7 +68,7 @@ Template.eventEdit.helpers({
 
 	isInternal: function() {
 		return this.internal ? "checked" : null;
-	},
+	}
 });
 
 Template.eventDescriptionEdit.rendered = function() {
@@ -85,8 +83,8 @@ var readDateTime = function(dateStr, timeStr) {
 
 var getEventStartMoment = function(template) {
 	return readDateTime(
-		template.$('.js-eventStartDate').val(),
-		template.$('#edit_event_starttime').val()
+		template.$('.js-event-start-date').val(),
+		template.$('#editEventStartTime').val()
 	);
 };
 
@@ -95,7 +93,7 @@ var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = readDateTime(
 		startMoment.format('L'),
-		template.$('#edit_event_endtime').val()
+		template.$('#editEventEndTime').val()
 	);
 
 	// If the end time is earlier than the start time, assume the event
@@ -106,7 +104,7 @@ var getEventEndMoment = function(template) {
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
 			startMoment.add(1, 'day').format('L'),
-			template.$('#edit_event_endtime').val()
+			template.$('#editEventEndTime').val()
 		);
 	}
 
@@ -115,7 +113,7 @@ var getEventEndMoment = function(template) {
 
 
 var getEventDuration = function(template) {
-	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
+	var duration = parseInt(template.$('#editEventDuration').val(), 10);
 	return Math.max(0,duration);
 };
 
@@ -142,19 +140,19 @@ var updateTimes = function(template, updateEnd) {
 
 	duration = end.diff(start, 'minutes');
 	template.$('#edit_event_startdate').val(start.format('L'));
-	template.$('#edit_event_starttime').val(start.format('LT'));
-	template.$('#edit_event_endtime').val(end.format('LT'));
-	template.$('#edit_event_duration').val(duration.toString());
+	template.$('#editEventStartTime').val(start.format('LT'));
+	template.$('#editEventEndTime').val(end.format('LT'));
+	template.$('#editEventDuration').val(duration.toString());
 };
 
 Template.eventEdit.events({
-	'change .eventFileInput': function(event, template) {
-		template.$('button.eventFileUpload').toggle(300);
+	'change .js-event-add-file': function(event, template) {
+		template.$('.js-event-upload-file').toggle(300);
 	},
 
-	'click button.eventFileUpload': function(event, template) {
+	'click .js-event-upload-file': function(event, template) {
 
-		var fileEvent = $('.eventFileInput')[0].files;
+		var fileEvent = $('.js-event-add-file')[0].files;
 
 		//FS.Utility.eachFile(fileEvent, function(file) {
 		$.each( fileEvent, function(i,file){
@@ -174,13 +172,15 @@ Template.eventEdit.events({
 						}
 					];
 					template.files = fileList;
-					template.$('button.eventFileUpload').hide(50);
+					template.$('button.js-event-upload-file').hide(50);
 
 					var fileHtml = '<tr id="row-' + fileObj._id + '">';
-					fileHtml += '<td style="padding-right:5px;">';
-					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
-					fileHtml += '</td><td><button role="button" class="fileDelete close" type="button">';
-					fileHtml += '<span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+					fileHtml += '<td><i class="fa fa-file fa-fw" aria-hidden="true"></i>';
+					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">';
+					fileHtml += fileObj.original.name + '</a>';
+					fileHtml += '</td><td><button type="button" class="js-delete-file close"';
+					fileHtml += 'data-tooltip="' + mf('event.edit.removeFile') + '">';
+					fileHtml += '&times;</button></td></tr>';
 
 					$("table.file-list").append(fileHtml);
 
@@ -189,7 +189,7 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click button.fileDelete': function (event, template) {
+	'click .js-delete-file': function (event, template) {
 		var fileid = this._id;
 		var eventid = template.data._id;
 		var filename = this.filename;
@@ -221,10 +221,10 @@ Template.eventEdit.events({
 		var end = getEventEndMoment(instance);
 
 		var editevent = {
-			title: instance.$('#edit_event_title').val(),
-			description: instance.$('#edit_event_description').html(),
+			title: instance.$('#eventEditTitle').val(),
+			description: instance.$('#eventEditDescription').html(),
 			location: instance.selectedLocation.get(),
-			room: instance.$('#edit_event_room').val(),
+			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
 			files: this.files || Array(),
@@ -310,21 +310,20 @@ Template.eventEdit.events({
 		instance.parent.editing.set(false);
 	},
 
-	'click .toggle_duration': function(event, template){
+	'click .js-toggle-duration': function(event, instance){
 		Tooltips.hide();
-		template.$('.end_time').slideToggle(600);
-		template.$('.show_duration').slideToggle(600);
+		$('.time-end > *').toggle();
 	},
 
-	'change #edit_event_duration, change #edit_event_startdate, change #edit_event_starttime': function(event, template) {
+	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #edit_event_endtime': function(event, template) {
+	'change #editEventEndTime': function(event, template) {
 		updateTimes(template, false);
 	},
 
-	'change .-regionSelect': function(event, instance) {
-		instance.selectedRegion.set(instance.$('.-regionSelect').val());
+	'change .js-select-region': function(event, instance) {
+		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 });

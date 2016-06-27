@@ -18,7 +18,7 @@ Template.report.events({
 	},
 	'click .js-report-send': function(event, instance) {
 		event.preventDefault();
-		Meteor.call('report', document.title, window.location.href, instance.$('.report').val(), function(error, result) {
+		Meteor.call('report', document.title, window.location.href, instance.$('#reportMessage').val(), function(error, result) {
 			if (error) {
 				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."), 'danger');
 			} else {
