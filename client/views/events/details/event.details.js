@@ -14,7 +14,6 @@ Template.eventDisplay.onCreated(function() {
 Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
 	this.locationTracker.setLocation(this.data.location);
-	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 
@@ -139,7 +138,7 @@ Template.eventGroupAdd.helpers({
 
 
 Template.eventGroupAdd.events({
-	'click .js-add': function(event, instance) {
+	'click .js-add-group': function(event, instance) {
 		Meteor.call('event.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
 				addMessage(mf('course.group.addFailed'), 'danger');

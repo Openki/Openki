@@ -6,152 +6,149 @@
 
 <template name="userprofile">
 	<div class="container-sm">
-		<h1 class="profile-username">
-			{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
-		</h1>
+		<div class="details-page-component">
+			<h2>
+				{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
+			</h2>
 			{{#if ownuser}}
-				<div class="profile-it-is-you">
-					<h4>
-						{{mf 'profile.its_you' "It's you!"}}&nbsp;
-					</h4>
-					<h5>
-						<a href="/profile/" >
-							<span class="fa fa-cog"></span>
-							{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
-						</a>
-					</h5>
-				</div>
+				<h4>
+					{{mf 'profile.its_you' "It's you!"}}&nbsp;
+				</h4>
+				<h5>
+					<a href="/profile/" >
+						<span class="fa fa-cog"></span>
+						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
+					</a>
+				</h5>
 			{{else}}
 				{{>emailBox}}
 			{{/if}}
-
-		{{#if showPrivileges}}
-			<div class="profile-settings-container">
-				<div class="profile-settings">
-					<h3>
-						<span class="fa fa-cog"></span>
-						{{mf 'privileges.title' 'Administrate Privileges'}}
-					</h3>
-					<div class="list-group">
-						{{#if privileges.admin}}
-							<li class="list-group-item list-group-item-success">
-								{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
-								{{#if alterPrivileges}}
-									<button class="js-remove-privilege-btn"
-										data-tooltip="{{mf 'privilege.remove' 'Remove privilege'}}"
-										data-priv="admin"
-										role="button"
-										type="button">
-										<span class="glyphicon glyphicon-remove"></span>
-									</button>
-								{{/if}}
-							</li>
-						{{else}}
-							{{#if alterPrivileges}}
-									<button class="giveAdmin list-group-item" type="button">
-										{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
-									</button>
-							{{/if}}
-						{{/if}}
-
-						{{#if privileges.upload}}
-							<li class="list-group-item list-group-item-success">
-								{{mf 'privilege.has.upload' 'Upload allowed'}}
-								{{#if alterPrivileges}}
-									<button class="js-remove-privilege-btn"
-										data-tooltip="{{mf 'privilege.remove'}}"
-										data-priv="upload"
-										role="button"
-										type="button">
-										<span class="glyphicon glyphicon-remove"></span>
-									</button>
-								{{/if}}
-							</li>
-						{{else}}
-							{{#if alterPrivileges}}
-									<button class="giveUpload list-group-item" type="button">
-										{{mf 'privilege.add.upload' 'Grant upload privilege'}}
-									</button>
-							{{/if}}
-						{{/if}}
-					</div>
-				</div>
-			</div>
-		{{/if}}
-
-		{{#if showInviteGroups}}
-			<div class="profile-settings-container">
-				<div class="profile-settings">
-					<h3>
-						<span class="fa fa-cog"></span>
-						{{mf 'userprofile.groups.header' 'Edit groups'}}
-					</h3>
-					<div class="list-group">
-						{{#each inviteGroups}}
-								{{#if groupMember this ../user}}
-								<li class="list-group-item list-group-item-success">
-									{{mf 'profile.group.member' 'Member of group '}}
-									<span class="group">{{name}}</span>
-									&nbsp;
-									<button class="js-group-expel-btn"
-										data-tooltip="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}"
-										role="button"
-										type="button">
-										<span class="glyphicon glyphicon-remove"></span>
-									</button>
-								</li>
+			{{#if showSettings}}
+				<div class="form-group">
+					{{#if showPrivileges}}
+						<div class="form-group-element">
+							<label class="label-lg">
+								<span class="fa fa-cog"></span>
+								{{mf 'privileges.title' 'Administrate Privileges'}}
+							</label>
+							<div class="list-group">
+								{{#if privileges.admin}}
+									<li class="list-group-item list-group-item-success">
+										{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
+										{{#if alterPrivileges}}
+											<button type="button" class="js-remove-privilege-btn close"
+												data-tooltip="{{mf 'privilege.remove' 'Remove privilege'}}"
+												data-priv="admin">
+												&times;
+											</button>
+										{{/if}}
+									</li>
 								{{else}}
-									<button class="draftIntoGroup list-group-item">
-										{{mf 'profile.group.draft' 'Draft into group '}}
-										{{name}}
-									</button>
+									{{#if alterPrivileges}}
+											<button type="button" class="giveAdmin list-group-item">
+												{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
+											</button>
+									{{/if}}
 								{{/if}}
-						{{/each}}
-					</div>
-				</div>
-			</div>
-		{{/if}}
 
-		<div class="profile-course-list-heading">
-			<hr>
-			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
+								{{#if privileges.upload}}
+									<li class="list-group-item list-group-item-success">
+										{{mf 'privilege.has.upload' 'Upload allowed'}}
+										{{#if alterPrivileges}}
+											<button type="button" class="js-remove-privilege-btn close"
+												data-tooltip="{{mf 'privilege.remove'}}"
+												data-priv="upload">
+												&times;
+											</button>
+										{{/if}}
+									</li>
+								{{else}}
+									{{#if alterPrivileges}}
+											<button type="button" class="giveUpload list-group-item">
+												{{mf 'privilege.add.upload' 'Grant upload privilege'}}
+											</button>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+					{{/if}}
+
+					{{#if showInviteGroups}}
+						<div class="form-group-element">
+							<label class="label-lg">
+								<span class="fa fa-cog"></span>
+								{{mf 'userprofile.groups.header' 'Edit groups'}}
+							</label>
+							<div class="list-group">
+								{{#each inviteGroups}}
+										{{#if groupMember this ../user}}
+										<li class="list-group-item list-group-item-success">
+											{{mf 'profile.group.member' 'Member of group '}}
+											<span class="group">{{name}}</span>
+											<button type="button" class="js-group-expel-btn close"
+												data-tooltip="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
+												&times;
+											</button>
+										</li>
+										{{else}}
+											<button type="button" class="draftIntoGroup list-group-item">
+												{{mf 'profile.group.draft' 'Draft into group '}}
+												{{name}}
+											</button>
+										{{/if}}
+								{{/each}}
+							</div>
+						</div>
+					{{/if}}
+				</div>
+			{{/if}}
 		</div>
-		<div class="profile-course-list">
-			{{#each involvedIn}}
-				{{> course}}
-			{{/each}}
+
+		<div class="details-page-component profile-courselist">
+			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
+			<div class="courselist">
+				{{#each involvedIn}}
+					{{> course}}
+				{{/each}}
+			</div>
 		</div>
 	</div>
 </template>
 
 <template name="emailBox">
-	<div class="profile-send-email">
+	<div class="details-form">
 		<form class="sendMail">
-			<h4>{{mf 'profile.mail.content' 'Your message:'}}</h4>
-			<textarea class="form-control"
-				id="emailmessage"
-				placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
-				rows="3"></textarea>
-			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-default">
-					<input class="js-send-own-adress"
-						id="sendOwnAdress"
-						type="checkbox"/>
-					{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
-					<span class="checkmark glyphicon glyphicon-ok"></span>
-				</label>
-				<label class="btn btn-default">
-					<input class="js-receive-copy"
-						id="receiveCopy"
-						type="checkbox"/>
-					{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
-					<span class="checkmark glyphicon glyphicon-ok"></span>
-				</label>
+			<div class="form-group">
+				<label>{{mf 'profile.mail.content' 'Your message:'}}</label>
+				<textarea class="form-control"
+					id="emailmessage"
+					placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
+					rows="3"></textarea>
 			</div>
-			<button class="btn btn-save" type="submit">
-				<span class="glyphicon glyphicon-send"></span>&nbsp;
-				{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
-			</button>
+			<div class="form-group">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default">
+						<input class="js-receive-copy"
+							id="receiveCopy"
+							type="checkbox"/>
+						{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
+						<span class="checkmark glyphicon glyphicon-ok" style="display:none"></span>
+					</label>
+					<label class="btn btn-default">
+						<input class="js-send-own-adress"
+							id="sendOwnAdress"
+							type="checkbox"/>
+						{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
+						<span class="checkmark glyphicon glyphicon-ok" style="display:none"></span>
+					</label>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-save">
+					<span class="glyphicon glyphicon-send"></span>&nbsp;
+					{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
+				</button>
+			</div>
 		</form>
 	</div>
 </template>

@@ -1,13 +1,11 @@
 #history {
-  @include grid(12);
-  padding: 0 0 10px;
+	@include clearfix;
+  padding-bottom: 10px;
 }
 
 .timeline-pre,
 .timeline-post {
-  @include grid(12);
   height: 30px;
-  padding: 0;
 }
 
 .timeline-start-container,
@@ -26,11 +24,11 @@
 }
 
 .timeline-start {
-  @include gradient-vertical($openki-light-blue, $brand-primary, 0%, 100%);
+  @include gradient-vertical($openki-blue-lighter, $brand-primary, 0%, 100%);
 }
 
 .timeline-end {
-  @include gradient-vertical($brand-primary, $openki-light-blue, 0%, 100%);
+  @include gradient-vertical($brand-primary, $openki-blue-lighter, 0%, 100%);
 }
 
 .timeline-header {
@@ -99,4 +97,8 @@
     padding-top: 10px;
     text-align: center;
   }
+}
+
+.files-info {
+	padding: 0 8px;
 }

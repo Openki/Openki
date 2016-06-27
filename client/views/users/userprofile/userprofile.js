@@ -51,6 +51,12 @@ Template.userprofile.helpers({
 
 	showInviteGroups: function() {
 		return this.inviteGroups.count && this.inviteGroups.count() > 0;
+	},
+
+	showSettings: function() {
+		var showPrivileges = Template.instance().data.showPrivileges;
+		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
+		return showPrivileges || showInviteGroups;
 	}
 });
 
@@ -100,7 +106,8 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.js-group-expel-btn': function(event, template) {
+	'click .js-group-expel-btn': function(event, template) {
+		Tooltips.hide();
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
@@ -161,10 +168,3 @@ Template.emailBox.events({
 		);
 	}
 });
-
-Template.userprofile.rendered = function() {
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	if (this.data.user._id == Meteor.userId())
-		$('a.loginButton.navbar-link').addClass('navbar-link-active');
-};

@@ -26,7 +26,7 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+								showServerError('Saving the course went wrong.', err);
 							} else {
 								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
 							}
@@ -121,18 +121,11 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 768; // @screen-sm
+		return Session.get('screenSize') <= 992; // @screen-md
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
 	}
-});
-
-Template.courseDetailsSubmenu.helpers({
-	hasFiles: function() {
-		var withFiles = { courseId: this.course._id, files: {$exists: 1, $not: {$size: 0}} };
-		return !!Events.findOne(withFiles);
-	},
 });
 
 Template.courseDetailsPage.events({
@@ -199,7 +192,7 @@ Template.courseGroupAdd.helpers({
 
 
 Template.courseGroupAdd.events({
-	'click .js-add': function(event, instance) {
+	'click .js-add-group': function(event, instance) {
 		Meteor.call('course.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
 				addMessage(mf('course.group.addFailed', "Failed to add group"), 'danger');

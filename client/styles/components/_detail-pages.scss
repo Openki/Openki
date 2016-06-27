@@ -1,0 +1,145 @@
+.details-page-component {
+	@include clearfix;
+	& + .details-page-component {
+		margin-top: 15px;
+	}
+	& > h2,
+	& > h3 {
+		margin-bottom: $form-group-margin-bottom;
+		margin-top: 0;
+	}
+	& > .btn:first-child {
+		width: 100%;
+	}
+	& > .frame-events {
+		padding: 0;
+	}
+	& > .form-group:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.details-header {
+	padding: 10px $form-group-margin-bottom;
+	& > h2,
+	& > h3 {
+		margin-top: 0;
+	}
+	& > *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.details-body {
+	@include clearfix;
+	margin-top: 3px;
+}
+
+.details-content {
+	padding: ($grid-gutter-width / 2);
+	& > h3,
+	& > h4 {
+		margin-top: 0;
+	}
+	& > *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.details-map {
+	height: 300px;
+	padding: $form-group-margin-bottom 0;
+	width: 100%;
+	@media (min-width: $screen-sm) {
+		width: 300px;
+		float: right;
+		padding: 0 0 $form-group-margin-bottom $form-group-margin-bottom;
+	}
+	.mapContainer.box {
+		height: 100%;
+		width: 100%;
+	}
+	.coordinates {
+		font-weight: bold;
+		margin: 5px 5px 5px 0;
+		text-align: right;
+	}
+}
+
+.details-form {
+	@include clearfix;
+	background-color: lighten($brand-success, 10%);
+	border-color: $brand-success;
+	border-style: solid;
+	border-width: 1px;
+	padding: ($grid-gutter-width / 2);
+	& > h3 {
+		margin-top: 0;
+	}
+	& > form > *:last-child {
+		margin-bottom: 0;
+	}
+	& + .form-group {
+		margin-top: $form-group-margin-bottom;
+	}
+}
+
+.details-form > .details-form-element {
+	&:nth-child(1):nth-last-child(2),
+	&:nth-child(2):nth-last-child(1) {
+		@include grid(12, 6);
+		padding: 0;
+	}
+	@media (min-width: $screen-sm) {
+		&:nth-child(1):nth-last-child(2) {
+			padding-right: ($grid-gutter-width / 2);
+		}
+		&:nth-child(2):nth-last-child(1) {
+			padding-left: ($grid-gutter-width / 2);
+		}
+	}
+	& > h3 {
+		margin-top: 0;
+	}
+}
+
+.details-addition {
+	background-color: $gray-lighter;
+	border-color: darken($gray-lighter, 3%);
+	border-style: solid;
+	border-width: 1px 1px;
+	padding: $form-group-margin-bottom;
+	& > h3,
+	& > h4 {
+		margin-top: 0;
+	}
+	& > *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.details-info-group {
+	@include make-row;
+	margin-bottom: $form-group-margin-bottom;
+}
+
+.details-info-label {
+	@include grid(12, 3);
+	font-weight: bold;
+	@media (min-width: $screen-sm) {
+		padding-top: 7px;
+		text-align: right;
+	}
+}
+
+.details-info-data {
+	@include grid(12, 9);
+	@media (min-width: $screen-sm) {
+		padding-top: 7px;
+	}
+}
+
+.details-info-btn {
+	@include grid(12, 9);
+	@include make-sm-column-offset(3);
+}

@@ -1,50 +1,19 @@
-.groupSettings {
-  @include grid(12);
-  background: rgba(170, 230, 170, .2);
-  font-size: x-large;
-  margin-bottom: 50px;
-  padding: 0;
+.group-settings {
   h2 {
     margin-top: 8px;
   }
   .settings {
-    @include grid(12, 6);
-    padding: 15px;
     .editable {
       background: none;
-    }
-    .setInfos {
-      height: auto;
-      max-height: 150px;
-      min-height: 40px;
-      p {
-        margin: 0;
-      }
-    }
-    .groupEditFinishbtns {
-      @include grid(12);
-      padding: 20px 0;
-      button {
-        margin-right: 10px;
-      }
     }
   }
 
   .members {
-    @include grid(12, 6);
-    font-size: medium;
-    padding: 15px;
-    h2 {
-      padding-bottom: 20px;
-    }
-    .input-group {
-      margin-bottom: 10px;
-    }
     ul {
-      margin-left: 0;
-      padding-bottom: 10px;
+			@include list-unstyled;
       li {
         background-color: rgba(80, 90, 50, .15);
+				display: inline-block;
         margin-bottom: 5px;
         margin-right: 5px;
         padding-left: 8px;
@@ -73,4 +42,8 @@
       }
     }
   }
+}
+
+.group-links {
+	@include list-unstyled;
 }

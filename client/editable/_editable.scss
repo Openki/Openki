@@ -2,9 +2,8 @@
   margin: -8px;
   position: relative;
   .editable {
-    @include transition-property(#{'background-color, border, box-shadow'});
-    @include transition-duration($default-transition-time);
     min-height: 2em;
+		outline: none;
     padding: 8px;
     &:focus,
     &.changed {
@@ -67,4 +66,9 @@
     @include box-shadow-big($default-shadow);
     margin-right: 5px;
   }
+}
+
+.editable-textarea {
+	height: 100px;
+	overflow: auto;
 }

@@ -1,9 +1,7 @@
 <template name="courseRoles">
-	<div class="course-roles">
-		{{#each this}}
-			{{> courseRole}}
-		{{/each}}
-	</div>
+	{{#each this}}
+		{{> courseRole}}
+	{{/each}}
 </template>
 
 <template name="courseRole">
@@ -12,10 +10,8 @@
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
-				<button class="js-role-unsubscribe-btn btn btn-cancel"
-					name="{{roletype.type}}"
-					role="button"
-					type="button">
+				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
+					name="{{roletype.type}}">
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
@@ -26,31 +22,34 @@
 					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
 				</div>
 				<div class="course-role-enrol-options">
-					{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
-					<textarea class='course-role-enrol-comment form-control'
-						>{{../../member.comment}}</textarea>
+					<div class="form-group">
+						<label>
+							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
+						</label>
+						<textarea class='form-control'
+							>{{../../member.comment}}</textarea>
+					</div>
 					{{#if privacyEnabled}}
 						<div class="checkbox">
 							<label>
-								<input class="incognito" type="checkbox" value="1" />
+								<input class="incognito" type="checkbox" value="1"/>
 								{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
 							</label>
 						</div>
 					{{/if}}
-					<div class="course-role-enrol-btns">
-						<button class="btn btn-save js-role-subscribe-btn">
-							<span class="glyphicon glyphicon-ok"></span>
-							{{mf 'course.roles.enrol' 'Enroll'}}
-						</button>
-						<button class="btn btn-cancel js-role-enrol-cancel-btn">
-							<span class="glyphicon glyphicon-remove"></span>
+					<div class="form-actions">
+						<button type="button" class="btn btn-cancel js-role-enrol-cancel-btn">
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
+						</button>
+						<button type="button" class="btn btn-save js-role-subscribe-btn">
+							<i class="glyphicon glyphicon-fire fa-fw"></i>
+							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
 					</div>
 				</div>
 			{{else}}
 				{{#if maySubscribe roletype.type}}
-					<button class="btn btn-add js-role-enrol-btn" type="button" name="participant">
+					<button type="button" class="btn btn-add js-role-enrol-btn" name="participant">
 						<span class="{{roletype.icon}}"></span>&nbsp;
 						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 					</button>

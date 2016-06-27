@@ -108,7 +108,7 @@ Template.locationDetails.helpers({
 
 Template.locationDetails.events({
 
-	'click input.edit': function () {
+	'click .js-location-edit': function () {
 		if (pleaseLogin()) return;
 
 		// das reicht wohl noch nicht, muss auf server-seite passieren?
@@ -123,7 +123,7 @@ Template.locationDetails.events({
 
 	},
 
-	'click input.del': function () {
+	'click .js-location-delete': function () {
 		if (pleaseLogin()) return;
 
 		// das reicht wohl noch nicht, muss auf server-seite passieren?

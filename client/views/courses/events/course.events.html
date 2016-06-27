@@ -1,11 +1,14 @@
 <template name="course_events">
 	{{#if mayAdd}}
+	<div class="details-page-component">
 		<button type="button" class="btn btn-add eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
+			<i class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></i>
 			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
+	</div>
 	{{/if}}
 	{{#if haveEvents}}
+	<div class="details-page-component">
 		<div class="course_events_fadebox">
 			<div class="course_events">
 				{{#if havePastEvents}}
@@ -23,11 +26,7 @@
 							{{/if}}
 						</div>
 						<div class="course_events_events">
-							{{#each pastEvents}}
-								{{#if this}}
-									{{> small_event_withDate}}
-								{{/if}}
-							{{/each}}
+							{{> eventSmallList eventsList=pastEvents withDate=true}}
 						</div>
 					</div>
 				{{/if}}
@@ -43,9 +42,7 @@
 						{{/if}}
 					</div>
 					<div class="course_events_events">
-						{{#each ongoingEvents}}
-							{{> small_event_withDate}}
-						{{/each}}
+						{{> eventSmallList eventsList=ongoingEvents withDate=true}}
 					</div>
 				{{/if}}
 				{{#if haveFutureEvents}}
@@ -62,23 +59,20 @@
 						{{/if}}
 					</div>
 					<div class="course_events_events">
-						{{#each futureEvents}}
-						{{> small_event_withDate}}
-						{{/each}}
+						{{> eventSmallList eventsList=futureEvents withDate=true}}
 					</div>
 				{{/if}}
 			</div>
 			<div class="fade_effect_top" style="display:none"></div>
 			<div class="fade_effect_bottom"></div>
 		</div>
-		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button class="btn btn-default js-events-download-btn"
-				data-tooltip="{{mf 'course.events.download.tooltip'}}"
-				href="#"
-				type="button">
-				<span class="fa fa-download"></span>&nbsp;
-				{{mf 'course.download_cal' 'Download events to my calendar'}}
-			</button>
+	</div>
+	<div class="details-page-component">
+		<a href="/cal/course/{{course._id}}"
+			target="_blank">
+			<i class="fa fa-arrow-down" aria-hidden="true"></i>
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
 		</a>
+	</div>
 	{{/if}}
 </template>

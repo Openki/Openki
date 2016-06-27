@@ -122,8 +122,13 @@ var updateCategorySearch = function(event, instance) {
 	instance.categorySearchResults.set(results);
 };
 
-var filterPreview = function(highlightClass, opacity) {
-	$('.course').not(highlightClass).stop().fadeTo('slow', opacity);
+var filterPreview = function(switchOn, match) {
+	var noMatch = $('.course').not(match);
+	if (switchOn) {
+		noMatch.addClass('filter-no-match');
+	} else {
+		noMatch.removeClass('filter-no-match');
+	}
 };
 
 Template.find.events({
@@ -148,27 +153,43 @@ Template.find.events({
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
-		filterPreview('.hasupcomingevents', 0.33);
+		filterPreview(true, '.hasupcomingevents');
 	},
 
 	'mouseout .js-filter-upcoming-events': function() {
-		filterPreview('.hasupcomingevents', 1);
+		filterPreview(false, '.hasupcomingevents');
 	},
 
 	'mouseover .js-filter-needs-host': function() {
-		filterPreview('.needsHost', 0.33);
+		filterPreview(true, '.needsHost');
 	},
 
 	'mouseout .js-filter-needs-host': function() {
-		filterPreview('.needsHost', 1);
+		filterPreview(false, '.needsHost');
 	},
 
 	'mouseover .js-filter-needs-mentor': function() {
-		filterPreview('.needsMentor', 0.33);
+		filterPreview(true, '.needsMentor');
 	},
 
 	'mouseout .js-filter-needs-mentor': function() {
-		filterPreview('.needsMentor', 1);
+		filterPreview(false, '.needsMentor');
+	},
+
+	'mouseover .js-category-label': function() {
+		filterPreview(true, ('.'+this));
+	},
+
+	'mouseout .js-category-label': function() {
+		filterPreview(false, ('.'+this));
+	},
+
+	'mouseover .group': function() {
+		filterPreview(true, ('.'+this));
+	},
+
+	'mouseout .group': function() {
+		filterPreview(false, ('.'+this));
 	},
 
 	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
@@ -189,14 +210,11 @@ Template.find.events({
 		instance.$('.js-search-categories').val('');
 		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
+		window.scrollTo(0, 0);
 	},
 
-	'mouseover .js-category-label': function() {
-		filterPreview(('.'+this), 0.33);
-	},
-
-	'mouseout .js-category-label': function() {
-		filterPreview(('.'+this), 1);
+	'click .js-group-label': function(event, instance) {
+		window.scrollTo(0, 0);
 	},
 
 	'click .js-remove-category-btn': function(event, instance) {
@@ -214,14 +232,6 @@ Template.find.events({
 			instance.filter.done();
 			updateUrl(event, instance);
 		}
-	},
-
-	'mouseover .group': function() {
-		filterPreview(('.'+this), 0.33);
-	},
-
-	'mouseout .group': function() {
-		filterPreview(('.'+this), 1);
 	},
 
 	"click .js-all-regions-btn": function(event, template){
