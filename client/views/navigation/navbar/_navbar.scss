@@ -43,11 +43,11 @@
 
 .navbar-brand:hover {
 	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
+}
 
-	& > .site-name,
-	& > .site-stage {
-		color: $default-white;
-	}
+.navbar-brand:hover > .site-name,
+.navbar-brand:hover > .site-stage {
+	color: $default-white;
 }
 
 .navbar-link {
@@ -95,80 +95,76 @@
 	}
 }
 
-.calendar-link.navbar-link-active {
-	& > .nav-marker-caret {
-		border-bottom-color: $calendar-navigation-bg;
+.navbar-link-active.calendar-link > .nav-marker-caret {
+	border-bottom-color: $calendar-navigation-bg;
+}
+
+.navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
+	background-color: $calendar-navigation-bg;
+	opacity: 1;
+}
+
+.navbar .navbar-nav:first-child,
+.navbar .navbar-nav:last-child {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.navbar .navbar-nav > .open > .dropdown-menu {
+	@media (min-width: $screen-sm) {
+		padding-top: 10px;
+		z-index: -1;
 	}
 
-	&.navbar-link-covering > .nav-marker-bar {
-		background-color: $calendar-navigation-bg;
-		opacity: 1;
+	@media (max-width: $screen-sm) {
+		background-color: $dropdown-bg;
+		box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
+		padding: 0;
 	}
 }
 
-.navbar .navbar-nav {
-	&:first-child,
-	&:last-child {
-		margin-bottom: 0;
-		margin-top: 0;
+.navbar .navbar-nav > .open > .dropdown-menu > li > a {
+	@media (max-width: $screen-sm) {
+		border-bottom: 1px solid darken($dropdown-bg, 10%);
+		color: $dropdown-link-color;
 	}
+}
 
-	& > .open > .dropdown-menu {
-		@media (min-width: $screen-sm) {
-			padding-top: 10px;
-			z-index: -1;
-		}
-
-		@media (max-width: $screen-sm) {
-			background-color: $dropdown-bg;
-			box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
-			padding: 0;
-
-			& > li {
-				& > a {
-					border-bottom: 1px solid darken($dropdown-bg, 10%);
-					color: $dropdown-link-color;
-				}
-
-				&:last-child > a {
-					border-bottom: 0;
-				}
-			}
-		}
+.navbar .navbar-nav > .open > .dropdown-menu > li > a:last-child > a {
+	@media (max-width: $screen-sm) {
+		border-bottom: 0;
 	}
+}
 
-	& > .open > .navbar-link {
-		&,
-		&:hover,
-		&:focus {
-			background-color: lighten($navbar-default-bg, 10%);
-			box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-		}
+.navbar .navbar-nav > .open > .navbar-link,
+.navbar .navbar-nav > .open > .navbar-link:hover,
+.navbar .navbar-nav > .open > .navbar-link:focus {
+	background-color: lighten($navbar-default-bg, 10%);
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
 
-		> .nav-marker-caret {
-			opacity: 0;
-		}
+.navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
+	opacity: 0;
+}
 
-		@media (min-width: $screen-sm) {
-			.nav-marker-bar {
-				background-color: $dropdown-bg;
-				opacity: 1;
-			}
-		}
+.navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
+	@media (min-width: $screen-sm) {
+		background-color: $dropdown-bg;
+		opacity: 1;
 	}
 }
 
 .navbar-covering {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
 
-	.nav-marker-caret {
-		opacity: 0;
-	}
+.navbar-covering .nav-marker-caret {
+	opacity: 0;
+}
 
-	.navbar-link-active,
-	.navbar-nav > li > .navbar-link-active:hover,
-	.navbar-nav > li > .navbar-link-active:focus {
-		background-color: lighten($navbar-default-bg, 10%);
-		box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-	}
+.navbar-covering .navbar-link-active,
+.navbar-covering .navbar-nav > li > .navbar-link-active:hover,
+.navbar-covering .navbar-nav > li > .navbar-link-active:focus {
+	background-color: lighten($navbar-default-bg, 10%);
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }

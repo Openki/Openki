@@ -10,8 +10,8 @@
 		color: $location-hover-text;
 		text-decoration: none;
 	}
+}
 
-	.glyphicon-home {
-		margin-right: 2px;
-	}
+.js-location-link > .glyphicon-home {
+	margin-right: 2px;
 }

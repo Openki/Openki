@@ -15,12 +15,12 @@
 	position: relative;
 	top: calc(#{'50% - 100px'});
 	width: 300px;
+}
 
-	img {
-		@include make-xs-column(4);
-		height: 95px;
-		padding: 0;
-	}
+.noscript-message-box img {
+	@include make-xs-column(4);
+	height: 95px;
+	padding: 0;
 }
 
 .noscript-message {

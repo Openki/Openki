@@ -40,24 +40,28 @@
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 		color: $brand-primary;
-
-		h4 {
-			color: $brand-primary;
-		}
 	}
 
 	&.haspastevents {
 		border-style: solid;
 	}
 
-	& > a:hover {
-		text-decoration: none;
+	&.hasupcomingevents {
+		background: $openki-blue-lighter;
 	}
+}
 
-	h4 {
-		@include transition(color $default-transition-time);
-		color: $default-black;
-	}
+.course.hasupcomingevents > .course-content {
+	background: $openki-blue-lighter;
+}
+
+.course h4 {
+	@include transition(color $default-transition-time);
+	color: $default-black;
+}
+
+.course:hover h4 {
+	color: $brand-primary;
 }
 
 .filter-no-match {
@@ -101,28 +105,18 @@
 		@include make-xs-column(7.5);
 		padding: 0 0 0 15px;
 	}
-
-	.course-categories {
-		margin-bottom: 0;
-		margin-left: -2px;
-
-		li:nth-child(3),
-		li:nth-child(4),
-		li:nth-child(5),
-		li:nth-child(6) {
-			display: none;
-		}
-	}
 }
 
-.course {
-	&.hasupcomingevents {
-		background: $openki-blue-lighter;
+.course-content > .course-categories {
+	margin-bottom: 0;
+	margin-left: -2px;
+}
 
-		.course-content {
-			background: $openki-blue-lighter;
-		}
-	}
+.course-content > .course-categories > li:nth-child(3),
+.course-content > .course-categories > li:nth-child(4),
+.course-content > .course-categories > li:nth-child(5),
+.course-content > .course-categories > li:nth-child(6) {
+	display: none;
 }
 
 .course-roles-status {
@@ -131,14 +125,13 @@
 	position: relative;
 	right: -7px;
 	top: -7px;
+}
 
-	& > div {
-		margin-top: 3px;
+.course-roles-status > div {
+	margin-top: 3px;
 
-		&:first-child,
-		&.tooltip {
-			margin-top: 0;
-		}
+	&:first-child {
+		margin-top: 0;
 	}
 }
 
@@ -163,14 +156,14 @@
 .course-eventlist-location {
 	@include word-break;
 	padding: 0 4px;
+}
 
-	span {
-		display: inline;
-	}
+.course-eventlist-location span {
+	display: inline;
+}
 
-	.glyphicon-home {
-		padding-right: 3px;
-	}
+.course-eventlist-location .glyphicon-home {
+	padding-right: 3px;
 }
 
 .course > .groups-list {
@@ -178,9 +171,9 @@
 	margin: 0;
 	position: absolute;
 	right: $course-border-width;
+}
 
-	li {
-		float: right;
-		margin-left: 4px;
-	}
+.course > .groups-list > li {
+	float: right;
+	margin-left: 4px;
 }

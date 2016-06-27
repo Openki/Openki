@@ -34,10 +34,10 @@
 	border-bottom: 1px solid $openki-blue-lighter;
 	color: $brand-primary;
 	width: 100%;
+}
 
-	& > h4 {
-		margin-top: 0;
-	}
+.filter-header > h4 {
+	margin-top: 0;
 }
 
 .filter-course-properties,
@@ -52,11 +52,11 @@
 		padding-right: 0;
 		width: 100%;
 	}
+}
 
-	.btn-group-vertical {
-		@media (max-width: $screen-xs) {
-			width: 100%;
-		}
+.filter-course-properties > .btn-group-vertical {
+	@media (max-width: $screen-xs) {
+		width: 100%;
 	}
 }
 
@@ -70,11 +70,11 @@
 	display: inline-block;
 	text-align: center;
 	width: 28px;
+}
 
-	& > .glyphicon {
-		position: relative;
-		top: 2px;
-	}
+.toggle-property-filter-icon > .glyphicon {
+	position: relative;
+	top: 2px;
 }
 
 .eventcaption_upcoming {
@@ -101,12 +101,15 @@
 	left: 3px;
 	position: absolute;
 	width: 3px;
+
 	&.first-line {
 		top: 2px;
 	}
+
 	&.second-line {
 		top: 4px;
 	}
+
 	&.third-line {
 		top: 6px;
 	}
@@ -127,17 +130,17 @@
 
 .filter-categories {
 	padding: 10px 0;
+
 	@media (max-width: $screen-xs) {
 		padding: 0;
 		width: 100%;
 	}
-	h4 {
-		color: $brand-primary;
-		margin-top: 0;
-	}
 }
 
-.filter-categories-heading {
+.filter-categories > h4 {
+	color: $brand-primary;
+	margin-top: 0;
+
 	@media (max-width: $screen-xs) {
 		display: none;
 	}
@@ -146,9 +149,7 @@
 .filter-categories-select {
 	margin-bottom: 10px;
 	padding: 0;
-	.dropdown-toggle {
-		display: none;
-	}
+
 	&::after {
 		content: '';
 		font-family: FontAwesome;
@@ -156,13 +157,19 @@
 		right: 7px;
 		top: 6px;
 	}
+
 	&.open::after {
 		content: '';
 	}
 }
 
+.filter-categories-select > .dropdown-toggle {
+	display: none;
+}
+
 .js-search-categories {
 	border: 1px dashed $category-bg;
+
 	&:focus {
 		border-style: solid;
 	}
@@ -170,6 +177,7 @@
 
 .filter-no-categories-found {
 	padding: 5px 10px;
+
 	&:hover {
 		background-color: $body-bg;
 		cursor: default;
@@ -181,15 +189,17 @@
 	min-width: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
-	.js-category-label {
-		background-color: $dropdown-bg;
-		box-shadow: none;
-		position: relative;
-	}
+}
+
+.filter-categories-dropdown .js-category-label {
+	background-color: $dropdown-bg;
+	box-shadow: none;
+	position: relative;
 }
 
 .js-toggle-subcategories {
 	padding: 0 5px;
+
 	&:hover {
 		cursor: pointer;
 	}
@@ -199,29 +209,33 @@
 	border-left: 1px solid $dropdown-link-hover-bg;
 	display: none;
 	margin-left: 20px;
-	& > a {
-		padding-left: 15px;
-	}
+}
+
+.js-sub-category > a {
+	padding-left: 15px;
 }
 
 .filter-selected-categories {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+
 	@media (max-width: $screen-xs) {
 		border: 1px solid $brand-success;
 		border-radius: 4px;
 		margin-bottom: 10px;
 		padding: 5px;
 	}
-	li {
-		margin-bottom: 3px;
-		padding: 0 3px 3px 0;
-		@media (max-width: $screen-xs) {
-			display: inline-block;
-			margin: 5px 0;
-			padding-bottom: 0;
-		}
+}
+
+.filter-selected-categories > li {
+	margin-bottom: 3px;
+	padding: 0 3px 3px 0;
+
+	@media (max-width: $screen-xs) {
+		display: inline-block;
+		margin: 5px 0;
+		padding-bottom: 0;
 	}
 }
 
@@ -233,11 +247,13 @@
 	max-width: 400px;
 	padding: 15px;
 	text-align: center;
-	.fa-exclamation-circle {
-		color: $brand-warning;
-		padding-right: 5px;
-	}
-	.btn-group {
-		margin-top: 10px;
-	}
+}
+
+.no-courses-found > .fa-exclamation-circle {
+	color: $brand-warning;
+	padding-right: 5px;
+}
+
+.no-courses-found > .btn-group {
+	margin-top: 10px;
 }

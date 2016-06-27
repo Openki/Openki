@@ -2,50 +2,47 @@
 	@include clearfix;
 }
 
-.form-group > .form-group-element {
+.form-group-element:nth-child(1):nth-last-child(2),
+.form-group-element:nth-child(2):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
-		// Automatically split form-group into equally big elements
-		// two elements
-		&:nth-child(1):nth-last-child(2),
-		&:nth-child(2):nth-last-child(1) {
-			@include make-sm-column(6);
-		}
-
-		// three elements
-		&:nth-child(1):nth-last-child(3),
-		&:nth-child(2):nth-last-child(2),
-		&:nth-child(3):nth-last-child(1) {
-			@include make-sm-column(4);
-		}
-
-		&:nth-child(1):nth-last-child(2),
-		&:nth-child(1):nth-last-child(3) {
-			padding-left: 0;
-		}
-
-		&:nth-child(2):nth-last-child(1),
-		&:nth-child(3):nth-last-child(1) {
-			padding-right: 0;
-		}
-	}
-
-	@media (max-width: $screen-sm) {
-		& + .form-group-element {
-			margin-top: $form-group-margin-bottom;
-		}
+		@include make-sm-column(6);
 	}
 }
 
-.form-group,
-.form-group-element {
-	& > .list-group {
-		margin-bottom: 0;
+.form-group-element:nth-child(1):nth-last-child(3),
+.form-group-element:nth-child(2):nth-last-child(2),
+.form-group-element:nth-child(3):nth-last-child(1) {
+	@media (min-width: $screen-sm) {
+		@include make-sm-column(4);
 	}
+}
 
-	& > .radio:nth-child(2),
-	& > .checkbox:nth-child(2) {
-		margin-top: 0;
+.form-group-element:nth-child(1):nth-last-child(2),
+.form-group-element:nth-child(1):nth-last-child(3) {
+	padding-left: 0;
+}
+
+.form-group-element:nth-child(2):nth-last-child(1),
+.form-group-element:nth-child(3):nth-last-child(1) {
+	padding-right: 0;
+}
+
+.form-group-element + .form-group-element {
+	@media (max-width: $screen-sm) {
+		margin-top: $form-group-margin-bottom;
 	}
+}
+
+.form-group > .list-group,
+.form-group-element > .list-group {
+	margin-bottom: 0;
+}
+
+.form-group > .radio:nth-child(2),
+.form-group > .checkbox:nth-child(2),
+.form-group-element > .radio:nth-child(2)
+.form-group-element > .checkbox:nth-child(2) {
+	margin-top: 0;
 }
 
 .label-lg,
@@ -55,9 +52,9 @@
 	font-weight: normal;
 }
 
+.details-info-label,
 .form-group > label,
-.form-group-element > label,
-.details-info-label {
+.form-group-element > label {
 	color: darken($brand-primary, 10%);
 	font-weight: normal;
 }
