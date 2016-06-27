@@ -98,52 +98,13 @@ Template.groupDetails.onCreated(function() {
 	instance.editingSettings = new ReactiveVar(false);
 });
 
-Template.groupSettings.onCreated(function() {
-	var instance = this;
-	instance.userSearch = new ReactiveVar('');
-
-	instance.autorun(function() {
-		var search = instance.userSearch.get();
-		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
-		}
-	});
-});
-
 Template.groupDetails.helpers({
 	editingSettings: function() {
 		return this.mayEdit && Template.instance().editingSettings.get();
 	},
 });
 
-Template.groupSettings.helpers({
-	foundUsers: function() {
-		var instance = Template.instance();
-
-		var search = instance.userSearch.get();
-		if (search === '') return false;
-
-		var group = Groups.findOne(Router.current().params._id);
-		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
-	},
-
-	kioskEventURL: function() {
-		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
-	},
-	kioskTimetableURL: function() {
-		return Router.routes.kioskTimetable.url({}, { query: {group: this._id} });
-	},
-	frameEventsURL: function() {
-		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
-	},
-	frameCalendarURL: function() {
-		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
-	},
-});
-
-
 Template.groupDetails.events({
-
 	'click .-settings' : function(event, instance) {
 		if (pleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
@@ -178,54 +139,5 @@ Template.groupDetails.events({
 
 	'click .js-group-cancel': function(event, instance) {
 		Router.go('/'); // Got a better idea?
-	},
-
-	'click .js-group-edit-save': function(event, instance) {
-		Meteor.call("saveGroup", instance.data.group._id, {
-			logoUrl: instance.$('.-logoUrl').val(),
-			backgroundUrl: instance.$('.-backgroundUrl').val(),
-		}, function(err) {
-			if (err) {
-				addMessage(mf('group.settings.saveError', { ERROR: err }, "Error saving settings: {ERROR}"), 'danger');
-			} else {
-				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
-				instance.editingSettings.set(false);
-			}
-		});
-	},
-
-	'click .js-group-edit-cancel': function(event, instance) {
-		instance.editingSettings.set(false);
-	},
-
-	'click .js-member-add-btn': function(event, instance) {
-		var memberId = this._id;
-		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
-			if (err) {
-				addMessage(mf('group.settings.addMemberError', { ERROR: err }, "Error adding member: {ERROR}"), 'danger');
-			} else {
-				addMessage(mf('group.settings.addedMember', "Added group member"), 'success');
-			}
-		});
-	},
-
-	'click .js-member-remove-btn': function(event, instance) {
-		var memberId = ''+this;
-		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
-			if (err) {
-				addMessage(mf('group.settings.removeMemberError', { ERROR: err }, "Error removing member: {ERROR}"), 'danger');
-			} else {
-				addMessage(mf('group.settings.removedMember', "Removed group member"), 'success');
-			}
-		});
-	},
-
-});
-
-Template.groupSettings.events({
-	'keyup .-userSearch': function(event, instance) {
-		instance.userSearch.set(instance.$('.-userSearch').val());
 	}
 });

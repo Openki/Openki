@@ -46,7 +46,9 @@
 }
 
 .tab-content {
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	border-color: lighten($openki-blue-lighter, 0%);
+	border-style: solid;
+	border-width: 0 1px 1px;
 	position: relative;
 	&::before,
 	&::after {
@@ -59,10 +61,10 @@
 		z-index: 99;
 	}
 	&::before {
-		left: 0;
+		left: -1px;
 	}
 	&::after {
-		right: 0;
+		right: -1px;
 	}
 }
 
