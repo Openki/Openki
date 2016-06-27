@@ -47,9 +47,7 @@
 							</div>
 						{{/if}}
 					{{/with}}
-				</div>
-				<div class="details-page-component">
-					{{> report}}
+					{{> courseRoles roles_details}}
 				</div>
 			{{/if}}
 			<!-- GET VIEWPORT SIZE AND ADJUST LAYOUT-->
@@ -65,11 +63,13 @@
 			{{/unless}}
 			<div class="details-page-component">
 				{{> courseMembers course}}
-				{{> courseRoles roles_details}}
 			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
+			<div class="details-page-component">
+				{{> report}}
+			</div>
 		</div>
 	</div>
 </template>
