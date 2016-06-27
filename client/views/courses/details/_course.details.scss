@@ -104,17 +104,17 @@
 	padding: 15px (15px + $course-border-width);
 }
 
-.course-details.haspastevents > .details-header {
+.course-details.hasupcomingevents > .details-header {
 	background: $openki-blue-lighter;
 	border-width: 0;
 }
 
-.course-details.haspastevents .course-details-nav {
+.course-details.hasupcomingevents .course-details-nav {
 	background: $openki-blue-lighter;
 }
 
-.course-details.haspastevents .tab-content::after,
-.course-details.haspastevents .tab-content::before {
+.course-details.hasupcomingevents .tab-content::after,
+.course-details.hasupcomingevents .tab-content::before {
 	width: 16px;
 }
 

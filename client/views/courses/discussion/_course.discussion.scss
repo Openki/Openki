@@ -51,10 +51,10 @@ $discussion-thumb-width: 60;
 .discussion-post-header {
 	background: $discussion-post-header-bg;
 	border-color: $discussion-post-border;
+}
 
-	.profilelink {
-		font-weight: bold;
-	}
+.discussion-post-header .profilelink {
+	font-weight: bold;
 }
 
 .discussion-edit-btn,
