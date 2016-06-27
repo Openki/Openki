@@ -10,14 +10,14 @@
 	top: 50px;
 	width: 100%;
 	z-index: 1010;
+}
 
-	& > .right {
-		float: right;
-	}
+.calendar-navigation > .right {
+	float: right;
+}
 
-	small {
-		font-size: 12px;
-	}
+.calendar-navigation small {
+	font-size: 12px;
 }
 
 .switch-date-btn {
@@ -35,27 +35,27 @@
 
 .calendar-week {
 	text-align: center;
+}
 
-	.week {
-		color: $calendar-header-text;
-		font-size: large;
-		line-height: .75;
-		margin: 7px 0 0;
-	}
+.calendar-week .week {
+	color: $calendar-header-text;
+	font-size: large;
+	line-height: .75;
+	margin: 7px 0 0;
+}
 
-	.date {
-		color: $calendar-header-text;
-		font-size: small;
-		margin: 3px 0;
-	}
+.calendar-week .date {
+	color: $calendar-header-text;
+	font-size: small;
+	margin: 3px 0;
 }
 
 .calendar-container {
 	padding-top: 50px;
+}
 
-	& > a:first-child {
-		margin-bottom: 15px;
-	}
+.calendar-container > a:first-child {
+	margin-bottom: 15px;
 }
 
 .calendar-date {
