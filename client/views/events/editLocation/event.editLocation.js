@@ -144,8 +144,8 @@ Template.eventEditLocation.helpers({
 		};
 	},
 
-	candidateClass: function() {
-		return 'locationCandidate -locationCandidate' + (this.hover ? ' hover' : '');
+	hoverClass: function() {
+		return this.hover ? 'hover' : '';
 	},
 
 	searching: function() {
@@ -156,11 +156,11 @@ Template.eventEditLocation.helpers({
 
 
 Template.eventEditLocation.events({
-	'click .-addressSearch': function(event, instance) {
+	'click .js-location-search-btn': function(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
-		var search = instance.$('.-locationName').val();
+		var search = instance.$('.js-location-search-input').val();
 		var nominatimQuery = {
 			format: 'json',
 			q: search,
@@ -205,16 +205,16 @@ Template.eventEditLocation.events({
 		});
 	},
 
-	'click .-locationChange': function(event, instance) {
+	'click .js-location-change': function(event, instance) {
 		instance.location.set({});
 		instance.search.set('');
 	},
 
-	'click .-locationCandidate': function(event, instance) {
+	'click .js-location-candidate': function(event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
-	'keyup .-locationName': function(event, instance) {
+	'keyup .js-location-search-input': function(event, instance) {
 		instance.addressSearch.set(false);
 		instance.search.set(event.target.value);
 
@@ -223,18 +223,18 @@ Template.eventEditLocation.events({
 		instance.location.set(updLocation);
 	},
 
-	'keyup .-locationAddress': function(event, instance) {
+	'keyup .js-location-address-search': function(event, instance) {
 		var updLocation = instance.location.get();
 		updLocation.address = event.target.value;
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .-locationCandidate': function(event, instance) {
+	'mouseenter .js-location-candidate': function(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 		instance.locationTracker.markers.update(this._id, {$set:{hover: true}});
 	},
 
-	'mouseleave .-locationCandidate': function(event, instance) {
+	'mouseleave .js-location-candidate': function(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 	}
 

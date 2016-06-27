@@ -1,46 +1,41 @@
 <template name="eventEditLocation">
-	<div class="locationFrame form-group">
+	<div class="form-group">
 		<label>{{mf 'course.event.edit.location' 'Location'}}</label>
-		<div class="locationEdit input-group">
+		<div class="input-group event-edit-location">
 			<span class="input-group-addon">
 				<span class="glyphicon glyphicon-home"></span>
 			</span>
-			<div class="locationSearch">
+			<div class="event-edit-location-search">
 				{{#if locationIsPreset}}
-					<div class="currentLocation">
-						<div class="locationName">
-							<span class="fa fa-map-marker"></span>&nbsp;
-							{{location.name}}
-							{{#if location.address}}
-								<br>
-								{{location.address}}
-							{{/if}}
-							&nbsp;
-						</div>
-						<button type="button" class="btn btn-edit -locationChange">
-							{{mf 'event.edit.locationChange' "Change location"}}
-						</button>
+					<div class="event-edit-location-selected">
+						<i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+						{{location.name}}
+						{{#if location.address}}
+							<br>
+							{{location.address}}
+						{{/if}}
+						&nbsp;
 					</div>
+					<button type="button" class="btn btn-edit js-location-change">
+						{{mf 'event.edit.locationChange' "Change location"}}
+					</button>
 				{{else}}
-					<div class="locationSearchbar input-group">
-						<input class="-locationName form-control"
-							placeholder="{{mf 'event.edit.locationNamePlaceholder' "Where?"}}"
-							type="text"
+					<div class="input-group event-edit-location-searchbar">
+						<input type="text" class="form-control js-location-search-input"
+							placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
 							value="{{location.name}}"/>
 						<span class="input-group-btn">
-							<button type="submit" class="btn btn-go -addressSearch">
-								<span class="glyphicon glyphicon-search"></span>
-								&nbsp;
+							<button type="submit" class="btn btn-go js-location-search-btn">
+								<i class="fa fa-search fa-fw" aria-hidden="true"></i>
 								{{mf 'event.edit.addressSearch' "Search"}}
 							</button>
 						</span>
 					</div>
 					{{#if searching}}
-					<input class="-locationAddress form-control"
-						placeholder="{{mf 'event.edit.locationAddressPlaceholder' "Address"}}"
-						size="40"
-						type="text"
-						value="{{location.address}}"/>
+						<input type="text" class="form-control js-location-address-search"
+							placeholder="{{mf 'event.edit.locationAddressPlaceholder' 'Address'}}"
+							size="40"
+							value="{{location.address}}"/>
 					{{/if}}
 					{{#if haveLocationCandidates}}
 						{{#if searching}}
@@ -48,9 +43,9 @@
 						{{else}}
 							{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
 						{{/if}}
-						<ul class="locationCandidates">
+						<ul class="event-edit-location-candidates">
 							{{#each locationCandidates}}
-								<li class='{{candidateClass}}'>
+								<li class='event-edit-location-candidate js-location-candidate {{hoverClass}}'>
 									{{name}}
 									<div class="address">{{address}}</div>
 								</li>
@@ -61,8 +56,8 @@
 					{{/if}}
 				{{/if}}
 			</div>
-			<div class="locationMap">
-				{{>map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+			<div class="event-edit-location-map">
+				{{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 			</div>
 		</div>
 	</div>
