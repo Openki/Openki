@@ -118,13 +118,6 @@ $discussion-thumb-width: 60;
 	padding-left: $discussion-thumb-width * 1px;
 }
 
-.discussion-post-new-btn {
-	@include btn-lg;
-	text-align: left;
-	margin-top: 3px;
-	width: 100%;
-}
-
 .discussion-post-new {
 	background-color: $brand-success;
 	margin-top: 3px;

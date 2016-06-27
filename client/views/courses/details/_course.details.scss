@@ -147,3 +147,14 @@
 		margin-left: 0;
 	}
 }
+
+.course-details-btn {
+	@include btn-lg;
+	text-align: left;
+	margin-top: 3px;
+	width: 100%;
+}
+
+.course-details-btn i {
+	margin-right: 5px;
+}
