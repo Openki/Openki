@@ -74,6 +74,10 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
+				<!-- <a href="{{pathFor 'calEvent' this}}" style="vertical-align:bottom">
+					<i class="fa fa-download fa-fw"></i>
+					{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
+				</a> -->
 				<button type="button" class="eventDelete btn btn-delete">
 					<i class="fa fa-trash fa-fw"></i>
 					{{mf '_button.delete'}}
@@ -97,8 +101,8 @@
 		{{/if}}
 	</div>
 	<div class="details-page-component">
-		<a class="btn btn-default" href="{{pathFor 'calEvent' this}}" role="button">
-			<i class="fa fa-download fa-fw"></i>
+		<a href="{{pathFor 'calEvent' this}}">
+			<i class="fa fa-arrow-down" aria-hidden="true"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
 	</div>
