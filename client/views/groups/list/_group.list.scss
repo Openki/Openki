@@ -1,0 +1,72 @@
+.groups-list {
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+}
+
+.groups-list > li,
+.groups-list > .dropdown,
+.groups-list > li > .dropdown {
+	display: inline-block;
+}
+
+%group-label {
+	@include transition(all $default-transition-time);
+	background: $group-bg;
+	color: $group-text;
+
+	&:hover,
+	&:focus {
+		background: $group-hover-bg;
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $group-hover-shadow;
+		color: $group-hover-text;
+	}
+}
+
+.js-group-label {
+	@extend %group-label;
+	padding: 0 4px 1px;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.group-label-addon {
+	background: $group-bg;
+	color: $group-text;
+	padding: 1px 1px 0;
+	vertical-align: middle;
+}
+
+.group-label-addon-btn {
+	@extend %group-label;
+	border-color: darken($group-bg, 5%);
+	border-style: solid;
+	border-width: 0 0 0 1px;
+	padding: 0 1px;
+
+	&:hover,
+	&:focus {
+		border-left-color: $group-bg;
+	}
+}
+
+.group-label-btn {
+	@extend %group-label;
+	border: 0;
+	padding: 0 3px;
+}
+
+.js-add-group {
+	@include btn-sm;
+}
+
+.group-tool-dialog {
+	padding: 10px 15px;
+}
+
+.group-tool-dialog > .btn {
+	margin-top: 10px;
+	width: 100%;
+}

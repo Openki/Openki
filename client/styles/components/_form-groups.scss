@@ -1,0 +1,76 @@
+.form-group {
+	@include clearfix;
+}
+
+.form-group > .form-group-element {
+	@media (min-width: $screen-sm) {
+		// Automatically split form-group into equally big elements
+		// two elements
+		&:nth-child(1):nth-last-child(2),
+		&:nth-child(2):nth-last-child(1) {
+			@include make-sm-column(6);
+		}
+
+		// three elements
+		&:nth-child(1):nth-last-child(3),
+		&:nth-child(2):nth-last-child(2),
+		&:nth-child(3):nth-last-child(1) {
+			@include make-sm-column(4);
+		}
+
+		&:nth-child(1):nth-last-child(2),
+		&:nth-child(1):nth-last-child(3) {
+			padding-left: 0;
+		}
+
+		&:nth-child(2):nth-last-child(1),
+		&:nth-child(3):nth-last-child(1) {
+			padding-right: 0;
+		}
+	}
+
+	@media (max-width: $screen-sm) {
+		& + .form-group-element {
+			margin-top: $form-group-margin-bottom;
+		}
+	}
+}
+
+.form-group,
+.form-group-element {
+	& > .list-group {
+		margin-bottom: 0;
+	}
+
+	& > .radio:nth-child(2),
+	& > .checkbox:nth-child(2) {
+		margin-top: 0;
+	}
+}
+
+.label-lg,
+.form-group > .label-lg,
+.form-group > .form-group-element > .label-lg {
+	font-size: x-large;
+	font-weight: normal;
+}
+
+.form-group > label,
+.form-group-element > label,
+.details-info-label {
+	color: darken($brand-primary, 10%);
+	font-weight: normal;
+}
+
+.control-label {
+	@include make-sm-column(3);
+}
+
+.control-input {
+	@include make-sm-column(9);
+}
+
+.control-btn {
+	@include make-sm-column(9);
+	@include make-sm-column-offset(3);
+}

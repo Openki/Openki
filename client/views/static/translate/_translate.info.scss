@@ -1,0 +1,115 @@
+@import 'translate.mixins';
+
+.translate-info {
+	@include container-sm;
+}
+
+#mfTransContainer {
+	@include container-sm;
+
+	a {
+		color: darken($brand-primary, 10%);
+		font-weight: bold;
+
+		&:hover {
+			cursor: pointer;
+			text-decoration: underline;
+		}
+	}
+}
+
+table.mfTrans {
+	border: 0;
+	width: 100%;
+
+	th,
+	td {
+		background-color: $body-bg;
+	}
+
+	tr {
+		&:first-child {
+			font-size: medium;
+		}
+
+		&:hover {
+			td:first-child {
+				background-color: darken($gray-lighter, 5%);
+			}
+
+			td:nth-child(2),
+			td:nth-child(3) {
+				background-color: lighten($translate-trans, 15%);
+			}
+
+			td:nth-child(4),
+			td:nth-child(5) {
+				background-color: lighten($translate-fuzzy, 15%);
+			}
+
+			td:nth-child(6),
+			td:nth-child(7) {
+				background-color: lighten($translate-untrans, 15%);
+			}
+
+			td:last-child {
+				background-color: $openki-blue-lighter;
+			}
+		}
+
+		th:first-child,
+		th:last-child {
+			background-color: $gray-lighter;
+		}
+
+		th:nth-child(2),
+		th:nth-child(3) {
+			background-color: lighten($translate-trans, 25%);
+			color: black;
+		}
+
+		th:nth-child(4),
+		th:nth-child(5) {
+			background-color: lighten($translate-fuzzy, 25%);
+			color: black;
+		}
+
+		th:nth-child(6),
+		th:nth-child(7) {
+			background-color: lighten($translate-untrans, 25%);
+			color: black;
+		}
+
+		th:last-child {
+			background-color: lighten($openki-blue-lighter, 5%);
+		}
+	}
+}
+
+div.mfTransGraph {
+	&.trans {
+		background-color: $translate-trans;
+	}
+
+	&.fuzzy {
+		background-color: $translate-fuzzy;
+	}
+
+	&.untrans {
+		background-color: $translate-untrans;
+	}
+}
+
+#mfTransNewText,
+#mfTransNewSubmit {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+#mfTransNewText {
+	width: auto;
+}
+
+#mfTransLang {
+	@include container;
+}

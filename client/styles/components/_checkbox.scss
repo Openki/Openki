@@ -1,0 +1,17 @@
+.checkbox > label:hover i,
+.checkbox > label.checkbox-checked i {
+	color: $default-black;
+}
+
+.checkbox > label	.fa-angle-down {
+	@include transition(color $default-transition-time);
+	color: $default-light-grey;
+}
+
+.checkbox-sub {
+	margin-left: 20px;
+}
+
+.checkbox-sub + .checkbox:not(.checkbox-sub) {
+	margin-top: 5px;
+}

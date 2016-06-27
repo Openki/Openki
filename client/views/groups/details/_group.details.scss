@@ -1,0 +1,44 @@
+.group-details .editable {
+	background-color: none;
+}
+
+.group-details-header {
+	@include clearfix;
+	background-color: rgba(130, 216, 130, .9);
+	font-size: x-large;
+}
+
+.group-details-logo {
+	float: left;
+}
+
+.group-details-name {
+	float: left;
+	padding: 7px;
+}
+
+.js-group-settings {
+	font-size: x-large;
+	line-height: $line-height-base;
+	padding: 7px;
+}
+
+.group-details-short {
+	float: right;
+	padding: 7px;
+	text-align: right;
+}
+
+.group-details-body {
+	background: rgba(130, 216, 130, 0.5);
+}
+
+.group-details-claim {
+	font-size: large;
+}
+
+.group-details-description {
+	height: auto;
+	max-height: 150px;
+	min-height: 100px;
+}

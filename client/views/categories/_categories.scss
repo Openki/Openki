@@ -1,0 +1,34 @@
+.course-categories {
+	line-height: 23px;
+	list-style: none;
+	margin-left: -2px;
+	padding-left: 0;
+}
+
+.course-categories li {
+	display: inline-block;
+	margin: 2px;
+	position: relative;
+}
+
+.category-label {
+	background: $category-bg;
+	color: $brand-primary;
+	padding: 2px 5px;
+}
+
+.category-label + .remove-btn {
+	margin-left: 5px;
+}
+
+.js-category-label {
+	@extend .category-label;
+	@include transition(box-shadow $default-transition-time);
+
+	&:hover {
+		background: $category-hover-bg;
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $category-hover-shadow;
+		color: $category-hover-text;
+		text-decoration: none;
+	}
+}

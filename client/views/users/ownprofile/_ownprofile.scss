@@ -1,0 +1,22 @@
+.profile-info {
+	background-color: lighten($user-bg, 5%);
+	border: 1px solid lighten($user-bg, 2%);
+}
+
+.profile-delete-confirmation {
+	background-color: pink;
+	border: 1px solid $brand-danger;
+	padding: 15px 15px 0;
+}
+
+.translate-link {
+	@include btn-lg;
+}
+
+.profile-groups-list .groups {
+	@include list-unstyled;
+}
+
+.profile-groups-list .groups li {
+	margin-bottom: 10px;
+}
