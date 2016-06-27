@@ -105,7 +105,7 @@ mongo-livedata@1.0.12
 msavin:mongol@1.6.2
 msgfmt:core@2.0.0-preview.22
 msgfmt:extract@2.0.2
-msgfmt:ui@2.0.0-preview.11
+msgfmt:ui@2.0.0
 nicolaslopezj:router-layer@0.0.11
 npm-bcrypt@0.8.6_1
 npm-mongo@1.4.44
