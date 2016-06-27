@@ -105,7 +105,7 @@ Template.groupDetails.helpers({
 });
 
 Template.groupDetails.events({
-	'click .-settings' : function(event, instance) {
+	'click .js-group-settings' : function(event, instance) {
 		if (pleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},

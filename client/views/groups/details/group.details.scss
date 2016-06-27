@@ -1,49 +1,47 @@
 @import '{}/client/styles/variables';
 @import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/clearfix';
 
-.group-details {
-	.editable {
-		background-color: none;
-	}
+.group-details .editable {
+	background-color: none;
 }
 
 .group-details-header {
 	@include clearfix;
 	background-color: rgba(130, 216, 130, .9);
 	font-size: x-large;
-
-	.editformLogo {
-		float: left;
-	}
-
-	.editformName {
-		float: left;
-		padding: 7px;
-	}
-
-	.editformShort {
-		float: right;
-		padding: 7px;
-		text-align: right;
-	}
-
-	button.settings {
-		font-size: x-large;
-		line-height: $line-height-base;
-		padding: 7px;
-	}
 }
 
-.groupEditSub {
+.group-details-logo {
+	float: left;
+}
+
+.group-details-name {
+	float: left;
+	padding: 7px;
+}
+
+.js-group-settings {
+	font-size: x-large;
+	line-height: $line-height-base;
+	padding: 7px;
+}
+
+.group-details-short {
+	float: right;
+	padding: 7px;
+	text-align: right;
+}
+
+.group-details-body {
 	background: rgba(130, 216, 130, 0.5);
+}
 
-	.editformClaim {
-		font-size: large;
-	}
+.group-details-claim {
+	font-size: large;
+}
 
-	.editformDescription {
-		height: auto;
-		max-height: 150px;
-		min-height: 100px;
-	}
+.group-details-description {
+	height: auto;
+	max-height: 150px;
+	min-height: 100px;
 }
