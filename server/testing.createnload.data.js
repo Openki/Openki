@@ -413,6 +413,7 @@ function ensureGroup(short) {
 		var id = Groups.insert({
 			name: short,
 			short: short,
+			members: [],
 			createdby: 'ServerScript_from_TestCouses',
 			description: 'Automaticaly created group by server'
 		});
