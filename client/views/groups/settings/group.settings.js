@@ -45,7 +45,7 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
 			if (err) {
-				addMessage(mf('group.settings.addMemberError', { ERROR: err }, "Error adding member: {ERROR}"), 'danger');
+				showServerError('Could not add member', err);
 			} else {
 				addMessage(mf('group.settings.addedMember', "Added group member"), 'success');
 			}
@@ -57,7 +57,7 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
 			if (err) {
-				addMessage(mf('group.settings.removeMemberError', { ERROR: err }, "Error removing member: {ERROR}"), 'danger');
+				showServerError('Could not remove member', err);
 			} else {
 				addMessage(mf('group.settings.removedMember', "Removed group member"), 'success');
 			}
@@ -70,7 +70,7 @@ Template.groupSettings.events({
 			backgroundUrl: instance.$('.-backgroundUrl').val(),
 		}, function(err) {
 			if (err) {
-				addMessage(mf('group.settings.saveError', { ERROR: err }, "Error saving settings: {ERROR}"), 'danger');
+				showServerError('Could not save settings', err);
 			} else {
 				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
 				instance.editingSettings.set(false);

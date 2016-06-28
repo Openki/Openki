@@ -33,7 +33,7 @@ Router.map(function () {
 			if (mayEdit) {
 				var handleSaving = function(err, groupId) {
 					if (err) {
-						addMessage(mf('group.saving.error', { ERROR: err }, 'Saving the group went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+						showServerError('Saving the group went wrong', err);
 					} else {
 						addMessage(mf('group.saving.success', { NAME: group.short }, 'Saved change to {NAME}'), 'success');
 					}
@@ -122,8 +122,7 @@ Template.groupDetails.events({
 
 		Meteor.call("saveGroup", "create", group, function(err, groupId) {
 			if (err) {
-				var msg = mf('group.saving.error', { ERROR: err });
-				addMessage(msg, 'danger');
+				showServerError('Saving the group went wrong', err);
 			} else {
 				instance.data.editableName.end();
 				instance.data.editableShort.end();

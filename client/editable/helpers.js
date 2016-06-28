@@ -59,7 +59,7 @@ Template.editable.onRendered(function() {
 
 		if (self.editingVersion !== false && currentText !== self.editingVersion) {
 			// Uh oh, not handling this well
-			addMessage(mf('editable.sorrychanged', "Sorry, somebody else just changed that. Your changes have been discarded."), 'danger');
+			addMessage("Sorry, somebody else just changed that. Your changes have been discarded.", 'danger');
 
 			//:-( REALLY BAD
 			self.changed.set(false);

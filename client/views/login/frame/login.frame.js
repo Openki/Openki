@@ -18,7 +18,7 @@ Template.userFrame.events({
 			email: instance.$('.js-login-email').val()
 		}, function(err) {
 			if (err) {
-				addMessage(mf('forgot.failedSending', "We were unable to send a mail to this address!"), 'danger');
+				showServerError('We were unable to send a mail to this address', err);
 			} else {
 				addMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
 				instance.forgot.set(false);

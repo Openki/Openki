@@ -65,7 +65,7 @@ Template.userprofile.events({
 	'click button.giveAdmin': function() {
 		Meteor.call('addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
+				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
 			}
@@ -75,7 +75,7 @@ Template.userprofile.events({
 	'click button.giveUpload': function() {
 		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
+				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
@@ -86,7 +86,7 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'), 'danger');
+				showServerError('Unable to remove privilege', err);
 			} else {
 				addMessage(mf('privilege.removed', 'Removed privilege'), 'success');
 			}
@@ -99,7 +99,7 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, true, function(err) {
 			if (err) {
-				addMessage(mf('profile.group.draftError', { ERROR: err }, 'Unable draft user into group: {ERROR}'), 'danger');
+				showServerError('Unable to draft user into group', err);
 			} else {
 				addMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
 			}
@@ -113,7 +113,7 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, false, function(err) {
 			if (err) {
-				addMessage(mf('profile.group.expelError', { ERROR: err }, 'Unable expel user from group: {ERROR}'), 'danger');
+				showServerError('Unable to expel user from group', err);
 			} else {
 				addMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
 			}

@@ -29,7 +29,7 @@ Template.courseMember.helpers({
 			function(newMessage) {
 				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
 					if (err) {
-						addMessage(mf('subscribemessage.saving.error', { ERROR: err }, 'Unable to change your message. We encountered the following error: {ERROR}'), 'danger');
+						showServerError('Unable to change your message', err);
 					} else {
 						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'), 'success');
 					}

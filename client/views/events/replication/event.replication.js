@@ -131,7 +131,7 @@ Template.eventReplication.events({
 
 			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
 				if (error) {
-					addMessage(mf('event.replicate.error', { ERROR: error }, 'Replicating the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+					showServerError('Replicating the event went wrong', error);
 					success = false;
 				} else {
 					var fmtDate = moment(replicaEvent.start).format('LL');
