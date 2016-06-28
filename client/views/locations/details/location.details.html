@@ -77,6 +77,16 @@
 					</div>
 					{{/if}}
 
+					<button class="btn btn-default -contact">
+						{{mf 'location.details.contact' 'Contact'}}
+					</button>
+					<br><br>
+					{{#if canEditLocation}}
+						{{mf 'location.details.youAreHost' 'You are Host here:'}}
+						<input type="button" class="js-edit" value="Edit" />
+						<input type="button" class="js-del" value="Delete" />
+					{{/if}}
+
 				</div>
 				<!-- {{#if canEditLocation}} -->
 					<div class="actions">
