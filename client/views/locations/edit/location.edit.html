@@ -1,95 +1,178 @@
-<template name="location_edit">
-	<form class="location_edit">
-		<h2>
-			{{#if _id}}
-				{{mf 'location.edit.edit_location' 'Edit location'}}
-			{{else}}
-				{{mf 'location.edit.add_location' 'Add location'}}
-			{{/if}}
-		</h2>
-		<p>
-			{{mf 'location.edit.name' 'Name:'}}
-			<input type="text" id="editform_name" size="40" value="{{#if _id}}{{name}}{{else}}{{query}}{{/if}}"/>
-		</p>
-		<p>
-			{{mf 'location.edit.desc' 'Desc:'}}
-			<textarea cols="65" rows="5" id="editform_description" name="editform_description">
-				{{description}}
-			</textarea>
-		</p>
-		<p>
-			{{mf 'location.edit.address' 'Address:'}}
-			<textarea cols="30" rows="2" id="editform_address" name="editform_address">
-				{{address}}
-			</textarea>
-		</p>
-		<p>
-			{{mf 'location.edit.route' 'Route:'}}
-			<textarea cols="30" rows="2" id="editform_route" name="editform_route">
-				{{route}}
-			</textarea>
-		</p>
-		<p>((
-			<label>
-				<input type="checkbox" id="editform_visible" checked>
-				{{mf 'location.edit.visible_in_list' 'Visible in list (contactable for other users)'}}
-			</label> ))
-		</p>
-		<p>((
-			<label>
-				<input type="checkbox" id="editform_publicspace" >
-				{{mf 'location.edit.public_space' 'Public Space (everybody is allowed to host here)'}}
-			</label> ))
-		</p>
-
-		{{#unless _id}}
-			<p>{{mf 'location.edit.region' 'Region:'}}
-				<select name='region' class="region_select">
-					<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
-					{{#each regions}}
-						<option value='{{_id}}' {{regionSel}}>{{name}}</option>
-					{{/each}}
-				</select>
-			</p>
-		{{/unless}}
-
-		<p>&nbsp;</p>
-		<p>
-			{{mf 'location.edit.hosts_admins' 'Hosts/Admins'}}:
-			<ul class='hosts'>
-				{{#each locationHosts}}
-					<li>
-						{{>profilelink this}}
-						<input class="remove_host" value="Remove" name="Remm" type="button"/>
-					</li>
-				{{/each}}
-			</ul>
-			{{mf 'location.edit.search_usr_add_host' 'Search for username to add as host:'}}
-			<input type="text" id="search_username" size="20" />
-			<input type="button" class="addhost" value="Search" />
-			<br>
-			{{#if addHost}}
-				{{#if addHostSearch}}
-					{{>profilelink addHostSearch._id}}
-					<input type="button" class="save_addhost" value="Add as host" />
-					<input type="hidden" id="addhost_id" value="{{addHostSearch._id}}" />
+<template name="locationEdit">
+	<div class="location-edit">
+		<form>
+			<div class="location_edit_header">
+				{{#if _id}}
+					<h2>{{mf 'location.edit.edit_location' 'Edit location'}}</h2>
 				{{else}}
-					{{mf 'location.edit.no_usr_found' 'no username found'}}
+					<h2>{{mf 'location.edit.propose' 'Create new location'}}</h2>
 				{{/if}}
-			{{/if}}
-		</p>
-		<p>&nbsp;</p>
-		<p>{{mf 'location.edit.optional_info' 'Optional Info'}}</p>
-		<p>{{mf 'location.edit.max_ppl' 'Max. People'}}
-			<input type="text" id="editform_maxpeople" size="4" value="{{maxpeople}}"/>
-		</p>
-		<p>{{mf 'location.edit.max_workplace' 'Max. Workplaces'}}
-			<input type="text" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}"/>
-		</p>
-		<p>&nbsp;</p>
-		<p>
-			<input type="button" class="save" value="Save" />
-			<input type="button" class="cancel" value="Cancel" />
-		</p>
-	</form>
+
+
+				<div class="location-edit-sub">
+
+					<div class="form-group">
+						<label>{{mf 'location.edit.Name' 'Name:'}}</label>
+						<input
+							class="form-control"
+							type="text"
+							id="editform-name"
+							placeholder="{{mf 'location.name.placeholder' 'Full name of location'}}"
+							size="60"
+							value="{{name}}"
+						/>
+					</div>
+
+					<div class="form-group">
+						<label>{{mf 'location.edit.description' 'Description:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</span>
+							<div class="form-control editable-textarea"
+								id="editform-description"
+								placeholder= "{{mf 'location.edit.description.placeholder' 'Some words about this location'}}"></div>
+							{{{description}}}
+						</div>
+					</div>
+
+					<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-hashtag"></span>
+						</span>
+						<input
+							class="form-control"
+							id="editform-short"
+							placeholder= "{{mf 'location.edit.short.placeholder' 'short name'}} {{mf '_inputField-optional'}}">
+						{{{short}}}
+					</div>
+
+
+
+					{{#unless _id}}
+						<label>{{mf 'location.edit.region' 'Region:'}}</label>
+						<div class="input-group">
+							<select name='region' class="region_select">
+								<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
+							{{#each regions}}
+								<option value='{{_id}}' {{regionSel}}>{{name}}</option>
+							{{/each}}
+							</select>
+						</div>
+					{{/unless}}
+
+					<label>{{mf 'location.details.address' 'Address:'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-map-marker"></span>
+						</span>
+						<input
+							class="form-control"
+							id="editform-address"
+							placeholder= "{{mf 'location.edit.address.placeholder' 'Street, City, State'}}">
+						{{{address}}}
+					</div>
+
+					<label>{{mf 'location.details.route'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-map-signs"></span>
+						</span>
+						<input
+							class="form-control"
+							id="editform-address"
+							placeholder= "{{mf 'location.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
+						{{{route}}}
+					</div>
+
+					<div class="location_map">
+						{{>map markers=markers}}
+						<div class="coordinates">
+							{{coords}}
+						</div>
+					</div>
+
+					<div class="input-group">
+						<label> <input
+							type="checkbox"
+							id="editform_visible"
+							checked>
+						{{mf 'location.edit.visible_in_list' 'Visible'}}
+						</label>
+					</div>
+
+					<div class="input-group">
+						<label> <input
+							type="checkbox"
+							id="editform_publicspace" >
+							{{mf 'location.edit.public_space' 'Public Space'}}
+						</label>
+					</div>
+
+
+					<label>{{mf 'location.edit.optional_info' 'Optional Info'}}</label>
+
+					<p>{{mf 'location.edit.max_ppl' 'Max. People'}} <input type="text" id="editform_maxpeople" size="4" value="{{maxpeople}}"></p>
+					<p>{{mf 'location.edit.max_workplace' 'Max. Workplaces'}} <input type="text" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}"></p>
+
+
+					<div class="hosts">
+						<h2>
+							<span class="glyphicon glyphicon-user"></span>
+							{{mf 'location.details.hosts' 'Hosts:'}}
+						</h2>
+						<ul>
+							{{#each hosts}}
+								<li>
+									<span class="glyphicon glyphicon-user"></span>
+									{{username this}}
+									<button type="button" class="js-removeHost cancel">
+										<span
+											class="glyphicon glyphicon-remove"
+											title="{{mf 'location.settings.removeHosts' 'remove host'}}">
+										</span>
+									</button>
+								</li>
+							{{/each}}
+						</ul>
+						<label>{{mf 'location.edit.addHost' 'Add other host:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-user"></span>
+							</span>
+							<input
+								type="text"
+								id="add-host"
+								class="form-control js-user-search"
+								placeholder= "{{mf 'location.settings.add.member.placeholder' 'type name of buddy'}}"
+								size="40"
+							/>
+						</div>
+						<ul>
+							{{#each foundUsers}}
+								<li>
+									<span class="glyphicon glyphicon-user"></span>
+									{{username this._id}}
+									<button type="button" class="js-addMember confirm"><span class="glyphicon glyphicon-plus" title="{{mf 'location.settings.addMember' "add as member"}}"></span></button>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="locationEditFinishbtns">
+				<button type="button" class="save">
+					<span class="glyphicon glyphicon-save"></span>
+					{{mf 'location.edit.save_btn' 'Save'}}
+				</button>
+				<button type="button" class="cancel">
+					<span class="glyphicon glyphicon-remove"></span>
+					{{mf 'location.edit.cancel_btn' 'Cancel'}}
+				</button>
+			</div>
+		</form>
+	</div>
 </template>
