@@ -84,17 +84,13 @@ Template.editable.helpers({
 
 	wrapAttrs: function() {
 		var instance = Template.instance();
-		var classes = [];
-		classes.push(instance.data.simple ? 'editable-wrap-simple' : 'editable-wrap-rich');
-		return classes.join(' ');
+		return instance.data.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
 	},
 
 	editableAttrs: function() {
 		var instance = Template.instance();
-		var classes = [];
-		if (instance.changed.get()) classes.push('editable-changed');
-		return classes.join(' ');
-	}	
+		return instance.changed.get() ? 'editable-changed' : '';
+	}
 });
 
 Template.editable.events({
