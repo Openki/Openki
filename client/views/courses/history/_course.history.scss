@@ -24,7 +24,7 @@
 }
 
 .timeline-start {
-	@include gradient-vertical($openki-blue-lighter, $brand-primary, 0%, 100%);
+	@include gradient-vertical($openki-blue-lighter, $brand-primary);
 }
 
 .timeline-end {

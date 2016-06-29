@@ -3,8 +3,6 @@
 // Based on variables from base-colors and bootstrap
 // --------------------------------------------------
 
-$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
-
 // == Colors
 $orange: #f98f39;
 $yellow: #f3f981;
@@ -140,6 +138,20 @@ $shadow-lg-blur: 8px;
 $shadow-sm-offset-x: 1px;
 $shadow-sm-offset-y: 2px;
 $shadow-sm-blur: 4px;
+
+$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
+
+$btn-hover-level-start: 3%;
+$btn-level-end: 6%;
+$btn-hover-level-end: 9%;
+
+$btn-background-colors: (
+	default: $btn-default-bg,
+	primary: $btn-primary-bg,
+	success: $btn-success-bg,
+	warning: $btn-warning-bg-custom,
+	danger: $btn-danger-bg
+);
 
 //== Screen breakpoints
 //
