@@ -1,101 +1,112 @@
 .event-small-container {
-	@include grid(12);
+	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .frame-events-fluid .event-small-container {
 	@media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-xsm) {
-		@include grid(4, 3, inherit, 2);
+		@include make-xs-column(4);
+		@include make-sm-column(3);
+		@include make-lg-column(2);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container .event-small-container {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-sm) {
-		@include grid(4, inherit, 3);
+		@include make-xs-column(4);
+		@include make-md-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container-sm .event-small-container {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
+
 	@media (min-width: $screen-sm) {
-		@include grid(4);
+		@include make-xs-column(4);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .course_events .event-small-container {
 	@media (min-width: $screen-xs) {
-		@include grid(6);
+		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .event-small {
-  @include transition(box-shadow $default-transition-time);
-  background: $event-small-bg;
-  height: 200px;
+	background: $event-small-bg;
+	height: 200px;
 	position: relative;
-  &:hover {
-    @include box-shadow-big($default-shadow);
-  }
+	transition: box-shadow $default-transition-time;
+
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	}
 }
 
 .event-small-header,
 .event-small-title,
 .event-small-description {
-  @include word-break;
-  overflow: hidden;
+	overflow: hidden;
+	word-break: break-all;
 }
 
 .event-small-header {
-  background: $event-small-header-bg;
-  border-bottom: 1px solid $body-bg;
-  color: $event-small-header-color;
-  height: 55px;
-  padding: 5px;
-  .fa,
-  .glyphicon {
-    margin-right: 2px;
-  }
-  .fa-clock-o,
-  .event-small-time {
-    margin-bottom: 5px;
-  }
-  .fa-map-signs {
-    margin-left: 4px;
-  }
+	background: $event-small-header-bg;
+	border-bottom: 1px solid $body-bg;
+	color: $event-small-header-color;
+	height: 55px;
+	padding: 5px;
+}
+
+.event-small-header .fa,
+.event-small-header .glyphicon {
+	margin-right: 2px;
+}
+
+.event-small-header .fa-clock-o,
+.event-small-header .event-small-time {
+	margin-bottom: 5px;
+}
+
+.event-small-header .fa-map-signs {
+	margin-left: 4px;
 }
 
 .event-small-with-date {
 	height: 220px;
-	.event-small-header {
-		height: 75px;
-	}
+}
+
+.event-small-with-date .event-small-header {
+	height: 75px;
 }
 
 .event-small-title {
-  color: $event-small-title-color;
-  font-size: medium;
-  max-height: 56px;
-  padding: 5px;
+	color: $event-small-title-color;
+	font-size: medium;
+	max-height: 56px;
+	padding: 5px;
 }
 
 .event-small-description {
-  color: $event-small-description-color;
-  height: 85px;
-  margin-top: -3px;
-  padding: 0 5px 5px;
+	color: $event-small-description-color;
+	height: 85px;
+	margin-top: -3px;
+	padding: 0 5px 5px;
 }

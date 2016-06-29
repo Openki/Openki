@@ -1,0 +1,110 @@
+#history {
+	@include clearfix;
+	padding-bottom: 10px;
+}
+
+.timeline-pre,
+.timeline-post {
+	height: 30px;
+}
+
+.timeline-start-container,
+.timeline-end-container {
+	@include make-xs-column(1);
+	@include make-xs-column-offset(3);
+	height: 100%;
+	padding: 0;
+}
+
+.timeline-start,
+.timeline-end {
+	height: 100%;
+	margin: auto;
+	width: 1px;
+}
+
+.timeline-start {
+	@include gradient-vertical($openki-blue-lighter, $brand-primary);
+}
+
+.timeline-end {
+	@include gradient-vertical($brand-primary, $openki-blue-lighter, 0%, 100%);
+}
+
+.timeline-header {
+	@include make-xs-column(8);
+	height: 100%;
+	padding: 0;
+}
+
+.timeline {
+	@include make-xs-column(4);
+	height: 20px;
+	padding: 0;
+}
+
+.timeline-eventdate {
+	@include make-xs-column(9);
+	color: rgb(109, 112, 112);
+	padding: 0;
+	text-align: right;
+
+	&.active {
+		color: $default-black;
+	}
+}
+
+.timeline-eventline-container {
+	@include make-xs-column(3);
+	height: 100%;
+	padding: 0;
+}
+
+.timeline-eventline {
+	background: $brand-primary;
+	height: 100%;
+	margin: auto;
+	width: 1px;
+}
+
+.timeline-eventpoint {
+	background: $brand-primary;
+	border-radius: 50% !important;
+	bottom: 13px;
+	height: 7px;
+	margin: auto;
+	position: relative;
+	transition: background-color $default-transition-time;
+	width: 7px;
+
+	&.active {
+		background: $brand-danger;
+	}
+}
+
+.coursehistory-event {
+	@include make-xs-column(8);
+	height: 20px;
+	padding: 0;
+
+	&:hover a {
+		color: $default-black;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	a {
+		color: $brand-primary;
+	}
+
+	h4 {
+		padding-top: 10px;
+		text-align: center;
+	}
+}
+
+.files-info {
+	padding: 0 8px;
+}

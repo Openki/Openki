@@ -1,6 +1,6 @@
 .navbar {
-	@include transition(box-shadow $default-transition-time);
-  border: 0;
+	border: 0;
+	transition: box-shadow $default-transition-time;
 }
 
 #bs-navbar-collapse-1 {
@@ -10,11 +10,11 @@
 }
 
 .navbar-container {
-  max-width: 1600px;
+	max-width: 1600px;
 }
 
 .navbar-brand {
-  position: relative;
+	position: relative;
 }
 
 .navbar-brand > img {
@@ -25,64 +25,67 @@
 }
 
 .site-name {
-	@include transition(text-shadow $default-transition-time);
-  font-size: x-large;
-  vertical-align: top;
+	font-size: x-large;
+	vertical-align: top;
+	transition: text-shadow $default-transition-time;
 }
 
 .site-stage {
-	@include transition(text-shadow $default-transition-time);
-  @include rotate(345deg);
-  bottom: 2px;
-  color: $site-stage-color;
-  font-size: small;
-  font-weight: bold;
-  left: 105px;
+	bottom: 2px;
+	color: $site-stage-color;
+	font-size: small;
+	font-weight: bold;
+	left: 105px;
 	position: absolute;
+	transition: text-shadow $default-transition-time;
+	transform: rotate(345deg);
 }
 
 .navbar-brand:hover {
 	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
-	& > .site-name,
-	& > .site-stage {
-		color: $default-white;
-	}
+}
+
+.navbar-brand:hover > .site-name,
+.navbar-brand:hover > .site-stage {
+	color: $default-white;
 }
 
 .navbar-link {
-	@include transition-property(#{'background-color, box-shadow, text-shadow'});
-  @include transition-duration($default-transition-time);
-  font-size: $navbar-default-font-size;
+	font-size: $navbar-default-font-size;
+	transition-duration: $default-transition-time;
+	transition-property: #{'background-color, box-shadow, text-shadow'};
+
 	&:hover {
 		text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	}
+
 	@media (max-width: $screen-sm) {
 		border-bottom: 1px solid $navbar-default-border;
 	}
 }
 
 .nav-marker-bar {
-	@include transition-property(#{'background-color, opacity'});
-	@include transition-duration($default-transition-time);
 	background-color: transparent;
 	bottom: -6px;
 	height: 6px;
 	left: 0;
 	opacity: 0;
 	position: absolute;
+	transition-duration: $default-transition-time;
+	transition-property: #{'background-color, opacity'};
 	width: 100%;
 }
 
 .nav-marker-caret {
-	@include transition(opacity $default-transition-time);
 	border: 5px solid;
-	border-color:  transparent transparent $body-bg;
+	border-color:	transparent transparent $body-bg;
 	bottom: 0;
 	box-shadow: 0 5px 5px -5px #fff;
 	height: 0;
 	left: 50%;
 	opacity: 0;
 	position: absolute;
+	transition: opacity $default-transition-time;
 	width: 0;
 }
 
@@ -92,70 +95,76 @@
 	}
 }
 
-.calendar-link.navbar-link-active {
-	& > .nav-marker-caret {
-		border-bottom-color: $calendar-navigation-bg;
+.navbar-link-active.calendar-link > .nav-marker-caret {
+	border-bottom-color: $calendar-navigation-bg;
+}
+
+.navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
+	background-color: $calendar-navigation-bg;
+	opacity: 1;
+}
+
+.navbar .navbar-nav:first-child,
+.navbar .navbar-nav:last-child {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.navbar .navbar-nav > .open > .dropdown-menu {
+	@media (min-width: $screen-sm) {
+		padding-top: 10px;
+		z-index: -1;
 	}
-	&.navbar-link-covering > .nav-marker-bar {
-		background-color: $calendar-navigation-bg;
-		opacity: 1;
+
+	@media (max-width: $screen-sm) {
+		background-color: $dropdown-bg;
+		box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
+		padding: 0;
 	}
 }
 
-.navbar .navbar-nav {
-	&:first-child,
-	&:last-child {
-		margin-bottom: 0;
-		margin-top: 0;
+.navbar .navbar-nav > .open > .dropdown-menu > li > a {
+	@media (max-width: $screen-sm) {
+		border-bottom: 1px solid darken($dropdown-bg, 10%);
+		color: $dropdown-link-color;
 	}
-	& > .open > .dropdown-menu {
-		@media (min-width: $screen-sm) {
-			padding-top: 10px;
-			z-index: -1;
-		}
-		@media (max-width: $screen-sm) {
-			background-color: $dropdown-bg;
-			box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
-			padding: 0;
-			& > li {
-				& > a {
-					border-bottom: 1px solid darken($dropdown-bg, 10%);
-					color: $dropdown-link-color;
-				}
-				&:last-child > a {
-					border-bottom: 0;
-				}
-			}
-		}
+}
+
+.navbar .navbar-nav > .open > .dropdown-menu > li > a:last-child > a {
+	@media (max-width: $screen-sm) {
+		border-bottom: 0;
 	}
-	& > .open > .navbar-link {
-		&,
-		&:hover,
-		&:focus {
-			background-color: lighten($navbar-default-bg, 10%);
-			box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-		}
-		> .nav-marker-caret {
-			opacity: 0;
-		}
-		@media (min-width: $screen-sm) {
-			.nav-marker-bar {
-				background-color: $dropdown-bg;
-				opacity: 1;
-			}
-		}
+}
+
+.navbar .navbar-nav > .open > .navbar-link,
+.navbar .navbar-nav > .open > .navbar-link:hover,
+.navbar .navbar-nav > .open > .navbar-link:focus {
+	background-color: lighten($navbar-default-bg, 10%);
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
+	opacity: 0;
+}
+
+.navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
+	@media (min-width: $screen-sm) {
+		background-color: $dropdown-bg;
+		opacity: 1;
 	}
 }
 
 .navbar-covering {
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-	.nav-marker-caret {
-		opacity: 0;
-	}
-	.navbar-link-active,
-	.navbar-nav > li > .navbar-link-active:hover,
-	.navbar-nav > li > .navbar-link-active:focus {
-		background-color: lighten($navbar-default-bg, 10%);
-		box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-	}
+}
+
+.navbar-covering .nav-marker-caret {
+	opacity: 0;
+}
+
+.navbar-covering .navbar-link-active,
+.navbar-covering .navbar-nav > li > .navbar-link-active:hover,
+.navbar-covering .navbar-nav > li > .navbar-link-active:focus {
+	background-color: lighten($navbar-default-bg, 10%);
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }

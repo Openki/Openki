@@ -6,14 +6,19 @@ Template.eventReplication.onCreated(function() {
 
 
 Template.eventReplication.onRendered(function() {
-	this.$('.-replicateStart').datepicker({
+	this.$('.js-replicate-date').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
-		format: 'L',
-	});
-
-	this.$('.-replicateEnd').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		format: 'L',
+		language: moment.locale(),
+		autoclose: true,
+		startDate: new Date(),
+		format: {
+			toDisplay: function(date) {
+				return moment(date).format('L');
+			},
+			toValue: function(date) {
+				return moment(date, 'L').toDate();
+			}
+		}
 	});
 
 	updateReplicas(this);
@@ -60,14 +65,14 @@ var updateReplicas = function(template) {
 
 
 var getEventFrequency = function(template) {
-	var startDate = moment(template.$('.-replicateStart').val(), 'L');
+	var startDate = moment(template.$('#replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
 	if (startDate.isBefore(moment())) {
 		// Jump forward in time so we don't have to look at all these old dates
 		startDate = replicaStartDate(startDate);
 	}
 
-	var endDate   = moment(template.$('.-replicateEnd').val(), 'L');
+	var endDate   = moment(template.$('#replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.-replicateFrequency:checked').val();
 

@@ -43,7 +43,6 @@ http
 es5-shim
 router-autoscroll
 meteorhacks:ssr
-standard-minifier-css
 standard-minifier-js
 rajit:bootstrap3-datepicker
 matb33:bootstrap-glyphicons
@@ -53,3 +52,4 @@ fourseven:scss
 reywood:bootstrap3-sass
 lookback:tooltips
 ongoworks:spiderable
+seba:minifiers-autoprefixer

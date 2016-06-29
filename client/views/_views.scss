@@ -9,10 +9,10 @@
 
 // Courses
 @import 'courses/details/course.details';
-@import 'courses/details/discussion/course.discussion';
-@import 'courses/details/history/course.history';
-@import 'courses/details/members/course.members';
-@import 'courses/details/roles/course.roles';
+@import 'courses/discussion/course.discussion';
+@import 'courses/history/course.history';
+@import 'courses/members/course.members';
+@import 'courses/roles/course.roles';
 @import 'courses/edit/course.edit';
 @import 'courses/events/course.events';
 @import 'courses/list/course.list';

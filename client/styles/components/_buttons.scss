@@ -1,107 +1,46 @@
-// Gradient button backgrounds
+// == Buttons
 // --------------------------------------------------
-
-// Define percentage of how much btn-bg should get darkened for each step
-$level-dark: 3%;
-$level-darker: 6%;
-$level-darkest: 9%;
-
-// Map darkening steps
-$btn-default-bg-color-steps: (
-	default: $btn-default-bg,
-	dark: darken($btn-default-bg, $level-dark),
-	darker: darken($btn-default-bg, $level-darker),
-	darkest: darken($btn-default-bg, $level-darkest)
-);
-
-$btn-primary-bg-color-steps: (
-	default: $btn-primary-bg,
-	dark: darken($btn-primary-bg, $level-dark),
-	darker: darken($btn-primary-bg, $level-darker),
-	darkest: darken($btn-primary-bg, $level-darkest)
-);
-
-$btn-success-bg-color-steps: (
-	default: $btn-success-bg,
-	dark: darken($btn-success-bg, $level-dark),
-	darker: darken($btn-success-bg, $level-darker),
-	darkest: darken($btn-success-bg, $level-darkest)
-);
-
-$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
-
-$btn-warning-bg-color-steps: (
-	default: $btn-warning-bg-custom,
-	dark: darken($btn-warning-bg-custom, $level-dark),
-	darker: darken($btn-warning-bg-custom, $level-darker),
-	darkest: darken($btn-warning-bg-custom, $level-darkest)
-);
-
-$btn-danger-bg-color-steps: (
-	default: $btn-danger-bg,
-	dark: darken($btn-danger-bg, $level-dark),
-	darker: darken($btn-danger-bg, $level-darker),
-	darkest: darken($btn-danger-bg, $level-darkest)
-);
-
-// Map maps containing darkening steps according to btn-variant
-$all-btn-bg-color-steps: (
-	default: $btn-default-bg-color-steps,
-	primary: $btn-primary-bg-color-steps,
-	success: $btn-success-bg-color-steps,
-	warning: $btn-warning-bg-color-steps,
-	danger: $btn-danger-bg-color-steps
-);
-
-// Iterate over button variants and their darkening steps and apply gradient backgrounds for each one
-@each $btn-variant, $btn-bg-color-steps in $all-btn-bg-color-steps {
-  .btn-#{$btn-variant} {
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    @include gradient-vertical(map-get($btn-bg-color-steps, default), map-get($btn-bg-color-steps, darker));
-    &:hover {
-      @include gradient-vertical(map-get($btn-bg-color-steps, dark), map-get($btn-bg-color-steps, darkest));
-    }
-  }
-}
-
-// Change default button styles
-// --------------------------------------------------
-
 .btn {
-  @include transition(border-color .15s ease-in-out);
+	transition: border-color .15s ease-in-out;
 }
 
 .btn-group {
-  @media (max-width: $screen-xs) {
-    width: 100%;
-    & > .btn {
-      border-radius: 4px !important;
-			width: 100%;
-			& + .btn {
-				margin-top: 10px;
-			}
-    }
-  }
+	@media (max-width: $screen-xs) {
+		width: 100%;
+	}
+}
+
+.btn-group > .btn {
+	@media (max-width: $screen-xs) {
+		border-radius: 4px !important;
+		width: 100%;
+	}
+}
+
+.btn-group > .btn + .btn {
+	@media (max-width: $screen-xs) {
+		margin-top: 10px;
+	}
 }
 
 .btn-primary:focus {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(56, 130, 156, .6);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(56, 130, 156, .6);
 }
 
-// Gradient background for active default btn
 .btn-default.active {
-  @include gradient-vertical(map-get($btn-default-bg-color-steps, dark), map-get($btn-default-bg-color-steps, darkest));
+	@include gradient-vertical(darken($btn-default-bg, $btn-hover-level-start), darken($btn-default-bg, $btn-hover-level-end));
 }
 
-.remove-btn {
-  background-color: transparent;
-  border: 0;
-  color: $default-gray;
-  padding: 0;
-  &:hover {
-    color: $default-black;
-    cursor: pointer;
-  }
+// Apply gradient backgrounds for all btn-variants
+@each $variant, $bg-color in $btn-background-colors {
+	.btn-#{$variant} {
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		@include gradient-vertical($bg-color, darken($bg-color, $btn-level-end));
+
+		&:hover {
+			@include gradient-vertical(darken($bg-color, $btn-hover-level-start), darken($bg-color, $btn-hover-level-end));
+		}
+	}
 }
 
 .btn-go {
@@ -117,17 +56,18 @@ $all-btn-bg-color-steps: (
 	@extend .btn-default;
 }
 
-// Cancel/Delete button style, turning red when beeing hovered over
 .btn-cancel,
 .btn-delete,
 .btn-remove {
-	@include gradient-vertical(map-get($btn-danger-bg-color-steps, default), map-get($btn-danger-bg-color-steps, darker));
+	@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
 	border: 1px solid $btn-danger-border;
+
 	@media (min-width: $screen-xs) {
-		@include gradient-vertical(map-get($btn-default-bg-color-steps, default), map-get($btn-default-bg-color-steps, darker));
+		@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
 		border: 1px solid $btn-default-border;
+
 		&:hover {
-			@include gradient-vertical(map-get($btn-danger-bg-color-steps, default), map-get($btn-danger-bg-color-steps, darker));
+			@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
 			border: 1px solid $btn-danger-border;
 		}
 	}
@@ -136,6 +76,18 @@ $all-btn-bg-color-steps: (
 .btn-sm {
 	@media (max-width: $screen-xs) {
 		@include btn-base;
+	}
+}
+
+.remove-btn {
+	background-color: transparent;
+	border: 0;
+	color: $default-gray;
+	padding: 0;
+
+	&:hover {
+		color: $default-black;
+		cursor: pointer;
 	}
 }
 
