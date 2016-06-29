@@ -139,6 +139,7 @@ rzymek:moment-locale-it@2.12.0
 rzymek:moment-locale-ja@2.12.0
 rzymek:moment-locale-tr@2.12.0
 rzymek:moment-locale-zh-tw@2.12.0
+seba:minifiers-autoprefixer@1.0.1
 service-configuration@1.0.10
 servicelocale:geoip@0.1.3
 session@1.1.6
@@ -147,7 +148,6 @@ spacebars@1.0.12
 spacebars-compiler@1.0.12
 srp@1.0.9
 standard-app-packages@1.0.9
-standard-minifier-css@1.0.7
 standard-minifier-js@1.0.7
 templating@1.1.11
 templating-tools@1.0.4

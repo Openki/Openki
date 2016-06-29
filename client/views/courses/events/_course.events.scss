@@ -76,7 +76,7 @@
 }
 
 .course_event {
-	@include transition(box-shadow $default-transition-time);
+	transition: box-shadow $default-transition-time;
 
 	a {
 		& > .course_event_date {
@@ -109,7 +109,7 @@
 }
 
 .course_event_title {
-	@include transition(color $default-transition-time);
+	transition: color $default-transition-time;
 
 	h3 {
 		margin: 10px 0;

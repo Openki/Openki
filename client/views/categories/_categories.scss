@@ -23,7 +23,7 @@
 
 .js-category-label {
 	@extend .category-label;
-	@include transition(box-shadow $default-transition-time);
+	transition: box-shadow $default-transition-time;
 
 	&:hover {
 		background: $category-hover-bg;

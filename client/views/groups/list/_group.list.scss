@@ -11,9 +11,9 @@
 }
 
 %group-label {
-	@include transition(all $default-transition-time);
 	background: $group-bg;
 	color: $group-text;
+	transition: all $default-transition-time;
 
 	&:hover,
 	&:focus {

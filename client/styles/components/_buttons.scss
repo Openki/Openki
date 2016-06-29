@@ -2,7 +2,7 @@
 // --------------------------------------------------
 
 .btn {
-	@include transition(border-color .15s ease-in-out);
+	transition: border-color .15s ease-in-out;
 }
 
 .btn-group {

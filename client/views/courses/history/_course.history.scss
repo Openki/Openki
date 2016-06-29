@@ -68,13 +68,13 @@
 }
 
 .timeline-eventpoint {
-	@include transition(background-color $default-transition-time);
 	background: $brand-primary;
 	border-radius: 50% !important;
 	bottom: 13px;
 	height: 7px;
 	margin: auto;
 	position: relative;
+	transition: background-color $default-transition-time;
 	width: 7px;
 
 	&.active {

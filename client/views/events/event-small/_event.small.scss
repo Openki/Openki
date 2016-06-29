@@ -50,10 +50,10 @@
 }
 
 .event-small {
-	@include transition(box-shadow $default-transition-time);
 	background: $event-small-bg;
 	height: 200px;
 	position: relative;
+	transition: box-shadow $default-transition-time;
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
@@ -63,8 +63,8 @@
 .event-small-header,
 .event-small-title,
 .event-small-description {
-	@include word-break;
 	overflow: hidden;
+	word-break: break-all;
 }
 
 .event-small-header {

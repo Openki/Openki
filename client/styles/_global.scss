@@ -49,11 +49,11 @@ a:hover,
 }
 
 .elevate_child {
-	@include transition(box-shadow $default-transition-time);
 	box-shadow: none !important;
+	transition: box-shadow $default-transition-time;
 }
 
 .collapsing,
 .fade {
-	@include transition-duration(0s);
+	transition-duration: 0s;
 }

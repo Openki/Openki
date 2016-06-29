@@ -56,8 +56,8 @@
 }
 
 .course h4 {
-	@include transition(color $default-transition-time);
 	color: $default-black;
+	transition: color $default-transition-time;
 }
 
 .course:hover h4 {
@@ -154,8 +154,8 @@
 }
 
 .course-eventlist-location {
-	@include word-break;
 	padding: 0 4px;
+	word-break: break-all;
 }
 
 .course-eventlist-location span {

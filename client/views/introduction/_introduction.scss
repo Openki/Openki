@@ -1,10 +1,10 @@
 .introduction {
 	@include clearfix;
-	@include transition(background-color 1s);
 	background-color: $introduction-bg;
 	margin-top: 15px;
 	padding: 2px ($grid-gutter-width / 2) 0;
 	position: relative;
+	transition: background-color 1s;
 
 	&:hover {
 		background-color: $introduction-text;

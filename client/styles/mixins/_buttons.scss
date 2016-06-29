@@ -22,9 +22,9 @@
 }
 
 @mixin icon-btn-remove {
-	@include transition(color $default-transition-time);
 	color: lighten($brand-danger, 20%);
 	cursor: pointer;
+	transition: color $default-transition-time;
 
 	&:hover {
 		color: $brand-danger;

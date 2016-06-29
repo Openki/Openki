@@ -33,10 +33,10 @@
 	}
 
 	.editIcon {
-		@include transition(color $default-transition-time);
 		color: $default-gray;
 		cursor: default;
 		padding: .2em;
+		transition: color $default-transition-time;
 	}
 
 	&.rich .editIcon {

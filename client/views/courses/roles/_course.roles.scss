@@ -1,7 +1,7 @@
 .course-role,
 .course-role-enrol {
-	@include transition-property(#{'box-shadow, margin'});
-	@include transition-duration(.3s);
+	transition-duration: .3s;
+	transition-property: #{'box-shadow, margin'};
 }
 
 .course-role-title,
