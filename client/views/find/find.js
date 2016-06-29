@@ -100,7 +100,7 @@ Template.find.onCreated(function() {
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.js-search-categories').val();
-	if (query === '') {
+	if (!query) {
 		instance.categorySearchResults.set(categories);
 		return;
 	}
