@@ -45,7 +45,6 @@ router-autoscroll
 meteorhacks:ssr
 standard-minifier-js
 rajit:bootstrap3-datepicker
-matb33:bootstrap-glyphicons
 prng
 ccorcos:subs-cache
 fourseven:scss

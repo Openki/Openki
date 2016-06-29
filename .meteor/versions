@@ -79,13 +79,10 @@ jag:pince@0.0.9
 jquery@1.11.9
 lai:collection-extensions@0.1.4
 launch-screen@1.0.12
-less@2.6.3
 livedata@1.0.18
 localstorage@1.0.11
 logging@1.0.13
 lookback:tooltips@0.5.2
-matb33:bootstrap-base@10.0.0
-matb33:bootstrap-glyphicons@10.0.0
 mediumeditor:mediumeditor@5.2.0
 meteor@1.1.15
 meteor-platform@1.2.6
