@@ -82,25 +82,19 @@ Template.editable.helpers({
 		return instance.data.showControls && instance.changed.get();
 	},
 
-	editableAttrs: function() {
-		var instance = Template.instance();
-		var classes = ['editable'];
-		classes.push(instance.data.simple ? 'simple' : 'rich');
-		if (instance.changed.get()) classes.push('changed');
-		return {
-			'class': classes.join(' '),
-		};
-	},
-
 	wrapAttrs: function() {
 		var instance = Template.instance();
-		var classes = ['editableWrap'];
-		classes.push(instance.data.simple ? 'simple' : 'rich');
-		if (instance.changed.get()) classes.push('changed');
-		return {
-			'class': classes.join(' '),
-		};
-	}
+		var classes = [];
+		classes.push(instance.data.simple ? 'editable-wrap-simple' : 'editable-wrap-rich');
+		return classes.join(' ');
+	},
+
+	editableAttrs: function() {
+		var instance = Template.instance();
+		var classes = [];
+		if (instance.changed.get()) classes.push('editable-changed');
+		return classes.join(' ');
+	}	
 });
 
 Template.editable.events({
@@ -112,13 +106,15 @@ Template.editable.events({
 		instance.data.store(changedText);
 		instance.editingVersion = false;
 	},
+
 	'click .js-editable-cancel': function(event, instance) {
 		event.preventDefault();
 		instance.$('.editable').html(instance.data.text);
 		instance.changed.set(false);
 		instance.editingVersion = false;
 	},
-	'click .-edit': function(event, instance) {
+
+	'click .js-editable-edit': function(event, instance) {
 		// Moving the cursor to the end of the editable element?
 		// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
 		var selectEnd = function(el) {

@@ -1,73 +1,55 @@
-
-@import '{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
-
-
-.editableWrap {
+.editable-wrap {
 	margin: -8px;
 	position: relative;
+}
 
-	.editable {
-		min-height: 2em;
-		outline: none;
-		padding: 8px;
+.editable {
+	min-height: 2em;
+	outline: none;
+	padding: 8px;
 
-		&:focus,
-		&.changed {
-			box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-			background: $body-bg;
-			border: 1px solid $brand-primary;
-			padding: 7px;
-		}
-	}
-
-	.editable:focus,
-	.editable.changed {
+	&:focus,
+	&.editable-changed {
 		background: $body-bg;
 		border: 1px solid $brand-primary;
 		box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
 		padding: 7px;
 	}
+}
 
-	.editable:after {
-		position: static;
-	}
+.editable-wrap-rich .editable {
+	min-height: 4ex;
+}
 
-	.editIcon {
-		color: $default-gray;
-		cursor: default;
-		padding: .2em;
-		transition: color $default-transition-time;
-	}
+.editable-wrap-simple .editable {
+	display: inline-block;
+	min-width: 8em;
 
-	&.rich .editIcon {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
-	&.simple .editable {
-		display: inline-block;
-		min-width: 8em;
-
-		&:focus {
-			min-width: 10em;
-		}
-	}
-
-	&.rich .editable {
-		min-height: 4ex;
+	&:focus {
+		min-width: 10em;
 	}
 }
 
-.editableWrap:hover .editIcon {
+.editable-icon {
+	color: $default-gray;
+	cursor: default;
+	padding: .2em;
+	transition: color $default-transition-time;
+}
+
+.editable-wrap:hover .editable-icon {
 	color: $default-black;
 }
 
-.editable:focus,
-.editable.changed {
-	& + .editIcon {
-		color: $default-black;
-	}
+.editable-wrap-rich .editable-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.editable:focus + .editable-icon,
+.editable-changed + .editable-icon {
+	color: $default-black;
 }
 
 .editable-controls {
@@ -75,11 +57,11 @@
 	margin-top: 15px;
 	position: absolute;
 	z-index: 1;
+}
 
-	button {
-		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-		margin-right: 5px;
-	}
+.editable-controls button {
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	margin-right: 5px;
 }
 
 .editable-textarea {
