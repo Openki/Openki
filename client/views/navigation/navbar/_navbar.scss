@@ -168,25 +168,3 @@
 	background-color: lighten($navbar-default-bg, 10%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
-
-.region_sel > a {
-	font-size: large;
-}
-
-.region_sel.open > a {
-	height: 50px;
-	padding-top: 13px;
-}
-
-.js-regions-search {
-	color: #000;
-}
-
-.badge-courses {
-	background-color: $brand-primary;
-}
-
-.badge-events {
-	background-color: $brand-success;
-	color: $role-occupied-text;
-}
