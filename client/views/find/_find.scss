@@ -169,6 +169,7 @@
 
 .js-search-categories {
 	border: 1px dashed $category-bg;
+	box-shadow: none;
 
 	&:focus {
 		border-style: solid;
