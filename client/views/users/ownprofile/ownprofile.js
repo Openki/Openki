@@ -59,6 +59,10 @@ Template.profile.helpers({
 
 	groupCount: function() {
 		return this.user.groups.count();
+	},
+
+	privacyChecked: function() {
+		if (this.user.privacy) return 'checked';
 	}
 });
 
@@ -106,7 +110,7 @@ Template.profile.events({
 			document.getElementById('privacy').checked,
 			function(err) {
 				if (err) {
-					addMessage(mf('profile.savingError', { ERROR: err }, 'Saving your profile failed: {ERROR}'), 'danger');
+					showServerError('Saving your profile failed', err);
 				} else {
 					addMessage(mf('profile.updated', 'Updated profile'), 'success');
 					template.editing.set(false);
@@ -115,7 +119,7 @@ Template.profile.events({
 		);
 	},
 
-	'submit .change-pwd': function(event) {
+	'submit #changePwd': function(event) {
 		event.preventDefault();
 		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
@@ -132,7 +136,7 @@ Template.profile.events({
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
-						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'), 'danger');
+						showServerError('Failed to change your password', err);
 					} else {
 						addMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
 						template.changingPass.set(false);

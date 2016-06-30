@@ -10,26 +10,47 @@
 				{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
 				<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
 			{{/if}}
-			<div class="course_edit_body">
-				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
-				<input class="form-control"
-					id="editform_name"
-					placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
-					size="40"
-					type="text"
-					value="{{name}}"/>
-				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>
-				<div class="form-control"
-					id="editform_description"
-					data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
-					{{{description}}}
+			<div class="course-edit-body">
+				<div class="form-group">
+					<label>{{mf 'course.edit.title' 'Title'}}</label>
+					<input class="form-control input-lg"
+						id="editform_name"
+						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+						size="40"
+						type="text"
+						value="{{name}}"/>
 				</div>
-				<div id='editform_categories'>
-					{{#if editingCategories}}
-						<div id="edit_categories">
-							<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
-								{{#each availableCategories}}
-									<div class="checkbox">
+				<div class="form-group">
+					<label>{{mf 'course.edit.description' 'Description'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-info-sign"></span>
+						</span>
+						<div class="form-control editable-textarea"
+							id="editform_description"
+							data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
+							{{{description}}}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="form-group-element">
+						{{#if editingCategories}}
+							<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
+							{{#each availableCategories}}
+								<div class="checkbox">
+									<label class="{{isChecked}}">
+										<input class='js-category-checkbox cat_{{this}}'
+											name='{{this}}'
+											type='checkbox'
+											value="1"
+											{{checkCategory}}/>
+										{{> categoryLabel}}
+										<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+									</label>
+								</div>
+								{{#each availableSubcategories this}}
+									<div class="checkbox checkbox-sub">
 										<label class="{{isChecked}}">
 											<input class='js-category-checkbox cat_{{this}}'
 												name='{{this}}'
@@ -37,47 +58,49 @@
 												value="1"
 												{{checkCategory}}/>
 											{{> categoryLabel}}
-											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
 										</label>
 									</div>
-									{{#each availableSubcategories this}}
-										<div class="checkbox checkbox-sub">
-											<label class="{{isChecked}}">
-												<input class='js-category-checkbox cat_{{this}}'
-													name='{{this}}'
-													type='checkbox'
-													value="1"
-													{{checkCategory}}/>
-												{{> categoryLabel}}
-											</label>
-										</div>
-									{{/each}}
 								{{/each}}
-						</div>
-					{{else}}
-						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
-						{{#if categories}}
-							{{>courseCategories}}
+							{{/each}}
+						{{else}}
+							<label>{{mf 'course.edit.categories' 'Categories'}}</label>
+							{{#if categories}}
+								{{>courseCategories}}
+							{{/if}}
+							{{#unless categories}}
+								{{mf 'course.edit.no.categories' 'No categories'}}
+							{{/unless}}
+							<button type="button" class="btn btn-edit editCategories">
+								<span class="glyphicon glyphicon-edit"></span>
+								{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
+							</button>
 						{{/if}}
-						{{#unless categories}}
-							{{mf 'course.edit.no.categories' 'No categories'}}
-						{{/unless}}
-						<button class="btn btn-edit editCategories" type="button" role="button">
-							<span class="glyphicon glyphicon-edit"></span>
-							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
-						</button>
-					{{/if}}
+					</div>
+					<div class="form-group-element">
+						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+						{{#each available_roles}}
+							{{> courseEditRole selected=../roles role=this members=../members}}
+						{{/each}}
+					</div>
+					{{#unless _id}}
+						<div class="form-group-element">
+							<label>{{mf 'course.edit.region' 'Region'}}</label>
+							<select class="region_select form-control" name='region'>
+								<option value='' disabled selected class="select_placeholder">
+									{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+								</option>
+								{{#each regions}}
+									<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
+										{{name}}
+									</option>
+								{{/each}}
+							</select>
+						</div>
+					{{/unless}}
 				</div>
 
-				<div class="course_edit_roles">
-					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
-					{{#each available_roles}}
-						{{> courseEditRole selected=../roles role=this members=../members}}
-					{{/each}}
-				</div>
-
-				<div class="course_edit_internal">
-					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
+				<div class="form-group">
+					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
 					<div class="checkbox">
 						<label>
 							<input class="-courseInternal"
@@ -88,29 +111,13 @@
 					</div>
 				</div>
 
-				<div class="course_edit_region">
-					{{#unless _id}}
-						<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-						<select class="region_select form-control" name='region'>
-							<option value='' disabled selected class="select_placeholder">
-								{{mf 'course.edit.pls_select_region' 'Please select a region'}}
-							</option>
-							{{#each regions}}
-								<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
-									{{name}}
-								</option>
-							{{/each}}
-						</select>
-					{{/unless}}
-				</div>
-				<div class="course_edit_finishbtns">
-					<button type="button" class="btn btn-save js-course-edit-save">
-						<span class="glyphicon glyphicon-save"></span>
-						{{mf 'course.edit.save_btn' 'Save'}}
-					</button>
+				<div class="form-actions">
 					<button type="button" class="btn btn-cancel js-course-edit-cancel">
-						<span class="glyphicon glyphicon-remove"></span>
 						{{mf '_button.cancel'}}
+					</button>
+					<button type="button" class="btn btn-save js-course-edit-save">
+						<i class="fa fa-download fa-fw" aria-hidden="true"></i>
+						{{mf 'course.edit.save_btn' 'Save'}}
 					</button>
 				</div>
 			</div>

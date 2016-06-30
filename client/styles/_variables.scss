@@ -8,10 +8,10 @@ $orange: #f98f39;
 $yellow: #f3f981;
 
 $default-black: #333;
-$default-shadow: rgba(88, 106, 102, .4);
 $default-white: #fff;
 $default-gray: #868383;
 $default-light-grey: #ccc;
+$default-shadow: rgba(88, 106, 102, .4);
 $brand-primary-hover: darken($brand-primary, 10%);
 
 // == Navbar
@@ -20,7 +20,7 @@ $navbar-link-covering-bg: lighten($navbar-default-bg, 10%);
 $navbar-default-font-size: large;
 
 // == Login
-$login-bg: $openki-light-blue;
+$login-bg: $openki-blue-lighter;
 
 // ==Footer
 $footer-default-bg: $navbar-default-bg;
@@ -85,9 +85,9 @@ $external-servies: (
 );
 
 // Calendar colors
-$calendar-header-bg: $openki-light-blue;
+$calendar-header-bg: $openki-blue-lighter;
 $calendar-header-text: $default-black;
-$calendar-navigation-bg: $openki-light-blue;
+$calendar-navigation-bg: $openki-blue-lighter;
 $calendar-btn-bg: $brand-primary;
 $calendar-btn-text: $default-white;
 $calendar-btn-border: darken($calendar-btn-bg, 3%);
@@ -97,8 +97,8 @@ $calendar-btn-hover-border: darken($calendar-btn-border, 5%);
 $map-lefalet-hover-fill: #ff1;
 
 // Discussion colors
-$discussion-conversation-bg: $openki-light-blue;
-$discussion-post-bg: $openki-light-blue;
+$discussion-conversation-bg: $openki-blue-lighter;
+$discussion-post-bg: $openki-blue-lighter;
 $discussion-post-header-bg: darken($discussion-post-bg, 5%);
 $discussion-post-border: darken($discussion-post-bg, 10%);
 $discussion-edit-bg: lighten($default-light-grey, 10%);
@@ -110,7 +110,9 @@ $checkmark-color: darken($brand-success, 20%);
 $remove-btn-color: lighten($gray-light, 15%);
 $remove-btn-hover-color: $brand-danger;
 
-$event-bg: $openki-light-blue;
+$course-border-width: 7px;
+
+$event-bg: $openki-blue-lighter;
 $event-header-bg: $brand-success;
 $event-header-color: $default-black;
 $event-title-color: $default-black;
@@ -125,6 +127,31 @@ $event-small-description-color: $event-description-color;
 $translate-trans: $checkmark-color;
 $translate-fuzzy: $openki-yellow;
 $translate-untrans: darken($brand-danger, 15%);
+
+// Box Shadows
+
+
+$shadow-lg-offset-x: 2px;
+$shadow-lg-offset-y: 5px;
+$shadow-lg-blur: 8px;
+
+$shadow-sm-offset-x: 1px;
+$shadow-sm-offset-y: 2px;
+$shadow-sm-blur: 4px;
+
+$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
+
+$btn-hover-level-start: 3%;
+$btn-level-end: 6%;
+$btn-hover-level-end: 9%;
+
+$btn-background-colors: (
+	default: $btn-default-bg,
+	primary: $btn-primary-bg,
+	success: $btn-success-bg,
+	warning: $btn-warning-bg-custom,
+	danger: $btn-danger-bg
+);
 
 //== Screen breakpoints
 //

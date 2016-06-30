@@ -150,7 +150,7 @@ Template.post.events({
 
 		Meteor.call(method, comment, function(err, commentId) {
 			if (err) {
-				addMessage(mf('comment.saving.error', { ERROR: err }, 'Posting your comment went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+				showServerError('Posting your comment went wrong', err);
 			} else {
 				instance.editing.set(false);
 			}
@@ -169,7 +169,7 @@ Template.post.events({
 		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ))) {
 			Meteor.call('deleteComment', this._id, function(err) {
 				if (err) {
-					addMessage(mf('comment.delete.error', { ERROR: err }, 'Could not delete comment. Reason: {ERROR}'), 'danger');
+					showServerError('Could not delete comment', err);
 				} else {
 					addMessage(mf('comment.delete.success', {}, 'Commend deleted successfuly.'), 'success');
 				}

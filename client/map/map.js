@@ -125,11 +125,18 @@ Template.map.onRendered(function() {
 	instance.autorun(function() {
 		var fullscreen = instance.fullscreen.get();
 		var mini = instance.data.mini;
+
 		var show = function(control, show) {
-			if (show) {
-				map.addControl(control);
-			} else {
-				map.removeControl(control);
+			if (control.shown === undefined) control.shown = false;
+			var show = !!show;
+
+			if (control.shown !== show) {
+				control.shown = show;
+				if (show) {
+					map.addControl(control);
+				} else {
+					map.removeControl(control);
+				}
 			}
 		};
 
@@ -169,12 +176,6 @@ Template.map.onRendered(function() {
 
 		var maxZoom = 16;
 
-		// To give some perspective, we extend the bounds to include the region center when there are few markers
-		if (count < 2) {
-			for (var centerPos in centers) { bounds.extend(centers[centerPos]); }
-			count += 1;
-			if (count == 1) maxZoom = 13;
-		}
 		if (bounds.isValid()) {
 			map.fitBounds(bounds, { padding: [20, 20], maxZoom: maxZoom });
 		}
@@ -294,9 +295,9 @@ Template.map.onRendered(function() {
 Template.map.helpers({
 	mapContainerClass: function() {
 		if (Template.instance().fullscreen.get()) {
-			return "mapContainer fullscreen";
+			return "map-fullscreen";
 		} else {
-			return "mapContainer box";
+			return "map-box";
 		}
 	},
 

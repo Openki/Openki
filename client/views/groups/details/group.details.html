@@ -1,0 +1,73 @@
+<template name="groupDetails">
+	<div class="container">
+		{{#if isNew}}
+			<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
+		{{/if}}
+		<div class="details-page-component group-details">
+			<div class="details-header group-details-header">
+				<div class="group-details-logo">
+					{{#if groupLogo group._id}}
+						<img src="{{groupLogo group._id}}" width='50' style="vertical-align:bottom">&nbsp;&nbsp;
+					{{/if}}
+				</div>
+				<div class="group-details-name">
+					{{#if editableName}}
+						{{>editable editableName}}
+					{{else}}
+						{{group.name}}
+					{{/if}}
+				</div>
+				{{#if mayEdit}}
+					<button type="button" class="close js-group-settings">
+						<i class="fa fa-cog" aria-hidden="true"
+							data-tooltip="{{mf 'group.settings.title' 'Group settings'}}">
+						</i>
+					</button>
+				{{/if}}
+				<div class="group-details-short">
+					{{#if editableShort}}
+						{{> editable editableShort}}
+					{{else}}
+						{{group.short}}
+					{{/if}}
+				</div>
+			</div>
+			<div class="details-body group-details-body">
+				<div class="details-content">
+					{{#if editableClaim}}
+						<div class="group-details-claim">
+							{{> editable editableClaim}}
+						</div>
+					{{else}}
+						<h4>{{group.claim}}</h4>
+					{{/if}}
+						{{#if editableDescription}}
+							<div class="group-details-description">
+								{{> editable editableDescription}}
+							</div>
+						{{else}}
+							<p>{{{group.description}}}</p>
+						{{/if}}
+				</div>
+			</div>
+			{{#if isNew}}
+				<div class="actions">
+					<button type="button" class="btn btn-cancel js-group-cancel">
+						<span class="glyphicon glyphicon-remove"></span>
+						{{mf '_button.cancel'}}
+					</button>
+					<button type="button" class="btn btn-save js-group-save">
+						<span class="glyphicon glyphicon-save"></span>
+						{{mf '_button.save'}}
+					</button>
+				</div>
+			{{/if}}
+			{{#if editingSettings}}
+				{{> groupSettings}}
+			{{/if}}
+		</div>
+		{{#if showCourses}}
+			{{> find courseQuery}}
+		{{/if}}
+	</div>
+</template>

@@ -29,6 +29,10 @@ Accounts.onCreateUser(function(options, user) {
 	if (user.services && user.services.facebook && user.services.facebook.email){
 		user.emails = [{'address': user.services.facebook.email, "verified": true}];
 	}
+
+	user.groups = [];
+	user.badges = [user._id];
+
 	return user;
 });
 

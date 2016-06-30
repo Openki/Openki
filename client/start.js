@@ -12,10 +12,6 @@ Meteor.subscribe('version');
 Router.onBeforeAction(function() {
 	Tooltips.hide();
 
-	var currentPath = Router.current().route.path(this);
-	$('.navbar-link[href!="' + currentPath + '"]').removeClass('navbar-link-active');
-	$('.navbar-link[href="' + currentPath + '"]').addClass('navbar-link-active');
-
 	Session.set('verify', false);
 
 	this.next();
@@ -130,7 +126,7 @@ Accounts.onLogin(function() {
 Accounts.onEmailVerificationLink(function(token, done) {
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			addMessage(mf("email.verificationFailed", "Address could not be verified"), 'danger');
+			showServerError('Address could not be verified', error);
 		} else {
 			addMessage(mf("email.verified", "Email verified."), 'success');
 		}

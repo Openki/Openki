@@ -1,0 +1,25 @@
+.nav-tabs > li {
+	z-index: 99;
+}
+
+.nav-tabs > li > a {
+	color: $default-black;
+
+	&:hover {
+		background-color: $openki-blue-light;
+		border-bottom-width: 2px;
+		color: $default-white;
+	}
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+	background-color: lighten($openki-blue-lighter, 5%);
+	border-top: 3px solid $openki-blue-light;
+}
+
+.tab-content {
+	background-color: lighten($openki-blue-lighter, 5%);
+	padding: 15px;
+}

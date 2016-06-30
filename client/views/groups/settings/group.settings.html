@@ -1,0 +1,119 @@
+<template name="groupSettings">
+	<form>
+		{{#with group}}
+			<div class="details-form group-settings">
+				<div class="details-form-element settings">
+					<h3>
+						<span class="fa fa-cog"></span>
+						{{mf 'group.settings.title' 'Settings'}}
+					</h3>
+					<div class="form-group">
+						<label>{{mf 'group.settings.field.infos' 'Internal informations'}}</label>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+							</div>
+							<input class= "setInfos form-control"
+								id="setInfos"
+								placeholder="{{mf 'group.settings.infos.placeholder' 'Add some notes for your group-members'}}"
+								size="60"
+								type="text"
+								value="{{infos}}"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-rebel fa-fw" aria-hidden="true"></i>
+							</span>
+							<input class="-logoUrl form-control"
+								id="setLogo"
+								placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
+								value="{{logoUrl}}"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>
+							{{mf 'group.settings.field.backgroundImg' 'Background Image'}}
+							<small>&#40;{{mf '_notYetWorking' 'not working yet'}}&#41;</small>
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-picture-o fa-fw" aria-hidden="true"></i>
+							</span>
+							<input class="-backgroundUrl form-control"
+								id="setBackgroundImage"
+								placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
+								value="{{backgroundUrl}}"/>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="button" class="btn btn-cancel js-group-edit-cancel">
+							<span class="glyphicon glyphicon-remove"></span>
+							{{mf '_button.cancel'}}
+						</button>
+						<button type="button" class="btn btn-save js-group-edit-save">
+							<span class="glyphicon glyphicon-save"></span>
+							{{mf 'group.edit.save_btn' 'Save'}}
+						</button>
+					</div>
+				</div>
+
+				<div class="details-form-element">
+					<h3>
+						<span class="glyphicon glyphicon-user"></span>
+						{{mf 'group.settings.title.Members' 'Members'}}
+					</h3>
+					<ul class="group-members">
+						{{#each members}}
+							<li>
+								<span class="glyphicon glyphicon-user"></span>
+								{{username this}}
+								<button type="button" class="js-member-remove-btn btn">
+									<span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' "remove member"}}"></span>
+								</button>
+							</li>
+						{{/each}}
+					</ul>
+					<div class="form-group">
+						<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-user"></span>
+							</span>
+							<input class="-userSearch form-control"
+								id="AddGroupMember"
+								placeholder= "{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+								size="40"
+								type="text"/>
+						</div>
+					</div>
+					<ul class="group-members">
+						{{#each foundUsers}}
+							<li>
+								<span class="glyphicon glyphicon-user"></span>
+								{{username this._id}}
+								<button type="button" class="btn js-member-add-btn">
+									<span class="glyphicon glyphicon-plus" title="{{mf 'group.settings.addMember' "add as member"}}"></span>
+								</button>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+			<div class="details-addition">
+				<h3>
+					<span class="glyphicon glyphicon-link"></span>
+					{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
+				</h3>
+				<ul class="group-links">
+					<li>Infoscreen-Link: <a href="{{kioskEventURL}}">{{kioskEventURL}}</a></li>
+					<li>Timetable-Link: <a href="{{kioskTimetableURL}}">{{kioskTimetableURL}}</a></li>
+					<li>iframe-Eventboxes-Link: <a href="{{frameEventsURL}}">{{frameEventsURL}}</a></li>
+					<li>iframe-Calendar-Link: <a href="{{frameCalendarURL}}">{{frameCalendarURL}}</a></li>
+				</ul>
+			</div>
+		{{/with}}
+	</form>
+</template>

@@ -7,28 +7,26 @@
 
 @mixin btn-lg {
 	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
-	@media (max-width: $screen-xs) {
-		@include btn-base;
-	}
+	border-radius: 0px !important;
 }
 
 @mixin btn-sm {
-  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
-	@media (max-width: $screen-xs) {
-		@include btn-base;
+	@media (min-width: $screen-xs) {
+		@include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
 	}
 }
 
 @mixin header-btn {
-  background: none;
-  border: 0;
+	background: none;
+	border: 0;
 }
 
 @mixin icon-btn-remove {
-  @include transition(color $default-transition-time);
-  color: lighten($brand-danger, 20%);
-  cursor: pointer;
-  &:hover {
-    color: $brand-danger;
-  }
+	color: lighten($brand-danger, 20%);
+	cursor: pointer;
+	transition: color $default-transition-time;
+
+	&:hover {
+		color: $brand-danger;
+	}
 }

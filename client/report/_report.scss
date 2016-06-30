@@ -1,6 +1,5 @@
-.js-report {
-  margin-top: 15px;
-  @media (max-width: $screen-xs) {
-    margin-bottom: 15px;
-  }
+.report {
+	background: $btn-warning-bg-custom;
+	border: 1px solid $btn-warning-border;
+	padding: $form-group-margin-bottom $form-group-margin-bottom 0;
 }

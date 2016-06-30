@@ -26,7 +26,7 @@ Router.map(function () {
 					function(newName) {
 						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+								showServerError('Saving the course went wrong', err);
 							} else {
 								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
 							}
@@ -40,7 +40,7 @@ Router.map(function () {
 					function(newDescription) {
 						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 							if (err) {
-								addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+								showServerError('Saving the course went wrong', err);
 							} else {
 								addMessage(mf('course.saving.desc.editable.success', { NAME: course.name }), 'success');
 							}
@@ -121,18 +121,11 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('screenSize') <= 768; // @screen-sm
+		return Session.get('screenSize') <= 992; // @screen-md
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
 	}
-});
-
-Template.courseDetailsSubmenu.helpers({
-	hasFiles: function() {
-		var withFiles = { courseId: this.course._id, files: {$exists: 1, $not: {$size: 0}} };
-		return !!Events.findOne(withFiles);
-	},
 });
 
 Template.courseDetailsPage.events({
@@ -142,7 +135,7 @@ Template.courseDetailsPage.events({
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
 			Meteor.call('remove_course', this._id, function(error) {
 				if (error) {
-					addMessage(mf('course.detail.remove.error', { ERROR: error, NAME: self.name }, 'Sorry but removing the proposal "{NAME}" went wrong. We encountered the following error: {ERROR}'), 'danger');
+					showServerError("Removing the proposal '"+ self.name + "' went wrong", error);
 				} else {
 					addMessage(mf('course.detail.remove.success', { NAME: self.name }, 'The proposal "{NAME}" was obliterated!'), 'success');
 				}
@@ -199,10 +192,10 @@ Template.courseGroupAdd.helpers({
 
 
 Template.courseGroupAdd.events({
-	'click .js-add': function(event, instance) {
+	'click .js-add-group': function(event, instance) {
 		Meteor.call('course.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.addFailed', "Failed to add group"), 'danger');
+				showServerError("Failed to add group", error);
 			} else {
 				addMessage(mf('course.group.addedGroup', "Added your group to the list of promoters"), 'success');
 				instance.collapse();
@@ -218,7 +211,7 @@ Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeFailed', "Failed to remove group"), 'danger');
+				showServerError("Failed to remove group", error);
 			} else {
 				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
 				instance.collapse();
@@ -234,7 +227,7 @@ Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.makeOrganizerFailed', "Failed to give group editing rights"), 'danger');
+				showServerError("Failed to give group editing rights", error);
 			} else {
 				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit this"), 'success');
 				instance.collapse();
@@ -250,7 +243,7 @@ Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
 		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeOrganizerFailed', "Failed to remove organizer status"), 'danger');
+				showServerError("Failed to remove organizer status", error);
 			} else {
 				addMessage(mf('course.group.removedOrganizer', "Removed editing rights"), 'success');
 				instance.collapse();
