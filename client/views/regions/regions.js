@@ -124,10 +124,20 @@ Template.region_sel.events({
 	'keyup .js-regions-search': _.debounce(updateRegionSearch, 100),
 
 	'focus .js-regions-search': function(event, instance) {
+		var isMobile = Session.get('screenSize') <= 768; // @screen-sm
+		if (!isMobile) {
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
+		}
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
 	'blur .js-regions-search': function(event, instance) {
+		var isMobile = Session.get('screenSize') <= 768; // @screen-sm
+		if (!isMobile) {
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
+		}
 		instance.$('.dropdown-toggle').dropdown('toggle');
 		instance.parentInstance().searchingRegions.set(false);
 	}

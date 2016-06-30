@@ -37,7 +37,7 @@
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li>
+					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
 						<a href="{{pathFor 'home'}}"
 							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
 							 id="nav_courses">
@@ -47,7 +47,7 @@
 							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li>
+					<li class="{{activeClass 'proposeCourse'}}">
 						<a href="{{pathFor 'proposeCourse'}}"
 							 class="{{activeClass 'proposeCourse'}} navbar-link js-nav-dropdown-close">
 							 <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -56,9 +56,9 @@
 							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li>
+					<li class="{{activeClass 'calendar'}}">
 						<a href="{{pathFor 'calendar'}}"
-							 class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
+							 class="navbar-link calendar-link js-nav-dropdown-close">
 							 <i class="fa fa-calendar" aria-hidden="true"></i>
 							 &nbsp;
 							 {{mf 'menue.Calendar' 'Calendar'}}
