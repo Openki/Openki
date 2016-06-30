@@ -28,11 +28,11 @@ Template.region_sel.onCreated(function() {
 });
 
 Template.region_sel.rendered = function(){
-	Template.instance().$('.-searchRegions').select();
+	Template.instance().$('.js-regions-search').select();
 };
 
 var updateRegionSearch = function(event, instance) {
-	var search = instance.$('.-searchRegions').val();
+	var search = instance.$('.js-regions-search').val();
 	search = String(search).trim();
 	instance.regionSearch.set(search);
 };
@@ -121,9 +121,14 @@ Template.region_sel.events({
 			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 1);
 	},
 
-	'keyup .-searchRegions': _.debounce(updateRegionSearch, 100),
+	'keyup .js-regions-search': _.debounce(updateRegionSearch, 100),
 
-	'focus .-searchRegions': function(event, instance) {
+	'focus .js-regions-search': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
+	},
+
+	'blur .js-regions-search': function(event, instance) {
+		instance.$('.dropdown-toggle').dropdown('toggle');
+		instance.parentInstance().searchingRegions.set(false);
 	}
 });

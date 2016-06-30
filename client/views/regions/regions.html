@@ -11,13 +11,10 @@
 <template name="region_sel">
 	<a class="navbar-link">
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
-		<input class="-searchRegions"
-					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
-					 type="text"
-		/>
+		<input type="text" class="js-regions-search"
+					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
 	</a>
-	<span
-		class="dropdown-toggle"
+	<span class="dropdown-toggle"
 		data-toggle="dropdown"
 		role="button"
 		aria-expanded="false">
@@ -32,11 +29,11 @@
 				<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
 					{{mf 'menue.All regions' 'All regions'}}
 				</span>
-				<span class="coursesCount"
+				<span class="badge badge-courses"
 						title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 					{{allCourses}}
 				</span>
-				<span class="eventsCount"
+				<span class="badge badge-events"
 						title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 					{{allUpcomingEvents}}
 				</span>
@@ -51,11 +48,11 @@
 					<span class="regionName {{#if currentRegion}}currentRegion{{/if}}">
 						{{regionNameMarked}}
 					</span>
-					<span class="coursesCount"
+					<span class="badge badge-courses"
 							title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 						{{courseCount}}
 					</span>
-					<span class="eventsCount"
+					<span class="badge badge-events"
 							title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 						{{futureEventCount}}
 					</span>
@@ -69,7 +66,7 @@
 </template>
 
 <template name="regionsDisplay">
-	<a class="-regionsDisplay">
+	<a class="navbar-link -regionsDisplay">
 		<span class="fa fa-dot-circle-o"></span>&nbsp;
 		{{#if region}}
 			{{region.name}}
