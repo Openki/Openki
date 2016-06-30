@@ -116,7 +116,7 @@ Meteor.startup(function() {
 
 Meteor.startup(Assistant.init);
 
-Meteor.startup(getWindowSize);
+Meteor.startup(getViewportWidth);
 
 Accounts.onLogin(function() {
 	var locale = Meteor.user().profile.locale;

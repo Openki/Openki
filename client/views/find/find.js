@@ -309,6 +309,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Session.get('screenSize') <= 480; // @screen-xs
+		return Session.get('viewportWidth') <= 480; // @screen-xs
 	}
 });
