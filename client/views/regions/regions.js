@@ -124,8 +124,9 @@ Template.region_sel.events({
 	'keyup .js-regions-search': _.debounce(updateRegionSearch, 100),
 
 	'focus .js-regions-search': function(event, instance) {
-		var isMobile = Session.get('screenSize') <= 768; // @screen-sm
-		if (!isMobile) {
+		var screenSize = Session.get('screenSize');
+		var screenMd = screenSize >= 768 && screenSize <= 992;
+		if (screenMd) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
@@ -133,8 +134,9 @@ Template.region_sel.events({
 	},
 
 	'blur .js-regions-search': function(event, instance) {
-		var isMobile = Session.get('screenSize') <= 768; // @screen-sm
-		if (!isMobile) {
+		var screenSize = Session.get('screenSize');
+		var screenMd = screenSize >= 768 && screenSize <= 992;
+		if (screenMd) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
