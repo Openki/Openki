@@ -123,7 +123,7 @@ var updateCategorySearch = function(event, instance) {
 };
 
 var filterPreview = function(switchOn, match) {
-	var noMatch = $('.course').not(match);
+	var noMatch = $('.course-compact').not(match);
 	if (switchOn) {
 		noMatch.addClass('filter-no-match');
 	} else {

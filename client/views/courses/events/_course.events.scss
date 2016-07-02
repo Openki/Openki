@@ -13,7 +13,7 @@
 		position: relative;
 		width: calc(#{'100% + 6px'});
 
-		.event-small-withDate-container {
+		.event-compact-withDate-container {
 			@include make-md-column(6);
 			padding: 0 3px 10px;
 		}

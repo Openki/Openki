@@ -1,31 +1,4 @@
-Router.map(function () {
-	this.route('courses', {
-		path: 'courses',
-		template: 'coursepage',
-		waitOn: function() {
-			var region = Session.get('region');
-			return [
-				Meteor.subscribe('coursesFind', { region: region }, 40),
-				Meteor.subscribe('coursesFind', { region: region, missingTeam: true }, 5),
-				Meteor.subscribe('coursesFind', { region: region, missingParticipants: true }, 5),
-			];
-		},
-		data: function () {
-			var region = Session.get('region');
-			return {
-				all_courses:         coursesFind({ region: region }, 36),
-				missing_organizer: coursesFind({ region: region, missingTeam: true }, 5),
-				missing_subscribers: coursesFind({ region: region, missingParticipants: true }, 5)
-			};
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Courselist';
-		},
-	});
-});
-
-
-Template.course.helpers({
+Template.courseCompact.helpers({
 	ready: function() {
 		var instance = Template.instance;
 		return !instance.eventSub || instance.eventSub.ready();
@@ -64,13 +37,13 @@ Template.course.helpers({
 	}
 });
 
-Template.courseEventlist.helpers({
+Template.courseCompactEvents.helpers({
 	additionalEvents: function(){
 		return Math.max(this.futureEvents -1, 0);
 	},
 });
 
-Template.courseRolesStatus.helpers({
+Template.courseCompactRoles.helpers({
 	requiresMentor: function() {
 		if (!this.roles) return false;
 		return this.roles.indexOf('mentor') != -1;
@@ -112,23 +85,23 @@ Template.courseRolesStatus.helpers({
 });
 
 
-Template.course.events({
+Template.courseCompact.events({
 	"mouseover .js-category-label": function(event, template){
-		 template.$('.course').addClass('elevate_child');
+		 template.$('.course-compact').addClass('elevate_child');
 	},
 	"mouseout .js-category-label": function(event, template){
-		 template.$('.course').removeClass('elevate_child');
+		 template.$('.course-compact').removeClass('elevate_child');
 	},
 	"mouseover .js-group-label": function(event, template){
-		 template.$('.course').addClass('elevate_child');
+		 template.$('.course-compact').addClass('elevate_child');
 	},
 	"mouseout .js-group-label": function(event, template){
-		 template.$('.course').removeClass('elevate_child');
+		 template.$('.course-compact').removeClass('elevate_child');
 	}
 });
 
-Template.course.rendered = function() {
-	this.$('.course-name').dotdotdot({
+Template.courseCompact.rendered = function() {
+	this.$('.course-compact-name').dotdotdot({
 		height: 60,
 	});
 };

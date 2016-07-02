@@ -9,12 +9,12 @@
 	}
 }
 
-.course-container {
+.course-compact-wrap {
 	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
-.container .course-container {
+.container .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
 		@include make-xs-column(6);
 		@include make-md-column(4);
@@ -23,14 +23,14 @@
 	}
 }
 
-.container-sm .course-container {
+.container-sm .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
 		@include make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
-.course {
+.course-compact {
 	border: $course-border-width dashed $openki-blue-lighter;
 	height: 150px;
 	position: relative;
@@ -51,16 +51,16 @@
 	}
 }
 
-.course.hasupcomingevents > .course-content {
+.course-compact.hasupcomingevents > .course-compact-content {
 	background: $openki-blue-lighter;
 }
 
-.course h4 {
+.course-compact h4 {
 	color: $default-black;
 	transition: color $default-transition-time;
 }
 
-.course:hover h4 {
+.course-compact:hover h4 {
 	color: $brand-primary;
 }
 
@@ -68,16 +68,16 @@
 	opacity: .33;
 }
 
-.course-name {
+.course-compact-name {
 	color: $default-black;
 	font-size: 22px;
 	line-height: 24px;
 	margin: 8px 0 0;
 }
 
-.course-roles-status-team,
-.course-roles-status-mentor,
-.course-roles-status-host {
+.course-compact-roles-team,
+.course-compact-roles-mentor,
+.course-compact-roles-host {
 	text-align: center;
 }
 
@@ -96,7 +96,7 @@
 	color: $user-text;
 }
 
-.course-content {
+.course-compact-content {
 	@include make-xs-column(9);
 	background: $body-bg;
 	padding: 0 0 0 15px;
@@ -107,19 +107,19 @@
 	}
 }
 
-.course-content > .course-categories {
+.course-compact-content > .course-categories {
 	margin-bottom: 0;
 	margin-left: -2px;
 }
 
-.course-content > .course-categories > li:nth-child(3),
-.course-content > .course-categories > li:nth-child(4),
-.course-content > .course-categories > li:nth-child(5),
-.course-content > .course-categories > li:nth-child(6) {
+.course-compact-content > .course-categories > li:nth-child(3),
+.course-compact-content > .course-categories > li:nth-child(4),
+.course-compact-content > .course-categories > li:nth-child(5),
+.course-compact-content > .course-categories > li:nth-child(6) {
 	display: none;
 }
 
-.course-roles-status {
+.course-compact-roles {
 	@include make-xs-column(3);
 	padding: 0;
 	position: relative;
@@ -127,7 +127,7 @@
 	top: -7px;
 }
 
-.course-roles-status > div {
+.course-compact-roles > div {
 	margin-top: 3px;
 
 	&:first-child {
@@ -135,7 +135,7 @@
 	}
 }
 
-.course-eventlist {
+.course-compact-events {
 	@include make-xs-column(4.5);
 	background: $brand-success;
 	color: $default-black;
@@ -147,33 +147,33 @@
 	top: -7px;
 }
 
-.course-eventlist-time,
-.course-eventlist-date {
+.course-compact-events-time,
+.course-compact-events-date {
 	@include make-xs-column(12);
 	padding: 0;
 }
 
-.course-eventlist-location {
+.course-compact-events-location {
 	padding: 0 4px;
 	word-break: break-all;
 }
 
-.course-eventlist-location span {
+.course-compact-events-location span {
 	display: inline;
 }
 
-.course-eventlist-location .glyphicon-home {
+.course-compact-events-location .glyphicon-home {
 	padding-right: 3px;
 }
 
-.course > .groups-list {
+.course-compact > .groups-list {
 	bottom: $course-border-width;
 	margin: 0;
 	position: absolute;
 	right: $course-border-width;
 }
 
-.course > .groups-list > li {
+.course-compact > .groups-list > li {
 	float: right;
 	margin-left: 4px;
 }

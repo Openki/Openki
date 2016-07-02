@@ -181,7 +181,7 @@
 				{{> loadingPage}}
 			{{else}}
 				{{#each results}}
-					{{> course}}
+					{{> courseCompact}}
 				{{else}}
 					<div class="no-courses-found">
 						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
@@ -229,7 +229,7 @@
 					{{/mf}}
 				{{/if}}
 				</h3><br />
-				{{> eventSmallList eventsList=eventResults withDate=true}}
+				{{> eventList dataEvents=eventResults withDate=true}}
 			</div>
 		</div>
 	{{/if}}

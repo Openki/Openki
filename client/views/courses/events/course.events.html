@@ -26,7 +26,7 @@
 							{{/if}}
 						</div>
 						<div class="course_events_events">
-							{{> eventSmallList eventsList=pastEvents withDate=true}}
+							{{> eventList dataEvents=pastEvents withDate=true}}
 						</div>
 					</div>
 				{{/if}}
@@ -42,7 +42,7 @@
 						{{/if}}
 					</div>
 					<div class="course_events_events">
-						{{> eventSmallList eventsList=ongoingEvents withDate=true}}
+						{{> eventList dataEvents=ongoingEvents withDate=true}}
 					</div>
 				{{/if}}
 				{{#if haveFutureEvents}}
@@ -59,7 +59,7 @@
 						{{/if}}
 					</div>
 					<div class="course_events_events">
-						{{> eventSmallList eventsList=futureEvents withDate=true}}
+						{{> eventList dataEvents=futureEvents withDate=true}}
 					</div>
 				{{/if}}
 			</div>
