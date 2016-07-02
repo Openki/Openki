@@ -35,7 +35,7 @@
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" id="privacy" {{privacyChecked}}/>
-										<i class="fa fa-user-secret fa-fw" aria-hidden="true"></i>
+										<span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
 										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
 										<span class="help-block">
 											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}
@@ -46,9 +46,11 @@
 						</div>
 						<div class="form-actions">
 							<button type="button" class="btn btn-cancel js-profile-info-cancel-btn">
+								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 								{{mf '_button.cancel'}}
 							</button>
 							<button type="submit" class="btn btn-save profile-info-save-btn">
+								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 								{{mf 'profile.input.save' "Save"}}
 							</button>
 						</div>
@@ -80,7 +82,7 @@
 						<div class="details-info-group">
 							<div class="details-info-btn">
 								<button type="button" class="btn btn-success js-verify-mail-btn">
-									<i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i>
+									<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
 									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
 								</button>
 							</div>
@@ -92,7 +94,7 @@
 							</div>
 							<div class="details-info-data">
 								{{#if user.privacy}}
-									<i class="fa fa-user-secret" aria-hidden="true"></i>
+									<span class="fa fa-user-secret" aria-hidden="true"></span>
 									{{mf 'profile.privacyOn' 'on'}}
 								{{else}}
 									{{mf 'profile.privacyOff' 'off'}}
@@ -130,9 +132,11 @@
 						</div>
 						<div class="form-actions">
 							<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
+								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 								{{mf '_button.cancel'}}
 							</button>
 							<button type="submit" class="btn btn-save">
+								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
 						</div>
@@ -143,18 +147,18 @@
 					{{#unless verifyDelete}}
 						<button type="button" class="btn btn-delete js-profile-delete-btn"
 							data-tooltip="{{mf 'profile.delete' 'Delete my account'}}">
-							<i class="glyphicon glyphicon-trash fa-fw" aria-hidden="true"></i>
+							<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
 							{{mf '_button.delete'}}
 						</button>
 					{{/unless}}
 					<button type="button" class="btn btn-edit js-profile-info-edit-btn"
 						data-tooltip="{{mf 'profile.edit' 'Edit profile info'}}">
-						<i class="glyphicon glyphicon-edit fa-fw" aria-hidden="true"></i>
+						<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 						{{mf '_button.edit'}}
 					</button>
 					{{#unless changingPass}}
 						<button type="button" class="btn btn-default js-change-pwd-btn">
-							<i class="fa fa-lock fa-fw" aria-hidden="true"></i>
+							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.changePass' 'Change my password'}}
 						</button>
 					{{/unless}}
@@ -165,9 +169,11 @@
 					<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 					<div class="form-actions">
 						<button type="button" class="btn btn-default js-profile-delete-cancel-btn">
+							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 							{{mf '_button.cancel'}}
 						</button>
 						<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
+							<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
 						</button>
 					</div>
@@ -176,7 +182,7 @@
 		</div>
 		<div class="details-page-component">
 			<a class="btn btn-success translate-link" href="/translate">
-				<i class="fa fa-language" aria-hidden="true"></i>
+				<span class="fa fa-language fa-fw" aria-hidden="true"></span>
 				{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 			</a>
 		</div>
@@ -202,16 +208,12 @@
 			</ul>
 			<a class="btn btn-add"
 				href="{{pathFor 'groupDetails' _id='create'}}">
-				<span class="fa fa-plus"></span>&nbsp;
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 			</a>
 		</div>
 		<div class="details-page-component">
-			<div class="course-list">
-				{{#each courses}}
-					{{> course}}
-				{{/each}}
-			</div>
+			{{> courseList courses}}
 		</div>
 	</div>
 </template>

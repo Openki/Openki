@@ -7,19 +7,19 @@
 				</h3>
 				<div class="form-group">
 					<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-						<span class="glyphicon glyphicon-share-alt"></span>
+						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 						{{mf 'login.frame.profile' 'Visit my profile'}}
 					</a>
 				</div>
 				<div class="form-group">
 					<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
-						<span class="glyphicon glyphicon-cog"></span>
+						<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 						{{mf 'login.frame.settings' 'Account settings'}}
 					</a>
 				</div>
 				<div class="form-group">
 					<button type="button" class="btn btn-default js-logout-btn form-control">
-						<span class="glyphicon glyphicon-log-out"></span>
+						<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
 						{{mf 'login.logout' 'Logout'}}
 					</button>
 				</div>
@@ -40,7 +40,7 @@
 			<div class="form-group {{#if userNotFound}}has-error{{/if}}{{#if userAlreadyExists}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}">
 				<div class="input-group">
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-user"></span>
+						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="js-login-name form-control"
 						id="login-name"
@@ -62,7 +62,7 @@
 			<div class="form-group {{#if incorrectPassword}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}{{#if noPasswordProvided}}has-error{{/if}}">
 				<div class="input-group">
 					<span class="input-group-addon">
-						<span class="fa fa-lock"></span>
+						<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="js-login-password form-control"
 						id="login-password"
@@ -87,7 +87,7 @@
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon">
-							<span class="fa fa-envelope"></span>
+							<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 						</span>
 						<input class="js-login-email form-control"
 							type="email"
@@ -98,13 +98,13 @@
 				</div>
 				<div class="form-group">
 					<button type="submit" class='btn btn-add js-register-btn form-control'>
-						<span class="glyphicon glyphicon-plus"></span>&nbsp;
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'login.register.submit' 'Create account'}}
 					</button>
 				</div>
 				<div class="form-group">
 					<button type="submit" class='btn btn-default js-login-btn form-control'>
-						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 							{{mf 'login.login.back_to_login' 'Back to login'}}
 					</button>
 				</div>
@@ -116,7 +116,7 @@
 				</div>
 				<div class="form-group">
 					<button type="submit" class='btn btn-default js-login-btn form-control'>
-						<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 							{{mf 'login.login.submit' 'Login'}}
 					</button>
 				</div>

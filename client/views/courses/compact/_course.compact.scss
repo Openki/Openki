@@ -1,0 +1,168 @@
+.course-compact-wrap {
+	@include make-xs-column(12);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
+}
+
+.container .course-compact-wrap {
+	@media (min-width: $screen-xsm) {
+		@include make-xs-column(6);
+		@include make-md-column(4);
+		@include make-lg-column(3);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	}
+}
+
+.container-sm .course-compact-wrap {
+	@media (min-width: $screen-xsm) {
+		@include make-xs-column(6);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	}
+}
+
+.course-compact {
+	border: $course-border-width dashed $openki-blue-lighter;
+	height: 150px;
+	position: relative;
+	transition-duration: $default-transition-time;
+	transition-property: #{'box-shadow opacity'};
+
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+		color: $brand-primary;
+	}
+
+	&.haspastevents {
+		border-style: solid;
+	}
+
+	&.hasupcomingevents {
+		background: $openki-blue-lighter;
+	}
+}
+
+.course-compact.hasupcomingevents > .course-compact-content {
+	background: $openki-blue-lighter;
+}
+
+.course-compact h4 {
+	color: $default-black;
+	transition: color $default-transition-time;
+}
+
+.course-compact:hover h4 {
+	color: $brand-primary;
+}
+
+.filter-no-match {
+	opacity: .33;
+}
+
+.course-compact-name {
+	color: $default-black;
+	font-size: 22px;
+	line-height: 24px;
+	margin: 8px 0 0;
+}
+
+.course-compact-roles-team,
+.course-compact-roles-mentor,
+.course-compact-roles-host {
+	text-align: center;
+}
+
+.role-needed {
+	background-color: $role-needed-bg;
+	color: $role-needed-text;
+}
+
+.role-occupied {
+	background-color: $role-occupied-bg;
+	color: $role-occupied-text;
+}
+
+.role-occupied-by-user {
+	background-color: $user-bg;
+	color: $user-text;
+}
+
+.course-compact-content {
+	@include make-xs-column(9);
+	background: $body-bg;
+	padding: 0 0 0 15px;
+
+	&.hasupcomingevents {
+		@include make-xs-column(7.5);
+		padding: 0 0 0 15px;
+	}
+}
+
+.course-compact-content > .course-categories {
+	margin-bottom: 0;
+	margin-left: -2px;
+}
+
+.course-compact-content > .course-categories > li:nth-child(3),
+.course-compact-content > .course-categories > li:nth-child(4),
+.course-compact-content > .course-categories > li:nth-child(5),
+.course-compact-content > .course-categories > li:nth-child(6) {
+	display: none;
+}
+
+.course-compact-roles {
+	@include make-xs-column(3);
+	padding: 0;
+	position: relative;
+	right: -7px;
+	top: -7px;
+}
+
+.course-compact-roles > div {
+	margin-top: 3px;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+.course-compact-events {
+	@include make-xs-column(4.5);
+	background: $brand-success;
+	color: $default-black;
+	max-height: 150px;
+	padding: 3px;
+	position: relative;
+	right: -7px;
+	text-align: center;
+	top: -7px;
+}
+
+.course-compact-events-time,
+.course-compact-events-date {
+	@include make-xs-column(12);
+	padding: 0;
+}
+
+.course-compact-events-location {
+	padding: 0 4px;
+	word-break: break-all;
+}
+
+.course-compact-events-location span {
+	display: inline;
+}
+
+.course-compact-events-location .glyphicon-home {
+	padding-right: 3px;
+}
+
+.course-compact > .groups-list {
+	bottom: $course-border-width;
+	margin: 0;
+	position: absolute;
+	right: $course-border-width;
+}
+
+.course-compact > .groups-list > li {
+	float: right;
+	margin-left: 4px;
+}

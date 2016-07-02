@@ -3,7 +3,7 @@
 		{{#if course}}
 			<p>
 				<a href="{{pathFor 'showCourse' _id=course._id}}">
-					<span class="glyphicon glyphicon-arrow-left"></span>
+					<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
 				</a>
 			</p>
@@ -29,11 +29,10 @@
 		<div class="details-header event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
-					<span class="glyphicon glyphicon-calendar"></span>
+					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 					{{dateformat_mini_fullmonth start}}
 				</span>
-				&nbsp;
-				<span class="glyphicon glyphicon-time"></span>
+				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 				{{timeformat start}} - {{timeformat end}}
 		</div>
 		<div class="details-body event-details-body">
@@ -42,7 +41,7 @@
 				<div class="location">
 					{{> locationLink}}
 					{{#if location.address}}
-						<span class="fa fa-map-marker"></span>
+						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 						{{location.address}}
 					{{/if}}
 				</div>
@@ -75,21 +74,21 @@
 		{{#if mayEdit}}
 			<div class="actions">
 				<button type="button" class="eventDelete btn btn-delete">
-					<i class="fa fa-trash fa-fw"></i>
+					<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
 					{{mf '_button.delete'}}
 				</button>
 				<button type="button" class="eventEdit btn btn-edit">
-					<i class="fa fa-edit fa-fw"></i>
+					<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 					{{mf '_button.edit'}}
 				</button>
 				{{#if replicating}}
 					<button type="button" class="-closeReplication btn btn-cancel">
-						<i class="fa fa-minus fa-fw"></i>
+						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.repl_menu_btn'}}
 					</button>
 				{{else}}
 					<button type="button" class="-openReplication btn btn-add">
-						<i class="fa fa-plus fa-fw"></i>
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 					</button>
 				{{/if}}
@@ -98,7 +97,7 @@
 	</div>
 	<div class="details-page-component">
 		<a href="{{pathFor 'calEvent' this}}">
-			<i class="fa fa-arrow-down" aria-hidden="true"></i>
+			<i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
 	</div>
@@ -109,7 +108,7 @@
 
 <template name="eventAttachments">
 	<li>
-		<i class="fa fa-file fa-fw" aria-hidden="true"></i>
+		<span class="fa fa-file fa-fw" aria-hidden="true"></span>
 		<a href="{{file}}" target="_blank">{{filename}}</a>
 	</li>
 </template>
@@ -132,7 +131,7 @@
 				{{> groupName}}
 				{{#if isOrganizer}}
 					<span class="group-label-addon">
-						<i class="glyphicon glyphicon-bullhorn fa-fw"></i>
+						<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 					</span>
 				{{/if}}
 				{{#if tools}}
@@ -141,7 +140,7 @@
 							aria-expanded="false"
 							aria-haspopup="true"
 							data-toggle="dropdown">
-							<i class="fa fa-caret-down fa-fw"></i>
+							<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 						</button>
 							<ul class="dropdown-menu">
 							{{#each tools}}
@@ -164,7 +163,9 @@
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<i class="fa fa-plus fa-fw" title="{{mf 'course.group.addText' 'Add a group'}}"></i>
+				<span class="fa fa-plus fa-fw" aria-hidden="true"
+					title="{{mf 'course.group.addText' 'Add a group'}}">
+				</span>
 			</button>
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
@@ -185,7 +186,7 @@
 
 <template name="eventGroupRemove">
 		<a href="#" class="js-expand">
-			<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 			{{mf 'course.group.remove' 'Remove'}}
 		</a>
 		{{#if expanded}}
@@ -203,7 +204,7 @@
 
 <template name="eventGroupMakeOrganizer">
 	<a href="#" class="js-expand">
-		<i class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></i>
+		<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.addOrgText'}}
 	</a>
 	{{#if expanded}}
@@ -221,7 +222,7 @@
 
 <template name="eventGroupRemoveOrganizer">
 	<a href="#" class="js-expand">
-		<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+		<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.removeOrgText' NAME=name}}
 	</a>
 	{{#if expanded}}

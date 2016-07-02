@@ -23,15 +23,15 @@
 						{{#if showingFilters}}
 							<button type="button" class="btn btn-cancel js-toggle-filter">
 								{{#if isMobile}}
-									<span class="glyphicon glyphicon-filter"></span>
+									<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
 								{{else}}
-									<span class="glyphicon glyphicon-remove"></span>
+									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 									{{mf 'find.hideFilters' 'Remove all filters'}}
 								{{/if}}
 							</button>
 						{{else}}
 							<button type="button" class="btn btn-default js-toggle-filter">
-								<span class="glyphicon glyphicon-filter"></span>
+								<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
 								{{mf 'find.showFilters' 'Filter'}}
 							</button>
 						{{/if}}
@@ -42,7 +42,7 @@
 			<div class="filter">
 				<div class="filter-header">
 					<h4>
-						<span class="glyphicon glyphicon-filter"></span>
+						<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
 						{{mf 'find.search_filter.title' 'Filter search'}}
 					</h4>
 				</div>
@@ -64,7 +64,7 @@
 							&nbsp;
 							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
 							{{#if toggleChecked 'upcomingEvent'}}
-								<span class="checkmark glyphicon glyphicon-ok"></span>
+								<span class="checkmark glyphicon glyphicon-ok" aria-hidden="true"></span>
 							{{/if}}
 						</label>
 						<label class="js-toggle-property-filter js-filter-needs-host btn btn-default">
@@ -74,7 +74,7 @@
 								type="checkbox"
 								{{toggleChecked 'needsHost'}}/>
 							<div class="toggle-property-filter-icon">
-								<span class="glyphicon glyphicon-home"></span>
+								<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 							</div>
 							&nbsp;
 							{{mf 'find.needsHost' 'Looking for a host'}}
@@ -90,13 +90,13 @@
 								type="checkbox"
 								{{toggleChecked 'needsMentor'}}/>
 							<div class="toggle-property-filter-icon">
-								<span class="fa fa-graduation-cap"></span>
+								<span class="fa fa-graduation-cap" aria-hidden="true"></span>
 							</div>
 							&nbsp;
 							{{mf 'find.needsMentor' 'Looking for a mentor'}}
 							&nbsp;
 							{{#if toggleChecked 'needsMentor'}}
-								<span class="checkmark glyphicon glyphicon-ok"></span>
+								<span class="checkmark glyphicon glyphicon-ok" aria-hidden="true"></span>
 							{{/if}}
 						</label>
 					</div>
@@ -138,7 +138,7 @@
 											{{#if availableSubcategories this}}
 												<small class="js-toggle-subcategories {{this}}"
 													title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-													<span class="fa fa-angle-down"></span>
+													<span class="fa fa-angle-down" aria-hidden="true"></span>
 												</small>
 											{{/if}}
 										</a>
@@ -151,7 +151,7 @@
 								{{/each}}
 							{{else}}
 								<span class="filter-no-categories-found">
-									<span class="fa fa-exclamation"></span>
+									<span class="fa fa-exclamation fa-fw" aria-hidden="true"></span>
 									{{mf 'find.filter-no-categories-found' 'No categories found.'}}
 								</span>
 							{{/if}}
@@ -176,41 +176,39 @@
 		{{/if}}
 	</div>
 	<div class="details-page-component">
-		<div class="courselist">
-			{{#unless ready}}
-				{{> loadingPage}}
+		{{#unless ready}}
+			{{> loadingPage}}
+		{{else}}
+			{{#if results}}
+				{{> courseList results}}
 			{{else}}
-				{{#each results}}
-					{{> course}}
-				{{else}}
-					<div class="no-courses-found">
-						<span class="fa fa-exclamation-circle"></span>
-						{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
-						<div class="btn-group">
-							{{#if regionSelected}}
-								<button type="button" class="btn btn-default js-all-regions-btn">
-									<span class="fa fa-dot-circle-o"></span>
-									{{mf 'find.searchAllRegions' 'Search in all regions'}}
-								</button>
-							{{/if}}
-							{{#if showingFilters}}
-								<button type="button" class="btn btn-cancel js-toggle-filter">
-									<span class="glyphicon glyphicon-remove"></span>
-									{{mf 'find.hideFilters'}}
-								</button>
-							{{/if}}
-						</div>
-						{{#if proposeNewBlurb}}
-							{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=(search)}}
+				<div class="no-courses-found">
+					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
+					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
+					<div class="btn-group">
+						{{#if regionSelected}}
+							<button type="button" class="btn btn-default js-all-regions-btn">
+								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								{{mf 'find.searchAllRegions' 'Search in all regions'}}
+							</button>
+						{{/if}}
+						{{#if showingFilters}}
+							<button type="button" class="btn btn-cancel js-toggle-filter">
+								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+								{{mf 'find.hideFilters'}}
+							</button>
 						{{/if}}
 					</div>
-				{{/each}}
-			{{/unless}}
-		</div>
+					{{#if proposeNewBlurb}}
+						{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=(search)}}
+					{{/if}}
+				</div>
+			{{/if}}
+		{{/unless}}
 	</div>
 	{{#if eventResults.count}}
 		<div class="details-page-component">
-			<div class="courselist">
+			<div class="course-list">
 				<hr>
 				<h3>
 				{{#if results.count}}
@@ -229,7 +227,7 @@
 					{{/mf}}
 				{{/if}}
 				</h3><br />
-				{{> eventSmallList eventsList=eventResults withDate=true}}
+				{{> eventList dataEvents=eventResults withDate=true}}
 			</div>
 		</div>
 	{{/if}}

@@ -8,7 +8,7 @@
 			{{/with}}
 			<div class="frame-calendar-date-events">
 				{{#if dayEvents}}
-					{{> eventSmallList eventsList=dayEvents withDate=false}}
+					{{> eventList dataEvents=dayEvents withDate=false}}
 				{{else}}
 					<div class="frame-calendar-no-events">
 						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}

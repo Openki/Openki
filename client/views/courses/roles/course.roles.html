@@ -18,7 +18,7 @@
 		{{else}}
 			{{#if enrolling}}
 				<div class="course-role-title-enrol">
-					<span class="{{roletype.icon}}"></span>&nbsp;
+					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
 					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
 				</div>
 				<div class="course-role-enrol-options">
@@ -39,10 +39,11 @@
 					{{/if}}
 					<div class="form-actions">
 						<button type="button" class="btn btn-cancel js-role-enrol-cancel-btn">
+							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 							{{mf 'course.roles.cancelenrol'  'Cancel'}}
 						</button>
 						<button type="button" class="btn btn-save js-role-subscribe-btn">
-							<i class="glyphicon glyphicon-fire fa-fw"></i>
+							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
 							{{mf 'course.roles.enrol' 'Enroll'}}
 						</button>
 					</div>
@@ -50,7 +51,7 @@
 			{{else}}
 				{{#if maySubscribe roletype.type}}
 					<button type="button" class="btn btn-add course-details-btn js-role-enrol-btn" name="participant">
-						<i class="{{roletype.icon}} fa-fw" aria-hidden="true"></i>
+						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
 						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 					</button>
 				{{/if}}
