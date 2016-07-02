@@ -104,13 +104,9 @@
 			{{/if}}
 		</div>
 
-		<div class="details-page-component profile-courselist">
+		<div class="details-page-component profile-course-list">
 			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
-			<div class="courselist">
-				{{#each involvedIn}}
-					{{> courseCompact}}
-				{{/each}}
-			</div>
+			{{> courseList involvedIn}}
 		</div>
 	</div>
 </template>

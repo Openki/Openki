@@ -176,41 +176,39 @@
 		{{/if}}
 	</div>
 	<div class="details-page-component">
-		<div class="courselist">
-			{{#unless ready}}
-				{{> loadingPage}}
+		{{#unless ready}}
+			{{> loadingPage}}
+		{{else}}
+			{{#if results}}
+				{{> courseList results}}
 			{{else}}
-				{{#each results}}
-					{{> courseCompact}}
-				{{else}}
-					<div class="no-courses-found">
-						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
-						{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
-						<div class="btn-group">
-							{{#if regionSelected}}
-								<button type="button" class="btn btn-default js-all-regions-btn">
-									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-									{{mf 'find.searchAllRegions' 'Search in all regions'}}
-								</button>
-							{{/if}}
-							{{#if showingFilters}}
-								<button type="button" class="btn btn-cancel js-toggle-filter">
-									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-									{{mf 'find.hideFilters'}}
-								</button>
-							{{/if}}
-						</div>
-						{{#if proposeNewBlurb}}
-							{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=(search)}}
+				<div class="no-courses-found">
+					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
+					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
+					<div class="btn-group">
+						{{#if regionSelected}}
+							<button type="button" class="btn btn-default js-all-regions-btn">
+								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								{{mf 'find.searchAllRegions' 'Search in all regions'}}
+							</button>
+						{{/if}}
+						{{#if showingFilters}}
+							<button type="button" class="btn btn-cancel js-toggle-filter">
+								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+								{{mf 'find.hideFilters'}}
+							</button>
 						{{/if}}
 					</div>
-				{{/each}}
-			{{/unless}}
-		</div>
+					{{#if proposeNewBlurb}}
+						{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=(search)}}
+					{{/if}}
+				</div>
+			{{/if}}
+		{{/unless}}
 	</div>
 	{{#if eventResults.count}}
 		<div class="details-page-component">
-			<div class="courselist">
+			<div class="course-list">
 				<hr>
 				<h3>
 				{{#if results.count}}

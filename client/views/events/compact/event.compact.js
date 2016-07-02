@@ -1,7 +1,3 @@
-Template.eventList.onCreated(function() {
-	this.headerHeight = this.data.withDate ? 75 : 55;
-});
-
 Template.eventCompact.events({
 	"mouseover .js-location-link": function(event, template){
 		template.$('.event-compact').addClass('elevate_child');
@@ -18,13 +14,17 @@ Template.eventCompact.helpers({
 });
 
 Template.eventCompact.rendered = function() {
+	var eventList = this.parentInstance();
+
 	this.$('.event-compact-header').dotdotdot({
-		height: this.parentInstance().headerHeight,
+		height: eventList.headerHeight,
 		watch : "window",
 	});
+
 	this.$('.event-compact-title').dotdotdot({
 		watch: "window",
 	});
+
 	this.$('.event-compact-description').dotdotdot({
 		watch: "window",
 	});
