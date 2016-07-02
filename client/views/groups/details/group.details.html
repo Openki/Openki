@@ -19,9 +19,9 @@
 				</div>
 				{{#if mayEdit}}
 					<button type="button" class="close js-group-settings">
-						<i class="fa fa-cog" aria-hidden="true"
+						<span class="fa fa-cog" aria-hidden="true"
 							data-tooltip="{{mf 'group.settings.title' 'Group settings'}}">
-						</i>
+						</span>
 					</button>
 				{{/if}}
 				<div class="group-details-short">
@@ -53,11 +53,11 @@
 			{{#if isNew}}
 				<div class="actions">
 					<button type="button" class="btn btn-cancel js-group-cancel">
-						<span class="glyphicon glyphicon-remove"></span>
+						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 						{{mf '_button.cancel'}}
 					</button>
 					<button type="button" class="btn btn-save js-group-save">
-						<span class="glyphicon glyphicon-save"></span>
+						<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 						{{mf '_button.save'}}
 					</button>
 				</div>

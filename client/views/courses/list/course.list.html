@@ -49,11 +49,11 @@
 	<div class="course-eventlist">
 		{{#with nextEvent}}
 			<div class="course-eventlist-date">
-				<span class="fa fa-calendar" aria-hidden="true"></span>
+				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 				{{dateformat_mini this.start}}
 			</div>
 			<div class="course-eventlist-time">
-				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 				{{timeformat this.start}}
 			</div>
 			{{this.description}}
@@ -67,8 +67,7 @@
 		{{#if additionalEvents}}
 			<div class="course-eventlist-hasmore">
 				+ {{additionalEvents}}
-				&nbsp;
-				<span class="glyphicon glyphicon-calendar"></span>
+				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 			</div>
 		{{/if}}
 	</div>

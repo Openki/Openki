@@ -2,7 +2,7 @@
 	{{#if mayAdd}}
 	<div class="details-page-component">
 		<button type="button" class="btn btn-add eventEdit">
-			<i class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></i>
+			<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
 			{{mf 'course.events.addButton' 'Add event'}}
 		</button>
 	</div>
@@ -48,7 +48,7 @@
 				{{#if haveFutureEvents}}
 					<div class="courseEvents-titlebar">
 						<h4>
-							<span class="glyphicon glyphicon-calendar"></span>
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							{{mf 'course.events.upcominglist' 'Upcoming events'}}
 						</h4>
 						{{#if havePastEvents}}
@@ -70,7 +70,7 @@
 	<div class="details-page-component">
 		<a href="/cal/course/{{course._id}}"
 			target="_blank">
-			<i class="fa fa-arrow-down" aria-hidden="true"></i>
+			<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
 			{{mf 'course.download_cal' 'Download events to my calendar'}}
 		</a>
 	</div>

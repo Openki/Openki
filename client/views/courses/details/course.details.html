@@ -35,11 +35,11 @@
 						{{#if currentUserMayEdit}}
 							<div class="actions">
 								<button type="button" class="btn btn-delete js-delete-course-btn">
-									<i class="fa fa-trash fa-fw"></i>
+									<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
 									{{mf '_button.delete'}}
 								</button>
 								<button type="button" class="btn btn-edit js-edit-course-btn">
-									<i class="fa fa-edit fa-fw"></i>
+									<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 									{{mf '_button.edit'}}
 								</button>
 							</div>
@@ -76,19 +76,19 @@
 		<ul class="nav nav-tabs">
 			<li role="presentation" class='active'>
 				<a href="#description" data-toggle="tab">
-					<i class="fa fa-info fa-fw"></i>
+					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 					{{mf 'course.subnav.descr' 'Description'}}
 				</a>
 			</li>
 			<li role="presentation">
 				<a href="#docs" data-toggle="tab">
-					<i class="fa fa-folder-open fa-fw"></i>
+					<span class="fa fa-folder-open fa-fw" aria-hidden="true"></span>
 					{{mf 'course.subnav.docs' 'Docs'}}
 				</a>
 			</li>
 			<li role="presentation">
 				<a href="#history" data-toggle="tab">
-					<i class="fa fa-history fa-fw"></i>
+					<span class="fa fa-history fa-fw" aria-hidden="true"></span>
 					{{mf 'course.subnav.history' 'History'}}
 				</a>
 			</li>
@@ -125,7 +125,7 @@
 				{{> groupName}}
 				{{#if isOrganizer}}
 					<span class="group-label-addon">
-						<i class="glyphicon glyphicon-bullhorn fa-fw"></i>
+						<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 					</span>
 				{{/if}}
 				{{#if tools}}
@@ -134,7 +134,7 @@
 							aria-expanded="false"
 							aria-haspopup="true"
 							data-toggle="dropdown">
-							<i class="fa fa-caret-down fa-fw"></i>
+							<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 						</button>
 						<ul class="dropdown-menu">
 							{{#each tools}}
@@ -157,7 +157,9 @@
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<i class="fa fa-plus fa-fw" title="{{mf 'course.group.addText' 'Add a group'}}"></i>
+				<span class="fa fa-plus fa-fw" aria-hidden="true"
+					title="{{mf 'course.group.addText' 'Add a group'}}">
+				</span>
 			</button>
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
@@ -178,7 +180,7 @@
 
 <template name="courseGroupRemove">
 	<a href="#" class="js-expand">
-		<i class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></i>
+		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.remove' 'Remove'}}
 	</a>
 	{{#if expanded}}
@@ -196,7 +198,7 @@
 
 <template name="courseGroupMakeOrganizer">
 	<a href="#" class="js-expand">
-		<i class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></i>
+		<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.addOrgText' "Give editing rights"}}
 	</a>
 	{{#if expanded}}
@@ -214,7 +216,7 @@
 
 <template name="courseGroupRemoveOrganizer">
 	<a href="#" class="js-expand">
-		<i class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></i>
+		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.removeOrgText' "Remove editing rights"}}
 	</a>
 	{{#if expanded}}

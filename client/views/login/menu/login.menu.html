@@ -6,10 +6,10 @@
 			href="#"
 			role="button">
 			{{#if currentUser}}
-				<span class="fa fa-user"></span>&nbsp;
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
 			{{else}}
-				<span class="fa fa-sign-in"></span>&nbsp;
+				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 				{{mf 'login.navig.unlogged' 'Login/Register'}}
 			{{/if}}
 			<div class="nav-marker-caret"></div>

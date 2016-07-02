@@ -16,7 +16,7 @@
 				</h4>
 				<h5>
 					<a href="/profile/" >
-						<span class="fa fa-cog"></span>
+						<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 						{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
 					</a>
 				</h5>
@@ -28,7 +28,7 @@
 					{{#if showPrivileges}}
 						<div class="form-group-element">
 							<label class="label-lg">
-								<span class="fa fa-cog"></span>
+								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'privileges.title' 'Administrate Privileges'}}
 							</label>
 							<div class="list-group">
@@ -76,7 +76,7 @@
 					{{#if showInviteGroups}}
 						<div class="form-group-element">
 							<label class="label-lg">
-								<span class="fa fa-cog"></span>
+								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'userprofile.groups.header' 'Edit groups'}}
 							</label>
 							<div class="list-group">
@@ -132,20 +132,20 @@
 							id="receiveCopy"
 							type="checkbox"/>
 						{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
-						<span class="checkmark glyphicon glyphicon-ok" style="display:none"></span>
+						<span class="checkmark glyphicon glyphicon-ok" aria-hidden="true" style="display:none"></span>
 					</label>
 					<label class="btn btn-default">
 						<input class="js-send-own-adress"
 							id="sendOwnAdress"
 							type="checkbox"/>
 						{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
-						<span class="checkmark glyphicon glyphicon-ok" style="display:none"></span>
+						<span class="checkmark glyphicon glyphicon-ok" aria-hidden="true" style="display:none"></span>
 					</label>
 				</div>
 			</div>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-save">
-					<span class="glyphicon glyphicon-send"></span>&nbsp;
+					<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 					{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
 				</button>
 			</div>

@@ -4,14 +4,14 @@
 			<div class="details-form group-settings">
 				<div class="details-form-element settings">
 					<h3>
-						<span class="fa fa-cog"></span>
+						<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 						{{mf 'group.settings.title' 'Settings'}}
 					</h3>
 					<div class="form-group">
 						<label>{{mf 'group.settings.field.infos' 'Internal informations'}}</label>
 						<div class="input-group">
 							<div class="input-group-addon">
-								<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 							</div>
 							<input class= "setInfos form-control"
 								id="setInfos"
@@ -25,7 +25,7 @@
 						<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
-								<i class="fa fa-rebel fa-fw" aria-hidden="true"></i>
+								<span class="fa fa-rebel fa-fw" aria-hidden="true"></span>
 							</span>
 							<input class="-logoUrl form-control"
 								id="setLogo"
@@ -40,7 +40,7 @@
 						</label>
 						<div class="input-group">
 							<span class="input-group-addon">
-								<i class="fa fa-picture-o fa-fw" aria-hidden="true"></i>
+								<span class="fa fa-picture-o fa-fw" aria-hidden="true"></span>
 							</span>
 							<input class="-backgroundUrl form-control"
 								id="setBackgroundImage"
@@ -50,11 +50,11 @@
 					</div>
 					<div class="form-actions">
 						<button type="button" class="btn btn-cancel js-group-edit-cancel">
-							<span class="glyphicon glyphicon-remove"></span>
+							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 							{{mf '_button.cancel'}}
 						</button>
 						<button type="button" class="btn btn-save js-group-edit-save">
-							<span class="glyphicon glyphicon-save"></span>
+							<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 							{{mf 'group.edit.save_btn' 'Save'}}
 						</button>
 					</div>
@@ -62,16 +62,16 @@
 
 				<div class="details-form-element">
 					<h3>
-						<span class="glyphicon glyphicon-user"></span>
+						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
 						{{mf 'group.settings.title.Members' 'Members'}}
 					</h3>
 					<ul class="group-members">
 						{{#each members}}
 							<li>
-								<span class="glyphicon glyphicon-user"></span>
+								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 								{{username this}}
 								<button type="button" class="js-member-remove-btn btn">
-									<span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' "remove member"}}"></span>
+									<span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"></span>
 								</button>
 							</li>
 						{{/each}}
@@ -80,7 +80,7 @@
 						<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
-								<span class="fa fa-user"></span>
+								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 							</span>
 							<input class="-userSearch form-control"
 								id="AddGroupMember"
@@ -92,10 +92,11 @@
 					<ul class="group-members">
 						{{#each foundUsers}}
 							<li>
-								<span class="glyphicon glyphicon-user"></span>
+								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 								{{username this._id}}
-								<button type="button" class="btn js-member-add-btn">
-									<span class="glyphicon glyphicon-plus" title="{{mf 'group.settings.addMember' "add as member"}}"></span>
+								<button type="button" class="btn js-member-add-btn"
+									title="{{mf 'group.settings.addMember' 'add as member'}}">
+									<span class="fa fa-plus" aria-hidden="true"></span>
 								</button>
 							</li>
 						{{/each}}
@@ -104,7 +105,7 @@
 			</div>
 			<div class="details-addition">
 				<h3>
-					<span class="glyphicon glyphicon-link"></span>
+					<span class="glyphicon glyphicon-link fa-fw" aria-hidden="true"></span>
 					{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
 				</h3>
 				<ul class="group-links">

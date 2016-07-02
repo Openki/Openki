@@ -1,8 +1,7 @@
 <template name="courseMembers">
 	<div class="course-details-component-titlebar">
 		<h4 class="course-details-component-heading">
-			<span class="fa fa-users"></span>
-			&nbsp;
+			<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 			{{#mf KEY='course.dtails.paticipants.title' NUM=howManyEnrolled}}
 				{NUM, plural,
 					=0 {No participants yet}
@@ -24,14 +23,13 @@
 
 <template name="courseMember">
 	<div class="course-member">
-		<span class="glyphicon glyphicon-user"></span>&nbsp;
+		<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 		{{> profilelink member.user}}
 		{{#if hasRoles}}
 		<ul class='course-member-roles'>
 			{{#each member.roles}}
 				<li class='{{this}}'>
-					<span class="{{rolelist_icon this}}"></span>
-					&nbsp;
+					<span class="{{rolelist_icon this}} fa-fw" aria-hidden="true"></span>
 					<span class="role-short">{{mf roleShort}}</span>
 				</li>
 			{{/each}}
@@ -41,7 +39,7 @@
 		<button type="button" class='btn btn-add js-add-to-team-btn'>
 			<span class="glyphicon glyphicon-plus add-to-team-btn-plus {{member.user}}"></span>
 			<span class="add-to-team-btn-txt {{member.user}}">
-				<span class="glyphicon glyphicon-bullhorn"></span>&nbsp;
+				<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 				{{mf 'course.roles.maketeam' 'Add to team'}}
 			</span>
 		</button>
