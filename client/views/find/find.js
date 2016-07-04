@@ -281,23 +281,25 @@ Template.find.helpers({
 		return groups[group];
 	},
 
+	'hasResults': function() {
+		var filterQuery = Template.instance().filter.toQuery();
+		var results = coursesFind(filterQuery, 1);
+
+		return results.count() > 0;
+	},
+
 	'results': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 
 		return coursesFind(filterQuery, 36);
 	},
 
+
 	'eventResults': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
 		return eventsFind(filterQuery, 12);
-	},
-
-	'proposeNewBlurb': function() {
-		var instance = Template.instance();
-		var filter = instance.filter.toParams();
-		return !instance.showingFilters.get() && filter.search;
 	},
 
 	'ready': function() {

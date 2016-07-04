@@ -1,6 +1,6 @@
 <template name="course_events">
 	{{#if mayAdd}}
-	<div class="details-page-component">
+	<div class="page-component">
 		<button type="button" class="btn btn-add eventEdit">
 			<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
 			{{mf 'course.events.addButton' 'Add event'}}
@@ -8,7 +8,7 @@
 	</div>
 	{{/if}}
 	{{#if haveEvents}}
-	<div class="details-page-component">
+	<div class="page-component">
 		<div class="course_events_fadebox">
 			<div class="course_events">
 				{{#if havePastEvents}}
@@ -67,7 +67,7 @@
 			<div class="fade_effect_bottom"></div>
 		</div>
 	</div>
-	<div class="details-page-component">
+	<div class="page-component">
 		<a href="/cal/course/{{course._id}}"
 			target="_blank">
 			<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>

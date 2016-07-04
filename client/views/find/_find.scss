@@ -240,20 +240,15 @@
 	}
 }
 
-.no-courses-found {
-	background: lighten($gray-lighter, 5%);
-	border: 1px solid darken($gray-lighter, 10%);
+.no-results {
 	font-size: large;
-	margin: 20px auto;
 	max-width: 400px;
-	padding: 15px;
-	text-align: center;
 }
 
-.no-courses-found > .fa-exclamation-circle {
+.no-results-body > .fa-exclamation-circle {
 	color: $brand-warning;
 }
 
-.no-courses-found > .btn-group {
+.no-results > .btn-group {
 	margin-top: 10px;
 }
