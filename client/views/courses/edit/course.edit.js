@@ -81,7 +81,6 @@ Template.course_edit.helpers({
 
 		var filterQuery = filter.toQuery();
 		var results = coursesFind(filterQuery, 1);
-		console.log(results.count());
 
 		return (results.count() === 0) && search;
 	},
