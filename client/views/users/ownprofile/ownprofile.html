@@ -212,8 +212,10 @@
 				{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 			</a>
 		</div>
-		<div class="details-page-component">
-			{{> courseList courses}}
-		</div>
+		{{#if hasInvolvedIn}}
+			<div class="details-page-component">
+				{{> courseList involvedIn}}
+			</div>
+		{{/if}}
 	</div>
 </template>
