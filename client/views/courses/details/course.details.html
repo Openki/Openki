@@ -2,11 +2,11 @@
 	<div class="container">
 		<div class="course-details-column-left">
 			{{#if edit}}
-				<div class="details-page-component">
+				<div class="page-component">
 					{{> course_edit course}}
 				</div>
 			{{else}}
-				<div class="details-page-component">
+				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						<div class="details-header">
 							{{#if editableName}}
@@ -58,13 +58,13 @@
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-			<div class="details-page-component">
+			<div class="page-component">
 				{{> courseMembers course}}
 			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
-			<div class="details-page-component">
+			<div class="page-component">
 				{{> report}}
 			</div>
 		</div>

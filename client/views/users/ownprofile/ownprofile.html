@@ -1,6 +1,6 @@
 <template name="profile">
 	<div class="container-sm">
-		<div class="details-page-component">
+		<div class="page-component">
 			<h1>{{mf 'login.frame.settings'}}</h1>
 			<a class="profile-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				{{mf 'login.frame.profile' 'Visit my profile'}}
@@ -180,13 +180,13 @@
 				</div>
 			{{/if}}
 		</div>
-		<div class="details-page-component">
+		<div class="page-component">
 			<a class="btn btn-success translate-link" href="/translate">
 				<span class="fa fa-language fa-fw" aria-hidden="true"></span>
 				{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 			</a>
 		</div>
-		<div class="profile-groups-list details-page-component">
+		<div class="profile-groups-list page-component">
 			<hr>
 			<h3> {{mf 'profile.groups' 'My groups'}}</h3>
 			<h5>
@@ -213,7 +213,7 @@
 			</a>
 		</div>
 		{{#if hasInvolvedIn}}
-			<div class="details-page-component">
+			<div class="page-component">
 				{{> courseList involvedIn}}
 			</div>
 		{{/if}}

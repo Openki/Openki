@@ -25,7 +25,7 @@
 </template>
 
 <template name="eventDisplay">
-	<div class="details-page-component">
+	<div class="page-component">
 		<div class="details-header event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
@@ -95,13 +95,13 @@
 			</div>
 		{{/if}}
 	</div>
-	<div class="details-page-component">
+	<div class="page-component">
 		<a href="{{pathFor 'calEvent' this}}">
 			<i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
 	</div>
-	<div class="details-page-component">
+	<div class="page-component">
 		{{> report}}
 	</div>
 </template>
