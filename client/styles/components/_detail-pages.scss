@@ -24,6 +24,11 @@
 	margin-bottom: 0;
 }
 
+.page-component-seperated {
+	border-top: 1px solid $openki-blue-lighter;
+	padding-top: $form-group-margin-bottom;
+}
+
 .details-header {
 	padding: 10px $form-group-margin-bottom;
 }
