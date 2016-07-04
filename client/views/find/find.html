@@ -182,9 +182,11 @@
 			{{#if hasResults}}
 				{{> courseList results}}
 			{{else}}
-				<div class="no-courses-found">
-					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
-					{{mf 'find.no-courses-found' 'No Courses found. You might want to...'}}
+				<div class="no-results">
+					<div class="no-results-body">
+						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
+						{{mf 'find.no-courses-found' 'No Courses found.'}}
+					</div>
 					<div class="btn-group">
 						{{#if regionSelected}}
 							<button type="button" class="btn btn-default js-all-regions-btn">
@@ -199,9 +201,6 @@
 							</button>
 						{{/if}}
 					</div>
-					{{#if proposeNewBlurb}}
-						{{mf 'find.propose_new_course?' 'Why not propose a new one for "{TERM}"?' TERM=(search)}}
-					{{/if}}
 				</div>
 			{{/if}}
 		{{/unless}}
