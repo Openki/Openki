@@ -47,4 +47,8 @@ Template.frameCalendar.helpers({
 		Session.get('timeLocale');
 		return moment(day.toDate()).format('dddd, Do MMMM');
 	},
+
+	hasDayEvents: function() {
+		return this.dayEvents.count() > 0;
+	}
 });

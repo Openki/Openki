@@ -7,7 +7,7 @@
 				</div>
 			{{/with}}
 			<div class="frame-calendar-date-events">
-				{{#if dayEvents}}
+				{{#if hasDayEvents}}
 					{{> eventList dataEvents=dayEvents withDate=false}}
 				{{else}}
 					<div class="frame-calendar-no-events">
