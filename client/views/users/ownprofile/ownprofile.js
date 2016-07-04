@@ -29,7 +29,7 @@ Router.map(function () {
 
 				return {
 					user: userdata,
-					courses: coursesFind({ userInvolved: user._id })
+					involvedIn: coursesFind({ userInvolved: user._id })
 				};
 			}
 		},
@@ -63,6 +63,10 @@ Template.profile.helpers({
 
 	privacyChecked: function() {
 		if (this.user.privacy) return 'checked';
+	},
+
+	hasInvolvedIn: function() {
+		return this.involvedIn.count() > 0;
 	}
 });
 

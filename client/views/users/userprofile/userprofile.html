@@ -6,7 +6,7 @@
 
 <template name="userprofile">
 	<div class="container-sm">
-		<div class="details-page-component">
+		<div class="page-component">
 			<h2>
 				{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
 			</h2>
@@ -104,10 +104,12 @@
 			{{/if}}
 		</div>
 
-		<div class="details-page-component profile-course-list">
-			<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
-			{{> courseList involvedIn}}
-		</div>
+		{{#if hasInvolvedIn}}
+			<div class="page-component profile-course-list">
+				<h3>{{mf 'profile.courses' "{NAME}'s Courses" NAME=this.user.username}}</h3>
+				{{> courseList involvedIn}}
+			</div>
+		{{/if}}
 	</div>
 </template>
 

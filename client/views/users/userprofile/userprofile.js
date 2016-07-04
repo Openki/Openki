@@ -57,6 +57,10 @@ Template.userprofile.helpers({
 		var showPrivileges = Template.instance().data.showPrivileges;
 		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
+	},
+
+	hasInvolvedIn: function() {
+		return this.involvedIn.count() > 0;
 	}
 });
 
