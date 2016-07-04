@@ -203,7 +203,7 @@ Template.eventEdit.events({
 		//remove file attribute from the event
 		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
 			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
-			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."), 'danger');
+			else showServerError("Couldn't remove file '" + filename + "'", error);
 		});
 	},
 
@@ -288,7 +288,7 @@ Template.eventEdit.events({
 
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
 			if (error) {
-				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+				showServerError('Saving the event went wrong', error);
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });

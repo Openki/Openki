@@ -100,7 +100,7 @@ Template.find.onCreated(function() {
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.js-search-categories').val();
-	if (query === '') {
+	if (!query) {
 		instance.categorySearchResults.set(categories);
 		return;
 	}
@@ -123,7 +123,7 @@ var updateCategorySearch = function(event, instance) {
 };
 
 var filterPreview = function(switchOn, match) {
-	var noMatch = $('.course').not(match);
+	var noMatch = $('.course-compact').not(match);
 	if (switchOn) {
 		noMatch.addClass('filter-no-match');
 	} else {
@@ -309,6 +309,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Session.get('screenSize') <= 480; // @screen-xs
+		return Session.get('viewportWidth') <= 480; // @screen-xs
 	}
 });

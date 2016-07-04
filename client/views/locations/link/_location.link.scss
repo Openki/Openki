@@ -1,15 +1,13 @@
 .js-location-link {
-  @include transition(all $default-transition-time);
-  background: $location-bg;
-  color: $location-text;
-  padding: 3px 4px 1px;
-  &:hover {
-    @include box-shadow-small($default-shadow);
-    background: $location-hover-bg;
+	background: $location-bg;
+	color: $location-text;
+	padding: 3px 4px 1px;
+	transition: all $default-transition-time;
+
+	&:hover {
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+		background: $location-hover-bg;
 		color: $location-hover-text;
-    text-decoration: none;
-  }
-  .glyphicon-home {
-    margin-right: 2px;
-  }
+		text-decoration: none;
+	}
 }

@@ -83,6 +83,7 @@ Meteor.startup(function () {
 	// Update List of badges per user
 	Meteor.call('user.updateBadges', {}, logAsyncErrors);
 
+	Meteor.call('updateRegionCounters', {}, logAsyncErrors);
 
 	// Keep the nextEvent entry updated
 	// On startup do a full scan to catch stragglers
@@ -91,6 +92,8 @@ Meteor.startup(function () {
 		function() {
 			// Update nextEvent for courses where it expired
 			Meteor.call('updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
+
+			Meteor.call('updateRegionCounters', {}, logAsyncErrors);
 		},
 		60*1000 // Check every minute
 	);

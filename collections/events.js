@@ -289,6 +289,7 @@ Meteor.methods({
 
 		// the assumption is that all replicas have the same course if any
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
+		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 
 		return eventId;
 	},
@@ -306,6 +307,7 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
+		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 	},
 
 

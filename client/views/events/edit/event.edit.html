@@ -25,7 +25,7 @@
 					<label>{{mf 'course.event.edit.date_start' 'Date'}}</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<i class="glyphicon glyphicon-calendar"></i>
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text" class="form-control js-event-start-date"
 							value="{{localDate start}}"
@@ -36,7 +36,7 @@
 					<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-time"></span>
+							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text" class="form-control" id="editEventStartTime"
 							size="5"
@@ -47,7 +47,6 @@
 				<div class="form-group-element time-end">
 					<label style="display:none">
 						{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
-						&nbsp;
 						<button type="button" class="js-toggle-duration btn-icon"
 							data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
 							<span class="fa fa-exchange"></span>
@@ -55,7 +54,7 @@
 					</label>
 					<div class="input-group" style="display:none">
 						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-time"></span>
+							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="number" class="form-control" id="editEventDuration"
 							value="{{timeformat Duration}}"
@@ -63,7 +62,6 @@
 					</div>
 					<label>
 						{{mf 'course.event.edit.time_end' 'Time end'}}
-						&nbsp;
 						<button type="button" class="js-toggle-duration btn-icon"
 							data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
 							<span class="fa fa-exchange"></span>
@@ -71,7 +69,7 @@
 					</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-time"></span>
+							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text" class="form-control"	id="editEventEndTime"
 							size="5"
@@ -85,16 +83,41 @@
 				<label>{{mf 'course.event.edit.desc' 'Description'}}</label>
 				<div class="input-group">
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-info-sign"></span>
+						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 					</span>
 					{{> eventDescriptionEdit description}}
 				</div>
 			</div>
 
-			<div class="form-group">
-				{{#if showRegionSelection}}
-					<div class="region_selection form-group-element">
-						<label>{{mf 'course.edit.region' 'Region'}}</label>
+			<div class="form-group event-edit-files">
+				<label>
+					{{mf 'course.event.edit.files' 'Files'}}
+					<small> {{mf '_inputField.optional'}}</small>
+				</label>
+					<input type="file" class="js-event-add-file"
+						name="…"
+						value="Upload file"/>
+				<button type="button" class="btn btn-default js-event-upload-file"
+					style="display:none">
+					<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
+					{{mf 'event.edit.startUpload' 'Start Upload'}}
+				</button>
+				<table class="table table-hover file-list">
+					<tbody>
+						{{#each files}}
+							{{> eventAttachmentsEdit}}
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+
+			{{#if showRegionSelection}}
+				<div class="form-group">
+					<label>{{mf 'course.edit.region' 'Region'}}</label>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+						</div>
 						<select class="region_select js-select-region form-control"
 							name='region'>
 							<option value='' disabled selected class="select_placeholder">
@@ -107,49 +130,27 @@
 							{{/each}}
 						</select>
 					</div>
-				{{/if}}
-
-				<div class="event-edit-files form-group-element">
-					<label>
-						{{mf 'course.event.edit.files' 'Files'}}
-						<small> {{mf '_inputField.optional'}}</small>
-					</label>
-						<input type="file" class="js-event-add-file"
-							name="…"
-							value="Upload file"/>
-					<button type="button" class="btn btn-default js-event-upload-file"
-						style="display:none">
-						<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
-						{{mf 'event.edit.startUpload' 'Start Upload'}}
-					</button>
-					<table class="table table-hover file-list">
-						<tbody>
-							{{#each files}}
-								{{> eventAttachmentsEdit}}
-							{{/each}}
-						</tbody>
-					</table>
 				</div>
-			</div>
+			{{/if}}
 
 			{{#if showLocationSelection}}
 				{{>eventEditLocation}}
-			{{/if}}
-
-			<div class="form-group">
-				<label>
-					{{mf 'course.event.edit.room' 'Room'}}
-					<small> {{mf '_inputField.optional'}}</small>
-				</label>
-				<div class="input-group" id="editform_room" name="editform_room">
-					<span class="input-group-addon">
-						<span class="fa fa-map-signs"></span>
-					</span>
-					<input type="text" class="form-control"	id="eventEditRoom"
+				<div class="form-group">
+					<label>
+						{{mf 'course.event.edit.room' 'Room'}}
+						<small> {{mf '_inputField.optional'}}</small>
+					</label>
+					<div class="input-group" id="editform_room" name="editform_room">
+						<span class="input-group-addon">
+							<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+						</span>
+						<input type="text" class="form-control"	id="eventEditRoom"
 						size="40"
 						value="{{room}}"/>
+					</div>
 				</div>
-			</div>
+			{{/if}}
+
 
 			<div class="form-group">
 				<div class="form-group-element">
@@ -172,7 +173,7 @@
 									"Update {COUNT, plural, one {later copy} other {# later copies as well}}"
 									COUNT=affectedReplicaCount
 								}}
-								<span class="warn-block">
+								<span class="help-block">
 									<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
 										{{mf 'event.edit.updateReplicas.times'
 										"Time-changes will not be updated in {COUNT, plural, one {copy} other {copies}}."
@@ -210,7 +211,7 @@
 <template name="eventAttachmentsEdit">
 	<tr id="row-{{_id}}">
 		<td>
-			<i class="fa fa-file fa-fw" aria-hidden="true"></i>
+			<span class="fa fa-file fa-fw" aria-hidden="true"></span>
 			<a href="{{file}}" target="_blank">
 				{{filename}}
 			</a>

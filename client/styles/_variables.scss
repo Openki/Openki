@@ -8,10 +8,10 @@ $orange: #f98f39;
 $yellow: #f3f981;
 
 $default-black: #333;
-$default-shadow: rgba(88, 106, 102, .4);
 $default-white: #fff;
 $default-gray: #868383;
 $default-light-grey: #ccc;
+$default-shadow: rgba(88, 106, 102, .4);
 $brand-primary-hover: darken($brand-primary, 10%);
 
 // == Navbar
@@ -118,15 +118,40 @@ $event-header-color: $default-black;
 $event-title-color: $default-black;
 $event-description-color: $brand-primary;
 
-$event-small-bg: $event-bg;
-$event-small-header-bg: $event-header-bg;
-$event-small-header-color: $event-header-color;
-$event-small-title-color: $event-title-color;
-$event-small-description-color: $event-description-color;
+$event-compact-bg: $event-bg;
+$event-compact-header-bg: $event-header-bg;
+$event-compact-header-color: $event-header-color;
+$event-compact-title-color: $event-title-color;
+$event-compact-description-color: $event-description-color;
 
 $translate-trans: $checkmark-color;
 $translate-fuzzy: $openki-yellow;
 $translate-untrans: darken($brand-danger, 15%);
+
+// Box Shadows
+
+
+$shadow-lg-offset-x: 2px;
+$shadow-lg-offset-y: 5px;
+$shadow-lg-blur: 8px;
+
+$shadow-sm-offset-x: 1px;
+$shadow-sm-offset-y: 2px;
+$shadow-sm-blur: 4px;
+
+$btn-warning-bg-custom: lighten($btn-warning-bg, 20%);
+
+$btn-hover-level-start: 3%;
+$btn-level-end: 6%;
+$btn-hover-level-end: 9%;
+
+$btn-background-colors: (
+	default: $btn-default-bg,
+	primary: $btn-primary-bg,
+	success: $btn-success-bg,
+	warning: $btn-warning-bg-custom,
+	danger: $btn-danger-bg
+);
 
 //== Screen breakpoints
 //

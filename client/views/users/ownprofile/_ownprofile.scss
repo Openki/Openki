@@ -4,20 +4,19 @@
 }
 
 .profile-delete-confirmation {
-  background-color: pink;
-  border: 1px solid $brand-danger;
-  padding: 15px 15px 0;
+	background-color: pink;
+	border: 1px solid $brand-danger;
+	padding: 15px 15px 0;
 }
 
 .translate-link {
 	@include btn-lg;
 }
 
-.profile-groups-list {
-  .groups {
-    @include list-unstyled;
-    li {
-      margin-bottom: 10px;
-    }
-  }
+.profile-groups-list .groups {
+	@include list-unstyled;
+}
+
+.profile-groups-list .groups li {
+	margin-bottom: 10px;
 }

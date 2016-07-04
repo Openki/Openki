@@ -20,7 +20,7 @@ Template.report.events({
 		event.preventDefault();
 		Meteor.call('report', document.title, window.location.href, instance.$('#reportMessage').val(), function(error, result) {
 			if (error) {
-				addMessage(mf('report.error', "Your report could not be sent. I'd feel sorry for you but I'm just a programmed response."), 'danger');
+				showServerError('Your report could not be sent', error);
 			} else {
 				addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
 			}

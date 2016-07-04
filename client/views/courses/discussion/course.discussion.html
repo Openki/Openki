@@ -2,8 +2,7 @@
 	<div class="details-page-component discussion">
 		<div class="course-details-component-titlebar">
 			<h4 class="course-details-component-heading">
-				<span class="fa fa-comments"></span>
-				&nbsp;
+				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
@@ -37,15 +36,13 @@
 		{{#if parentId}}
 			<div class="discussion-reply">
 				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn">
-					<span class="fa fa-reply"></span>
-					&nbsp;
+					<span class="fa fa-reply fa-fw" aria-hidden="true"></span>
 					{{mf 'course.discussion.comment_answer' 'Answer'}}
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-add discussion-post-new-btn js-discussion-edit">
-				<span class="glyphicon glyphicon-pencil"></span>
-				&nbsp;
+			<button type="button" class="btn btn-add course-details-btn js-discussion-edit">
+				<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
 				{{mf 'course.discussion.write_comment' 'Write a comment'}}
 			</button>
 		{{/if}}
@@ -68,13 +65,13 @@
 					{{#if mayDelete}}
 						<button type="button" class="discussion-delete-btn delete"
 							data-tooltip="{{mf '_button.delete'}}">
-							<span class="glyphicon glyphicon-remove"></span>
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
 					{{/if}}
 					{{#if mayEdit}}
 						<button type="button" class="js-discussion-edit discussion-edit-btn"
 							data-tooltip="{{mf '_button.edit'}}">
-							<span class="glyphicon glyphicon-edit"></span>
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 						</button>
 					{{/if}}
 				</div>
@@ -138,9 +135,11 @@
 				{{/if}}
 				<div class="form-actions">
 					<button type="button" class="btn btn-cancel js-discussion-cancel-btn">
+						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 						{{mf '_button.cancel'}}
 					</button>
 					<button type="submit" class="btn btn-save discussion-save-btn">
+						<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 						{{#if new}}
 							{{#if parentId}}
 								{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}

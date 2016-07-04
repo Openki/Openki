@@ -8,20 +8,21 @@
 @import 'categories/categories';
 
 // Courses
+@import 'courses/compact/course.compact';
 @import 'courses/details/course.details';
-@import 'courses/details/discussion/course.discussion';
-@import 'courses/details/history/course.history';
-@import 'courses/details/members/course.members';
-@import 'courses/details/roles/course.roles';
+@import 'courses/discussion/course.discussion';
+@import 'courses/history/course.history';
+@import 'courses/members/course.members';
+@import 'courses/roles/course.roles';
 @import 'courses/edit/course.edit';
 @import 'courses/events/course.events';
 @import 'courses/list/course.list';
 
 // Events
+@import 'events/compact/event.compact';
 @import 'events/details/event.details';
 @import 'events/edit/event.edit';
 @import 'events/editLocation/event.editLocation';
-@import 'events/event-small/event.small';
 
 // Find
 @import 'find/find';

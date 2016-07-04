@@ -116,7 +116,7 @@ Meteor.startup(function() {
 
 Meteor.startup(Assistant.init);
 
-Meteor.startup(getWindowSize);
+Meteor.startup(getViewportWidth);
 
 Accounts.onLogin(function() {
 	var locale = Meteor.user().profile.locale;
@@ -126,7 +126,7 @@ Accounts.onLogin(function() {
 Accounts.onEmailVerificationLink(function(token, done) {
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			addMessage(mf("email.verificationFailed", "Address could not be verified"), 'danger');
+			showServerError('Address could not be verified', error);
 		} else {
 			addMessage(mf("email.verified", "Email verified."), 'success');
 		}

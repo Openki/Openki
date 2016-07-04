@@ -295,9 +295,9 @@ Template.map.onRendered(function() {
 Template.map.helpers({
 	mapContainerClass: function() {
 		if (Template.instance().fullscreen.get()) {
-			return "mapContainer fullscreen";
+			return "map-fullscreen";
 		} else {
-			return "mapContainer box";
+			return "map-box";
 		}
 	},
 

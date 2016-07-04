@@ -1,111 +1,125 @@
 .introduction {
 	@include clearfix;
-  @include transition(background-color 1s);
-  background-color: $introduction-bg;
-  margin-top: 15px;
-  padding: 2px ($grid-gutter-width / 2) 0;
-  position: relative;
-  &:hover {
-    background-color: $introduction-text;
-  }
-  h3 {
-    color: $brand-primary;
-    margin: 5px 0 6px;
-  }
+	background-color: $introduction-bg;
+	margin-top: 15px;
+	padding: 2px ($grid-gutter-width / 2) 0;
+	position: relative;
+	transition: background-color 1s;
+
+	&:hover {
+		background-color: $introduction-text;
+	}
+}
+
+.introduction h3 {
+	color: $brand-primary;
+	margin: 5px 0 6px;
 }
 
 .calendar-introduction {
 	margin-top: 60px;
-	& + #maincontent .container {
-		padding-top: 0;
-	}
+}
+
+.calendar-introduction + #maincontent > .container {
+	padding-top: 0;
 }
 
 .js-introduction-close-btn {
-  font-size: large;
-  position: absolute;
-  right: 13px;
-  top: 13px;
+	font-size: large;
+	position: absolute;
+	right: 13px;
+	top: 13px;
 }
 
 .introduction-show-btn,
 .introduction-hide-btn {
 	@include btn-sm;
-  margin-left: 10px;
-  &::after {
-    color: $gray-light;
-    font-family: FontAwesome;
-  }
+	margin-left: 10px;
+
+	&::after {
+		color: $gray-light;
+		font-family: FontAwesome;
+	}
 }
 
 .introduction-show-btn::after {
-  content: '';
+	content: '\f107';
 }
 
 .introduction-hide-btn::after {
-  content: '';
+	content: '\f106';
 }
 
 .introduction-content {
-  border-top: 1px solid $default-light-grey;
-  margin-top: 5px;
-  padding: 12px ($grid-gutter-width / 2);
+	border-top: 1px solid $default-light-grey;
+	margin-top: 5px;
+	padding: 12px ($grid-gutter-width / 2);
 }
 
 .introduction-steps {
-  @include list-unstyled;
-  font-size: medium;
-  li {
-    @include grid(6, 2);
-    margin-bottom: 15px;
-    @media (max-width: $screen-sm) {
-      &:nth-child(2),
-      &:nth-child(4) {
-        padding-bottom: 15px;
-        h2::after {
-          content: '';
-        }
-      }
-      &:nth-last-child(2),
-      &:last-child {
-        @include grid(12);
-        text-align: center;
-      }
-    }
-    @media (max-width: $screen-xxs) {
-      @include grid(12);
-      padding-bottom: 20px;
-      text-align: center;
-      h2::after {
-        bottom: -15px;
-        content: '';
-        right: 47%;
-      }
-    }
-    h2 {
-      margin-bottom: 8px;
-      margin-top: 0;
-      text-align: center;
-      &::after {
-        @include opacity(.5);
-        color: lighten($default-gray, 15%);
-        content: '';
-        font-family: FontAwesome;
-        font-size: 16px;
-        position: absolute;
-        right: 0;
-        top: 6px;
-      }
-      &:nth-last-child(2),
-      &:last-child {
-        h2::after {
-          content: none;
-        }
-      }
-    }
-    .fa {
-      @include opacity(.6);
-      color: $brand-primary;
-    }
-  }
+	@include list-unstyled;
+	font-size: medium;
+}
+
+.introduction-steps > li {
+	@include make-xs-column(6);
+	@include make-sm-column(2);
+	margin-bottom: 15px;
+
+	@media (max-width: $screen-xxs) {
+		@include make-xs-column(12);
+		padding-bottom: 20px;
+		text-align: center;
+	}
+
+	&:nth-child(2),
+	&:nth-child(4) {
+		@media (max-width: $screen-sm) {
+			padding-bottom: 15px;
+		}
+	}
+
+	&:nth-last-child(2),
+	&:last-child {
+		@media (max-width: $screen-sm) {
+			@include make-xs-column(12);
+			text-align: center;
+		}
+	}
+}
+
+.introduction-steps > li > h2 {
+	margin-bottom: 8px;
+	margin-top: 0;
+	text-align: center;
+
+	&::after {
+		@include opacity(.5);
+		color: lighten($default-gray, 15%);
+		content: '';
+		font-family: FontAwesome;
+		font-size: 16px;
+		position: absolute;
+		right: 0;
+		top: 6px;
+
+		@media (max-width: $screen-xxs) {
+			bottom: -15px;
+			content: '';
+			right: 47%;
+		}
+	}
+}
+
+.introduction-steps > li:nth-child(2) > h2::after,
+.introduction-steps > li:nth-child(4) > h2::after,
+.introduction-steps > li:nth-child(5) > h2::after {
+	@media (max-width: $screen-sm) {
+		content: '';
+	}
+}
+
+.introduction-steps > li > h2 > .fa {
+	@include opacity(.6);
+	color: $brand-primary;
 }

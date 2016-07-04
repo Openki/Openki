@@ -60,7 +60,7 @@ Template.event.events({
 		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
 			Meteor.call('removeEvent', this._id, function (error) {
 				if (error) {
-					addMessage(mf('event.remove.error', { TITLE: title }, 'Error during removal of event "{TITLE}".'), 'danger');
+					showServerError('Could not remove event ' + "'" + title + "'", error);
 				} else {
 					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
 					if (course) {
@@ -141,7 +141,7 @@ Template.eventGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
 		Meteor.call('event.promote', instance.data._id, event.target.value, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.addFailed'), 'danger');
+				showServerError('Failed to add group', error);
 			} else {
 				addMessage(mf('course.group.addedGroup'), 'success');
 				instance.collapse();
@@ -157,7 +157,7 @@ Template.eventGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('event.promote', instance.data.event._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeFailed'), 'danger');
+				showServerError('Failed to remove group', error);
 			} else {
 				addMessage(mf('course.group.removedGroup'), 'success');
 				instance.collapse();
@@ -173,7 +173,7 @@ Template.eventGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, true, function(error) {
 			if (error) {
-				addMessage(mf('course.group.makeOrganizerFailed'), 'danger');
+				showServerError('Failed to give group editing rights', error);
 			} else {
 				addMessage(mf('course.group.groupMadeOrganizer'), 'success');
 				instance.collapse();
@@ -189,7 +189,7 @@ Template.eventGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
 		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				addMessage(mf('course.group.removeOrganizerFailed'), 'danger');
+				showServerError('Failed to remove organizer status', error);
 			} else {
 				addMessage(mf('course.group.removedOrganizer'), 'success');
 				instance.collapse();

@@ -89,7 +89,7 @@ Template.resetPassword.events({
 		var token = Template.instance().data;
 		Accounts.resetPassword(token, password, function(err) {
 			if (err) {
-				addMessage(mf('resetPassword.errorMessage', { ERROR: err }, 'Unable to reset password: {ERROR}'), 'danger');
+				showServerError('Unable to reset password', err);
 			} else {
 				addMessage(mf('resetPassword.successMessage', 'Reset your password'), 'success');
 				Router.go('profile');
