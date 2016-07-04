@@ -95,7 +95,7 @@ minimongo@1.0.17
 mobile-status-bar@1.0.12
 modules@0.6.4
 modules-runtime@0.6.4_1
-momentjs:moment@2.12.0
+momentjs:moment@2.14.1
 mongo@1.1.9_1
 mongo-id@1.0.5
 mongo-livedata@1.0.12
