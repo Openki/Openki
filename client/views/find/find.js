@@ -283,7 +283,8 @@ Template.find.helpers({
 
 	'hasResults': function() {
 		var filterQuery = Template.instance().filter.toQuery();
-		var results = coursesFind(filterQuery, 36);
+		var results = coursesFind(filterQuery, 1);
+
 		return results.count() > 0;
 	},
 

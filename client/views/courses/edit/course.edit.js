@@ -76,18 +76,19 @@ Template.course_edit.helpers({
 		var filter = parentInstance.filter;
 		if (!filter) return false;
 
+		var search = filter.toParams().search;
+		if (!search) return false;
+
 		var filterQuery = filter.toQuery();
-		var results = coursesFind(filterQuery, 36);
+		var results = coursesFind(filterQuery, 1);
+		console.log(results.count());
 
-		var filterParams = filter.toParams();
-
-		return (results.count() === 0) && filterParams.search;
+		return (results.count() === 0) && search;
 	},
 
 	courseSearch: function() {
 		var parentInstance = Template.instance().parentInstance();
 		var filterParams = parentInstance.filter.toParams();
-		if (!filterParams) return false;
 
 		return filterParams.search;
 	}
