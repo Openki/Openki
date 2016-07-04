@@ -79,7 +79,7 @@ Template.course_edit.helpers({
 		var filterQuery = filter.toQuery();
 		var results = coursesFind(filterQuery, 36);
 
-		var filterParams = parentInstance.filter.toParams();
+		var filterParams = filter.toParams();
 
 		return (results.count() === 0) && filterParams.search;
 	},
