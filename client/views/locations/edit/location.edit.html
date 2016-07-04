@@ -13,107 +13,122 @@
 
 					<div class="form-group">
 						<label>{{mf 'location.edit.Name' 'Name:'}}</label>
-						<input
-							class="form-control"
-							type="text"
-							id="editform-name"
+						<input type="text" class="form-control"	id="editform-name"
 							placeholder="{{mf 'location.name.placeholder' 'Full name of location'}}"
 							size="60"
-							value="{{name}}"
-						/>
+							value="{{name}}">
 					</div>
 
 					<div class="form-group">
 						<label>{{mf 'location.edit.description' 'Description:'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-info-sign"></span>
+								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 							</span>
-							<div class="form-control editable-textarea"
-								id="editform-description"
+							<div class="form-control editable-textarea"	id="editform-description"
 								placeholder= "{{mf 'location.edit.description.placeholder' 'Some words about this location'}}"></div>
 							{{{description}}}
 						</div>
 					</div>
 
-					<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-hashtag"></span>
-						</span>
-						<input
-							class="form-control"
-							id="editform-short"
-							placeholder= "{{mf 'location.edit.short.placeholder' 'short name'}} {{mf '_inputField-optional'}}">
-						{{{short}}}
+					<div class="form-group">
+						<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
+							</span>
+							<input class="form-control"	id="editform-short"
+								placeholder= "{{mf 'location.edit.short.placeholder' 'short name'}} {{mf '_inputField-optional'}}">
+							{{{short}}}
+						</div>
 					</div>
 
 					{{#unless _id}}
-						<label>{{mf 'location.edit.region' 'Region:'}}</label>
-						<div class="input-group">
-							<select name='region' class="region_select">
-								<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
-							{{#each regions}}
-								<option value='{{_id}}' {{regionSel}}>{{name}}</option>
-							{{/each}}
-							</select>
+						<div class="form-group">
+							<label>{{mf 'location.edit.region' 'Region:'}}</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								</span>
+								<select name='region' class="form-control region_select">
+									<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
+								{{#each regions}}
+									<option value='{{_id}}' {{regionSel}}>{{name}}</option>
+								{{/each}}
+								</select>
+							</div>
 						</div>
 					{{/unless}}
 
-					<label>{{mf 'location.details.address' 'Address:'}}</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-map-marker"></span>
-						</span>
-						<input
-							class="form-control"
-							id="editform-address"
-							placeholder= "{{mf 'location.edit.address.placeholder' 'Street, City, State'}}">
-						{{{address}}}
-					</div>
-
-					<label>{{mf 'location.details.route'}}</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-map-signs"></span>
-						</span>
-						<input
-							class="form-control"
-							id="editform-address"
-							placeholder= "{{mf 'location.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
-						{{{route}}}
-					</div>
-
-					<div class="location_map">
-						{{>map markers=markers}}
-						<div class="coordinates">
-							{{coords}}
+					<div class="form-group">
+						<label>{{mf 'location.details.address' 'Address:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+							</span>
+							<input
+								class="form-control"
+								id="editform-address"
+								placeholder= "{{mf 'location.edit.address.placeholder' 'Street, City, State'}}">
+							{{{address}}}
 						</div>
 					</div>
 
-					<div class="input-group">
-						<label> <input
-							type="checkbox"
-							id="editform_visible"
-							checked>
-						{{mf 'location.edit.visible_in_list' 'Visible'}}
-						</label>
+					<div class="form-group">
+						<label>{{mf 'location.details.route'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-map-signs"></span>
+							</span>
+							<input
+								class="form-control"
+								id="editform-address"
+								placeholder= "{{mf 'location.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
+							{{{route}}}
+						</div>
 					</div>
 
-					<div class="input-group">
-						<label> <input
-							type="checkbox"
-							id="editform_publicspace" >
-							{{mf 'location.edit.public_space' 'Public Space'}}
-						</label>
+					<div class="form-group">
+						<div class="form-group-element">
+							<label>{{mf 'location.edit.visibility' 'Visibility'}}</label>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="editform_visible" checked>
+								{{mf 'location.edit.visible_in_list' 'Visible'}}
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="editform_publicspace">
+									{{mf 'location.edit.public_space' 'Public Space'}}
+								</label>
+							</div>
+						</div>
+						<div class="form-group-element">
+							<div class="location_map">
+								{{>map markers=markers}}
+								<div class="coordinates">
+									{{coords}}
+								</div>
+							</div>
+						</div>
 					</div>
 
-
-					<label>{{mf 'location.edit.optional_info' 'Optional Info'}}</label>
-
-					<p>{{mf 'location.edit.max_ppl' 'Max. People'}} <input type="text" id="editform_maxpeople" size="4" value="{{maxpeople}}"></p>
-					<p>{{mf 'location.edit.max_workplace' 'Max. Workplaces'}} <input type="text" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}"></p>
-
+					<div class="form-group">
+						<!-- <label>{{mf 'location.edit.optional_info' 'Optional Info'}}</label> -->
+						<div class="form-group-element">
+							<label>
+								{{mf 'location.edit.max_ppl' 'Max. People'}}
+							</label>
+							<input type="text" class="form-control" id="editform_maxpeople" size="4" value="{{maxpeople}}">
+						</div>
+						<div class="form-group-element">
+							<label>
+								{{mf 'location.edit.max_workplace' 'Max. Workplaces'}}
+							</label>
+							<input type="text" class="form-control" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}">
+						</div>
+					</div>
 
 					<div class="hosts">
 						<h2>
@@ -139,13 +154,9 @@
 							<span class="input-group-addon">
 								<span class="fa fa-user"></span>
 							</span>
-							<input
-								type="text"
-								id="add-host"
-								class="form-control js-user-search"
+							<input type="text" class="form-control js-user-search" id="add-host"
 								placeholder= "{{mf 'location.settings.add.member.placeholder' 'type name of buddy'}}"
-								size="40"
-							/>
+								size="40">
 						</div>
 						<ul>
 							{{#each foundUsers}}
@@ -161,14 +172,14 @@
 
 				</div>
 			</div>
-			<div class="locationEditFinishbtns">
-				<button type="button" class="save">
-					<span class="glyphicon glyphicon-save"></span>
-					{{mf 'location.edit.save_btn' 'Save'}}
+			<div class="form-actions">
+				<button type="button" class="btn btn-cancel">
+					<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+					{{mf '_button.cancel'}}
 				</button>
-				<button type="button" class="cancel">
-					<span class="glyphicon glyphicon-remove"></span>
-					{{mf 'location.edit.cancel_btn' 'Cancel'}}
+				<button type="button" class="btn btn-save">
+					<span class="fa fa-download fa-fw" aria-hidden="true"></span>
+					{{mf '_button.save'}}
 				</button>
 			</div>
 		</form>
