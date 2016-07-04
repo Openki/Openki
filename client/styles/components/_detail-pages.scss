@@ -29,6 +29,15 @@
 	padding-top: $form-group-margin-bottom;
 }
 
+.page-link {
+	display: block;
+}
+
+.page-link + .form-group,
+.page-link + .page-component {
+	margin-top: 10px;
+}
+
 .details-header {
 	padding: 10px $form-group-margin-bottom;
 }

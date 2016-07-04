@@ -1,10 +1,16 @@
 <template name="profile">
 	<div class="container-sm">
 		<div class="page-component">
-			<h1>{{mf 'login.frame.settings'}}</h1>
-			<a class="profile-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				{{mf 'login.frame.profile' 'Visit my profile'}}
-			</a>
+			<h1>
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings'}}
+			</h1>
+		</div>
+		<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+			<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+			{{mf 'login.frame.profile' 'Visit my profile'}}
+		</a>
+		<div class="page-component">
 			{{#if editing}}
 				<div class="details-form">
 					<form class="form-horizontal profile-info-edit">
