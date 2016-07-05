@@ -40,6 +40,7 @@ Router.map(function () {
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
+	this.sending = new ReactiveVar(false);
 };
 
 Template.profile.helpers({
@@ -49,6 +50,11 @@ Template.profile.helpers({
 	changingPass: function() {
 		return Template.instance().changingPass.get();
 	},
+
+	sending: function() {
+		return Template.instance().sending.get();
+	},
+
 	verifyDelete: function() {
 		return Session.get('verify') === 'delete';
 	},
@@ -146,9 +152,11 @@ Template.profile.events({
 		}
 	},
 
-	'click .js-verify-mail-btn': function () {
+	'click .js-verify-mail-btn': function (event, instance) {
+		instance.sending.set(true);
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
+				instance.sending.set(false);
 				showServerError('Failed to send verification mail', err);
 			} else {
 				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
