@@ -80,20 +80,25 @@
 								</div>
 								<div class="details-info-data">
 									{{user.email}}
-									<small> {{verifiedEmail}} </small>
+									<small style="margin: 1em; color: gray">
+										{{#if user.verified}}
+											<i class="fa fa-check-square" aria-hidden="true"></i>
+											{{mf 'profile.emailVerified' "verified"}}
+										{{/if}}
+									</small>
 								</div>
 							</div>
-						{{/if}}
-						{{#unless user.veryfiedEmailTrue}}
-						<div class="details-info-group">
-							<div class="details-info-btn">
-								<button type="button" class="btn btn-success js-verify-mail-btn">
-									<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-								</button>
+							{{#unless user.verified}}
+							<div class="details-info-group">
+								<div class="details-info-btn">
+									<button type="button" class="btn btn-success js-verify-mail-btn">
+										<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
+										{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+									</button>
+								</div>
 							</div>
-						</div>
-						{{/unless}}
+							{{/unless}}
+						{{/if}}
 						<div class="details-info-group">
 							<div class="details-info-label">
 								{{mf 'profile.highprivacy' 'High privacy'}}

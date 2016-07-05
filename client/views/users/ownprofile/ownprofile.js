@@ -20,11 +20,7 @@ Router.map(function () {
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
-					if(user.emails[0].verified){
-						userdata.verifiedEmail = 'verified';
-						userdata.verifiedEmailTrue = '1';
-					}
-					else userdata.verifiedEmail = 'not verified';
+					userdata.verified = !!user.emails[0].verified;
 				}
 
 				return {
@@ -151,6 +147,12 @@ Template.profile.events({
 	},
 
 	'click .js-verify-mail-btn': function () {
-		Meteor.call('sendVerificationEmail');
+		Meteor.call('sendVerificationEmail', function(err) {
+			if (err) {
+				showServerError('Failed to send verification mail', err);
+			} else {
+				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
+			}
+		});
 	}
 });
