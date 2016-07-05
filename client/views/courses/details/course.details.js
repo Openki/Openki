@@ -129,7 +129,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 });
 
 Template.courseDetailsPage.events({
-	'click .js-delete-course-btn': function () {
+	'click .js-delete-course': function () {
 		var self = this;
 		if (pleaseLogin()) return;
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
@@ -144,7 +144,7 @@ Template.courseDetailsPage.events({
 		}
 	},
 
-	'click .js-edit-course-btn': function () {
+	'click .js-edit-course': function () {
 		if (pleaseLogin()) return;
 		Router.go('showCourse', this, { query: {edit: 'course'} });
 	}

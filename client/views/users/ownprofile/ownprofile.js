@@ -71,7 +71,7 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	'click .js-profile-info-edit-btn': function(event, template) {
+	'click .js-profile-info-edit': function(event, template) {
 		Tooltips.hide();
 		Template.instance().editing.set(true);
 	},
@@ -90,7 +90,7 @@ Template.profile.events({
 		return false;
 	},
 
-	'click .js-profile-delete-btn': function (event, template) {
+	'click .js-profile-delete': function (event, template) {
 		Session.set('verify', 'delete');
 	},
 
@@ -101,7 +101,7 @@ Template.profile.events({
 		Session.set('verify', false);
 	},
 
-	'click .js-profile-delete-cancel-btn': function () {
+	'click .js-profile-delete-cancel': function () {
 		Session.set('verify', false);
 	},
 

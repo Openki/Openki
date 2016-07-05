@@ -71,14 +71,8 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				<button type="button" class="eventDelete btn btn-delete">
-					<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-					{{mf '_button.delete'}}
-				</button>
-				<button type="button" class="eventEdit btn btn-edit">
-					<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-					{{mf '_button.edit'}}
-				</button>
+				{{> buttonDelete event="js-event-delete"}}
+				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
 					<button type="button" class="-closeReplication btn btn-cancel">
 						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>

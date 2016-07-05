@@ -139,17 +139,9 @@
 				{{/if}}
 				<div class="actions">
 					{{#unless verifyDelete}}
-						<button type="button" class="btn btn-delete js-profile-delete-btn"
-							data-tooltip="{{mf 'profile.delete' 'Delete my account'}}">
-							<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-							{{mf '_button.delete'}}
-						</button>
+						{{> buttonDelete event="js-profile-delete"}}
 					{{/unless}}
-					<button type="button" class="btn btn-edit js-profile-info-edit-btn"
-						data-tooltip="{{mf 'profile.edit' 'Edit profile info'}}">
-						<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-						{{mf '_button.edit'}}
-					</button>
+						{{> buttonEdit event="js-profile-info-edit"}}
 					{{#unless changingPass}}
 						<button type="button" class="btn btn-default js-change-pwd-btn">
 							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
@@ -162,10 +154,7 @@
 				<div class="profile-delete-confirmation">
 					<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 					<div class="form-actions">
-						<button type="button" class="btn btn-default js-profile-delete-cancel-btn">
-							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-							{{mf '_button.cancel'}}
-						</button>
+						{{> buttonCancel event="js-profile-delete-cancel"}}
 						<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
 							<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}

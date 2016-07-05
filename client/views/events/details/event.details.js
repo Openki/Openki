@@ -54,7 +54,7 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
-	'click button.eventDelete': function () {
+	'click .js-event-delete': function () {
 		var title = this.title;
 		var course = this.courseId;
 		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
@@ -74,7 +74,7 @@ Template.event.events({
 		}
 	},
 
-	'click button.eventEdit': function (event, instance) {
+	'click .js-event-edit': function (event, instance) {
 		if (pleaseLogin()) return;
 		instance.editing.set(true);
 	},
