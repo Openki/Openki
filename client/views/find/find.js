@@ -149,7 +149,7 @@ Template.find.events({
 
 	'click .js-find-btn': function(event, instance) {
 		instance.filter.add('search', $('.js-search-input').val()).done();
-		updateURL(event, instance);
+		updateUrl(event, instance);
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
