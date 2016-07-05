@@ -122,7 +122,7 @@ Template.kioskLink.helpers({
 			options.query = queryString;
 		}
 
-		return Router.url('kiosk', {}, options);
+		return Router.url('kioskEvents', {}, options);
 	},
 });
 
