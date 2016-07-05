@@ -120,14 +120,8 @@
 				</div>
 
 				<div class="form-actions">
-					<button type="button" class="btn btn-cancel js-course-edit-cancel">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf '_button.cancel'}}
-					</button>
-					<button type="button" class="btn btn-save js-course-edit-save">
-						<i class="fa fa-download fa-fw" aria-hidden="true"></i>
-						{{mf 'course.edit.save_btn' 'Save'}}
-					</button>
+					{{> buttonCancel event="js-course-edit-cancel"}}
+					{{> buttonSave event="js-course-edit-save"}}
 				</div>
 			</div>
 		</form>

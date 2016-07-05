@@ -106,7 +106,8 @@ Template.course_edit.events({
 
 		if (pleaseLogin()) return;
 
-		var courseId = this._id ? this._id : '';
+		var course = instance.data;
+		var courseId = course._id ? course._id : '';
 		var isNew = courseId === '';
 
 		var roles = {};
@@ -163,9 +164,11 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click .js-course-edit-cancel': function(event) {
-		if (this._id) {
-			Router.go('showCourse', this);
+	'click .js-course-edit-cancel': function(event, instance) {
+		var course = instance.data;
+
+		if (course._id) {
+			Router.go('showCourse', course);
 		} else {
 			Router.go('/');
 		}

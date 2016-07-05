@@ -73,12 +73,12 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	'click .js-profile-info-edit-btn': function(event, template) {
+	'click .js-profile-info-edit': function(event, template) {
 		Tooltips.hide();
 		Template.instance().editing.set(true);
 	},
 
-	'click .js-profile-info-cancel-btn': function() {
+	'click .js-profile-info-cancel': function() {
 		Template.instance().editing.set(false);
 		return false;
 	},
@@ -87,12 +87,12 @@ Template.profile.events({
 		Template.instance().changingPass.set(true);
 	},
 
-	'click .js-change-pwd-cancel-btn': function() {
+	'click .js-change-pwd-cancel': function() {
 		Template.instance().changingPass.set(false);
 		return false;
 	},
 
-	'click .js-profile-delete-btn': function (event, template) {
+	'click .js-profile-delete': function (event, template) {
 		Session.set('verify', 'delete');
 	},
 
@@ -103,7 +103,7 @@ Template.profile.events({
 		Session.set('verify', false);
 	},
 
-	'click .js-profile-delete-cancel-btn': function () {
+	'click .js-profile-delete-cancel': function () {
 		Session.set('verify', false);
 	},
 

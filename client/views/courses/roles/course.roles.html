@@ -38,10 +38,7 @@
 						</div>
 					{{/if}}
 					<div class="form-actions">
-						<button type="button" class="btn btn-cancel js-role-enrol-cancel-btn">
-							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-							{{mf 'course.roles.cancelenrol'  'Cancel'}}
-						</button>
+						{{> buttonCancel event="js-role-enrol-cancel"}}
 						<button type="button" class="btn btn-save js-role-subscribe-btn">
 							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
 							{{mf 'course.roles.enrol' 'Enroll'}}

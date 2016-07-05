@@ -73,12 +73,12 @@ Template.groupSettings.events({
 				showServerError('Could not save settings', err);
 			} else {
 				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
-				instance.editingSettings.set(false);
+				instance.parentInstance().editingSettings.set(false);
 			}
 		});
 	},
 
 	'click .js-group-edit-cancel': function(event, instance) {
-		instance.editingSettings.set(false);
+		instance.parentInstance().editingSettings.set(false);
 	}
 });
