@@ -51,14 +51,8 @@
 							</div>
 						</div>
 						<div class="form-actions">
-							<button type="button" class="btn btn-cancel js-profile-info-cancel-btn">
-								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-								{{mf '_button.cancel'}}
-							</button>
-							<button type="submit" class="btn btn-save profile-info-save-btn">
-								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.input.save' "Save"}}
-							</button>
+							{{> buttonCancel event="js-profile-info-cancel"}}
+							{{> buttonSave}}
 						</div>
 					</form>
 				</div>
@@ -137,14 +131,8 @@
 							</div>
 						</div>
 						<div class="form-actions">
-							<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
-								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-								{{mf '_button.cancel'}}
-							</button>
-							<button type="submit" class="btn btn-save">
-								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.changePass' 'Change my password'}}
-							</button>
+							{{> buttonCancel event="js-change-pwd-cancel"}}
+							{{> buttonSave}}
 						</div>
 					</form>
 				</div>

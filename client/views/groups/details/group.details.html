@@ -52,14 +52,8 @@
 			</div>
 			{{#if isNew}}
 				<div class="actions">
-					<button type="button" class="btn btn-cancel js-group-cancel">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf '_button.cancel'}}
-					</button>
-					<button type="button" class="btn btn-save js-group-save">
-						<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-						{{mf '_button.save'}}
-					</button>
+					{{> buttonCancel event="js-group-cancel"}}
+					{{> buttonSave event="js-group-save"}}
 				</div>
 			{{/if}}
 			{{#if editingSettings}}

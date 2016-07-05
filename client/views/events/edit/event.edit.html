@@ -187,13 +187,8 @@
 			</div>
 
 			<div class="form-actions">
-				<button type="button" class="btn btn-cancel js-event-edit-cancel-btn">
-					{{mf '_button.cancel'}}
-				</button>
-				<button type="submit" class="btn btn-save">
-					<i class="fa fa-download fa-fw" aria-hidden="true"></i>
-					{{mf '_button.save'}}
-				</button>
+				{{> buttonCancel event="js-event-edit-cancel"}}
+				{{> buttonSave}}
 			</div>
 		</div>
 	</div>

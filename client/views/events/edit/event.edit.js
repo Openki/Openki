@@ -305,7 +305,7 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click .js-event-edit-cancel-btn': function (event, instance) {
+	'click .js-event-edit-cancel': function (event, instance) {
 		if (this.new) history.back();
 		instance.parent.editing.set(false);
 	},

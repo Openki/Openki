@@ -76,7 +76,7 @@ Template.profile.events({
 		Template.instance().editing.set(true);
 	},
 
-	'click .js-profile-info-cancel-btn': function() {
+	'click .js-profile-info-cancel': function() {
 		Template.instance().editing.set(false);
 		return false;
 	},
@@ -85,7 +85,7 @@ Template.profile.events({
 		Template.instance().changingPass.set(true);
 	},
 
-	'click .js-change-pwd-cancel-btn': function() {
+	'click .js-change-pwd-cancel': function() {
 		Template.instance().changingPass.set(false);
 		return false;
 	},

@@ -11,9 +11,7 @@
 						placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
 				</div>
 				<div class="form-actions">
-					<button type="button" class='btn btn-cancel js-report-cancel'>
-						{{mf 'report.cancel' 'Nevermind'}}
-					</button>
+					{{> buttonCancel event="js-report-cancel"}}
 					<button type="button" class='btn btn-save js-report-send'>
 						<i class="fa fa-send fa-fw" aria-hidden="true"></i>
 						{{mf 'report.report' 'Send report'}}
