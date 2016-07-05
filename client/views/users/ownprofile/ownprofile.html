@@ -44,7 +44,7 @@
 										<span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
 										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
 										<span class="help-block">
-											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}
+											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrol anonymously to courses (experimental)'}}
 										</span>
 									</label>
 								</div>
@@ -80,20 +80,29 @@
 								</div>
 								<div class="details-info-data">
 									{{user.email}}
-									<small> {{verifiedEmail}} </small>
+									<small style="margin: 1em; color: gray">
+										{{#if user.verified}}
+											<i class="fa fa-check-square" aria-hidden="true"></i>
+											{{mf 'profile.emailVerified' "verified"}}
+										{{/if}}
+									</small>
 								</div>
 							</div>
-						{{/if}}
-						{{#unless user.veryfiedEmailTrue}}
-						<div class="details-info-group">
-							<div class="details-info-btn">
-								<button type="button" class="btn btn-success js-verify-mail-btn">
-									<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-								</button>
+							{{#unless user.verified}}
+							<div class="details-info-group">
+								<div class="details-info-btn">
+								{{#if sending}}
+									{{mf 'profile.sendingVerificationMail' "We're sending a verification mail to your address, it should arrive shortly. Please click the link in that message."}}
+								{{else}}
+									<button type="button" class="btn btn-success js-verify-mail-btn">
+										<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
+										{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+									</button>
+								{{/if}}
+								</div>
 							</div>
-						</div>
-						{{/unless}}
+							{{/unless}}
+						{{/if}}
 						<div class="details-info-group">
 							<div class="details-info-label">
 								{{mf 'profile.highprivacy' 'High privacy'}}

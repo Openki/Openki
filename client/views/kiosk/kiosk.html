@@ -1,11 +1,4 @@
 <template name="kioskLayout">
-	{{#if showKioskCalendar}}
-		<a id ="backToKiosk" href="{{pathFor 'kiosk'}}" class="pull-right">
-			<span class="glyphicon glyphicon-share-alt"></span>&nbsp;
-			{{mf 'kiosk.kiosk_link' 'back to Kiosk mode'}}
-		</a>
-		<hr>
-	{{/if}}
 	{{> yield}}
 </template>
 

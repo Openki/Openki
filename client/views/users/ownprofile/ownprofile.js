@@ -20,11 +20,7 @@ Router.map(function () {
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
-					if(user.emails[0].verified){
-						userdata.verifiedEmail = 'verified';
-						userdata.verifiedEmailTrue = '1';
-					}
-					else userdata.verifiedEmail = 'not verified';
+					userdata.verified = !!user.emails[0].verified;
 				}
 
 				return {
@@ -44,6 +40,7 @@ Router.map(function () {
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
+	this.sending = new ReactiveVar(false);
 };
 
 Template.profile.helpers({
@@ -53,6 +50,11 @@ Template.profile.helpers({
 	changingPass: function() {
 		return Template.instance().changingPass.get();
 	},
+
+	sending: function() {
+		return Template.instance().sending.get();
+	},
+
 	verifyDelete: function() {
 		return Session.get('verify') === 'delete';
 	},
@@ -150,7 +152,15 @@ Template.profile.events({
 		}
 	},
 
-	'click .js-verify-mail-btn': function () {
-		Meteor.call('sendVerificationEmail');
+	'click .js-verify-mail-btn': function (event, instance) {
+		instance.sending.set(true);
+		Meteor.call('sendVerificationEmail', function(err) {
+			if (err) {
+				instance.sending.set(false);
+				showServerError('Failed to send verification mail', err);
+			} else {
+				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
+			}
+		});
 	}
 });

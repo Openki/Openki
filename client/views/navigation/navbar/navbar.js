@@ -52,8 +52,8 @@ Template.navbar.helpers({
 	},
 
 	activeClass: function(linkRoute) {
-		var routeName = Router.current().route.getName();
-		if (routeName === linkRoute) {
+		var route = Router.current().route;
+		if (route && route.getName() === linkRoute) {
 			return 'navbar-link-active';
 		} else {
 			return '';
