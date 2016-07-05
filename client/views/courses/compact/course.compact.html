@@ -16,7 +16,7 @@
 						{{> courseCategories}}
 					</div>
 					{{#if hasUpcomingEvents}}
-						{{> courseCompactEvents}}
+						{{> courseCompactEvent}}
 					{{else}}
 						{{> courseCompactRoles}}
 					{{/if}}
@@ -27,29 +27,25 @@
 	{{/if}}
 </template>
 
-<template name="courseCompactEvents">
-	<div class="course-compact-events">
+<template name="courseCompactEvent">
+	<div class="course-compact-event">
 		{{#with nextEvent}}
-			<div class="course-compact-events-date">
+			<div class="course-compact-event-date">
 				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 				{{dateformat_mini this.start}}
 			</div>
-			<div class="course-compact-events-time">
+			<div class="course-compact-event-time">
 				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 				{{timeformat this.start}}
 			</div>
 			{{this.description}}
 			{{#if this.location.name}}
-				<div class="course-compact-events-location">
+				<div class="course-compact-event-location">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>{{this.location.name}}</span>
 				</div>
 			{{/if}}
 		{{/with}}
-		{{#if additionalEvents}}
-			+ {{additionalEvents}}
-			<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-		{{/if}}
 	</div>
 </template>
 
