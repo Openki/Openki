@@ -234,7 +234,7 @@ Template.find.events({
 		}
 	},
 
-	"click .js-all-regions-btn": function(event, template){
+	"click .js-all-regions-btn": function(event, instance){
 		Session.set('region', 'all');
 	}
 });
@@ -306,8 +306,28 @@ Template.find.helpers({
 		return Template.instance().coursesReady.get();
 	},
 
-	'regionSelected': function() {
-		return (Session.get('region') != 'all');
+	'filteredRegion': function() {
+		return Template.instance().filter.get('region') || false;
+	},
+
+	'activeFilters': function() {
+		var activeFilters = Template.instance().filter;
+		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
+		for (var i = 0; i < filters.length; i++) {
+			var isActive = activeFilters.get(filters[i]) || false;
+			if (isActive) return true;
+		}
+		return false;
+	},
+
+	'searchIsLimited': function() {
+		var activeFilters = Template.instance().filter;
+		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories', 'region'];
+		for (var i = 0; i < filters.length; i++) {
+			var isActive = activeFilters.get(filters[i]) || false;
+			if (isActive) return true;
+		}
+		return false;
 	},
 
 	'isMobile': function() {
