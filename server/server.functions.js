@@ -1,5 +1,6 @@
 Meteor.methods({
 	update_userdata: function(username, email, privacy) {
+		check(email, String);
 		var user = Meteor.user();
 
 		var changes = {};
@@ -8,6 +9,7 @@ Meteor.methods({
 		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
 			// Working under the assumption that there is only one address
 			// if there was more than one address oops I accidentally your addresses
+			email = email.trim();
 			if (email && email.length > 3) {
 				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
 					throw new Meteor.Error('emailExists', 'Email address already in use');
