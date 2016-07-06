@@ -1,0 +1,24 @@
+<template name="frameSchedule">
+	<div class="frameSchedule">
+		<table>
+			<tr>
+				<th>{{mf 'schedule.header.hour' "Hour"}}</th>
+			{{#each weekdays}}
+				<th style="border-left: 1px solid black; padding: 0.1em">{{this}}</th>
+			{{/each}}
+			</tr>
+			{{#each hours}}
+			<tr style="border-top: 1px solid black">
+				<th style="vertical-align: top">{{hourFormat hour}}</th>
+				{{#each days}}
+				<td style="vertical-align: top; border-left: 1px solid black">
+					{{#each this}}
+					<a style="display: block; padding: 0.1em; margin: 0.1em; background-color: #aaa" href="{{pathFor  'showEvent'}}">{{title}}</a>
+					{{/each}}
+				</td>
+				{{/each}}
+			</tr>
+			{{/each}}
+		</table>
+	</div>
+</template>
