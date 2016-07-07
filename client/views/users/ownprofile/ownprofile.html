@@ -74,9 +74,9 @@
 								</div>
 								<div class="details-info-data">
 									{{user.email}}
-									<small style="margin: 1em; color: gray">
+									<small class="mail-verified">
 										{{#if user.verified}}
-											<i class="fa fa-check-square" aria-hidden="true"></i>
+											<span class="fa fa-check-square" aria-hidden="true"></span>
 											{{mf 'profile.emailVerified' "verified"}}
 										{{/if}}
 									</small>
