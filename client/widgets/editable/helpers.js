@@ -20,6 +20,7 @@ Template.editable.onRendered(function() {
 			placeholderText: mf('editable.link.placeholder', "Paste link here...")
 		},
 		autoLink: true,
+		buttonLabels: 'fontawesome'
 	};
 	if (this.data.simple) {
 		options.disableReturn = true;
