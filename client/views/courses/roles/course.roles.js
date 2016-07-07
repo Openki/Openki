@@ -50,7 +50,7 @@ Template.courseRole.events({
 		return false;
 	},
 
-	'click .js-role-enrol-cancel-btn': function (e, template) {
+	'click .js-role-enrol-cancel': function (e, template) {
 		template.enrolling.set(false);
 		return false;
 	},

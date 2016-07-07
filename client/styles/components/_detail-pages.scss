@@ -1,27 +1,37 @@
-.details-page-component {
+.page-component {
 	@include clearfix;
 }
 
-.details-page-component + .details-page-component {
+.page-component + .page-component {
 	margin-top: 15px;
 }
 
-.details-page-component > h2,
-.details-page-component > h3 {
+.page-component > h2,
+.page-component > h3 {
 	margin-bottom: $form-group-margin-bottom;
 	margin-top: 0;
 }
 
-.details-page-component > .btn:first-child {
+.page-component > .btn:first-child {
 	width: 100%;
 }
 
-.details-page-component > .frame-events {
+.page-component > .frame-events {
 	padding: 0;
 }
 
-.details-page-component > .form-group:last-child {
+.page-component > .form-group:last-child {
 	margin-bottom: 0;
+}
+
+.page-component-seperated {
+	border-top: 1px solid $openki-blue-lighter;
+	padding-top: $form-group-margin-bottom;
+}
+
+.page-link {
+	display: block;
+	margin-bottom: 10px;
 }
 
 .details-header {

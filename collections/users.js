@@ -131,6 +131,33 @@ Users.updateBadges = function(userId) {
 };
 
 Meteor.methods({
+	update_userdata: function(username, email, privacy) {
+		check(email, String);
+		var user = Meteor.user();
+
+		var changes = {};
+		if (user.username !== username) { changes.username = username; }
+		if (user.privacy !== privacy) { changes.privacy = !!privacy; }
+		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
+			// Working under the assumption that there is only one address
+			// if there was more than one address oops I accidentally your addresses
+			email = email.trim();
+			if (email && email.length > 3) {
+				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
+					throw new Meteor.Error('emailExists', 'Email address already in use');
+				}
+				changes.emails = [{ address: email, verified: false }];
+			} else {
+				changes.emails = [];
+			}
+		}
+		if (!_.isEmpty(changes)) {
+			Meteor.users.update(Meteor.userId(), {
+				$set: changes
+			});
+		}
+	},
+
 	delete_profile: function() {
 		var user = Meteor.user();
 		if (user) Meteor.users.remove({ _id: user._id });

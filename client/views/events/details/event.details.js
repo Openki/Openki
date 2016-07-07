@@ -54,11 +54,13 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
-	'click button.eventDelete': function () {
-		var title = this.title;
-		var course = this.courseId;
+	'click .js-event-delete': function (e, instance) {
+		var event = instance.data;
+		
+		var title = event.title;
+		var course = event.courseId;
 		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
-			Meteor.call('removeEvent', this._id, function (error) {
+			Meteor.call('removeEvent', event._id, function (error) {
 				if (error) {
 					showServerError('Could not remove event ' + "'" + title + "'", error);
 				} else {
@@ -74,7 +76,7 @@ Template.event.events({
 		}
 	},
 
-	'click button.eventEdit': function (event, instance) {
+	'click .js-event-edit': function (event, instance) {
 		if (pleaseLogin()) return;
 		instance.editing.set(true);
 	},

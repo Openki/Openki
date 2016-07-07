@@ -1,13 +1,17 @@
 <template name="course_edit">
 	<div class="course-edit">
 		<form>
-			{{#if _id}}
-				<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+			{{#if proposeFromQuery}}
+				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
 			{{else}}
-				<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
-				<span class="fa fa-info fa-fw" aria-hidden="true"></span>
-				{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
-				<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
+				{{#if _id}}
+					<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+				{{else}}
+					<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
+					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+					{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
+					<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
+				{{/if}}
 			{{/if}}
 			<div class="course-edit-body">
 				<div class="form-group">
@@ -116,14 +120,8 @@
 				</div>
 
 				<div class="form-actions">
-					<button type="button" class="btn btn-cancel js-course-edit-cancel">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf '_button.cancel'}}
-					</button>
-					<button type="button" class="btn btn-save js-course-edit-save">
-						<i class="fa fa-download fa-fw" aria-hidden="true"></i>
-						{{mf 'course.edit.save_btn' 'Save'}}
-					</button>
+					{{> buttonCancel event="js-course-edit-cancel"}}
+					{{> buttonSave event="js-course-edit-save"}}
 				</div>
 			</div>
 		</form>

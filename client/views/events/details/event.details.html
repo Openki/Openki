@@ -1,12 +1,10 @@
 <template name="eventPage">
 	<div class="container-sm">
 		{{#if course}}
-			<p>
-				<a href="{{pathFor 'showCourse' _id=course._id}}">
-					<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
-					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
-				</a>
-			</p>
+			<a class="page-link" href="{{pathFor 'showCourse' _id=course._id}}">
+				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+				{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+			</a>
 		{{/if}}
 		{{> event}}
 	</div>
@@ -25,7 +23,7 @@
 </template>
 
 <template name="eventDisplay">
-	<div class="details-page-component">
+	<div class="page-component">
 		<div class="details-header event-details-header">
 				<span class="day">{{weekday start}}</span><br>
 				<span class="date">
@@ -73,14 +71,8 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				<button type="button" class="eventDelete btn btn-delete">
-					<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-					{{mf '_button.delete'}}
-				</button>
-				<button type="button" class="eventEdit btn btn-edit">
-					<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-					{{mf '_button.edit'}}
-				</button>
+				{{> buttonDelete event="js-event-delete"}}
+				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
 					<button type="button" class="-closeReplication btn btn-cancel">
 						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
@@ -95,13 +87,13 @@
 			</div>
 		{{/if}}
 	</div>
-	<div class="details-page-component">
+	<div class="page-component">
 		<a href="{{pathFor 'calEvent' this}}">
 			<i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
 	</div>
-	<div class="details-page-component">
+	<div class="page-component">
 		{{> report}}
 	</div>
 </template>

@@ -2,11 +2,11 @@
 	<div class="container">
 		<div class="course-details-column-left">
 			{{#if edit}}
-				<div class="details-page-component">
+				<div class="page-component">
 					{{> course_edit course}}
 				</div>
 			{{else}}
-				<div class="details-page-component">
+				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						<div class="details-header">
 							{{#if editableName}}
@@ -34,14 +34,8 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								<button type="button" class="btn btn-delete js-delete-course-btn">
-									<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-									{{mf '_button.delete'}}
-								</button>
-								<button type="button" class="btn btn-edit js-edit-course-btn">
-									<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-									{{mf '_button.edit'}}
-								</button>
+								{{> buttonDelete event="js-delete-course"}}
+								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
@@ -58,13 +52,13 @@
 			{{#unless mobileViewport}}
 				{{> course_events}}
 			{{/unless}}
-			<div class="details-page-component">
+			<div class="page-component">
 				{{> courseMembers course}}
 			</div>
 			{{#if mobileViewport}}
 				{{> discussion course}}
 			{{/if}}
-			<div class="details-page-component">
+			<div class="page-component">
 				{{> report}}
 			</div>
 		</div>

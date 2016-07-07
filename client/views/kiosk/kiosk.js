@@ -57,33 +57,6 @@ Router.map(function () {
 			Meteor.clearInterval(this.timer);
 		}
 	});
-	this.route('kioskCalendar', {								///////// calendar /////////
-		path: '/kiosk/calendar',
-		template: 'calendar',
-		layoutTemplate: 'kioskLayout',
-		waitOn: function () {
-			var region = Session.get('region');
-			if (region === 'all') region = false;
-			return subs.subscribe('events', region);
-		},
-		data: function() {
-			var today = new Date();
-			return {
-				calendar_eventlist:      Events.find({start: {$gte:today}},{sort: {start: 1}}),
-				calendar_eventlist_past: Events.find({start: {$lt:today}},{sort: {start: -1}}),
-			};
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Kiosk-View';
-		}
-	});
-});
-
-Template.kioskLayout.helpers({
-	showKioskCalendar: function() {
-		var currentIsKiosk = Router.current().route.path();
-		if (currentIsKiosk != "/kiosk/events") return true;
-	}
 });
 
 Template.kioskEvents.helpers({
@@ -149,7 +122,7 @@ Template.kioskLink.helpers({
 			options.query = queryString;
 		}
 
-		return Router.url('kiosk', {}, options);
+		return Router.url('kioskEvents', {}, options);
 	},
 });
 

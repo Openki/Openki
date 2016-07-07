@@ -3,7 +3,7 @@
 		{{#if isNew}}
 			<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
 		{{/if}}
-		<div class="details-page-component group-details">
+		<div class="page-component group-details">
 			<div class="details-header group-details-header">
 				<div class="group-details-logo">
 					{{#if groupLogo group._id}}
@@ -20,7 +20,7 @@
 				{{#if mayEdit}}
 					<button type="button" class="close js-group-settings">
 						<span class="fa fa-cog" aria-hidden="true"
-							data-tooltip="{{mf 'group.settings.title' 'Group settings'}}">
+							data-tooltip="{{mf 'group.settings.title'}}">
 						</span>
 					</button>
 				{{/if}}
@@ -52,14 +52,8 @@
 			</div>
 			{{#if isNew}}
 				<div class="actions">
-					<button type="button" class="btn btn-cancel js-group-cancel">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf '_button.cancel'}}
-					</button>
-					<button type="button" class="btn btn-save js-group-save">
-						<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-						{{mf '_button.save'}}
-					</button>
+					{{> buttonCancel event="js-group-cancel"}}
+					{{> buttonSave event="js-group-save"}}
 				</div>
 			{{/if}}
 			{{#if editingSettings}}

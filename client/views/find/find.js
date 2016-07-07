@@ -149,7 +149,7 @@ Template.find.events({
 
 	'click .js-find-btn': function(event, instance) {
 		instance.filter.add('search', $('.js-search-input').val()).done();
-		updateURL(event, instance);
+		updateUrl(event, instance);
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
@@ -234,7 +234,7 @@ Template.find.events({
 		}
 	},
 
-	"click .js-all-regions-btn": function(event, template){
+	"click .js-all-regions-btn": function(event, instance){
 		Session.set('region', 'all');
 	}
 });
@@ -281,11 +281,19 @@ Template.find.helpers({
 		return groups[group];
 	},
 
+	'hasResults': function() {
+		var filterQuery = Template.instance().filter.toQuery();
+		var results = coursesFind(filterQuery, 1);
+
+		return results.count() > 0;
+	},
+
 	'results': function() {
 		var filterQuery = Template.instance().filter.toQuery();
 
 		return coursesFind(filterQuery, 36);
 	},
+
 
 	'eventResults': function() {
 		var filterQuery = Template.instance().filter.toQuery();
@@ -294,18 +302,32 @@ Template.find.helpers({
 		return eventsFind(filterQuery, 12);
 	},
 
-	'proposeNewBlurb': function() {
-		var instance = Template.instance();
-		var filter = instance.filter.toParams();
-		return !instance.showingFilters.get() && filter.search;
-	},
-
 	'ready': function() {
 		return Template.instance().coursesReady.get();
 	},
 
-	'regionSelected': function() {
-		return (Session.get('region') != 'all');
+	'filteredRegion': function() {
+		return Template.instance().filter.get('region') || false;
+	},
+
+	'activeFilters': function() {
+		var activeFilters = Template.instance().filter;
+		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
+		for (var i = 0; i < filters.length; i++) {
+			var isActive = activeFilters.get(filters[i]) || false;
+			if (isActive) return true;
+		}
+		return false;
+	},
+
+	'searchIsLimited': function() {
+		var activeFilters = Template.instance().filter;
+		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories', 'region'];
+		for (var i = 0; i < filters.length; i++) {
+			var isActive = activeFilters.get(filters[i]) || false;
+			if (isActive) return true;
+		}
+		return false;
 	},
 
 	'isMobile': function() {

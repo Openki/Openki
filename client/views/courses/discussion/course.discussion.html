@@ -1,5 +1,5 @@
 <template name="discussion">
-	<div class="details-page-component discussion">
+	<div class="page-component discussion">
 		<div class="course-details-component-titlebar">
 			<h4 class="course-details-component-heading">
 				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>
@@ -134,10 +134,7 @@
 					</div>
 				{{/if}}
 				<div class="form-actions">
-					<button type="button" class="btn btn-cancel js-discussion-cancel-btn">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf '_button.cancel'}}
-					</button>
+					{{> buttonCancel event="js-discussion-cancel"}}
 					<button type="submit" class="btn btn-save discussion-save-btn">
 						<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 						{{#if new}}

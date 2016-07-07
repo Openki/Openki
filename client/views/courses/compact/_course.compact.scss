@@ -124,7 +124,7 @@
 	}
 }
 
-.course-compact-events {
+.course-compact-event {
 	@include make-xs-column(4.5);
 	background: $brand-success;
 	color: $default-black;
@@ -136,22 +136,22 @@
 	top: -7px;
 }
 
-.course-compact-events-time,
-.course-compact-events-date {
+.course-compact-event-time,
+.course-compact-event-date {
 	@include make-xs-column(12);
 	padding: 0;
 }
 
-.course-compact-events-location {
+.course-compact-event-location {
 	padding: 0 4px;
 	word-break: break-all;
 }
 
-.course-compact-events-location span {
+.course-compact-event-location span {
 	display: inline;
 }
 
-.course-compact-events-location .glyphicon-home {
+.course-compact-event-location .glyphicon-home {
 	padding-right: 3px;
 }
 

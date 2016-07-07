@@ -37,12 +37,6 @@ Template.courseCompact.helpers({
 	}
 });
 
-Template.courseCompactEvents.helpers({
-	additionalEvents: function(){
-		return Math.max(this.futureEvents -1, 0);
-	},
-});
-
 Template.courseCompactRoles.helpers({
 	requiresMentor: function() {
 		if (!this.roles) return false;
