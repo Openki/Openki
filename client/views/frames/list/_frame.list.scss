@@ -1,0 +1,39 @@
+#frame-list-courses-title {
+	background-color: $openki-blue;
+	color: $default-white;
+	text-align: center;
+	padding: 10px;
+	margin: 0px;
+}
+
+.frame-list-courses {
+	@include make-xs-column(6);
+	padding: 2px;
+}
+
+.frame-list-courses h3 {
+	background: darken($openki-blue-lighter, 20%);
+	text-align: center;
+	padding: 5px;
+}
+
+.frame-list-courses ul {
+	@include list-unstyled;
+	background-color: lighten($openki-blue-lighter, 5%);
+	padding: 5px;
+
+	color: darken($openki-blue-lighter, 80%);
+	padding: 5px;
+}
+
+.frame-list-courses ul li{
+	padding: 2px 5px;
+	margin: 5px;
+	background-color: $openki-blue-lighter;
+	position: relative;
+	transition: box-shadow $default-transition-time;
+
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	}
+}
