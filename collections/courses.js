@@ -194,8 +194,11 @@ coursesFind = function(filter, limit) {
 	var find = {};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvent) {
-		find.nextEvent = { $ne: null };
+	if (filter.upcomingEvents === true) {
+		find.futureEvents = { $gt: 0 };
+	}
+	if (filter.upcomingEvents === false) {
+		find.futureEvents = 0;
 	}
 
 	var mustHaveRoles = [];
