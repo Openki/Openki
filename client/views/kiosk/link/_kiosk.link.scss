@@ -1,0 +1,34 @@
+.back-to-kiosk {
+	background-color: rgba(56, 130, 156, 0.31);
+	border-radius: 50%;
+	bottom: 80px;
+	height: 100px;
+	padding: 30px 20px 0;
+	position: fixed;
+	right: 50px;
+	text-align: center;
+	width: 100px;
+}
+
+.back-to-kiosk a {
+	color: $default-black;
+
+	&:hover {
+		color: $default-white;
+	}
+}
+
+.js-remove-back-to-kiosk {
+	@include opacity(.4);
+	background: none;
+	border: 0;
+	font-size: large;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+
+	&:hover {
+		@include opacity(1);
+		color: $brand-danger;
+	}
+}

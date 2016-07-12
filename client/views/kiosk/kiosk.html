@@ -3,8 +3,8 @@
 </template>
 
 <template name="kioskEvents">
-	<div class="kiosk">
-		<div class="kiosk_header">
+	<div class="kiosk container-fluid">
+		<div class="kiosk-header">
 			<div style='float:right'>
 				<h2 style='display:inline'>{{showTime}}</h2>
 				&nbsp;&nbsp;
@@ -157,20 +157,4 @@
 			</div>
 		</div>
 	</a>
-</template>
-
-<template name="kioskLink">
-{{#if link}}
-	<div class="container-fluid backToKioskLink" style="position: fixed; bottom: 4em; right: 2em; ">
-		<a href="">
-			<span class="glyphicon glyphicon-remove -removeBackLink"> </span>
-		</a>
-		<a href="{{link}}">
-			<span class="fa fa-circle"> </span>
-			<div class="text">
-				{{mf 'backToKiosk' 'Return to overview'}}
-			</div>
-		</a>
-	</div>
-{{/if}}
 </template>
