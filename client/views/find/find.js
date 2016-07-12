@@ -307,14 +307,14 @@ Template.find.helpers({
 	},
 
 	'filteredRegion': function() {
-		return Template.instance().filter.get('region') || false;
+		return !!Template.instance().filter.get('region');
 	},
 
 	'activeFilters': function() {
 		var activeFilters = Template.instance().filter;
 		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
 		for (var i = 0; i < filters.length; i++) {
-			var isActive = activeFilters.get(filters[i]) || false;
+			var isActive = !!activeFilters.get(filters[i]);
 			if (isActive) return true;
 		}
 		return false;
@@ -324,7 +324,7 @@ Template.find.helpers({
 		var activeFilters = Template.instance().filter;
 		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories', 'region'];
 		for (var i = 0; i < filters.length; i++) {
-			var isActive = activeFilters.get(filters[i]) || false;
+			var isActive = !!activeFilters.get(filters[i]);
 			if (isActive) return true;
 		}
 		return false;
