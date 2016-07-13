@@ -1,0 +1,160 @@
+//== Wrap
+//----------------------------------------
+.kiosk-event-wrap-ongoing {
+	@include make-xs-column(6);
+	@include make-sm-column(4);
+	@include make-md-column(2);
+	padding: ($grid-gutter-width / 8) ($grid-gutter-width / 4);
+}
+
+.kiosk-event-wrap-today,
+.kiosk-event-wrap-upcoming {
+	@include make-xs-column(6);
+	@include make-md-column(3);
+	@include make-lg-column(2.4);
+	padding: ($grid-gutter-width / 8) ($grid-gutter-width / 4);
+}
+
+//== Event
+//----------------------------------------
+.kiosk-event-ongoing {
+	height: $kiosk-event-ongoing-height;
+}
+
+.kiosk-event-today {
+	height: $kiosk-event-today-height;
+}
+
+.kiosk-event-upcoming {
+	height: $kiosk-event-upcoming-height;
+}
+
+//== Timecount
+//----------------------------------------
+.kiosk-event-timecount {
+	height: $kiosk-event-timecount-height;
+	padding: $timecount-padding-vertical ($grid-gutter-width / 3);
+}
+
+.kiosk-event-ongoing > .kiosk-event-timecount {
+	background-color: lighten($kiosk-event-ongoing-header-bg, 18%);
+}
+
+.kiosk-event-today > .kiosk-event-timecount,
+.kiosk-event-upcoming > .kiosk-event-timecount {
+	background-color: lighten($event-header-bg, 13%);
+}
+
+//== Header
+//----------------------------------------
+.kiosk-event-header {
+	color: $default-black;
+	font-size: medium;
+	height: $kiosk-event-header-height;
+	padding: 10px ($grid-gutter-width / 2);
+}
+
+
+.kiosk-event-ongoing > .kiosk-event-header {
+	background-color: $kiosk-event-ongoing-header-bg;
+}
+
+.kiosk-event-today > .kiosk-event-header {
+	height: $kiosk-event-today-header-height;
+}
+
+.kiosk-event-today > .kiosk-event-header,
+.kiosk-event-upcoming > .kiosk-event-header {
+	background-color: $event-header-bg;
+}
+
+//== Location name
+//----------------------------------------
+.kiosk-event-location {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.kiosk-event-today .kiosk-event-location,
+.kiosk-event-upcoming .kiosk-event-location {
+	float: right;
+	text-align: right;
+	width: 50%;
+}
+
+//== Body
+//----------------------------------------
+.kiosk-event-body {
+	margin-top: $event-body-margin;
+	padding: 10px ($grid-gutter-width / 2);
+}
+
+.kiosk-event-ongoing > .kiosk-event-body {
+	background-color: rgba(250, 150, 0, .3);
+	height: ($kiosk-event-ongoing-height
+	         - $kiosk-event-timecount-height
+	         - $kiosk-event-header-height
+	         - $event-body-margin);
+}
+
+.kiosk-event-today > .kiosk-event-body {
+	height: ($kiosk-event-today-height
+	         - $kiosk-event-timecount-height
+				   - $kiosk-event-today-header-height
+				   - $event-body-margin);
+}
+
+.kiosk-event-today > .kiosk-event-body,
+.kiosk-event-upcoming > .kiosk-event-body {
+	background-color: $event-bg;
+}
+
+.kiosk-event-upcoming > .kiosk-event-body {
+	height: ($kiosk-event-upcoming-height
+	         - $kiosk-event-header-height
+	         - $event-body-margin);
+}
+
+//== Title
+//----------------------------------------
+.kiosk-event-title {
+	color: $default-black;
+	font-size: $font-size-h3;
+	line-height: $headings-line-height;
+}
+
+.kiosk-event-ongoing .kiosk-event-title {
+	height: ($kiosk-event-ongoing-height
+	         - $kiosk-event-timecount-height
+	         - $kiosk-event-header-height
+	         - $event-body-margin
+					 - 20px);
+}
+
+.kiosk-event-today .kiosk-event-title {
+	height: $kiosk-event-today-title-height;
+}
+
+.kiosk-event-upcoming .kiosk-event-title {
+	height: $kiosk-event-upcoming-title-height;
+}
+
+//== Description
+//----------------------------------------
+.kiosk-event-today .kiosk-event-description {
+	height: ($kiosk-event-today-height
+	         - $kiosk-event-timecount-height
+				   - $kiosk-event-today-header-height
+				   - $event-body-margin
+					 - $kiosk-event-today-title-height
+					 - 20px);
+}
+
+.kiosk-event-upcoming .kiosk-event-description {
+	height: ($kiosk-event-upcoming-height
+				   - $kiosk-event-header-height
+				   - $event-body-margin
+					 - $kiosk-event-upcoming-title-height
+					 - 20px);
+}
