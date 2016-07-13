@@ -1,7 +1,11 @@
+//== Kiosk
+//----------------------------------------
 .kiosk {
 	margin: 25px 0;
 }
 
+//== Logo
+//----------------------------------------
 .kiosk-logo {
 	line-height: $line-height-base;
 	margin-right: 15px;
@@ -16,6 +20,8 @@
 	width: 50px;
 }
 
+//== Heading
+//----------------------------------------
 .kiosk-heading {
 	line-height: $line-height-base;
 	display: inline-block;
@@ -24,6 +30,8 @@
 	padding-bottom: 15px;
 }
 
+//== Region selection
+//----------------------------------------
 .kiosk-region-selection {
 	line-height: $line-height-base;
 	display: inline-block;
@@ -33,6 +41,8 @@
 	margin-top: 10px;
 }
 
+//== Clock
+//----------------------------------------
 .kiosk-clock {
 	line-height: $line-height-base;
 	float: right;
