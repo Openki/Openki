@@ -7,7 +7,7 @@ Template.layout.helpers({
 	},
 	translate: function() {
 		var route = Router.current().route;
-		return route && route.getName === "mfTrans";
+		return route && route.getName() === "mfTrans";
 	},
 
 	mayTranslate: function() {

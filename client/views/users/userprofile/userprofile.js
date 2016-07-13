@@ -150,7 +150,7 @@ Template.emailBox.events({
 		var revealAddress = template.$('#sendOwnAdress').is(':checked');
 		var receiveCopy = template.$('#receiveCopy').is(':checked');
 
-		if (message.length < '8') {
+		if (message.length < '2') {
 			alert(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}
