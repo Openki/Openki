@@ -101,8 +101,8 @@
 .kiosk-event-today > .kiosk-event-body {
 	height: ($kiosk-event-today-height
 	         - $kiosk-event-timecount-height
-				   - $kiosk-event-today-header-height
-				   - $event-body-margin);
+	         - $kiosk-event-today-header-height
+	         - $event-body-margin);
 }
 
 .kiosk-event-today > .kiosk-event-body,
@@ -129,7 +129,7 @@
 	         - $kiosk-event-timecount-height
 	         - $kiosk-event-header-height
 	         - $event-body-margin
-					 - 20px);
+	         - 20px);
 }
 
 .kiosk-event-today .kiosk-event-title {
@@ -145,16 +145,16 @@
 .kiosk-event-today .kiosk-event-description {
 	height: ($kiosk-event-today-height
 	         - $kiosk-event-timecount-height
-				   - $kiosk-event-today-header-height
-				   - $event-body-margin
-					 - $kiosk-event-today-title-height
-					 - 20px);
+	         - $kiosk-event-today-header-height
+           - $event-body-margin
+	         - $kiosk-event-today-title-height
+	         - 20px);
 }
 
 .kiosk-event-upcoming .kiosk-event-description {
 	height: ($kiosk-event-upcoming-height
-				   - $kiosk-event-header-height
-				   - $event-body-margin
-					 - $kiosk-event-upcoming-title-height
-					 - 20px);
+	         - $kiosk-event-header-height
+	         - $event-body-margin
+	         - $kiosk-event-upcoming-title-height
+	         - 20px);
 }
