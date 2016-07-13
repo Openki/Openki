@@ -169,8 +169,8 @@ $kiosk-event-header-height: 65px;
 $event-body-margin: 3px;
 $kiosk-event-today-title-height: 40px;
 $kiosk-event-upcoming-title-height: 40px;
-$kiosk-event-header-padding-vertical: 10px;
-$kiosk-event-body-padding-vertical: 10px;
+$kiosk-event-component-padding-vertical: ($grid-gutter-width / 3);
+$kiosk-event-component-padding-horizontal: ($grid-gutter-width / 2);
 
 
 //== Screen breakpoints
