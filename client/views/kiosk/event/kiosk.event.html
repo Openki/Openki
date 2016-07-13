@@ -15,15 +15,17 @@
 					{{#unless isOngoing}}
 						{{> kioskEventLocation}}
 					{{/unless}}
-					{{#if isUpcoming}}
-						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-						{{dateformat start}} <br>
-					{{/if}}
-					<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-					{{timeformat start}}
-					{{#unless isUpcoming}}
-						- {{timeformat end}}
-					{{/unless}}
+					<div class="kiosk-event-moment">
+						{{#if isUpcoming}}
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{dateformat start}} <br>
+						{{/if}}
+						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+						{{timeformat start}}
+						{{#unless isUpcoming}}
+							- {{timeformat end}}
+						{{/unless}}
+					</div>
 					{{#if isOngoing}}
 						{{> kioskEventLocation}}
 					{{/if}}

@@ -1,5 +1,5 @@
 .kiosk-event-list {
 	@include clearfix;
-	margin: (($grid-gutter-width / 8) * -1) (($grid-gutter-width / 4) * -1);
+	margin: ($kiosk-wrap-padding-vertical * -1) ($kiosk-wrap-padding-horizontal * -1);
 	width: auto;
 }

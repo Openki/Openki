@@ -4,7 +4,7 @@
 	@include make-xs-column(6);
 	@include make-sm-column(4);
 	@include make-md-column(2);
-	padding: ($grid-gutter-width / 8) ($grid-gutter-width / 4);
+	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
 }
 
 .kiosk-event-wrap-today,
@@ -12,7 +12,7 @@
 	@include make-xs-column(6);
 	@include make-md-column(3);
 	@include make-lg-column(2.4);
-	padding: ($grid-gutter-width / 8) ($grid-gutter-width / 4);
+	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
 }
 
 //== Event
@@ -33,7 +33,7 @@
 //----------------------------------------
 .kiosk-event-timecount {
 	height: $kiosk-event-timecount-height;
-	padding: $timecount-padding-vertical ($grid-gutter-width / 3);
+	padding: $timecount-padding-vertical $timecount-padding-horizontal;
 }
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
@@ -51,7 +51,7 @@
 	color: $default-black;
 	font-size: medium;
 	height: $kiosk-event-header-height;
-	padding: 10px ($grid-gutter-width / 2);
+	padding: $kiosk-event-header-padding-vertical ($grid-gutter-width / 2);
 }
 
 
@@ -68,30 +68,47 @@
 	background-color: $event-header-bg;
 }
 
-//== Location name
+//== Moment & Location
 //----------------------------------------
+.kiosk-event-moment,
 .kiosk-event-location {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
+.kiosk-event-today .kiosk-event-moment,
+.kiosk-event-today .kiosk-event-location,
+.kiosk-event-upcoming .kiosk-event-moment,
+.kiosk-event-upcoming .kiosk-event-location {
+	width: 50%;
+}
+
+//== Moment
+//----------------------------------------
+.kiosk-event-today .kiosk-event-moment,
+.kiosk-event-upcoming .kiosk-event-moment {
+	float: left;
+	text-align: left;
+}
+
+//== Location
+//----------------------------------------
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
 	float: right;
 	text-align: right;
-	width: 50%;
 }
 
 //== Body
 //----------------------------------------
 .kiosk-event-body {
 	margin-top: $event-body-margin;
-	padding: 10px ($grid-gutter-width / 2);
+	padding: $kiosk-event-body-padding-vertical ($grid-gutter-width / 2);
 }
 
 .kiosk-event-ongoing > .kiosk-event-body {
-	background-color: rgba(250, 150, 0, .3);
+	background-color: $kiosk-event-ongoing-body-bg;
 	height: ($kiosk-event-ongoing-height
 	         - $kiosk-event-timecount-height
 	         - $kiosk-event-header-height
@@ -129,7 +146,7 @@
 	         - $kiosk-event-timecount-height
 	         - $kiosk-event-header-height
 	         - $event-body-margin
-	         - 20px);
+	         - ($kiosk-event-body-padding-vertical * 2));
 }
 
 .kiosk-event-today .kiosk-event-title {
@@ -148,7 +165,7 @@
 	         - $kiosk-event-today-header-height
            - $event-body-margin
 	         - $kiosk-event-today-title-height
-	         - 20px);
+	         - ($kiosk-event-body-padding-vertical * 2));
 }
 
 .kiosk-event-upcoming .kiosk-event-description {
@@ -156,5 +173,5 @@
 	         - $kiosk-event-header-height
 	         - $event-body-margin
 	         - $kiosk-event-upcoming-title-height
-	         - 20px);
+	         - ($kiosk-event-body-padding-vertical * 2));
 }
