@@ -107,27 +107,3 @@ Template.kioskEventFuture.rendered = function() {
 		height: 60,
 	});
 };
-
-
-Template.kioskLink.helpers({
-	link: function() {
-		var filterParams = Session.get('kioskFilter');
-		if (!filterParams) return;
-
-		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		var queryString = UrlTools.paramsToQueryString(filterParams);
-
-		var options = {};
-		if (queryString.length) {
-			options.query = queryString;
-		}
-
-		return Router.url('kioskEvents', {}, options);
-	},
-});
-
-Template.kioskLink.events({
-	'click .-removeBackLink': function() {
-		return Session.set('kioskFilter', false);
-	}
-});
