@@ -43,14 +43,14 @@
 				</div>
 			{{/if}}
 			{{#if mobileViewport}}
-				{{> course_events}}
+				{{> courseEvents}}
 			{{else}}
 				{{> discussion course}}
 			{{/if}}
 		</div>
 		<div class="course-details-column-right">
 			{{#unless mobileViewport}}
-				{{> course_events}}
+				{{> courseEvents}}
 			{{/unless}}
 			<div class="page-component">
 				{{> courseMembers course}}

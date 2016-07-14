@@ -1,139 +1,57 @@
-.course_events {
-	@include make-xs-column(12);
+.course-events {
 	height: 400px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	padding: 0;
 	position: relative;
+}
 
-	.course_events_events {
-		@include make-xs-column(12);
-		left: -3px;
-		padding: 10px 0;
-		position: relative;
-		width: calc(#{'100% + 6px'});
-
-		.event-compact-withDate-container {
-			@include make-md-column(6);
-			padding: 0 3px 10px;
-		}
-	}
-
-	hr {
-		clear: both;
-		margin: 0;
+.container .course-events .event-compact-wrap {
+	@media (min-width: $screen-xs) {
+		@include make-xs-column(6);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
-.calendar_event,
-.calendar_event_past {
-	&:hover {
-		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-		z-index: 1029;
-	}
-}
-
-.course_events_fadebox {
-	height: 415px;
-	position: relative;
-
-	.fade_effect_top,
-	.fade_effect_bottom {
-		margin-left: -5px;
-		width: calc(#{'100% + 5px'});
-	}
-}
-
-.course_event_container,
-.course_event_past_container {
-	@include make-sm-column(6);
-	padding: 5px;
-}
-
-.course_event_past_container {
-	.course_event_date,
-	.event-details-body {
-		@include opacity(.6);
-	}
-}
-
-.courseEvents-titlebar {
-	@include make-xs-column(12);
-	background: $brand-primary;
-	border: 5px solid $brand-primary;
-	color: $body-bg;
-
-	h4 {
-		font-weight: bold;
-	}
-
-	& > .link {
-		color: $default-black;
-		position: absolute;
-		right: 10px;
-		top: -1px;
-	}
-}
-
-.course_event {
-	transition: box-shadow $default-transition-time;
-
-	a {
-		& > .course_event_date {
-			background: $brand-success;
-			border-bottom: 3px solid $default-white;
-			height: 70px;
-			padding: 10px 0;
-			white-space: nowrap;
-		}
-
-		.course_event_date .date {
-			font-size: large;
-		}
-
-		& > .course_event_time {
-			font-size: medium;
-			padding: 0 0 10px;
-		}
-
-		.course_event_time > span {
-			font-size: small;
-		}
-	}
-
-	& > a,
-	& > a:hover {
-		color: $default-black;
-		text-decoration: none;
-	}
-}
-
-input#eventEditTitle {
-	font-size: large;
-}
-
-.fade_effect_top {
-	background: none;
-	height: 40px;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
+.course-event-list {
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	width: auto;
 
 	@media (min-width: $screen-xs) {
-		@include gradient-vertical($body-bg, transparent);
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
 	}
 }
 
-.fade_effect_bottom {
+.course-details-component-titlebar + .course-event-list {
+	padding-top: 10px;
+}
+
+.course-event-list + .course-details-component-titlebar {
+	margin-top: 10px;
+}
+
+.fade-wrap {
+	position: relative;
+}
+
+.fade-top,
+.fade-bottom {
 	background: none;
+	left: 0;
+	position: absolute;
+	width: 100%;
+}
+
+.fade-top {
+	@include gradient-vertical($body-bg, transparent);
+	display: none;
+	height: 40px;
+	top: 0;
+}
+
+.fade-bottom {
+	@include gradient-vertical(transparent, $body-bg);
 	bottom: 0;
 	height: 40px;
-	left: 0;
-	position: absolute;
-	width: 100%;
-
-	@media (min-width: $screen-xs) {
-		@include gradient-vertical(transparent, $body-bg);
-	}
 }
