@@ -1,19 +1,9 @@
-.fade-wrap {
-	position: relative;
-}
-
 .course-events {
 	height: 400px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	padding: 0;
 	position: relative;
-
-
-	hr {
-		clear: both;
-		margin: 0;
-	}
 }
 
 .container .course-events .event-compact-wrap {
@@ -41,37 +31,27 @@
 	margin-top: 10px;
 }
 
-.past-events-link {
-	color: $default-black;
-	position: absolute;
-	right: 10px;
-	top: -1px;
+.fade-wrap {
+	position: relative;
 }
 
 .fade-top,
 .fade-bottom {
 	background: none;
 	left: 0;
-	margin-left: -5px;
 	position: absolute;
-	width: calc(#{'100% + 5px'});
+	width: 100%;
 }
 
 .fade-top {
+	@include gradient-vertical($body-bg, transparent);
 	display: none;
 	height: 40px;
 	top: 0;
-
-	@media (min-width: $screen-xs) {
-		@include gradient-vertical($body-bg, transparent);
-	}
 }
 
 .fade-bottom {
+	@include gradient-vertical(transparent, $body-bg);
 	bottom: 0;
 	height: 40px;
-
-	@media (min-width: $screen-xs) {
-		@include gradient-vertical(transparent, $body-bg);
-	}
 }
