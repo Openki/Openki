@@ -43,16 +43,16 @@
 
 //== Clock
 //----------------------------------------
-.kiosk-clock {
+.kiosk-moment {
 	line-height: $line-height-base;
 	float: right;
 }
 
-.kiosk-clock-time {
+.kiosk-moment-time {
 	font-size: $font-size-h2;
 }
 
-.kiosk-clock-date {
+.kiosk-moment-date {
 	font-size: $font-size-h4;
 	margin-left: 5px;
 }
