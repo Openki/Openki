@@ -1,13 +1,15 @@
 .back-to-kiosk {
-	background-color: rgba(56, 130, 156, 0.31);
+	background-color: $openki-blue-lighter;
 	border-radius: 50%;
-	bottom: 80px;
+	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+	bottom: 30px;
 	height: 100px;
 	padding: 30px 20px 0;
 	position: fixed;
 	right: 50px;
 	text-align: center;
 	width: 100px;
+	z-index: 1;
 }
 
 .back-to-kiosk a {
@@ -25,6 +27,7 @@
 	font-size: large;
 	position: absolute;
 	right: 0px;
+	text-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	top: 0px;
 
 	&:hover {
