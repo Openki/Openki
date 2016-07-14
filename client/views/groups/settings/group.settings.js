@@ -24,8 +24,8 @@ Template.groupSettings.helpers({
 	kioskEventURL: function() {
 		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
 	},
-	kioskTimetableURL: function() {
-		return Router.routes.kioskTimetable.url({}, { query: {group: this._id} });
+	timetableURL: function() {
+		return Router.routes.timetable.url({}, { query: {group: this._id} });
 	},
 	frameEventsURL: function() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
