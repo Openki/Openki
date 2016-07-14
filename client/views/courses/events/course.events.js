@@ -65,7 +65,7 @@ Template.courseEvents.events({
 		var visibleHeight = scrollableContainer.height();
 
 		// Compute height and subtract a possible deviation
-		var computedHeight = trueHeight - visibleHeight - 0.2;
+		var computedHeight = trueHeight - visibleHeight - 1;
 
 		if (scrollableContainer.scrollTop() === 0) {
 			instance.$(".fade-top").fadeOut(200);
