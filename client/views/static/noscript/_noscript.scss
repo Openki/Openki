@@ -1,31 +1,4 @@
 .noscript {
-	background: $openki-blue-lighter;
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-
-.noscript-message-box {
-	background: $brand-primary;
-	border: 3px solid $default-white;
-	height: 100px;
-	margin: auto;
-	position: relative;
-	top: calc(#{'50% - 100px'});
-	width: 300px;
-}
-
-.noscript-message-box img {
-	@include make-xs-column(4);
-	height: 95px;
-	padding: 0;
-}
-
-.noscript-message {
-	@include make-xs-column(8);
-	color: $default-white;
-	height: 100%;
-	padding: 15px;
+	margin-top: 50px;
+	text-align: center;
 }
