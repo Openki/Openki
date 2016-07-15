@@ -60,11 +60,11 @@ $discussion-thumb-width: 60;
 .discussion-edit-btn,
 .discussion-delete-btn {
 	@include header-btn;
-	color: $default-gray;
+	color: $gray-light;
 	float: right;
 
 	&:hover {
-		color: $default-black;
+		color: $gray-dark;
 	}
 }
 
@@ -77,7 +77,7 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-time {
-	color: $default-gray;
+	color: $gray-light;
 	cursor: default;
 }
 

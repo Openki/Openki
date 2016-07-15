@@ -15,7 +15,7 @@
 
 .course-role-title {
 	background: $user-bg;
-	color: $default-black;
+	color: $gray-dark;
 }
 
 .course-role-title-enrol {
@@ -35,6 +35,6 @@
 
 .course-role-enrol-options {
 	@include clearfix;
-	background: $openki-blue-lighter;
+	background: $blue-lighter;
 	padding: 15px 15px 0;
 }

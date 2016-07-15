@@ -51,7 +51,7 @@
 }
 
 .introduction-content {
-	border-top: 1px solid $default-light-grey;
+	border-top: 1px solid $gray-lighter;
 	margin-top: 5px;
 	padding: 12px ($grid-gutter-width / 2);
 }
@@ -95,7 +95,7 @@
 
 	&::after {
 		@include opacity(.5);
-		color: lighten($default-gray, 15%);
+		color: lighten($gray-light, 15%);
 		content: '';
 		font-family: FontAwesome;
 		font-size: 16px;

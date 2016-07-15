@@ -1,13 +1,13 @@
 .event-edit-location {
 	@include make-xs-column(12);
 	background-color: $location-edit-bg;
-	border: 1px solid $default-light-grey;
+	border: 1px solid $gray-lighter;
 	overflow: auto;
 	padding: 0;
 }
 
 .event-edit-location .input-group-addon {
-	border-color: $default-light-grey;
+	border-color: $gray-lighter;
 	border-style: solid;
 	border-width: 0 1px 0 0;
 

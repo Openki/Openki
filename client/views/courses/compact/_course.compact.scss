@@ -20,7 +20,7 @@
 }
 
 .course-compact {
-	border: $course-border-width dashed $openki-blue-lighter;
+	border: $course-border-width dashed $blue-lighter;
 	height: 150px;
 	position: relative;
 	transition-duration: $default-transition-time;
@@ -36,16 +36,16 @@
 	}
 
 	&.hasupcomingevents {
-		background: $openki-blue-lighter;
+		background: $blue-lighter;
 	}
 }
 
 .course-compact.hasupcomingevents > .course-compact-content {
-	background: $openki-blue-lighter;
+	background: $blue-lighter;
 }
 
 .course-compact h4 {
-	color: $default-black;
+	color: $gray-dark;
 	transition: color $default-transition-time;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .course-compact-name {
-	color: $default-black;
+	color: $gray-dark;
 	font-size: 22px;
 	line-height: 24px;
 	margin: 8px 0 0;
@@ -127,7 +127,7 @@
 .course-compact-event {
 	@include make-xs-column(4.5);
 	background: $brand-success;
-	color: $default-black;
+	color: $gray-dark;
 	max-height: 150px;
 	padding: 3px;
 	position: relative;

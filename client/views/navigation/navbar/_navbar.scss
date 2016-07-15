@@ -47,7 +47,7 @@
 
 .navbar-brand:hover > .site-name,
 .navbar-brand:hover > .site-stage {
-	color: $default-white;
+	color: $white;
 }
 
 .navbar-link {
@@ -80,7 +80,7 @@
 	border: 5px solid;
 	border-color:	transparent transparent $body-bg;
 	bottom: 0;
-	box-shadow: 0 5px 5px -5px #fff;
+	box-shadow: 0 5px 5px -5px $white;
 	height: 0;
 	left: 50%;
 	opacity: 0;

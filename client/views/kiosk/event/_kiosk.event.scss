@@ -37,7 +37,7 @@
 }
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
-	background-color: lighten($kiosk-event-ongoing-header-bg, 18%);
+	background-color: lighten($event-ongoing-header-bg, 18%);
 }
 
 .kiosk-event-today > .kiosk-event-timecount,
@@ -48,7 +48,7 @@
 //== Header
 //----------------------------------------
 .kiosk-event-header {
-	color: $default-black;
+	color: $gray-dark;
 	font-size: medium;
 	height: $kiosk-event-header-height;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
@@ -56,7 +56,7 @@
 
 
 .kiosk-event-ongoing > .kiosk-event-header {
-	background-color: $kiosk-event-ongoing-header-bg;
+	background-color: $event-ongoing-header-bg;
 }
 
 .kiosk-event-today > .kiosk-event-header {
@@ -108,7 +108,7 @@
 }
 
 .kiosk-event-ongoing > .kiosk-event-body {
-	background-color: $kiosk-event-ongoing-body-bg;
+	background-color: $event-ongoing-body-bg;
 	height: ($kiosk-event-ongoing-height
 	         - $kiosk-event-timecount-height
 	         - $kiosk-event-header-height
@@ -124,7 +124,7 @@
 
 .kiosk-event-today > .kiosk-event-body,
 .kiosk-event-upcoming > .kiosk-event-body {
-	background-color: $event-bg;
+	background-color: $event-body-bg;
 }
 
 .kiosk-event-upcoming > .kiosk-event-body {
@@ -136,7 +136,7 @@
 //== Title
 //----------------------------------------
 .kiosk-event-title {
-	color: $default-black;
+	color: $gray-dark;
 	font-size: $font-size-h3;
 	line-height: $headings-line-height;
 }

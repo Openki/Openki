@@ -49,7 +49,7 @@
 }
 
 .tab-content {
-	border-color: lighten($openki-blue-lighter, 0%);
+	border-color: lighten($blue-lighter, 0%);
 	border-style: solid;
 	border-width: 0 1px 1px;
 	position: relative;
@@ -75,13 +75,13 @@
 }
 
 .course-details > .details-header {
-	border-color: $openki-blue-lighter;
+	border-color: $blue-lighter;
 	border-style: dashed;
 	border-width: $course-border-width $course-border-width 0;
 }
 
 .course-details.proposal .course-details-nav {
-	border-color: $openki-blue-lighter;
+	border-color: $blue-lighter;
 	border-style: dashed;
 	border-width: 0 $course-border-width;
 }
@@ -95,7 +95,7 @@
 }
 
 .course-details.haspastevents .course-details-nav {
-	border-color: $openki-blue-lighter;
+	border-color: $blue-lighter;
 	border-style: solid;;
 	border-width: 0 $course-border-width;
 }
@@ -105,12 +105,12 @@
 }
 
 .course-details.hasupcomingevents > .details-header {
-	background: $openki-blue-lighter;
+	background: $blue-lighter;
 	border-width: 0;
 }
 
 .course-details.hasupcomingevents .course-details-nav {
-	background: $openki-blue-lighter;
+	background: $blue-lighter;
 }
 
 .course-details.hasupcomingevents .tab-content::after,

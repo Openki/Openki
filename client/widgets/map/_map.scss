@@ -31,7 +31,7 @@
 }
 
 .leaflet-marker-pane .leaflet-marker-icon .fa-map-marker {
-	color: #000;
+	color: $black;
 
 	&:hover {
 		cursor: grabbing;

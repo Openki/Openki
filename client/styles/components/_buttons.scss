@@ -82,11 +82,11 @@
 .remove-btn {
 	background-color: transparent;
 	border: 0;
-	color: $default-gray;
+	color: $gray-light;
 	padding: 0;
 
 	&:hover {
-		color: $default-black;
+		color: $gray-dark;
 		cursor: pointer;
 	}
 }

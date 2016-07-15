@@ -1,5 +1,5 @@
 .back-to-kiosk {
-	background-color: $openki-blue-lighter;
+	background-color: $blue-lighter;
 	border-radius: 50%;
 	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	bottom: 30px;
@@ -13,10 +13,10 @@
 }
 
 .back-to-kiosk a {
-	color: $default-black;
+	color: $gray-dark;
 
 	&:hover {
-		color: $default-white;
+		color: $white;
 	}
 }
 

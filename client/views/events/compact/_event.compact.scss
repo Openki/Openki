@@ -43,7 +43,7 @@
 }
 
 .event-compact {
-	background: $event-compact-bg;
+	background: $event-body-bg;
 	height: 200px;
 	position: relative;
 	transition: box-shadow $default-transition-time;
@@ -61,7 +61,7 @@
 }
 
 .event-compact-header {
-	background: $event-compact-header-bg;
+	background: $event-header-bg;
 	border-bottom: 1px solid $body-bg;
 	color: $event-compact-header-color;
 	height: 55px;

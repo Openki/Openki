@@ -12,8 +12,8 @@
 
 .actions {
 	@extend %actions;
-	background-color: $gray-lighter;
-	border-color: darken($gray-lighter, 3%);
+	background-color: $gray-lightest;
+	border-color: darken($gray-lightest, 3%);
 	border-style: solid;
 	border-width: 1px;
 	padding: 10px;

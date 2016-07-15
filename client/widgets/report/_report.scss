@@ -1,5 +1,46 @@
 .report {
-	background: $btn-warning-bg-custom;
-	border: 1px solid $btn-warning-border;
+	background: $report-bg;
+	border: 1px solid $report-border;
 	padding: $form-group-margin-bottom $form-group-margin-bottom 0;
+}
+
+.test {
+	font-size: large;
+	text-align: center;
+	height: 100px;
+	width: 100%;
+}
+
+.test-1 {
+	background-color: $green-dark;
+}
+
+.test-2 {
+	background-color: $green-darker;
+}
+.test-3 {
+	background-color: $role-occupied-text;
+}
+.test-4 {
+	background-color: darken(desaturate($green, 5%), 30%);
+}
+.test-5 {
+	background-color: DarkCyan;
+}
+
+.test-6 {
+	background-color: $gray-light;
+}
+.test-7 {
+	background-color: $gray-lighter;
+}
+.test-8 {
+	background-color: $gray-lighter;
+}
+
+.test-9 {
+	background-color: $category-bg;
+}
+.test-10 {
+	background-color: rgba($gray-lighter, .5);
 }
