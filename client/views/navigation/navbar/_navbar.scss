@@ -32,7 +32,7 @@
 
 .site-stage {
 	bottom: 2px;
-	color: $site-stage-color;
+	color: $gray-dark;
 	font-size: small;
 	font-weight: bold;
 	left: 105px;
@@ -51,7 +51,7 @@
 }
 
 .navbar-link {
-	font-size: $navbar-default-font-size;
+	font-size: large;
 	transition-duration: $default-transition-time;
 	transition-property: #{'background-color, box-shadow, text-shadow'};
 

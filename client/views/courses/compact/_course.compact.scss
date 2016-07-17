@@ -20,7 +20,7 @@
 }
 
 .course-compact {
-	border: $course-border-width dashed $blue-lighter;
+	border: $course-border-width $proposal-border-style $course-border-color;
 	height: 150px;
 	position: relative;
 	transition-duration: $default-transition-time;
@@ -28,36 +28,34 @@
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-		color: $brand-primary;
 	}
 
 	&.haspastevents {
-		border-style: solid;
+		border-style: $has-past-events-border-style;
 	}
 
 	&.hasupcomingevents {
-		background: $blue-lighter;
+		background: $has-upcoming-events-bg;
 	}
 }
 
 .course-compact.hasupcomingevents > .course-compact-content {
-	background: $blue-lighter;
+	background: $has-upcoming-events-bg;
 }
 
 .course-compact h4 {
-	color: $gray-dark;
 	transition: color $default-transition-time;
 }
 
 .course-compact:hover h4 {
-	color: $brand-primary;
+	color: $blue;
 }
 
 .filter-no-match {
 	opacity: .33;
 }
 
-.course-compact-name {
+.course-compact-title {
 	color: $gray-dark;
 	font-size: 22px;
 	line-height: 24px;
@@ -126,8 +124,8 @@
 
 .course-compact-event {
 	@include make-xs-column(4.5);
-	background: $brand-success;
-	color: $gray-dark;
+	background: $course-compact-event-bg;
+	color: $course-compact-event-color;
 	max-height: 150px;
 	padding: 3px;
 	position: relative;

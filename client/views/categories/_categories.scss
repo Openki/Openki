@@ -13,7 +13,7 @@
 
 .category-label {
 	background: $category-bg;
-	color: $brand-primary;
+	color: $category-color;
 	padding: 2px 5px;
 }
 
@@ -26,9 +26,9 @@
 	transition: box-shadow $default-transition-time;
 
 	&:hover {
-		background: $category-hover-bg;
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $category-hover-shadow;
-		color: $category-hover-text;
+		background: darken($category-bg, 10%);
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+		color: darken($category-color, 10%);
 		text-decoration: none;
 	}
 }

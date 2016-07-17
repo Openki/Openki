@@ -1,57 +1,38 @@
 // *** Variables ***
 //==================
 
-// ** Colors
+// ** Box shadow
 //========================================================================================
 $default-shadow:                                 rgba($gray-light, .4);
 
-// ** Navbar
-//========================================================================================
-$site-stage-color:                               $gray-dark;
-$navbar-link-covering-bg:                        lighten($navbar-default-bg, 10%);
-$navbar-default-font-size:                       large;
+$shadow-lg-offset-x:                             2px;
+$shadow-lg-offset-y:                             5px;
+$shadow-lg-blur:                                 8px;
 
-// ** Login
-//========================================================================================
-$login-bg:                                       $blue-lighter;
+$shadow-sm-offset-x:                             1px;
+$shadow-sm-offset-y:                             2px;
+$shadow-sm-blur:                                 4px;
 
 // ** Footer
 //========================================================================================
-$footer-default-bg:                              $navbar-default-bg;
-$footer-default-color:                           $navbar-default-color;
-$footer-default-link-color:                      $navbar-default-link-color;
-$footer-default-link-hover-color:                $navbar-default-link-hover-color;
-$footer-default-link-hover-bg:                   $navbar-link-covering-bg;
 $footer-height:                                  50px;
-$footer-default-font-size:                       $navbar-default-font-size;
 
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
-$group-text:                                     $blue;
-$group-hover-bg:                                 darken($group-bg, 10%);
-$group-hover-shadow:                             $default-shadow;
-$group-hover-text:                               $group-text;
+$group-color:                                    $blue;
+
+$group-member-bg:                                rgba($gray-light, .15);
 
 // ** Category
 //========================================================================================
 $category-bg:                                    rgba($gray-lighter, .5);
-$category-text:                                  $blue;
-$category-hover-bg:                              darken($category-bg, 10%);
-$category-hover-text:                            darken($category-text, 10%);
-$category-hover-shadow:                          $default-shadow;
+$category-color:                                 $blue;
 
 // ** Location
 //========================================================================================
 $location-bg:                                    desaturate($green, 40%);
-$location-text:                                  $red-darkest;
-$location-hover-bg:                              darken($location-bg, 4%);
-$location-hover-text:                            $location-text;
-$location-hover-shadow:                          $default-shadow;
-$location-description-bg:                        $blue-lighter;
-$location-edit-bg:                               $location-description-bg;
-$location-candidate-bg:                          darken($location-edit-bg, 5%);
-$location-candidate-hover-bg:                    darken($location-edit-bg, 10%);
+$location-color:                                 $red-darkest;
 
 // ** User
 //========================================================================================
@@ -65,11 +46,6 @@ $role-occupied-text:                             desaturate(darken($role-occupie
 $role-needed-bg:                                 $red;
 $role-needed-text:                               darken($role-needed-bg, 38%);
 
-// ** Introduction
-//========================================================================================
-$introduction-bg:                                lighten($gray-lightest, 5%);
-$introduction-hover-bg:                          darken($introduction-bg, 2%);
-
 // ** External services
 //========================================================================================
 $external-servies: (
@@ -81,13 +57,7 @@ $external-servies: (
 // ** Calendar
 //========================================================================================
 $calendar-header-bg:                             $blue-lighter;
-$calendar-header-text:                           $gray-dark;
 $calendar-navigation-bg:                         $blue-lighter;
-$calendar-btn-bg:                                $blue;
-$calendar-btn-text:                              $white;
-$calendar-btn-border:                            darken($calendar-btn-bg, 3%);
-$calendar-btn-hover-bg:                          darken($calendar-btn-bg, 5%);
-$calendar-btn-hover-border:                      darken($calendar-btn-border, 5%);
 
 // ** Map
 //========================================================================================
@@ -95,53 +65,38 @@ $map-leaflet-hover-fill:                         $yellow-dark;
 
 // ** Discussion
 //========================================================================================
-$discussion-conversation-bg:                     $blue-lighter;
 $discussion-post-bg:                             $blue-lighter;
-$discussion-post-header-bg:                      darken($discussion-post-bg, 5%);
-$discussion-post-border:                         darken($discussion-post-bg, 10%);
 $discussion-edit-bg:                             lighten($gray-lighter, 10%);
-$discussion-edit-header-bg:                      darken($discussion-edit-bg, 5%);
-$discussion-edit-border:                         darken($discussion-edit-bg, 10%);
-$discussion-post-new-bg:                         $brand-success;
-
-// ** Checkmark
-//========================================================================================
-$checkmark-color:                                $green-dark;
-
-// ** Courses
-//========================================================================================
-$course-border-width:                            7px;
 
 // ** Events
 //========================================================================================
 $event-body-bg:                                  $blue-lighter;
 $event-header-bg:                                $green;
-$event-header-color:                             $gray-dark;
-$event-title-color:                              $gray-dark;
-$event-description-color:                        $blue;
 
-$event-compact-header-color:                     $event-header-color;
-$event-compact-title-color:                      $event-title-color;
-$event-compact-description-color:                $event-description-color;
+$event-compact-header-color:                     $gray-dark;
 
 $event-ongoing-header-bg:                        $beige;
 $event-ongoing-body-bg:                          rgba($orange, .3);
+
+// ** Courses
+//========================================================================================
+$course-border-width:                            7px;
+$course-border-color:                            $blue-lighter;
+$has-upcoming-events-bg:                         $blue-lighter;
+$proposal-border-style:                          dashed;
+$has-past-events-border-style:                   solid;
+
+$course-compact-event-bg:                        $green;
+$course-compact-event-color:                     $gray-dark;
+
+$course-details-component-bg:                    $blue-lighter;
+$course-details-seperator-height:                3px;
 
 // ** Translate
 //========================================================================================
 $translate-trans:                                $green-dark;
 $translate-fuzzy:                                $yellow;
 $translate-untrans:                              $red-dark;
-
-// ** Box shadow
-//========================================================================================
-$shadow-lg-offset-x:                             2px;
-$shadow-lg-offset-y:                             5px;
-$shadow-lg-blur:                                 8px;
-
-$shadow-sm-offset-x:                             1px;
-$shadow-sm-offset-y:                             2px;
-$shadow-sm-blur:                                 4px;
 
 // ** Buttons
 //========================================================================================
@@ -156,9 +111,6 @@ $btn-background-colors: (
   warning:                                       $btn-warning-bg,
   danger:                                        $btn-danger-bg
 );
-
-$remove-btn-color:                               lighten($gray-light, 15%);
-$remove-btn-hover-color:                         $red;
 
 // ** Kiosk
 //========================================================================================
@@ -177,11 +129,6 @@ $kiosk-event-today-title-height:                 40px;
 $kiosk-event-upcoming-title-height:              40px;
 $kiosk-event-component-padding-vertical:         $grid-gutter-width / 3;
 $kiosk-event-component-padding-horizontal:       $grid-gutter-width / 2;
-
-// ** Report
-//========================================================================================
-$report-bg:                                      $yellow-light;
-$report-border:                                  darken($report-bg, 5%);
 
 // ** Screen breakpoints
 //========================================================================================

@@ -38,14 +38,12 @@
 }
 
 .calendar-week .week {
-	color: $calendar-header-text;
 	font-size: large;
 	line-height: .75;
 	margin: 7px 0 0;
 }
 
 .calendar-week .date {
-	color: $calendar-header-text;
 	font-size: small;
 	margin: 3px 0;
 }
@@ -59,8 +57,8 @@
 }
 
 .calendar-date {
-	background: $calendar-navigation-bg;
-	border-color: $brand-primary;
+	background: $blue-lighter;
+	border-color: $blue;
 	border-style: solid;
 	border-width: 10px 0 0;
 	box-shadow: 0 5px 5px rgba(0, 0, 0, .3);

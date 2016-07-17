@@ -8,18 +8,16 @@
 .course-role-title-enrol {
 	font-size: large;
 	line-height: 1.1;
-	margin-top: 3px;
 	padding: 10px ($grid-gutter-width / 2);
 	width: 100%;
 }
 
 .course-role-title {
 	background: $user-bg;
-	color: $gray-dark;
 }
 
 .course-role-title-enrol {
-	background: $brand-success;
+	background: $green;
 }
 
 .js-role-unsubscribe-btn {
@@ -35,6 +33,6 @@
 
 .course-role-enrol-options {
 	@include clearfix;
-	background: $blue-lighter;
+	background: $course-details-component-bg;
 	padding: 15px 15px 0;
 }

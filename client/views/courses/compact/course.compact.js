@@ -95,7 +95,7 @@ Template.courseCompact.events({
 });
 
 Template.courseCompact.rendered = function() {
-	this.$('.course-compact-name').dotdotdot({
+	this.$('.course-compact-title').dotdotdot({
 		height: 60,
 	});
 };

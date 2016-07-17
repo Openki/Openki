@@ -12,14 +12,14 @@
 
 %group-label {
 	background: $group-bg;
-	color: $group-text;
+	color: $group-color;
 	transition: all $default-transition-time;
 
 	&:hover,
 	&:focus {
-		background: $group-hover-bg;
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $group-hover-shadow;
-		color: $group-hover-text;
+		background: darken($group-bg, 10%);
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+		color: $group-color;
 	}
 }
 
@@ -34,7 +34,7 @@
 
 .group-label-addon {
 	background: $group-bg;
-	color: $group-text;
+	color: $group-color;
 	padding: 1px 1px 0;
 	vertical-align: middle;
 }

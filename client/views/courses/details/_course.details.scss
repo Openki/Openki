@@ -1,7 +1,9 @@
 .course-details-component-titlebar {
-	background: $brand-primary;
-	border: 5px solid $brand-primary;
-	color: $body-bg;
+	$background-color: $blue;
+
+	background: $background-color;
+	border: 5px solid $background-color;
+	color: $white;
 	padding: 0 ($grid-gutter-width / 2);
 }
 
@@ -49,14 +51,14 @@
 }
 
 .tab-content {
-	border-color: lighten($blue-lighter, 0%);
+	border-color: $course-details-component-bg;
 	border-style: solid;
 	border-width: 0 1px 1px;
 	position: relative;
 
 	&::before,
 	&::after {
-		border-top: 1px solid $brand-primary;
+		border-top: 1px solid $blue;
 		content: '';
 		height: 100%;
 		position: absolute;
@@ -75,14 +77,14 @@
 }
 
 .course-details > .details-header {
-	border-color: $blue-lighter;
-	border-style: dashed;
+	border-color: $course-border-color;
+	border-style: $proposal-border-style;
 	border-width: $course-border-width $course-border-width 0;
 }
 
 .course-details.proposal .course-details-nav {
-	border-color: $blue-lighter;
-	border-style: dashed;
+	border-color: $course-border-color;
+	border-style: $proposal-border-style;
 	border-width: 0 $course-border-width;
 }
 
@@ -91,12 +93,12 @@
 }
 
 .course-details.haspastevents > .details-header {
-	border-style: solid;
+	border-style: $has-past-events-border-style;
 }
 
 .course-details.haspastevents .course-details-nav {
-	border-color: $blue-lighter;
-	border-style: solid;;
+	border-color: $course-border-color;
+	border-style: $has-past-events-border-style;
 	border-width: 0 $course-border-width;
 }
 
@@ -105,12 +107,12 @@
 }
 
 .course-details.hasupcomingevents > .details-header {
-	background: $blue-lighter;
+	background: $has-upcoming-events-bg;
 	border-width: 0;
 }
 
 .course-details.hasupcomingevents .course-details-nav {
-	background: $blue-lighter;
+	background: $has-upcoming-events-bg;
 }
 
 .course-details.hasupcomingevents .tab-content::after,
@@ -151,10 +153,6 @@
 .course-details-btn {
 	@include btn-lg;
 	text-align: left;
-	margin-top: 3px;
+	margin-top: $course-details-seperator-height;
 	width: 100%;
-}
-
-.course-details-btn i {
-	margin-right: 5px;
 }

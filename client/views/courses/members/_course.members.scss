@@ -1,19 +1,14 @@
 .course-members {
-	background: $blue-lighter;
-	border-top: 3px solid $body-bg;
+	margin-top: $course-details-seperator-height;
 	font-size: medium;
 }
 
 .course-member {
+	background: $course-details-component-bg;
 	padding: 10px ($grid-gutter-width / 2);
-}
 
-.horizontal-line {
-	background: $body-bg;
-	height: 1px;
-
-	&:last-child {
-		display: none;
+	&:not(:last-child) {
+		margin-bottom: 1px;
 	}
 }
 
@@ -30,8 +25,8 @@
 }
 
 .course-member-roles li {
-	background: $brand-primary;
-	color: $body-bg;
+	background: $blue;
+	color: $white;
 	display: inline-block;
 	font-size: small;
 	font-weight: bold;
@@ -63,12 +58,4 @@
 
 .course-member-comment .editable {
 	padding-left: 0 !important;
-}
-
-.course-member-comment .editable-store,
-.course-member-comment .editable-cancel {
-	background: none;
-	border: 0;
-	color: $brand-primary;
-	display: inline-block;
 }

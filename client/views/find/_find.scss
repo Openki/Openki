@@ -1,5 +1,5 @@
 .find-heading {
-	color: $brand-primary;
+	color: $blue;
 	margin-top: 0;
 
 	@media (max-width: $screen-xs) {
@@ -32,7 +32,7 @@
 
 .filter-header {
 	border-bottom: 1px solid $blue-lighter;
-	color: $brand-primary;
+	color: $blue;
 	width: 100%;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .eventcaption_upcoming {
-	background: $blue-lighter;
+	background: $has-upcoming-events-bg;
 	display: inline-block;
 	height: 20px;
 	position: relative;
@@ -87,7 +87,7 @@
 }
 
 .eventcaption_upcoming_box {
-	background: $brand-success;
+	background: $course-compact-event-bg;
 	height: 10px;
 	position: absolute;
 	right: 0;
@@ -96,7 +96,7 @@
 }
 
 .eventcaption_upcoming_text {
-	background: $default-shadow;
+	background: $course-compact-event-color;
 	height: 1px;
 	left: 3px;
 	position: absolute;
@@ -138,7 +138,7 @@
 }
 
 .filter-categories > h4 {
-	color: $brand-primary;
+	color: $blue;
 	margin-top: 0;
 
 	@media (max-width: $screen-xs) {
@@ -180,7 +180,6 @@
 	padding: 5px 10px;
 
 	&:hover {
-		background-color: $body-bg;
 		cursor: default;
 	}
 }
@@ -207,7 +206,7 @@
 }
 
 .dropdown-menu > .js-sub-category {
-	border-left: 1px solid $dropdown-link-hover-bg;
+	border-left: 1px solid $blue-light;
 	display: none;
 	margin-left: 20px;
 }
@@ -222,7 +221,7 @@
 	padding: 0;
 
 	@media (max-width: $screen-xs) {
-		border: 1px solid $brand-success;
+		border: 1px solid $green;
 		border-radius: 4px;
 		margin-bottom: 10px;
 		padding: 5px;

@@ -1,10 +1,10 @@
 .discussion-conversation {
-	background: $discussion-conversation-bg;
+	background: $blue-lighter;
 	padding: 15px ($grid-gutter-width / 2) 10px;
 }
 
 .discussion > div:nth-child(3) {
-	border-top: 3px solid $body-bg;
+	border-top: $course-details-seperator-height solid $body-bg;
 }
 
 $discussion-thumb-width: 60;
@@ -32,7 +32,6 @@ $discussion-thumb-width: 60;
 
 .discussion-post-header,
 .discussion-edit-header {
-	border: 1px solid;
 	padding: 5px ($grid-gutter-width / 2);
 }
 
@@ -49,8 +48,7 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-header {
-	background: $discussion-post-header-bg;
-	border-color: $discussion-post-border;
+	background: darken($discussion-post-bg, 5%);
 }
 
 .discussion-post-header .profilelink {
@@ -59,7 +57,8 @@ $discussion-thumb-width: 60;
 
 .discussion-edit-btn,
 .discussion-delete-btn {
-	@include header-btn;
+	background: none;
+	border: 0;
 	color: $gray-light;
 	float: right;
 
@@ -82,7 +81,7 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-content {
-	border-color: $discussion-post-border;
+	border-color: darken($discussion-post-bg, 10%);
 }
 
 .discussion-post-title {
@@ -106,12 +105,11 @@ $discussion-thumb-width: 60;
 
 .discussion-edit-content {
 	background: $discussion-edit-bg;
-	border-color: $discussion-edit-border;
+	border-color: darken($discussion-edit-bg, 5%);
 }
 
 .discussion-edit-header {
-	background: $discussion-edit-header-bg;
-	border-color: $discussion-edit-border;
+	background: darken($discussion-edit-bg, 5%);
 }
 
 .discussion-reply {
@@ -119,8 +117,8 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-post-new {
-	background-color: $brand-success;
-	margin-top: 3px;
+	background-color: $green;
+	margin-top: $course-details-seperator-height;
 	padding: 10px ($grid-gutter-width / 2);
 	width: 100%;
 }
