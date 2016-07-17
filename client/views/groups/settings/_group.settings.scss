@@ -1,12 +1,8 @@
-.group-settings h2 {
-	margin-top: 8px;
-}
-
 .group-members {
 	@include list-unstyled;
 }
 
-.group-members > li {
+.group-member {
 	background-color: $group-member-bg;
 	display: inline-block;
 	margin-bottom: 5px;
@@ -25,7 +21,7 @@
 	background-color: $red;
 }
 
-.js-member-remove-btn span {
+.js-member-remove-btn .fa {
 	color: $red-darker;
 }
 
@@ -33,7 +29,7 @@
 	background-color: $green;
 }
 
-.js-member-add-btn span {
+.js-member-add-btn .fa {
 	color: $green-darker;
 }
 

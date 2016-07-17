@@ -61,11 +61,11 @@
 					</h3>
 					<ul class="group-members">
 						{{#each members}}
-							<li>
+							<li class="group-member">
 								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 								{{username this}}
 								<button type="button" class="js-member-remove-btn btn">
-									<span class="glyphicon glyphicon-remove" title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"></span>
+									<span class="fa fa-remove" title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"></span>
 								</button>
 							</li>
 						{{/each}}
@@ -85,7 +85,7 @@
 					</div>
 					<ul class="group-members">
 						{{#each foundUsers}}
-							<li>
+							<li class="group-member">
 								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 								{{username this._id}}
 								<button type="button" class="btn js-member-add-btn"
