@@ -107,8 +107,8 @@
 }
 
 .course-compact-next-event-location {
+	@include ellipsis;
 	padding: 0 4px;
-	word-break: break-all;
 }
 
 // ** Roles

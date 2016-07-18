@@ -76,9 +76,7 @@
 //========================================================================================
 .kiosk-event-moment,
 .kiosk-event-location {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	@include ellipsis;
 }
 
 .kiosk-event-today .kiosk-event-moment,
