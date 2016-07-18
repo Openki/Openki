@@ -1,3 +1,8 @@
+// *** Event compact ***
+//======================
+
+// ** Wrap
+//========================================================================================
 .event-compact-wrap {
 	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
@@ -42,6 +47,8 @@
 	}
 }
 
+// ** Compact
+//========================================================================================
 .event-compact {
 	background: $event-body-bg;
 	height: 200px;
@@ -57,10 +64,14 @@
 	height: 220px;
 }
 
+// ** Body
+//========================================================================================
 .event-compact-body {
 	padding: 5px;
 }
 
+// ** Header
+//========================================================================================
 .event-compact-header {
 	background: $event-header-bg;
 	border-bottom: $event-compact-seperator-height solid $body-bg;
@@ -73,11 +84,15 @@
 	margin-bottom: 5px;
 }
 
+// ** Title
+//========================================================================================
 .event-compact-title {
 	color: $gray-dark;
 	margin: 0 0 5px;
 }
 
+// ** Description
+//========================================================================================
 .event-compact-description {
 	color: $blue;
 	margin: 0;

@@ -1,5 +1,8 @@
-//== Wrap
-//----------------------------------------
+// *** Kiosk event ***
+//====================
+
+// ** Wrap
+//========================================================================================
 .kiosk-event-wrap-ongoing {
 	@include make-xs-column(6);
 	@include make-sm-column(4);
@@ -15,8 +18,8 @@
 	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
 }
 
-//== Event
-//----------------------------------------
+// ** Event
+//========================================================================================
 .kiosk-event-ongoing {
 	background-color: $event-ongoing-body-bg;
 }
@@ -35,8 +38,8 @@
 	background-color: $event-body-bg;
 }
 
-//== Timecount
-//----------------------------------------
+// ** Timecount
+//========================================================================================
 .kiosk-event-timecount {
 	padding: 2px ($grid-gutter-width / 3);
 }
@@ -50,8 +53,8 @@
 	background-color: lighten($event-header-bg, 13%);
 }
 
-//== Header
-//----------------------------------------
+// ** Header
+//========================================================================================
 .kiosk-event-header {
 	@include clearfix;
 	color: $gray-dark;
@@ -69,8 +72,8 @@
 	background-color: $event-header-bg;
 }
 
-//== Moment & Location
-//----------------------------------------
+// ** Moment & Location
+//========================================================================================
 .kiosk-event-moment,
 .kiosk-event-location {
 	overflow: hidden;
@@ -85,38 +88,38 @@
 	width: 50%;
 }
 
-//== Moment
-//----------------------------------------
+// ** Moment
+//========================================================================================
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
 	float: left;
 	text-align: left;
 }
 
-//== Location
-//----------------------------------------
+// ** Location
+//========================================================================================
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
 	float: right;
 	text-align: right;
 }
 
-//== Body
-//----------------------------------------
+// ** Body
+//========================================================================================
 .kiosk-event-body {
 	border-top: $event-compact-seperator-height solid $body-bg;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
 
-//== Title
-//----------------------------------------
+// ** Title
+//========================================================================================
 .kiosk-event-title {
 	color: $gray-dark;
 	margin: 0;
 }
 
-//== Description
-//----------------------------------------
+// ** Description
+//========================================================================================
 .kiosk-event-description {
 	margin: 0;
 }
