@@ -1,6 +1,6 @@
 <template name="courseDetailsPage">
 	<div class="container">
-		<div class="course-details-column-left">
+		<div class="course-page-column-left">
 			{{#if edit}}
 				<div class="page-component">
 					{{> course_edit course}}
@@ -11,7 +11,7 @@
 						<div class="details-header">
 							{{#if editableName}}
 								<div class="course-details-title">
-									{{>editable editableName}}
+									{{> editable editableName}}
 								</div>
 							{{else}}
 								<h2>{{course.name}}</h2>
@@ -22,14 +22,10 @@
 										{{> courseCategories}}
 									</div>
 								{{/if}}
-								<div class="course-details-groups">
-									{{> courseGroupList}}
-								</div>
+								{{> courseGroupList}}
 							{{/with}}
 						</div>
-						<div class="course-details-content">
-							{{> courseDetailsSubmenu}}
-						</div>
+						{{> courseDetailsSubmenu}}
 					</div>
 					{{#with course}}
 						{{#if currentUserMayEdit}}
@@ -48,7 +44,7 @@
 				{{> discussion course}}
 			{{/if}}
 		</div>
-		<div class="course-details-column-right">
+		<div class="course-page-column-right">
 			{{#unless mobileViewport}}
 				{{> courseEvents}}
 			{{/unless}}
@@ -67,7 +63,7 @@
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs course-details-nav-tabs">
 			<li role="presentation" class='active'>
 				<a href="#description" data-toggle="tab">
 					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
@@ -88,7 +84,7 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="tab-content">
+	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription}}
 		</div>

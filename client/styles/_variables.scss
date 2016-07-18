@@ -63,6 +63,10 @@ $calendar-nav-bg:                                $blue-lighter;
 //========================================================================================
 $map-leaflet-hover-fill:                         $yellow-dark;
 
+// ** Detail pages
+//========================================================================================
+$details-header-padding-horizontal:              15px;
+
 // ** Discussion
 //========================================================================================
 $discussion-post-bg:                             $blue-lighter;
@@ -91,8 +95,10 @@ $has-past-events-border-style:                   solid;
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-dark;
 
-$course-details-component-bg:                    $blue-lighter;
+$course-page-component-bg:                       $blue-lighter;
 $course-details-seperator-height:                3px;
+$course-details-content-bg:                      lighten($blue-lighter, 5%);
+$course-details-content-padding-horizontal:        ($details-header-padding-horizontal + $course-border-width);
 
 // ** Translate
 //========================================================================================

@@ -1,125 +1,79 @@
-.course-details-component-titlebar {
-	$background-color: $blue;
+// *** Course details ***
+//==================
 
-	background: $background-color;
-	border: 5px solid $background-color;
-	color: $white;
-	padding: 0 ($grid-gutter-width / 2);
-}
-
-.course-details-component-heading {
-	font-weight: bold;
-}
-
-.course-details-description {
-	font-size: medium;
-	margin-bottom: 0;
-}
-
-.course-details-description .editable {
-	max-height: 300px;
-	overflow: auto;
-}
-
-.course-details-column-left {
+// ** Column layout
+//========================================================================================
+.course-page-column-left {
 	@include make-sm-column(12);
 	@include make-md-column(8);
 	padding: 0;
 
 	@media (min-width: $screen-md) {
-		padding: 0 7.5px 0 0;
+		padding: 0 ($grid-gutter-width / 4) 0 0;
 	}
 }
 
-.course-details-column-right {
+.course-page-column-right {
 	@include make-sm-column(12);
 	@include make-md-column(4);
 	padding: 15px 0 0;
 
 	@media (min-width: $screen-md) {
-		padding: 0 0 0 7.5px;
+		padding: 0 0 0 ($grid-gutter-width / 4);
 	}
 }
 
-.course-details-column-left > div:first-child,
-.course-details-column-right > div:first-child {
+.course-page-column-left > div:first-child,
+.course-page-column-right > div:first-child {
 	padding-top: 0;
 }
 
-.course-details-nav {
-	padding: 0 15px;
+// ** Component header
+//========================================================================================
+.course-page-component-header {
+	$background-color: $blue;
+
+	background: $background-color;
+	color: $white;
+	padding: 15px;
 }
 
-.tab-content {
-	border-color: $course-details-component-bg;
-	border-style: solid;
-	border-width: 0 1px 1px;
-	position: relative;
-
-	&::before,
-	&::after {
-		border-top: 1px solid $blue;
-		content: '';
-		height: 100%;
-		position: absolute;
-		top: -1px;
-		width: (16px + $course-border-width);
-		z-index: 99;
-	}
-
-	&::before {
-		left: -1px;
-	}
-
-	&::after {
-		right: -1px;
-	}
+.course-page-component-header > h4 {
+	font-weight: bold;
+	margin: 0;
 }
 
-.course-details > .details-header {
+// ** Component buttons
+//========================================================================================
+.course-page-btn {
+	@include btn-lg;
+	text-align: left;
+	margin-top: $course-details-seperator-height;
+	width: 100%;
+}
+
+// ** Header
+//========================================================================================
+.proposal > .details-header,
+.has-past-events > .details-header {
 	border-color: $course-border-color;
-	border-style: $proposal-border-style;
 	border-width: $course-border-width $course-border-width 0;
 }
 
-.course-details.proposal .course-details-nav {
-	border-color: $course-border-color;
+.proposal > .details-header {
 	border-style: $proposal-border-style;
-	border-width: 0 $course-border-width;
 }
 
-.course-details.proposal .tab-content {
-	padding: 15px (15px + $course-border-width);
-}
-
-.course-details.has-past-events > .details-header {
+.has-past-events > .details-header {
 	border-style: $has-past-events-border-style;
 }
 
-.course-details.has-past-events .course-details-nav {
-	border-color: $course-border-color;
-	border-style: $has-past-events-border-style;
-	border-width: 0 $course-border-width;
-}
-
-.course-details.has-past-events .tab-content {
-	padding: 15px (15px + $course-border-width);
-}
-
-.course-details.has-upcoming-events > .details-header {
-	background: $has-upcoming-events-bg;
-	border-width: 0;
-}
-
-.course-details.has-upcoming-events .course-details-nav {
+.has-upcoming-events > .details-header {
 	background: $has-upcoming-events-bg;
 }
 
-.course-details.has-upcoming-events .tab-content::after,
-.course-details.has-upcoming-events .tab-content::before {
-	width: 16px;
-}
-
+// ** Title
+//========================================================================================
 .course-details-title {
 	font-size: 30px;
 	margin-bottom: 10px;
@@ -134,10 +88,8 @@
 	font-size: medium;
 }
 
-.course-details-title > * {
-	display: inline-block;
-}
-
+// ** Categories
+//========================================================================================
 .course-details-categories > ul {
 	margin-bottom: 0;
 }
@@ -150,9 +102,116 @@
 	}
 }
 
-.course-details-btn {
-	@include btn-lg;
-	text-align: left;
-	margin-top: $course-details-seperator-height;
-	width: 100%;
+// ** Navigation
+//========================================================================================
+.course-details-nav {
+	padding: 0 $details-header-padding-horizontal;
+}
+
+.proposal .course-details-nav,
+.has-past-events .course-details-nav {
+	border-color: $course-border-color;
+	border-width: 0 $course-border-width;
+}
+
+.proposal .course-details-nav {
+	border-style: $proposal-border-style;
+}
+
+.has-past-events .course-details-nav {
+	border-style: $has-past-events-border-style;
+}
+
+.has-upcoming-events .course-details-nav {
+	background: $has-upcoming-events-bg;
+}
+
+.course-details-nav-tabs > li {
+	z-index: 99;
+}
+
+.course-details-nav-tabs > li > a {
+	color: $gray-dark;
+
+	&:hover {
+		background-color: $blue-light;
+		border-bottom-width: 2px;
+		color: $white;
+	}
+}
+
+.course-details-nav-tabs > li.active > a,
+.course-details-nav-tabs > li.active > a:hover,
+.course-details-nav-tabs > li.active > a:focus {
+	background-color: $course-details-content-bg;
+	border-top: 3px solid $blue-light;
+}
+
+// ** Content
+//========================================================================================
+.course-details-content {
+	$background-color: $course-details-content-bg;
+	$border-width: 1px;
+
+	background-color: $background-color;
+	border-color: darken($background-color, 5%);
+	border-style: solid;
+	border-width: 0 $border-width $border-width;
+	position: relative;
+
+	&::before,
+	&::after {
+		border-top: $border-width solid $blue;
+		content: '';
+		height: 100%;
+		position: absolute;
+		top: $border-width * -1;
+		z-index: 99;
+	}
+
+	&::before {
+		left: $border-width * -1;
+	}
+
+	&::after {
+		right: $border-width * -1;
+	}
+}
+
+.proposal .course-details-content {
+	padding: 15px $course-details-content-padding-horizontal;
+}
+
+.has-past-events .course-details-content {
+	padding: 15px $course-details-content-padding-horizontal;
+}
+
+.proposal .course-details-content::after,
+.proposal .course-details-content::before,
+.has-past-events .course-details-content::after,
+.has-past-events .course-details-content::before {
+	width: $course-details-content-padding-horizontal;
+}
+
+.has-upcoming-events .course-details-content {
+	$padding-horizontal: $details-header-padding-horizontal;
+
+	padding: 15px $padding-horizontal;
+
+	&::after,
+	&::before {
+		width: $padding-horizontal;
+	}
+}
+
+// ** Description
+//========================================================================================
+.course-details-description {
+	font-size: medium;
+	margin-bottom: 0;
+}
+
+.course-details-description .editable {
+	max-height: 300px;
+	overflow: auto;
 }

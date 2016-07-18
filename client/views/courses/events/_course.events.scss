@@ -23,11 +23,11 @@
 	}
 }
 
-.course-details-component-titlebar + .course-event-list {
+.course-page-component-header + .course-event-list {
 	padding-top: 10px;
 }
 
-.course-event-list + .course-details-component-titlebar {
+.course-event-list + .course-page-component-header {
 	margin-top: 10px;
 }
 
