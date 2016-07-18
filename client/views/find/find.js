@@ -153,11 +153,11 @@ Template.find.events({
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
-		filterPreview(true, '.hasupcomingevents');
+		filterPreview(true, '.has-upcoming-events');
 	},
 
 	'mouseout .js-filter-upcoming-events': function() {
-		filterPreview(false, '.hasupcomingevents');
+		filterPreview(false, '.has-upcoming-events');
 	},
 
 	'mouseover .js-filter-needs-host': function() {

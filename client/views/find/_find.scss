@@ -87,7 +87,7 @@
 }
 
 .eventcaption_upcoming_box {
-	background: $course-compact-event-bg;
+	background: $course-compact-next-event-bg;
 	height: 10px;
 	position: absolute;
 	right: 0;
@@ -96,7 +96,7 @@
 }
 
 .eventcaption_upcoming_text {
-	background: $course-compact-event-color;
+	background: $course-compact-next-event-color;
 	height: 1px;
 	left: 3px;
 	position: absolute;
@@ -239,6 +239,10 @@
 	}
 }
 
+.category-label + .remove-btn {
+	margin-left: 5px;
+}
+
 .no-results {
 	font-size: large;
 	max-width: 400px;
@@ -250,4 +254,8 @@
 
 .no-results > .btn-group {
 	margin-top: 10px;
+}
+
+.filter-no-match {
+	opacity: .33;
 }

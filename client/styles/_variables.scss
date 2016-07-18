@@ -57,7 +57,7 @@ $external-servies: (
 // ** Calendar
 //========================================================================================
 $calendar-header-bg:                             $blue-lighter;
-$calendar-nav-bg:                         $blue-lighter;
+$calendar-nav-bg:                                $blue-lighter;
 
 // ** Map
 //========================================================================================
@@ -88,8 +88,8 @@ $has-upcoming-events-bg:                         $blue-lighter;
 $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
 
-$course-compact-event-bg:                        $green;
-$course-compact-event-color:                     $gray-dark;
+$course-compact-next-event-bg:                   $green;
+$course-compact-next-event-color:                $gray-dark;
 
 $course-details-component-bg:                    $blue-lighter;
 $course-details-seperator-height:                3px;

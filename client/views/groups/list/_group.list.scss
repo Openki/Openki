@@ -1,12 +1,12 @@
-.groups-list {
+.grouplist {
 	list-style: none;
 	margin-bottom: 0;
 	padding-left: 0;
 }
 
-.groups-list > li,
-.groups-list > .dropdown,
-.groups-list > li > .dropdown {
+.grouplist > li,
+.grouplist > .dropdown,
+.grouplist > li > .dropdown {
 	display: inline-block;
 }
 

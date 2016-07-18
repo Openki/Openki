@@ -5,8 +5,8 @@ Template.courseCompact.helpers({
 	},
 
 	courseState: function() {
-		if (this.nextEvent) return 'hasupcomingevents';
-		if (this.lastEvent) return 'haspastevents';
+		if (this.nextEvent) return 'has-upcoming-events';
+		if (this.lastEvent) return 'has-past-events';
 		return 'proposal';
 	},
 
@@ -95,7 +95,5 @@ Template.courseCompact.events({
 });
 
 Template.courseCompact.rendered = function() {
-	this.$('.course-compact-title').dotdotdot({
-		height: 60,
-	});
+	this.$('.course-compact-title').dotdotdot();
 };

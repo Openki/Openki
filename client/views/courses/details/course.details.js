@@ -116,8 +116,8 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return this.editableBy(Meteor.user());
 	},
 	coursestate: function() {
-		if (this.nextEvent) return 'hasupcomingevents';
-		if (this.lastEvent) return 'haspastevents';
+		if (this.nextEvent) return 'has-upcoming-events';
+		if (this.lastEvent) return 'has-past-events';
 		return 'proposal';
 	},
 	mobileViewport: function() {

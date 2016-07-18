@@ -92,31 +92,31 @@
 	padding: 15px (15px + $course-border-width);
 }
 
-.course-details.haspastevents > .details-header {
+.course-details.has-past-events > .details-header {
 	border-style: $has-past-events-border-style;
 }
 
-.course-details.haspastevents .course-details-nav {
+.course-details.has-past-events .course-details-nav {
 	border-color: $course-border-color;
 	border-style: $has-past-events-border-style;
 	border-width: 0 $course-border-width;
 }
 
-.course-details.haspastevents .tab-content {
+.course-details.has-past-events .tab-content {
 	padding: 15px (15px + $course-border-width);
 }
 
-.course-details.hasupcomingevents > .details-header {
+.course-details.has-upcoming-events > .details-header {
 	background: $has-upcoming-events-bg;
 	border-width: 0;
 }
 
-.course-details.hasupcomingevents .course-details-nav {
+.course-details.has-upcoming-events .course-details-nav {
 	background: $has-upcoming-events-bg;
 }
 
-.course-details.hasupcomingevents .tab-content::after,
-.course-details.hasupcomingevents .tab-content::before {
+.course-details.has-upcoming-events .tab-content::after,
+.course-details.has-upcoming-events .tab-content::before {
 	width: 16px;
 }
 

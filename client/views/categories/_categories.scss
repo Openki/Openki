@@ -1,24 +1,12 @@
-.course-categories {
-	line-height: 23px;
-	list-style: none;
-	margin-left: -2px;
-	padding-left: 0;
-}
+// *** Categories ***
+//===================
 
-.course-categories li {
-	display: inline-block;
-	margin: 2px;
-	position: relative;
-}
-
+// ** Label
+//========================================================================================
 .category-label {
 	background: $category-bg;
 	color: $category-color;
 	padding: 2px 5px;
-}
-
-.category-label + .remove-btn {
-	margin-left: 5px;
 }
 
 .js-category-label {
@@ -31,4 +19,19 @@
 		color: darken($category-color, 10%);
 		text-decoration: none;
 	}
+}
+
+// ** Course categories
+//========================================================================================
+.course-categories {
+	line-height: 23px;
+	list-style: none;
+	margin-left: -2px;
+	padding-left: 0;
+}
+
+.course-categories li {
+	display: inline-block;
+	margin: 2px;
+	position: relative;
 }
