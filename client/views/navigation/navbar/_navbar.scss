@@ -96,11 +96,11 @@
 }
 
 .navbar-link-active.calendar-link > .nav-marker-caret {
-	border-bottom-color: $calendar-navigation-bg;
+	border-bottom-color: $calendar-nav-bg;
 }
 
 .navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	background-color: $calendar-navigation-bg;
+	background-color: $calendar-nav-bg;
 	opacity: 1;
 }
 
