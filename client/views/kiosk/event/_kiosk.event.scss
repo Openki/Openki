@@ -18,22 +18,27 @@
 //== Event
 //----------------------------------------
 .kiosk-event-ongoing {
-	height: $kiosk-event-ongoing-height;
+	background-color: $kiosk-event-ongoing-body-bg;
 }
 
+.kiosk-event-ongoing,
 .kiosk-event-today {
-	height: $kiosk-event-today-height;
+	height: 200px;
 }
 
 .kiosk-event-upcoming {
-	height: $kiosk-event-upcoming-height;
+	height: 150px;
+}
+
+.kiosk-event-today,
+.kiosk-event-upcoming {
+	background-color: $event-bg;
 }
 
 //== Timecount
 //----------------------------------------
 .kiosk-event-timecount {
-	height: $kiosk-event-timecount-height;
-	padding: $timecount-padding-vertical $timecount-padding-horizontal;
+	padding: 2px ($grid-gutter-width / 3);
 }
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
@@ -48,19 +53,15 @@
 //== Header
 //----------------------------------------
 .kiosk-event-header {
+	@include clearfix;
 	color: $default-black;
 	font-size: medium;
-	height: $kiosk-event-header-height;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
 
 
 .kiosk-event-ongoing > .kiosk-event-header {
 	background-color: $kiosk-event-ongoing-header-bg;
-}
-
-.kiosk-event-today > .kiosk-event-header {
-	height: $kiosk-event-today-header-height;
 }
 
 .kiosk-event-today > .kiosk-event-header,
@@ -103,75 +104,19 @@
 //== Body
 //----------------------------------------
 .kiosk-event-body {
-	margin-top: $event-body-margin;
+	border-top: 3px solid $body-bg;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
-}
-
-.kiosk-event-ongoing > .kiosk-event-body {
-	background-color: $kiosk-event-ongoing-body-bg;
-	height: ($kiosk-event-ongoing-height
-	         - $kiosk-event-timecount-height
-	         - $kiosk-event-header-height
-	         - $event-body-margin);
-}
-
-.kiosk-event-today > .kiosk-event-body {
-	height: ($kiosk-event-today-height
-	         - $kiosk-event-timecount-height
-	         - $kiosk-event-today-header-height
-	         - $event-body-margin);
-}
-
-.kiosk-event-today > .kiosk-event-body,
-.kiosk-event-upcoming > .kiosk-event-body {
-	background-color: $event-bg;
-}
-
-.kiosk-event-upcoming > .kiosk-event-body {
-	height: ($kiosk-event-upcoming-height
-	         - $kiosk-event-header-height
-	         - $event-body-margin);
 }
 
 //== Title
 //----------------------------------------
 .kiosk-event-title {
 	color: $default-black;
-	font-size: $font-size-h3;
-	line-height: $headings-line-height;
-}
-
-.kiosk-event-ongoing .kiosk-event-title {
-	height: ($kiosk-event-ongoing-height
-	         - $kiosk-event-timecount-height
-	         - $kiosk-event-header-height
-	         - $event-body-margin
-	         - ($kiosk-event-component-padding-vertical * 2));
-}
-
-.kiosk-event-today .kiosk-event-title {
-	height: $kiosk-event-today-title-height;
-}
-
-.kiosk-event-upcoming .kiosk-event-title {
-	height: $kiosk-event-upcoming-title-height;
+	margin: 0;
 }
 
 //== Description
 //----------------------------------------
-.kiosk-event-today .kiosk-event-description {
-	height: ($kiosk-event-today-height
-	         - $kiosk-event-timecount-height
-	         - $kiosk-event-today-header-height
-           - $event-body-margin
-	         - $kiosk-event-today-title-height
-	         - ($kiosk-event-component-padding-vertical * 2));
-}
-
-.kiosk-event-upcoming .kiosk-event-description {
-	height: ($kiosk-event-upcoming-height
-	         - $kiosk-event-header-height
-	         - $event-body-margin
-	         - $kiosk-event-upcoming-title-height
-	         - ($kiosk-event-component-padding-vertical * 2));
+.kiosk-event-description {
+	margin: 0;
 }

@@ -156,19 +156,8 @@ $btn-background-colors: (
 // Kiosk
 $kiosk-wrap-padding-horizontal: ($grid-gutter-width / 4);
 $kiosk-wrap-padding-vertical: $kiosk-wrap-padding-horizontal;
-$kiosk-event-ongoing-height: 200px;
-$kiosk-event-today-height: 200px;
-$kiosk-event-upcoming-height: 150px;
-$timecount-padding-vertical: 2px;
-$timecount-padding-horizontal: ($grid-gutter-width / 3);
-$kiosk-event-timecount-height: 19px + ($timecount-padding-vertical * 2);
 $kiosk-event-ongoing-header-bg: rgba(251, 238, 148, 1);
 $kiosk-event-ongoing-body-bg: rgba(250, 150, 0, .3);
-$kiosk-event-today-header-height: 45px;
-$kiosk-event-header-height: 65px;
-$event-body-margin: 3px;
-$kiosk-event-today-title-height: 40px;
-$kiosk-event-upcoming-title-height: 40px;
 $kiosk-event-component-padding-vertical: ($grid-gutter-width / 3);
 $kiosk-event-component-padding-horizontal: ($grid-gutter-width / 2);
 

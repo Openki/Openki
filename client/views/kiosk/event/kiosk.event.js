@@ -13,11 +13,7 @@ Template.kioskEvent.helpers({
 });
 
 Template.kioskEvent.rendered = function() {
-	this.$('.kiosk-event-title').dotdotdot();
-
-	if (this.parentInstance().hasDescription) {
-		this.$('.kiosk-event-description').dotdotdot();
-	}
+	this.$('.kiosk-event').dotdotdot();
 };
 
 Template.kioskEventLocation.helpers({
