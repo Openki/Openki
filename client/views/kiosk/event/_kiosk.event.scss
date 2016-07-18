@@ -104,7 +104,7 @@
 //== Body
 //----------------------------------------
 .kiosk-event-body {
-	border-top: 3px solid $body-bg;
+	border-top: $event-compact-seperator-height solid $body-bg;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
 

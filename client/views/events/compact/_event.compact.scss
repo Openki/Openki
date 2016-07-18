@@ -53,18 +53,18 @@
 	}
 }
 
-.event-compact-header,
-.event-compact-title,
-.event-compact-description {
-	overflow: hidden;
-	word-break: break-all;
+.event-compact-with-date {
+	height: 220px;
+}
+
+.event-compact-body {
+	padding: 5px;
 }
 
 .event-compact-header {
 	background: $event-header-bg;
-	border-bottom: 1px solid $body-bg;
+	border-bottom: $event-compact-seperator-height solid $body-bg;
 	color: $event-compact-header-color;
-	height: 55px;
 	padding: 5px;
 }
 
@@ -73,24 +73,12 @@
 	margin-bottom: 5px;
 }
 
-.event-compact-with-date {
-	height: 220px;
-}
-
-.event-compact-with-date .event-compact-header {
-	height: 75px;
-}
-
 .event-compact-title {
 	color: $gray-dark;
-	font-size: medium;
-	max-height: 56px;
-	padding: 5px;
+	margin: 0 0 5px;
 }
 
 .event-compact-description {
 	color: $blue;
-	height: 85px;
-	margin-top: -3px;
-	padding: 0 5px 5px;
+	margin: 0;
 }
