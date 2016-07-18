@@ -1,7 +1,7 @@
 <template name="kioskEvent">
 	<div class="kiosk-event-wrap-{{timePeriod}}">
 		<a href="{{pathFor 'showEvent'}}">
-			<div class="kiosk-event-{{timePeriod}}">
+			<div class="kiosk-event kiosk-event-{{timePeriod}}">
 				{{#unless isUpcoming}}
 					<div class="kiosk-event-timecount">
 						<span class="fa fa-play-circle fa-fw" aria-hidden="true"></span>
@@ -31,13 +31,13 @@
 					{{/if}}
 				</div>
 				<div class="kiosk-event-body">
-					<div class="kiosk-event-title">
+					<h3 class="kiosk-event-title">
 						{{plain this.title}}
-					</div>
+					</h3>
 					{{#unless isOngoing}}
-						<div class="kiosk-event-description">
-							{{plain this.description}}
-						</div>
+						<p class="kiosk-event-description">
+							{{plain description}}
+						</p>
 					{{/unless}}
 				</div>
 			</div>
@@ -56,7 +56,7 @@
 			{{#unless showLocation}}
 				<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
 			{{/unless}}
-			{{this.room}}
+			{{room}}
 		{{/if}}
 	</div>
 </template>
