@@ -284,12 +284,14 @@ Meteor.methods({
 			}
 		}
 
-		Meteor.call('updateEventLocation', eventId);
-		Meteor.call('event.updateGroups', eventId);
+		if (Meteor.isServer) {
+			Meteor.call('updateEventLocation', eventId, logAsyncErrors);
+			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
+			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 
-		// the assumption is that all replicas have the same course if any
-		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
-		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
+			// the assumption is that all replicas have the same course if any
+			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, logAsyncErrors);
+		}
 
 		return eventId;
 	},
