@@ -194,10 +194,10 @@ coursesFind = function(filter, limit) {
 	var find = {};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvents === true) {
+	if (filter.upcomingEvent === true) {
 		find.futureEvents = { $gt: 0 };
 	}
-	if (filter.upcomingEvents === false) {
+	if (filter.upcomingEvent === false) {
 		find.futureEvents = 0;
 	}
 
