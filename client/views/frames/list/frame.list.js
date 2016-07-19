@@ -7,10 +7,10 @@ Router.map(function () {
 			var filter = Filtering(EventPredicates).read(this.params.query).done();
 
 			this.coursesWithEvents = filter.toParams();
-			this.coursesWithEvents.upcomingEvents = true;
+			this.coursesWithEvents.upcomingEvent = true;
 
 			this.coursesWithoutEvents = filter.toParams();
-			this.coursesWithoutEvents.upcomingEvents = false;
+			this.coursesWithoutEvents.upcomingEvent = false;
 
 			return [
 				Meteor.subscribe('coursesFind', this.coursesWithEvents, 25),
