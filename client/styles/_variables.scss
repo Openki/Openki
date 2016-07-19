@@ -153,6 +153,15 @@ $btn-background-colors: (
 	danger: $btn-danger-bg
 );
 
+// Kiosk
+$kiosk-wrap-padding-horizontal: ($grid-gutter-width / 4);
+$kiosk-wrap-padding-vertical: $kiosk-wrap-padding-horizontal;
+$kiosk-event-ongoing-header-bg: rgba(251, 238, 148, 1);
+$kiosk-event-ongoing-body-bg: rgba(250, 150, 0, .3);
+$kiosk-event-component-padding-vertical: ($grid-gutter-width / 3);
+$kiosk-event-component-padding-horizontal: ($grid-gutter-width / 2);
+
+
 //== Screen breakpoints
 //
 // --------------------------------------------------

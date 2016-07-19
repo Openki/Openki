@@ -1,0 +1,5 @@
+.kiosk-event-list {
+	@include clearfix;
+	margin: ($kiosk-wrap-padding-vertical * -1) ($kiosk-wrap-padding-horizontal * -1);
+	width: auto;
+}

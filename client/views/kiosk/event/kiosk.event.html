@@ -1,0 +1,62 @@
+<template name="kioskEvent">
+	<div class="kiosk-event-wrap-{{timePeriod}}">
+		<a href="{{pathFor 'showEvent'}}">
+			<div class="kiosk-event kiosk-event-{{timePeriod}}">
+				{{#unless isUpcoming}}
+					<div class="kiosk-event-timecount">
+						<span class="fa fa-play-circle fa-fw" aria-hidden="true"></span>
+						{{#if isOngoing}}
+							{{mf 'kiosk.started' 'Started'}}
+						{{/if}}
+						{{dateformat_fromnow start}}
+					</div>
+				{{/unless}}
+				<div class="kiosk-event-header">
+					{{#unless isOngoing}}
+						{{> kioskEventLocation}}
+					{{/unless}}
+					<div class="kiosk-event-moment">
+						{{#if isUpcoming}}
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{dateformat start}} <br>
+						{{/if}}
+						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+						{{timeformat start}}
+						{{#unless isUpcoming}}
+							- {{timeformat end}}
+						{{/unless}}
+					</div>
+					{{#if isOngoing}}
+						{{> kioskEventLocation}}
+					{{/if}}
+				</div>
+				<div class="kiosk-event-body">
+					<h3 class="kiosk-event-title">
+						{{plain this.title}}
+					</h3>
+					{{#unless isOngoing}}
+						<p class="kiosk-event-description">
+							{{plain description}}
+						</p>
+					{{/unless}}
+				</div>
+			</div>
+		</a>
+	</div>
+</template>
+
+<template name="kioskEventLocation">
+	<div class="kiosk-event-location">
+		{{#if showLocation}}
+			<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+			{{location.name}}
+			{{#if room}} - {{/if}}
+		{{/if}}
+		{{#if room}}
+			{{#unless showLocation}}
+				<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+			{{/unless}}
+			{{room}}
+		{{/if}}
+	</div>
+</template>
