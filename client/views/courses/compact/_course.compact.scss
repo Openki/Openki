@@ -131,17 +131,19 @@
 
 .course-compact-role-needed {
 	background-color: $role-needed-bg;
-	color: $role-needed-text;
+	color: $role-needed-color;
 }
 
 .course-compact-role-occupied {
-	background-color: $role-occupied-bg;
-	color: $role-occupied-text;
+	$background-color: $green;
+
+	background-color: $background-color;
+	color: desaturate(darken($background-color, 40%), 50%);
 }
 
 .course-compact-role-occupied-by-user {
 	background-color: $user-bg;
-	color: $user-text;
+	color: desaturate(darken($user-bg, 40%), 80%);
 }
 
 // ** Grouplist

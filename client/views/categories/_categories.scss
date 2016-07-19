@@ -3,9 +3,11 @@
 
 // ** Label
 //========================================================================================
+$category-label-color: $blue;
+
 .category-label {
 	background: $category-bg;
-	color: $category-color;
+	color: $category-label-color;
 	padding: 2px 5px;
 }
 
@@ -16,7 +18,7 @@
 	&:hover {
 		background: darken($category-bg, 10%);
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-		color: darken($category-color, 10%);
+		color: darken($category-label-color, 10%);
 		text-decoration: none;
 	}
 }

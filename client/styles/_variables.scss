@@ -20,14 +20,10 @@ $footer-height:                                  50px;
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
-$group-color:                                    $blue;
-
-$group-member-bg:                                rgba($gray-light, .15);
 
 // ** Category
 //========================================================================================
 $category-bg:                                    rgba($gray-lighter, .5);
-$category-color:                                 $blue;
 
 // ** Location
 //========================================================================================
@@ -37,52 +33,26 @@ $location-color:                                 $red-darkest;
 // ** User
 //========================================================================================
 $user-bg:                                        $blue-alternative;
-$user-text:                                      desaturate(darken($user-bg, 40%), 80%);
 
 // ** Roles
 //========================================================================================
-$role-occupied-bg:                               $green;
-$role-occupied-text:                             desaturate(darken($role-occupied-bg, 40%), 50%);
 $role-needed-bg:                                 $red;
-$role-needed-text:                               darken($role-needed-bg, 38%);
-
-// ** External services
-//========================================================================================
-$external-servies: (
-  google-plus:                                   #dd4b39,
-  facebook:                                      #3b5998,
-  github:                                        #333
-);
+$role-needed-color:                               darken($role-needed-bg, 38%);
 
 // ** Calendar
 //========================================================================================
-$calendar-header-bg:                             $blue-lighter;
 $calendar-nav-bg:                                $blue-lighter;
-
-// ** Map
-//========================================================================================
-$map-leaflet-hover-fill:                         $yellow-dark;
 
 // ** Detail pages
 //========================================================================================
 $details-header-padding-horizontal:              15px;
-
-// ** Discussion
-//========================================================================================
-$discussion-post-bg:                             $blue-lighter;
-$discussion-edit-bg:                             lighten($gray-lighter, 10%);
 
 // ** Events
 //========================================================================================
 $event-body-bg:                                  $blue-lighter;
 $event-header-bg:                                $green;
 
-$event-compact-header-color:                     $gray-dark;
-
 $event-compact-seperator-height:                 3px;
-
-$event-ongoing-header-bg:                        $beige;
-$event-ongoing-body-bg:                          rgba($orange, .3);
 
 // ** Courses
 //========================================================================================
@@ -97,14 +67,6 @@ $course-compact-next-event-color:                $gray-dark;
 
 $course-page-component-bg:                       $blue-lighter;
 $course-details-seperator-height:                3px;
-$course-details-content-bg:                      lighten($blue-lighter, 5%);
-$course-details-content-padding-horizontal:        ($details-header-padding-horizontal + $course-border-width);
-
-// ** Translate
-//========================================================================================
-$translate-trans:                                $green-dark;
-$translate-fuzzy:                                $yellow;
-$translate-untrans:                              $red-dark;
 
 // ** Buttons
 //========================================================================================
@@ -112,21 +74,10 @@ $btn-hover-level-start:                          3%;
 $btn-level-end:                                  6%;
 $btn-hover-level-end:                            9%;
 
-$btn-background-colors: (
-  default:                                       $btn-default-bg,
-  primary:                                       $btn-primary-bg,
-  success:                                       $btn-success-bg,
-  warning:                                       $btn-warning-bg,
-  danger:                                        $btn-danger-bg
-);
-
 // ** Kiosk
 //========================================================================================
 $kiosk-wrap-padding-horizontal:                  $grid-gutter-width / 4;
 $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
-
-$kiosk-event-component-padding-vertical:         $grid-gutter-width / 3;
-$kiosk-event-component-padding-horizontal:       $grid-gutter-width / 2;
 
 // ** Screen breakpoints
 //========================================================================================

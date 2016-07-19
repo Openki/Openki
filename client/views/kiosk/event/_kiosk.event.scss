@@ -21,7 +21,7 @@
 // ** Event
 //========================================================================================
 .kiosk-event-ongoing {
-	background-color: $event-ongoing-body-bg;
+	background-color: rgba($orange, .3);
 }
 
 .kiosk-event-ongoing,
@@ -44,6 +44,8 @@
 	padding: 2px ($grid-gutter-width / 3);
 }
 
+$event-ongoing-header-bg: $beige;
+
 .kiosk-event-ongoing > .kiosk-event-timecount {
 	background-color: lighten($event-ongoing-header-bg, 18%);
 }
@@ -55,6 +57,9 @@
 
 // ** Header
 //========================================================================================
+$kiosk-event-component-padding-vertical: $grid-gutter-width / 3;
+$kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
+
 .kiosk-event-header {
 	@include clearfix;
 	color: $gray-dark;

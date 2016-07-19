@@ -2,6 +2,8 @@
 	@include list-unstyled;
 }
 
+$group-member-bg: rgba($gray-light, .15);
+
 .group-member {
 	background-color: $group-member-bg;
 	display: inline-block;

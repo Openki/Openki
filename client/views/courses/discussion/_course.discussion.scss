@@ -40,6 +40,8 @@ $discussion-thumb-width: 60;
 	padding: 10px ($grid-gutter-width / 2) 0;
 }
 
+$discussion-post-bg: $blue-lighter;
+
 .discussion-post {
 	background: $discussion-post-bg;
 	display: table;
@@ -102,6 +104,8 @@ $discussion-thumb-width: 60;
 .discussion-comment + .discussion-reply {
 	padding-left: $discussion-thumb-width * 2 * 1px;
 }
+
+$discussion-edit-bg: lighten($gray-lighter, 10%);
 
 .discussion-edit-content {
 	background: $discussion-edit-bg;

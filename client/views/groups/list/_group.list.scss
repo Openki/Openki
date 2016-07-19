@@ -10,16 +10,18 @@
 	display: inline-block;
 }
 
+$group-label-color: $blue;
+
 %group-label {
 	background: $group-bg;
-	color: $group-color;
+	color: $group-label-color;
 	transition: all $default-transition-time;
 
 	&:hover,
 	&:focus {
 		background: darken($group-bg, 10%);
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-		color: $group-color;
+		color: $group-label-color;
 	}
 }
 
@@ -34,7 +36,7 @@
 
 .group-label-addon {
 	background: $group-bg;
-	color: $group-color;
+	color: $group-label-color;
 	padding: 1px 1px 0;
 	vertical-align: middle;
 }

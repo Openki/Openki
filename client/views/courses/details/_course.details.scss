@@ -140,6 +140,8 @@
 	}
 }
 
+$course-details-content-bg: lighten($blue-lighter, 5%);
+
 .course-details-nav-tabs > li.active > a,
 .course-details-nav-tabs > li.active > a:hover,
 .course-details-nav-tabs > li.active > a:focus {
@@ -150,11 +152,10 @@
 // ** Content
 //========================================================================================
 .course-details-content {
-	$background-color: $course-details-content-bg;
 	$border-width: 1px;
 
-	background-color: $background-color;
-	border-color: darken($background-color, 5%);
+	background-color: $course-details-content-bg;
+	border-color: darken($course-details-content-bg, 5%);
 	border-style: solid;
 	border-width: 0 $border-width $border-width;
 	position: relative;
@@ -177,6 +178,8 @@
 		right: $border-width * -1;
 	}
 }
+
+$course-details-content-padding-horizontal: ($details-header-padding-horizontal + $course-border-width);
 
 .proposal .course-details-content {
 	padding: 15px $course-details-content-padding-horizontal;
