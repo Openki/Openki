@@ -184,11 +184,11 @@ Template.find.events({
 		filterPreview(false, ('.'+this));
 	},
 
-	'mouseover .group': function() {
+	'mouseover .js-group-label': function() {
 		filterPreview(true, ('.'+this));
 	},
 
-	'mouseout .group': function() {
+	'mouseout .js-group-label': function() {
 		filterPreview(false, ('.'+this));
 	},
 
