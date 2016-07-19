@@ -1,3 +1,6 @@
+// *** Event location edit ***
+//============================
+
 .event-edit-location {
 	@include make-xs-column(12);
 	overflow: auto;
@@ -6,7 +9,6 @@
 
 .event-edit-location-search {
 	@include make-sm-column(6);
-	margin: 10px 0;
 	padding: 0 ($grid-gutter-width / 4) 0 0;
 }
 
@@ -15,7 +17,7 @@
 	padding-bottom: 5px;
 }
 
-.event-edit-location-selected > i {
+.event-edit-location-selected > .fa {
 	color: $green-darker;
 }
 
@@ -24,7 +26,8 @@
 }
 
 .event-edit-location-candidates {
-	padding: 5px 0;
+	margin: 0;
+	padding: 5px 0 0;
 }
 
 .event-edit-location-candidate {
@@ -51,7 +54,6 @@
 
 .event-edit-location-map {
 	@include make-sm-column(6);
-	margin: 10px 0;
 	padding: 0 0 0 ($grid-gutter-width / 4);
 
 	@media (max-width: $screen-xs) {
