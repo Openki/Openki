@@ -30,7 +30,7 @@ mongopid=`cat "${path}mongod.lock"`
 portfile="${path}METEOR-PORT"
 port=`cat "$portfile"`
 
-sshsock=$(tempfile)
+sshsock=$(mktemp)
 rm "$sshsock" # ugh SSH must create its own socket file but having the file created first is insecure, I'm just lazy
 
 ssh -M -S $sshsock -fnNT -L 27018:localhost:27017 $remote || fail "connecting to remote failed"
