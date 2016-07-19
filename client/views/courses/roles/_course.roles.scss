@@ -31,6 +31,11 @@
 	margin-bottom: 10px;
 }
 
+.course-role-enrol,
+.course-role-enrolled {
+	margin-top: $course-details-seperator-height;
+}
+
 .course-role-enrol-options {
 	@include clearfix;
 	background: $course-page-component-bg;

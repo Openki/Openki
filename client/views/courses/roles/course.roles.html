@@ -5,8 +5,8 @@
 </template>
 
 <template name="courseRole">
-	<div class="course-role{{#if enrolling}}-enrol{{/if}}">
-		{{#if subscribed}}
+	{{#if subscribed}}
+		<div class="course-role-enrolled">
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
@@ -15,7 +15,9 @@
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
-		{{else}}
+		</div>
+	{{else}}
+		<div class="course-role{{#if enrolling}}-enrol{{/if}}">
 			{{#if enrolling}}
 				<div class="course-role-title-enrol">
 					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
@@ -53,6 +55,6 @@
 					</button>
 				{{/if}}
 			{{/if}}
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 </template>
