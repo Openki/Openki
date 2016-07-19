@@ -73,6 +73,7 @@
 // ** Header
 //========================================================================================
 .event-compact-header {
+	@include ellipsis;
 	background: $event-header-bg;
 	border-bottom: $event-compact-seperator-height solid $body-bg;
 	color: $gray-dark;
