@@ -30,6 +30,7 @@
 // Frames
 @import 'frames/calendar/frame.calendar';
 @import 'frames/events/frame.events';
+@import 'frames/list/frame.list';
 
 // Groups
 @import 'groups/details/group.details';
@@ -41,6 +42,9 @@
 
 // Kiosk
 @import 'kiosk/kiosk';
+@import 'kiosk/event/kiosk.event';
+@import 'kiosk/link/kiosk.link';
+@import 'kiosk/list/kiosk.list';
 
 // Locations
 @import 'locations/location';

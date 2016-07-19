@@ -194,8 +194,11 @@ coursesFind = function(filter, limit) {
 	var find = {};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvent) {
-		find.nextEvent = { $ne: null };
+	if (filter.upcomingEvent === true) {
+		find.futureEvents = { $gt: 0 };
+	}
+	if (filter.upcomingEvent === false) {
+		find.futureEvents = 0;
 	}
 
 	var mustHaveRoles = [];
@@ -473,39 +476,41 @@ Meteor.methods({
 		/* Changes we want to perform */
 		var set = {};
 
-		_.each(Roles.find().fetch(), function(roletype) {
-			var type = roletype.type;
-			var should_have = roletype.preset || changes.roles && changes.roles[type];
-			var have = course.roles.indexOf(type) !== -1;
+		if (changes.roles) {
+			_.each(Roles.find().fetch(), function(roletype) {
+				var type = roletype.type;
+				var should_have = roletype.preset || changes.roles && changes.roles[type];
+				var have = course.roles.indexOf(type) !== -1;
 
-			if (have && !should_have) {
-				Courses.update(
-					{ _id: courseId },
-					{ $pull: { roles: type }},
-					checkUpdateOne
-				);
-
-				// HACK
-				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
-				// so we keep removing one by one until there are none left
-				while(Courses.update(
-					{ _id: courseId, "members.roles": type },
-					{ $pull: { 'members.$.roles': type }}
-				));
-			}
-			if (!have && should_have) {
-				if (isNew) {
-					set.roles = set.roles || [];
-					set.roles.push(type);
-				} else {
+				if (have && !should_have) {
 					Courses.update(
 						{ _id: courseId },
-						{ $addToSet: { roles: type }},
+						{ $pull: { roles: type }},
 						checkUpdateOne
 					);
+
+					// HACK
+					// due to a mongo limitation we can't { $pull { 'members.roles': type } }
+					// so we keep removing one by one until there are none left
+					while(Courses.update(
+						{ _id: courseId, "members.roles": type },
+						{ $pull: { 'members.$.roles': type }}
+					));
 				}
-			}
-		});
+				if (!have && should_have) {
+					if (isNew) {
+						set.roles = set.roles || [];
+						set.roles.push(type);
+					} else {
+						Courses.update(
+							{ _id: courseId },
+							{ $addToSet: { roles: type }},
+							checkUpdateOne
+						);
+					}
+				}
+			});
+		}
 
 		if (changes.description) {
 			set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody  -- Mao */

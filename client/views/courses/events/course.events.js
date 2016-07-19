@@ -1,4 +1,25 @@
-Template.course_events.helpers({
+Template.courseEvents.onCreated(function() {
+	var instance = this;
+	var courseId = this.data.course._id;
+
+	subs.subscribe('eventsForCourse', courseId);
+
+	instance.haveEvents = function() {
+		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
+	};
+
+	instance.ongoingEvents = function() {
+		return eventsFind({ course: courseId, ongoing: minuteTime.get() });
+	};
+
+	instance.futureEvents = function() {
+		return eventsFind({ course: courseId, after: minuteTime.get() }, 4);
+	};
+
+	instance.hasScrolled = new ReactiveVar(false);
+});
+
+Template.courseEvents.helpers({
 	mayAdd: function() {
 		return this.course.editableBy(Meteor.user());
 	},
@@ -21,53 +42,38 @@ Template.course_events.helpers({
 
 	haveFutureEvents: function() {
 		return Template.instance().futureEvents().count() > 0;
-	},
+	}
 });
 
-
-Template.course_events.onCreated(function() {
-	var instance = this;
-	var courseId = this.data.course._id;
-
-	subs.subscribe('eventsForCourse', courseId);
-
-	instance.haveEvents = function() {
-		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
-	};
-
-	instance.ongoingEvents = function() {
-		return eventsFind({ course: courseId, ongoing: minuteTime.get() });
-	};
-
-	instance.futureEvents = function() {
-		return eventsFind({ course: courseId, after: minuteTime.get() }, 4);
-	};
-});
-
-
-Template.course_events.rendered = function() {
-	var scrollableContainer = this.$(".course_events");
-
-	if (scrollableContainer.length === 0) return; // No events
-
-	scrollableContainer.scroll(function (event) {
-		var trueHeight = scrollableContainer[0].scrollHeight - scrollableContainer.height();
-		var reactiveArea = trueHeight - 1;
-
-		$(".fade_effect_top").fadeIn(200);
-		$(".fade_effect_bottom").fadeIn(200);
-
-		if (scrollableContainer.scrollTop() > reactiveArea) {
-			$(".fade_effect_bottom").fadeOut(200);
-		}
-		else if (scrollableContainer.scrollTop() < 1) {
-			$(".fade_effect_top").fadeOut(200);
-		}
-	});
-};
-
-Template.course_events.events({
-	'click button.eventEdit': function () {
+Template.courseEvents.events({
+	'click .js-add-event': function () {
 		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
+	},
+
+	'scroll .js-scrollable-container': function() {
+		var instance = Template.instance();
+		var scrollableContainer = instance.$('.js-scrollable-container');
+
+		if (!instance.hasScrolled.get()) {
+			instance.$(".fade-top").fadeIn(200);
+			instance.hasScrolled.set(true);
+		}
+
+		// Use dom element to get true height of clipped div
+		// https://stackoverflow.com/questions/4612992/get-full-height-of-a-clipped-div#5627286
+		var trueHeight = scrollableContainer[0].scrollHeight;
+		var visibleHeight = scrollableContainer.height();
+
+		// Compute height and subtract a possible deviation
+		var computedHeight = trueHeight - visibleHeight - 1;
+
+		if (scrollableContainer.scrollTop() === 0) {
+			instance.$(".fade-top").fadeOut(200);
+		} else if (scrollableContainer.scrollTop() >= computedHeight) {
+			instance.$(".fade-bottom").fadeOut(200);
+		} else {
+			instance.$(".fade-top").fadeIn(200);
+			instance.$(".fade-bottom").fadeIn(200);
+		}
 	}
 });

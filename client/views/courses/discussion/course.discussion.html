@@ -1,7 +1,7 @@
 <template name="discussion">
 	<div class="page-component discussion">
-		<div class="course-details-component-titlebar">
-			<h4 class="course-details-component-heading">
+		<div class="course-page-component-header">
+			<h4>
 				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
@@ -41,7 +41,7 @@
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-add course-details-btn js-discussion-edit">
+			<button type="button" class="btn btn-add course-page-btn js-discussion-edit">
 				<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
 				{{mf 'course.discussion.write_comment' 'Write a comment'}}
 			</button>

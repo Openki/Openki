@@ -2,25 +2,11 @@
 	margin-bottom: 10px;
 }
 
-.location a {
-	background-color: $location-bg;
-	color: $location-text;
-	display: inline-block;
-	padding-left: 5px;
-	padding-right: 5px;
-
-	&:hover {
-		background: $location-hover-bg;
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $location-hover-shadow;
-		text-decoration: none;
-	}
-}
-
 .location .name {
 	font-size: medium;
 }
 
 .location .description {
-	color: $default-black;
+	color: $gray-dark;
 	font-size: small;
 }

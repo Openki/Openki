@@ -5,8 +5,8 @@
 </template>
 
 <template name="courseRole">
-	<div class="course-role{{#if enrolling}}-enrol{{/if}}">
-		{{#if subscribed}}
+	{{#if subscribed}}
+		<div class="course-role-enrolled">
 			<div class="course-role-title">
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
@@ -15,7 +15,9 @@
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
-		{{else}}
+		</div>
+	{{else}}
+		<div class="course-role{{#if enrolling}}-enrol{{/if}}">
 			{{#if enrolling}}
 				<div class="course-role-title-enrol">
 					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
@@ -26,7 +28,7 @@
 						<label>
 							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
 						</label>
-						<textarea class='form-control'
+						<textarea class='form-control course-role-enrol-comment'
 							>{{../../member.comment}}</textarea>
 					</div>
 					{{#if privacyEnabled}}
@@ -47,12 +49,12 @@
 				</div>
 			{{else}}
 				{{#if maySubscribe roletype.type}}
-					<button type="button" class="btn btn-add course-details-btn js-role-enrol-btn" name="participant">
+					<button type="button" class="btn btn-add course-page-btn js-role-enrol-btn" name="participant">
 						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
 						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 					</button>
 				{{/if}}
 			{{/if}}
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 </template>

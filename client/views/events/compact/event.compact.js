@@ -14,18 +14,5 @@ Template.eventCompact.helpers({
 });
 
 Template.eventCompact.rendered = function() {
-	var eventList = this.parentInstance();
-
-	this.$('.event-compact-header').dotdotdot({
-		height: eventList.headerHeight,
-		watch : "window",
-	});
-
-	this.$('.event-compact-title').dotdotdot({
-		watch: "window",
-	});
-
-	this.$('.event-compact-description').dotdotdot({
-		watch: "window",
-	});
+	this.$('.event-compact').dotdotdot();
 };

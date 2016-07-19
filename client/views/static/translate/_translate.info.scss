@@ -9,7 +9,7 @@
 }
 
 #mfTransContainer a {
-	color: darken($brand-primary, 10%);
+	color: darken($blue, 10%);
 	font-weight: bold;
 
 	&:hover {
@@ -34,8 +34,10 @@ table.mfTrans tr:first-child {
 
 table.mfTrans th:first-child,
 table.mfTrans th:last-child {
-	background-color: $gray-lighter;
+	background-color: $gray-lightest;
 }
+
+$translate-trans: $green-dark;
 
 table.mfTrans th:nth-child(2),
 table.mfTrans th:nth-child(3) {
@@ -43,11 +45,15 @@ table.mfTrans th:nth-child(3) {
 	color: black;
 }
 
+$translate-fuzzy: $yellow;
+
 table.mfTrans th:nth-child(4),
 table.mfTrans th:nth-child(5) {
 	background-color: lighten($translate-fuzzy, 25%);
 	color: black;
 }
+
+$translate-untrans: $red-dark;
 
 table.mfTrans th:nth-child(6),
 table.mfTrans th:nth-child(7) {
@@ -56,11 +62,11 @@ table.mfTrans th:nth-child(7) {
 }
 
 table.mfTrans th:last-child {
-	background-color: lighten($openki-blue-lighter, 5%);
+	background-color: lighten($blue-lighter, 5%);
 }
 
 table.mfTrans tr:hover td:first-child {
-	background-color: darken($gray-lighter, 5%);
+	background-color: darken($gray-lightest, 5%);
 }
 
 table.mfTrans tr:hover td:nth-child(2),
@@ -79,7 +85,7 @@ table.mfTrans tr:hover td:nth-child(7) {
 }
 
 table.mfTrans tr:hover td:last-child {
-	background-color: $openki-blue-lighter;
+	background-color: $blue-lighter;
 }
 
 div.mfTransGraph {

@@ -1,6 +1,11 @@
-.calendar-navigation {
+// *** Calendar ***
+//=================
+
+// ** Navigation
+//========================================================================================
+.calendar-nav {
 	@include make-xs-column(12);
-	background-color: $calendar-navigation-bg;
+	background-color: $calendar-nav-bg;
 	box-shadow: 0 6px 2px $default-shadow;
 	font-size: 32px;
 	margin-bottom: 10px;
@@ -12,16 +17,23 @@
 	z-index: 1010;
 }
 
-.calendar-navigation > .right {
-	float: right;
+// ** Navigation elements
+//========================================================================================
+.calendar-nav-element {
+	display: inline-block;
+
+	&:first-child {
+		float: left;
+	}
+
+	&:last-child {
+		float: right;
+	}
 }
 
-.calendar-navigation small {
-	font-size: 12px;
-}
-
-.switch-date-btn {
-	float: left;
+// ** Navigation buttons
+//========================================================================================
+.calendar-nav-btn {
 	margin: 6px 3px;
 
 	&:first-child {
@@ -33,34 +45,34 @@
 	}
 }
 
-.calendar-week {
-	text-align: center;
-}
-
-.calendar-week .week {
-	color: $calendar-header-text;
+// ** Navigation week & date
+//========================================================================================
+.calendar-nav-week {
 	font-size: large;
 	line-height: .75;
-	margin: 7px 0 0;
+	margin: 10px 0 0;
 }
 
-.calendar-week .date {
-	color: $calendar-header-text;
+.calendar-nav-date {
 	font-size: small;
 	margin: 3px 0;
 }
 
+// ** Container
+//========================================================================================
 .calendar-container {
 	padding-top: 50px;
 }
 
-.calendar-container > a:first-child {
+.calendar-container > .btn:first-child {
 	margin-bottom: 15px;
 }
 
+// ** Date
+//========================================================================================
 .calendar-date {
-	background: $calendar-navigation-bg;
-	border-color: $brand-primary;
+	background: $blue-lighter;
+	border-color: $blue;
 	border-style: solid;
 	border-width: 10px 0 0;
 	box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
@@ -74,7 +86,9 @@
 	}
 }
 
-.calendar-events {
+// ** Event list
+//========================================================================================
+.calendar-event-list {
 	@include clearfix;
 	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
 	padding: 10px 0;

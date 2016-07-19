@@ -1,6 +1,6 @@
 .location-details-header {
 	background-color: $location-bg;
-	color: $location-text;
+	color: $location-color;
 }
 
 .location-details-header > img {
@@ -10,5 +10,5 @@
 }
 
 .location-details-body {
-	background-color: $location-description-bg;
+	background-color: $blue-lighter;
 }

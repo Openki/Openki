@@ -17,9 +17,9 @@ var makeFilterQuery = function(params) {
 };
 
 Router.map(function () {
-	this.route('kioskTimetable', {
+	this.route('timetable', {
 		path: '/kiosk/timetable',
-		layoutTemplate: 'kioskTimetableLayout',
+		layoutTemplate: 'timetableLayout',
 		waitOn: function () {
 			return subs.subscribe('eventsFind', makeFilterQuery(this.params && this.params.query), 200);
 		},
@@ -112,7 +112,7 @@ Router.map(function () {
 });
 
 
-Template.kioskTimetable.helpers({
+Template.timetable.helpers({
 	position: function() {
 		return "left: "+this.relStart*100+"%; right: "+this.relEnd*100+"%;";
 	},
