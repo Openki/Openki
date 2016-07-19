@@ -14,10 +14,13 @@ Template.frameSchedule.onCreated(function() {
 	instance.separators = new ReactiveVar([]);
 
 	this.autorun(function() {
-		var scheduleStart = moment(minuteTime.get()).startOf('week');
+		var query = Router.current().params.query;
+
+		var scheduleStart;
+		if (query.start) scheduleStart = moment(query.start);
+		if (!scheduleStart || !scheduleStart.isValid()) scheduleStart = moment(minuteTime.get()).startOf('week');
 		instance.scheduleStart.set(scheduleStart);
 
-		var query = Router.current().params.query;
 
 		var rawSeps = (query.sep || "").split(',');
 		var seps = [];
