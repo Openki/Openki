@@ -267,7 +267,13 @@ Template.eventEdit.events({
 				editevent.courseId = this.courseId;
 			} else {
 				editevent.region = instance.selectedRegion.get();
+				if (!editevent.region || editevent.region === 'all') {
+					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					return null;
+				}
 
+				// We have this 'secret' feature where you can set a group ID
+				// in the URL to assign a group to the event on creation
 				var groups = [];
 				if (Router.current().params.query.group) {
 					groups.push(Router.current().params.query.group);
@@ -306,7 +312,7 @@ Template.eventEdit.events({
 	},
 
 	'click .js-event-edit-cancel': function (event, instance) {
-		if (this.new) history.back();
+		if (instance.data.new) history.back();
 		instance.parent.editing.set(false);
 	},
 
