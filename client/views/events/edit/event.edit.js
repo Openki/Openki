@@ -308,7 +308,7 @@ Template.eventEdit.events({
 	},
 
 	'click .js-event-edit-cancel': function (event, instance) {
-		if (this.new) history.back();
+		if (instance.data.new) history.back();
 		instance.parent.editing.set(false);
 	},
 
