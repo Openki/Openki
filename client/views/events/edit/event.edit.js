@@ -267,6 +267,10 @@ Template.eventEdit.events({
 				editevent.courseId = this.courseId;
 			} else {
 				editevent.region = instance.selectedRegion.get();
+				if (!editevent.region || editevent.region === 'all') {
+					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					return null;
+				}
 
 				// We have this 'secret' feature where you can set a group ID
 				// in the URL to assign a group to the event on creation
