@@ -69,6 +69,7 @@ Template.frameSchedule.onCreated(function() {
 	instance.days = new ReactiveVar([]);
 	instance.intervals = new ReactiveVar([]);
 	instance.slots = new ReactiveVar({});
+	instance.kindMap = function() { return 0; };
 
 	this.autorun(function() {
 		var scheduleStart = moment(filter.get('after'));
@@ -92,6 +93,9 @@ Template.frameSchedule.onCreated(function() {
 		// Map of slots where events were found. each slot holds a list of events.
 		var slots = {};
 
+		// Count occurences of first few chars in event titles
+		var kinds = {};
+
 		// Place found events into the slots
 		eventsFind(filter.toQuery(), 100).forEach(function(event) {
 			var eventStart = moment(event.start);
@@ -112,12 +116,27 @@ Template.frameSchedule.onCreated(function() {
 			if (!slots[mins]) slots[mins] = [];
 			if (!slots[mins][day]) slots[mins][day] = [];
 			slots[mins][day].push(event);
+
+			var kindId = event.title.substr(0, 5);
+			if (!kinds[kindId]) kinds[kindId] = 1;
+			kinds[kindId] += 1;
 		});
 
 		var numCmp = function(a, b) { return a - b; };
 		instance.days.set(_.values(days).sort(numCmp));
 		instance.intervals.set(_.values(intervals).sort(numCmp));
 		instance.slots.set(slots);
+
+		// Build list of most used titles (first few chars)
+		var mostUsedKinds = _.sortBy(_.pairs(kinds), function(kv) { return -kv[1]; });
+		var kindRank = _.object(_.map(mostUsedKinds.slice(0, 15), function(kv, rank) {
+			return [kv[0], rank+1];
+		}));
+		instance.kindMap = function(title) {
+			var kindId = title.substr(0, 5);
+			if (kindRank[kindId]) return kindRank[kindId];
+			return 0;
+		};
 	});
 });
 
@@ -142,4 +161,8 @@ Template.frameSchedule.helpers({
 			}
 		});
 	},
+
+	colorClass: function() {
+		return "color-"+Template.instance().kindMap(this.title);
+	}
 });
