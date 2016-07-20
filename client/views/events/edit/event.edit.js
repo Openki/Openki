@@ -268,6 +268,8 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 
+				// We have this 'secret' feature where you can set a group ID
+				// in the URL to assign a group to the event on creation
 				var groups = [];
 				if (Router.current().params.query.group) {
 					groups.push(Router.current().params.query.group);
