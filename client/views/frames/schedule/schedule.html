@@ -1,24 +1,34 @@
 <template name="frameSchedule">
-	<div class="frameSchedule">
-		<table>
+	<table class="schedule">
+		<thead>
 			<tr>
-				<th>{{mf 'schedule.header.hour' "Hour"}}</th>
-			{{#each days}}
-				<th style="border-left: 1px solid black; padding: 0.1em">{{this}}</th>
-			{{/each}}
-			</tr>
-			{{#each intervals}}
-			<tr style="border-top: 1px solid black">
-				<th style="vertical-align: top">{{interval}}</th>
-				{{#each slots}}
-				<td style="vertical-align: top; border-left: 1px solid black">
-					{{#each this}}
-					<a style="display: block; padding: 0.1em; margin: 0.1em; background-color: #aaa" href="{{pathFor  'showEvent'}}">{{title}}</a>
-					{{/each}}
-				</td>
+				<th class="schedule-header-time" scope="col">
+					{{mf 'schedule.header.hour' "Hour"}}
+				</th>
+				{{#each days}}
+					<th class="schedule-header-day" scope="col">
+						{{this}}
+					</th>
 				{{/each}}
 			</tr>
+		</thead>
+		<tbody>
+			{{#each intervals}}
+				<tr>
+					<th class="schedule-time" scope="row">{{interval}}</th>
+					{{#each slots}}
+						<td class="schedule-slot">
+							{{#each this}}
+								<a href="{{pathFor  'showEvent'}}">
+									<div class="schedule-event schedule-event-type-{{type}}">
+										{{title}}
+									</div>
+								</a>
+							{{/each}}
+						</td>
+					{{/each}}
+				</tr>
 			{{/each}}
-		</table>
-	</div>
+		</tbody>
+	</table>
 </template>

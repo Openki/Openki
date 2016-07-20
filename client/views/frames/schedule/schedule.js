@@ -162,7 +162,7 @@ Template.frameSchedule.helpers({
 		});
 	},
 
-	colorClass: function() {
-		return "color-"+Template.instance().kindMap(this.title);
+	type: function() {
+		return Template.instance().kindMap(this.title);
 	}
 });
