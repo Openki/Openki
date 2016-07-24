@@ -8,7 +8,7 @@ Router.map(function () {
 Template.frameSchedule.onCreated(function() {
 	var filter = Filtering(EventPredicates);
 
-	var instance = this;
+	var instance = this; hello everybody
 	instance.interval = new ReactiveVar(60);
 	instance.scheduleStart = new ReactiveVar(moment());
 	instance.separators = new ReactiveVar([]);
