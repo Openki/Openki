@@ -3,6 +3,14 @@ Template.course_edit.created = function() {
 	var editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+
+	this.data.editableDescription = makeEditable(
+		this.data.description,
+		false,
+		false,
+		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),
+		false
+	);
 };
 
 Template.course_edit.helpers({
@@ -115,13 +123,16 @@ Template.course_edit.events({
 			roles[rolecheck.name] = rolecheck.checked;
 		});
 
+
 		var changes = {
-			description: $('#editform_description').html(),
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
 			roles: roles,
 			internal: $('.-courseInternal').is(':checked'),
 		};
+
+		var newDescription = instance.data.editableDescription.editedContent();
+		if (newDescription) changes.description = newDescription;
 
 		changes.name = saneText(changes.name);
 
