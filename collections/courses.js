@@ -313,8 +313,9 @@ if (Meteor.isServer) {
 			}
 
 			addRole(course, role, subscriptionId);
-			var time = new Date();
-			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
+
+			// Update the modification date
+			Courses.update(courseId, { $set: {time_lastedit: new Date()} });
 		},
 
 		remove_role: function(courseId, role) {
@@ -435,8 +436,7 @@ Meteor.methods({
 
 		Courses.update(
 			{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
-			{ $set: { 'members.$.comment': comment } },
-			checkUpdateOne
+			{ $set: { 'members.$.comment': comment } }
 		);
 	},
 
