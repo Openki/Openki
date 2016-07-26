@@ -24,10 +24,10 @@ Files.allow({
 		return privileged(userId, 'upload');
 	},
 	update: function(userId) {
-		return privileged(userId, 'upload');
+		return false;
 	},
 	remove: function(userId) {
-		return privileged(userId, 'upload');
+		return false;
 	},
 	download: function(){
 		return true;

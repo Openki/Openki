@@ -3,6 +3,8 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.location || {});
+
+	instance.uploaded = new ReactiveVar([]);
 });
 
 Template.eventEdit.onRendered(function() {
@@ -68,6 +70,10 @@ Template.eventEdit.helpers({
 
 	isInternal: function() {
 		return this.internal ? "checked" : null;
+	},
+
+	uploaded: function() {
+		return Template.instance().uploaded.get();
 	}
 });
 
@@ -146,64 +152,50 @@ var updateTimes = function(template, updateEnd) {
 };
 
 Template.eventEdit.events({
-	'change .js-event-add-file': function(event, template) {
-		template.$('.js-event-upload-file').toggle(300);
-	},
-
-	'click .js-event-upload-file': function(event, template) {
-
-		var fileEvent = $('.js-event-add-file')[0].files;
-
-		//FS.Utility.eachFile(fileEvent, function(file) {
-		$.each( fileEvent, function(i,file){
-
+	'change .js-event-add-file': function(event, instance) {
+		FS.Utility.eachFile(event, function(file) {
 			Files.insert(file, function (err, fileObj) {
-
-				if (err){
-					// add err handling
+				if (err) {
+					addMessage(mf('file.upload.error', "Uploading file '" + fileObj.original.name + "; failed"));
 				} else {
-					//adds a single file at a time at the moment
-					var fileList = [
-						{
-							_id: fileObj._id,
-							file : "/cfs/files/files/" + fileObj._id,
-							filename : fileObj.original.name,
-							filesize : fileObj.original.size,
-						}
-					];
-					template.files = fileList;
-					template.$('button.js-event-upload-file').hide(50);
+					var uploaded = instance.uploaded.get();
 
-					var fileHtml = '<tr id="row-' + fileObj._id + '">';
-					fileHtml += '<td><i class="fa fa-file fa-fw" aria-hidden="true"></i>';
-					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">';
-					fileHtml += fileObj.original.name + '</a>';
-					fileHtml += '</td><td><button type="button" class="js-delete-file close"';
-					fileHtml += 'data-tooltip="' + mf('event.edit.removeFile') + '">';
-					fileHtml += '&times;</button></td></tr>';
+					uploaded.push({
+						_id: fileObj._id,
+						file : "/cfs/files/files/" + fileObj._id,
+						filename : fileObj.original.name,
+						filesize : fileObj.original.size,
+					});
 
-					$("table.file-list").append(fileHtml);
-
+					instance.uploaded.set(uploaded);
 				}
 			});
 		});
 	},
 
-	'click .js-delete-file': function (event, template) {
-		var fileid = this._id;
-		var eventid = template.data._id;
+
+	'click .js-delete-file': function (event, instance) {
+		var fileId = this._id;
+		var eventId = instance.data._id;
 		var filename = this.filename;
-		//delete the actual file
-		Files.remove(fileid);
 
-		//hide file name
-		var rowid = "tr#row-" + fileid;
-		$(rowid).hide();
+		// check whether the file hasn't been associated with the event yet
+		var uploaded = instance.uploaded.get();
+		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId });
+		if (uploadedClean.length < uploaded.length) {
+			// The server does not allow to delete files that are not associated
+			// to an event. So we just remove the local reference and hope
+			// somebody will clean up stray files on the server
+			instance.uploaded.set(uploadedClean);
+			return;
+		}
 
-		//remove file attribute from the event
-		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
-			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
-			else showServerError("Couldn't remove file '" + filename + "'", error);
+		Meteor.call('removeFile', eventId, fileId, function(error) {
+			if (error) {
+				showServerError("Couldn't remove file '" + filename + "'", error);
+			} else {
+				addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
+			}
 		});
 	},
 
@@ -227,28 +219,10 @@ Template.eventEdit.events({
 			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
-			files: this.files || Array(),
 			internal: instance.$('.-eventInternal').is(':checked'),
 		};
 
-		var fileList = instance.files;
-		instance.files = null;
-
-		//check if file object is stored in the template object
-		if (!!fileList) {
-			var tmp = [];
-			if(this.files){
-				$.each( this.files, function( i,fileObj ){
-					tmp.push( fileObj );
-				});
-			}
-
-			$.each( fileList, function( i, fileObj ){
-				tmp.push( fileObj );
-			});
-
-			editevent.files = tmp;
-		}
+		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
 		var eventId = this._id;
 		var isNew = !this._id;
