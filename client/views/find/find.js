@@ -56,6 +56,7 @@ Template.find.onCreated(function() {
 
 	instance.showingFilters = new ReactiveVar(false);
 	instance.categorySearchResults = new ReactiveVar(categories);
+	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	var filter = Filtering(CoursePredicates);
@@ -83,7 +84,12 @@ Template.find.onCreated(function() {
 	// Update whenever filter changes
 	instance.autorun(function() {
 		var filterQuery = filter.toQuery();
-		var sub = subs.subscribe('coursesFind', filterQuery, 36, function() {
+		instance.coursesReady.set(false);
+
+		// Add one to the limit so we know there is more to show
+		var limit = instance.courseLimit.get() + 1;
+
+		subs.subscribe('coursesFind', filterQuery, limit, function() {
 			instance.coursesReady.set(true);
 		});
 	});
@@ -237,6 +243,11 @@ Template.find.events({
 
 	"click .js-all-regions-btn": function(event, instance){
 		Session.set('region', 'all');
+	},
+
+	"click .js-more": function(event, instance) {
+		var courseLimit = instance.courseLimit;
+		courseLimit.set(courseLimit.get() + 36);
 	}
 });
 
@@ -289,10 +300,22 @@ Template.find.helpers({
 		return results.count() > 0;
 	},
 
-	'results': function() {
-		var filterQuery = Template.instance().filter.toQuery();
+	'hasMore': function() {
+		var instance = Template.instance();
+		if (!instance.coursesReady.get()) return false;
 
-		return coursesFind(filterQuery, 36);
+		var filterQuery = instance.filter.toQuery();
+		var limit = instance.courseLimit.get();
+		var results = coursesFind(filterQuery, limit+1);
+
+		return results.count() > limit;
+	},
+
+	'results': function() {
+		var instance = Template.instance();
+		var filterQuery = instance.filter.toQuery();
+
+		return coursesFind(filterQuery, instance.courseLimit.get());
 	},
 
 
