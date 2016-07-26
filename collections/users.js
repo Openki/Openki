@@ -126,7 +126,7 @@ Users.updateBadges = function(userId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 

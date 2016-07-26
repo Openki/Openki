@@ -181,8 +181,7 @@ Courses.updateGroups = function(courseId) {
 			{ $set: { editors: editors } },
 			{ fullResult: true }
 		);
-
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 
 	// At some point we'll have to figure out a proper caching hierarchy

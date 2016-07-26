@@ -118,7 +118,7 @@ updateEventLocation = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -167,7 +167,7 @@ Events.updateGroups = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
