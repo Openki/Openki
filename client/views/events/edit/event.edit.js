@@ -194,7 +194,7 @@ Template.eventEdit.events({
 			if (error) {
 				showServerError("Couldn't remove file '" + filename + "'", error);
 			} else {
-				addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
+				addMessage(mf('file.removed', { FILENAME:filename }, 'Removed file {FILENAME}.'), 'success');
 			}
 		});
 	},
