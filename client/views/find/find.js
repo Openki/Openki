@@ -7,7 +7,8 @@ function finderRoute(path) {
 
 			// Add filter options for the homepage
 			return _.extend(query, {
-				internal: false
+				internal: false,
+				region: Session.get('region')
 			});
 		},
 		onAfterAction: function() {
@@ -67,7 +68,6 @@ Template.find.onCreated(function() {
 		filter
 			.clear()
 			.read(query)
-			.add('region', Session.get('region'))
 			.done();
 	});
 
