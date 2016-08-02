@@ -3,9 +3,6 @@ dist: trusty
 node_js:
   - 5.2.0
 
-services:
-  - mongodb
-
 cache:
   directories:
     - "$HOME/node_modules"
