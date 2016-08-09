@@ -2,23 +2,23 @@
 
 .translate-info {
 	@include container-sm;
-	background-color: lighten($default-light-grey, 15%);
+	background-color: $gray-lightest;
 }
 .translate-info h2{
-	border-bottom: 1px solid $default-light-grey;
-	color: $brand-primary;
+	border-bottom: 1px solid $gray-lighter;
+	color: $blue;
 	margin: 10px 0px;
 }
 .translate-info ul {
 	@include list-unstyled;
 }
 .translate-info li {
-	background-color: $default-white;
+	background-color: $white;
 	margin: 5px;
 	padding: 2px 5px;
 	margin-left: 15px;
 	border-width: 1px;
-	border-color: $default-light-grey;
+	border-color: $gray-lighter;
 	border-style: solid;
 }
 
