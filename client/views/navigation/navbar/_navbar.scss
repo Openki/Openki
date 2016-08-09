@@ -32,7 +32,7 @@
 
 .site-stage {
 	bottom: 2px;
-	color: $site-stage-color;
+	color: $gray-dark;
 	font-size: small;
 	font-weight: bold;
 	left: 105px;
@@ -47,11 +47,11 @@
 
 .navbar-brand:hover > .site-name,
 .navbar-brand:hover > .site-stage {
-	color: $default-white;
+	color: $white;
 }
 
 .navbar-link {
-	font-size: $navbar-default-font-size;
+	font-size: large;
 	transition-duration: $default-transition-time;
 	transition-property: #{'background-color, box-shadow, text-shadow'};
 
@@ -80,7 +80,7 @@
 	border: 5px solid;
 	border-color:	transparent transparent $body-bg;
 	bottom: 0;
-	box-shadow: 0 5px 5px -5px #fff;
+	box-shadow: 0 5px 5px -5px $white;
 	height: 0;
 	left: 50%;
 	opacity: 0;
@@ -96,11 +96,11 @@
 }
 
 .navbar-link-active.calendar-link > .nav-marker-caret {
-	border-bottom-color: $calendar-navigation-bg;
+	border-bottom-color: $calendar-nav-bg;
 }
 
 .navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	background-color: $calendar-navigation-bg;
+	background-color: $calendar-nav-bg;
 	opacity: 1;
 }
 

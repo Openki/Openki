@@ -1,24 +1,15 @@
+// *** Event location edit ***
+//============================
+
 .event-edit-location {
 	@include make-xs-column(12);
-	background-color: $location-edit-bg;
-	border: 1px solid $default-light-grey;
 	overflow: auto;
 	padding: 0;
 }
 
-.event-edit-location .input-group-addon {
-	border-color: $default-light-grey;
-	border-style: solid;
-	border-width: 0 1px 0 0;
-
-	@media (max-width: $screen-xs) {
-		display: none;
-	}
-}
-
 .event-edit-location-search {
 	@include make-sm-column(6);
-	margin: 10px 0;
+	padding: 0 ($grid-gutter-width / 4) 0 0;
 }
 
 .event-edit-location-selected {
@@ -26,8 +17,8 @@
 	padding-bottom: 5px;
 }
 
-.event-edit-location-selected > i {
-	color: darken($brand-success, 40%);
+.event-edit-location-selected > .fa {
+	color: $green-darker;
 }
 
 .event-edit-location-searchbar {
@@ -35,11 +26,14 @@
 }
 
 .event-edit-location-candidates {
-	padding: 5px 0;
+	margin: 0;
+	padding: 5px 0 0;
 }
 
 .event-edit-location-candidate {
-	background-color: $location-candidate-bg;
+	$background-color: darken($blue-lighter, 5%);
+
+	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
 	padding-left: 5px;
@@ -50,7 +44,7 @@
 
 	&:hover,
 	&.hover {
-		background: $location-candidate-hover-bg;
+		background: darken($background-color, 5%);
 	}
 }
 
@@ -60,8 +54,7 @@
 
 .event-edit-location-map {
 	@include make-sm-column(6);
-	margin: 10px 0;
-	padding-left: 0;
+	padding: 0 0 0 ($grid-gutter-width / 4);
 
 	@media (max-width: $screen-xs) {
 		padding-left: 15px;

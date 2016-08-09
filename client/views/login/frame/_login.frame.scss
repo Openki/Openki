@@ -42,13 +42,19 @@
 .js-external-service-login-btn {
 	background: none;
 	border: 0;
-	color: $default-gray;
+	color: $gray-light;
 	padding: 0 9px;
 }
 
 .js-external-service-login-btn .fa {
 	font-size: xx-large;
 }
+
+$external-servies: (
+  google-plus:                                   #dd4b39,
+  facebook:                                      #3b5998,
+  github:                                        #333
+);
 
 @each $service, $color in $external-servies {
 	.fa-#{$service}-square {

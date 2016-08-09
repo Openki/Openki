@@ -1,13 +1,4 @@
 
-havingRole = function(members, role) {
-	return _.reduce(members, function(ids, member) {
-		if (member.roles.indexOf(role) !== -1) {
-			ids.push(member.user);
-		}
-		return ids;
-	}, []);
-};
-
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;

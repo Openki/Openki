@@ -16,11 +16,6 @@
 	}
 }
 
-@mixin header-btn {
-	background: none;
-	border: 0;
-}
-
 @mixin icon-btn-remove {
 	color: lighten($brand-danger, 20%);
 	cursor: pointer;

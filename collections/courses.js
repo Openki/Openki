@@ -181,8 +181,7 @@ Courses.updateGroups = function(courseId) {
 			{ $set: { editors: editors } },
 			{ fullResult: true }
 		);
-
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 
 	// At some point we'll have to figure out a proper caching hierarchy
@@ -194,10 +193,10 @@ coursesFind = function(filter, limit) {
 	var find = {};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvents === true) {
+	if (filter.upcomingEvent === true) {
 		find.futureEvents = { $gt: 0 };
 	}
-	if (filter.upcomingEvents === false) {
+	if (filter.upcomingEvent === false) {
 		find.futureEvents = 0;
 	}
 
@@ -313,8 +312,9 @@ if (Meteor.isServer) {
 			}
 
 			addRole(course, role, subscriptionId);
-			var time = new Date();
-			Courses.update({_id: courseId}, { $set: {time_lastedit: time}}, checkUpdateOne);
+
+			// Update the modification date
+			Courses.update(courseId, { $set: {time_lastedit: new Date()} });
 		},
 
 		remove_role: function(courseId, role) {
@@ -435,8 +435,7 @@ Meteor.methods({
 
 		Courses.update(
 			{ _id: course._id, 'members.user': Meteor.userId() },  //TODO: not allocated to anon user
-			{ $set: { 'members.$.comment': comment } },
-			checkUpdateOne
+			{ $set: { 'members.$.comment': comment } }
 		);
 	},
 
@@ -476,39 +475,41 @@ Meteor.methods({
 		/* Changes we want to perform */
 		var set = {};
 
-		_.each(Roles.find().fetch(), function(roletype) {
-			var type = roletype.type;
-			var should_have = roletype.preset || changes.roles && changes.roles[type];
-			var have = course.roles.indexOf(type) !== -1;
+		if (changes.roles) {
+			_.each(Roles.find().fetch(), function(roletype) {
+				var type = roletype.type;
+				var should_have = roletype.preset || changes.roles && changes.roles[type];
+				var have = course.roles.indexOf(type) !== -1;
 
-			if (have && !should_have) {
-				Courses.update(
-					{ _id: courseId },
-					{ $pull: { roles: type }},
-					checkUpdateOne
-				);
-
-				// HACK
-				// due to a mongo limitation we can't { $pull { 'members.roles': type } }
-				// so we keep removing one by one until there are none left
-				while(Courses.update(
-					{ _id: courseId, "members.roles": type },
-					{ $pull: { 'members.$.roles': type }}
-				));
-			}
-			if (!have && should_have) {
-				if (isNew) {
-					set.roles = set.roles || [];
-					set.roles.push(type);
-				} else {
+				if (have && !should_have) {
 					Courses.update(
 						{ _id: courseId },
-						{ $addToSet: { roles: type }},
+						{ $pull: { roles: type }},
 						checkUpdateOne
 					);
+
+					// HACK
+					// due to a mongo limitation we can't { $pull { 'members.roles': type } }
+					// so we keep removing one by one until there are none left
+					while(Courses.update(
+						{ _id: courseId, "members.roles": type },
+						{ $pull: { 'members.$.roles': type }}
+					));
 				}
-			}
-		});
+				if (!have && should_have) {
+					if (isNew) {
+						set.roles = set.roles || [];
+						set.roles.push(type);
+					} else {
+						Courses.update(
+							{ _id: courseId },
+							{ $addToSet: { roles: type }},
+							checkUpdateOne
+						);
+					}
+				}
+			});
+		}
 
 		if (changes.description) {
 			set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody  -- Mao */

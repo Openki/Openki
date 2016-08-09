@@ -1,25 +1,27 @@
-.groups-list {
+.grouplist {
 	list-style: none;
 	margin-bottom: 0;
 	padding-left: 0;
 }
 
-.groups-list > li,
-.groups-list > .dropdown,
-.groups-list > li > .dropdown {
+.grouplist > li,
+.grouplist > .dropdown,
+.grouplist > li > .dropdown {
 	display: inline-block;
 }
 
+$group-label-color: $blue;
+
 %group-label {
 	background: $group-bg;
-	color: $group-text;
+	color: $group-label-color;
 	transition: all $default-transition-time;
 
 	&:hover,
 	&:focus {
-		background: $group-hover-bg;
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $group-hover-shadow;
-		color: $group-hover-text;
+		background: darken($group-bg, 10%);
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+		color: $group-label-color;
 	}
 }
 
@@ -34,7 +36,7 @@
 
 .group-label-addon {
 	background: $group-bg;
-	color: $group-text;
+	color: $group-label-color;
 	padding: 1px 1px 0;
 	vertical-align: middle;
 }

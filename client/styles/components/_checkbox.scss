@@ -1,10 +1,10 @@
 .checkbox > label:hover i,
 .checkbox > label.checkbox-checked i {
-	color: $default-black;
+	color: $gray-dark;
 }
 
 .checkbox > label	.fa-angle-down {
-	color: $default-light-grey;
+	color: $gray-lighter;
 	transition: color $default-transition-time;
 }
 

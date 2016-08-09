@@ -42,6 +42,9 @@
 
 // Kiosk
 @import 'kiosk/kiosk';
+@import 'kiosk/event/kiosk.event';
+@import 'kiosk/link/kiosk.link';
+@import 'kiosk/list/kiosk.list';
 
 // Locations
 @import 'locations/location';

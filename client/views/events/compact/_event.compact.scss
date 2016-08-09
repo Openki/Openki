@@ -1,3 +1,8 @@
+// *** Event compact ***
+//======================
+
+// ** Wrap
+//========================================================================================
 .event-compact-wrap {
 	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
@@ -42,15 +47,10 @@
 	}
 }
 
-.course_events .event-compact-wrap {
-	@media (min-width: $screen-xs) {
-		@include make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-	}
-}
-
+// ** Compact
+//========================================================================================
 .event-compact {
-	background: $event-compact-bg;
+	background: $event-body-bg;
 	height: 200px;
 	position: relative;
 	transition: box-shadow $default-transition-time;
@@ -60,18 +60,23 @@
 	}
 }
 
-.event-compact-header,
-.event-compact-title,
-.event-compact-description {
-	overflow: hidden;
-	word-break: break-all;
+.event-compact-with-date {
+	height: 220px;
 }
 
+// ** Body
+//========================================================================================
+.event-compact-body {
+	padding: 5px;
+}
+
+// ** Header
+//========================================================================================
 .event-compact-header {
-	background: $event-compact-header-bg;
-	border-bottom: 1px solid $body-bg;
-	color: $event-compact-header-color;
-	height: 55px;
+	@include ellipsis;
+	background: $event-header-bg;
+	border-bottom: $event-compact-seperator-height solid $body-bg;
+	color: $gray-dark;
 	padding: 5px;
 }
 
@@ -80,24 +85,16 @@
 	margin-bottom: 5px;
 }
 
-.event-compact-with-date {
-	height: 220px;
-}
-
-.event-compact-with-date .event-compact-header {
-	height: 75px;
-}
-
+// ** Title
+//========================================================================================
 .event-compact-title {
-	color: $event-compact-title-color;
-	font-size: medium;
-	max-height: 56px;
-	padding: 5px;
+	color: $gray-dark;
+	margin: 0 0 5px;
 }
 
+// ** Description
+//========================================================================================
 .event-compact-description {
-	color: $event-compact-description-color;
-	height: 85px;
-	margin-top: -3px;
-	padding: 0 5px 5px;
+	color: $blue;
+	margin: 0;
 }

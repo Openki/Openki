@@ -24,11 +24,11 @@
 }
 
 .timeline-start {
-	@include gradient-vertical($openki-blue-lighter, $brand-primary);
+	@include gradient-vertical($blue-lighter, $brand-primary);
 }
 
 .timeline-end {
-	@include gradient-vertical($brand-primary, $openki-blue-lighter, 0%, 100%);
+	@include gradient-vertical($brand-primary, $blue-lighter, 0%, 100%);
 }
 
 .timeline-header {
@@ -50,7 +50,7 @@
 	text-align: right;
 
 	&.active {
-		color: $default-black;
+		color: $gray-dark;
 	}
 }
 
@@ -88,7 +88,7 @@
 	padding: 0;
 
 	&:hover a {
-		color: $default-black;
+		color: $gray-dark;
 
 		&:hover {
 			text-decoration: underline;

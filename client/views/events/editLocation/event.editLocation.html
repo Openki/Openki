@@ -2,21 +2,17 @@
 	<div class="form-group">
 		<label>{{mf 'course.event.edit.location' 'Location'}}</label>
 		<div class="event-edit-location">
-			<!-- <span class="input-group-addon">
-				<span class="fa fa-map-marker fa-2x fa-fw" aria-hidden="true"></span>
-			</span> -->
 			<div class="event-edit-location-search">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
-						<i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 						{{location.name}}
 						{{#if location.address}}
 							<br>
 							{{location.address}}
 						{{/if}}
-						&nbsp;
 					</div>
-					<button type="button" class="btn btn-edit js-location-change">
+					<button type="button" class="btn btn-edit btn-inline js-location-change">
 						{{mf 'event.edit.locationChange' "Change location"}}
 					</button>
 				{{else}}
@@ -26,7 +22,7 @@
 							value="{{location.name}}"/>
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-go js-location-search-btn">
-								<i class="fa fa-search fa-fw" aria-hidden="true"></i>
+								<span class="fa fa-search fa-fw" aria-hidden="true"></span>
 								{{mf 'event.edit.addressSearch' "Search"}}
 							</button>
 						</span>
