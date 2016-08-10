@@ -88,6 +88,20 @@
 	font-size: medium;
 }
 
+// ** Location of Proposals
+//========================================================================================
+.course-details-status {
+	float: right;
+	text-align: center;
+	position: relative;
+}
+.course-details-status > div {
+		$background-color: $course-page-component-bg;
+		background-color: $background-color;
+		color: desaturate(darken($background-color, 40%), 50%);
+		padding: 3px 8px;
+}
+
 // ** Categories
 //========================================================================================
 .course-details-categories > ul {
