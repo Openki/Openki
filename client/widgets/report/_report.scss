@@ -1,0 +1,7 @@
+.report {
+	$background-color: $yellow-light;
+
+	background: $background-color;
+	border: 1px solid darken($background-color, 5%);
+	padding: $form-group-margin-bottom $form-group-margin-bottom 0;
+}

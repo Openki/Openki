@@ -91,14 +91,8 @@
 				<!-- {{#if canEditLocation}} -->
 					<div class="actions">
 						<!-- {{mf 'location.details.youAreHost' 'You are Host here:'}} -->
-						<button type="button" class="btn btn-delete js-location-delete">
-							<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
-							{{mf '_button.delete'}}
-						</button>
-						<button type="button" class="btn btn-edit js-location-edit">
-							<i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-							{{mf '_button.edit'}}
-						</button>
+						{{> buttonDelete event="js-location-delete"}}
+						{{> buttonEdit event="js-location-edit"}}
 					</div>
 				<!-- {{/if}} -->
 			</div>

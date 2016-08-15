@@ -116,8 +116,8 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return this.editableBy(Meteor.user());
 	},
 	coursestate: function() {
-		if (this.nextEvent) return 'hasupcomingevents';
-		if (this.lastEvent) return 'haspastevents';
+		if (this.nextEvent) return 'has-upcoming-events';
+		if (this.lastEvent) return 'has-past-events';
 		return 'proposal';
 	},
 	mobileViewport: function() {
@@ -125,28 +125,35 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
+	},
+	courseRegionName: function() {
+		var regionId = this.course.region;
+		return Regions.findOne({_id: regionId}).name;
 	}
 });
 
 Template.courseDetailsPage.events({
-	'click .js-delete-course-btn': function () {
-		var self = this;
+	'click .js-delete-course': function (event, instance) {
 		if (pleaseLogin()) return;
+
+		var course = instance.data.course;
 		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
-			Meteor.call('remove_course', this._id, function(error) {
+			Meteor.call('remove_course', course._id, function(error) {
 				if (error) {
-					showServerError("Removing the proposal '"+ self.name + "' went wrong", error);
+					showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 				} else {
-					addMessage(mf('course.detail.remove.success', { NAME: self.name }, 'The proposal "{NAME}" was obliterated!'), 'success');
+					addMessage(mf('course.detail.remove.success', { NAME: course.name }, 'The proposal "{NAME}" was obliterated!'), 'success');
 				}
 			});
 			Router.go('/');
 		}
 	},
 
-	'click .js-edit-course-btn': function () {
+	'click .js-course-edit': function (event, instance) {
 		if (pleaseLogin()) return;
-		Router.go('showCourse', this, { query: {edit: 'course'} });
+
+		var course = instance.data.course;
+		Router.go('showCourse', course, { query: {edit: 'course'} });
 	}
 });
 

@@ -114,7 +114,6 @@
 
 // client/lib/client.functions.js
 
-		"havingRole":true,
 		"getMember":true,
 		"userName":true,
 		"goBase":true,

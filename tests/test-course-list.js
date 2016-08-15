@@ -12,26 +12,12 @@ describe('Frontpage', function () {
       Router.go('/');
     });
 
-    // According to the testing docs, it should be possible to wait until all
-    // subscriptions become ready at this point. However, for some reason that
-    // does not work in this app. This can be easily verified by opening up the
-    // browser and pasting the line `DDP._allSubscriptionsReady()` into the
-    // console. At some point it should return `true`, but it never does (in my
-    // case).
-    // https://github.com/meteor/guide/blob/testing-modules-content/content/testing.md#full-app-integration-test
-    //
-    // browser.waitUntil(function() {
-    //   var response = browser.execute(function() {
-    //     return DDP._allSubscriptionsReady();
-    //   });
-    //   return response.value;
-    // });
-
-    // Instead we simply wait for critical elements to appear, and then each
-    // test-case needs to wait again for those elements it wants to run
-    // assertions against.
-    // http://www.webdriver.io/api/utility/waitForExist.html
-    browser.waitForExist('.course-compact-wrap');
+	browser.waitUntil(function() {
+        var response = browser.execute(function() {
+			return DDP._allSubscriptionsReady();
+		});
+		return response.value;
+    });
   });
 
   it('should list 7 courses for unauthenticated user (Testistan)', function () {

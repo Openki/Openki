@@ -1,0 +1,37 @@
+.back-to-kiosk {
+	background-color: $blue-lighter;
+	border-radius: 50%;
+	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+	bottom: 30px;
+	height: 100px;
+	padding: 30px 20px 0;
+	position: fixed;
+	right: 50px;
+	text-align: center;
+	width: 100px;
+	z-index: 1;
+}
+
+.back-to-kiosk a {
+	color: $gray-dark;
+
+	&:hover {
+		color: $white;
+	}
+}
+
+.js-remove-back-to-kiosk {
+	@include opacity(.4);
+	background: none;
+	border: 0;
+	font-size: large;
+	position: absolute;
+	right: 0px;
+	text-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+	top: 0px;
+
+	&:hover {
+		@include opacity(1);
+		color: $red;
+	}
+}

@@ -45,15 +45,6 @@ Template.calendar.onCreated(function() {
 	});
 });
 
-Template.calendar.rendered = function() {
-	$(window).scroll(function (event) {
-		if($(window).scrollTop() > 5)
-			this.$('.calendar-navigation').addClass('over_content');
-		else
-			this.$('.calendar-navigation').removeClass('over_content');
-	});
-};
-
 var updateUrl = function(event, instance) {
 	var filterParams = instance.filter.toParams();
 	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
@@ -171,12 +162,12 @@ var mvDateHandler = function(amount, unit) {
 };
 
 Template.calendar.events({
-	'click .nextWeek': mvDateHandler(1, 'week'),
-	'click .prevWeek': mvDateHandler(-1, 'week'),
-	'click .nextMonth': mvDateHandler(1, 'month'),
-	'click .prevMonth': mvDateHandler(-1, 'month'),
-	'click .nextYear': mvDateHandler(1, 'year'),
-	'click .prevYear': mvDateHandler(-1, 'year'),
+	'click .js-next-week':      mvDateHandler( 1, 'week'),
+	'click .js-previous-week':  mvDateHandler(-1, 'week'),
+	'click .js-next-month':     mvDateHandler( 1, 'month'),
+	'click .js-previous-month': mvDateHandler(-1, 'month'),
+	'click .js-next-year':      mvDateHandler( 1, 'year'),
+	'click .js-previous-year':  mvDateHandler(-1, 'year'),
 });
 
 Template.calendarNavigation.helpers({

@@ -1,6 +1,6 @@
 <template name="courseMembers">
-	<div class="course-details-component-titlebar">
-		<h4 class="course-details-component-heading">
+	<div class="course-page-component-header">
+		<h4>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 			{{#mf KEY='course.dtails.paticipants.title' NUM=howManyEnrolled}}
 				{NUM, plural,
@@ -15,7 +15,6 @@
 		<div class="course-members">
 			{{#each members}}
 				{{> courseMember member=this course=..}}
-				<div class="horizontal-line"></div>
 			{{/each}}
 		</div>
 	{{/if}}

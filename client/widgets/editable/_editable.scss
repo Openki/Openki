@@ -31,14 +31,14 @@
 }
 
 .editable-icon {
-	color: $default-gray;
+	color: $gray-light;
 	cursor: default;
 	padding: .2em;
 	transition: color $default-transition-time;
 }
 
 .editable-wrap:hover .editable-icon {
-	color: $default-black;
+	color: $gray-dark;
 }
 
 .editable-wrap-rich .editable-icon {
@@ -49,7 +49,7 @@
 
 .editable:focus + .editable-icon,
 .editable-changed + .editable-icon {
-	color: $default-black;
+	color: $gray-dark;
 }
 
 .editable-controls {

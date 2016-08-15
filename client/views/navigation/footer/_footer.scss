@@ -1,26 +1,27 @@
 footer {
-	background: $footer-default-bg;
-	color: $footer-default-color;
-	font-size: $footer-default-font-size;
+	background: $blue;
+	color: $white;
+	font-size: large;
+	height: $footer-height;
 	position: relative;
 	text-align: center;
 }
 
 .footer-link {
-	color: $footer-default-link-color;
+	color: $white;
 	padding: 10px 15px 15px;
 	position: relative;
 	top: 10px;
 
 	&:hover {
-		background: $footer-default-link-hover-bg;
-		color: $footer-default-link-hover-color;
+		background: $blue-light;
+		color: $white;
 		text-decoration: none;
 	}
 }
 
 .footer-deployed-version {
-	color: $default-light-grey;
+	color: $gray-lighter;
 	float: right;
 	font-size: small;
 	padding: .3em;

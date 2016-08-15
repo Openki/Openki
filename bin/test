@@ -17,48 +17,54 @@
  * https://github.com/xolvio/automated-testing-best-practices
  */
 
-var extend = require('util')._extend,
-  exec = require('child_process').exec;
+var extend = require('util')._extend;
+var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
+
 
 function runChimp() {
-  return startProcess({
-    name: 'Chimp',
-    options: {
-      env: extend({CI: 1}, process.env)
-    },
-    command: 'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests --webdriverio.waitforTimeout=5000'
-  });
+	var proc = exec(
+		'chimp --mocha --browser=phantomjs --ddp=http://localhost:3000 --path=tests --webdriverio.waitforTimeout=5000',
+		{ env: extend({CI: 1}, process.env) }
+    );
+
+	proc.stdout.pipe(process.stdout);
+	proc.stderr.pipe(process.stderr);
+
+	return proc;
 }
 
-function runMeteor(callback) {
-  return startProcess({
-    name: 'Meteor',
-    command: 'meteor --production --settings=settings.ci.json'
-  });
+
+function runMeteor() {
+	var proc = execFile(
+		'meteor',
+		[ '--production', '--settings=settings.ci.json' ]
+	);
+
+	proc.stdout.pipe(process.stdout);
+	proc.stderr.pipe(process.stderr);
+
+	return proc;
 }
 
-function startProcess(opts, callback) {
-  var proc = exec(
-    opts.command,
-    opts.options
-  );
-  proc.stdout.pipe(process.stdout);
-  proc.stderr.pipe(process.stderr);
-
-  return proc;
-}
 
 function runTests() {
   var meteor = runMeteor();
 
+  var exit = function(code) {
+	meteor.kill();
+	process.exit(code);
+  };
+
   meteor.stdout.on('data', function waitForMessage(data) {
     if (data.toString().match('App running at:')) {
       var chimp = runChimp();
-      chimp.on('close', function (code) {
-        process.exit(code);
+      chimp.on('close', function(code) {
+		exit(code);
       });
     }
   });
 }
 
 runTests();
+

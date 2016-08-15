@@ -1,10 +1,16 @@
 <template name="profile">
 	<div class="container-sm">
 		<div class="page-component">
-			<h1>{{mf 'login.frame.settings'}}</h1>
-			<a class="profile-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				{{mf 'login.frame.profile' 'Visit my profile'}}
-			</a>
+			<h1>
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings'}}
+			</h1>
+		</div>
+		<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+			<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+			{{mf 'login.frame.profile' 'Visit my profile'}}
+		</a>
+		<div class="page-component">
 			{{#if editing}}
 				<div class="details-form">
 					<form class="form-horizontal profile-info-edit">
@@ -38,21 +44,15 @@
 										<span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
 										{{mf 'profile.toggle.highprivacy' 'High privacy'}}
 										<span class="help-block">
-											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrole anonymously to courses (experimental)'}}
+											{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrol anonymously to courses (experimental)'}}
 										</span>
 									</label>
 								</div>
 							</div>
 						</div>
 						<div class="form-actions">
-							<button type="button" class="btn btn-cancel js-profile-info-cancel-btn">
-								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-								{{mf '_button.cancel'}}
-							</button>
-							<button type="submit" class="btn btn-save profile-info-save-btn">
-								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.input.save' "Save"}}
-							</button>
+							{{> buttonCancel event="js-profile-info-cancel"}}
+							{{> buttonSave}}
 						</div>
 					</form>
 				</div>
@@ -74,20 +74,29 @@
 								</div>
 								<div class="details-info-data">
 									{{user.email}}
-									<small> {{verifiedEmail}} </small>
+									<small class="mail-verified">
+										{{#if user.verified}}
+											<span class="fa fa-check-square" aria-hidden="true"></span>
+											{{mf 'profile.emailVerified' "verified"}}
+										{{/if}}
+									</small>
 								</div>
 							</div>
-						{{/if}}
-						{{#unless user.veryfiedEmailTrue}}
-						<div class="details-info-group">
-							<div class="details-info-btn">
-								<button type="button" class="btn btn-success js-verify-mail-btn">
-									<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-								</button>
+							{{#unless user.verified}}
+							<div class="details-info-group">
+								<div class="details-info-btn">
+								{{#if sending}}
+									{{mf 'profile.sendingVerificationMail' "We're sending a verification mail to your address, it should arrive shortly. Please click the link in that message."}}
+								{{else}}
+									<button type="button" class="btn btn-success js-verify-mail-btn">
+										<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
+										{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+									</button>
+								{{/if}}
+								</div>
 							</div>
-						</div>
-						{{/unless}}
+							{{/unless}}
+						{{/if}}
 						<div class="details-info-group">
 							<div class="details-info-label">
 								{{mf 'profile.highprivacy' 'High privacy'}}
@@ -131,31 +140,17 @@
 							</div>
 						</div>
 						<div class="form-actions">
-							<button type="button" class="btn btn-cancel js-change-pwd-cancel-btn">
-								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-								{{mf '_button.cancel'}}
-							</button>
-							<button type="submit" class="btn btn-save">
-								<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.changePass' 'Change my password'}}
-							</button>
+							{{> buttonCancel event="js-change-pwd-cancel"}}
+							{{> buttonSave}}
 						</div>
 					</form>
 				</div>
 				{{/if}}
 				<div class="actions">
 					{{#unless verifyDelete}}
-						<button type="button" class="btn btn-delete js-profile-delete-btn"
-							data-tooltip="{{mf 'profile.delete' 'Delete my account'}}">
-							<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-							{{mf '_button.delete'}}
-						</button>
+						{{> buttonDelete event="js-profile-delete"}}
 					{{/unless}}
-					<button type="button" class="btn btn-edit js-profile-info-edit-btn"
-						data-tooltip="{{mf 'profile.edit' 'Edit profile info'}}">
-						<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-						{{mf '_button.edit'}}
-					</button>
+						{{> buttonEdit event="js-profile-info-edit"}}
 					{{#unless changingPass}}
 						<button type="button" class="btn btn-default js-change-pwd-btn">
 							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
@@ -168,10 +163,7 @@
 				<div class="profile-delete-confirmation">
 					<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 					<div class="form-actions">
-						<button type="button" class="btn btn-default js-profile-delete-cancel-btn">
-							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-							{{mf '_button.cancel'}}
-						</button>
+						{{> buttonCancel event="js-profile-delete-cancel"}}
 						<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
 							<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
@@ -186,9 +178,8 @@
 				{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
 			</a>
 		</div>
-		<div class="profile-groups-list page-component">
-			<hr>
-			<h3> {{mf 'profile.groups' 'My groups'}}</h3>
+		<div class="page-component page-component-seperated profile-grouplist">
+			<h3>{{mf 'profile.groups' 'My groups'}}</h3>
 			<h5>
 				{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
 				You are {NUM_GROUPS, plural,
@@ -213,7 +204,8 @@
 			</a>
 		</div>
 		{{#if hasInvolvedIn}}
-			<div class="page-component">
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'ownprofile.myCourses' 'My Courses'}}</h3>
 				{{> courseList involvedIn}}
 			</div>
 		{{/if}}

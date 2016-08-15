@@ -24,8 +24,8 @@ Template.groupSettings.helpers({
 	kioskEventURL: function() {
 		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
 	},
-	kioskTimetableURL: function() {
-		return Router.routes.kioskTimetable.url({}, { query: {group: this._id} });
+	timetableURL: function() {
+		return Router.routes.timetable.url({}, { query: {group: this._id} });
 	},
 	frameEventsURL: function() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
@@ -73,12 +73,12 @@ Template.groupSettings.events({
 				showServerError('Could not save settings', err);
 			} else {
 				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
-				instance.editingSettings.set(false);
+				instance.parentInstance().editingSettings.set(false);
 			}
 		});
 	},
 
 	'click .js-group-edit-cancel': function(event, instance) {
-		instance.editingSettings.set(false);
+		instance.parentInstance().editingSettings.set(false);
 	}
 });

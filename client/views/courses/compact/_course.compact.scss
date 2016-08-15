@@ -1,3 +1,8 @@
+// *** Course compact ***
+//=================
+
+// ** Wrap
+//========================================================================================
 .course-compact-wrap {
 	@include make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
@@ -19,8 +24,9 @@
 	}
 }
 
+// ** Compact
+//========================================================================================
 .course-compact {
-	border: $course-border-width dashed $openki-blue-lighter;
 	height: 150px;
 	position: relative;
 	transition-duration: $default-transition-time;
@@ -28,86 +34,85 @@
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-		color: $brand-primary;
 	}
 
-	&.haspastevents {
-		border-style: solid;
+	&.proposal,
+	&.has-past-events {
+		border-width: $course-border-width;
+		border-color: $course-border-color;
 	}
 
-	&.hasupcomingevents {
-		background: $openki-blue-lighter;
+	&.proposal {
+		border-style: $proposal-border-style;
+	}
+
+	&.has-past-events {
+		border-style: $has-past-events-border-style;
+	}
+
+	&.has-upcoming-events {
+		background: $has-upcoming-events-bg;
 	}
 }
 
-.course-compact.hasupcomingevents > .course-compact-content {
-	background: $openki-blue-lighter;
-}
-
-.course-compact h4 {
-	color: $default-black;
-	transition: color $default-transition-time;
-}
-
-.course-compact:hover h4 {
-	color: $brand-primary;
-}
-
-.filter-no-match {
-	opacity: .33;
-}
-
-.course-compact-name {
-	color: $default-black;
-	font-size: 22px;
-	line-height: 24px;
-	margin: 8px 0 0;
-}
-
-.course-compact-roles-team,
-.course-compact-roles-mentor,
-.course-compact-roles-host {
-	text-align: center;
-}
-
-.role-needed {
-	background-color: $role-needed-bg;
-	color: $role-needed-text;
-}
-
-.role-occupied {
-	background-color: $role-occupied-bg;
-	color: $role-occupied-text;
-}
-
-.role-occupied-by-user {
-	background-color: $user-bg;
-	color: $user-text;
-}
-
+// ** Content
+//========================================================================================
 .course-compact-content {
 	@include make-xs-column(9);
 	background: $body-bg;
 	padding: 0 0 0 15px;
 
-	&.hasupcomingevents {
+	&.has-upcoming-events {
 		@include make-xs-column(7.5);
-		padding: 0 0 0 15px;
+		background: $has-upcoming-events-bg;
+		padding: 0 5px 0 15px;
 	}
 }
 
+// ** Title
+//========================================================================================
+.course-compact-title {
+	color: $gray-dark;
+	font-size: 22px;
+	line-height: 24px;
+	margin: 8px 0 0;
+	max-height: 60px;
+}
+
+// ** Categories
+//========================================================================================
 .course-compact-content > .course-categories {
+	height: 55px;
 	margin-bottom: 0;
 	margin-left: -2px;
+	overflow: hidden;
 }
 
-.course-compact-content > .course-categories > li:nth-child(3),
-.course-compact-content > .course-categories > li:nth-child(4),
-.course-compact-content > .course-categories > li:nth-child(5),
-.course-compact-content > .course-categories > li:nth-child(6) {
-	display: none;
+// ** Event
+//========================================================================================
+.course-compact-next-event {
+	@include make-xs-column(4.5);
+	background: $course-compact-next-event-bg;
+	color: $course-compact-next-event-color;
+	max-height: 150px;
+	padding: 3px;
+	position: relative;
+	text-align: center;
 }
 
+.course-compact-next-event-time,
+.course-compact-next-event-date {
+	@include make-xs-column(12);
+	padding: 0;
+}
+
+.course-compact-next-event-location {
+	@include ellipsis;
+	padding: 0 4px;
+}
+
+// ** Roles
+//========================================================================================
 .course-compact-roles {
 	@include make-xs-column(3);
 	padding: 0;
@@ -116,53 +121,50 @@
 	top: -7px;
 }
 
-.course-compact-roles > div {
-	margin-top: 3px;
+.course-compact-role {
+	text-align: center;
 
-	&:first-child {
-		margin-top: 0;
+	&:not(:first-child) {
+		margin-top: 3px;
 	}
 }
 
-.course-compact-events {
-	@include make-xs-column(4.5);
-	background: $brand-success;
-	color: $default-black;
-	max-height: 150px;
-	padding: 3px;
-	position: relative;
-	right: -7px;
-	text-align: center;
-	top: -7px;
+.course-compact-role-needed {
+	background-color: $role-needed-bg;
+	color: $role-needed-color;
 }
 
-.course-compact-events-time,
-.course-compact-events-date {
-	@include make-xs-column(12);
-	padding: 0;
+.course-compact-role-occupied {
+	$background-color: $green;
+
+	background-color: $background-color;
+	color: desaturate(darken($background-color, 40%), 50%);
 }
 
-.course-compact-events-location {
-	padding: 0 4px;
-	word-break: break-all;
+.course-compact-role-occupied-by-user {
+	background-color: $user-bg;
+	color: desaturate(darken($user-bg, 40%), 80%);
 }
 
-.course-compact-events-location span {
-	display: inline;
-}
-
-.course-compact-events-location .glyphicon-home {
-	padding-right: 3px;
-}
-
-.course-compact > .groups-list {
-	bottom: $course-border-width;
+// ** Grouplist
+//========================================================================================
+.course-compact > .grouplist {
 	margin: 0;
 	position: absolute;
+}
+
+.course-compact.proposal > .grouplist,
+.course-compact.has-past-events > .grouplist {
+	bottom: $course-border-width;
 	right: $course-border-width;
 }
 
-.course-compact > .groups-list > li {
+.course-compact.has-upcoming-events > .grouplist {
+	bottom: $course-border-width * 2;
+	right: $course-border-width * 2;
+}
+
+.course-compact > .grouplist > li {
 	float: right;
 	margin-left: 4px;
 }

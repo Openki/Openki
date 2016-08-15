@@ -1,6 +1,19 @@
 <template name="courseDetailsPage">
 	<div class="container">
-		<div class="course-details-column-left">
+		<div class="course-page-column-left">
+			<div class="course-details-status">
+				<div>
+					{{#if isProposal}}
+						{{#mf KEY='course.details.state.proposalInRegion' REGION=courseRegionName}}
+						This is a proposal in {REGION}
+						{{/mf}}
+					{{else}}
+						{{#mf KEY='course.details.state.courseInRegion' REGION=courseRegionName}}
+						in {REGION}
+						{{/mf}}
+					{{/if}}
+				</div>
+			</div>
 			{{#if edit}}
 				<div class="page-component">
 					{{> course_edit course}}
@@ -11,7 +24,7 @@
 						<div class="details-header">
 							{{#if editableName}}
 								<div class="course-details-title">
-									{{>editable editableName}}
+									{{> editable editableName}}
 								</div>
 							{{else}}
 								<h2>{{course.name}}</h2>
@@ -22,26 +35,16 @@
 										{{> courseCategories}}
 									</div>
 								{{/if}}
-								<div class="course-details-groups">
-									{{> courseGroupList}}
-								</div>
+								{{> courseGroupList}}
 							{{/with}}
 						</div>
-						<div class="course-details-content">
-							{{> courseDetailsSubmenu}}
-						</div>
+						{{> courseDetailsSubmenu}}
 					</div>
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								<button type="button" class="btn btn-delete js-delete-course-btn">
-									<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-									{{mf '_button.delete'}}
-								</button>
-								<button type="button" class="btn btn-edit js-edit-course-btn">
-									<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-									{{mf '_button.edit'}}
-								</button>
+								{{> buttonDelete event="js-delete-course"}}
+								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
@@ -49,14 +52,14 @@
 				</div>
 			{{/if}}
 			{{#if mobileViewport}}
-				{{> course_events}}
+				{{> courseEvents}}
 			{{else}}
 				{{> discussion course}}
 			{{/if}}
 		</div>
-		<div class="course-details-column-right">
+		<div class="course-page-column-right">
 			{{#unless mobileViewport}}
-				{{> course_events}}
+				{{> courseEvents}}
 			{{/unless}}
 			<div class="page-component">
 				{{> courseMembers course}}
@@ -73,7 +76,7 @@
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs course-details-nav-tabs">
 			<li role="presentation" class='active'>
 				<a href="#description" data-toggle="tab">
 					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
@@ -94,7 +97,7 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="tab-content">
+	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription}}
 		</div>
@@ -119,7 +122,7 @@
 
 
 <template name="courseGroupList">
-	<ul class="groups-list">
+	<ul class="grouplist">
 		{{#each groups}}
 			<li>
 				{{> groupName}}

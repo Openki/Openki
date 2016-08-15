@@ -24,8 +24,18 @@
 	margin-bottom: 0;
 }
 
+.page-component-seperated {
+	border-top: 1px solid $blue-lighter;
+	padding-top: $form-group-margin-bottom;
+}
+
+.page-link {
+	display: block;
+	margin-bottom: 10px;
+}
+
 .details-header {
-	padding: 10px $form-group-margin-bottom;
+	padding: 10px $details-header-padding-horizontal;
 }
 
 .details-header > h2,
@@ -122,8 +132,8 @@
 }
 
 .details-addition {
-	background-color: $gray-lighter;
-	border-color: darken($gray-lighter, 3%);
+	background-color: $gray-lightest;
+	border-color: darken($gray-lightest, 3%);
 	border-style: solid;
 	border-width: 1px 1px;
 	padding: $form-group-margin-bottom;

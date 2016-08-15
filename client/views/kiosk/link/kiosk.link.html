@@ -1,0 +1,12 @@
+<template name="kioskLink">
+	{{#if link}}
+		<div class="back-to-kiosk">
+			<button class="js-remove-back-to-kiosk">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</button>
+			<a href="{{link}}">
+				{{mf 'backToKiosk' 'Return to overview'}}
+			</a>
+		</div>
+	{{/if}}
+</template>

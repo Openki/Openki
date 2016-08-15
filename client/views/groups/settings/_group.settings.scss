@@ -1,13 +1,11 @@
-.group-settings h2 {
-	margin-top: 8px;
-}
-
 .group-members {
 	@include list-unstyled;
 }
 
-.group-members > li {
-	background-color: rgba(80, 90, 50, .15);
+$group-member-bg: rgba($gray-light, .15);
+
+.group-member {
+	background-color: $group-member-bg;
 	display: inline-block;
 	margin-bottom: 5px;
 	margin-right: 5px;
@@ -15,29 +13,26 @@
 	padding-right: 0;
 }
 
-.group-members > li > button {
+.js-member-remove-btn,
+.js-member-add-btn {
+	background-color: rgba($group-member-bg, .3);
 	padding: 2px 6px;
 }
 
-.js-member-remove-btn,
-.js-member-add-btn {
-	background-color: rgba(80, 90, 50, .3);
-}
-
 .js-member-remove-btn:hover {
-	background-color: $brand-danger;
+	background-color: $red;
 }
 
-.js-member-remove-btn span {
-	color: #400;
+.js-member-remove-btn .fa {
+	color: $red-darker;
 }
 
 .js-member-add-btn:hover {
-	background-color: $brand-success;
+	background-color: $green;
 }
 
-.js-member-add-btn span {
-	color: #040;
+.js-member-add-btn .fa {
+	color: $green-darker;
 }
 
 .group-links {

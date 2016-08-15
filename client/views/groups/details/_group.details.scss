@@ -4,7 +4,7 @@
 
 .group-details-header {
 	@include clearfix;
-	background-color: rgba(130, 216, 130, .9);
+	background-color: darken($group-bg, 10%);
 	font-size: x-large;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .group-details-body {
-	background: rgba(130, 216, 130, 0.5);
+	background: $group-bg;
 }
 
 .group-details-claim {

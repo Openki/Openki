@@ -1,18 +1,20 @@
 .introduction {
+	$background-color: lighten($gray-lightest, 5%);
+
 	@include clearfix;
-	background-color: $introduction-bg;
+	background-color: $background-color;
 	margin-top: 15px;
 	padding: 2px ($grid-gutter-width / 2) 0;
 	position: relative;
 	transition: background-color 1s;
 
 	&:hover {
-		background-color: $introduction-text;
+		background-color: darken($background-color, 2%);
 	}
 }
 
 .introduction h3 {
-	color: $brand-primary;
+	color: $blue;
 	margin: 5px 0 6px;
 }
 
@@ -37,7 +39,6 @@
 	margin-left: 10px;
 
 	&::after {
-		color: $gray-light;
 		font-family: FontAwesome;
 	}
 }
@@ -51,7 +52,7 @@
 }
 
 .introduction-content {
-	border-top: 1px solid $default-light-grey;
+	border-top: 1px solid $gray-lighter;
 	margin-top: 5px;
 	padding: 12px ($grid-gutter-width / 2);
 }
@@ -95,7 +96,7 @@
 
 	&::after {
 		@include opacity(.5);
-		color: lighten($default-gray, 15%);
+		color: lighten($gray-light, 15%);
 		content: '';
 		font-family: FontAwesome;
 		font-size: 16px;
@@ -121,5 +122,5 @@
 
 .introduction-steps > li > h2 > .fa {
 	@include opacity(.6);
-	color: $brand-primary;
+	color: $blue;
 }
