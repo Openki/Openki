@@ -2,10 +2,34 @@
 	h2{
 		margin-top: 0;
 	}
+}
 
+.location-edit-header {
+	margin-top: 10px;
 
+	@media (min-width: $screen-xs) {
+		border-color: $location-bg;
+		border-style: $proposal-border-style;
+		border-width: 7px 7px 0;
+		padding: 20px 30px 0;
+	}
+}
 
+.location-edit-body {
+	padding-bottom: 10px;
 
+	@media (min-width: $screen-xs) {
+		border-color: $blue-lighter;
+		border-style: $proposal-border-style;
+		border-width: 0 7px 7px;
+		padding: 0 30px 10px;
+	}
+}
 
+.location-edit-additional-info {
+	$background-color: lighten($location-bg, 15%);
 
+	background-color: $background-color;
+	border: 1px solid darken($background-color, 10%);
+	padding: 15px;
 }

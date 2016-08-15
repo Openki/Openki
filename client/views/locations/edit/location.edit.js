@@ -1,6 +1,13 @@
 "use strict";
 
-Template.location_edit.helpers({
+Template.locationEdit.onCreated(function() {
+	this.showAdditionalInfo = new ReactiveVar(false);
+});
+
+Template.locationEdit.helpers({
+	showAdditionalInfo: function() {
+		return Template.instance().showAdditionalInfo.get();
+	},
 
 	regions: function(){
 		return Regions.find();
@@ -26,7 +33,7 @@ Template.location_edit.helpers({
 
 
 
-Template.location_edit.events({
+Template.locationEdit.events({
 	'submit form.location_edit, click input.save': function (ev) {
 		ev.preventDefault();
 
@@ -109,6 +116,10 @@ Template.location_edit.events({
 
 	},
 
+	'click .js-toggle-additional-info-btn': function(event, instance) {
+		instance.showAdditionalInfo.set(!instance.showAdditionalInfo.get());
+	},
+
 
 
 	'click input.cancel': function() {
@@ -122,4 +133,3 @@ Template.location_edit.events({
 	}
 
 });
-
