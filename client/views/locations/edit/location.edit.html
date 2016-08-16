@@ -76,6 +76,9 @@
 						<label>{{mf 'location.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
 						{{#if showAdditionalInfo}}
 							{{> locationEditOptionalInfo}}
+							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
+								{{mf 'location.edit.hideAdditionalInfo' 'Hide additional information'}}
+							</button>
 						{{else}}
 							<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
 								{{mf 'location.edit.provideAdditionalInfo' 'Fill out additional information'}}
