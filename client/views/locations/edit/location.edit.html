@@ -75,7 +75,7 @@
 					<div class="form-group">
 						<label>{{mf 'location.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
 						{{#if showAdditionalInfo}}
-							{{> locationEditOptionalInfo}}
+							{{> locationEditAdditionalInfo}}
 							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
 								{{mf 'location.edit.hideAdditionalInfo' 'Hide additional information'}}
 							</button>
@@ -100,7 +100,7 @@
 	</div>
 </template>
 
-<template name="locationEditOptionalInfo">
+<template name="locationEditAdditionalInfo">
 	<div class="location-edit-additional-info">
 		<div class="form-group">
 			<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
