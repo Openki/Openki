@@ -6,6 +6,7 @@
 // "subscribe"        -> String     (decription for subscription)
 // "preset"           -> Boolean
 // "show_subscribers" -> Boolean
+// "order"            -> Integer
 // ===========================
 
 
