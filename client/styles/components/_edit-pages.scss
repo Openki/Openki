@@ -2,13 +2,15 @@
 	margin-top: 0;
 }
 
+$edit-page-border: 7px;
+
 .edit-page-header {
 	margin-top: 10px;
 	position: relative;
 
 	@media (min-width: $screen-xs) {
 		border-style: $proposal-border-style;
-		border-width: 7px 7px 0;
+		border-width: $edit-page-border $edit-page-border 0;
 		padding: 20px 30px 0;
 	}
 }
@@ -19,7 +21,7 @@
 
 	@media (min-width: $screen-xs) {
 		border-style: $proposal-border-style;
-		border-width: 7px;
+		border-width: $edit-page-border;
 		margin-top: 10px;
 		padding: 20px 30px 10px;
 	}
