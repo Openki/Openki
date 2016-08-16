@@ -4,6 +4,7 @@
 
 .event-edit-header {
 	margin-top: 10px;
+	position: relative;
 
 	@media (min-width: $screen-xs) {
 		border-color: $event-header-bg;

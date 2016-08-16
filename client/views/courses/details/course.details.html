@@ -8,8 +8,10 @@
 			{{else}}
 				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
-						{{> courseRegion}}
 						<div class="details-header">
+							{{#with course}}
+								{{> regionTag}}
+							{{/with}}
 							{{#if editableName}}
 								<div class="course-details-title">
 									{{> editable editableName}}

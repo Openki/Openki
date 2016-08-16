@@ -12,6 +12,9 @@
 		{{/if}}
 
 		<div class="event-edit-header">
+			{{#unless showRegionSelection}}
+				{{> regionTag}}
+			{{/unless}}
 			<div class="form-group">
 				<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
 				<input type="text" class="form-control input-lg" id="eventEditTitle"
