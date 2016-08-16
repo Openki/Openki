@@ -77,6 +77,31 @@
 	background: $has-upcoming-events-bg;
 }
 
+.proposal-tag {
+	border-bottom: 40px solid rgba($blue, 0.75);
+	border-left: 40px solid transparent;
+	border-right: 40px solid transparent;
+	color: $white;
+	height: 0;
+	left: -32px;
+	position: absolute;
+	top: -12px;
+	transform: rotate(-45deg);
+	width: 0;
+}
+
+.proposal-tag-icon {
+	font-size: large;
+	left: -15px;
+	position: absolute;
+	top: 12px;
+	transform: rotate(45deg);
+
+	&:hover {
+		cursor: help;
+	}
+}
+
 // ** Title
 //========================================================================================
 .course-details-title {
@@ -91,6 +116,14 @@
 
 .course-details-title > .editable-controls {
 	font-size: medium;
+}
+
+.course-details-title > h2 {
+	margin-top: 0;
+}
+
+.proposal .course-details-title {
+	margin-left: 15px;
 }
 
 // ** Categories

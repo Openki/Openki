@@ -35,3 +35,9 @@
 .tooltip-inner {
 	max-width: none;
 }
+
+.tooltip--right::after {
+	border-color: transparent $brand-primary transparent transparent;
+	left: -15px;
+	top: 5px;
+}
