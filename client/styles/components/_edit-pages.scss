@@ -34,3 +34,9 @@ $edit-page-border: 7px;
 		padding-top: 0;
 	}
 }
+
+.edit-page-header > .region-tag,
+.edit-page-body > .region-tag {
+	right: -$edit-page-border;
+	top: -$edit-page-border;
+}

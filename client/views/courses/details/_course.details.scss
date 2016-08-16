@@ -64,6 +64,11 @@
 	border-style: $proposal-border-style;
 }
 
+.proposal > .details-header > .region-tag {
+	right: -$course-border-width;
+	top: -$course-border-width;
+}
+
 .has-past-events > .details-header {
 	border-style: $has-past-events-border-style;
 }
