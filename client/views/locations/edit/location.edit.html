@@ -1,12 +1,12 @@
 <template name="locationEdit">
-	<div class="location-edit">
+	<div class="edit-page">
 		{{#if _id}}
 			<h2>{{mf 'location.edit.edit_location' 'Edit location'}}</h2>
 		{{else}}
 			<h2>{{mf 'location.edit.propose' 'Create new location'}}</h2>
 		{{/if}}
 		<form>
-			<div class="location-edit-header">
+			<div class="edit-page-header location-edit-header">
 					<div class="form-group">
 						<label>{{mf 'location.edit.Name' 'Name:'}}</label>
 						<input type="text" class="form-control"	id="editform-name"
@@ -15,7 +15,7 @@
 							value="{{name}}">
 					</div>
 			</div>
-			<div class="location-edit-body">
+			<div class="edit-page-body location-edit-body">
 					<div class="form-group">
 						<label>{{mf 'location.edit.description' 'Description:'}}</label>
 						<div class="input-group">
