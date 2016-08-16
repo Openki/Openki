@@ -32,7 +32,7 @@ Template.courseCompact.helpers({
 		return this.nextEvent;
 	},
 
-	courseRegion: function() {
+	courseRegionId: function() {
 		return this.region;
 	}
 });

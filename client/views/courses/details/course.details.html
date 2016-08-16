@@ -1,19 +1,6 @@
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
-			<div class="course-details-status">
-				<div>
-					{{#if isProposal}}
-						{{#mf KEY='course.details.state.proposalInRegion' REGION=courseRegionName}}
-						This is a proposal in {REGION}
-						{{/mf}}
-					{{else}}
-						{{#mf KEY='course.details.state.courseInRegion' REGION=courseRegionName}}
-						in {REGION}
-						{{/mf}}
-					{{/if}}
-				</div>
-			</div>
 			{{#if edit}}
 				<div class="page-component">
 					{{> course_edit course}}
@@ -21,6 +8,7 @@
 			{{else}}
 				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+						{{> courseRegion}}
 						<div class="details-header">
 							{{#if editableName}}
 								<div class="course-details-title">

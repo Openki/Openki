@@ -1,0 +1,14 @@
+<template name="courseRegion">
+	<div class="course-details-region">
+		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+		{{#if isProposal}}
+			{{#mf KEY='course.details.state.proposalInRegion' REGION=courseRegion}}
+			This is a proposal in {REGION}
+			{{/mf}}
+		{{else}}
+			{{#mf KEY='course.details.state.courseInRegion' REGION=courseRegion}}
+			in {REGION}
+			{{/mf}}
+		{{/if}}
+	</div>
+</template>
