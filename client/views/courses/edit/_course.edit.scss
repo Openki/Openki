@@ -1,14 +1,5 @@
-.course-edit h2 {
-	margin-top: 0;
-}
-
 .course-edit-body {
-	padding-bottom: 10px;
-	position: relative;
-
 	@media (min-width: $screen-xs) {
-		border: $course-border-width $proposal-border-style $course-border-color;
-		margin-top: 10px;
-		padding: 20px 30px 10px;
+		border-color: $course-border-color;
 	}
 }

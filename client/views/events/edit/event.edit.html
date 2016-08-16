@@ -1,6 +1,6 @@
 <template name="eventEdit">
 	<form>
-	<div class="event-edit">
+	<div class="edit-page">
 		{{#if _id}}
 			<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
 		{{else}}
@@ -11,7 +11,7 @@
 			{{/unless}}
 		{{/if}}
 
-		<div class="event-edit-header">
+		<div class="edit-page-header event-edit-header">
 			{{#unless showRegionSelection}}
 				{{> regionTag}}
 			{{/unless}}
@@ -81,7 +81,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="event-edit-body">
+		<div class="edit-page-body event-edit-body">
 			<div class="form-group">
 				<label>{{mf 'course.event.edit.desc' 'Description'}}</label>
 				<div class="input-group">
