@@ -1,19 +1,6 @@
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
-			<div class="course-details-status">
-				<div>
-					{{#if isProposal}}
-						{{#mf KEY='course.details.state.proposalInRegion' REGION=courseRegionName}}
-						This is a proposal in {REGION}
-						{{/mf}}
-					{{else}}
-						{{#mf KEY='course.details.state.courseInRegion' REGION=courseRegionName}}
-						in {REGION}
-						{{/mf}}
-					{{/if}}
-				</div>
-			</div>
 			{{#if edit}}
 				<div class="page-component">
 					{{> course_edit course}}
@@ -22,13 +9,29 @@
 				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						<div class="details-header">
-							{{#if editableName}}
-								<div class="course-details-title">
-									{{> editable editableName}}
+							{{#with course}}
+								{{> regionTag}}
+							{{/with}}
+							{{#if isProposal}}
+								<div class="proposal-tag"
+
+									href="#">
+									<div class="proposal-tag-icon">
+										<span class="fa fa-lightbulb-o fa-fw"
+											aria-hidden="true"
+											data-tooltip="{{mf 'course.details.proposalTag.tooltip' 'This course is still a proposal.'}}"
+											data-tooltip-direction="e">
+										</span>
+									</div>
 								</div>
-							{{else}}
-								<h2>{{course.name}}</h2>
 							{{/if}}
+							<div class="course-details-title">
+								{{#if editableName}}
+									{{> editable editableName}}
+								{{else}}
+									<h2>{{course.name}}</h2>
+								{{/if}}
+							</div>
 							{{#with course}}
 								{{#if categories}}
 									<div class="course-details-categories">

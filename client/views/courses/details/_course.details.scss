@@ -1,5 +1,5 @@
 // *** Course details ***
-//==================
+//=======================
 
 // ** Column layout
 //========================================================================================
@@ -64,12 +64,42 @@
 	border-style: $proposal-border-style;
 }
 
+.proposal > .details-header > .region-tag {
+	right: -$course-border-width;
+	top: -$course-border-width;
+}
+
 .has-past-events > .details-header {
 	border-style: $has-past-events-border-style;
 }
 
 .has-upcoming-events > .details-header {
 	background: $has-upcoming-events-bg;
+}
+
+.proposal-tag {
+	border-bottom: 40px solid rgba($blue, 0.75);
+	border-left: 40px solid transparent;
+	border-right: 40px solid transparent;
+	color: $white;
+	height: 0;
+	left: -32px;
+	position: absolute;
+	top: -12px;
+	transform: rotate(-45deg);
+	width: 0;
+}
+
+.proposal-tag-icon {
+	font-size: large;
+	left: -15px;
+	position: absolute;
+	top: 12px;
+	transform: rotate(45deg);
+
+	&:hover {
+		cursor: help;
+	}
 }
 
 // ** Title
@@ -88,18 +118,12 @@
 	font-size: medium;
 }
 
-// ** Location of Proposals
-//========================================================================================
-.course-details-status {
-	float: right;
-	text-align: center;
-	position: relative;
+.course-details-title > h2 {
+	margin-top: 0;
 }
-.course-details-status > div {
-		$background-color: $course-page-component-bg;
-		background-color: $background-color;
-		color: desaturate(darken($background-color, 40%), 50%);
-		padding: 3px 8px;
+
+.proposal .course-details-title {
+	margin-left: 15px;
 }
 
 // ** Categories

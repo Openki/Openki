@@ -1,5 +1,5 @@
 <template name="course_edit">
-	<div class="course-edit">
+	<div class="edit-page">
 		<form>
 			{{#if proposeFromQuery}}
 				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
@@ -13,7 +13,10 @@
 					<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
 				{{/if}}
 			{{/if}}
-			<div class="course-edit-body">
+			<div class="edit-page-body course-edit-body">
+				{{#if _id}}
+					{{> regionTag}}
+				{{/if}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.title' 'Title'}}</label>
 					<input class="form-control input-lg"
