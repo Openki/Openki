@@ -125,10 +125,6 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	},
 	isProposal: function() {
 		return !this.course.nextEvent;
-	},
-	courseRegionName: function() {
-		var regionId = this.course.region;
-		return Regions.findOne({_id: regionId}).name;
 	}
 });
 

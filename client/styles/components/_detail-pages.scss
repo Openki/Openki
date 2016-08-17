@@ -36,6 +36,7 @@
 
 .details-header {
 	padding: 10px $details-header-padding-horizontal;
+	position: relative;
 }
 
 .details-header > h2,
@@ -50,6 +51,7 @@
 .details-body {
 	@include clearfix;
 	margin-top: 3px;
+	position: relative;
 }
 
 .details-content {
