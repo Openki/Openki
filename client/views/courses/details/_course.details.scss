@@ -77,6 +77,28 @@
 	background: $has-upcoming-events-bg;
 }
 
+// ** Tags
+//========================================================================================
+.details-header-tags {
+	position: absolute;
+	right: -$course-border-width;
+	top: -$course-border-width;
+}
+
+.details-header-tags > div {
+	display: block;
+	position: relative;
+}
+
+.proposal-tag {
+	$background-color: rgba($blue-lighter, 0.75);
+
+	background-color: $background-color;
+	color: darken($background-color, 65%);
+	margin-bottom: 1px;
+	padding: 8px;
+}
+
 // ** Title
 //========================================================================================
 .course-details-title {
