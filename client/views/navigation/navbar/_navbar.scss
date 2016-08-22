@@ -80,7 +80,7 @@
 	border: 5px solid;
 	border-color:	transparent transparent $body-bg;
 	bottom: 0;
-	box-shadow: 0 5px 5px -5px $white;
+	box-shadow: 0 5px 5px -5px #fff;
 	height: 0;
 	left: 50%;
 	opacity: 0;
@@ -167,4 +167,28 @@
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
 	background-color: lighten($navbar-default-bg, 10%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.region_sel > a {
+	font-size: large;
+}
+
+.region_sel.open > a {
+	height: 50px;
+	padding-top: 13px;
+}
+
+.js-regions-search {
+	color: #000;
+}
+
+.badge-courses {
+	background-color: $brand-primary;
+}
+
+.badge-events {
+	$background-color: $green;
+
+	background-color: $background-color;
+	color: desaturate(darken($background-color, 40%), 50%)
 }
