@@ -9,12 +9,12 @@
 </template>
 
 <template name="regionSelection">
-	<form class="navbar-form navbar-link dropdown">
+	<li class="navbar-form region-selection dropdown">
 		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-		<input type="text" class="js-regions-search"
+		<input type="text" class="form-control js-regions-search"
 					 value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
 		<span class="dropdown-toggle"
-		data-toggle="dropdown"
+			data-toggle="dropdown"
 			role="button"
 			aria-expanded="false">
 		</span>
@@ -61,16 +61,18 @@
 				</li>
 			{{/each}}
 		</ul>
-	</form>
+	</li>
 </template>
 
 <template name="regionDisplay">
-	<a class="navbar-link js-region-display">
-		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-		{{#if region}}
-			{{region.name}}
-		{{else}}
-			{{mf 'menue.All regions' 'All regions'}}
-		{{/if}}
-	</a>
+	<li class="region_sel">
+		<a class="navbar-link js-region-display">
+			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			{{#if region}}
+				{{region.name}}
+			{{else}}
+				{{mf 'menue.All regions' 'All regions'}}
+			{{/if}}
+		</a>
+	</li>
 </template>

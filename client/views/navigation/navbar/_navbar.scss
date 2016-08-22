@@ -170,11 +170,21 @@
 }
 
 .js-regions-search {
-	color: #000;
+	color: $black;
 }
 
-.navbar-form {
-	padding: 0;
+.region-selection {
+	font-size: large;
+	margin: 0;
+	padding: 8.5px 0;
+}
+
+.region-selection > .fa {
+	color: $white;
+
+	@media (max-width: $screen-sm) {
+		display: none;
+	}
 }
 
 .badge-courses {
