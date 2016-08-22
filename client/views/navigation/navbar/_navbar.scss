@@ -169,17 +169,12 @@
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
 
-.region_sel > a {
-	font-size: large;
-}
-
-.region_sel.open > a {
-	height: 50px;
-	padding-top: 13px;
-}
-
 .js-regions-search {
 	color: #000;
+}
+
+.navbar-form {
+	padding: 0;
 }
 
 .badge-courses {

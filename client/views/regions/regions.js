@@ -1,33 +1,33 @@
-Template.region_sel_outer.created = function(){
+Template.regionSelectionWrap.created = function(){
 	 this.subscribe("Regions");
 	 var instance = this;
 	 instance.searchingRegions = new ReactiveVar(false);
 };
 
-Template.region_sel_outer.helpers({
+Template.regionSelectionWrap.helpers({
 	searchingRegions: function() {
 		return Template.instance().searchingRegions.get();
 	}
 });
 
-Template.regionsDisplay.helpers({
+Template.regionDisplay.helpers({
 	region: function(){
 		var region = Regions.findOne(Session.get('region'));
 		return region;
 	}
 });
 
-Template.regionsDisplay.events({
-	'click .-regionsDisplay': function(event, instance) {
+Template.regionDisplay.events({
+	'click .js-region-display': function(event, instance) {
 		instance.parentInstance().searchingRegions.set(true);
 	}
 });
 
-Template.region_sel.onCreated(function() {
+Template.regionSelection.onCreated(function() {
 	this.regionSearch = new ReactiveVar('');
 });
 
-Template.region_sel.rendered = function(){
+Template.regionSelection.rendered = function(){
 	Template.instance().$('.js-regions-search').select();
 };
 
@@ -37,7 +37,7 @@ var updateRegionSearch = function(event, instance) {
 	instance.regionSearch.set(search);
 };
 
-Template.region_sel.helpers({
+Template.regionSelection.helpers({
 	regions: function() {
 		var search = Template.instance().regionSearch.get();
 		var query = {};
@@ -91,7 +91,7 @@ Template.region_sel.helpers({
 	}
 });
 
-Template.region_sel.events({
+Template.regionSelection.events({
 	'click a.regionselect': function(event, instance){
 		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
@@ -132,15 +132,17 @@ Template.region_sel.events({
 		}
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
+});
 
-	'blur .js-regions-search': function(event, instance) {
+Template.regionSelection.onRendered(function() {
+	var parentInstance = this.parentInstance();
+	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
 		if (screenMd) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
-		instance.$('.dropdown-toggle').dropdown('toggle');
-		instance.parentInstance().searchingRegions.set(false);
-	}
+		parentInstance.searchingRegions.set(false);
+	});
 });
