@@ -92,16 +92,13 @@ Template.find.onCreated(function() {
 		subs.subscribe('coursesFind', filterQuery, limit, function() {
 			instance.coursesReady.set(true);
 		});
-	});
 
-	// The event display reacts to changes in time as well
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
+		var eventQuery = filter.toQuery();
 
-		// Here we show events only when they're not attached to a course
-		filterQuery.standalone = true;
-		filterQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', filterQuery, 12);
+		// We show events only when they're not attached to a course
+		eventQuery.standalone = true;
+		eventQuery.after = minuteTime.get();
+		instance.subscribe('eventsFind', eventQuery, 12);
 	});
 });
 
