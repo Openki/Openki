@@ -2,7 +2,6 @@
 
 ////////////// db-subscriptions:
 
-Meteor.subscribe('roles');
 Meteor.subscribe('currentUser');
 Meteor.subscribe('files');
 Meteor.subscribe('version');

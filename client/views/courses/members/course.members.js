@@ -7,7 +7,7 @@ Template.courseMember.helpers({
 
 	rolelist_icon: function(roletype) {
 		if (roletype != "participant") {
-			return Roles.findOne({ type: roletype }).icon;
+			return _.findWhere(Roles, { type: roletype }).icon;
 		}
 	},
 
