@@ -110,42 +110,6 @@ Template.calendarDay.helpers({
 	}
 });
 
-Template.calendar.onCreated(function() {
-	var instance = this;
-
-	var filter = Filtering(EventPredicates);
-	instance.filter = filter;
-
-	// Read URL state
-	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
-
-		// Show internal events only when a group or location is specified
-		if (!query.group && !query.location && query.internal === undefined) {
-			query.internal = false;
-		}
-
-		filter
-			.clear()
-			.add('start', moment().startOf('week'))
-			.read(query)
-			.add('region', Session.get('region'))
-			.done();
-	});
-
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
-
-		var start = filter.get('start').toDate();
-		var limit = filter.get('start').add(1, 'week').toDate();
-
-		filterQuery.period = [start, limit];
-		instance.eventSub = subs.subscribe('eventsFind', filterQuery);
-
-	});
-});
-
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {
 		var start = instance.filter.get('start');
