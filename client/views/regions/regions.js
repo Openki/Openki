@@ -1,4 +1,4 @@
-Template.regionSelectionWrap.created = function(){
+Template.regionSelectionWrap.created = function() {
 	 this.subscribe("Regions");
 	 var instance = this;
 	 instance.searchingRegions = new ReactiveVar(false);
@@ -11,7 +11,7 @@ Template.regionSelectionWrap.helpers({
 });
 
 Template.regionDisplay.helpers({
-	region: function(){
+	region: function() {
 		var region = Regions.findOne(Session.get('region'));
 		return region;
 	}
@@ -27,7 +27,7 @@ Template.regionSelection.onCreated(function() {
 	this.regionSearch = new ReactiveVar('');
 });
 
-Template.regionSelection.rendered = function(){
+Template.regionSelection.rendered = function() {
 	Template.instance().$('.js-region-search').select();
 };
 
@@ -64,7 +64,7 @@ Template.regionSelection.helpers({
 		return Spacebars.SafeString(marked);
 	},
 
-	region: function(){
+	region: function() {
 		var region = Regions.findOne(Session.get('region'));
 		return region;
 	},
@@ -92,7 +92,7 @@ Template.regionSelection.helpers({
 });
 
 Template.regionSelection.events({
-	'click .js-region-link': function(event, instance){
+	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
 		var changed = Session.get('region') !== region_id;
