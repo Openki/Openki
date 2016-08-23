@@ -107,14 +107,14 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover .js-region-link:not(.all-regions-link)': function() {
-		if (Session.get('region') == "all") {
+	'mouseover, focus .js-region-link': function() {
+		if (this._id && (Session.get('region') == "all")) {
 			courseFilterPreview(true, '.'+this._id);
 		}
 	},
 
-	'mouseout .js-region-link:not(.all-regions-link)': function() {
-		if (Session.get('region') == "all") {
+	'mouseout, focusout .js-region-link': function() {
+		if (this._id && (Session.get('region') == "all")) {
 			courseFilterPreview(false, '.'+this._id);
 		}
 	},
