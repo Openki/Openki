@@ -45,7 +45,7 @@
 		{{#unless _id}}
 			<p>{{mf 'location.edit.region' 'Region:'}}
 				<select name='region' class="region_select">
-					<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
+					<option value=''>{{mf '_selection.pleaseSelect'}}</option>
 					{{#each regions}}
 						<option value='{{_id}}' {{regionSel}}>{{name}}</option>
 					{{/each}}
