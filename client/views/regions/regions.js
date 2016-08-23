@@ -28,11 +28,11 @@ Template.regionSelection.onCreated(function() {
 });
 
 Template.regionSelection.rendered = function(){
-	Template.instance().$('.js-regions-search').select();
+	Template.instance().$('.js-region-search').select();
 };
 
 var updateRegionSearch = function(event, instance) {
-	var search = instance.$('.js-regions-search').val();
+	var search = instance.$('.js-region-search').val();
 	search = String(search).trim();
 	instance.regionSearch.set(search);
 };
@@ -92,7 +92,7 @@ Template.regionSelection.helpers({
 });
 
 Template.regionSelection.events({
-	'click a.regionselect': function(event, instance){
+	'click .js-region-link': function(event, instance){
 		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
 		var changed = Session.get('region') !== region_id;
@@ -111,19 +111,19 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover li.region a.regionselect': function() {
+	'mouseover .js-region-link': function() {
 		if (Session.get('region') == "all")
 			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 0.33);
 	},
 
-	'mouseout li.region a.regionselect': function() {
+	'mouseout .js-region-link': function() {
 		if (Session.get('region') == "all")
 			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 1);
 	},
 
-	'keyup .js-regions-search': _.debounce(updateRegionSearch, 100),
+	'keyup .js-region-search': _.debounce(updateRegionSearch, 100),
 
-	'focus .js-regions-search': function(event, instance) {
+	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
 		if (screenMd) {
