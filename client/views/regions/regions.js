@@ -81,10 +81,6 @@ Template.regionSelection.helpers({
 		}, 0);
 	},
 
-	courses: function() {
-		return coursesFind({ region: this._id }).count();
-	},
-
 	currentRegion: function() {
 		var region = this._id || "all";
 		return region == Session.get('region');
