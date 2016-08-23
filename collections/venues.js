@@ -8,7 +8,7 @@
 //
 // loc:         GeoJSON coordinates of the location
 //
-// address:     Address string of the location
+// address:     Address string
 //
 // "route"         -> String
 // "description"   -> String
@@ -25,32 +25,19 @@
 // ===========================
 
 
-Locations = new Meteor.Collection("Locations");
-if (Meteor.isServer) Locations._ensureIndex({loc : "2dsphere"});
+Venues = new Meteor.Collection("Venues");
+if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
 
 
-
-Locations.allow({
-	update: function (userId, doc, fieldNames, modifier) {
-		return userId && true;   // allow only if UserId is present
-	},
-	insert: function (userId, doc) {
-		return userId && true;   // allow only if UserId is present
-	},
-	remove: function (userId, doc) {
-		return userId && true;   // allow only if UserId is present
-	},
-});
-
-/* Find locations for given filters
+/* Find venues for given filters
  *
  * filter: dictionary with filter options
  *   search: string of words to search for
- *   region: restrict to locations in that region
+ *   region: restrict to venues in that region
  * limit: how many to find
  *
  */
-locationsFind = function(filter, limit) {
+venuesFind = function(filter, limit) {
 	var find = {};
 	var options = {};
 
@@ -69,19 +56,13 @@ locationsFind = function(filter, limit) {
 		});
 	}
 
-	if (filter.recent) {
-		var recentEvents = Events.find({ 'location._id': { $exists: true }}, { sort: { time_lastedit: -1 }, limit: 5 }).fetch();
-		var recentLocations = _.uniq(recentEvents, false, function(event) { return event.location._id; });
-		find._id = { $in: recentLocations };
-	}
-
-	return Locations.find(find, options);
+	return Venues.find(find, options);
 };
 
-Meteor.methods({
 
-	save_location: function(locationId, changes) {
-		check(locationId, String);
+Meteor.methods({
+	saveVenue: function(venueId, changes) {
+		check(venueId, String);
 		check(changes, {
 			description:   Match.Optional(String),
 			hosts:         [String],
@@ -103,11 +84,11 @@ Meteor.methods({
 			}
 		}
 
-		var location;
-		var isNew = locationId.length === 0;
+		var venue;
+		var isNew = venueId.length === 0;
 		if (!isNew) {
-			location = Locations.findOne({_id: locationId});
-			if (!location) throw new Meteor.Error(404, "Location not found");
+			venue = Venues.findOne({_id: venueId});
+			if (!venue) throw new Meteor.Error(404, "Venue not found");
 		}
 
 		/* Changes we want to perform */
@@ -132,16 +113,16 @@ Meteor.methods({
 			set.region = Regions.findOne({_id: changes.region})._id;
 			if (!set.region) throw new Exception(404, 'region missing');
 
-			locationId = Locations.insert({
+			venueId = Venues.insert({
 				hosts: [user._id],
 				createdby: user._id,
 				time_created: new Date()
-			}, checkInsert);
+			});
 		}
 
-		Locations.update({ _id: locationId }, { $set: set }, checkUpdateOne);
+		Venues.update({ _id: venueId }, { $set: set }, checkUpdateOne);
 
-		return locationId;
+		return venueId;
 	}
 });
 

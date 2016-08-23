@@ -6,10 +6,10 @@
 // start:          -> Date      (Time the events starts)
 // end:            -> Date      (Time the event ends)
 //
-// location {
-//       _id:          Optional reference to a document in the Locations collection
+// venue {
+//       _id:          Optional reference to a document in the Venues collection
 //                         If this is set, the fields name, loc, and address are synchronized
-//       name:         Descriptive name for the location
+//       name:         Descriptive name for the venue
 //       loc:          Event location in GeoJSON format
 //       address:      Address string where the event will take place
 // }
@@ -18,7 +18,7 @@
 // time_created    -> Date
 // time_lastedit   -> Date
 // courseId        -> course._id of parent course, optional
-// internal        -> Boolean    (Events are only displayed when group or location-filter is active)
+// internal        -> Boolean    (Events are only displayed when group or venue-filter is active)
 
 // groups          -> list of group._id that promote this event
 // groupOrganizers -> list of group._id that are allowed to edit the course
@@ -76,37 +76,37 @@ affectedReplicaSelectors = function(event) {
 	return selector;
 };
 
-// Sync location fields of the event document
-updateEventLocation = function(eventId) {
+// Sync venue fields of the event document
+updateEventVenue = function(eventId) {
 	untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
-		if (typeof event.location != 'object') {
+		if (typeof event.venue != 'object') {
 			// This happens only at creation when the field was not initialized correctly
-			Events.update(event._id, { $set:{ location: {} }});
+			Events.update(event._id, { $set:{ venue: {} }});
 			return false;
 		}
 
-		var location = false;
-		if (event.location._id) {
-			location = Locations.findOne(event.location._id);
+		var venue = false;
+		if (event.venue._id) {
+			venue = Venues.findOne(event.venue._id);
 		}
 
 		var update;
-		if (location) {
-			// Do not update location for historical events
+		if (venue) {
+			// Do not update venue for historical events
 			if (event.start < new Date()) return true;
 
-			// Sync values to the values set in the location document
+			// Sync values to the values set in the venue document
 			update = { $set: {
-				'location.name': location.name,
-				'location.address': location.address,
-				'location.loc': location.loc
+				'venue.name':    venue.name,
+				'venue.address': venue.address,
+				'venue.loc':     venue.loc
 			}};
 		} else {
-			// If the location vanished we delete the locationId but let the cached fields live on
-			update = { $unset: { 'location._id': 1 }};
+			// If the venue vanished from the DB we delete the reference but let the cached fields live on
+			update = { $unset: { 'venue._id': 1 }};
 		}
 
 		// We have to use the Mongo collection API because Meteor does not
@@ -179,7 +179,7 @@ Meteor.methods({
 		var expectedFields = {
 			title:       String,
 			description: String,
-			location:    Object,
+			venue:       Object,
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
@@ -285,7 +285,7 @@ Meteor.methods({
 		}
 
 		if (Meteor.isServer) {
-			Meteor.call('updateEventLocation', eventId, logAsyncErrors);
+			Meteor.call('updateEventVenues', eventId, logAsyncErrors);
 			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
 			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 
@@ -335,11 +335,11 @@ Meteor.methods({
 		Files.remove(fileId);
 	},
 
-	// Update the location fields for all events matching the selector
-	updateEventLocation: function(selector) {
+	// Update the venue field for all events matching the selector
+	updateEventVenue: function(selector) {
 		var idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach(function(event) {
-			updateEventLocation(event._id);
+			updateEventVenue(event._id);
 		});
 	},
 
@@ -383,7 +383,7 @@ Meteor.methods({
  *   ongoing: only events that are ongoing during this date
  *   end: only events that started before this date
  *   after: only events starting after this date
- *   location: only events at this location (string match)
+ *   venue: only events at this venue (ID)
  *   room: only events in this room (string match)
  *   standalone: only events that are not attached to a course
  *   region: restrict to given region
@@ -434,8 +434,8 @@ eventsFind = function(filter, limit) {
 		if (!filter.after) options.sort = { start: -1 };
 	}
 
-	if (filter.location) {
-		find['location._id'] = filter.location;
+	if (filter.venue) {
+		find['venue._id'] = filter.venue;
 	}
 
 	if (filter.room) {

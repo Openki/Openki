@@ -17,7 +17,7 @@ Meteor.startup(function () {
 
 	if (Meteor.settings.testdata) {
 		loadTestRegionsIfNone();       // Regions    from server/data/testing.regions.js
-		loadLocationsIfNone();         // Locations  from server/data/testing.locations.js
+		loadVenuesIfNone();            // Venues     from server/data/testing.venues.js
 		loadGroupsIfNone();            // Groups     from server/data/testing.groups.js
 		loadCoursesIfNone(Meteor.settings.testdata);
 		createEventsIfNone();          // Events     in   server/testing.createnload.data.js (generic)
@@ -75,7 +75,7 @@ Meteor.startup(function () {
 	/* Initialize cache-fields on startup */
 
 	// Resync location cache in events
-	Meteor.call('updateEventLocation', {}, logAsyncErrors);
+	Meteor.call('updateEventVenue', {}, logAsyncErrors);
 
 	// Update list of organizers per course
 	Meteor.call('course.updateGroups', {}, logAsyncErrors);

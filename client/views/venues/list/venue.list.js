@@ -1,9 +1,9 @@
 Router.map(function () {
-	this.route('locations',{
+	this.route('venues',{
 		path: 'venues',
-		template: 'locationlist',
+		template: 'venueList',
 		waitOn: function () {
-			return Meteor.subscribe('locations', Session.get('region'));
+			return Meteor.subscribe('venues', Session.get('region'));
 		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Venues list';
@@ -13,13 +13,7 @@ Router.map(function () {
 
 Template.locationlist.helpers({
 	locations: function() {
-		var locations = Locations.find();
-
-		if(Meteor.userId()) {
-			Session.set("locationHosts",[Meteor.userId()]); // Variable brauchts für das New-Location-Formular. Hier wohl nicht so logisch, wo hintun?
-		}
-
-		return locations;
+		return Venues.find({ region: Session.get('region') });
 	},
 
 	mayHost: function() {
