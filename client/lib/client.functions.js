@@ -67,9 +67,18 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
+courseFilterPreview = function(switchOn, match) {
+	var noMatch = $('.course-compact').not(match);
+	if (switchOn) {
+		noMatch.addClass('filter-no-match');
+	} else {
+		noMatch.removeClass('filter-no-match');
+	}
+};
+
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
-}
+};
 
 var subbedGroup = function(group) {
 	var groupId = ''+group; // it's not a string?! LOL I DUNNO

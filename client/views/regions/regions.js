@@ -111,14 +111,16 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover .js-region-link': function() {
-		if (Session.get('region') == "all")
-			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 0.33);
+	'mouseover .js-region-link:not(.all-regions-link)': function() {
+		if (Session.get('region') == "all") {
+			courseFilterPreview(true, '.'+this._id);
+		}
 	},
 
-	'mouseout .js-region-link': function() {
-		if (Session.get('region') == "all")
-			$('.courselist_course').not('.'+this._id).stop().fadeTo('slow', 1);
+	'mouseout .js-region-link:not(.all-regions-link)': function() {
+		if (Session.get('region') == "all") {
+			courseFilterPreview(false, '.'+this._id);
+		}
 	},
 
 	'keyup .js-region-search': _.debounce(updateRegionSearch, 100),

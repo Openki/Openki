@@ -120,15 +120,6 @@ var updateCategorySearch = function(event, instance) {
 	instance.categorySearchResults.set(results);
 };
 
-var filterPreview = function(switchOn, match) {
-	var noMatch = $('.course-compact').not(match);
-	if (switchOn) {
-		noMatch.addClass('filter-no-match');
-	} else {
-		noMatch.removeClass('filter-no-match');
-	}
-};
-
 Template.find.events({
 	'submit': updateUrl,
 	'change .js-search-field': updateUrl,
@@ -151,43 +142,43 @@ Template.find.events({
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
-		filterPreview(true, '.has-upcoming-events');
+		courseFilterPreview(true, '.has-upcoming-events');
 	},
 
 	'mouseout .js-filter-upcoming-events': function() {
-		filterPreview(false, '.has-upcoming-events');
+		courseFilterPreview(false, '.has-upcoming-events');
 	},
 
 	'mouseover .js-filter-needs-host': function() {
-		filterPreview(true, '.needsHost');
+		courseFilterPreview(true, '.needsHost');
 	},
 
 	'mouseout .js-filter-needs-host': function() {
-		filterPreview(false, '.needsHost');
+		courseFilterPreview(false, '.needsHost');
 	},
 
 	'mouseover .js-filter-needs-mentor': function() {
-		filterPreview(true, '.needsMentor');
+		courseFilterPreview(true, '.needsMentor');
 	},
 
 	'mouseout .js-filter-needs-mentor': function() {
-		filterPreview(false, '.needsMentor');
+		courseFilterPreview(false, '.needsMentor');
 	},
 
 	'mouseover .js-category-label': function() {
-		filterPreview(true, ('.'+this));
+		courseFilterPreview(true, ('.'+this));
 	},
 
 	'mouseout .js-category-label': function() {
-		filterPreview(false, ('.'+this));
+		courseFilterPreview(false, ('.'+this));
 	},
 
 	'mouseover .js-group-label': function() {
-		filterPreview(true, ('.'+this));
+		courseFilterPreview(true, ('.'+this));
 	},
 
 	'mouseout .js-group-label': function() {
-		filterPreview(false, ('.'+this));
+		courseFilterPreview(false, ('.'+this));
 	},
 
 	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
