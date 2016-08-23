@@ -27,6 +27,9 @@ Template.groupSettings.helpers({
 	timetableURL: function() {
 		return Router.routes.timetable.url({}, { query: {group: this._id} });
 	},
+	scheduleURL: function() {
+	return Router.routes.frameSchedule.url({}, { query: {group: this._id} });
+	},
 	frameEventsURL: function() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
 	},
