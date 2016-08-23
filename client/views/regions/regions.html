@@ -4,13 +4,14 @@
 		data-toggle="dropdown"
 		href="#"
 		role="button">
-		<span class="fa fa-dot-circle-o"></span>&nbsp;
+		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 		{{#if region}}
 			{{region.name}}
 		{{else}}
 			{{mf 'menue.All regions' 'All regions'}}
 		{{/if}}
-		<span class="caret"></span>
+		<div class="nav-marker-caret"></div>
+		<div class="nav-marker-bar"></div>
 	</a>
 
 	<ul class="dropdown-menu" role="menu">
@@ -18,7 +19,7 @@
 			<a class="regionselect js-nav-dropdown-close" href="/region/">
 				{{mf 'menue.All regions' 'All regions'}}
 				{{#if currentRegion}}
-					<span class="checkmark"></span>
+					<span class="checkmark glyphicon glyphicon-ok"></span>
 				{{/if}}
 			</a>
 		</li>
@@ -27,7 +28,7 @@
 				<a href="#" class="regionselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentRegion}}
-						<span class="checkmark"></span>
+						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
 			</li>

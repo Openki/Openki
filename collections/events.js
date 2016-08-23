@@ -118,7 +118,7 @@ updateEventLocation = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -167,7 +167,7 @@ Events.updateGroups = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -284,11 +284,14 @@ Meteor.methods({
 			}
 		}
 
-		Meteor.call('updateEventLocation', eventId);
-		Meteor.call('event.updateGroups', eventId);
+		if (Meteor.isServer) {
+			Meteor.call('updateEventLocation', eventId, logAsyncErrors);
+			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
+			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 
-		// the assumption is that all replicas have the same course if any
-		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
+			// the assumption is that all replicas have the same course if any
+			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, logAsyncErrors);
+		}
 
 		return eventId;
 	},
@@ -306,32 +309,30 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
+		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 	},
 
 
-	removeFile: function(eventId,fileId) {
+	removeFile: function(eventId, fileId) {
 		check(eventId, String);
+		check(fileId, String);
 
 		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
+
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
+
 		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
-		var tmp = [];
-
-		for(var i = 0; i < event.files.length; i++ ){
-			var fileObj = event.files[i];
-			if( fileObj._id != fileId){
-				tmp.push(fileObj);
-			}
+		// Check that the event actually references the file
+		// Wouldn't want to delete just any file
+		if (!_.some(event.files, function(file) { return file._id === fileId; })) {
+			return false;
 		}
 
-		var edits = {
-			files: tmp,
-		};
-		var upd = Events.update(eventId, { $set: edits });
-		return upd;
+		Events.update(event._id, { $pull: { files: { _id: fileId } } });
+		Files.remove(fileId);
 	},
 
 	// Update the location fields for all events matching the selector
@@ -454,7 +455,7 @@ eventsFind = function(filter, limit) {
 	}
 
 	if (filter.group) {
-		find.groups = filter.group;
+		find.allGroups = filter.group;
 	}
 
 	if (filter.course) {

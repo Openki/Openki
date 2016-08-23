@@ -20,16 +20,12 @@ Router.map(function () {
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
-					if(user.emails[0].verified){
-						userdata.verifiedEmail = 'verified';
-						userdata.verifiedEmailTrue = '1';
-					}
-					else userdata.verifiedEmail = 'not verified';
+					userdata.verified = !!user.emails[0].verified;
 				}
 
 				return {
 					user: userdata,
-					courses: coursesFind({ userInvolved: user._id })
+					involvedIn: coursesFind({ userInvolved: user._id })
 				};
 			}
 		},
@@ -44,6 +40,7 @@ Router.map(function () {
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
+	this.sending = new ReactiveVar(false);
 };
 
 Template.profile.helpers({
@@ -53,22 +50,35 @@ Template.profile.helpers({
 	changingPass: function() {
 		return Template.instance().changingPass.get();
 	},
+
+	sending: function() {
+		return Template.instance().sending.get();
+	},
+
 	verifyDelete: function() {
 		return Session.get('verify') === 'delete';
 	},
 
 	groupCount: function() {
 		return this.user.groups.count();
+	},
+
+	privacyChecked: function() {
+		if (this.user.privacy) return 'checked';
+	},
+
+	hasInvolvedIn: function() {
+		return this.involvedIn.count() > 0;
 	}
 });
 
 Template.profile.events({
-	'click .js-profile-info-edit-btn': function(event, template) {
+	'click .js-profile-info-edit': function(event, template) {
+		Tooltips.hide();
 		Template.instance().editing.set(true);
-		template.$("[data-toggle='tooltip']").tooltip('hide');
 	},
 
-	'click .js-profile-info-cancel-btn': function() {
+	'click .js-profile-info-cancel': function() {
 		Template.instance().editing.set(false);
 		return false;
 	},
@@ -77,14 +87,13 @@ Template.profile.events({
 		Template.instance().changingPass.set(true);
 	},
 
-	'click .js-change-pwd-cancel-btn': function() {
+	'click .js-change-pwd-cancel': function() {
 		Template.instance().changingPass.set(false);
 		return false;
 	},
 
-	'click .js-profile-delete-btn': function (event, template) {
+	'click .js-profile-delete': function (event, template) {
 		Session.set('verify', 'delete');
-		template.$("[data-toggle='tooltip']").tooltip('hide');
 	},
 
 	'click .js-profile-delete-confirm-btn': function () {
@@ -94,7 +103,7 @@ Template.profile.events({
 		Session.set('verify', false);
 	},
 
-	'click .js-profile-delete-cancel-btn': function () {
+	'click .js-profile-delete-cancel': function () {
 		Session.set('verify', false);
 	},
 
@@ -107,7 +116,7 @@ Template.profile.events({
 			document.getElementById('privacy').checked,
 			function(err) {
 				if (err) {
-					addMessage(mf('profile.savingError', { ERROR: err }, 'Saving your profile failed: {ERROR}'), 'danger');
+					showServerError('Saving your profile failed', err);
 				} else {
 					addMessage(mf('profile.updated', 'Updated profile'), 'success');
 					template.editing.set(false);
@@ -116,7 +125,7 @@ Template.profile.events({
 		);
 	},
 
-	'submit .change-pwd': function(event) {
+	'submit #changePwd': function(event) {
 		event.preventDefault();
 		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
@@ -133,7 +142,7 @@ Template.profile.events({
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
-						addMessage(mf('profile.passwordChangeFailed', 'Failed to change your password'), 'danger');
+						showServerError('Failed to change your password', err);
 					} else {
 						addMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
 						template.changingPass.set(false);
@@ -143,14 +152,15 @@ Template.profile.events({
 		}
 	},
 
-	'click .js-verify-mail-btn': function () {
-		Meteor.call('sendVerificationEmail');
+	'click .js-verify-mail-btn': function (event, instance) {
+		instance.sending.set(true);
+		Meteor.call('sendVerificationEmail', function(err) {
+			if (err) {
+				instance.sending.set(false);
+				showServerError('Failed to send verification mail', err);
+			} else {
+				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
+			}
+		});
 	}
 });
-
-Template.profile.rendered = function() {
-	$("[data-toggle='tooltip']").tooltip();
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	$('a.loginButton.navbar-link').addClass('navbar-link-active');
-};

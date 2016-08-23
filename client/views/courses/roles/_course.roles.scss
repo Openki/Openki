@@ -1,0 +1,43 @@
+.course-role,
+.course-role-enrol {
+	transition-duration: .3s;
+	transition-property: #{'box-shadow, margin'};
+}
+
+.course-role-title,
+.course-role-title-enrol {
+	font-size: large;
+	line-height: 1.1;
+	padding: 10px ($grid-gutter-width / 2);
+	width: 100%;
+}
+
+.course-role-title {
+	background: $user-bg;
+}
+
+.course-role-title-enrol {
+	background: $green;
+}
+
+.js-role-unsubscribe-btn {
+	font-size: medium;
+	margin-left: 5px;
+	padding: 3px 12px;
+}
+
+.course-role-enrol {
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	margin-bottom: 10px;
+}
+
+.course-role-enrol,
+.course-role-enrolled {
+	margin-top: $course-details-seperator-height;
+}
+
+.course-role-enrol-options {
+	@include clearfix;
+	background: $course-page-component-bg;
+	padding: 15px 15px 0;
+}

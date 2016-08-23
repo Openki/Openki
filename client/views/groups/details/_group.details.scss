@@ -1,81 +1,44 @@
-.groupEdit {
-  background: rgba(130, 216, 130, 0.5);
-  margin-bottom: 50px;
-  .group_edit_header {
-    @include grid(12);
-    background: rgba(130, 216, 130, 0.9);
-    border-bottom: 3px solid $default-white;
-    font-size: x-large;
-    padding: 0px;
-    .editformLogo {
-      float: left;
-    }
-    .editformName {
-      float: left;
-      padding: 7px;
-    }
-    .editformShort {
-      float: right;
-      padding: 7px;
-      text-align: right;
-    }
-    button.settings {
-      background: none;
-      border: left;
-      border-color: white;
-      border-width: 2px;
-      color: grey;
-      float: right;
-      margin-left: 5px;
-      padding: 7px 15px;
-      &:hover {
-        color: black;
-      }
-    }
-  }
-  .groupEditSub {
-    padding-bottom: 15px;
-    padding-left: 10px;
-    .editformClaim {
-      clear: both;
-      font-size: large;
-    }
-    .editformDescription {
-      @extend .form-control;
-      height: auto;
-      max-height: 150px;
-      min-height: 100px;
-      p {
-        margin: 0px;
-      }
-    }
-  }
-  .editable {
-    background: none;
-  }
-  #editform_short,
-  #editform_claim,
-  #addGroupMember {
-    @extend .form-control;
-  }
-  .groupEditFinishbtns {
-    @include grid(12);
-    padding: 10px 0px 0px;
-    button {
-      @extend .btn;
-      margin-right: 10px;
-      @media mobile {
-        @include form-control;
-        @include btn;
-        @include btn-primary;
-        margin-bottom: 10px;
-      }
-      &.save {
-        @extend .btn-success;
-      }
-      &.cancel {
-        @extend .btn-danger;
-      }
-    }
-  }
+.group-details .editable {
+	background-color: none;
+}
+
+.group-details-header {
+	@include clearfix;
+	background-color: darken($group-bg, 10%);
+	font-size: x-large;
+}
+
+.group-details-logo {
+	float: left;
+}
+
+.group-details-name {
+	float: left;
+	padding: 7px;
+}
+
+.js-group-settings {
+	font-size: x-large;
+	line-height: $line-height-base;
+	padding: 7px;
+}
+
+.group-details-short {
+	float: right;
+	padding: 7px;
+	text-align: right;
+}
+
+.group-details-body {
+	background: $group-bg;
+}
+
+.group-details-claim {
+	font-size: large;
+}
+
+.group-details-description {
+	height: auto;
+	max-height: 150px;
+	min-height: 100px;
 }

@@ -1,5 +1,5 @@
 <template name="locationlist">
-	<div class="locationlist">
+	<div class="container">
 		<h1>{{mf 'locations.list.title' 'Locations'}}</h1>
 		Publically visible locations in {{region}}:    <!-- TODO: -->
 		<div class="">
@@ -8,9 +8,9 @@
 			{{else}}
 				no locations
 			{{/each}}
-			{{> location_edit}}
+			{{> locationEdit}}
 		</div>
-	</div><!-- /.locationlist -->
+	</div>
 </template>
 
 <template name="location">
@@ -22,5 +22,5 @@
 				<div class="mylocation">You can host here</div>
 			{{/if}}
 		</a>
-	</div><!-- /.locationlist_location -->
+	</div>
 </template>

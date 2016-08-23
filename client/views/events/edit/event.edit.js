@@ -3,12 +3,14 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.location || {});
+
+	instance.uploaded = new ReactiveVar([]);
 });
 
 Template.eventEdit.onRendered(function() {
 	updateTimes(this, false);
 
-	this.$('.js-eventStartDate').datepicker({
+	this.$('.js-event-start-date').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		language: moment.locale(),
 		autoclose: true,
@@ -22,9 +24,6 @@ Template.eventEdit.onRendered(function() {
 			}
 		}
 	});
-
-	this.$("[data-toggle='tooltip']").tooltip();
-	$('a[href!="*"].navbar-link').removeClass('navbar-link-active');
 });
 
 
@@ -72,6 +71,10 @@ Template.eventEdit.helpers({
 	isInternal: function() {
 		return this.internal ? "checked" : null;
 	},
+
+	uploaded: function() {
+		return Template.instance().uploaded.get();
+	}
 });
 
 Template.eventDescriptionEdit.rendered = function() {
@@ -86,8 +89,8 @@ var readDateTime = function(dateStr, timeStr) {
 
 var getEventStartMoment = function(template) {
 	return readDateTime(
-		template.$('.js-eventStartDate').val(),
-		template.$('#edit_event_starttime').val()
+		template.$('.js-event-start-date').val(),
+		template.$('#editEventStartTime').val()
 	);
 };
 
@@ -96,7 +99,7 @@ var getEventEndMoment = function(template) {
 	var startMoment = getEventStartMoment(template);
 	var endMoment = readDateTime(
 		startMoment.format('L'),
-		template.$('#edit_event_endtime').val()
+		template.$('#editEventEndTime').val()
 	);
 
 	// If the end time is earlier than the start time, assume the event
@@ -107,7 +110,7 @@ var getEventEndMoment = function(template) {
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
 			startMoment.add(1, 'day').format('L'),
-			template.$('#edit_event_endtime').val()
+			template.$('#editEventEndTime').val()
 		);
 	}
 
@@ -116,7 +119,7 @@ var getEventEndMoment = function(template) {
 
 
 var getEventDuration = function(template) {
-	var duration = parseInt(template.$('#edit_event_duration').val(), 10);
+	var duration = parseInt(template.$('#editEventDuration').val(), 10);
 	return Math.max(0,duration);
 };
 
@@ -143,68 +146,56 @@ var updateTimes = function(template, updateEnd) {
 
 	duration = end.diff(start, 'minutes');
 	template.$('#edit_event_startdate').val(start.format('L'));
-	template.$('#edit_event_starttime').val(start.format('LT'));
-	template.$('#edit_event_endtime').val(end.format('LT'));
-	template.$('#edit_event_duration').val(duration.toString());
+	template.$('#editEventStartTime').val(start.format('LT'));
+	template.$('#editEventEndTime').val(end.format('LT'));
+	template.$('#editEventDuration').val(duration.toString());
 };
 
 Template.eventEdit.events({
-	'change .eventFileInput': function(event, template) {
-		template.$('button.eventFileUpload').toggle(300);
-	},
-
-	'click button.eventFileUpload': function(event, template) {
-
-		var fileEvent = $('.eventFileInput')[0].files;
-
-		//FS.Utility.eachFile(fileEvent, function(file) {
-		$.each( fileEvent, function(i,file){
-
+	'change .js-event-add-file': function(event, instance) {
+		FS.Utility.eachFile(event, function(file) {
 			Files.insert(file, function (err, fileObj) {
-
-				if (err){
-					// add err handling
+				if (err) {
+					addMessage(mf('file.upload.error', "Uploading file '" + fileObj.original.name + "; failed"));
 				} else {
-					//adds a single file at a time at the moment
-					var fileList = [
-						{
-							_id: fileObj._id,
-							file : "/cfs/files/files/" + fileObj._id,
-							filename : fileObj.original.name,
-							filesize : fileObj.original.size,
-						}
-					];
-					template.files = fileList;
-					template.$('button.eventFileUpload').hide(50);
+					var uploaded = instance.uploaded.get();
 
-					var fileHtml = '<tr id="row-' + fileObj._id + '">';
-					fileHtml += '<td style="padding-right:5px;">';
-					fileHtml += '<a href="/cfs/files/files/' + fileObj._id + '" target="_blank">' + fileObj.original.name + '</a>';
-					fileHtml += '</td><td><button role="button" class="fileDelete close" type="button">';
-					fileHtml += '<span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+					uploaded.push({
+						_id: fileObj._id,
+						file : "/cfs/files/files/" + fileObj._id,
+						filename : fileObj.original.name,
+						filesize : fileObj.original.size,
+					});
 
-					$("table.file-list").append(fileHtml);
-
+					instance.uploaded.set(uploaded);
 				}
 			});
 		});
 	},
 
-	'click button.fileDelete': function (event, template) {
-		var fileid = this._id;
-		var eventid = template.data._id;
+
+	'click .js-delete-file': function (event, instance) {
+		var fileId = this._id;
+		var eventId = instance.data._id;
 		var filename = this.filename;
-		//delete the actual file
-		Files.remove(fileid);
 
-		//hide file name
-		var rowid = "tr#row-" + fileid;
-		$(rowid).hide();
+		// check whether the file hasn't been associated with the event yet
+		var uploaded = instance.uploaded.get();
+		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId });
+		if (uploadedClean.length < uploaded.length) {
+			// The server does not allow to delete files that are not associated
+			// to an event. So we just remove the local reference and hope
+			// somebody will clean up stray files on the server
+			instance.uploaded.set(uploadedClean);
+			return;
+		}
 
-		//remove file attribute from the event
-		Meteor.call('removeFile', eventid, fileid, function (error, fileRemoved){
-			if (fileRemoved) addMessage(mf('file.removed', { FILENAME:filename }, 'Successfully removed file {FILENAME}.'), 'success');
-			else addMessage(mf('file.removed.fail', { FILENAME:filename }, "Couldn't remove file {FILENAME}."), 'danger');
+		Meteor.call('removeFile', eventId, fileId, function(error) {
+			if (error) {
+				showServerError("Couldn't remove file '" + filename + "'", error);
+			} else {
+				addMessage(mf('file.removed', { FILENAME:filename }, 'Removed file {FILENAME}.'), 'success');
+			}
 		});
 	},
 
@@ -222,34 +213,16 @@ Template.eventEdit.events({
 		var end = getEventEndMoment(instance);
 
 		var editevent = {
-			title: instance.$('#edit_event_title').val(),
-			description: instance.$('#edit_event_description').html(),
+			title: instance.$('#eventEditTitle').val(),
+			description: instance.$('#eventEditDescription').html(),
 			location: instance.selectedLocation.get(),
-			room: instance.$('#edit_event_room').val(),
+			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
-			files: this.files || Array(),
 			internal: instance.$('.-eventInternal').is(':checked'),
 		};
 
-		var fileList = instance.files;
-		instance.files = null;
-
-		//check if file object is stored in the template object
-		if (!!fileList) {
-			var tmp = [];
-			if(this.files){
-				$.each( this.files, function( i,fileObj ){
-					tmp.push( fileObj );
-				});
-			}
-
-			$.each( fileList, function( i, fileObj ){
-				tmp.push( fileObj );
-			});
-
-			editevent.files = tmp;
-		}
+		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
 		var eventId = this._id;
 		var isNew = !this._id;
@@ -268,7 +241,13 @@ Template.eventEdit.events({
 				editevent.courseId = this.courseId;
 			} else {
 				editevent.region = instance.selectedRegion.get();
+				if (!editevent.region || editevent.region === 'all') {
+					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					return null;
+				}
 
+				// We have this 'secret' feature where you can set a group ID
+				// in the URL to assign a group to the event on creation
 				var groups = [];
 				if (Router.current().params.query.group) {
 					groups.push(Router.current().params.query.group);
@@ -289,7 +268,7 @@ Template.eventEdit.events({
 
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
 			if (error) {
-				addMessage(mf('event.saving.error', { ERROR: error }, 'Saving the event went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+				showServerError('Saving the event went wrong', error);
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });
@@ -306,26 +285,25 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click button.cancelEditEvent': function (event, instance) {
-		if (this.new) history.back();
+	'click .js-event-edit-cancel': function (event, instance) {
+		if (instance.data.new) history.back();
 		instance.parent.editing.set(false);
 	},
 
-	'click .toggle_duration': function(event, template){
-		template.$("[data-toggle='tooltip']").tooltip('hide');
-		template.$('.end_time').slideToggle(600);
-		template.$('.show_duration').slideToggle(600);
+	'click .js-toggle-duration': function(event, instance){
+		Tooltips.hide();
+		$('.time-end > *').toggle();
 	},
 
-	'change #edit_event_duration, change #edit_event_startdate, change #edit_event_starttime': function(event, template) {
+	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #edit_event_endtime': function(event, template) {
+	'change #editEventEndTime': function(event, template) {
 		updateTimes(template, false);
 	},
 
-	'change .-regionSelect': function(event, instance) {
-		instance.selectedRegion.set(instance.$('.-regionSelect').val());
+	'change .js-select-region': function(event, instance) {
+		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 });

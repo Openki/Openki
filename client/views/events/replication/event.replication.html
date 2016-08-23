@@ -1,61 +1,65 @@
 <template name="eventReplication">
-	<div class="eventReplicationMenu">
-		<div class="col-xs-12 col-sm-6">
-			<label for="replicateStart" class="col-xs-12 col-md-6">{{mf 'event.replication.interval.start' 'Interval Start'}}</label>
-			<div class="input-group col-xs-12 col-md-6">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-				<input id="replicateStart" type="text" class="form-control -replicateStart -updateReplicas" value="{{replicaStart}}" size="8">
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-6">
-			<label for="replicateEnd" class="col-xs-12 col-md-6">{{mf 'event.replication.interval.end' 'Interval End'}}</label>
-			<div class="input-group col-xs-12 col-md-6">
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-				<input id="replicateEnd" type="text" class="form-control -replicateEnd -updateReplicas" value="{{replicaEnd}}" size="8">
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-6">
-			<label for="replicateFrequency" class="col-xs-12 col-md-6">{{mf 'event.replication.repeat' 'Repeat'}}</label>
-			<div class="col-xs-12 col-md-6">
-				<div class="radio">
-					<label>
-						<input type="radio" name="replicateFrequency" value="once" class="-replicateFrequency -updateReplicas">
-						{{mf 'event.replication.freq.once' 'once'}}
-					</label>
+	<div class="details-form event-replicate">
+		<div class="form-group">
+			<div class="form-group-element">
+				<label for="replicateStart">{{mf 'event.replication.interval.start' 'Interval Start'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+					</span>
+					<input id="replicateStart" type="text" class="form-control js-replicate-date -updateReplicas" value="{{replicaStart}}" size="8">
 				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="replicateFrequency" value="daily" class="-replicateFrequency -updateReplicas">
-						{{mf 'event.replication.freq.daily' 'every day'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="replicateFrequency" value="weekly" class="-replicateFrequency -updateReplicas" checked>
-						{{mf'event.replication.freq.weekly' 'once a week'}}
-					</label>
+			</div>
+			<div class="form-group-element">
+				<label for="replicateEnd">{{mf 'event.replication.interval.end' 'Interval End'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+					</span>
+					<input id="replicateEnd" type="text" class="form-control js-replicate-date -updateReplicas" value="{{replicaEnd}}" size="8">
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-6">
-		{{#if replicaDateCount}}
-			{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}
-			<ul>
-			{{#each replicaDates}}
-				<li>{{localDate this}}</li>
-			{{/each}}
-			</ul>
-			<div class="input-group">
-				<button type="button" class="-eventReplicate btn btn-success" role="button">
-					{{mf 'course.details.repl_btn' 'Create {COUNT, plural, one {event} other {# events}}' COUNT=replicaDateCount}}
-				</button>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label for="replicateFrequency">{{mf 'event.replication.repeat' 'Repeat'}}</label>
+					<div class="radio">
+						<label>
+							<input type="radio" name="replicateFrequency" value="once" class="-replicateFrequency -updateReplicas">
+							{{mf 'event.replication.freq.once' 'once'}}
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="replicateFrequency" value="daily" class="-replicateFrequency -updateReplicas">
+							{{mf 'event.replication.freq.daily' 'every day'}}
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="replicateFrequency" value="weekly" class="-replicateFrequency -updateReplicas" checked>
+							{{mf'event.replication.freq.weekly' 'once a week'}}
+						</label>
+					</div>
 			</div>
-		{{/if}}
+			{{#if replicaDateCount}}
+				<div class="form-group-element">
+					<label>{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}</label>
+					<ul class="fa-ul">
+						{{#each replicaDates}}
+							<li>
+								<span class="fa-li fa fa-calendar-plus-o" aria-hidden="true"></span>
+								{{localDate this}}
+							</li>
+						{{/each}}
+					</ul>
+					<div class="input-group">
+						<button type="button" class="-eventReplicate btn btn-save">
+							{{mf 'course.details.repl_btn' 'Create {COUNT, plural, one {event} other {# events}}' COUNT=replicaDateCount}}
+						</button>
+					</div>
+				</div>
+			{{/if}}
 		</div>
-		<div style="clear: both"></div>
 	</div>
 </template>

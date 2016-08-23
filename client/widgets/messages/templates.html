@@ -1,0 +1,18 @@
+<template name="messages">
+	<div class="messages">
+		{{#each messages}}
+			{{> message}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="message">
+	<div class="alert alert-{{type}} alert-dismissible" role="alert">
+		{{message}}
+		<button type="button" class="close"
+			aria-label="{{mf 'message.close' 'Close message'}}"
+			data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</template>

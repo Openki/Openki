@@ -1,0 +1,61 @@
+.course-members {
+	margin-top: $course-details-seperator-height;
+	font-size: medium;
+}
+
+.course-member {
+	background: $course-page-component-bg;
+	padding: 10px ($grid-gutter-width / 2);
+
+	&:not(:last-child) {
+		margin-bottom: 1px;
+	}
+}
+
+.course-member-roles {
+	display: inline-block;
+	list-style: none;
+	margin-bottom: 0;
+	margin-left: 10px;
+	padding-left: 0;
+
+	&:hover {
+		cursor: default;
+	}
+}
+
+.course-member-roles li {
+	background: $blue;
+	color: $white;
+	display: inline-block;
+	font-size: small;
+	font-weight: bold;
+	padding: 5px 10px;
+	vertical-align: middle;
+
+	&.participant {
+		display: none;
+	}
+}
+
+.role-short {
+	text-transform: uppercase;
+}
+
+.js-add-to-team-btn {
+	margin-left: 10px;
+	padding: 3px 10px;
+}
+
+.add-to-team-btn-txt {
+	display: none;
+}
+
+.course-member-comment {
+	display: block;
+	padding-top: 10px;
+}
+
+.course-member-comment .editable {
+	padding-left: 0 !important;
+}

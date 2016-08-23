@@ -38,10 +38,10 @@ Template.course_edit.helpers({
 		return 'roles.'+this.type+'.subscribe';
 	},
 
-	activeCategory: function() {
+	isChecked: function() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
-			return 'active';
+			return 'checkbox-checked';
 		}
 		return '';
 	},
@@ -70,6 +70,27 @@ Template.course_edit.helpers({
 	isInternal: function() {
 		return this.internal ? "checked" : null;
 	},
+
+	proposeFromQuery: function() {
+		var parentInstance = Template.instance().parentInstance();
+		var filter = parentInstance.filter;
+		if (!filter) return false;
+
+		var search = filter.toParams().search;
+		if (!search) return false;
+
+		var filterQuery = filter.toQuery();
+		var results = coursesFind(filterQuery, 1);
+
+		return (results.count() === 0) && search;
+	},
+
+	courseSearch: function() {
+		var parentInstance = Template.instance().parentInstance();
+		var filterParams = parentInstance.filter.toParams();
+
+		return filterParams.search;
+	}
 });
 
 
@@ -80,12 +101,13 @@ Template.course_edit.rendered = function() {
 
 
 Template.course_edit.events({
-	'submit form, click button.save': function (ev, instance) {
+	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
 		if (pleaseLogin()) return;
 
-		var courseId = this._id ? this._id : '';
+		var course = instance.data;
+		var courseId = course._id ? course._id : '';
 		var isNew = courseId === '';
 
 		var roles = {};
@@ -124,7 +146,7 @@ Template.course_edit.events({
 
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
 			if (err) {
-				addMessage(mf('course.saving.error', { ERROR: err }, 'Saving the course went wrong! Sorry about this. We encountered the following error: {ERROR}'), 'danger');
+				showServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
@@ -142,9 +164,11 @@ Template.course_edit.events({
 		return false;
 	},
 
-	'click button.cancel': function(event) {
-		if (this._id) {
-			Router.go('showCourse', this);
+	'click .js-course-edit-cancel': function(event, instance) {
+		var course = instance.data;
+
+		if (course._id) {
+			Router.go('showCourse', course);
 		} else {
 			Router.go('/');
 		}
@@ -154,7 +178,7 @@ Template.course_edit.events({
 		Template.instance().editingCategories.set(true);
 	},
 
-	'change .categories input': function(event, instance) {
+	'change .js-category-checkbox': function(event, instance) {
 		var catKey = ''+this;
 		var selectedCategories = instance.selectedCategories.get();
 		var checked = instance.$('input.cat_'+catKey).prop('checked');

@@ -1,0 +1,70 @@
+.editable-wrap {
+	margin: -8px;
+	position: relative;
+}
+
+.editable {
+	min-height: 2em;
+	outline: none;
+	padding: 8px;
+
+	&:focus,
+	&.editable-changed {
+		background: $body-bg;
+		border: 1px solid $brand-primary;
+		box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
+		padding: 7px;
+	}
+}
+
+.editable-wrap-rich .editable {
+	min-height: 4ex;
+}
+
+.editable-wrap-simple .editable {
+	display: inline-block;
+	min-width: 8em;
+
+	&:focus {
+		min-width: 10em;
+	}
+}
+
+.editable-icon {
+	color: $gray-light;
+	cursor: default;
+	padding: .2em;
+	transition: color $default-transition-time;
+}
+
+.editable-wrap:hover .editable-icon {
+	color: $gray-dark;
+}
+
+.editable-wrap-rich .editable-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.editable:focus + .editable-icon,
+.editable-changed + .editable-icon {
+	color: $gray-dark;
+}
+
+.editable-controls {
+	margin-left: -8px;
+	margin-top: 15px;
+	position: absolute;
+	z-index: 1;
+}
+
+.editable-controls button {
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	margin-right: 5px;
+}
+
+.editable-textarea {
+	height: 100px;
+	overflow: auto;
+}

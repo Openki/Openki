@@ -1,104 +1,81 @@
 <template name="calendar">
-	{{> switchDate date=startDate}}
-	<div class="calendar">
+	{{> calendarNavigation date=startDate}}
+	<div class="container calendar-container">
+		<a href="/event/create" class="btn btn-add" role="button">
+			{{mf 'menue.CreateEvent'}}
+		</a>
 		{{#each days}}
 			{{> calendarDay day=this filter=filter}}
 			<hr>
 		{{/each}}
-		<a href="/event/create">
-			<button type="button" class="btn btn-default">
-				{{mf 'menue.CreateEvent'}}
-			</button>
+		<a href="/event/create" class="btn btn-add" role="button">
+			{{mf 'menue.CreateEvent'}}
 		</a>
-	</div><!-- /.calendar -->
+	</div>
 </template>
 
 <template name="calendarDay">
-	<div class="calendar_date">
-		<div class="date">
-			{{calendarDay day.start}}
-		</div><!-- /.date -->
-		{{#if eventsReady}}
-			{{#unless hasEvents}}
-				<br>
-				{{mf 'calendar.noCoursesThisDay' "There are no events on this day"}}
-			{{/unless}}
-			{{#if hasEvents}}
-				<div class="calendar_events">
-					{{#each events}}
-						{{#if past}}
-							{{> calendar_event_past}}
-						{{else}}
-							{{> eventSmall}}
-						{{/if}}
-					{{/each}}
-				</div><!-- /.calendar_events -->
-			{{/if}}
-		{{else}}
-			{{> loadingRow}}
+	<div class="calendar-date">
+		{{calendarDay day.start}}
+	</div>
+	{{#if eventsReady}}
+		{{#unless hasEvents}}
+			<br>
+			{{mf 'calendar.noCoursesThisDay' "There are no events on this day"}}
+		{{/unless}}
+		{{#if hasEvents}}
+			<div class="calendar-event-list">
+				{{> eventList dataEvents=events withDate=false}}
+			</div>
 		{{/if}}
-	</div><!-- /.calendar_date -->
+	{{else}}
+		{{> loadingRow}}
+	{{/if}}
 </template>
 
-<template name="calendar_event_past">
-	<a href="{{pathFor 'showEvent'}}">
-		<div class="calendar_event_past no-padding col-xs-12 col-sm-4 col-md-3 col-lg-2" style='overflow: hidden'>
-			<div class="course_event_date">
-				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-				{{dateformat_withday start}}
-			</div>
-			<div class="course_event_time">
-				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-				{{timeformat start}} - {{timeformat end}} &nbsp;&nbsp;&nbsp; {{this.location}}, {{this.room}}
-			</div>
-			<div class="course_event_title">
-				<h4>{{this.title}}</h4>
-			</div>
-			<div class="course_event_desc ellipsis">
-				<p>{{plain description}}</p>
-			</div>
-			<div class="grey_out"></div>
-		</div>
-	</a>
-</template>
-
-<template name="switchDate">
-	<div class="switchDate">
-		<div class="left">
-			<button class="prevYear" aria-label="go back one year">
-				<span class="fa fa-arrow-left"></span>
+<template name="calendarNavigation">
+	<div class="calendar-nav">
+		<div class="calendar-nav-element">
+			<button type="button" class="btn btn-default calendar-nav-btn js-previous-year"
+				aria-label="go back one year">
+				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousYear" "one year"}}
 			</button>
-			<button class="prevMonth" aria-label="go back one month">
-				<span class="fa fa-arrow-left"></span>
+			<button type="button" class="btn btn-default calendar-nav-btn js-previous-month"
+				aria-label="go back one month">
+				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousMonth" "one month"}}
 			</button>
-			<button class="prevWeek" aria-label="go back one week">
-				<span class="fa fa-arrow-left"></span>
+			<button type="button" class="btn btn-default calendar-nav-btn js-previous-week"
+				aria-label="go back one week">
+				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousweek" "one week"}}
 			</button>
-		</div><!-- /.left -->
-		<div class="right">
-			<button class="nextWeek" aria-label="go forward one week">
-				{{mf "calendar.button.nextWeek" "one week"}}
-				<span class="fa fa-arrow-right"></span>
-			</button>
-			<button class="nextMonth" aria-label="go forward one month">
-				{{mf "calendar.button.nextMonth" "one month"}}
-				<span class="fa fa-arrow-right"></span>
-			</button>
-			<button class="nextYear" aria-label="go forward one year">
-				{{mf "calendar.button.nextYear" "one year"}}
-				 <span class="fa fa-arrow-right"></span>
-			</button>
-		</div><!-- /.right -->
-		<div class="calendar_week">
-			<div class="week">
+		</div>
+		<div class="calendar-nav-element">
+			<div class="calendar-nav-week">
 					{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
-			</div><!-- /.week -->
-			<div class="date">
+			</div>
+			<div class="calendar-nav-date">
 				{{dateLong date}} - {{dateLong (endDateTo date)}}
-			</div><!-- /.date -->
-		</div><!-- /.calendar_week -->
-	</div><!-- /.switchDate -->
+			</div>
+		</div>
+		<div class="calendar-nav-element">
+			<button type="button" class="btn btn-default calendar-nav-btn js-next-week"
+				aria-label="go forward one week">
+				{{mf "calendar.button.nextWeek" "one week"}}
+				<span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default calendar-nav-btn js-next-month"
+				aria-label="go forward one month">
+				{{mf "calendar.button.nextMonth" "one month"}}
+				<span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default calendar-nav-btn js-next-year"
+				aria-label="go forward one year">
+				{{mf "calendar.button.nextYear" "one year"}}
+				 <span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
 </template>

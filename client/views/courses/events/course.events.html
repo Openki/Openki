@@ -1,87 +1,78 @@
-<template name="course_events">
+<template name="courseEvents">
 	{{#if mayAdd}}
-		<button type="button" class="eventEdit">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;
-			{{mf 'course.events.addButton' 'Add event'}}
-		</button>
+		<div class="page-component">
+			<button type="button" class="btn btn-add js-add-event">
+				<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
+				{{mf 'course.events.addButton' 'Add event'}}
+			</button>
+		</div>
 	{{/if}}
 	{{#if haveEvents}}
-		<div class="course_events_fadebox">
-			<div class="course_events">
+	<div class="page-component">
+		<div class="fade-wrap">
+			<div class="course-events js-scrollable-container">
 				{{#if havePastEvents}}
-					<div name="past_events">
-						<div class="courseEvents-titlebar">
-							<h4>
-								<span class="glyphicon glyphicon-calendar"></span>
-								{{mf 'course.events.pastList' 'Previous events'}}
-							</h4>
-							{{#if haveFutureEvents}}
-								<a href="#future_events" class="link">
-									<span class="glyphicon glyphicon-arrow-down"></span>
-									{{mf 'course.events.futureListLink' 'future events'}}
-								</a>
-							{{/if}}
-						</div><!-- /.courseEvents-titlebar -->
-						<div class="course_events_events">
-							{{#each pastEvents}}
-								{{#if this}}
-									{{> small_event_withDate}}
-								{{/if}}
-							{{/each}}
-						</div><!-- /.course_events_events -->
-					</div><!-- /.past_events -->
+					<div class="course-page-component-header">
+						<h4>
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{mf 'course.events.pastList' 'Previous events'}}
+						</h4>
+						{{#if haveFutureEvents}}
+							<a href="#future_events" class="link">
+								<span class="glyphicon glyphicon-arrow-down"></span>
+								{{mf 'course.events.futureListLink' 'future events'}}
+							</a>
+						{{/if}}
+					</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=pastEvents withDate=true}}
+					</div>
 				{{/if}}
-				<hr class="now" id="future_events">
 				{{#if haveOngoingEvents}}
-					<div class="courseEvents-titlebar">
-						<h4>{{mf 'course.events.ongoinglist' 'Ongoing events'}}</h4>
+					<div class="course-page-component-header">
+						<h4>
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{mf 'course.events.ongoinglist' 'Ongoing events'}}
+						</h4>
 						{{#if havePastEvents}}
-							<a href="#past_events" class="link">
+							<a href="#past_events" class="past-events-link">
 								<span class="glyphicon glyphicon-arrow-up"></span>
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div><!-- /.courseEvents-titlebar -->
-					<div class="course_events_events">
-						{{#each ongoingEvents}}
-							{{> small_event_withDate}}
-						{{/each}}
-					</div><!-- /.course_events_events -->
+					</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=ongoingEvents withDate=false}}
+					</div>
 				{{/if}}
 				{{#if haveFutureEvents}}
-					<div class="courseEvents-titlebar">
+					<div class="course-page-component-header">
 						<h4>
-							<span class="glyphicon glyphicon-calendar"></span>
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							{{mf 'course.events.upcominglist' 'Upcoming events'}}
 						</h4>
 						{{#if havePastEvents}}
-							<a href="#past_events" class="link">
+							<a href="#past_events" class="past-events-link">
 								<span class="glyphicon glyphicon-arrow-up"></span>
 								{{mf 'course.events.pastListLink' 'past events'}}
 							</a>
 						{{/if}}
-					</div><!-- /.courseEvents-titlebar -->
-					<div class="course_events_events">
-						{{#each futureEvents}}
-						{{> small_event_withDate}}
-						{{/each}}
-					</div><!-- /.course_events_events -->
+					</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=futureEvents withDate=true}}
+					</div>
 				{{/if}}
-			</div><!-- /.course_events -->
-			<div class="fade_effect_top" style="display:none"></div>
-			<div class="fade_effect_bottom"></div>
-		</div><!-- /.course_events_fadebox -->
-		<a href="/cal/course/{{course._id}}" target="_blank">
-			<button class="js-events-download-btn"
-				data-delay='{"show":"500", "hide":"0"}'
-				data-original-title="{{mf 'course.events.download.tooltip'}}"
-				data-placement="top"
-				data-toggle="tooltip"
-				href="#"
-				type="button">
-				<span class="fa fa-download"></span>&nbsp;
-				{{mf 'course.download_cal' 'Download events to my calendar'}}
-			</button>
+			</div>
+			<div class="fade-top"></div>
+			<div class="fade-bottom"></div>
+		</div>
+	</div>
+	<div class="page-component">
+		<a href="/cal/course/{{course._id}}"
+			target="_blank">
+			<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
+			{{mf 'course.download_cal' 'Download events to my calendar'}}
 		</a>
+	</div>
 	{{/if}}
 </template>

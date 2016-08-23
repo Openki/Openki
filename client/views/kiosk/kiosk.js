@@ -57,33 +57,6 @@ Router.map(function () {
 			Meteor.clearInterval(this.timer);
 		}
 	});
-	this.route('kioskCalendar', {								///////// calendar /////////
-		path: '/kiosk/calendar',
-		template: 'calendar',
-		layoutTemplate: 'kioskLayout',
-		waitOn: function () {
-			var region = Session.get('region');
-			if (region === 'all') region = false;
-			return subs.subscribe('events', region);
-		},
-		data: function() {
-			var today = new Date();
-			return {
-				calendar_eventlist:      Events.find({start: {$gte:today}},{sort: {start: 1}}),
-				calendar_eventlist_past: Events.find({start: {$lt:today}},{sort: {start: -1}}),
-			};
-		},
-		onAfterAction: function() {
-			document.title = webpagename + 'Kiosk-View';
-		}
-	});
-});
-
-Template.kioskLayout.helpers({
-	showKioskCalendar: function() {
-		var currentIsKiosk = Router.current().route.path();
-		if (currentIsKiosk != "/kiosk/events") return true;
-	}
 });
 
 Template.kioskEvents.helpers({
@@ -94,67 +67,5 @@ Template.kioskEvents.helpers({
 	showDate: function() {
 		Session.get('seconds');
 		return moment().format('LL');
-	}
-});
-
-Template.locationDisplay.helpers({
-	showLocation: function() {
-		// The location is shown when we have a location name and the location is not used as a filter
-		return this.location.name && !Router.current().params.query.location;
-	}
-});
-
-Template.kioskEventOngoing.rendered = function() {
-	this.$('.kiosk_event_home').dotdotdot({
-		height: 30,
-	});
-	this.$('.ellipsis').dotdotdot({
-		height: 90,
-	});
-};
-Template.kioskEventToday.rendered = function() {
-	this.$('.course_event_title').dotdotdot({
-		height: 70,
-	});
-	this.$('.course_event_desc').dotdotdot({
-		//
-	});
-	this.$('.kiosk_event_home').dotdotdot({
-		height: 60,
-	});
-};
-Template.kioskEventFuture.rendered = function() {
-	this.$('.course_event_title').dotdotdot({
-		height: 70,
-	});
-	this.$('.course_event_desc').dotdotdot({
-		height: 20,
-	});
-	this.$('.kiosk_event_home').dotdotdot({
-		height: 60,
-	});
-};
-
-
-Template.kioskLink.helpers({
-	link: function() {
-		var filterParams = Session.get('kioskFilter');
-		if (!filterParams) return;
-
-		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		var queryString = UrlTools.paramsToQueryString(filterParams);
-
-		var options = {};
-		if (queryString.length) {
-			options.query = queryString;
-		}
-
-		return Router.url('kiosk', {}, options);
-	},
-});
-
-Template.kioskLink.events({
-	'click .-removeBackLink': function() {
-		return Session.set('kioskFilter', false);
 	}
 });

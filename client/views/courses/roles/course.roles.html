@@ -1,0 +1,60 @@
+<template name="courseRoles">
+	{{#each this}}
+		{{> courseRole}}
+	{{/each}}
+</template>
+
+<template name="courseRole">
+	{{#if subscribed}}
+		<div class="course-role-enrolled">
+			<div class="course-role-title">
+				<span class="{{roletype.icon}}"></span>&nbsp;
+				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
+				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
+					name="{{roletype.type}}">
+					{{mf 'course.roles.retract' 'Retract'}}
+				</button>
+			</div>
+		</div>
+	{{else}}
+		<div class="course-role{{#if enrolling}}-enrol{{/if}}">
+			{{#if enrolling}}
+				<div class="course-role-title-enrol">
+					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
+					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
+				</div>
+				<div class="course-role-enrol-options">
+					<div class="form-group">
+						<label>
+							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
+						</label>
+						<textarea class='form-control course-role-enrol-comment'
+							>{{../../member.comment}}</textarea>
+					</div>
+					{{#if privacyEnabled}}
+						<div class="checkbox">
+							<label>
+								<input class="incognito" type="checkbox" value="1"/>
+								{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
+							</label>
+						</div>
+					{{/if}}
+					<div class="form-actions">
+						{{> buttonCancel event="js-role-enrol-cancel"}}
+						<button type="button" class="btn btn-save js-role-subscribe-btn">
+							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
+							{{mf 'course.roles.enrol' 'Enroll'}}
+						</button>
+					</div>
+				</div>
+			{{else}}
+				{{#if maySubscribe roletype.type}}
+					<button type="button" class="btn btn-add course-page-btn js-role-enrol-btn" name="participant">
+						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
+						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+					</button>
+				{{/if}}
+			{{/if}}
+		</div>
+	{{/if}}
+</template>

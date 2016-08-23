@@ -1,0 +1,27 @@
+<template name="frameList">
+	<div>
+		{{#if groupName}}
+			<h2 id="frame-list-courses-title">The courses of {{groupName}}</h2>
+		{{/if}}
+		<div class="frame-list-courses">
+			<h3>{{mf 'frame.list.coursesWithEvents' 'With upcoming events'}}</h3>
+			<ul>
+				{{#each coursesWithEvents}}
+					<a href="{{pathFor 'showCourse'}}">
+						<li>{{name}}</li>
+					</a>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="frame-list-courses">
+			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Without upcoming events'}}</h3>
+			<ul>
+				{{#each coursesWithoutEvents}}
+					<a href="{{pathFor 'showCourse'}}">
+						<li>{{name}}</li>
+					</a>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</template>

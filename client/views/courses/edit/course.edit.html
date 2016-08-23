@@ -1,130 +1,134 @@
 <template name="course_edit">
-	<div class="course-edit">
+	<div class="edit-page">
 		<form>
-			{{#if _id}}
-				<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+			{{#if proposeFromQuery}}
+				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
 			{{else}}
-				<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
-				<span class="fa fa-info"></span>
-				&nbsp;
-				{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
-				<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
+				{{#if _id}}
+					<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+				{{else}}
+					<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
+					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+					{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
+					<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
+				{{/if}}
 			{{/if}}
-			<div class="course_edit_body">
-				<h4>{{mf 'course.edit.title' 'Title:'}}</h4>
-				<input id="editform_name"
-					placeholder="{{mf 'course.title.placeholder' 'what do you want to learn?'}}"
-					size="40"
-					type="text"
-					value="{{name}}"/>
-				<h4>{{mf 'course.edit.description' 'Description:'}}</h4>
-				<div id="editform_description"
-					data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
-					{{{description}}}
+			<div class="edit-page-body course-edit-body">
+				{{#if _id}}
+					{{> regionTag}}
+				{{/if}}
+				<div class="form-group">
+					<label>{{mf 'course.edit.title' 'Title'}}</label>
+					<input class="form-control input-lg"
+						id="editform_name"
+						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+						size="40"
+						type="text"
+						value="{{name}}"/>
 				</div>
-				<div id='editform_categories'>
-					{{#if editingCategories}}
-						<div id="edit_categories">
-							<h4>{{mf 'course.edit.edit_categories' 'Edit Categories:'}}</h4>
-							<ul class='categories'>
-								{{#each availableCategories}}
-									<li class="{{activeCategory}}">
-										<label class="{{this}}">
-											<input class='checkbox cat_{{this}}'
+				<div class="form-group">
+					<label>{{mf 'course.edit.description' 'Description'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+						</span>
+						<div class="form-control editable-textarea"
+							id="editform_description"
+							data-placeholder="{{mf 'course.description.placeholder' ' Describe your idea, so that more people will find it and that they`ll know what to expect.'}}">
+							{{{description}}}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="form-group-element">
+						{{#if editingCategories}}
+							<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
+							{{#each availableCategories}}
+								<div class="checkbox">
+									<label class="{{isChecked}}">
+										<input class='js-category-checkbox cat_{{this}}'
+											name='{{this}}'
+											type='checkbox'
+											value="1"
+											{{checkCategory}}/>
+										{{> categoryLabel}}
+										<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+									</label>
+								</div>
+								{{#each availableSubcategories this}}
+									<div class="checkbox checkbox-sub">
+										<label class="{{isChecked}}">
+											<input class='js-category-checkbox cat_{{this}}'
 												name='{{this}}'
-												style="display: inline"
 												type='checkbox'
 												value="1"
 												{{checkCategory}}/>
-											{{categoryName}}
-											<span class="caret {{activeCategory}}"></span>
+											{{> categoryLabel}}
 										</label>
-										<ul class='subcategories'>
-											{{#each availableSubcategories this}}
-												<li>
-													<div class="checkbox">
-														<label class="{{this}}">
-															<input class='checkbox_sub cat_{{this}}'
-																name='{{this}}'
-																type='checkbox'
-																value="1"
-																{{checkCategory}}/>
-															{{categoryName}}
-														</label>
-													</div><!-- /.checkbox -->
-												</li>
-											{{/each}}
-										</ul>
-									</li>
+									</div>
 								{{/each}}
-							</ul>
-						</div><!-- /#edit_categories -->
-					{{else}}
-						<h4>{{mf 'course.edit.categories' 'Categories:'}}</h4>
-						{{#if categories}}
-							{{>showCategories}}
-						{{/if}}
-						{{#unless categories}}
-							{{mf 'course.edit.no.categories' 'No categories'}}
-						{{/unless}}
-						<button class="editCategories" type="button" role="button">
-							<span class="glyphicon glyphicon-edit"></span>
-							{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
-						</button>
-					{{/if}}
-				</div><!-- /#editform_categories -->
-
-				<div class="course_edit_roles">
-					<h4>{{mf 'course.edit.needs.role' 'This course might need...'}}</h4>
-					<ul class="roles_list">
-						{{#each available_roles}}
-							<li>
-								{{> courseEditRole selected=../roles role=this members=../members}}
-							</li>
-						{{/each}}
-					</ul>
-				</div><!-- /.course_edit_roles -->
-
-				<div class="course_edit_internal">
-					<h4>{{mf 'course.edit.intern' 'Internal course:'}}</h4>
-					<label>
-						<input
-							type="checkbox"
-							class="-courseInternal"
-							{{isInternal}}
-						>
-						{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
-					</label>
-				</div><!-- /.course_edit_internal -->
-
-				<div class="course_edit_region">
-					{{#unless _id}}
-						<h4>{{mf 'course.edit.region' 'Region:'}}</h4>
-						<select name='region' class="region_select">
-							<option value='' disabled selected class="select_placeholder">
-								{{mf 'course.edit.pls_select_region' 'Please select a region'}}
-							</option>
-							{{#each regions}}
-								<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
-									{{name}}
-								</option>
 							{{/each}}
-						</select>
+						{{else}}
+							<label>{{mf 'course.edit.categories' 'Categories'}}</label>
+							{{#if categories}}
+								{{>courseCategories}}
+							{{/if}}
+							{{#unless categories}}
+								{{mf 'course.edit.no.categories' 'No categories'}}
+							{{/unless}}
+							<button type="button" class="btn btn-edit editCategories">
+								<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
+								{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
+							</button>
+						{{/if}}
+					</div>
+					<div class="form-group-element">
+						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+						{{#each available_roles}}
+							{{> courseEditRole selected=../roles role=this members=../members}}
+						{{/each}}
+					</div>
+					{{#unless _id}}
+						<div class="form-group-element">
+							<label>{{mf 'course.edit.region' 'Region'}}</label>
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								</div>
+								<select class="region_select form-control" name='region'>
+									<option value='' disabled selected class="select_placeholder">
+										{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+									</option>
+									{{#each regions}}
+										<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
+											{{name}}
+										</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
 					{{/unless}}
-				</div><!-- /.course_edit_region -->
-				<div class="course_edit_finishbtns">
-					<button type="button" class="save">
-						<span class="glyphicon glyphicon-save"></span>
-						{{mf 'course.edit.save_btn' 'Save'}}
-					</button>
-					<button type="button" class="cancel">
-						<span class="glyphicon glyphicon-remove"></span>
-						{{mf '_button.cancel'}}
-					</button>
-				</div><!-- /.course_edit_finishbtns -->
-			</div><!-- /.course_edit_body -->
+				</div>
+
+				<div class="form-group">
+					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
+					<div class="checkbox">
+						<label>
+							<input class="-courseInternal"
+								type="checkbox"
+								{{isInternal}}/>
+							{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
+						</label>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					{{> buttonCancel event="js-course-edit-cancel"}}
+					{{> buttonSave event="js-course-edit-save"}}
+				</div>
+			</div>
 		</form>
-	</div><!-- /.course_edit -->
+	</div>
 </template>
 
 <template name="courseEditRole">
@@ -134,17 +138,19 @@
 				name='{{role.type}}'
 				type="checkbox"
 				{{checkRole}}/>
-			<span class="{{role.icon}}"></span>
+			<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
 			{{mf roleDescription}}
 		</label>
-		{{#if checkRole}}
-			<label style="margin-left: 2em; display: block">
+	</div>
+	{{#if checkRole}}
+		<div class="checkbox checkbox-sub">
+			<label>
 				<input class='-enrol {{role.type}}'
 					name='{{role.type}}'
 					type="checkbox"
 					{{hasRole}}/>
 				{{mf roleSubscription}}
 			</label>
-		{{/if}}
-	</div><!-- /.checkbox -->
+		</div>
+	{{/if}}
 </template>

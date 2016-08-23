@@ -23,6 +23,10 @@ Template.layout.helpers({
 Template.introduction.helpers({
 	openedIntro: function() {
 		return Assistant.openedIntro();
+	},
+
+	isInCalendar: function() {
+		return Router.current().route.getName() == "calendar";
 	}
 });
 

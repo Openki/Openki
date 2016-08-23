@@ -1,0 +1,28 @@
+<template name='report'>
+	{{#if sending}}
+		{{mf 'report.sending' 'Report is being sent…'}}
+	{{/if}}
+	{{#if reporting}}
+		<div class="report">
+			<form>
+				<div class="form-group">
+					<label for="reportMessage">{{mf 'report.text' 'Please tell us what is wrong.'}}</label>
+					<textarea class="form-control" id="reportMessage" rows="3"
+						placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
+				</div>
+				<div class="form-actions">
+					{{> buttonCancel event="js-report-cancel"}}
+					<button type="button" class='btn btn-save js-report-send'>
+						<i class="fa fa-send fa-fw" aria-hidden="true"></i>
+						{{mf 'report.report' 'Send report'}}
+					</button>
+				</div>
+			</form>
+		</div>
+	{{else}}
+		<button type="button" class="btn btn-default js-report">
+			<span class="glyphicon glyphicon-warning-sign"></span>
+			{{mf 'report.open' 'Report problem'}}
+		</button>
+	{{/if}}
+</template>

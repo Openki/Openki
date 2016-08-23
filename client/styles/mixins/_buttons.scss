@@ -1,93 +1,27 @@
 // Button mixins
 // --------------------------------------------------
 
-// Reset mixin to remove default button styles
-@mixin btn-reset {
-  background: none;
-  border: 0px;
-  padding: 0px;
+@mixin btn-base {
+	@include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
 }
 
-// Cancel/Delete button style, turning red when beeing hovered over
-@mixin btn-cancel {
-  @extend .btn-default;
-  &:hover {
-    @include gradient-vertical(map-get($btn-danger-bg-color-steps, dark), map-get($btn-danger-bg-color-steps, darkest), 0%, 100%);
-    border: 1px solid $btn-danger-border;
-  }
+@mixin btn-lg {
+	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
+	border-radius: 0px !important;
 }
 
-@mixin btn-go {
-  @extend .btn-default;
-  &:hover {
-    @include gradient-vertical(map-get($btn-success-bg-color-steps, dark), map-get($btn-success-bg-color-steps, darkest), 0%, 100%);
-    border: 1px solid $btn-success-border;
-  }
+@mixin btn-sm {
+	@media (min-width: $screen-xs) {
+		@include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
+	}
 }
 
-@mixin btn-thin {
-  @extend .btn;
-  padding: 3px 12px;
-}
+@mixin icon-btn-remove {
+	color: lighten($brand-danger, 20%);
+	cursor: pointer;
+	transition: color $default-transition-time;
 
-@mixin big-button-primary {
-  @extend .form-control;
-  @extend .btn;
-  @extend .btn-primary;
-  border: 0px;
-  margin-top: 3px;
-  font-size: large;
-  height: auto;
-  line-height: 1.1;
-  padding: 10px 15px;
-  text-align: left;
-  &:hover {
-    border: 0px;
-    margin-top: 3px;
-  }
-}
-
-@mixin big-button-success {
-  @extend .form-control;
-  @extend .btn;
-  @extend .btn-success;
-  border: 0px;
-  margin-top: 3px;
-  font-size: large;
-  height: auto;
-  line-height: 1.1;
-  padding: 10px 15px;
-  text-align: left;
-  &:hover {
-    border: 0px;
-    margin-top: 3px;
-  }
-}
-
-@mixin header-btn {
-  background: none;
-  border: 0px;
-}
-
-@mixin btn-remove {
-  @include transition(color $default-transition-time);
-  color: lighten($brand-danger, 20%);
-  cursor: pointer;
-  &:hover {
-    color: $brand-danger;
-  }
-}
-
-@mixin btn-calendar {
-  background-color: $calendar-btn-bg;
-  border-color: $calendar-btn-border;
-  color: $calendar-btn-text;
-  &:hover {
-    background-color: $calendar-btn-hover-bg;
-    border-color: $calendar-btn-hover-bg;
-    color: $calendar-btn-text;
-  }
-  &:focus {
-    color: darken($calendar-btn-text, 20%);
-  }
+	&:hover {
+		color: $brand-danger;
+	}
 }

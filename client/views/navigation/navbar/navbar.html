@@ -1,16 +1,14 @@
 <template name="navbar">
-	<nav class="navbar"
+	<nav class="navbar navbar-default navbar-fixed-top"
 		id="topnavbar"
 		role="navigation">
 		{{#if showTestWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
 		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-container">
+		<div class="navbar-container container-fluid">
 			<div class="navbar-header">
-				<button
-					type="button"
-					class="navbar-toggle collapsed"
+				<button	type="button"	class="navbar-toggle collapsed"
 					data-toggle="collapse"
 					data-target="#bs-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
@@ -39,32 +37,30 @@
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li>
+					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
 						<a href="{{pathFor 'home'}}"
-							 class="navbar-link js-nav-dropdown-close -closeIntroAtHome"
+							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
 							 id="nav_courses">
-							 <span class="fa fa-lightbulb-o"></span>
-							 &nbsp;
+							 <span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Courses' 'Find'}}
-							 <span class="caret" id="active_caret"></span>
+							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li>
+					<li class="{{activeClass 'proposeCourse'}}">
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="navbar-link js-nav-dropdown-close">
-							 <i class="fa fa-pencil" aria-hidden="true"></i>
-							 &nbsp;
+							 class="{{activeClass 'proposeCourse'}} navbar-link js-nav-dropdown-close">
+							 <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Create' 'Create'}}
-							 <span class="caret"></span>
+							 <div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="calendar-link">
+					<li class="{{activeClass 'calendar'}}">
 						<a href="{{pathFor 'calendar'}}"
-							 class="navbar-link js-nav-dropdown-close">
-							 <i class="fa fa-calendar" aria-hidden="true"></i>
-							 &nbsp;
+							 class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
+							 <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Calendar' 'Calendar'}}
-							 <span class="caret"></span>
+							 <div class="nav-marker-caret"></div>
+							 <div class="nav-marker-bar"></div>
 						</a>
 					</li>
 				</ul>
@@ -75,7 +71,7 @@
 					<li class="dropdown lang_sel">
 						{{> lang_sel}}
 					</li>
-					<li class="dropdown login-link">
+					<li class="dropdown login-link {{activeClass 'profile'}}">
 						{{> loginButton}}
 						<div class="dropdown-menu login-dropdown">
 							{{> userFrame}}

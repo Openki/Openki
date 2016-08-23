@@ -1,14 +1,10 @@
 <head>
-	<meta name="viewport" content="width=device-width,  user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<noscript>
-		<div class="noscript">
-			<div class="noscript-message-container">
-				<img src="/logo/openki.png" alt="Openki logo">
-				<div class="noscript-message">
-					Please enable javascript
-				</div><!-- /.noscript-message -->
-			</div><!-- /.noscript-message-container -->
-		</div><!-- /.noscript -->
+		<div class="container-sm noscript">
+			<img src="/logo/openki.png" alt="Openki logo">
+			<h2>Please enable javascript</h2>
+		</div>
 	</noscript>
 </head>
 
@@ -16,7 +12,7 @@
 	<div id="wrap">
 		<div id="topBar">
 			{{> navbar}}
-		</div><!-- #topBar -->
+		</div>
 		<div id="outer" class={{testWarningClass}}>
 			{{#if shownIntro}}
 				{{> introduction}}
@@ -34,11 +30,12 @@
 				{{> yield}}
 				{{> messages}}
 			{{/if}}
-			</div><!-- /#maincontent -->
-		</div><!-- /.{{testWarningClass}} -->
+			</div>
+		</div>
 		<div class="push"></div>
-	</div><!-- /#wrap -->
+	</div>
 	{{> kioskLink}}
+	{{> tooltips}}
 	{{> footer}}
 </template>
 
@@ -48,9 +45,10 @@
 		data-toggle="dropdown"
 		href="#"
 		role="button">
-		<span class="fa fa-language"></span>&nbsp;
+		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
 		{{short}}
-		<span class="caret"></span>
+		<div class="nav-marker-caret"></div>
+		<div class="nav-marker-bar"></div>
 	</a>
 
 	<ul class="dropdown-menu" role="menu">
@@ -59,42 +57,10 @@
 				<a href="#" class="langselect js-nav-dropdown-close">
 					{{name}}
 					{{#if currentLanguage}}
-						<span class="checkmark"></span>
+						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
 			</li>
 		{{/each}}
-	</ul>
-</template>
-
-<template name="translateInfo">
-	<h4>Welcome and thanks for helping with the translation of Openki</h4>
-	<p>Here are some guidelines and some help, please read them carefully before you start to translate.</p>
-
-	We use a casual, every day language for the interface.
-	<ul>
-		<li> Try to sound as natural as possible.</li>
-		<li> Openki is on a first-name basis with all users.</li>
-		<li> It's totally ok to address the user informally as if they were a good friend.</li>
-	</ul>
-
-	Where possible we use a gender-neutral, inclusive language.
-	<ul>
-		<li> We avoid gender-specific pronouns and try to use gender-neutral ones...</li>
-		<li> As well we use gender-neutral titles and roles.</li>
-		<li> ...without sounding too weird though.</li>
-	</ul>
-
-	Some technical stuff:
-	<ul>
-		<li> Words in capital letters in brackets like <code>{NAME}</code> are variables. Transfer them as they are.</li>
-		<li> "Don't forget 'all' the punctuation (marks)!"...</li>
-		<li> In some languages capitalization differs from English. Otherwise transfer them too.</li>
-		<li> Sometimes there are multiple translations in one string. Ex. when there is <code>no participant</code>, but <code>1 participant</code> and <code>2 participants</code>.<br>
-		So we need a translation for each case. One for zero (=0), one for one (=1), one for te rest (other). The used syntax is as follows: <br>
-		<code>Create {COUNT, plural, one {event} other {# events}}</code> becomes: <br>
-		<code>Erstelle {COUNT, plural, one {Veranstaltung} other {# Veranstaltungen}}</code></li>
-		<li> # stands for a Number.</li>
-		<li> There are no save-buttons. Strings get saved as you move to the next one or away from the translation page.</li>
 	</ul>
 </template>

@@ -43,6 +43,12 @@ Router.map(function () {
 });
 
 Template.frameCalendar.helpers({
-	weekday:  function() { return this.format('ddd'); },
-	monthday: function() { return this.format('D'); },
+	calendarDay: function(day) {
+		Session.get('timeLocale');
+		return moment(day.toDate()).format('dddd, Do MMMM');
+	},
+
+	hasDayEvents: function() {
+		return this.dayEvents.count() > 0;
+	}
 });

@@ -1,140 +1,34 @@
-.profile-link {
-	@include grid(12);
-	margin-bottom: 10px;
-}
-
-.profile-info-container {
-  @include grid(12);
-}
-
 .profile-info {
-  @include grid(12);
-	border: 3px solid $user-bg;
-	border-bottom: none;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  padding: 15px;
-  table {
-    font-size: large;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-}
+	$background-color: lighten($user-bg, 5%);
 
-.profile-info-edit {
-  label .checkmark {
-    display: none;
-  }
-  .active .checkmark {
-    display: inline;
-  }
-}
-
-.profile-info-save-btn,
-.js-profile-info-cancel-btn {
-  @extend .btn;
-}
-
-.profile-info-save-btn {
-  @extend .btn-success;
-}
-
-.js-profile-info-cancel-btn {
-  @include btn-cancel;
-  margin-left: 5px;
-}
-
-.profile-info-edit .btn-group label {
-  @extend .btn-default;
-}
-
-.js-profile-info-edit-btn,
-.js-profile-delete-btn {
-  @include header-btn;
-  color: $default-gray;
-  float: right;
-  font-size: large;
-  &:hover {
-    color: $default-black;
-  }
-}
-
-.js-change-pwd-btn {
-  @extend .btn;
-  @extend .btn-default;
-  margin-top: 10px;
-}
-
-.js-verify-mail-btn {
-  @extend .btn;
-  @extend .btn-primary;
-}
-
-.change-pwd {
-  @include grid(12);
-  padding: 0px;
-}
-
-.change-pwd-btn,
-.js-change-pwd-cancel-btn {
-  @extend .btn;
-}
-
-.change-pwd-btn {
-  @extend .btn-success;
-}
-
-.js-change-pwd-cancel-btn {
-  @include btn-cancel;
-  margin-left: 5px;
+	background-color: $background-color;
+	border: 1px solid darken($background-color, 3%);
 }
 
 .profile-delete-confirmation {
-  @include grid(12);
-  background-color: pink;
-  border: 2px solid $brand-danger;
-  margin-top: 15px;
-  overflow: auto;
-  padding: 15px;
-}
+	$background-color: lighten($brand-danger, 20%);
 
-.js-profile-delete-cancel-btn,
-.js-profile-delete-confirm-btn {
-  @extend .btn;
-  margin-top: 10px;
-}
-
-.js-profile-delete-cancel-btn {
-  @extend .btn-default;
-}
-
-.js-profile-delete-confirm-btn {
-  @include btn-cancel;
+	background-color: $background-color;
+	border: 1px solid darken($background-color, 20%);
+	padding: 15px 15px 0;
 }
 
 .translate-link {
-  @include grid(12);
-  a {
-    @extend .btn;
-    @extend .btn-success;
-    @extend .btn-lg;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    width: 100%;
-  }
+	@include btn-lg;
 }
 
-.profile-groups-list {
-  @include grid(12);
-  .groups {
-    @extend .list-unstyled;
-    li {
-      margin-bottom: 10px;
-    }
-  }
+.profile-grouplist .groups {
+	@include list-unstyled;
 }
 
-.create-group-btn {
-  @extend .btn;
-  @extend .btn-success;
+.profile-grouplist .groups li {
+	margin-bottom: 10px;
+}
+
+.mail-verified {
+	margin-left: 10px;
+}
+
+.mail-verified .fa {
+	color: $gray;
 }

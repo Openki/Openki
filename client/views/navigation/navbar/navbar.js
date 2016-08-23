@@ -1,5 +1,5 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Session.get('screenSize') <= 768; // @screen-sm
+	var isMobile = Session.get('viewportWidth') <= 768; // @screen-sm
 	if (!isMobile) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -10,19 +10,27 @@ Template.navbar.onRendered(function() {
 
 		$(window).scroll(function (event) {
 			if($(window).scrollTop() > 5){
-				this.$('.navbar-container').addClass('navbar-covering-content');
+				this.$('.navbar').addClass('navbar-covering');
 				this.$('.navbar-link-active').addClass('navbar-link-covering');
 			}
 			else {
-				this.$('.navbar-container').removeClass('navbar-covering-content');
+				this.$('.navbar').removeClass('navbar-covering');
 				this.$('.navbar-link').removeClass('navbar-link-covering');
 			}
 		});
 	}
 	else {
 		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
-			$('#bs-navbar-collapse-1').scrollTop($(this).offset().top - 50);
+			var container = $('#bs-navbar-collapse-1');
+			var scrollTo = $(this);
+			container.animate({
+				scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+			});
 		}, 1));
+		this.$('.dropdown').on('hide.bs.dropdown', function(e){
+			var container = $('#bs-navbar-collapse-1');
+			container.scrollTop(0);
+		});
 	}
 });
 
@@ -42,6 +50,15 @@ Template.navbar.helpers({
 	notConnected: function() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
 	},
+
+	activeClass: function(linkRoute) {
+		var route = Router.current().route;
+		if (route && route.getName() === linkRoute) {
+			return 'navbar-link-active';
+		} else {
+			return '';
+		}
+	}
 });
 
 Template.navbar.events({

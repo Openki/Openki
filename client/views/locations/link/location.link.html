@@ -1,0 +1,19 @@
+<template name="locationLink">
+	{{#if location.name}}
+		{{#if location._id}}
+			<a class="js-location-link"
+				data-tooltip="{{mf 'location.link.tooltip' 'Show details of {LOCATION}' LOCATION=location.name}}"
+				href="{{pathFor 'locationDetails' data=location}}">
+				<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+				{{location.name}}
+			</a>
+		{{else}}
+			<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+			<span>{{location.name}}</span>
+		{{/if}}
+		{{#if room}}
+			<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+			<span>{{this.room}}</span>
+		{{/if}}
+	{{/if}}
+</template>

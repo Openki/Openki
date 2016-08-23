@@ -1,0 +1,116 @@
+<template name="courseCompact">
+	{{#if ready}}
+		<div class="course-compact-wrap">
+			<a href="{{pathFor 'showCourse'}}">
+				<div class="course-compact
+					{{courseState}}
+					{{#if needsHost}}needsHost{{/if}}
+					{{#if needsMentor}}needsMentor{{/if}}
+					{{#each categories}}{{this}} {{/each}}
+					{{#each this.groups}}{{this}} {{/each}}
+					{{courseRegionId}}">
+					<div class="course-compact-content {{courseState}}">
+						<div class="course-compact-title">
+							<h4>{{name}}</h4>
+						</div>
+						{{> courseCategories}}
+					</div>
+					{{#if hasUpcomingEvents}}
+						{{> courseCompactEvent}}
+					{{else}}
+						{{> courseCompactRoles}}
+					{{/if}}
+					{{> groupList}}
+				</div>
+			</a>
+		</div>
+	{{/if}}
+</template>
+
+<template name="courseCompactEvent">
+	<div class="course-compact-next-event">
+		{{#with nextEvent}}
+			<div class="course-compact-next-event-date">
+				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+				{{dateformat_mini this.start}}
+			</div>
+			<div class="course-compact-next-event-time">
+				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+				{{timeformat this.start}}
+			</div>
+			{{this.description}}
+			{{#if this.location.name}}
+				<div class="course-compact-next-event-location">
+					<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+					{{this.location.name}}
+				</div>
+			{{/if}}
+		{{/with}}
+	</div>
+</template>
+
+<template name="courseCompactRoles">
+	<div class="course-compact-roles">
+		<div class="course-compact-role
+				{{#if needsTeam}}
+					course-compact-role-needed
+				{{else}}
+					course-compact-role-occupied{{#if userInTeam}}-by-user{{/if}}
+				{{/if}}"
+			data-tooltip="
+				{{#if needsTeam}}
+					{{mf 'course.list.status_titles.needs_organizer' 'Needs an organizer'}}
+				{{else}}
+					{{#if userInTeam}}
+						{{mf 'course.list.status_titles.u_are_organizer' 'You are organizer'}}
+					{{else}}
+						{{mf 'course.list.status_titles.has_team' 'Has a organizer-team'}}
+					{{/if}}
+				{{/if}}"
+			href="#">
+			<span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+		</div>
+		{{#if requiresMentor}}
+			<div class="course-compact-role
+					{{#if needsMentor}}
+						course-compact-role-needed
+					{{else}}
+						course-compact-role-occupied{{#if userIsMenteor}}-by-user{{/if}}
+					{{/if}}"
+				data-tooltip="
+					{{#if needsMentor}}
+						{{mf 'course.list.status_titles.needs_mentor' 'Needs a mentor'}}
+					{{else}}
+						{{#if userIsMenteor}}
+							{{mf 'course.list.status_titles.u_are_mentor' 'You are mentor'}}
+						{{else}}
+							{{mf 'course.list.status_titles.has_mentor' 'Has a mentor'}}
+						{{/if}}
+					{{/if}}"
+				href="#">
+				<span class="fa fa-graduation-cap" aria-hidden="true"></span>
+			</div>
+		{{/if}}
+		{{#if requiresHost}}
+			<div class="course-compact-role
+					{{#if needsHost}}
+						course-compact-role-needed
+					{{else}}
+						course-compact-role-occupied{{#if userIsHost}}-by-user{{/if}}
+					{{/if}}"
+				data-tooltip="
+					{{#if needsHost}}
+						{{mf 'course.list.status_titles.needs_host' 'Needs a host'}}
+					{{else}}
+						{{#if userIsHost}}
+							{{mf 'course.list.status_titles.u_are_host' 'You are host'}}
+						{{else}}
+							{{mf 'course.list.status_titles.has_host' 'Has a host'}}
+						{{/if}}
+					{{/if}}"
+				href="#">
+				<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+			</div>
+		{{/if}}
+	</div>
+</template>

@@ -1,0 +1,128 @@
+.discussion-conversation {
+	background: $blue-lighter;
+	padding: 15px ($grid-gutter-width / 2) 10px;
+}
+
+.discussion > div:nth-child(3) {
+	border-top: $course-details-seperator-height solid $body-bg;
+}
+
+$discussion-thumb-width: 60;
+
+.discussion-thumb {
+	display: table-cell;
+	position: relative;
+	width: $discussion-thumb-width * 1px;
+}
+
+.discussion-profile-icon {
+	left: 0;
+	position: absolute;
+	top: 0;
+	vertical-align: text-bottom;
+	width: ($discussion-thumb-width - 10) * 1px;
+}
+
+.discussion-post-content,
+.discussion-edit-content {
+	border: 1px solid;
+	display: table-cell;
+	padding: 0;
+}
+
+.discussion-post-header,
+.discussion-edit-header {
+	padding: 5px ($grid-gutter-width / 2);
+}
+
+.discussion-post-body,
+.discussion-edit-body {
+	padding: 10px ($grid-gutter-width / 2) 0;
+}
+
+$discussion-post-bg: $blue-lighter;
+
+.discussion-post {
+	background: $discussion-post-bg;
+	display: table;
+	padding: 7px 0;
+	width: 100%;
+}
+
+.discussion-post-header {
+	background: darken($discussion-post-bg, 5%);
+}
+
+.discussion-post-header .profilelink {
+	font-weight: bold;
+}
+
+.discussion-edit-btn,
+.discussion-delete-btn {
+	background: none;
+	border: 0;
+	color: $gray-light;
+	float: right;
+
+	&:hover {
+		color: $gray-dark;
+	}
+}
+
+.discussion-edit-btn {
+	margin-right: -5px;
+}
+
+.discussion-delete-btn {
+	margin-right: -10px;
+}
+
+.discussion-post-time {
+	color: $gray-light;
+	cursor: default;
+}
+
+.discussion-post-content {
+	border-color: darken($discussion-post-bg, 10%);
+}
+
+.discussion-post-title {
+	margin-top: 0;
+}
+
+.discussion-post-title + p {
+	padding-top: 0;
+}
+
+.discussion-comment {
+	display: table;
+	padding: 7px 0 7px ($discussion-thumb-width * 1px);
+	position: relative;
+	width: 100%;
+}
+
+.discussion-comment + .discussion-reply {
+	padding-left: $discussion-thumb-width * 2 * 1px;
+}
+
+$discussion-edit-bg: lighten($gray-lighter, 10%);
+
+.discussion-edit-content {
+	background: $discussion-edit-bg;
+	border-color: darken($discussion-edit-bg, 5%);
+}
+
+.discussion-edit-header {
+	background: darken($discussion-edit-bg, 5%);
+}
+
+.discussion-reply {
+	padding-left: $discussion-thumb-width * 1px;
+}
+
+.discussion-post-new {
+	background-color: $green;
+	margin-top: $course-details-seperator-height;
+	padding: 10px ($grid-gutter-width / 2);
+	width: 100%;
+}

@@ -1,0 +1,49 @@
+.map-box {
+	height: 200px;
+	width: 200px;
+}
+
+.map-box .fa {
+	font-size: 30px;
+}
+
+.map-fullscreen {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 9999;
+}
+
+.map-fullscreen .fa {
+	font-size: 8vh;
+}
+
+.map {
+	height: 100%;
+	width: 100%;
+}
+
+.leaflet-marker-pane .leaflet-marker-icon {
+	background: none;
+	border: 0;
+}
+
+.leaflet-marker-pane .leaflet-marker-icon .fa-map-marker {
+	color: $black;
+
+	&:hover {
+		cursor: grabbing;
+	}
+}
+
+.leaflet-control-container .leaflet-right .leaflet-control:hover {
+	color: $brand-primary;
+	cursor: pointer;
+}
+
+.leaflet-interactive:hover {
+	cursor: pointer;
+	fill: $yellow-dark;
+}

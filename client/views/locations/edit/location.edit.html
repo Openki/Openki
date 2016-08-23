@@ -1,95 +1,211 @@
-<template name="location_edit">
-	<form class="location_edit">
-		<h2>
-			{{#if _id}}
-				{{mf 'location.edit.edit_location' 'Edit location'}}
-			{{else}}
-				{{mf 'location.edit.add_location' 'Add location'}}
-			{{/if}}
-		</h2>
-		<p>
-			{{mf 'location.edit.name' 'Name:'}}
-			<input type="text" id="editform_name" size="40" value="{{#if _id}}{{name}}{{else}}{{query}}{{/if}}"/>
-		</p>
-		<p>
-			{{mf 'location.edit.desc' 'Desc:'}}
-			<textarea cols="65" rows="5" id="editform_description" name="editform_description">
-				{{description}}
-			</textarea>
-		</p>
-		<p>
-			{{mf 'location.edit.address' 'Address:'}}
-			<textarea cols="30" rows="2" id="editform_address" name="editform_address">
-				{{address}}
-			</textarea>
-		</p>
-		<p>
-			{{mf 'location.edit.route' 'Route:'}}
-			<textarea cols="30" rows="2" id="editform_route" name="editform_route">
-				{{route}}
-			</textarea>
-		</p>
-		<p>((
-			<label>
-				<input type="checkbox" id="editform_visible" checked>
-				{{mf 'location.edit.visible_in_list' 'Visible in list (contactable for other users)'}}
-			</label> ))
-		</p>
-		<p>((
-			<label>
-				<input type="checkbox" id="editform_publicspace" >
-				{{mf 'location.edit.public_space' 'Public Space (everybody is allowed to host here)'}}
-			</label> ))
-		</p>
+<template name="locationEdit">
+	<div class="edit-page">
+		{{#if _id}}
+			<h2>{{mf 'location.edit.edit_location' 'Edit location'}}</h2>
+		{{else}}
+			<h2>{{mf 'location.edit.propose' 'Create new location'}}</h2>
+		{{/if}}
+		<form>
+			<div class="edit-page-header location-edit-header">
+					<div class="form-group">
+						<label>{{mf 'location.edit.Name' 'Name:'}}</label>
+						<input type="text" class="form-control"	id="editform-name"
+							placeholder="{{mf 'location.name.placeholder' 'Full name of location'}}"
+							size="60"
+							value="{{name}}">
+					</div>
+			</div>
+			<div class="edit-page-body location-edit-body">
+					<div class="form-group">
+						<label>{{mf 'location.edit.description' 'Description:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+							</span>
+							<div class="form-control editable-textarea"	id="editform-description"
+								placeholder= "{{mf 'location.edit.description.placeholder' 'Some words about this location'}}"></div>
+							{{{description}}}
+						</div>
+					</div>
 
-		{{#unless _id}}
-			<p>{{mf 'location.edit.region' 'Region:'}}
-				<select name='region' class="region_select">
-					<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
-					{{#each regions}}
-						<option value='{{_id}}' {{regionSel}}>{{name}}</option>
-					{{/each}}
-				</select>
-			</p>
-		{{/unless}}
+					{{#unless _id}}
+						<div class="form-group">
+							<label>{{mf 'location.edit.region' 'Region:'}}</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								</span>
+								<select name='region' class="form-control region_select">
+									<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
+								{{#each regions}}
+									<option value='{{_id}}' {{regionSel}}>{{name}}</option>
+								{{/each}}
+								</select>
+							</div>
+						</div>
+					{{/unless}}
 
-		<p>&nbsp;</p>
-		<p>
-			{{mf 'location.edit.hosts_admins' 'Hosts/Admins'}}:
-			<ul class='hosts'>
-				{{#each locationHosts}}
-					<li>
-						{{>profilelink this}}
-						<input class="remove_host" value="Remove" name="Remm" type="button"/>
-					</li>
-				{{/each}}
-			</ul>
-			{{mf 'location.edit.search_usr_add_host' 'Search for username to add as host:'}}
-			<input type="text" id="search_username" size="20" />
-			<input type="button" class="addhost" value="Search" />
-			<br>
-			{{#if addHost}}
-				{{#if addHostSearch}}
-					{{>profilelink addHostSearch._id}}
-					<input type="button" class="save_addhost" value="Add as host" />
-					<input type="hidden" id="addhost_id" value="{{addHostSearch._id}}" />
-				{{else}}
-					{{mf 'location.edit.no_usr_found' 'no username found'}}
-				{{/if}}
-			{{/if}}
-		</p>
-		<p>&nbsp;</p>
-		<p>{{mf 'location.edit.optional_info' 'Optional Info'}}</p>
-		<p>{{mf 'location.edit.max_ppl' 'Max. People'}}
-			<input type="text" id="editform_maxpeople" size="4" value="{{maxpeople}}"/>
-		</p>
-		<p>{{mf 'location.edit.max_workplace' 'Max. Workplaces'}}
-			<input type="text" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}"/>
-		</p>
-		<p>&nbsp;</p>
-		<p>
-			<input type="button" class="save" value="Save" />
-			<input type="button" class="cancel" value="Cancel" />
-		</p>
-	</form>
+					<div class="form-group">
+						<label>{{mf 'location.details.address' 'Address:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+							</span>
+							<input
+								class="form-control"
+								id="editform-address"
+								placeholder= "{{mf 'location.edit.address.placeholder' 'Street, City, State'}}">
+							{{{address}}}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>{{mf 'location.details.route'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-map-signs"></span>
+							</span>
+							<input
+								class="form-control"
+								id="editform-address"
+								placeholder= "{{mf 'location.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
+							{{{route}}}
+						</div>
+					</div>
+					<div class="form-group">
+						<label>{{mf 'location.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
+						{{#if showAdditionalInfo}}
+							{{> locationEditAdditionalInfo}}
+							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
+								{{mf 'location.edit.hideAdditionalInfo' 'Hide additional information'}}
+							</button>
+						{{else}}
+							<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
+								{{mf 'location.edit.provideAdditionalInfo' 'Fill out additional information'}}
+							</button>
+						{{/if}}
+					</div>
+					<div class="form-actions">
+						<button type="button" class="btn btn-cancel">
+							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+							{{mf '_button.cancel'}}
+						</button>
+						<button type="button" class="btn btn-save">
+							<span class="fa fa-download fa-fw" aria-hidden="true"></span>
+							{{mf '_button.save'}}
+						</button>
+					</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="locationEditAdditionalInfo">
+	<div class="location-edit-additional-info">
+		<div class="form-group">
+			<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control"	id="editform-short"
+					placeholder= "{{mf 'location.edit.short.placeholder' 'short name'}} {{mf '_inputField-optional'}}">
+				{{{short}}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label>
+					{{mf 'location.edit.max_ppl' 'Max. People'}}
+				</label>
+				<input type="number" class="form-control" id="editform_maxpeople" size="4" value="{{maxpeople}}">
+			</div>
+			<div class="form-group-element">
+				<label>
+					{{mf 'location.edit.max_workplace' 'Max. Workplaces'}}
+				</label>
+				<input type="number" class="form-control" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label>{{mf 'location.edit.infra' 'Infrastructure:'}}</label>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.beamer' 'Beamer'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.screen' 'Screen'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.audioSystem' 'Audio System'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.blackboard' 'Blackboard'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.whiteboard' 'Whiteboard'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.flipchart' 'Flipchart'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.wifi' 'Wifi'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.kitchen' 'Kitchen'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox">
+						<span>{{mf 'location.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group-element">
+				<label>{{mf 'location.edit.additionalEquipment' 'Additional equipment:'}}</label>
+				<textarea class="form-control"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>{{mf 'location.edit.owners' 'Owner(s):'}}</label>
+			<input type="text" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>{{mf 'location.edit.usersToContact' 'User(s) to contact:'}}</label>
+			<input type="text" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>{{mf 'location.edit.website' 'Website:'}}'</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
+				</span>
+				<input type="text" class="form-control">
+			</div>
+		</div>
+	</div>
 </template>

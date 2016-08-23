@@ -1,52 +1,50 @@
-<template name="kioskTimetableLayout">
+<template name="timetableLayout">
 	{{> yield}}
 </template>
 
-<template name="kioskTimetable">
-	<div class="kioskTimetable">
-		<div class="timetable">
-			<div class="times">
-				<div>
-				{{#each days}}
-					<div class="day" style={{position}}>
-						<div></div>
-						{{showDay moment}}
+<template name="timetable">
+	<div class="container-fluid timetable">
+		<div class="timetable-header">
+			<div class="timetable-days">
+			{{#each days}}
+				<div class="timetable-day" style={{position}}>
+					{{showDay moment}}
+				</div>
+			{{/each}}
+			</div>
+			<div class="timetable-hours">
+				{{#each hours}}
+					<div class="timetable-hour" style={{position}}>
+						{{showHour moment}}
 					</div>
 				{{/each}}
+			</div>
+		</div>
+		{{#each this.grouped}}
+			<div class="timetable-row">
+				<div class="timetable-location">
+					<a href="{{pathFor 'locationDetails' data=location}}">
+						<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+						{{location.name}}
+					</a>
 				</div>
-				<div>
-					{{#each hours}}
-						<div class="hour" style={{position}}>
-							<div></div>
-							{{showHour moment}}
-						</div>
-					{{/each}}
-				</div>
-			</div><!-- /.times -->
-			{{#each this.grouped}}
-				<div class="timeLines">
-					<div class="locationName">
-						<a class="location_link" href="{{pathFor 'locationDetails' data=location}}">
-							<span class="glyphicon glyphicon-home"></span>
-							{{location.name}}
-						</a>
-					</div><!-- /.locationName -->
-					{{#each rows}}
-						<div class="rows">
-							{{#each this}}
-								<a href="{{pathFor  'showEvent'}}" class="event" style={{position}}>
-									<div class="title">{{this.title}}</div>
-									<div class="time">
-										<span class="glyphicon glyphicon-time"></span>
-										{{timeformat start}} - {{timeformat end}}
-									</div>
-									<div class="description"> {{{description}}}</div>
-								</a>
-							{{/each}}
-						</div><!-- /.rows -->
-					{{/each}}
-				</div><!-- /.timeLiens -->
-			{{/each}}
-		</div><!--/.timetable -->
-	</div><!-- /. kioskTimetable -->
+				{{#each rows}}
+					<div class="timetable-row-section">
+						{{#each this}}
+							<a href="{{pathFor  'showEvent'}}" class="timetable-event" style={{position}}>
+								<div class="timetable-event-title">
+									{{this.title}}
+								</div>
+								<div class="timetable-event-time">
+									<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+									{{timeformat start}} - {{timeformat end}}
+								</div>
+								<div class="timetable-event-description">{{{description}}}</div>
+							</a>
+						{{/each}}
+					</div>
+				{{/each}}
+			</div>
+		{{/each}}
+	</div>
 </template>

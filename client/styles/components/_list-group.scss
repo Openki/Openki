@@ -1,0 +1,22 @@
+.list-group button + li {
+	border-top-color: $btn-default-border;
+}
+
+.list-group button:hover + li,
+.list-group button:hover + button {
+	border-top-color: #8dc3d6;
+}
+
+.list-group-item {
+	transition: border-color .15s ease-in-out;
+}
+
+button.list-group-item {
+	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
+	border-color: $btn-default-border;
+
+	&:hover {
+		@include gradient-vertical(darken($btn-default-bg, $btn-hover-level-start), darken($btn-default-bg, $btn-hover-level-end));
+		border-color: #8dc3d6;
+	}
+}

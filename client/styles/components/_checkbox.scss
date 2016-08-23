@@ -1,0 +1,17 @@
+.checkbox > label:hover i,
+.checkbox > label.checkbox-checked i {
+	color: $gray-dark;
+}
+
+.checkbox > label	.fa-angle-down {
+	color: $gray-lighter;
+	transition: color $default-transition-time;
+}
+
+.checkbox-sub {
+	margin-left: 20px;
+}
+
+.checkbox-sub + .checkbox:not(.checkbox-sub) {
+	margin-top: 5px;
+}

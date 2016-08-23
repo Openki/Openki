@@ -1,97 +1,40 @@
-.groupSettings {
-  @include grid(12);
-  background: rgba(170, 230, 170, 0.2);
-  font-size: x-large;
-  margin-bottom: 50px;
-  padding: 0px;
-  #setInfos,
-  #setLogo,
-  #setBackgroundImage,
-  #AddGroupMember {
-    @extend .form-control;
-  }
-  h2 {
-    margin-top: 8px;
-  }
-  .settings {
-    @include grid(12, 6);
-    padding: 15px;
-    .editable {
-      background: none;
-    }
-    .setInfos {
-      height: auto;
-      max-height: 150px;
-      min-height: 40px;
-      p {
-        margin: 0px;
-      }
-    }
-    .groupEditFinishbtns {
-      @include grid(12);
-      padding: 20px 0px;
-      button {
-        @extend .btn;
-        margin-right: 10px;
-        @media mobile {
-          @include form-control;
-          @include btn;
-          @include btn-primary;
-          margin-bottom: 10px;
-        }
-        &.save {
-          @extend .btn-success;
-        }
-        &.cancel {
-          @extend .btn-danger;
-        }
-      }
-    }
-  }
+.group-members {
+	@include list-unstyled;
+}
 
-  .members {
-    @include grid(12, 6);
-    font-size: medium;
-    padding: 15px;
-    h2 {
-      padding-bottom: 20px;
-    }
-    .input-group {
-      margin-bottom: 10px;
-    }
-    ul {
-      @extend .list-inline;
-      margin-left: 0px;
-      padding-bottom: 10px;
-      li {
-        background-color: rgba(80, 90, 50, 0.15);
-        margin-bottom: 5px;
-        margin-right: 5px;
-        padding-left: 8px;
-        padding-right: 0px;
-        button {
-          @include btn-thin;
-          padding: 2px 6px;
-          &.cancel {
-            span {
-              color: #440000;
-            }
-            background-color: rgba(80, 90, 50, 0.3);
-            &:hover {
-              background-color: $brand-danger;
-            }
-          }
-          &.confirm {
-            span {
-              color: #004400;
-              background-color: rgba(80, 90, 50, 0.3);
-            }
-            &:hover {
-              background-color: $brand-success;
-            }
-          }
-        }
-      }
-    }
-  }
+$group-member-bg: rgba($gray-light, .15);
+
+.group-member {
+	background-color: $group-member-bg;
+	display: inline-block;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	padding-left: 8px;
+	padding-right: 0;
+}
+
+.js-member-remove-btn,
+.js-member-add-btn {
+	background-color: rgba($group-member-bg, .3);
+	padding: 2px 6px;
+}
+
+.js-member-remove-btn:hover {
+	background-color: $red;
+}
+
+.js-member-remove-btn .fa {
+	color: $red-darker;
+}
+
+.js-member-add-btn:hover {
+	background-color: $green;
+}
+
+.js-member-add-btn .fa {
+	color: $green-darker;
+}
+
+.group-links {
+	@include list-unstyled;
 }

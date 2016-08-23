@@ -51,6 +51,16 @@ Template.userprofile.helpers({
 
 	showInviteGroups: function() {
 		return this.inviteGroups.count && this.inviteGroups.count() > 0;
+	},
+
+	showSettings: function() {
+		var showPrivileges = Template.instance().data.showPrivileges;
+		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
+		return showPrivileges || showInviteGroups;
+	},
+
+	hasInvolvedIn: function() {
+		return this.involvedIn.count() > 0;
 	}
 });
 
@@ -59,7 +69,7 @@ Template.userprofile.events({
 	'click button.giveAdmin': function() {
 		Meteor.call('addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
+				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
 			}
@@ -69,7 +79,7 @@ Template.userprofile.events({
 	'click button.giveUpload': function() {
 		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorAdding', { ERROR: err }, 'Unable to add privilege: {ERROR}'), 'danger');
+				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
@@ -80,7 +90,7 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				addMessage(mf('privilege.errorRemoving', { ERROR: err }, 'Unable to remove privilege: {ERROR}'), 'danger');
+				showServerError('Unable to remove privilege', err);
 			} else {
 				addMessage(mf('privilege.removed', 'Removed privilege'), 'success');
 			}
@@ -93,20 +103,21 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, true, function(err) {
 			if (err) {
-				addMessage(mf('profile.group.draftError', { ERROR: err }, 'Unable draft user into group: {ERROR}'), 'danger');
+				showServerError('Unable to draft user into group', err);
 			} else {
 				addMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
 			}
 		});
 	},
 
-	'click button.js-group-expel-btn': function(event, template) {
+	'click .js-group-expel-btn': function(event, template) {
+		Tooltips.hide();
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, false, function(err) {
 			if (err) {
-				addMessage(mf('profile.group.expelError', { ERROR: err }, 'Unable expel user from group: {ERROR}'), 'danger');
+				showServerError('Unable to expel user from group', err);
 			} else {
 				addMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
 			}
@@ -139,7 +150,7 @@ Template.emailBox.events({
 		var revealAddress = template.$('#sendOwnAdress').is(':checked');
 		var receiveCopy = template.$('#receiveCopy').is(':checked');
 
-		if (message.length < '8') {
+		if (message.length < '2') {
 			alert(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}
@@ -161,11 +172,3 @@ Template.emailBox.events({
 		);
 	}
 });
-
-Template.userprofile.rendered = function() {
-	this.$("[data-toggle='tooltip']").tooltip();
-	var currentPath = Router.current().route.path(this);
-	$('a[href!="' + currentPath + '"].navbar-link').removeClass('navbar-link-active');
-	if (this.data.user._id == Meteor.userId())
-		$('a.loginButton.navbar-link').addClass('navbar-link-active');
-};
