@@ -80,7 +80,7 @@
 	border: 5px solid;
 	border-color:	transparent transparent $body-bg;
 	bottom: 0;
-	box-shadow: 0 5px 5px -5px #fff;
+	box-shadow: 0 5px 5px -5px $white;
 	height: 0;
 	left: 50%;
 	opacity: 0;
@@ -167,33 +167,4 @@
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
 	background-color: lighten($navbar-default-bg, 10%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-}
-
-.js-regions-search {
-	color: $black;
-}
-
-.region-selection {
-	font-size: large;
-	margin: 0;
-	padding: 8.5px 0;
-}
-
-.region-selection > .fa {
-	color: $white;
-
-	@media (max-width: $screen-sm) {
-		display: none;
-	}
-}
-
-.badge-courses {
-	background-color: $brand-primary;
-}
-
-.badge-events {
-	$background-color: $green;
-
-	background-color: $background-color;
-	color: desaturate(darken($background-color, 40%), 50%)
 }

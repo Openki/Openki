@@ -1,0 +1,28 @@
+.js-regions-search {
+	color: $black;
+}
+
+.region-selection {
+	font-size: large;
+	margin: 0;
+	padding: 8.5px 0;
+}
+
+.region-selection > .fa {
+	color: $white;
+
+	@media (max-width: $screen-sm) {
+		display: none;
+	}
+}
+
+.badge-courses {
+	background-color: $brand-primary;
+}
+
+.badge-events {
+	$background-color: $green;
+
+	background-color: $background-color;
+	color: desaturate(darken($background-color, 40%), 50%)
+}
