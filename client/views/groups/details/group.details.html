@@ -17,6 +17,11 @@
 						{{group.name}}
 					{{/if}}
 				</div>
+				<button class="close js-group-remove-filter">
+							<span class="fa fa-remove fa-fw" aria-hidden="true"
+							data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
+							</span>
+				</button>
 				{{#if mayEdit}}
 					<button type="button" class="close js-group-settings">
 						<span class="fa fa-cog" aria-hidden="true"

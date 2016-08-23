@@ -138,5 +138,9 @@ Template.groupDetails.events({
 
 	'click .js-group-cancel': function(event, instance) {
 		Router.go('/'); // Got a better idea?
+	},
+
+	'click .js-group-remove-filter': function(event, instance) {
+		Router.go('/'); // Got a better idea?
 	}
 });
