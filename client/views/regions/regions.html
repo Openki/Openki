@@ -1,37 +1,71 @@
-<template name="region_sel">
-	<a class="navbar-link dropdown-toggle"
-		aria-expanded="false"
-		data-toggle="dropdown"
-		href="#"
-		role="button">
-		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-		{{#if region}}
-			{{region.name}}
+<template name="regionSelectionWrap">
+	{{#if Template.subscriptionsReady}}
+		{{#if searchingRegions}}
+			{{> regionSelection}}
 		{{else}}
-			{{mf 'menue.All regions' 'All regions'}}
+			{{> regionDisplay}}
 		{{/if}}
-		<div class="nav-marker-caret"></div>
-		<div class="nav-marker-bar"></div>
-	</a>
+	{{/if}}
+</template>
 
-	<ul class="dropdown-menu" role="menu">
-		<li>
-			<a class="regionselect js-nav-dropdown-close" href="/region/">
-				{{mf 'menue.All regions' 'All regions'}}
-				{{#if currentRegion}}
-					<span class="checkmark glyphicon glyphicon-ok"></span>
-				{{/if}}
-			</a>
-		</li>
-		{{# each regions}}
+<template name="regionSelection">
+	<li class="navbar-form region-selection dropdown">
+		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+		<input type="text" class="form-control js-region-search"
+			value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
+		<span class="dropdown-toggle"
+			data-toggle="dropdown"
+			role="button"
+			aria-expanded="false">
+		</span>
+		<ul class="dropdown-menu" role="menu">
 			<li>
-				<a href="#" class="regionselect js-nav-dropdown-close">
-					{{name}}
+				<a class="js-region-link js-nav-dropdown-close" href="#">
+					{{mf 'menue.All regions' 'All regions'}}
+					<span class="badge badge-courses"
+						title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+						{{allCourses}}
+					</span>
+					<span class="badge badge-events"
+						title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+						{{allUpcomingEvents}}
+					</span>
 					{{#if currentRegion}}
 						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
 			</li>
-		{{/each}}
-	</ul>
+			{{#each regions}}
+				<li>
+					<a href="#" class="js-region-link js-nav-dropdown-close">
+						{{regionNameMarked}}
+						<span class="badge badge-courses"
+							title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+							{{courseCount}}
+						</span>
+						<span class="badge badge-events"
+							title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+							{{futureEventCount}}
+						</span>
+						{{#if currentRegion}}
+							<span class="checkmark glyphicon glyphicon-ok"></span>
+						{{/if}}
+					</a>
+				</li>
+			{{/each}}
+		</ul>
+	</li>
+</template>
+
+<template name="regionDisplay">
+	<li>
+		<a class="navbar-link js-region-display">
+			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			{{#if region}}
+				{{region.name}}
+			{{else}}
+				{{mf 'menue.All regions' 'All regions'}}
+			{{/if}}
+		</a>
+	</li>
 </template>

@@ -24,7 +24,6 @@
 	<div class="course-member">
 		<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 		{{> profilelink member.user}}
-		{{#if hasRoles}}
 		<ul class='course-member-roles'>
 			{{#each member.roles}}
 				<li class='{{this}}'>
@@ -33,7 +32,6 @@
 				</li>
 			{{/each}}
 		</ul>
-		{{/if}}
 		{{#if maySubscribe}}
 		<button type="button" class='btn btn-add js-add-to-team-btn'>
 			<span class="glyphicon glyphicon-plus add-to-team-btn-plus {{member.user}}"></span>

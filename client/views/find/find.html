@@ -176,12 +176,23 @@
 		{{/if}}
 	</div>
 	<div class="page-component">
-		{{#unless ready}}
-			{{> loadingPage}}
+		{{#if hasResults}}
+			{{> courseList results}}
+
+			{{#unless ready}}
+				{{> loadingPage}}
+			{{/unless}}
+
+			{{#if hasMore}}
+				<div class="show-more-courses">
+					<button type="button" class="btn btn-success js-more-courses">
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'find.showMoreCourses' 'Show more courses'}}
+					</button>
+				</div>
+			{{/if}}
 		{{else}}
-			{{#if hasResults}}
-				{{> courseList results}}
-			{{else}}
+			{{#if ready}}
 				<div class="no-results">
 					<div class="no-results-body">
 						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
@@ -204,8 +215,10 @@
 						</div>
 					{{/if}}
 				</div>
+			{{else}}
+				{{> loadingPage}}
 			{{/if}}
-		{{/unless}}
+		{{/if}}
 	</div>
 	{{#if eventResults.count}}
 		<div class="page-component">

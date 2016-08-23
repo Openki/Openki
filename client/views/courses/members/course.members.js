@@ -11,15 +11,6 @@ Template.courseMember.helpers({
 		}
 	},
 
-	hasRoles: function() {
-		if (this.member.roles == "participant") {
-			return false;
-		}
-		else {
-			return true;
-		}
-	},
-
 	editableMessage: function() {
 		var course = this.course;
 		if (this.member.user !== Meteor.userId()) return false;
