@@ -184,7 +184,12 @@
 			{{/unless}}
 
 			{{#if hasMore}}
-				<button type="button" class="js-more">{{mf 'find.more' "Show more"}}</button>
+				<div class="show-more-courses">
+					<button type="button" class="btn btn-success js-more-courses">
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'find.showMoreCourses' 'Show more courses'}}
+					</button>
+				</div>
 			{{/if}}
 		{{else}}
 			{{#if ready}}

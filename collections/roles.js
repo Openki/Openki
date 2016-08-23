@@ -6,6 +6,7 @@
 // "subscribe"        -> String     (decription for subscription)
 // "preset"           -> Boolean
 // "show_subscribers" -> Boolean
+// "order"            -> Integer
 // ===========================
 
 
@@ -17,17 +18,20 @@ var roles = [{
 		'alt_icon':    'fa fa-info-circle',
 		'preset':      true,	//if true: allways available, not offered as choice in proposal
 		'show_subscribers': true,
+		'order': 3
 	},{
 		'type':        'participant',
 		'alt_icon':    'glyphicon glyphicon-user',
 		'icon':        'fa fa-user-plus',
 		'preset':      true,
-		'show_subscribers': true
+		'show_subscribers': true,
+		'order': 0
 	},{
 		'type':        'mentor',
 		'alt_icon':    'glyphicon glyphicon-education',
 		'icon':        'fa fa-graduation-cap',
 		'show_subscribers': true,
+		'order': 1
 	},{
 		'type':        'host',
 		'icon':        'glyphicon glyphicon-home',
@@ -36,6 +40,7 @@ var roles = [{
 		'fields': {
 			'address': 'text'
 		},
+		'order': 2
 	}
 ];
 

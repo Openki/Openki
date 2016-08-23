@@ -9,13 +9,24 @@
 				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						<div class="details-header">
-							{{#if editableName}}
-								<div class="course-details-title">
+							<div class="details-header-tags">
+								{{#if isProposal}}
+									<div class="proposal-tag">
+										<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
+										{{mf 'course.details.proposalTag' 'Proposal'}}
+									</div>
+								{{/if}}
+								{{#with course}}
+									{{> regionTag}}
+								{{/with}}
+							</div>
+							<div class="course-details-title">
+								{{#if editableName}}
 									{{> editable editableName}}
-								</div>
-							{{else}}
-								<h2>{{course.name}}</h2>
-							{{/if}}
+								{{else}}
+									<h2>{{course.name}}</h2>
+								{{/if}}
+							</div>
 							{{#with course}}
 								{{#if categories}}
 									<div class="course-details-categories">
