@@ -47,10 +47,10 @@
 @import 'kiosk/list/kiosk.list';
 
 // Locations
-@import 'locations/location';
-@import 'locations/details/location.details';
-@import 'locations/link/location.link';
-@import 'locations/edit/location.edit';
+@import 'venues/venue';
+@import 'venues/details/venue.details';
+@import 'venues/link/venue.link';
+@import 'venues/edit/venue.edit';
 
 // Login
 @import 'login/frame/login.frame';
