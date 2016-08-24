@@ -16,6 +16,12 @@
 	}
 }
 
+.region-badges {
+	display: inline-block;
+	float: right;
+	padding-left: 10px;
+}
+
 .badge-courses {
 	background-color: $brand-primary;
 }
