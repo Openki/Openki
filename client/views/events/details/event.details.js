@@ -27,6 +27,11 @@ Template.eventPage.helpers({
 			return Courses.findOne({_id: courseId});
 		}
 	},
+
+	referredByCourse: function() {
+		var previousRouteName = Session.get("previousRouteName");
+		return previousRouteName == "showCourse";
+	}
 });
 
 

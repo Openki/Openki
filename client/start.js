@@ -17,6 +17,11 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
+// Store routeName to be able to refer to previous route
+Router.onStop(function() {
+	Session.set('previousRouteName', Router.current().route.getName());
+});
+
 // Subscribe to list of regions and configure the regions
 // This checks client storage for a region setting. When there is no previously
 // selected region, we ask the server to do geolocation. If that fails too,
