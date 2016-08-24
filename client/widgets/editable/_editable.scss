@@ -35,6 +35,10 @@
 	cursor: default;
 	padding: .2em;
 	transition: color $default-transition-time;
+
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 .editable-wrap:hover .editable-icon {

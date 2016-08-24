@@ -41,7 +41,7 @@ Template.eventReplication.helpers({
 	},
 
 	localDate: function(date) {
-		return moment(date).format("L");
+		return moment(date).format("D. MMM");
 	},
 
 	affectedReplicaCount: function() {
@@ -146,6 +146,14 @@ Template.eventReplication.events({
 		});
 
 		template.parentInstance().replicating.set(false);
+	},
+
+	'mouseover .-eventReplicate': function(event, instance) {
+		instance.$('.replica-event-captions').addClass('highlighted');
+	},
+
+	'mouseout .-eventReplicate': function(event, instance) {
+		instance.$('.replica-event-captions').removeClass('highlighted');
 	},
 
 	'change .-updateReplicas, keyup .-updateReplicas': function(event, template) {

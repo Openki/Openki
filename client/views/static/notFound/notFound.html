@@ -1,21 +1,31 @@
 <template name="notFound">
-	<div class="static_content_top">
-		<h1>{{mf 'notFound.title' "Page not found"}}</h1>
-
-		<div>
-			{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
+	<div class="container page-not-found">
+		<div class="page-component">
+			<h1>
+				<span class="fa fa-flash fa-fw" aria-hidden="true"></span>
+				{{mf 'notFound.title' "Page not found"}}
+				<span class="fa fa-flash fa-fw" aria-hidden="true"></span>
+			</h1>
+			<h3>{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}</h3>
 		</div>
-
-		<div>
-			{{> report}}
-		</div>
-
-		<div>
-			<h2>{{mf 'notFound.suggestedLinks' "Suggested Links"}}</h2>
-			<ul>
-				<li><a href="#" class="goBack">{{mf 'notFound.goBack' "Go back"}}</a></li>
-				<li><a href='/'>{{mf 'notFound.visitStartPage' "Go to the start page"}}</a></li>
+		<div class="page-component page-component-seperated">
+			<ul class="page-not-found-links">
+				<li>
+					<a href="#">
+						<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+						{{mf 'notFound.goBack' "Go back"}}
+					</a>
+				</li>
+				<li>
+					<a href='/'>
+						<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+						{{mf 'notFound.visitStartPage' "Go to the start page"}}
+					</a>
+				</li>
 			</ul>
+		</div>
+		<div class="page-not-found-report">
+			{{> report}}
 		</div>
 	</div>
 </template>

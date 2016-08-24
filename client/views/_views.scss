@@ -23,6 +23,7 @@
 @import 'events/details/event.details';
 @import 'events/edit/event.edit';
 @import 'events/editLocation/event.editLocation';
+@import 'events/replication/event.replication';
 
 // Find
 @import 'find/find';
@@ -66,6 +67,7 @@
 // Static
 @import 'static/loading/loading';
 @import 'static/noscript/noscript';
+@import 'static/notFound/notFound';
 @import 'static/translate/translate.info';
 
 // Timetable
