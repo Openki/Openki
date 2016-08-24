@@ -11,13 +11,13 @@
 		<div class="page-component page-component-seperated">
 			<ul class="page-not-found-links">
 				<li>
-					<a href="#">
+					<button class="btn-link js-go-back">
 						<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 						{{mf 'notFound.goBack' "Go back"}}
-					</a>
+					</button>
 				</li>
 				<li>
-					<a href='/'>
+					<a href="{{pathFor 'home'}}">
 						<span class="fa fa-home fa-fw" aria-hidden="true"></span>
 						{{mf 'notFound.visitStartPage' "Go to the start page"}}
 					</a>
