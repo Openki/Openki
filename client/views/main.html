@@ -13,7 +13,7 @@
 		<div id="topBar">
 			{{> navbar}}
 		</div>
-		<div id="outer" class={{testWarningClass}}>
+		<div id="outer" class="{{#if testWarning}}test-warning{{/if}}">
 			{{#if shownIntro}}
 				{{> introduction}}
 			{{/if}}
