@@ -17,7 +17,6 @@ Template.languageDisplay.helpers({
 
 Template.languageDisplay.events({
 	'click .js-language-display': function(event, instance) {
-		console.log(Languages);
 		instance.parentInstance().searchingLanguages.set(true);
 	}
 });
