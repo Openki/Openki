@@ -31,12 +31,6 @@ Template.regionSelection.rendered = function() {
 	Template.instance().$('.js-region-search').select();
 };
 
-var updateRegionSearch = function(event, instance) {
-	var search = instance.$('.js-region-search').val();
-	search = String(search).trim();
-	instance.regionSearch.set(search);
-};
-
 Template.regionSelection.helpers({
 	regions: function() {
 		var search = Template.instance().regionSearch.get();
@@ -87,6 +81,14 @@ Template.regionSelection.helpers({
 	}
 });
 
+
+var updateRegionSearch = _.debounce(function(event, instance) {
+	var search = instance.$('.js-region-search').val();
+	search = String(search).trim();
+	instance.regionSearch.set(search);
+}, 100);
+
+
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
@@ -119,7 +121,13 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': _.debounce(updateRegionSearch, 100),
+	'keyup .js-region-search': function(event, instance) {
+		if (event.which === 13) {
+			instance.$('.js-region-link').first().click();
+		} else {
+			updateRegionSearch();
+		}
+	},
 
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
