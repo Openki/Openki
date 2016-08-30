@@ -17,7 +17,7 @@ Template.eventDisplay.onRendered(function() {
 });
 
 
-Template.eventPage.helpers({
+Template.eventBackToLink.helpers({
 	course: function() {
 		var courseId = this.courseId;
 		if (courseId) {

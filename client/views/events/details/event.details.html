@@ -1,23 +1,5 @@
 <template name="eventPage">
 	<div class="container-sm">
-		<div class="page-component">
-			{{#if course}}
-				{{#if referredByCourse}}
-					<a href="{{pathFor 'showCourse' _id=course._id}}">
-						<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
-						{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
-					</a>
-				{{else}}
-					{{> backToLink}}
-					<a href="{{pathFor 'showCourse' _id=course._id}}">
-						<span class="fa fa-rocket fa-fw" aria-hidden="true"></span>
-						{{mf 'course.event.detail.goToCourse' 'Go to course'}} "{{course.name}}"
-					</a>
-				{{/if}}
-			{{else}}
-				{{> backToLink}}
-			{{/if}}
-		</div>
 		{{> event}}
 	</div>
 </template>
@@ -30,8 +12,30 @@
 	{{#if editing}}
 		{{> eventEdit}}
 	{{else}}
+		{{> eventBackToLink}}
 		{{> eventDisplay}}
 	{{/if}}
+</template>
+
+<template name="eventBackToLink">
+	<div class="page-component">
+		{{#if course}}
+			{{#if referredByCourse}}
+				<a href="{{pathFor 'showCourse' _id=course._id}}">
+					<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
+				</a>
+			{{else}}
+				{{> backToLink}}
+				<a href="{{pathFor 'showCourse' _id=course._id}}">
+					<span class="fa fa-rocket fa-fw" aria-hidden="true"></span>
+					{{mf 'course.event.detail.goToCourse' 'Go to course'}} "{{course.name}}"
+				</a>
+			{{/if}}
+		{{else}}
+			{{> backToLink}}
+		{{/if}}
+	</div>
 </template>
 
 <template name="eventDisplay">
