@@ -75,12 +75,12 @@ Meteor.startup(function() {
 		if (!lang) return false;
 
 		var locale = false;
-		if (lgs[lang]) {
+		if (Languages[lang]) {
 			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
 			var short = lang.substring(0, 2);
-			if (lgs[short]) {
+			if (Languages[short]) {
 				locale = short;
 			}
 		}
