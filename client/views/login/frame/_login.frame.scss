@@ -35,6 +35,18 @@
 	text-align: right;
 }
 
+.forgot-pwd-btn-container > .btn-link {
+	$color: $blue;
+
+	color: $color;
+
+	&:hover {
+		color: darken($color, 20%)
+	}
+}
+
+
+
 .external-service-login {
 	text-align: center;
 }
