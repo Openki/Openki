@@ -21,10 +21,6 @@
 		<ul class="dropdown-menu" role="menu">
 			<li>
 				<a class="js-region-link js-nav-dropdown-close" href="#">
-					{{mf 'menue.All regions' 'All regions'}}
-					{{#if currentRegion}}
-						<span class="checkmark glyphicon glyphicon-ok"></span>
-					{{/if}}
 					<div class="region-badges">
 						<span class="badge badge-courses"
 							title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
@@ -35,15 +31,15 @@
 							{{allUpcomingEvents}}
 						</span>
 					</div>
+					{{mf 'menue.All regions' 'All regions'}}
+					{{#if currentRegion}}
+						<span class="checkmark glyphicon glyphicon-ok"></span>
+					{{/if}}
 				</a>
 			</li>
 			{{#each regions}}
 				<li>
 					<a href="#" class="js-region-link js-nav-dropdown-close">
-						{{regionNameMarked}}
-						{{#if currentRegion}}
-							<span class="checkmark glyphicon glyphicon-ok"></span>
-						{{/if}}
 						<div class="region-badges">
 							<span class="badge badge-courses"
 								title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
@@ -54,6 +50,10 @@
 								{{futureEventCount}}
 							</span>
 						</div>
+						{{regionNameMarked}}
+						{{#if currentRegion}}
+							<span class="checkmark glyphicon glyphicon-ok"></span>
+						{{/if}}
 					</a>
 				</li>
 			{{/each}}
