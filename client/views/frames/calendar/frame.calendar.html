@@ -1,11 +1,9 @@
 <template name="frameCalendar">
 	<div class="frame-events-fluid">
 		{{#each weekdays}}
-			{{#with date}}
-				<div class="calendar-date">
-					{{calendarDay this}}
-				</div>
-			{{/with}}
+			<div class="calendar-date">
+				{{calendarDay date}}
+			</div>
 			<div class="frame-calendar-date-events">
 			{{#if Template.subscriptionsReady}}
 				{{#if hasDayEvents}}
