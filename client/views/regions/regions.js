@@ -81,14 +81,6 @@ Template.regionSelection.helpers({
 	}
 });
 
-
-var updateRegionSearch = _.debounce(function(event, instance) {
-	var search = instance.$('.js-region-search').val();
-	search = String(search).trim();
-	instance.regionSearch.set(search);
-}, 100);
-
-
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
@@ -121,13 +113,15 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': function(event, instance) {
+	'keyup .js-region-search': _.debounce(function(event, instance) {
 		if (event.which === 13) {
 			instance.$('.js-region-link').first().click();
 		} else {
-			updateRegionSearch();
+			var search = instance.$('.js-region-search').val();
+			search = String(search).trim();
+			instance.regionSearch.set(search);
 		}
-	},
+	}, 100),
 
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
