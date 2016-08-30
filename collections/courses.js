@@ -476,7 +476,7 @@ Meteor.methods({
 		var set = {};
 
 		if (changes.roles) {
-			_.each(Roles.find().fetch(), function(roletype) {
+			_.each(Roles, function(roletype) {
 				var type = roletype.type;
 				var should_have = roletype.preset || changes.roles && changes.roles[type];
 				var have = course.roles.indexOf(type) !== -1;

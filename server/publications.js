@@ -18,10 +18,6 @@ Meteor.publish ('courseDetails', function(id) {
 
 Meteor.publish  ('coursesFind', coursesFind);
 
-Meteor.publish ('roles', function(){
-	return Roles.find();
-});
-
 Meteor.publish ('regions', function(){
 	return Regions.find();
 });
