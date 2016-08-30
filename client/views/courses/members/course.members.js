@@ -5,6 +5,15 @@ Template.courseMembers.helpers({
 });
 
 Template.courseMember.helpers({
+	showMemberRoles: function() {
+		var memberRoles = this.member.roles;
+		if (memberRoles.length == 1) {
+			return memberRoles[0] != "participant" ? true : false;
+		} else {
+			return true;
+		}
+	},
+	
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
@@ -34,15 +43,6 @@ Template.courseMember.helpers({
 			},
 			mf('roles.message.placeholder', 'My interests...')
 		);
-	},
-
-	showMemberRoles: function() {
-		var memberRoles = this.member.roles;
-		if (memberRoles.length == 1) {
-			return memberRoles[0] != "participant" ? true : false;
-		} else {
-			return true;
-		}
 	}
 });
 
