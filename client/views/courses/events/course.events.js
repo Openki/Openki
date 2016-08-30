@@ -2,7 +2,7 @@ Template.courseEvents.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
 
-	subs.subscribe('eventsForCourse', courseId);
+	instance.eventSub = subs.subscribe('eventsForCourse', courseId);
 
 	instance.haveEvents = function() {
 		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
@@ -40,6 +40,10 @@ Template.courseEvents.helpers({
 
 	haveFutureEvents: function() {
 		return Template.instance().futureEvents().count() > 0;
+	},
+
+	ready: function() {
+		return Template.instance().eventSub.ready();
 	}
 });
 
