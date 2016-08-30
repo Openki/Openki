@@ -48,11 +48,6 @@ Template.languageSelection.onRendered(function() {
 	Template.instance().$('.js-language-search').select();
 });
 
-var updateLanguageSearch = function(event, instance) {
-	var search = instance.$('.js-language-search').val();
-	search = String(search).trim();
-	instance.languageSearch.set(search);
-};
 
 Template.languageSelection.helpers({
 	setLanguage: function() {
@@ -95,18 +90,32 @@ Template.languageSelection.helpers({
 	}
 });
 
+var updateLanguageSearch = _.debounce(function(instance) {
+	var search = instance.$('.js-language-search').val();
+	search = String(search).trim();
+	instance.languageSearch.set(search);
+}, 100);
+
 Template.languageSelection.events({
 	'click .js-language-link': function(event, instance) {
-		localStorage.setItem('locale', this.lg);
-		Session.set('locale', this.lg);
 		event.preventDefault();
+		var lg = this.lg;
+
+		localStorage.setItem('locale', lg);
+		Session.set('locale', lg);
 		if (Meteor.user()){
-			Meteor.call('updateUserLocale', this.lg);
+			Meteor.call('updateUserLocale', lg);
 		}
 		instance.parentInstance().searchingLanguages.set(false);
 	},
 
-	'keyup .js-language-search': _.debounce(updateLanguageSearch, 100),
+	'keyup .js-language-search': function(event, instance) {
+			if (event.which === 13) {
+				instance.$('.js-language-link').first().click();
+			} else {
+				updateLanguageSearch(instance);
+			}
+	},
 
 	'focus .js-language-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
