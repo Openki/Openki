@@ -1,4 +1,7 @@
 describe('Event save', function () {
+	var eventId;
+	var event;
+
 	it('Stores an event', function () {
 		server.call('login', {
 			"user": {
@@ -16,7 +19,7 @@ describe('Event save', function () {
 		var evenLater = new Date();
 		evenLater.setHours(1002);
 
-		var eventId = server.call('saveEvent', '', {
+		event = {
 			title: "Intentionally clever title for a generated test-event",
 			description: "This space intentionally filled with bland verbiage. You are safe to ignore this. ",
 			location: { name: "Undisclosed place where heavy testing takes place" },
@@ -24,10 +27,16 @@ describe('Event save', function () {
 			end: evenLater,
 			region: 'testId',
 			internal: true,
-		});
+		};
+
+		eventId = server.call('saveEvent', '', event);
 
 		assert.isString(eventId, "got an event ID");
+	});
 
-		// Ok once I figure out a good way to subscribe we can even test whether the event was stored >_<
-  });
+	it('Allows creator to update the event', function () {
+		delete event.region;
+		event.title = event.title + " No really";
+		server.call('saveEvent', eventId, event);
+	});
 });
