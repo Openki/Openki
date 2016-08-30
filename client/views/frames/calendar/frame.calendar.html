@@ -1,12 +1,13 @@
 <template name="frameCalendar">
 	<div class="frame-events-fluid">
-		{{#each this}}
+		{{#each weekdays}}
 			{{#with date}}
 				<div class="calendar-date">
 					{{calendarDay this}}
 				</div>
 			{{/with}}
 			<div class="frame-calendar-date-events">
+			{{#if Template.subscriptionsReady}}
 				{{#if hasDayEvents}}
 					{{> eventList dataEvents=dayEvents withDate=false}}
 				{{else}}
@@ -14,6 +15,9 @@
 						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
 					</div>
 				{{/if}}
+			{{else}}
+				{{> loadingRow}}
+			{{/if}}
 			</div>
 		{{/each}}
 	</div>
