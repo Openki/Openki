@@ -48,7 +48,6 @@ Template.languageSelection.onRendered(function() {
 	Template.instance().$('.js-language-search').select();
 });
 
-
 Template.languageSelection.helpers({
 	setLanguage: function() {
 		return lgs[Session.get('locale')];
