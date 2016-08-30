@@ -1,10 +1,7 @@
 <template name="frameList">
-	<div>
-		{{#if groupName}}
-			<h2 id="frame-list-courses-title">The courses of {{groupName}}</h2>
-		{{/if}}
+	<div class="frame-list-all">
 		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithEvents' 'With upcoming events'}}</h3>
+			<h3>{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithEvents}}
 					<a href="{{pathFor 'showCourse'}}">
@@ -14,7 +11,7 @@
 			</ul>
 		</div>
 		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Without upcoming events'}}</h3>
+			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithoutEvents}}
 					<a href="{{pathFor 'showCourse'}}">
@@ -23,5 +20,10 @@
 				{{/each}}
 			</ul>
 		</div>
+		{{#if groupName}}
+			<div class="frame-list-courses-footer">
+				{{mf 'frame.list.allCoursesOfGroup' "You're looking at a list of the courses of {GROUP}" GROUP=groupName}}
+			</div>
+		{{/if}}
 	</div>
 </template>
