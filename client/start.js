@@ -6,6 +6,12 @@ Meteor.subscribe('currentUser');
 Meteor.subscribe('files');
 Meteor.subscribe('version');
 
+// Always load english translation
+// For dynamically constructed translation strings there is no default
+// translation and meteor would show the translation key if there is no
+// translation in the current locale
+mfPkg.loadLangs('en');
+
 
 // close any verification dialogs still open
 Router.onBeforeAction(function() {
