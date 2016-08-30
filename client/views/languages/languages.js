@@ -40,9 +40,9 @@ Template.languageSelection.helpers({
 		var query = search.toLowerCase();
 
 		var results = {};
-		for (var lg in Languages) {
-			if (Languages[lg].name.toLowerCase().indexOf(query) >= 0) {
-				results[Languages[lg].lg] = Languages[lg];
+		for (var language in Languages) {
+			if (Languages[language].name.toLowerCase().indexOf(query) >= 0) {
+				results[Languages[language].lg] = Languages[language];
 			}
 		}
 		return _.values(results);
