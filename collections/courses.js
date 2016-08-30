@@ -106,7 +106,7 @@ hasRoleUser = function(members, role, userId) {
 
 	members.forEach(function(member) {
 		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
-			if(member.roles.indexOf(role) !== -1) has = 'anon';
+			if (member.roles.indexOf(role) !== -1) has = 'anon';
 		}
 	});
 
