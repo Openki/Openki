@@ -168,3 +168,17 @@
 	background-color: lighten($navbar-default-bg, 10%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
+
+.navbar-form-selection {
+	font-size: large;
+	margin: 0;
+	padding: 8.5px 0;
+}
+
+.navbar-form-selection > .fa {
+	color: $white;
+
+	@media (max-width: $screen-sm) {
+		display: none;
+	}
+}

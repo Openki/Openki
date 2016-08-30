@@ -38,29 +38,3 @@
 	{{> tooltips}}
 	{{> footer}}
 </template>
-
-<template name="lang_sel">
-	<a class="navbar-link dropdown-toggle"
-		aria-expanded="false"
-		data-toggle="dropdown"
-		href="#"
-		role="button">
-		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
-		{{short}}
-		<div class="nav-marker-caret"></div>
-		<div class="nav-marker-bar"></div>
-	</a>
-
-	<ul class="dropdown-menu" role="menu">
-		{{#each lgs}}
-			<li>
-				<a href="#" class="langselect js-nav-dropdown-close">
-					{{name}}
-					{{#if currentLanguage}}
-						<span class="checkmark glyphicon glyphicon-ok"></span>
-					{{/if}}
-				</a>
-			</li>
-		{{/each}}
-	</ul>
-</template>
