@@ -97,6 +97,9 @@ hasRole = function(members, role) {
 	return has;
 };
 
+/** @summary Determine whether a given user has a given role in a members list
+ *  @return true if the user has this role, the string 'anon' if the logged-in user has the role incognito. False otherwise.
+  */
 hasRoleUser = function(members, role, userId) {
 	var has = false;
 	var loggeduser = Meteor.user();
