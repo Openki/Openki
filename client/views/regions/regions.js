@@ -115,7 +115,8 @@ Template.regionSelection.events({
 
 	'keyup .js-region-search': _.debounce(function(event, instance) {
 		if (event.which === 13) {
-			instance.$('.js-region-link').first().click();
+			// Select second element on return pressed (first element is "all regions")
+			instance.$('.js-region-link').eq(1).click();
 		} else {
 			var search = instance.$('.js-region-search').val();
 			search = String(search).trim();
