@@ -20,9 +20,11 @@
 				{{/each}}
 			</ul>
 		</div>
-		{{#if groupName}}
+		{{#if getGroup}}
 			<div class="frame-list-courses-footer">
-				{{mf 'frame.list.allCoursesOfGroup' "You're looking at a list of the courses of {GROUP}" GROUP=groupName}}
+				<a href="{{pathFor 'groupDetails' _id=getGroup._id}}" target="_blank">
+					{{mf 'frame.list.allCoursesOfGroup' "You're looking at a list of the courses of {GROUP} on openki.net" GROUP=getGroup.name}}
+				</a>
 			</div>
 		{{/if}}
 	</div>
