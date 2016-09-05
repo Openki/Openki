@@ -4,7 +4,7 @@
 			<h3>{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithEvents}}
-					<a href="{{pathFor 'showCourse'}}">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
 						<li>{{name}}</li>
 					</a>
 				{{/each}}
@@ -14,7 +14,7 @@
 			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithoutEvents}}
-					<a href="{{pathFor 'showCourse'}}">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
 						<li>{{name}}</li>
 					</a>
 				{{/each}}

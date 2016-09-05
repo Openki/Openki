@@ -67,3 +67,15 @@ Template.frameCalendar.helpers({
 		return Template.instance().weekdays.get();
 	}
 });
+
+Template.frameCalendar.onRendered(function() {
+	var instance = this;
+	this.autorun(function() {
+		// rerun when subscriptions become ready
+		console.log(instance.subscriptionsReady());
+		// wait until subtemplates are rendered
+		setTimeout(function(){
+			instance.$("a").attr("target", "_blank");
+		}, 0);
+	});
+});
