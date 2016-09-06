@@ -82,7 +82,7 @@ updateEventVenue = function(eventId) {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
-		if (typeof event.venue != 'object') {
+		if (!_.isObject(event.venue)) {
 			// This happens only at creation when the field was not initialized correctly
 			Events.update(event._id, { $set:{ venue: {} }});
 			return false;
