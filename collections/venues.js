@@ -16,16 +16,37 @@
 // "picture"       -> String   (lokal/external link)
 // "infra"         -> not clear jet
 // "createdby"     -> ID_user
-// "hosts"         -> [ID_users]
-// "roles"         -> WTF?
+// "editor"        -> userId
 // "contacts"      -> [ID_users]
 // "time_created"  -> Date
 // "time_lastedit" -> Date
 // "loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // ===========================
 
+/** Venue objects represent locations where events take place.
+  */
+Venue = function() {
+};
 
-Venues = new Meteor.Collection("Venues");
+
+/** Check whether a user may edit the venue.
+  *
+  * @param {Object} venue
+  * @return {Boolean}
+  */
+Venue.prototype.editableBy = function(user) {
+	if (!user) return false;
+	var isNew = !this._id;
+	return isNew // Anybody may create a new location
+		|| user._id === this.editor
+		|| privileged(user, 'admin'); // Admins can edit all venues
+};
+
+Venues = new Meteor.Collection("Venues", {
+	transform: function(venue) {
+		return _.extend(new Venue(), venue);
+	}
+});
 if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
 
 
@@ -61,17 +82,16 @@ venuesFind = function(filter, limit) {
 
 
 Meteor.methods({
-	saveVenue: function(venueId, changes) {
+	'venue.save': function(venueId, changes) {
 		check(venueId, String);
 		check(changes, {
-			description:   Match.Optional(String),
-			hosts:         [String],
 			name:          Match.Optional(String),
+			description:   Match.Optional(String),
 			region:        Match.Optional(String),
 			address:       Match.Optional(String),
 			route:         Match.Optional(String),
-			maxpeople:     Match.Optional(String),
-			maxworkplaces: Match.Optional(String)
+			maxpeople:     Match.Optional(Number),
+			maxworkplaces: Match.Optional(Number)
 		});
 
 		var user = Meteor.user();
@@ -87,7 +107,7 @@ Meteor.methods({
 		var venue;
 		var isNew = venueId.length === 0;
 		if (!isNew) {
-			venue = Venues.findOne({_id: venueId});
+			venue = Venues.findOne(venueId);
 			if (!venue) throw new Meteor.Error(404, "Venue not found");
 		}
 
@@ -95,26 +115,28 @@ Meteor.methods({
 		var set = {};
 
 
-		if (changes.description) set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody */
+		if (changes.description) set.description = changes.description.trim().substring(0, 640*1024);
 		if (changes.name) {
-			set.name = changes.name.substring(0, 1000);
+			set.name = changes.name.trim().substring(0, 1000);
 			set.slug = getSlug(set.name);
 		}
 
-		if (changes.address) set.address = changes.address.substring(0, 40*1024);
-		if (changes.route) set.route = changes.route.substring(0, 40*1024);
-		if (changes.maxpeople) set.maxpeople = changes.maxpeople.substring(0, 10);
-		if (changes.maxworkplaces) set.maxworkplaces = changes.maxworkplaces.substring(0, 10);
-		set.hosts=changes.hosts;
+		if (changes.address) set.address = changes.address.trim().substring(0, 40*1024);
+		if (changes.route) set.route = changes.route.trim().substring(0, 40*1024);
+
+		if (changes.maxpeople !== undefined) set.maxpeople = Math.min(1e10, Math.max(0, changes.maxpeople));
+		if (changes.maxworkplaces !== undefined) set.maxworkplaces = Math.min(1e10, Math.max(0, changes.maxworkplaces));
 
 		set.time_lastedit = new Date();
 		if (isNew) {
 			/* region cannot be changed */
-			set.region = Regions.findOne({_id: changes.region})._id;
-			if (!set.region) throw new Exception(404, 'region missing');
+			var region = Regions.findOne(changes.region);
+			if (!region) throw new Meteor.Error(404, 'region missing');
+
+			set.region = region._id;
 
 			venueId = Venues.insert({
-				hosts: [user._id],
+				editor: user._id,
 				createdby: user._id,
 				time_created: new Date()
 			});
@@ -123,7 +145,22 @@ Meteor.methods({
 		Venues.update({ _id: venueId }, { $set: set }, checkUpdateOne);
 
 		return venueId;
+	},
+
+	'venue.remove': function(venueId) {
+		check(venueId, String);
+		var venue = Venues.findOne(venueId);
+		if (!venue) {
+			throw new Meteor.Error(404, "No such venue");
+		}
+
+		if (!venue.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, "Please log in");
+		}
+
+		return Venues.remove(venueId);
 	}
+
 });
 
 

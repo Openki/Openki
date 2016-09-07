@@ -69,7 +69,7 @@ getViewportWidth = function() {
 
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
-}
+};
 
 var subbedGroup = function(group) {
 	var groupId = ''+group; // it's not a string?! LOL I DUNNO
@@ -93,6 +93,12 @@ groupNameHelpers = {
 	},
 };
 
+/** Use null instead of 'all' to mean "All regions".
+  * This is needed until all instances where we deal with regions are patched.
+  */
+cleanedRegion = function(region) {
+	return region === 'all' ? null : region;
+};
 
 TemplateMixins = {
 	/** Setup expand/collaps logic for a template

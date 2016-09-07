@@ -1,42 +1,43 @@
-<template name="locationEdit">
+<template name="venueEdit">
 	<div class="edit-page">
 		{{#if _id}}
-			<h2>{{mf 'location.edit.edit_location' 'Edit location'}}</h2>
+			<h2>{{mf 'venue.edit.title' 'Edit venue'}}</h2>
 		{{else}}
-			<h2>{{mf 'location.edit.propose' 'Create new location'}}</h2>
+			<h2>{{mf 'venue.edit.titleCreate' 'Create new venue'}}</h2>
 		{{/if}}
 		<form>
-			<div class="edit-page-header location-edit-header">
+			<div class="edit-page-header venue-edit-header">
 					<div class="form-group">
-						<label>{{mf 'location.edit.Name' 'Name:'}}</label>
-						<input type="text" class="form-control"	id="editform-name"
-							placeholder="{{mf 'location.name.placeholder' 'Full name of location'}}"
+						<label>{{mf 'venue.edit.name' 'Name:'}}</label>
+						<input type="text"
+							class="form-control js-name"
+							placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
 							size="60"
 							value="{{name}}">
 					</div>
 			</div>
-			<div class="edit-page-body location-edit-body">
+			<div class="edit-page-body venue-edit-body">
 					<div class="form-group">
-						<label>{{mf 'location.edit.description' 'Description:'}}</label>
+						<label>{{mf 'venue.edit.description' 'Description:'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
 								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 							</span>
-							<div class="form-control editable-textarea"	id="editform-description"
-								placeholder= "{{mf 'location.edit.description.placeholder' 'Some words about this location'}}"></div>
-							{{{description}}}
+							<textarea class="form-control editable-textarea js-description"
+								placeholder= "{{mf 'venue.edit.description.placeholder' 'Some words about this venue'}}"
+							>{{description}}</textarea>
 						</div>
 					</div>
 
-					{{#unless _id}}
+					{{#unless region}}
 						<div class="form-group">
-							<label>{{mf 'location.edit.region' 'Region:'}}</label>
+							<label>{{mf 'venue.edit.region' 'Region:'}}</label>
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 								</span>
-								<select name='region' class="form-control region_select">
-									<option value=''>{{mf 'location.edit.pls_select' 'Please select'}}</option>
+								<select name='region' class="form-control js-region">
+									<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
 								{{#each regions}}
 									<option value='{{_id}}' {{regionSel}}>{{name}}</option>
 								{{/each}}
@@ -46,51 +47,50 @@
 					{{/unless}}
 
 					<div class="form-group">
-						<label>{{mf 'location.details.address' 'Address:'}}</label>
+						<label>{{mf 'venue.details.address' 'Address:'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
 								<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 							</span>
 							<input
-								class="form-control"
-								id="editform-address"
-								placeholder= "{{mf 'location.edit.address.placeholder' 'Street, City, State'}}">
+								class="form-control js-address"
+								placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}">
 							{{{address}}}
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label>{{mf 'location.details.route'}}</label>
+						<label>{{mf 'venue.details.route'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
 								<span class="fa fa-map-signs"></span>
 							</span>
 							<input
-								class="form-control"
+								class="form-control js-route"
 								id="editform-address"
-								placeholder= "{{mf 'location.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
+								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
 							{{{route}}}
 						</div>
 					</div>
 					<div class="form-group">
-						<label>{{mf 'location.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
+						<label>{{mf 'venue.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
 						{{#if showAdditionalInfo}}
-							{{> locationEditAdditionalInfo}}
+							{{> venueEditAdditionalInfo}}
 							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
-								{{mf 'location.edit.hideAdditionalInfo' 'Hide additional information'}}
+								{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
 							</button>
 						{{else}}
 							<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
-								{{mf 'location.edit.provideAdditionalInfo' 'Fill out additional information'}}
+								{{mf 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
 							</button>
 						{{/if}}
 					</div>
 					<div class="form-actions">
-						<button type="button" class="btn btn-cancel">
+						<button type="button" class="btn btn-cancel js-edit-cancel">
 							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 							{{mf '_button.cancel'}}
 						</button>
-						<button type="button" class="btn btn-save">
+						<button type="submit" class="btn btn-save">
 							<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 							{{mf '_button.save'}}
 						</button>
@@ -100,106 +100,106 @@
 	</div>
 </template>
 
-<template name="locationEditAdditionalInfo">
-	<div class="location-edit-additional-info">
+<template name="venueEditAdditionalInfo">
+	<div class="venue-edit-additional-info">
 		<div class="form-group">
-			<label>{{mf 'location.edit.shortName' 'Abbreviation:'}}</label>
+			<label>{{mf 'venue.edit.shortName' 'Abbreviation:'}}</label>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control"	id="editform-short"
-					placeholder= "{{mf 'location.edit.short.placeholder' 'short name'}} {{mf '_inputField-optional'}}">
-				{{{short}}}
+					placeholder= "{{mf 'venue.edit.short.placeholder' 'short name'}} {{mf '_inputField.optional'}}"
+					value="{{short}}">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-group-element">
 				<label>
-					{{mf 'location.edit.max_ppl' 'Max. People'}}
+					{{mf 'venue.edit.max_ppl' 'Max. People'}}
 				</label>
 				<input type="number" class="form-control" id="editform_maxpeople" size="4" value="{{maxpeople}}">
 			</div>
 			<div class="form-group-element">
 				<label>
-					{{mf 'location.edit.max_workplace' 'Max. Workplaces'}}
+					{{mf 'venue.edit.max_workplace' 'Max. Workplaces'}}
 				</label>
 				<input type="number" class="form-control" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-group-element">
-				<label>{{mf 'location.edit.infra' 'Infrastructure:'}}</label>
+				<label>{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.beamer' 'Beamer'}}</span>
+						<span>{{mf 'venue.edit.projector' 'Projector'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.screen' 'Screen'}}</span>
+						<span>{{mf 'venue.edit.screen' 'Screen'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.audioSystem' 'Audio System'}}</span>
+						<span>{{mf 'venue.edit.audioSystem' 'Audio System'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.blackboard' 'Blackboard'}}</span>
+						<span>{{mf 'venue.edit.blackboard' 'Blackboard'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.whiteboard' 'Whiteboard'}}</span>
+						<span>{{mf 'venue.edit.whiteboard' 'Whiteboard'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.flipchart' 'Flipchart'}}</span>
+						<span>{{mf 'venue.edit.flipchart' 'Flipchart'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.wifi' 'Wifi'}}</span>
+						<span>{{mf 'venue.edit.wifi' 'Wifi'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.kitchen' 'Kitchen'}}</span>
+						<span>{{mf 'venue.edit.kitchen' 'Kitchen'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox">
-						<span>{{mf 'location.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
+						<span>{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
 					</label>
 				</div>
 			</div>
 			<div class="form-group-element">
-				<label>{{mf 'location.edit.additionalEquipment' 'Additional equipment:'}}</label>
+				<label>{{mf 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
 				<textarea class="form-control"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
-			<label>{{mf 'location.edit.owners' 'Owner(s):'}}</label>
+			<label>{{mf 'venue.edit.owners' 'Owner(s):'}}</label>
 			<input type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>{{mf 'location.edit.usersToContact' 'User(s) to contact:'}}</label>
+			<label>{{mf 'venue.edit.usersToContact' 'User(s) to contact:'}}</label>
 			<input type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>{{mf 'location.edit.website' 'Website:'}}'</label>
+			<label>{{mf 'venue.edit.website' 'Website:'}}'</label>
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>

@@ -1,10 +1,11 @@
 "use strict";
 
-Template.locationEdit.onCreated(function() {
+Template.venueEdit.onCreated(function() {
 	this.showAdditionalInfo = new ReactiveVar(false);
+	this.isNew = !this.data._id;
 });
 
-Template.locationEdit.helpers({
+Template.venueEdit.helpers({
 	showAdditionalInfo: function() {
 		return Template.instance().showAdditionalInfo.get();
 	},
@@ -12,15 +13,7 @@ Template.locationEdit.helpers({
 	regions: function(){
 		return Regions.find();
 	},
-	addHost: function () {
-		return Session.get("addHost");
-	},
-	locationHosts: function(){
-		return Session.get("locationHosts");
-	},
-	addHostSearch: function(){
-		return search_user($('#search_username').val());
-	},
+
 	regionSel: function() {
 		var attr = {};
 		var selected = Session.get('region');
@@ -33,103 +26,57 @@ Template.locationEdit.helpers({
 
 
 
-Template.locationEdit.events({
-	'submit form.location_edit, click input.save': function (ev) {
-		ev.preventDefault();
+Template.venueEdit.events({
+	'submit': function(event, instance) {
+		event.preventDefault();
 
-		try {
-			if (pleaseLogin()) return;
+		if (pleaseLogin()) return;
 
-			var locationId = this._id ? this._id : '';
-			var isNew = locationId === '';
+		var changes =
+			{ name:          instance.$('.js-name').val()
+			, description:   instance.$('.js-description').val()
+			, address:       instance.$('.js-address').val()
+			, route:         instance.$('.js-route').val()
+			, maxpeople:     parseInt(instance.$('.js-maxpeople').val(), 10)
+			, maxworkplaces: parseInt(instance.$('.js-maxworkplaces').val(), 10)
+		    };
 
-			var changes = {
-				description: $('#editform_description').val(),
-				name: $('#editform_name').val(),
-				address: $('#editform_address').val(),
-				route: $('#editform_route').val(),
-				maxpeople: $('#editform_maxpeople').val(),
-				maxworkplaces: $('#editform_maxworkplaces').val(),
-				hosts: Session.get("locationHosts")
-			};
+		if (instance.isNew) {
+			var region = cleanedRegion(Session.get('region'));
+			changes.region = region || $('.js-region').val();
+			if (!changes.region) {
+				alert("Please select a region");
+				return;
+			}
+		}
 
-			if (isNew) {
-				changes.region = $('.region_select').val();
-				if (!changes.region) {
-					alert("Please select a region"+$('.region_select').val());
-					return;
+		var venueId = this._id ? this._id : '';
+		var parentInstance = instance.parentInstance();
+		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
+			if (err) {
+				showServerError('Saving the location went wrong', err);
+			} else {
+				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes venue "{NAME}".'), 'success');
+				if (instance.isNew) {
+					Router.go('venueDetails', { _id: venueId });
+				} else {
+					parentInstance.editing.set(false);
 				}
 			}
-
-			Meteor.call("save_location", locationId, changes, function(err, locationId) {
-				Session.set("isEditing", false);
-				Session.set('search', ''); // clear js-search-field
-				if (err) alert("Saving the location went terribly wrong: "+err);
-				if (isNew){
-					Router.go('locationDetails', {_id: locationId}); // TODO: Slug is not included in url
-				}
-			});
-
-
-
-		} catch(err) {
-			if (err instanceof String) alert(err);
-			else throw err;
-		}
+		});
 	},
 
-	'click input.addhost': function() {
-		Session.set("addHost", false); // that it reloads
-		Session.set("addHost", true);
-	},
-
-	'click input.cancel_addhost': function() {
-		Session.set("addHost", false);
-	},
-
-	'click input.save_addhost': function() {
-		Session.set("addHost", false);
-
-		var hosts=Session.get("locationHosts");
-		var new_host=$("#addhost_id").val();
-		if(hosts.indexOf(new_host) == -1) {
-			hosts.push(new_host);
-			Session.set("locationHosts",hosts);
-		}else{
-			alert("This host ist already in list.");
-		}
-	},
-
-	'click input.remove_host': function() {
-
-		if(Meteor.userId()==this){
-			if(!confirm('Delete yourself from hosts? You loose write permissions!'))
-			return;
-		}
-
-		var hosts=Session.get("locationHosts");
-
-		var index = hosts.indexOf(this);
-		hosts.splice(index, 1);
-
-		Session.set("locationHosts",hosts);
-
-	},
 
 	'click .js-toggle-additional-info-btn': function(event, instance) {
 		instance.showAdditionalInfo.set(!instance.showAdditionalInfo.get());
 	},
 
 
-
-	'click input.cancel': function() {
-		Session.set("isEditing", false);
+	'click .js-edit-cancel': function(event, instance) {
+		if (instance.isNew) {
+			Router.go('/');
+		} else {
+			instance.parentInstance().editing.set(false);
+		}
 	},
-
-	'click input.edit': function () {
-		if (pleaseLogin()) return;
-
-		// gehe in den edit-mode, siehe html
-	}
-
 });

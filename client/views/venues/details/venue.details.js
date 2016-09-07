@@ -1,26 +1,49 @@
 "use strict";
 
 Router.map(function() {
-	this.route('locationDetails', {
+	this.route('venueDetails', {
 		path: 'venue/:_id/:name?',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('locationDetails', this.params._id),
+				Meteor.subscribe('venueDetails', this.params._id),
 				Meteor.subscribe('eventsFind', { location : this.params._id })
 			];
 		},
-		data: function () {
-			var location =  Locations.findOne({_id: this.params._id});
-			if (!location) return false;
 
-			return {
-				'location': location,
-				'eventsCursor': eventsFind ({location: this.params._id, after: minuteTime.get()}, 12)
-			};
+		data: function() {
+			var id = this.params._id;
+
+			var venue;
+			var data = {};
+			if (id === 'create') {
+				var userId = Meteor.userId();
+				venue = new Venue();
+				venue.region = cleanedRegion(Session.get('region'));
+				venue.editor = userId;
+			} else {
+				venue = Venues.findOne({_id: this.params._id});
+				if (!venue) return false; // Not found
+
+				data.eventsList = eventsFind({venue: id, after: minuteTime.get()}, 12);
+			}
+
+			data.venue = venue;
+
+			return data;
 		},
+
 		onAfterAction: function() {
-			if (!this.data()) return;
-			document.title = webpagename + this.data().location.name + " - venue-details";
+			var data = this.data();
+			if (!data) return;
+
+			var venue = data.venue;
+			var title;
+			if (venue._id) {
+				title = venue.name;
+			} else {
+				title = mf('venue.edit.siteTitle.create', "Create Venue");
+			}
+			document.title = webpagename + title;
 		}
 	});
 });
@@ -29,15 +52,18 @@ Router.map(function() {
 
 /////////////////////////////////////////////////// map
 
-Template.locationDetails.onCreated(function() {
+Template.venueDetails.onCreated(function() {
+	var isNew = !this.data.venue._id;
+	this.editing = new ReactiveVar(isNew);
+
 	var markers = new Meteor.Collection(null);
 	this.markers = markers;
 
-	this.setLocation = function(location) {
+	this.setLocation = function(loc) {
 		markers.remove({ main: true });
-		if (location && location.loc) {
+		if (loc) {
 			markers.insert({
-				loc: location.loc,
+				loc: loc,
 				main: true
 			});
 		}
@@ -54,29 +80,23 @@ Template.locationDetails.onCreated(function() {
 	};
 });
 
-Template.locationDetails.onRendered(function() {
+Template.venueDetails.onRendered(function() {
 	var instance = this;
 
-	this.setLocation(this.data.location);
+	this.setLocation(this.data.venue.loc);
 
-	var region = Regions.findOne(instance.data.location.region);
+	var region = Regions.findOne(instance.data.venue.region);
 	instance.setRegion(region);
 });
 
 
-
-
-
-
-
-Template.locationDetails.helpers({
-
-	isEditing: function () {
-		return Session.get("isEditing");
+Template.venueDetails.helpers({
+	editing: function () {
+		return Template.instance().editing.get();
 	},
 
-	canEditLocation: function () {
-		return this.hosts && this.hosts.indexOf(Meteor.userId()) !== -1;
+	mayEdit: function () {
+		return this.editableBy(Meteor.user());
 	},
 
 	markers: function() {
@@ -96,44 +116,28 @@ Template.locationDetails.helpers({
 				LON: fmt(this.loc.coordinates[0]),
 			};
 
-			return mf('locationDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
+			return mf('venueDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
 		}
 	}
 });
 
 
-
-
-
-
-Template.locationDetails.events({
-
-	'click .js-location-edit': function () {
-		if (pleaseLogin()) return;
-
-		// das reicht wohl noch nicht, muss auf server-seite passieren?
-		if(this.hosts.indexOf(Meteor.userId())==-1 ) {
-			alert("No admin rights");
-			return;}
-
-		// gehe in den edit-mode, siehe html
-
-		Session.set("locationHosts",this.hosts);
-		Session.set("isEditing", true);
-
+Template.venueDetails.events({
+	'click .js-venue-edit': function(event, instance) {
+		instance.editing.set(true);
 	},
 
-	'click .js-location-delete': function () {
-		if (pleaseLogin()) return;
-
-		// das reicht wohl noch nicht, muss auf server-seite passieren?
-		if(this.hosts.indexOf(Meteor.userId())==-1 ) {
-			alert("No Aadmin rights");
-			return;}
-
-		if(confirm('Whoa! Really delete location?')){
-			Locations.remove(this._id);
-			Router.go('/locations/');
+	'click .js-venue-delete': function(event, instance) {
+		if (confirm(mf("venue.detail.remove", "Remove venue?"))) {
+			var venue = instance.data.venue;
+			Meteor.call('venue.remove', venue._id, function(err, result) {
+				if (err) {
+					showServerError('Deleting the venue went wrong', err);
+				} else {
+					addMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
+					Router.go('venues');
+				}
+			});
 		}
 	}
 

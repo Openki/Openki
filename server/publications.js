@@ -27,11 +27,10 @@ Meteor.publish ('regions', function(){
 });
 
 
-
 Meteor.publish ('venues', function(region) {
-	check(region, String);
+	check(region, Match.Maybe(String));
 	var find = {};
-	if (region != 'all') find.region = region;
+	if (region) find.region = region;
 	return Venues.find(find);
 });
 

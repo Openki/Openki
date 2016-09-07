@@ -1,16 +1,16 @@
-.location-edit-header {
+.venue-edit-header {
 	@media (min-width: $screen-xs) {
 		border-color: $location-bg;
 	}
 }
 
-.location-edit-body {
+.venue-edit-body {
 	@media (min-width: $screen-xs) {
 		border-color: $blue-lighter;
 	}
 }
 
-.location-edit-additional-info {
+.venue-edit-additional-info {
 	$background-color: lighten($location-bg, 15%);
 
 	background-color: $background-color;

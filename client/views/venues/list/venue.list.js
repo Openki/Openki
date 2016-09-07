@@ -3,7 +3,7 @@ Router.map(function () {
 		path: 'venues',
 		template: 'venueList',
 		waitOn: function () {
-			return Meteor.subscribe('venues', Session.get('region'));
+			return Meteor.subscribe('venues', cleanedRegion(Session.get('region')));
 		},
 		onAfterAction: function() {
 			document.title = webpagename + 'Venues list';
@@ -11,9 +11,12 @@ Router.map(function () {
 	});
 });
 
-Template.locationlist.helpers({
-	locations: function() {
-		return Venues.find({ region: Session.get('region') });
+Template.venueList.helpers({
+	venues: function() {
+		var pred = {};
+		var region = cleanedRegion(Session.get('region'));
+		if (region) pred.region = region;
+		return Venues.find(pred);
 	},
 
 	mayHost: function() {
@@ -23,8 +26,8 @@ Template.locationlist.helpers({
 	region: function() {
 		var regionId = Session.get('region');
 		var regionObj = Regions.findOne(regionId);
-		var regionName = regionObj ? regionObj.name : 'all regions';
-		return regionName;
+		if (regionObj) return regionObj.name;
+		return false;
 	}
 });
 
