@@ -13,7 +13,7 @@ Template.introduction.onRendered(function() {
 	});
 
 	// use $screen-xxs (from scss) to compare with the width of window
-	if ($(window).width()<380) {
+	if (Session.get("viewportWidth") < 380) {
 		Assistant.closeIntro();
 		// dont wait for slideUp
 		this.$('.introduction-content').hide();
