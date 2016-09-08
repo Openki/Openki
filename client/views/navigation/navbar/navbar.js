@@ -54,7 +54,7 @@ Template.navbar.helpers({
 	activeClass: function(linkRoute, id) {
 		var router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
-			if (id && router.params._id !== id) return '';
+			if (typeof id == 'string' && router.params._id !== id) return '';
 			return 'navbar-link-active';
 		} else {
 			return '';
