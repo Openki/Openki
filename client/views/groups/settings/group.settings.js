@@ -36,6 +36,9 @@ Template.groupSettings.helpers({
 	frameCalendarURL: function() {
 		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
 	},
+	frameListURL: function() {
+		return Router.routes.frameList.url({}, { query: {group: this._id} });
+	},
 });
 
 Template.groupSettings.events({
