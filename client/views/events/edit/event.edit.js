@@ -2,7 +2,7 @@ Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
-	instance.selectedLocation = new ReactiveVar(this.data.location || {});
+	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
 
 	instance.uploaded = new ReactiveVar([]);
 });
@@ -181,7 +181,7 @@ Template.eventEdit.events({
 
 		// check whether the file hasn't been associated with the event yet
 		var uploaded = instance.uploaded.get();
-		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId });
+		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId; });
 		if (uploadedClean.length < uploaded.length) {
 			// The server does not allow to delete files that are not associated
 			// to an event. So we just remove the local reference and hope
@@ -215,7 +215,7 @@ Template.eventEdit.events({
 		var editevent = {
 			title: instance.$('#eventEditTitle').val(),
 			description: instance.$('#eventEditDescription').html(),
-			location: instance.selectedLocation.get(),
+			venue: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),

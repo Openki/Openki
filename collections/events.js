@@ -285,7 +285,7 @@ Meteor.methods({
 		}
 
 		if (Meteor.isServer) {
-			Meteor.call('updateEventVenues', eventId, logAsyncErrors);
+			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
 			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
 			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 
