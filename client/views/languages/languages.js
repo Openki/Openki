@@ -100,7 +100,7 @@ Template.languageSelection.events({
 	'focus .js-language-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd) {
+		if (screenMd && !Session.get('isRetina')) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
@@ -113,7 +113,7 @@ Template.languageSelection.onRendered(function() {
 	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd) {
+		if (screenMd && !Session.get('isRetina')) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
