@@ -149,7 +149,7 @@ Template.course_edit.events({
 				showServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-				addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
 				$('input.-enrol').each(function(_, enrolcheck) {
 					if (enrolcheck.checked) {
