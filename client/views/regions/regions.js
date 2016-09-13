@@ -81,6 +81,23 @@ Template.regionSelection.helpers({
 	}
 });
 
+var handleKeyup = _.debounce(function(event, instance, parentInstance) {
+	var search = instance.$('.js-region-search').val();
+	search = String(search).trim();
+
+	if (event.which === 13) {
+		if (instance.regionSearch.get() === '') {
+			parentInstance.searchingRegions.set(false);
+		} else {
+			var regionLinks = instance.$('.js-region-link');
+			var first = (regionLinks.length == 1) ? 0 : 1;
+			regionLinks.eq(first).click();
+		}
+	} else {
+		instance.regionSearch.set(search);
+	}
+}, 100);
+
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
@@ -113,16 +130,10 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': _.debounce(function(event, instance) {
-		if (event.which === 13) {
-			// Select second element on return pressed (first element is "all regions")
-			instance.$('.js-region-link').eq(1).click();
-		} else {
-			var search = instance.$('.js-region-search').val();
-			search = String(search).trim();
-			instance.regionSearch.set(search);
-		}
-	}, 100),
+	'keyup .js-region-search': function(event, instance) {
+		var parentInstance = instance.parentInstance();
+		handleKeyup(event, instance, parentInstance);
+	},
 
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
