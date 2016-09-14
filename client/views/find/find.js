@@ -56,6 +56,7 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
+	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(categories);
 	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
@@ -123,6 +124,7 @@ var updateCategorySearch = function(event, instance) {
 			}
 		}
 	}
+	instance.categorySearch.set(query);
 	instance.categorySearchResults.set(results);
 };
 
@@ -275,6 +277,25 @@ Template.find.helpers({
 
 	'availableSubcategories': function(mainCategory) {
 		return Template.instance().categorySearchResults.get()[mainCategory];
+	},
+
+	'categoryNameMarked': function() {
+		Session.get('locale'); // Reactive dependency
+		var search = Template.instance().categorySearch.get();
+		var name = mf('category.'+this);
+		if (search === '') return name;
+		var match = name.match(new RegExp(search, 'i'));
+
+		// To add markup we have to escape all the parts separately
+		var marked;
+		if (match) {
+			var term = match[0];
+			var parts = name.split(term);
+			marked = _.map(parts, Blaze._escape).join('<strong>'+Blaze._escape(term)+'</strong>');
+		} else {
+			marked = Blaze._escape(name);
+		}
+		return Spacebars.SafeString(marked);
 	},
 
 	'availableGroups': function(group) {
