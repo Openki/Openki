@@ -283,19 +283,7 @@ Template.find.helpers({
 		Session.get('locale'); // Reactive dependency
 		var search = Template.instance().categorySearch.get();
 		var name = mf('category.'+this);
-		if (search === '') return name;
-		var match = name.match(new RegExp(search, 'i'));
-
-		// To add markup we have to escape all the parts separately
-		var marked;
-		if (match) {
-			var term = match[0];
-			var parts = name.split(term);
-			marked = _.map(parts, Blaze._escape).join('<strong>'+Blaze._escape(term)+'</strong>');
-		} else {
-			marked = Blaze._escape(name);
-		}
-		return Spacebars.SafeString(marked);
+		return markedName(search, name);
 	},
 
 	'availableGroups': function(group) {
