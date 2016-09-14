@@ -104,6 +104,14 @@ Template.languageSelection.events({
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
+
+		var screenSm = viewportWidth <= 768;
+		if (!screenSm) {
+			instance.$('.dropdown').on('show.bs.dropdown', function(e){
+				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+			});
+		}
+
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });
