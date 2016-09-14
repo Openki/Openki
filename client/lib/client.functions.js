@@ -171,8 +171,7 @@ Handlebars.registerHelper ("siteStage", function() {
 });
 
 
-Handlebars.registerHelper ("categoryName", function(cat) {
-	cat = cat || this;
+Handlebars.registerHelper ("categoryName", function() {
 	Session.get('locale'); // Reactive dependency
 	return mf('category.'+this);
 });
