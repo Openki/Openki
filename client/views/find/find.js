@@ -106,6 +106,7 @@ Template.find.onCreated(function() {
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.js-search-categories').val();
 	instance.categorySearch.set(query);
+
 	if (!query) {
 		instance.categorySearchResults.set(categories);
 		return;
@@ -282,7 +283,6 @@ Template.find.helpers({
 	'categoryNameMarked': function() {
 		Session.get('locale'); // Reactive dependency
 		var search = Template.instance().categorySearch.get();
-		console.log(search);
 		var name = mf('category.'+this);
 		return markedName(search, name);
 	},
