@@ -76,8 +76,19 @@ var getEventFrequency = function(template) {
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.-replicateFrequency:checked').val();
 
-	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
+	var frequencies = { once:          { unit: 'days',
+	                                     interval: 1 },
+	                    daily:         { unit: 'days',
+	                                     interval: 1 },
+	                    weekly:        { unit: 'weeks',
+	                                     interval: 1 },
+	                    everyTwoWeeks: { unit: 'weeks',
+	                                     interval: 2 }};
+
+	var unit = frequencies[frequency].unit;
 	if (unit === undefined) return [];
+
+	var interval = frequencies[frequency].interval;
 
 	var eventStart = moment(template.data.start);
 	var originDay = moment(eventStart).startOf('day');
@@ -97,7 +108,7 @@ var getEventFrequency = function(template) {
 			if (dates.length >= 52) break;
 		}
 
-		repStart.add(1, unit);
+		repStart.add(interval, unit);
 	}
 
 	return dates;

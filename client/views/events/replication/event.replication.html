@@ -41,6 +41,12 @@
 							{{mf'event.replication.freq.weekly' 'once a week'}}
 						</label>
 					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="replicateFrequency" value="everyTwoWeeks" class="-replicateFrequency -updateReplicas">
+							{{mf'event.replication.freq.everyTwoWeeks' 'every 2 weeks'}}
+						</label>
+					</div>
 			</div>
 			{{#if replicaDateCount}}
 				<div class="form-group-element">
