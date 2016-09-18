@@ -74,7 +74,7 @@ var getEventFrequency = function(template) {
 
 	var endDate   = moment(template.$('#replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
-	var frequency = template.$('.-replicateFrequency:checked').val();
+	var frequency = template.$('.js-replicate-frequency:checked').val();
 
 	var frequencies = { once:          { unit: 'days',
 	                                     interval: 1 },
@@ -116,7 +116,7 @@ var getEventFrequency = function(template) {
 
 
 Template.eventReplication.events({
-	'click .-eventReplicate': function (event, template) {
+	'click .js-replicate-btn': function (event, template) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
 
@@ -159,15 +159,15 @@ Template.eventReplication.events({
 		template.parentInstance().replicating.set(false);
 	},
 
-	'mouseover .-eventReplicate': function(event, instance) {
+	'mouseover .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').addClass('highlighted');
 	},
 
-	'mouseout .-eventReplicate': function(event, instance) {
+	'mouseout .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
 	},
 
-	'change .-updateReplicas, keyup .-updateReplicas': function(event, template) {
+	'change .js-update-replicas, keyup .js-update-replicas': function(event, template) {
 		updateReplicas(template);
 	}
 });
