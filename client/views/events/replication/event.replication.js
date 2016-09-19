@@ -76,14 +76,10 @@ var getEventFrequency = function(template) {
 	if (!endDate.isValid()) return [];
 	var frequency = template.$('.js-replicate-frequency:checked').val();
 
-	var frequencies = { once:          { unit: 'days',
-	                                     interval: 1 },
-	                    daily:         { unit: 'days',
-	                                     interval: 1 },
-	                    weekly:        { unit: 'weeks',
-	                                     interval: 1 },
-	                    biWeekly:      { unit: 'weeks',
-	                                     interval: 2 }};
+	var frequencies = { once:     { unit: 'days',  interval: 1 },
+	                    daily:    { unit: 'days',  interval: 1 },
+	                    weekly:   { unit: 'weeks', interval: 1 },
+	                    biWeekly: { unit: 'weeks', interval: 2 } };
 
 	var unit = frequencies[frequency].unit;
 	if (unit === undefined) return [];
