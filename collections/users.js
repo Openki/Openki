@@ -191,6 +191,7 @@ Meteor.methods({
 		}
 	},
 
+
 	// Recalculate the groups and badges field
 	'user.updateBadges': function(selector) {
 		Meteor.users.find(selector).forEach(function(user) {
@@ -198,3 +199,14 @@ Meteor.methods({
 		});
 	},
 });
+
+if (Meteor.isServer) {
+	Meteor.methods({
+		'user.name': function(userId) {
+			var user = Meteor.users.findOne(userId);
+			if (!user) return false;
+			var username = user.username;
+			return username;
+		}
+	});
+}

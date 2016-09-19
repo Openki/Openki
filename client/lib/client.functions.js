@@ -16,32 +16,78 @@ getMember = function(members, user) {
  *
  * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
-userName = function(userId) {
-	if (!userId) return mf('noUser_placeholder', 'someone');
+userName = function() {
+	// We cache the username lookups
+	// To prevent unlimited cache-growth, after a enough lookups we
+	// build a new cache from the old
+	var cacheLimit = 1000;
+	var cache = {};
+	var previousCache = {};
+	var lookups = 0;
+	var pending = {};
 
-	if (userId.substr(0, 5)  == 'Anon_') {
-		var loggeduser = Meteor.user();
-		if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
-			return  '☔ ' + loggeduser.username + ' ☔';
+	return function(userId) {
+		if (!userId) return mf('noUser_placeholder', 'someone');
+
+		if (userId.substr(0, 5)  == 'Anon_') {
+			var loggeduser = Meteor.user();
+			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
+				return  '☔ ' + loggeduser.username + ' ☔';
+			}
+			return "☔ incognito";
 		}
-		return "☔ incognito";
-	}
 
-	// This seems extremely wasteful
-	// But the alternatives are more complicated by a few orders of magnitude
-	miniSubs.subscribe('user', userId);
+		// Consult cache
+		var user = cache[userId];
+		if (user === undefined) {
+			// Consult old cache
+			user = previousCache[userId];
 
-	var user = Meteor.users.findOne({ _id: userId });
-	if (user) {
-		if (user.username) {
-			return user.username;
+			// Carry to new cache if it was present in the old
+			if (user !== undefined) {
+				cache[userId] = user;
+			}
+		}
+
+		if (user === undefined) {
+			// Substitute until the name (or its absence) is loaded
+			user = '?!';
+
+			if (pending[userId]) {
+				pending[userId].depend();
+			} else {
+				// Cache miss, now we'll have to round-trip to the server
+				lookups += 1;
+				pending[userId] = new Tracker.Dependency();
+				pending[userId].depend();
+
+				// Cycle the cache if it's full
+				if (cacheLimit < lookups) {
+					previousCache = cache;
+					cache = {};
+					lookups = 0;
+				}
+
+				Meteor.call('user.name', userId, function(err, user) {
+					if (err) {
+						console.warn(err);
+					}
+					if (user) {
+						cache[userId] = user;
+						pending[userId].changed();
+						delete pending[userId];
+					}
+				});
+			}
+		}
+
+		if (user) {
+			return user;
 		} else {
-			return "userId: " + user._id;
+			return "userId: " + userId;
 		}
-	}
-
-	return "No_User";
-};
+	};
+}();
 
 
 /* Go to the same page removing query parameters */
