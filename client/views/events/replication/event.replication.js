@@ -82,7 +82,7 @@ var getEventFrequency = function(template) {
 	                                     interval: 1 },
 	                    weekly:        { unit: 'weeks',
 	                                     interval: 1 },
-	                    everyTwoWeeks: { unit: 'weeks',
+	                    biWeekly:      { unit: 'weeks',
 	                                     interval: 2 }};
 
 	var unit = frequencies[frequency].unit;
