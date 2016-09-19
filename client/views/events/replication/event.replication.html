@@ -1,6 +1,12 @@
 <template name="eventReplication">
 	<div class="details-form event-replicate">
 		<div class="form-group">
+			<label>
+				{{mf 'event.replication.chooseDates' 'Choose dates'}}
+			</label>
+			<div class="js-replicate-datepick"></div>
+		</div>
+		<div class="form-group">
 			<div class="form-group-element">
 				<label for="replicateStart">
 					{{mf 'event.replication.interval.start' 'Interval Start'}}

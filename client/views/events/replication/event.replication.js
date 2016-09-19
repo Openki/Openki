@@ -6,7 +6,9 @@ Template.eventReplication.onCreated(function() {
 
 
 Template.eventReplication.onRendered(function() {
-	this.$('.js-replicate-date').datepicker({
+	var instance = this;
+
+	instance.$('.js-replicate-date').datepicker({
 		weekStart: moment.localeData().firstDayOfWeek(),
 		language: moment.locale(),
 		autoclose: true,
@@ -21,7 +23,27 @@ Template.eventReplication.onRendered(function() {
 		}
 	});
 
-	updateReplicas(this);
+	instance.$('.js-replicate-datepick').datepicker({
+		weekStart: moment.localeData().firstDayOfWeek(),
+		language: moment.locale(),
+		multidate: true,
+		multidateSeperator: ", ",
+		todayHighlight: true,
+		startDate: new Date()
+	}).on('changeDate', function(event) {
+		var dates = [];
+		for (var i = 0; i < event.dates.length; i++) {
+			dates.push(moment(event.dates[i]));
+		}
+
+		// http://www.codeproject.com/Articles/625832/How-to-Sort-Date-and-or-Time-in-JavaScript
+		var sortByDateAsc = function (lhs, rhs) {
+			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
+		};
+		dates.sort(sortByDateAsc);
+
+		instance.replicaDates.set(dates);
+    });
 });
 
 var replicaStartDate = function(originalDate) {
@@ -59,22 +81,22 @@ Template.eventReplication.helpers({
 });
 
 
-var updateReplicas = function(template) {
-	template.replicaDates.set(_.map(getEventFrequency(template), function(interval) { return interval[0]; } ));
+var updateReplicas = function(instance) {
+	instance.replicaDates.set(_.map(getEventFrequency(instance), function(interval) { return interval[0]; } ));
 };
 
 
-var getEventFrequency = function(template) {
-	var startDate = moment(template.$('#replicateStart').val(), 'L');
+var getEventFrequency = function(instance) {
+	var startDate = moment(instance.$('#replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
 	if (startDate.isBefore(moment())) {
 		// Jump forward in time so we don't have to look at all these old dates
 		startDate = replicaStartDate(startDate);
 	}
 
-	var endDate   = moment(template.$('#replicateEnd').val(), 'L');
+	var endDate   = moment(instance.$('#replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
-	var frequency = template.$('.js-replicate-frequency:checked').val();
+	var frequency = instance.$('.js-replicate-frequency:checked').val();
 
 	var frequencies = { once:     { unit: 'days',   interval: 1 },
 	                    daily:    { unit: 'days',   interval: 1 },
@@ -86,9 +108,9 @@ var getEventFrequency = function(template) {
 
 	var interval = frequencies[frequency].interval;
 
-	var eventStart = moment(template.data.start);
+	var eventStart = moment(instance.data.start);
 	var originDay = moment(eventStart).startOf('day');
-	var eventEnd = moment(template.data.end);
+	var eventEnd = moment(instance.data.end);
 
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
@@ -112,29 +134,44 @@ var getEventFrequency = function(template) {
 
 
 Template.eventReplication.events({
-	'click .js-replicate-btn': function (event, template) {
+	'click .js-replicate-btn': function (event, instance) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
 
-		var dates = getEventFrequency(template);
-		var success = true;
-		$.each( dates, function( i,eventTime ) {
+		var replicaDates = instance.replicaDates.get();
+		var eventMoments = [];
 
+		var eventStart = moment(instance.data.start).format('LT');
+		var eventEnd = moment(instance.data.end).format('LT');
+
+		var readDateTime = function(dateStr, timeStr) {
+			return moment(dateStr+' '+timeStr, 'L LT');
+		};
+
+		for (var i = 0; i < replicaDates.length; i++) {
+			var date = replicaDates[i].format('L');
+			eventMoments[i] = [];
+			eventMoments[i].push(readDateTime(date, eventStart));
+			eventMoments[i].push(readDateTime(date, eventEnd));
+		}
+
+		var success = true;
+		$.each(eventMoments, function(i, eventTime) {
 			/*create a new event for each time interval */
 			var replicaEvent = {
-				title: template.data.title,
-				description: template.data.description,
-				location: template.data.location,
-				room: template.data.room || '',
+				title: instance.data.title,
+				description: instance.data.description,
+				location: instance.data.location,
+				room: instance.data.room || '',
 				start: eventTime[0].toDate(),
 				end: eventTime[1].toDate(),
-				files: template.data.files  || [],
-				region: template.data.region || Session.get('region'),
-				groups: template.data.groups,
-				replicaOf: template.data.replicaOf || template.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
+				files: instance.data.files  || [],
+				region: instance.data.region || Session.get('region'),
+				groups: instance.data.groups,
+				replicaOf: instance.data.replicaOf || instance.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 
-			var courseId = template.data.courseId;
+			var courseId = instance.data.courseId;
 			if (courseId) {
 				replicaEvent.courseId = courseId;
 			}
@@ -147,12 +184,12 @@ Template.eventReplication.events({
 					success = false;
 				} else {
 					var fmtDate = moment(replicaEvent.start).format('LL');
-					addMessage(mf('event.replicate.success', { TITLE: template.data.title, DATE: fmtDate }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
+					addMessage(mf('event.replicate.success', { TITLE: instance.data.title, DATE: fmtDate }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});
 		});
 
-		template.parentInstance().replicating.set(false);
+		instance.parentInstance().replicating.set(false);
 	},
 
 	'mouseover .js-replicate-btn': function(event, instance) {
@@ -161,9 +198,5 @@ Template.eventReplication.events({
 
 	'mouseout .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
-	},
-
-	'change .js-update-replicas, keyup .js-update-replicas': function(event, template) {
-		updateReplicas(template);
 	}
 });
