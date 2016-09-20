@@ -1,88 +1,14 @@
 <template name="eventReplication">
 	<div class="details-form event-replicate">
 		<div class="form-group">
-			<label>
-				{{mf 'event.replication.chooseDates' 'Choose dates'}}
-			</label>
-			<div class="js-replicate-datepick"></div>
-		</div>
-		<div class="form-group">
 			<div class="form-group-element">
-				<label for="replicateStart">
-					{{mf 'event.replication.interval.start' 'Interval Start'}}
+				<label>
+					{{mf 'event.replication.chooseDates' 'Choose dates'}}
 				</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					</span>
-					<input type="text"
-						class="form-control js-replicate-date js-update-replicas"
-						id="replicateStart"
-						size="8"
-						value="{{replicaStart}}">
-				</div>
+				<div class="js-replicate-datepick"></div>
 			</div>
 			<div class="form-group-element">
-				<label for="replicateEnd">
-					{{mf 'event.replication.interval.end' 'Interval End'}}
-				</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					</span>
-					<input type="text"
-						class="form-control js-replicate-date js-update-replicas"
-						id="replicateEnd"
-						size="8"
-						value="{{replicaEnd}}">
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-group-element">
-				<label for="replicateFrequency">
-					{{mf 'event.replication.repeat' 'Repeat'}}
-				</label>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="once">
-						{{mf 'event.replication.freq.once' 'once'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="daily">
-						{{mf 'event.replication.freq.daily' 'every day'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="weekly"
-							checked>
-						{{mf'event.replication.freq.weekly' 'once a week'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="biWeekly">
-						{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
-					</label>
-				</div>
-			</div>
-			{{#if replicaDateCount}}
-				<div class="form-group-element">
+				{{#if replicaDateCount}}
 					<label>
 						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
 							Create {COUNT, plural,
@@ -118,8 +44,83 @@
 							{{/mf}}
 						</button>
 					</div>
+				{{else}}
+					<label>No dates selected</label>
+				{{/if}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label for="replicateStart">
+					{{mf 'event.replication.interval.start' 'Interval Start'}}
+				</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+					</span>
+					<input type="text"
+						class="form-control js-replicate-date js-update-replicas"
+						id="replicateStart"
+						size="8"
+						value="{{replicaStart}}">
 				</div>
-			{{/if}}
+			</div>
+			<div class="form-group-element">
+				<label for="replicateEnd">
+					{{mf 'event.replication.interval.end' 'Interval End'}}
+				</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+					</span>
+					<input type="text"
+						class="form-control js-replicate-date js-update-replicas"
+						id="replicateEnd"
+						size="8"
+						value="{{replicaEnd}}">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="replicateFrequency">
+				{{mf 'event.replication.repeat' 'Repeat'}}
+			</label>
+			<div class="radio">
+				<label>
+					<input type="radio"
+						class="js-replicate-frequency js-update-replicas"
+						name="replicateFrequency"
+						value="once">
+					{{mf 'event.replication.freq.once' 'once'}}
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio"
+						class="js-replicate-frequency js-update-replicas"
+						name="replicateFrequency"
+						value="daily">
+					{{mf 'event.replication.freq.daily' 'every day'}}
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio"
+						class="js-replicate-frequency js-update-replicas"
+						name="replicateFrequency"
+						value="weekly">
+					{{mf'event.replication.freq.weekly' 'once a week'}}
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio"
+						class="js-replicate-frequency js-update-replicas"
+						name="replicateFrequency"
+						value="biWeekly">
+					{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
+				</label>
+			</div>
 		</div>
 	</div>
 </template>

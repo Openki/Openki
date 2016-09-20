@@ -2,6 +2,7 @@
 
 Template.eventReplication.onCreated(function() {
 	this.replicaDates = new ReactiveVar([]);
+	this.datesSetByFrequency = new ReactiveVar(false);
 });
 
 
@@ -21,6 +22,8 @@ Template.eventReplication.onRendered(function() {
 				return moment(date, 'L').toDate();
 			}
 		}
+	}).on('changeDate', function(event) {
+		updateReplicas(instance);
 	});
 
 	instance.$('.js-replicate-datepick').datepicker({
@@ -31,19 +34,32 @@ Template.eventReplication.onRendered(function() {
 		todayHighlight: true,
 		startDate: new Date()
 	}).on('changeDate', function(event) {
-		var dates = [];
-		for (var i = 0; i < event.dates.length; i++) {
-			dates.push(moment(event.dates[i]));
+		if (!instance.datesSetByFrequency.get()) {
+			var datepickerDates = event.dates;
+			var dates = [];
+
+			for (var i = 0; i < datepickerDates.length; i++) {
+				dates.push(moment(datepickerDates[i]));
+			}
+
+			// http://www.codeproject.com/Articles/625832/How-to-Sort-Date-and-or-Time-in-JavaScript
+			var sortByDateAsc = function (lhs, rhs) {
+				return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
+			};
+			dates.sort(sortByDateAsc);
+
+			instance.replicaDates.set(dates);
 		}
-
-		// http://www.codeproject.com/Articles/625832/How-to-Sort-Date-and-or-Time-in-JavaScript
-		var sortByDateAsc = function (lhs, rhs) {
-			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
-		};
-		dates.sort(sortByDateAsc);
-
-		instance.replicaDates.set(dates);
     });
+
+	instance.$('.datepicker-days').on('click', 'td.day', function (e) {
+		var datesSetByFrequency = instance.datesSetByFrequency;
+		if (datesSetByFrequency.get()) {
+			instance.$('.js-update-replicas').prop('checked', false);
+			instance.$('.js-replicate-datepick').datepicker('setDates', '');
+			datesSetByFrequency.set(false);
+		}
+	});
 });
 
 var replicaStartDate = function(originalDate) {
@@ -80,9 +96,18 @@ Template.eventReplication.helpers({
 	},
 });
 
-
 var updateReplicas = function(instance) {
-	instance.replicaDates.set(_.map(getEventFrequency(instance), function(interval) { return interval[0]; } ));
+	var moments = _.map(getEventFrequency(instance), function(interval) { return interval[0]; });
+
+	instance.replicaDates.set(moments);
+
+	var dates = [];
+	for (var i = 0; i < moments.length; i++) {
+		dates.push(moments[i].toDate());
+	}
+
+	instance.datesSetByFrequency.set(true);
+	instance.$('.js-replicate-datepick').datepicker('update');
 };
 
 
@@ -139,7 +164,7 @@ Template.eventReplication.events({
 		//this does not do anything yet other than generating the start-end times for a given period
 
 		var replicaDates = instance.replicaDates.get();
-		var eventMoments = [];
+		var replicaTimes = [];
 
 		var eventStart = moment(instance.data.start).format('LT');
 		var eventEnd = moment(instance.data.end).format('LT');
@@ -150,21 +175,22 @@ Template.eventReplication.events({
 
 		for (var i = 0; i < replicaDates.length; i++) {
 			var date = replicaDates[i].format('L');
-			eventMoments[i] = [];
-			eventMoments[i].push(readDateTime(date, eventStart));
-			eventMoments[i].push(readDateTime(date, eventEnd));
+
+			replicaTimes[i] = [];
+			replicaTimes[i].push(readDateTime(date, eventStart));
+			replicaTimes[i].push(readDateTime(date, eventEnd));
 		}
 
 		var success = true;
-		$.each(eventMoments, function(i, eventTime) {
+		$.each(replicaTimes, function(i, replicaTime) {
 			/*create a new event for each time interval */
 			var replicaEvent = {
 				title: instance.data.title,
 				description: instance.data.description,
 				location: instance.data.location,
 				room: instance.data.room || '',
-				start: eventTime[0].toDate(),
-				end: eventTime[1].toDate(),
+				start: replicaTime[0].toDate(),
+				end: replicaTime[1].toDate(),
 				files: instance.data.files  || [],
 				region: instance.data.region || Session.get('region'),
 				groups: instance.data.groups,
@@ -198,5 +224,13 @@ Template.eventReplication.events({
 
 	'mouseout .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
+	},
+
+	'click .js-update-replicas': function(event, instance) {
+		updateReplicas(instance);
+	},
+
+	'keyup .js-update-replicas': function(event, instance) {
+		updateReplicas(instance);
 	}
 });
