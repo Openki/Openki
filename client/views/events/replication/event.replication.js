@@ -69,7 +69,11 @@ Template.eventReplication.helpers({
 	},
 
 	localDate: function(date) {
-		return moment(date).format("D. MMM");
+		return moment(date).format("ll");
+	},
+
+	fullDate: function(date) {
+		return moment(date).format("LL");
 	},
 
 	affectedReplicaCount: function() {
@@ -88,7 +92,6 @@ Template.eventReplication.helpers({
 		});
 	},
 });
-
 
 var getEventFrequency = function(instance) {
 	var startDate = moment(instance.$('#replicateStart').val(), 'L');
@@ -186,5 +189,5 @@ Template.eventReplication.events({
 
 	'mouseout .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
-	}
+	},
 });

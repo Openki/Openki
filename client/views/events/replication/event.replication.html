@@ -1,13 +1,14 @@
 <template name="eventReplication">
 	<div class="details-form event-replicate">
-		<div class="form-group">
-			<label>
-				{{mf 'event.replication.chooseDates' 'Choose dates'}}
-			</label>
-			<div class="js-replicate-datepick"></div>
+		<div class="form-group replica-info">
+			<span class="fa fa-info-circle fa-fw" aria-hidden="true"></span>
+			{{mf 'event.replication.replicaInfo' 'Use the interactive calendar or the checkbox options to choose the replication dates.'}}
 		</div>
 		<div class="form-group">
-			<div class="form-group-element">
+			<div class="form-group-element js-replica-selection-datepick">
+				<div class="js-replicate-datepick"></div>
+			</div>
+			<div class="form-group-element js-replica-selection-frequencies">
 				<label for="replicateStart">
 					{{mf 'event.replication.interval.start' 'Interval Start'}}
 				</label>
@@ -21,8 +22,6 @@
 						size="8"
 						value="{{replicaStart}}">
 				</div>
-			</div>
-			<div class="form-group-element">
 				<label for="replicateEnd">
 					{{mf 'event.replication.interval.end' 'Interval End'}}
 				</label>
@@ -36,10 +35,6 @@
 						size="8"
 						value="{{replicaEnd}}">
 				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-group-element">
 				<label for="replicateFrequency">
 					{{mf 'event.replication.repeat' 'Repeat'}}
 				</label>
@@ -90,42 +85,59 @@
 					</label>
 				</div>
 			</div>
+		</div>
+		<div class="form-group">
 			{{#if replicaDateCount}}
-				<div class="form-group-element">
-					<label>
-						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
-							Create {COUNT, plural,
-								one {a copy on this date}
-								other {# copies on this dates}
-							}
-						{{/mf}}
-					</label>
-					<div class="replica-event-captions">
-						{{#each replicaDates}}
-							<div class="replica-event-caption">
-								<div class="replica-event-caption-header-wrap">
-									<div class="replica-event-caption-header">
-										<span class="fa fa-map-pin"></span>
-										<div class="replica-event-caption-pseudoborder"></div>
-									</div>
-								</div>
-								<div class="replica-event-caption-body-wrap">
-									<div class="replica-event-caption-body">
-										{{localDate this}}
-									</div>
+				<label>
+					{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
+						Create {COUNT, plural,
+							one {a copy on this date}
+							other {# copies on this dates}
+						}
+					{{/mf}}
+				</label>
+				<div class="replica-event-captions">
+					{{#each replicaDates}}
+						<div class="replica-event-caption" title="{{fullDate this}}">
+							<div class="replica-event-caption-header-wrap">
+								<div class="replica-event-caption-header">
+									<span class="fa fa-map-pin"></span>
+									<div class="replica-event-caption-pseudoborder"></div>
 								</div>
 							</div>
-						{{/each}}
-					</div>
-					<div class="input-group">
-						<button type="button" class="btn btn-save js-replicate-btn">
-							{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
-								Create {COUNT, plural,
-									one {event}
-									other {# events}
-								}
-							{{/mf}}
-						</button>
+							<div class="replica-event-caption-body-wrap">
+								<div class="replica-event-caption-body">
+									{{localDate this}}
+								</div>
+							</div>
+						</div>
+					{{/each}}
+				</div>
+				<div class="input-group">
+					<button type="button" class="btn btn-save js-replicate-btn">
+						{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
+							Create {COUNT, plural,
+								one {event}
+								other {# events}
+							}
+						{{/mf}}
+					</button>
+				</div>
+			{{else}}
+				<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
+				<div class="replica-event-captions">
+					<div class="replica-event-caption replica-event-caption-placeholder">
+						<div class="replica-event-caption-header-wrap">
+							<div class="replica-event-caption-header">
+								<span class="fa fa-map-pin"></span>
+								<div class="replica-event-caption-pseudoborder"></div>
+							</div>
+						</div>
+						<div class="replica-event-caption-body-wrap">
+							<div class="replica-event-caption-body">
+								{{localDate this.start}}
+							</div>
+						</div>
 					</div>
 				</div>
 			{{/if}}
