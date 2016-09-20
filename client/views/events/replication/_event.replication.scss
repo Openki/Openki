@@ -1,3 +1,20 @@
+.replica-info {
+	$background-color: $yellow-light;
+
+	background-color: $background-color;
+	border: 1px solid darken($background-color, 10%);
+	padding: 10px;
+}
+
+.datepicker-inline {
+	border-radius: 0;
+	width: 100%;
+}
+
+.datepicker table {
+	width: 100%;
+}
+
 .replica-event-captions {
 	@include clearfix;
 	margin: -2.5px -5px;
@@ -9,10 +26,11 @@
 }
 
 .replica-event-caption {
-	@include make-xs-column(2.4);
+	@include make-xs-column(1.33);
 	display: table;
 	height: 50px;
 	padding: 2.5px 5px;
+	position: relative;
 	text-align: center;
 }
 
@@ -20,9 +38,12 @@
 	display: table-row;
 }
 
+$replica-event-caption-header-bg: $event-header-bg;
+$replica-event-caption-border: $yellow;
+
 .replica-event-caption-header {
-	background-color: $event-header-bg;
-	border-color: $yellow;
+	background-color: $replica-event-caption-header-bg;
+	border-color: $replica-event-caption-border;
 	border-style: solid;
 	border-width: 1.5px 1.5px 0;
 	display: table-cell;
@@ -52,14 +73,35 @@
 	height: 70%;
 }
 
+$replica-event-caption-body-bg: $event-body-bg;
+
 .replica-event-caption-body {
-	background-color: $event-body-bg;
-	border-color: $yellow;
+	background-color: $replica-event-caption-body-bg;
+	border-color: $replica-event-caption-border;
 	border-style: solid;
 	border-width: 0 1.5px 1.5px;
 	display: table-cell;
 	transition: border-color $default-transition-time;
 	vertical-align: middle;
+}
+
+.replica-event-caption-placeholder .replica-event-caption-header {
+	background-color: rgba(desaturate($replica-event-caption-header-bg, 55%), 0.5);
+}
+
+.replica-event-caption-placeholder .fa-map-pin {
+	color: $gray-lighter;
+}
+
+.replica-event-caption-placeholder .replica-event-caption-body {
+	background-color: rgba(desaturate($replica-event-caption-body-bg, 50%), 0.5);
+	color: transparent;
+	text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.5);
+}
+
+.replica-event-caption-placeholder .replica-event-caption-header,
+.replica-event-caption-placeholder .replica-event-caption-body {
+	border-color: $gray-lightest;
 }
 
 .replica-event-captions.highlighted .replica-event-caption-header,
