@@ -26,6 +26,16 @@ userName = function() {
 	var lookups = 0;
 	var pending = {};
 
+	// Update the cache if users are pushed to the collection
+	Meteor.users.find().observe({
+		'added': function(user) {
+			cache[user._id] = user.username;
+		},
+		'changed': function(user) {
+			cache[user._id] = user.username;
+		}
+	});
+
 	return function(userId) {
 		if (!userId) return mf('noUser_placeholder', 'someone');
 
