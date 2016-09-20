@@ -200,7 +200,7 @@ Template.courseGroupAdd.events({
 			if (error) {
 				showServerError("Failed to add group", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.saved'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -232,7 +232,7 @@ Template.courseGroupMakeOrganizer.events({
 			if (error) {
 				showServerError("Failed to give group editing rights", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.saved'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
