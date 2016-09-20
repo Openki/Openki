@@ -82,6 +82,10 @@ Template.eventReplication.helpers({
 		return moment(date).format("D. MMM");
 	},
 
+	fullDate: function(date) {
+		return moment(date).format("D. MMMM YYYY");
+	},
+
 	affectedReplicaCount: function() {
 		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(affectedReplicaSelectors(this)).count();
