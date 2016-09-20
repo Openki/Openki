@@ -1,0 +1,75 @@
+.schedule {
+	table-layout: fixed;
+}
+
+.schedule-header-time,
+.schedule-header-day {
+	border-bottom: 2px solid $body-bg;
+}
+
+.schedule-header-time {
+	text-align: center;
+}
+
+.schedule-header-day {
+	background-color: $black;
+	border-width: 0 2px 2px;
+	border-style: solid;
+	border-color: $body-bg;
+	color: $white;
+	padding: 5px;
+	text-align: center;
+}
+
+.schedule-time {
+	text-align: center;
+	vertical-align: top;
+}
+
+.schedule-header-time,
+.schedule-time {
+	width: 50px;
+}
+
+.schedule-slot {
+	margin: 2px;
+	vertical-align: top;
+}
+
+.schedule-event {
+	margin: 2px;
+	padding: 5px;
+}
+
+$schedule-event-type-1-color:  rgb(142, 224, 242);
+$schedule-event-type-2-color:  rgb(61, 252, 166);
+$schedule-event-type-3-color:  rgb(98, 162, 247);
+$schedule-event-type-4-color:  rgb(167, 251, 159);
+$schedule-event-type-5-color:  rgb(108, 131, 251);
+$schedule-event-type-6-color:  rgb(150, 114, 254);
+
+$schedule-event-types: (
+	1:  $schedule-event-type-1-color,
+	2:  $schedule-event-type-2-color,
+	3:  $schedule-event-type-3-color,
+	4:  $schedule-event-type-4-color,
+	5:  $schedule-event-type-5-color,
+	6:  $schedule-event-type-6-color,
+	7:  desaturate($schedule-event-type-1-color, 50%),
+	8:  desaturate($schedule-event-type-2-color, 50%),
+	9:  desaturate($schedule-event-type-3-color, 50%),
+	10: desaturate($schedule-event-type-4-color, 50%),
+	11: desaturate($schedule-event-type-5-color, 50%),
+	12: desaturate($schedule-event-type-6-color, 50%),
+	13: desaturate($schedule-event-type-1-color, 75%),
+	14: desaturate($schedule-event-type-2-color, 75%),
+	15: desaturate($schedule-event-type-3-color, 75%),
+	0:  desaturate($schedule-event-type-4-color, 100%)
+);
+
+@each $i, $background-color in $schedule-event-types {
+	.schedule-event-type-#{$i} {
+		background-color: $background-color;
+		color: #000;
+	}
+}

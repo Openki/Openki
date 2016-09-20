@@ -97,13 +97,16 @@ hasRole = function(members, role) {
 	return has;
 };
 
+/** @summary Determine whether a given user has a given role in a members list
+ *  @return true if the user has this role, the string 'anon' if the logged-in user has the role incognito. False otherwise.
+  */
 hasRoleUser = function(members, role, userId) {
 	var has = false;
 	var loggeduser = Meteor.user();
 
 	members.forEach(function(member) {
 		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
-			if(member.roles.indexOf(role) !== -1) has = 'anon';
+			if (member.roles.indexOf(role) !== -1) has = 'anon';
 		}
 	});
 
@@ -476,7 +479,7 @@ Meteor.methods({
 		var set = {};
 
 		if (changes.roles) {
-			_.each(Roles.find().fetch(), function(roletype) {
+			_.each(Roles, function(roletype) {
 				var type = roletype.type;
 				var should_have = roletype.preset || changes.roles && changes.roles[type];
 				var have = course.roles.indexOf(type) !== -1;
@@ -550,6 +553,8 @@ Meteor.methods({
 			set.createdby = user._id;
 			set.time_created = new Date();
 			courseId = Courses.insert(set);
+
+			Meteor.call('updateNextEvent', courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		}

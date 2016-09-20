@@ -64,11 +64,6 @@
 	border-style: $proposal-border-style;
 }
 
-.proposal > .details-header > .region-tag {
-	right: -$course-border-width;
-	top: -$course-border-width;
-}
-
 .has-past-events > .details-header {
 	border-style: $has-past-events-border-style;
 }
@@ -85,7 +80,8 @@
 	top: 0;
 }
 
-.proposal .details-header-tags {
+.proposal .details-header-tags,
+.has-past-events .details-header-tags {
 	right: -$course-border-width;
 	top: -$course-border-width;
 }
@@ -118,6 +114,7 @@
 
 .course-details-title > .editable-controls {
 	font-size: medium;
+	z-index: 100;
 }
 
 .course-details-title > h2 {

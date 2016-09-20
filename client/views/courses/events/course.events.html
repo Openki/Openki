@@ -1,9 +1,10 @@
 <template name="courseEvents">
+{{#if ready}}
 	{{#if mayAdd}}
 		<div class="page-component">
 			<button type="button" class="btn btn-add js-add-event">
 				<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
-				{{mf 'course.events.addButton' 'Add event'}}
+				{{mf 'course.event.edit.add'}}
 			</button>
 		</div>
 	{{/if}}
@@ -75,4 +76,7 @@
 		</a>
 	</div>
 	{{/if}}
+{{else}}
+	{{> loadingRow}}
+{{/if}}
 </template>

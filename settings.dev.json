@@ -1,6 +1,7 @@
 {
 	"testdata": 1,
 	"admins": ["greg", "FeeLing", "IvanZ"],
+	"robots": false,
 	"public": {
 		"siteName": "Hmmm",
 		"siteStage": "DEV"

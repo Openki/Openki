@@ -17,7 +17,7 @@ Template.eventDisplay.onRendered(function() {
 });
 
 
-Template.eventPage.helpers({
+Template.eventBackToLink.helpers({
 	course: function() {
 		var courseId = this.courseId;
 		if (courseId) {
@@ -27,6 +27,11 @@ Template.eventPage.helpers({
 			return Courses.findOne({_id: courseId});
 		}
 	},
+
+	referredByCourse: function() {
+		var previousRouteName = Session.get("previousRouteName");
+		return previousRouteName == "showCourse";
+	}
 });
 
 
@@ -56,7 +61,7 @@ Template.eventDisplay.helpers({
 Template.event.events({
 	'click .js-event-delete': function (e, instance) {
 		var event = instance.data;
-		
+
 		var title = event.title;
 		var course = event.courseId;
 		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {

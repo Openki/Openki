@@ -48,7 +48,7 @@
 					</li>
 					<li class="{{activeClass 'proposeCourse'}}">
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="{{activeClass 'proposeCourse'}} navbar-link js-nav-dropdown-close">
+							 class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
 							 <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Create' 'Create'}}
 							 <div class="nav-marker-caret"></div>
@@ -65,12 +65,8 @@
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown region_sel">
-						{{> region_sel}}
-					</li>
-					<li class="dropdown lang_sel">
-						{{> lang_sel}}
-					</li>
+					{{> regionSelectionWrap}}
+					{{> languageSelectionWrap}}
 					<li class="dropdown login-link {{activeClass 'profile'}}">
 						{{> loginButton}}
 						<div class="dropdown-menu login-dropdown">

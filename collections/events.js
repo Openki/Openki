@@ -14,7 +14,7 @@
 //       address:      Address string where the event will take place
 // }
 // room            -> String    (Where inside the building the event will take place)
-// createdby       -> userId
+// createdBy       -> userId
 // time_created    -> Date
 // time_lastedit   -> Date
 // courseId        -> course._id of parent course, optional
@@ -134,7 +134,7 @@ Events.updateGroups = function(eventId) {
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
 		var editors = event.groupOrganizers.slice(); // Clone
-		if (event.createdby) editors.push(event.createdby);
+		if (event.createdBy) editors.push(event.createdBy);
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		var courseGroups = [];

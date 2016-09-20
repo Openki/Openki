@@ -1,4 +1,4 @@
-Template.layout.onRendered(function() {
+Template.introduction.onRendered(function() {
 	if (!Assistant.openedIntro()) {
 		this.$('.introduction-content').hide();
 	}
@@ -11,6 +11,13 @@ Template.layout.onRendered(function() {
 			instance.$('.introduction-content').slideUp(400);
 		}
 	});
+
+	// use $screen-xxs (from scss) to compare with the width of window
+	if (Session.get("viewportWidth") < 380) {
+		Assistant.closeIntro();
+		// dont wait for slideUp
+		this.$('.introduction-content').hide();
+	}
 });
 
 

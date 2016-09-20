@@ -2,60 +2,123 @@
 	<div class="details-form event-replicate">
 		<div class="form-group">
 			<div class="form-group-element">
-				<label for="replicateStart">{{mf 'event.replication.interval.start' 'Interval Start'}}</label>
+				<label for="replicateStart">
+					{{mf 'event.replication.interval.start' 'Interval Start'}}
+				</label>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 					</span>
-					<input id="replicateStart" type="text" class="form-control js-replicate-date -updateReplicas" value="{{replicaStart}}" size="8">
+					<input type="text"
+						class="form-control js-replicate-date js-update-replicas"
+						id="replicateStart"
+						size="8"
+						value="{{replicaStart}}">
 				</div>
 			</div>
 			<div class="form-group-element">
-				<label for="replicateEnd">{{mf 'event.replication.interval.end' 'Interval End'}}</label>
+				<label for="replicateEnd">
+					{{mf 'event.replication.interval.end' 'Interval End'}}
+				</label>
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 					</span>
-					<input id="replicateEnd" type="text" class="form-control js-replicate-date -updateReplicas" value="{{replicaEnd}}" size="8">
+					<input type="text"
+						class="form-control js-replicate-date js-update-replicas"
+						id="replicateEnd"
+						size="8"
+						value="{{replicaEnd}}">
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-group-element">
-				<label for="replicateFrequency">{{mf 'event.replication.repeat' 'Repeat'}}</label>
+				<label for="replicateFrequency">
+					{{mf 'event.replication.repeat' 'Repeat'}}
+				</label>
 					<div class="radio">
 						<label>
-							<input type="radio" name="replicateFrequency" value="once" class="-replicateFrequency -updateReplicas">
+							<input type="radio"
+								class="js-replicate-frequency js-update-replicas"
+								name="replicateFrequency"
+								value="once">
 							{{mf 'event.replication.freq.once' 'once'}}
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="replicateFrequency" value="daily" class="-replicateFrequency -updateReplicas">
+							<input type="radio"
+								class="js-replicate-frequency js-update-replicas"
+								name="replicateFrequency"
+								value="daily">
 							{{mf 'event.replication.freq.daily' 'every day'}}
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="replicateFrequency" value="weekly" class="-replicateFrequency -updateReplicas" checked>
+							<input type="radio"
+								class="js-replicate-frequency js-update-replicas"
+								name="replicateFrequency"
+								value="weekly"
+								checked>
 							{{mf'event.replication.freq.weekly' 'once a week'}}
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio"
+								class="js-replicate-frequency js-update-replicas"
+								name="replicateFrequency"
+								value="biWeekly">
+							{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio"
+								class="js-replicate-frequency js-update-replicas"
+								name="replicateFrequency"
+								value="monthly">
+							{{mf'event.replication.freq.monthly' 'once a month'}}
 						</label>
 					</div>
 			</div>
 			{{#if replicaDateCount}}
 				<div class="form-group-element">
-					<label>{{mf 'event.replication.createText' "Create {COUNT, plural, one {a copy on this date} other {# copies on these dates}}:" COUNT=replicaDateCount}}</label>
-					<ul class="fa-ul">
+					<label>
+						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
+							Create {COUNT, plural,
+								one {a copy on this date}
+								other {# copies on this dates}
+							}
+						{{/mf}}
+					</label>
+					<div class="replica-event-captions">
 						{{#each replicaDates}}
-							<li>
-								<span class="fa-li fa fa-calendar-plus-o" aria-hidden="true"></span>
-								{{localDate this}}
-							</li>
+							<div class="replica-event-caption">
+								<div class="replica-event-caption-header-wrap">
+									<div class="replica-event-caption-header">
+										<span class="fa fa-map-pin"></span>
+										<div class="replica-event-caption-pseudoborder"></div>
+									</div>
+								</div>
+								<div class="replica-event-caption-body-wrap">
+									<div class="replica-event-caption-body">
+										{{localDate this}}
+									</div>
+								</div>
+							</div>
 						{{/each}}
-					</ul>
+					</div>
 					<div class="input-group">
-						<button type="button" class="-eventReplicate btn btn-save">
-							{{mf 'course.details.repl_btn' 'Create {COUNT, plural, one {event} other {# events}}' COUNT=replicaDateCount}}
+						<button type="button" class="btn btn-save js-replicate-btn">
+							{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
+								Create {COUNT, plural,
+									one {event}
+									other {# events}
+								}
+							{{/mf}}
 						</button>
 					</div>
 				</div>

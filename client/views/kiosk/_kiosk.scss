@@ -32,13 +32,22 @@
 
 //== Region selection
 //----------------------------------------
-.kiosk-region-selection {
+.kiosk-language-selection {
 	line-height: $line-height-base;
 	display: inline-block;
 }
 
-.kiosk-region-selection > .dropdown-menu {
-	margin-top: 10px;
+.kiosk-language-selection > li {
+	list-style: none;
+}
+
+.kiosk-language-selection > li > .fa {
+	color: $blue;
+}
+
+.kiosk-language-selection > li > .dropdown-menu {
+	left: auto;
+	right: 0;
 }
 
 //== Clock

@@ -27,11 +27,17 @@ Template.groupSettings.helpers({
 	timetableURL: function() {
 		return Router.routes.timetable.url({}, { query: {group: this._id} });
 	},
+	scheduleURL: function() {
+	return Router.routes.frameSchedule.url({}, { query: {group: this._id} });
+	},
 	frameEventsURL: function() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
 	},
 	frameCalendarURL: function() {
 		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
+	},
+	frameListURL: function() {
+		return Router.routes.frameList.url({}, { query: {group: this._id} });
 	},
 });
 

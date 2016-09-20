@@ -52,24 +52,18 @@ Template.resetPassword.helpers({
 		return Template.instance().showPassword.get() ? "text" : "password";
 	},
 
-	'showButtonClass': function(action) {
-		var showPassword = Template.instance().showPassword.get();
-		var active = action == 'show' ? showPassword : !showPassword;
-		return "btn btn-secondary -" + action + "Password " + (active ? 'active' : '');
-	},
-
 	'submitDisabled': function() {
 		return Template.instance().passwordValid.get() ? '' : 'disabled';
 	}
 });
 
 Template.resetPassword.events({
-	'click .-showPassword': function(event, instance) {
+	'click .js-show-pwd': function(event, instance) {
 		instance.showPassword.set(true);
 		instance.updatePassword();
 	},
 
-	'click .-hidePassword': function(event, instance) {
+	'click .js-hide-pwd': function(event, instance) {
 		instance.showPassword.set(false);
 		instance.updatePassword();
 	},
@@ -97,7 +91,7 @@ Template.resetPassword.events({
 		});
     },
 
-	'click .-resetPasswordAbort': function() {
+	'click .js-cancel-reset-pwd': function() {
 		Router.go('/');
 	}
 });

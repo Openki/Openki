@@ -14,6 +14,10 @@ Meteor.startup(function () {
 	}
 	Version.update({}, {$set: {lastStart: new Date() }});
 
+	if (Meteor.settings.robots === false) {
+		robots.addLine('User-agent: *');
+		robots.addLine('Disallow: /');
+	}
 
 	if (Meteor.settings.testdata) {
 		loadTestRegionsIfNone();       // Regions    from server/data/testing.regions.js

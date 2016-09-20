@@ -94,7 +94,7 @@ Router.map(function () {
 
 function loadroles(course) {
 	var userId = Meteor.userId();
-	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
+	return _.reduce(Roles, function(goodroles, roletype) {
 		var role = roletype.type;
 		var sub = hasRoleUser(course.members, role, userId);
 		if (course.roles && course.roles.indexOf(role) !== -1) {
@@ -124,7 +124,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return Session.get('viewportWidth') <= 992; // @screen-md
 	},
 	isProposal: function() {
-		return !this.course.nextEvent;
+		return !this.course.nextEvent && !this.course.lastEvent;
 	}
 });
 

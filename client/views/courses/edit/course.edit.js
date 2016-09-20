@@ -27,7 +27,7 @@ Template.course_edit.helpers({
 	},
 
 	available_roles: function() {
-		return Roles.find({'preset': { $ne: true }});
+		return _.filter(Roles, function(role) { return !role.preset; });
 	},
 
 	roleDescription: function() {

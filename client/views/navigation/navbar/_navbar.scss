@@ -35,7 +35,7 @@
 	color: $gray-dark;
 	font-size: small;
 	font-weight: bold;
-	left: 105px;
+	right: 1em;
 	position: absolute;
 	transition: text-shadow $default-transition-time;
 	transform: rotate(345deg);
@@ -167,4 +167,18 @@
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
 	background-color: lighten($navbar-default-bg, 10%);
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.navbar-form-selection {
+	font-size: large;
+	margin: 0;
+	padding: 8.5px 0;
+}
+
+.navbar-form-selection > .fa {
+	color: $white;
+
+	@media (max-width: $screen-sm) {
+		display: none;
+	}
 }

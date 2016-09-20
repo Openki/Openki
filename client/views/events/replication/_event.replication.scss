@@ -1,0 +1,68 @@
+.replica-event-captions {
+	@include clearfix;
+	margin: -2.5px -5px;
+	padding-bottom: 10px;
+}
+
+.replica-event-captions > li {
+	display: inline-block;
+}
+
+.replica-event-caption {
+	@include make-xs-column(2.4);
+	display: table;
+	height: 50px;
+	padding: 2.5px 5px;
+	text-align: center;
+}
+
+.replica-event-caption-header-wrap {
+	display: table-row;
+}
+
+.replica-event-caption-header {
+	background-color: $event-header-bg;
+	border-color: $yellow;
+	border-style: solid;
+	border-width: 1.5px 1.5px 0;
+	display: table-cell;
+	font-size: 8px;
+	position: relative;
+	transition: border-color $default-transition-time;
+	vertical-align: top;
+}
+
+.replica-event-caption-header > .fa-map-pin {
+	position: relative;
+	top: -5px;
+	transform: rotate(10deg);
+}
+
+.replica-event-caption-pseudoborder {
+	background-color: $white;
+	bottom: 0;
+	left: 0;
+	height: 1px;
+	position: absolute;
+	width: 100%;
+}
+
+.replica-event-caption-body-wrap {
+	display: table-row;
+	height: 70%;
+}
+
+.replica-event-caption-body {
+	background-color: $event-body-bg;
+	border-color: $yellow;
+	border-style: solid;
+	border-width: 0 1.5px 1.5px;
+	display: table-cell;
+	transition: border-color $default-transition-time;
+	vertical-align: middle;
+}
+
+.replica-event-captions.highlighted .replica-event-caption-header,
+.replica-event-captions.highlighted .replica-event-caption-body {
+	border-color: darken($green, 25%);
+}

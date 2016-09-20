@@ -1,0 +1,34 @@
+<template name="frameSchedule">
+	<table class="schedule">
+		<thead>
+			<tr>
+				<th class="schedule-header-time" scope="col">
+					{{mf 'schedule.header.hour' "Hour"}}
+				</th>
+				{{#each days}}
+					<th class="schedule-header-day" scope="col">
+						{{this}}
+					</th>
+				{{/each}}
+			</tr>
+		</thead>
+		<tbody>
+			{{#each intervals}}
+				<tr>
+					<th class="schedule-time" scope="row">{{interval}}</th>
+					{{#each slots}}
+						<td class="schedule-slot">
+							{{#each this}}
+								<a href="{{pathFor  'showEvent'}}" target="_blank">
+									<div class="schedule-event schedule-event-type-{{type}}">
+										{{title}}
+									</div>
+								</a>
+							{{/each}}
+						</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</template>

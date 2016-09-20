@@ -78,7 +78,7 @@
 							{{/unless}}
 							<button type="button" class="btn btn-edit editCategories">
 								<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-								{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
+								{{mf 'course.edit.edit_categories'}}
 							</button>
 						{{/if}}
 					</div>
@@ -97,7 +97,7 @@
 								</div>
 								<select class="region_select form-control" name='region'>
 									<option value='' disabled selected class="select_placeholder">
-										{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+										{{mf '_selection.pleaseSelect'}}
 									</option>
 									{{#each regions}}
 										<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">

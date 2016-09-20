@@ -41,7 +41,7 @@ Template.eventReplication.helpers({
 	},
 
 	localDate: function(date) {
-		return moment(date).format("L");
+		return moment(date).format("D. MMM");
 	},
 
 	affectedReplicaCount: function() {
@@ -74,10 +74,18 @@ var getEventFrequency = function(template) {
 
 	var endDate   = moment(template.$('#replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
-	var frequency = template.$('.-replicateFrequency:checked').val();
+	var frequency = template.$('.js-replicate-frequency:checked').val();
 
-	var unit = { once: 'days', daily: 'days', weekly: 'weeks' }[frequency];
+	var frequencies = { once:     { unit: 'days',   interval: 1 },
+	                    daily:    { unit: 'days',   interval: 1 },
+	                    weekly:   { unit: 'weeks',  interval: 1 },
+	                    biWeekly: { unit: 'weeks',  interval: 2 },
+	                    monthly:  { unit: 'months', interval: 1 } };
+
+	var unit = frequencies[frequency].unit;
 	if (unit === undefined) return [];
+
+	var interval = frequencies[frequency].interval;
 
 	var eventStart = moment(template.data.start);
 	var originDay = moment(eventStart).startOf('day');
@@ -97,7 +105,7 @@ var getEventFrequency = function(template) {
 			if (dates.length >= 52) break;
 		}
 
-		repStart.add(1, unit);
+		repStart.add(interval, unit);
 	}
 
 	return dates;
@@ -105,7 +113,7 @@ var getEventFrequency = function(template) {
 
 
 Template.eventReplication.events({
-	'click .-eventReplicate': function (event, template) {
+	'click .js-replicate-btn': function (event, template) {
 		//get all startDates where the event should be created
 		//this does not do anything yet other than generating the start-end times for a given period
 
@@ -148,7 +156,15 @@ Template.eventReplication.events({
 		template.parentInstance().replicating.set(false);
 	},
 
-	'change .-updateReplicas, keyup .-updateReplicas': function(event, template) {
+	'mouseover .js-replicate-btn': function(event, instance) {
+		instance.$('.replica-event-captions').addClass('highlighted');
+	},
+
+	'mouseout .js-replicate-btn': function(event, instance) {
+		instance.$('.replica-event-captions').removeClass('highlighted');
+	},
+
+	'change .js-update-replicas, keyup .js-update-replicas': function(event, template) {
 		updateReplicas(template);
 	}
 });
