@@ -1,31 +1,28 @@
-// ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "region"        -> ID_region
-// "categories"    -> String
-// "maxPeople"     -> Int
-// "maxWorkplaces" -> Int
-//
-// loc:         GeoJSON coordinates of the location
-//
-// address:     Address string
-//
-// "route"         -> String
-// "description"   -> String
-// "contact"       -> {"meetings","email","web","fon"... -> strings}
-// "picture"       -> String   (lokal/external link)
-// "infra"         -> not clear jet
-// "createdby"     -> ID_user
-// "editor"        -> userId
-// "contacts"      -> [ID_users]
-// "time_created"  -> Date
-// "time_lastedit" -> Date
-// "loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
-// ===========================
+// _id          ID
+// editor       user ID
+// name         String
+// description  String
+// region       region ID
+// loc          GeoJSON coordinates
+// address      String
+// route        String
+
+// Additional information
+// short            String
+// maxPeople        Int
+// maxWorkplaces    Int
+// facilities       [String]
+// otherFacilities  String
+// ownersContact    String
+// usersContact     String
+// website          URL
+
+// loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 
 /** Venue objects represent locations where events take place.
   */
 Venue = function() {
+	this.facilities = {};
 };
 
 
@@ -49,6 +46,10 @@ Venues = new Meteor.Collection("Venues", {
 });
 if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
 
+Venues.facilityOptions =
+	[ 'projector', 'screen', 'audio', 'blackboard', 'whiteboard'
+	, 'flipchart', 'wifi', 'kitchen', 'wheelchairs'
+	];
 
 /* Find venues for given filters
  *
@@ -84,15 +85,23 @@ venuesFind = function(filter, limit) {
 Meteor.methods({
 	'venue.save': function(venueId, changes) {
 		check(venueId, String);
-		check(changes, {
-			name:          Match.Optional(String),
-			description:   Match.Optional(String),
-			region:        Match.Optional(String),
-			address:       Match.Optional(String),
-			route:         Match.Optional(String),
-			maxpeople:     Match.Optional(Number),
-			maxworkplaces: Match.Optional(Number)
-		});
+		check(changes,
+			{ name:            Match.Optional(String)
+			, description:     Match.Optional(String)
+			, region:          Match.Optional(String)
+			, coordinates:     Match.Optional([Number])
+			, address:         Match.Optional(String)
+			, route:           Match.Optional(String)
+			, short:           Match.Optional(String)
+			, maxPeople:       Match.Optional(Number)
+			, maxWorkplaces:   Match.Optional(Number)
+			, facilities:      Match.Optional([String])
+			, otherFacilities: Match.Optional(String)
+			, owners:          Match.Optional(String)
+			, users:           Match.Optional(String)
+			, website:         Match.Optional(String)
+			}
+		);
 
 		var user = Meteor.user();
 		if (!user) {
@@ -112,7 +121,7 @@ Meteor.methods({
 		}
 
 		/* Changes we want to perform */
-		var set = {};
+		var set = { updated: new Date() };
 
 
 		if (changes.description) set.description = changes.description.trim().substring(0, 640*1024);
@@ -121,13 +130,37 @@ Meteor.methods({
 			set.slug = getSlug(set.name);
 		}
 
-		if (changes.address) set.address = changes.address.trim().substring(0, 40*1024);
-		if (changes.route) set.route = changes.route.trim().substring(0, 40*1024);
+		if (changes.address !== undefined) set.address = changes.address.trim().substring(0, 40*1024);
+		if (changes.route !== undefined) set.route = changes.route.trim().substring(0, 40*1024);
+		if (changes.short !== undefined) set.short = changes.short.trim().substring(0, 40);
 
-		if (changes.maxpeople !== undefined) set.maxpeople = Math.min(1e10, Math.max(0, changes.maxpeople));
-		if (changes.maxworkplaces !== undefined) set.maxworkplaces = Math.min(1e10, Math.max(0, changes.maxworkplaces));
+		if (changes.maxPeople !== undefined) set.maxPeople = Math.min(1e10, Math.max(0, changes.maxPeople));
+		if (changes.maxWorkplaces !== undefined) set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
+		if (changes.facilities !== undefined) {
+			set.facilities = _.reduce(changes.facilities, function(fs, f) {
+				if (Venues.facilityOptions.indexOf(f) >= 0) {
+					fs[f] = true;
+				}
+				return fs;
+			}, {});
+		}
 
-		set.time_lastedit = new Date();
+		if (changes.otherFacilities) {
+			set.otherFacilities = changes.otherFacilities.substring(0, 40*1024);
+		}
+
+		if (changes.owners) {
+			set.owners = changes.owners.substring(0, 40*1024);
+		}
+
+		if (changes.users) {
+			set.users = changes.users.substring(0, 40*1024);
+		}
+
+		if (changes.website) {
+			set.website = changes.website.substring(0, 40*1024);
+		}
+
 		if (isNew) {
 			/* region cannot be changed */
 			var region = Regions.findOne(changes.region);
@@ -138,7 +171,7 @@ Meteor.methods({
 			venueId = Venues.insert({
 				editor: user._id,
 				createdby: user._id,
-				time_created: new Date()
+				created: new Date()
 			});
 		}
 

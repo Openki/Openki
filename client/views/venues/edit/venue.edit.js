@@ -6,6 +6,12 @@ Template.venueEdit.onCreated(function() {
 });
 
 Template.venueEdit.helpers({
+	displayAdditionalInfo: function() {
+		return {
+			style: 'display: '+(Template.instance().showAdditionalInfo.get() ? 'block' : 'none')
+		};
+	},
+
 	showAdditionalInfo: function() {
 		return Template.instance().showAdditionalInfo.get();
 	},
@@ -21,6 +27,16 @@ Template.venueEdit.helpers({
 			attr.selected = 'selected';
 		}
 		return attr;
+	},
+});
+
+Template.venueEditAdditionalInfo.helpers({
+	facilitiesCheck: function(name) {
+		var attrs = { class: 'js-' + name };
+		if (this.facilities[name]) {
+			attrs.checked = 'checked';
+		}
+		return attrs;
 	}
 });
 
@@ -33,13 +49,25 @@ Template.venueEdit.events({
 		if (pleaseLogin()) return;
 
 		var changes =
-			{ name:          instance.$('.js-name').val()
-			, description:   instance.$('.js-description').val()
-			, address:       instance.$('.js-address').val()
-			, route:         instance.$('.js-route').val()
-			, maxpeople:     parseInt(instance.$('.js-maxpeople').val(), 10)
-			, maxworkplaces: parseInt(instance.$('.js-maxworkplaces').val(), 10)
+			{ name:            instance.$('.js-name').val()
+			, description:     instance.$('.js-description').val()
+			, address:         instance.$('.js-address').val()
+			, route:           instance.$('.js-route').val()
+			, short:           instance.$('.js-short').val()
+			, maxPeople:       parseInt(instance.$('.js-maxPeople').val(), 10)
+			, maxWorkplaces:   parseInt(instance.$('.js-maxWorkplaces').val(), 10)
+			, facilities:      []
+			, otherFacilities: instance.$('.js-otherFacilities').val()
+			, owners:          instance.$('.js-owners').val()
+			, users:           instance.$('.js-users').val()
+			, website:           instance.$('.js-website').val()
 		    };
+
+		_.each(Venues.facilityOptions, function(f) {
+			if (instance.$('.js-'+f).prop('checked')) {
+				changes.facilities.push(f);
+			}
+		});
 
 		if (instance.isNew) {
 			var region = cleanedRegion(Session.get('region'));
@@ -54,7 +82,7 @@ Template.venueEdit.events({
 		var parentInstance = instance.parentInstance();
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
 			if (err) {
-				showServerError('Saving the location went wrong', err);
+				showServerError('Saving the venue went wrong', err);
 			} else {
 				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes venue "{NAME}".'), 'success');
 				if (instance.isNew) {

@@ -54,8 +54,8 @@
 							</span>
 							<input
 								class="form-control js-address"
-								placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}">
-							{{{address}}}
+								placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}" value={{address}}>
+
 						</div>
 					</div>
 
@@ -68,14 +68,15 @@
 							<input
 								class="form-control js-route"
 								id="editform-address"
-								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}">
-							{{{route}}}
+								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}>
 						</div>
 					</div>
 					<div class="form-group">
 						<label>{{mf 'venue.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
-						{{#if showAdditionalInfo}}
+						<div {{displayAdditionalInfo}}>
 							{{> venueEditAdditionalInfo}}
+						</div>
+						{{#if showAdditionalInfo}}
 							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
 								{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
 							</button>
@@ -108,7 +109,7 @@
 				<span class="input-group-addon">
 					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control"	id="editform-short"
+				<input class="form-control js-short"
 					placeholder= "{{mf 'venue.edit.short.placeholder' 'short name'}} {{mf '_inputField.optional'}}"
 					value="{{short}}">
 			</div>
@@ -118,13 +119,13 @@
 				<label>
 					{{mf 'venue.edit.max_ppl' 'Max. People'}}
 				</label>
-				<input type="number" class="form-control" id="editform_maxpeople" size="4" value="{{maxpeople}}">
+				<input type="number" class="form-control js-maxPeople" size="4" value="{{maxPeople}}">
 			</div>
 			<div class="form-group-element">
 				<label>
 					{{mf 'venue.edit.max_workplace' 'Max. Workplaces'}}
 				</label>
-				<input type="number" class="form-control" id="editform_maxworkplaces" size="4" value="{{maxworkplaces}}">
+				<input type="number" class="form-control js-maxWorkplaces" size="4" value="{{maxWorkplaces}}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -132,71 +133,71 @@
 				<label>{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'projector'}}>
 						<span>{{mf 'venue.edit.projector' 'Projector'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'screen'}}>
 						<span>{{mf 'venue.edit.screen' 'Screen'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'audio'}}>
 						<span>{{mf 'venue.edit.audioSystem' 'Audio System'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'blackboard'}}>
 						<span>{{mf 'venue.edit.blackboard' 'Blackboard'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'whiteboard'}}>
 						<span>{{mf 'venue.edit.whiteboard' 'Whiteboard'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'flipchart'}}>
 						<span>{{mf 'venue.edit.flipchart' 'Flipchart'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'wifi'}}>
 						<span>{{mf 'venue.edit.wifi' 'Wifi'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'kitchen'}}>
 						<span>{{mf 'venue.edit.kitchen' 'Kitchen'}}</span>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox">
+						<input type="checkbox" {{facilitiesCheck 'wheelchairs'}}>
 						<span>{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
 					</label>
 				</div>
 			</div>
 			<div class="form-group-element">
 				<label>{{mf 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
-				<textarea class="form-control"></textarea>
+				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<label>{{mf 'venue.edit.owners' 'Owner(s):'}}</label>
-			<input type="text" class="form-control">
+			<input type="text" class="form-control js-owners" value="{{owners}}">
 		</div>
 		<div class="form-group">
 			<label>{{mf 'venue.edit.usersToContact' 'User(s) to contact:'}}</label>
-			<input type="text" class="form-control">
+			<input type="text" class="form-control js-users" value="{{users}}">
 		</div>
 		<div class="form-group">
 			<label>{{mf 'venue.edit.website' 'Website:'}}'</label>
@@ -204,7 +205,7 @@
 				<span class="input-group-addon">
 					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
 				</span>
-				<input type="text" class="form-control">
+				<input type="text" class="form-control js-website" value="{{website}}">
 			</div>
 		</div>
 	</div>
