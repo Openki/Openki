@@ -203,6 +203,7 @@ Meteor.methods({
 if (Meteor.isServer) {
 	Meteor.methods({
 		'user.name': function(userId) {
+			this.unblock();
 			var user = Meteor.users.findOne(userId);
 			if (!user) return false;
 			var username = user.username;
