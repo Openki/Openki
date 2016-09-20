@@ -48,6 +48,16 @@
 						<input type="radio"
 							class="js-replicate-frequency js-update-replicas"
 							name="replicateFrequency"
+							value=""
+							checked>
+						{{mf 'event.replication.freq.dont' 'no repetition'}}
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio"
+							class="js-replicate-frequency js-update-replicas"
+							name="replicateFrequency"
 							value="once">
 						{{mf 'event.replication.freq.once' 'once'}}
 					</label>
@@ -66,8 +76,7 @@
 						<input type="radio"
 							class="js-replicate-frequency js-update-replicas"
 							name="replicateFrequency"
-							value="weekly"
-							checked>
+							value="weekly">
 						{{mf'event.replication.freq.weekly' 'once a week'}}
 					</label>
 				</div>

@@ -107,8 +107,8 @@ var getEventFrequency = function(instance) {
 	                    weekly:   { unit: 'weeks',  interval: 1 },
 	                    biWeekly: { unit: 'weeks',  interval: 2 } };
 
+	if (frequencies[frequency] === undefined) return [];
 	var unit = frequencies[frequency].unit;
-	if (unit === undefined) return [];
 
 	var interval = frequencies[frequency].interval;
 
