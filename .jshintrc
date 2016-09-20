@@ -118,7 +118,7 @@
 		"userName":true,
 		"goBase":true,
 		"pleaseLogin":true,
-
+		"showServerError": true,
 // client/map/map.js
 
 		"L":true,
