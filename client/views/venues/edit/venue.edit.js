@@ -58,9 +58,7 @@ Template.venueEdit.events({
 			, maxWorkplaces:   parseInt(instance.$('.js-maxWorkplaces').val(), 10)
 			, facilities:      []
 			, otherFacilities: instance.$('.js-otherFacilities').val()
-			, owners:          instance.$('.js-owners').val()
-			, users:           instance.$('.js-users').val()
-			, website:           instance.$('.js-website').val()
+			, website:         instance.$('.js-website').val()
 		    };
 
 		_.each(Venues.facilityOptions, function(f) {

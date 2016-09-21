@@ -13,8 +13,6 @@
 // maxWorkplaces    Int
 // facilities       [String]
 // otherFacilities  String
-// ownersContact    String
-// usersContact     String
 // website          URL
 
 // loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
@@ -97,8 +95,6 @@ Meteor.methods({
 			, maxWorkplaces:   Match.Optional(Number)
 			, facilities:      Match.Optional([String])
 			, otherFacilities: Match.Optional(String)
-			, owners:          Match.Optional(String)
-			, users:           Match.Optional(String)
 			, website:         Match.Optional(String)
 			}
 		);
@@ -147,14 +143,6 @@ Meteor.methods({
 
 		if (changes.otherFacilities) {
 			set.otherFacilities = changes.otherFacilities.substring(0, 40*1024);
-		}
-
-		if (changes.owners) {
-			set.owners = changes.owners.substring(0, 40*1024);
-		}
-
-		if (changes.users) {
-			set.users = changes.users.substring(0, 40*1024);
 		}
 
 		if (changes.website) {
