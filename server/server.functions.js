@@ -48,20 +48,6 @@ var closestRegion = function(address) {
 		}}
 	});
 
-	result.lookup = GeoIP.lookup(address);
-
-	if (!result.lookup) {
-		result.message = "No result for GeoIP lookup";
-		return result;
-	}
-
-	result.region = Regions.findOne({
-		loc: { $near: {
-			$geometry: {type: "Point", coordinates: result.lookup.ll.reverse()},
-			$maxDistance: maxDistance
-		}}
-	});
-
 	if (result.region) {
 		result.message = "Found region " + result.region.name + ".";
 	} else {
