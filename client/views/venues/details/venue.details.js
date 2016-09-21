@@ -83,10 +83,14 @@ Template.venueDetails.onCreated(function() {
 Template.venueDetails.onRendered(function() {
 	var instance = this;
 
-	this.setLocation(this.data.venue.loc);
+	instance.autorun(function() {
+		var data = Template.currentData();
 
-	var region = Regions.findOne(instance.data.venue.region);
-	instance.setRegion(region);
+		instance.setLocation(data.venue.loc);
+
+		var region = Regions.findOne(data.venue.region);
+		instance.setRegion(region);
+	});
 });
 
 
