@@ -29,7 +29,7 @@
 						</div>
 					</div>
 
-					{{#unless region}}
+					{{#if regionSelectable}}
 						<div class="form-group">
 							<label>{{mf 'venue.edit.region' 'Region:'}}</label>
 							<div class="input-group">
@@ -39,12 +39,15 @@
 								<select name='region' class="form-control js-region">
 									<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
 								{{#each regions}}
-									<option value='{{_id}}' {{regionSel}}>{{name}}</option>
+									<option value='{{_id}}'>{{name}}</option>
 								{{/each}}
 								</select>
 							</div>
 						</div>
-					{{/unless}}
+					{{/if}}
+					{{#if regionSelected}}
+						{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+					{{/if}}
 
 					<div class="form-group">
 						<label>{{mf 'venue.details.address' 'Address:'}}</label>

@@ -1,8 +1,58 @@
 "use strict";
 
 Template.venueEdit.onCreated(function() {
-	this.showAdditionalInfo = new ReactiveVar(false);
-	this.isNew = !this.data._id;
+	var instance = this;
+	instance.showAdditionalInfo = new ReactiveVar(false);
+	instance.isNew = !this.data._id;
+
+	instance.locationTracker = LocationTracker();
+	instance.locationTracker.setLocation(this.data, true);
+
+	instance.selectedRegion = new ReactiveVar();
+	instance.regionSelectable = new ReactiveVar(false);
+	if (instance.isNew) {
+		instance.autorun(function() {
+			// If the session sets the region, we use it
+			var sessionRegion = cleanedRegion(Session.get('region'));
+
+			instance.selectedRegion.set(sessionRegion);
+
+			// If the session does not give us a region, we let the user select it
+			instance.regionSelectable.set(!sessionRegion);
+		});
+	} else {
+		// For existing venues the region is already selected and cannot
+		// be changed
+
+		instance.selectedRegion.set(this.data.region);
+	}
+
+	instance.autorun(function() {
+		var regionId = instance.selectedRegion.get();
+		instance.locationTracker.setRegion(regionId);
+	});
+
+	instance.locationTracker.markers.find().observe({
+		added: function(mark) {
+			if (mark.proposed) {
+				// The map widget does not reactively update markers when their
+				// flags change. So we remove the propsed marker it added and
+				// replace it by a main one. This is only a little weird.
+				instance.locationTracker.markers.remove({ proposed: true });
+
+				mark.main = true;
+				mark.draggable = true;
+				delete mark.proposed;
+				instance.locationTracker.markers.insert(mark);
+			}
+		},
+
+		changed: function(mark) {
+			if (mark.remove) {
+				instance.locationTracker.markers.remove(mark._id);
+			}
+		}
+	});
 });
 
 Template.venueEdit.helpers({
@@ -20,13 +70,35 @@ Template.venueEdit.helpers({
 		return Regions.find();
 	},
 
-	regionSel: function() {
-		var attr = {};
-		var selected = Session.get('region');
-		if (selected && selected === this._id) {
-			attr.selected = 'selected';
-		}
-		return attr;
+	regionSelectable: function() {
+		return Template.instance().regionSelectable.get();
+	},
+
+	regionSelected: function() {
+		return !!Template.instance().selectedRegion.get();
+	},
+
+	venueMarkers: function() {
+		return Template.instance().locationTracker.markers;
+	},
+
+	allowPlacing: function() {
+		var locationTracker = Template.instance().locationTracker;
+
+		// We return a function so the reactive dependency on locationState is
+		// established from within the map template which will call it.
+		return function() {
+			// We only allow placing if we don't have a selected location yet
+			return !locationTracker.markers.findOne({ main: true });
+		};
+	},
+
+	allowRemoving: function() {
+		var locationTracker = Template.instance().locationTracker;
+
+		return function() {
+			return locationTracker.markers.findOne({ main: true });
+		};
 	},
 });
 
@@ -67,9 +139,15 @@ Template.venueEdit.events({
 			}
 		});
 
+		var marker = instance.locationTracker.markers.findOne({ main: true });
+		if (marker) {
+			changes.loc = marker.loc;
+		} else {
+			changes.loc = null;
+		}
+
 		if (instance.isNew) {
-			var region = cleanedRegion(Session.get('region'));
-			changes.region = region || $('.js-region').val();
+			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
 				alert("Please select a region");
 				return;
@@ -104,5 +182,9 @@ Template.venueEdit.events({
 		} else {
 			instance.parentInstance().editing.set(false);
 		}
+	},
+
+	'change .js-region': function(event, instance) {
+		instance.selectedRegion.set(instance.$('.js-region').val());
 	},
 });

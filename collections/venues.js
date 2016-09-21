@@ -15,8 +15,6 @@
 // otherFacilities  String
 // website          URL
 
-// loc"           -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
-
 /** Venue objects represent locations where events take place.
   */
 Venue = function() {
@@ -87,7 +85,7 @@ Meteor.methods({
 			{ name:            Match.Optional(String)
 			, description:     Match.Optional(String)
 			, region:          Match.Optional(String)
-			, coordinates:     Match.Optional([Number])
+			, loc:             Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] }))
 			, address:         Match.Optional(String)
 			, route:           Match.Optional(String)
 			, short:           Match.Optional(String)
@@ -129,6 +127,10 @@ Meteor.methods({
 		if (changes.address !== undefined) set.address = changes.address.trim().substring(0, 40*1024);
 		if (changes.route !== undefined) set.route = changes.route.trim().substring(0, 40*1024);
 		if (changes.short !== undefined) set.short = changes.short.trim().substring(0, 40);
+		if (changes.loc !== undefined) {
+			set.loc = changes.loc;
+			set.loc.type = "Point";
+		}
 
 		if (changes.maxPeople !== undefined) set.maxPeople = Math.min(1e10, Math.max(0, changes.maxPeople));
 		if (changes.maxWorkplaces !== undefined) set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
