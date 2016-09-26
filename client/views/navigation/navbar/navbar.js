@@ -1,6 +1,6 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Session.get('viewportWidth') <= 991; // @grid-float-breakpoint
-	if (!isMobile) {
+	var isCollapsed = Session.get('viewportWidth') <= 991; // @grid-float-breakpoint
+	if (!isCollapsed) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 		});
