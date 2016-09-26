@@ -1,6 +1,5 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Session.get('viewportWidth') <= 768; // @screen-sm
-	var isRetina = window.devicePixelRatio == 2;
+	var isMobile = Session.get('viewportWidth') <= 991; // @grid-float-breakpoint
 	if (!isMobile) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();

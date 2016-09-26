@@ -100,13 +100,14 @@ Template.languageSelection.events({
 	'focus .js-language-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd && !Session.get('isRetina')) {
+		var isRetina = Session.get('isRetina');
+		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
-		var screenSm = viewportWidth <= 768;
-		if (!screenSm) {
+		var gridFloatBreakpoint = viewportWidth <= 991;
+		if (!gridFloatBreakpoint) {
 			instance.$('.dropdown').on('show.bs.dropdown', function(e){
 				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 			});
@@ -121,7 +122,8 @@ Template.languageSelection.onRendered(function() {
 	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd && !Session.get('isRetina')) {
+		var isRetina = Session.get('isRetina');
+		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}

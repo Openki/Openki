@@ -4,7 +4,7 @@
 }
 
 #bs-navbar-collapse-1 {
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
 	}
 }
@@ -59,7 +59,7 @@
 		text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	}
 
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		border-bottom: 1px solid $navbar-default-border;
 	}
 }
@@ -90,7 +90,7 @@
 }
 
 .navbar-link-active .nav-marker-caret {
-	@media (min-width: $screen-sm) {
+	@media (min-width: $grid-float-breakpoint) {
 		opacity: 1;
 	}
 }
@@ -111,12 +111,12 @@
 }
 
 .navbar .navbar-nav > .open > .dropdown-menu {
-	@media (min-width: $screen-sm) {
+	@media (min-width: $grid-float-breakpoint) {
 		padding-top: 10px;
 		z-index: -1;
 	}
 
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		background-color: $dropdown-bg;
 		box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
 		padding: 0;
@@ -124,14 +124,14 @@
 }
 
 .navbar .navbar-nav > .open > .dropdown-menu > li > a {
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		border-bottom: 1px solid darken($dropdown-bg, 10%);
 		color: $dropdown-link-color;
 	}
 }
 
 .navbar .navbar-nav > .open > .dropdown-menu > li > a:last-child > a {
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		border-bottom: 0;
 	}
 }
@@ -148,7 +148,7 @@
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
-	@media (min-width: $screen-sm) {
+	@media (min-width: $grid-float-breakpoint) {
 		background-color: $dropdown-bg;
 		opacity: 1;
 	}
@@ -178,7 +178,13 @@
 .navbar-form-selection > .fa {
 	color: $white;
 
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
 		display: none;
+	}
+}
+
+.navbar-form-selection > .form-control {
+	@media (max-width: $grid-float-breakpoint) {
+		width: 100%;
 	}
 }
