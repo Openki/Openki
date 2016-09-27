@@ -139,7 +139,6 @@ rzymek:moment-locale-tr@2.12.0
 rzymek:moment-locale-zh-tw@2.12.0
 seba:minifiers-autoprefixer@1.0.1
 service-configuration@1.0.10
-servicelocale:geoip@0.1.3
 session@1.1.6
 sha@1.0.8
 spacebars@1.0.12
