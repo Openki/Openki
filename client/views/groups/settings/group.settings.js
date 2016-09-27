@@ -42,8 +42,8 @@ Template.groupSettings.helpers({
 });
 
 Template.groupSettings.events({
-	'keyup .-userSearch': function(event, instance) {
-		instance.userSearch.set(instance.$('.-userSearch').val());
+	'keyup .js-search-users': function(event, instance) {
+		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
 	'click .js-member-add-btn': function(event, instance) {
@@ -72,8 +72,8 @@ Template.groupSettings.events({
 
 	'click .js-group-edit-save': function(event, instance) {
 		Meteor.call("saveGroup", instance.data.group._id, {
-			logoUrl: instance.$('.-logoUrl').val(),
-			backgroundUrl: instance.$('.-backgroundUrl').val(),
+			logoUrl: instance.$('.js-logo-url').val(),
+			backgroundUrl: instance.$('.js-background-url').val(),
 		}, function(err) {
 			if (err) {
 				showServerError('Could not save settings', err);

@@ -1,6 +1,7 @@
 Template.navbar.onRendered(function() {
-	var isMobile = Session.get('viewportWidth') <= 768; // @screen-sm
-	if (!isMobile) {
+	var gridFloatBreakpoint = Breakpoints.gridFloat;
+	var isCollapsed = Session.get('viewportWidth') <= gridFloatBreakpoint;
+	if (!isCollapsed) {
 		this.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 		});
@@ -51,9 +52,10 @@ Template.navbar.helpers({
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
 	},
 
-	activeClass: function(linkRoute) {
-		var route = Router.current().route;
-		if (route && route.getName() === linkRoute) {
+	activeClass: function(linkRoute, id) {
+		var router = Router.current();
+		if (router.route && router.route.getName() === linkRoute) {
+			if (typeof id == 'string' && router.params._id !== id) return '';
 			return 'navbar-link-active';
 		} else {
 			return '';

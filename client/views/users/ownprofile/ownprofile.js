@@ -56,7 +56,7 @@ Template.profile.helpers({
 	},
 
 	verifyDelete: function() {
-		return Session.get('verify') === 'delete';
+		return Session.equals('verify', 'delete');
 	},
 
 	groupCount: function() {

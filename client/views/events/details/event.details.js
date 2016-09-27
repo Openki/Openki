@@ -88,13 +88,10 @@ Template.event.events({
 });
 
 Template.eventDisplay.events({
-	'click .-openReplication': function(event, instance) {
-		instance.replicating.set(true);
-	},
-
-	'click .-closeReplication': function(event, instance) {
-		instance.replicating.set(false);
-	},
+	'click .js-toggle-replication': function(event, instance) {
+		var replicating = instance.replicating;
+		replicating.set(!replicating.get());
+	}
 });
 
 

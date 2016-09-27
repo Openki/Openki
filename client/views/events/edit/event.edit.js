@@ -219,7 +219,7 @@ Template.eventEdit.events({
 			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
-			internal: instance.$('.-eventInternal').is(':checked'),
+			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
 		editevent.files = (this.files || []).concat(instance.uploaded.get());

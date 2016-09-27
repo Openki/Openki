@@ -111,7 +111,7 @@ Template.course_edit.events({
 		var isNew = courseId === '';
 
 		var roles = {};
-		$('input.-roleselection').each(function(_, rolecheck) {
+		$('.js-check-role').each(function(_, rolecheck) {
 			roles[rolecheck.name] = rolecheck.checked;
 		});
 
@@ -120,7 +120,7 @@ Template.course_edit.events({
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
 			roles: roles,
-			internal: $('.-courseInternal').is(':checked'),
+			internal: $('.js-check-internal').is(':checked'),
 		};
 
 		changes.name = saneText(changes.name);
@@ -151,7 +151,7 @@ Template.course_edit.events({
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
-				$('input.-enrol').each(function(_, enrolcheck) {
+				$('.js-check-enrol').each(function(_, enrolcheck) {
 					if (enrolcheck.checked) {
 						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
 					} else {
@@ -174,7 +174,7 @@ Template.course_edit.events({
 		}
 	},
 
-	'click button.editCategories': function (event, template) {
+	'click .js-edit-categories': function (event, template) {
 		Template.instance().editingCategories.set(true);
 	},
 
@@ -226,7 +226,7 @@ Template.courseEditRole.helpers({
 });
 
 Template.courseEditRole.events({
-	"change .-roleselection": function(event, instance) {
-		instance.checked.set(instance.$(".-roleselection").prop("checked"));
+	"change .js-check-role": function(event, instance) {
+		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
 });

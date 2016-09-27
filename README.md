@@ -1,4 +1,4 @@
-Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/schuel/hmmm.svg?branch=master)](https://travis-ci.org/schuel/hmmm) &nbsp; &nbsp; [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
+Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) &nbsp; &nbsp; [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](http://meteor.com)

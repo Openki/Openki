@@ -56,6 +56,7 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
+	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(categories);
 	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
@@ -104,6 +105,8 @@ Template.find.onCreated(function() {
 
 var updateCategorySearch = function(event, instance) {
 	var query = instance.$('.js-search-categories').val();
+	instance.categorySearch.set(query);
+
 	if (!query) {
 		instance.categorySearchResults.set(categories);
 		return;
@@ -277,6 +280,13 @@ Template.find.helpers({
 		return Template.instance().categorySearchResults.get()[mainCategory];
 	},
 
+	'categoryNameMarked': function() {
+		Session.get('locale'); // Reactive dependency
+		var search = Template.instance().categorySearch.get();
+		var name = mf('category.'+this);
+		return markedName(search, name);
+	},
+
 	'availableGroups': function(group) {
 		return groups[group];
 	},
@@ -343,6 +353,8 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Session.get('viewportWidth') <= 480; // @screen-xs
+		var viewportWidth = Session.get('viewportWidth');
+		var screenXs = Breakpoints.screenXs;
+		return Session.get('viewportWidth') <= screenXs;
 	}
 });

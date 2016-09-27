@@ -553,6 +553,8 @@ Meteor.methods({
 			set.createdby = user._id;
 			set.time_created = new Date();
 			courseId = Courses.insert(set);
+
+			Meteor.call('updateNextEvent', courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
 		}
