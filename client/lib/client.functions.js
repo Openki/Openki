@@ -139,8 +139,7 @@ markedName = function(search, name) {
 };
 
 getViewportWidth = function() {
-	var viewportWidth = Math.max(document.documentElement.clientWidth,
-														window.innerWidth || 0);
+	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	Session.set('viewportWidth', viewportWidth);
 };
 
