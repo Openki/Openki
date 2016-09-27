@@ -34,6 +34,19 @@ Template.introduction.helpers({
 
 	isInCalendar: function() {
 		return Router.current().route.getName() == "calendar";
+	},
+
+	clearfixFor: function(triggerSize) {
+		var viewportWidth = Session.get('viewportWidth');
+		var screenSize = '';
+
+		if (viewportWidth < 992 && viewportWidth > 768) {
+			screenSize = "screenSm";
+		} else if (viewportWidth < 768 && viewportWidth > 380) {
+			screenSize = "screenXs";
+		}
+
+		return (triggerSize == screenSize);
 	}
 });
 
