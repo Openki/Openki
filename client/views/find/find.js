@@ -353,6 +353,8 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		return Session.get('viewportWidth') <= 480; // @screen-xs
+		var viewportWidth = Session.get('viewportWidth');
+		var screenXs = Breakpoints.screenXs;
+		return Session.get('viewportWidth') <= screenXs;
 	}
 });

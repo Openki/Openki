@@ -125,15 +125,16 @@ Template.regionSelection.events({
 
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
 		var isRetina = Session.get('isRetina');
+		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+
 		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
-		var girdFloatBreakpoint = viewportWidth <= 991;
-		if (!girdFloatBreakpoint) {
+		var gridFloatBreakpoint = viewportWidth <= Breakpoints.gridFloat;
+		if (!gridFloatBreakpoint) {
 			instance.$('.dropdown').on('show.bs.dropdown', function(e){
 				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 			});
@@ -147,8 +148,9 @@ Template.regionSelection.onRendered(function() {
 	var parentInstance = this.parentInstance();
 	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
 		var isRetina = Session.get('isRetina');
+		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+
 		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);

@@ -13,7 +13,9 @@ Template.introduction.onRendered(function() {
 	});
 
 	// use $screen-xxs (from scss) to compare with the width of window
-	if (Session.get("viewportWidth") < 380) {
+	var viewportWidth = Session.get('viewportWidth');
+	var screenXxs = Breakpoints.screenXxs;
+	if (viewportWidth < screenXxs) {
 		Assistant.closeIntro();
 		// dont wait for slideUp
 		this.$('.introduction-content').hide();
@@ -40,9 +42,9 @@ Template.introduction.helpers({
 		var viewportWidth = Session.get('viewportWidth');
 		var screenSize = '';
 
-		if (viewportWidth < 992 && viewportWidth > 768) {
+		if (viewportWidth < Breakpoints.screenMd && viewportWidth > Breakpoints.screenSm) {
 			screenSize = "screenSm";
-		} else if (viewportWidth < 768 && viewportWidth > 380) {
+		} else if (viewportWidth < Breakpoints.screenSm && viewportWidth > Breakpoints.screenXxs) {
 			screenSize = "screenXs";
 		}
 
