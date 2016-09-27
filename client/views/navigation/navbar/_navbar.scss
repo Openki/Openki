@@ -15,6 +15,15 @@
 
 .navbar-brand {
 	position: relative;
+	vertical-align: center;
+}
+
+.navbar-brand > .connecting {
+	text-shadow: 0 0 1px $green-dark;
+}
+
+.navbar-brand > .no-connection {
+	text-shadow: 0 0 1px $red;
 }
 
 .navbar-brand > img {

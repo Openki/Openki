@@ -18,21 +18,23 @@
 				</button>
 				<a class="navbar-brand -toggleIntro" href="/">
 					{{#if connecting}}
-						<i class="fa fa-circle-o-notch fa-3x fa-spin fa-fw" title="{{mf 'status.connecting' "Connecting to server"}}"></i>
+						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
+						      title="{{mf 'status.connecting' "Connecting to server"}}">
+						</span>
 						<span class="sr-only">{{mf 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
-						<i class="fa fa-circle-o-notch fa-3x fa-fw" title="{{mf 'status.notConnected' "No connection to server"}}"></i>
+						<span class="fa fa-circle-o-notch fa-fw no-connection"
+						      title="{{mf 'status.notConnected' "No connection to server"}}">
+						</span>
 						<span class="sr-only">{{mf 'status.notConnected'}}</span>
 					{{/if}}
 					{{#if connected}}
-					<img
-						src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
-						alt="Openki logo"
-					/>
+						<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
+						     alt="Openki logo">
+					{{/if}}
 					<span class="site-name">{{siteName}}</span>
 					<span class="site-stage">{{siteStage}}</span>
-					{{/if}}
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
