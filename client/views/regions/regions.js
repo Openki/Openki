@@ -90,7 +90,7 @@ Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
-		var changed = Session.get('region') !== region_id;
+		var changed = !Session.equals('region', region_id);
 
 		localStorage.setItem("region", region_id); // to survive page reload
 		Session.set('region', region_id);
@@ -107,13 +107,13 @@ Template.regionSelection.events({
 	},
 
 	'mouseover, focus .js-region-link': function() {
-		if (this._id && (Session.get('region') == "all")) {
+		if (this._id && Session.equals('region', 'all')) {
 			courseFilterPreview(true, '.'+this._id);
 		}
 	},
 
 	'mouseout, focusout .js-region-link': function() {
-		if (this._id && (Session.get('region') == "all")) {
+		if (this._id && Session.equals('region', 'all')) {
 			courseFilterPreview(false, '.'+this._id);
 		}
 	},

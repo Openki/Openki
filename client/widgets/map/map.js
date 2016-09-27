@@ -99,7 +99,7 @@ Template.map.onRendered(function() {
 	});
 	var attributionControl = L.control.attribution();
 	var scaleControl = L.control.scale({
-		imperial: Session.get('locale') == 'en'
+		imperial: Session.equals('locale', 'en')
 	});
 	var fullscreenControl = new OpenkiControl({
 		icon: FaIcon('arrows-alt'),
