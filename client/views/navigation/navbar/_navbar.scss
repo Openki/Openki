@@ -172,7 +172,11 @@
 .navbar-form-selection {
 	font-size: large;
 	margin: 0;
-	padding: 8.5px 0;
+	padding: 0;
+
+	@media (min-width: $grid-float-breakpoint) {
+		padding: 8.5px 0;
+	}
 }
 
 .navbar-form-selection > .fa {
@@ -185,6 +189,7 @@
 
 .navbar-form-selection > .form-control {
 	@media (max-width: $grid-float-breakpoint) {
+		height: 100%;
 		width: 100%;
 	}
 }
