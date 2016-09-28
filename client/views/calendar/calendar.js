@@ -20,8 +20,8 @@ Template.calendar.onCreated(function() {
 		var data = Template.currentData();
 		var query = data.query || {};
 
-		// Show internal events only when a group or location is specified
-		if (!query.group && !query.location && query.internal === undefined) {
+		// Show internal events only when a group or venue is specified
+		if (!query.group && !query.venue && query.internal === undefined) {
 			query.internal = false;
 		}
 
@@ -109,6 +109,7 @@ Template.calendarDay.helpers({
 		return instance.parentInstance().eventSub.ready();
 	}
 });
+
 
 var mvDateHandler = function(amount, unit) {
 	return function(event, instance) {

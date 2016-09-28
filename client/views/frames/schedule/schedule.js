@@ -25,7 +25,7 @@ Template.frameSchedule.onCreated(function() {
 		var rawSeps = (query.sep || "").split(',');
 		var seps = [];
 		_.each(rawSeps, function(rawSep) {
-			if (rawSep.length == 0) {
+			if (rawSep.length === 0) {
 				return;
 			}
 
@@ -158,7 +158,7 @@ Template.frameSchedule.helpers({
 				slots: _.map(Template.instance().days.get(), function(day) {
 					return slots[mins] && slots[mins][day];
 				})
-			}
+			};
 		});
 	},
 

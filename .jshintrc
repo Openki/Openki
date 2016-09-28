@@ -2,6 +2,7 @@
 	"laxbreak": true,
 	"browser": true,
 	"node": true,
+	"laxcomma": true,
 
 	"globals": {
 		"Meteor": false,
@@ -77,8 +78,10 @@
 		"coursesFind":true,
 		"Roles":true,
 		"Regions":true,
-		"Locations":true,
-		"locationsFind":true,
+		"cleanedRegion": true,
+		"Venue": true,
+		"Venues": true,
+		"venuesFind": true,
 		"CourseDiscussions":true,
 		"Events":true,
 		"eventsFind":true,
@@ -118,6 +121,7 @@
 		"userName":true,
 		"goBase":true,
 		"pleaseLogin":true,
+		"showServerError": true,
 
 // client/map/map.js
 
@@ -169,7 +173,6 @@
 
 // collection/...
 
-		"LocationCategories":true,
 		"privilegedTo":true,
 		"UserLib": true,
 		"GroupLib": true,

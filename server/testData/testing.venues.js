@@ -1,7 +1,4 @@
-// Locations are rather organisations. they can have multiple rooms of couse bit they are not shown on this site.
-
-
-testLocations = [{
+testVenues = [{
 	'name':              'Kasama',
 	'region':            'J6GDhEEvdmdSMzPPF',
 	'categories':        ['infoshop'],

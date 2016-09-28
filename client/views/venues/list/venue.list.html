@@ -1,0 +1,30 @@
+<template name="venueList">
+	<div class="container">
+		<h1>
+		{{#if regionName}}
+			{{mf 'venues.list.titleForRegion' 'Venues in region {REGION}' REGION=regionName}}
+		{{else}}
+			{{mf 'venues.list.title' 'Venues'}}
+		{{/if}}
+		</h1>
+		<div class="">
+			{{#each venues}}
+				{{> venue}}
+			{{else}}
+				{{mf 'venues.list.noneFound' "No venues found"}}
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="venue">
+	<div class="venue">
+		<a href="{{pathFor 'venueDetails'}}">
+			<div class="name"> {{name}}</div>
+			<div class="description">{{description}} </div>
+		{{#if mayHost}}
+			<div>{{mf 'venues.list.mayHost' "You may host here"}}</div>
+		{{/if}}
+		</a>
+	</div>
+</template>

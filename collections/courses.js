@@ -579,12 +579,12 @@ Meteor.methods({
 
 			var nextEvent = Events.findOne(
 				{ courseId: course._id, start: {$gt: new Date()} },
-				{ sort: {start: 1}, fields: {start: 1, _id: 1, location: 1} }
+				{ sort: {start: 1}, fields: {start: 1, _id: 1, venue: 1} }
 			);
 
 			var lastEvent = Events.findOne(
 				{ courseId: course._id, start: {$lt: new Date()} },
-				{ sort: {start: -1}, fields: {start: 1, _id: 1, location: 1} }
+				{ sort: {start: -1}, fields: {start: 1, _id: 1, venue: 1} }
 			);
 
 			Courses.update(course._id, { $set: {
