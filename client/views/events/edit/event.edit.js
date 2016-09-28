@@ -74,6 +74,16 @@ Template.eventEdit.helpers({
 
 	uploaded: function() {
 		return Template.instance().uploaded.get();
+	},
+
+	course: function() {
+		var courseId = this.courseId;
+		if (courseId) {
+			// Very bad?
+			Template.instance().subscribe('courseDetails', courseId);
+
+			return Courses.findOne({_id: courseId});
+		}
 	}
 });
 
