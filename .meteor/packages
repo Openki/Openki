@@ -3,9 +3,9 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-accounts-password@1.2.12
-accounts-base@1.2.9
-email@1.1.16
+accounts-password@1.3.0
+accounts-base@1.2.11
+email@1.1.17
 standard-app-packages@1.0.9
 check@1.2.3
 iron:router
@@ -38,11 +38,11 @@ msgfmt:ui
 accounts-google@1.0.10
 msavin:mongol
 bevanhunt:leaflet
-http@1.2.8
-es5-shim@4.6.13
+http@1.2.9
+es5-shim@4.6.14
 router-autoscroll
 meteorhacks:ssr
-standard-minifier-js@1.1.8
+standard-minifier-js@1.2.0
 rajit:bootstrap3-datepicker
 prng
 ccorcos:subs-cache
@@ -52,3 +52,4 @@ lookback:tooltips
 ongoworks:spiderable
 seba:minifiers-autoprefixer
 gadicohen:robots-txt
+shell-server
