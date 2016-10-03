@@ -13,6 +13,10 @@
 	}
 }
 
+.datepicker {
+	z-index: $zindex-navbar-fixed + 1 !important;
+}
+
 .datepicker-dropdown.datepicker-orient-top:after {
 	border-top-color: $dropdown-bg;
 }
