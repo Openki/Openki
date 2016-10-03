@@ -110,32 +110,60 @@ Template.calendarDay.helpers({
 	}
 });
 
-var mvDateHandler = function(amount, unit) {
-	return function(event, instance) {
-		var start = instance.filter.get('start');
-		var weekCorrection = unit == "week"? 0 : 1;
-		if (amount < 0) {
-			start.add(amount, unit).startOf('week');
-		} else {
-			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
-		}
-		instance.filter.add('start', start).done();
-		updateUrl(event, instance);
-		return false;
-	};
-};
-
-Template.calendar.events({
-	'click .js-next-week':      mvDateHandler( 1, 'week'),
-	'click .js-previous-week':  mvDateHandler(-1, 'week'),
-	'click .js-next-month':     mvDateHandler( 1, 'month'),
-	'click .js-previous-month': mvDateHandler(-1, 'month'),
-	'click .js-next-year':      mvDateHandler( 1, 'year'),
-	'click .js-previous-year':  mvDateHandler(-1, 'year'),
-});
 
 Template.calendarNavigation.helpers({
 	endDateTo: function(date) {
 		return moment(date).add(6, 'days');
+	}
+});
+
+Template.calendarNavigation.onCreated(function() {
+	this.currentUnit = new ReactiveVar('week');
+});
+
+var mvDateHandler = function(unit, instance) {
+	var amount = instance.data.direction == 'previous' ? -1 : 1;
+	var calendarInstance = instance.parentInstance(2);
+	var start = calendarInstance.filter.get('start');
+	var weekCorrection = unit == "week"? 0 : 1;
+
+	if (amount < 0) {
+		start.add(amount, unit).startOf('week');
+	} else {
+		start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
+	}
+	calendarInstance.filter.add('start', start).done();
+	updateUrl(event, calendarInstance);
+	return false;
+};
+
+Template.calendarNavigationButton.events({
+	'click .js-change-date': function(event, instance) {
+		var unit = instance.parentInstance().currentUnit.get();
+
+		mvDateHandler(unit, instance);
+	},
+
+	'click .js-change-unit': function(event, instance) {
+		var unit = this;
+
+		instance.parentInstance().currentUnit.set(unit);
+		mvDateHandler(unit, instance);
+	}
+});
+
+Template.calendarNavigationButton.helpers({
+	isPrevious: function() {
+		return this.direction == 'previous';
+	},
+
+	currentUnit: function() {
+		var parentInstance = Template.instance().parentInstance();
+		return parentInstance.currentUnit.get();
+	},
+
+	navUnits: function() {
+		var navUnits = ['week', 'month', 'year'];
+		return navUnits;
 	}
 });
