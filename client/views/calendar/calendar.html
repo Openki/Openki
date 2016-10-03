@@ -36,43 +36,50 @@
 <template name="calendarNavigation">
 	<div class="calendar-nav">
 		<div class="calendar-nav-element">
-			<button type="button" class="btn btn-default calendar-nav-btn js-previous-year"
-				aria-label="go back one year">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-previous-year"
+			        aria-label="go back one year">
 				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousYear" "one year"}}
 			</button>
-			<button type="button" class="btn btn-default calendar-nav-btn js-previous-month"
-				aria-label="go back one month">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-previous-month"
+			        aria-label="go back one month">
 				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousMonth" "one month"}}
 			</button>
-			<button type="button" class="btn btn-default calendar-nav-btn js-previous-week"
-				aria-label="go back one week">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-previous-week"
+			        aria-label="go back one week">
 				<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 				{{mf "calendar.button.previousweek" "one week"}}
 			</button>
 		</div>
 		<div class="calendar-nav-element">
 			<div class="calendar-nav-week">
-					{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}<br>
+				{{mf "calendar.weekNumber" "Week"}} {{weekNr date}}
+				<br>
 			</div>
 			<div class="calendar-nav-date">
 				{{dateLong date}} - {{dateLong (endDateTo date)}}
 			</div>
 		</div>
 		<div class="calendar-nav-element">
-			<button type="button" class="btn btn-default calendar-nav-btn js-next-week"
-				aria-label="go forward one week">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-next-week"
+			        aria-label="go forward one week">
 				{{mf "calendar.button.nextWeek" "one week"}}
 				<span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-default calendar-nav-btn js-next-month"
-				aria-label="go forward one month">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-next-month"
+			        aria-label="go forward one month">
 				{{mf "calendar.button.nextMonth" "one month"}}
 				<span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-default calendar-nav-btn js-next-year"
-				aria-label="go forward one year">
+			<button type="button"
+			        class="btn btn-default calendar-nav-btn js-next-year"
+			        aria-label="go forward one year">
 				{{mf "calendar.button.nextYear" "one year"}}
 				 <span class="fa fa-arrow-right fa-fw" aria-hidden="true"></span>
 			</button>
