@@ -72,7 +72,7 @@ Template.eventReplication.helpers({
 	},
 
 	localDate: function(date) {
-		return moment(date).format("ll");
+		return moment(date).format("l");
 	},
 
 	fullDate: function(date) {
