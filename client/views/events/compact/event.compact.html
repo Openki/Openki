@@ -1,7 +1,7 @@
 <template name="eventCompact">
 	<div class="event-compact-wrap">
 		<a href="{{pathFor 'showEvent'}}">
-			<div class="event-compact {{#if withDate}}event-compact-with-date{{/if}}">
+			<div class="event-compact {{#if withDate}}event-compact-with-date{{/if}} {{#if pastEvent}}event-compact-past{{/if}}">
 				<div class="event-compact-header">
 					{{#if withDate}}
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>

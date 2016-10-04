@@ -14,4 +14,5 @@ Template.layout.helpers({
 
 Template.layout.rendered = function() {
 	$(window).resize(function(event){ getViewportWidth(); });
+	Session.set('isRetina', (window.devicePixelRatio == 2));
 };

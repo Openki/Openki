@@ -10,6 +10,10 @@
 	}
 }
 
+.time-end > .input-group + label {
+	margin-top: 0;
+}
+
 .event-edit-files > .btn {
 	margin-top: 10px;
 }

@@ -1,11 +1,19 @@
-Template.course_edit.created = function() {
+Template.courseEdit.created = function() {
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+
+	this.data.editableDescription = makeEditable(
+		this.data.description,
+		false,
+		false,
+		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),
+		false
+	);
 };
 
-Template.course_edit.helpers({
+Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
 	},
@@ -94,13 +102,7 @@ Template.course_edit.helpers({
 });
 
 
-Template.course_edit.rendered = function() {
-	var desc = this.find('#editform_description');
-	if (desc) new MediumEditor(desc);
-};
-
-
-Template.course_edit.events({
+Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
@@ -111,17 +113,20 @@ Template.course_edit.events({
 		var isNew = courseId === '';
 
 		var roles = {};
-		$('input.-roleselection').each(function(_, rolecheck) {
+		$('.js-check-role').each(function(_, rolecheck) {
 			roles[rolecheck.name] = rolecheck.checked;
 		});
 
+
 		var changes = {
-			description: $('#editform_description').html(),
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
 			roles: roles,
-			internal: $('.-courseInternal').is(':checked'),
+			internal: $('.js-check-internal').is(':checked'),
 		};
+
+		var newDescription = instance.data.editableDescription.editedContent();
+		if (newDescription) changes.description = newDescription;
 
 		changes.name = saneText(changes.name);
 
@@ -149,9 +154,9 @@ Template.course_edit.events({
 				showServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-				addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
-				$('input.-enrol').each(function(_, enrolcheck) {
+				$('.js-check-enrol').each(function(_, enrolcheck) {
 					if (enrolcheck.checked) {
 						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
 					} else {
@@ -174,7 +179,7 @@ Template.course_edit.events({
 		}
 	},
 
-	'click button.editCategories': function (event, template) {
+	'click .js-edit-categories': function (event, template) {
 		Template.instance().editingCategories.set(true);
 	},
 
@@ -226,7 +231,7 @@ Template.courseEditRole.helpers({
 });
 
 Template.courseEditRole.events({
-	"change .-roleselection": function(event, instance) {
-		instance.checked.set(instance.$(".-roleselection").prop("checked"));
+	"change .js-check-role": function(event, instance) {
+		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
 });

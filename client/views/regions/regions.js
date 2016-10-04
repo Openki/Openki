@@ -90,7 +90,7 @@ Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
 		var region_id = this._id ? this._id : 'all';
-		var changed = Session.get('region') !== region_id;
+		var changed = !Session.equals('region', region_id);
 
 		localStorage.setItem("region", region_id); // to survive page reload
 		Session.set('region', region_id);
@@ -107,13 +107,13 @@ Template.regionSelection.events({
 	},
 
 	'mouseover, focus .js-region-link': function() {
-		if (this._id && (Session.get('region') == "all")) {
+		if (this._id && Session.equals('region', 'all')) {
 			courseFilterPreview(true, '.'+this._id);
 		}
 	},
 
 	'mouseout, focusout .js-region-link': function() {
-		if (this._id && (Session.get('region') == "all")) {
+		if (this._id && Session.equals('region', 'all')) {
 			courseFilterPreview(false, '.'+this._id);
 		}
 	},
@@ -125,11 +125,21 @@ Template.regionSelection.events({
 
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd) {
+		var isRetina = Session.get('isRetina');
+		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+
+		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
+
+		var gridFloatBreakpoint = viewportWidth <= Breakpoints.gridFloat;
+		if (!gridFloatBreakpoint) {
+			instance.$('.dropdown').on('show.bs.dropdown', function(e){
+				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+			});
+		}
+
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });
@@ -138,8 +148,10 @@ Template.regionSelection.onRendered(function() {
 	var parentInstance = this.parentInstance();
 	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = viewportWidth >= 768 && viewportWidth <= 992;
-		if (screenMd) {
+		var isRetina = Session.get('isRetina');
+		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+
+		if (screenMd && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}

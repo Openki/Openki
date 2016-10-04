@@ -109,8 +109,13 @@ goBase = function() {
 pleaseLogin = function() {
 	if (Meteor.userId()) return false;
 	alert(mf('Please.login', 'Please login or register'));
-	if (Session.get('viewportWidth') <= 768) // @screen-sm
+
+	var viewportWidth = Session.get('viewportWidth');
+	var screenSm = Breakpoints.screenSm;
+	if (viewportWidth <= screenSm) {
 		$('.collapse').collapse('show');
+	}
+
 	setTimeout(function(){
 		$('.loginButton').dropdown('toggle');    //or $('.dropdown').addClass('open');
 	},0);
@@ -134,8 +139,7 @@ markedName = function(search, name) {
 };
 
 getViewportWidth = function() {
-	var viewportWidth = Math.max(document.documentElement.clientWidth,
-														window.innerWidth || 0);
+	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	Session.set('viewportWidth', viewportWidth);
 };
 

@@ -1,4 +1,6 @@
 #!/bin/sh
+meteor npm install
+
 ver=$(git describe --abbrev=0)
 completeVer=$(git describe)
 branch=$(git rev-parse --abbrev-ref HEAD)
