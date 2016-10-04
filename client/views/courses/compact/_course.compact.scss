@@ -54,10 +54,14 @@
 		background: $has-upcoming-events-bg;
 	}
 
-	&.filter-no-match {
-		transition-delay: .3s;
+	&.filter-no-match,
+	&.filter-no-match-delayed {
 		transition-duration: .5s;
 		transition-property: opacity;
+	}
+
+	&.filter-no-match-delayed {
+		transition-delay: .3s;
 	}
 }
 

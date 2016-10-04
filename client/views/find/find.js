@@ -151,43 +151,51 @@ Template.find.events({
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
-		courseFilterPreview(true, '.has-upcoming-events');
+		courseFilterPreview(true, '.has-upcoming-events', false);
 	},
 
 	'mouseout .js-filter-upcoming-events': function() {
-		courseFilterPreview(false, '.has-upcoming-events');
+		courseFilterPreview(false, '.has-upcoming-events', false);
 	},
 
 	'mouseover .js-filter-needs-host': function() {
-		courseFilterPreview(true, '.needsHost');
+		courseFilterPreview(true, '.needsHost', false);
 	},
 
 	'mouseout .js-filter-needs-host': function() {
-		courseFilterPreview(false, '.needsHost');
+		courseFilterPreview(false, '.needsHost', false);
 	},
 
 	'mouseover .js-filter-needs-mentor': function() {
-		courseFilterPreview(true, '.needsMentor');
+		courseFilterPreview(true, '.needsMentor', false);
 	},
 
 	'mouseout .js-filter-needs-mentor': function() {
-		courseFilterPreview(false, '.needsMentor');
+		courseFilterPreview(false, '.needsMentor', false);
+	},
+
+	'mouseover .js-category-selection-label': function() {
+		courseFilterPreview(true, ('.'+this), false);
+	},
+
+	'mouseout .js-category-selection-label': function() {
+		courseFilterPreview(false, ('.'+this), false);
 	},
 
 	'mouseover .js-category-label': function() {
-		courseFilterPreview(true, ('.'+this));
+		courseFilterPreview(true, ('.'+this), true);
 	},
 
 	'mouseout .js-category-label': function() {
-		courseFilterPreview(false, ('.'+this));
+		courseFilterPreview(false, ('.'+this), true);
 	},
 
 	'mouseover .js-group-label': function() {
-		courseFilterPreview(true, ('.'+this));
+		courseFilterPreview(true, ('.'+this), true);
 	},
 
 	'mouseout .js-group-label': function() {
-		courseFilterPreview(false, ('.'+this));
+		courseFilterPreview(false, ('.'+this), true);
 	},
 
 	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
@@ -203,7 +211,7 @@ Template.find.events({
 		event.stopPropagation();
 	},
 
-	'click .js-category-label': function(event, instance) {
+	'click .js-category-label, click .js-category-selection-label': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.js-search-categories').val('');
 		updateCategorySearch(event, instance);
