@@ -60,9 +60,6 @@ var updateUrl = function(event, instance) {
 };
 
 Template.calendar.helpers({
-	weekday: function(day) {
-		return day.format('dddd Do MMMM');
-	},
 	past: function() {
 		return moment().isAfter(this.end);
 	},
