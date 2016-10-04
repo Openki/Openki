@@ -41,7 +41,7 @@ Template.eventReplication.onRendered(function() {
 		todayHighlight: true,
 		startDate: new Date()
 	}).on('changeDate', function(event) {
-		var origin = moment(instance.data.start);
+		var origin = moment(instance.data.start).startOf('day');
 		var dates = event.dates;
 
 		var days = _.map(dates, function(date) {
