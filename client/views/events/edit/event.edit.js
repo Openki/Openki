@@ -227,6 +227,16 @@ Template.eventEdit.events({
 		var newDescription = instance.data.editableDescription.editedContent();
 		if (newDescription) editevent.description = newDescription;
 
+		if (editevent.title.length === 0) {
+			alert(mf('event.edit.plzProvideTitle', "Please provide a title"));
+			return;
+		}
+
+		if (!editevent.description) {
+			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
+			return;
+		}
+
 		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
 		var eventId = this._id;
