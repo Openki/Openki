@@ -150,52 +150,28 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
-	'mouseover .js-filter-upcoming-events': function() {
-		courseFilterPreview(true, '.has-upcoming-events', false);
+	'mouseover .js-filter-upcoming-events, mouseout .js-filter-upcoming-events': function() {
+		courseFilterPreview('.has-upcoming-events', false);
 	},
 
-	'mouseout .js-filter-upcoming-events': function() {
-		courseFilterPreview(false, '.has-upcoming-events', false);
+	'mouseover .js-filter-needs-host, mouseout .js-filter-needs-host': function() {
+		courseFilterPreview('.needsHost', false);
 	},
 
-	'mouseover .js-filter-needs-host': function() {
-		courseFilterPreview(true, '.needsHost', false);
+	'mouseover .js-filter-needs-mentor, mouseout .js-filter-needs-mentor': function() {
+		courseFilterPreview('.needsMentor', false);
 	},
 
-	'mouseout .js-filter-needs-host': function() {
-		courseFilterPreview(false, '.needsHost', false);
+	'mouseover .js-category-selection-label, mouseout .js-category-selection-label': function() {
+		courseFilterPreview(('.'+this), false);
 	},
 
-	'mouseover .js-filter-needs-mentor': function() {
-		courseFilterPreview(true, '.needsMentor', false);
+	'mouseover .js-category-label, mouseout .js-category-label': function() {
+		courseFilterPreview(('.'+this), true);
 	},
 
-	'mouseout .js-filter-needs-mentor': function() {
-		courseFilterPreview(false, '.needsMentor', false);
-	},
-
-	'mouseover .js-category-selection-label': function() {
-		courseFilterPreview(true, ('.'+this), false);
-	},
-
-	'mouseout .js-category-selection-label': function() {
-		courseFilterPreview(false, ('.'+this), false);
-	},
-
-	'mouseover .js-category-label': function() {
-		courseFilterPreview(true, ('.'+this), true);
-	},
-
-	'mouseout .js-category-label': function() {
-		courseFilterPreview(false, ('.'+this), true);
-	},
-
-	'mouseover .js-group-label': function() {
-		courseFilterPreview(true, ('.'+this), true);
-	},
-
-	'mouseout .js-group-label': function() {
-		courseFilterPreview(false, ('.'+this), true);
+	'mouseover .js-group-label, mouseout .js-group-label': function() {
+		courseFilterPreview(('.'+this), true);
 	},
 
 	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),

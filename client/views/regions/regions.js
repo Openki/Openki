@@ -106,15 +106,9 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover, focus .js-region-link': function() {
+	'mouseover, mouseout, focus, focusout .js-region-link': function() {
 		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview(true, '.'+this._id, false);
-		}
-	},
-
-	'mouseout, focusout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview(false, '.'+this._id, false);
+			courseFilterPreview('.' + this._id, false);
 		}
 	},
 
