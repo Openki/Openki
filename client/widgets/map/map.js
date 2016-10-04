@@ -126,13 +126,14 @@ Template.map.onRendered(function() {
 		var fullscreen = instance.fullscreen.get();
 		var mini = instance.data.mini;
 
-		var show = function(control, show) {
-			if (control.shown === undefined) control.shown = false;
-			var show = !!show;
+		var show = function(control, toggle) {
+			toggle = !!toggle; // coerce to bool
 
-			if (control.shown !== show) {
-				control.shown = show;
-				if (show) {
+			if (control.shown === undefined) control.shown = false;
+
+			if (control.shown !== toggle) {
+				control.shown = toggle;
+				if (toggle) {
 					map.addControl(control);
 				} else {
 					map.removeControl(control);
