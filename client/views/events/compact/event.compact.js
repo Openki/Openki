@@ -8,8 +8,12 @@ Template.eventCompact.events({
 });
 
 Template.eventCompact.helpers({
-	withDate: function(){
+	withDate: function() {
 		return Template.instance().parentInstance().data.withDate;
+	},
+
+	pastEvent: function() {
+		return moment().isAfter(this.end);
 	}
 });
 

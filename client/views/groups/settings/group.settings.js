@@ -42,8 +42,8 @@ Template.groupSettings.helpers({
 });
 
 Template.groupSettings.events({
-	'keyup .-userSearch': function(event, instance) {
-		instance.userSearch.set(instance.$('.-userSearch').val());
+	'keyup .js-search-users': function(event, instance) {
+		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
 	'click .js-member-add-btn': function(event, instance) {
@@ -53,7 +53,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not add member', err);
 			} else {
-				addMessage(mf('group.settings.addedMember', "Added group member"), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 			}
 		});
 	},
@@ -65,20 +65,20 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not remove member', err);
 			} else {
-				addMessage(mf('group.settings.removedMember', "Removed group member"), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
 		});
 	},
 
 	'click .js-group-edit-save': function(event, instance) {
 		Meteor.call("saveGroup", instance.data.group._id, {
-			logoUrl: instance.$('.-logoUrl').val(),
-			backgroundUrl: instance.$('.-backgroundUrl').val(),
+			logoUrl: instance.$('.js-logo-url').val(),
+			backgroundUrl: instance.$('.js-background-url').val(),
 		}, function(err) {
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {
-				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 				instance.parentInstance().editingSettings.set(false);
 			}
 		});

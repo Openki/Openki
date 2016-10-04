@@ -20,13 +20,13 @@ Template.resetPassword.onCreated(function () {
 	instance.showPassword = new ReactiveVar(false);
 
 	instance.updatePassword = function() {
-		var password = $('.-resetPassword').val();
+		var password = $('.js-pwd-reset').val();
 		instance.password.set(password);
 
 		if (instance.showPassword.get()) {
 			instance.passwordValid.set(password.length > 0);
 		} else {
-			var passwordConfirm = $('.-resetPasswordConfirm').val();
+			var passwordConfirm = $('.js-confirm-pwd-reset').val();
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
 			instance.passwordNotSame.set(passwordConfirm && password.length <= passwordConfirm.length && password !== passwordConfirm);
 			instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
@@ -79,7 +79,7 @@ Template.resetPassword.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-        var password = instance.$('.-resetPassword').val();
+        var password = instance.$('.js-pwd-reset').val();
 		var token = Template.instance().data;
 		Accounts.resetPassword(token, password, function(err) {
 			if (err) {

@@ -17,6 +17,7 @@ Meteor.methods({
 
 ////////  Geo-IP    find nearest region to IP of user
 var closestRegion = function(address) {
+	GeoIP = Npm.require('geoip-lite');
 	check(address, String);
 
 	var maxDistance = 200000; // meters
@@ -35,20 +36,6 @@ var closestRegion = function(address) {
         result.region = Regions.findOne('EZqQLGL4PtFCxCNrp');
 		return result;
 	}
-
-	if (!result.lookup) {
-		result.message = "No result for GeoIP lookup";
-		return result;
-	}
-
-	result.region = Regions.findOne({
-		loc: { $near: {
-			$geometry: {type: "Point", coordinates: result.lookup.ll.reverse()},
-			$maxDistance: maxDistance
-		}}
-	});
-
-	result.lookup = GeoIP.lookup(address);
 
 	if (!result.lookup) {
 		result.message = "No result for GeoIP lookup";

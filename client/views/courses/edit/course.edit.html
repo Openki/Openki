@@ -76,7 +76,7 @@
 							{{#unless categories}}
 								{{mf 'course.edit.no.categories' 'No categories'}}
 							{{/unless}}
-							<button type="button" class="btn btn-edit editCategories">
+							<button type="button" class="btn btn-edit js-edit-categories">
 								<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 								{{mf 'course.edit.edit_categories'}}
 							</button>
@@ -114,7 +114,7 @@
 					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
 					<div class="checkbox">
 						<label>
-							<input class="-courseInternal"
+							<input class="js-check-internal"
 								type="checkbox"
 								{{isInternal}}/>
 							{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
@@ -134,7 +134,7 @@
 <template name="courseEditRole">
 	<div class="checkbox">
 		<label class="{{role.type}}">
-			<input class='-roleselection {{role.type}}'
+			<input class='js-check-role {{role.type}}'
 				name='{{role.type}}'
 				type="checkbox"
 				{{checkRole}}/>
@@ -145,7 +145,7 @@
 	{{#if checkRole}}
 		<div class="checkbox checkbox-sub">
 			<label>
-				<input class='-enrol {{role.type}}'
+				<input class='js-check-enrol {{role.type}}'
 					name='{{role.type}}'
 					type="checkbox"
 					{{hasRole}}/>

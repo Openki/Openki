@@ -91,12 +91,12 @@
 				{{> buttonDelete event="js-event-delete"}}
 				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
-					<button type="button" class="-closeReplication btn btn-cancel">
+					<button type="button" class="btn btn-cancel js-toggle-replication">
 						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.repl_menu_btn'}}
 					</button>
 				{{else}}
-					<button type="button" class="-openReplication btn btn-add">
+					<button type="button" class="btn btn-add js-toggle-replication">
 						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 					</button>
