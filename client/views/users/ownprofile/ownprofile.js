@@ -5,7 +5,8 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
-				Meteor.subscribe('groupsFind', { own: true })
+				Meteor.subscribe('groupsFind', { own: true }),
+				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
 			];
 		},
 		data: function () {
@@ -16,6 +17,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					groups: GroupLib.find({ own: true }),
+					venues: Venues.find({ editor: user._id })
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -65,6 +67,10 @@ Template.profile.helpers({
 
 	privacyChecked: function() {
 		if (this.user.privacy) return 'checked';
+	},
+
+	isVenueEditor: function() {
+		return this.user.venues.count() > 0;
 	},
 
 	hasInvolvedIn: function() {
