@@ -23,27 +23,21 @@ Meteor.publish ('regions', function(){
 });
 
 
-/////////////////////////////////////////////////// locations
-Meteor.publish ('locations', function(region) {
-	check(region, String);
+Meteor.publish ('venues', function(region) {
+	check(region, Match.Maybe(String));
 	var find = {};
-	if (region != 'all') find.region = region;
-	return Locations.find(find);
+	if (region) find.region = region;
+	return Venues.find(find);
 });
 
-Meteor.publish ('locationNames', function(region) {
-	var find = {};
-	if (region != 'all' && region !== undefined) find.region = region;
-	return Locations.find(find);
+Meteor.publish ('venueDetails', function(id) {
+	return Venues.find(id);
 });
 
-Meteor.publish ('locationDetails', function(id) {
-	return Locations.find(id);
+Meteor.publish('venuesFind', function(find, limit) {
+	return venuesFind(find, limit);
 });
 
-Meteor.publish('locationsFind', function(find, limit) {
-	return locationsFind(find, limit);
-});
 
 Meteor.publish('discussion', function(courseId) {
 	return CourseDiscussions.find({ courseId: courseId });

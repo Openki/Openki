@@ -22,7 +22,7 @@ describe('Event save', function () {
 		event = {
 			title: "Intentionally clever title for a generated test-event",
 			description: "This space intentionally filled with bland verbiage. You are safe to ignore this. ",
-			location: { name: "Undisclosed place where heavy testing takes place" },
+			venue: { name: "Undisclosed place where heavy testing takes place" },
 			start: theFuture,
 			end: evenLater,
 			region: 'testId',

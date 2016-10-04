@@ -1,10 +1,9 @@
-<template name="locationDetails">
+<template name="venueDetails">
 	<div class="container-sm">
-		{{#if isEditing}}
-				{{>location_edit}}
-		{{/if}}
-		{{#with location}}
-			{{#unless isEditing}}
+		{{#if editing}}
+			{{> venueEdit venue}}
+		{{else}}
+			{{#with venue}}
 			<div class="page-component">
 				<div class="details-header location-details-header">
 					{{#if picture}}
@@ -14,16 +13,17 @@
 					<p>{{description}} </p>
 					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
 				</div>
+
 				<div class="details-body location-details-body">
 					<div class="details-content">
-						<span class="title">{{mf 'location.details.hosts_admin' 'Hosts/Admin:'}}</span>
+						{{#if editor}}
+						<span class="title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
 						<ul class='hosts'>
-							{{#each hosts}}
 								<li>
-									{{>profilelink this}}
+									{{>profilelink editor}}
 								</li>
-							{{/each}}
 						</ul>
+						{{/if}}
 
 						{{#if contact.web}}
 						<div>
@@ -31,37 +31,34 @@
 							<a href="{{contact.web}}">{{contact.web}}</a>
 						</div>
 						{{/if}}
-						<span class="title">{{mf 'location.details.address' 'Address:'}}</span> {{address}}
+						<div>
+							<span class="title">{{mf 'venue.details.address' 'Address:'}}</span> {{address}}
+						</div>
 						{{#if route}}
 						<div>
-							<span class="title">{{mf 'location.details.how_go_there' 'How to go there:'}}</span> {{route}}
+							<span class="title">{{mf 'venue.details.route' 'How to go there:'}}</span> {{route}}
 						</div>
 						{{/if}}
 						{{#if maxPeople}}
 						<div>
-							<span class="title">{{mf 'location.details.max_ppl' 'Maximum People:'}}</span> {{maxPeople}}
+							<span class="title">{{mf 'venue.details.max_ppl' 'Maximum People:'}}</span> {{maxPeople}}
 						</div>
 						{{/if}}
 						{{#if maxWorkplaces}}
 						<div>
-							<span class="title">{{mf 'location.details.max_workplaces' 'Maximum Workplaces:'}}</span> {{maxWorkplaces}}
+							<span class="title">{{mf 'venue.details.max_workplaces' 'Maximum Workplaces:'}}</span> {{maxWorkplaces}}
 						</div>
 						{{/if}}
 						{{#if infra2.def }}
 						<div>
-							<span class="title">{{mf 'location.details.has_projector' 'Has a Projector!'}} </span>
+							<span class="title">{{mf 'venue.details.has_projector' 'Has a Projector!'}} </span>
 						</div>
 						{{/if}}
 						{{#if specials}}
 						<div>
-							<span class="title">{{mf 'location.details.specials' 'Specials:'}}</span> {{specials}}
+							<span class="title">{{mf 'venue.details.specials' 'Specials:'}}</span> {{specials}}
 						</div>
 						{{/if}}
-						<div class="form-group">
-							<button type="button" class="btn btn-default -contact">
-								{{mf 'location.details.contact' 'Contact'}}
-							</button>
-						</div>
 					</div>
 
 					{{#if loc}}
@@ -72,26 +69,21 @@
 						</div>
 					</div>
 					{{/if}}
-
-
-
-
-
 				</div>
-				<!-- {{#if canEditLocation}} -->
-					<div class="actions">
-						<!-- {{mf 'location.details.youAreHost' 'You are Host here:'}} -->
-						{{> buttonDelete event="js-location-delete"}}
-						{{> buttonEdit event="js-location-edit"}}
-					</div>
-				<!-- {{/if}} -->
+			{{#if mayEdit}}
+				<div class="actions">
+					{{> buttonDelete event="js-venue-delete"}}
+					{{> buttonEdit event="js-venue-edit"}}
+				</div>
+			{{/if}}
 			</div>
-			{{/unless}}
-		{{/with}}
+			{{/with}}
+		{{/if}}
+		{{#if eventsList.count}}
 		<div class="page-component">
-			<h2> Upcoming events: </h2>
-			{{> frameEvents eventsCursor}}
+			<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
+			{{> frameEvents eventsList}}
 		</div>
-
+		{{/if}}
 	</div>
 </template>

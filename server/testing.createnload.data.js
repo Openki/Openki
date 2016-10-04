@@ -65,15 +65,15 @@ function ensureRegion(name) {
 	}
 }
 
-function ensureLocation(name, regionId) {
+function ensureVenue(name, regionId) {
 	var prng = Prng("ensureLocation");
 
 	while (true) {
-		var location = Locations.findOne({name: name, region:regionId});
+		var venue = Venues.findOne({name: name, region:regionId});
 
-		if (location) return location;
+		if (venue) return venue;
 
-		location = {
+		venue = {
 			name: name,
 			region: regionId,
 			rooms: []
@@ -82,27 +82,27 @@ function ensureLocation(name, regionId) {
 		var region = Regions.findOne(regionId);
 		var lat = region.loc.coordinates[1] + Math.pow(prng(), 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
 		var lon = region.loc.coordinates[0] + Math.pow(prng(), 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
-		location.loc =  {"type": "Point", "coordinates":[lon, lat]};
+		venue.loc =  {"type": "Point", "coordinates":[lon, lat]};
 
 		// TESTING: always use same id for same location to avoid broken urls while testing
 		var crypto = Npm.require('crypto'), m5 = crypto.createHash('md5');
-		m5.update(location.name);
-		m5.update(location.region);
+		m5.update(venue.name);
+		m5.update(venue.region);
 
-		location._id = m5.digest('hex').substring(0, 8);
+		venue._id = m5.digest('hex').substring(0, 8);
 
 		var age = Math.floor(prng()*80000000000);
-		location.time_created = new Date(new Date().getTime()-age);
-		location.time_lastedit = new Date(new Date().getTime()-age*0.25);
+		venue.time_created = new Date(new Date().getTime()-age);
+		venue.time_lastedit = new Date(new Date().getTime()-age*0.25);
 
 
-		Locations.insert(location);
-		console.log('Added location: "'+location.name+'" in region: '+location.region);
+		Venues.insert(venue);
+		console.log('Added venue: "' + venue.name + '" in region: ' + venue.region);
 	}
 }
 
-function ensureRoom(location, room){
-	Locations.update(location, { $addToSet: { rooms: room } });
+function ensureRoom(venue, room){
+	Venues.update(venue._id, { $addToSet: { rooms: room } });
 }
 
 loadCoursesIfNone = function(scale) {
@@ -167,51 +167,28 @@ function createCourses(scale) {
 
 /////////////////////////////// TESTING: Create Locations if non in db
 
-loadLocationsIfNone = function(){
-	if (Locations.find().count() === 0) {
-		loadLocations();
+loadVenuesIfNone = function(){
+	if (Venues.find().count() === 0) {
+		loadVenues();
 	}
 };
 
-function ensureLocationCategory(name){
-	var category_prototype = {name: name};
-	var category;
-	while (!(category = LocationCategories.findOne(category_prototype))) { // Legit
-		LocationCategories.insert(category_prototype);
-	}
-	return category;
-}
-
-// TESTING:
-function loadLocations(){
+function loadVenues(){
 	var prng = Prng("loadLocations");
 
 	var testRegions = [Regions.findOne('9JyFCoKWkxnf8LWPh'), Regions.findOne('EZqQLGL4PtFCxCNrp')];
-	_.each(testLocations, function(locationData) {
-		if (!locationData.name) return;      // Don't create locations that don't have a name
+	_.each(testVenues, function(venueData) {
+		if (!venueData.name) return;      // Don't create locations that don't have a name
 
-		locationData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
+		venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
-		var location = ensureLocation(locationData.name, locationData.region._id);
+		var venue = ensureVenue(venueData.name, venueData.region._id);
 
-		_.extend(location, locationData);
+		_.extend(venue, venueData);
 
-		var category_names = location.categories;
-		location.categories = [];
-		for (var i=0; category_names && i < category_names.length; i++) {
-			location.categories.push(ensureLocationCategory(category_names[i]));
-		}
+		venue.createdby = ensureUser(venue.createdby)._id;
 
-		location.createdby = ensureUser(location.createdby)._id;
-//		location.hosts.noContact = ensureUser(location.hosts.noContact)._id
-
-//		if (!location.hosts) location.hosts = [];
-//		location.hosts = [ensureUser(location.hosts[0])._id];
-
-//		location.maxWorkplaces = prng() > 0.3 ? undefined : humandistrib()
-//		location.maxPeople = prng() > 0.5 ? undefined : location.subscribers_min + Math.floor(location.maxWorkplaces*prng())
-
-		Locations.update(location._id, location);
+		Venues.update(venue._id, venue);
 	});
 }
 
@@ -238,24 +215,24 @@ createEventsIfNone = function(){
 				event.groupOrganizers = [];
 
 				var random = prng();
-				var location;
-				if (random < 0.4) location = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
-				else if (random < 0.7) location = random < 0.5 ? 'Volkshaus' : 'SQ131';
-				else if (random < 0.8) location = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
-				else if (random < 0.9) location = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
-				else location = random < 0.95 ? 'Hub' : 'ASZ';
-				event.location = ensureLocation(location, event.region);
+				var venue;
+				if (random < 0.4) venue = random < 0.3 ? 'Haus am See' : 'Kongresszentrum';
+				else if (random < 0.7) venue = random < 0.5 ? 'Volkshaus' : 'SQ131';
+				else if (random < 0.8) venue = random < 0.75 ? 'Caffee Zähringer' : 'Restaurant Krone';
+				else if (random < 0.9) venue = random < 0.85 ? 'Hischengraben 3' : 'SQ125';
+				else venue = random < 0.95 ? 'Hub' : 'ASZ';
+				event.venue = ensureVenue(venue, event.region);
 
 				var rooms;
-				if (event.location.rooms.length > 0) {
-					rooms = event.location.rooms;
+				if (event.venue.rooms.length > 0) {
+					rooms = event.venue.rooms;
 					if (prng() > 0.5) event.room = rooms[Math.floor(prng()*rooms.length)];
 				}
 
 				if (!event.room && prng() > 0.6) {
 					rooms = ['Grosser Saal', 'Vortragsraum', 'Erkerzimmer', 'Mirror-room', 'Garden', '5', 'Moscow', 'Moscow'];
 					event.room = rooms[Math.floor(prng()*rooms.length)];
-					ensureRoom(event.location, event.room);
+					ensureRoom(event.venue, event.room);
 				}
 
 				event.internal = prng() < 0.07;
@@ -362,9 +339,9 @@ loadTestEvents = function(){
 			console.log("   which is "+dateOffset+" milliseconds, right?");
 			console.log("   becouse toDay is: "+toDay+", and day of first loaded event is: "+DayOfFirstEvent);
 		}
-		event.location = ensureLocation(event.location, event.region);
+		event.venue = ensureVenue(event.venue, event.region);
 		if (event.room) {
-			ensureRoom(event.location, event.room);
+			ensureRoom(event.venue, event.room);
 		}
 		event.internal = !!event.internal;
 		event.start = new Date(event.start.$date+dateOffset);

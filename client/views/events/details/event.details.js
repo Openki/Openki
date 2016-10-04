@@ -13,7 +13,7 @@ Template.eventDisplay.onCreated(function() {
 
 Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.location);
+	this.locationTracker.setLocation(this.data.venue);
 });
 
 
@@ -50,7 +50,7 @@ Template.eventDisplay.helpers({
 		return Template.instance().locationTracker.markers;
 	},
 	haveLocation: function() {
-		return this.location && this.location.loc;
+		return this.venue && this.venue.loc;
 	},
 
 	replicating: function() {

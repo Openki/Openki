@@ -88,8 +88,8 @@ Template.eventEditLocation.onCreated(function() {
 		}
 		var localQuery = _.extend(query, { recent: false } ); // We dont have recent events loaded on the client
 
-		subs.subscribe('locationsFind', query, 10);
-		locationsFind(localQuery).observe({
+		subs.subscribe('venuesFind', query, 10);
+		venuesFind(localQuery).observe({
 			'added': function(location) {
 				location.proposed = true;
 				location.presetName = location.name;

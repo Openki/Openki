@@ -176,6 +176,12 @@ groupNameHelpers = {
 	},
 };
 
+/** Use null instead of 'all' to mean "All regions".
+  * This is needed until all instances where we deal with regions are patched.
+  */
+cleanedRegion = function(region) {
+	return region === 'all' ? null : region;
+};
 
 TemplateMixins = {
 	/** Setup expand/collaps logic for a template
@@ -363,10 +369,10 @@ Handlebars.registerHelper('plain', function(html) {
 	return div.textContent || div.innerText || '';
 });
 
-Handlebars.registerHelper ("locationName", function(loc) {
-	var location = Locations.findOne(loc);
-	if (!location) return 'LocationNotFound';
-	return location.name;
+Handlebars.registerHelper ("venueName", function(venueId) {
+	var venue = Venues.findOne(venueId);
+	if (!venue) return '';
+	return venue.name;
 });
 
 // http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
