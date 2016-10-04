@@ -62,3 +62,12 @@ a:hover,
 .fade {
 	transition-duration: 0s;
 }
+
+.medium-editor-placeholder:hover {
+	cursor: text;
+}
+
+.medium-editor-placeholder::after {
+	position: relative;
+	white-space: normal;
+}
