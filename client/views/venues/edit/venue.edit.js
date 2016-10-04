@@ -74,10 +74,6 @@ Template.venueEdit.helpers({
 		return Template.instance().regionSelectable.get();
 	},
 
-	regionSelected: function() {
-		return !!Template.instance().selectedRegion.get();
-	},
-
 	venueMarkers: function() {
 		return Template.instance().locationTracker.markers;
 	},

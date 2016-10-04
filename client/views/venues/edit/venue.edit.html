@@ -45,9 +45,7 @@
 							</div>
 						</div>
 					{{/if}}
-					{{#if regionSelected}}
-						{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
-					{{/if}}
+					{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 
 					<div class="form-group">
 						<label>{{mf 'venue.details.address' 'Address:'}}</label>
