@@ -5,12 +5,10 @@ Template.eventReplication.onCreated(function() {
 	// Days are stored as difference from the original day
 	this.calcDays = new ReactiveVar([]); // calculated from the dialog
 	this.pickDays = new ReactiveVar([]); // picked in the calendar
+	this.usingPicker = new ReactiveVar(true);
 
-	// Get the combined list of day diffs
-	this.allDays = function() {
-		var all = this.calcDays.get().concat(this.pickDays.get());
-		all.sort(function(a, b) { return a - b; });
-		return _.uniq(all, true);
+	this.activeDays = function() {
+		return this.usingPicker.get() ? this.pickDays.get() : this.calcDays.get();
 	};
 });
 
@@ -50,6 +48,11 @@ Template.eventReplication.onRendered(function() {
 
 		instance.pickDays.set(days);
     });
+
+	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+		var target = $(e.target).attr('href');
+		instance.usingPicker.set(target == '#datepicker');
+	});
 });
 
 var replicaStartDate = function(originalDate) {
@@ -82,15 +85,15 @@ Template.eventReplication.helpers({
 	},
 
 	replicaDateCount: function() {
-		return Template.instance().allDays().length;
+		return Template.instance().activeDays().length;
 	},
 
 	replicaDates: function() {
 		var start = moment(this.start);
-		return _.map(Template.instance().allDays(), function(days) {
+		return _.map(Template.instance().activeDays(), function(days) {
 			return moment(start).add(days, 'days');
 		});
-	},
+	}
 });
 
 var getEventFrequency = function(instance) {
@@ -142,7 +145,7 @@ Template.eventReplication.events({
 		var start = moment(instance.data.start);
 		var end = moment(instance.data.end);
 
-		var replicaDays = instance.allDays();
+		var replicaDays = instance.activeDays();
 		$.each(replicaDays, function(i, days) {
 			/*create a new event for each time interval */
 			var replicaEvent = {

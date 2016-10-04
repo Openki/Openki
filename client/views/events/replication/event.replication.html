@@ -1,103 +1,118 @@
 <template name="eventReplication">
 	<div class="details-form event-replicate">
-		<div class="form-group replica-info">
-			<span class="fa fa-info-circle fa-fw" aria-hidden="true"></span>
-			{{mf 'event.replication.replicaInfo' 'Use the interactive calendar or the checkbox options to choose the replication dates.'}}
-		</div>
 		<div class="form-group">
-			<div class="form-group-element js-replica-selection-datepick">
-				<div class="js-replicate-datepick"></div>
+			<div class="form-group-element">
+				<nav>
+					<ul class="nav nav-tabs replica-nav-tabs">
+						<li role="presentation" class="active">
+							<a href="#datepicker" data-toggle="tab">
+								<span class="fa fa-calendar-check-o fa-fw" aria-hidden="true"></span>
+								{{mf 'event.replication.changeToPicker' 'Pick dates'}}
+							</a>
+						</li>
+						<li role="presentation">
+							<a href="#frequency" data-toggle="tab">
+								<span class="fa fa-list fa-fw" aria-hidden="true"></span>
+								{{mf 'event.replication.changeToPattern' 'Select frequency'}}
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="tab-content replica-tab-content">
+					<div class="tab-pane active" id="datepicker">
+						<div class="js-replicate-datepick"></div>
+					</div>
+					<div class="tab-pane form-group" id="frequency">
+						<label for="replicateStart">
+							{{mf 'event.replication.interval.start' 'Interval Start'}}
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							</span>
+							<input type="text"
+								class="form-control js-replicate-date js-update-replicas"
+								id="replicateStart"
+								size="8"
+								value="{{replicaStart}}">
+						</div>
+						<label for="replicateEnd">
+							{{mf 'event.replication.interval.end' 'Interval End'}}
+						</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							</span>
+							<input type="text"
+								class="form-control js-replicate-date js-update-replicas"
+								id="replicateEnd"
+								size="8"
+								value="{{replicaEnd}}">
+						</div>
+						<label for="replicateFrequency">
+							{{mf 'event.replication.repeat' 'Repeat'}}
+						</label>
+						<div class="radio">
+							<label>
+								<input type="radio"
+									class="js-replicate-frequency js-update-replicas"
+									name="replicateFrequency"
+									value=""
+									checked>
+								{{mf 'event.replication.freq.dont' 'no repetition'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio"
+									class="js-replicate-frequency js-update-replicas"
+									name="replicateFrequency"
+									value="once">
+								{{mf 'event.replication.freq.once' 'once'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio"
+									class="js-replicate-frequency js-update-replicas"
+									name="replicateFrequency"
+									value="daily">
+								{{mf 'event.replication.freq.daily' 'every day'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio"
+									class="js-replicate-frequency js-update-replicas"
+									name="replicateFrequency"
+									value="weekly">
+								{{mf'event.replication.freq.weekly' 'once a week'}}
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio"
+									class="js-replicate-frequency js-update-replicas"
+									name="replicateFrequency"
+									value="biWeekly">
+								{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
+							</label>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="form-group-element js-replica-selection-frequencies">
-				<label for="replicateStart">
-					{{mf 'event.replication.interval.start' 'Interval Start'}}
-				</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					</span>
-					<input type="text"
-						class="form-control js-replicate-date js-update-replicas"
-						id="replicateStart"
-						size="8"
-						value="{{replicaStart}}">
-				</div>
-				<label for="replicateEnd">
-					{{mf 'event.replication.interval.end' 'Interval End'}}
-				</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					</span>
-					<input type="text"
-						class="form-control js-replicate-date js-update-replicas"
-						id="replicateEnd"
-						size="8"
-						value="{{replicaEnd}}">
-				</div>
-				<label for="replicateFrequency">
-					{{mf 'event.replication.repeat' 'Repeat'}}
-				</label>
-				<div class="radio">
+			<div class="form-group-element">
+				{{#if replicaDateCount}}
 					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value=""
-							checked>
-						{{mf 'event.replication.freq.dont' 'no repetition'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="once">
-						{{mf 'event.replication.freq.once' 'once'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="daily">
-						{{mf 'event.replication.freq.daily' 'every day'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="weekly">
-						{{mf'event.replication.freq.weekly' 'once a week'}}
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio"
-							class="js-replicate-frequency js-update-replicas"
-							name="replicateFrequency"
-							value="biWeekly">
-						{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
-					</label>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			{{#if replicaDateCount}}
-				<label>
-					{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
+						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
 						Create {COUNT, plural,
 							one {a copy on this date}
 							other {# copies on this dates}
 						}
-					{{/mf}}
-				</label>
-				<div class="replica-event-captions">
-					{{#each replicaDates}}
+						{{/mf}}
+					</label>
+					<div class="replica-event-captions">
+						{{#each replicaDates}}
 						<div class="replica-event-caption" title="{{fullDate this}}">
 							<div class="replica-event-caption-header-wrap">
 								<div class="replica-event-caption-header">
@@ -111,36 +126,37 @@
 								</div>
 							</div>
 						</div>
-					{{/each}}
-				</div>
-				<div class="input-group">
-					<button type="button" class="btn btn-save js-replicate-btn">
-						{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
+						{{/each}}
+					</div>
+					<div class="input-group">
+						<button type="button" class="btn btn-save js-replicate-btn">
+							{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
 							Create {COUNT, plural,
 								one {event}
 								other {# events}
 							}
-						{{/mf}}
-					</button>
-				</div>
-			{{else}}
-				<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
-				<div class="replica-event-captions">
-					<div class="replica-event-caption replica-event-caption-placeholder">
-						<div class="replica-event-caption-header-wrap">
-							<div class="replica-event-caption-header">
-								<span class="fa fa-map-pin"></span>
-								<div class="replica-event-caption-pseudoborder"></div>
+							{{/mf}}
+						</button>
+					</div>
+				{{else}}
+					<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
+					<div class="replica-event-captions">
+						<div class="replica-event-caption replica-event-caption-placeholder">
+							<div class="replica-event-caption-header-wrap">
+								<div class="replica-event-caption-header">
+									<span class="fa fa-map-pin"></span>
+									<div class="replica-event-caption-pseudoborder"></div>
+								</div>
 							</div>
-						</div>
-						<div class="replica-event-caption-body-wrap">
-							<div class="replica-event-caption-body">
-								{{localDate this.start}}
+							<div class="replica-event-caption-body-wrap">
+								<div class="replica-event-caption-body">
+									{{localDate this.start}}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{{/if}}
+				{{/if}}
+			</div>
 		</div>
 	</div>
 </template>

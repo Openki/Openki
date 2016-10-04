@@ -1,9 +1,18 @@
-.replica-info {
-	$background-color: $yellow-light;
+.replica-tab-content {
+	border-color: $blue;
+	padding: 15px;
+}
 
-	background-color: $background-color;
-	border: 1px solid darken($background-color, 10%);
-	padding: 10px;
+.replica-tab-content .form-group {
+	margin-bottom: 0;
+}
+
+.replica-tab-content .input-group + label {
+	margin-top: 10px;
+}
+
+.replica-tab-content label + .radio {
+	margin-top: 0;
 }
 
 .datepicker-inline {
@@ -26,7 +35,7 @@
 }
 
 .replica-event-caption {
-	@include make-xs-column(1.33);
+	@include make-xs-column(3);
 	display: table;
 	height: 50px;
 	padding: 2.5px 5px;
@@ -81,6 +90,7 @@ $replica-event-caption-body-bg: $event-body-bg;
 	border-style: solid;
 	border-width: 0 1.5px 1.5px;
 	display: table-cell;
+	padding: 2px;
 	transition: border-color $default-transition-time;
 	vertical-align: middle;
 }
