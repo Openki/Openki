@@ -1,7 +1,7 @@
 Router.map(function () {
 	this.route('framePropose', {
 		path: '/frame/propose',
-		template: 'course_edit',
+		template: 'courseEdit',
 		layoutTemplate: 'frameLayout',
 		waitOn: function () {
 			this.filter = Filtering(EventPredicates).read(this.params.query).done();

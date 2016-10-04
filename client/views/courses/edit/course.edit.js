@@ -1,4 +1,4 @@
-Template.course_edit.created = function() {
+Template.courseEdit.created = function() {
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
@@ -13,7 +13,7 @@ Template.course_edit.created = function() {
 	);
 };
 
-Template.course_edit.helpers({
+Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
 	},
@@ -102,7 +102,7 @@ Template.course_edit.helpers({
 });
 
 
-Template.course_edit.events({
+Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
