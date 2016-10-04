@@ -60,9 +60,6 @@ var updateUrl = function(event, instance) {
 };
 
 Template.calendar.helpers({
-	past: function() {
-		return moment().isAfter(this.end);
-	},
 	days: function() {
 		var start = Template.instance().filter.get('start');
 		var i = 0;

@@ -85,6 +85,16 @@
 	margin-bottom: 5px;
 }
 
+// ** Past event
+//========================================================================================
+.event-compact-past {
+	background-color: desaturate(lighten($event-body-bg, 5%), 20%);
+}
+
+.event-compact-past > .event-compact-header {
+	background-color: desaturate(lighten($event-header-bg, 5%), 40%);
+}
+
 // ** Title
 //========================================================================================
 .event-compact-title {
