@@ -102,7 +102,7 @@
 					<span class="input-group-addon">
 						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 					</span>
-					{{> eventDescriptionEdit description}}
+					{{> editableTextarea editableDescription}}
 				</div>
 			</div>
 
@@ -212,14 +212,6 @@
 		</div>
 	</div>
 	</form>
-</template>
-
-<template name="eventDescriptionEdit">
-	<div class="form-control editable-textarea"
-		id="eventEditDescription"
-		data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
-		{{{this}}}
-	</div>
 </template>
 
 <template name="eventAttachmentsEdit">

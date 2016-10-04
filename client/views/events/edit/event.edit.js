@@ -5,6 +5,14 @@ Template.eventEdit.onCreated(function() {
 	instance.selectedLocation = new ReactiveVar(this.data.location || {});
 
 	instance.uploaded = new ReactiveVar([]);
+
+	this.data.editableDescription = makeEditable(
+		this.data.description,
+		false,
+		false,
+		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
+		false
+	);
 });
 
 Template.eventEdit.onRendered(function() {
@@ -76,11 +84,6 @@ Template.eventEdit.helpers({
 		return Template.instance().uploaded.get();
 	}
 });
-
-Template.eventDescriptionEdit.rendered = function() {
-	new MediumEditor(this.firstNode);
-};
-
 
 var readDateTime = function(dateStr, timeStr) {
 	return moment(dateStr+' '+timeStr, 'L LT');
@@ -214,13 +217,15 @@ Template.eventEdit.events({
 
 		var editevent = {
 			title: instance.$('#eventEditTitle').val(),
-			description: instance.$('#eventEditDescription').html(),
 			location: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
+
+		var newDescription = instance.data.editableDescription.editedContent();
+		if (newDescription) editevent.description = newDescription;
 
 		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
