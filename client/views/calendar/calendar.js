@@ -116,12 +116,17 @@ Template.calendarNav.onCreated(function() {
 });
 
 Template.calendarNav.onRendered(function() {
-	$('.calendar-nav-container').slideDown();
+	var navContainer = this.$('.calendar-nav-container');
+	navContainer.slideDown();
+
 	$(window).scroll(function () {
-		if($(window).scrollTop() > 5){
-			this.$('.calendar-nav-container').addClass('calendar-nav-container-covering');
-		} else {
-			this.$('.calendar-nav-container').removeClass('calendar-nav-container-covering');
+		var isCovering = navContainer.hasClass('calendar-nav-container-covering');
+		var atTop = $(window).scrollTop() < 5;
+
+		if (!isCovering && !atTop) {
+			navContainer.addClass('calendar-nav-container-covering');
+		} else if (isCovering && atTop) {
+			navContainer.removeClass('calendar-nav-container-covering');
 		}
 	});
 });
