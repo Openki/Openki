@@ -39,10 +39,10 @@
 				{{timeformat this.start}}
 			</div>
 			{{this.description}}
-			{{#if this.location.name}}
-				<div class="course-compact-next-event-location">
+			{{#if this.venue.name}}
+				<div class="course-compact-next-event-venue">
 					<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-					{{this.location.name}}
+					{{this.venue.name}}
 				</div>
 			{{/if}}
 		{{/with}}

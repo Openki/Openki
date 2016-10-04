@@ -49,7 +49,7 @@ Template.eventDisplay.helpers({
 	eventMarkers: function() {
 		return Template.instance().locationTracker.markers;
 	},
-	haveLocation: function() {
+	hasVenue: function() {
 		return this.venue && this.venue.loc;
 	},
 

@@ -1,13 +1,13 @@
-.js-location-link {
-	background: $location-bg;
-	color: $location-color;
+.js-venue-link {
+	background: $venue-bg;
+	color: $venue-color;
 	padding: 3px 4px 1px;
 	transition: all $default-transition-time;
 
 	&:hover {
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-		background: darken($location-bg, 4%);
-		color: $location-color;
+		background: darken($venue-bg, 4%);
+		color: $venue-color;
 		text-decoration: none;
 	}
 }

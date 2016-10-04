@@ -1,8 +1,8 @@
 Template.eventCompact.events({
-	"mouseover .js-location-link": function(event, template){
+	"mouseover .js-venue-link": function(event, template){
 		template.$('.event-compact').addClass('elevate_child');
 	},
-	"mouseout .js-location-link": function(event, template){
+	"mouseout .js-venue-link": function(event, template){
 		template.$('.event-compact').removeClass('elevate_child');
 	}
 });

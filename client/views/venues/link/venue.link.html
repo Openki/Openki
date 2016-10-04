@@ -1,15 +1,15 @@
-<template name="locationLink">
-	{{#if location.name}}
-		{{#if location._id}}
-			<a class="js-location-link"
-				data-tooltip="{{mf 'location.link.tooltip' 'Show details of {LOCATION}' LOCATION=location.name}}"
-				href="{{pathFor 'locationDetails' data=location}}">
+<template name="venueLink">
+	{{#if venue.name}}
+		{{#if venue._id}}
+			<a class="js-venue-link"
+				data-tooltip="{{mf 'location.link.tooltip' 'Show details of {VENUE}' VENUE=venue.name}}"
+				href="{{pathFor 'venueDetails' data=venue}}">
 				<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-				{{location.name}}
+				{{venue.name}}
 			</a>
 		{{else}}
 			<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-			<span>{{location.name}}</span>
+			<span>{{venue.name}}</span>
 		{{/if}}
 		{{#if room}}
 			<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>

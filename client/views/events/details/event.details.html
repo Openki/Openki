@@ -54,17 +54,17 @@
 			<div class="details-content">
 				<h3>{{this.title}}</h3>
 				<div class="location">
-					{{> locationLink}}
-					{{#if location.address}}
+					{{> venueLink}}
+					{{#if venue.address}}
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-						{{location.address}}
+						{{venue.address}}
 					{{/if}}
 				</div>
 
 				{{> eventGroupList}}
 
 				<p>
-					{{#if haveLocation}}
+					{{#if hasVenue}}
 						<div class="details-map">
 							{{>map markers=eventMarkers}}
 						</div>
