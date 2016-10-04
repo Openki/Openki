@@ -108,13 +108,13 @@ Template.regionSelection.events({
 
 	'mouseover, focus .js-region-link': function() {
 		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview(true, '.'+this._id);
+			courseFilterPreview(true, '.'+this._id, false);
 		}
 	},
 
 	'mouseout, focusout .js-region-link': function() {
 		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview(false, '.'+this._id);
+			courseFilterPreview(false, '.'+this._id, false);
 		}
 	},
 

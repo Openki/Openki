@@ -132,7 +132,7 @@
 							{{#if availableCategories}}
 								{{#each availableCategories}}
 									<li class="{{this}}">
-										<a class="js-category-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+										<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
 											href="#">
 											{{categoryNameMarked}}
 											{{#if availableSubcategories this}}
@@ -145,7 +145,7 @@
 									</li>
 									{{#each availableSubcategories this}}
 										<li class="js-sub-category {{..}}">
-											<a class="js-category-label" href="#">
+											<a class="js-category-selection-label" href="#">
 												{{categoryNameMarked}}
 											</a>
 										</li>
