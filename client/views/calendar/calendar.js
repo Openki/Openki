@@ -111,13 +111,13 @@ Template.calendarDay.helpers({
 });
 
 
-Template.calendarNavigation.helpers({
+Template.calendarNav.helpers({
 	endDateTo: function(date) {
 		return moment(date).add(6, 'days');
 	}
 });
 
-Template.calendarNavigation.onCreated(function() {
+Template.calendarNav.onCreated(function() {
 	this.currentUnit = new ReactiveVar('week');
 });
 
@@ -137,24 +137,26 @@ var mvDateHandler = function(unit, instance) {
 	return false;
 };
 
-Template.calendarNavigationButton.events({
+Template.calendarNavControl.events({
 	'click .js-change-date': function(event, instance) {
 		var unit = instance.parentInstance().currentUnit.get();
-
 		mvDateHandler(unit, instance);
 	},
 
 	'click .js-change-unit': function(event, instance) {
 		var unit = this;
-
 		instance.parentInstance().currentUnit.set(unit);
 		mvDateHandler(unit, instance);
 	}
 });
 
-Template.calendarNavigationButton.helpers({
+Template.calendarNavControl.helpers({
 	isPrevious: function() {
 		return this.direction == 'previous';
+	},
+
+	mfString: function(direction, unit, length) {
+		return mf('calendar.' + direction + '.' + unit + '.' + length);
 	},
 
 	currentUnit: function() {
@@ -166,4 +168,8 @@ Template.calendarNavigationButton.helpers({
 		var navUnits = ['week', 'month', 'year'];
 		return navUnits;
 	}
+});
+
+Template.calendarNav.onRendered(function() {
+	$('.calendar-nav-container').slideDown();
 });
