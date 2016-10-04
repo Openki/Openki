@@ -102,12 +102,6 @@ Template.course_edit.helpers({
 });
 
 
-Template.course_edit.rendered = function() {
-	var desc = this.find('#editform_description');
-	if (desc) new MediumEditor(desc);
-};
-
-
 Template.course_edit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
