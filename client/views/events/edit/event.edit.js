@@ -272,9 +272,9 @@ Template.eventEdit.events({
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });
-					addMessage(mf('event.creating.success', { TITLE: editevent.title }, 'Created event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
 				} else {
-					addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 
 				if (updateReplicas) {
