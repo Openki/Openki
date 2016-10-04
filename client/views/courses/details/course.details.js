@@ -28,7 +28,7 @@ Router.map(function () {
 							if (err) {
 								showServerError('Saving the course went wrong', err);
 							} else {
-								addMessage(mf('course.saving.name.editable.success', { NAME: course.name }), 'success');
+								addMessage("\u2713 " + mf('_message.saved'), 'success');
 							}
 						});
 					},
@@ -42,7 +42,7 @@ Router.map(function () {
 							if (err) {
 								showServerError('Saving the course went wrong', err);
 							} else {
-								addMessage(mf('course.saving.desc.editable.success', { NAME: course.name }), 'success');
+								addMessage("\u2713 " + mf('_message.saved'), 'success');
 							}
 						});
 					},
@@ -94,7 +94,7 @@ Router.map(function () {
 
 function loadroles(course) {
 	var userId = Meteor.userId();
-	return _.reduce(Roles.find({}, {sort: {type: 1} }).fetch(), function(goodroles, roletype) {
+	return _.reduce(Roles, function(goodroles, roletype) {
 		var role = roletype.type;
 		var sub = hasRoleUser(course.members, role, userId);
 		if (course.roles && course.roles.indexOf(role) !== -1) {
@@ -121,10 +121,12 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'proposal';
 	},
 	mobileViewport: function() {
-		return Session.get('viewportWidth') <= 992; // @screen-md
+		var viewportWidth = Session.get('viewportWidth');
+		var screenMd = Breakpoints.screenMd;
+		return viewportWidth <= screenMd;
 	},
 	isProposal: function() {
-		return !this.course.nextEvent;
+		return !this.course.nextEvent && !this.course.lastEvent;
 	}
 });
 
@@ -138,7 +140,7 @@ Template.courseDetailsPage.events({
 				if (error) {
 					showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 				} else {
-					addMessage(mf('course.detail.remove.success', { NAME: course.name }, 'The proposal "{NAME}" was obliterated!'), 'success');
+					addMessage("\u2713 " + mf('_message.removed'), 'success');
 				}
 			});
 			Router.go('/');
@@ -200,7 +202,7 @@ Template.courseGroupAdd.events({
 			if (error) {
 				showServerError("Failed to add group", error);
 			} else {
-				addMessage(mf('course.group.addedGroup', "Added your group to the list of promoters"), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -216,7 +218,7 @@ Template.courseGroupRemove.events({
 			if (error) {
 				showServerError("Failed to remove group", error);
 			} else {
-				addMessage(mf('course.group.removedGroup', "Removed group from the list of promoters"), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -232,7 +234,7 @@ Template.courseGroupMakeOrganizer.events({
 			if (error) {
 				showServerError("Failed to give group editing rights", error);
 			} else {
-				addMessage(mf('course.group.groupMadeOrganizer', "Group members can now edit this"), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -248,7 +250,7 @@ Template.courseGroupRemoveOrganizer.events({
 			if (error) {
 				showServerError("Failed to remove organizer status", error);
 			} else {
-				addMessage(mf('course.group.removedOrganizer', "Removed editing rights"), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});

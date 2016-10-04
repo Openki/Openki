@@ -171,7 +171,7 @@ Template.post.events({
 				if (err) {
 					showServerError('Could not delete comment', err);
 				} else {
-					addMessage(mf('comment.delete.success', {}, 'Commend deleted successfuly.'), 'success');
+					addMessage("\u2713 " + mf('_message.removed'), 'success');
 				}
 			});
 		}

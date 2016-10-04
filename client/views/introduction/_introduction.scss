@@ -60,11 +60,13 @@
 .introduction-steps {
 	@include list-unstyled;
 	font-size: medium;
+	text-align: center;
 }
 
 .introduction-steps > li {
 	@include make-xs-column(6);
-	@include make-sm-column(2);
+	@include make-sm-column(4);
+	@include make-md-column(2);
 	margin-bottom: 15px;
 
 	@media (max-width: $screen-xxs) {
@@ -77,14 +79,6 @@
 	&:nth-child(4) {
 		@media (max-width: $screen-sm) {
 			padding-bottom: 15px;
-		}
-	}
-
-	&:nth-last-child(2),
-	&:last-child {
-		@media (max-width: $screen-sm) {
-			@include make-xs-column(12);
-			text-align: center;
 		}
 	}
 }
@@ -113,9 +107,14 @@
 }
 
 .introduction-steps > li:nth-child(2) > h2::after,
-.introduction-steps > li:nth-child(4) > h2::after,
-.introduction-steps > li:nth-child(5) > h2::after {
+.introduction-steps > li:nth-child(4) > h2::after {
 	@media (max-width: $screen-sm) {
+		content: '';
+	}
+}
+
+.introduction-steps > li:nth-child(3) > h2::after {
+	@media (max-width: $screen-md) and (min-width: $screen-sm) {
 		content: '';
 	}
 }

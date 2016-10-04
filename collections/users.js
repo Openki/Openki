@@ -126,7 +126,7 @@ Users.updateBadges = function(userId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -191,6 +191,7 @@ Meteor.methods({
 		}
 	},
 
+
 	// Recalculate the groups and badges field
 	'user.updateBadges': function(selector) {
 		Meteor.users.find(selector).forEach(function(user) {
@@ -198,3 +199,15 @@ Meteor.methods({
 		});
 	},
 });
+
+if (Meteor.isServer) {
+	Meteor.methods({
+		'user.name': function(userId) {
+			this.unblock();
+			var user = Meteor.users.findOne(userId);
+			if (!user) return false;
+			var username = user.username;
+			return username;
+		}
+	});
+}

@@ -1,27 +1,31 @@
 <template name="frameList">
-	<div>
-		{{#if groupName}}
-			<h2 id="frame-list-courses-title">The courses of {{groupName}}</h2>
-		{{/if}}
+	<div class="frame-list-all">
 		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithEvents' 'With upcoming events'}}</h3>
+			<h3>{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithEvents}}
-					<a href="{{pathFor 'showCourse'}}">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
 						<li>{{name}}</li>
 					</a>
 				{{/each}}
 			</ul>
 		</div>
 		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Without upcoming events'}}</h3>
+			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}</h3>
 			<ul>
 				{{#each coursesWithoutEvents}}
-					<a href="{{pathFor 'showCourse'}}">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
 						<li>{{name}}</li>
 					</a>
 				{{/each}}
 			</ul>
 		</div>
+		{{#if group}}
+			<div class="frame-list-courses-footer">
+				<a href="{{pathFor 'groupDetails' _id=group._id}}" target="_blank">
+					{{mf 'frame.list.allCoursesOfGroup' "You're looking at a list of the courses of {GROUP} on openki.net" GROUP=group.name}}
+				</a>
+			</div>
+		{{/if}}
 	</div>
 </template>

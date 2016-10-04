@@ -3,18 +3,18 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-accounts-password
-accounts-base
-email
-standard-app-packages
-check
+accounts-password@1.3.0
+accounts-base@1.2.11
+email@1.1.17
+standard-app-packages@1.0.9
+check@1.2.3
 iron:router
-reactive-var
-accounts-github
-service-configuration
+reactive-var@1.0.10
+accounts-github@1.0.10
+service-configuration@1.0.10
 mediumeditor:mediumeditor
 djedi:sanitize-html
-accounts-facebook
+accounts-facebook@1.0.10
 archive:jquery-dotdotdot
 ical
 cfs:standard-packages
@@ -31,19 +31,18 @@ rzymek:moment-locale-fa
 rzymek:moment-locale-el
 rzymek:moment-locale-tr
 rzymek:moment-locale-hu
-servicelocale:geoip
 fortawesome:fontawesome
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
-accounts-google
+accounts-google@1.0.10
 msavin:mongol
 bevanhunt:leaflet
-http
-es5-shim
+http@1.2.9
+es5-shim@4.6.14
 router-autoscroll
 meteorhacks:ssr
-standard-minifier-js
+standard-minifier-js@1.2.0
 rajit:bootstrap3-datepicker
 prng
 ccorcos:subs-cache
@@ -52,3 +51,5 @@ reywood:bootstrap3-sass
 lookback:tooltips
 ongoworks:spiderable
 seba:minifiers-autoprefixer
+gadicohen:robots-txt
+shell-server

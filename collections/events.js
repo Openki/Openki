@@ -14,7 +14,7 @@
 //       address:      Address string where the event will take place
 // }
 // room            -> String    (Where inside the building the event will take place)
-// createdby       -> userId
+// createdBy       -> userId
 // time_created    -> Date
 // time_lastedit   -> Date
 // courseId        -> course._id of parent course, optional
@@ -118,7 +118,7 @@ updateEventLocation = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -134,7 +134,7 @@ Events.updateGroups = function(eventId) {
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
 		var editors = event.groupOrganizers.slice(); // Clone
-		if (event.createdby) editors.push(event.createdby);
+		if (event.createdBy) editors.push(event.createdBy);
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		var courseGroups = [];
@@ -167,7 +167,7 @@ Events.updateGroups = function(eventId) {
 			{ fullResult: true }
 		);
 
-		return result.nModified === 0;
+		return result.result.nModified === 0;
 	});
 };
 
@@ -313,29 +313,26 @@ Meteor.methods({
 	},
 
 
-	removeFile: function(eventId,fileId) {
+	removeFile: function(eventId, fileId) {
 		check(eventId, String);
+		check(fileId, String);
 
 		var user = Meteor.user();
 		if (!user) throw new Meteor.Error(401, "please log in");
+
 		var event = Events.findOne(eventId);
 		if (!event) throw new Meteor.Error(404, "No such event");
+
 		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
-		var tmp = [];
-
-		for(var i = 0; i < event.files.length; i++ ){
-			var fileObj = event.files[i];
-			if( fileObj._id != fileId){
-				tmp.push(fileObj);
-			}
+		// Check that the event actually references the file
+		// Wouldn't want to delete just any file
+		if (!_.some(event.files, function(file) { return file._id === fileId; })) {
+			return false;
 		}
 
-		var edits = {
-			files: tmp,
-		};
-		var upd = Events.update(eventId, { $set: edits });
-		return upd;
+		Events.update(event._id, { $pull: { files: { _id: fileId } } });
+		Files.remove(fileId);
 	},
 
 	// Update the location fields for all events matching the selector

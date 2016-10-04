@@ -35,7 +35,7 @@ Router.map(function () {
 					if (err) {
 						showServerError('Saving the group went wrong', err);
 					} else {
-						addMessage(mf('group.saving.success', { NAME: group.short }, 'Saved change to {NAME}'), 'success');
+						addMessage("\u2713 " + mf('_message.saved'), 'success');
 					}
 				};
 
@@ -137,6 +137,10 @@ Template.groupDetails.events({
 	},
 
 	'click .js-group-cancel': function(event, instance) {
+		Router.go('/'); // Got a better idea?
+	},
+
+	'click .js-group-remove-filter': function(event, instance) {
 		Router.go('/'); // Got a better idea?
 	}
 });

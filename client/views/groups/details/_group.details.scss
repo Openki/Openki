@@ -20,13 +20,26 @@
 .js-group-settings {
 	font-size: x-large;
 	line-height: $line-height-base;
-	padding: 7px;
+	// padding: 7px;
+	position: absolute;
+	right: 6px;
+	top: 25px;
+}
+
+.js-group-remove-filter {
+	font-size: x-large;
+	line-height: $line-height-base;
+	// padding: 7px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .group-details-short {
 	float: right;
 	padding: 7px;
 	text-align: right;
+	margin-right: 7px;
 }
 
 .group-details-body {

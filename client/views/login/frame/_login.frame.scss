@@ -1,13 +1,13 @@
 .navbar .navbar-nav > .open > .login-dropdown,
 .navbar .navbar-nav > .dropdown > .login-dropdown {
 	@media (min-width: $screen-sm) {
-		padding-top: 15px;
-		width: 300px;
+		min-width: 300px;
 	}
 }
 
 .user-frame {
-	@media (max-width: $screen-sm) {
+	@media (max-width: $grid-float-breakpoint) {
+		@include clearfix;
 		background-color: $dropdown-bg;
 		padding-top: 15px;
 	}
@@ -34,6 +34,18 @@
 .forgot-pwd-btn-container {
 	text-align: right;
 }
+
+.forgot-pwd-btn-container > .btn-link {
+	$color: $blue;
+
+	color: $color;
+
+	&:hover {
+		color: darken($color, 20%)
+	}
+}
+
+
 
 .external-service-login {
 	text-align: center;

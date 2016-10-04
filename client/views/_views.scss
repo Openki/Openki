@@ -23,6 +23,7 @@
 @import 'events/details/event.details';
 @import 'events/edit/event.edit';
 @import 'events/editLocation/event.editLocation';
+@import 'events/replication/event.replication';
 
 // Find
 @import 'find/find';
@@ -31,6 +32,7 @@
 @import 'frames/calendar/frame.calendar';
 @import 'frames/events/frame.events';
 @import 'frames/list/frame.list';
+@import 'frames/schedule/schedule';
 
 // Groups
 @import 'groups/details/group.details';
@@ -59,9 +61,13 @@
 @import 'navigation/footer/footer';
 @import 'navigation/navbar/navbar';
 
+// Regions
+@import 'regions/regions';
+
 // Static
 @import 'static/loading/loading';
 @import 'static/noscript/noscript';
+@import 'static/notFound/notFound';
 @import 'static/translate/translate.info';
 
 // Timetable

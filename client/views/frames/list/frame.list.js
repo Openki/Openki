@@ -33,9 +33,3 @@ Router.map(function () {
 		}
 	});
 });
-
-Template.frameList.helpers({
-	groupName: function() {
-		return Template.instance().data.group.name;
-	},
-})

@@ -1,0 +1,37 @@
+.page-not-found {
+	text-align: center;
+}
+
+.page-not-found .fa-flash {
+	color: $yellow;
+}
+
+.page-not-found .btn {
+	width: auto !important;
+}
+
+.page-not-found-links {
+	@include list-unstyled;
+	font-size: large;
+}
+
+.page-not-found-links li {
+	display: inline-block;
+
+	&:first-child {
+		margin-right: 10px;
+	}
+}
+
+.page-not-found-report {
+	$page-not-found-report-width: 500px;
+
+	margin: 15px auto 0;
+	@media (min-width: $page-not-found-report-width) {
+		width: $page-not-found-report-width;
+	}
+}
+
+.page-not-found-report .report {
+	text-align: left;
+}

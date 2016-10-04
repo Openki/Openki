@@ -1,0 +1,16 @@
+.region-badges {
+	display: inline-block;
+	float: right;
+	padding-left: 10px;
+}
+
+.badge-courses {
+	background-color: $brand-primary;
+}
+
+.badge-events {
+	$background-color: $green;
+
+	background-color: $background-color;
+	color: desaturate(darken($background-color, 40%), 50%)
+}

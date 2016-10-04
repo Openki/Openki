@@ -20,13 +20,13 @@ Template.resetPassword.onCreated(function () {
 	instance.showPassword = new ReactiveVar(false);
 
 	instance.updatePassword = function() {
-		var password = $('.-resetPassword').val();
+		var password = $('.js-pwd-reset').val();
 		instance.password.set(password);
 
 		if (instance.showPassword.get()) {
 			instance.passwordValid.set(password.length > 0);
 		} else {
-			var passwordConfirm = $('.-resetPasswordConfirm').val();
+			var passwordConfirm = $('.js-confirm-pwd-reset').val();
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
 			instance.passwordNotSame.set(passwordConfirm && password.length <= passwordConfirm.length && password !== passwordConfirm);
 			instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
@@ -52,24 +52,18 @@ Template.resetPassword.helpers({
 		return Template.instance().showPassword.get() ? "text" : "password";
 	},
 
-	'showButtonClass': function(action) {
-		var showPassword = Template.instance().showPassword.get();
-		var active = action == 'show' ? showPassword : !showPassword;
-		return "btn btn-secondary -" + action + "Password " + (active ? 'active' : '');
-	},
-
 	'submitDisabled': function() {
 		return Template.instance().passwordValid.get() ? '' : 'disabled';
 	}
 });
 
 Template.resetPassword.events({
-	'click .-showPassword': function(event, instance) {
+	'click .js-show-pwd': function(event, instance) {
 		instance.showPassword.set(true);
 		instance.updatePassword();
 	},
 
-	'click .-hidePassword': function(event, instance) {
+	'click .js-hide-pwd': function(event, instance) {
 		instance.showPassword.set(false);
 		instance.updatePassword();
 	},
@@ -85,7 +79,7 @@ Template.resetPassword.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-        var password = instance.$('.-resetPassword').val();
+        var password = instance.$('.js-pwd-reset').val();
 		var token = Template.instance().data;
 		Accounts.resetPassword(token, password, function(err) {
 			if (err) {
@@ -97,7 +91,7 @@ Template.resetPassword.events({
 		});
     },
 
-	'click .-resetPasswordAbort': function() {
+	'click .js-cancel-reset-pwd': function() {
 		Router.go('/');
 	}
 });

@@ -1,0 +1,120 @@
+.replica-tab-content {
+	border-color: $blue;
+	padding: 15px;
+}
+
+.replica-tab-content .form-group {
+	margin-bottom: 0;
+}
+
+.replica-tab-content .input-group + label {
+	margin-top: 10px;
+}
+
+.replica-tab-content label + .radio {
+	margin-top: 0;
+}
+
+.datepicker-inline {
+	border-radius: 0;
+	width: 100%;
+}
+
+.datepicker table {
+	width: 100%;
+}
+
+.replica-event-captions {
+	@include clearfix;
+	margin: -2.5px -5px;
+	padding-bottom: 10px;
+}
+
+.replica-event-captions > li {
+	display: inline-block;
+}
+
+.replica-event-caption {
+	@include make-xs-column(3);
+	display: table;
+	height: 50px;
+	padding: 2.5px 5px;
+	position: relative;
+	text-align: center;
+}
+
+.replica-event-caption-header-wrap {
+	display: table-row;
+}
+
+$replica-event-caption-header-bg: $event-header-bg;
+$replica-event-caption-border: $yellow;
+
+.replica-event-caption-header {
+	background-color: $replica-event-caption-header-bg;
+	border-color: $replica-event-caption-border;
+	border-style: solid;
+	border-width: 1.5px 1.5px 0;
+	display: table-cell;
+	font-size: 8px;
+	position: relative;
+	transition: border-color $default-transition-time;
+	vertical-align: top;
+}
+
+.replica-event-caption-header > .fa-map-pin {
+	position: relative;
+	top: -5px;
+	transform: rotate(10deg);
+}
+
+.replica-event-caption-pseudoborder {
+	background-color: $white;
+	bottom: 0;
+	left: 0;
+	height: 1px;
+	position: absolute;
+	width: 100%;
+}
+
+.replica-event-caption-body-wrap {
+	display: table-row;
+	height: 70%;
+}
+
+$replica-event-caption-body-bg: $event-body-bg;
+
+.replica-event-caption-body {
+	background-color: $replica-event-caption-body-bg;
+	border-color: $replica-event-caption-border;
+	border-style: solid;
+	border-width: 0 1.5px 1.5px;
+	display: table-cell;
+	padding: 2px;
+	transition: border-color $default-transition-time;
+	vertical-align: middle;
+}
+
+.replica-event-caption-placeholder .replica-event-caption-header {
+	background-color: rgba(desaturate($replica-event-caption-header-bg, 55%), 0.5);
+}
+
+.replica-event-caption-placeholder .fa-map-pin {
+	color: $gray-lighter;
+}
+
+.replica-event-caption-placeholder .replica-event-caption-body {
+	background-color: rgba(desaturate($replica-event-caption-body-bg, 50%), 0.5);
+	color: transparent;
+	text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.5);
+}
+
+.replica-event-caption-placeholder .replica-event-caption-header,
+.replica-event-caption-placeholder .replica-event-caption-body {
+	border-color: $gray-lightest;
+}
+
+.replica-event-captions.highlighted .replica-event-caption-header,
+.replica-event-captions.highlighted .replica-event-caption-body {
+	border-color: darken($green, 25%);
+}

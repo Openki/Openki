@@ -99,26 +99,26 @@ Template.map.onRendered(function() {
 	});
 	var attributionControl = L.control.attribution();
 	var scaleControl = L.control.scale({
-		imperial: Session.get('locale') == 'en'
+		imperial: Session.equals('locale', 'en')
 	});
 	var fullscreenControl = new OpenkiControl({
 		icon: FaIcon('arrows-alt'),
-		action: '-fullscreen',
+		action: 'js-make-fullscreen',
 		title: mf('map.fullscreen', 'big map')
 	});
 	var closeFullscreenControl = new OpenkiControl({
 		icon: FaIcon('close'),
-		action: '-fullscreenClose',
+		action: 'js-close-fullscreen',
 		title: mf('map.fullscreenClose', 'close')
 	});
 	var addMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('plus', 'map-marker'),
-		action: '-addMarker',
+		action: 'js-add-marker',
 		title: mf('map.addMarker', 'set marker')
 	});
 	var removeMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('minus', 'map-marker'),
-		action: '-removeMarker',
+		action: 'js-remove-marker',
 		title: mf('map.removeMarker', 'remove the marker')
 	});
 
@@ -325,19 +325,19 @@ Template.map.events({
 		if (instance.data.mini) instance.fullscreen.set(true);
 	},
 
-	'mousedown .-addMarker': function(event, instance) {
+	'mousedown .js-add-marker': function(event, instance) {
 		instance.proposeMarker();
 	},
 
-	'click .-removeMarker': function(event, instance) {
+	'click .js-remove-marker': function(event, instance) {
 		instance.removeMarker();
 	},
 
-	'click .-fullscreen': function(event, instance) {
+	'click .js-make-fullscreen': function(event, instance) {
 		instance.fullscreen.set(true);
 	},
 
-	'click .-fullscreenClose': function(event, instance) {
+	'click .js-close-fullscreen': function(event, instance) {
 		instance.fullscreen.set(false);
 	},
 

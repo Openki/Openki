@@ -12,6 +12,14 @@ body {
 	padding-top: $navbar-height;
 }
 
+#outer.test-warning {
+	padding-top: $navbar-height + 19px;
+}
+
+#outer.test-warning .calendar-nav-container {
+	top: $navbar-height + 19px;
+}
+
 .push {
 	height: $footer-height;
 }

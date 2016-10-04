@@ -66,7 +66,7 @@
 					</span>
 					<input class="js-login-password form-control"
 						id="login-password"
-						placeholder="{{mf 'frame.login.password' 'Password'}}"
+						placeholder="{{mf '_inputField.password'}}"
 						type="password"/>
 				</div>
 				{{#if hasWarnings}}
@@ -110,7 +110,7 @@
 				</div>
 			{{else}}
 				<div class="form-group forgot-pwd-btn-container">
-					<button type="button" class="btn {{#if incorrectPassword}}btn-warning form-control{{else}}btn-default btn-sm{{/if}} js-forgot-pwd-btn">
+					<button type="button" class="{{#if incorrectPassword}}btn btn-warning form-control{{else}}btn-link{{/if}} js-forgot-pwd-btn">
 						{{mf 'forgot' "I forgot my password"}}
 					</button>
 				</div>
@@ -182,7 +182,7 @@
 		<div class="form-group">
 			<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
 				<span class="glyphicon glyphicon-remove"></span>
-				{{mf 'forgot.close' 'Never mind'}}
+				{{mf '_button.cancel'}}
 			</button>
 		</div>
 	</div>

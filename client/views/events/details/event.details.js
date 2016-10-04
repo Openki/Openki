@@ -17,7 +17,7 @@ Template.eventDisplay.onRendered(function() {
 });
 
 
-Template.eventPage.helpers({
+Template.eventBackToLink.helpers({
 	course: function() {
 		var courseId = this.courseId;
 		if (courseId) {
@@ -27,6 +27,11 @@ Template.eventPage.helpers({
 			return Courses.findOne({_id: courseId});
 		}
 	},
+
+	referredByCourse: function() {
+		var previousRouteName = Session.get("previousRouteName");
+		return previousRouteName == "showCourse";
+	}
 });
 
 
@@ -56,7 +61,7 @@ Template.eventDisplay.helpers({
 Template.event.events({
 	'click .js-event-delete': function (e, instance) {
 		var event = instance.data;
-		
+
 		var title = event.title;
 		var course = event.courseId;
 		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
@@ -64,7 +69,7 @@ Template.event.events({
 				if (error) {
 					showServerError('Could not remove event ' + "'" + title + "'", error);
 				} else {
-					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.removed'), 'success');
 					if (course) {
 						Router.go('showCourse', { _id: course });
 					} else {
@@ -83,13 +88,10 @@ Template.event.events({
 });
 
 Template.eventDisplay.events({
-	'click .-openReplication': function(event, instance) {
-		instance.replicating.set(true);
-	},
-
-	'click .-closeReplication': function(event, instance) {
-		instance.replicating.set(false);
-	},
+	'click .js-toggle-replication': function(event, instance) {
+		var replicating = instance.replicating;
+		replicating.set(!replicating.get());
+	}
 });
 
 
@@ -145,7 +147,7 @@ Template.eventGroupAdd.events({
 			if (error) {
 				showServerError('Failed to add group', error);
 			} else {
-				addMessage(mf('course.group.addedGroup'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -161,7 +163,7 @@ Template.eventGroupRemove.events({
 			if (error) {
 				showServerError('Failed to remove group', error);
 			} else {
-				addMessage(mf('course.group.removedGroup'), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -177,7 +179,7 @@ Template.eventGroupMakeOrganizer.events({
 			if (error) {
 				showServerError('Failed to give group editing rights', error);
 			} else {
-				addMessage(mf('course.group.groupMadeOrganizer'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -193,7 +195,7 @@ Template.eventGroupRemoveOrganizer.events({
 			if (error) {
 				showServerError('Failed to remove organizer status', error);
 			} else {
-				addMessage(mf('course.group.removedOrganizer'), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});

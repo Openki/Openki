@@ -1,5 +1,5 @@
 // *** Course details ***
-//==================
+//=======================
 
 // ** Column layout
 //========================================================================================
@@ -72,6 +72,34 @@
 	background: $has-upcoming-events-bg;
 }
 
+// ** Tags
+//========================================================================================
+.details-header-tags {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.proposal .details-header-tags,
+.has-past-events .details-header-tags {
+	right: -$course-border-width;
+	top: -$course-border-width;
+}
+
+.details-header-tags > div {
+	display: block;
+	position: relative;
+}
+
+.proposal-tag {
+	$background-color: rgba($blue-lighter, 0.75);
+
+	background-color: $background-color;
+	color: darken($background-color, 65%);
+	margin-bottom: 1px;
+	padding: 8px;
+}
+
 // ** Title
 //========================================================================================
 .course-details-title {
@@ -86,6 +114,11 @@
 
 .course-details-title > .editable-controls {
 	font-size: medium;
+	z-index: 100;
+}
+
+.course-details-title > h2 {
+	margin-top: 0;
 }
 
 // ** Categories
@@ -126,56 +159,28 @@
 	background: $has-upcoming-events-bg;
 }
 
-.course-details-nav-tabs > li {
-	z-index: 99;
-}
-
-.course-details-nav-tabs > li > a {
-	color: $gray-dark;
-
-	&:hover {
-		background-color: $blue-light;
-		border-bottom-width: 2px;
-		color: $white;
-	}
-}
-
-$course-details-content-bg: lighten($blue-lighter, 5%);
-
-.course-details-nav-tabs > li.active > a,
-.course-details-nav-tabs > li.active > a:hover,
-.course-details-nav-tabs > li.active > a:focus {
-	background-color: $course-details-content-bg;
-	border-top: 3px solid $blue-light;
-}
-
 // ** Content
 //========================================================================================
 .course-details-content {
-	$border-width: 1px;
-
-	background-color: $course-details-content-bg;
-	border-color: darken($course-details-content-bg, 5%);
-	border-style: solid;
-	border-width: 0 $border-width $border-width;
+	border-color: darken($tab-content-bg, 5%);
 	position: relative;
 
 	&::before,
 	&::after {
-		border-top: $border-width solid $blue;
+		border-top: $tab-content-border-width solid $blue;
 		content: '';
 		height: 100%;
 		position: absolute;
-		top: $border-width * -1;
+		top: $tab-content-border-width * -1;
 		z-index: 99;
 	}
 
 	&::before {
-		left: $border-width * -1;
+		left: $tab-content-border-width * -1;
 	}
 
 	&::after {
-		right: $border-width * -1;
+		right: $tab-content-border-width * -1;
 	}
 }
 

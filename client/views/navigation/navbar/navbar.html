@@ -16,30 +16,32 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand -toggleIntro" href="/">
+				<a class="navbar-brand js-toggle-introduction" href="/">
 					{{#if connecting}}
-						<i class="fa fa-circle-o-notch fa-3x fa-spin fa-fw" title="{{mf 'status.connecting' "Connecting to server"}}"></i>
+						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
+						      title="{{mf 'status.connecting' "Connecting to server"}}">
+						</span>
 						<span class="sr-only">{{mf 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
-						<i class="fa fa-circle-o-notch fa-3x fa-fw" title="{{mf 'status.notConnected' "No connection to server"}}"></i>
+						<span class="fa fa-circle-o-notch fa-fw no-connection"
+						      title="{{mf 'status.notConnected' "No connection to server"}}">
+						</span>
 						<span class="sr-only">{{mf 'status.notConnected'}}</span>
 					{{/if}}
 					{{#if connected}}
-					<img
-						src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
-						alt="Openki logo"
-					/>
+						<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
+						     alt="Openki logo">
+					{{/if}}
 					<span class="site-name">{{siteName}}</span>
 					<span class="site-stage">{{siteStage}}</span>
-					{{/if}}
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
 						<a href="{{pathFor 'home'}}"
-							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close -closeIntroAtHome"
+							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
 							 id="nav_courses">
 							 <span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Courses' 'Find'}}
@@ -48,7 +50,7 @@
 					</li>
 					<li class="{{activeClass 'proposeCourse'}}">
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="{{activeClass 'proposeCourse'}} navbar-link js-nav-dropdown-close">
+							 class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
 							 <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 							 {{mf 'menue.Create' 'Create'}}
 							 <div class="nav-marker-caret"></div>
@@ -65,12 +67,8 @@
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown region_sel">
-						{{> region_sel}}
-					</li>
-					<li class="dropdown lang_sel">
-						{{> lang_sel}}
-					</li>
+					{{> regionSelectionWrap}}
+					{{> languageSelectionWrap}}
 					<li class="dropdown login-link {{activeClass 'profile'}}">
 						{{> loginButton}}
 						<div class="dropdown-menu login-dropdown">

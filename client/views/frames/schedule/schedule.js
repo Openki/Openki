@@ -107,7 +107,7 @@ Template.frameSchedule.onCreated(function() {
 			var minuteDiff = eventStart.diff(dayStart, 'minutes');
 			var intervalStart = Math.floor(minuteDiff / interval) * interval;
 			var closestSeparator = _.find(separators, function(sep) {
-				return sep < minuteDiff;
+				return sep <= minuteDiff;
 			});
 
 			var mins = Math.max(intervalStart, closestSeparator || 0);
@@ -162,7 +162,7 @@ Template.frameSchedule.helpers({
 		});
 	},
 
-	colorClass: function() {
-		return "color-"+Template.instance().kindMap(this.title);
+	type: function() {
+		return Template.instance().kindMap(this.title);
 	}
 });

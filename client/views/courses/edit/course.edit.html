@@ -1,5 +1,5 @@
 <template name="course_edit">
-	<div class="course-edit">
+	<div class="edit-page">
 		<form>
 			{{#if proposeFromQuery}}
 				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
@@ -13,7 +13,10 @@
 					<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
 				{{/if}}
 			{{/if}}
-			<div class="course-edit-body">
+			<div class="edit-page-body course-edit-body">
+				{{#if _id}}
+					{{> regionTag}}
+				{{/if}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.title' 'Title'}}</label>
 					<input class="form-control input-lg"
@@ -69,9 +72,9 @@
 							{{#unless categories}}
 								{{mf 'course.edit.no.categories' 'No categories'}}
 							{{/unless}}
-							<button type="button" class="btn btn-edit editCategories">
+							<button type="button" class="btn btn-edit js-edit-categories">
 								<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
-								{{mf 'course.edit.edit_categories-button' 'Edit categories'}}
+								{{mf 'course.edit.edit_categories'}}
 							</button>
 						{{/if}}
 					</div>
@@ -90,7 +93,7 @@
 								</div>
 								<select class="region_select form-control" name='region'>
 									<option value='' disabled selected class="select_placeholder">
-										{{mf 'course.edit.pls_select_region' 'Please select a region'}}
+										{{mf '_selection.pleaseSelect'}}
 									</option>
 									{{#each regions}}
 										<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
@@ -107,7 +110,7 @@
 					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
 					<div class="checkbox">
 						<label>
-							<input class="-courseInternal"
+							<input class="js-check-internal"
 								type="checkbox"
 								{{isInternal}}/>
 							{{mf 'course.edit.internDescription' 'Show this course only in a group or location'}}
@@ -127,7 +130,7 @@
 <template name="courseEditRole">
 	<div class="checkbox">
 		<label class="{{role.type}}">
-			<input class='-roleselection {{role.type}}'
+			<input class='js-check-role {{role.type}}'
 				name='{{role.type}}'
 				type="checkbox"
 				{{checkRole}}/>
@@ -138,7 +141,7 @@
 	{{#if checkRole}}
 		<div class="checkbox checkbox-sub">
 			<label>
-				<input class='-enrol {{role.type}}'
+				<input class='js-check-enrol {{role.type}}'
 					name='{{role.type}}'
 					type="checkbox"
 					{{hasRole}}/>

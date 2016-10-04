@@ -1,0 +1,26 @@
+.nav-tabs > li > a {
+	color: $gray-dark;
+
+	&:hover {
+		background-color: $blue-light;
+		border-bottom-width: 2px;
+		color: $white;
+	}
+}
+
+$tab-content-bg: lighten($blue-lighter, 5%);
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+	background-color: $tab-content-bg;
+	border-top: 3px solid $blue-light;
+}
+
+$tab-content-border-width: 1px;
+
+.tab-content {
+	background-color: $tab-content-bg;
+	border-style: solid;
+	border-width: 0 $tab-content-border-width $tab-content-border-width;
+}

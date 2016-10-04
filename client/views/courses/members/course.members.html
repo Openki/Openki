@@ -24,24 +24,22 @@
 	<div class="course-member">
 		<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 		{{> profilelink member.user}}
-		{{#if hasRoles}}
-		<ul class='course-member-roles'>
-			{{#each member.roles}}
-				<li class='{{this}}'>
-					<span class="{{rolelist_icon this}} fa-fw" aria-hidden="true"></span>
-					<span class="role-short">{{mf roleShort}}</span>
-				</li>
-			{{/each}}
-		</ul>
+		{{#if showMemberRoles}}
+			<ul class='course-member-roles'>
+				{{#each member.roles}}
+					<li class='{{this}}'>
+						<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
+						<span class="role-short">{{mf roleShort}}</span>
+					</li>
+				{{/each}}
+			</ul>
 		{{/if}}
 		{{#if maySubscribe}}
-		<button type="button" class='btn btn-add js-add-to-team-btn'>
-			<span class="glyphicon glyphicon-plus add-to-team-btn-plus {{member.user}}"></span>
-			<span class="add-to-team-btn-txt {{member.user}}">
-				<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
-				{{mf 'course.roles.maketeam' 'Add to team'}}
-			</span>
-		</button>
+			<button type="button" class="btn btn-add js-add-to-team-btn"
+				data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
+				data-tooltip-direction="e">
+				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
+			</button>
 		{{/if}}
 		{{#if editableMessage}}
 			<div class="course-member-comment">
@@ -50,7 +48,7 @@
 		{{else}}
 			{{#if member.comment}}
 				<div class="course-member-comment">
-						{{member.comment}}
+					{{member.comment}}
 				</div>
 			{{/if}}
 		{{/if}}
