@@ -177,6 +177,15 @@ Template.map.onRendered(function() {
 
 		var maxZoom = 16;
 
+		// Use center markers when there are no other markers
+		if (count < 1) {
+			for (var centerPos in centers) {
+				bounds.extend(centers[centerPos]);
+				count += 1;
+			}
+			if (count == 1) maxZoom = 13;
+		}
+
 		if (bounds.isValid()) {
 			map.fitBounds(bounds, { padding: [20, 20], maxZoom: maxZoom });
 		}
