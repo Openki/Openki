@@ -121,6 +121,17 @@ Template.calendarNav.onCreated(function() {
 	this.currentUnit = new ReactiveVar('week');
 });
 
+Template.calendarNav.onRendered(function() {
+	$('.calendar-nav-container').slideDown();
+	$(window).scroll(function () {
+		if($(window).scrollTop() > 5){
+			this.$('.calendar-nav-container').addClass('calendar-nav-container-covering');
+		} else {
+			this.$('.calendar-nav-container').removeClass('calendar-nav-container-covering');
+		}
+	});
+});
+
 var mvDateHandler = function(unit, instance) {
 	var amount = instance.data.direction == 'previous' ? -1 : 1;
 	var calendarInstance = instance.parentInstance(2);
@@ -168,8 +179,4 @@ Template.calendarNavControl.helpers({
 		var navUnits = ['week', 'month', 'year'];
 		return navUnits;
 	}
-});
-
-Template.calendarNav.onRendered(function() {
-	$('.calendar-nav-container').slideDown();
 });
