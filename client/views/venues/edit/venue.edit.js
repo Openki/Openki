@@ -53,6 +53,14 @@ Template.venueEdit.onCreated(function() {
 			}
 		}
 	});
+
+	this.data.editableDescription = makeEditable(
+		this.data.description,
+		false,
+		false,
+		mf('venue.edit.description.placeholder', 'Some words about this venue'),
+		false
+	);
 });
 
 Template.venueEdit.helpers({
@@ -128,6 +136,9 @@ Template.venueEdit.events({
 			, otherFacilities: instance.$('.js-otherFacilities').val()
 			, website:         instance.$('.js-website').val()
 		    };
+
+		var newDescription = instance.data.editableDescription.editedContent();
+		if (newDescription) changes.description = newDescription;
 
 		_.each(Venues.facilityOptions, function(f) {
 			if (instance.$('.js-'+f).prop('checked')) {
