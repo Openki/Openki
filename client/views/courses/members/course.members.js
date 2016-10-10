@@ -37,7 +37,7 @@ Template.courseMember.helpers({
 					if (err) {
 						showServerError('Unable to change your message', err);
 					} else {
-						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'), 'success');
+						addMessage("\u2713 " + mf('_message.saved'), 'success');
 					}
 				});
 			},

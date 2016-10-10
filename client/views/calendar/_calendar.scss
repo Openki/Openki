@@ -1,61 +1,70 @@
 // *** Calendar ***
 //=================
 
-// ** Navigation
+// ** Navigation container
 //========================================================================================
-.calendar-nav {
+.calendar-nav-container {
 	@include make-xs-column(12);
-	background-color: $calendar-nav-bg;
-	box-shadow: 0 6px 2px $default-shadow;
-	font-size: 32px;
+	background-color: rgba($calendar-nav-bg, 0.97);
+	display: none;
 	margin-bottom: 10px;
 	padding: 0 10px;
 	position: fixed;
 	text-align: center;
 	top: $navbar-height;
+	transition: box-shadow $default-transition-time;
 	width: 100%;
 	z-index: 1010;
 }
 
+.calendar-nav-container-covering {
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+// ** Navigation
+//========================================================================================
+.calendar-nav {
+	display: table;
+	margin: 0 auto;
+	padding: 5px 0;
+}
+
 // ** Navigation elements
 //========================================================================================
-.calendar-nav-element {
-	display: inline-block;
+.calendar-nav-control,
+.calendar-nav-moment {
+	display: table-cell;
+	vertical-align: middle;
+}
 
-	&:first-child {
-		float: left;
-	}
-
-	&:last-child {
-		float: right;
+.calendar-nav-control > .btn-group > .dropdown-toggle {
+	@media (max-width: $screen-xs) {
+		margin-top: 5px;
 	}
 }
 
-// ** Navigation buttons
-//========================================================================================
-.calendar-nav-btn {
-	margin: 6px 3px;
+.calendar-nav > .calendar-nav-control:last-child .dropdown-menu {
+	left: auto;
+	right: 0;
+}
 
-	&:first-child {
-		margin-left: 0;
-	}
-
-	&:last-child {
-		margin-right: 0;
-	}
+.calendar-nav-moment {
+	padding: 0 20px;
 }
 
 // ** Navigation week & date
 //========================================================================================
+.calendar-nav-week,
+.calendar-nav-date {
+	display: table-row;
+}
+
 .calendar-nav-week {
 	font-size: large;
-	line-height: .75;
-	margin: 10px 0 0;
 }
 
 .calendar-nav-date {
 	font-size: small;
-	margin: 3px 0;
 }
 
 // ** Container
@@ -75,7 +84,7 @@
 	border-color: $blue;
 	border-style: solid;
 	border-width: 10px 0 0;
-	box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 	font-size: large;
 	padding: 5px 7px 5px 9px;
 	text-align: center;

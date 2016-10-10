@@ -126,13 +126,14 @@ Template.map.onRendered(function() {
 		var fullscreen = instance.fullscreen.get();
 		var mini = instance.data.mini;
 
-		var show = function(control, show) {
-			if (control.shown === undefined) control.shown = false;
-			var show = !!show;
+		var show = function(control, toggle) {
+			toggle = !!toggle; // coerce to bool
 
-			if (control.shown !== show) {
-				control.shown = show;
-				if (show) {
+			if (control.shown === undefined) control.shown = false;
+
+			if (control.shown !== toggle) {
+				control.shown = toggle;
+				if (toggle) {
 					map.addControl(control);
 				} else {
 					map.removeControl(control);
@@ -175,6 +176,15 @@ Template.map.onRendered(function() {
 		}
 
 		var maxZoom = 16;
+
+		// Use center markers when there are no other markers
+		if (count < 1) {
+			for (var centerPos in centers) {
+				bounds.extend(centers[centerPos]);
+				count += 1;
+			}
+			if (count == 1) maxZoom = 13;
+		}
 
 		if (bounds.isValid()) {
 			map.fitBounds(bounds, { padding: [20, 20], maxZoom: maxZoom });

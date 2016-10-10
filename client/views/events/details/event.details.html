@@ -54,17 +54,17 @@
 			<div class="details-content">
 				<h3>{{this.title}}</h3>
 				<div class="location">
-					{{> locationLink}}
-					{{#if location.address}}
+					{{> venueLink}}
+					{{#if venue.address}}
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-						{{location.address}}
+						{{venue.address}}
 					{{/if}}
 				</div>
 
 				{{> eventGroupList}}
 
 				<p>
-					{{#if haveLocation}}
+					{{#if hasVenue}}
 						<div class="details-map">
 							{{>map markers=eventMarkers}}
 						</div>
@@ -93,7 +93,7 @@
 				{{#if replicating}}
 					<button type="button" class="btn btn-cancel js-toggle-replication">
 						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
-						{{mf 'course.details.repl_menu_btn'}}
+						{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
 					</button>
 				{{else}}
 					<button type="button" class="btn btn-add js-toggle-replication">

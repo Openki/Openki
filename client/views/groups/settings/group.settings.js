@@ -53,7 +53,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not add member', err);
 			} else {
-				addMessage(mf('group.settings.addedMember', "Added group member"), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 			}
 		});
 	},
@@ -65,7 +65,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not remove member', err);
 			} else {
-				addMessage(mf('group.settings.removedMember', "Removed group member"), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
 		});
 	},
@@ -78,7 +78,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {
-				addMessage(mf('group.settings.saved', "Saved settings"), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 				instance.parentInstance().editingSettings.set(false);
 			}
 		});

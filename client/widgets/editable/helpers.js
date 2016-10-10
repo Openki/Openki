@@ -1,4 +1,6 @@
-Template.editable.onCreated(function() {
+_.each([Template.editable, Template.editableTextarea], function(template) {
+
+template.onCreated(function() {
 	// When not editing individual fields, mark all fields as changed
 	// from the start
 	var startChanged = !this.data.showControls;
@@ -7,9 +9,9 @@ Template.editable.onCreated(function() {
 });
 
 
-Template.editable.onRendered(function() {
+template.onRendered(function() {
 	var self = this;
-	var editable = this.$('.editable');
+	var editable = this.$('.js-editable');
 	var options = {
 		placeholder: {
 			hideOnClick: false,
@@ -77,7 +79,7 @@ Template.editable.onRendered(function() {
 	});
 });
 
-Template.editable.helpers({
+template.helpers({
 	showControls: function() {
 		var instance = Template.instance();
 		return instance.data.showControls && instance.changed.get();
@@ -94,11 +96,11 @@ Template.editable.helpers({
 	}
 });
 
-Template.editable.events({
+template.events({
 	'click .js-editable-save': function(event, instance) {
 		event.preventDefault();
 		instance.changed.set(false);
-		var editable = instance.$('.editable');
+		var editable = instance.$('.js-editable');
 		var changedText = instance.data.simple ? editable.text() : editable.html();
 		instance.data.store(changedText);
 		instance.editingVersion = false;
@@ -106,7 +108,7 @@ Template.editable.events({
 
 	'click .js-editable-cancel': function(event, instance) {
 		event.preventDefault();
-		instance.$('.editable').html(instance.data.text);
+		instance.$('.js-editable').html(instance.data.text);
 		instance.changed.set(false);
 		instance.editingVersion = false;
 	},
@@ -122,6 +124,7 @@ Template.editable.events({
 			selection.removeAllRanges();
 			selection.addRange(range);
 		};
-		selectEnd(instance.$('.editable')[0]);
+		selectEnd(instance.$('.js-editable')[0]);
 	}
+});
 });

@@ -1,11 +1,19 @@
-Template.course_edit.created = function() {
+Template.courseEdit.created = function() {
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+
+	this.data.editableDescription = makeEditable(
+		this.data.description,
+		false,
+		false,
+		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),
+		false
+	);
 };
 
-Template.course_edit.helpers({
+Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
 	},
@@ -94,13 +102,7 @@ Template.course_edit.helpers({
 });
 
 
-Template.course_edit.rendered = function() {
-	var desc = this.find('#editform_description');
-	if (desc) new MediumEditor(desc);
-};
-
-
-Template.course_edit.events({
+Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
@@ -115,13 +117,16 @@ Template.course_edit.events({
 			roles[rolecheck.name] = rolecheck.checked;
 		});
 
+
 		var changes = {
-			description: $('#editform_description').html(),
 			categories: instance.selectedCategories.get(),
 			name: $('#editform_name').val(),
 			roles: roles,
 			internal: $('.js-check-internal').is(':checked'),
 		};
+
+		var newDescription = instance.data.editableDescription.editedContent();
+		if (newDescription) changes.description = newDescription;
 
 		changes.name = saneText(changes.name);
 
@@ -149,7 +154,7 @@ Template.course_edit.events({
 				showServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-				addMessage(mf('course.saving.success', { NAME: changes.name }, 'Saved changes to course "{NAME}".'), 'success');
+				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
 				$('.js-check-enrol').each(function(_, enrolcheck) {
 					if (enrolcheck.checked) {
