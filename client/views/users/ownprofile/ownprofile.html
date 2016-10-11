@@ -219,11 +219,18 @@
 					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
 				</a>
 			</div>
-		{{#if hasInvolvedIn}}
-			<div class="page-component page-component-seperated">
-				<h3>{{mf 'ownprofile.myCourses' 'My Courses'}}</h3>
-				{{> courseList involvedIn}}
-			</div>
-		{{/if}}
+		<div class="page-component page-component-seperated">
+			{{#each role in roles}}
+				{{#if coursesByRole role.type}}	
+					<h3 class="title-my-courses">
+						<span class="{{role.icon}}"> </span>
+						{{#with role}}{{mf roleMyList}}{{/with}}:
+					</h3>
+					{{#each course in coursesByRole role.type}}
+						{{> courseCompact course}}
+					{{/each}}
+				{{/if}}
+			{{/each}}
+		</div>
 	</div>
 </template>
