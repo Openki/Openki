@@ -219,18 +219,6 @@
 					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
 				</a>
 			</div>
-		<div class="page-component page-component-seperated profile-courselist">
-			{{#each role in roles}}
-				{{#if coursesByRole role.type}}
-					<h3>
-						<div class="badge">
-							<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-						</div>
-						{{#with role}}{{mf roleMyList}}{{/with}}
-					</h3>
-					{{> courseList coursesByRole role.type}}
-				{{/if}}
-			{{/each}}
-		</div>
+			{{> usersCourselist profileData=this ownProfile=true}}
 	</div>
 </template>
