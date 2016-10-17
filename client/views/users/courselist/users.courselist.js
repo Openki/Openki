@@ -29,7 +29,7 @@ Template.usersCourselist.helpers({
 	getName: function() {
 		var username = Template.instance()
 		               .data.profileData
-					   .user.username;
+		               .user.username;
 		if (username) return username;
 	}
 });
