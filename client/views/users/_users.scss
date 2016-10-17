@@ -1,0 +1,8 @@
+.profile-courselist > .course-list + h3 {
+	margin-top: 15px;
+}
+
+.profile-courselist .badge {
+	background-color: $user-bg;
+	color: desaturate(darken($user-bg, 40%), 80%);
+}

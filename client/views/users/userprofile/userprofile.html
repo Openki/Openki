@@ -101,18 +101,16 @@
 				</div>
 			{{/if}}
 		</div>
-			<div class="page-component page-component-seperated">
+			<div class="page-component page-component-seperated profile-courselist">
 				{{#each role in roles}}
 					{{#if coursesByRole role.type}}
-						<h3 class="title-my-courses">
-							<span class="{{role.icon}}" aria-hidden="true"> </span>
+						<h3>
 							{{#with role}}
 								{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
 							{{/with}}
+							<span class="{{role.icon}}" aria-hidden="true"></span>
 						</h3>
-						{{#each course in coursesByRole role.type}}
-							{{> courseCompact course}}
-						{{/each}}
+						{{> courseList coursesByRole role.type}}
 					{{/if}}
 				{{/each}}
 			</div>

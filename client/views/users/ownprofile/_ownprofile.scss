@@ -32,7 +32,3 @@
 .mail-verified .fa {
 	color: $gray;
 }
-
-.title-my-courses {
-	@include make-xs-column(12);
-}
