@@ -76,6 +76,9 @@ Template.userprofile.helpers({
 	},
 	roleUserList: function() {
 		return 'roles.'+this.type+'.userList';
+	},
+	getName: function() {
+		return Template.instance().data.user.username;
 	}
 });
 

@@ -223,8 +223,8 @@
 			{{#each role in roles}}
 				{{#if coursesByRole role.type}}	
 					<h3 class="title-my-courses">
-						<span class="{{role.icon}}"> </span>
-						{{#with role}}{{mf roleMyList}}{{/with}}:
+						<span class="{{role.icon}}" aria-hidden="true"></span>
+						{{#with role}}{{mf roleMyList}}{{/with}}
 					</h3>
 					{{#each course in coursesByRole role.type}}
 						{{> courseCompact course}}

@@ -105,9 +105,10 @@
 				{{#each role in roles}}
 					{{#if coursesByRole role.type}}
 						<h3 class="title-my-courses">
-							<span class="{{role.icon}}"> </span>
-							{{this.user.username}} 
-							{{#with role}}{{mf roleUserList}}{{/with}}:
+							<span class="{{role.icon}}" aria-hidden="true"> </span>
+							{{#with role}}
+								{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
+							{{/with}}
 						</h3>
 						{{#each course in coursesByRole role.type}}
 							{{> courseCompact course}}
