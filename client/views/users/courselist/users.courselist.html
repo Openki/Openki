@@ -1,9 +1,21 @@
 <template name="usersCourselist">
 	<div class="page-component page-component-seperated profile-courselist">
+		<h3>
+			I'm involved in many courses: <br>
+			{{#each role in roles}}
+				<div class="badge">
+					<a href="#{{role.type}}">
+						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
+						{{coursesByRole role.type true}} {{role.type}}
+					</a>
+				</div>
+				
+			{{/each}}
+		</h3>
 		{{#each role in roles}}
-			{{#if coursesByRole role.type}}
-				<h3>
-					{{#with role}}
+			{{#if coursesByRole role.type false}}
+				{{#with role}}
+					<h3 id="{{role.type}}">
 						<div class="badge">
 							<span class="{{icon}} fa-fw" aria-hidden="true"></span>
 						</div>
@@ -12,9 +24,9 @@
 						{{else}}
 							{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
 						{{/if}}
-					{{/with}}
-				</h3>
-				{{> courseList coursesByRole role.type}}
+					</h3>
+				{{/with}}
+				{{> courseList coursesByRole role.type false}}
 			{{/if}}
 		{{/each}}
 	</div>

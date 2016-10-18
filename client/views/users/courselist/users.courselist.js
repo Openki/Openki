@@ -3,7 +3,7 @@ Template.usersCourselist.helpers({
 		return _.clone(Roles).reverse();
 	},
 
-	coursesByRole: function(role) {
+	coursesByRole: function(role, countTrue) {
 		var profileData = Template.instance().data.profileData;
 		var involvedIn = profileData.involvedIn;
 		var userID = profileData.user._id;
@@ -14,8 +14,11 @@ Template.usersCourselist.helpers({
 				coursesForRole.push(course);
 			}
 		});
-
-		return coursesForRole;
+		if(countTrue) {
+			return coursesForRole.length;
+		} else {
+			return coursesForRole;
+		}
 	},
 
 	roleUserList: function() {
