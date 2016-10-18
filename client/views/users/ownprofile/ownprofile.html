@@ -203,27 +203,22 @@
 				{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 			</a>
 		</div>
-			<div class="page-component page-component-seperated profile-venues-list">
-				<h3>{{mf 'profile.venues' 'My venues:'}}</h3>
-				{{#if isVenueEditor}}
-					<ul class="list-unstyled">
-						{{#each user.venues}}
-							<li>{{> venueLink venue=this}}</li>
-						{{/each}}
-					</ul>
-				{{else}}
-					<p>{{mf 'userprofile.noOwnVenues' "You're not editor of any venue."}}</p>
-				{{/if}}
-				<a class="btn btn-add" href="{{pathFor 'venueDetails' _id='create'}}">
-					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
-				</a>
-			</div>
-		{{#if hasInvolvedIn}}
-			<div class="page-component page-component-seperated">
-				<h3>{{mf 'ownprofile.myCourses' 'My Courses'}}</h3>
-				{{> courseList involvedIn}}
-			</div>
-		{{/if}}
+		<div class="page-component page-component-seperated profile-venues-list">
+			<h3>{{mf 'profile.venues' 'My venues:'}}</h3>
+			{{#if isVenueEditor}}
+				<ul class="list-unstyled">
+					{{#each user.venues}}
+						<li>{{> venueLink venue=this}}</li>
+					{{/each}}
+				</ul>
+			{{else}}
+				<p>{{mf 'userprofile.noOwnVenues' "You're not editor of any venue."}}</p>
+			{{/if}}
+			<a class="btn btn-add" href="{{pathFor 'venueDetails' _id='create'}}">
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
+			</a>
+		</div>
+		{{> usersCourselist profileData=this ownProfile=true}}
 	</div>
 </template>

@@ -1,0 +1,21 @@
+<template name="usersCourselist">
+	<div class="page-component page-component-seperated profile-courselist">
+		{{#each role in roles}}
+			{{#if coursesByRole role.type}}
+				<h3>
+					{{#with role}}
+						<div class="badge">
+							<span class="{{icon}} fa-fw" aria-hidden="true"></span>
+						</div>
+						{{#if ../ownProfile}}
+							{{mf roleMyList}}
+						{{else}}
+							{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
+						{{/if}}
+					{{/with}}
+				</h3>
+				{{> courseList coursesByRole role.type}}
+			{{/if}}
+		{{/each}}
+	</div>
+</template>

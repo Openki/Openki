@@ -58,9 +58,27 @@ Template.userprofile.helpers({
 		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
+	roles: function() {
+		return _.clone(Roles).reverse();
+	},
+	coursesByRole: function(role) {
+		var templateData = Template.instance().data;
+		var involvedIn = templateData.involvedIn;
+		var userID = templateData.user._id;
+		var coursesForRole = [];
 
-	hasInvolvedIn: function() {
-		return this.involvedIn.count() > 0;
+		involvedIn.forEach(function(course) {			
+			if(!!hasRoleUser(course.members, role, userID)) {
+				coursesForRole.push(course);
+			}
+		});
+		return coursesForRole;
+	},
+	roleUserList: function() {
+		return 'roles.'+this.type+'.userList';
+	},
+	getName: function() {
+		return Template.instance().data.user.username;
 	}
 });
 
