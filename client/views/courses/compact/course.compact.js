@@ -22,12 +22,6 @@ Template.courseCompact.helpers({
 			return !hasRole(this.members, 'host');
 	},
 
-	categorynames: function() {
-		return Categories.find({_id: {$in: course.categories}}).map(function(cat) {
-			return cat.name;
-		}).join(', ');
-	},
-
 	hasUpcomingEvents: function() {
 		return this.nextEvent;
 	},

@@ -18,16 +18,18 @@ Template.courseEdit.helpers({
 		return Session.get('search');
 	},
 
-	availableCategories: function() {
-		return Object.keys(categories);
+	categories: function() {
+		return Categories;
 	},
 
-	availableSubcategories: function(category) {
+	subcategories: function() {
+		var category = this;
+
 		// Hide if parent categories not selected
 		var selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.indexOf(category) < 0) return [];
+		if (!~selectedCategories.indexOf(category.name)) return [];
 
-		return categories[category];
+		return category.subcategories;
 	},
 
 	editingCategories: function() {
@@ -47,17 +49,19 @@ Template.courseEdit.helpers({
 	},
 
 	isChecked: function() {
+		var name = this.name || this;
 		var selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
+		if (selectedCategories.length && ~selectedCategories.indexOf(name)) {
 			return 'checkbox-checked';
 		}
 		return '';
 	},
 
 	checkCategory: function() {
+		var name = this.name || this;
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length) {
-			return selectedCategories.indexOf(''+this) >= 0 ? 'checked' : '';
+			return ~selectedCategories.indexOf(name) ? 'checked' : '';
 		}
 	},
 
@@ -184,18 +188,20 @@ Template.courseEdit.events({
 	},
 
 	'change .js-category-checkbox': function(event, instance) {
-		var catKey = ''+this;
+		var category = this;
+		var name = category.name || ''+category;
 		var selectedCategories = instance.selectedCategories.get();
-		var checked = instance.$('input.cat_'+catKey).prop('checked');
+		var checked = instance.$('input.cat_' + name).prop('checked');
 		if (checked) {
-			selectedCategories.push(catKey);
+			selectedCategories.push(name);
 			selectedCategories = _.uniq(selectedCategories);
 		} else {
-			selectedCategories = _.without(selectedCategories, catKey);
+			selectedCategories = _.without(selectedCategories, name);
 
-			if (categories[catKey]) {
+			var subcategories = category.subcategories;
+			if (subcategories) {
 				// Remove all the subcategories as well
-				selectedCategories = _.difference(selectedCategories, categories[catKey]);
+				selectedCategories = _.difference(selectedCategories, subcategories);
 			}
 		}
 

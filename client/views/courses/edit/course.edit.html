@@ -39,11 +39,11 @@
 					<div class="form-group-element">
 						{{#if editingCategories}}
 							<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
-							{{#each availableCategories}}
+							{{#each categories}}
 								<div class="checkbox">
 									<label class="{{isChecked}}">
-										<input class='js-category-checkbox cat_{{this}}'
-											name='{{this}}'
+										<input class='js-category-checkbox cat_{{name}}'
+											name='{{name}}'
 											type='checkbox'
 											value="1"
 											{{checkCategory}}/>
@@ -51,17 +51,17 @@
 										<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
 									</label>
 								</div>
-								{{#each availableSubcategories this}}
-									<div class="checkbox checkbox-sub">
-										<label class="{{isChecked}}">
-											<input class='js-category-checkbox cat_{{this}}'
-												name='{{this}}'
-												type='checkbox'
-												value="1"
-												{{checkCategory}}/>
-											{{> categoryLabel}}
-										</label>
-									</div>
+								{{#each subcategories}}
+										<div class="checkbox checkbox-sub">
+											<label class="{{isChecked}}">
+												<input class='js-category-checkbox cat_{{this}}'
+													name='{{this}}'
+													type='checkbox'
+													value="1"
+													{{checkCategory}}/>
+												{{> categoryLabel}}
+											</label>
+										</div>
 								{{/each}}
 							{{/each}}
 						{{else}}

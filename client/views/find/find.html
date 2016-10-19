@@ -106,9 +106,9 @@
 						{{mf 'find.filter.categories' 'Categories'}}
 					</h4>
 					{{#unless isMobile}}
-						{{#if categories}}
+						{{#if selectedCategories}}
 							<ul class="filter-selected-categories">
-							{{#each categories}}
+							{{#each selectedCategories}}
 								<li>
 									{{> categoryLabel}}
 									<button type="button" class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
@@ -132,10 +132,10 @@
 							{{#if availableCategories}}
 								{{#each availableCategories}}
 									<li class="{{this}}">
-										<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+										<a class="js-category-selection-label {{#if availableSubcategories}}drodown-item-main{{/if}}"
 											href="#">
 											{{categoryNameMarked}}
-											{{#if availableSubcategories this}}
+											{{#if availableSubcategories}}
 												<small class="js-toggle-subcategories {{this}}"
 													title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
 													<span class="fa fa-angle-down" aria-hidden="true"></span>
@@ -143,7 +143,7 @@
 											{{/if}}
 										</a>
 									</li>
-									{{#each availableSubcategories this}}
+									{{#each availableSubcategories}}
 										<li class="js-sub-category {{..}}">
 											<a class="js-category-selection-label" href="#">
 												{{categoryNameMarked}}

@@ -252,8 +252,9 @@ Handlebars.registerHelper ("siteStage", function() {
 
 
 Handlebars.registerHelper ("categoryName", function() {
+	var name = this.name || this;
 	Session.get('locale'); // Reactive dependency
-	return mf('category.'+this);
+	return mf('category.' + name);
 });
 
 Handlebars.registerHelper ("privacyEnabled", function(){

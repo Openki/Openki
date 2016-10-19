@@ -56,8 +56,16 @@ Template.find.onCreated(function() {
 	var instance = this;
 
 	instance.showingFilters = new ReactiveVar(false);
+
+	var categoryNames = {};
+	_.each(Categories, function(category) {
+		categoryNames[category.name] = category.subcategories;
+	});
+
+	instance.categoryNames = categoryNames;
 	instance.categorySearch = new ReactiveVar('');
-	instance.categorySearchResults = new ReactiveVar(categories);
+	instance.categorySearchResults = new ReactiveVar(categoryNames);
+
 	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
@@ -104,28 +112,31 @@ Template.find.onCreated(function() {
 });
 
 var updateCategorySearch = function(event, instance) {
+	var categoryNames = instance.categoryNames;
 	var query = instance.$('.js-search-categories').val();
 	instance.categorySearch.set(query);
 
 	if (!query) {
-		instance.categorySearchResults.set(categories);
+		instance.categorySearchResults.set(categoryNames);
 		return;
 	}
 
 	var lowQuery = query.toLowerCase();
 	var results = {};
-	for (var mainCategory in categories) {
-		if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
-			results[mainCategory] = [];
+	for (var categoryName in categoryNames) {
+		if (~mf('category.' + categoryName).toLowerCase().indexOf(lowQuery)) {
+			results[categoryName] = [];
 		}
-		for (i = 0; i < categories[mainCategory].length; i++) {
-			var subCategory = categories[mainCategory][i];
-			if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
-				if (results[mainCategory]) results[mainCategory].push(subCategory);
-				else results[subCategory] = [];
+
+		var subcategoryNames = categoryNames[categoryName];
+		_.each(subcategoryNames, function(subcategoryName) {
+			if (~mf('category.' + subcategoryName).toLowerCase().indexOf(lowQuery)) {
+				if (results[categoryName]) results[categoryName].push(subcategoryName);
+				else results[subcategoryName] = [];
 			}
-		}
+		});
 	}
+
 	instance.categorySearchResults.set(results);
 };
 
@@ -246,7 +257,7 @@ Template.find.helpers({
 		return course;
 	},
 
-	'categories': function() {
+	'selectedCategories': function() {
 		return Template.instance().filter.get('categories');
 	},
 
@@ -257,17 +268,17 @@ Template.find.helpers({
 	},
 
 	'availableCategories': function() {
-		return Object.keys(Template.instance().categorySearchResults.get('categorySearchResults'));
+		return Object.keys(Template.instance().categorySearchResults.get());
 	},
 
-	'availableSubcategories': function(mainCategory) {
-		return Template.instance().categorySearchResults.get()[mainCategory];
+	'availableSubcategories': function() {
+		return Template.instance().categorySearchResults.get()[this];
 	},
 
 	'categoryNameMarked': function() {
 		Session.get('locale'); // Reactive dependency
 		var search = Template.instance().categorySearch.get();
-		var name = mf('category.'+this);
+		var name = mf('category.' + this);
 		return markedName(search, name);
 	},
 
