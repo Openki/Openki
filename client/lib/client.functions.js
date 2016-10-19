@@ -146,7 +146,7 @@ getViewportWidth = function() {
 courseFilterPreview = function(match, delayed) {
 	var noMatch = $('.course-compact').not(match);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
-	
+
 	noMatch.toggleClass(filterClass);
 };
 
@@ -231,6 +231,28 @@ TemplateMixins = {
 			},
 		});
 	}
+};
+
+updateUrl = function(event, instance) {
+	event.preventDefault();
+
+	var filterParams = instance.filter.toParams();
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+	delete filterParams.internal;
+	var queryString = UrlTools.paramsToQueryString(filterParams);
+
+	var options = {};
+
+	if (queryString.length) {
+		options.query = queryString;
+	}
+
+	RouterAutoscroll.cancelNext();
+
+	var router = Router.current();
+	Router.go(router.route.getName(), { _id: router.params._id }, options);
+
+	return true;
 };
 
 

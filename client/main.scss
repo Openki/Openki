@@ -16,8 +16,6 @@
 // Mixins
 @import 'styles/mixins';
 
-// Main layout
-@import 'styles/layout';
 
 // Global styles
 @import 'styles/global';
@@ -32,3 +30,6 @@
 @import 'widgets/regionTag/regionTag';
 @import 'widgets/report/report';
 @import 'views/views';
+
+// Main layout
+@import 'styles/layout';

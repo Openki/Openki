@@ -1,0 +1,57 @@
+$categories-menu-height: 90px;
+
+.categories-menu {
+	background-color: $blue-lighter;
+	height: $categories-menu-height;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: $navbar-height;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+
+	z-index: $zindex-navbar-fixed - 1;
+}
+
+.categories-menu-container {
+	height: 100%;
+}
+
+@for $i from 1 through 12 {
+	.has-#{$i}-categories > .menu-category {
+		@include make-sm-column(12 / $i);
+	}
+}
+
+.menu-category {
+	border-color: $gray-lighter;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+	color: $blue;
+	font-size: medium;
+	height: 100%;
+	padding: 15px 0;
+	text-align: center;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:first-child {
+		border-width: 0 1px;
+	}
+}
+
+.menu-category > .fa {
+	display: block;
+	font-size: xx-large;
+	margin-bottom: 5px;
+}
+
+@each $i, $color in $category-colors {
+	.menu-category-#{$i}:hover,
+	.menu-category-#{$i}.active {
+		background-color: lighten($color, 40%);
+		color: $color;
+	}
+}

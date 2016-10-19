@@ -9,15 +9,15 @@ body {
 }
 
 #outer {
-	padding-top: $navbar-height;
+	padding-top: $navbar-height + $categories-menu-height;
 }
 
 #outer.test-warning {
-	padding-top: $navbar-height + 19px;
+	padding-top: $navbar-height + $categories-menu-height + 19px;
 }
 
 #outer.test-warning .calendar-nav-container {
-	top: $navbar-height + 19px;
+	top: $navbar-height + $categories-menu-height + 19px;
 }
 
 .push {

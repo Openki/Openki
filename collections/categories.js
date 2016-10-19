@@ -51,7 +51,7 @@ Categories = [
 	},
 	{
 		name: 'culture',
-		icon: 'asl-interpreting',
+		icon: 'paint-brush',
 		subcategories: [
 			'literature',
 			'theatre',
@@ -67,7 +67,7 @@ Categories = [
 	},
 	{
 		name: 'computer',
-		icon: 'laptop',
+		icon: 'desktop',
 		subcategories: [
 			'internet',
 			'programming',
