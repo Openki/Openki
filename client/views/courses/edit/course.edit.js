@@ -4,7 +4,7 @@ Template.courseEdit.created = function() {
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
 
-	this.data.editableDescription = makeEditable(
+	this.editableDescription = makeEditable(
 		this.data.description,
 		false,
 		false,
@@ -98,6 +98,10 @@ Template.courseEdit.helpers({
 		var filterParams = parentInstance.filter.toParams();
 
 		return filterParams.search;
+	},
+
+	editableDescription: function() {
+		return Template.instance().editableDescription;
 	}
 });
 

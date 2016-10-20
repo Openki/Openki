@@ -52,13 +52,6 @@ template.onRendered(function() {
 	// is to just discard the local edits.
 	self.autorun(function() {
 		var currentData = Template.currentData();
-
-		// Ugly HACK: Ignore spurious re-runs with no data
-		// In some instances, during page-load, this autorun gets called a
-		// second time when the template has no data. I have no words either.
-		// Unsolved mystery.
-		if (!currentData) return;
-
 		var currentText = currentData.text;
 
 		// Here we instill the version we got in the DB
