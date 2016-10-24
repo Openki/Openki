@@ -27,7 +27,7 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
+var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor'];
 
 Template.find.onCreated(function() {
 	var instance = this;
@@ -60,6 +60,17 @@ Template.find.onCreated(function() {
 
 	// When there are filters set, show the filtering pane
 	instance.autorun(function() {
+		var mainCategoryNames = _.map(Categories, function(category) {
+			return category.name;
+		});
+
+		_.each(filter.get('categories'), function(filterCategory) {
+			if (!~mainCategoryNames.indexOf(filterCategory)) {
+				instance.showingFilters.set(true);
+				return;
+			}
+		});
+
 		for (var name in filter.toParams()) {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
