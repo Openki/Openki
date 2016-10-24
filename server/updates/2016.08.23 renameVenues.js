@@ -3,7 +3,7 @@ UpdatesAvailable["2016.08.23 renameVenues"] = function() {
 	var copied = 0;
 
 	Locations.find().forEach(function(venue) {
-		Events.insert(venue);
+		Venues.insert(venue);
 		copied += 1;
 	});
 
