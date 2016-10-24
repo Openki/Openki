@@ -76,14 +76,6 @@ Template.courseCompactRoles.helpers({
 
 
 Template.courseCompact.events({
-	"mouseover .js-category-label": function(event, template){
-		 template.$('.course-compact').addClass('elevate_child');
-	},
-
-	"mouseout .js-category-label": function(event, template){
-		 template.$('.course-compact').removeClass('elevate_child');
-	},
-
 	"mouseover .js-group-label": function(event, template){
 		 template.$('.course-compact').addClass('elevate_child');
 	},
