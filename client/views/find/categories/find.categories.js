@@ -38,5 +38,6 @@ Template.categoriesMenu.events({
 		}
 
 		updateUrl(e, findInstance);
+		window.scrollTo(0, 0);
 	}
 });

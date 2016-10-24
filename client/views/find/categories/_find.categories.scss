@@ -24,7 +24,7 @@ $categories-menu-height: 90px;
 }
 
 .menu-category {
-	border-color: $gray-lighter;
+	border-color: rgba($gray-lighter, .4);
 	border-style: solid;
 	border-width: 0 1px 0 0;
 	color: $blue;

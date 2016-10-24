@@ -2,7 +2,7 @@
 // "name"             -> String
 // "icon"             -> String
 // "subcategories"    -> [String]
-// ===========================
+// ===================================
 
 Categories = [
 	{

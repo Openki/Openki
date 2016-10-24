@@ -10,16 +10,39 @@ Template.courseCompact.helpers({
 		return 'proposal';
 	},
 
-	needsMentor: function() {
-		if (!this.roles) return false;
-		else if (this.roles.indexOf('mentor') != -1)
-			return !hasRole(this.members, 'mentor');
+	mainCategoryIndices: function() {
+		var mainCategoryIndices = [];
+		_.each(this.categories, function(courseCategory) {
+			var mainCategory = _.find(Categories, function(category) {
+				return category.name == courseCategory;
+			});
+			if (mainCategory) {
+				mainCategoryIndices.push(Categories.indexOf(mainCategory));
+			}
+		});
+
+		return mainCategoryIndices;
 	},
 
-	needsHost: function() {
-		if (!this.roles) return false;
-		else if (this.roles.indexOf('host') != -1)
-			return !hasRole(this.members, 'host');
+	mainCategories: function() {
+		var mainCategories = [];
+		_.each(this.categories, function(courseCategory) {
+			var mainCategory = _.find(Categories, function(category) {
+				return category.name == courseCategory;
+			});
+			if (mainCategory) mainCategories.push(mainCategory);
+		});
+
+		return mainCategories;
+	},
+
+	needsRole: function(role) {
+		var courseRoles = this.roles;
+		if (!courseRoles) {
+			return false;
+		} else if (courseRoles.indexOf(role) != -1){
+			return !hasRole(this.members, role);
+		}
 	},
 
 	hasUpcomingEvents: function() {
@@ -32,44 +55,23 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactRoles.helpers({
-	requiresMentor: function() {
-		if (!this.roles) return false;
-		return this.roles.indexOf('mentor') != -1;
+	maxRoles: function() {
+		return Roles.length - 1; // -1 because we don't show participants role
 	},
 
-	requiresHost: function() {
-		if (!this.roles) return false;
-		return this.roles.indexOf('host') != -1;
+	requiresRole: function(role) {
+		var courseRoles = this.roles;
+		if (!courseRoles) return false;
+		return courseRoles.indexOf(role) != -1;
 	},
 
-	needsTeam: function() {
-		return !hasRole(this.members, 'team');
+	needsRole: function(role) {
+		return !hasRole(this.members, role);
 	},
 
-	needsMentor: function() {
-		return !hasRole(this.members, 'mentor');
-	},
-
-	needsHost: function() {
-		return !hasRole(this.members, 'host');
-	},
-
-	userIsHost: function() {
-		return hasRoleUser(this.members, 'host', Meteor.userId());
-	},
-
-	userInTeam: function() {
-		return hasRoleUser(this.members, 'team', Meteor.userId());
-	},
-
-	userIsMenteor: function() {
-		return hasRoleUser(this.members, 'mentor', Meteor.userId());
-	},
-
-	is_subscriber: function() {
-		return hasRoleUser(this.members, 'participant', Meteor.userId()) ? '*' : '';
+	userHasRole: function (role) {
+		return hasRoleUser(this.members, role, Meteor.userId());
 	}
-
 });
 
 
@@ -77,12 +79,15 @@ Template.courseCompact.events({
 	"mouseover .js-category-label": function(event, template){
 		 template.$('.course-compact').addClass('elevate_child');
 	},
+
 	"mouseout .js-category-label": function(event, template){
 		 template.$('.course-compact').removeClass('elevate_child');
 	},
+
 	"mouseover .js-group-label": function(event, template){
 		 template.$('.course-compact').addClass('elevate_child');
 	},
+
 	"mouseout .js-group-label": function(event, template){
 		 template.$('.course-compact').removeClass('elevate_child');
 	}
