@@ -5,6 +5,6 @@
 	width: auto;
 
 	@media (min-width: $screen-xsm) {
-		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+		margin: (($grid-gutter-width / 4) * -1);
 	}
 }

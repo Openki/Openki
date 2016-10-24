@@ -13,14 +13,14 @@
 		@include make-xs-column(6);
 		@include make-md-column(4);
 		@include make-lg-column(3);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 4);
 	}
 }
 
 .container-sm .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
 		@include make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 4);
 	}
 }
 
