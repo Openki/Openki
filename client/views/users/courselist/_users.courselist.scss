@@ -6,3 +6,12 @@
 	background-color: $user-bg;
 	color: desaturate(darken($user-bg, 40%), 80%);
 }
+
+.profile-courselist .role-label {
+	transition: all $default-transition-time;
+	&:hover,
+	&:focus {
+		background: darken($user-bg, 5%);
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+	}
+}

@@ -8,6 +8,7 @@ Template.usersCourselist.helpers({
 		var involvedIn = profileData.involvedIn;
 		var userID = profileData.user._id;
 		var coursesForRole = [];
+		if(typeof countTrue != "boolean") countTrue = false;
 
 		involvedIn.forEach(function(course) {
 			if (hasRoleUser(course.members, role, userID)) {
@@ -34,5 +35,43 @@ Template.usersCourselist.helpers({
 		               .data.profileData
 		               .user.username;
 		if (username) return username;
+	},
+	roleShort: function() {
+		return 'roles.' + this.type + '.short';
 	}
+});
+
+Template.usersCourselist.events({
+	'click #js-scroll-team': function() {
+		var position = $('#team').offset();
+		if(typeof position != 'undefined') {
+			// subtract the amount of pixels of the height of the navbar
+			position = position.top - 50;
+			$(document.body).animate({'scrollTop': position}, 400);
+		}
+	},
+	'click #js-scroll-host': function() {
+		var position = $('#host').offset();
+		if(typeof position != 'undefined') {
+			// subtract the amount of pixels of the height of the navbar
+			position = position.top - 50;
+			$(document.body).animate({'scrollTop': position}, 400);
+		}
+	},
+	'click #js-scroll-mentor': function() {
+		var position = $('#mentor').offset();
+		if(typeof position != 'undefined') {
+			// subtract the amount of pixels of the height of the navbar
+			position = position.top - 50;
+			$(document.body).animate({'scrollTop': position}, 400);
+		}
+	},
+	'click #js-scroll-participant': function() {
+		var position = $('#participant').offset();
+		if(typeof position != 'undefined') {
+			// subtract the amount of pixels of the height of the navbar
+			position = position.top - 50;
+			$(document.body).animate({'scrollTop': position}, 400);
+		}
+	},
 });
