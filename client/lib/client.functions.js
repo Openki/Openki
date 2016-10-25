@@ -369,6 +369,21 @@ Template.registerHelper('plain', function(html) {
 	return div.textContent || div.innerText || '';
 });
 
+// Take a plain excerpt from HTML text
+// If the output is truncated to len, an ellipsis is added
+Template.registerHelper('plainExcerpt', function(html, len) {
+	html = html || '';
+	var div = document.createElement('div');
+	div.innerHTML = html;
+	var s = div.textContent || div.innerText || '';
+
+	// Condense runs of whitespace so counting characters won't be too far off
+	s = s.replace(/\s+/, " ");
+
+	if (s.length <= len) return s;
+	return s.substring(0, len)+'…';
+});
+
 Template.registerHelper ("venueName", function(venueId) {
 	var venue = Venues.findOne(venueId);
 	if (!venue) return '';
