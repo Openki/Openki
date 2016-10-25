@@ -8,14 +8,12 @@
 			{{/if}}
 			<br>
 			{{#each role in roles}}
-				<div class="badge role-label">
-					<a href="#{{role.type}}" class="js-scroll">
-						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
-						{{#with role}} {{mf roleShort}} {{/with}}
-						{{coursesByRoleCount role.type}}
-					</a>
-				</div>
-				
+				<a class="badge role-label js-scroll" href="#{{role.type}}">
+					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
+					{{#with role}} {{mf roleShort}} {{/with}}
+					<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
+					{{coursesByRoleCount role.type}}
+				</a>
 			{{/each}}
 		</h3>
 		{{#each role in roles}}
