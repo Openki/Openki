@@ -26,7 +26,6 @@
 								{{#if isMobile}}
 									<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
 								{{else}}
-									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 									{{mf 'find.hideFilters' 'Remove all filters'}}
 								{{/if}}
 							</button>
@@ -55,13 +54,7 @@
 								name="hasUpcomingEvent"
 								autocomplete="off"
 								{{toggleChecked 'upcomingEvent'}}/>
-							<div class="eventcaption_upcoming">
-								<div class="eventcaption_upcoming_box">
-									<div class="eventcaption_upcoming_text first-line"></div>
-									<div class="eventcaption_upcoming_text second-line"></div>
-									<div class="eventcaption_upcoming_text third-line"></div>
-								</div>
-							</div>
+							<span class="fa fa-calendar fa-fw toggle-property-filter-icon" aria-hidden="true"></span>
 							&nbsp;
 							{{mf 'find.with_upcoming_events' 'With upcoming events'}}
 							{{#if toggleChecked 'upcomingEvent'}}
@@ -74,9 +67,7 @@
 								name="needsHost"
 								type="checkbox"
 								{{toggleChecked 'needsHost'}}/>
-							<div class="toggle-property-filter-icon">
-								<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-							</div>
+							<span class="glyphicon glyphicon-home fa-fw toggle-property-filter-icon" aria-hidden="true"></span>
 							&nbsp;
 							{{mf 'find.needsHost' 'Looking for a host'}}
 							&nbsp;
@@ -90,9 +81,7 @@
 								name="needsMentor"
 								type="checkbox"
 								{{toggleChecked 'needsMentor'}}/>
-							<div class="toggle-property-filter-icon">
-								<span class="fa fa-graduation-cap" aria-hidden="true"></span>
-							</div>
+							<span class="fa fa-graduation-cap fa-fw toggle-property-filter-icon" aria-hidden="true"></span>
 							&nbsp;
 							{{mf 'find.needsMentor' 'Looking for a mentor'}}
 							&nbsp;

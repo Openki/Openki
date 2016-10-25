@@ -2,15 +2,19 @@ $categories-menu-height: 90px;
 
 .categories-menu {
 	background-color: $blue-lighter;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	display: none;
 	height: $categories-menu-height;
-	width: 100%;
-	position: fixed;
 	left: 0;
+	position: fixed;
 	right: 0;
 	top: $navbar-height;
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-
+	width: 100%;
 	z-index: $zindex-navbar-fixed - 1;
+
+	@media (min-width: $screen-sm) {
+		display: block;
+	}
 }
 
 .categories-menu-container {

@@ -18,6 +18,10 @@
 	font-size: large;
 }
 
+.js-toggle-filter > * {
+	color: $blue;
+}
+
 .filter {
 	@include make-xs-column(12);
 	@include make-md-column(7);
@@ -65,67 +69,7 @@
 }
 
 .toggle-property-filter-icon {
-	background: $role-needed-bg;
-	color: $role-needed-color;
-	display: inline-block;
-	text-align: center;
-	width: 28px;
-}
-
-.toggle-property-filter-icon > .glyphicon {
-	position: relative;
-	top: 2px;
-}
-
-.eventcaption_upcoming {
-	background: $has-upcoming-events-bg;
-	display: inline-block;
-	height: 20px;
-	position: relative;
-	vertical-align: bottom;
-	width: 28px;
-}
-
-.eventcaption_upcoming_box {
-	background: $course-compact-next-event-bg;
-	height: 10px;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 10px;
-}
-
-.eventcaption_upcoming_text {
-	background: $course-compact-next-event-color;
-	height: 1px;
-	left: 3px;
-	position: absolute;
-	width: 3px;
-
-	&.first-line {
-		top: 2px;
-	}
-
-	&.second-line {
-		top: 4px;
-	}
-
-	&.third-line {
-		top: 6px;
-	}
-}
-
-.eventcaption_upcoming,
-.toggle-property-filter-icon {
-	@include opacity(.7);
-	transition: opacity .15s;
-}
-
-.js-toggle-property-filter:hover > .eventcaption_upcoming,
-.js-toggle-property-filter:hover > .toggle-property-filter-icon,
-.active > .eventcaption_upcoming,
-.active > .toggle-property-filter-icon {
-	@include opacity(1);
+	color: $blue;
 }
 
 .filter-categories {
@@ -262,5 +206,6 @@
 }
 
 .show-more-courses {
+	padding-top: 10px;
 	text-align: center;
 }
