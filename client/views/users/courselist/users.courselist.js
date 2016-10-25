@@ -3,9 +3,7 @@ Template.usersCourselist.onCreated(function() {
 
 	var id = instance.data.profileData.user._id;
 
-	instance.autorun(function() {
-		Meteor.subscribe('coursesFind',  { userInvolved: id });
-	});
+	instance.subscribe('coursesFind',  { userInvolved: id });
 
 	instance.coursesByRole = function(role) {
 		return Courses.find({ members: { $elemMatch: {
