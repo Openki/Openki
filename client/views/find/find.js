@@ -102,6 +102,8 @@ Template.find.onCreated(function() {
 updateCategorySearch = function(event, instance) {
 	var categoryNames = instance.categoryNames;
 	var query = instance.$('.js-search-categories').val();
+	if (!query) query = '';
+
 	instance.categorySearch.set(query);
 
 	var filterCategories = instance.filter.get('categories');
