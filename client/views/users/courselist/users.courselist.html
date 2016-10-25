@@ -9,7 +9,7 @@
 			<br>
 			{{#each role in roles}}
 				<div class="badge role-label">
-					<a id="js-scroll-{{role.type}}">
+					<a href="#{{role.type}}" class="js-scroll">
 						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
 						{{#with role}} {{mf roleShort}} {{/with}}
 						{{coursesByRoleCount role.type}}

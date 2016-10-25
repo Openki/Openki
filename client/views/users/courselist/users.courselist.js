@@ -44,38 +44,3 @@ Template.usersCourselist.helpers({
 		return 'roles.' + this.type + '.short';
 	}
 });
-
-Template.usersCourselist.events({
-	'click #js-scroll-team': function() {
-		var position = $('#team').offset();
-		if(typeof position != 'undefined') {
-			// subtract the amount of pixels of the height of the navbar
-			position = position.top - 50;
-			$(document.body).animate({'scrollTop': position}, 400);
-		}
-	},
-	'click #js-scroll-host': function() {
-		var position = $('#host').offset();
-		if(typeof position != 'undefined') {
-			// subtract the amount of pixels of the height of the navbar
-			position = position.top - 50;
-			$(document.body).animate({'scrollTop': position}, 400);
-		}
-	},
-	'click #js-scroll-mentor': function() {
-		var position = $('#mentor').offset();
-		if(typeof position != 'undefined') {
-			// subtract the amount of pixels of the height of the navbar
-			position = position.top - 50;
-			$(document.body).animate({'scrollTop': position}, 400);
-		}
-	},
-	'click #js-scroll-participant': function() {
-		var position = $('#participant').offset();
-		if(typeof position != 'undefined') {
-			// subtract the amount of pixels of the height of the navbar
-			position = position.top - 50;
-			$(document.body).animate({'scrollTop': position}, 400);
-		}
-	},
-});
