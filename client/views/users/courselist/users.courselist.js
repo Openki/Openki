@@ -1,10 +1,18 @@
 Template.usersCourselist.onCreated(function() {
 	var instance = this;
 
+	var id = instance.data.profileData.user._id;
+
 	instance.autorun(function() {
-		var id = instance.data.profileData.user._id;
 		Meteor.subscribe('coursesFind',  { userInvolved: id });
 	});
+
+	instance.coursesByRole = function(role) {
+		return Courses.find({ members: { $elemMatch: {
+			user: id,
+			roles: role }
+		}});
+	};
 });
 
 Template.usersCourselist.helpers({
@@ -13,17 +21,11 @@ Template.usersCourselist.helpers({
 	},
 
 	coursesByRoleCount: function(role) {
-		return Courses.find({ members: { $elemMatch: {
-			user: Template.instance().data.profileData.user._id,
-			roles: role }
-		}}).count();
+		return Template.instance().coursesByRole(role).count();
 	},
 
 	coursesByRole: function(role) {
-		return Courses.find({ members: { $elemMatch: {
-			user: Template.instance().data.profileData.user._id,
-			roles: role }
-		}});
+		return Template.instance().coursesByRole(role);
 	},
 
 	roleUserList: function() {
