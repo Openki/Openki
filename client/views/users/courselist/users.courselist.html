@@ -1,37 +1,44 @@
 <template name="usersCourselist">
 	<div class="page-component page-component-seperated profile-courselist">
-		<h3>
-			{{#if ownProfile}}
-				{{mf 'users.courselist.myCourses' 'I am involved in the following courses'}}
+		{{#if isInvolved}}
+			<h3>
+				{{#if ownProfile}}
+					{{mf 'users.courselist.myCourses' 'I am involved in the following courses'}}
+				{{else}}
+					{{mf 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
+				{{/if}}
+			</h3>
+			{{#if ready}} 
+				{{#each role in roles}}
+					{{#if coursesByRoleCount role.type}}
+						<a class="badge role-label js-scroll" href="#{{role.type}}">
+							<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
+							{{#with role}} {{mf roleShort}} {{/with}}
+							<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
+							{{coursesByRoleCount role.type}}
+						</a>
+					{{/if}}
+				{{/each}}
+				{{#each role in roles}}
+					{{#if coursesByRoleCount role.type}}
+						{{#with role}}
+							<h3 id="{{role.type}}">
+								<div class="badge">
+									<span class="{{icon}} fa-fw" aria-hidden="true"></span>
+								</div>
+								{{#if ../ownProfile}}
+									{{mf roleMyList}}
+								{{else}}
+									{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
+								{{/if}}
+							</h3>
+						{{/with}}
+						{{> courseList coursesByRole role.type}}
+					{{/if}}
+				{{/each}}
 			{{else}}
-				{{mf 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
+				{{> loadingPage}}
 			{{/if}}
-			<br>
-			{{#each role in roles}}
-				<a class="badge role-label js-scroll" href="#{{role.type}}">
-					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
-					{{#with role}} {{mf roleShort}} {{/with}}
-					<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
-					{{coursesByRoleCount role.type}}
-				</a>
-			{{/each}}
-		</h3>
-		{{#each role in roles}}
-			{{#if coursesByRoleCount role.type}}
-				{{#with role}}
-					<h3 id="{{role.type}}">
-						<div class="badge">
-							<span class="{{icon}} fa-fw" aria-hidden="true"></span>
-						</div>
-						{{#if ../ownProfile}}
-							{{mf roleMyList}}
-						{{else}}
-							{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
-						{{/if}}
-					</h3>
-				{{/with}}
-				{{> courseList coursesByRole role.type}}
-			{{/if}}
-		{{/each}}
+		{{/if}}
 	</div>
 </template>
