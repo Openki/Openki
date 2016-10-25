@@ -87,7 +87,7 @@
 
 		.course-compact-role-occupied,
 		.course-compact-role-occupied-by-user {
-			color: $categoryColor;
+			color: rgba($categoryColor, .7);
 		}
 
 		.js-group-label,
@@ -131,7 +131,7 @@
 
 			.course-compact-role-occupied,
 			.course-compact-role-occupied-by-user {
-				color: $computedColor;
+				color: rgba($computedColor, .7);
 			}
 
 			.js-group-label,
