@@ -28,9 +28,6 @@ $categories-menu-height: 90px;
 }
 
 .menu-category {
-	border-color: rgba($gray-lighter, .4);
-	border-style: solid;
-	border-width: 0 1px 0 0;
 	color: $blue;
 	font-size: medium;
 	height: 100%;
@@ -39,10 +36,6 @@ $categories-menu-height: 90px;
 
 	&:hover {
 		cursor: pointer;
-	}
-
-	&:first-child {
-		border-width: 0 1px;
 	}
 }
 
@@ -55,7 +48,9 @@ $categories-menu-height: 90px;
 @each $i, $color in $category-colors {
 	.menu-category-#{$i}:hover,
 	.menu-category-#{$i}.active {
-		background-color: lighten($color, 40%);
-		color: $color;
+		background-color: rgba($color, .5);
+		box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+		color: $white;
+		z-index: $zindex-navbar-fixed + 10;
 	}
 }
