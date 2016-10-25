@@ -150,9 +150,9 @@
 }
 
 @each $i, $color in $category-colors {
-	.filter-categories-dropdown .category-#{$i} > a,
 	.filter-categories-dropdown .category-#{$i} > a:hover,
-	.filter-categories-dropdown .category-#{$i} > a:focus {
+	.filter-categories-dropdown .category-#{$i} > a:focus,
+	.filter-categories-dropdown .category-#{$i}.category-filtered > a {
 		background-color: rgba($color, 0.4);
 		color: $black;
 	}
