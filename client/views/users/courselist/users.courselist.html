@@ -12,14 +12,14 @@
 					<a id="js-scroll-{{role.type}}">
 						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span> 
 						{{#with role}} {{mf roleShort}} {{/with}}
-						{{coursesByRole role.type true}}
+						{{coursesByRoleCount role.type}}
 					</a>
 				</div>
 				
 			{{/each}}
 		</h3>
 		{{#each role in roles}}
-			{{#if coursesByRole role.type}}
+			{{#if coursesByRoleCount role.type}}
 				{{#with role}}
 					<h3 id="{{role.type}}">
 						<div class="badge">

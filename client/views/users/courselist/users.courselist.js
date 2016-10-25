@@ -1,25 +1,29 @@
+Template.usersCourselist.onCreated(function() {
+	var instance = this;
+
+	instance.autorun(function() {
+		var id = instance.data.profileData.user._id;
+		Meteor.subscribe('coursesFind',  { userInvolved: id });
+	});
+});
+
 Template.usersCourselist.helpers({
 	roles: function() {
 		return _.clone(Roles).reverse();
 	},
 
-	coursesByRole: function(role, countTrue) {
-		var profileData = Template.instance().data.profileData;
-		var involvedIn = profileData.involvedIn;
-		var userID = profileData.user._id;
-		var coursesForRole = [];
-		if(typeof countTrue != "boolean") countTrue = false;
+	coursesByRoleCount: function(role) {
+		return Courses.find({ members: { $elemMatch: {
+			user: Template.instance().data.profileData.user._id,
+			roles: role }
+		}}).count();
+	},
 
-		involvedIn.forEach(function(course) {
-			if (hasRoleUser(course.members, role, userID)) {
-				coursesForRole.push(course);
-			}
-		});
-		if(countTrue) {
-			return coursesForRole.length;
-		} else {
-			return coursesForRole;
-		}
+	coursesByRole: function(role) {
+		return Courses.find({ members: { $elemMatch: {
+			user: Template.instance().data.profileData.user._id,
+			roles: role }
+		}});
 	},
 
 	roleUserList: function() {
