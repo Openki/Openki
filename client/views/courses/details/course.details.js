@@ -122,8 +122,8 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	},
 	mobileViewport: function() {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = Breakpoints.screenMd;
-		return viewportWidth <= screenMd;
+		var screenMD = SCSSVars.screenMD;
+		return viewportWidth <= screenMD;
 	},
 	isProposal: function() {
 		return !this.course.nextEvent && !this.course.lastEvent;

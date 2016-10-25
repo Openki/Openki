@@ -23,7 +23,7 @@ Template.layout.events({
 		var position = $(event.target.getAttribute('href')).offset();
 		if(typeof position != 'undefined') {
 			// subtract the amount of pixels of the height of the navbar
-			position = position.top - 50;
+			position = position.top - SCSSVars.navbarHeight;
 			$(document.body).animate({'scrollTop': position}, 400);
 		}
 		event.preventDefault();
