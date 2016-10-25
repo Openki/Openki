@@ -121,9 +121,10 @@
 						<ul class="dropdown-menu filter-categories-dropdown" role="menu">
 							{{#if availableCategories}}
 								{{#each availableCategories}}
-									<li class="{{this}}">
-										<a class="js-category-selection-label {{#if availableSubcategories}}drodown-item-main{{/if}}"
+									<li class="{{this}} {{#if isInFilter}}category-{{categoryIdentifier}}{{/if}}">
+										<a class="js-category-selection-label categories-main-category"
 											href="#">
+											<span class="fa fa-{{icon}} fa-fw" aria-hidden="true"></span>
 											{{categoryNameMarked}}
 											{{#if availableSubcategories}}
 												<small class="js-toggle-subcategories {{this}}"

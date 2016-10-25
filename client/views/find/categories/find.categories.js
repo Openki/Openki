@@ -7,8 +7,8 @@ Template.categoriesMenu.helpers({
 		return Categories;
 	},
 
-	categoryIndex: function() {
-		return Categories.indexOf(this);
+	categoryIdentifier: function() {
+		return Categories.indexOf(this) + 1;
 	},
 
 	activeCategory: function() {
@@ -37,6 +37,7 @@ Template.categoriesMenu.events({
 			filter.add('categories', categoryName).done();
 		}
 
+		updateCategorySearch(e, findInstance);
 		updateUrl(e, findInstance);
 		window.scrollTo(0, 0);
 	}

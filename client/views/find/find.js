@@ -99,30 +99,36 @@ Template.find.onCreated(function() {
 	});
 });
 
-var updateCategorySearch = function(event, instance) {
+updateCategorySearch = function(event, instance) {
 	var categoryNames = instance.categoryNames;
 	var query = instance.$('.js-search-categories').val();
 	instance.categorySearch.set(query);
 
-	if (!query) {
-		instance.categorySearchResults.set(categoryNames);
-		return;
-	}
-
+	var filterCategories = instance.filter.get('categories');
 	var lowQuery = query.toLowerCase();
 	var results = {};
+
 	for (var categoryName in categoryNames) {
-		if (~mf('category.' + categoryName).toLowerCase().indexOf(lowQuery)) {
-			results[categoryName] = [];
-		}
+		results[categoryName] = [];
 
 		var subcategoryNames = categoryNames[categoryName];
 		_.each(subcategoryNames, function(subcategoryName) {
-			if (~mf('category.' + subcategoryName).toLowerCase().indexOf(lowQuery)) {
+			var categoryInFilter = _.contains(filterCategories, subcategoryName);
+
+			var lowMFString = mf('category.' + subcategoryName).toLowerCase();
+			var matchesQuery = ~lowMFString.indexOf(lowQuery);
+
+			if (!categoryInFilter && matchesQuery) {
 				if (results[categoryName]) results[categoryName].push(subcategoryName);
-				else results[subcategoryName] = [];
 			}
 		});
+	}
+
+	var subcategories = instance.$('.js-sub-category');
+	if (!query) {
+		subcategories.hide();
+	} else {
+		subcategories.show();
 	}
 
 	instance.categorySearchResults.set(results);
@@ -161,14 +167,6 @@ Template.find.events({
 		courseFilterPreview('.needsMentor', false);
 	},
 
-	'mouseover .js-category-selection-label, mouseout .js-category-selection-label': function() {
-		courseFilterPreview(('.'+this), false);
-	},
-
-	'mouseover .js-category-label, mouseout .js-category-label': function() {
-		courseFilterPreview(('.'+this), true);
-	},
-
 	'mouseover .js-group-label, mouseout .js-group-label': function() {
 		courseFilterPreview(('.'+this), true);
 	},
@@ -200,6 +198,7 @@ Template.find.events({
 
 	'click .js-remove-category-btn': function(event, instance) {
 		instance.filter.remove('categories', ''+this).done();
+		updateCategorySearch(event, instance);
 		updateUrl(event, instance);
 		return false;
 	},
@@ -261,6 +260,28 @@ Template.find.helpers({
 
 	'availableSubcategories': function() {
 		return Template.instance().categorySearchResults.get()[this];
+	},
+
+	isInFilter: function() {
+		var filterCategories = Template.instance().filter.get('categories');
+		var categoryName = ''+this;
+		return _.contains(filterCategories, categoryName);
+	},
+
+	categoryIdentifier: function() {
+		var categoryName = ''+this;
+		var mainCategory = _.find(Categories, function(category) {
+			return category.name === categoryName;
+		});
+		return Categories.indexOf(mainCategory) + 1;
+	},
+
+	'icon': function() {
+		var categoryName = this;
+		var category = _.find(Categories, function(category) {
+			return category.name == categoryName;
+		});
+		if (category) return category.icon;
 	},
 
 	'categoryNameMarked': function() {

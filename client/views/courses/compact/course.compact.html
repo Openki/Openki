@@ -4,7 +4,7 @@
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course-compact
 					{{courseState}}
-					{{#each mainCategoryIndices}}course-compact-category-{{this}} {{/each}}
+					course-compact-category-{{courseCategoryIdentifier}}
 					{{#if needsRole 'host'}}needsHost{{/if}}
 					{{#if needsRole 'mentor'}}needsMentor{{/if}}
 					{{#each categories}}{{this}} {{/each}}

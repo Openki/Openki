@@ -65,44 +65,89 @@
 	}
 }
 
-@each $i, $color in $category-colors {
-	.course-compact-category-#{$i} {
+@each $categoryIndex, $categoryColor in $category-colors {
+	.course-compact-category-#{$categoryIndex} {
 		&.proposal,
 		&.has-past-events {
-			border-color: rgba($color, .2);
+			border-color: rgba($categoryColor, .2);
 		}
 
 		&.has-upcoming-events {
-			background-color: rgba($color, .2);
+			background-color: rgba($categoryColor, .2);
 		}
 
 		.course-compact-next-event {
-			background-color: rgba($color, .4);
+			background-color: rgba($categoryColor, .4);
 			color: $white;
 		}
 
 		.course-compact-role-needed {
-			color: rgba($color, .2);
+			color: rgba($categoryColor, .2);
 		}
 
 		.course-compact-role-occupied,
 		.course-compact-role-occupied-by-user {
-			color: $color;
+			color: $categoryColor;
 		}
 
 		.js-group-label,
 		.js-group-label:hover,
 		.js-group-label:focus {
-			background-color: rgba($color, 0.2);
-			color: $color;
+			background-color: rgba($categoryColor, 0.2);
+			color: $categoryColor;
 		}
 
 		.course-compact-categories {
-			color: rgba($color, .2);
+			color: rgba($categoryColor, .2);
 		}
 
 		.has-upcoming-events .course-compact-categories {
-			color: rgba($color, .2);
+			color: rgba($categoryColor, .2);
+		}
+	}
+
+	@for $i from 1 through length($category-colors) {
+		$computedIdentifier: $categoryIndex + $i * 10;
+		$computedColor: mix(map-get($category-colors, $categoryIndex), map-get($category-colors, $i));
+
+		.course-compact-category-#{$computedIdentifier} {
+			&.proposal,
+			&.has-past-events {
+				border-color: rgba($computedColor, .2);
+			}
+
+			&.has-upcoming-events {
+				background-color: rgba($computedColor, .2);
+			}
+
+			.course-compact-next-event {
+				background-color: rgba($computedColor, .4);
+				color: $white;
+			}
+
+			.course-compact-role-needed {
+				color: rgba($computedColor, .2);
+			}
+
+			.course-compact-role-occupied,
+			.course-compact-role-occupied-by-user {
+				color: $computedColor;
+			}
+
+			.js-group-label,
+			.js-group-label:hover,
+			.js-group-label:focus {
+				background-color: rgba($computedColor, 0.2);
+				color: $computedColor;
+			}
+
+			.course-compact-categories {
+				color: rgba($computedColor, .2);
+			}
+
+			.has-upcoming-events .course-compact-categories {
+				color: rgba($computedColor, .2);
+			}
 		}
 	}
 }

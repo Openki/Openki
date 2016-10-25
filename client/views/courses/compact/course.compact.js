@@ -10,18 +10,25 @@ Template.courseCompact.helpers({
 		return 'proposal';
 	},
 
-	mainCategoryIndices: function() {
-		var mainCategoryIndices = [];
+	courseCategoryIdentifier: function() {
+		var mainCategoryIdentifiers = [];
 		_.each(this.categories, function(courseCategory) {
 			var mainCategory = _.find(Categories, function(category) {
 				return category.name == courseCategory;
 			});
 			if (mainCategory) {
-				mainCategoryIndices.push(Categories.indexOf(mainCategory));
+				mainCategoryIdentifiers.push(Categories.indexOf(mainCategory) + 1);
 			}
 		});
 
-		return mainCategoryIndices;
+		var indexCount = mainCategoryIdentifiers.length;
+		if (indexCount && indexCount == 1) {
+			return mainCategoryIdentifiers;
+		} else if (indexCount) {
+			return _.reduce(mainCategoryIdentifiers, function(a, b) {
+				return a + b * 10;
+			});
+		}
 	},
 
 	mainCategories: function() {

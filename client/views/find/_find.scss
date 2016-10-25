@@ -135,10 +135,27 @@
 	overflow-y: auto;
 }
 
+.filter-categories-dropdown .categories-main-category {
+	padding-left: 15px;
+}
+
+.filter-categories-dropdown .categories-main-category > .fa {
+	margin-right: 5px;
+}
+
 .filter-categories-dropdown .js-category-label {
 	background-color: $dropdown-bg;
 	box-shadow: none;
 	position: relative;
+}
+
+@each $i, $color in $category-colors {
+	.filter-categories-dropdown .category-#{$i} > a,
+	.filter-categories-dropdown .category-#{$i} > a:hover,
+	.filter-categories-dropdown .category-#{$i} > a:focus {
+		background-color: rgba($color, 0.4);
+		color: $black;
+	}
 }
 
 .js-toggle-subcategories {
