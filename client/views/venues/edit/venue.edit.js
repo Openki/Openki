@@ -54,13 +54,17 @@ Template.venueEdit.onCreated(function() {
 		}
 	});
 
-	this.data.editableDescription = makeEditable(
-		this.data.description,
-		false,
-		false,
-		mf('venue.edit.description.placeholder', 'Some words about this venue'),
-		false
-	);
+	instance.autorun(function() {
+		// If this looks wrong that's because it is
+		var data = Template.currentData();
+		data.editableDescription = makeEditable(
+			data.description,
+			false,
+			false,
+			mf('venue.edit.description.placeholder', 'Some words about this venue'),
+			false
+		);
+	});
 });
 
 Template.venueEdit.helpers({
