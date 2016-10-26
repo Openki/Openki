@@ -25,6 +25,10 @@ template.onRendered(function() {
 		} else {
 			editable.html(text);
 		}
+
+		// HACK remove placeholder when there is content
+		// We should be using setContent() anyway, but it's not defined?!
+		if (text && text.length > 0) editable.removeClass('medium-editor-placeholder');
 	};
 
 	// Automatically replace contents when text changes
