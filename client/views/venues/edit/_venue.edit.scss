@@ -10,6 +10,11 @@
 	}
 }
 
+.venue-edit-body .map-box {
+	height: 300px;
+	width: 100%;
+}
+
 .venue-edit-additional-info {
 	$background-color: lighten($venue-bg, 15%);
 
