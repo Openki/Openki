@@ -29,21 +29,6 @@ template.onRendered(function() {
 		options.toolbar = false;
 	}
 
-	// UGLY The following two methods can be used to access and change
-	// template state from other templates. This is a lot of indirection and
-	// shows that I didn't think things through.
-
-	// This method yields the current content if it was edited
-	this.data.editedContent = function() {
-		if (!self.changed.get()) return false;
-		return self.data.simple ? editable.text() : editable.html();
-	};
-
-	// This method can be used to leave editing mode
-	this.data.end = function() {
-		self.changed.set(false);
-	};
-
 	// When the text changes while we are editing, the changes will be
 	// inserted as new nodes instead of replacing the other nodes.
 	// That's because Blaze doesn't know how to merge the current DOM
@@ -51,8 +36,24 @@ template.onRendered(function() {
 	// Merging the two versions is nontrivial and the current behaviour
 	// is to just discard the local edits.
 	self.autorun(function() {
-		var currentData = Template.currentData();
-		var currentText = currentData.text;
+		var data = Template.currentData();
+
+		// UGLY The following two methods can be used to access and change
+		// template state from other templates. This is a lot of indirection and
+		// shows that I didn't think things through.
+
+		// This method yields the current content if it was edited
+		data.editedContent = function() {
+			if (!self.changed.get()) return false;
+			return self.data.simple ? editable.text() : editable.html();
+		};
+
+		// This method can be used to leave editing mode
+		data.end = function() {
+			self.changed.set(false);
+		};
+
+		var currentText = data.text;
 
 		// Here we instill the version we got in the DB
 		// Most of the time, it will be the same as what
