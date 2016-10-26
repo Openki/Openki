@@ -77,7 +77,7 @@ venuesFind = function(filter, limit) {
 	return Venues.find(find, options);
 };
 
-
+if (Meteor.isServer) {
 Meteor.methods({
 	'venue.save': function(venueId, changes) {
 		check(venueId, String);
@@ -185,5 +185,4 @@ Meteor.methods({
 	}
 
 });
-
-
+}
