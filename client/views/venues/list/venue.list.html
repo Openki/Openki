@@ -21,7 +21,7 @@
 	<div class="venue">
 		<a href="{{pathFor 'venueDetails'}}">
 			<div class="name"> {{name}}</div>
-			<div class="description">{{description}} </div>
+			<div class="description">{{plainExcerpt description 300}}</div>
 		{{#if mayHost}}
 			<div>{{mf 'venues.list.mayHost' "You may host here"}}</div>
 		{{/if}}

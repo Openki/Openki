@@ -106,24 +106,6 @@
 				</div>
 			</div>
 
-			<div class="form-group event-edit-files">
-				<label>
-					{{mf 'course.event.edit.files' 'Files'}}
-					<small> {{mf '_inputField.optional'}}</small>
-				</label>
-				<input type="file" class="js-event-add-file" value=""/>
-				<table class="table table-hover file-list">
-					<tbody>
-						{{#each files}}
-							{{> eventAttachmentsEdit}}
-						{{/each}}
-						{{#each uploaded}}
-							{{> eventAttachmentsEdit}}
-						{{/each}}
-					</tbody>
-				</table>
-			</div>
-
 			{{#if showRegionSelection}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.region' 'Region'}}</label>
@@ -212,21 +194,4 @@
 		</div>
 	</div>
 	</form>
-</template>
-
-<template name="eventAttachmentsEdit">
-	<tr id="row-{{_id}}">
-		<td>
-			<span class="fa fa-file fa-fw" aria-hidden="true"></span>
-			<a href="{{file}}" target="_blank">
-				{{filename}}
-			</a>
-		</td>
-		<td>
-			<button type="button" class="js-delete-file close"
-				data-tooltip="{{mf 'event.edit.removeFile' 'Remove attached file'}}">
-				&times;
-			</button>
-		</td>
-	</tr>
 </template>
