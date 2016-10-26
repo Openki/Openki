@@ -134,7 +134,6 @@ Template.venueEdit.events({
 
 		var changes =
 			{ name:            instance.$('.js-name').val()
-			, description:     instance.$('.js-description').val()
 			, address:         instance.$('.js-address').val()
 			, route:           instance.$('.js-route').val()
 			, short:           instance.$('.js-short').val()
@@ -157,8 +156,6 @@ Template.venueEdit.events({
 		var marker = instance.locationTracker.markers.findOne({ main: true });
 		if (marker) {
 			changes.loc = marker.loc;
-		} else {
-			changes.loc = null;
 		}
 
 		if (instance.isNew) {
