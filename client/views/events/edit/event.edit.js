@@ -4,13 +4,18 @@ Template.eventEdit.onCreated(function() {
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
 
-	this.data.editableDescription = makeEditable(
-		this.data.description,
+	instance.editableDescription = Editable(
 		false,
 		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
 		false
 	);
+
+	instance.autorun(function() {
+		var data = Template.currentData();
+		data.editableDescription = instance.editableDescription;
+		instance.editableDescription.setText(data.description);
+	});
 });
 
 Template.eventEdit.onRendered(function() {
@@ -171,7 +176,7 @@ Template.eventEdit.events({
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
-		var newDescription = instance.data.editableDescription.editedContent();
+		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) editevent.description = newDescription;
 
 		if (editevent.title.length === 0) {

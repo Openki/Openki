@@ -54,16 +54,17 @@ Template.venueEdit.onCreated(function() {
 		}
 	});
 
+	instance.editableDescription = Editable(
+		false,
+		false,
+		mf('venue.edit.description.placeholder', 'Some words about this venue'),
+		false
+	);
+
 	instance.autorun(function() {
-		// If this looks wrong that's because it is
 		var data = Template.currentData();
-		data.editableDescription = makeEditable(
-			data.description,
-			false,
-			false,
-			mf('venue.edit.description.placeholder', 'Some words about this venue'),
-			false
-		);
+		data.editableDescription = instance.editableDescription;
+		instance.editableDescription.setText(data.description);
 	});
 });
 
@@ -144,7 +145,7 @@ Template.venueEdit.events({
 			, website:         instance.$('.js-website').val()
 		    };
 
-		var newDescription = instance.data.editableDescription.editedContent();
+		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
 		_.each(Venues.facilityOptions, function(f) {

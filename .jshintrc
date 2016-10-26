@@ -108,7 +108,7 @@
 // client/editable/...
 
 		"MediumEditor":true,
-		"makeEditable":true,
+		"Editable": true,
 
 // client/lib/...
 

@@ -29,8 +29,7 @@ Template.courseMember.helpers({
 	editableMessage: function() {
 		var course = this.course;
 		if (this.member.user !== Meteor.userId()) return false;
-		return makeEditable(
-			this.member.comment,
+		var editable = Editable(
 			true,
 			function(newMessage) {
 				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
@@ -43,6 +42,9 @@ Template.courseMember.helpers({
 			},
 			mf('roles.message.placeholder', 'My interests...')
 		);
+
+		editable.setText(this.member.comment);
+		return editable;
 	}
 });
 
