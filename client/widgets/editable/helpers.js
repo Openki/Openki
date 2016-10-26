@@ -59,10 +59,6 @@ template.onRendered(function() {
 		instance.state.changed.set(false);
 	};
 
-
-	// Initialize the editor interface
-	instance.editor = new MediumEditor(editable, options);
-
 	var options = {
 		placeholder: {
 			hideOnClick: false,
@@ -79,6 +75,9 @@ template.onRendered(function() {
 		options.disableReturn = true;
 		options.toolbar = false;
 	}
+
+	// Initialize the editor interface
+	instance.editor = new MediumEditor(editable, options);
 
 	// Register when the field is being edited
 	editable.on('input', function() {
