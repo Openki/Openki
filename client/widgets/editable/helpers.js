@@ -112,6 +112,8 @@ template.events({
 	},
 
 	'click .js-editable-edit': function(event, instance) {
+		instance.$('.js-editable').focus();
+
 		// Moving the cursor to the end of the editable element?
 		// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
 		var selectEnd = function(el) {
