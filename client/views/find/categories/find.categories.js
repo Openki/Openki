@@ -21,7 +21,7 @@ Template.categoriesMenu.helpers({
 });
 
 Template.categoriesMenu.events({
-	"click .js-menu-category": function(e, instance){
+	"click .js-menu-category": function(event, instance) {
 		var categoryName = this.name;
 
 		var findInstance = instance.parentInstance();
@@ -32,13 +32,15 @@ Template.categoriesMenu.events({
 
 		if (categoryIsSelected) {
 			filter.remove('categories', categoryName).done();
+		} else if (event.ctrlKey) {
+			filter.add('categories', categoryName).done();
 		} else {
 			filter.clear();
 			filter.add('categories', categoryName).done();
 		}
 
-		updateCategorySearch(e, findInstance);
-		updateUrl(e, findInstance);
+		updateCategorySearch(event, findInstance);
+		updateUrl(event, findInstance);
 		window.scrollTo(0, 0);
 	}
 });

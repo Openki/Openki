@@ -46,6 +46,10 @@ $categories-menu-height: 90px;
 }
 
 @each $i, $color in $category-colors {
+	.menu-category-#{$i} {
+		color: rgba($color, .5);
+	}
+
 	.menu-category-#{$i}:hover,
 	.menu-category-#{$i}.active {
 		background-color: rgba($color, .5);

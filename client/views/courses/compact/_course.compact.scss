@@ -63,94 +63,153 @@
 	&.filter-no-match-delayed {
 		transition-delay: .3s;
 	}
-}
 
-@each $categoryIndex, $categoryColor in $category-colors {
-	.course-compact-category-#{$categoryIndex} {
+	&.course-compact-category-no-category,
+	&.course-compact-category-more-than-two {
+		$no-category-color: $blue-lighter;
+
 		&.proposal,
 		&.has-past-events {
-			border-color: rgba($categoryColor, .2);
+			background-color: rgba($no-category-color, .15);
+			border-color: rgba($no-category-color, 1);
 		}
 
 		&.has-upcoming-events {
-			background-color: rgba($categoryColor, .2);
+			background-color: rgba($no-category-color, 1);
 		}
 
 		.course-compact-next-event {
-			background-color: rgba($categoryColor, .5);
+			background-color: rgba($blue-light, .7);
 			color: $white;
 		}
 
 		.course-compact-role-needed {
-			color: rgba($categoryColor, .2);
+			color: rgba($no-category-color, 1);
 		}
 
 		.course-compact-role-occupied,
 		.course-compact-role-occupied-by-user {
-			color: rgba($categoryColor, .7);
+			color: rgba($blue-light, .7);
 		}
 
 		.js-group-label,
 		.js-group-label:hover,
 		.js-group-label:focus {
-			background-color: rgba($categoryColor, 0.2);
-			color: $categoryColor;
+			background-color: rgba($blue-light, .2);
+			color: rgba($blue-light, 1);
 		}
 
 		.course-compact-categories {
-			color: rgba($categoryColor, .2);
+			color: rgba($no-category-color, 1);
 		}
 
 		.has-upcoming-events .course-compact-categories {
-			color: rgba($categoryColor, .2);
+			color: rgba($no-category-color, 1);
 		}
 	}
 
-	@for $i from 1 through length($category-colors) {
-		$computedIdentifier: $categoryIndex + $i * 10;
-		$computedColor: mix(map-get($category-colors, $categoryIndex), map-get($category-colors, $i));
-
-		.course-compact-category-#{$computedIdentifier} {
+	@each $categoryIndex, $categoryColor in $category-colors {
+		&.course-compact-category-#{$categoryIndex} {
 			&.proposal,
 			&.has-past-events {
-				border-color: rgba($computedColor, .2);
+				background-color: rgba($categoryColor, .05);
+				border-color: rgba($categoryColor, .2);
 			}
 
 			&.has-upcoming-events {
-				background-color: rgba($computedColor, .2);
+				background-color: rgba($categoryColor, .2);
 			}
 
 			.course-compact-next-event {
-				background-color: rgba($computedColor, .5);
+				background-color: rgba($categoryColor, .5);
 				color: $white;
 			}
 
 			.course-compact-role-needed {
-				color: rgba($computedColor, .2);
+				color: rgba($categoryColor, .2);
 			}
 
 			.course-compact-role-occupied,
 			.course-compact-role-occupied-by-user {
-				color: rgba($computedColor, .7);
+				color: rgba($categoryColor, .7);
 			}
 
 			.js-group-label,
 			.js-group-label:hover,
 			.js-group-label:focus {
-				background-color: rgba($computedColor, 0.2);
-				color: $computedColor;
+				background-color: rgba($categoryColor, 0.2);
+				color: $categoryColor;
 			}
 
 			.course-compact-categories {
-				color: rgba($computedColor, .2);
+				color: rgba($categoryColor, .2);
 			}
 
 			.has-upcoming-events .course-compact-categories {
-				color: rgba($computedColor, .2);
+				color: rgba($categoryColor, .2);
 			}
+		}
+
+		@for $i from 1 through length($category-colors) {
+			$computedIdentifier: $categoryIndex + $i * 10;
+			$computedColor: mix(map-get($category-colors, $categoryIndex), map-get($category-colors, $i), 45%);
+
+			@if saturation($computedColor) < 70% {
+				$computedColor: saturate($computedColor, 50%);
+			}
+
+			&.course-compact-category-#{$computedIdentifier} {
+				&.proposal,
+				&.has-past-events {
+					border-color: rgba($computedColor, .2);
+				}
+
+				&.has-upcoming-events {
+					background-color: rgba($computedColor, .2);
+				}
+
+				.course-compact-next-event {
+					background-color: rgba($computedColor, .4);
+					color: $white;
+				}
+
+				.course-compact-role-needed {
+					color: rgba($computedColor, .2);
+				}
+
+				.course-compact-role-occupied,
+				.course-compact-role-occupied-by-user {
+					color: rgba($computedColor, .6);
+				}
+
+				.js-group-label,
+				.js-group-label:hover,
+				.js-group-label:focus {
+					background-color: rgba($computedColor, 0.2);
+					color: $computedColor;
+				}
+
+				.course-compact-categories {
+					color: rgba($computedColor, .2);
+				}
+
+				.has-upcoming-events .course-compact-categories {
+					color: rgba($computedColor, .2);
+				}
+			}
+		}
+
+		&.proposal .category-#{$categoryIndex},
+		&.has-past-events .category-#{$categoryIndex} {
+			color: rgba($categoryColor, .2);
+		}
+
+		&.has-upcoming-events .category-#{$categoryIndex} {
+			color: rgba($categoryColor, .4);
 		}
 	}
 }
+
 
 // ** Content
 //========================================================================================

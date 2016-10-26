@@ -275,7 +275,7 @@ Template.find.helpers({
 		var mainCategory = _.find(Categories, function(category) {
 			return category.name === categoryName;
 		});
-		return Categories.indexOf(mainCategory) + 1;
+		return mainCategory._id;
 	},
 
 	'icon': function() {

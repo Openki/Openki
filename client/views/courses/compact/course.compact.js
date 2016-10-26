@@ -1,3 +1,19 @@
+Template.courseCompact.onCreated(function() {
+	var instance = this;
+	var course = instance.data;
+
+	var mainCategories = [];
+	_.each(course.categories, function(courseCategory) {
+		var mainCategory = _.find(Categories, function(category) {
+			return category.name == courseCategory;
+		});
+		if (mainCategory) mainCategories.push(mainCategory);
+	});
+
+	instance.mainCategories = mainCategories;
+	instance.mainCategoriesCount = mainCategories.length;
+});
+
 Template.courseCompact.helpers({
 	ready: function() {
 		var instance = Template.instance;
@@ -11,36 +27,40 @@ Template.courseCompact.helpers({
 	},
 
 	courseCategoryIdentifier: function() {
-		var mainCategoryIdentifiers = [];
-		_.each(this.categories, function(courseCategory) {
-			var mainCategory = _.find(Categories, function(category) {
-				return category.name == courseCategory;
-			});
-			if (mainCategory) {
-				mainCategoryIdentifiers.push(Categories.indexOf(mainCategory) + 1);
-			}
+		var instance = Template.instance();
+		var mainCategories = instance.mainCategories;
+		var mainCategoriesCount = instance.mainCategoriesCount;
+
+		if (!mainCategoriesCount) return 'no-category';
+
+		// limit number of mainCategories taken into account
+		mainCategories = mainCategories.slice(0, 2);
+
+		var mainCategoryIdentifiers = _.map(mainCategories, function(mainCategory) {
+			return mainCategory._id;
 		});
 
-		var indexCount = mainCategoryIdentifiers.length;
-		if (indexCount && indexCount == 1) {
-			return mainCategoryIdentifiers;
-		} else if (indexCount) {
-			return _.reduce(mainCategoryIdentifiers, function(a, b) {
-				return a + b * 10;
-			});
-		}
+		// calculate identifier for if the course has more than one main category
+		var courseCategoryIdentifier = _.reduce(mainCategoryIdentifiers, function(a, b) {
+			return a + b * 10;
+		});
+
+		return courseCategoryIdentifier;
 	},
 
 	mainCategories: function() {
-		var mainCategories = [];
-		_.each(this.categories, function(courseCategory) {
-			var mainCategory = _.find(Categories, function(category) {
-				return category.name == courseCategory;
-			});
-			if (mainCategory) mainCategories.push(mainCategory);
-		});
+		return Template.instance().mainCategories;
+	},
 
-		return mainCategories;
+	multipleMainCategories: function() {
+		var instance = Template.instance();
+		var mainCategoriesCount = instance.mainCategoriesCount;
+
+		return mainCategoriesCount > 1;
+	},
+
+	categoryIdentifier: function() {
+		return Categories.indexOf(this) + 1;
 	},
 
 	needsRole: function(role) {

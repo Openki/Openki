@@ -1,4 +1,5 @@
 // ======== Collection-Model: ========
+// "_id"              -> Integer
 // "name"             -> String
 // "icon"             -> String
 // "subcategories"    -> [String]
@@ -6,6 +7,7 @@
 
 Categories = [
 	{
+		_id:  1,
 		name: 'sports',
 		icon: 'bicycle',
 		subcategories: [
@@ -15,6 +17,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  2,
 		name: 'handicraft',
 		icon: 'wrench',
 		subcategories: [
@@ -26,6 +29,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  3,
 		name: 'sciences',
 		icon: 'flask',
 		subcategories: [
@@ -38,6 +42,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  4,
 		name: 'humanities',
 		icon: 'group',
 		subcategories: [
@@ -50,6 +55,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  5,
 		name: 'culture',
 		icon: 'paint-brush',
 		subcategories: [
@@ -66,6 +72,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  6,
 		name: 'computer',
 		icon: 'desktop',
 		subcategories: [
@@ -75,6 +82,7 @@ Categories = [
 		]
 	},
 	{
+		_id:  7,
 		name: 'misc',
 		icon: 'puzzle-piece',
 		subcategories: [
