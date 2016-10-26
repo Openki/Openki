@@ -60,21 +60,6 @@ Router.map(function () {
 		}
 	});
 
-	this.route('showCourseDocs', {
-		path: 'course/:_id/:slug/docs',
-		//template: 'coursedocs',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('courseDetails', this.params._id),
-			];
-		},
-		data: function () {
-			var course = Courses.findOne({_id: this.params._id});
-			return {
-				course: course
-			};
-		}
-	});
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
 		//template: 'coursehistory',

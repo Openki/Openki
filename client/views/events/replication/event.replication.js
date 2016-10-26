@@ -155,7 +155,6 @@ Template.eventReplication.events({
 				description: instance.data.description,
 				location: instance.data.location,
 				room: instance.data.room || '',
-				files: instance.data.files  || [],
 				region: instance.data.region,
 				groups: instance.data.groups,
 				replicaOf: instance.data.replicaOf || instance.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica

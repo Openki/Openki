@@ -13,7 +13,7 @@ Router.map(function() {
 			if (!user) return; // not loaded?
 
 			// What privileges the user has
-			var privileges = _.reduce(['admin', 'upload'], function(ps, p) {
+			var privileges = _.reduce(['admin'], function(ps, p) {
 				ps[p] = privileged(user, p);
 				return ps;
 			}, {});
@@ -90,16 +90,6 @@ Template.userprofile.events({
 				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
-			}
-		});
-	},
-
-	'click button.giveUpload': function() {
-		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
-			if (err) {
-				showServerError('Unable to add privilege', err);
-			} else {
-				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
 		});
 	},

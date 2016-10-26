@@ -166,11 +166,6 @@
 
 		"updateEventLocation":true,
 
-// collection/files.js
-
-		"FS":true,
-		"Files":true,
-
 // collection/...
 
 		"privilegedTo":true,

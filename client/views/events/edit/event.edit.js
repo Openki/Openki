@@ -4,8 +4,6 @@ Template.eventEdit.onCreated(function() {
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
 
-	instance.uploaded = new ReactiveVar([]);
-
 	this.data.editableDescription = makeEditable(
 		this.data.description,
 		false,
@@ -79,10 +77,6 @@ Template.eventEdit.helpers({
 	isInternal: function() {
 		return this.internal ? "checked" : null;
 	},
-
-	uploaded: function() {
-		return Template.instance().uploaded.get();
-	}
 });
 
 var readDateTime = function(dateStr, timeStr) {
@@ -155,53 +149,6 @@ var updateTimes = function(template, updateEnd) {
 };
 
 Template.eventEdit.events({
-	'change .js-event-add-file': function(event, instance) {
-		FS.Utility.eachFile(event, function(file) {
-			Files.insert(file, function (err, fileObj) {
-				if (err) {
-					addMessage(mf('file.upload.error', "Uploading file '" + fileObj.original.name + "; failed"));
-				} else {
-					var uploaded = instance.uploaded.get();
-
-					uploaded.push({
-						_id: fileObj._id,
-						file : "/cfs/files/files/" + fileObj._id,
-						filename : fileObj.original.name,
-						filesize : fileObj.original.size,
-					});
-
-					instance.uploaded.set(uploaded);
-				}
-			});
-		});
-	},
-
-
-	'click .js-delete-file': function (event, instance) {
-		var fileId = this._id;
-		var eventId = instance.data._id;
-		var filename = this.filename;
-
-		// check whether the file hasn't been associated with the event yet
-		var uploaded = instance.uploaded.get();
-		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId; });
-		if (uploadedClean.length < uploaded.length) {
-			// The server does not allow to delete files that are not associated
-			// to an event. So we just remove the local reference and hope
-			// somebody will clean up stray files on the server
-			instance.uploaded.set(uploadedClean);
-			return;
-		}
-
-		Meteor.call('removeFile', eventId, fileId, function(error) {
-			if (error) {
-				showServerError("Couldn't remove file '" + filename + "'", error);
-			} else {
-				addMessage(mf('file.removed', { FILENAME:filename }, 'Removed file {FILENAME}.'), 'success');
-			}
-		});
-	},
-
 	'submit': function(event, instance) {
 		event.preventDefault();
 
@@ -236,8 +183,6 @@ Template.eventEdit.events({
 			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
 			return;
 		}
-
-		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
 		var eventId = this._id;
 		var isNew = !this._id;

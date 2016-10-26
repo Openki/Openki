@@ -73,16 +73,6 @@
 				</p>
 			</div>
 		</div>
-		{{#if files}}
-			<div class="details-addition">
-				<h4>Related Files:</h4>
-				<ul class="event-files-list">
-					{{#each files}}
-						{{> eventAttachments}}
-					{{/each}}
-				</ul>
-			</div>
-		{{/if}}
 		{{#if replicating}}
 			{{>eventReplication}}
 		{{/if}}
@@ -114,14 +104,6 @@
 		{{> report}}
 	</div>
 </template>
-
-<template name="eventAttachments">
-	<li>
-		<span class="fa fa-file fa-fw" aria-hidden="true"></span>
-		<a href="{{file}}" target="_blank">{{filename}}</a>
-	</li>
-</template>
-
 
 
 <!-- COPYPASTA WARNING
