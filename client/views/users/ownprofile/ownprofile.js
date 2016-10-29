@@ -72,9 +72,24 @@ Template.profile.helpers({
 	isVenueEditor: function() {
 		return this.user.venues.count() > 0;
 	},
+	roles: function() {
+		return _.clone(Roles).reverse();
+	},
+	coursesByRole: function(role) {
+		var templateData = Template.instance().data;
+		var involvedIn = templateData.involvedIn;
+		var userID = templateData.user._id;
+		var coursesForRole = [];
 
-	hasInvolvedIn: function() {
-		return this.involvedIn.count() > 0;
+		involvedIn.forEach(function(course) {			
+			if(!!hasRoleUser(course.members, role, userID)) {
+				coursesForRole.push(course);
+			}
+		});
+		return coursesForRole;
+	},
+	roleMyList: function() {
+		return 'roles.'+this.type+'.myList';
 	}
 });
 

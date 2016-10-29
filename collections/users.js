@@ -38,7 +38,7 @@
 // "username"     -> String
 // "emails"       -> [{address: String, verified: Boolean}]
 // "profile"      -> {name: String, locale: Lang}
-// "privileges"   -> [upload, admin]
+// "privileges"   -> [admin]
 // "lastLogin"    -> Date
 // groups         -> List of groups the user is a member of, calculated by updateBadges()
 // badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()

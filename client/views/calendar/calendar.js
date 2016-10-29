@@ -17,8 +17,7 @@ Template.calendar.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
+		var query = Router.current().params.query;
 
 		// Show internal events only when a group or venue is specified
 		if (!query.group && !query.venue && query.internal === undefined) {

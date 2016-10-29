@@ -13,7 +13,7 @@ Router.map(function() {
 			if (!user) return; // not loaded?
 
 			// What privileges the user has
-			var privileges = _.reduce(['admin', 'upload'], function(ps, p) {
+			var privileges = _.reduce(['admin'], function(ps, p) {
 				ps[p] = privileged(user, p);
 				return ps;
 			}, {});
@@ -58,9 +58,27 @@ Template.userprofile.helpers({
 		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
+	roles: function() {
+		return _.clone(Roles).reverse();
+	},
+	coursesByRole: function(role) {
+		var templateData = Template.instance().data;
+		var involvedIn = templateData.involvedIn;
+		var userID = templateData.user._id;
+		var coursesForRole = [];
 
-	hasInvolvedIn: function() {
-		return this.involvedIn.count() > 0;
+		involvedIn.forEach(function(course) {			
+			if(!!hasRoleUser(course.members, role, userID)) {
+				coursesForRole.push(course);
+			}
+		});
+		return coursesForRole;
+	},
+	roleUserList: function() {
+		return 'roles.'+this.type+'.userList';
+	},
+	getName: function() {
+		return Template.instance().data.user.username;
 	}
 });
 
@@ -72,16 +90,6 @@ Template.userprofile.events({
 				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
-			}
-		});
-	},
-
-	'click button.giveUpload': function() {
-		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
-			if (err) {
-				showServerError('Unable to add privilege', err);
-			} else {
-				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
 		});
 	},

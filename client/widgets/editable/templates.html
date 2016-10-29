@@ -1,11 +1,6 @@
 <template name='editable'>
 	<div class="editable-wrap {{wrapAttrs}}">
 		<div class="editable js-editable {{editableAttrs}}">
-			{{#if simple}}
-				{{text}}
-			{{else}}
-				{{{text}}}
-			{{/if}}
 		</div>
 		<span class="fa fa-pencil editable-icon js-editable-edit"></span>
 	</div>
@@ -16,11 +11,6 @@
 
 <template name="editableTextarea">
 	<div class="js-editable {{editableAttrs}} form-control editable-textarea">
-		{{#if simple}}
-			{{text}}
-		{{else}}
-			{{{text}}}
-		{{/if}}
 	</div>
 </template>
 

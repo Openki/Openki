@@ -1,16 +1,21 @@
 Template.courseEdit.created = function() {
+	var instance = this;
+
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
 
-	this.data.editableDescription = makeEditable(
-		this.data.description,
+	instance.editableDescription = Editable(
 		false,
 		false,
 		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),
 		false
 	);
+
+	instance.autorun(function() {
+		instance.editableDescription.setText(Template.currentData().description);
+	});
 };
 
 Template.courseEdit.helpers({
@@ -98,6 +103,10 @@ Template.courseEdit.helpers({
 		var filterParams = parentInstance.filter.toParams();
 
 		return filterParams.search;
+	},
+
+	editableDescription: function() {
+		return Template.instance().editableDescription;
 	}
 });
 
@@ -125,7 +134,7 @@ Template.courseEdit.events({
 			internal: $('.js-check-internal').is(':checked'),
 		};
 
-		var newDescription = instance.data.editableDescription.editedContent();
+		var newDescription = instance.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
 		changes.name = saneText(changes.name);

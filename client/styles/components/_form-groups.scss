@@ -2,6 +2,13 @@
 	@include clearfix;
 }
 
+.form-group-element:nth-child(1):nth-last-child(1) {
+	@media (min-width: $screen-sm) {
+		@include make-sm-column(12);
+		padding: 0;
+	}
+}
+
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(2):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
