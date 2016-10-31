@@ -19,6 +19,15 @@
 	src: url('/fonts/sourcesanspro/SourceSansPro-LightIt.eot') format('embedded-opentype'), url('/fonts/sourcesanspro/SourceSansPro-LightIt.otf.woff') format('woff'), url('/fonts/sourcesanspro/SourceSansPro-LightIt.otf') format('opentype'), url('/fonts/sourcesanspro/SourceSansPro-LightIt.ttf') format('truetype');
 }
 
+// Regular
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-stretch: normal;
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/sourcesanspro/SourceSansPro-Regular.eot') format('embedded-opentype'), url('/fonts/sourcesanspro/SourceSansPro-Regular.otf.woff') format('woff'), url('/fonts/sourcesanspro/SourceSansPro-Regular.otf') format('opentype'), url('/fonts/sourcesanspro/SourceSansPro-Regular.ttf') format('truetype');
+}
+
 // Semibold (for bold)
 @font-face {
 	font-family: 'Source Sans Pro';
