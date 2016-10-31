@@ -2,6 +2,17 @@ Template.layout.helpers({
 	testWarning: function() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
 	},
+
+    submenuShown: function() {
+        var route = Router.current().route;
+        submenuRoutes = [
+            'home',
+            'groupDetails'
+        ];
+
+        if (route) return ~submenuRoutes.indexOf(route.getName());
+    },
+
 	translate: function() {
 		var route = Router.current().route;
 		return route && route.getName() === "mfTrans";

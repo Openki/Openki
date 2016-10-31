@@ -6,7 +6,7 @@
 .calendar-nav-container {
 	@include make-xs-column(12);
 	background-color: rgba($calendar-nav-bg, 0.97);
-	display: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 	margin-bottom: 10px;
 	padding: 0 10px;
 	position: fixed;
@@ -15,10 +15,6 @@
 	transition: box-shadow $default-transition-time;
 	width: 100%;
 	z-index: 1010;
-}
-
-.calendar-nav-container-covering {
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
 
 // ** Navigation

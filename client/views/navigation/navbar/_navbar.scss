@@ -73,18 +73,6 @@
 	}
 }
 
-.nav-marker-bar {
-	background-color: transparent;
-	bottom: -6px;
-	height: 6px;
-	left: 0;
-	opacity: 0;
-	position: absolute;
-	transition-duration: $default-transition-time;
-	transition-property: #{'background-color, opacity'};
-	width: 100%;
-}
-
 .nav-marker-caret {
 	border: 5px solid;
 	border-color:	transparent transparent $body-bg;
@@ -104,13 +92,8 @@
 	}
 }
 
-.navbar-link-active.calendar-link > .nav-marker-caret {
+.navbar-link-active.toggling-submenu > .nav-marker-caret {
 	border-bottom-color: $calendar-nav-bg;
-}
-
-.navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	background-color: $calendar-nav-bg;
-	opacity: 1;
 }
 
 .navbar .navbar-nav:first-child,
@@ -154,13 +137,6 @@
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
 	opacity: 0;
-}
-
-.navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
-	@media (min-width: $grid-float-breakpoint) {
-		background-color: $dropdown-bg;
-		opacity: 1;
-	}
 }
 
 .navbar-covering {

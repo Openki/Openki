@@ -1,0 +1,63 @@
+@function toRGB($color) {
+	$r: red($color);
+    $g: green($color);
+    $b: blue($color);
+
+	@return rgb($r, $g, $b);
+}
+
+@function RGBtoCMYK($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $r: $r / 255;
+  $g: $g / 255;
+  $b: $b / 255;
+
+  $k: 1 - max($r, $g, $b);
+  $c: (1 - $r - $k) / (1 - $k);
+  $m: (1 - $g - $k) / (1 - $k);
+  $y: (1 - $b - $k) / (1 - $k);
+
+  $cmyk: (
+    c: $c,
+    m: $m,
+    y: $y,
+    k: $k
+  );
+
+  @return $cmyk;
+}
+
+@function CMYKtoRGB($color) {
+  $c: map-get($color, c);
+  $m: map-get($color, m);
+  $y: map-get($color, y);
+  $k: map-get($color, k);
+
+  $r: 255 * (1 - $c) * (1 - $k);
+  $g: 255 * (1 - $m) * (1 - $k);
+  $b: 255 * (1 - $y) * (1 - $k);
+
+  $rgb: rgb($r, $g, $b);
+
+  @return $rgb;
+}
+
+@function mixCMYK($color1, $color2) {
+  $color1: RGBtoCMYK($color1);
+  $color2: RGBtoCMYK($color2);
+
+
+  $mix: (
+    c: map-get($color1, c) + map-get($color2, c),
+    m: map-get($color1, m) + map-get($color2, m),
+    y: map-get($color1, y) + map-get($color2, y),
+    k: map-get($color1, k) + map-get($color2, k)
+  );
+
+  $rgb: CMYKtoRGB($mix);
+
+  @return $rgb;
+}

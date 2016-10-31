@@ -1,0 +1,30 @@
+$category-base-colors: (
+	1: rgb(154, 0, 255),
+	2: rgb(0, 79, 254),
+	3: rgb(255, 0, 0),
+	4: rgb(226, 9, 251),
+	5: rgb(4, 176, 26),
+	6: rgb(255, 138, 0),
+	7: rgb(37, 183, 249)
+);
+
+$category-computed-colors: $category-base-colors;
+
+@each $category-id, $category-color in $category-base-colors {
+    @for $second-category-id from 1 through length($category-base-colors) {
+        $second-category-color: map-get($category-base-colors, $second-category-id);
+
+        @if lightness($category-color) < lightness($second-category-color) {
+            $category-color: lighten($category-color, 35%);
+        } @else if lightness($category-color) > lightness($second-category-color) {
+            $second-category-color: lighten($second-category-color, 35%);
+        }
+
+        $computed-color: mixCMYK($category-color, $second-category-color);
+        $computed-id: $category-id + $second-category-id * 10;
+
+        $category-computed-colors: map-merge($category-computed-colors, (
+            $computed-id: $computed-color
+        ));
+    }
+}

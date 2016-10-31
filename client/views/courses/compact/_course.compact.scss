@@ -1,4 +1,4 @@
-// *** Course compact ***
+	// *** Course compact ***
 //=================
 
 // ** Wrap
@@ -64,8 +64,7 @@
 		transition-delay: .3s;
 	}
 
-	&.course-compact-category-no-category,
-	&.course-compact-category-more-than-two {
+	&.course-compact-category-no-category {
 		$no-category-color: $blue-lighter;
 
 		&.proposal,
@@ -107,105 +106,51 @@
 			color: rgba($no-category-color, 1);
 		}
 	}
+}
 
-	@each $categoryIndex, $categoryColor in $category-colors {
-		&.course-compact-category-#{$categoryIndex} {
-			&.proposal,
-			&.has-past-events {
-				background-color: rgba($categoryColor, .05);
-				border-color: rgba($categoryColor, .2);
-			}
+@each $category-index, $category-color in $category-computed-colors {
+	.category-#{$category-index} {
+		color: rgba($category-color, .2);
+	}
 
-			&.has-upcoming-events {
-				background-color: rgba($categoryColor, .2);
-			}
-
-			.course-compact-next-event {
-				background-color: rgba($categoryColor, .5);
-				color: $white;
-			}
-
-			.course-compact-role-needed {
-				color: rgba($categoryColor, .2);
-			}
-
-			.course-compact-role-occupied,
-			.course-compact-role-occupied-by-user {
-				color: rgba($categoryColor, .7);
-			}
-
-			.js-group-label,
-			.js-group-label:hover,
-			.js-group-label:focus {
-				background-color: rgba($categoryColor, 0.2);
-				color: $categoryColor;
-			}
-
-			.course-compact-categories {
-				color: rgba($categoryColor, .2);
-			}
-
-			.has-upcoming-events .course-compact-categories {
-				color: rgba($categoryColor, .2);
-			}
+	.course-compact-category-#{$category-index} {
+		&.proposal,
+		&.has-past-events {
+			background-color: rgba($category-color, .05);
+			border-color: rgba($category-color, .2);
 		}
 
-		@for $i from 1 through length($category-colors) {
-			$computedIdentifier: $categoryIndex + $i * 10;
-			$computedColor: mix(map-get($category-colors, $categoryIndex), map-get($category-colors, $i), 45%);
-
-			@if saturation($computedColor) < 70% {
-				$computedColor: saturate($computedColor, 50%);
-			}
-
-			&.course-compact-category-#{$computedIdentifier} {
-				&.proposal,
-				&.has-past-events {
-					border-color: rgba($computedColor, .2);
-				}
-
-				&.has-upcoming-events {
-					background-color: rgba($computedColor, .2);
-				}
-
-				.course-compact-next-event {
-					background-color: rgba($computedColor, .4);
-					color: $white;
-				}
-
-				.course-compact-role-needed {
-					color: rgba($computedColor, .2);
-				}
-
-				.course-compact-role-occupied,
-				.course-compact-role-occupied-by-user {
-					color: rgba($computedColor, .6);
-				}
-
-				.js-group-label,
-				.js-group-label:hover,
-				.js-group-label:focus {
-					background-color: rgba($computedColor, 0.2);
-					color: $computedColor;
-				}
-
-				.course-compact-categories {
-					color: rgba($computedColor, .2);
-				}
-
-				.has-upcoming-events .course-compact-categories {
-					color: rgba($computedColor, .2);
-				}
-			}
+		&.has-upcoming-events {
+			background-color: rgba($category-color, .2);
 		}
 
-		&.proposal .category-#{$categoryIndex},
-		&.has-past-events .category-#{$categoryIndex} {
-			color: rgba($categoryColor, .2);
+		.course-compact-next-event {
+			background-color: rgba($category-color, .5);
+			color: $white;
 		}
 
-		&.has-upcoming-events .category-#{$categoryIndex} {
-			color: rgba($categoryColor, .4);
+		.course-compact-role-needed {
+			color: rgba($category-color, .2);
+		}
+
+		.course-compact-role-occupied,
+		.course-compact-role-occupied-by-user {
+			color: rgba($category-color, .7);
+		}
+
+		.js-group-label,
+		.js-group-label:hover,
+		.js-group-label:focus {
+			background-color: rgba($category-color, 0.2);
+			color: $category-color;
+		}
+
+		.course-compact-categories {
+			color: rgba($category-color, .2);
+		}
+
+		.has-upcoming-events .course-compact-categories {
+			color: rgba($category-color, .2);
 		}
 	}
 }
@@ -227,7 +172,7 @@
 // ** Title
 //========================================================================================
 .course-compact-title {
-	color: $gray-dark;
+	color: $gray;
 	margin: 8px 0 0;
 	max-height: 60px;
 }

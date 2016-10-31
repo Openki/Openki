@@ -1,18 +1,19 @@
 Template.navbar.onRendered(function() {
+    var instance = this;
 	var gridFloatBreakpoint = Breakpoints.gridFloat;
 	var isCollapsed = Session.get('viewportWidth') <= gridFloatBreakpoint;
 
 	if (!isCollapsed) {
-		this.$('.dropdown').on('show.bs.dropdown', function(e){
+		instance.$('.dropdown').on('show.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
 		});
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
+		instance.$('.dropdown').on('hide.bs.dropdown', function(e){
 			$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
 		});
 
 		$(window).scroll(function () {
-			var navbar = this.$('.navbar');
-			var activeNavLink = this.$('.navbar-link-active');
+			var navbar = instance.$('.navbar');
+			var activeNavLink = instance.$('.navbar-link-active');
 			var isCovering = navbar.hasClass('navbar-covering');
 			var atTop = $(window).scrollTop() < 5;
 
@@ -25,7 +26,7 @@ Template.navbar.onRendered(function() {
 			}
 		});
 	} else {
-		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
+		instance.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
 			var container = $('#bs-navbar-collapse-1');
 			var scrollTo = $(this);
 			container.animate({
@@ -34,7 +35,7 @@ Template.navbar.onRendered(function() {
 				           + container.scrollTop()
 			});
 		}, 1));
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
+		instance.$('.dropdown').on('hide.bs.dropdown', function(e){
 			var container = $('#bs-navbar-collapse-1');
 			container.scrollTop(0);
 		});

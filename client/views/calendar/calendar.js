@@ -115,22 +115,6 @@ Template.calendarNav.onCreated(function() {
 	this.currentUnit = new ReactiveVar('week');
 });
 
-Template.calendarNav.onRendered(function() {
-	var navContainer = this.$('.calendar-nav-container');
-	navContainer.slideDown();
-
-	$(window).scroll(function () {
-		var isCovering = navContainer.hasClass('calendar-nav-container-covering');
-		var atTop = $(window).scrollTop() < 5;
-
-		if (!isCovering && !atTop) {
-			navContainer.addClass('calendar-nav-container-covering');
-		} else if (isCovering && atTop) {
-			navContainer.removeClass('calendar-nav-container-covering');
-		}
-	});
-});
-
 var mvDateHandler = function(unit, instance) {
 	var amount = instance.data.direction == 'previous' ? -1 : 1;
 	var calendarInstance = instance.parentInstance(2);

@@ -3,7 +3,7 @@
 		<div class="container categories-menu-container has-{{categoriesCount}}-categories">
 			{{#each categories}}
 				<div class="menu-category menu-category-{{categoryIdentifier}} {{activeCategory}} js-menu-category">
-					<span class="fa fa-{{icon}}"></span>
+					<span class="fa fa-{{icon}} menu-category-icon" aria-hidden="true"></span>
 					{{categoryName}}
 				</div>
 			{{/each}}

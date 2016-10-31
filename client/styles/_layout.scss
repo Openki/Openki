@@ -9,15 +9,27 @@ body {
 }
 
 #outer {
-	padding-top: $navbar-height + $categories-menu-height;
-}
+    padding-top: $navbar-height;
 
-#outer.test-warning {
-	padding-top: $navbar-height + $categories-menu-height + 19px;
+    &.submenu-shown {
+        padding-top: $navbar-height + $categories-menu-height;
+    }
+
+    &.test-warning {
+        padding-top: $navbar-height + 19px;
+    }
+
+    &.submenu-shown.test-warning {
+        padding-top: $navbar-height + $categories-menu-height + 19px;
+    }
 }
 
 #outer.test-warning .calendar-nav-container {
-	top: $navbar-height + $categories-menu-height + 19px;
+    top: $navbar-height + 19px;
+}
+
+#outer.submenu-shown.test-warning .calendar-nav-container {
+    top: $navbar-height + $categories-menu-height + 19px;
 }
 
 .push {

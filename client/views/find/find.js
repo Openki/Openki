@@ -157,15 +157,27 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
-	'mouseover .js-filter-upcoming-events, mouseout .js-filter-upcoming-events': function() {
+	'mouseover .js-filter-upcoming-events': function() {
 		courseFilterPreview('.has-upcoming-events', false);
 	},
 
-	'mouseover .js-filter-needs-host, mouseout .js-filter-needs-host': function() {
+	'mouseover .js-filter-needs-host': function() {
 		courseFilterPreview('.needsHost', false);
 	},
 
-	'mouseover .js-filter-needs-mentor, mouseout .js-filter-needs-mentor': function() {
+	'mouseover .js-filter-needs-mentor': function() {
+		courseFilterPreview('.needsMentor', false);
+	},
+
+    'mouseout .js-filter-upcoming-events': function() {
+		courseFilterPreview('.has-upcoming-events', false);
+	},
+
+	'mouseout .js-filter-needs-host': function() {
+		courseFilterPreview('.needsHost', false);
+	},
+
+	'mouseout .js-filter-needs-mentor': function() {
 		courseFilterPreview('.needsMentor', false);
 	},
 

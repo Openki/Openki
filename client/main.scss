@@ -4,6 +4,9 @@
 // Fonts
 @import 'styles/fonts';
 
+// Functions
+@import 'styles/lib/cmyk';
+
 // Base colors
 @import 'styles/base-colors';
 
@@ -16,6 +19,7 @@
 // Mixins
 @import 'styles/mixins';
 
+@import 'styles/lib/category-colors';
 
 // Global styles
 @import 'styles/global';
