@@ -29,23 +29,29 @@
 
 					{{#if regionSelectable}}
 						<div class="form-group">
-							<label>{{mf 'venue.edit.region' 'Region:'}}</label>
-							<div class="input-group">
-								<span class="input-group-addon">
-									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-								</span>
-								<select name='region' class="form-control js-region">
-									<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
-								{{#each regions}}
-									<option value='{{_id}}'>{{name}}</option>
-								{{/each}}
-								</select>
+							<div class="form-group-element">
+								<label>{{mf 'venue.edit.region' 'Region:'}}</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+									</span>
+									<select name='region' class="form-control js-region">
+										<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
+									{{#each regions}}
+										<option value='{{_id}}'>{{name}}</option>
+									{{/each}}
+									</select>
+								</div>
 							</div>
+							{{#if regionSelected}}
+								<div class="form-group-element">
+									<label>{{mf 'venue.edit.map' 'Map:'}}</label>
+									{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+								</div>
+							{{/if}}
 						</div>
 					{{/if}}
-					{{#if regionSelected}}
-						{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
-					{{/if}}
+
 
 					<div class="form-group">
 						<label>{{mf 'venue.details.address' 'Address:'}}</label>
