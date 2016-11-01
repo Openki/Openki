@@ -39,6 +39,15 @@
 .schedule-event {
 	margin: 2px;
 	padding: 5px;
+    transition-property: #{'box-shadow transform'};
+    transition-duration: .1s;
+
+    &:hover {
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+        transform: scale(1.2, 1.2);
+        transition-property: #{'box-shadow transform'};
+        transition-duration: .3s;
+    }
 }
 
 $schedule-event-type-1-color:  rgb(142, 224, 242);
