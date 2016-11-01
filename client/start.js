@@ -3,7 +3,6 @@
 ////////////// db-subscriptions:
 
 Meteor.subscribe('currentUser');
-Meteor.subscribe('files');
 Meteor.subscribe('version');
 
 // Always load english translation

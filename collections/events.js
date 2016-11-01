@@ -183,7 +183,6 @@ Meteor.methods({
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
-			files:       Match.Optional(Array),
 			internal:    Match.Optional(Boolean),
 		};
 
@@ -312,28 +311,6 @@ Meteor.methods({
 		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
 	},
 
-
-	removeFile: function(eventId, fileId) {
-		check(eventId, String);
-		check(fileId, String);
-
-		var user = Meteor.user();
-		if (!user) throw new Meteor.Error(401, "please log in");
-
-		var event = Events.findOne(eventId);
-		if (!event) throw new Meteor.Error(404, "No such event");
-
-		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
-
-		// Check that the event actually references the file
-		// Wouldn't want to delete just any file
-		if (!_.some(event.files, function(file) { return file._id === fileId; })) {
-			return false;
-		}
-
-		Events.update(event._id, { $pull: { files: { _id: fileId } } });
-		Files.remove(fileId);
-	},
 
 	// Update the venue field for all events matching the selector
 	updateEventVenue: function(selector) {
