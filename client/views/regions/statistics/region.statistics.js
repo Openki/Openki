@@ -3,28 +3,29 @@ Router.map(function () {
 		path: 'region/:_id',
 		template: 'regionStatistics',
 		waitOn: function () {
+			var instance = this;
 			return [
-				Meteor.subscribe('regions'),
+				instance.subscribe('regions'),
+				// instance.subscribe('currentUser'),
+				// instance.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
+				// instance.subscribe('groupsFind', { own: true }),
+				// instance.subscribe('venuesFind', { editor: Meteor.userId() })
 			];
 		},
 		data: function() {
 			var region;
 			region = Regions.findOne({_id: this.params._id});
-			if(region){
-				return region;
+			if(typeof region == 'undefined'){
+				region = Regions.findOne({name: this.params._id})
 			}
-			region = Regions.findOne({name: this.params._id})
-			if(region){
-				return region;
-			}
-			return false;
+			console.log(region);
+			return region;
 		},
 	});
 });
 Template.regionStatistics.helpers({
 	test: function() {
 		var regionSel = Template.instance().data;
-		console.log(regionSel);
 		return regionSel.name;
 	}
 });
