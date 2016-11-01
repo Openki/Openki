@@ -166,9 +166,9 @@ Template.frameSchedule.helpers({
 		return Template.instance().kindMap(this.title);
 	},
 
-    customStartTime: function(interval) {
-        var event = this;
-        var startTime = moment(event.start).format('LT');
-        return (interval !== startTime) ? startTime : false;
-    },
+	customStartTime: function(interval) {
+		var event = this;
+		var startTime = moment(event.start).format('LT');
+		return (interval !== startTime) ? startTime : false;
+	},
 });
