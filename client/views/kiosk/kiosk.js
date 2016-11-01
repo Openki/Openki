@@ -19,9 +19,7 @@ Router.map(function () {
 				subs.subscribe('eventsFind', queryOngoing),
 			];
 		},
-		subscriptions: function() {
-			return	subs.subscribe('locationNames');
-		},
+
 		data: function() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);

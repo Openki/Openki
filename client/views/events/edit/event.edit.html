@@ -45,7 +45,7 @@
 					<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text"
 						       class="form-control"
@@ -66,7 +66,7 @@
 					</label>
 					<div class="input-group" style="display:none">
 						<span class="input-group-addon">
-							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="number"
 						       class="form-control"
@@ -84,7 +84,7 @@
 					</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text"
 						       class="form-control"
@@ -102,26 +102,8 @@
 					<span class="input-group-addon">
 						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 					</span>
-					{{> eventDescriptionEdit description}}
+					{{> editableTextarea editableDescription}}
 				</div>
-			</div>
-
-			<div class="form-group event-edit-files">
-				<label>
-					{{mf 'course.event.edit.files' 'Files'}}
-					<small> {{mf '_inputField.optional'}}</small>
-				</label>
-				<input type="file" class="js-event-add-file" value="">
-				<table class="table table-hover file-list">
-					<tbody>
-						{{#each files}}
-							{{> eventAttachmentsEdit}}
-						{{/each}}
-						{{#each uploaded}}
-							{{> eventAttachmentsEdit}}
-						{{/each}}
-					</tbody>
-				</table>
 			</div>
 
 			{{#if showRegionSelection}}
@@ -222,6 +204,30 @@
 						</label>
 					</div>
 				{{/if}}
+				{{#if affectedReplicaCount}}
+					<div class="form-group-element">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="updateReplicas">
+								{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
+									Update {COUNT, plural,
+										one {later copy}
+										other {# later copies as well}
+									}
+								{{/mf}}
+								<span class="help-block">
+									<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+									{{#mf KEY='event.edit.updateReplicas.times' COUNT=affectedReplicaCount}}
+										Time-changes will not be updated in {COUNT, plural,
+											one {copy}
+											other {copies}
+										}
+									{{/mf}}
+								</span>
+							</label>
+						</div>
+					</div>
+				{{/if}}
 			</div>
 
 			<div class="form-actions">
@@ -231,29 +237,4 @@
 		</div>
 	</div>
 	</form>
-</template>
-
-<template name="eventDescriptionEdit">
-	<div class="form-control editable-textarea"
-	     id="eventEditDescription"
-	     data-placeholder="{{mf 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'}}">
-		{{{this}}}
-	</div>
-</template>
-
-<template name="eventAttachmentsEdit">
-	<tr id="row-{{_id}}">
-		<td>
-			<span class="fa fa-file fa-fw" aria-hidden="true"></span>
-			<a href="{{file}}" target="_blank">
-				{{filename}}
-			</a>
-		</td>
-		<td>
-			<button type="button" class="js-delete-file close"
-				data-tooltip="{{mf 'event.edit.removeFile' 'Remove attached file'}}">
-				&times;
-			</button>
-		</td>
-	</tr>
 </template>

@@ -5,7 +5,8 @@ Router.map(function () {
 			return [
 				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
-				Meteor.subscribe('groupsFind', { own: true })
+				Meteor.subscribe('groupsFind', { own: true }),
+				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
 			];
 		},
 		data: function () {
@@ -16,6 +17,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					groups: GroupLib.find({ own: true }),
+					venues: Venues.find({ editor: user._id })
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -67,8 +69,27 @@ Template.profile.helpers({
 		if (this.user.privacy) return 'checked';
 	},
 
-	hasInvolvedIn: function() {
-		return this.involvedIn.count() > 0;
+	isVenueEditor: function() {
+		return this.user.venues.count() > 0;
+	},
+	roles: function() {
+		return _.clone(Roles).reverse();
+	},
+	coursesByRole: function(role) {
+		var templateData = Template.instance().data;
+		var involvedIn = templateData.involvedIn;
+		var userID = templateData.user._id;
+		var coursesForRole = [];
+
+		involvedIn.forEach(function(course) {			
+			if(!!hasRoleUser(course.members, role, userID)) {
+				coursesForRole.push(course);
+			}
+		});
+		return coursesForRole;
+	},
+	roleMyList: function() {
+		return 'roles.'+this.type+'.myList';
 	}
 });
 

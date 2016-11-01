@@ -2,6 +2,13 @@
 	@include clearfix;
 }
 
+.form-group-element:nth-child(1):nth-last-child(1) {
+	@media (min-width: $screen-sm) {
+		@include make-sm-column(12);
+		padding: 0;
+	}
+}
+
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(2):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
@@ -33,6 +40,10 @@
 	}
 }
 
+.form-group-element > .input-group + label {
+	margin-top: 5px;
+}
+
 .form-group > .list-group,
 .form-group-element > .list-group {
 	margin-bottom: 0;
@@ -42,6 +53,10 @@
 .form-group > .checkbox:nth-child(2),
 .form-group-element > .radio:nth-child(2)
 .form-group-element > .checkbox:nth-child(2) {
+	margin-top: 0;
+}
+
+.form-group-element > label + .radio {
 	margin-top: 0;
 }
 

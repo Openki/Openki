@@ -4,6 +4,31 @@ Template.courseMembers.helpers({
 	}
 });
 
+
+Template.courseMember.onCreated(function() {
+	var instance = this;
+	var courseId = this.data.course._id;
+
+	instance.editableMessage = Editable(
+		true,
+		function(newMessage) {
+			Meteor.call("change_comment", courseId, newMessage, function(err, courseId) {
+				if (err) {
+					showServerError('Unable to change your message', err);
+				} else {
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
+				}
+			});
+		},
+		mf('roles.message.placeholder', 'My interests...')
+	);
+
+	instance.autorun(function() {
+		var data = Template.currentData();
+		instance.editableMessage.setText(data.member.comment);
+	});
+});
+
 Template.courseMember.helpers({
 	showMemberRoles: function() {
 		var memberRoles = this.member.roles;
@@ -27,23 +52,9 @@ Template.courseMember.helpers({
 	},
 
 	editableMessage: function() {
-		var course = this.course;
-		if (this.member.user !== Meteor.userId()) return false;
-		return makeEditable(
-			this.member.comment,
-			true,
-			function(newMessage) {
-				Meteor.call("change_comment", course._id, newMessage, function(err, courseId) {
-					if (err) {
-						showServerError('Unable to change your message', err);
-					} else {
-						addMessage(mf('subscribemessage.saving.success', { NAME: course.name }, 'Changed your message on {NAME}'), 'success');
-					}
-				});
-			},
-			mf('roles.message.placeholder', 'My interests...')
-		);
-	}
+		var mayChangeComment = this.member.user === Meteor.userId();
+		return mayChangeComment && Template.instance().editableMessage;
+	},
 });
 
 Template.courseMember.events({

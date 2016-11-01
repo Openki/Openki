@@ -2,9 +2,20 @@ Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
-	instance.selectedLocation = new ReactiveVar(this.data.location || {});
+	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
 
-	instance.uploaded = new ReactiveVar([]);
+	instance.editableDescription = Editable(
+		false,
+		false,
+		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
+		false
+	);
+
+	instance.autorun(function() {
+		var data = Template.currentData();
+		data.editableDescription = instance.editableDescription;
+		instance.editableDescription.setText(data.description);
+	});
 });
 
 Template.eventEdit.onRendered(function() {
@@ -87,11 +98,6 @@ Template.eventEdit.helpers({
 	}
 });
 
-Template.eventDescriptionEdit.rendered = function() {
-	new MediumEditor(this.firstNode);
-};
-
-
 var readDateTime = function(dateStr, timeStr) {
 	return moment(dateStr+' '+timeStr, 'L LT');
 };
@@ -162,53 +168,6 @@ var updateTimes = function(template, updateEnd) {
 };
 
 Template.eventEdit.events({
-	'change .js-event-add-file': function(event, instance) {
-		FS.Utility.eachFile(event, function(file) {
-			Files.insert(file, function (err, fileObj) {
-				if (err) {
-					addMessage(mf('file.upload.error', "Uploading file '" + fileObj.original.name + "; failed"));
-				} else {
-					var uploaded = instance.uploaded.get();
-
-					uploaded.push({
-						_id: fileObj._id,
-						file : "/cfs/files/files/" + fileObj._id,
-						filename : fileObj.original.name,
-						filesize : fileObj.original.size,
-					});
-
-					instance.uploaded.set(uploaded);
-				}
-			});
-		});
-	},
-
-
-	'click .js-delete-file': function (event, instance) {
-		var fileId = this._id;
-		var eventId = instance.data._id;
-		var filename = this.filename;
-
-		// check whether the file hasn't been associated with the event yet
-		var uploaded = instance.uploaded.get();
-		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId });
-		if (uploadedClean.length < uploaded.length) {
-			// The server does not allow to delete files that are not associated
-			// to an event. So we just remove the local reference and hope
-			// somebody will clean up stray files on the server
-			instance.uploaded.set(uploadedClean);
-			return;
-		}
-
-		Meteor.call('removeFile', eventId, fileId, function(error) {
-			if (error) {
-				showServerError("Couldn't remove file '" + filename + "'", error);
-			} else {
-				addMessage(mf('file.removed', { FILENAME:filename }, 'Removed file {FILENAME}.'), 'success');
-			}
-		});
-	},
-
 	'submit': function(event, instance) {
 		event.preventDefault();
 
@@ -224,15 +183,25 @@ Template.eventEdit.events({
 
 		var editevent = {
 			title: instance.$('#eventEditTitle').val(),
-			description: instance.$('#eventEditDescription').html(),
-			location: instance.selectedLocation.get(),
+			venue: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
 			start: start.toDate(),
 			end:   end.toDate(),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
-		editevent.files = (this.files || []).concat(instance.uploaded.get());
+		var newDescription = instance.data.editableDescription.getEdited();
+		if (newDescription) editevent.description = newDescription;
+
+		if (editevent.title.length === 0) {
+			alert(mf('event.edit.plzProvideTitle', "Please provide a title"));
+			return;
+		}
+
+		if (!editevent.description) {
+			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
+			return;
+		}
 
 		var eventId = this._id;
 		var isNew = !this._id;
@@ -282,9 +251,9 @@ Template.eventEdit.events({
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });
-					addMessage(mf('event.creating.success', { TITLE: editevent.title }, 'Created event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
 				} else {
-					addMessage(mf('event.saving.success', { TITLE: editevent.title }, 'Saved changes to event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 
 				if (updateReplicas) {

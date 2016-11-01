@@ -29,7 +29,7 @@
 .course-compact {
 	height: 150px;
 	position: relative;
-	transition-duration: $default-transition-time;
+	transition-duration: .15s;
 	transition-property: #{'box-shadow opacity'};
 
 	&:hover {
@@ -52,6 +52,16 @@
 
 	&.has-upcoming-events {
 		background: $has-upcoming-events-bg;
+	}
+
+	&.filter-no-match,
+	&.filter-no-match-delayed {
+		transition-duration: .5s;
+		transition-property: opacity;
+	}
+
+	&.filter-no-match-delayed {
+		transition-delay: .3s;
 	}
 }
 
@@ -106,7 +116,7 @@
 	padding: 0;
 }
 
-.course-compact-next-event-location {
+.course-compact-next-event-venue {
 	@include ellipsis;
 	padding: 0 4px;
 }

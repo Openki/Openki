@@ -17,11 +17,10 @@ Template.calendar.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var data = Template.currentData();
-		var query = data.query || {};
+		var query = Router.current().params.query;
 
-		// Show internal events only when a group or location is specified
-		if (!query.group && !query.location && query.internal === undefined) {
+		// Show internal events only when a group or venue is specified
+		if (!query.group && !query.venue && query.internal === undefined) {
 			query.internal = false;
 		}
 
@@ -60,12 +59,6 @@ var updateUrl = function(event, instance) {
 };
 
 Template.calendar.helpers({
-	weekday: function(day) {
-		return day.format('dddd Do MMMM');
-	},
-	past: function() {
-		return moment().isAfter(this.end);
-	},
 	days: function() {
 		var start = Template.instance().filter.get('start');
 		var i = 0;
@@ -110,32 +103,78 @@ Template.calendarDay.helpers({
 	}
 });
 
-var mvDateHandler = function(amount, unit) {
-	return function(event, instance) {
-		var start = instance.filter.get('start');
-		var weekCorrection = unit == "week"? 0 : 1;
-		if (amount < 0) {
-			start.add(amount, unit).startOf('week');
-		} else {
-			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
-		}
-		instance.filter.add('start', start).done();
-		updateUrl(event, instance);
-		return false;
-	};
-};
 
-Template.calendar.events({
-	'click .js-next-week':      mvDateHandler( 1, 'week'),
-	'click .js-previous-week':  mvDateHandler(-1, 'week'),
-	'click .js-next-month':     mvDateHandler( 1, 'month'),
-	'click .js-previous-month': mvDateHandler(-1, 'month'),
-	'click .js-next-year':      mvDateHandler( 1, 'year'),
-	'click .js-previous-year':  mvDateHandler(-1, 'year'),
-});
-
-Template.calendarNavigation.helpers({
+Template.calendarNav.helpers({
 	endDateTo: function(date) {
 		return moment(date).add(6, 'days');
+	}
+});
+
+Template.calendarNav.onCreated(function() {
+	this.currentUnit = new ReactiveVar('week');
+});
+
+Template.calendarNav.onRendered(function() {
+	var navContainer = this.$('.calendar-nav-container');
+	navContainer.slideDown();
+
+	$(window).scroll(function () {
+		var isCovering = navContainer.hasClass('calendar-nav-container-covering');
+		var atTop = $(window).scrollTop() < 5;
+
+		if (!isCovering && !atTop) {
+			navContainer.addClass('calendar-nav-container-covering');
+		} else if (isCovering && atTop) {
+			navContainer.removeClass('calendar-nav-container-covering');
+		}
+	});
+});
+
+var mvDateHandler = function(unit, instance) {
+	var amount = instance.data.direction == 'previous' ? -1 : 1;
+	var calendarInstance = instance.parentInstance(2);
+	var start = calendarInstance.filter.get('start');
+	var weekCorrection = unit == "week"? 0 : 1;
+
+	if (amount < 0) {
+		start.add(amount, unit).startOf('week');
+	} else {
+		start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
+	}
+	calendarInstance.filter.add('start', start).done();
+	updateUrl(event, calendarInstance);
+	return false;
+};
+
+Template.calendarNavControl.events({
+	'click .js-change-date': function(event, instance) {
+		var unit = instance.parentInstance().currentUnit.get();
+		mvDateHandler(unit, instance);
+	},
+
+	'click .js-change-unit': function(event, instance) {
+		var unit = this;
+		instance.parentInstance().currentUnit.set(unit);
+		mvDateHandler(unit, instance);
+	}
+});
+
+Template.calendarNavControl.helpers({
+	isPrevious: function() {
+		return this.direction == 'previous';
+	},
+
+	mfString: function(direction, unit, length) {
+		return mf('calendar.' + direction + '.' + unit + '.' + length);
+	},
+
+	currentUnit: function() {
+		var parentInstance = Template.instance().parentInstance();
+		return parentInstance.currentUnit.get();
+	},
+
+	navUnits: function() {
+		var navUnits = ['week', 'month', 'year'];
+		return navUnits;
 	}
 });

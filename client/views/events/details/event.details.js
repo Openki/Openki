@@ -13,7 +13,7 @@ Template.eventDisplay.onCreated(function() {
 
 Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.location);
+	this.locationTracker.setLocation(this.data.venue);
 });
 
 
@@ -49,8 +49,8 @@ Template.eventDisplay.helpers({
 	eventMarkers: function() {
 		return Template.instance().locationTracker.markers;
 	},
-	haveLocation: function() {
-		return this.location && this.location.loc;
+	hasVenue: function() {
+		return this.venue && this.venue.loc;
 	},
 
 	replicating: function() {
@@ -69,7 +69,7 @@ Template.event.events({
 				if (error) {
 					showServerError('Could not remove event ' + "'" + title + "'", error);
 				} else {
-					addMessage(mf('event.removed', { TITLE: title }, 'Successfully removed event "{TITLE}".'), 'success');
+					addMessage("\u2713 " + mf('_message.removed'), 'success');
 					if (course) {
 						Router.go('showCourse', { _id: course });
 					} else {
@@ -147,7 +147,7 @@ Template.eventGroupAdd.events({
 			if (error) {
 				showServerError('Failed to add group', error);
 			} else {
-				addMessage(mf('course.group.addedGroup'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -163,7 +163,7 @@ Template.eventGroupRemove.events({
 			if (error) {
 				showServerError('Failed to remove group', error);
 			} else {
-				addMessage(mf('course.group.removedGroup'), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -179,7 +179,7 @@ Template.eventGroupMakeOrganizer.events({
 			if (error) {
 				showServerError('Failed to give group editing rights', error);
 			} else {
-				addMessage(mf('course.group.groupMadeOrganizer'), 'success');
+				addMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -195,7 +195,7 @@ Template.eventGroupRemoveOrganizer.events({
 			if (error) {
 				showServerError('Failed to remove organizer status', error);
 			} else {
-				addMessage(mf('course.group.removedOrganizer'), 'success');
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});

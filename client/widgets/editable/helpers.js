@@ -1,19 +1,68 @@
-Template.editable.onCreated(function() {
-	// When not editing individual fields, mark all fields as changed
-	// from the start
-	var startChanged = !this.data.showControls;
-	this.changed = new ReactiveVar(startChanged);
+"use strict";
+
+_.each([Template.editable, Template.editableTextarea], function(template) {
+
+template.onCreated(function() {
+	// This reeks
+	this.state = this.data.connect(this);
 	this.editingVersion = false;
 });
 
+template.onRendered(function() {
+	var instance = this;
+	var editable = this.$('.js-editable');
 
-Template.editable.onRendered(function() {
-	var self = this;
-	var editable = this.$('.editable');
+	instance.getEdited = function() {
+		if (!instance.state.changed.get()) return false;
+		return instance.state.simple ? editable.text() : editable.html();
+	};
+
+	instance.reset = function() {
+		var text = instance.state.text();
+
+		if (instance.state.simple) {
+			editable.text(text);
+		} else {
+			editable.html(text);
+		}
+
+		// HACK remove placeholder when there is content
+		// We should be using setContent() anyway, but it's not defined?!
+		if (text && text.length > 0) editable.removeClass('medium-editor-placeholder');
+	};
+
+	// Automatically replace contents when text changes
+	instance.autorun(function() {
+		instance.reset();
+	});
+
+	// When the text changes while we are editing, we discard the changes made
+	// by the user. Merging the changes is nontrivial.
+	instance.autorun(function() {
+		var changed = instance.state.changed.get();
+		if (changed) {
+			var upstreamText = instance.state.text();
+			if (instance.editingVersion && upstreamText != instance.editingVersion) {
+				// :'-(
+				addMessage("Sorry, somebody else just changed that. Your changes have been discarded.", 'danger');
+			}
+
+			// keep for comparison
+			instance.editingVersion = upstreamText;
+		} else {
+			instance.editingVersion = false;
+		}
+	});
+
+	instance.store = function () {
+		instance.state.store(instance.getEdited());
+		instance.state.changed.set(false);
+	};
+
 	var options = {
 		placeholder: {
 			hideOnClick: false,
-			text: self.data.placeholderText
+			text: instance.state.placeholderText
 		},
 		anchor: {
 			linkValidation: true,
@@ -22,96 +71,52 @@ Template.editable.onRendered(function() {
 		autoLink: true,
 		buttonLabels: 'fontawesome'
 	};
-	if (this.data.simple) {
+	if (instance.state.simple) {
 		options.disableReturn = true;
 		options.toolbar = false;
 	}
 
-	// UGLY The following two methods can be used to access and change
-	// template state from other templates. This is a lot of indirection and
-	// shows that I didn't think things through.
+	// Initialize the editor interface
+	instance.editor = new MediumEditor(editable, options);
 
-	// This method yields the current content if it was edited
-	this.data.editedContent = function() {
-		if (!self.changed.get()) return false;
-		return self.data.simple ? editable.text() : editable.html();
-	};
-
-	// This method can be used to leave editing mode
-	this.data.end = function() {
-		self.changed.set(false);
-	};
-
-	// When the text changes while we are editing, the changes will be
-	// inserted as new nodes instead of replacing the other nodes.
-	// That's because Blaze doesn't know how to merge the current DOM
-	// with the new text value it's given.
-	// Merging the two versions is nontrivial and the current behaviour
-	// is to just discard the local edits.
-	self.autorun(function() {
-		var currentData = Template.currentData();
-		var currentText = currentData.text;
-
-		// Here we instill the version we got in the DB
-		// Most of the time, it will be the same as what
-		// is already displayed
-		currentText = currentText || '';
-		if (currentText !== self.editingVersion) editable.html(currentText);
-
-		if (self.editingVersion !== false && currentText !== self.editingVersion) {
-			// Uh oh, not handling this well
-			addMessage("Sorry, somebody else just changed that. Your changes have been discarded.", 'danger');
-
-			//:-( REALLY BAD
-			self.changed.set(false);
-			self.editingVersion = false;
-		}
-	});
-
-	self.editor = new MediumEditor(editable, options);
+	// Register when the field is being edited
 	editable.on('input', function() {
-		if (!self.changed.get()) {
-			self.changed.set(true);
-			self.editingVersion = self.data.text;
-		}
+		instance.state.changed.set(true);
 	});
 });
 
-Template.editable.helpers({
+template.helpers({
 	showControls: function() {
 		var instance = Template.instance();
-		return instance.data.showControls && instance.changed.get();
+		return instance.state.showControls && instance.state.changed.get();
 	},
 
 	wrapAttrs: function() {
 		var instance = Template.instance();
-		return instance.data.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
+		return instance.state.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
 	},
 
 	editableAttrs: function() {
 		var instance = Template.instance();
-		return instance.changed.get() ? 'editable-changed' : '';
+		return instance.state.changed.get() ? 'editable-changed' : '';
 	}
 });
 
-Template.editable.events({
+template.events({
 	'click .js-editable-save': function(event, instance) {
 		event.preventDefault();
-		instance.changed.set(false);
-		var editable = instance.$('.editable');
-		var changedText = instance.data.simple ? editable.text() : editable.html();
-		instance.data.store(changedText);
-		instance.editingVersion = false;
+		instance.store();
 	},
 
 	'click .js-editable-cancel': function(event, instance) {
 		event.preventDefault();
-		instance.$('.editable').html(instance.data.text);
-		instance.changed.set(false);
-		instance.editingVersion = false;
+		instance.reset();
+		instance.state.changed.set(false);
 	},
 
 	'click .js-editable-edit': function(event, instance) {
+		instance.$('.js-editable').focus();
+
 		// Moving the cursor to the end of the editable element?
 		// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
 		var selectEnd = function(el) {
@@ -122,6 +127,7 @@ Template.editable.events({
 			selection.removeAllRanges();
 			selection.addRange(range);
 		};
-		selectEnd(instance.$('.editable')[0]);
+		selectEnd(instance.$('.js-editable')[0]);
 	}
+});
 });
