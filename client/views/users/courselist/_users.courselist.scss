@@ -1,5 +1,13 @@
-.profile-courselist > .course-list + h3 {
+.profile-courselist h3[id] {
 	margin-top: 10px;
+}
+
+.profile-courselist .badge-title {
+	margin-bottom: 5px;
+}
+
+.profile-courselist .badge-title + div {
+	margin-bottom: 20px;
 }
 
 .profile-courselist .badge {
