@@ -1,7 +1,7 @@
 // _id          ID
 // editor       user ID
 // name         String
-// description  String
+// description  String (HTML)
 // region       region ID
 // loc          GeoJSON coordinates
 // address      String
@@ -77,7 +77,7 @@ venuesFind = function(filter, limit) {
 	return Venues.find(find, options);
 };
 
-
+if (Meteor.isServer) {
 Meteor.methods({
 	'venue.save': function(venueId, changes) {
 		check(venueId, String);
@@ -118,7 +118,7 @@ Meteor.methods({
 		var set = { updated: new Date() };
 
 
-		if (changes.description) set.description = changes.description.trim().substring(0, 640*1024);
+		if (changes.description) set.description = saneHtml(changes.description.trim().substring(0, 640*1024));
 		if (changes.name) {
 			set.name = changes.name.trim().substring(0, 1000);
 			set.slug = getSlug(set.name);
@@ -185,5 +185,4 @@ Meteor.methods({
 	}
 
 });
-
-
+}

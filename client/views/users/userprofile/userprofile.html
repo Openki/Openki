@@ -48,25 +48,6 @@
 											</button>
 									{{/if}}
 								{{/if}}
-
-								{{#if privileges.upload}}
-									<li class="list-group-item list-group-item-success">
-										{{mf 'privilege.has.upload' 'Upload allowed'}}
-										{{#if alterPrivileges}}
-											<button type="button" class="js-remove-privilege-btn close"
-												data-tooltip="{{mf 'privilege.remove'}}"
-												data-priv="upload">
-												&times;
-											</button>
-										{{/if}}
-									</li>
-								{{else}}
-									{{#if alterPrivileges}}
-											<button type="button" class="giveUpload list-group-item">
-												{{mf 'privilege.add.upload' 'Grant upload privilege'}}
-											</button>
-									{{/if}}
-								{{/if}}
 							</div>
 						</div>
 					{{/if}}

@@ -54,13 +54,18 @@ Template.venueEdit.onCreated(function() {
 		}
 	});
 
-	this.data.editableDescription = makeEditable(
-		this.data.description,
+	instance.editableDescription = Editable(
 		false,
 		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),
 		false
 	);
+
+	instance.autorun(function() {
+		var data = Template.currentData();
+		data.editableDescription = instance.editableDescription;
+		instance.editableDescription.setText(data.description);
+	});
 });
 
 Template.venueEdit.helpers({
@@ -80,6 +85,10 @@ Template.venueEdit.helpers({
 
 	regionSelectable: function() {
 		return Template.instance().regionSelectable.get();
+	},
+
+	regionSelected: function() {
+		return !!Template.instance().selectedRegion.get();
 	},
 
 	venueMarkers: function() {
@@ -126,7 +135,6 @@ Template.venueEdit.events({
 
 		var changes =
 			{ name:            instance.$('.js-name').val()
-			, description:     instance.$('.js-description').val()
 			, address:         instance.$('.js-address').val()
 			, route:           instance.$('.js-route').val()
 			, short:           instance.$('.js-short').val()
@@ -137,7 +145,7 @@ Template.venueEdit.events({
 			, website:         instance.$('.js-website').val()
 		    };
 
-		var newDescription = instance.data.editableDescription.editedContent();
+		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
 		_.each(Venues.facilityOptions, function(f) {
@@ -149,8 +157,6 @@ Template.venueEdit.events({
 		var marker = instance.locationTracker.markers.findOne({ main: true });
 		if (marker) {
 			changes.loc = marker.loc;
-		} else {
-			changes.loc = null;
 		}
 
 		if (instance.isNew) {
