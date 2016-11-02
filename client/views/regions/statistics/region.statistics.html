@@ -1,3 +1,18 @@
 <template name="regionStatistics">	
-	{{test}}
+	<h3>The essence of {{regionName}}</h3>
+	<h4>Form</h4>
+	<ul>
+		<li>Courses (all): {{courseCount}}</li>
+		<li>Proposals (Courses without future or past events): {{proposalsCount}} </li>
+		<li>Future events: {{futureEventCount}}</li>
+		<li>Past events: </li>
+	</ul>
+	<h4>Substance</h4>
+	<ul>
+		<li>Users: </li>
+		<li>Mentors: </li>
+		<li>Venues: {{venuesCount}} </li>
+		<li>Groups: </li>
+		<li>Most active Groups: </li>
+	</ul>
 </template>
