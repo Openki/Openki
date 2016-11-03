@@ -173,7 +173,7 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas) {
+	saveEvent: function(eventId, changes, updateReplicas, sendNotifications) {
 		check(eventId, String);
 
 		var expectedFields = {
@@ -284,6 +284,10 @@ Meteor.methods({
 		}
 
 		if (Meteor.isServer) {
+			if (sendNotifications) {
+				Openki.Log.Notification.Event(eventId);
+			}
+
 			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
 			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
 			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);

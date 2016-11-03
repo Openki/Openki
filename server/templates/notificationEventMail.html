@@ -1,0 +1,39 @@
+<template name="notificationEventMail">
+	{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username}}
+
+	{{#if new}}
+		{{mf "notification.event.mail.intro.new" "A new event was just published for course {COURSE}:" COURSE=course.title}}
+	{{else}}
+		{{mf "notification.event.mail.intro.changed" "The event {EVENT} for course {COURSE} changed:" EVENT=event.title COURSE=course.title}}
+	{{/if}}
+	<table>
+		<tr>
+			<th>{{mf "notification.event.mail.table.title" "Title"}}</th>
+			<td>{{event.title}}</td>
+		</tr>
+		<tr>
+			<th>{{mf "notification.event.mail.table.date" "Date"}}</th>
+			<td>{{eventDate}}</td>
+		</tr>
+		<tr>
+			<th>{{mf "notification.event.mail.table.time" "Time"}}</th>
+			<td>{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{\if}}</td>
+		</tr>
+		<tr>
+			<th>{{mf "notification.event.mail.table.link" "Link"}}</th>
+			<td>
+				<a href="{{urlFor 'showEvent' event}}">{{mf "notification.event.mail.linkText" "Visit page"}}</a><br>
+				<a href="{{urlFor 'calEvent' event}}">{{mf "notification.event.mail.linkCalendar" "Add to my calendar"}}</a><br>
+			</td>
+		</tr>
+		<tr>
+			<th>{{mf "notification.event.mail.table.description" "Event description"}}</th>
+			<td>{{{description}}}</td>
+		</tr>
+	</table>
+
+	<small>
+		{{mf "notification.event.mail.notice" "This mail was sent by Openki."}}
+		<a href="{{urlFor 'ownProfile'">{{mf "notification.event.mail.profileLink" "Visit your profile"}}</a>
+	</small>
+</template>

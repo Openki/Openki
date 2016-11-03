@@ -28,7 +28,6 @@
 
 		"DDPServer": false,
 		"global": false,
-		"Log": false,
 		"MongoInternals": false,
 		"process": false,
 		"WebApp": false,
@@ -89,6 +88,7 @@
 		"privileged":true,
 		"groupsFind":true,
 		"Groups":true,
+		"Log": true,
 
 // lib/functions.js
 
