@@ -100,7 +100,7 @@ Template.regionSelection.events({
 		// the homepage for those
 		if (changed) {
 			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'locations', 'calendar'];
+			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.parentInstance().searchingRegions.set(false);
