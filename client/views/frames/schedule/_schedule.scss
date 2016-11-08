@@ -1,4 +1,5 @@
 .schedule {
+	margin: 5px;
 	table-layout: fixed;
 }
 
@@ -17,18 +18,28 @@
 	border-style: solid;
 	border-color: $body-bg;
 	color: $white;
+	font-weight: bold;
 	padding: 5px;
 	text-align: center;
 }
 
 .schedule-time {
-	text-align: center;
 	vertical-align: top;
+}
+
+.schedule-time-interval {
+	background: black;
+	color: white;
+	font-weight: bold;
+	margin-top: 2px;
+	padding: 5px 10px;
+	text-align: center;
+	width: 100%;
 }
 
 .schedule-header-time,
 .schedule-time {
-	width: 50px;
+	width: 100px;
 }
 
 .schedule-slot {
@@ -39,6 +50,23 @@
 .schedule-event {
 	margin: 2px;
 	padding: 5px;
+	transition-property: #{'box-shadow transform'};
+	transition-duration: .1s;
+
+	&:hover {
+		box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+		transform: scale(1.2, 1.2);
+		transition-property: #{'box-shadow transform'};
+		transition-duration: .3s;
+	}
+}
+
+.schedule-event-time {
+	background: black;
+	color: white;
+	font-weight: bold;
+	font-size: small;
+	padding: 0 3px;
 }
 
 $schedule-event-type-1-color:  rgb(142, 224, 242);

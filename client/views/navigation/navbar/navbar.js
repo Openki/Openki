@@ -1,5 +1,5 @@
 Template.navbar.onRendered(function() {
-	var gridFloatBreakpoint = Breakpoints.gridFloat;
+	var gridFloatBreakpoint = SCSSVars.gridFloat;
 	var isCollapsed = Session.get('viewportWidth') <= gridFloatBreakpoint;
 
 	if (!isCollapsed) {
