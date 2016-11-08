@@ -153,7 +153,7 @@ Template.eventReplication.events({
 				end:   moment(end  ).add(days, 'days').toDate(),
 				title: instance.data.title,
 				description: instance.data.description,
-				location: instance.data.location,
+				venue: instance.data.venue,
 				room: instance.data.room || '',
 				region: instance.data.region,
 				groups: instance.data.groups,
