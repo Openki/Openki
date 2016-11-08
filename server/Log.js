@@ -8,12 +8,17 @@ Openki.Log = function(track, rel, body) {
 	check(track, String);
 	check(rel, Match.Optional(String));
 	check(body, Object);
-	Log.insert(
-		{ track: track
+	var entry =
+		{ tr: track
 		, ts: new Date()
 		, body: body
-		}
-	);
+		};
+
+	if (rel) {
+		entry.rel = rel;
+	}
+
+	Log.insert(entry);
 };
 
 Openki.Log.Notification = {};
@@ -65,7 +70,7 @@ Openki.Log.Notification.Event.Result = function(rel, sent, recipient, message, r
 Openki.Log.Notification.Event.handler = function() {
 	var now = new Date();
 	var gracePeriod = now.setHours(now.getHours() - 12);
-	Log.find({ track: 'notification.event', ts: { $geq: gracePeriod } }).observe({
+	Log.find({ tr: 'notification.event', ts: { $geq: gracePeriod } }).observe({
 		added: function(entry) {
 			var concluded = {};
 
@@ -101,18 +106,42 @@ Openki.Log.Notification.Event.handler = function() {
 						var userLocale = user.profile && user.profile.locale || 'en';
 						var startMoment = moment(event.start);
 						startMoment.locale(userLocale);
+						var endMoment = moment(event.end);
+						endMoment.locale(userLocale);
 
-						var vars =
-							{ EVENT: htmlize(event.title)
-							, DATE: htmlize(startMoment.format('ll'))
-							, DATETIME: htmlize(startMoment.format('LLLL'))
-							, END: htmlize(startMoment.format('LT'))
-							,
+						var subjectvars =
+							{ TITLE: event.title.substr(0,30)
+							, DATE: startMoment.format('LL')
 							};
 
-						var message;
+						var vars =
+							{ event: event
+							, course: course
+							, eventDate: startMoment.format('LL')
+							, eventStart: startMoment.format('LT')
+							, eventEnd: startMoment.format('LT')
+							, locale: userLocale
+							, new: entry.new
+							};
+
+						var message = Blaze.toHTMLWithData(Template.notificationEventMail, vars);
+
+						var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
+						var subject;
 						if (entry.new) {
+							subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
+						} else {
+							subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
 						}
+
+						var mail =
+							{ from: Accounts.emailTemplates.from
+							, to: address
+							, subject: subjectPrefix + subject
+							, html: message
+							};
+
+						Email.send(email);
 					}
 					catch(reason) {
 						Openki.Log.Notification.Event.Result(entry._id, false, recipient, false, reason);
