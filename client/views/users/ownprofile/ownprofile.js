@@ -10,8 +10,10 @@ Router.map(function () {
 			];
 		},
 		data: function () {
+			var data = {};
 			var user = Meteor.user();
-			if(user) {
+			data.loggedIn = !!user;
+			if (data.loggedIn) {
 				var userdata = {
 					_id: user._id,
 					name: user.username,
@@ -25,11 +27,10 @@ Router.map(function () {
 					userdata.verified = !!user.emails[0].verified;
 				}
 
-				return {
-					user: userdata,
-					involvedIn: coursesFind({ userInvolved: user._id })
-				};
+				data.user = userdata;
+				data.involvedIn = coursesFind({ userInvolved: user._id });
 			}
+			return data;
 		},
 		onAfterAction: function() {
 			var user = Meteor.users.findOne();
