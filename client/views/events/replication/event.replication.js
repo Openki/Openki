@@ -16,38 +16,49 @@ Template.eventReplication.onCreated(function() {
 Template.eventReplication.onRendered(function() {
 	var instance = this;
 
-	instance.$('.js-replicate-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
+	var pickDays = [];
+
+	instance.autorun(function() {
+		Session.get('locale');
+
+		var $dateInput = instance.$('.js-replicate-date');
+		$dateInput.datepicker('remove');
+		$dateInput.datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
 			}
-		}
-	});
-
-	instance.$('.js-replicate-datepick').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		multidate: true,
-		multidateSeperator: ", ",
-		todayHighlight: true,
-		startDate: new Date()
-	}).on('changeDate', function(event) {
-		var origin = moment(instance.data.start).startOf('day');
-		var dates = event.dates;
-
-		var days = _.map(dates, function(date) {
-			return moment(date).diff(origin, 'days');
 		});
 
-		instance.pickDays.set(days);
-    });
+		var $multiDateInput = instance.$('.js-replicate-datepick');
+		$multiDateInput.datepicker('remove');
+		$multiDateInput.datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			language: moment.locale(),
+			multidate: true,
+			multidateSeperator: ", ",
+			todayHighlight: true,
+			startDate: new Date()
+		}).on('changeDate', function(event) {
+			var origin = moment(instance.data.start).startOf('day');
+			var dates = event.dates;
+
+			pickDays = dates;
+			var days = _.map(dates, function(date) {
+				return moment(date).diff(origin, 'days');
+			});
+
+			instance.pickDays.set(days);
+		});
+		$multiDateInput.datepicker('setDates', pickDays);
+	});
 
 	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 		var target = $(e.target).attr('href');
