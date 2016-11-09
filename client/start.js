@@ -126,12 +126,20 @@ Meteor.startup(function() {
 		// work for the datepicker. But we want to use the momentjs settings
 		// anyway, so we might as well clobber the 'en' locale.
 		var mf = moment().localeData();
+
+		var monthsShort = function() {
+			if (typeof mf.monthsShort === 'function') {
+				return _.map(_.range(12), function(month) { return mf.monthsShort(moment().month(month), ''); });
+			}
+			return mf._monthsShort;
+		};
+
 		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
 			days: mf._weekdays,
 			daysShort: mf._weekdaysShort,
 			daysMin: mf._weekdaysMin,
 			months: mf._months || mf._monthsNominativeEl,
-			monthsShort: mf._monthsShort,
+			monthsShort: monthsShort(),
 			weekStart: mf._week.dow
 		});
 	});

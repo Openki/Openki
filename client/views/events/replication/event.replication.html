@@ -35,6 +35,7 @@
 							       id="replicateStart"
 							       size="8"
 							       value="{{replicaStart}}">
+							<span class="replica-date-weekday">{{replicateStartDay}}</span>
 						</div>
 						<label for="replicateEnd">
 							{{mf 'event.replication.interval.end' 'Interval End'}}
@@ -48,6 +49,7 @@
 							       id="replicateEnd"
 							       size="8"
 							       value="{{replicaEnd}}">
+							<span class="replica-date-weekday">{{replicateEndDay}}</span>
 						</div>
 						<label for="replicateFrequency">
 							{{mf 'event.replication.repeat' 'Repeat'}}
@@ -108,6 +110,7 @@
 								<div class="replica-event-caption-header-wrap">
 									<div class="replica-event-caption-header">
 										<span class="fa fa-map-pin"></span>
+										{{weekDay this}}
 										<div class="replica-event-caption-pseudoborder"></div>
 									</div>
 								</div>
@@ -118,16 +121,6 @@
 								</div>
 							</div>
 						{{/each}}
-					</div>
-					<div class="input-group">
-						<button type="button" class="btn btn-save js-replicate-btn">
-							{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
-								Create {COUNT, plural,
-									one {event}
-									other {# events}
-								}
-							{{/mf}}
-						</button>
 					</div>
 				{{else}}
 					<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
@@ -149,5 +142,16 @@
 				{{/if}}
 			</div>
 		</div>
+		{{#if replicaDateCount}}
+			<button type="button" class="btn btn-save js-replicate-btn">
+				<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
+				{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
+					Create {COUNT, plural,
+						one {event}
+						other {# events}
+					}
+				{{/mf}}
+			</button>
+		{{/if}}
 	</div>
 </template>
