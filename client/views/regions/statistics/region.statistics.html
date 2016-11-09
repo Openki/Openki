@@ -3,16 +3,20 @@
 	<h4>Form</h4>
 	<ul>
 		<li>Courses (all): {{courseCount}}</li>
-		<li>Proposals (Courses without future or past events): {{proposalsCount}} </li>
+		<li>Proposals (Courses without future or past events): {{proposalCount}} </li>
 		<li>Future events: {{futureEventCount}}</li>
-		<li>Past events: </li>
+		<li>Past events: {{pastEventCount}}</li>
 	</ul>
 	<h4>Substance</h4>
 	<ul>
 		<li>Users: </li>
 		<li>Mentors: </li>
 		<li>Venues: {{venuesCount}} </li>
-		<li>Groups: </li>
-		<li>Most active Groups: </li>
+		<li>Groups: {{groupsCount}}</li>
+		<li> Most active Groups: <br/>
+			{{ #each group in groups}}
+				{{group.weight}} {{group.name}} <br/>
+			{{ /each }}
+		</li>
 	</ul>
 </template>
