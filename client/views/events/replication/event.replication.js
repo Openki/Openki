@@ -1,15 +1,28 @@
 "use strict";
 
+var replicaStartDate = function(originalDate) {
+	var originalMoment = moment(originalDate);
+	var startMoment = moment.max(originalMoment, moment());
+	startMoment.day(originalMoment.day());
+	return startMoment;
+};
+
 Template.eventReplication.onCreated(function() {
+	var instance = this;
+
 	// Store the current date selection for replication
 	// Days are stored as difference from the original day
-	this.calcDays = new ReactiveVar([]); // calculated from the dialog
-	this.pickDays = new ReactiveVar([]); // picked in the calendar
-	this.usingPicker = new ReactiveVar(true);
+	instance.calcDays = new ReactiveVar([]); // calculated from the dialog
+	instance.pickDays = new ReactiveVar([]); // picked in the calendar
+	instance.usingPicker = new ReactiveVar(true);
 
-	this.activeDays = function() {
-		return this.usingPicker.get() ? this.pickDays.get() : this.calcDays.get();
+	instance.activeDays = function() {
+		return instance.usingPicker.get() ? instance.pickDays.get() : instance.calcDays.get();
 	};
+
+	var data = instance.data;
+	instance.replicateStartDate = new ReactiveVar(replicaStartDate(data.start));
+	instance.replicateEndDate = new ReactiveVar(replicaStartDate(data.end));
 });
 
 
@@ -28,6 +41,14 @@ Template.eventReplication.onRendered(function() {
 			toValue: function(date) {
 				return moment(date, 'L').toDate();
 			}
+		}
+	}).on('changeDate', function(event) {
+		var targetID = event.target.id;
+		var date = event.date;
+		if (targetID === 'replicateStart') {
+			instance.replicateStartDate.set(date);
+		} else if (targetID === 'replicateEnd') {
+			instance.replicateEndDate.set(date);
 		}
 	});
 
@@ -55,13 +76,6 @@ Template.eventReplication.onRendered(function() {
 	});
 });
 
-var replicaStartDate = function(originalDate) {
-	var originalMoment = moment(originalDate);
-	var startMoment = moment.max(originalMoment, moment());
-	startMoment.day(originalMoment.day());
-	return startMoment;
-};
-
 Template.eventReplication.helpers({
 	replicaStart: function() {
 		return replicaStartDate(this.start).format("L");
@@ -71,12 +85,26 @@ Template.eventReplication.helpers({
 		return replicaStartDate(this.start).add(1, 'week').format("L");
 	},
 
+	replicateStartDay: function() {
+		var replicateStartDate = Template.instance().replicateStartDate.get();
+		return moment(replicateStartDate).format('ddd');
+	},
+
+	replicateEndDay: function() {
+		var replicateEndDate = Template.instance().replicateEndDate.get();
+		return moment(replicateEndDate).format('ddd');
+	},
+
 	localDate: function(date) {
 		return moment(date).format("l");
 	},
 
 	fullDate: function(date) {
-		return moment(date).format("LL");
+		return moment(date).format("LLLL");
+	},
+
+	weekDay: function(date) {
+		return moment(date).format("ddd");
 	},
 
 	affectedReplicaCount: function() {

@@ -24,6 +24,16 @@
 	width: 100%;
 }
 
+.replica-date-weekday {
+	color: $gray-light;
+	padding-right: $padding-base-horizontal;
+	padding-top: $padding-base-vertical;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 3;
+}
+
 .replica-event-captions {
 	@include clearfix;
 	margin: -2.5px -5px;
@@ -41,6 +51,10 @@
 	padding: 2.5px 5px;
 	position: relative;
 	text-align: center;
+
+	&:hover {
+		cursor: help;
+	}
 }
 
 .replica-event-caption-header-wrap {
@@ -55,16 +69,19 @@ $replica-event-caption-border: $yellow;
 	border-color: $replica-event-caption-border;
 	border-style: solid;
 	border-width: 1.5px 1.5px 0;
+	font-size: small;
 	display: table-cell;
-	font-size: 8px;
+	padding: 3px;
 	position: relative;
 	transition: border-color $default-transition-time;
 	vertical-align: top;
 }
 
 .replica-event-caption-header > .fa-map-pin {
-	position: relative;
+	font-size: 8px;
+	position: absolute;
 	top: -5px;
+	left: 50%;
 	transform: rotate(10deg);
 }
 
@@ -90,7 +107,7 @@ $replica-event-caption-body-bg: $event-body-bg;
 	border-style: solid;
 	border-width: 0 1.5px 1.5px;
 	display: table-cell;
-	padding: 2px;
+	padding: 3px;
 	transition: border-color $default-transition-time;
 	vertical-align: middle;
 }
