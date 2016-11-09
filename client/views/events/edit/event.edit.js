@@ -19,21 +19,34 @@ Template.eventEdit.onCreated(function() {
 });
 
 Template.eventEdit.onRendered(function() {
-	updateTimes(this, false);
+	var instance = this;
+	updateTimes(instance, false);
 
-	this.$('.js-event-start-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
+	instance.autorun(function() {
+		// Depend on locale so we update reactively when it changes
+		Session.get('locale');
+
+		var $dateInput = instance.$('.js-event-start-date');
+
+		// remove, re-add the datepicker when the locale changed
+		$dateInput.datepicker('remove');
+
+		// I don't know why, but language: moment.locale() does not work here.
+		// So instead we clobber the 'en' settings with settings for the
+		// selected language.
+		$dateInput.datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
 			}
-		}
+		});
 	});
 });
 

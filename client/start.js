@@ -120,6 +120,20 @@ Meteor.startup(function() {
 		var setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
 		if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+
+		// HACK replace the datepicker locale settings
+		// I do not understand why setting language: moment.locale() does not
+		// work for the datepicker. But we want to use the momentjs settings
+		// anyway, so we might as well clobber the 'en' locale.
+		var mf = moment().localeData();
+		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
+			days: mf._weekdays,
+			daysShort: mf._weekdaysShort,
+			daysMin: mf._weekdaysMin,
+			months: mf._months || mf._monthsNominativeEl,
+			monthsShort: mf._monthsShort,
+			weekStart: mf._week.dow
+		});
 	});
 });
 
