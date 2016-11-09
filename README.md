@@ -36,17 +36,16 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :iphone: Responsive design: mobile, tablet and desktop computers
 - :ideograph_advantage: I18n: In-browser-GUI for life translation
 - :envelope: Email notifications
-- :open_file_folder: File upload for course-documentation
 - :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
 - :white_large_square: White-labeling for groups, locations and regions
+- :open_file_folder: File upload for course-documentation
 - :closed_lock_with_key: Privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :mailbox: Privat messaging
 - :name_badge: OpenBadges
 - :ghost: Customizability
-- :ticket: Mozzila Persona
 - :8ball: Connection to SocialNetworks APIs
 - :iphone: Smartphone App
 
@@ -57,7 +56,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
-#### Documentation
+### Documentation
 - The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
 
 ### License
