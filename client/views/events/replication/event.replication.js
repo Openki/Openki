@@ -1,60 +1,5 @@
 "use strict";
 
-Template.eventReplication.onCreated(function() {
-	// Store the current date selection for replication
-	// Days are stored as difference from the original day
-	this.calcDays = new ReactiveVar([]); // calculated from the dialog
-	this.pickDays = new ReactiveVar([]); // picked in the calendar
-	this.usingPicker = new ReactiveVar(true);
-
-	this.activeDays = function() {
-		return this.usingPicker.get() ? this.pickDays.get() : this.calcDays.get();
-	};
-});
-
-
-Template.eventReplication.onRendered(function() {
-	var instance = this;
-
-	instance.$('.js-replicate-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
-			}
-		}
-	});
-
-	instance.$('.js-replicate-datepick').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		multidate: true,
-		multidateSeperator: ", ",
-		todayHighlight: true,
-		startDate: new Date()
-	}).on('changeDate', function(event) {
-		var origin = moment(instance.data.start).startOf('day');
-		var dates = event.dates;
-
-		var days = _.map(dates, function(date) {
-			return moment(date).diff(origin, 'days');
-		});
-
-		instance.pickDays.set(days);
-    });
-
-	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-		var target = $(e.target).attr('href');
-		instance.usingPicker.set(target == '#datepicker');
-	});
-});
-
 var replicaStartDate = function(originalDate) {
 	var originalMoment = moment(originalDate);
 	var startMoment = moment.max(originalMoment, moment());
@@ -62,13 +7,101 @@ var replicaStartDate = function(originalDate) {
 	return startMoment;
 };
 
+Template.eventReplication.onCreated(function() {
+	var instance = this;
+
+	// Store the current date selection for replication
+	// Days are stored as difference from the original day
+	instance.calcDays = new ReactiveVar([]); // calculated from the dialog
+	instance.pickDays = new ReactiveVar([]); // picked in the calendar
+	instance.usingPicker = new ReactiveVar(true);
+
+	instance.activeDays = function() {
+		return instance.usingPicker.get() ? instance.pickDays.get() : instance.calcDays.get();
+	};
+
+	var data = instance.data;
+	instance.replicateStartDate = new ReactiveVar(replicaStartDate(data.start));
+	instance.replicateEndDate = new ReactiveVar(replicaStartDate(moment(data.start).add(1, 'week')));
+});
+
+
+Template.eventReplication.onRendered(function() {
+	var instance = this;
+
+	var pickDays = [];
+
+	instance.autorun(function() {
+		Session.get('locale');
+
+		instance.$('.js-replicate-date').datepicker('remove');
+		instance.$('.js-replicate-date').datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			language: moment.locale(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
+			}
+		}).on('changeDate', function(event) {
+			var targetID = event.target.id;
+			var date = event.date;
+			if (targetID === 'replicateStart') {
+				instance.replicateStartDate.set(date);
+			} else if (targetID === 'replicateEnd') {
+				instance.replicateEndDate.set(date);
+			}
+		});
+
+		instance.$('.js-replicate-datepick').datepicker('remove');
+		instance.$('.js-replicate-datepick').datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			language: moment.locale(),
+			multidate: true,
+			multidateSeperator: ", ",
+			todayHighlight: true,
+			startDate: new Date()
+		}).on('changeDate', function(event) {
+			var origin = moment(instance.data.start).startOf('day');
+			pickDays = event.dates;
+
+			var days = _.map(pickDays, function(date) {
+				return moment(date).diff(origin, 'days');
+			});
+
+			instance.pickDays.set(days);
+		});
+		instance.$('.js-replicate-datepick').datepicker('setDates', pickDays);
+	});
+
+	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+		var target = $(e.target).attr('href');
+		instance.usingPicker.set(target == '#datepicker');
+	});
+});
+
 Template.eventReplication.helpers({
 	replicaStart: function() {
-		return replicaStartDate(this.start).format("L");
+		return replicaStartDate(Template.instance().replicateStartDate.get()).format("L");
 	},
 
 	replicaEnd: function() {
-		return replicaStartDate(this.start).add(1, 'week').format("L");
+		return replicaStartDate(Template.instance().replicateEndDate.get()).format("L");
+	},
+
+	replicateStartDay: function() {
+		var replicateStartDate = Template.instance().replicateStartDate.get();
+		return moment(replicateStartDate).format('ddd');
+	},
+
+	replicateEndDay: function() {
+		var replicateEndDate = Template.instance().replicateEndDate.get();
+		return moment(replicateEndDate).format('ddd');
 	},
 
 	localDate: function(date) {
@@ -76,7 +109,11 @@ Template.eventReplication.helpers({
 	},
 
 	fullDate: function(date) {
-		return moment(date).format("LL");
+		return moment(date).format("LLLL");
+	},
+
+	weekDay: function(date) {
+		return moment(date).format("ddd");
 	},
 
 	affectedReplicaCount: function() {
@@ -153,7 +190,7 @@ Template.eventReplication.events({
 				end:   moment(end  ).add(days, 'days').toDate(),
 				title: instance.data.title,
 				description: instance.data.description,
-				location: instance.data.location,
+				venue: instance.data.venue,
 				room: instance.data.room || '',
 				region: instance.data.region,
 				groups: instance.data.groups,

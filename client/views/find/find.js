@@ -338,7 +338,7 @@ Template.find.helpers({
 
 	'isMobile': function() {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenXs = Breakpoints.screenXs;
-		return Session.get('viewportWidth') <= screenXs;
+		var screenXS = SCSSVars.screenXS;
+		return Session.get('viewportWidth') <= screenXS;
 	}
 });

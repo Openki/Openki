@@ -6,6 +6,9 @@ Template.userFrame.events({
 	'click .js-logout-btn': function(event){
 		event.preventDefault();
 		Meteor.logout();
+
+		var routeName = Router.current().route.getName();
+		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
 	},
 
 	'click .js-forgot-pwd-btn': function(event, instance) {

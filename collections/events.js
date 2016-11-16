@@ -179,7 +179,7 @@ Meteor.methods({
 		var expectedFields = {
 			title:       String,
 			description: String,
-			venue:       Object,
+			venue:       Match.Optional(Object),
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),

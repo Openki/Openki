@@ -100,7 +100,7 @@ Template.regionSelection.events({
 		// the homepage for those
 		if (changed) {
 			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'locations', 'calendar'];
+			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.parentInstance().searchingRegions.set(false);
@@ -120,14 +120,14 @@ Template.regionSelection.events({
 	'focus .js-region-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
-		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
 
-		if (screenMd && !isRetina) {
+		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
-		var gridFloatBreakpoint = viewportWidth <= Breakpoints.gridFloat;
+		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloat;
 		if (!gridFloatBreakpoint) {
 			instance.$('.dropdown').on('show.bs.dropdown', function(e){
 				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -143,9 +143,9 @@ Template.regionSelection.onRendered(function() {
 	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
-		var screenMd = viewportWidth >= Breakpoints.screenSm && viewportWidth <= Breakpoints.screenMd;
+		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
 
-		if (screenMd && !isRetina) {
+		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}

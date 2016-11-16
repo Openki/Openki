@@ -6,6 +6,9 @@
 				{{mf 'login.frame.settings'}}
 			</h1>
 		</div>
+	{{#unless loggedIn}}
+		{{mf "profile.not_logged_in"}}
+	{{else}}
 		<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 			<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 			{{mf 'login.frame.profile' 'Visit my profile'}}
@@ -220,5 +223,6 @@
 			</a>
 		</div>
 		{{> usersCourselist profileData=this ownProfile=true}}
+	{{/unless}}
 	</div>
 </template>
