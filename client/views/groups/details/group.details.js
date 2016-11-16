@@ -124,9 +124,13 @@ Template.groupDetails.helpers({
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableDescription;
 	},
-
+	mayEdit: function() {
+		var instance = Template.instance();
+			return instance.mayEdit.get();
+	},
 	editingSettings: function() {
-		return this.mayEdit && Template.instance().editingSettings.get();
+		var instance = Template.instance();
+		return instance.mayEdit.get() && Template.instance().editingSettings.get();
 	},
 });
 
