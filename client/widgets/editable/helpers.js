@@ -47,6 +47,7 @@ template.onRendered(function() {
 	instance.store = function () {
 		instance.state.store(instance.getEdited());
 		instance.state.changed.set(false);
+		changedByUser = false;
 	};
 
 	var options = {
