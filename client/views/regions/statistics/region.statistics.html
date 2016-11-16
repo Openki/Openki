@@ -1,22 +1,66 @@
-<template name="regionStatistics">	
-	<h3>The essence of {{regionName}}</h3>
-	<h4>Form</h4>
-	<ul>
-		<li>Courses (all): {{courseCount}}</li>
-		<li>Proposals (Courses without future or past events): {{proposalCount}} </li>
-		<li>Future events: {{futureEventCount}}</li>
-		<li>Past events: {{pastEventCount}}</li>
-	</ul>
-	<h4>Substance</h4>
-	<ul>
-		<li>Users: </li>
-		<li>Mentors: </li>
-		<li>Venues: {{venuesCount}} </li>
-		<li>Groups: {{groupsCount}}</li>
-		<li> Most active Groups: <br/>
-			{{ #each group in groups}}
-				{{group.weight}} {{group.name}} <br/>
-			{{ /each }}
-		</li>
-	</ul>
+<template name="regionStatistics">
+	<div class="container">
+		<div class="page-component region-statistics">
+			<div class="details-header region-statistics-header">
+				<h2>Numbers of {{regionName}}</h2>
+			</div>
+		</div>
+		<div class="details-body region-statistics-body">
+			<div class="region-statistics-numbers">
+				<table>
+					<tr>
+						<th><h3>Form</h3></th>
+						<th></th>
+					</tr>
+					<tr>
+						<td>Courses (all)</td>
+						<td>{{courseCount}}</td>
+					</tr>
+					<tr>
+						<td>Proposals (Courses without future or past events)</td>
+						<td>{{proposalCount}}</td>
+					</tr>
+					<tr>
+						<td>Future events</td>
+						<td>{{futureEventCount}}</td>
+					</tr>
+					<tr>
+						<td>Past events</td>
+						<td>{{pastEventCount}}</td>
+					</tr>
+
+					<tr>
+						<th><h3>Substance</h3></th>
+						<th></th>
+					</tr>
+					<tr>
+						<td>Users</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Mentors</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Venues</td>
+						<td>{{venuesCount}}</td>
+					</tr>
+					<tr>
+						<td>Groups</td>
+						<td>{{groupsCount}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="region-statistics-groups">
+				<h3>Most active Groups</h3>
+				<ul>
+					{{ #each group in groups }}
+						<li>
+							{{group.weight}} {{group.name}} <br/>
+						</li>
+					{{ /each }}
+				</ul>
+			</div>
+		</div>
+	</div>
 </template>

@@ -1,0 +1,32 @@
+.region-statistics-header {
+	background-color: $blue-lighter;
+	color: darken($blue-lighter, 65%);
+	font-size: x-large;
+}
+
+.region-statistics-body {
+	$background-color: lighten($blue-lighter, 5%);
+	background-color: $background-color;
+	color: darken($background-color, 65%);
+	font-size: medium;
+}
+
+.region-statistics-body table tr td:nth-child(2) {
+	text-align: right;
+}
+
+.region-statistics-groups ul {
+	@include list-unstyled;
+}
+
+.region-statistics-numbers {
+	@include make-md-column(6);
+	@include make-xs-column(12);
+	padding: 0px 20px 20px 20px;
+}
+
+.region-statistics-groups {
+	@include make-md-column(6);
+	@include make-xs-column(12);
+	padding: 0px 20px 20px 20px;
+}

@@ -40,7 +40,7 @@ updateRegionCounters = function(regionId) {
 			}
 		}
 	});
-	for(var i = 0; i<allGroups.length; i++) {
+	for(var i = 0; i < allGroups.length; i++) {
 		allGroups[i].name = Groups.findOne({ _id: allGroups[i].groupId }).name;
 	}
 	allGroups.sort(function(a, b){ return b.weight-a.weight });

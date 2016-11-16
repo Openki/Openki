@@ -63,7 +63,8 @@
 @import 'navigation/navbar/navbar';
 
 // Regions
-@import 'regions/regions';
+@import 'regions/selection/regions';
+@import 'regions/statistics/region.statistics';
 
 // Static
 @import 'static/loading/loading';

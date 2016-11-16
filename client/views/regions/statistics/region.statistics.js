@@ -48,6 +48,6 @@ Template.regionStatistics.helpers({
 		return Template.instance().data.region.groups.length;
 	},
 	groups: function() {
-		return Template.instance().data.region.groups;
+		return Template.instance().data.region.groups.slice(0, 10);
 	}
 });
