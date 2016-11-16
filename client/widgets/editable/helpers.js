@@ -5,12 +5,13 @@ _.each([Template.editable, Template.editableTextarea], function(template) {
 template.onCreated(function() {
 	// This reeks
 	this.state = this.data.connect(this);
-	this.editingVersion = false;
 });
 
 template.onRendered(function() {
 	var instance = this;
 	var editable = this.$('.js-editable');
+	var initialized = false;
+	var changedByUser = false;
 
 	instance.getEdited = function() {
 		if (!instance.state.changed.get()) return false;
@@ -32,25 +33,14 @@ template.onRendered(function() {
 	};
 
 	// Automatically replace contents when text changes
-	instance.autorun(function() {
-		instance.reset();
-	});
-
-	// When the text changes while we are editing, we discard the changes made
-	// by the user. Merging the changes is nontrivial.
+	// When the user has already made changes, we don't update the field. This
+	// protects the user's changes but at the same time it allows overwriting
+	// other people's changes.
 	instance.autorun(function() {
 		var changed = instance.state.changed.get();
-		if (changed) {
-			var upstreamText = instance.state.text();
-			if (instance.editingVersion && upstreamText != instance.editingVersion) {
-				// :'-(
-				addMessage("Sorry, somebody else just changed that. Your changes have been discarded.", 'danger');
-			}
-
-			// keep for comparison
-			instance.editingVersion = upstreamText;
-		} else {
-			instance.editingVersion = false;
+		if (!changedByUser || !initialized) {
+			instance.reset();
+			initialized = true;
 		}
 	});
 
@@ -81,6 +71,7 @@ template.onRendered(function() {
 
 	// Register when the field is being edited
 	editable.on('input', function() {
+		changedByUser = true;
 		instance.state.changed.set(true);
 	});
 });
