@@ -1,12 +1,51 @@
 Log = new Meteor.Collection('Log');
-Log._ensureIndex({ track: 1});
+Log._ensureIndex({ tr: 1});
 Log._ensureIndex({ ts: 1});
 Log._ensureIndex({ rel: 1});
 
 Openki = {};
+
+// Define toJSON on the Error object so error objects can be added to the log
+if (!('toJSON' in Error.prototype))
+Object.defineProperty(Error.prototype, 'toJSON', {
+    value: function () {
+        var alt = {};
+
+        Object.getOwnPropertyNames(this).forEach(function (key) {
+            alt[key] = this[key];
+        }, this);
+
+        return alt;
+    },
+    configurable: true,
+    writable: true
+});
+
+// Define toJSON on the Error object so error objects can be added to the log
+if (!('toJSON' in Meteor.Error.prototype))
+Object.defineProperty(Meteor.Error.prototype, 'toJSON', {
+    value: function () {
+        var alt = {};
+
+        Object.getOwnPropertyNames(this).forEach(function (key) {
+            alt[key] = this[key];
+        }, this);
+
+        return alt;
+    },
+    configurable: true,
+    writable: true
+});
+
+/** Record a new entry to the log
+  *
+  * @param  {String} track   - type of log entry
+  * @param  {String} rel     - related ID, may be a list
+  * @param  {Object} body    - log body depending on track
+  */
 Openki.Log = function(track, rel, body) {
 	check(track, String);
-	check(rel, Match.Optional(String));
+	check(rel, Match.Maybe(String));
 	check(body, Object);
 	var entry =
 		{ tr: track
@@ -23,11 +62,15 @@ Openki.Log = function(track, rel, body) {
 
 Openki.Log.Notification = {};
 
-// A notification event log entry records the intent to send notifications
-// about an event to course members.
+/** Record the intent to send event notifications
+  *
+  * @param      {ID} eventID   - event to announce
+  * @param {Boolean} isNew     - whether the event is a new one
+  */
 Openki.Log.Notification.Event = function(eventId, isNew) {
+	check(eventId, String);
 	var event = Events.findOne(eventId);
-	check(event, Object);
+	if (!event) throw new Meteor.Error("No event for" + eventId);
 
 	// What do we do when we receive an event which is not attached to a course?
 	// For now when we don't have a course we just go through the motions but
@@ -51,12 +94,20 @@ Openki.Log.Notification.Event = function(eventId, isNew) {
 	Openki.Log('notification.event', null, entry);
 };
 
+
+/** Record the result of a notification delivery attempt to the log
+  * @param      {ID} rel       - reference to the notification log-entry
+  * @param {Boolean} sent      - whether the notification was sent
+  * @param      {ID} recipient - target user ID
+  * @param  {String} message   - generated message (or null if we didn't get
+  *                              that far)
+  * @param  {String} reason    - why this log entry was recorded
+  */
 Openki.Log.Notification.Event.Result = function(rel, sent, recipient, message, reason) {
 	check(rel, String);
 	check(sent, Boolean);
-	check(recipient, Match.Optional(String));
-	check(message, Match.Optional(String));
-	check(reason, String);
+	check(recipient, String);
+	check(message, Match.Maybe(Object));
 	var entry = {
 		sent: sent,
 		recipient: recipient,
@@ -67,88 +118,137 @@ Openki.Log.Notification.Event.Result = function(rel, sent, recipient, message, r
 	Openki.Log('notification.event.result', rel, entry);
 };
 
-Openki.Log.Notification.Event.handler = function() {
-	var now = new Date();
-	var gracePeriod = now.setHours(now.getHours() - 12);
-	Log.find({ tr: 'notification.event', ts: { $geq: gracePeriod } }).observe({
-		added: function(entry) {
-			var concluded = {};
+Openki.Log.Notification.Event.handler = function(entry) {
+	// Find out for which recipients sending has already been attempted.
+	var concluded = {};
 
-			Log.find(
-				{ track: 'notification.event.result'
-				, rel: entry._id
+
+	Log.find(
+		{ tr: 'notification.event.result'
+		, rel: entry._id
+		}
+	).forEach(function(result) {
+		concluded[result.body.recipient] = true;
+	});
+
+	var event = Events.findOne(entry.body.eventId);
+	var course = false;
+	if (event && event.courseId) {
+		course = Courses.findOne(event.courseId);
+	}
+
+	_.each(entry.body.recipients, function(recipient) {
+		if (!concluded[recipient]) {
+			var mail = null;
+
+			try {
+				if (!event) throw "Event does not exist (0.o)";
+				if (!course) throw "Course does not exist (0.o)";
+
+				var user = Meteor.users.findOne(recipient);
+				if (!user) throw "Recipient does not exist (0.o)";
+
+				if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+					throw "Recipient has no email address registered";
 				}
-			).each(function(result) {
-				concluded[result.body.recipient] = true;
-			});
 
-			var event = Events.findOne(entry.body.eventId);
-			var course = false;
-			if (event && event.courseId) {
-				course = Courses.findOne(event.courseId);
+				var	email = user.emails[0];
+				var address = email.address;
+
+				var userLocale = user.profile && user.profile.locale || 'en';
+				var startMoment = moment(event.start);
+				startMoment.locale(userLocale);
+				var endMoment = moment(event.end);
+				endMoment.locale(userLocale);
+
+				var subjectvars =
+					{ TITLE: event.title.substr(0,30)
+					, DATE: startMoment.format('LL')
+					};
+
+				var vars =
+					{ event: event
+					, course: course
+					, eventDate: startMoment.format('LL')
+					, eventStart: startMoment.format('LT')
+					, eventEnd: startMoment.format('LT')
+					, locale: userLocale
+					, new: entry.new
+					};
+
+				var message = SSR.render("notificationEventMail", vars);
+
+				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
+				var subject;
+				if (entry.new) {
+					subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
+				} else {
+					subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
+				}
+
+				mail =
+					{ from: Accounts.emailTemplates.from
+					, to: address
+					, subject: subjectPrefix + subject
+					, html: message
+					};
+
+				Email.send(mail);
+
+				Openki.Log.Notification.Event.Result(entry._id, true, recipient, mail, "success");
+			}
+			catch(e) {
+				var reason = e;
+				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
+				Openki.Log.Notification.Event.Result(entry._id, false, recipient, mail, reason);
 			}
 
-			_.each(entry.body.recipients, function(recipient) {
-				if (!concluded[recipient]) {
-					try {
-						if (!event) throw "Event does not exist (0.o)";
-						if (!course) throw "Course does not exist (0.o)";
-
-						var user = Meteor.users.findOne(recipient);
-						if (!user) throw "User does not exist (0.o)";
-
-						if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-							throw "Has no email address registered";
-						}
-						var	email = user.emails[0];
-						var address = email.address;
-
-						var userLocale = user.profile && user.profile.locale || 'en';
-						var startMoment = moment(event.start);
-						startMoment.locale(userLocale);
-						var endMoment = moment(event.end);
-						endMoment.locale(userLocale);
-
-						var subjectvars =
-							{ TITLE: event.title.substr(0,30)
-							, DATE: startMoment.format('LL')
-							};
-
-						var vars =
-							{ event: event
-							, course: course
-							, eventDate: startMoment.format('LL')
-							, eventStart: startMoment.format('LT')
-							, eventEnd: startMoment.format('LT')
-							, locale: userLocale
-							, new: entry.new
-							};
-
-						var message = Blaze.toHTMLWithData(Template.notificationEventMail, vars);
-
-						var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
-						var subject;
-						if (entry.new) {
-							subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
-						} else {
-							subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
-						}
-
-						var mail =
-							{ from: Accounts.emailTemplates.from
-							, to: address
-							, subject: subjectPrefix + subject
-							, html: message
-							};
-
-						Email.send(email);
-					}
-					catch(reason) {
-						Openki.Log.Notification.Event.Result(entry._id, false, recipient, false, reason);
-					}
-
-				}
-			});
 		}
 	});
 };
+
+
+/** Watch the Log for event notifications
+*/
+Meteor.startup(function() {
+	/*
+   * Main Blaze regular helper / block helper, calls mf() with correct
+   * parameters.  On the client, mf() honors the Session locale if none is
+   * manually specified here (see messageformat.js), making this a reactive
+   * data source.
+   */
+  Blaze.Template.registerHelper("mf", function(key, message, params) {
+    if (arguments[arguments.length-1] instanceof Spacebars.kw) {
+
+      var result;
+      var _HTML = params && (params._HTML || params._html);
+
+      message = params ? message : null;
+      params = params ? params.hash : {};
+
+      result = mf(key, params, message, params ? params.LOCALE : null);
+      return _HTML ?
+        Spacebars.SafeString(msgfmt.sanitizeHTML(result, _HTML)) : result;
+
+    } else {
+
+      // Block helpers expects a template to be returned
+      return mfTpl;
+
+    }
+
+  });
+
+	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
+
+	// To avoid sending stale notifications, only consider records added in the
+	// last hours. This way, if the server should have failed for a longer time,
+	// no notifications will go out.
+	var gracePeriod = new Date();
+	gracePeriod.setHours(gracePeriod.getHours() - 12);
+
+	// The Log is append-only so we only watch for additions
+	Log.find({ tr: 'notification.event', ts: { $gte: gracePeriod } }).observe({
+		added: Openki.Log.Notification.Event.handler
+	});
+});
