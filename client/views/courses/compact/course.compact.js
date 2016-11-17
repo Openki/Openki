@@ -34,7 +34,7 @@ Template.courseCompact.helpers({
 		if (!mainCategoriesCount) return 'no-category';
 
 		// limit number of main categories taken into account
-		mainCategories = mainCategories.slice(0, 2);
+		mainCategories = mainCategories.slice(0, 1);
 
 		var mainCategoryIdentifiers = _.map(mainCategories, function(mainCategory) {
 			return mainCategory._id;
@@ -53,13 +53,6 @@ Template.courseCompact.helpers({
 		var mainCategories = instance.mainCategories;
 
 		return mainCategories.slice(0, limit);
-	},
-
-	multipleMainCategories: function() {
-		var instance = Template.instance();
-		var mainCategoriesCount = instance.mainCategoriesCount;
-
-		return mainCategoriesCount > 1;
 	},
 
 	categoryIdentifier: function() {

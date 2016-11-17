@@ -63,13 +63,13 @@
 	&.filter-no-match-delayed {
 		transition-delay: .3s;
 	}
-
-	&.course-compact-category-no-category {
+	//
+	// &.course-compact-category-no-category {
 		$no-category-color: $blue-lighter;
 
 		&.proposal,
 		&.has-past-events {
-			background-color: rgba($no-category-color, .15);
+			background-color: rgba($no-category-color, .2);
 			border-color: rgba($no-category-color, 1);
 		}
 
@@ -78,6 +78,7 @@
 		}
 
 		.course-compact-next-event {
+			// background-color: rgba($green-dark, .7);
 			background-color: rgba($blue-light, .7);
 			color: $white;
 		}
@@ -97,61 +98,12 @@
 			background-color: rgba($blue-light, .2);
 			color: rgba($blue-light, 1);
 		}
-
-		.course-compact-categories {
-			color: rgba($no-category-color, 1);
-		}
-
-		.has-upcoming-events .course-compact-categories {
-			color: rgba($no-category-color, 1);
-		}
-	}
+	// }
 }
 
 @each $category-index, $category-color in $category-computed-colors {
 	.category-#{$category-index} {
-		color: rgba($category-color, .2);
-	}
-
-	.course-compact-category-#{$category-index} {
-		&.proposal,
-		&.has-past-events {
-			background-color: rgba($category-color, .05);
-			border-color: rgba($category-color, .2);
-		}
-
-		&.has-upcoming-events {
-			background-color: rgba($category-color, .2);
-		}
-
-		.course-compact-next-event {
-			background-color: rgba($category-color, .5);
-			color: $white;
-		}
-
-		.course-compact-role-needed {
-			color: rgba($category-color, .2);
-		}
-
-		.course-compact-role-occupied,
-		.course-compact-role-occupied-by-user {
-			color: rgba($category-color, .7);
-		}
-
-		.js-group-label,
-		.js-group-label:hover,
-		.js-group-label:focus {
-			background-color: rgba($category-color, 0.2);
-			color: $category-color;
-		}
-
-		.course-compact-categories {
-			color: rgba($category-color, .2);
-		}
-
-		.has-upcoming-events .course-compact-categories {
-			color: rgba($category-color, .2);
-		}
+		color: rgba($category-color, .4);
 	}
 }
 
