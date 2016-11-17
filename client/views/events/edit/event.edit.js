@@ -257,7 +257,7 @@ Template.eventEdit.events({
 		}
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
-		var sendNotification = instance.$("input[name='js-check-notify']").is(':checked');
+		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
 			if (error) {
