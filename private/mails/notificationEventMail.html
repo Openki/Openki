@@ -33,5 +33,6 @@
 
 <small>
 	{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
-	<a href="{{urlFor 'ownProfile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+	<a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a>
+	<a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
 </small>

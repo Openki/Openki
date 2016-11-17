@@ -1,43 +1,4 @@
-Router.map(function () {
-	this.route('profile', {
-		path: 'profile',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('currentUser'),
-				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
-			];
-		},
-		data: function () {
-			var data = {};
-			var user = Meteor.user();
-			data.loggedIn = !!user;
-			if (data.loggedIn) {
-				var userdata = {
-					_id: user._id,
-					name: user.username,
-					privacy: user.privacy,
-					groups: GroupLib.find({ own: true }),
-					venues: Venues.find({ editor: user._id })
-				};
-				userdata.have_email = user.emails && user.emails.length > 0;
-				if (userdata.have_email) {
-					userdata.email = user.emails[0].address;
-					userdata.verified = !!user.emails[0].verified;
-				}
-
-				data.user = userdata;
-				data.involvedIn = coursesFind({ userInvolved: user._id });
-			}
-			return data;
-		},
-		onAfterAction: function() {
-			var user = Meteor.users.findOne();
-			if (!user) return;
-			document.title = webpagename + 'My Profile_Settings - ' + user.username;
-		}
-	});
-});
+// See routing.js for the route
 
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);

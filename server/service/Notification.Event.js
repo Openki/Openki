@@ -29,29 +29,37 @@ Openki.Log.Notification.Event = function(eventId, isNew) {
 		entry.courseId = course._id;
 	}
 
-	Openki.Log('notification.event', null, entry);
+	Openki.Log('notification.event', [], entry);
 };
 
 
-/** Record the result of a notification delivery attempt to the log
-  * @param      {ID} rel       - reference to the notification log-entry
+/** Record the result of a notification delivery attempt
+  * @param  {object} note      - notification log-entry
+  * @param      {ID} unsubToken - token that can be used to unsubscribe from
+  *                               further notices
   * @param {Boolean} sent      - whether the notification was sent
-  * @param      {ID} recipient - target user ID
+  * @param      {ID} recipient - recipient user ID
+  * @param      {ID} userId    - target user ID (different for anon recipients)
   * @param  {String} message   - generated message (or null if we didn't get
   *                              that far)
   * @param  {String} reason    - why this log entry was recorded
   */
-Openki.Log.Notification.Event.Result = function(rel, sent, recipient, message, reason) {
-	check(rel, String);
+Openki.Log.Notification.Event.Result = function(note, unsubToken, sent, recipient, userId, message, reason) {
 	check(sent, Boolean);
+	check(unsubToken, Match.Maybe(String));
 	check(recipient, String);
 	check(message, Match.Maybe(Object));
 	var entry = {
 		sent: sent,
 		recipient: recipient,
+		userId: userId,
 		message: message,
-		reason: reason
+		reason: reason,
+		unsubToken: unsubToken
 	};
+
+	var rel = [ note._id ];
+	if (unsubToken) rel.push(unsubToken);
 
 	Openki.Log('notification.event.result', rel, entry);
 };
@@ -82,6 +90,8 @@ Openki.Log.Notification.Event.handler = function(entry) {
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
 			var mail = null;
+			var unsubToken = null;
+			var userId = null;
 
 			try {
 				if (!event) throw "Event does not exist (0.o)";
@@ -92,6 +102,11 @@ Openki.Log.Notification.Event.handler = function(entry) {
 					// Retry as anonId
 					user = Meteor.users.findOne({anonId: recipient});
 					if (!user) throw "Recipient does not exist (0.o)";
+				}
+				userId = user._id;
+
+				if (user.profile.receiveNotifications === false) {
+					throw "User wishes to not receive notifications";
 				}
 
 				if (!user.emails || !user.emails[0] || !user.emails[0].address) {
@@ -112,6 +127,8 @@ Openki.Log.Notification.Event.handler = function(entry) {
 					, DATE: startMoment.format('LL')
 					};
 
+				unsubToken = Random.secret();
+
 				var vars =
 					{ event: event
 					, course: course
@@ -119,6 +136,7 @@ Openki.Log.Notification.Event.handler = function(entry) {
 					, eventStart: startMoment.format('LT')
 					, eventEnd: startMoment.format('LT')
 					, locale: userLocale
+					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 					, new: entry.new
 					};
 
@@ -141,12 +159,12 @@ Openki.Log.Notification.Event.handler = function(entry) {
 
 				Email.send(mail);
 
-				Openki.Log.Notification.Event.Result(entry._id, true, recipient, mail, "success");
+				Openki.Log.Notification.Event.Result(entry, unsubToken, true, recipient, userId, mail, "success");
 			}
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
-				Openki.Log.Notification.Event.Result(entry._id, false, recipient, mail, reason);
+				Openki.Log.Notification.Event.Result(entry, unsubToken, false, recipient, userId, mail, reason);
 			}
 
 		}
@@ -154,8 +172,7 @@ Openki.Log.Notification.Event.handler = function(entry) {
 };
 
 
-/** Watch the Log for event notifications
-*/
+// Watch the Log for event notifications
 Meteor.startup(function() {
 	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
 

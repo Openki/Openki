@@ -8,22 +8,19 @@ Openki = {};
 /** Record a new entry to the log
   *
   * @param  {String} track   - type of log entry
-  * @param  {String} rel     - related ID, may be a list
+  * @param  {String} rel     - related ID
   * @param  {Object} body    - log body depending on track
   */
 Openki.Log = function(track, rel, body) {
 	check(track, String);
-	check(rel, Match.Maybe(String));
+	check(rel, [String]);
 	check(body, Object);
 	var entry =
 		{ tr: track
 		, ts: new Date()
+		, rel: rel
 		, body: body
 		};
-
-	if (rel) {
-		entry.rel = rel;
-	}
 
 	Log.insert(entry);
 };
