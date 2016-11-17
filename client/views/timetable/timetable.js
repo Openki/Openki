@@ -66,16 +66,16 @@ Router.map(function () {
 				cursor.add(1, 'hour');
 			} while(cursor.isBefore(end));
 
-			var perLocation = {};
-			var useLocation = function(location) {
-				var id = location._id || '#'+location.name;
-				if (!perLocation[id]) {
-					perLocation[id] = {
-						location: location,
+			var perVenue = {};
+			var useVenue = function(venue) {
+				var id = venue._id || '#'+venue.name;
+				if (!perVenue[id]) {
+					perVenue[id] = {
+						venue: venue,
 						rows: []
 					};
 				}
-				return perLocation[id].rows;
+				return perVenue[id].rows;
 			};
 
 			events.forEach(function(event) {
@@ -83,9 +83,9 @@ Router.map(function () {
 				event.relEnd   = (endAbs - event.end.getTime()) / span;
 				var placed = false;
 
-				var locationRows = useLocation(event.location);
-				for (var rowNr in locationRows) {
-					var row = locationRows[rowNr];
+				var venueRows = useVenue(event.venue);
+				for (var rowNr in venueRows) {
+					var row = venueRows[rowNr];
 					var last = undefined;
 					for (var eventNr in row) {
 						var placedEvent = row[eventNr];
@@ -98,14 +98,14 @@ Router.map(function () {
 					}
 				}
 				if (!placed) {
-					locationRows.push([event]);
+					venueRows.push([event]);
 				}
 			});
 
 			return {
 				days: _.toArray(days),
 				hours: _.toArray(hours),
-				grouped: _.toArray(perLocation)
+				grouped: _.toArray(perVenue)
 			};
 		},
 	});
