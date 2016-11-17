@@ -5,38 +5,6 @@ Log._ensureIndex({ rel: 1});
 
 Openki = {};
 
-// Define toJSON on the Error object so error objects can be added to the log
-if (!('toJSON' in Error.prototype))
-Object.defineProperty(Error.prototype, 'toJSON', {
-    value: function () {
-        var alt = {};
-
-        Object.getOwnPropertyNames(this).forEach(function (key) {
-            alt[key] = this[key];
-        }, this);
-
-        return alt;
-    },
-    configurable: true,
-    writable: true
-});
-
-// Define toJSON on the Error object so error objects can be added to the log
-if (!('toJSON' in Meteor.Error.prototype))
-Object.defineProperty(Meteor.Error.prototype, 'toJSON', {
-    value: function () {
-        var alt = {};
-
-        Object.getOwnPropertyNames(this).forEach(function (key) {
-            alt[key] = this[key];
-        }, this);
-
-        return alt;
-    },
-    configurable: true,
-    writable: true
-});
-
 /** Record a new entry to the log
   *
   * @param  {String} track   - type of log entry
