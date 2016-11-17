@@ -118,7 +118,11 @@ Openki.Log.Notification.Event.handler = function(entry) {
 				if (!course) throw "Course does not exist (0.o)";
 
 				var user = Meteor.users.findOne(recipient);
-				if (!user) throw "Recipient does not exist (0.o)";
+				if (!user) {
+					// Retry as anonId
+					user = Meteor.users.findOne({anonId: recipient});
+					if (!user) throw "Recipient does not exist (0.o)";
+				}
 
 				if (!user.emails || !user.emails[0] || !user.emails[0].address) {
 					throw "Recipient has no email address registered";
