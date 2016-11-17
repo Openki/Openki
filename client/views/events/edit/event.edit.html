@@ -204,30 +204,6 @@
 						</label>
 					</div>
 				{{/if}}
-				{{#if affectedReplicaCount}}
-					<div class="form-group-element">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" name="updateReplicas">
-								{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
-									Update {COUNT, plural,
-										one {later copy}
-										other {# later copies as well}
-									}
-								{{/mf}}
-								<span class="help-block">
-									<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-									{{#mf KEY='event.edit.updateReplicas.times' COUNT=affectedReplicaCount}}
-										Time-changes will not be updated in {COUNT, plural,
-											one {copy}
-											other {copies}
-										}
-									{{/mf}}
-								</span>
-							</label>
-						</div>
-					</div>
-				{{/if}}
 			</div>
 
 			<div class="form-actions">
