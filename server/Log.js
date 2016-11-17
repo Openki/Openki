@@ -187,34 +187,6 @@ Openki.Log.Notification.Event.handler = function(entry) {
 /** Watch the Log for event notifications
 */
 Meteor.startup(function() {
-	/*
-   * Main Blaze regular helper / block helper, calls mf() with correct
-   * parameters.  On the client, mf() honors the Session locale if none is
-   * manually specified here (see messageformat.js), making this a reactive
-   * data source.
-   */
-  Blaze.Template.registerHelper("mf", function(key, message, params) {
-    if (arguments[arguments.length-1] instanceof Spacebars.kw) {
-
-      var result;
-      var _HTML = params && (params._HTML || params._html);
-
-      message = params ? message : null;
-      params = params ? params.hash : {};
-
-      result = mf(key, params, message, params ? params.LOCALE : null);
-      return _HTML ?
-        Spacebars.SafeString(msgfmt.sanitizeHTML(result, _HTML)) : result;
-
-    } else {
-
-      // Block helpers expects a template to be returned
-      return mfTpl;
-
-    }
-
-  });
-
 	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
 
 	// To avoid sending stale notifications, only consider records added in the
