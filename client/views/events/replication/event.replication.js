@@ -22,53 +22,62 @@ Template.eventReplication.onCreated(function() {
 
 	var data = instance.data;
 	instance.replicateStartDate = new ReactiveVar(replicaStartDate(data.start));
-	instance.replicateEndDate = new ReactiveVar(replicaStartDate(data.end));
+	instance.replicateEndDate = new ReactiveVar(replicaStartDate(moment(data.start).add(1, 'week')));
 });
 
 
 Template.eventReplication.onRendered(function() {
 	var instance = this;
 
-	instance.$('.js-replicate-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
+	var pickDays = [];
+
+	instance.autorun(function() {
+		Session.get('locale');
+
+		instance.$('.js-replicate-date').datepicker('remove');
+		instance.$('.js-replicate-date').datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			language: moment.locale(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
 			}
-		}
-	}).on('changeDate', function(event) {
-		var targetID = event.target.id;
-		var date = event.date;
-		if (targetID === 'replicateStart') {
-			instance.replicateStartDate.set(date);
-		} else if (targetID === 'replicateEnd') {
-			instance.replicateEndDate.set(date);
-		}
-	});
-
-	instance.$('.js-replicate-datepick').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		multidate: true,
-		multidateSeperator: ", ",
-		todayHighlight: true,
-		startDate: new Date()
-	}).on('changeDate', function(event) {
-		var origin = moment(instance.data.start).startOf('day');
-		var dates = event.dates;
-
-		var days = _.map(dates, function(date) {
-			return moment(date).diff(origin, 'days');
+		}).on('changeDate', function(event) {
+			var targetID = event.target.id;
+			var date = event.date;
+			if (targetID === 'replicateStart') {
+				instance.replicateStartDate.set(date);
+			} else if (targetID === 'replicateEnd') {
+				instance.replicateEndDate.set(date);
+			}
 		});
 
-		instance.pickDays.set(days);
-    });
+		instance.$('.js-replicate-datepick').datepicker('remove');
+		instance.$('.js-replicate-datepick').datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			language: moment.locale(),
+			multidate: true,
+			multidateSeperator: ", ",
+			todayHighlight: true,
+			startDate: new Date()
+		}).on('changeDate', function(event) {
+			var origin = moment(instance.data.start).startOf('day');
+			pickDays = event.dates;
+
+			var days = _.map(pickDays, function(date) {
+				return moment(date).diff(origin, 'days');
+			});
+
+			instance.pickDays.set(days);
+		});
+		instance.$('.js-replicate-datepick').datepicker('setDates', pickDays);
+	});
 
 	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 		var target = $(e.target).attr('href');
@@ -78,11 +87,11 @@ Template.eventReplication.onRendered(function() {
 
 Template.eventReplication.helpers({
 	replicaStart: function() {
-		return replicaStartDate(this.start).format("L");
+		return replicaStartDate(Template.instance().replicateStartDate.get()).format("L");
 	},
 
 	replicaEnd: function() {
-		return replicaStartDate(this.start).add(1, 'week').format("L");
+		return replicaStartDate(Template.instance().replicateEndDate.get()).format("L");
 	},
 
 	replicateStartDay: function() {
