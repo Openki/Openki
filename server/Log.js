@@ -86,10 +86,14 @@ Openki.Log.Notification.Event.Result = function(rel, sent, recipient, message, r
 	Openki.Log('notification.event.result', rel, entry);
 };
 
+
+/** Handle event notification
+  *
+  * @param entry Notification.Event log entry to process
+  */
 Openki.Log.Notification.Event.handler = function(entry) {
 	// Find out for which recipients sending has already been attempted.
 	var concluded = {};
-
 
 	Log.find(
 		{ tr: 'notification.event.result'
