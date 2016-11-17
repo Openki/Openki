@@ -26,6 +26,10 @@ Template.courseCompact.helpers({
 		return 'proposal';
 	},
 
+	isProposal: function(courseState) {
+		return courseState === 'proposal';
+	},
+
 	courseCategoryIdentifier: function() {
 		var instance = Template.instance();
 		var mainCategories = instance.mainCategories;

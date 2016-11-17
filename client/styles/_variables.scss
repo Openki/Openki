@@ -57,11 +57,13 @@ $event-compact-seperator-height:                 3px;
 
 // ** Courses
 //========================================================================================
-$course-border-width:                            7px;
+$course-border-width:                            5px;
 $course-border-color:                            $blue-lighter;
 $has-upcoming-events-bg:                         $blue-lighter;
-$proposal-border-style:                          dashed;
-$has-past-events-border-style:                   dashed;
+// $proposal-border-style:                          solid;
+$proposal-border-style:                          dotted;
+// $has-past-events-border-style:                   solid;
+$has-past-events-border-style:                   dotted;
 
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-dark;

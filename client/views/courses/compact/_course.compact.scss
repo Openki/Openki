@@ -39,7 +39,6 @@
 	&.proposal,
 	&.has-past-events {
 		border-width: $course-border-width;
-		border-color: $course-border-color;
 	}
 
 	&.proposal {
@@ -70,7 +69,8 @@
 		&.proposal,
 		&.has-past-events {
 			background-color: rgba($no-category-color, .2);
-			border-color: rgba($no-category-color, 1);
+			// border-color: rgba($green, .8);
+			border-color: rgba($blue-light, .3);
 		}
 
 		&.has-upcoming-events {
@@ -78,8 +78,9 @@
 		}
 
 		.course-compact-next-event {
-			// background-color: rgba($green-dark, .7);
-			background-color: rgba($blue-light, .7);
+			background-color: rgba($green-dark, .7);
+			// background-color: rgba($blue-light, .7);
+			// box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 			color: $white;
 		}
 
