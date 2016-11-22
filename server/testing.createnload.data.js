@@ -105,11 +105,22 @@ function ensureRoom(venue, room){
 	Venues.update(venue._id, { $addToSet: { rooms: room } });
 }
 
-loadCoursesIfNone = function(scale) {
-	if (Courses.find().count() === 0) {
-		createCourses(scale);
+function ensureGroup(short) {
+	while (true) {
+		var group = Groups.findOne({short: short});
+		if (group) return group._id;
+
+		var id = Groups.insert({
+			name: short,
+			short: short,
+			members: [],
+			createdby: 'ServerScript_from_TestCouses',
+			description: 'Automaticaly created group by server'
+		});
+		console.log("Added group from TestCouses: "+short+" id: "+id);
 	}
-};
+}
+
 
 function createCourses(scale) {
 	var prng = Prng("createCourses");
@@ -162,16 +173,17 @@ function createCourses(scale) {
 	});
 }
 
+loadCoursesIfNone = function(scale) {
+	if (Courses.find().count() === 0) {
+		createCourses(scale);
+	}
+};
+
+
 
 
 
 /////////////////////////////// TESTING: Create Locations if non in db
-
-loadVenuesIfNone = function(){
-	if (Venues.find().count() === 0) {
-		loadVenues();
-	}
-};
 
 function loadVenues(){
 	var prng = Prng("loadLocations");
@@ -191,6 +203,12 @@ function loadVenues(){
 		Venues.update(venue._id, venue);
 	});
 }
+
+loadVenuesIfNone = function(){
+	if (Venues.find().count() === 0) {
+		loadVenues();
+	}
+};
 
 
 
@@ -381,23 +399,6 @@ loadGroupsIfNone = function(){
 		});
 	}
 };
-
-function ensureGroup(short) {
-	while (true) {
-		var group = Groups.findOne({short: short});
-		if (group) return group._id;
-
-		var id = Groups.insert({
-			name: short,
-			short: short,
-			members: [],
-			createdby: 'ServerScript_from_TestCouses',
-			description: 'Automaticaly created group by server'
-		});
-		console.log("Added group from TestCouses: "+short+" id: "+id);
-	}
-}
-
 
 /////////////////////////////// TESTING: Create Regions if non in db
 
