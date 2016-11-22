@@ -4,6 +4,7 @@
 	"node": true,
 	"laxcomma": true,
 	"esversion": 6,
+	"latedef": true,
 
 	"globals": {
 		"Meteor": false,
