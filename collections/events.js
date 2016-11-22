@@ -286,7 +286,7 @@ Meteor.methods({
 		}
 
 		if (sendNotifications) {
-			Notification.Event.record(eventId);
+			Notification.Event.record(eventId, isNew);
 		}
 
 		if (Meteor.isServer) {

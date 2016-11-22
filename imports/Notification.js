@@ -11,6 +11,7 @@ Notification.Event = {};
   */
 Notification.Event.record = function(eventId, isNew) {
 	check(eventId, String);
+	check(isNew, Boolean);
 	var event = Events.findOne(eventId);
 	if (!event) throw new Meteor.Error("No event for" + eventId);
 
@@ -109,7 +110,7 @@ Notification.Event.handler = function(entry) {
 					, eventEnd: startMoment.format('LT')
 					, locale: userLocale
 					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
-					, new: entry.new
+					, new: entry.body.new
 					};
 
 				var message = SSR.render("notificationEventMail", vars);
