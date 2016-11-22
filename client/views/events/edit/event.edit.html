@@ -192,11 +192,13 @@
 						<label>
 							{{#if new}}
 								<input type="checkbox" class="js-check-notify" checked>
+								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about this event.
 								{{/mf}}
 							{{else}}
 								<input type="checkbox" class="js-check-notify">
+								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about the changes you made.
 								{{/mf}}
