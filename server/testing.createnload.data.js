@@ -34,6 +34,7 @@ function ensureUser(name) {
 			username: name,
 			email: email,
 			profile: {name : name},
+			notifications: true
 		});
 
 		var age = Math.floor(prng()*100000000000);

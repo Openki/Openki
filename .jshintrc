@@ -3,6 +3,7 @@
 	"browser": true,
 	"node": true,
 	"laxcomma": true,
+	"esversion": 6,
 
 	"globals": {
 		"Meteor": false,

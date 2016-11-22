@@ -1,11 +1,15 @@
-Openki.Log.Notification = {};
+/* global Notification: true */
+export default Notification = {};
+import '/imports/collections/Log.js';
+
+Notification.Event = {};
 
 /** Record the intent to send event notifications
   *
   * @param      {ID} eventID   - event to announce
   * @param {Boolean} isNew     - whether the event is a new one
   */
-Openki.Log.Notification.Event = function(eventId, isNew) {
+Notification.Event.record = function(eventId, isNew) {
 	check(eventId, String);
 	var event = Events.findOne(eventId);
 	if (!event) throw new Meteor.Error("No event for" + eventId);
@@ -29,39 +33,7 @@ Openki.Log.Notification.Event = function(eventId, isNew) {
 		entry.courseId = course._id;
 	}
 
-	Openki.Log('notification.event', [], entry);
-};
-
-
-/** Record the result of a notification delivery attempt
-  * @param  {object} note      - notification log-entry
-  * @param      {ID} unsubToken - token that can be used to unsubscribe from
-  *                               further notices
-  * @param {Boolean} sent      - whether the notification was sent
-  * @param      {ID} recipient - recipient user ID
-  * @param      {ID} userId    - target user ID (different for anon recipients)
-  * @param  {String} message   - generated message (or null if we didn't get
-  *                              that far)
-  * @param  {String} reason    - why this log entry was recorded
-  */
-Openki.Log.Notification.Event.Result = function(note, unsubToken, sent, recipient, userId, message, reason) {
-	check(sent, Boolean);
-	check(unsubToken, Match.Maybe(String));
-	check(recipient, String);
-	check(message, Match.Maybe(Object));
-	var entry = {
-		sent: sent,
-		recipient: recipient,
-		userId: userId,
-		message: message,
-		reason: reason,
-		unsubToken: unsubToken
-	};
-
-	var rel = [ note._id ];
-	if (unsubToken) rel.push(unsubToken);
-
-	Openki.Log('notification.event.result', rel, entry);
+	Log.record('Notification.Event', [course._id], entry);
 };
 
 
@@ -69,12 +41,12 @@ Openki.Log.Notification.Event.Result = function(note, unsubToken, sent, recipien
   *
   * @param entry Notification.Event log entry to process
   */
-Openki.Log.Notification.Event.handler = function(entry) {
+Notification.Event.handler = function(entry) {
 	// Find out for which recipients sending has already been attempted.
 	var concluded = {};
 
 	Log.find(
-		{ tr: 'notification.event.result'
+		{ tr: 'Notification.EventResult'
 		, rel: entry._id
 		}
 	).forEach(function(result) {
@@ -105,7 +77,7 @@ Openki.Log.Notification.Event.handler = function(entry) {
 				}
 				userId = user._id;
 
-				if (user.profile.receiveNotifications === false) {
+				if (user.profile.notifications === false) {
 					throw "User wishes to not receive notifications";
 				}
 
@@ -159,12 +131,12 @@ Openki.Log.Notification.Event.handler = function(entry) {
 
 				Email.send(mail);
 
-				Openki.Log.Notification.Event.Result(entry, unsubToken, true, recipient, userId, mail, "success");
+				Notification.EventResult.record(entry, unsubToken, true, recipient, userId, mail, "success");
 			}
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
-				Openki.Log.Notification.Event.Result(entry, unsubToken, false, recipient, userId, mail, reason);
+				Notification.EventResult.record(entry, unsubToken, false, recipient, userId, mail, reason);
 			}
 
 		}
@@ -172,18 +144,35 @@ Openki.Log.Notification.Event.handler = function(entry) {
 };
 
 
-// Watch the Log for event notifications
-Meteor.startup(function() {
-	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
+Notification.EventResult = {};
 
-	// To avoid sending stale notifications, only consider records added in the
-	// last hours. This way, if the server should have failed for a longer time,
-	// no notifications will go out.
-	var gracePeriod = new Date();
-	gracePeriod.setHours(gracePeriod.getHours() - 12);
+/** Record the result of a notification delivery attempt
+  * @param  {object} note      - notification log-entry
+  * @param      {ID} unsubToken - token that can be used to unsubscribe from
+  *                               further notices
+  * @param {Boolean} sent      - whether the notification was sent
+  * @param      {ID} recipient - recipient user ID
+  * @param      {ID} userId    - target user ID (different for anon recipients)
+  * @param  {String} message   - generated message (or null if we didn't get
+  *                              that far)
+  * @param  {String} reason    - why this log entry was recorded
+  */
+Notification.EventResult.record = function(note, unsubToken, sent, recipient, userId, message, reason) {
+	check(sent, Boolean);
+	check(unsubToken, Match.Maybe(String));
+	check(recipient, String);
+	check(message, Match.Maybe(Object));
+	var entry = {
+		sent: sent,
+		recipient: recipient,
+		userId: userId,
+		message: message,
+		reason: reason,
+		unsubToken: unsubToken
+	};
 
-	// The Log is append-only so we only watch for additions
-	Log.find({ tr: 'notification.event', ts: { $gte: gracePeriod } }).observe({
-		added: Openki.Log.Notification.Event.handler
-	});
-});
+	var rel = [ note._id ];
+	if (unsubToken) rel.push(unsubToken);
+
+	Log.record('Notification.EventResult', rel, entry);
+};

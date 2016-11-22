@@ -1,9 +1,10 @@
-Log = new Meteor.Collection('Log');
-Log._ensureIndex({ tr: 1});
-Log._ensureIndex({ ts: 1});
-Log._ensureIndex({ rel: 1});
+export default Log = new Meteor.Collection('Log');
 
-Openki = {};
+if (Meteor.isServer) {
+	Log._ensureIndex({ tr: 1});
+	Log._ensureIndex({ ts: 1});
+	Log._ensureIndex({ rel: 1});
+}
 
 /** Record a new entry to the log
   *
@@ -11,7 +12,7 @@ Openki = {};
   * @param  {String} rel     - related ID
   * @param  {Object} body    - log body depending on track
   */
-Openki.Log = function(track, rel, body) {
+Log.record = function(track, rel, body) {
 	check(track, String);
 	check(rel, [String]);
 	check(body, Object);

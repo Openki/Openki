@@ -6,7 +6,18 @@
 				{{mf 'login.frame.settings'}}
 			</h1>
 		</div>
-	{{#unless loggedIn}}
+		{{#if unsubscribeSuccess}}
+		<div>
+			O HAI U UNSUBD
+		</div>
+		{{/if}}
+		{{#if unsubscribeError}}
+		<div>
+			O NOES IT BEROKE
+		</div>
+		{{/if}}
+	
+		{{#unless loggedIn}}
 		{{mf "profile.not_logged_in"}}
 	{{else}}
 		<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
@@ -37,6 +48,16 @@
 									id="editform_email"
 									type="text"
 									value="{{user.email}}"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="control-btn">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
+										{{mf 'profile.toggle.notifications' 'receive notifications'}}
+									</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -100,6 +121,18 @@
 							</div>
 							{{/unless}}
 						{{/if}}
+						<div class="details-info-group">
+							<div class="details-info-label">
+								{{mf 'profile.notification.subscribe' 'Get notified about planned events'}}
+							</div>
+							<div class="details-info-data">
+								{{#if user.notifications}}
+									{{mf 'profile.notificationsOn' 'On'}}
+								{{else}}
+									{{mf 'profile.notificationsOff' 'Off'}}
+								{{/if}}
+							</div>
+						</div>
 						<div class="details-info-group">
 							<div class="details-info-label">
 								{{mf 'profile.highprivacy' 'High privacy'}}

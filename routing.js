@@ -1,3 +1,5 @@
+import '/imports/Profile.js';
+
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
@@ -93,6 +95,7 @@ Router.map(function () {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
+					notifications: user.notifications,
 					groups: GroupLib.find({ own: true }),
 					venues: Venues.find({ editor: user._id })
 				};
@@ -116,20 +119,23 @@ Router.map(function () {
 });
 
 Router.route('/profile/unsubscribe/:token', function() {
+
 	var unsubToken = this.params.token;
 
-	var accepted = Openki.Profile.Unsubscribe.handle(unsubToken);
+	var accepted = Profile.Notifications.unsubscribe(unsubToken);
 
 	var query = {};
 	if (accepted) {
-		query.unsubscribed = 1;
+		query.unsubscribed = '';
 	} else {
-		query['unsubscribe-error'] = 1;
+		query['unsubscribe-error'] = '';
 	}
 
 	this.response.writeHead(302, {
 		'Location': Router.url('profile', {}, { query: query })
 	});
+
+	this.response.end();
 }, {
 	name: 'profile.unsubscribe',
 	where: 'server'

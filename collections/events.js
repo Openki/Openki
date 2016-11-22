@@ -1,3 +1,5 @@
+import '/imports/Notification.js';
+
 // ======== DB-Model: ========
 // _id             -> ID
 // region          -> ID_region
@@ -283,10 +285,11 @@ Meteor.methods({
 			}
 		}
 
+		if (sendNotifications) {
+			Notification.Event.record(eventId);
+		}
+
 		if (Meteor.isServer) {
-			if (sendNotifications) {
-				Openki.Log.Notification.Event(eventId);
-			}
 
 			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
 			Meteor.call('event.updateGroups', eventId, logAsyncErrors);

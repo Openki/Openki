@@ -1,3 +1,5 @@
+import '/imports/startup/eventnotifications.js';
+
 Meteor.startup(function () {
 
 	applyUpdates();

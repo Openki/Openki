@@ -26,6 +26,10 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
+	notificationsChecked: function() {
+		if (this.user.notifications) return 'checked';
+	},
+
 	privacyChecked: function() {
 		if (this.user.privacy) return 'checked';
 	},
@@ -51,6 +55,12 @@ Template.profile.helpers({
 	},
 	roleMyList: function() {
 		return 'roles.'+this.type+'.myList';
+	},
+	unsubscribeSuccess: function() {
+		return Router.current().params.query.unsubscribed === '';
+	},
+	unsubscribeError: function() {
+		return Router.current().params.query['unsubscribe-error'] === '';
 	}
 });
 
@@ -95,6 +105,7 @@ Template.profile.events({
 		Meteor.call('update_userdata',
 			document.getElementById('editform_username').value,
 			document.getElementById('editform_email').value,
+			template.$('.js-notifications').prop("checked"),
 			document.getElementById('privacy').checked,
 			function(err) {
 				if (err) {
