@@ -12,15 +12,13 @@ Template.frameSchedule.onCreated(function() {
 	instance.interval = new ReactiveVar(60);
 	instance.scheduleStart = new ReactiveVar(moment());
 	instance.separators = new ReactiveVar([]);
-	instance.minRepeats = new ReactiveVar(1);
+	instance.repeatingOnly = new ReactiveVar(false);
 
 	// Read query params
 	this.autorun(function() {
 		var query = Router.current().params.query;
 
-		if (query.repeating) {
-			instance.minRepeats.set(Math.max(1, +query.repeating));
-		}
+		instance.repeatingOnly.set(Object.hasOwnProperty(query, 'repeating'));
 
 		var scheduleStart;
 		if (query.start) scheduleStart = moment(query.start);
@@ -136,7 +134,7 @@ Template.frameSchedule.onCreated(function() {
 		// Place found events into the slots
 		_.each(dedupedEvents, function(event) {
 			event.repCount = repetitionCount[event.repKey];
-			if (event.repCount < instance.minRepeats.get()) {
+			if (event.repCount < 2 && instance.repeatingOnly.get()) {
 				// Skip
 				return;
 			}
