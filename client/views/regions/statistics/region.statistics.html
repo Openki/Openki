@@ -2,67 +2,101 @@
 	<div class="container">
 		<div class="page-component region-statistics">
 			<div class="details-header region-statistics-header">
-				<h2>The numbers of {{regionName}}</h2>
+				<h2>{{mf 'region.statistics.header' 'The numbers of {NAME}' NAME=regionName}}</h2>
 			</div>
 		</div>
 		<div class="details-body region-statistics-body">
 			<div class="region-statistics-numbers">
 				<table>
 					<tr>
-						<th colspan="3"><h3>Intellectual power</h3></th>
+						<th colspan="3"><h3>{{mf 'region.statistics.intellectual' 'Intellectual power'}}</h3></th>
 					</tr>
 					<tr>
 						<td>{{courseCount}}</td>
 						<td><span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span></td>
-						<td>Courses</td>
+						<td>
+							{{#mf KEY='region.statistics.courses' COUNT=courseCount}}
+								{COUNT, plural, one {course} other {courses} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{proposalCount}}</td>
 						<td><span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span></td>
-						<td>Proposals (Courses without events)</td>
+						<td>
+							{{#mf KEY='region.statistics.proposals' COUNT=proposalCount}}
+								{COUNT, plural, one {proposal (course without events)} other {proposals (courses without events)} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{futureEventCount}}</td>
 						<td><span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span></td>
-						<td>Future events</td>
+						<td>
+							{{#mf KEY='region.statistics.futureEvents' COUNT=futureEventCount}}
+								{COUNT, plural, one {future event} other {future events} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{pastEventCount}}</td>
 						<td><span class="fa fa-history fa-fw" aria-hidden="true"></span></td>
-						<td>Past events</td>
+						<td>
+							{{#mf KEY='region.statistics.pastEvents' COUNT=pastEventCount}}
+								{COUNT, plural, one {past event} other {past events} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
-						<th colspan="3"><h3>Substantial basis</h3></th>
+						<th colspan="3"><h3>{{mf 'region.statistics.substance' 'Substancial basis'}}</h3></th>
 					</tr>
 					<tr>
 						<td>{{userCount}}</td>
 						<td><span class="fa fa-user-plus fa-fw" aria-hidden="true"></span></td>
-						<td>Users</td>
+						<td>
+							{{#mf KEY='region.statistics.users' COUNT=userCount}}
+								{COUNT, plural, one {user} other {users} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{mentorCount}}</td>
 						<td><span class="fa fa-graduation-cap fa-fw" aria-hidden="true"></span></td>
-						<td>Mentors</td>
+						<td>
+							{{#mf KEY='region.statistics.mentors' COUNT=mentorCount}}
+								{COUNT, plural, one {mentor} other {mentors} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{venueCount}}</td>
 						<td><span class="glyphicon glyphicon-home" aria-hidden="true"></span> </td>
-						<td>Venues</td>
+						<td>
+							{{#mf KEY='region.statistics.venues' COUNT=venueCount}}
+								{COUNT, plural, one {venue} other {venues} }
+							{{/mf}}
+						</td>
 					</tr>
 					<tr>
 						<td>{{groupCount}}</td>
 						<td><span class="fa fa-users fa-fw" aria-hidden="true"></span></td>
-						<td>Groups</td>
+						<td>
+							{{#mf KEY='region.statistics.groups' COUNT=groupCount}}
+								{COUNT, plural, one {group} other {groups} }
+							{{/mf}}
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="region-statistics-groups">
-				<h3>Most active Groups</h3>
+				<h3>{{mf 'region.statistics.mostActiveGroups' 'Most active Groups'}}</h3>
 				<ul>
 					{{ #each group in groups }}
-						<li>
-							{{group.weight}} Courses – {{group.name}} <br/>
-						</li>
+						<a href="{{pathFor 'groupDetails' _id=group.id}}">
+							<li>
+								{{group.name}}
+							</li>
+						</a>
 					{{ /each }}
 				</ul>
 			</div>
