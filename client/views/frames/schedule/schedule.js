@@ -12,9 +12,15 @@ Template.frameSchedule.onCreated(function() {
 	instance.interval = new ReactiveVar(60);
 	instance.scheduleStart = new ReactiveVar(moment());
 	instance.separators = new ReactiveVar([]);
+	instance.minRepeats = new ReactiveVar(1);
 
+	// Read query params
 	this.autorun(function() {
 		var query = Router.current().params.query;
+
+		if (query.repeating) {
+			instance.minRepeats.set(Math.max(1, +query.repeating));
+		}
 
 		var scheduleStart;
 		if (query.start) scheduleStart = moment(query.start);
@@ -57,9 +63,10 @@ Template.frameSchedule.onCreated(function() {
 
 		filter.clear().read(query);
 		filter.add('after', scheduleStart);
-		filter.add('end', moment(scheduleStart).add(1, 'week'));
+		filter.add('end', moment(scheduleStart).add(4, 'week'));
 		filter.done();
 	});
+
 
 	this.autorun(function() {
 		subs.subscribe('eventsFind', filter.toQuery(), 100);
@@ -77,8 +84,37 @@ Template.frameSchedule.onCreated(function() {
 		var dayCount = end.diff(scheduleStart, 'days');
 		var interval = instance.interval.get();
 
-		// Because we need to find the closest separator later on
-		// we create a reversed copy which is easier to search
+		// Track repeating events so we know how often they occur.
+		// The key to this dict is a combination of courseId, weekday and start time.
+		var repetitionCount = {};
+
+		// Load events but keep only the first when they repeat on the same
+		// weekday at the same time.
+		var dedupedEvents = [];
+		eventsFind(filter.toQuery(), 200).forEach(function(event) {
+			var repKey = event.start.getDay()+'-'+event.start.getHours()+'-'+ event.start.getMinutes()+'-';
+
+			// If there is no courseId, we fall back to replicationId, then _id.
+			if (event.courseId) {
+				repKey += event.courseId;
+			} else if (event.replicaOf) {
+				repKey += event.replicaOf;
+			} else {
+				repKey += event._id;
+			}
+
+			if (repetitionCount[repKey] >= 1) {
+				repetitionCount[repKey] += 1;
+			} else {
+				repetitionCount[repKey] = 1;
+
+				event.repKey = repKey;
+				dedupedEvents.push(event);
+			}
+		});
+
+		// Because we need to find the closest separator later on we create a
+		// reversed copy which is easier to search.
 		var separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
@@ -90,18 +126,25 @@ Template.frameSchedule.onCreated(function() {
 		// List of days where events where found
 		var days = {};
 
-		// Map of slots where events were found. each slot holds a list of events.
+		// Map of slots where events were found. Each slot holds a list of events.
 		var slots = {};
 
 		// Count occurences of first few chars in event titles
+		// This helps coloring the events so they're easier to scan.
 		var kinds = {};
 
 		// Place found events into the slots
-		eventsFind(filter.toQuery(), 100).forEach(function(event) {
+		_.each(dedupedEvents, function(event) {
+			event.repCount = repetitionCount[event.repKey];
+			if (event.repCount < instance.minRepeats.get()) {
+				// Skip
+				return;
+			}
+
 			var eventStart = moment(event.start);
 			var dayStart = moment(eventStart).startOf('day');
 
-			var day = dayStart.diff(scheduleStart, 'days');
+			var day = dayStart.diff(scheduleStart, 'days') % 7;
 			days[day] = day;
 
 			var minuteDiff = eventStart.diff(dayStart, 'minutes');
@@ -112,6 +155,7 @@ Template.frameSchedule.onCreated(function() {
 
 			var mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
+
 
 			if (!slots[mins]) slots[mins] = [];
 			if (!slots[mins][day]) slots[mins][day] = [];
@@ -171,4 +215,18 @@ Template.frameSchedule.helpers({
 		var startTime = moment(event.start).format('LT');
 		return (interval !== startTime) ? startTime : false;
 	},
+
+	single: function() {
+		return this.repCount < 2;
+	},
+
+	showDate: function() {
+		// The date is shown if an event has now repetitions...
+		if (this.repCount < 2) return true;
+
+		// ... or if it doesn't occur this week.
+		var thisWeek = moment().startOf('week');
+		var eventWeek = moment(this.start).startOf('week');
+		return eventWeek.isAfter(thisWeek);
+	}
 });

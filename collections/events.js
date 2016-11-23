@@ -25,6 +25,9 @@ import '/imports/Notification.js';
 // groups          -> list of group._id that promote this event
 // groupOrganizers -> list of group._id that are allowed to edit the course
 
+// replicaOf       -> ID of the replication parent, only cloned events have this
+
+
 /** Calculated fields
   *
   * courseGroups: list of group._id inherited from course (if courseId is set)
