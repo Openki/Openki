@@ -12,11 +12,31 @@
 }
 
 .region-statistics-body table tr td:nth-child(2) {
+	text-align: center;
+}
+.region-statistics-body table tr td:nth-child(1) {
 	text-align: right;
+}
+.region-statistics-body table tr td {
+	padding: 2px 5px;
 }
 
 .region-statistics-groups ul {
 	@include list-unstyled;
+}
+
+.region-statistics-groups ul li {
+	padding: 2px 5px;
+	margin: 5px;
+	background-color: $white;
+	border-width: 1px;
+	border-color: darken($blue-lighter, 15%);
+	border-style: solid;
+	position: relative;
+	transition: box-shadow $default-transition-time;
+	&:hover {
+		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	}
 }
 
 .region-statistics-numbers {

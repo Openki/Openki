@@ -41,13 +41,19 @@ Template.regionStatistics.helpers({
 	proposalCount: function() {
 		return Template.instance().data.region.proposalCount;
 	},
-	venuesCount: function() {
+	venueCount: function() {
 		return Template.instance().data.venues.count();
 	},
-	groupsCount: function() {
+	groupCount: function() {
 		return Template.instance().data.region.groups.length;
 	},
 	groups: function() {
 		return Template.instance().data.region.groups.slice(0, 10);
+	},
+	userCount: function() {
+		return Template.instance().data.region.userCount;
+	},
+	mentorCount: function() {
+		return Template.instance().data.region.mentorCount;
 	}
 });

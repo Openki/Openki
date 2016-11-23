@@ -21,36 +21,62 @@ updateRegionCounters = function(regionId) {
 	var pastEventCount = Events.find({ region: regionId, end: { $lt: new Date() } }).count();
 
 	var coursesWithGroups = Courses.find({ region: regionId, $where: "obj.groups.length > 0" });
-	var allGroups = [];
+	var allGroups = new Map();
+	var groups = [];
+	var allUsers = new Map();
+	var mentorCount = 0;
+
 	coursesWithGroups.forEach( function (course) {
 		// save all groups (Id) of the course and count their courses
 		for(var i = 0; i < course.groups.length; i++){
 			var idToCheck = course.groups[i];
-			var arrayIndexOfGroup = allGroups.map(function(e) { return e.groupId; })
-									.indexOf(idToCheck);
-
-			if( arrayIndexOfGroup == -1) {
-				var group = {
-					groupId : course.groups[i],
-					weight : 1
-				}
-				allGroups.push(group);
+			var weight = allGroups.get(idToCheck);
+			if(weight != undefined) {
+				weight++;
 			} else {
-				allGroups[arrayIndexOfGroup].weight++;
+				weight = 1;
+			}
+			allGroups.set(idToCheck, weight);
+		}
+		// save all distinguished users an if they are a "mentor" somewhere
+		for(var i = 0; i < course.members.length; i++){
+			var member = course.members[i];
+			var userRole = allUsers.get(member.user);
+			if(userRole == undefined){
+				userRole = member.roles[0];
+				allUsers.set(member.user, userRole);
+				if (userRole == "mentor") mentorCount++;
+			}
+			if (userRole != "mentor") {
+				for(var j = 0; j < member.roles.length; j++){
+					if(member.roles[j] == "mentor"){
+						allUsers.set(member.user, "mentor");
+						mentorCount++;
+						j = member.roles.length; // quit for-loop
+					}
+				}
 			}
 		}
 	});
-	for(var i = 0; i < allGroups.length; i++) {
-		allGroups[i].name = Groups.findOne({ _id: allGroups[i].groupId }).name;
-	}
-	allGroups.sort(function(a, b){ return b.weight-a.weight });
+	allGroups.forEach( function (value, key){
+		var group = {
+		id : key,
+		weight : value,
+		name : Groups.findOne({ _id: key }).name
+
+		}
+		groups.push(group);
+	});
+	groups.sort(function(a, b){ return b.weight-a.weight });
 
 	Regions.update(regionId, { $set: {
 		courseCount: courseCount,
 		proposalCount: proposalCount,
 		futureEventCount: futureEventCount,
 		pastEventCount: pastEventCount,
-		groups: allGroups
+		groups: groups,
+		userCount: allUsers.size,
+		mentorCount: mentorCount
 	} });
 };
 

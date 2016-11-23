@@ -2,52 +2,57 @@
 	<div class="container">
 		<div class="page-component region-statistics">
 			<div class="details-header region-statistics-header">
-				<h2>Numbers of {{regionName}}</h2>
+				<h2>The numbers of {{regionName}}</h2>
 			</div>
 		</div>
 		<div class="details-body region-statistics-body">
 			<div class="region-statistics-numbers">
 				<table>
 					<tr>
-						<th><h3>Form</h3></th>
-						<th></th>
+						<th colspan="3"><h3>Intellectual power</h3></th>
 					</tr>
 					<tr>
-						<td>Courses (all)</td>
 						<td>{{courseCount}}</td>
+						<td><span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span></td>
+						<td>Courses</td>
 					</tr>
 					<tr>
-						<td>Proposals (Courses without future or past events)</td>
 						<td>{{proposalCount}}</td>
+						<td><span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span></td>
+						<td>Proposals (Courses without events)</td>
 					</tr>
 					<tr>
-						<td>Future events</td>
 						<td>{{futureEventCount}}</td>
+						<td><span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span></td>
+						<td>Future events</td>
 					</tr>
 					<tr>
-						<td>Past events</td>
 						<td>{{pastEventCount}}</td>
-					</tr>
-
-					<tr>
-						<th><h3>Substance</h3></th>
-						<th></th>
+						<td><span class="fa fa-history fa-fw" aria-hidden="true"></span></td>
+						<td>Past events</td>
 					</tr>
 					<tr>
+						<th colspan="3"><h3>Substantial basis</h3></th>
+					</tr>
+					<tr>
+						<td>{{userCount}}</td>
+						<td><span class="fa fa-user-plus fa-fw" aria-hidden="true"></span></td>
 						<td>Users</td>
-						<td></td>
 					</tr>
 					<tr>
+						<td>{{mentorCount}}</td>
+						<td><span class="fa fa-graduation-cap fa-fw" aria-hidden="true"></span></td>
 						<td>Mentors</td>
-						<td></td>
 					</tr>
 					<tr>
+						<td>{{venueCount}}</td>
+						<td><span class="glyphicon glyphicon-home" aria-hidden="true"></span> </td>
 						<td>Venues</td>
-						<td>{{venuesCount}}</td>
 					</tr>
 					<tr>
+						<td>{{groupCount}}</td>
+						<td><span class="fa fa-users fa-fw" aria-hidden="true"></span></td>
 						<td>Groups</td>
-						<td>{{groupsCount}}</td>
 					</tr>
 				</table>
 			</div>
@@ -56,7 +61,7 @@
 				<ul>
 					{{ #each group in groups }}
 						<li>
-							{{group.weight}} {{group.name}} <br/>
+							{{group.weight}} Courses – {{group.name}} <br/>
 						</li>
 					{{ /each }}
 				</ul>
