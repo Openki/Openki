@@ -185,6 +185,11 @@ Template.frameSchedule.onCreated(function() {
 });
 
 Template.frameSchedule.helpers({
+	month: function() {
+		var instance = Template.instance();
+		return moment(instance.scheduleStart.get()).format('MMMM');
+	},
+
 	days: function() {
 		var instance = Template.instance();
 		var scheduleStart = instance.scheduleStart.get();
