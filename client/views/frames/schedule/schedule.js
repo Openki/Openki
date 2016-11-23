@@ -67,7 +67,7 @@ Template.frameSchedule.onCreated(function() {
 
 
 	this.autorun(function() {
-		subs.subscribe('eventsFind', filter.toQuery(), 100);
+		subs.subscribe('eventsFind', filter.toQuery(), 500);
 	});
 
 
@@ -89,7 +89,7 @@ Template.frameSchedule.onCreated(function() {
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
 		var dedupedEvents = [];
-		eventsFind(filter.toQuery(), 200).forEach(function(event) {
+		eventsFind(filter.toQuery()).forEach(function(event) {
 			var repKey = event.start.getDay()+'-'+event.start.getHours()+'-'+ event.start.getMinutes()+'-';
 
 			// If there is no courseId, we fall back to replicationId, then _id.
