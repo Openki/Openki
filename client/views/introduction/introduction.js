@@ -35,7 +35,8 @@ Template.introduction.helpers({
 	},
 
 	isInCalendar: function() {
-		return Router.current().route.getName() == "calendar";
+		var currentRoute = Router.current().route;
+		if (!!currentRoute) return currentRoute.getName() == "calendar";
 	},
 
 	clearfixFor: function(triggerSize) {
