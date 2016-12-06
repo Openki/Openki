@@ -1,6 +1,7 @@
 Template.backToLink.helpers({
 	previousRoute: function() {
 		var previousRouteName = Session.get("previousRouteName");
+		if (!previousRouteName) return false;
 		return mf('route.'+previousRouteName);
 	}
 });
