@@ -53,20 +53,16 @@
 	transition-property: #{'box-shadow transform'};
 	transition-duration: .1s;
 
+	color: black;
+
 	&:hover {
 		box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 		transform: scale(1.2, 1.2);
 		transition-property: #{'box-shadow transform'};
 		transition-duration: .3s;
 	}
-}
 
-.schedule-event-time {
-	background: black;
-	color: white;
-	font-weight: bold;
-	font-size: small;
-	padding: 0 3px;
+
 }
 
 $schedule-event-type-1-color:  rgb(142, 224, 242);
@@ -98,6 +94,13 @@ $schedule-event-types: (
 @each $i, $background-color in $schedule-event-types {
 	.schedule-event-type-#{$i} {
 		background-color: $background-color;
-		color: #000;
 	}
+}
+
+.schedule-event-time {
+	background: black;
+	color: white;
+	font-weight: bold;
+	font-size: small;
+	padding: 0 3px;
 }
