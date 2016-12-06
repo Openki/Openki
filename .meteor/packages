@@ -17,8 +17,6 @@ djedi:sanitize-html
 accounts-facebook@1.0.11
 archive:jquery-dotdotdot
 ical
-cfs:standard-packages
-cfs:gridfs
 rzymek:moment-locale-ar
 rzymek:moment-locale-de
 rzymek:moment-locale-es
