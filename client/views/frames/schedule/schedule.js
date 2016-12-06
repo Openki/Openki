@@ -224,7 +224,7 @@ Template.frameSchedule.helpers({
 	},
 
 	showDate: function() {
-		// The date is shown if an event has now repetitions...
+		// The date is shown if an event has no repetitions...
 		if (this.repCount < 2) return true;
 
 		// ... or if it doesn't occur this week.
