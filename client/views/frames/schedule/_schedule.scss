@@ -92,7 +92,7 @@ $schedule-event-types: (
 	13: desaturate($schedule-event-type-1-color, 75%),
 	14: desaturate($schedule-event-type-2-color, 75%),
 	15: desaturate($schedule-event-type-3-color, 75%),
-	0:  desaturate($schedule-event-type-4-color, 100%)
+	other: desaturate($schedule-event-type-4-color, 100%)
 );
 
 @each $i, $background-color in $schedule-event-types {
