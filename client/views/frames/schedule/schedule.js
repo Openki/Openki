@@ -203,7 +203,7 @@ Template.frameSchedule.helpers({
 			return {
 				interval: moment().hour(0).minute(mins).format('LT'),
 				slots: _.map(Template.instance().days.get(), function(day) {
-					return slots[mins] && slots[mins][day];
+					return slots[mins] && slots[mins][day] || [];
 				})
 			};
 		});
