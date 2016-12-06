@@ -105,10 +105,13 @@ Notification.Event.handler = function(entry) {
 				var vars =
 					{ event: event
 					, course: course
+					, username: user.username
 					, eventDate: startMoment.format('LL')
 					, eventStart: startMoment.format('LT')
 					, eventEnd: startMoment.format('LT')
 					, locale: userLocale
+					, eventLink: Router.url('showEvent', event)
+					, calLink: Router.url('calEvent', event)
 					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 					, new: entry.body.new
 					};

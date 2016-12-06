@@ -21,8 +21,8 @@
 	<tr>
 		<th>{{mf "notification.event.mail.link" "Link" LOCALE=locale}}</th>
 		<td>
-			<a href="{{urlFor 'showEvent' event}}">{{mf "notification.event.mail.linkText" "Visit page" LOCALE=locale}}</a><br>
-			<a href="{{urlFor 'calEvent' event}}">{{mf "notification.event.mail.linkCalendar" "Add to my calendar" LOCALE=locale}}</a><br>
+			<a href="{{eventLink}}">{{mf "notification.event.mail.linkText" "Visit page" LOCALE=locale}}</a><br>
+			<a href="{{calLink}}">{{mf "notification.event.mail.linkCalendar" "Add to my calendar" LOCALE=locale}}</a><br>
 		</td>
 	</tr>
 	<tr>
