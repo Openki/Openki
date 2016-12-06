@@ -376,6 +376,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   groups: the event must be in one of the group ID
  *   course: only events for this course (ID)
  *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
@@ -441,8 +442,17 @@ eventsFind = function(filter, limit) {
 		find.categories = { $all: filter.categories };
 	}
 
+	var inGroups = [];
 	if (filter.group) {
-		find.allGroups = filter.group;
+		inGroups.push(filter.group);
+	}
+
+	if (filter.groups) {
+		inGroups = inGroups.concat(filter.groups);
+	}
+
+	if (inGroups.length > 0) {
+		find.allGroups = { $in: inGroups };
 	}
 
 	if (filter.course) {
