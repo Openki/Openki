@@ -94,6 +94,9 @@ Template.regionSelection.events({
 
 		localStorage.setItem("region", region_id); // to survive page reload
 		Session.set('region', region_id);
+		if (region_id !== 'all' && Meteor.userId()) {
+			Meteor.call('user.regionChange', region_id);
+		}
 
 		// When the region changes, we want the content of the page to update
 		// Many pages do not change when the region changed, so we go to

@@ -50,6 +50,10 @@ Meteor.subscribe('regions', function() {
 		return false;
 	};
 
+	// The region m,ight have been chosen already because the user is logged-in.
+	// See Accounts.onLogin().
+	if (useRegion(Session.get('region'))) return;
+
 	// Region parameter in URL or in storage?
 	if (useRegion(UrlTools.queryParam('region'))) return;
 	if (useRegion(localStorage.getItem("region"))) return;
@@ -150,8 +154,13 @@ Meteor.startup(Assistant.init);
 Meteor.startup(getViewportWidth);
 
 Accounts.onLogin(function() {
-	var locale = Meteor.user().profile.locale;
+	var user = Meteor.user();
+
+	var locale = user.profile.locale;
 	if (locale) Session.set('locale', locale);
+
+	var regionId = user.profile.regionId;
+	if (regionId) Session.set('region', regionId);
 });
 
 Accounts.onEmailVerificationLink(function(token, done) {
