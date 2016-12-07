@@ -83,7 +83,7 @@ Template.eventEdit.helpers({
 		return currentRegion && region._id == currentRegion;
 	},
 
-	showLocationSelection: function(region) {
+	showVenueSelection: function(region) {
 		var selectedRegion = Template.instance().selectedRegion.get();
 		return selectedRegion && selectedRegion !== 'all';
 	},

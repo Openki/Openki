@@ -132,8 +132,8 @@
 				</div>
 			{{/if}}
 
-			{{#if showLocationSelection}}
-				{{>eventEditLocation}}
+			{{#if showVenueSelection}}
+				{{>eventEditVenue}}
 				<div class="form-group">
 					<label>
 						{{mf 'course.event.edit.room' 'Room'}}
@@ -157,10 +157,10 @@
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" class="js-check-event-internal" {{isInternal}}>
-						{{mf 'event.edit.internal' 'Internal'}}
+						{{mf 'event.edit.internal' 'Hide on front page'}}
 						<span class="help-block">
 							{{#mf KEY='event.edit.internal.description'}}
-								Internal events are only shown in group and location-details
+								Show this event only on group and venue pages
 							{{/mf}}
 						</span>
 					</label>
