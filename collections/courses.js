@@ -194,10 +194,7 @@ Courses.updateGroups = function(courseId) {
 
 coursesFind = function(filter, limit) {
 	var find = {};
-
-	//sort variable
 	var sort = {time_lastedit: -1, time_created: -1};
-
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent === true) {
