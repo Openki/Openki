@@ -44,3 +44,36 @@ Profile.Notifications.unsubscribe = function(token) {
 	});
 	return accepted;
 };
+
+
+Profile.Region = {};
+
+/** Update the selected region for a user
+  *
+  * @param {ID} userId   - update region for this user
+  * @param {ID} regionId - choose this region for this user
+  *
+  * @return {Bool} whether the change was accepted
+  */
+Profile.Region.change = function(userId, regionId, reason) {
+	check(userId, String);
+	check(regionId, String);
+	check(reason, String);
+
+	var region = Regions.findOne(regionId);
+	var accepted = !!region;
+
+	Log.record('Profile.Region', [userId, regionId],
+		{ userId: userId
+		, regionId: regionId
+		, accepted: accepted
+		, reason: reason
+		}
+	);
+
+	if (accepted) {
+		Meteor.users.update(userId, { $set: { 'profile.regionId':  region._id } });
+	}
+
+	return accepted;
+};

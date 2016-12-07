@@ -39,7 +39,7 @@ import '/imports/Profile.js';
 //         loginTockens: [{when: Date, hashed: String}]}}
 // "username"     -> String
 // "emails"       -> [{address: String, verified: Boolean}]
-// "profile"      -> {name: String, locale: Lang}
+// "profile"      -> {name: String, locale: Lang, regionId: ID}
 // "privileges"   -> [admin]
 // "lastLogin"    -> Date
 // groups         -> List of groups the user is a member of, calculated by updateBadges()
@@ -133,6 +133,12 @@ Users.updateBadges = function(userId) {
 };
 
 Meteor.methods({
+	/** Set user region
+	  */
+	'user.regionChange': function(newRegion) {
+		Profile.Region.change(Meteor.userId(), newRegion, "client call");
+	},
+
 	update_userdata: function(username, email, notifications, privacy) {
 		check(username, String);
 		check(email, String);
