@@ -83,6 +83,10 @@ Template.venueEdit.helpers({
 		return Regions.find();
 	},
 
+	showMapSelection: function() {
+		return Template.instance().regionSelectable.get() || !!Template.instance().selectedRegion.get();
+	},
+
 	regionSelectable: function() {
 		return Template.instance().regionSelectable.get();
 	},
