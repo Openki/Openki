@@ -75,7 +75,7 @@ Template.forgotPwdFrame.helpers({
 
 
 Template.forgotPwdFrame.events({
-	'change .js-login-email, keyup .js-login-email': function(event, instance) {
+	'change, keyup, input': function(event, instance) {
 		instance.loginEmail.set("" + instance.$('.js-login-email').val());
 	},
 });
