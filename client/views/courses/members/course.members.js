@@ -55,11 +55,23 @@ Template.courseMember.helpers({
 		var mayChangeComment = this.member.user === Meteor.userId();
 		return mayChangeComment && Template.instance().editableMessage;
 	},
+
+	theFasterTakesTheCrown: function(label) {
+		var course = this.course;
+		var isSubscribedAsTeam = hasRoleUser(course.members, 'team', Meteor.userId() ) == 'subscribed';
+		var hasEditableRights = course.editableBy(Meteor.userId());
+		// allow admins or team members to unsubscribe team members
+		return label == 'team' && (hasEditableRights || isSubscribedAsTeam);
+	},
 });
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(e, template) {
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		return false;
+	},
+	'click .js-remove-from-team-btn': function(e, template) {
+		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });
