@@ -37,6 +37,9 @@ Profile.Notifications.unsubscribe = function(token) {
 	Log.find({
 		rel: token
 	}).forEach(function(entry) {
+		// See whether it was indeed a secret token.
+		// This check is not redundant because public ID like courseID
+		// are also written into the rel-index and would be found if provided.
 		if (entry.body.unsubToken === token) {
 			Profile.Notifications.change(entry.body.userId, false, entry._id, "unsubscribe token");
 			accepted = true;

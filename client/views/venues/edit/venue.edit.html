@@ -26,9 +26,9 @@
 							{{> editableTextarea editableDescription}}
 						</div>
 					</div>
-
-					{{#if regionSelectable}}
-						<div class="form-group">
+				{{#if showMapSelection}}
+					<div class="form-group">
+						{{#if regionSelectable}}
 							<div class="form-group-element">
 								<label>{{mf 'venue.edit.region' 'Region:'}}</label>
 								<div class="input-group">
@@ -43,15 +43,15 @@
 									</select>
 								</div>
 							</div>
-							{{#if regionSelected}}
-								<div class="form-group-element">
-									<label>{{mf 'venue.edit.map' 'Map:'}}</label>
-									{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
-								</div>
-							{{/if}}
-						</div>
-					{{/if}}
-
+						{{/if}}
+						{{#if regionSelected}}
+							<div class="form-group-element">
+								<label>{{mf 'venue.edit.map' 'Map:'}}</label>
+								{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+							</div>
+						{{/if}}
+					</div>
+				{{/if}}
 
 					<div class="form-group">
 						<label>{{mf 'venue.details.address' 'Address:'}}</label>
