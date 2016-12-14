@@ -68,11 +68,16 @@ Template.map.onRendered(function() {
 	// Add tiles depending on language
 	var tiles = null;
 	var tileLayers = {
-		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
 		'fr': function() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			});
+		},
+		'de': function() {
+			return L.tileLayer('//{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; Openstreetmap Germany | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			});
 		},
 		'default': function() {
