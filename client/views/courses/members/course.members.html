@@ -47,8 +47,9 @@
 			<button type="button" class="btn btn-add js-add-to-team-btn"
 				data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
 				data-tooltip-direction="e">
-				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
 				<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
+				<span class="role-short">{{mf 'roles.team.short'}}</span>
+				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
 			</button>
 		{{/if}}
 		{{#if editableMessage}}

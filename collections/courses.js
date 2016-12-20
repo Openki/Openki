@@ -161,6 +161,35 @@ maySubscribe = function(operatorId, course, userId, role) {
 	return true;
 };
 
+mayUnSubscribe = function(operatorId, course, userId, role) {
+	if (!userId) return false;
+
+	// Do not allow unsubscribing when not subscribed
+	if (!hasRoleUser(course.members, role, userId)) return false;
+
+	// Admins may do anything
+	if (privileged(operatorId, 'admin')) {
+		return true;
+	}
+
+	// The team role is restricted
+	if ('team' === role) {
+
+		// Only members of the team can take-out other people
+		if (hasRoleUser(course.members, 'team', operatorId)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// The other roles can only be chosen by the users themselves
+	if (operatorId !== userId) {
+		return false;
+	} else {
+		return true;
+	}
+};
 
 // Update list of editors
 Courses.updateGroups = function(courseId) {
@@ -320,15 +349,29 @@ if (Meteor.isServer) {
 			Courses.update(courseId, { $set: {time_lastedit: new Date()} });
 		},
 
-		remove_role: function(courseId, role) {
+		remove_role: function(courseId, userId, role) {
 			check(role, String);
+			check(userId, String);
 			check(courseId, String);
 
-			var user = Meteor.user();
-			if (!user) throw new Meteor.Error(401, "please log in");
+			var user = Meteor.users.findOne(userId);
+			if (!user) throw new Meteor.Error(404, "User not found");
+
+			var operator = Meteor.user();
+			if (!operator) throw new Meteor.Error(401, "please log in");
 
 			var course = Courses.findOne({_id: courseId});
 			if (!course) throw new Meteor.Error(404, "Course not found");
+
+			// do nothing if user is not subscribed with this role
+			if (!hasRoleUser(course.members, role, userId)) return true;
+
+			// Check permissions
+			 if (!mayUnSubscribe(operator._id, course, user._id, role)) {
+				throw new Meteor.Error(401, "not permitted");
+			}
+
+			//what to do for incognito unsubscribe???
 
 			// The subscriptionId is the user._id unless we're delisting incognito
 			var subscriptionId = false;

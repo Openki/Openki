@@ -56,7 +56,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-unsubscribe-btn': function () {
-		Meteor.call('remove_role', this.course._id, this.roletype.type);
+		Meteor.call('remove_role', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;
 	}
 });
