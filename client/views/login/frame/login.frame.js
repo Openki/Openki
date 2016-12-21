@@ -174,6 +174,11 @@ Template.loginFrame.events({
 				if (err) {
 					instance.activeWarning.set(err.reason);
 				} else {
+					var regionId = cleanedRegion(Session.get('region'));
+					if (regionId) {
+						Meteor.call('user.regionChange', regionId);
+					}
+
 					instance.closeDropdown();
 				}
 			});
