@@ -151,18 +151,26 @@
 				data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{mf 'course.group.addText' 'Link a group'}}</span>
+				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
-						<a href="#">
-							<button type="button" class="btn btn-add js-add-group" value="{{this}}" data-tooltip="{{name}}">
-								{{mf 'course.group.confirmAddButton' "Add"}}
+						<a href="#" class="js-add-group" value="{{this}}">
+							{{mf 'course.group.confirmAddButton' "Add"}}
+							<button type="button" class="btn group-label-btn add-group-dropdown"
+								data-tooltip="{{name}}">
 								{{short}}
 							</button>
 						</a>
 					</li>
 				{{/each}}
+				<li>
+					<a href="#">
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+						create new group
+					</a>
+				</li>
 			</ul>
 		</div>
 	{{/if}}
