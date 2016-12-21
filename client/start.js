@@ -23,7 +23,8 @@ Router.onBeforeAction(function() {
 
 // Store routeName to be able to refer to previous route
 Router.onStop(function() {
-	Session.set('previousRouteName', Router.current().route.getName());
+	var route = Router.current().route;
+	if (route) Session.set('previousRouteName', route.getName());
 });
 
 // Subscribe to list of regions and configure the regions

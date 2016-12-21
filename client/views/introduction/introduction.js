@@ -57,7 +57,8 @@ Template.introduction.helpers({
 Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction': function() {
-		if (Router.current().route.options.template === "findWrap") {
+		var route = Router.current().route;
+		if (route && route.options.template === "findWrap") {
 			Assistant.showIntro();
 		}
 	},
