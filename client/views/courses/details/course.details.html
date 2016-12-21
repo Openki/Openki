@@ -149,17 +149,16 @@
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"
-					title="{{mf 'course.group.addText' 'Add a group'}}">
-				</span>
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				<span>{{mf 'course.group.addText' 'Link a group'}}</span>
 			</button>
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
 						<a href="#">
-							{{> groupName}}&nbsp;
-							<button type="button" class="btn btn-add js-add-group" value="{{this}}">
-								{{mf 'course.group.confirmAddButton' "Promote"}}
+							<button type="button" class="btn btn-add js-add-group" value="{{this}}" data-tooltip="{{name}}">
+								{{mf 'course.group.confirmAddButton' "Add"}}
+								{{short}}
 							</button>
 						</a>
 					</li>
