@@ -3,13 +3,9 @@
 <template name="venueMap">
 
 <div class="container-fluid">
-
-
-			<h1>{{mf 'course.venue.list' 'The venues'}}</h1>
+		<h1>{{mf 'course.venue.list' 'Venues'}}</h1>
 		<div class="venue-map-location">
-
 			<div class="venue-map-location-search">
-
 					{{#if haveVenues}}
 						<ul class="venue-map-location-candidates">
 							{{#each venues}}
@@ -23,13 +19,11 @@
 						{{mf 'venue.map.locations.foundnone'}}
 					{{/if}}
 					<a class="btn btn-default" href="http://localhost:3000/venue/create">Create a new venue</a>
-
 			</div>
 			<div class="venue-map-location-map ">
-				<!--h1>{{mf 'course.venue.map' 'on the map'}}</h1>-->
 				{{> map markers=venueMarkers}}
 			</div>
 		</div>
-
 </div>
+
 </template>

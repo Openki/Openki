@@ -69,11 +69,8 @@ Template.venueMap.helpers({
 Template.venueMap.events({
 
 	'click .js-location-candidate': function(event, instance) {
-		//instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
-    console.log(this);
 		Router.go("venueDetails", this);
 	},
-
 
 	'mouseenter .js-location-candidate': function(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
