@@ -20,6 +20,14 @@ Router.map(function () {
 Template.venueMap.onCreated(function() {
 	var instance = this;
 
+	instance.filter = new Filtering(VenuePredicates);
+	instance.autorun(function() {
+		instance.filter.clear();
+		instance.filter.add('region', Session.get('region'));
+		instance.filter.read(Router.current().params.query);
+		instance.filter.done();
+	});
+
 	instance.locationTracker = LocationTracker();
 
 	instance.autorun(function() {
@@ -28,10 +36,11 @@ Template.venueMap.onCreated(function() {
 	});
 
 	instance.autorun(function() {
-
-		var query = { region: Session.get("region") };
-
+		var query = instance.filter.toQuery();
 		subs.subscribe('venuesFind', query);
+
+		// Here we assume venues are not changed or removed.
+		instance.locationTracker.markers.remove({});
 		venuesFind(query).observe({
 			'added': function(location) {
 				location.proposed = true;
@@ -64,7 +73,7 @@ Template.venueMap.helpers({
 	},
 
 	regionName: function() {
-		var regionId = Session.get('region');
+		var regionId = Template.instance().filter.get('region');
 		var regionObj = Regions.findOne(regionId);
 		if (regionObj) return regionObj.name;
 		return false;
