@@ -4,7 +4,7 @@
 
 Router.map(function () {
 	this.route('venueMap',{
-		path: 'venues/map',
+		path: 'venues',
 		template: 'venueMap',
 		waitOn: function () {
 			return Meteor.subscribe('venues', cleanedRegion(Session.get('region')));
