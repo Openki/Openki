@@ -161,7 +161,7 @@ maySubscribe = function(operatorId, course, userId, role) {
 	return true;
 };
 
-mayUnSubscribe = function(operatorId, course, userId, role) {
+mayUnsubscribe = function(operatorId, course, userId, role) {
 	if (!userId) return false;
 
 	// Do not allow unsubscribing when not subscribed
@@ -176,19 +176,11 @@ mayUnSubscribe = function(operatorId, course, userId, role) {
 	if ('team' === role) {
 
 		// Only members of the team can take-out other people
-		if (hasRoleUser(course.members, 'team', operatorId)) {
-			return true;
-		} else {
-			return false;
-		}
+		return hasRoleUser(course.members, 'team', operatorId);
 	}
 
 	// The other roles can only be chosen by the users themselves
-	if (operatorId !== userId) {
-		return false;
-	} else {
-		return true;
-	}
+	return operatorId !== userId;
 };
 
 // Update list of editors
@@ -367,7 +359,7 @@ if (Meteor.isServer) {
 			if (!hasRoleUser(course.members, role, userId)) return true;
 
 			// Check permissions
-			 if (!mayUnSubscribe(operator._id, course, user._id, role)) {
+			 if (!mayUnsubscribe(operator._id, course, user._id, role)) {
 				throw new Meteor.Error(401, "not permitted");
 			}
 

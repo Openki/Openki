@@ -56,12 +56,9 @@ Template.courseMember.helpers({
 		return mayChangeComment && Template.instance().editableMessage;
 	},
 
-	theFasterTakesTheCrown: function(label) {
-		var course = this.course;
-		var isSubscribedAsTeam = hasRoleUser(course.members, 'team', Meteor.userId() ) == 'subscribed';
-		var hasEditableRights = course.editableBy(Meteor.userId());
-		// allow admins or team members to unsubscribe team members
-		return label == 'team' && (hasEditableRights || isSubscribedAsTeam);
+	mayUnsubscribeFromTeam: function(label) {
+		return label == 'team'
+			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
 	},
 });
 
