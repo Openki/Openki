@@ -19,7 +19,7 @@ boilerplate-generator@1.0.11
 caching-compiler@1.1.9
 caching-html-compiler@1.0.7
 callback-hook@1.0.10
-ccorcos:subs-cache@0.1.0
+ccorcos:subs-cache@0.2.1
 check@1.2.4
 coffeescript@1.11.1_4
 cosmos:browserify@0.10.0
