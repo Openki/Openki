@@ -61,8 +61,14 @@ Template.venueMap.helpers({
 
 	hoverClass: function() {
 		return this.hover ? 'hover' : '';
-	}
+	},
 
+	regionName: function() {
+		var regionId = Session.get('region');
+		var regionObj = Regions.findOne(regionId);
+		if (regionObj) return regionObj.name;
+		return false;
+	}
 });
 
 
