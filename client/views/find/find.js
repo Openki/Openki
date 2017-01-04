@@ -16,7 +16,7 @@ function finderRoute(path) {
 			if (search) {
 				document.title = webpagename + mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"');
 			} else {
-				document.title = webpagename + mf('startpage.windowtitle', 'What do you want to learn?');
+				document.title = webpagename + mf('find.WhatLearn?');
 			}
 		}
 	};
