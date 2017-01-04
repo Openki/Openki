@@ -109,8 +109,9 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 	userIsInGroup: function() {
-		if (Meteor.user()) {
-			return Meteor.user().groups.length > 0;
+		var user = Meteor.user();
+		if (user && user.groups) {
+			return user.groups.length > 0;
 		} else {
 			return false;
 		}
