@@ -36,8 +36,9 @@ Template.regionSelection.helpers({
 		var search = Template.instance().regionSearch.get();
 		var query = {};
 		if (search !== '') query = { name: new RegExp(search, 'i') };
+		var options = {sort: {futureEventCount: -1}};
 
-		return Regions.find(query);
+		return Regions.find(query, options);
 	},
 
 	regionNameMarked: function() {
