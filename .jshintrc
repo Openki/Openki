@@ -192,28 +192,6 @@
 		"untilClean":true,
 
 
-// server/testData/...
-
-		"testCourses":true,
-		"testEvents":true,
-		"testGroups":true,
-		"testLocations":true,
-		"regions":true,
-
-
-// server/testing.createnload.data.js
-
-		"loadCoursesIfNone":true,
-		"loadLocationsIfNone":true,
-		"createEventsIfNone":true,
-		"createCommentsIfNone":true,
-		"loadTestEvents":true,
-		"loadGroupsIfNone":true,
-		"loadTestRegionsIfNone":true,
-
-
-
-
 // Packages
 
 		"GeoIP":true
