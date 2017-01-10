@@ -154,21 +154,24 @@
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"
-					title="{{mf 'course.group.addText' 'Add a group'}}">
-				</span>
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				<span>{{mf 'course.group.addText' 'link a group'}}</span>
+				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu group-editor">
 				{{#each groupsToAdd}}
 					<li>
-						<a href="#">
-							{{> groupName}}&nbsp;
-							<button type="button" class="btn btn-add js-add-group" value="{{this}}">
-								{{mf 'course.group.confirmAddButton'}}
-							</button>
-						</a>
+						<button type="button" class="btn-link js-add-group" value="{{this}}">
+							{{name}}
+						</button>
 					</li>
 				{{/each}}
+				<li>
+					<a href="/group/create">
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'profile.createNewGroup.button'}}
+					</a>
+				</li>
 			</ul>
 		</div>
 	{{/if}}

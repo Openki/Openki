@@ -61,7 +61,7 @@ $group-label-color: $blue;
 }
 
 .js-add-group {
-	@include btn-sm;
+	border: 0;
 }
 
 .group-tool-dialog {
