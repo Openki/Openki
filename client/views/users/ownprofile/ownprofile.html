@@ -68,20 +68,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="control-btn">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" id="privacy" {{privacyChecked}}/>
-											<span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.highprivacy' 'High privacy'}}
-											<span class="help-block">
-												{{mf 'profile.toggle.highprivacy.explication' 'If enabled you can enrol anonymously to courses (experimental)'}}
-											</span>
-										</label>
-									</div>
-								</div>
-							</div>
 							<div class="form-actions">
 								{{> buttonCancel event="js-profile-info-cancel"}}
 								{{> buttonSave}}
@@ -136,19 +122,6 @@
 								</div>
 								<div class="details-info-data">
 									{{#if user.notifications}}
-										{{mf '_option.on'}}
-									{{else}}
-										{{mf '_option.off'}}
-									{{/if}}
-								</div>
-							</div>
-							<div class="details-info-group">
-								<div class="details-info-label">
-									<span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.highprivacy' 'High privacy'}}
-								</div>
-								<div class="details-info-data">
-									{{#if user.privacy}}
 										{{mf '_option.on'}}
 									{{else}}
 										{{mf '_option.off'}}

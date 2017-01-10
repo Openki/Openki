@@ -102,7 +102,6 @@ function loadroles(course) {
 				roletype: roletype,
 				role: role,
 				subscribed: !!sub,
-				anonsub: sub == 'anon',
 				course: course
 			});
 		}

@@ -70,7 +70,6 @@
 		"lgs":true,
 		"categories":true,
 		"ServiceConfiguration":true,
-		"anonId":true,
 		"Categories":true,   //shouldnt be here
 
 // server/publications
