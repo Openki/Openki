@@ -108,7 +108,7 @@ Notification.Event.handler = function(entry) {
 					, username: user.username
 					, eventDate: startMoment.format('LL')
 					, eventStart: startMoment.format('LT')
-					, eventEnd: startMoment.format('LT')
+					, eventEnd: endMoment.format('LT')
 					, locale: userLocale
 					, eventLink: Router.url('showEvent', event)
 					, calLink: Router.url('calEvent', event)

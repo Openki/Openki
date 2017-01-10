@@ -179,6 +179,7 @@
 
 		"CoursePredicates":true,
 		"EventPredicates":true,
+		"VenuePredicates":true,
 		"Filtering":true,
 
 
