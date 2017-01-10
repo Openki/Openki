@@ -106,17 +106,19 @@
 					{{/unless}}
 				</div>
 
-				<div class="form-group">
-					<label>{{mf 'course.edit.intern' 'Internal course'}}</label>
-					<div class="checkbox">
-						<label>
-							<input class="js-check-internal"
-								type="checkbox"
-								{{isInternal}}/>
-							{{mf 'course.edit.internDescription' 'Show this course only in a group or venue'}}
-						</label>
+				{{#if userIsInGroup}}
+					<div class="form-group">
+						<label>{{mf 'course.edit.intern' 'Hide on front page'}}</label>
+						<div class="checkbox">
+							<label>
+								<input class="js-check-internal"
+									type="checkbox"
+									{{isInternal}}/>
+								{{mf 'course.edit.internDescription' "Only show when looking at a group's courses"}}
+							</label>
+						</div>
 					</div>
-				</div>
+				{{/if}}
 
 				<div class="form-actions">
 					{{> buttonCancel event="js-course-edit-cancel"}}

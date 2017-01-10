@@ -5,7 +5,6 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('user', this.params._id),
 				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('coursesFind', { userInvolved: this.params._id })
 			];
 		},
 		data: function () {
@@ -13,7 +12,7 @@ Router.map(function() {
 			if (!user) return; // not loaded?
 
 			// What privileges the user has
-			var privileges = _.reduce(['admin', 'upload'], function(ps, p) {
+			var privileges = _.reduce(['admin'], function(ps, p) {
 				ps[p] = privileged(user, p);
 				return ps;
 			}, {});
@@ -23,7 +22,6 @@ Router.map(function() {
 
 			return {
 				'user': user,
-				'involvedIn': coursesFind({ userInvolved: this.params._id }),
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
 				'inviteGroups': GroupLib.find({ own: true }),
@@ -90,16 +88,6 @@ Template.userprofile.events({
 				showServerError('Unable to add privilege', err);
 			} else {
 				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
-			}
-		});
-	},
-
-	'click button.giveUpload': function() {
-		Meteor.call('addPrivilege', this.user._id, 'upload', function(err) {
-			if (err) {
-				showServerError('Unable to add privilege', err);
-			} else {
-				addMessage(mf('privilege.addedUpload', 'Granted upload privilege'), 'success');
 			}
 		});
 	},

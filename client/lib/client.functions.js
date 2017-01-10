@@ -111,8 +111,8 @@ pleaseLogin = function() {
 	alert(mf('Please.login', 'Please login or register'));
 
 	var viewportWidth = Session.get('viewportWidth');
-	var screenSm = Breakpoints.screenSm;
-	if (viewportWidth <= screenSm) {
+	var screenSM = SCSSVars.screenSM;
+	if (viewportWidth <= screenSM) {
 		$('.collapse').collapse('show');
 	}
 
@@ -143,11 +143,15 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
-courseFilterPreview = function(match, delayed) {
-	var noMatch = $('.course-compact').not(match);
+courseFilterPreview = function(matchSelector, activate, delayed) {
+	var noMatchSelector = $('.course-compact').not(matchSelector);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
-	
-	noMatch.toggleClass(filterClass);
+
+	if (activate) {
+		noMatchSelector.addClass(filterClass);
+	} else {
+		noMatchSelector.removeClass(filterClass);
+	}
 };
 
 showServerError = function(message, err) {
@@ -236,14 +240,14 @@ TemplateMixins = {
 
 /*************** HandleBars Helpers ***********************/
 
-Handlebars.registerHelper ("siteName", function() {
+Template.registerHelper ("siteName", function() {
 	if (Meteor.settings.public && Meteor.settings.public.siteName) {
 		return Meteor.settings.public.siteName;
 	}
 	return "Hmmm";
 });
 
-Handlebars.registerHelper ("siteStage", function() {
+Template.registerHelper ("siteStage", function() {
 	if (Meteor.settings.public && Meteor.settings.public.siteStage) {
 		return Meteor.settings.public.siteStage;
 	}
@@ -251,37 +255,37 @@ Handlebars.registerHelper ("siteStage", function() {
 });
 
 
-Handlebars.registerHelper ("categoryName", function() {
+Template.registerHelper ("categoryName", function() {
 	Session.get('locale'); // Reactive dependency
 	return mf('category.'+this);
 });
 
-Handlebars.registerHelper ("privacyEnabled", function(){
+Template.registerHelper ("privacyEnabled", function(){
 	var user = Meteor.user();
 	if(!user) return false;
 	return user.privacy;
 });
 
 
-Handlebars.registerHelper("log", function(context) {
+Template.registerHelper("log", function(context) {
 	if (window.console) console.log(arguments.length > 0 ? context : this);
 });
 
 
-Handlebars.registerHelper('username', userName);
+Template.registerHelper('username', userName);
 
 
-Handlebars.registerHelper('currentLocale', function() {
+Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
 
-Handlebars.registerHelper('dateformat', function(date) {
+Template.registerHelper('dateformat', function(date) {
 	Session.get('timeLocale');
 	if (date) return moment(date).format('L');
 });
 
-Handlebars.registerHelper('dateLong', function(date) {
+Template.registerHelper('dateLong', function(date) {
 	if (date) {
 		Session.get('timeLocale');
 		date = moment(moment(date).toDate());
@@ -289,7 +293,7 @@ Handlebars.registerHelper('dateLong', function(date) {
 	}
 });
 
-Handlebars.registerHelper('weekNr', function(date) {
+Template.registerHelper('weekNr', function(date) {
 	if (date) {
 		Session.get('timeLocale');
 		date = moment(moment(date).toDate());
@@ -298,64 +302,64 @@ Handlebars.registerHelper('weekNr', function(date) {
 });
 
 
-Handlebars.registerHelper('dateformat_calendar', function(date) {
+Template.registerHelper('dateformat_calendar', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).calendar();
 });
 
-Handlebars.registerHelper('dateformat_withday', function(date) {
+Template.registerHelper('dateformat_withday', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('ddd D.MM.YYYY');
 });
 
-Handlebars.registerHelper('weekday', function(date) {
+Template.registerHelper('weekday', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('dddd');
 });
 
-Handlebars.registerHelper('weekday_short', function(date) {
+Template.registerHelper('weekday_short', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('ddd');
 });
 
-Handlebars.registerHelper('dateformat_fromnow', function(date) {
+Template.registerHelper('dateformat_fromnow', function(date) {
 	Session.get('fineTime');
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).fromNow();
 });
 
-Handlebars.registerHelper('fullDate', function(date) {
+Template.registerHelper('fullDate', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('ddd D.MM.YYYY HH:mm');
 });
 
 
-Handlebars.registerHelper('dateformat_mini', function(date) {
+Template.registerHelper('dateformat_mini', function(date) {
 	if (date) return moment(date).format('D.M.');
 });
 
-Handlebars.registerHelper('dateformat_mini_fullmonth', function(date) {
+Template.registerHelper('dateformat_mini_fullmonth', function(date) {
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).format('D. MMMM');
 });
 
-Handlebars.registerHelper('timeformat', function(date) {
+Template.registerHelper('timeformat', function(date) {
 	Session.get('timeLocale');
 	if (date) return moment(date).format('LT');
 });
 
-Handlebars.registerHelper('fromNow', function(date) {
+Template.registerHelper('fromNow', function(date) {
 	Session.get('fineTime');
 	Session.get('timeLocale'); // it depends
 	if (date) return moment(date).fromNow();
 });
 
 
-Handlebars.registerHelper('isNull', function(val) {
+Template.registerHelper('isNull', function(val) {
 	return val === null;
 });
 
-Handlebars.registerHelper('courseURL', function(_id) {
+Template.registerHelper('courseURL', function(_id) {
 	var course=Courses.findOne(_id);
 	var name = getSlug(course.name);
 	return '/course/' + _id + '/' + name;
@@ -363,13 +367,28 @@ Handlebars.registerHelper('courseURL', function(_id) {
 
 
 // Strip HTML markup
-Handlebars.registerHelper('plain', function(html) {
+Template.registerHelper('plain', function(html) {
 	var div = document.createElement('div');
 	div.innerHTML = html;
 	return div.textContent || div.innerText || '';
 });
 
-Handlebars.registerHelper ("venueName", function(venueId) {
+// Take a plain excerpt from HTML text
+// If the output is truncated to len, an ellipsis is added
+Template.registerHelper('plainExcerpt', function(html, len) {
+	html = html || '';
+	var div = document.createElement('div');
+	div.innerHTML = html;
+	var s = div.textContent || div.innerText || '';
+
+	// Condense runs of whitespace so counting characters won't be too far off
+	s = s.replace(/\s+/, " ");
+
+	if (s.length <= len) return s;
+	return s.substring(0, len)+'…';
+});
+
+Template.registerHelper ("venueName", function(venueId) {
 	var venue = Venues.findOne(venueId);
 	if (!venue) return '';
 	return venue.name;
@@ -395,7 +414,7 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
     }
 };
 
-Handlebars.registerHelper('groupShort', function(groupId) {
+Template.registerHelper('groupShort', function(groupId) {
 	var instance = Template.instance();
 	instance.subscribe('group', groupId);
 
@@ -404,7 +423,7 @@ Handlebars.registerHelper('groupShort', function(groupId) {
 	return "";
 });
 
-Handlebars.registerHelper('groupLogo', function(groupId) {
+Template.registerHelper('groupLogo', function(groupId) {
 	var instance = Template.instance();
 	instance.subscribe('group', groupId);
 

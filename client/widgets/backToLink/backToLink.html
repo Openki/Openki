@@ -1,6 +1,8 @@
 <template name="backToLink">
+	{{#if previousRoute}}
 	<button class="btn-link js-back-to-link">
 		<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
 		{{mf 'backToLink.backTo' 'Back to'}} {{previousRoute}}
 	</button>
+	{{/if}}
 </template>

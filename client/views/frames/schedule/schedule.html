@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th class="schedule-header-time" scope="col">
-					{{mf 'schedule.header.hour' "Hour"}}
+					{{month}}
 				</th>
 				{{#each days}}
 					<th class="schedule-header-day" scope="col">
@@ -15,13 +15,30 @@
 		<tbody>
 			{{#each intervals}}
 				<tr>
-					<th class="schedule-time" scope="row">{{interval}}</th>
+					<td class="schedule-time" scope="row">
+						<div class="schedule-time-interval">
+							{{interval}}
+						</div>
+					</td>
 					{{#each slots}}
 						<td class="schedule-slot">
 							{{#each this}}
 								<a href="{{pathFor  'showEvent'}}" target="_blank">
 									<div class="schedule-event schedule-event-type-{{type}}">
 										{{title}}
+										{{#if showDate}}
+											<br>
+											<span class="schedule-event-time">
+												{{#unless single}}start:{{/unless}}
+												{{dateformat start}}
+											</span>
+										{{/if}}
+										{{#if customStartTime ../../interval}}
+											<br>
+											<span class="schedule-event-time">
+												{{customStartTime ../../interval}}
+											</span>
+										{{/if}}
 									</div>
 								</a>
 							{{/each}}

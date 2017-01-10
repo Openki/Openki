@@ -27,7 +27,7 @@
 						<div class="form-group-element">
 							<label class="label-lg">
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-								{{mf 'privileges.title' 'Administrate Privileges'}}
+								{{mf 'privileges.title' 'Edit Privileges'}}
 							</label>
 							<div class="list-group">
 								{{#if privileges.admin}}
@@ -45,25 +45,6 @@
 									{{#if alterPrivileges}}
 											<button type="button" class="giveAdmin list-group-item">
 												{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
-											</button>
-									{{/if}}
-								{{/if}}
-
-								{{#if privileges.upload}}
-									<li class="list-group-item list-group-item-success">
-										{{mf 'privilege.has.upload' 'Upload allowed'}}
-										{{#if alterPrivileges}}
-											<button type="button" class="js-remove-privilege-btn close"
-												data-tooltip="{{mf 'privilege.remove'}}"
-												data-priv="upload">
-												&times;
-											</button>
-										{{/if}}
-									</li>
-								{{else}}
-									{{#if alterPrivileges}}
-											<button type="button" class="giveUpload list-group-item">
-												{{mf 'privilege.add.upload' 'Grant upload privilege'}}
 											</button>
 									{{/if}}
 								{{/if}}

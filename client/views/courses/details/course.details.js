@@ -19,36 +19,6 @@ Router.map(function () {
 				course: course,
 				member: member
 			};
-			if (course.editableBy(Meteor.user())) {
-				data.editableName = makeEditable(
-					course.name,
-					true,
-					function(newName) {
-						Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
-							if (err) {
-								showServerError('Saving the course went wrong', err);
-							} else {
-								addMessage("\u2713 " + mf('_message.saved'), 'success');
-							}
-						});
-					},
-					mf('course.title.placeholder')
-				);
-				data.editableDescription = makeEditable(
-					course.description,
-					false,
-					function(newDescription) {
-						Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
-							if (err) {
-								showServerError('Saving the course went wrong', err);
-							} else {
-								addMessage("\u2713 " + mf('_message.saved'), 'success');
-							}
-						});
-					},
-					mf('course.description.placeholder')
-				);
-			}
 			return data;
 		},
 		onAfterAction: function() {
@@ -60,21 +30,6 @@ Router.map(function () {
 		}
 	});
 
-	this.route('showCourseDocs', {
-		path: 'course/:_id/:slug/docs',
-		//template: 'coursedocs',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('courseDetails', this.params._id),
-			];
-		},
-		data: function () {
-			var course = Courses.findOne({_id: this.params._id});
-			return {
-				course: course
-			};
-		}
-	});
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
 		//template: 'coursehistory',
@@ -89,6 +44,51 @@ Router.map(function () {
 				course: course
 			};
 		}
+	});
+});
+
+Template.courseDetailsPage.onCreated(function() {
+	var instance = this;
+	var course = instance.data.course;
+
+	instance.editableName = Editable(
+		true,
+		function(newName) {
+			Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+				if (err) {
+					showServerError('Saving the course went wrong', err);
+				} else {
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
+				}
+			});
+		},
+		mf('course.title.placeholder')
+	);
+
+	instance.editableDescription = Editable(
+		false,
+		function(newDescription) {
+			Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
+				if (err) {
+					showServerError('Saving the course went wrong', err);
+				} else {
+					addMessage("\u2713 " + mf('_message.saved'), 'success');
+				}
+			});
+		},
+		mf('course.description.placeholder')
+	);
+
+	this.autorun(function() {
+		var data = Template.currentData();
+		var course = data.course;
+		var editingPermitted = course.editableBy(Meteor.user());
+
+		data.editableName = editingPermitted && instance.editableName;
+		data.editableDescription = editingPermitted && instance.editableDescription;
+
+		instance.editableName.setText(course.name);
+		instance.editableDescription.setText(course.description);
 	});
 });
 
@@ -122,8 +122,8 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	},
 	mobileViewport: function() {
 		var viewportWidth = Session.get('viewportWidth');
-		var screenMd = Breakpoints.screenMd;
-		return viewportWidth <= screenMd;
+		var screenMD = SCSSVars.screenMD;
+		return viewportWidth <= screenMD;
 	},
 	isProposal: function() {
 		return !this.course.nextEvent && !this.course.lastEvent;

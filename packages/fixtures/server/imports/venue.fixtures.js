@@ -1,4 +1,4 @@
-testVenues = [{
+export default venues = [{
 	'name':              'Kasama',
 	'region':            'J6GDhEEvdmdSMzPPF',
 	'categories':        ['infoshop'],

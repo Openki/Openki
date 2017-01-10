@@ -26,24 +26,32 @@
 							{{> editableTextarea editableDescription}}
 						</div>
 					</div>
-
-					{{#if regionSelectable}}
-						<div class="form-group">
-							<label>{{mf 'venue.edit.region' 'Region:'}}</label>
-							<div class="input-group">
-								<span class="input-group-addon">
-									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-								</span>
-								<select name='region' class="form-control js-region">
-									<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
-								{{#each regions}}
-									<option value='{{_id}}'>{{name}}</option>
-								{{/each}}
-								</select>
+				{{#if showMapSelection}}
+					<div class="form-group">
+						{{#if regionSelectable}}
+							<div class="form-group-element">
+								<label>{{mf 'venue.edit.region' 'Region:'}}</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+									</span>
+									<select name='region' class="form-control js-region">
+										<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
+									{{#each regions}}
+										<option value='{{_id}}'>{{name}}</option>
+									{{/each}}
+									</select>
+								</div>
 							</div>
-						</div>
-					{{/if}}
-					{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+						{{/if}}
+						{{#if regionSelected}}
+							<div class="form-group-element">
+								<label>{{mf 'venue.edit.map' 'Map:'}}</label>
+								{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+							</div>
+						{{/if}}
+					</div>
+				{{/if}}
 
 					<div class="form-group">
 						<label>{{mf 'venue.details.address' 'Address:'}}</label>
@@ -64,14 +72,14 @@
 							<span class="input-group-addon">
 								<span class="fa fa-map-signs"></span>
 							</span>
-							<input
+							<textarea
 								class="form-control js-route"
 								id="editform-address"
-								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}>
+								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}></textarea>
 						</div>
 					</div>
 					<div class="form-group">
-						<label>{{mf 'venue.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
+						<label>{{mf 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
 						<div {{displayAdditionalInfo}}>
 							{{> venueEditAdditionalInfo}}
 						</div>

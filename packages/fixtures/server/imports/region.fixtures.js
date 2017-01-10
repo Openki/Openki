@@ -1,4 +1,4 @@
-regions = [{
+export default regions = [{
 		'name':        'Testistan',
 		'_id':         '9JyFCoKWkxnf8LWPh',
 		'loc':          [47.1375,7.2472],

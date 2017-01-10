@@ -15,6 +15,7 @@ describe('Profile', function () {
 		server.call('update_userdata',
 			"Seee",
 			"greg@openki.example",
+			false,
 			false
 		);
 	}).to.throw(/emailExists/);

@@ -1,21 +1,28 @@
+Template.usersCourselist.onCreated(function() {
+	var instance = this;
+	var id = instance.data.profileData.user._id;
+
+	instance.courseSub = instance.subscribe('coursesFind',  { userInvolved: id });
+
+	instance.coursesByRole = function(role) {
+		return Courses.find({ members: { $elemMatch: {
+			user: id,
+			roles: role }
+		}});
+	};
+});
+
 Template.usersCourselist.helpers({
 	roles: function() {
 		return _.clone(Roles).reverse();
 	},
 
+	coursesByRoleCount: function(role) {
+		return Template.instance().coursesByRole(role).count();
+	},
+
 	coursesByRole: function(role) {
-		var profileData = Template.instance().data.profileData;
-		var involvedIn = profileData.involvedIn;
-		var userID = profileData.user._id;
-		var coursesForRole = [];
-
-		involvedIn.forEach(function(course) {
-			if (hasRoleUser(course.members, role, userID)) {
-				coursesForRole.push(course);
-			}
-		});
-
-		return coursesForRole;
+		return Template.instance().coursesByRole(role);
 	},
 
 	roleUserList: function() {
@@ -31,5 +38,15 @@ Template.usersCourselist.helpers({
 		               .data.profileData
 		               .user.username;
 		if (username) return username;
+	},
+	roleShort: function() {
+		return 'roles.' + this.type + '.short';
+	},
+	ready: function() {
+		return Template.instance().courseSub.ready();
+	},
+	isInvolved: function() {
+		var userId = Template.instance().data.profileData.user._id;
+		return coursesFind({ userInvolved: userId }).count() > 0;
 	}
 });

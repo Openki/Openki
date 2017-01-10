@@ -4,33 +4,49 @@ Template.eventEdit.onCreated(function() {
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
 
-	instance.uploaded = new ReactiveVar([]);
-
-	this.data.editableDescription = makeEditable(
-		this.data.description,
+	instance.editableDescription = Editable(
 		false,
 		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
 		false
 	);
+
+	instance.autorun(function() {
+		var data = Template.currentData();
+		data.editableDescription = instance.editableDescription;
+		instance.editableDescription.setText(data.description);
+	});
 });
 
 Template.eventEdit.onRendered(function() {
-	updateTimes(this, false);
+	var instance = this;
+	updateTimes(instance, false);
 
-	this.$('.js-event-start-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
+	instance.autorun(function() {
+		// Depend on locale so we update reactively when it changes
+		Session.get('locale');
+
+		var $dateInput = instance.$('.js-event-start-date');
+
+		// remove, re-add the datepicker when the locale changed
+		$dateInput.datepicker('remove');
+
+		// I don't know why, but language: moment.locale() does not work here.
+		// So instead we clobber the 'en' settings with settings for the
+		// selected language.
+		$dateInput.datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
 			}
-		}
+		});
 	});
 });
 
@@ -67,7 +83,7 @@ Template.eventEdit.helpers({
 		return currentRegion && region._id == currentRegion;
 	},
 
-	showLocationSelection: function(region) {
+	showVenueSelection: function(region) {
 		var selectedRegion = Template.instance().selectedRegion.get();
 		return selectedRegion && selectedRegion !== 'all';
 	},
@@ -82,6 +98,16 @@ Template.eventEdit.helpers({
 
 	uploaded: function() {
 		return Template.instance().uploaded.get();
+	},
+
+	course: function() {
+		var courseId = this.courseId;
+		if (courseId) {
+			// Very bad?
+			Template.instance().subscribe('courseDetails', courseId);
+
+			return Courses.findOne({_id: courseId});
+		}
 	}
 });
 
@@ -155,53 +181,6 @@ var updateTimes = function(template, updateEnd) {
 };
 
 Template.eventEdit.events({
-	'change .js-event-add-file': function(event, instance) {
-		FS.Utility.eachFile(event, function(file) {
-			Files.insert(file, function (err, fileObj) {
-				if (err) {
-					addMessage(mf('file.upload.error', "Uploading file '" + fileObj.original.name + "; failed"));
-				} else {
-					var uploaded = instance.uploaded.get();
-
-					uploaded.push({
-						_id: fileObj._id,
-						file : "/cfs/files/files/" + fileObj._id,
-						filename : fileObj.original.name,
-						filesize : fileObj.original.size,
-					});
-
-					instance.uploaded.set(uploaded);
-				}
-			});
-		});
-	},
-
-
-	'click .js-delete-file': function (event, instance) {
-		var fileId = this._id;
-		var eventId = instance.data._id;
-		var filename = this.filename;
-
-		// check whether the file hasn't been associated with the event yet
-		var uploaded = instance.uploaded.get();
-		var uploadedClean = _.reject(uploaded, function(file) { return file._id === fileId; });
-		if (uploadedClean.length < uploaded.length) {
-			// The server does not allow to delete files that are not associated
-			// to an event. So we just remove the local reference and hope
-			// somebody will clean up stray files on the server
-			instance.uploaded.set(uploadedClean);
-			return;
-		}
-
-		Meteor.call('removeFile', eventId, fileId, function(error) {
-			if (error) {
-				showServerError("Couldn't remove file '" + filename + "'", error);
-			} else {
-				addMessage(mf('file.removed', { FILENAME:filename }, 'Removed file {FILENAME}.'), 'success');
-			}
-		});
-	},
-
 	'submit': function(event, instance) {
 		event.preventDefault();
 
@@ -224,7 +203,7 @@ Template.eventEdit.events({
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
-		var newDescription = instance.data.editableDescription.editedContent();
+		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) editevent.description = newDescription;
 
 		if (editevent.title.length === 0) {
@@ -236,8 +215,6 @@ Template.eventEdit.events({
 			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
 			return;
 		}
-
-		editevent.files = (this.files || []).concat(instance.uploaded.get());
 
 		var eventId = this._id;
 		var isNew = !this._id;
@@ -280,8 +257,9 @@ Template.eventEdit.events({
 		}
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
+		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
-		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

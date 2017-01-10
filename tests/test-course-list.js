@@ -27,17 +27,19 @@ describe('Frontpage', function () {
       var divcount = browser.selectorExecute('.course-compact-wrap', function(divs) {
         return divs.length;
       });
-      return divcount == 7;
+      return divcount == 8;
     });
 
     // Then collect data and assert stuff.
     var titles = browser.getText('.course-compact-wrap h4');
+
     expect(titles[0]).to.equal('Sprachaustausch');
     expect(titles[1]).to.equal('Game Design mit Unity');
     expect(titles[2]).to.equal('Aikido');
     expect(titles[3]).to.equal('Open Lab');
-    expect(titles[4]).to.equal('Ubuntu auf Mac (dual-Boot)');
-    expect(titles[5]).to.equal('Lerne Russisch in 2 Stunden');
-    expect(titles[6]).to.equal('Meteor.js Workshop');
+    expect(titles[4]).to.equal('First-Aid Course');
+    expect(titles[5]).to.equal('Ubuntu auf Mac (dual-Boot)');
+    expect(titles[6]).to.equal('Velo Flicken');
+    expect(titles[7]).to.equal('Meteor.js Workshop');
   });
 });
