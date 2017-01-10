@@ -20,20 +20,18 @@ describe('User search', function () {
 		assert.isTrue(foundGreg);
   });
 
-  /*
-  it('finds Seee for s', function () {
+  it('finds Chnöde when searching for "Chn"', function () {
 		// HACK I don't really know how to access the subscription result so I'm just gonna rely on server._original
 		var foundSeee = false;
 		server._original.observe('users').added = function(userId) {
 			var user = server._original.collections.users[userId];
-			if (user.username === 'Seee') {
+			if (user.username === 'Chnöde') {
 				foundSeee = true;
 				assert.isUndefined(user.lastLogin, "lastLogin field must not be exported");
 			}
 		}
-		server.subscribeSync('userSearch', ['S']);
+		server.subscribeSync('userSearch', ['Chn']);
 
-		assert.isTrue(foundSeee);
+		assert.isTrue(foundSeee, "User 'Chnöde' not found");
   });
-  */
 });
