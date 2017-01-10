@@ -17,7 +17,7 @@ GroupLib = {};
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-GroupLib.find = function(filter, limit) {
+GroupLib.find = function(filter) {
 	var find = {};
 
 	if (filter.own) {
