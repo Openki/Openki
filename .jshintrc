@@ -5,7 +5,7 @@
 	"laxcomma": true,
 	"esversion": 6,
 	"latedef": true,
-	"unused": true,
+	"unused": "vars",
 	"loopfunc": true, 
 
 	"globals": {
