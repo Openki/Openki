@@ -4,9 +4,6 @@
 // "short"         -> String
 // "claim"         -> String
 // "description"   -> String
-// "createdby"     -> userId
-// "time_created"  -> Date
-// "time_lastedit" -> Date
 // "members"       -> List of userIds
 // ===========================
 
@@ -20,7 +17,7 @@ GroupLib = {};
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-GroupLib.find = function(filter, limit) {
+GroupLib.find = function(filter) {
 	var find = {};
 
 	if (filter.own) {

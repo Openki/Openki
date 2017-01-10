@@ -12,7 +12,6 @@
 // "createdby"     -> ID_user
 // "time_created"  -> Date
 // "time_lastedit" -> Date
-// "time_lastenrol"-> Date
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
@@ -85,43 +84,54 @@ function removeRole(course, role, user) {
 	Courses.updateGroups(course._id);
 }
 
+/** @summary Determine whether there is a member with the given role
+  * @param members list of members
+  * @param role role key
+  * @return true if there is a member with the given role, and false otherwise.
+  */
 hasRole = function(members, role) {
 	if (!members) return false;
-	var has = false;
-	members.forEach(function(member) {
-		if (member.roles.indexOf(role) !== -1) {
-			has = true;
-			return true;
-		}
+	return members.some(function(member) {
+		return member.roles.indexOf(role) !== -1;
 	});
-	return has;
 };
 
 /** @summary Determine whether a given user has a given role in a members list
- *  @return true if the user has this role, the string 'anon' if the logged-in user has the role incognito. False otherwise.
+  * @param members list of members
+  * @param role role key
+  * @param userId user ID to check
+  * @return 'subscribed' if the user has this role, the string 'anon' if the
+  *         logged-in user has the role incognito, and false otherwise.
+  *
+  * Note that if you hand this function an anonId it will return 'subscribed'
+  * if some user is subscribed incognito with that Id.
   */
 hasRoleUser = function(members, role, userId) {
-	var has = false;
+	// Consider the possibility that the user might be subscribed incognito
 	var loggeduser = Meteor.user();
+	var matchAnon = function(member) {
+		return loggeduser.anonId.indexOf(member.user) !== -1
+			&& member.roles.indexOf(role) !== -1;
+	};
 
-	members.forEach(function(member) {
-		if (loggeduser && loggeduser._id == userId && loggeduser.anonId && loggeduser.anonId.indexOf(member.user) != -1) {
-			if (member.roles.indexOf(role) !== -1) has = 'anon';
-		}
-	});
+	if (loggeduser
+	 && loggeduser._id == userId
+	 && loggeduser.anonId
+	 && members.some(matchAnon)) {
+		return 'anon';
+	}
 
-	members.forEach(function(member) {
-		if (member.user == userId) {
-			if (member.roles.indexOf(role) !== -1) {
-				has = 'subscribed';
-			}
+	// Return 'subscribed' if the userId has that role
+	var matchRole = function(member) {
+		return member.user == userId
+		    && member.roles.indexOf(role) !== -1;
+	};
 
-			// terminate forEach early
-			return true;
-		}
-	});
+	if (members.some(matchRole)) {
+		return 'subscribed';
+	}
 
-	return has;
+	return false;
 };
 
 maySubscribe = function(operatorId, course, userId, role) {

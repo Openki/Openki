@@ -3,12 +3,26 @@ UpdatesAvailable = {};
 UpdatesApplied = new Meteor.Collection("UpdatesApplied");
 
 applyUpdates = function () {
+	var skipInitial = UpdatesApplied.find().count() === 0;
+
 	for (var name in UpdatesAvailable) {
 		if (UpdatesApplied.find({ name: name }).count() === 0) {
-			console.log("Applying update " + name);
-			var affected = UpdatesAvailable[name]();
-			console.log(''+affected+" affected documents");
-			UpdatesApplied.insert({ name: name, applied: new Date(), affected: affected });
+			var entry =
+				{ name: name
+				, affected: 0
+				, run: new Date()
+				};
+
+			if (skipInitial) {
+				console.log("Skipping update " + name);
+			} else {
+				console.log("Applying update " + name);
+				entry.affected = UpdatesAvailable[name]();
+				entry.applied = new Date();
+				entry.affected = affected;
+				console.log(name + ": " + affected + " affected documents");
+			}
+			UpdatesApplied.insert(entry);
 		}
 	}
 };

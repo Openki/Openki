@@ -18,7 +18,7 @@ Beside longterm public installations, Openki can be used at unconferences, BarCa
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
 
-All submissions are welcome. To submit a change, [fork this repo](https://github.com/schuel/hmmm/fork), commit your changes, and send us a [pull request](http://help.github.com/send-pull-requests/).
+All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](http://help.github.com/send-pull-requests/).
 
 
 ### Features
@@ -51,13 +51,13 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
-- [Download](https://github.com/schuel/hmmm/archive/master.zip) and unzip or `git clone https://github.com/schuel/hmmm.git` Openki into /some/path.
+- [Download](https://github.com/Openki/Openki/archive/master.zip) and unzip or `git clone https://github.com/Openki/Openki.git` Openki into /some/path.
 - `cd /some/path/hmmm`
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
 ### Documentation
-- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/schuel/hmmm/wiki)
+- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/Openki/Openki/wiki)
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
