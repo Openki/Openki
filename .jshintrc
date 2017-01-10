@@ -5,6 +5,8 @@
 	"laxcomma": true,
 	"esversion": 6,
 	"latedef": true,
+	"unused": true,
+	"loopfunc": true, 
 
 	"globals": {
 		"Meteor": false,
