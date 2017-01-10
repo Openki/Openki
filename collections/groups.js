@@ -4,9 +4,6 @@
 // "short"         -> String
 // "claim"         -> String
 // "description"   -> String
-// "createdby"     -> userId
-// "time_created"  -> Date
-// "time_lastedit" -> Date
 // "members"       -> List of userIds
 // ===========================
 

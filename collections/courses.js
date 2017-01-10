@@ -12,7 +12,6 @@
 // "createdby"     -> ID_user
 // "time_created"  -> Date
 // "time_lastedit" -> Date
-// "time_lastenrol"-> Date
 // "roles"         -> [role-keys]
 // "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
 // "internal"      -> Boolean
