@@ -31,14 +31,6 @@
 						<textarea class='form-control js-comment'
 							>{{../../member.comment}}</textarea>
 					</div>
-					{{#if privacyEnabled}}
-						<div class="checkbox">
-							<label>
-								<input class="incognito" type="checkbox" value="1"/>
-								{{mf 'course.roles.incognitosubscription' 'incognito'}} ☔
-							</label>
-						</div>
-					{{/if}}
 					<div class="form-actions">
 						{{> buttonCancel event="js-role-enrol-cancel"}}
 						<button type="button" class="btn btn-save js-role-subscribe-btn">

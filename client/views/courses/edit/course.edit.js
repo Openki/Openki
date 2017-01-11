@@ -177,7 +177,7 @@ Template.courseEdit.events({
 					if (enrolcheck.checked) {
 						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
 					} else {
-						Meteor.call('remove_role', courseId, enrolcheck.name);
+						Meteor.call('remove_role', courseId, Meteor.userId(), enrolcheck.name);
 					}
 				});
 			}

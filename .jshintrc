@@ -5,7 +5,7 @@
 	"laxcomma": true,
 	"esversion": 6,
 	"latedef": true,
-	"unused": true,
+	"unused": "vars",
 	"loopfunc": true, 
 
 	"globals": {
@@ -70,7 +70,6 @@
 		"lgs":true,
 		"categories":true,
 		"ServiceConfiguration":true,
-		"anonId":true,
 		"Categories":true,   //shouldnt be here
 
 // server/publications

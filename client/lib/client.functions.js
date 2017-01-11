@@ -13,8 +13,6 @@ getMember = function(members, user) {
 
 
 /* Get a username from ID
- *
- * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
 userName = function() {
 	// We cache the username lookups
@@ -38,14 +36,6 @@ userName = function() {
 
 	return function(userId) {
 		if (!userId) return mf('noUser_placeholder', 'someone');
-
-		if (userId.substr(0, 5)  == 'Anon_') {
-			var loggeduser = Meteor.user();
-			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
-				return  '☔ ' + loggeduser.username + ' ☔';
-			}
-			return "☔ incognito";
-		}
 
 		// Consult cache
 		var user = cache[userId];

@@ -1,3 +1,21 @@
+function loadroles(course) {
+	var userId = Meteor.userId();
+	return _.reduce(Roles, function(goodroles, roletype) {
+		var role = roletype.type;
+		var sub = hasRoleUser(course.members, role, userId);
+		if (course.roles && course.roles.indexOf(role) !== -1) {
+			goodroles.push({
+				roletype: roletype,
+				role: role,
+				subscribed: !!sub,
+				course: course
+			});
+		}
+		return goodroles;
+	}, []);
+}
+
+
 Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id/:slug?',
@@ -6,7 +24,6 @@ Router.map(function () {
 			return subs.subscribe('courseDetails', this.params._id);
 		},
 		data: function() {
-			var self = this;
 			var course = Courses.findOne({_id: this.params._id});
 
 			if (!course) return false;
@@ -91,25 +108,6 @@ Template.courseDetailsPage.onCreated(function() {
 		instance.editableDescription.setText(course.description);
 	});
 });
-
-function loadroles(course) {
-	var userId = Meteor.userId();
-	return _.reduce(Roles, function(goodroles, roletype) {
-		var role = roletype.type;
-		var sub = hasRoleUser(course.members, role, userId);
-		if (course.roles && course.roles.indexOf(role) !== -1) {
-			goodroles.push({
-				roletype: roletype,
-				role: role,
-				subscribed: !!sub,
-				anonsub: sub == 'anon',
-				course: course
-			});
-		}
-		return goodroles;
-	}, []);
-}
-
 
 Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	currentUserMayEdit: function() {

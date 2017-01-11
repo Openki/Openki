@@ -30,7 +30,7 @@
 	display: inline-block;
 	font-size: small;
 	font-weight: bold;
-	padding: 5px 10px;
+	padding: 4px 6px;
 	vertical-align: middle;
 
 	&.participant {
@@ -43,9 +43,17 @@
 }
 
 .js-add-to-team-btn {
-	margin-left: 10px;
-	padding: 3px 10px;
+	margin-left: 6px;
+	padding: 2px 8px;
 }
+
+.js-remove-from-team-btn {
+	margin-left: 3px;
+	padding: 0px 5px;
+	color: $black;
+	font-size: ceil($font-size-base * .7);
+}
+
 
 .course-member-comment {
 	display: block;

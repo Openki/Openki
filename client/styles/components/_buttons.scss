@@ -67,17 +67,12 @@ $btn-background-colors: (
 .btn-cancel,
 .btn-delete,
 .btn-remove {
-	@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
-	border: 1px solid $btn-danger-border;
+	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
+	border: 1px solid $btn-default-border;
 
-	@media (min-width: $screen-xs) {
-		@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
-		border: 1px solid $btn-default-border;
-
-		&:hover {
-			@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
-			border: 1px solid $btn-danger-border;
-		}
+	&:hover {
+		@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
+		border: 1px solid $btn-danger-border;
 	}
 }
 
