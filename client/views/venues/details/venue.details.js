@@ -122,6 +122,10 @@ Template.venueDetails.helpers({
 
 			return mf('venueDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
 		}
+	},
+
+	facilityNames: function() {
+		return Object.keys(this.facilities);
 	}
 });
 
