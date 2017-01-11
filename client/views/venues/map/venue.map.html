@@ -24,7 +24,7 @@
 					{{else}}
 						{{mf 'venues.list.noneFound' "No venues found"}}
 					{{/if}}
-					<a class="btn btn-default" href="http://localhost:3000/venue/create">{{mf 'venues.createNew' 'Create a new venue'}}</a>
+					<a class="btn btn-default" href="{{pathFor 'venueDetails' _id='create'}}">{{mf 'profile.createNewVenue.button'}}</a>
 			</div>
 			<div class="venue-map-location-map ">
 				{{> map markers=venueMarkers}}
