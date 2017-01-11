@@ -149,6 +149,8 @@ Template.venueEdit.events({
 			, website:         instance.$('.js-website').val()
 		    };
 
+
+
 		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
@@ -166,7 +168,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				alert("Please select a region");
+				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
 		}
@@ -177,7 +179,7 @@ Template.venueEdit.events({
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
-				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes venue "{NAME}".'), 'success');
+				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 				if (instance.isNew) {
 					Router.go('venueDetails', { _id: venueId });
 				} else {
