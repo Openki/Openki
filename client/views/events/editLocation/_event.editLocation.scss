@@ -1,6 +1,12 @@
 // *** Event location edit ***
 //============================
 
+.event-edit-location-info {
+	color: $gray-light;
+	font-style: italic;
+	margin-bottom: 10px;
+}
+
 .event-edit-location {
 	@include make-xs-column(12);
 	overflow: auto;
