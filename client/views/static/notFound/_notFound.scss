@@ -33,5 +33,5 @@
 }
 
 .page-not-found-report .report {
-	text-align: left;
+	@include td-text-align(left);
 }

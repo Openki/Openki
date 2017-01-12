@@ -62,7 +62,7 @@ $discussion-post-bg: $blue-lighter;
 	background: none;
 	border: 0;
 	color: $gray-light;
-	float: right;
+	@include td-float(right);
 
 	&:hover {
 		color: $gray-dark;

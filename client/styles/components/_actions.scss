@@ -3,7 +3,7 @@
 }
 
 %actions .btn {
-	float: right;
+	@include td-float(right);
 }
 
 %actions .btn + .btn {

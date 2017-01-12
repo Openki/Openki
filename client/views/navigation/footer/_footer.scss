@@ -22,7 +22,7 @@ footer {
 
 .footer-deployed-version {
 	color: $gray-lighter;
-	float: right;
+	@include td-float(right);
 	font-size: small;
 	padding: .3em;
 }

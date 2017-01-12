@@ -47,7 +47,7 @@
 	left: -1em;
 	padding: 0 1em;
 	position: absolute;
-	text-align: left;
+	@include td-text-align(left);
 	width: 12em;
 }
 

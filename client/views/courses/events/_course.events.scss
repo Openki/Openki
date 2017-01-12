@@ -8,7 +8,7 @@
 
 .container .course-events .event-compact-wrap {
 	@media (min-width: $screen-xs) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }

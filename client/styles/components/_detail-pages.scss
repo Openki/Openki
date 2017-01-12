@@ -73,9 +73,9 @@
 	width: 100%;
 
 	@media (min-width: $screen-sm) {
-		width: 300px;
-		float: right;
+		@include td-float(right);
 		padding: 0 0 0 $form-group-margin-bottom;
+		width: 300px;
 	}
 }
 
@@ -87,7 +87,7 @@
 .details-map .coordinates {
 	font-weight: bold;
 	margin: 5px 5px 5px 0;
-	text-align: right;
+	@include td-text-align(right);
 }
 
 .details-form {
@@ -113,7 +113,7 @@
 
 .details-form-element:nth-child(1):nth-last-child(2),
 .details-form-element:nth-child(2):nth-last-child(1) {
-	@include make-sm-column(6);
+	@include td-make-sm-column(6);
 	padding: 0;
 }
 
@@ -156,17 +156,17 @@
 }
 
 .details-info-label {
-	@include make-sm-column(3);
+	@include td-make-sm-column(3);
 	font-weight: bold;
 
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
-		text-align: right;
+		@include td-text-align(right);
 	}
 }
 
 .details-info-data {
-	@include make-sm-column(9);
+	@include td-make-sm-column(9);
 
 	@media (min-width: $screen-sm) {
 		padding-top: 7px;
@@ -174,6 +174,6 @@
 }
 
 .details-info-btn {
-	@include make-sm-column(9);
+	@include td-make-sm-column(9);
 	@include make-sm-column-offset(3);
 }

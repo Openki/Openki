@@ -1,0 +1,37 @@
+@mixin td-text-align($dir) {
+	$opposite-dir: if($dir == left, right, left);
+
+	text-align: $dir;
+	.rtl & {
+		text-align: $opposite-dir;
+	}
+}
+
+@mixin td-float($dir) {
+	$opposite-dir: if($dir == left, right, left);
+
+	float: $dir;
+	.rtl & {
+		float: $opposite-dir;
+	}
+}
+
+@mixin td-make-xs-column($columns) {
+	@include make-xs-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-sm-column($columns) {
+	@include make-sm-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-md-column($columns) {
+	@include make-md-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-lg-column($columns) {
+	@include make-lg-column($columns);
+	@include td-float(left);
+}

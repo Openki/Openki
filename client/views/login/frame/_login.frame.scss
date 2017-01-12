@@ -32,7 +32,7 @@
 }
 
 .forgot-pwd-btn-container {
-	text-align: right;
+	@include td-text-align(right);
 }
 
 .forgot-pwd-btn-container > .btn-link {

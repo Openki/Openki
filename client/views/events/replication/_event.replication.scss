@@ -45,7 +45,7 @@
 }
 
 .replica-event-caption {
-	@include make-xs-column(3);
+	@include td-make-xs-column(3);
 	display: table;
 	height: 50px;
 	padding: 2.5px 5px;
@@ -134,5 +134,5 @@ $replica-event-caption-body-bg: $event-body-bg;
 }
 
 .js-replicate-btn {
-	float: right;
+	@include td-float(right);
 }

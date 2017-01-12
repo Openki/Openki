@@ -53,8 +53,8 @@
 //== Clock
 //----------------------------------------
 .kiosk-moment {
+	@include td-float(right);
 	line-height: $line-height-base;
-	float: right;
 }
 
 .kiosk-moment-time {

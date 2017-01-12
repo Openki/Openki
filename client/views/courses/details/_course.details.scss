@@ -4,8 +4,8 @@
 // ** Column layout
 //========================================================================================
 .course-page-column-left {
-	@include make-sm-column(12);
-	@include make-md-column(8);
+	@include td-make-sm-column(12);
+	@include td-make-md-column(8);
 	padding: 0;
 
 	@media (min-width: $screen-md) {
@@ -14,8 +14,8 @@
 }
 
 .course-page-column-right {
-	@include make-sm-column(12);
-	@include make-md-column(4);
+	@include td-make-sm-column(12);
+	@include td-make-md-column(4);
 	padding: 15px 0 0;
 
 	@media (min-width: $screen-md) {
@@ -47,7 +47,7 @@
 //========================================================================================
 .course-page-btn {
 	@include btn-lg;
-	text-align: left;
+	@include td-text-align(left);
 	margin-top: $course-details-seperator-height;
 	width: 100%;
 }

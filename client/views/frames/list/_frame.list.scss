@@ -1,5 +1,5 @@
 .frame-list-all{
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	background-color: $blue-lighter;
 	border-width: 1px;
 	border-color: darken($blue-lighter, 15%);
@@ -7,7 +7,7 @@
 }
 
 .frame-list-courses {
-	@include make-xs-column(6);
+	@include td-make-xs-column(6);
 	padding: 2px;
 }
 

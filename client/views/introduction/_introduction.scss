@@ -64,13 +64,13 @@
 }
 
 .introduction-steps > li {
-	@include make-xs-column(6);
-	@include make-sm-column(4);
-	@include make-md-column(2);
+	@include td-make-xs-column(6);
+	@include td-make-sm-column(4);
+	@include td-make-md-column(2);
 	margin-bottom: 15px;
 
 	@media (max-width: $screen-xxs) {
-		@include make-xs-column(12);
+		@include td-make-xs-column(12);
 		padding-bottom: 20px;
 		text-align: center;
 	}

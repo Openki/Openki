@@ -9,8 +9,8 @@
 }
 
 .js-search-field {
-	@include make-xs-column(12);
-	@include make-md-column(5);
+	@include td-make-xs-column(12);
+	@include td-make-md-column(5);
 	padding: 0;
 }
 
@@ -19,8 +19,8 @@
 }
 
 .filter {
-	@include make-xs-column(12);
-	@include make-md-column(7);
+	@include td-make-xs-column(12);
+	@include td-make-md-column(7);
 	margin-top: $form-group-margin-bottom;
 	padding: 0;
 
@@ -42,7 +42,7 @@
 
 .filter-course-properties,
 .filter-categories {
-	float: left;
+	@include td-float(left);
 }
 
 .filter-course-properties {
@@ -61,7 +61,7 @@
 }
 
 .js-toggle-property-filter {
-	text-align: left;
+	@include td-text-align(left);
 }
 
 .toggle-property-filter-icon {

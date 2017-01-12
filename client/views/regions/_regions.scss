@@ -1,6 +1,6 @@
 .region-badges {
 	display: inline-block;
-	float: right;
+	@include td-float(right);
 	padding-left: 10px;
 }
 

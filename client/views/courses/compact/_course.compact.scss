@@ -4,22 +4,22 @@
 // ** Wrap
 //========================================================================================
 .course-compact-wrap {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .container .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
-		@include make-md-column(4);
-		@include make-lg-column(3);
+		@include td-make-xs-column(6);
+		@include td-make-md-column(4);
+		@include td-make-lg-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container-sm .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
@@ -68,12 +68,12 @@
 // ** Content
 //========================================================================================
 .course-compact-content {
-	@include make-xs-column(9);
+	@include td-make-xs-column(9);
 	background: $body-bg;
 	padding: 0 0 0 15px;
 
 	&.has-upcoming-events {
-		@include make-xs-column(7.5);
+		@include td-make-xs-column(7.5);
 		background: $has-upcoming-events-bg;
 		padding: 0 5px 0 15px;
 	}
@@ -105,7 +105,7 @@
 // ** Event
 //========================================================================================
 .course-compact-next-event {
-	@include make-xs-column(4.5);
+	@include td-make-xs-column(4.5);
 	background: $course-compact-next-event-bg;
 	color: $course-compact-next-event-color;
 	max-height: 150px;
@@ -116,7 +116,7 @@
 
 .course-compact-next-event-time,
 .course-compact-next-event-date {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: 0;
 }
 
@@ -128,7 +128,7 @@
 // ** Roles
 //========================================================================================
 .course-compact-roles {
-	@include make-xs-column(3);
+	@include td-make-xs-column(3);
 	padding: 0;
 	position: relative;
 	right: -7px;
@@ -179,6 +179,6 @@
 }
 
 .course-compact > .grouplist > li {
-	float: right;
+	@include td-float(right);
 	margin-left: 4px;
 }
