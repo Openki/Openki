@@ -27,11 +27,17 @@
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(1):nth-last-child(3) {
 	@include td-padding(left, 0);
+	.rtl & {
+		padding-left: 15px;
+	}
 }
 
 .form-group-element:nth-child(2):nth-last-child(1),
 .form-group-element:nth-child(3):nth-last-child(1) {
 	@include td-padding(right, 0);
+	.rtl & {
+		padding-right: 15px;
+	}
 }
 
 .form-group-element + .form-group-element {

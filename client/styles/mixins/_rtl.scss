@@ -145,3 +145,14 @@
 		margin-right: -20px;
 	}
 }
+
+.rtl {
+	.nav-tabs > li {
+	    float: right;
+	}
+
+	.nav-tabs > li > a {
+		margin-right: 0;
+		margin-left: 2px;
+	}
+}

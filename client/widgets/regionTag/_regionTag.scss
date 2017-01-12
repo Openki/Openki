@@ -9,3 +9,8 @@
 	@include td-pos(right, 0);
 	top: 0;
 }
+
+.rtl .region-tag {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 3px;
+}
