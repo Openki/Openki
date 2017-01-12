@@ -37,7 +37,7 @@
 
 .group-details-short {
 	@include td-float(right);
-	margin-right: 7px;
+	@include td-margin(right, 7px);
 	padding: 7px;
 	@include td-text-align(right);
 }

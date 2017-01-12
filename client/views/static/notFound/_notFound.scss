@@ -19,7 +19,7 @@
 	display: inline-block;
 
 	&:first-child {
-		margin-right: 10px;
+		@include td-margin(right, 10px);
 	}
 }
 

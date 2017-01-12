@@ -208,7 +208,7 @@
 .dropdown-menu > .js-sub-category {
 	border-left: 1px solid $blue-light;
 	display: none;
-	margin-left: 20px;
+	@include td-margin(left, 20px);
 }
 
 .js-sub-category > a {
@@ -240,7 +240,7 @@
 }
 
 .category-label + .remove-btn {
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 }
 
 .no-results {

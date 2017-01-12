@@ -29,7 +29,7 @@ $category-label-color: $blue;
 .course-categories {
 	line-height: 23px;
 	list-style: none;
-	margin-left: -2px;
+	@include td-margin(left, -2px);
 	@include td-padding(left, 0);
 }
 

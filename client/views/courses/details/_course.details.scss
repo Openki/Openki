@@ -131,7 +131,7 @@
 	margin-bottom: 10px;
 
 	&:first-child {
-		margin-left: 0;
+		@include td-margin(left, 0);
 	}
 }
 

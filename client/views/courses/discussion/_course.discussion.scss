@@ -70,11 +70,11 @@ $discussion-post-bg: $blue-lighter;
 }
 
 .discussion-edit-btn {
-	margin-right: -5px;
+	@include td-margin(right, -5px);
 }
 
 .discussion-delete-btn {
-	margin-right: -10px;
+	@include td-margin(right, -10px);
 }
 
 .discussion-post-time {

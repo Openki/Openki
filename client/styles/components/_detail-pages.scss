@@ -86,7 +86,7 @@
 
 .details-map .coordinates {
 	font-weight: bold;
-	margin: 5px 5px 5px 0;
+	@include td-margin-all(5px, 5px, 5px, 0);
 	@include td-text-align(right);
 }
 

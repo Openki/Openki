@@ -8,7 +8,7 @@ $group-member-bg: rgba($gray-light, .15);
 	background-color: $group-member-bg;
 	display: inline-block;
 	margin-bottom: 5px;
-	margin-right: 5px;
+	@include td-margin(right, 5px);
 	@include td-padding(left, 8px);
 	@include td-padding(right, 0);
 }

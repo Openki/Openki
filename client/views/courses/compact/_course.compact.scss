@@ -98,7 +98,7 @@
 .course-compact-content > .course-categories {
 	height: 55px;
 	margin-bottom: 0;
-	margin-left: -2px;
+	@include td-margin(left, -2px);
 	overflow: hidden;
 }
 
@@ -180,5 +180,5 @@
 
 .course-compact > .grouplist > li {
 	@include td-float(right);
-	margin-left: 4px;
+	@include td-margin(left, 4px);
 }

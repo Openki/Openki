@@ -36,7 +36,7 @@
 .introduction-show-btn,
 .introduction-hide-btn {
 	@include btn-sm;
-	margin-left: 10px;
+	@include td-margin(left, 10px);
 
 	&::after {
 		font-family: FontAwesome;

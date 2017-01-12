@@ -99,12 +99,12 @@ $btn-background-colors: (
 	border: 0;
 	cursor: pointer;
 	font-size: $font-size-small;
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 	padding: 0;
 }
 
 .btn-inline {
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 }
 
 .btn-link {

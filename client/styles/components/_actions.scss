@@ -7,7 +7,7 @@
 }
 
 %actions .btn + .btn {
-	margin-right: 5px;
+	@include td-margin(right, 5px);
 }
 
 .actions {
