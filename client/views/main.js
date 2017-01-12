@@ -16,18 +16,7 @@ Template.layout.rendered = function() {
 	$(window).resize(function(event){ getViewportWidth(); });
 	Session.set('isRetina', (window.devicePixelRatio == 2));
 
-	Tracker.autorun(function() {
-		var locale = Session.get('locale');
-
-		if (locale) {
-			// check text directionality and set/remove CSS-class accordingly
-			var body = $('body');
-			var isRTL = body.attr('dir') === 'rtl';
-
-			Session.set('isRTL', isRTL);
-			return isRTL ? body.addClass('rtl') : body.removeClass('rtl');
-		}
-	 });
+	textDirTracker();
 };
 
 

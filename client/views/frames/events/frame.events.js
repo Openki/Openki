@@ -29,6 +29,10 @@ Router.map(function () {
 	});
 });
 
+Template.frameLayout.onRendered(function() {
+	textDirTracker();
+});
+
 Template.frameEvents.onRendered(function() {
 	var instance = this;
 	this.autorun(function() {

@@ -78,4 +78,6 @@ Template.frameCalendar.onRendered(function() {
 			instance.$("a").attr("target", "_blank");
 		}, 0);
 	});
+
+	textDirTracker();
 });
