@@ -269,6 +269,15 @@ Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
+Template.registerHelper('arrowDirection', function(isBack) {
+	var isRTL = Session.get('isRTL');
+
+	if (isBack) {
+		return isRTL ? 'right' : 'left';
+	} else {
+		return isRTL ? 'left' : 'right';
+	}
+});
 
 Template.registerHelper('dateformat', function(date) {
 	Session.get('timeLocale');

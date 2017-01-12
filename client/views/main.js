@@ -24,6 +24,7 @@ Template.layout.rendered = function() {
 			var body = $('body');
 			var isRTL = body.attr('dir') === 'rtl';
 
+			Session.set('isRTL', isRTL);
 			return isRTL ? body.addClass('rtl') : body.removeClass('rtl');
 		}
 	 });

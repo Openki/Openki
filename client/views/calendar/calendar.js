@@ -160,7 +160,7 @@ Template.calendarNavControl.events({
 });
 
 Template.calendarNavControl.helpers({
-	isPrevious: function() {
+	isBack: function() {
 		return this.direction == 'previous';
 	},
 

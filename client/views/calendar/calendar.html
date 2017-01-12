@@ -55,7 +55,7 @@
 		<div class="btn-group">
 			<button type="button"
 					class="btn btn-default js-change-date">
-					<span class="fa fa-arrow-{{#if isPrevious}}left{{else}}right{{/if}} fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-arrow-{{arrowDirection (isBack)}} fa-fw" aria-hidden="true"></span>
 				{{mfString direction currentUnit 'short'}}
 			</button>
 			<button type="button"

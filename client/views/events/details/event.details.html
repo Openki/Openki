@@ -22,7 +22,7 @@
 		{{#if course}}
 			{{#if referredByCourse}}
 				<a href="{{pathFor 'showCourse' _id=course._id}}">
-					<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-arrow-{{arrowDirection true}} fa-fw" aria-hidden="true"></span>
 					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
 				</a>
 			{{else}}
