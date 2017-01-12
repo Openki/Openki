@@ -79,3 +79,19 @@
 	@include make-lg-column($columns);
 	@include td-float(left);
 }
+
+.rtl .navbar-header {
+	@media (min-width: $grid-float-breakpoint) {
+		float: right;
+	}
+}
+
+.rtl .navbar-nav > li {
+	@media (min-width: $grid-float-breakpoint) {
+		float: right;
+	}
+}
+
+.rtl .dropdown-menu {
+	text-align: right;
+}

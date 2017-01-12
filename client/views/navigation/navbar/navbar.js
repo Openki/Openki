@@ -66,6 +66,16 @@ Template.navbar.helpers({
 		} else {
 			return '';
 		}
+	},
+
+	toggleNavbarRight: function(LTRPos) {
+		var isRTL = Session.get('isRTL');
+
+		if (LTRPos === 'left') {
+			return isRTL ? 'navbar-right' : '';
+		} else {
+			return isRTL ? '' : 'navbar-right';
+		}
 	}
 });
 
