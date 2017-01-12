@@ -17,7 +17,7 @@
 	list-style: none;
 	margin-bottom: 0;
 	margin-left: 10px;
-	padding-left: 0;
+	@include td-padding(left, 0);
 
 	&:hover {
 		cursor: default;
@@ -61,5 +61,5 @@
 }
 
 .course-member-comment .editable {
-	padding-left: 0 !important;
+	@include td-padding(left, 0 !important);
 }

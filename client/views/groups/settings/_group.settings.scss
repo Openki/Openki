@@ -9,8 +9,8 @@ $group-member-bg: rgba($gray-light, .15);
 	display: inline-block;
 	margin-bottom: 5px;
 	margin-right: 5px;
-	padding-left: 8px;
-	padding-right: 0;
+	@include td-padding(left, 8px);
+	@include td-padding(right, 0);
 }
 
 .js-member-remove-btn,

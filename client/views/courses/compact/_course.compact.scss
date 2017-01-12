@@ -70,12 +70,12 @@
 .course-compact-content {
 	@include td-make-xs-column(9);
 	background: $body-bg;
-	padding: 0 0 0 15px;
+	@include td-padding-all(0, 0, 0, 15px);
 
 	&.has-upcoming-events {
 		@include td-make-xs-column(7.5);
 		background: $has-upcoming-events-bg;
-		padding: 0 5px 0 15px;
+		@include td-padding-all(0, 5px, 0, 15px);
 	}
 }
 

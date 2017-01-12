@@ -1,3 +1,20 @@
+@mixin td-padding($dir, $x) {
+	$opposite-dir: if($dir == left, right, left);
+
+	padding-#{$dir}: $x;
+	.rtl & {
+		padding-#{$dir}: 0;
+		padding-#{$opposite-dir}: $x;
+	}
+}
+
+@mixin td-padding-all($top, $right, $bottom, $left) {
+	padding: $top $right $bottom $left;
+	.rtl & {
+		padding: $top $left $bottom $right;
+	}
+}
+
 @mixin td-pos($dir, $x) {
 	$opposite-dir: if($dir == left, right, left);
 

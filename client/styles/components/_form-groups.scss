@@ -26,12 +26,12 @@
 
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(1):nth-last-child(3) {
-	padding-left: 0;
+	@include td-padding(left, 0);
 }
 
 .form-group-element:nth-child(2):nth-last-child(1),
 .form-group-element:nth-child(3):nth-last-child(1) {
-	padding-right: 0;
+	@include td-padding(right, 0);
 }
 
 .form-group-element + .form-group-element {

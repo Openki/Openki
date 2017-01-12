@@ -9,7 +9,7 @@
 	padding: 0;
 
 	@media (min-width: $screen-md) {
-		padding: 0 ($grid-gutter-width / 4) 0 0;
+		@include td-padding-all(0, ($grid-gutter-width / 4), 0, 0);
 	}
 }
 
@@ -19,7 +19,7 @@
 	padding: 15px 0 0;
 
 	@media (min-width: $screen-md) {
-		padding: 0 0 0 ($grid-gutter-width / 4);
+		@include td-padding-all(0, 0, 0, ($grid-gutter-width / 4));
 	}
 }
 

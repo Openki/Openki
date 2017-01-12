@@ -40,7 +40,7 @@
 	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
-	padding-left: 5px;
+	@include td-padding(left, 5px);
 
 	&:hover {
 		cursor: pointer;

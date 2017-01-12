@@ -74,7 +74,7 @@
 
 	@media (min-width: $screen-sm) {
 		@include td-float(right);
-		padding: 0 0 0 $form-group-margin-bottom;
+		@include td-padding-all(0, 0, 0, $form-group-margin-bottom);
 		width: 300px;
 	}
 }
@@ -119,13 +119,13 @@
 
 .details-form-element:nth-child(1):nth-last-child(2) {
 	@media (min-width: $screen-sm) {
-		padding-right: ($grid-gutter-width / 2);
+		@include td-padding(right, ($grid-gutter-width / 2));
 	}
 }
 
 .details-form-element:nth-child(2):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
-		padding-left: ($grid-gutter-width / 2);
+		@include td-padding(left, ($grid-gutter-width / 2));
 	}
 }
 

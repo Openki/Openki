@@ -9,7 +9,7 @@
 
 .event-edit-location-search {
 	@include td-make-sm-column(6);
-	padding: 0 ($grid-gutter-width / 4) 0 0;
+	@include td-padding-all(0, ($grid-gutter-width / 4), 0, 0);
 }
 
 .event-edit-location-selected {
@@ -36,7 +36,7 @@
 	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
-	padding-left: 5px;
+	@include td-padding(left, 5px);
 
 	&:hover {
 		cursor: pointer;
@@ -54,10 +54,10 @@
 
 .event-edit-location-map {
 	@include td-make-sm-column(6);
-	padding: 0 0 0 ($grid-gutter-width / 4);
+	@include td-padding-all(0, 0, 0, ($grid-gutter-width / 4));
 
 	@media (max-width: $screen-xs) {
-		padding-left: 15px;
+		@include td-padding(left, 15px);
 	}
 }
 

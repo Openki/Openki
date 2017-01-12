@@ -26,7 +26,7 @@
 
 	@media (min-width: $screen-md) {
 		margin-top: 0;
-		padding-left: 15px;
+		@include td-padding(left, 15px);
 	}
 }
 
@@ -46,10 +46,10 @@
 }
 
 .filter-course-properties {
-	padding: 10px 15px 10px 0;
+	@include td-padding-all(10px, 15px, 10px, 0);
 
 	@media (max-width: $screen-xs) {
-		padding-right: 0;
+		@include td-padding(right, 0);
 		width: 100%;
 	}
 }
@@ -212,7 +212,7 @@
 }
 
 .js-sub-category > a {
-	padding-left: 15px;
+	@include td-padding(left, 15px);
 }
 
 .filter-selected-categories {
@@ -230,7 +230,7 @@
 
 .filter-selected-categories > li {
 	margin-bottom: 3px;
-	padding: 0 3px 3px 0;
+	@include td-padding-all(0, 3px, 3px, 0);
 
 	@media (max-width: $screen-xs) {
 		display: inline-block;
