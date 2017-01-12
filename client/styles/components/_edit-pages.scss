@@ -37,6 +37,6 @@ $edit-page-border: 7px;
 
 .edit-page-header > .region-tag,
 .edit-page-body > .region-tag {
-	right: -$edit-page-border;
+	@include td-pos(right, -$edit-page-border);
 	top: -$edit-page-border;
 }

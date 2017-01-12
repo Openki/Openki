@@ -44,7 +44,7 @@
 }
 
 .timetable-location {
-	left: -1em;
+	@include td-pos(left, -1em);
 	padding: 0 1em;
 	position: absolute;
 	@include td-text-align(left);

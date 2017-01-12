@@ -46,8 +46,8 @@
 }
 
 .kiosk-language-selection > li > .dropdown-menu {
-	left: auto;
-	right: 0;
+	@include td-pos(left, auto);
+	@include td-pos(right, 0);
 }
 
 //== Clock

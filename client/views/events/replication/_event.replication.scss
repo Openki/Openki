@@ -29,7 +29,7 @@
 	padding-right: $padding-base-horizontal;
 	padding-top: $padding-base-vertical;
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 	z-index: 3;
 }
@@ -79,9 +79,9 @@ $replica-event-caption-border: $yellow;
 
 .replica-event-caption-header > .fa-map-pin {
 	font-size: 8px;
+	@include td-pos(left, 50%);
 	position: absolute;
 	top: -5px;
-	left: 50%;
 	transform: rotate(10deg);
 }
 

@@ -90,7 +90,7 @@
 	background: $course-compact-next-event-bg;
 	height: 10px;
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 	width: 10px;
 }
@@ -98,7 +98,7 @@
 .eventcaption_upcoming_text {
 	background: $course-compact-next-event-color;
 	height: 1px;
-	left: 3px;
+	@include td-pos(left, 3px);
 	position: absolute;
 	width: 3px;
 
@@ -154,7 +154,7 @@
 		content: '';
 		font-family: FontAwesome;
 		position: absolute;
-		right: 7px;
+		@include td-pos(right, 7px);
 		top: 6px;
 	}
 

@@ -44,8 +44,8 @@
 }
 
 .calendar-nav > .calendar-nav-control:last-child .dropdown-menu {
-	left: auto;
-	right: 0;
+	@include td-pos(left, auto);
+	@include td-pos(right, 0);
 }
 
 .calendar-nav-moment {

@@ -16,7 +16,7 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-profile-icon {
-	left: 0;
+	@include td-pos(left, 0);
 	position: absolute;
 	top: 0;
 	vertical-align: text-bottom;

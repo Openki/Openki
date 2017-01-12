@@ -47,7 +47,7 @@
 
 .editable-wrap-rich .editable-icon {
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 }
 

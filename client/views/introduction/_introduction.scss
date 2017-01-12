@@ -29,7 +29,7 @@
 .js-introduction-close-btn {
 	font-size: large;
 	position: absolute;
-	right: 13px;
+	@include td-pos(right, 13px);
 	top: 13px;
 }
 
@@ -95,13 +95,13 @@
 		font-family: FontAwesome;
 		font-size: 16px;
 		position: absolute;
-		right: 0;
+		@include td-pos(right, 0);
 		top: 6px;
 
 		@media (max-width: $screen-xxs) {
 			bottom: -15px;
 			content: '';
-			right: 47%;
+			@include td-pos(right, 47%);
 		}
 	}
 }

@@ -1,3 +1,13 @@
+@mixin td-pos($dir, $x) {
+	$opposite-dir: if($dir == left, right, left);
+
+	#{$dir}: $x;
+	.rtl & {
+		#{$dir}: auto;
+		#{$opposite-dir}: $x;
+	}
+}
+
 @mixin td-text-align($dir) {
 	$opposite-dir: if($dir == left, right, left);
 

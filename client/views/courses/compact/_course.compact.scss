@@ -131,7 +131,7 @@
 	@include td-make-xs-column(3);
 	padding: 0;
 	position: relative;
-	right: -7px;
+	@include td-pos(right, -7px);
 	top: -7px;
 }
 
@@ -170,12 +170,12 @@
 .course-compact.proposal > .grouplist,
 .course-compact.has-past-events > .grouplist {
 	bottom: $course-border-width;
-	right: $course-border-width;
+	@include td-pos(right, $course-border-width);
 }
 
 .course-compact.has-upcoming-events > .grouplist {
 	bottom: $course-border-width * 2;
-	right: $course-border-width * 2;
+	@include td-pos(right, $course-border-width * 2);
 }
 
 .course-compact > .grouplist > li {

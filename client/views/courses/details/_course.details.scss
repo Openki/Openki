@@ -76,13 +76,13 @@
 //========================================================================================
 .details-header-tags {
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 }
 
 .proposal .details-header-tags,
 .has-past-events .details-header-tags {
-	right: -$course-border-width;
+	@include td-pos(right, -$course-border-width);
 	top: -$course-border-width;
 }
 

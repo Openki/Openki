@@ -2,6 +2,6 @@
 	bottom: 0;
 	@include td-float(right);
 	position: fixed;
-	right: 15px;
+	@include td-pos(right, 15px);
 	z-index: 9999;
 }
