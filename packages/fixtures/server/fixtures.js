@@ -322,7 +322,7 @@ Meteor.methods({
 				} else {
 					commenter = course.members[Math.floor(prng()*courseMembers)];
 				}
-				comment.userId = commenter;
+				comment.userId = commenter.user;
 				CourseDiscussions.insert(comment);
 			}
 
