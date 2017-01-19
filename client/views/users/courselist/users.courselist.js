@@ -53,12 +53,10 @@ Template.usersCourselist.helpers({
 
 Template.usersCourselist.events({
 	"click .js-scroll": function(event, instance){
-		var jQueryTarget = $(event.target);
-		var roleLabel = jQueryTarget.hasClass('js-scroll') ? jQueryTarget : jQueryTarget.closest('.js-scroll');
-
+		var roleLabel = event.currentTarget;
+		var rolePosition = $(roleLabel.getAttribute('href')).offset().top;
 		// subtract the amount of pixels of the height of the navbar
-		var rolePosition = $(roleLabel.attr('href')).offset().top - SCSSVars.navbarHeight;
-		$('html, body').animate({'scrollTop': rolePosition});
+		$('html, body').animate({'scrollTop': rolePosition - SCSSVars.navbarHeight});
 		event.preventDefault();
 	}
 });
