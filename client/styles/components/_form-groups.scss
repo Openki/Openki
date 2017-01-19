@@ -90,5 +90,5 @@
 
 .control-btn {
 	@include td-make-sm-column(9);
-	@include make-sm-column-offset(3);
+	@include td-make-sm-column-offset(3);
 }

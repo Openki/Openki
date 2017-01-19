@@ -80,6 +80,28 @@
 	@include td-float(left);
 }
 
+@mixin td-make-xs-column-offset($columns) {
+	@include make-xs-column-offset($columns);
+
+	@media (min-width: $screen-xs-min) {
+		.rtl & {
+			margin-left: 0;
+			margin-right: percentage($columns / $grid-columns);
+		}
+	}
+}
+
+@mixin td-make-sm-column-offset($columns) {
+	@include make-sm-column-offset($columns);
+
+	@media (min-width: $screen-sm-min) {
+		.rtl & {
+			margin-left: 0;
+			margin-right: percentage($columns / $grid-columns);
+		}
+	}
+}
+
 .rtl .navbar-header {
 	@media (min-width: $grid-float-breakpoint) {
 		float: right;

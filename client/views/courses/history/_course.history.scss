@@ -11,7 +11,7 @@
 .timeline-start-container,
 .timeline-end-container {
 	@include td-make-xs-column(1);
-	@include make-xs-column-offset(3);
+	@include td-make-xs-column-offset(3);
 	height: 100%;
 	padding: 0;
 }
