@@ -1,4 +1,8 @@
 Template.messages.helpers({
+	hasMessages: function() {
+		return ClientMessages.count();
+	},
+
 	messages: function() {
 		return ClientMessages.find();
 	}
