@@ -115,7 +115,7 @@
 		{{#if eventsList.count}}
 			<div class="page-component">
 				<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
-				{{> frameEvents eventsList}}
+				{{> eventList dataEvents=eventsList withDate=true}}
 			</div>
 		{{/if}}
 	</div>
