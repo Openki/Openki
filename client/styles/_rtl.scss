@@ -1,34 +1,33 @@
-
-.rtl .navbar-header {
-	@media (min-width: $grid-float-breakpoint) {
-		float: right;
-	}
-}
-
-.rtl .navbar-nav > li {
-	@media (min-width: $grid-float-breakpoint) {
-		float: right;
-	}
-}
-
-.rtl .navbar-nav > li > .dropdown-menu {
-	@media (min-width: $grid-float-breakpoint) {
-		left: 0;
-		right: auto;
-	}
-}
-
-.rtl .list-unstyled {
-	padding-right: 0;
-}
-
-.rtl .dropdown-menu {
-	left: auto;
-	text-align: right;
-	right: 0;
-}
-
 .rtl {
+	.navbar-header {
+		@media (min-width: $grid-float-breakpoint) {
+			float: right;
+		}
+	}
+
+	.navbar-nav > li {
+		@media (min-width: $grid-float-breakpoint) {
+			float: right;
+		}
+	}
+
+	.navbar-nav > li > .dropdown-menu {
+		@media (min-width: $grid-float-breakpoint) {
+			left: 0;
+			right: auto;
+		}
+	}
+
+	.list-unstyled {
+		padding-right: 0;
+	}
+
+	.dropdown-menu {
+		left: auto;
+		text-align: right;
+		right: 0;
+	}
+
 	.input-group .form-control:first-child,
 	.input-group-addon:first-child,
 	.input-group-btn:first-child > .btn,
@@ -60,9 +59,7 @@
 		border-left: 1px;
 		border-right: 0;
 	}
-}
 
-.rtl {
 	.radio label ,
 	.checkbox  label {
 		padding-left: 0;
@@ -76,9 +73,7 @@
 		margin-left: 0;
 		margin-right: -20px;
 	}
-}
 
-.rtl {
 	.nav-tabs > li {
 	    float: right;
 	}
