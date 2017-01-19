@@ -63,19 +63,17 @@
 }
 
 $external-servies: (
-  google-plus:                                   #dd4b39,
-  facebook:                                      #3b5998,
-  github:                                        #333
+  google-plus: #dd4b39,
+  facebook: #3b5998,
+  github: #333
 );
 
 @each $service, $color in $external-servies {
 	.fa-#{$service}-square {
+		color: rgba($color, .5);
+
 		&:hover,
 		&:focus {
-			color: $color;
-		}
-
-		@media (max-width: $screen-xs) {
 			color: $color;
 		}
 	}
