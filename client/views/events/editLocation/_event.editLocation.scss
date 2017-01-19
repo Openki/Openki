@@ -58,6 +58,11 @@
 	font-size: 11px;
 }
 
+.event-edit-location-create-venue {
+	display: block;
+	margin-top: 10px;
+}
+
 .event-edit-location-map {
 	@include make-sm-column(6);
 	padding: 0 0 0 ($grid-gutter-width / 4);

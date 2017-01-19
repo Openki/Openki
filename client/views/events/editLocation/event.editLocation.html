@@ -50,10 +50,14 @@
 								</li>
 							{{/each}}
 						</ul>
-						<a class="btn btn-default" href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">{{mf 'profile.createNewVenue.button'}}</a>
 					{{else}}
 						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
 					{{/if}}
+					<a class="btn btn-default event-edit-location-create-venue"
+					   href="{{pathFor 'venueDetails' _id='create'}}"
+					   target="_blank">
+					   {{mf 'profile.createNewVenue.button'}}
+					</a>
 				{{/if}}
 			</div>
 			<div class="event-edit-location-map">
