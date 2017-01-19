@@ -1,6 +1,12 @@
 // *** Event location edit ***
 //============================
 
+.event-edit-location-info {
+	color: $gray-light;
+	font-style: italic;
+	margin-bottom: 10px;
+}
+
 .event-edit-location {
 	@include make-xs-column(12);
 	overflow: auto;
@@ -50,6 +56,11 @@
 
 .event-edit-location-candidate > .address {
 	font-size: 11px;
+}
+
+.event-edit-location-create-venue {
+	display: block;
+	margin-top: 10px;
 }
 
 .event-edit-location-map {
