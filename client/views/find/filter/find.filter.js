@@ -24,7 +24,7 @@ Template.filter.events({
 		_.debounce(updateCategorySearch(event, instance, parentInstance), 100);
 	},
 
-	'focus .js-search-categories': function(event, instance) {
+	'click .js-search-categories': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
@@ -54,7 +54,7 @@ Template.filter.events({
 
 		parentInstance.filter.remove('categories', '' + category).done();
 		updateUrl(event, parentInstance);
-		return false;
+		$('#find').select();
 	},
 });
 
@@ -110,5 +110,16 @@ Template.filter.onRendered(function() {
 	instance.$('.js-filter-needs-mentor').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
 		courseFilterPreview('.needsMentor', activate);
+	});
+
+	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {
+		var dropdownMenu = $(e.target).find('.dropdown-menu').first();
+
+		dropdownMenu.stop(true, true).slideToggle(200);
+		instance.$('.dropdown-toggle').fadeToggle(200);
+	});
+
+	instance.$('.filter-categories-select').on('shown.bs.dropdown', function(e) {
+		instance.$('.js-search-categories').select();
 	});
 });
