@@ -151,35 +151,35 @@ Template.find.events({
 	},
 
 	'mouseover .js-filter-upcoming-events': function() {
-		courseFilterPreview('.has-upcoming-events', true, false);
+		courseFilterPreview('.has-upcoming-events', true);
 	},
 
 	'mouseout .js-filter-upcoming-events': function() {
-		courseFilterPreview('.has-upcoming-events', false, false);
+		courseFilterPreview('.has-upcoming-events', false);
 	},
 
 	'mouseover .js-filter-needs-host': function() {
-		courseFilterPreview('.needsHost', true, false);
+		courseFilterPreview('.needsHost', true);
 	},
 
 	'mouseout .js-filter-needs-host': function() {
-		courseFilterPreview('.needsHost', false, false);
+		courseFilterPreview('.needsHost', false);
 	},
 
 	'mouseover .js-filter-needs-mentor': function() {
-		courseFilterPreview('.needsMentor', true, false);
+		courseFilterPreview('.needsMentor', true);
 	},
 
 	'mouseout .js-filter-needs-mentor': function() {
-		courseFilterPreview('.needsMentor', false, false);
+		courseFilterPreview('.needsMentor', false);
 	},
 
 	'mouseover .js-category-selection-label': function() {
-		courseFilterPreview(('.'+this), true, false);
+		courseFilterPreview(('.'+this), true);
 	},
 
 	'mouseout .js-category-selection-label': function() {
-		courseFilterPreview(('.'+this), false, false);
+		courseFilterPreview(('.'+this), false);
 	},
 
 	'mouseover .js-category-label': function() {

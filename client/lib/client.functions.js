@@ -133,15 +133,11 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
-courseFilterPreview = function(matchSelector, activate, delayed) {
-	var noMatchSelector = $('.course-compact').not(matchSelector);
+courseFilterPreview = function(selector, activate, delayed) {
+	var negativeSelection = $('.course-compact').not(selector);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
 
-	if (activate) {
-		noMatchSelector.addClass(filterClass);
-	} else {
-		noMatchSelector.removeClass(filterClass);
-	}
+	negativeSelection.toggleClass(filterClass, activate);
 };
 
 showServerError = function(message, err) {
