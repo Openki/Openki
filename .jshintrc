@@ -20,7 +20,6 @@
 		"Match": false,
 		"check": false,
 		"Tracker": false,
-		"Deps": false,
 		"ReactiveVar": false,
 		"EJSON": false,
 		"HTTP": false,

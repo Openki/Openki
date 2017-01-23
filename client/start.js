@@ -115,7 +115,7 @@ Meteor.startup(function() {
 });
 
 Meteor.startup(function() {
-	Deps.autorun(function() {
+	Tracker.autorun(function() {
 		var desiredLocale = Session.get('locale');
 
 		mfPkg.setLocale(desiredLocale);
