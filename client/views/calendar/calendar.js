@@ -160,8 +160,17 @@ Template.calendarNavControl.events({
 });
 
 Template.calendarNavControl.helpers({
-	isBack: function() {
-		return this.direction == 'previous';
+	arrow: function() {
+		var isRTL = Session.get('isRTL');
+
+		if (this.direction == 'previous') {
+			isRTL = !isRTL;
+		}
+
+		var direction = isRTL ? 'left' : 'right';
+		return Spacebars.SafeString(
+			'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+		);
 	},
 
 	mfString: function(direction, unit, length) {

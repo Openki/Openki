@@ -67,7 +67,3 @@ Template.kioskEvents.helpers({
 		return moment().format('LL');
 	}
 });
-
-Template.kioskLayout.onRendered(function() {
-	textDirTracker();
-});

@@ -111,9 +111,6 @@ Router.map(function () {
 	});
 });
 
-Template.timetableLayout.onRendered(function() {
-	textDirTracker();
-});
 
 Template.timetable.helpers({
 	position: function() {

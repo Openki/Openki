@@ -144,21 +144,6 @@ courseFilterPreview = function(matchSelector, activate, delayed) {
 	}
 };
 
-textDirTracker = function() {
-	Tracker.autorun(function() {
-		var locale = Session.get('locale');
-
-		if (locale) {
-			// check text directionality and set/remove CSS-class accordingly
-			var body = $('body');
-			var isRTL = body.attr('dir') === 'rtl';
-
-			Session.set('isRTL', isRTL);
-			return isRTL ? body.addClass('rtl') : body.removeClass('rtl');
-		}
-	});
-};
-
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };
@@ -284,14 +269,11 @@ Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
-Template.registerHelper('arrowDirection', function(isBack) {
-	var isRTL = Session.get('isRTL');
-
-	if (isBack) {
-		return isRTL ? 'right' : 'left';
-	} else {
-		return isRTL ? 'left' : 'right';
-	}
+Template.registerHelper('backArrow', function() {
+	var direction = Session.get('isRTL') ? 'right' : 'left';
+	return Spacebars.SafeString(
+		'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+	);
 });
 
 Template.registerHelper('dateformat', function(date) {
