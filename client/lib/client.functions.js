@@ -133,6 +133,56 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
+updateUrl = function(event, instance) {
+	event.preventDefault();
+
+	var filterParams = instance.filter.toParams();
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+	delete filterParams.internal;
+	var queryString = UrlTools.paramsToQueryString(filterParams);
+
+	var options = {};
+
+	if (queryString.length) {
+		options.query = queryString;
+	}
+
+	RouterAutoscroll.cancelNext();
+
+	var router = Router.current();
+	Router.go(router.route.getName(), { _id: router.params._id }, options);
+
+	return true;
+};
+
+updateCategorySearch = function(event, instance, parentInstance) {
+	if (!parentInstance) parentInstance = instance;
+
+	var query = instance.$('.js-search-categories').val();
+	parentInstance.categorySearch.set(query);
+
+	if (!query) {
+		parentInstance.categorySearchResults.set(categories);
+		return;
+	}
+
+	var lowQuery = query.toLowerCase();
+	var results = {};
+	for (var mainCategory in categories) {
+		if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+			results[mainCategory] = [];
+		}
+		for (i = 0; i < categories[mainCategory].length; i++) {
+			var subCategory = categories[mainCategory][i];
+			if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+				if (results[mainCategory]) results[mainCategory].push(subCategory);
+				else results[subCategory] = [];
+			}
+		}
+	}
+	parentInstance.categorySearchResults.set(results);
+};
+
 courseFilterPreview = function(selector, activate, delayed) {
 	var negativeSelection = $('.course-compact').not(selector);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
