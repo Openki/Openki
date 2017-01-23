@@ -1,41 +1,40 @@
 Template.navbar.onRendered(function() {
+	var instance = this;
+	var dropdown = instance.$('.dropdown');
 	var gridFloatBreakpoint = SCSSVars.gridFloat;
-	var isCollapsed = Session.get('viewportWidth') <= gridFloatBreakpoint;
+	var notCollapsed = Session.get('viewportWidth') > gridFloatBreakpoint;
 
-	if (!isCollapsed) {
-		this.$('.dropdown').on('show.bs.dropdown', function(e){
-			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-		});
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
-			$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+	if (notCollapsed) {
+		// animate navbar dropdowns with a sliding motion
+		dropdown.on('show.bs.dropdown hide.bs.dropdown', function(e) {
+			var dropdownMenu = $(e.currentTarget).find('.dropdown-menu').first();
+
+			dropdownMenu.stop(true, true).slideToggle();
 		});
 
+		// give the navbar and active menu item a class for when not at top
 		$(window).scroll(function () {
-			var navbar = this.$('.navbar');
-			var activeNavLink = this.$('.navbar-link-active');
-			var isCovering = navbar.hasClass('navbar-covering');
-			var atTop = $(window).scrollTop() < 5;
+			var navbar = instance.$('.navbar');
+			var activeNavLink = instance.$('.navbar-link-active');
+			var notAtTop = $(window).scrollTop() > 5;
 
-			if (!isCovering && !atTop) {
-				navbar.addClass('navbar-covering');
-				activeNavLink.addClass('navbar-link-covering');
-			} else if (isCovering && atTop) {
-				navbar.removeClass('navbar-covering');
-				activeNavLink.removeClass('navbar-link-covering');
-			}
+			navbar.toggleClass('navbar-covering', notAtTop);
+			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
 		});
 	} else {
-		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
-			var container = $('#bs-navbar-collapse-1');
-			var scrollTo = $(this);
+		var container = instance.$('#bs-navbar-collapse-1');
+
+		// make menu item scroll up when opening the dropdown menu
+		instance.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
+			var scrollTo = $(e.currentTarget);
 			container.animate({
 				scrollTop: scrollTo.offset().top
 				           - container.offset().top
 				           + container.scrollTop()
 			});
 		}, 1));
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
-			var container = $('#bs-navbar-collapse-1');
+
+		instance.$('.dropdown').on('hide.bs.dropdown', function(e){
 			container.scrollTop(0);
 		});
 	}
