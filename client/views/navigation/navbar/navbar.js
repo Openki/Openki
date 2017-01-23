@@ -1,7 +1,7 @@
 Template.navbar.onRendered(function() {
 	var instance = this;
 	var dropdown = instance.$('.dropdown');
-	var gridFloatBreakpoint = SCSSVars.gridFloat;
+	var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
 	var notCollapsed = Session.get('viewportWidth') > gridFloatBreakpoint;
 
 	if (notCollapsed) {
