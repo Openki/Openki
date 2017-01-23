@@ -25,7 +25,7 @@ Template.navbar.onRendered(function() {
 		var container = instance.$('#bs-navbar-collapse-1');
 
 		// make menu item scroll up when opening the dropdown menu
-		instance.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
+		dropdown.on('show.bs.dropdown', _.debounce(function(e){
 			var scrollTo = $(e.currentTarget);
 			container.animate({
 				scrollTop: scrollTo.offset().top
@@ -34,7 +34,7 @@ Template.navbar.onRendered(function() {
 			});
 		}, 1));
 
-		instance.$('.dropdown').on('hide.bs.dropdown', function(e){
+		dropdown.on('hide.bs.dropdown', function(e){
 			container.scrollTop(0);
 		});
 	}
