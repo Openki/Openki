@@ -110,27 +110,12 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, true, false);
-		}
-	},
+	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
+		var regionID = this._id;
+		if (regionID && Session.equals('region', 'all')) {
+			var activate = e.type == 'mouseover' || e.type == 'focusin';
 
-	'mouseout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, false, false);
-		}
-	},
-
-	'focus .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, true, false);
-		}
-	},
-
-	'focusout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, false, false);
+			courseFilterPreview('.' + regionID, activate);
 		}
 	},
 
