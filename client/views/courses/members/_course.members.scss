@@ -16,8 +16,8 @@
 	display: inline-block;
 	list-style: none;
 	margin-bottom: 0;
-	margin-left: 10px;
-	padding-left: 0;
+	@include td-margin(left, 10px);
+	@include td-padding(left, 0);
 
 	&:hover {
 		cursor: default;
@@ -43,12 +43,12 @@
 }
 
 .js-add-to-team-btn {
-	margin-left: 6px;
+	@include td-margin(left, 6px);
 	padding: 2px 8px;
 }
 
 .js-remove-from-team-btn {
-	margin-left: 3px;
+	@include td-margin(left, 3px);
 	padding: 0px 5px;
 	color: $black;
 	font-size: ceil($font-size-base * .7);
@@ -61,5 +61,5 @@
 }
 
 .course-member-comment .editable {
-	padding-left: 0 !important;
+	@include td-padding(left, 0 !important);
 }

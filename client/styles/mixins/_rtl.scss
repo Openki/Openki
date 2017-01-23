@@ -1,0 +1,103 @@
+@mixin td-padding($dir, $x) {
+	$opposite-dir: if($dir == left, right, left);
+
+	padding-#{$dir}: $x;
+	.rtl & {
+		padding-#{$dir}: 0;
+		padding-#{$opposite-dir}: $x;
+	}
+}
+
+@mixin td-padding-all($top, $right, $bottom, $left) {
+	padding: $top $right $bottom $left;
+	.rtl & {
+		padding: $top $left $bottom $right;
+	}
+}
+
+@mixin td-margin($dir, $x) {
+	$opposite-dir: if($dir == left, right, left);
+
+	margin-#{$dir}: $x;
+	.rtl & {
+		margin-#{$dir}: 0;
+		margin-#{$opposite-dir}: $x;
+	}
+}
+
+@mixin td-margin-all($top, $right, $bottom, $left) {
+	margin: $top $right $bottom $left;
+	.rtl & {
+		margin: $top $left $bottom $right;
+	}
+}
+
+@mixin td-pos($dir, $x) {
+	$opposite-dir: if($dir == left, right, left);
+
+	#{$dir}: $x;
+	.rtl & {
+		#{$dir}: auto;
+		#{$opposite-dir}: $x;
+	}
+}
+
+@mixin td-text-align($dir) {
+	$opposite-dir: if($dir == left, right, left);
+
+	text-align: $dir;
+	.rtl & {
+		text-align: $opposite-dir;
+	}
+}
+
+@mixin td-float($dir) {
+	$opposite-dir: if($dir == left, right, left);
+
+	float: $dir;
+	.rtl & {
+		float: $opposite-dir;
+	}
+}
+
+@mixin td-make-xs-column($columns) {
+	@include make-xs-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-sm-column($columns) {
+	@include make-sm-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-md-column($columns) {
+	@include make-md-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-lg-column($columns) {
+	@include make-lg-column($columns);
+	@include td-float(left);
+}
+
+@mixin td-make-xs-column-offset($columns) {
+	@include make-xs-column-offset($columns);
+
+	@media (min-width: $screen-xs-min) {
+		.rtl & {
+			margin-left: 0;
+			margin-right: percentage($columns / $grid-columns);
+		}
+	}
+}
+
+@mixin td-make-sm-column-offset($columns) {
+	@include make-sm-column-offset($columns);
+
+	@media (min-width: $screen-sm-min) {
+		.rtl & {
+			margin-left: 0;
+			margin-right: percentage($columns / $grid-columns);
+		}
+	}
+}

@@ -1,7 +1,7 @@
 .grouplist {
 	list-style: none;
 	margin-bottom: 0;
-	padding-left: 0;
+	@include td-padding(left, 0);
 }
 
 .grouplist > li,

@@ -9,8 +9,8 @@
 }
 
 .js-search-field {
-	@include make-xs-column(12);
-	@include make-md-column(5);
+	@include td-make-xs-column(12);
+	@include td-make-md-column(5);
 	padding: 0;
 }
 
@@ -19,14 +19,14 @@
 }
 
 .filter {
-	@include make-xs-column(12);
-	@include make-md-column(7);
+	@include td-make-xs-column(12);
+	@include td-make-md-column(7);
 	margin-top: $form-group-margin-bottom;
 	padding: 0;
 
 	@media (min-width: $screen-md) {
 		margin-top: 0;
-		padding-left: 15px;
+		@include td-padding(left, 15px);
 	}
 }
 
@@ -42,14 +42,14 @@
 
 .filter-course-properties,
 .filter-categories {
-	float: left;
+	@include td-float(left);
 }
 
 .filter-course-properties {
-	padding: 10px 15px 10px 0;
+	@include td-padding-all(10px, 15px, 10px, 0);
 
 	@media (max-width: $screen-xs) {
-		padding-right: 0;
+		@include td-padding(right, 0);
 		width: 100%;
 	}
 }
@@ -61,7 +61,7 @@
 }
 
 .js-toggle-property-filter {
-	text-align: left;
+	@include td-text-align(left);
 }
 
 .toggle-property-filter-icon {
@@ -90,7 +90,7 @@
 	background: $course-compact-next-event-bg;
 	height: 10px;
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 	width: 10px;
 }
@@ -98,7 +98,7 @@
 .eventcaption_upcoming_text {
 	background: $course-compact-next-event-color;
 	height: 1px;
-	left: 3px;
+	@include td-pos(left, 3px);
 	position: absolute;
 	width: 3px;
 
@@ -154,7 +154,7 @@
 		content: '';
 		font-family: FontAwesome;
 		position: absolute;
-		right: 7px;
+		@include td-pos(right, 7px);
 		top: 6px;
 	}
 
@@ -208,11 +208,11 @@
 .dropdown-menu > .js-sub-category {
 	border-left: 1px solid $blue-light;
 	display: none;
-	margin-left: 20px;
+	@include td-margin(left, 20px);
 }
 
 .js-sub-category > a {
-	padding-left: 15px;
+	@include td-padding(left, 15px);
 }
 
 .filter-selected-categories {
@@ -230,7 +230,7 @@
 
 .filter-selected-categories > li {
 	margin-bottom: 3px;
-	padding: 0 3px 3px 0;
+	@include td-padding-all(0, 3px, 3px, 0);
 
 	@media (max-width: $screen-xs) {
 		display: inline-block;
@@ -240,7 +240,7 @@
 }
 
 .category-label + .remove-btn {
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 }
 
 .no-results {

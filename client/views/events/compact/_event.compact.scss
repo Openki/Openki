@@ -4,45 +4,45 @@
 // ** Wrap
 //========================================================================================
 .event-compact-wrap {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .frame-events-fluid .event-compact-wrap {
 	@media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(4);
-		@include make-sm-column(3);
-		@include make-lg-column(2);
+		@include td-make-xs-column(4);
+		@include td-make-sm-column(3);
+		@include td-make-lg-column(2);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container .event-compact-wrap {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 
 	@media (min-width: $screen-sm) {
-		@include make-xs-column(4);
-		@include make-md-column(3);
+		@include td-make-xs-column(4);
+		@include td-make-md-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container-sm .event-compact-wrap {
 	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 
 	@media (min-width: $screen-sm) {
-		@include make-xs-column(4);
+		@include td-make-xs-column(4);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }

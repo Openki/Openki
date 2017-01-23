@@ -120,6 +120,14 @@ Meteor.startup(function() {
 
 		mfPkg.setLocale(desiredLocale);
 
+		// Logic taken from mfpkg:core to get text directionality
+		var lang = desiredLocale.substr(0, 2);
+		var isRTL = msgfmt.dirFromLang(lang) == 'rtl';
+		Session.set('isRTL', isRTL);
+
+		// Msgfmt already sets the dir attribute, but we want a class too.
+		$('body').toggleClass('rtl', isRTL);
+
 		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it
 		var setLocale = moment.locale(desiredLocale);

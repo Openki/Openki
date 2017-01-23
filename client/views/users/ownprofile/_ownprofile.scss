@@ -26,7 +26,7 @@
 }
 
 .mail-verified {
-	margin-left: 10px;
+	@include td-margin(left, 10px);
 }
 
 .mail-verified .fa {
