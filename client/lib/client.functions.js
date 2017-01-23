@@ -270,7 +270,8 @@ Template.registerHelper('currentLocale', function() {
 });
 
 Template.registerHelper('backArrow', function() {
-	var direction = Session.get('isRTL') ? 'right' : 'left';
+	var isRTL = Session.get('textDirectionality') == 'rtl';
+	var direction = isRTL ? 'right' : 'left';
 	return Spacebars.SafeString(
 		'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
 	);

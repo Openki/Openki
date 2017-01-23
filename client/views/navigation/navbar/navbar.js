@@ -69,7 +69,7 @@ Template.navbar.helpers({
 	},
 
 	toggleNavbarRight: function(LTRPos) {
-		var isRTL = Session.get('isRTL');
+		var isRTL = Session.get('textDirectionality') == 'rtl';
 
 		if (LTRPos === 'left') {
 			return isRTL ? 'navbar-right' : '';

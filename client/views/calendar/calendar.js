@@ -161,7 +161,7 @@ Template.calendarNavControl.events({
 
 Template.calendarNavControl.helpers({
 	arrow: function() {
-		var isRTL = Session.get('isRTL');
+		var isRTL = Session.get('textDirectionality') == 'rtl';
 
 		if (this.direction == 'previous') {
 			isRTL = !isRTL;
