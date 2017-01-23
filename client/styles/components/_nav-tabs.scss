@@ -25,6 +25,12 @@ $tab-content-border-width: 1px;
 	border-width: 0 $tab-content-border-width $tab-content-border-width;
 }
 
+.tab-pane {
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
 .tab-label {
 	@media (max-width: $screen-xs) {
 		display: none;
