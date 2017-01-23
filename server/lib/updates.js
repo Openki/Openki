@@ -19,7 +19,7 @@ applyUpdates = function () {
 				console.log("Applying update " + name);
 				entry.affected = UpdatesAvailable[name]();
 				entry.applied = new Date();
-				console.log(name + ": " + affected + " affected documents");
+				console.log(name + ": " + entry.affected + " affected documents");
 			}
 			UpdatesApplied.insert(entry);
 		}
