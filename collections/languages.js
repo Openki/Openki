@@ -83,6 +83,12 @@ Languages = {
 		short:   'tr',
 		english: 'Turkish'
 	},
+	'zh_CN': {
+		lg:      'zh_CN',
+		name:    '中文',
+		short:   '中文',
+		english: 'Simplified Chinese'
+	},
 	'zh_TW': {
 		lg:      'zh_TW',
 		name:    '國語',
