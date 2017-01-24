@@ -265,6 +265,10 @@ Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
+Template.registerHelper('now', function(){
+	return moment(new Date());
+});
+
 Template.registerHelper('backArrow', function() {
 	var isRTL = Session.get('textDirectionality') == 'rtl';
 	var direction = isRTL ? 'right' : 'left';

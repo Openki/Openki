@@ -78,3 +78,18 @@ $event-caption-body-bg: $event-body-bg;
 .event-caption.placeholder .event-caption-body {
 	border-color: $gray-lightest;
 }
+
+.event-caption-add {
+	@include td-float(left);
+	@include td-margin(right, 10px);
+}
+
+.event-caption-add .event-caption-body,
+.event-caption-add .event-caption-header {
+	border-color: $event-caption-border-highlighted;
+}
+
+.event-caption-add-text {
+	font-size: medium;
+	line-height: 50px;
+}

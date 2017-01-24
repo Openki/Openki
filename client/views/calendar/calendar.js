@@ -187,3 +187,16 @@ Template.calendarNavControl.helpers({
 		return navUnits;
 	}
 });
+
+Template.calendarAddEvent.onRendered(function() {
+	var instance = this;
+	var eventCaption = instance.$('.event-caption-add');
+
+	function toggleCaptionClass(e) {
+		var removeClass = e.type == 'mouseout';
+		eventCaption.toggleClass('placeholder', removeClass);
+	}
+
+	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
+	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
+});

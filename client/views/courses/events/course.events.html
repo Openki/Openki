@@ -2,7 +2,7 @@
 	{{#if mayAdd}}
 		<div class="page-component">
 			<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
-				<div class="event-caption placeholder course-event-caption">
+				<div class="event-caption placeholder event-caption-add">
 					<div class="event-caption-header-wrap">
 						<div class="event-caption-header">
 							<span class="fa fa-map-pin"></span>
@@ -15,7 +15,7 @@
 						</div>
 					</div>
 				</div>
-				<span class="course-event-add">
+				<span class="event-caption-add-text">
 					{{mf 'course.event.edit.add'}}
 				</span>
 			</a>

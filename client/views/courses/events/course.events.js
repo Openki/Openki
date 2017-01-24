@@ -26,10 +26,6 @@ Template.courseEvents.helpers({
 		return 'courseId=' + this.course._id;
 	},
 
-	now: function() {
-		return moment(new Date());
-	},
-
 	haveEvents: function() {
 		return Template.instance().haveEvents();
 	},
@@ -82,7 +78,7 @@ Template.courseEvents.events({
 
 Template.courseEvents.onRendered(function() {
 	var instance = this;
-	var eventCaption = instance.$('.event-caption');
+	var eventCaption = instance.$('.event-caption-add');
 
 	function toggleCaptionClass(e) {
 		var removeClass = e.type == 'mouseout';
@@ -90,5 +86,5 @@ Template.courseEvents.onRendered(function() {
 	}
 
 	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
-	instance.$('.course-event-add').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
+	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });
