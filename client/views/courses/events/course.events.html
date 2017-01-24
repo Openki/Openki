@@ -1,30 +1,15 @@
 <template name="courseEvents">
 	{{#if mayAdd}}
-		<div class="page-component">
-			<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
-				<div class="event-caption placeholder event-caption-add">
-					<div class="event-caption-header-wrap">
-						<div class="event-caption-header">
-							<span class="fa fa-map-pin"></span>
-							<div class="event-caption-pseudoborder"></div>
-						</div>
-					</div>
-					<div class="event-caption-body-wrap">
-						<div class="event-caption-body">
-							{{dateformat now}}
-						</div>
-					</div>
-				</div>
-				<span class="event-caption-add-text">
-					{{mf 'course.event.edit.add'}}
-				</span>
-			</a>
-		</div>
+		{{#if haveEvents}}
+			<div class="page-component">
+				{{> courseEventAdd}}
+			</div>
+		{{/if}}
 	{{/if}}
 
-	<div class="page-component">
-		{{#if ready}}
-			{{#if haveEvents}}
+	{{#if ready}}
+		{{#if haveEvents}}
+			<div class="page-component">
 				<div class="fade-wrap">
 					<div class="course-events js-scrollable-container">
 						{{#if havePastEvents}}
@@ -82,15 +67,22 @@
 					<div class="fade-top"></div>
 					<div class="fade-bottom"></div>
 				</div>
-			{{else}}
+			</div>
+		{{else}}
+			<div class="page-component">
 				<div class="course-page-component-header">
 					<h4>
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.noEvents' 'This course has no events'}}
 					</h4>
 				</div>
-			{{/if}}
-		{{else}}
+			</div>
+			<div class="page-component">
+				{{> courseEventAdd}}
+			</div>
+		{{/if}}
+	{{else}}
+		<div class="page-component">
 			<div class="course-page-component-header">
 				<h4>
 					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
@@ -98,8 +90,8 @@
 				</h4>
 			</div>
 			{{> loadingRow}}
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 
 	{{#if ready}}
 		{{#if haveEvents}}
@@ -112,4 +104,25 @@
 			</div>
 		{{/if}}
 	{{/if}}
+</template>
+
+<template name="courseEventAdd">
+	<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
+		<div class="event-caption placeholder event-caption-add">
+			<div class="event-caption-header-wrap">
+				<div class="event-caption-header">
+					<span class="fa fa-map-pin"></span>
+					<div class="event-caption-pseudoborder"></div>
+				</div>
+			</div>
+			<div class="event-caption-body-wrap">
+				<div class="event-caption-body">
+					{{dateformat now}}
+				</div>
+			</div>
+		</div>
+		<span class="event-caption-add-text">
+			{{mf 'course.event.edit.add'}}
+		</span>
+	</a>
 </template>

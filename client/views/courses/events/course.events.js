@@ -76,7 +76,7 @@ Template.courseEvents.events({
 	}
 });
 
-Template.courseEvents.onRendered(function() {
+Template.courseEventAdd.onRendered(function() {
 	var instance = this;
 	var eventCaption = instance.$('.event-caption-add');
 
