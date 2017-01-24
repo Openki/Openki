@@ -1,10 +1,24 @@
 <template name="courseEvents">
 	{{#if mayAdd}}
 		<div class="page-component">
-			<button type="button" class="btn btn-add js-add-event">
-				<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
-				{{mf 'course.event.edit.add'}}
-			</button>
+			<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
+				<div class="event-caption placeholder course-event-caption">
+					<div class="event-caption-header-wrap">
+						<div class="event-caption-header">
+							<span class="fa fa-map-pin"></span>
+							<div class="event-caption-pseudoborder"></div>
+						</div>
+					</div>
+					<div class="event-caption-body-wrap">
+						<div class="event-caption-body">
+							{{dateformat now}}
+						</div>
+					</div>
+				</div>
+				<span class="course-event-add">
+					{{mf 'course.event.edit.add'}}
+				</span>
+			</a>
 		</div>
 	{{/if}}
 

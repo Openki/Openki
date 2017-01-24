@@ -106,16 +106,16 @@
 					</label>
 					<div class="replica-event-captions">
 						{{#each replicaDates}}
-							<div class="replica-event-caption" title="{{fullDate this}}">
-								<div class="replica-event-caption-header-wrap">
-									<div class="replica-event-caption-header">
+							<div class="event-caption" title="{{fullDate this}}">
+								<div class="event-caption-header-wrap">
+									<div class="event-caption-header">
 										<span class="fa fa-map-pin"></span>
 										{{weekDay this}}
-										<div class="replica-event-caption-pseudoborder"></div>
+										<div class="event-caption-pseudoborder"></div>
 									</div>
 								</div>
-								<div class="replica-event-caption-body-wrap">
-									<div class="replica-event-caption-body">
+								<div class="event-caption-body-wrap">
+									<div class="event-caption-body">
 										{{localDate this}}
 									</div>
 								</div>
@@ -125,15 +125,15 @@
 				{{else}}
 					<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
 					<div class="replica-event-captions">
-						<div class="replica-event-caption replica-event-caption-placeholder">
-							<div class="replica-event-caption-header-wrap">
-								<div class="replica-event-caption-header">
+						<div class="event-caption placeholder">
+							<div class="event-caption-header-wrap">
+								<div class="event-caption-header">
 									<span class="fa fa-map-pin"></span>
-									<div class="replica-event-caption-pseudoborder"></div>
+									<div class="event-caption-pseudoborder"></div>
 								</div>
 							</div>
-							<div class="replica-event-caption-body-wrap">
-								<div class="replica-event-caption-body">
+							<div class="event-caption-body-wrap">
+								<div class="event-caption-body">
 									{{localDate this.start}}
 								</div>
 							</div>
