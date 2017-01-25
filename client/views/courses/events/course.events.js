@@ -4,6 +4,7 @@ Template.courseEvents.onCreated(function() {
 
 	instance.eventSub = subs.subscribe('eventsForCourse', courseId);
 
+	var maxEventsShown = 4;
 	instance.showAllEvents = new ReactiveVar(false);
 
 	instance.haveEvents = function() {
@@ -11,7 +12,7 @@ Template.courseEvents.onCreated(function() {
 	};
 
 	instance.haveMoreEvents = function() {
-		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 4;
+		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > maxEventsShown;
 	};
 
 	instance.ongoingEvents = function() {
@@ -19,8 +20,8 @@ Template.courseEvents.onCreated(function() {
 	};
 
 	instance.futureEvents = function() {
-		var limit = 0;
-		if (!instance.showAllEvents.get()) limit = 4;
+		var limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
+
 		return eventsFind({ course: courseId, after: minuteTime.get() }, limit);
 	};
 });
@@ -52,7 +53,7 @@ Template.courseEvents.helpers({
 
 	haveMoreEvents: function() {
 		var instance = Template.instance();
-		return instance.haveMoreEvents() & (!instance.showAllEvents.get());
+		return instance.haveMoreEvents() && (!instance.showAllEvents.get());
 	},
 
 	ready: function() {
