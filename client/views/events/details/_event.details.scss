@@ -11,6 +11,10 @@
 	margin-bottom: 10px;
 }
 
+.event-details-body .grouplist .dropdown-menu {
+	z-index: 10000;
+}
+
 .event-details-header {
 	background: $event-header-bg;
 }
