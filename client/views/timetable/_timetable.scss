@@ -4,7 +4,7 @@
 }
 
 .timetable-header {
-	margin-left: 12em;
+	@include td-margin(left, 12em);
 }
 
 .timetable-days,
@@ -44,16 +44,16 @@
 }
 
 .timetable-location {
-	left: -1em;
+	@include td-pos(left, -1em);
 	padding: 0 1em;
 	position: absolute;
-	text-align: left;
+	@include td-text-align(left);
 	width: 12em;
 }
 
 .timetable-row-section {
 	height: 45px;
-	margin-left: 12em;
+	@include td-margin(left, 12em);
 	position: relative;
 
 	&:hover {

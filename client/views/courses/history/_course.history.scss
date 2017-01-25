@@ -10,8 +10,8 @@
 
 .timeline-start-container,
 .timeline-end-container {
-	@include make-xs-column(1);
-	@include make-xs-column-offset(3);
+	@include td-make-xs-column(1);
+	@include td-make-xs-column-offset(3);
 	height: 100%;
 	padding: 0;
 }
@@ -32,22 +32,22 @@
 }
 
 .timeline-header {
-	@include make-xs-column(8);
+	@include td-make-xs-column(8);
 	height: 100%;
 	padding: 0;
 }
 
 .timeline {
-	@include make-xs-column(4);
+	@include td-make-xs-column(4);
 	height: 20px;
 	padding: 0;
 }
 
 .timeline-eventdate {
-	@include make-xs-column(9);
+	@include td-make-xs-column(9);
 	color: rgb(109, 112, 112);
 	padding: 0;
-	text-align: right;
+	@include td-text-align(right);
 
 	&.active {
 		color: $gray-dark;
@@ -55,7 +55,7 @@
 }
 
 .timeline-eventline-container {
-	@include make-xs-column(3);
+	@include td-make-xs-column(3);
 	height: 100%;
 	padding: 0;
 }
@@ -83,7 +83,7 @@
 }
 
 .coursehistory-event {
-	@include make-xs-column(8);
+	@include td-make-xs-column(8);
 	height: 20px;
 	padding: 0;
 

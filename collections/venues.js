@@ -11,7 +11,7 @@
 // short            String
 // maxPeople        Int
 // maxWorkplaces    Int
-// facilities       [String]
+// facilities       {facility-key: Boolean}
 // otherFacilities  String
 // website          URL
 

@@ -4,7 +4,7 @@
 
 .form-group-element:nth-child(1):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
-		@include make-sm-column(12);
+		@include td-make-sm-column(12);
 		padding: 0;
 	}
 }
@@ -12,7 +12,7 @@
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(2):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
-		@include make-sm-column(6);
+		@include td-make-sm-column(6);
 	}
 }
 
@@ -20,18 +20,24 @@
 .form-group-element:nth-child(2):nth-last-child(2),
 .form-group-element:nth-child(3):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
-		@include make-sm-column(4);
+		@include td-make-sm-column(4);
 	}
 }
 
 .form-group-element:nth-child(1):nth-last-child(2),
 .form-group-element:nth-child(1):nth-last-child(3) {
-	padding-left: 0;
+	@include td-padding(left, 0);
+	.rtl & {
+		padding-left: 15px;
+	}
 }
 
 .form-group-element:nth-child(2):nth-last-child(1),
 .form-group-element:nth-child(3):nth-last-child(1) {
-	padding-right: 0;
+	@include td-padding(right, 0);
+	.rtl & {
+		padding-right: 15px;
+	}
 }
 
 .form-group-element + .form-group-element {
@@ -75,14 +81,14 @@
 }
 
 .control-label {
-	@include make-sm-column(3);
+	@include td-make-sm-column(3);
 }
 
 .control-input {
-	@include make-sm-column(9);
+	@include td-make-sm-column(9);
 }
 
 .control-btn {
-	@include make-sm-column(9);
-	@include make-sm-column-offset(3);
+	@include td-make-sm-column(9);
+	@include td-make-sm-column-offset(3);
 }

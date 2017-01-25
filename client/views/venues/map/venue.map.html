@@ -1,0 +1,35 @@
+
+
+<template name="venueMap">
+
+<div class="container-fluid">
+		<h1>
+		{{#if regionName}}
+			{{mf 'venues.list.titleForRegion' 'Venues in region {REGION}' REGION=regionName}}
+		{{else}}
+			{{mf 'venues.list.title' 'Venues'}}
+		{{/if}}
+		</h1>
+		<div class="venue-map-location">
+			<div class="venue-map-location-search">
+					{{#if haveVenues}}
+						<ul class="venue-map-location-candidates">
+							{{#each venues}}
+								<li class='venue-map-location-candidate js-location-candidate {{hoverClass}}'>
+									{{name}}
+									<div class="address">{{address}}</div>
+								</li>
+							{{/each}}
+						</ul>
+					{{else}}
+						{{mf 'venues.list.noneFound' "No venues found"}}
+					{{/if}}
+					<a class="btn btn-default" href="{{pathFor 'venueDetails' _id='create'}}">{{mf 'profile.createNewVenue.button'}}</a>
+			</div>
+			<div class="venue-map-location-map ">
+				{{> map markers=venueMarkers}}
+			</div>
+		</div>
+</div>
+
+</template>

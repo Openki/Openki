@@ -109,8 +109,9 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 	userIsInGroup: function() {
-		if (Meteor.user()) {
-			return Meteor.user().groups.length > 0;
+		var user = Meteor.user();
+		if (user && user.groups) {
+			return user.groups.length > 0;
 		} else {
 			return false;
 		}
@@ -176,7 +177,7 @@ Template.courseEdit.events({
 					if (enrolcheck.checked) {
 						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
 					} else {
-						Meteor.call('remove_role', courseId, enrolcheck.name);
+						Meteor.call('remove_role', courseId, Meteor.userId(), enrolcheck.name);
 					}
 				});
 			}

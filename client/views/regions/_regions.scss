@@ -1,7 +1,7 @@
 .region-badges {
 	display: inline-block;
-	float: right;
-	padding-left: 10px;
+	@include td-float(right);
+	@include td-padding(left, 10px);
 }
 
 .badge-courses {

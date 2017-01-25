@@ -1,4 +1,4 @@
-testCourses = [{
+export default courses = [{
 	'name':        'Meditation & Yoga/Qi-Gong',
 	'categories': ['sports', 'spiritual'],
 	'tags':       ['Sport', 'Gspürschmi', 'TuetGuet'],

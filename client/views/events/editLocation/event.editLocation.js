@@ -206,6 +206,7 @@ Template.eventEditVenue.events({
 	},
 
 	'click .js-location-change': function(event, instance) {
+		instance.addressSearch.set(false);
 		instance.location.set({});
 		instance.search.set('');
 	},

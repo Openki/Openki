@@ -1,15 +1,21 @@
 // *** Event location edit ***
 //============================
 
+.event-edit-location-info {
+	color: $gray-light;
+	font-style: italic;
+	margin-bottom: 10px;
+}
+
 .event-edit-location {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	overflow: auto;
 	padding: 0;
 }
 
 .event-edit-location-search {
-	@include make-sm-column(6);
-	padding: 0 ($grid-gutter-width / 4) 0 0;
+	@include td-make-sm-column(6);
+	@include td-padding-all(0, ($grid-gutter-width / 4), 0, 0);
 }
 
 .event-edit-location-selected {
@@ -36,7 +42,7 @@
 	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
-	padding-left: 5px;
+	@include td-padding(left, 5px);
 
 	&:hover {
 		cursor: pointer;
@@ -52,12 +58,17 @@
 	font-size: 11px;
 }
 
+.event-edit-location-create-venue {
+	display: block;
+	margin-top: 10px;
+}
+
 .event-edit-location-map {
-	@include make-sm-column(6);
-	padding: 0 0 0 ($grid-gutter-width / 4);
+	@include td-make-sm-column(6);
+	@include td-padding-all(0, 0, 0, ($grid-gutter-width / 4));
 
 	@media (max-width: $screen-xs) {
-		padding-left: 15px;
+		@include td-padding(left, 15px);
 	}
 }
 

@@ -4,7 +4,7 @@
 // ** Navigation container
 //========================================================================================
 .calendar-nav-container {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	background-color: rgba($calendar-nav-bg, 0.97);
 	display: none;
 	margin-bottom: 10px;
@@ -44,8 +44,8 @@
 }
 
 .calendar-nav > .calendar-nav-control:last-child .dropdown-menu {
-	left: auto;
-	right: 0;
+	@include td-pos(left, auto);
+	@include td-pos(right, 0);
 }
 
 .calendar-nav-moment {
@@ -86,7 +86,7 @@
 	border-width: 10px 0 0;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 	font-size: large;
-	padding: 5px 7px 5px 9px;
+	@include td-padding-all(5px, 7px, 5px, 9px);
 	text-align: center;
 
 	@media (min-width: $screen-xxs) {

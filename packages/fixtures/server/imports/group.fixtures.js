@@ -1,6 +1,6 @@
 // Groups are groups, organisations, institutions, virtual or real instituts, departments or bodys...
 
-testGroups = [{
+export default groups = [{
 	'name':             'Dynamo',
 	'short':            'Dyn',
 	'claim':            'Jugendkulturhaus',

@@ -31,6 +31,10 @@ Template.courseEvents.helpers({
 		return this.course.editableBy(Meteor.user());
 	},
 
+	addEventQuery: function() {
+		return 'courseId=' + this.course._id;
+	},
+
 	haveEvents: function() {
 		return Template.instance().haveEvents();
 	},
@@ -62,10 +66,6 @@ Template.courseEvents.helpers({
 });
 
 Template.courseEvents.events({
-	'click .js-add-event': function () {
-		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
-	},
-
 	'click .js-show-all-events': function () {
 		Template.instance().showAllEvents.set(true);
 	},
@@ -92,4 +92,17 @@ Template.courseEvents.events({
 			instance.$(".fade-bottom").fadeIn(200);
 		}
 	}
+});
+
+Template.courseEventAdd.onRendered(function() {
+	var instance = this;
+	var eventCaption = instance.$('.event-caption-add');
+
+	function toggleCaptionClass(e) {
+		var removeClass = e.type == 'mouseout';
+		eventCaption.toggleClass('placeholder', removeClass);
+	}
+
+	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
+	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });

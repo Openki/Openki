@@ -22,7 +22,7 @@
 
 .js-role-unsubscribe-btn {
 	font-size: medium;
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 	padding: 3px 12px;
 }
 

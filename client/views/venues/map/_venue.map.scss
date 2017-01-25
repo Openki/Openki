@@ -1,0 +1,66 @@
+
+// *** venue location map ***
+//============================
+
+.venue-map-location {
+	@include make-row;
+}
+
+.venue-map-location-search {
+	@include td-make-sm-column(2);
+	text-align: center;
+
+	@media (max-width: $screen-sm) {
+		display: none;
+	}
+}
+
+.venue-map-location-selected {
+	display: inline-block;
+	padding-bottom: 5px;
+}
+
+.venue-map-location-selected > .fa {
+	color: $green-darker;
+}
+
+.venue-map-location-searchbar {
+	padding-bottom: 5px;
+}
+
+.venue-map-location-candidates {
+	@include list-unstyled;
+	margin-bottom:10px;
+	@include td-text-align(left);
+}
+
+.venue-map-location-candidate {
+	$background-color: darken($blue-lighter, 5%);
+
+	background-color: $background-color;
+	list-style: none;
+	margin-bottom: 4px;
+	@include td-padding(left, 5px);
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:hover,
+	&.hover {
+		background: darken($background-color, 5%);
+	}
+}
+
+.venue-map-location-candidate > .address {
+	font-size: 11px;
+}
+
+.venue-map-location-map {
+	@include td-make-sm-column(10);
+}
+
+.venue-map-location-map > .map-box {
+	height: 600px;
+	width: 100%;
+}

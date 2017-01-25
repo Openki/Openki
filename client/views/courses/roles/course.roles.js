@@ -34,14 +34,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-subscribe-btn': function (e, template) {
-		var incognito;
-		if (template.find('.incognito')) {
-			incognito = $(template.find('.incognito')).prop('checked');
-		} else {
-			incognito = false;
-		}
-
-		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, incognito);
+		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type);
 
 		// Store the comment
 		var comment = template.$('.js-comment').val();
@@ -56,7 +49,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-unsubscribe-btn': function () {
-		Meteor.call('remove_role', this.course._id, this.roletype.type);
+		Meteor.call('remove_role', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;
 	}
 });
