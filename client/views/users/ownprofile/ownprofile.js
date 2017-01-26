@@ -106,7 +106,6 @@ Template.profile.events({
 			document.getElementById('editform_username').value,
 			document.getElementById('editform_email').value,
 			template.$('.js-notifications').prop("checked"),
-			document.getElementById('privacy').checked,
 			function(err) {
 				if (err) {
 					showServerError('Saving your profile failed', err);
