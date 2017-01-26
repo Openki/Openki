@@ -31,10 +31,6 @@ Template.courseEvents.helpers({
 		return this.course.editableBy(Meteor.user());
 	},
 
-	addEventQuery: function() {
-		return 'courseId=' + this.course._id;
-	},
-
 	haveEvents: function() {
 		return Template.instance().haveEvents();
 	},
@@ -91,6 +87,12 @@ Template.courseEvents.events({
 			instance.$(".fade-top").fadeIn(200);
 			instance.$(".fade-bottom").fadeIn(200);
 		}
+	}
+});
+
+Template.courseEventAdd.helpers({
+	addEventQuery: function() {
+		return 'courseId=' + this.course._id;
 	}
 });
 
