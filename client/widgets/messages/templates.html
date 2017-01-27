@@ -1,9 +1,11 @@
 <template name="messages">
-	<div class="messages">
-		{{#each messages}}
-			{{> message}}
-		{{/each}}
-	</div>
+	{{#if hasMessages}}
+		<div class="messages">
+			{{#each messages}}
+				{{> message}}
+			{{/each}}
+		</div>
+	{{/if}}
 </template>
 
 <template name="message">

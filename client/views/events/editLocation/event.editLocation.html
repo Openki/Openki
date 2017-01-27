@@ -1,19 +1,22 @@
-<template name="eventEditLocation">
+<template name="eventEditVenue">
 	<div class="form-group">
-		<label>{{mf 'course.event.edit.location' 'Location'}}</label>
+		<label>{{mf 'course.event.edit.location' 'Venue'}}</label>
+		<div class="event-edit-location-info">
+			{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
+		</div>
 		<div class="event-edit-location">
 			<div class="event-edit-location-search">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-						{{location.name}}
+						{{> venueLink venue=location openInNewTab=true}}
 						{{#if location.address}}
 							<br>
 							{{location.address}}
 						{{/if}}
 					</div>
 					<button type="button" class="btn btn-edit btn-inline js-location-change">
-						{{mf 'event.edit.locationChange' "Change location"}}
+						{{mf 'event.edit.locationChange' "Change venue"}}
 					</button>
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">
@@ -50,6 +53,11 @@
 					{{else}}
 						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
 					{{/if}}
+					<a class="btn btn-{{#if haveLocationCandidates}}default{{else}}add{{/if}} event-edit-location-create-venue"
+					   href="{{pathFor 'venueDetails' _id='create'}}"
+					   target="_blank">
+					   {{mf 'profile.createNewVenue.button'}}
+					</a>
 				{{/if}}
 			</div>
 			<div class="event-edit-location-map">

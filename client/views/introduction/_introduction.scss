@@ -29,14 +29,14 @@
 .js-introduction-close-btn {
 	font-size: large;
 	position: absolute;
-	right: 13px;
+	@include td-pos(right, 13px);
 	top: 13px;
 }
 
 .introduction-show-btn,
 .introduction-hide-btn {
 	@include btn-sm;
-	margin-left: 10px;
+	@include td-margin(left, 10px);
 
 	&::after {
 		font-family: FontAwesome;
@@ -64,13 +64,13 @@
 }
 
 .introduction-steps > li {
-	@include make-xs-column(6);
-	@include make-sm-column(4);
-	@include make-md-column(2);
+	@include td-make-xs-column(6);
+	@include td-make-sm-column(4);
+	@include td-make-md-column(2);
 	margin-bottom: 15px;
 
 	@media (max-width: $screen-xxs) {
-		@include make-xs-column(12);
+		@include td-make-xs-column(12);
 		padding-bottom: 20px;
 		text-align: center;
 	}
@@ -95,13 +95,14 @@
 		font-family: FontAwesome;
 		font-size: 16px;
 		position: absolute;
-		right: 0;
+		@include td-pos(right, 0);
 		top: 6px;
 
 		@media (max-width: $screen-xxs) {
 			bottom: -15px;
 			content: '';
-			right: 47%;
+			// right: 47%;
+			@include td-pos(right, 47%);
 		}
 	}
 }
@@ -116,6 +117,26 @@
 .introduction-steps > li:nth-of-type(3) > h2::after {
 	@media (max-width: $screen-md) and (min-width: $screen-sm) {
 		content: '';
+	}
+}
+
+.rtl {
+	.introduction-steps > li > h2::after {
+		content: '\f060';
+		right: auto;
+	}
+
+	.introduction-steps > li:nth-of-type(2) > h2::after,
+	.introduction-steps > li:nth-of-type(4) > h2::after {
+		@media (max-width: $screen-sm) {
+			content: '';
+		}
+	}
+
+	.introduction-steps > li:nth-of-type(3) > h2::after {
+		@media (max-width: $screen-md) and (min-width: $screen-sm) {
+			content: '';
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
 // "_id"          -> ID
 // "title"        -> String
 // "text"         -> String
-// "userId"       -> ID_users
+// "userId"       -> ID_users undefined if anon comment
 // "courseId"     -> ID_Courses
 // "time_created" -> Date
 // "time_updated" -> Date

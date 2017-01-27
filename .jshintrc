@@ -5,6 +5,8 @@
 	"laxcomma": true,
 	"esversion": 6,
 	"latedef": true,
+	"unused": "vars",
+	"loopfunc": true, 
 
 	"globals": {
 		"Meteor": false,
@@ -18,7 +20,6 @@
 		"Match": false,
 		"check": false,
 		"Tracker": false,
-		"Deps": false,
 		"ReactiveVar": false,
 		"EJSON": false,
 		"HTTP": false,
@@ -68,7 +69,6 @@
 		"lgs":true,
 		"categories":true,
 		"ServiceConfiguration":true,
-		"anonId":true,
 		"Categories":true,   //shouldnt be here
 
 // server/publications
@@ -179,6 +179,7 @@
 
 		"CoursePredicates":true,
 		"EventPredicates":true,
+		"VenuePredicates":true,
 		"Filtering":true,
 
 
@@ -189,28 +190,6 @@
 		"applyUpdates":true,
 		"logAsyncErrors":true,
 		"untilClean":true,
-
-
-// server/testData/...
-
-		"testCourses":true,
-		"testEvents":true,
-		"testGroups":true,
-		"testLocations":true,
-		"regions":true,
-
-
-// server/testing.createnload.data.js
-
-		"loadCoursesIfNone":true,
-		"loadLocationsIfNone":true,
-		"createEventsIfNone":true,
-		"createCommentsIfNone":true,
-		"loadTestEvents":true,
-		"loadGroupsIfNone":true,
-		"loadTestRegionsIfNone":true,
-
-
 
 
 // Packages

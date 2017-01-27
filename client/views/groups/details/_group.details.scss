@@ -9,11 +9,11 @@
 }
 
 .group-details-logo {
-	float: left;
+	@include td-float(left);
 }
 
 .group-details-name {
-	float: left;
+	@include td-float(left);
 	padding: 7px;
 }
 
@@ -22,7 +22,7 @@
 	line-height: $line-height-base;
 	// padding: 7px;
 	position: absolute;
-	right: 6px;
+	@include td-pos(right, 6px);
 	top: 25px;
 }
 
@@ -31,15 +31,15 @@
 	line-height: $line-height-base;
 	// padding: 7px;
 	position: absolute;
-	right: 0;
+	@include td-pos(right, 0);
 	top: 0;
 }
 
 .group-details-short {
-	float: right;
+	@include td-float(right);
+	@include td-margin(right, 7px);
 	padding: 7px;
-	text-align: right;
-	margin-right: 7px;
+	@include td-text-align(right);
 }
 
 .group-details-body {

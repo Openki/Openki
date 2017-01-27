@@ -55,11 +55,20 @@ Template.courseMember.helpers({
 		var mayChangeComment = this.member.user === Meteor.userId();
 		return mayChangeComment && Template.instance().editableMessage;
 	},
+
+	mayUnsubscribeFromTeam: function(label) {
+		return label == 'team'
+			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+	},
 });
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(e, template) {
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		return false;
+	},
+	'click .js-remove-from-team-btn': function(e, template) {
+		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });

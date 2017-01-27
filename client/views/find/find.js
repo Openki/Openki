@@ -16,7 +16,7 @@ function finderRoute(path) {
 			if (search) {
 				document.title = webpagename + mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"');
 			} else {
-				document.title = webpagename + mf('startpage.windowtitle', 'What do you want to learn?');
+				document.title = webpagename + mf('find.WhatLearn?');
 			}
 		}
 	};
@@ -150,28 +150,52 @@ Template.find.events({
 		updateUrl(event, instance);
 	},
 
-	'mouseover .js-filter-upcoming-events, mouseout .js-filter-upcoming-events': function() {
+	'mouseover .js-filter-upcoming-events': function() {
+		courseFilterPreview('.has-upcoming-events', true);
+	},
+
+	'mouseout .js-filter-upcoming-events': function() {
 		courseFilterPreview('.has-upcoming-events', false);
 	},
 
-	'mouseover .js-filter-needs-host, mouseout .js-filter-needs-host': function() {
+	'mouseover .js-filter-needs-host': function() {
+		courseFilterPreview('.needsHost', true);
+	},
+
+	'mouseout .js-filter-needs-host': function() {
 		courseFilterPreview('.needsHost', false);
 	},
 
-	'mouseover .js-filter-needs-mentor, mouseout .js-filter-needs-mentor': function() {
+	'mouseover .js-filter-needs-mentor': function() {
+		courseFilterPreview('.needsMentor', true);
+	},
+
+	'mouseout .js-filter-needs-mentor': function() {
 		courseFilterPreview('.needsMentor', false);
 	},
 
-	'mouseover .js-category-selection-label, mouseout .js-category-selection-label': function() {
+	'mouseover .js-category-selection-label': function() {
+		courseFilterPreview(('.'+this), true);
+	},
+
+	'mouseout .js-category-selection-label': function() {
 		courseFilterPreview(('.'+this), false);
 	},
 
-	'mouseover .js-category-label, mouseout .js-category-label': function() {
-		courseFilterPreview(('.'+this), true);
+	'mouseover .js-category-label': function() {
+		courseFilterPreview(('.'+this), true, true);
 	},
 
-	'mouseover .js-group-label, mouseout .js-group-label': function() {
-		courseFilterPreview(('.'+this), true);
+	'mouseout .js-category-label': function() {
+		courseFilterPreview(('.'+this), false, true);
+	},
+
+	'mouseover .js-group-label': function() {
+		courseFilterPreview(('.'+this), true, true);
+	},
+
+	'mouseout .js-group-label': function() {
+		courseFilterPreview(('.'+this), false, true);
 	},
 
 	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
@@ -337,7 +361,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		var viewportWidth = Session.get('viewportWidth');
 		var screenXS = SCSSVars.screenXS;
 		return Session.get('viewportWidth') <= screenXS;
 	}

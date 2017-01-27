@@ -71,11 +71,6 @@ Notification.Event.handler = function(entry) {
 				if (!course) throw "Course does not exist (0.o)";
 
 				var user = Meteor.users.findOne(recipient);
-				if (!user) {
-					// Retry as anonId
-					user = Meteor.users.findOne({anonId: recipient});
-					if (!user) throw "Recipient does not exist (0.o)";
-				}
 				userId = user._id;
 
 				if (user.profile.notifications === false) {
@@ -108,7 +103,7 @@ Notification.Event.handler = function(entry) {
 					, username: user.username
 					, eventDate: startMoment.format('LL')
 					, eventStart: startMoment.format('LT')
-					, eventEnd: startMoment.format('LT')
+					, eventEnd: endMoment.format('LT')
 					, locale: userLocale
 					, eventLink: Router.url('showEvent', event)
 					, calLink: Router.url('calEvent', event)
@@ -135,12 +130,12 @@ Notification.Event.handler = function(entry) {
 
 				Email.send(mail);
 
-				Notification.EventResult.record(entry, unsubToken, true, recipient, userId, mail, "success");
+				Notification.EventResult.record(entry, unsubToken, true, recipient, mail, "success");
 			}
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
-				Notification.EventResult.record(entry, unsubToken, false, recipient, userId, mail, reason);
+				Notification.EventResult.record(entry, unsubToken, false, recipient, mail, reason);
 			}
 
 		}
@@ -156,12 +151,11 @@ Notification.EventResult = {};
   *                               further notices
   * @param {Boolean} sent      - whether the notification was sent
   * @param      {ID} recipient - recipient user ID
-  * @param      {ID} userId    - target user ID (different for anon recipients)
   * @param  {String} message   - generated message (or null if we didn't get
   *                              that far)
   * @param  {String} reason    - why this log entry was recorded
   */
-Notification.EventResult.record = function(note, unsubToken, sent, recipient, userId, message, reason) {
+Notification.EventResult.record = function(note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));
 	check(recipient, String);
@@ -169,7 +163,6 @@ Notification.EventResult.record = function(note, unsubToken, sent, recipient, us
 	var entry = {
 		sent: sent,
 		recipient: recipient,
-		userId: userId,
 		message: message,
 		reason: reason,
 		unsubToken: unsubToken

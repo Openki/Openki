@@ -23,7 +23,8 @@ Router.onBeforeAction(function() {
 
 // Store routeName to be able to refer to previous route
 Router.onStop(function() {
-	Session.set('previousRouteName', Router.current().route.getName());
+	var route = Router.current().route;
+	if (route) Session.set('previousRouteName', route.getName());
 });
 
 // Subscribe to list of regions and configure the regions
@@ -114,10 +115,19 @@ Meteor.startup(function() {
 });
 
 Meteor.startup(function() {
-	Deps.autorun(function() {
+	Tracker.autorun(function() {
 		var desiredLocale = Session.get('locale');
 
 		mfPkg.setLocale(desiredLocale);
+
+		// Logic taken from mfpkg:core to get text directionality
+		var lang = desiredLocale.substr(0, 2);
+		var textDirectionality = msgfmt.dirFromLang(lang);
+		Session.set('textDirectionality', textDirectionality);
+
+		// Msgfmt already sets the dir attribute, but we want a class too.
+		var isRTL = textDirectionality == 'rtl';
+		$('body').toggleClass('rtl', isRTL);
 
 		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it

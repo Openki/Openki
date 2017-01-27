@@ -9,6 +9,7 @@ $category-label-color: $blue;
 	background: $category-bg;
 	color: $category-label-color;
 	padding: 2px 5px;
+	font-size: 13px;
 }
 
 .js-category-label {
@@ -28,8 +29,8 @@ $category-label-color: $blue;
 .course-categories {
 	line-height: 23px;
 	list-style: none;
-	margin-left: -2px;
-	padding-left: 0;
+	@include td-margin(left, -2px);
+	@include td-padding(left, 0);
 }
 
 .course-categories li {

@@ -1,108 +1,104 @@
 <template name="venueEdit">
-	<div class="edit-page">
+	<div class="edit-page venue-edit">
 		{{#if _id}}
 			<h2>{{mf 'venue.edit.title' 'Edit venue'}}</h2>
 		{{else}}
 			<h2>{{mf 'venue.edit.titleCreate' 'Create new venue'}}</h2>
 		{{/if}}
 		<form>
-			<div class="edit-page-header venue-edit-header">
-					<div class="form-group">
-						<label>{{mf 'venue.edit.name' 'Name:'}}</label>
-						<input type="text"
-							class="form-control js-name"
-							placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
-							size="60"
-							value="{{name}}">
-					</div>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.name' 'Name:'}}</label>
+				<input type="text"
+					class="form-control js-name"
+					placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
+					size="60"
+					value="{{name}}">
 			</div>
-			<div class="edit-page-body venue-edit-body">
-					<div class="form-group">
-						<label>{{mf 'venue.edit.description' 'Description:'}}</label>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.description' 'Description:'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+					</span>
+					{{> editableTextarea editableDescription}}
+				</div>
+			</div>
+		{{#if showMapSelection}}
+			<div class="form-group">
+				{{#if regionSelectable}}
+					<div class="form-group-element">
+						<label>{{mf 'venue.edit.region' 'Region:'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
-								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 							</span>
-							{{> editableTextarea editableDescription}}
+							<select name='region' class="form-control js-region">
+								<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
+							{{#each regions}}
+								<option value='{{_id}}'>{{name}}</option>
+							{{/each}}
+							</select>
 						</div>
 					</div>
-
-					{{#if regionSelectable}}
-						<div class="form-group">
-							<div class="form-group-element">
-								<label>{{mf 'venue.edit.region' 'Region:'}}</label>
-								<div class="input-group">
-									<span class="input-group-addon">
-										<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-									</span>
-									<select name='region' class="form-control js-region">
-										<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
-									{{#each regions}}
-										<option value='{{_id}}'>{{name}}</option>
-									{{/each}}
-									</select>
-								</div>
-							</div>
-							{{#if regionSelected}}
-								<div class="form-group-element">
-									<label>{{mf 'venue.edit.map' 'Map:'}}</label>
-									{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
-								</div>
-							{{/if}}
-						</div>
-					{{/if}}
-
-
-					<div class="form-group">
-						<label>{{mf 'venue.details.address' 'Address:'}}</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-							</span>
-							<input
-								class="form-control js-address"
-								placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}" value={{address}}>
-
-						</div>
+				{{/if}}
+				{{#if regionSelected}}
+					<div class="form-group-element">
+						<label>{{mf 'venue.edit.map' 'Map:'}}</label>
+						{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 					</div>
+				{{/if}}
+			</div>
+		{{/if}}
 
-					<div class="form-group">
-						<label>{{mf 'venue.details.route'}}</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="fa fa-map-signs"></span>
-							</span>
-							<textarea
-								class="form-control js-route"
-								id="editform-address"
-								placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>{{mf 'venue.edit.additionalInfo' 'Additional Info:'}} {{mf '_inputField.optional'}}</label>
-						<div {{displayAdditionalInfo}}>
-							{{> venueEditAdditionalInfo}}
-						</div>
-						{{#if showAdditionalInfo}}
-							<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
-								{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
-							</button>
-						{{else}}
-							<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
-								{{mf 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
-							</button>
-						{{/if}}
-					</div>
-					<div class="form-actions">
-						<button type="button" class="btn btn-cancel js-edit-cancel">
-							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-							{{mf '_button.cancel'}}
-						</button>
-						<button type="submit" class="btn btn-save">
-							<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-							{{mf '_button.save'}}
-						</button>
-					</div>
+			<div class="form-group">
+				<label>{{mf 'venue.details.address' 'Address:'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+					</span>
+					<input
+						class="form-control js-address"
+						placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}" value={{address}}>
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>{{mf 'venue.details.route'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-signs"></span>
+					</span>
+					<textarea
+						class="form-control js-route"
+						id="editform-address"
+						placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
+				{{#if showAdditionalInfo}}
+					<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
+						{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
+					</button>
+				{{else}}
+					<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
+						{{mf 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
+					</button>
+				{{/if}}
+				<div {{displayAdditionalInfo}}>
+					{{> venueEditAdditionalInfo}}
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="button" class="btn btn-cancel js-edit-cancel">
+					<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+					{{mf '_button.cancel'}}
+				</button>
+				<button type="submit" class="btn btn-save">
+					<span class="fa fa-download fa-fw" aria-hidden="true"></span>
+					{{mf '_button.save'}}
+				</button>
 			</div>
 		</form>
 	</div>

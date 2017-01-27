@@ -1,4 +1,4 @@
-testEvents = [
+export default events = [
 
 { "title" : "DER MÜLL EINER HOCHSCHULE",
 	"description" : "<h4>Ausstellung</h4><p>Eine exemplarische Visualisierung des Mülls des ETH Bereichs Hauptgebäude (HG) sowie Infomaterial sollen den Besuchern einen Einblick geben, wie viel Müll pro Tag anfällt, welche Teile davon rezyklierbar sind und welchen Grenzen die Handhabung unterworfen ist. So wird zur Reflexion über die Reichweite der Institution sowie den eigenen Beitrag eingeladen.</p>",
