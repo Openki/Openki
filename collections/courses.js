@@ -167,7 +167,7 @@ mayUnsubscribe = function(operatorId, course, userId, role) {
 	}
 
 	// The other roles can only be chosen by the users themselves
-	return operatorId !== userId;
+	return operatorId === userId;
 };
 
 // Update list of editors
