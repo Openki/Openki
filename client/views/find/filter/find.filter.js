@@ -1,12 +1,15 @@
 Template.filter.events({
 	'change .js-toggle-property-filter': function(event, instance) {
+		event.preventDefault();
+
 		var parentInstance = instance.parentInstance();
 
 		parentInstance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
 		parentInstance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
 		parentInstance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
 		parentInstance.filter.done();
-		updateUrl(event, parentInstance);
+
+		parentInstance.updateUrl();
 	},
 
 	'mouseover .js-category-selection-label': function() {
@@ -21,7 +24,9 @@ Template.filter.events({
 
 	'keyup .js-search-categories': function(event, instance) {
 		var parentInstance = instance.parentInstance();
-		_.debounce(updateCategorySearch(event, instance, parentInstance), 100);
+		var query = instance.$('.js-search-categories').val();
+
+		parentInstance.updateCategorySearchDebounced(query);
 	},
 
 	'focus .js-search-categories': function(event, instance) {
@@ -38,13 +43,19 @@ Template.filter.events({
 	},
 
 	'click .js-category-selection-label': function(event, instance) {
+		event.preventDefault();
 		var parentInstance = instance.parentInstance();
-		var category = this;
 
+		// Add to filter
+		var category = this; // Event context is the category id
 		parentInstance.filter.add('categories', "" + category).done();
+
+		// Clear search field
 		instance.$('.js-search-categories').val('');
-		updateCategorySearch(event, instance, parentInstance);
-		updateUrl(event, parentInstance);
+
+		parentInstance.updateCategorySearch('');
+		parentInstance.updateUrl();
+
 		window.scrollTo(0, 0);
 	},
 
@@ -53,7 +64,8 @@ Template.filter.events({
 		var category = this;
 
 		parentInstance.filter.remove('categories', '' + category).done();
-		updateUrl(event, parentInstance);
+		parentInstance.updateUrl();
+
 		return false;
 	},
 });
