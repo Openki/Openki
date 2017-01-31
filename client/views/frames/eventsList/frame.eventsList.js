@@ -57,7 +57,7 @@ Template.frameEventsList.helpers({
 	}
 });
 
-Template.frameEventsList.events({
+Template.frameEventsListEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
 		var jQueryTarget = $(e.currentTarget);
 
