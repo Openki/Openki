@@ -8,8 +8,9 @@
 
 	{{#each pastEventsList}}
 		<div class="timeline">
-			<div class="timeline-eventdate {{this._id}}">
-				{{dateLong start}}
+			<div class="timeline-eventdate {{this._id}}"
+			     title="{{dateLong start}}">
+				{{fromNow start}}
 			</div>
 			<div class="timeline-eventline-container">
 				<div class="timeline-eventline"></div>
@@ -26,8 +27,9 @@
 
 	{{#with course}}
 		<div class="timeline">
-			<div class="timeline-eventdate {{this._id}}">
-				{{dateLong time_created}}
+			<div class="timeline-eventdate {{this._id}}"
+			     title="{{dateLong time_created}}">
+				{{fromNow time_created}}
 			</div>
 			<div class="timeline-eventline-container">
 				<div class="timeline-eventline"></div>
