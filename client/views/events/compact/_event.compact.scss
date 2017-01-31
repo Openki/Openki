@@ -51,7 +51,7 @@
 //========================================================================================
 .event-compact {
 	background: $event-body-bg;
-	height: 200px;
+	height: $event-compact-height;
 	position: relative;
 	transition: box-shadow $default-transition-time;
 
@@ -61,7 +61,7 @@
 }
 
 .event-compact-with-date {
-	height: 220px;
+	height: $event-compact-with-date-height;
 }
 
 // ** Body

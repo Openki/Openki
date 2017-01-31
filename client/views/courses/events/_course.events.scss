@@ -6,7 +6,7 @@
 	position: relative;
 }
 
-.container .course-events .event-compact-wrap {
+.container .course-event-list .event-compact-wrap {
 	@media (min-width: $screen-xs) {
 		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);

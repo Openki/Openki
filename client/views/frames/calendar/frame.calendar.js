@@ -20,7 +20,9 @@ Template.frameCalendar.onCreated(function() {
 	});
 
 	this.autorun(function() {
-		var filter = Filtering(EventPredicates).read(Router.current().params);
+		var filter = Filtering(EventPredicates)
+		             .read(Router.current().params.query)
+		             .done();
 
 		var filterParams = filter.toParams();
 		var startOfWeek = instance.startOfWeek.get();
@@ -31,7 +33,10 @@ Template.frameCalendar.onCreated(function() {
 	});
 
 	this.autorun(function() {
-		var filter = Filtering(EventPredicates).read(Router.current().params);
+		var filter = Filtering(EventPredicates)
+		             .read(Router.current().params.query)
+		             .done();
+
 		var start = instance.startOfWeek.get();
 		var end = moment(start).add(1, 'week');
 

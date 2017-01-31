@@ -1,0 +1,39 @@
+#!/usr/bin/env phantomjs
+
+var system = require('system');
+
+var url = system.args[1] || 'http://localhost:3000';
+console.log("Connecting to " + url + ".")
+
+var page = require('webpage').create();
+
+var timeout = 100;
+
+page.open(url, function(status) {
+	console.log('Page load status: ' + status);
+	if (status == 'fail') {
+		console.log("FAIL " + url);
+		phantom.exit(1);
+	}
+
+	setInterval(function() {
+		var notReady = page.evaluate(function() {
+			if (typeof Meteor === 'undefined') return "Meteor is undefined";
+			if (typeof Meteor.status === 'undefined') return "Meteor.status is undefined";
+			if (!Meteor.status().connected) return "Meteor not connected";
+			Deps.flush();
+			if (!DDP._allSubscriptionsReady) return "Subscriptions not ready";
+		});
+		
+		if (notReady) {
+			console.log("Not ready: " + notReady);
+		} else {
+			console.log("Ready.");
+			phantom.exit(0);
+		}
+		if (timeout-- < 1) {
+			console.log("TIMEOUT " + url);
+			phantom.exit(1);
+		}
+	}, 100);
+});
