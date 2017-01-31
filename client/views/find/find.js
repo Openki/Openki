@@ -32,6 +32,58 @@ var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
 Template.find.onCreated(function() {
 	var instance = this;
 
+	// Reflect filter selection in URI
+	// This creates a browser history entry so it is not done on every filter
+	// change. For example, when the search-field receives keydowns, the filter
+	// is updated but the change is not reflected in the URI.
+	instance.updateUrl = function() {
+		var filterParams = instance.filter.toParams();
+		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+		delete filterParams.internal;
+		var queryString = UrlTools.paramsToQueryString(filterParams);
+
+		var options = {};
+
+		if (queryString.length) {
+			options.query = queryString;
+		}
+
+		RouterAutoscroll.cancelNext();
+
+		var router = Router.current();
+		Router.go(router.route.getName(), { _id: router.params._id }, options);
+
+		return true;
+	};
+
+
+	instance.updateCategorySearch = function(query) {
+		instance.categorySearch.set(query);
+
+		if (!query) {
+			instance.categorySearchResults.set(categories);
+			return;
+		}
+
+		var lowQuery = query.toLowerCase();
+		var results = {};
+		for (var mainCategory in categories) {
+			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+				results[mainCategory] = [];
+			}
+			for (i = 0; i < categories[mainCategory].length; i++) {
+				var subCategory = categories[mainCategory][i];
+				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+					if (results[mainCategory]) results[mainCategory].push(subCategory);
+					else results[subCategory] = [];
+				}
+			}
+		}
+		instance.categorySearchResults.set(results);
+	};
+
+	instance.updateCategorySearchDebounced = _.debounce(instance.updateCategorySearch, 200);
+
 	instance.showingFilters = new ReactiveVar(false);
 	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(categories);
@@ -81,16 +133,23 @@ Template.find.onCreated(function() {
 });
 
 Template.find.events({
-	'change .js-search-field': updateUrl,
-
 	'keyup .js-search-input': _.debounce(function(event, instance) {
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
+
+	// Update the URI when the search-field was changed an loses focus
+	'change .js-search-field': function(event, instance) {
+		instance.updateUrl();
+	},
+
+
 	'click .js-find-btn': function(event, instance) {
+		event.preventDefault();
+
 		instance.filter.add('search', $('.js-search-input').val()).done();
-		updateUrl(event, instance);
+		instance.updateUrl();
 	},
 
 	'mouseover .js-category-label': function() {
@@ -112,8 +171,8 @@ Template.find.events({
 	'click .js-category-label': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.js-search-categories').val('');
-		updateCategorySearch(event, instance);
-		updateUrl(event, instance);
+		instance.updateCategorySearch('');
+		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
 
@@ -128,7 +187,7 @@ Template.find.events({
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
-			updateUrl(event, instance);
+			instance.updateUrl();
 		}
 	},
 
