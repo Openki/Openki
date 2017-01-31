@@ -79,7 +79,7 @@ Meteor.methods({
 		}
 	},
 
-	report: function(subject, location, report) {
+	report: function(subject, location, userAgent, report) {
 		var reporter = "A fellow visitor";
 		var rootUrl = Meteor.absoluteUrl();
 		if (this.userId) {
@@ -115,6 +115,7 @@ Meteor.methods({
 				report: report,
 				versionString: versionString,
 				timeNow: new Date(),
+				userAgent: userAgent
 			})
 		});
 	}
