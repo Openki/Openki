@@ -85,9 +85,11 @@
 					</h4>
 				</div>
 			</div>
-			<div class="page-component">
-				{{> courseEventAdd}}
-			</div>
+			{{#if mayAdd}}
+				<div class="page-component">
+					{{> courseEventAdd}}
+				</div>
+			{{/if}}
 		{{/if}}
 	{{else}}
 		<div class="page-component">
