@@ -22,8 +22,6 @@ Template.frameCalendar.onCreated(function() {
 	};
 
 	instance.eventsRendered = new ReactiveVar(false);
-
-	instance.startOfWeek = new ReactiveVar();
 	instance.groupedEvents = new ReactiveVar([]);
 	instance.days = new ReactiveVar([]);
 
