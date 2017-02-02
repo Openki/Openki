@@ -87,7 +87,7 @@ Template.frameCalendar.onRendered(function() {
 						value = '#' + value;
 					}
 
-					$(property.selector).css(property.name, value);
+					$(property.selector).css(propertyName, value);
 				}
 			});
 		}
