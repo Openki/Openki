@@ -28,18 +28,12 @@ Template.frameCalendar.onCreated(function() {
 	instance.days = new ReactiveVar([]);
 
 	this.autorun(function() {
-		minuteTime.get();
-		instance.startOfWeek.set(moment().startOf('week'));
-	});
-
-	this.autorun(function() {
 		var filter = Filtering(EventPredicates)
 		             .read(Router.current().params.query)
 		             .done();
 
 		var filterParams = filter.toParams();
-		var startOfWeek = instance.startOfWeek.get();
-		filterParams.after = startOfWeek.toDate();
+		filterParams.after = new Date();
 
 		instance.subscribe('eventsFind', filterParams, 200);
 
