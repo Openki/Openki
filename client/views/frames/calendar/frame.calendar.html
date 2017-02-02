@@ -1,23 +1,68 @@
 <template name="frameCalendar">
-	<div class="frame-events-fluid">
-		{{#each weekdays}}
-			<div class="calendar-date">
-				{{calendarDay date}}
-			</div>
-			<div class="frame-calendar-date-events">
-			{{#if Template.subscriptionsReady}}
-				{{#if hasDayEvents}}
-					{{> eventList dataEvents=dayEvents withDate=false}}
-				{{else}}
-					<div class="frame-calendar-no-events">
-						{{mf 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
-					</div>
-				{{/if}}
-			{{else}}
-				{{> loadingRow}}
-			{{/if}}
-			</div>
-		{{/each}}
+	<div class="container-fluid">
+		{{#if ready}}
+			{{#each day in days}}
+				<h4>{{day}}</h4>
+				{{#each event in (eventsOn day)}}
+					{{> frameCalendarEvent event}}
+				{{/each}}
+			{{/each}}
+		{{else}}
+			{{> loadingRow}}
+		{{/if}}
 	</div>
-	{{> tooltips}}
+</template>
+
+<template name="frameCalendarEvent">
+	<div class="frame-calendar-event">
+		<h4 class="frame-calendar-event-header js-toggle-event-details">
+			<span class="frame-calendar-event-time">
+				{{timeformat start}}
+			</span>
+			{{title}}
+		</h4>
+		<div class="frame-calendar-event-body">
+			<div class="frame-calendar-event-property">
+				<div class="description">
+					{{mf 'frame.eventsList.when' 'When:'}}
+				</div>
+				<div class="content">
+					{{timeformat start}}
+					 - {{timeformat end}}
+				</div>
+			</div>
+			<div class="frame-calendar-event-property">
+				<div class="description">
+					{{mf 'frame.eventsList.where' 'Where:'}}
+				</div>
+				<div class="content">
+					<a href="{{pathFor 'venueDetails' data=venue}}"
+					   target="_blank">
+						{{venue.name}}
+					</a>
+					{{#if room}}
+						 - {{room}}
+					{{/if}}
+				</div>
+			</div>
+			<div class="frame-calendar-event-property">
+				<div class="description">
+					{{mf 'frame.eventsList.description' 'Description:'}}
+				</div>
+				<div class="content">
+					{{description}}
+				</div>
+			</div>
+			<div class="frame-calendar-event-links">
+				<a href="{{pathFor 'showEvent'}}" target="_blank">
+					<i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+					{{mf 'frame.eventsList.showMore' 'show more'}}
+				</a>
+				<a href="{{pathFor 'calEvent' this}}">
+					<i class="fa fa-arrow-circle-down fa-fw" aria-hidden="true"></i>
+					{{mf 'frame.eventsList.download_cal' 'download event to my calendar'}}
+				</a>
+			</div>
+		</div>
+	</div>
 </template>
