@@ -3,12 +3,18 @@ function sendIcal(events, response) {
 	var calendar = ical({ name: "Openki Calendar" });
 	events.forEach(function(dbevent) {
 		var end = dbevent.end || dbevent.start;
+
+		var location = [];
+		if (dbevent.venue) location.push(dbevent.venue.name);
+		if (dbevent.room) location.push(dbevent.room);
+		location = location.join(', ');
+
 		calendar.addEvent({
 			uid: dbevent._id,
 			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
-			location: [dbevent.venue.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
+			location: location,
 			description: textPlain(dbevent.description),
 			url: Router.routes.showEvent.url(dbevent)
 		});

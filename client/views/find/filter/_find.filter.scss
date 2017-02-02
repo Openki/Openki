@@ -1,0 +1,219 @@
+.filter {
+	@include td-make-xs-column(12);
+	@include td-make-md-column(7);
+	margin-top: $form-group-margin-bottom;
+	padding: 0;
+
+	@media (min-width: $screen-md) {
+		margin-top: 0;
+		@include td-padding(left, 15px);
+	}
+}
+
+.filter-header {
+	border-bottom: 1px solid $blue-lighter;
+	color: $blue;
+	width: 100%;
+}
+
+.filter-header > h4 {
+	margin-top: 0;
+}
+
+.filter-course-properties,
+.filter-categories {
+	@include td-float(left);
+}
+
+.filter-course-properties {
+	@include td-padding-all(10px, 15px, 10px, 0);
+
+	@media (max-width: $screen-xs) {
+		@include td-padding(right, 0);
+		width: 100%;
+	}
+}
+
+.filter-course-properties > .btn-group-vertical {
+	@media (max-width: $screen-xs) {
+		width: 100%;
+	}
+}
+
+.js-toggle-property-filter {
+	@include td-text-align(left);
+}
+
+.toggle-property-filter-icon {
+	background: $role-needed-bg;
+	color: $role-needed-color;
+	display: inline-block;
+	text-align: center;
+	width: 28px;
+}
+
+.toggle-property-filter-icon > .glyphicon {
+	position: relative;
+	top: 2px;
+}
+
+.eventcaption_upcoming {
+	background: $has-upcoming-events-bg;
+	display: inline-block;
+	height: 20px;
+	position: relative;
+	vertical-align: bottom;
+	width: 28px;
+}
+
+.eventcaption_upcoming_box {
+	background: $course-compact-next-event-bg;
+	height: 10px;
+	position: absolute;
+	@include td-pos(right, 0);
+	top: 0;
+	width: 10px;
+}
+
+.eventcaption_upcoming_text {
+	background: $course-compact-next-event-color;
+	height: 1px;
+	@include td-pos(left, 3px);
+	position: absolute;
+	width: 3px;
+
+	&.first-line {
+		top: 2px;
+	}
+
+	&.second-line {
+		top: 4px;
+	}
+
+	&.third-line {
+		top: 6px;
+	}
+}
+
+.eventcaption_upcoming,
+.toggle-property-filter-icon {
+	@include opacity(.7);
+	transition: opacity .15s;
+}
+
+.js-toggle-property-filter:hover > .eventcaption_upcoming,
+.js-toggle-property-filter:hover > .toggle-property-filter-icon,
+.active > .eventcaption_upcoming,
+.active > .toggle-property-filter-icon {
+	@include opacity(1);
+}
+
+.filter-categories {
+	padding: 10px 0;
+
+	@media (max-width: $screen-xs) {
+		padding: 0;
+		width: 100%;
+	}
+}
+
+.filter-categories > h4 {
+	color: $blue;
+	margin-top: 0;
+
+	@media (max-width: $screen-xs) {
+		display: none;
+	}
+}
+
+.filter-categories-select {
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+.filter-categories-select > .dropdown-toggle {
+	background: $white;
+	border: 0;
+	display: block;
+	line-height: $line-height-base;
+	padding: $padding-base-vertical $padding-base-horizontal;
+	position: absolute;
+	@include td-pos(right, 3px);
+	top: 1px;
+}
+
+.js-search-categories {
+	border: 1px dashed $category-bg;
+	box-shadow: none;
+
+	&:focus {
+		border-style: solid;
+	}
+}
+
+.filter-no-categories-found {
+	padding: 5px 10px;
+
+	&:hover {
+		cursor: default;
+	}
+}
+
+.filter-categories-dropdown {
+	max-height: 300px;
+	min-width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.filter-categories-dropdown .js-category-label {
+	background-color: $dropdown-bg;
+	box-shadow: none;
+	position: relative;
+}
+
+.js-toggle-subcategories {
+	padding: 0 5px;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.dropdown-menu > .js-sub-category {
+	border-left: 1px solid $blue-light;
+	display: none;
+	@include td-margin(left, 20px);
+}
+
+.js-sub-category > a {
+	@include td-padding(left, 15px);
+}
+
+.filter-selected-categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	@media (max-width: $screen-xs) {
+		border: 1px solid $green;
+		border-radius: 4px;
+		margin-bottom: 10px;
+		padding: 5px;
+	}
+}
+
+.filter-selected-categories > li {
+	margin-bottom: 3px;
+	@include td-padding-all(0, 3px, 3px, 0);
+
+	@media (max-width: $screen-xs) {
+		display: inline-block;
+		margin: 5px 0;
+		padding-bottom: 0;
+	}
+}
+
+.category-label + .remove-btn {
+	@include td-margin(left, 5px);
+}
