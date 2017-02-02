@@ -56,7 +56,7 @@ Template.frameCalendar.onRendered(function() {
 	var query = Router.current().params.query;
 
 	var customizableProperties = [];
-	
+
 	customizableProperties.add = function(key, name, selector) {
 		this.push({
 			key: key,
@@ -77,7 +77,6 @@ Template.frameCalendar.onRendered(function() {
 	instance.autorun(function() {
 		var eventsRendered = instance.eventsRendered.get();
 		if (eventsRendered) {
-
 			_.forEach(customizableProperties, function(property) {
 				var value = query[property.key];
 				if (value) {
