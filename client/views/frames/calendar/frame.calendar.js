@@ -53,29 +53,32 @@ Template.frameCalendar.helpers({
 
 Template.frameCalendar.onRendered(function() {
 	var instance = this;
+	var query = Router.current().params.query;
 
-	function customProperty(key, name, selector) {
-		return {
+	var customizableProperties = [];
+	
+	customizableProperties.add = function(key, name, selector) {
+		this.push({
 			key: key,
 			name: name,
 			selector: selector
-		};
-	}
+		});
+		return this;
+	};
+
+	customizableProperties
+		.add('bgcolor', 'background-color', 'body')
+		.add('color', 'color', 'body')
+		.add('eventbg', 'background-color', '.frame-calendar-event')
+		.add('eventcolor', 'color', '.frame-calendar-event')
+		.add('linkcolor', 'color', '.frame-calendar-event a')
+		.add('fontsize', 'font-size', '*');
 
 	instance.autorun(function() {
 		var eventsRendered = instance.eventsRendered.get();
 		if (eventsRendered) {
-			var query = Router.current().params.query;
-			var customProperties = [
-				customProperty('bgcolor', 'background-color', 'body'),
-				customProperty('color', 'color', 'body'),
-				customProperty('eventbg', 'background-color', '.frame-calendar-event'),
-				customProperty('eventcolor', 'color', '.frame-calendar-event'),
-				customProperty('linkcolor', 'color', '.frame-calendar-event a'),
-				customProperty('fontsize', 'font-size', '*')
-			];
 
-			_.forEach(customProperties, function(property) {
+			_.forEach(customizableProperties, function(property) {
 				var value = query[property.key];
 				if (value) {
 					var propertyName = property.name;
