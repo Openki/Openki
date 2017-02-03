@@ -56,7 +56,6 @@ Template.frameCalendar.onRendered(function() {
 	var query = Router.current().params.query;
 
 	var customizableProperties = [];
-
 	customizableProperties.add = function(key, name, selector) {
 		this.push({
 			key: key,
@@ -80,14 +79,12 @@ Template.frameCalendar.onRendered(function() {
 			_.forEach(customizableProperties, function(property) {
 				var value = query[property.key];
 				if (value) {
-					var propertyName = property.name;
-
 					// hexify color values
-					if (~propertyName.indexOf('color')) {
+					if (~property.name.indexOf('color')) {
 						value = '#' + value;
 					}
 
-					$(property.selector).css(propertyName, value);
+					$(property.selector).css(property.name, value);
 				}
 			});
 		}
