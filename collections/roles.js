@@ -1,12 +1,9 @@
 // ======== DB-Model: ========
-// "_id"              -> ID
 // "type"             -> String     (name of role)
 // "icon"             -> String     ex: "glyphicon glyphicon-bullhorn"
-// "description"      -> String     (not used)
-// "subscribe"        -> String     (decription for subscription)
+// "alt_icon"         -> String     ex: "fa fa-bullhorn"
 // "preset"           -> Boolean    For always-on roles
 // "show_subscribers" -> Boolean
-// "order"            -> Integer
 // ===========================
 
 
