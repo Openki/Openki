@@ -1,20 +1,275 @@
-Template.userFrame.created = function() {
+Template.userFrame.onCreated(function() {
 	this.forgot = new ReactiveVar(false);
-};
+});
 
-Template.userFrame.events({
-	'click .js-logout-btn': function(event){
-		event.preventDefault();
-		Meteor.logout();
+Template.userFrame.helpers({
+	forgot: function() {
+		return !Meteor.user() && Template.instance().forgot.get();
+	},
 
-		var routeName = Router.current().route.getName();
-		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+	login: function() {
+		return !Meteor.user() && !Template.instance().forgot.get();
+	}
+});
+
+Template.loginFrame.onCreated(function() {
+	var instance = this;
+
+	instance.warnings = {
+		noUserName:
+			{ text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
+			, selectors: ['#loginName']
+			}
+		,
+		noCredentials:
+			{ text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
+			, selectors: ['#loginName', '#loginPassword']
+			}
+		,
+		noPassword:
+			{ text: mf('login.password.password_incorrect', 'Incorrect password')
+			, selectors: ['#loginPassword']
+			}
+		,
+		userNotFound:
+			{ text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
+			, selectors: ['#loginName']
+			}
+	};
+
+	instance.activeWarning = new ReactiveVar(false);
+});
+
+Template.loginFrame.onRendered(function() {
+	var instance = this;
+
+	function resetWarnings() {
+		instance.$('.form-group').removeClass('has-error');
+		instance.$('.help-block').remove();
+	}
+
+	instance.autorun(function() {
+		var activeWarning = instance.activeWarning.get();
+		if (activeWarning) {
+			resetWarnings();
+			var selectors = activeWarning.selectors;
+			_.each(selectors, function(selector, index) {
+				var formGroup = $(selector).parents('.form-group');
+				formGroup.addClass('has-error');
+
+				if (index === selectors.length -1) {
+					formGroup.append(
+						'<span class="help-block">'
+						+ activeWarning.text
+						+ '</span>'
+					);
+				}
+			});
+		} else {
+			resetWarnings();
+		}
+	});
+
+	$('.login-link').on('hide.bs.dropdown', function() {
+		resetWarnings();
+	});
+});
+
+Template.loginFrame.events({
+	'click .js-forgot-pwd-btn': function(event, instance) {
+		instance.parentInstance().forgot.set(true);
 		return false;
 	},
 
-	'click .js-forgot-pwd-btn': function(event, instance) {
-		instance.forgot.set(true);
-		return false;
+	'click .js-register-open': function(event, instance) {
+		var name = instance.$('#loginName').val();
+		var password = instance.$('#loginPassword').val();
+		var email;
+
+		// Sometimes people register with their email address in the first field
+		// Move entered username over to email field if it contains a @
+		if (~name.indexOf('@')) {
+			email = name;
+			name = '';
+		}
+
+		$('#registerName').val(name);
+		$('#registerPassword').val(password);
+		$('#registerEmail').val(email);
+	},
+
+	'submit form, click .js-login': function(event, instance){
+		event.preventDefault();
+		var user = instance.$('#loginName').val();
+		var password = instance.$('#loginPassword').val();
+		Meteor.loginWithPassword(user, password, function(err) {
+			if (err) {
+				var activeWarning = instance.activeWarning;
+				var warnings = instance.warnings;
+				var reason = err.reason;
+
+				if (reason == 'Match failed') {
+					var noPassword = !instance.$('#loginPassword').val();
+					activeWarning.set(noPassword
+					                  ? warnings.noCredentials
+								      : warnings.noUserName);
+				}
+
+				if (reason == 'Incorrect password') {
+					activeWarning.set(warnings.noPassword);
+				}
+
+				if (reason == 'User not found') {
+					activeWarning.set(warnings.userNotFound);
+				}
+			} else {
+				$('.loginButton').dropdown('toggle');
+			}
+		});
+	},
+
+	'click .js-external-service-login-btn': function(event, instance) {
+		event.preventDefault();
+
+		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		if (!Meteor[loginMethod]) {
+			console.log("don't have "+loginMethod);
+			return;
+		}
+		Meteor[loginMethod]({
+		}, function (err) {				// console.log(err.reason);
+
+			if (err) {
+				addMessage(err.reason || 'Unknown error', 'danger');
+			} else {
+				$('.loginButton').dropdown('toggle');
+			}
+		});
+	}
+});
+
+Template.registerFrame.onCreated(function() {
+	var instance = this;
+
+	instance.warnings = {
+		noUserName:
+			{ text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
+			, selectors: ['#registerName']
+			}
+		,
+		noPassword:
+			{ text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
+			, selectors: ['#registerPassword']
+			}
+		,
+		noCredentials:
+			{ text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
+			, selectors: ['#registerName', '#registerPassword']
+			}
+		,
+		userExists:
+			{ text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
+			, selectors: ['#registerName']
+			}
+	};
+
+	instance.activeWarning = new ReactiveVar(false);
+});
+
+Template.registerFrame.onRendered(function() {
+	var instance = this;
+
+	function resetWarnings() {
+		instance.$('.form-group').removeClass('has-error');
+		instance.$('.help-block').remove();
+	}
+
+	instance.autorun(function() {
+		var activeWarning = instance.activeWarning.get();
+		if (activeWarning) {
+			resetWarnings();
+			var selectors = activeWarning.selectors;
+			_.each(selectors, function(selector, index) {
+				var formGroup = $(selector).parents('.form-group');
+				formGroup.addClass('has-error');
+
+				if (index === selectors.length -1) {
+					formGroup.append(
+						'<span class="help-block">'
+						+ activeWarning.text
+						+ '</span>'
+					);
+				}
+			});
+		} else {
+			resetWarnings();
+		}
+	});
+
+	$('#registerFrame').on('hide.bs.modal', function() {
+		resetWarnings();
+	});
+});
+
+Template.registerFrame.events({
+	'click .js-register': function(event, instance) {
+		event.preventDefault();
+
+		var name = instance.$('#registerName').val();
+		var password = instance.$('#registerPassword').val();
+		var email = instance.$('#registerEmail').val();
+
+		Accounts.createUser({
+			username: name,
+			password: password,
+			email: email
+		}, function (err) {
+			if (err) {
+				var activeWarning = instance.activeWarning;
+				var warnings = instance.warnings;
+				var reason = err.reason;
+
+				if (reason == 'Need to set a username or email') {
+					activeWarning.set(warnings.noUserName);
+				}
+
+				if (reason == 'Password may not be empty') {
+					var noName = !instance.$('#registerName').val();
+					activeWarning.set(noName
+					                  ? warnings.noCredentials
+									  : warnings.noPassword);
+				}
+
+				if (reason == 'Username already exists.') {
+					activeWarning.set(warnings.userExists);
+				}
+			} else {
+				$('#registerFrame').modal('hide');
+				var regionId = cleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+			}
+		});
+	}
+});
+
+Template.forgotPwdFrame.onCreated(function() {
+	this.emailIsValid = new ReactiveVar(false);
+});
+
+Template.forgotPwdFrame.helpers({
+	noValidEmail: function() {
+		return !Template.instance().emailIsValid.get();
+	}
+});
+
+Template.forgotPwdFrame.events({
+	'keyup #resetPwdEmail': function(event, instance) {
+		var resetPwdEmail = $(event.currentTarget).val();
+		var emailIsValid = ~resetPwdEmail.indexOf('@');
+
+		instance.emailIsValid.set(emailIsValid);
 	},
 
 	'submit .js-reset-pw': function(event, instance) {
@@ -33,203 +288,18 @@ Template.userFrame.events({
 	},
 
 	'click .js-reset-pwd-close-btn': function(event, instance) {
-		instance.forgot.set(false);
+		instance.parentInstance().forgot.set(false);
 		return false;
 	},
 });
 
-Template.userFrame.helpers({
-	username: function() {
-		return Meteor.user() && Meteor.user().username;
-	},
-
-	forgot: function() {
-		return !Meteor.user() && Template.instance().forgot.get();
-	},
-
-	login: function() {
-		return !Meteor.user() && !Template.instance().forgot.get();
-	},
-});
-
-
-Template.forgotPwdFrame.onCreated(function() {
-	this.loginEmail = new ReactiveVar("");
-});
-
-
-var validEmail = function() {
-	var candidate = Template.instance().loginEmail.get();
-	var atPos = candidate.indexOf('@');
-	return atPos > 0 && atPos < candidate.length - 1;
-};
-
-
-Template.forgotPwdFrame.helpers({
-	validEmail: validEmail,
-
-	disableForInvalidEmail: function() {
-		return validEmail() ? '' : 'disabled';
-	}
-});
-
-
-Template.forgotPwdFrame.events({
-	'change, keyup, input': function(event, instance) {
-		instance.loginEmail.set("" + instance.$('.js-login-email').val());
-	},
-});
-
-
-
-Template.loginFrame.onRendered(function() {
-	var instance = this;
-	var dropdownElm = $(".login-dropdown").parent();
-	dropdownElm.on("shown.bs.dropdown", function() {
-		$('.js-login-name').focus();
-	});
-	instance.closeDropdown = function() {
-		dropdownElm.find("[data-toggle='dropdown']").dropdown('toggle');
-	};
-});
-
-
-Template.loginFrame.created = function() {
-	var instance = this;
-
-	this.registering = new ReactiveVar(false);
-	this.transEmail = ''; // Temp storage for email addresses enterd into the user name field
-	this.activeWarning = new ReactiveVar(false);
-};
-
-Template.loginFrame.helpers({
-	loginNamePlaceholder: function() {
-		if (Template.instance().registering.get()) {
-			return mf('frame.login.username', 'Username');
-		}
-		return mf('frame.login.usernameOrEmail', 'Username or Email');
-	},
-
-	registering: function() {
-		return Template.instance().registering.get();
-	},
-
-	transEmail: function() {
-		return Template.instance().transEmail;
-	},
-
-	validEmail: validEmail,
-
-	disableForInvalidEmail: function() {
-		return validEmail() ? '' : 'disabled';
-	},
-
-	hasWarnings: function() {
-		return Template.instance().activeWarning.get();
-	},
-
-	emptyLogin: function() {
-		return Template.instance().activeWarning.get() == 'Match failed';
-	},
-
-	incorrectPassword: function() {
-		return Template.instance().activeWarning.get() == 'Incorrect password';
-	},
-
-	userNotFound:function() {
-		return Template.instance().activeWarning.get() == 'User not found';
-	},
-
-	userAlreadyExists: function() {
-		return Template.instance().activeWarning.get() == 'Username already exists.';
-	},
-
-	noPasswordProvided: function() {
-		return Template.instance().activeWarning.get() == 'Password may not be empty';
-	},
-
-	loginUsernamePlaceholder: function() {
-		return Template.instance().registering.get()
-			? mf('frame.login.username', 'Username')
-			: mf('frame.login.usernameOrEmail', 'Username or Email');
-	},
-});
-
-
-Template.loginFrame.events({
-	'click .js-register-btn': function(event, instance){
+Template.ownUserFrame.events({
+	'click .js-logout': function(event){
 		event.preventDefault();
+		Meteor.logout();
 
-		var nameField =  instance.$('.js-login-name');
-		var name = nameField.val();
-
-		if (instance.registering.get()) {
-			var password = instance.find('.js-login-password').value;
-			var email = instance.$('.js-login-email').val();
-			Accounts.createUser({
-				username: name,
-				password: password,
-				email: email
-			}, function (err) {
-				if (err) {
-					instance.activeWarning.set(err.reason);
-				} else {
-					var regionId = cleanedRegion(Session.get('region'));
-					if (regionId) {
-						Meteor.call('user.regionChange', regionId);
-					}
-
-					instance.closeDropdown();
-				}
-			});
-		} else {
-			Template.instance().activeWarning.set(false);
-			Template.instance().registering.set(true);
-
-			// Sometimes people register with their email address in the first field
-			// Move entered username over to email field if it contains a @
-			var emailField = instance.$('.js-login-email');
-			var atPos = name.indexOf('@');
-			if (atPos > -1) {
-				nameField.val(name.substr(0, atPos));
-				instance.transEmail = name;
-			}
-		}
+		var routeName = Router.current().route.getName();
+		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+		return false;
 	},
-
-	'submit form, click .js-login-btn': function(event, instance){
-		event.preventDefault();
-		if(Template.instance().registering.get()){
-			Template.instance().activeWarning.set(false);
-			Template.instance().registering.set(false);
-			return;
-		}
-		var name = instance.find('.js-login-name').value;
-		var password = instance.find('.js-login-password').value;
-		Meteor.loginWithPassword(name, password, function(err) {
-			if (err) {
-				instance.activeWarning.set(err.reason);
-			} else {
-				instance.closeDropdown();
-			}
-		});
-	},
-
-	'click .js-external-service-login-btn': function(event, instance) {
-		event.preventDefault();
-
-		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
-		if (!Meteor[loginMethod]) {
-			console.log("don't have "+loginMethod);
-			return;
-		}
-		Meteor[loginMethod]({
-		}, function (err) {
-			if (err) {
-				addMessage(err.reason || 'Unknown error', 'danger');
-			} else {
-				instance.closeDropdown();
-			}
-		});
-	}
 });
