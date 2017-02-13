@@ -3,6 +3,52 @@ Router.map(function () {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
 		layoutTemplate: 'frameCalendar',
+		data: function() {
+			var customizableProperties = [];
+			customizableProperties.add = function(key, name, selector) {
+				this.push({
+					key: key,
+					name: name,
+					selector: selector
+				});
+				return this;
+			};
+
+			customizableProperties
+				.add('bgcolor', 'background-color', 'body')
+				.add('color', 'color', 'body')
+				.add('eventbg', 'background-color', '.frame-calendar-event')
+				.add('eventcolor', 'color', '.frame-calendar-event')
+				.add('linkcolor', 'color', '.frame-calendar-event a')
+				.add('fontsize', 'font-size', '*');
+
+			var cssRules = [];
+			var query = this.params.query;
+			_.forEach(customizableProperties, function(property) {
+				var queryValue = query[property.key];
+				var cssValue;
+				if (typeof queryValue !== 'undefined') {
+					// hexify color values
+					if (property.name.indexOf('color') >= 0) {
+						if (queryValue.match(/^[0-9A-F]+$/i)) {
+							cssValue = '#' + queryValue.substr(0, 6);
+						}
+					} else {
+						var intVal = parseInt(queryValue, 10);
+						if (!Number.isNaN(intVal)) {
+							cssValue = Math.max(0, Math.min(1000, intVal)) + 'px';
+						}
+					}
+
+					if (cssValue) {
+						cssRules.push({ selector: property.selector, name: property.name, value: cssValue });
+					}
+				}
+			});
+
+			return { cssRules: cssRules };
+
+		},
 		onAfterAction: function() {
 			document.title = webpagename + ' Calendar';
 		}
@@ -12,7 +58,6 @@ Router.map(function () {
 Template.frameCalendar.onCreated(function() {
 	var instance = this;
 
-	instance.eventsRendered = new ReactiveVar(false);
 	instance.groupedEvents = new ReactiveVar([]);
 	instance.days = new ReactiveVar([]);
 
@@ -51,45 +96,6 @@ Template.frameCalendar.helpers({
 	}
 });
 
-Template.frameCalendar.onRendered(function() {
-	var instance = this;
-	var query = Router.current().params.query;
-
-	var customizableProperties = [];
-	customizableProperties.add = function(key, name, selector) {
-		this.push({
-			key: key,
-			name: name,
-			selector: selector
-		});
-		return this;
-	};
-
-	customizableProperties
-		.add('bgcolor', 'background-color', 'body')
-		.add('color', 'color', 'body')
-		.add('eventbg', 'background-color', '.frame-calendar-event')
-		.add('eventcolor', 'color', '.frame-calendar-event')
-		.add('linkcolor', 'color', '.frame-calendar-event a')
-		.add('fontsize', 'font-size', '*');
-
-	instance.autorun(function() {
-		var eventsRendered = instance.eventsRendered.get();
-		if (eventsRendered) {
-			_.forEach(customizableProperties, function(property) {
-				var value = query[property.key];
-				if (value) {
-					// hexify color values
-					if (property.name.indexOf('color') >= 0) {
-						value = '#' + value;
-					}
-
-					$(property.selector).css(property.name, value);
-				}
-			});
-		}
-	});
-});
 
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
@@ -99,9 +105,4 @@ Template.frameCalendarEvent.events({
 		jQueryTarget.nextAll('.frame-calendar-event-body').toggle();
 		jQueryTarget.children('.frame-calendar-event-time').toggle();
 	}
-});
-
-Template.frameCalendarEvent.onRendered(function() {
-	var eventsRendered = this.parentInstance().eventsRendered;
-	if (!eventsRendered.get()) eventsRendered.set(true);
 });
