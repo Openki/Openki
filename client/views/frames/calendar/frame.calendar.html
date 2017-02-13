@@ -1,4 +1,10 @@
 <template name="frameCalendar">
+	<style type="text/css">
+		{{#each cssRules}}
+			{{selector}} { {{name}}: {{value}}; }
+		{{/each}}
+	</style>
+
 	<div class="container-fluid">
 		{{#if ready}}
 			{{#each day in days}}

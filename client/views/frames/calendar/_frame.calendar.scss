@@ -1,32 +1,33 @@
+.frame-calendar-event {
+	background-color: $blue-lighter;
+}
+
 .frame-calendar-event + .frame-calendar-event {
 	margin-top: 10px;
 }
 
 .frame-calendar-event-header {
-	$background-color: $blue-lighter;
-
-	background-color: $background-color;
 	font-weight: bold;
 	margin: 0;
 	padding: 10px;
 	transition: background-color $default-transition-time;
 
-	&:hover {
-		background-color: darken($background-color, 5%);
-		cursor: pointer;
+	&:hover,
+	&.active {
+		background-color: rgba(0, 0, 0, 0.03);
 	}
 
-	&.active {
-		background-color: darken($background-color, 5%);
+	&:hover {
+		cursor: pointer;
 	}
 }
 
 .frame-calendar-event-time {
+	font-weight: normal;
 	@include td-margin(right, 10px);
 }
 
 .frame-calendar-event-body {
-	background-color: $blue-lighter;
 	display: none;
 	padding: 10px;
 }
