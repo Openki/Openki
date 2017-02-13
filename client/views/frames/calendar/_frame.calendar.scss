@@ -6,6 +6,11 @@
 	margin-top: 10px;
 }
 
+.frame-calendar-day,
+.frame-calendar-event-header {
+	font-size: 1.2em;
+}
+
 .frame-calendar-event-header {
 	font-weight: bold;
 	margin: 0;
@@ -23,6 +28,7 @@
 }
 
 .frame-calendar-event-time {
+	font-size: 1em;
 	font-weight: normal;
 	@include td-margin(right, 10px);
 }

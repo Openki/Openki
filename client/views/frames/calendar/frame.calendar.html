@@ -8,7 +8,7 @@
 	<div class="container-fluid">
 		{{#if ready}}
 			{{#each day in days}}
-				<h4>{{day}}</h4>
+				<h4 class="frame-calendar-day">{{day}}</h4>
 				{{#each event in (eventsOn day)}}
 					{{> frameCalendarEvent event}}
 				{{/each}}
