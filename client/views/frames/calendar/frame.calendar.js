@@ -80,7 +80,7 @@ Template.frameCalendar.onRendered(function() {
 				var value = query[property.key];
 				if (value) {
 					// hexify color values
-					if (~property.name.indexOf('color')) {
+					if (property.name.indexOf('color') >= 0) {
 						value = '#' + value;
 					}
 
