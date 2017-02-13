@@ -106,11 +106,13 @@
 	{{#if ready}}
 		{{#if haveEvents}}
 			<div class="page-component">
-				<a href="/cal/course/{{course._id}}"
+			{{#with course}}
+				<a href="{{pathFor 'calCourse'}}"
 					target="_blank">
 					<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
 					{{mf 'course.download_cal' 'Download events to my calendar'}}
 				</a>
+			{{/with}}
 			</div>
 		{{/if}}
 	{{/if}}
