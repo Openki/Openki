@@ -68,7 +68,15 @@ Template.courseMember.events({
 		return false;
 	},
 	'click .js-remove-from-team-btn': function(e, template) {
-		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
+		if(this.member.user === Meteor.userId() && !privileged(Meteor.userId(), 'admin')){
+			if (confirm(mf("course.detail.remove.yourself.team", "Remove yourself from the team? Only another member can add you again."))) {
+				Meteor.call("remove_role", this.course._id, this.member.user, 'team');
+			}
+		} else {
+			if (confirm(mf("course.detail.remove.other.team", "Do you really want to remove this member from the team?"))) {
+				Meteor.call("remove_role", this.course._id, this.member.user, 'team');
+			}
+		}
 		return false;
 	}
 });
