@@ -25,16 +25,16 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :pencil: Easily propose courses and events
 - :mag: Fulltext-search them
 - :speech_balloon: Simple discussion-board
-- :computer: Infoscreen: Live-views with upcoming events for big and small screens [(Wiki)](https://github.com/Openki/Openki/wiki/InfoScreens)
-- :pager: Frame-URLs to dynamically embed views into other pages [(Wiki)](https://github.com/Openki/Openki/wiki/Frames)
+- :computer: Infoscreen: Live-views with upcoming events for big and small screens ([Wiki](https://github.com/Openki/Openki/wiki/InfoScreens))
+- :pager: Frame-URLs to dynamically embed views into other pages ([Wiki](https://github.com/Openki/Openki/wiki/Frames))
 - :cat: Categories with sub-categories
 - :door: Regions- and room-system
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
-- :date: Calendar and iCal exports [(Wiki)](https://github.com/Openki/Openki/wiki/calendar-export)
+- :date: Calendar and iCal exports ([Wiki](https://github.com/Openki/Openki/wiki/calendar-export))
 - :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for crowdsourced, live translation
+- :ideograph_advantage: I18n: In-browser-GUI for crowdsourced, live translation (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
 - :envelope: Email notifications
 - :bird: funny icons for the feature-list in our github-readme :)
 
