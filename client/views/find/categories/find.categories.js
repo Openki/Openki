@@ -23,10 +23,8 @@ Template.categoriesMenu.helpers({
 Template.categoriesMenu.events({
 	"click .js-menu-category": function(event, instance) {
 		var categoryName = this.name;
-
-		var findInstance = instance.parentInstance();
-		var filter = findInstance.filter;
-
+		var parentInstance = instance.parentInstance();
+		var filter = parentInstance.filter;
 		var selectedCategories = filter.get('categories');
 		var categoryIsSelected = selectedCategories && ~selectedCategories.indexOf(categoryName);
 
@@ -39,8 +37,8 @@ Template.categoriesMenu.events({
 			filter.add('categories', categoryName).done();
 		}
 
-		updateCategorySearch(event, findInstance);
-		updateUrl(event, findInstance);
+		parentInstance.updateCategorySearch('');
+		parentInstance.updateUrl();
 		window.scrollTo(0, 0);
 	}
 });

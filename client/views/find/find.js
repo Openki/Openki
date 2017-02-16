@@ -56,23 +56,27 @@ Template.find.onCreated(function() {
 		return true;
 	};
 
+	var categoryNames = {};
+	_.each(Categories, function(category) {
+		categoryNames[category.name] = category.subcategories;
+	});
 
 	instance.updateCategorySearch = function(query) {
 		instance.categorySearch.set(query);
 
 		if (!query) {
-			instance.categorySearchResults.set(categories);
+			instance.categorySearchResults.set(categoryNames);
 			return;
 		}
 
 		var lowQuery = query.toLowerCase();
 		var results = {};
-		for (var mainCategory in categories) {
+		for (var mainCategory in categoryNames) {
 			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
 				results[mainCategory] = [];
 			}
-			for (i = 0; i < categories[mainCategory].length; i++) {
-				var subCategory = categories[mainCategory][i];
+			for (i = 0; i < categoryNames[mainCategory].length; i++) {
+				var subCategory = categoryNames[mainCategory][i];
 				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
 					if (results[mainCategory]) results[mainCategory].push(subCategory);
 					else results[subCategory] = [];
@@ -85,16 +89,9 @@ Template.find.onCreated(function() {
 	instance.updateCategorySearchDebounced = _.debounce(instance.updateCategorySearch, 200);
 
 	instance.showingFilters = new ReactiveVar(false);
-
-	var categoryNames = {};
-	_.each(Categories, function(category) {
-		categoryNames[category.name] = category.subcategories;
-	});
-
 	instance.categoryNames = categoryNames;
 	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(categoryNames);
-
 	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
