@@ -4,8 +4,14 @@ Template.courseEvents.onCreated(function() {
 
 	instance.eventSub = subs.subscribe('eventsForCourse', courseId);
 
+	instance.showAllEvents = new ReactiveVar(false);
+
 	instance.haveEvents = function() {
 		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
+	};
+
+	instance.haveMoreEvents = function() {
+		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 4;
 	};
 
 	instance.ongoingEvents = function() {
@@ -13,7 +19,9 @@ Template.courseEvents.onCreated(function() {
 	};
 
 	instance.futureEvents = function() {
-		return eventsFind({ course: courseId, after: minuteTime.get() }, 4);
+		var limit = 0;
+		if (!instance.showAllEvents.get()) limit = 4;
+		return eventsFind({ course: courseId, after: minuteTime.get() }, limit);
 	};
 });
 
@@ -42,6 +50,11 @@ Template.courseEvents.helpers({
 		return Template.instance().futureEvents().count() > 0;
 	},
 
+	haveMoreEvents: function() {
+		var instance = Template.instance();
+		return instance.haveMoreEvents() & (!instance.showAllEvents.get());
+	},
+
 	ready: function() {
 		return Template.instance().eventSub.ready();
 	}
@@ -50,6 +63,10 @@ Template.courseEvents.helpers({
 Template.courseEvents.events({
 	'click .js-add-event': function () {
 		Router.go('showEvent', { _id: 'create' }, { query: { courseId: this.course._id } });
+	},
+
+	'click .js-show-all-events': function () {
+		Template.instance().showAllEvents.set(true);
 	},
 
 	'scroll .js-scrollable-container': function(event, instance) {

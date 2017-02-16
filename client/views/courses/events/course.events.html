@@ -62,6 +62,14 @@
 					<div class="course-event-list">
 						{{> eventList dataEvents=futureEvents withDate=true}}
 					</div>
+					<div class="show-more-courses">
+					{{#if haveMoreEvents}}
+						<button type="button" class="btn btn-add js-show-all-events">
+							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+							{{mf 'course.events.showAllEvents' 'Show all events'}}
+						</button>
+					{{/if}}
+				</div>
 				{{/if}}
 			</div>
 			<div class="fade-top"></div>
