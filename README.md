@@ -1,4 +1,4 @@
-Openki  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) &nbsp; &nbsp; [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
+Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](http://meteor.com)
@@ -10,31 +10,31 @@ An interactive web-platform in development with the ambition to facilitate a bar
 Beside longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
 [  read on...](http://about.openki.net "our blog")
-<div align="right"> (<span class="octicon octicon-star">★</span> Star us if you like the idea)</div>
+<div align="right"> (★ Star us if you like the idea)</div>
 
-- Demo/Playground: [sandbox.openki.net](http://sandbox.openki.net/?region=Englistan "runing here")
 - Live: [openki.net](https://openki.net)
+- Demo/Playground: [sandbox.openki.net](http://sandbox.openki.net/?region=Englistan "running here")
 - Concept: [about.openki.net](http://about.openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
 
-All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](http://help.github.com/send-pull-requests/).
+All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](https://github.com/Openki/Openki/compare).
 
 
 ### Features
 - :pencil: Easily propose courses and events
 - :mag: Fulltext-search them
 - :speech_balloon: Simple discussion-board
-- :computer: Information-display: live-views for big and small screens with upcomming events
-- :pager: frame-URIs to dynamically embed views into other pages
+- :computer: Infoscreen: Live-views with upcoming events for big and small screens ([Wiki](https://github.com/Openki/Openki/wiki/InfoScreens))
+- :pager: Frame-URLs to dynamically embed views into other pages ([Wiki](https://github.com/Openki/Openki/wiki/Frames))
 - :cat: Categories with sub-categories
 - :door: Regions- and room-system
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
-- :date: Calendar and iCal exports
+- :date: Calendar and iCal exports ([Wiki](https://github.com/Openki/Openki/wiki/calendar-export))
 - :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
-- :iphone: Responsive design: mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for life translation
+- :iphone: Responsive design: Mobile, tablet and desktop computers
+- :ideograph_advantage: I18n: In-browser-GUI for crowdsourced, live translation (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
 - :envelope: Email notifications
 - :bird: funny icons for the feature-list in our github-readme :)
 
@@ -57,9 +57,10 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
 ### Documentation
-- The technical documentation is here on Github in the <span class="octicon octicon-book"></span>[Wiki](https://github.com/Openki/Openki/wiki)
+- The technical documentation is here on Github in the :book: [Wiki](https://github.com/Openki/Openki/wiki)
+- More documentation can be found on our  [blog](http://about.openki.net/?page_id=1043)
 
 ### License
-- AGPL – GNU Affero General Public License (for the sourcecode) <span class="octicon octicon-mark-github"></span>
+- AGPL – GNU Affero General Public License (for the sourcecode)
 - For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA
 - For all testing-events descriptions (server/data/testing.events.js): Creative Commons BY-NC-SA

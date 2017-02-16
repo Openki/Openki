@@ -1,8 +1,14 @@
 <template name="frameCalendar">
+	<style type="text/css">
+		{{#each cssRules}}
+			{{selector}} { {{name}}: {{value}}; }
+		{{/each}}
+	</style>
+
 	<div class="container-fluid">
 		{{#if ready}}
 			{{#each day in days}}
-				<h4>{{day}}</h4>
+				<h4 class="frame-calendar-day">{{day}}</h4>
 				{{#each event in (eventsOn day)}}
 					{{> frameCalendarEvent event}}
 				{{/each}}
@@ -50,7 +56,7 @@
 					{{mf 'frame.eventsList.description' 'Description:'}}
 				</div>
 				<div class="content">
-					{{description}}
+					{{{description}}}
 				</div>
 			</div>
 			<div class="frame-calendar-event-links">
