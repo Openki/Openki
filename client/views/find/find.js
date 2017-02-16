@@ -114,7 +114,7 @@ Template.find.onCreated(function() {
 		});
 
 		_.each(filter.get('categories'), function(filterCategory) {
-			if (!~mainCategoryNames.indexOf(filterCategory)) {
+			if (mainCategoryNames.indexOf(filterCategory) < 0) {
 				instance.showingFilters.set(true);
 				return;
 			}

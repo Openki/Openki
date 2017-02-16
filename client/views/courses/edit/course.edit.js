@@ -32,7 +32,7 @@ Template.courseEdit.helpers({
 
 		// Hide if parent categories not selected
 		var selectedCategories = Template.instance().selectedCategories.get();
-		if (!~selectedCategories.indexOf(category.name)) return [];
+		if (selectedCategories.indexOf(category.name) < 0) return [];
 
 		return category.subcategories;
 	},
