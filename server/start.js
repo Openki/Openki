@@ -21,16 +21,6 @@ Meteor.startup(function () {
 		robots.addLine('Disallow: /');
 	}
 
-	if (Meteor.settings.testdata) {
-		loadTestRegionsIfNone();       // Regions    from server/data/testing.regions.js
-		loadVenuesIfNone();            // Venues     from server/data/testing.venues.js
-		loadGroupsIfNone();            // Groups     from server/data/testing.groups.js
-		loadCoursesIfNone(Meteor.settings.testdata);
-		createEventsIfNone();          // Events     in   server/testing.createnload.data.js (generic)
-		loadTestEvents();              // Events     from server/data/testing.events.js
-		createCommentsIfNone();        // Comments   in   server/testing.createnload.data.js (generic)
-	}
-
 	var serviceConf = Meteor.settings.service;
 	if (serviceConf) {
 		if (serviceConf.google

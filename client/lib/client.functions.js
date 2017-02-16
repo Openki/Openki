@@ -13,8 +13,6 @@ getMember = function(members, user) {
 
 
 /* Get a username from ID
- *
- * It tries hard to give a sensible response; incognito ids get represented by an incognito string, unless the user employing that incognito-ID is currently logged in.
  */
 userName = function() {
 	// We cache the username lookups
@@ -38,14 +36,6 @@ userName = function() {
 
 	return function(userId) {
 		if (!userId) return mf('noUser_placeholder', 'someone');
-
-		if (userId.substr(0, 5)  == 'Anon_') {
-			var loggeduser = Meteor.user();
-			if (loggeduser && loggeduser.anonId && loggeduser.anonId.indexOf(userId) != -1) {
-				return  '☔ ' + loggeduser.username + ' ☔';
-			}
-			return "☔ incognito";
-		}
 
 		// Consult cache
 		var user = cache[userId];
@@ -143,11 +133,11 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
-courseFilterPreview = function(match, delayed) {
-	var noMatch = $('.course-compact').not(match);
+courseFilterPreview = function(selector, activate, delayed) {
+	var negativeSelection = $('.course-compact').not(selector);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
 
-	noMatch.toggleClass(filterClass);
+	negativeSelection.toggleClass(filterClass, activate);
 };
 
 showServerError = function(message, err) {
@@ -297,6 +287,17 @@ Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
+Template.registerHelper('now', function(){
+	return moment(new Date());
+});
+
+Template.registerHelper('backArrow', function() {
+	var isRTL = Session.get('textDirectionality') == 'rtl';
+	var direction = isRTL ? 'right' : 'left';
+	return Spacebars.SafeString(
+		'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+	);
+});
 
 Template.registerHelper('dateformat', function(date) {
 	Session.get('timeLocale');

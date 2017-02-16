@@ -19,7 +19,7 @@
 	display: inline-block;
 
 	&:first-child {
-		margin-right: 10px;
+		@include td-margin(right, 10px);
 	}
 }
 
@@ -33,5 +33,5 @@
 }
 
 .page-not-found-report .report {
-	text-align: left;
+	@include td-text-align(left);
 }

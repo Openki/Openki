@@ -36,8 +36,9 @@ Template.regionSelection.helpers({
 		var search = Template.instance().regionSearch.get();
 		var query = {};
 		if (search !== '') query = { name: new RegExp(search, 'i') };
+		var options = {sort: {futureEventCount: -1}};
 
-		return Regions.find(query);
+		return Regions.find(query, options);
 	},
 
 	regionNameMarked: function() {
@@ -109,9 +110,12 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover, mouseout, focus, focusout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, false);
+	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
+		var regionID = this._id;
+		if (regionID && Session.equals('region', 'all')) {
+			var activate = e.type == 'mouseover' || e.type == 'focusin';
+
+			courseFilterPreview('.' + regionID, activate);
 		}
 	},
 
@@ -130,7 +134,7 @@ Template.regionSelection.events({
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
-		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloat;
+		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloatBreakpoint;
 		if (!gridFloatBreakpoint) {
 			instance.$('.dropdown').on('show.bs.dropdown', function(e){
 				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();

@@ -50,3 +50,13 @@ Template.usersCourselist.helpers({
 		return coursesFind({ userInvolved: userId }).count() > 0;
 	}
 });
+
+Template.usersCourselist.events({
+	"click .js-scroll": function(event, instance){
+		var roleLabel = event.currentTarget;
+		var rolePosition = $(roleLabel.getAttribute('href')).offset().top;
+		// subtract the amount of pixels of the height of the navbar
+		$('html, body').animate({'scrollTop': rolePosition - SCSSVars.navbarHeight});
+		event.preventDefault();
+	}
+});

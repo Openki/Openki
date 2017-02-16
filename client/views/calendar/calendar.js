@@ -144,8 +144,17 @@ Template.calendarNavControl.events({
 });
 
 Template.calendarNavControl.helpers({
-	isPrevious: function() {
-		return this.direction == 'previous';
+	arrow: function() {
+		var isRTL = Session.get('textDirectionality') == 'rtl';
+
+		if (this.direction == 'previous') {
+			isRTL = !isRTL;
+		}
+
+		var direction = isRTL ? 'left' : 'right';
+		return Spacebars.SafeString(
+			'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+		);
 	},
 
 	mfString: function(direction, unit, length) {
@@ -161,4 +170,17 @@ Template.calendarNavControl.helpers({
 		var navUnits = ['week', 'month', 'year'];
 		return navUnits;
 	}
+});
+
+Template.calendarAddEvent.onRendered(function() {
+	var instance = this;
+	var eventCaption = instance.$('.event-caption-add');
+
+	function toggleCaptionClass(e) {
+		var removeClass = e.type == 'mouseout';
+		eventCaption.toggleClass('placeholder', removeClass);
+	}
+
+	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
+	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });

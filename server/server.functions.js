@@ -1,12 +1,4 @@
 Meteor.methods({
-	generateAnonId: function(){
-		var newId = new Meteor.Collection.ObjectID();
-		anonId = 'Anon_' + newId._str;
-		Meteor.users.update(Meteor.userId(), {
-			$push: { anonId: anonId }
-		});
-		return anonId;
-	},
 	updateUserLocale: function(locale){
 		Meteor.users.update(Meteor.userId(), {
 			$set: { 'profile.locale': locale }

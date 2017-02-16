@@ -38,7 +38,7 @@
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}}">
 					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
 						<a href="{{pathFor 'home'}}"
 							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} toggling-submenu navbar-link js-nav-dropdown-close"
@@ -65,7 +65,7 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav {{toggleNavbarRight}}">
 					{{> regionSelectionWrap}}
 					{{> languageSelectionWrap}}
 					<li class="dropdown login-link {{activeClass 'profile'}}">

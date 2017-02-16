@@ -1,25 +1,25 @@
-	// *** Course compact ***
+// *** Course compact ***
 //=================
 
 // ** Wrap
 //========================================================================================
 .course-compact-wrap {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .container .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
-		@include make-md-column(4);
-		@include make-lg-column(3);
+		@include td-make-xs-column(6);
+		@include td-make-md-column(4);
+		@include td-make-lg-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 4);
 	}
 }
 
 .container-sm .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 4);
 	}
 }
@@ -159,13 +159,13 @@
 // ** Content
 //========================================================================================
 .course-compact-content {
-	@include make-xs-column(10);
+	@include td-make-xs-column(10);
 	height: 100%;
-	padding: 0 0 0 15px;
+	@include td-padding-all(0, 0, 0, 15px);
 
 	&.has-upcoming-events {
-		@include make-xs-column(7.5);
-		padding: $course-border-width 5px $course-border-width 15px;
+		@include td-make-xs-column(7.5);
+		@include td-padding-all($course-border-width, 5px, $course-border-width, 15px);
 	}
 }
 
@@ -193,7 +193,7 @@
 // ** Event
 //========================================================================================
 .course-compact-next-event {
-	@include make-xs-column(4.5);
+	@include td-make-xs-column(4.5);
 	max-height: 150px;
 	padding: 10px;
 	position: relative;
@@ -206,7 +206,7 @@
 .course-compact-next-event-time,
 .course-compact-next-event-date,
 .course-compact-next-event-venue {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: 0;
 }
 
@@ -217,7 +217,7 @@
 // ** Roles
 //========================================================================================
 .course-compact-roles {
-	@include make-xs-column(2);
+	@include td-make-xs-column(2);
 	height: 100%;
 	padding: 0;
 	position: relative;
@@ -248,17 +248,17 @@
 .course-compact.proposal > .grouplist,
 .course-compact.has-past-events > .grouplist {
 	bottom: $course-border-width;
-	right: $course-border-width;
+	@include td-pos(right, $course-border-width);
 }
 
 .course-compact.has-upcoming-events > .grouplist {
 	bottom: $course-border-width * 2;
-	right: $course-border-width * 2;
+	@include td-pos(right, $course-border-width * 2);
 }
 
 .course-compact > .grouplist > li {
-	float: right;
-	margin-left: 4px;
+	@include td-float(right);
+	@include td-margin(left, 4px);
 }
 
 .course-compact-content > .grouplist {

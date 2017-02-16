@@ -4,17 +4,17 @@
 // ** Wrap
 //========================================================================================
 .kiosk-event-wrap-ongoing {
-	@include make-xs-column(6);
-	@include make-sm-column(4);
-	@include make-md-column(2);
+	@include td-make-xs-column(6);
+	@include td-make-sm-column(4);
+	@include td-make-md-column(2);
 	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
 }
 
 .kiosk-event-wrap-today,
 .kiosk-event-wrap-upcoming {
-	@include make-xs-column(6);
-	@include make-md-column(3);
-	@include make-lg-column(2.4);
+	@include td-make-xs-column(6);
+	@include td-make-md-column(3);
+	@include td-make-lg-column(2.4);
 	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
 }
 
@@ -95,16 +95,16 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 //========================================================================================
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
-	float: left;
-	text-align: left;
+	@include td-float(left);
+	@include td-text-align(left);
 }
 
 // ** Location
 //========================================================================================
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
-	float: right;
-	text-align: right;
+	@include td-float(right);
+	@include td-text-align(right);
 }
 
 // ** Body

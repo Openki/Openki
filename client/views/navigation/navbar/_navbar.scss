@@ -44,7 +44,7 @@
 	color: $gray-dark;
 	font-size: small;
 	font-weight: bold;
-	right: 1em;
+	@include td-pos(right, 1em);
 	position: absolute;
 	transition: text-shadow $default-transition-time;
 	transform: rotate(345deg);
