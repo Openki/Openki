@@ -32,6 +32,58 @@ var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor'];
 Template.find.onCreated(function() {
 	var instance = this;
 
+	// Reflect filter selection in URI
+	// This creates a browser history entry so it is not done on every filter
+	// change. For example, when the search-field receives keydowns, the filter
+	// is updated but the change is not reflected in the URI.
+	instance.updateUrl = function() {
+		var filterParams = instance.filter.toParams();
+		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+		delete filterParams.internal;
+		var queryString = UrlTools.paramsToQueryString(filterParams);
+
+		var options = {};
+
+		if (queryString.length) {
+			options.query = queryString;
+		}
+
+		RouterAutoscroll.cancelNext();
+
+		var router = Router.current();
+		Router.go(router.route.getName(), { _id: router.params._id }, options);
+
+		return true;
+	};
+
+
+	instance.updateCategorySearch = function(query) {
+		instance.categorySearch.set(query);
+
+		if (!query) {
+			instance.categorySearchResults.set(categories);
+			return;
+		}
+
+		var lowQuery = query.toLowerCase();
+		var results = {};
+		for (var mainCategory in categories) {
+			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+				results[mainCategory] = [];
+			}
+			for (i = 0; i < categories[mainCategory].length; i++) {
+				var subCategory = categories[mainCategory][i];
+				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+					if (results[mainCategory]) results[mainCategory].push(subCategory);
+					else results[subCategory] = [];
+				}
+			}
+		}
+		instance.categorySearchResults.set(results);
+	};
+
+	instance.updateCategorySearchDebounced = _.debounce(instance.updateCategorySearch, 200);
+
 	instance.showingFilters = new ReactiveVar(false);
 
 	var categoryNames = {};
@@ -99,86 +151,24 @@ Template.find.onCreated(function() {
 	});
 });
 
-updateCategorySearch = function(event, instance) {
-	var categoryNames = instance.categoryNames;
-	var query = instance.$('.js-search-categories').val();
-	if (!query) query = '';
-
-	instance.categorySearch.set(query);
-
-	var filterCategories = instance.filter.get('categories');
-	var lowQuery = query.toLowerCase();
-	var results = {};
-
-	for (var categoryName in categoryNames) {
-		results[categoryName] = [];
-
-		var subcategoryNames = categoryNames[categoryName];
-		_.each(subcategoryNames, function(subcategoryName) {
-			var categoryInFilter = _.contains(filterCategories, subcategoryName);
-
-			var lowMFString = mf('category.' + subcategoryName).toLowerCase();
-			var matchesQuery = ~lowMFString.indexOf(lowQuery);
-
-			if (!categoryInFilter && matchesQuery) {
-				if (results[categoryName]) results[categoryName].push(subcategoryName);
-			}
-		});
-	}
-
-	var subcategories = instance.$('.js-sub-category');
-	if (!query) {
-		subcategories.hide();
-	} else {
-		subcategories.show();
-	}
-
-	instance.categorySearchResults.set(results);
-};
-
 Template.find.events({
-	'submit': updateUrl,
-	'change .js-search-field': updateUrl,
-	'change .js-toggle-property-filter': function(event, instance) {
-		instance.filter.add('upcomingEvent', instance.$('#hasUpcomingEvent').prop('checked'));
-		instance.filter.add('needsHost', instance.$('#needsHost').prop('checked'));
-		instance.filter.add('needsMentor', instance.$('#needsMentor').prop('checked'));
-		instance.filter.done();
-		updateUrl(event, instance);
-	},
-
 	'keyup .js-search-input': _.debounce(function(event, instance) {
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
-	'click .js-find-btn': function(event, instance) {
-		instance.filter.add('search', $('.js-search-input').val()).done();
-		updateUrl(event, instance);
+
+	// Update the URI when the search-field was changed an loses focus
+	'change .js-search-field': function(event, instance) {
+		instance.updateUrl();
 	},
 
-	'mouseover .js-filter-upcoming-events': function() {
-		courseFilterPreview('.has-upcoming-events', true);
+	'mouseover .js-category-label': function() {
+		courseFilterPreview(('.'+this), true, true);
 	},
 
-	'mouseout .js-filter-upcoming-events': function() {
-		courseFilterPreview('.has-upcoming-events', false);
-	},
-
-	'mouseover .js-filter-needs-host': function() {
-		courseFilterPreview('.needsHost', true);
-	},
-
-	'mouseout .js-filter-needs-host': function() {
-		courseFilterPreview('.needsHost', false);
-	},
-
-	'mouseover .js-filter-needs-mentor': function() {
-		courseFilterPreview('.needsMentor', true);
-	},
-
-	'mouseout .js-filter-needs-mentor': function() {
-		courseFilterPreview('.needsMentor', false);
+	'mouseout .js-category-label': function() {
+		courseFilterPreview(('.'+this), false, true);
 	},
 
 	'mouseover .js-group-label': function() {
@@ -189,36 +179,16 @@ Template.find.events({
 		courseFilterPreview(('.'+this), false, true);
 	},
 
-	'keyup .js-search-categories': _.debounce(updateCategorySearch, 100),
-
-	'focus .js-search-categories': function(event, instance) {
-		instance.$('.dropdown-toggle').dropdown('toggle');
-	},
-
-	'click .js-toggle-subcategories': function(event, instance) {
-		$(".js-sub-category" + "." + this).toggle();
-		$(".js-toggle-subcategories." + this + " span").toggleClass('fa-angle-down');
-		$(".js-toggle-subcategories." + this + " span").toggleClass('fa-angle-up');
-		event.stopPropagation();
-	},
-
-	'click .js-category-label, click .js-category-selection-label': function(event, instance) {
+	'click .js-category-label': function(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.js-search-categories').val('');
-		updateCategorySearch(event, instance);
-		updateUrl(event, instance);
+		instance.updateCategorySearch('');
+		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
 
 	'click .js-group-label': function(event, instance) {
 		window.scrollTo(0, 0);
-	},
-
-	'click .js-remove-category-btn': function(event, instance) {
-		instance.filter.remove('categories', ''+this).done();
-		updateCategorySearch(event, instance);
-		updateUrl(event, instance);
-		return false;
 	},
 
 	'click .js-toggle-filter': function(event, instance) {
@@ -228,7 +198,7 @@ Template.find.events({
 		if (!showingFilters) {
 			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
 			instance.filter.done();
-			updateUrl(event, instance);
+			instance.updateUrl();
 		}
 	},
 
@@ -251,66 +221,11 @@ Template.find.helpers({
 		return Template.instance().showingFilters.get();
 	},
 
-	'toggleChecked': function(name) {
-		return Template.instance().filter.get(name) ? 'checked' : '';
-	},
-
 	'newCourse': function() {
 		var instance = Template.instance();
 		var course = courseTemplate();
 		course.name = instance.filter.get('search');
 		return course;
-	},
-
-	'selectedCategories': function() {
-		return Template.instance().filter.get('categories');
-	},
-
-	'group': function() {
-		var groupId = Template.instance().filter.get('group');
-		if (!groupId) return false;
-		return groupId;
-	},
-
-	'availableCategories': function() {
-		return Object.keys(Template.instance().categorySearchResults.get());
-	},
-
-	'availableSubcategories': function() {
-		return Template.instance().categorySearchResults.get()[this];
-	},
-
-	isInFilter: function() {
-		var filterCategories = Template.instance().filter.get('categories');
-		var categoryName = ''+this;
-		return _.contains(filterCategories, categoryName);
-	},
-
-	categoryIdentifier: function() {
-		var categoryName = ''+this;
-		var mainCategory = _.find(Categories, function(category) {
-			return category.name === categoryName;
-		});
-		return mainCategory._id;
-	},
-
-	'icon': function() {
-		var categoryName = this;
-		var category = _.find(Categories, function(category) {
-			return category.name == categoryName;
-		});
-		if (category) return category.icon;
-	},
-
-	'categoryNameMarked': function() {
-		Session.get('locale'); // Reactive dependency
-		var search = Template.instance().categorySearch.get();
-		var name = mf('category.' + this);
-		return markedName(search, name);
-	},
-
-	'availableGroups': function(group) {
-		return groups[group];
 	},
 
 	'hasResults': function() {

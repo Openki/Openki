@@ -202,10 +202,12 @@ Courses.updateGroups = function(courseId) {
 
 coursesFind = function(filter, limit) {
 	var find = {};
+	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent === true) {
 		find.futureEvents = { $gt: 0 };
+		sort = {"nextEvent.start": 1, time_lastedit: -1};
 	}
 	if (filter.upcomingEvent === false) {
 		find.futureEvents = 0;
@@ -264,7 +266,7 @@ coursesFind = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
-	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
+	var options = { limit: limit, sort: sort };
 	return Courses.find(find, options);
 };
 
@@ -525,6 +527,7 @@ Meteor.methods({
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
 			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
+			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
 			courseId = Courses.insert(set);

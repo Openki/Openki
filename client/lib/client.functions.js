@@ -133,6 +133,7 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
+
 courseFilterPreview = function(selector, activate, delayed) {
 	var negativeSelection = $('.course-compact').not(selector);
 	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
