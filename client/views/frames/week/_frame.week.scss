@@ -1,0 +1,14 @@
+.frame-week-date-events {
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	padding: 10px 0;
+	width: auto;
+
+	@media (min-width: $screen-xsm) {
+		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	}
+}
+
+.frame-week-no-events {
+	text-align: center;
+}
