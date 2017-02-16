@@ -5,8 +5,10 @@ Template.layout.helpers({
 
     submenuShown: function() {
         var route = Router.current().route;
+		console.log(route.getName());
         submenuRoutes = [
             'home',
+			'find',
             'groupDetails'
         ];
 
