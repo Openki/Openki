@@ -6,6 +6,10 @@ Template.userFrame.events({
 	'click .js-logout-btn': function(event){
 		event.preventDefault();
 		Meteor.logout();
+
+		var routeName = Router.current().route.getName();
+		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+		return false;
 	},
 
 	'click .js-forgot-pwd-btn': function(event, instance) {
@@ -13,7 +17,8 @@ Template.userFrame.events({
 		return false;
 	},
 
-	'click .js-reset-pwd-btn': function(event, instance) {
+	'submit .js-reset-pw': function(event, instance) {
+		event.preventDefault();
 		Accounts.forgotPassword({
 			email: instance.$('.js-login-email').val()
 		}, function(err) {
@@ -24,16 +29,13 @@ Template.userFrame.events({
 				instance.forgot.set(false);
 			}
 		});
+		return false;
 	},
 
 	'click .js-reset-pwd-close-btn': function(event, instance) {
 		instance.forgot.set(false);
 		return false;
 	},
-
-	'click .user-frame': function(event, instance) {
-		event.stopPropagation();
-	}
 });
 
 Template.userFrame.helpers({
@@ -73,7 +75,7 @@ Template.forgotPwdFrame.helpers({
 
 
 Template.forgotPwdFrame.events({
-	'change .js-login-email, keyup .js-login-email': function(event, instance) {
+	'change, keyup, input': function(event, instance) {
 		instance.loginEmail.set("" + instance.$('.js-login-email').val());
 	},
 });
@@ -172,6 +174,11 @@ Template.loginFrame.events({
 				if (err) {
 					instance.activeWarning.set(err.reason);
 				} else {
+					var regionId = cleanedRegion(Session.get('region'));
+					if (regionId) {
+						Meteor.call('user.regionChange', regionId);
+					}
+
 					instance.closeDropdown();
 				}
 			});

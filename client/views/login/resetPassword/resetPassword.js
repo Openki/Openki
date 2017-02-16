@@ -68,11 +68,7 @@ Template.resetPassword.events({
 		instance.updatePassword();
 	},
 
-	'keyup': function(event, instance) {
-		instance.updatePassword();
-	},
-
-	'blur': function(event, instance) {
+	'input, keyup, blur': function(event, instance) {
 		instance.updatePassword();
 	},
 

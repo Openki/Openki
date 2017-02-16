@@ -23,7 +23,8 @@ Router.onBeforeAction(function() {
 
 // Store routeName to be able to refer to previous route
 Router.onStop(function() {
-	Session.set('previousRouteName', Router.current().route.getName());
+	var route = Router.current().route;
+	if (route) Session.set('previousRouteName', route.getName());
 });
 
 // Subscribe to list of regions and configure the regions
@@ -49,6 +50,10 @@ Meteor.subscribe('regions', function() {
 		}
 		return false;
 	};
+
+	// The region m,ight have been chosen already because the user is logged-in.
+	// See Accounts.onLogin().
+	if (useRegion(Session.get('region'))) return;
 
 	// Region parameter in URL or in storage?
 	if (useRegion(UrlTools.queryParam('region'))) return;
@@ -120,6 +125,28 @@ Meteor.startup(function() {
 		var setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
 		if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+
+		// HACK replace the datepicker locale settings
+		// I do not understand why setting language: moment.locale() does not
+		// work for the datepicker. But we want to use the momentjs settings
+		// anyway, so we might as well clobber the 'en' locale.
+		var mf = moment().localeData();
+
+		var monthsShort = function() {
+			if (typeof mf.monthsShort === 'function') {
+				return _.map(_.range(12), function(month) { return mf.monthsShort(moment().month(month), ''); });
+			}
+			return mf._monthsShort;
+		};
+
+		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
+			days: mf._weekdays,
+			daysShort: mf._weekdaysShort,
+			daysMin: mf._weekdaysMin,
+			months: mf._months || mf._monthsNominativeEl,
+			monthsShort: monthsShort(),
+			weekStart: mf._week.dow
+		});
 	});
 });
 
@@ -128,8 +155,13 @@ Meteor.startup(Assistant.init);
 Meteor.startup(getViewportWidth);
 
 Accounts.onLogin(function() {
-	var locale = Meteor.user().profile.locale;
+	var user = Meteor.user();
+
+	var locale = user.profile.locale;
 	if (locale) Session.set('locale', locale);
+
+	var regionId = user.profile.regionId;
+	if (regionId) Session.set('region', regionId);
 });
 
 Accounts.onEmailVerificationLink(function(token, done) {

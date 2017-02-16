@@ -33,6 +33,7 @@ Accounts.onCreateUser(function(options, user) {
 	user.groups = [];
 	user.badges = [user._id];
 
+	user.notifications = true;
 	return user;
 });
 

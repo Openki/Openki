@@ -14,8 +14,8 @@ Template.introduction.onRendered(function() {
 
 	// use $screen-xxs (from scss) to compare with the width of window
 	var viewportWidth = Session.get('viewportWidth');
-	var screenXxs = Breakpoints.screenXxs;
-	if (viewportWidth < screenXxs) {
+	var screenXXS = SCSSVars.screenXXS;
+	if (viewportWidth < screenXXS) {
 		Assistant.closeIntro();
 		// dont wait for slideUp
 		this.$('.introduction-content').hide();
@@ -35,17 +35,18 @@ Template.introduction.helpers({
 	},
 
 	isInCalendar: function() {
-		return Router.current().route.getName() == "calendar";
+		var currentRoute = Router.current().route;
+		if (!!currentRoute) return currentRoute.getName() == "calendar";
 	},
 
 	clearfixFor: function(triggerSize) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenSize = '';
 
-		if (viewportWidth < Breakpoints.screenMd && viewportWidth > Breakpoints.screenSm) {
-			screenSize = "screenSm";
-		} else if (viewportWidth < Breakpoints.screenSm && viewportWidth > Breakpoints.screenXxs) {
-			screenSize = "screenXs";
+		if (viewportWidth < SCSSVars.screenMD && viewportWidth > SCSSVars.screenSM) {
+			screenSize = "screenSM";
+		} else if (viewportWidth < SCSSVars.screenSM && viewportWidth > SCSSVars.screenXXS) {
+			screenSize = "screenXS";
 		}
 
 		return (triggerSize == screenSize);
@@ -56,7 +57,8 @@ Template.introduction.helpers({
 Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction': function() {
-		if (Router.current().route.options.template === "findWrap") {
+		var route = Router.current().route;
+		if (route && route.options.template === "findWrap") {
 			Assistant.showIntro();
 		}
 	},

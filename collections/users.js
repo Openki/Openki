@@ -1,3 +1,5 @@
+import '/imports/Profile.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date
@@ -37,7 +39,7 @@
 //         loginTockens: [{when: Date, hashed: String}]}}
 // "username"     -> String
 // "emails"       -> [{address: String, verified: Boolean}]
-// "profile"      -> {name: String, locale: Lang}
+// "profile"      -> {name: String, locale: Lang, regionId: ID}
 // "privileges"   -> [admin]
 // "lastLogin"    -> Date
 // groups         -> List of groups the user is a member of, calculated by updateBadges()
@@ -131,12 +133,22 @@ Users.updateBadges = function(userId) {
 };
 
 Meteor.methods({
-	update_userdata: function(username, email, privacy) {
+	/** Set user region
+	  */
+	'user.regionChange': function(newRegion) {
+		Profile.Region.change(Meteor.userId(), newRegion, "client call");
+	},
+
+	update_userdata: function(username, email, notifications, privacy) {
+		check(username, String);
 		check(email, String);
+		check(notifications, Boolean);
+		check(privacy, Boolean);
+
 		var user = Meteor.user();
 
 		var changes = {};
-		if (user.username !== username) { changes.username = username; }
+		if (user.username !== username) { changes.username = saneText(username).substring(0, 200); }
 		if (user.privacy !== privacy) { changes.privacy = !!privacy; }
 		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
 			// Working under the assumption that there is only one address
@@ -155,6 +167,10 @@ Meteor.methods({
 			Meteor.users.update(Meteor.userId(), {
 				$set: changes
 			});
+		}
+
+		if (user.notifications !== notifications) {
+			Profile.Notifications.change(user._id, notifications, false, "profile change");
 		}
 	},
 

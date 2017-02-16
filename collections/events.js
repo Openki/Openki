@@ -1,3 +1,5 @@
+import '/imports/Notification.js';
+
 // ======== DB-Model: ========
 // _id             -> ID
 // region          -> ID_region
@@ -22,6 +24,9 @@
 
 // groups          -> list of group._id that promote this event
 // groupOrganizers -> list of group._id that are allowed to edit the course
+
+// replicaOf       -> ID of the replication parent, only cloned events have this
+
 
 /** Calculated fields
   *
@@ -173,13 +178,13 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas) {
+	saveEvent: function(eventId, changes, updateReplicas, sendNotifications) {
 		check(eventId, String);
 
 		var expectedFields = {
 			title:       String,
 			description: String,
-			venue:       Object,
+			venue:       Match.Optional(Object),
 			room:        Match.Optional(String),
 			start:       Match.Optional(Date),
 			end:         Match.Optional(Date),
@@ -283,7 +288,12 @@ Meteor.methods({
 			}
 		}
 
+		if (sendNotifications) {
+			Notification.Event.record(eventId, isNew);
+		}
+
 		if (Meteor.isServer) {
+
 			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
 			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
 			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
@@ -366,6 +376,7 @@ Meteor.methods({
  *   region: restrict to given region
  *   categories: list of category ID the event must be in
  *   group: the event must be in that group (ID)
+ *   groups: the event must be in one of the group ID
  *   course: only events for this course (ID)
  *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
@@ -431,8 +442,17 @@ eventsFind = function(filter, limit) {
 		find.categories = { $all: filter.categories };
 	}
 
+	var inGroups = [];
 	if (filter.group) {
-		find.allGroups = filter.group;
+		inGroups.push(filter.group);
+	}
+
+	if (filter.groups) {
+		inGroups = inGroups.concat(filter.groups);
+	}
+
+	if (inGroups.length > 0) {
+		find.allGroups = { $in: inGroups };
 	}
 
 	if (filter.course) {

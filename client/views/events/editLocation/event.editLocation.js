@@ -1,6 +1,6 @@
 "use strict";
 
-Template.eventEditLocation.onCreated(function() {
+Template.eventEditVenue.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
 
@@ -102,7 +102,7 @@ Template.eventEditLocation.onCreated(function() {
 });
 
 
-Template.eventEditLocation.helpers({
+Template.eventEditVenue.helpers({
 
 	location: function() {
 		return Template.instance().location.get();
@@ -155,7 +155,7 @@ Template.eventEditLocation.helpers({
 });
 
 
-Template.eventEditLocation.events({
+Template.eventEditVenue.events({
 	'click .js-location-search-btn': function(event, instance) {
 		event.preventDefault();
 

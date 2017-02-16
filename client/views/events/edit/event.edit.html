@@ -115,11 +115,15 @@
 						</div>
 						<select class="region_select js-select-region form-control"
 							name='region'>
-							<option value='' disabled selected class="select_placeholder">
+							<option class="select_placeholder"
+							        disabled
+							        selected
+							        value=''>
 								{{mf '_selection.pleaseSelect'}}
 							</option>
 							{{#each regions}}
-								<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
+								<option selected="{{#if currentRegion this}}selected{{/if}}"
+								        value='{{_id}}'>
 									{{name}}
 								</option>
 							{{/each}}
@@ -128,8 +132,8 @@
 				</div>
 			{{/if}}
 
-			{{#if showLocationSelection}}
-				{{>eventEditLocation}}
+			{{#if showVenueSelection}}
+				{{>eventEditVenue}}
 				<div class="form-group">
 					<label>
 						{{mf 'course.event.edit.room' 'Room'}}
@@ -150,39 +154,56 @@
 
 
 			<div class="form-group">
-				<div class="form-group-element">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" class="js-check-event-internal" {{isInternal}}>
+						{{mf 'event.edit.internal' 'Hide on front page'}}
+						<span class="help-block">
+							{{#mf KEY='event.edit.internal.description'}}
+								Show this event only on group and venue pages
+							{{/mf}}
+						</span>
+					</label>
+				</div>
+				{{#if affectedReplicaCount}}
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" class="js-check-event-internal" {{isInternal}}/>
-							{{mf 'event.edit.internal' 'Internal'}}
+							<input type="checkbox" name="updateReplicas">
+							{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
+								Update {COUNT, plural,
+									one {later copy}
+									other {# later copies as well}
+								}
+							{{/mf}}
 							<span class="help-block">
-								{{mf 'event.edit.internal.description' 'Internal events are only shown in group and location-details'}}
+								<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+								{{#mf KEY='event.edit.updateReplicas.times' COUNT=affectedReplicaCount}}
+									Time-changes will not be updated in {COUNT, plural,
+										one {copy}
+										other {copies}
+									}.
+								{{/mf}}
 							</span>
 						</label>
 					</div>
-				</div>
-				{{#if affectedReplicaCount}}
-					<div class="form-group-element">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" name="updateReplicas">
-								{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
-									Update {COUNT, plural,
-										one {later copy}
-										other {# later copies as well}
-									}
+				{{/if}}
+				{{#if courseId}}
+					<div class="checkbox">
+						<label>
+							{{#if new}}
+								<input type="checkbox" class="js-check-notify" checked>
+								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
+									Notify all members of the course "{COURSE}" about this event.
 								{{/mf}}
-								<span class="help-block">
-									<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-									{{#mf KEY='event.edit.updateReplicas.times' COUNT=affectedReplicaCount}}
-										Time-changes will not be updated in {COUNT, plural,
-											one {copy}
-											other {copies}
-										}
-									{{/mf}}
-								</span>
-							</label>
-						</div>
+							{{else}}
+								<input type="checkbox" class="js-check-notify">
+								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
+									Notify all members of the course "{COURSE}" about the changes you made.
+								{{/mf}}
+							{{/if}}
+						</label>
 					</div>
 				{{/if}}
 			</div>

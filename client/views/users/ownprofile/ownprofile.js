@@ -1,43 +1,4 @@
-Router.map(function () {
-	this.route('profile', {
-		path: 'profile',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('currentUser'),
-				Meteor.subscribe('coursesFind', { userInvolved: Meteor.userId() }),
-				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
-			];
-		},
-		data: function () {
-			var user = Meteor.user();
-			if(user) {
-				var userdata = {
-					_id: user._id,
-					name: user.username,
-					privacy: user.privacy,
-					groups: GroupLib.find({ own: true }),
-					venues: Venues.find({ editor: user._id })
-				};
-				userdata.have_email = user.emails && user.emails.length > 0;
-				if (userdata.have_email) {
-					userdata.email = user.emails[0].address;
-					userdata.verified = !!user.emails[0].verified;
-				}
-
-				return {
-					user: userdata,
-					involvedIn: coursesFind({ userInvolved: user._id })
-				};
-			}
-		},
-		onAfterAction: function() {
-			var user = Meteor.users.findOne();
-			if (!user) return;
-			document.title = webpagename + 'My Profile_Settings - ' + user.username;
-		}
-	});
-});
+// See routing.js for the route
 
 Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
@@ -65,6 +26,10 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
+	notificationsChecked: function() {
+		if (this.user.notifications) return 'checked';
+	},
+
 	privacyChecked: function() {
 		if (this.user.privacy) return 'checked';
 	},
@@ -90,6 +55,12 @@ Template.profile.helpers({
 	},
 	roleMyList: function() {
 		return 'roles.'+this.type+'.myList';
+	},
+	unsubscribeSuccess: function() {
+		return Router.current().params.query.unsubscribed === '';
+	},
+	unsubscribeError: function() {
+		return Router.current().params.query['unsubscribe-error'] === '';
 	}
 });
 
@@ -134,6 +105,7 @@ Template.profile.events({
 		Meteor.call('update_userdata',
 			document.getElementById('editform_username').value,
 			document.getElementById('editform_email').value,
+			template.$('.js-notifications').prop("checked"),
 			document.getElementById('privacy').checked,
 			function(err) {
 				if (err) {

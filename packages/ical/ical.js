@@ -8,7 +8,7 @@ function sendIcal(events, response) {
 			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
-			location: [dbevent.location.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
+			location: [dbevent.venue.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
 			description: textPlain(dbevent.description),
 			url: Router.routes.showEvent.url(dbevent)
 		});

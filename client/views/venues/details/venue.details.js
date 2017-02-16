@@ -6,7 +6,7 @@ Router.map(function() {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),
-				Meteor.subscribe('eventsFind', { location : this.params._id })
+				Meteor.subscribe('eventsFind', { venue: this.params._id })
 			];
 		},
 

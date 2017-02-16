@@ -1,6 +1,6 @@
-<template name="eventEditLocation">
+<template name="eventEditVenue">
 	<div class="form-group">
-		<label>{{mf 'course.event.edit.location' 'Location'}}</label>
+		<label>{{mf 'course.event.edit.location' 'Venue'}}</label>
 		<div class="event-edit-location">
 			<div class="event-edit-location-search">
 				{{#if locationIsPreset}}
@@ -13,7 +13,7 @@
 						{{/if}}
 					</div>
 					<button type="button" class="btn btn-edit btn-inline js-location-change">
-						{{mf 'event.edit.locationChange' "Change location"}}
+						{{mf 'event.edit.locationChange' "Change venue"}}
 					</button>
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">

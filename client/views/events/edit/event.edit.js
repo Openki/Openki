@@ -19,21 +19,34 @@ Template.eventEdit.onCreated(function() {
 });
 
 Template.eventEdit.onRendered(function() {
-	updateTimes(this, false);
+	var instance = this;
+	updateTimes(instance, false);
 
-	this.$('.js-event-start-date').datepicker({
-		weekStart: moment.localeData().firstDayOfWeek(),
-		language: moment.locale(),
-		autoclose: true,
-		startDate: new Date(),
-		format: {
-			toDisplay: function(date) {
-				return moment(date).format('L');
-			},
-			toValue: function(date) {
-				return moment(date, 'L').toDate();
+	instance.autorun(function() {
+		// Depend on locale so we update reactively when it changes
+		Session.get('locale');
+
+		var $dateInput = instance.$('.js-event-start-date');
+
+		// remove, re-add the datepicker when the locale changed
+		$dateInput.datepicker('remove');
+
+		// I don't know why, but language: moment.locale() does not work here.
+		// So instead we clobber the 'en' settings with settings for the
+		// selected language.
+		$dateInput.datepicker({
+			weekStart: moment.localeData().firstDayOfWeek(),
+			autoclose: true,
+			startDate: new Date(),
+			format: {
+				toDisplay: function(date) {
+					return moment(date).format('L');
+				},
+				toValue: function(date) {
+					return moment(date, 'L').toDate();
+				}
 			}
-		}
+		});
 	});
 });
 
@@ -70,7 +83,7 @@ Template.eventEdit.helpers({
 		return currentRegion && region._id == currentRegion;
 	},
 
-	showLocationSelection: function(region) {
+	showVenueSelection: function(region) {
 		var selectedRegion = Template.instance().selectedRegion.get();
 		return selectedRegion && selectedRegion !== 'all';
 	},
@@ -82,6 +95,20 @@ Template.eventEdit.helpers({
 	isInternal: function() {
 		return this.internal ? "checked" : null;
 	},
+
+	uploaded: function() {
+		return Template.instance().uploaded.get();
+	},
+
+	course: function() {
+		var courseId = this.courseId;
+		if (courseId) {
+			// Very bad?
+			Template.instance().subscribe('courseDetails', courseId);
+
+			return Courses.findOne({_id: courseId});
+		}
+	}
 });
 
 var readDateTime = function(dateStr, timeStr) {
@@ -230,8 +257,9 @@ Template.eventEdit.events({
 		}
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
+		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
-		Meteor.call('saveEvent', eventId, editevent, updateReplicas, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {
