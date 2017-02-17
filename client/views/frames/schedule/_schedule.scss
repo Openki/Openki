@@ -61,34 +61,25 @@
 		transition-property: #{'box-shadow transform'};
 		transition-duration: .3s;
 	}
-
-
 }
 
-$schedule-event-type-1-color:  rgb(142, 224, 242);
-$schedule-event-type-2-color:  rgb(61, 252, 166);
-$schedule-event-type-3-color:  rgb(98, 162, 247);
-$schedule-event-type-4-color:  rgb(167, 251, 159);
-$schedule-event-type-5-color:  rgb(108, 131, 251);
-$schedule-event-type-6-color:  rgb(150, 114, 254);
-
 $schedule-event-types: (
-	1:  $schedule-event-type-1-color,
-	2:  $schedule-event-type-2-color,
-	3:  $schedule-event-type-3-color,
-	4:  $schedule-event-type-4-color,
-	5:  $schedule-event-type-5-color,
-	6:  $schedule-event-type-6-color,
-	7:  desaturate($schedule-event-type-1-color, 50%),
-	8:  desaturate($schedule-event-type-2-color, 50%),
-	9:  desaturate($schedule-event-type-3-color, 50%),
-	10: desaturate($schedule-event-type-4-color, 50%),
-	11: desaturate($schedule-event-type-5-color, 50%),
-	12: desaturate($schedule-event-type-6-color, 50%),
-	13: desaturate($schedule-event-type-1-color, 75%),
-	14: desaturate($schedule-event-type-2-color, 75%),
-	15: desaturate($schedule-event-type-3-color, 75%),
-	other: desaturate($schedule-event-type-4-color, 100%)
+	1:  rgb(192, 218, 33),
+	2:  rgb(238, 228, 92),
+	3:  rgb(196, 80, 43),
+	4:  rgb(92, 174, 241),
+	5:  rgb(146, 106, 246),
+	6:  rgb(121, 250, 242),
+	7:  rgb(237, 135, 237),
+	8:  rgb(122, 242, 120),
+	9:  rgb(247, 162, 83),
+	10: rgb(151, 167, 244),
+	11: rgb(85, 143, 85),
+	12: rgb(185, 91, 98),
+	13: rgb(152, 117, 74),
+	14: rgb(105, 149, 168),
+	15: rgb(118, 177, 165),
+	other: rgb(114, 140, 86)
 );
 
 @each $i, $background-color in $schedule-event-types {
