@@ -1,31 +1,4 @@
-.frame-calendar-event {
-	background-color: $blue-lighter;
-}
 
-.frame-calendar-event + .frame-calendar-event {
-	margin-top: 10px;
-}
-
-.frame-calendar-day,
-.frame-calendar-event-header {
-	font-size: 1.2em;
-}
-
-.frame-calendar-event-header {
-	font-weight: bold;
-	margin: 0;
-	padding: 10px;
-	transition: background-color $default-transition-time;
-
-	&:hover,
-	&.active {
-		background-color: rgba(0, 0, 0, 0.03);
-	}
-
-	&:hover {
-		cursor: pointer;
-	}
-}
 
 .frame-calendar-event-time {
 	font-size: 1em;
@@ -33,16 +6,7 @@
 	@include td-margin(right, 10px);
 }
 
-.frame-calendar-event-body {
-	display: none;
-	padding: 10px;
-}
-
-.frame-calendar-event-property {
-	@include make-row;
-}
-
-.frame-calendar-event-property .description {
+.frame-calendar-event-description {
 	@include td-make-xs-column(4);
 	font-weight: bold;
 
@@ -51,24 +15,10 @@
 	}
 }
 
-.frame-calendar-event-property .content {
+.frame-calendar-event-content {
 	@include td-make-xs-column(8);
 
 	@media (min-width: $screen-xsm) {
 		@include td-make-xs-column(10);
 	}
-}
-
-.frame-calendar-event-links {
-	@include clearfix;
-	margin-top: 15px;
-	@include td-text-align(right);
-}
-
-.frame-calendar-event-links > a:hover {
-	cursor: pointer;
-}
-
-.frame-calendar-event-links > a + a {
-	@include td-margin(left, 10px);
 }

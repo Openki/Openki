@@ -1,31 +1,88 @@
 <template name="frameList">
-	<div class="frame-list-all">
-		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}</h3>
-			<ul>
-				{{#each coursesWithEvents}}
-					<a href="{{pathFor 'showCourse'}}" target="_blank">
-						<li>{{name}}</li>
-					</a>
-				{{/each}}
-			</ul>
+	<div class="container-fluid">
+		<div class="frame-list-row">
+			{{>listCoursesWithEvents}}
 		</div>
-		<div class="frame-list-courses">
-			<h3>{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}</h3>
-			<ul>
-				{{#each coursesWithoutEvents}}
-					<a href="{{pathFor 'showCourse'}}" target="_blank">
-						<li>{{name}}</li>
-					</a>
-				{{/each}}
-			</ul>
+		<div class="frame-list-row">
+			{{>listCoursesWithoutEvents}}
 		</div>
 		{{#if group}}
-			<div class="frame-list-courses-footer">
+			<div class="list-style-item-links frame-list-footer">
 				<a href="{{pathFor 'groupDetails' _id=group._id}}" target="_blank">
-					{{mf 'frame.list.allCoursesOfGroup' "You're looking at a list of the courses of {GROUP} on openki.net" GROUP=group.name}}
+					{{mf 'frame.list.allCoursesOfGroup' 
+					"You're looking at a list of the courses of {GROUP} on openki.net" 
+					GROUP=group.name}}
 				</a>
 			</div>
 		{{/if}}
 	</div>
+</template>
+
+<template name="listCoursesWithEvents">
+	<h4 class="list-style-title">
+		{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}
+	</h4>
+	{{#each coursesWithEvents}}
+		<div class="list-style-item">
+			<h4 class="list-style-item-header js-toggle-event-details">
+				{{name}}
+			</h4>
+			<div class="list-style-item-body">
+				<div class="list-style-item-property">
+					<div class="frame-list-item-description">
+						{{mf 'frame.eventsList.description' 'Description:'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{{description}}}
+					</div>
+				</div>
+				<div class="list-style-item-property">
+					<div class="frame-list-item-description">
+						{{mf 'frame.courseList.nextEvent' 'Next Event:'}}
+					</div>
+					<div class="frame-list-item-content">
+						<a href="{{pathFor 'showEvent' data=nextEvent}}" target="_blank">
+							{{fullDate nextEvent.start}}
+							- {{nextEvent.venue.name}}
+						</a>
+					</div>
+				</div>
+				<div class="list-style-item-links">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
+						<i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+						{{mf 'frame.eventsList.showMore' 'show more'}}
+					</a>
+				</div>
+			</div>
+		</div>
+	{{/each}}
+</template>
+
+<template name="listCoursesWithoutEvents">
+	<h4 class="list-style-title">
+		{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}
+	</h4>
+	{{#each coursesWithoutEvents}}
+		<div class="list-style-item">
+			<h4 class="list-style-item-header js-toggle-event-details">
+					{{name}}
+			</h4>
+			<div class="list-style-item-body">
+				<div class="list-style-item-property">
+					<div class="frame-list-item-description">
+						{{mf 'frame.eventsList.description' 'Description:'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{{description}}}
+					</div>
+				</div>
+				<div class="list-style-item-links">
+					<a href="{{pathFor 'showCourse'}}" target="_blank">
+						<i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+						{{mf 'frame.eventsList.showMore' 'show more'}}
+					</a>
+				</div>
+			</div>
+		</div>
+	{{/each}}
 </template>

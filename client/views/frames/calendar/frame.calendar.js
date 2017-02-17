@@ -17,9 +17,9 @@ Router.map(function () {
 			customizableProperties
 				.add('bgcolor', 'background-color', 'body')
 				.add('color', 'color', 'body')
-				.add('eventbg', 'background-color', '.frame-calendar-event')
-				.add('eventcolor', 'color', '.frame-calendar-event')
-				.add('linkcolor', 'color', '.frame-calendar-event a')
+				.add('eventbg', 'background-color', '.list-style-item')
+				.add('eventcolor', 'color', '.list-style-item')
+				.add('linkcolor', 'color', '.list-style-item a')
 				.add('fontsize', 'font-size', '*');
 
 			var cssRules = [];
@@ -102,7 +102,7 @@ Template.frameCalendarEvent.events({
 		var jQueryTarget = $(e.currentTarget);
 
 		jQueryTarget.toggleClass('active');
-		jQueryTarget.nextAll('.frame-calendar-event-body').toggle();
+		jQueryTarget.nextAll('.list-style-item-body').toggle();
 		jQueryTarget.children('.frame-calendar-event-time').toggle();
 	}
 });
