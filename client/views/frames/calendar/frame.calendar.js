@@ -99,10 +99,8 @@ Template.frameCalendar.helpers({
 
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
-		var jQueryTarget = $(e.currentTarget);
-
-		jQueryTarget.toggleClass('active');
-		jQueryTarget.nextAll('.frame-calendar-event-body').toggle();
-		jQueryTarget.children('.frame-calendar-event-time').toggle();
+		$(e.currentTarget).toggleClass('active');
+		instance.$('.frame-calendar-event-body').toggle();
+		instance.$('.frame-calendar-event-time').toggle();
 	}
 });
