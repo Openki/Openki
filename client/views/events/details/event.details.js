@@ -143,7 +143,7 @@ Template.eventGroupAdd.helpers({
 
 Template.eventGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
-		Meteor.call('event.promote', instance.data._id, event.target.value, true, function(error) {
+		Meteor.call('event.promote', instance.data._id, event.currentTarget.value, true, function(error) {
 			if (error) {
 				showServerError('Failed to add group', error);
 			} else {
