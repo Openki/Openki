@@ -43,7 +43,7 @@
 					{{mf 'frame.eventsList.where' 'Where:'}}
 				</div>
 				<div class="frame-calendar-event-content">
-					<a href="{{pathFor 'venueDetails' data=venue}}"
+					<a href="{{pathFor 'venueDetails' _id=venue._id}}"
 					   target="_blank">
 						{{venue.name}}
 					</a>
