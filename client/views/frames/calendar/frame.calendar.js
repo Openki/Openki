@@ -2,7 +2,7 @@ Router.map(function () {
 	this.route('frameCalendar', {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
-		layoutTemplate: 'frameCalendar',
+		layoutTemplate: 'frameLayout',
 		data: function() {
 			var customizableProperties = [];
 			customizableProperties.add = function(key, name, selector) {
