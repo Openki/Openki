@@ -27,7 +27,8 @@
 			</span>
 			{{title}}
 		</h4>
-		<div class="list-style-item-body">
+	{{#if expanded}}
+		<div>
 			<div class="list-style-item-property">
 				<div class="frame-calendar-event-description">
 					{{mf 'frame.eventsList.when' 'When:'}}
@@ -70,5 +71,6 @@
 				</a>
 			</div>
 		</div>
+	{{/if}}
 	</div>
 </template>

@@ -97,12 +97,20 @@ Template.frameCalendar.helpers({
 });
 
 
+Template.frameCalendarEvent.onCreated(function() {
+	this.expanded = new ReactiveVar(false);
+});
+
+
+Template.frameCalendarEvent.helpers({
+	'expanded': function() {
+		return Template.instance().expanded.get();
+	},
+});
+
+
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
-		var jQueryTarget = $(e.currentTarget);
-
-		jQueryTarget.toggleClass('active');
-		jQueryTarget.nextAll('.list-style-item-body').toggle();
-		jQueryTarget.children('.frame-calendar-event-time').toggle();
+		instance.expanded.set(!instance.expanded.get());
 	}
 });
