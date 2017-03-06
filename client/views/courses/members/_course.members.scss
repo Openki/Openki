@@ -25,17 +25,20 @@
 }
 
 .course-member-roles li {
-	background: $blue;
-	color: $white;
 	display: inline-block;
-	font-size: small;
-	font-weight: bold;
-	padding: 4px 6px;
-	vertical-align: middle;
 
 	&.participant {
 		display: none;
 	}
+}
+
+.course-member-role {
+	vertical-align: middle;
+	padding: 4px 6px;
+	background: $blue;
+	color: $white;
+	font-size: small;
+	font-weight: bold;
 }
 
 .role-short {
@@ -44,13 +47,13 @@
 
 .js-add-to-team-btn {
 	@include td-margin(left, 6px);
-	padding: 2px 8px;
+	padding: 2px 6px;
 }
 
 .js-remove-from-team-btn {
-	margin-right: 3px;
-	margin-left: -2px;
-	padding: 3px 5px;
+	margin-right: 1px;
+	margin-left: 1px;
+	padding: 2px 6px;
 	color: $black;
 }
 

@@ -28,18 +28,20 @@
 			<ul class='course-member-roles'>
 				{{#each member.roles}}
 					<li class='{{this}}'>
-						<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-						<span class="role-short">{{mf roleShort}}</span>
+						<span class="course-member-role">
+							<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
+							<span class="role-short">{{mf roleShort}}</span>
+						</span>
+						{{#with ..}}
+							{{#if mayUnsubscribeFromTeam ..}}
+							<button type="button" class="btn btn-remove js-remove-from-team-btn"
+								data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
+								data-tooltip-direction="e">
+								<span class="fa fa-minus remove-from-team-btn-minus"></span>
+							</button>
+							{{/if}}
+						{{/with}}
 					</li>
-					{{#with ..}}
-						{{#if mayUnsubscribeFromTeam ..}}
-						<button type="button" class="btn btn-remove js-remove-from-team-btn"
-							data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
-							data-tooltip-direction="e">
-							<span class="fa fa-minus remove-from-team-btn-minus"></span>
-						</button>
-						{{/if}}
-					{{/with}}
 				{{/each}}
 			</ul>
 		{{/if}}

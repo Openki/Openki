@@ -32,11 +32,7 @@ Template.courseMember.onCreated(function() {
 Template.courseMember.helpers({
 	showMemberRoles: function() {
 		var memberRoles = this.member.roles;
-		if (memberRoles.length == 1) {
-			return memberRoles[0] != "participant" ? true : false;
-		} else {
-			return true;
-		}
+		return memberRoles.length != 1 || memberRoles[0] != "participant";
 	},
 	
 	roleShort: function() { return 'roles.'+this+'.short'; },
