@@ -2,7 +2,7 @@ Router.map(function () {
 	this.route('frameCalendar', {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
-		layoutTemplate: 'frameCalendar',
+		layoutTemplate: 'frameLayout',
 		data: function() {
 			var customizableProperties = [];
 			customizableProperties.add = function(key, name, selector) {
@@ -17,9 +17,9 @@ Router.map(function () {
 			customizableProperties
 				.add('bgcolor', 'background-color', 'body')
 				.add('color', 'color', 'body')
-				.add('eventbg', 'background-color', '.frame-calendar-event')
-				.add('eventcolor', 'color', '.frame-calendar-event')
-				.add('linkcolor', 'color', '.frame-calendar-event a')
+				.add('eventbg', 'background-color', '.list-style-item')
+				.add('eventcolor', 'color', '.list-style-item')
+				.add('linkcolor', 'color', '.list-style-item a')
 				.add('fontsize', 'font-size', '*');
 
 			var cssRules = [];
@@ -97,10 +97,20 @@ Template.frameCalendar.helpers({
 });
 
 
+Template.frameCalendarEvent.onCreated(function() {
+	this.expanded = new ReactiveVar(false);
+});
+
+
+Template.frameCalendarEvent.helpers({
+	'expanded': function() {
+		return Template.instance().expanded.get();
+	},
+});
+
+
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
-		$(e.currentTarget).toggleClass('active');
-		instance.$('.frame-calendar-event-body').toggle();
-		instance.$('.frame-calendar-event-time').toggle();
+		instance.expanded.set(!instance.expanded.get());
 	}
 });

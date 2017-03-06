@@ -33,3 +33,12 @@ Router.map(function () {
 		}
 	});
 });
+
+Template.frameList.events({
+	'click .js-toggle-event-details': function(e, instance) {
+		var jQueryTarget = $(e.currentTarget);
+
+		jQueryTarget.toggleClass('active');
+		jQueryTarget.nextAll('.list-style-item-body').toggle();
+	}
+});

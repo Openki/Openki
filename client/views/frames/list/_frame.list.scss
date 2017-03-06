@@ -1,42 +1,26 @@
-.frame-list-all{
+.frame-list-link, .frame-list-link:hover {
+	color: $text-color;
+}
+
+.frame-list-row {
 	@include td-make-xs-column(12);
-	background-color: $blue-lighter;
-	border-width: 1px;
-	border-color: darken($blue-lighter, 15%);
-	border-style: solid;
-}
-
-.frame-list-courses {
-	@include td-make-xs-column(6);
-	padding: 2px;
-}
-
-.frame-list-courses h3 {
-	text-align: center;
-	padding: 5px;
-	margin: 0px;
-}
-
-.frame-list-courses ul {
-	@include list-unstyled;
-	padding: 0px;
-}
-
-.frame-list-courses ul li{
-	padding: 2px 5px;
-	margin: 5px;
-	background-color: $white;
-	border-width: 1px;
-	border-color: darken($blue-lighter, 15%);
-	border-style: solid;
-	position: relative;
-	transition: box-shadow $default-transition-time;
-	&:hover {
-		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(6);
 	}
 }
 
-.frame-list-courses-footer {
+.frame-list-footer {
 	text-align: center;
 	padding: 5px;
+}
+
+.frame-list-item-description {
+	@include td-make-xs-column(4);
+	font-weight: bold;
+
+
+}
+
+.frame-list-item-content {
+	@include td-make-xs-column(8);
 }
