@@ -26,6 +26,9 @@
 				{{timeformat start}}
 			</span>
 			{{title}}
+			{{#if allRegions}}
+				<span class="badge frame-calendar-event-region">{{regionName}}</span>
+			{{/if}}
 		</h4>
 		{{#if expanded}}
 			<div class="list-style-item-body">

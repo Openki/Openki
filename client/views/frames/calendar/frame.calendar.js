@@ -8,7 +8,7 @@ Router.map(function () {
 		data: function() {
 			var cssRules = new CssRules();
 			cssRules.read(this.params.query);
-			
+
 			return { cssRules: cssRules };
 		},
 		onAfterAction: function() {
@@ -41,6 +41,8 @@ Template.frameCalendar.onCreated(function() {
 		instance.groupedEvents.set(groupedEvents);
 		instance.days.set(Object.keys(groupedEvents));
 	});
+
+	this.allRegions = Session.get('region') == 'all';
 });
 
 Template.frameCalendar.helpers({
@@ -65,9 +67,17 @@ Template.frameCalendarEvent.onCreated(function() {
 
 
 Template.frameCalendarEvent.helpers({
+	'allRegions': function() {
+		return Template.instance().parentInstance().allRegions;
+	},
+
+	'regionName': function() {
+		return Regions.findOne(this.region).name;
+	},
+
 	'expanded': function() {
 		return Template.instance().expanded.get();
-	},
+	}
 });
 
 Template.frameCalendarEvent.events({

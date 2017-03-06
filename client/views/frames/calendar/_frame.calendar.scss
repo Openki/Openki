@@ -3,6 +3,11 @@
 	@include td-margin(right, 10px);
 }
 
+.frame-calendar-event-region {
+	font-size: .8em;
+	margin-left: 5px;
+}
+
 .frame-calendar-event-description {
 	@include td-make-xs-column(4);
 	font-weight: bold;
