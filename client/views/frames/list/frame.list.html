@@ -1,13 +1,22 @@
 <template name="frameList">
+	<style type="text/css">
+		{{#each cssRules}}
+			{{selector}} { {{name}}: {{value}}; }
+		{{/each}}
+	</style>
+
 	<div class="container-fluid">
-		<div class="frame-list-row">
-			{{>listCoursesWithEvents}}
-		</div>
-		<div class="frame-list-row">
-			{{>listCoursesWithoutEvents}}
+		<div class="frame-list">
+			<div class="frame-list-column">
+				{{>listCoursesWithEvents}}
+			</div>
+			<div class="frame-list-column">
+				{{>listCoursesWithoutEvents}}
+			</div>
 		</div>
 		{{#if group}}
-			<div class="list-style-item-links frame-list-footer">
+			<div class="clearfix"></div>
+			<div class="frame-list-footer">
 				<a href="{{pathFor 'groupDetails' _id=group._id}}" target="_blank">
 					{{mf 'frame.list.allCoursesOfGroup'
 					"You're looking at a list of the courses of {GROUP} on openki.net"

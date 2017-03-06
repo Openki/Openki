@@ -21,9 +21,9 @@ CssRules = function() {
 	customizableProperties
 		.add('bgcolor', 'background-color', 'body')
 		.add('color', 'color', 'body')
-		.add('eventbg', 'background-color', '.frame-calendar-event')
-		.add('eventcolor', 'color', '.frame-calendar-event')
-		.add('linkcolor', 'color', '.frame-calendar-event a')
+		.add('eventbg', 'background-color', '.list-style-item')
+		.add('eventcolor', 'color', '.list-style-item')
+		.add('linkcolor', 'color', '.list-style-item a')
 		.add('fontsize', 'font-size', '*');
 
 	/** Invoke the add method on customizableProperties

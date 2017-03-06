@@ -1,3 +1,5 @@
+import '/client/views/frames/imports/CssRules.js';
+
 Router.map(function () {
 	this.route('frameList', {
 		path: '/frame/list',
@@ -20,7 +22,14 @@ Router.map(function () {
 		},
 
 		data: function() {
+			var cssRules = new CssRules();
+			cssRules
+				.add('footerbg', 'background-color', '.frame-list-footer')
+				.add('footercolor', 'color', '.frame-list-footer a')
+				.read(this.params.query);
+
 			var data = {
+				cssRules: cssRules,
 				group: Groups.findOne(this.coursesWithEvents.group),
 				coursesWithEvents: coursesFind(this.coursesWithEvents, 25),
 				coursesWithoutEvents: coursesFind(this.coursesWithoutEvents, 25)
