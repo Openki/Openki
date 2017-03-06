@@ -9,20 +9,7 @@
 </head>
 
 <template name="layout">
-	<div class="modal fade register" tabindex="-1" role="dialog" id="registerFrame">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						{{mf 'login.register.submit'}}
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> registerFrame}}
-				</div>
-			</div>
-		</div>
-	</div>
+	{{> registerModal}}
 	<div id="wrap">
 		<div id="topBar">
 			{{> navbar}}

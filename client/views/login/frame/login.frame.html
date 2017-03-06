@@ -84,6 +84,24 @@
 	</form>
 </template>
 
+<template name="registerModal">
+	<div class="modal fade register" tabindex="-1" role="dialog" id="registerFrame">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<span class="fa fa-user-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'login.register.submit'}}
+					</h4>
+				</div>
+				<div class="modal-body">
+					{{> registerFrame}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
 <template name="registerFrame">
 	<form>
 		<div class="form-group">
@@ -122,7 +140,6 @@
 				/>
 			</div>
 			<span class="help-block">
-				<span class="fa fa-info-circle fa-fw" aria-hidden="true"></span>
 				{{#mf KEY='login.frame.register.mailDisclaimer'}}
 					Providing an e-mail address allows other users to contact you
 					and is needed to recover your password in case you forget it.
