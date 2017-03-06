@@ -29,18 +29,16 @@
 				{{#each member.roles}}
 					<li class='{{this}}'>
 						<span class="course-member-role">
-							<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-							<span class="role-short">{{mf roleShort}}</span>
+							<span class="course-member-role-text">
+								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
+								<span class="role-short">{{mf roleShort}}</span>
+							</span>
+							{{#with ..}}
+								{{#if mayUnsubscribeFromTeam ..}}
+									{{> removeFromTeamDropdown}}
+								{{/if}}
+							{{/with}}
 						</span>
-						{{#with ..}}
-							{{#if mayUnsubscribeFromTeam ..}}
-							<button type="button" class="btn btn-remove js-remove-from-team-btn"
-								data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
-								data-tooltip-direction="e">
-								<span class="fa fa-minus remove-from-team-btn-minus"></span>
-							</button>
-							{{/if}}
-						{{/with}}
 					</li>
 				{{/each}}
 			</ul>
@@ -65,4 +63,32 @@
 			{{/if}}
 		{{/if}}
 	</div>
+</template>
+
+<template name="removeFromTeamDropdown">
+	<span class="dropdown">
+		<button type="button" class="btn btn-remove remove-team-btn dropdown-toggle"
+			aria-expanded="false"
+			aria-haspopup="true"
+			data-toggle="dropdown"
+			data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
+			data-tooltip-direction="e">
+			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li>
+				{{#if isNotPriviledgedSelf}}
+					{{mf 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
+				{{else}}
+					{{mf 'course.detail.remove.other.team' 'Do you really want to remove this member from the team?'}}
+				{{/if}}
+			</li>
+			<li>
+				<button type="button" class="btn btn-remove js-remove-team">
+					<span class="fa fa-remove"></span>
+					{{mf 'course.group.remove' 'Remove'}}
+				</button>
+			</li>
+		</ul>
+	</span>
 </template>

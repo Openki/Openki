@@ -32,13 +32,22 @@
 	}
 }
 
+.course-member-roles .dropdown-menu li {
+		padding: 5px 15px;
+}
+
 .course-member-role {
 	vertical-align: middle;
-	padding: 4px 6px;
+	padding: 3px 6px 5px 6px;
 	background: $blue;
+}
+.course-member-role-text{
 	color: $white;
 	font-size: small;
 	font-weight: bold;
+}
+.team .course-member-role {
+	padding-right: 0px;
 }
 
 .role-short {
@@ -50,13 +59,25 @@
 	padding: 2px 6px;
 }
 
-.js-remove-from-team-btn {
-	margin-right: 1px;
-	margin-left: 1px;
-	padding: 2px 6px;
-	color: $black;
+.remove-team-btn {
+	margin-top: -1px;
+	padding: 3px 6px;
+	color: $white;
+	background: $blue;
+	border: 0px;
+	transition: all $default-transition-time;
+
+	&:hover,
+	&:focus {
+		background: darken($blue, 10%);
+		color: $white;
+		border: 0px;
+	}
 }
 
+.js-remove-team {
+	padding: 6px 24px;
+}
 
 .course-member-comment {
 	display: block;

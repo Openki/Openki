@@ -55,7 +55,14 @@ Template.courseMember.helpers({
 	mayUnsubscribeFromTeam: function(label) {
 		return label == 'team'
 			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
-	},
+	}
+});
+
+Template.removeFromTeamDropdown.helpers({
+	isNotPriviledgedSelf: function() {
+		var notPriviledgedUser = !privileged(Meteor.userId(), 'admin');
+		return (this.member.user === Meteor.userId() && notPriviledgedUser);
+	}
 });
 
 Template.courseMember.events({
@@ -63,16 +70,8 @@ Template.courseMember.events({
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
-	'click .js-remove-from-team-btn': function(e, template) {
-		if(this.member.user === Meteor.userId() && !privileged(Meteor.userId(), 'admin')){
-			if (confirm(mf("course.detail.remove.yourself.team", "Remove yourself from the team? Only another member can add you back."))) {
-				Meteor.call("remove_role", this.course._id, this.member.user, 'team');
-			}
-		} else {
-			if (confirm(mf("course.detail.remove.other.team", { NAME: userName(this.member.user) }, 'Do you really want to remove member "{NAME}" from the team?'))) {
-				Meteor.call("remove_role", this.course._id, this.member.user, 'team');
-			}
-		}
+	'click .js-remove-team': function(e, template) {
+		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });
