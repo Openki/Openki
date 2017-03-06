@@ -1,3 +1,6 @@
+import GeoIP from 'geoip-lite';
+
+
 Meteor.methods({
 	updateUserLocale: function(locale){
 		Meteor.users.update(Meteor.userId(), {
@@ -9,7 +12,6 @@ Meteor.methods({
 
 ////////  Geo-IP    find nearest region to IP of user
 var closestRegion = function(address) {
-	GeoIP = Npm.require('geoip-lite');
 	check(address, String);
 
 	var maxDistance = 200000; // meters

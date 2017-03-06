@@ -1,41 +1,14 @@
-.frame-calendar-event + .frame-calendar-event {
-	margin-top: 10px;
-}
-
-.frame-calendar-event-header {
-	$background-color: $blue-lighter;
-
-	background-color: $background-color;
-	font-weight: bold;
-	margin: 0;
-	padding: 10px;
-	transition: background-color $default-transition-time;
-
-	&:hover {
-		background-color: darken($background-color, 5%);
-		cursor: pointer;
-	}
-
-	&.active {
-		background-color: darken($background-color, 5%);
-	}
-}
-
 .frame-calendar-event-time {
+	font-weight: normal;
 	@include td-margin(right, 10px);
 }
 
-.frame-calendar-event-body {
-	background-color: $blue-lighter;
-	display: none;
-	padding: 10px;
+.frame-calendar-event-region {
+	font-size: .8em;
+	margin-left: 5px;
 }
 
-.frame-calendar-event-property {
-	@include make-row;
-}
-
-.frame-calendar-event-property .description {
+.frame-calendar-event-description {
 	@include td-make-xs-column(4);
 	font-weight: bold;
 
@@ -44,24 +17,10 @@
 	}
 }
 
-.frame-calendar-event-property .content {
+.frame-calendar-event-content {
 	@include td-make-xs-column(8);
 
 	@media (min-width: $screen-xsm) {
 		@include td-make-xs-column(10);
 	}
-}
-
-.frame-calendar-event-links {
-	@include clearfix;
-	margin-top: 15px;
-	@include td-text-align(right);
-}
-
-.frame-calendar-event-links > a:hover {
-	cursor: pointer;
-}
-
-.frame-calendar-event-links > a + a {
-	@include td-margin(left, 10px);
 }
