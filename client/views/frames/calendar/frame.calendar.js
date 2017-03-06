@@ -7,7 +7,10 @@ Router.map(function () {
 		layoutTemplate: 'frameLayout',
 		data: function() {
 			var cssRules = new CssRules();
-			cssRules.read(this.params.query);
+			cssRules
+				.add('regionbg', 'background-color', '.frame-calendar-event-region')
+				.add('regioncolor', 'color', '.frame-calendar-event-region')
+				.read(this.params.query);
 
 			return { cssRules: cssRules };
 		},
