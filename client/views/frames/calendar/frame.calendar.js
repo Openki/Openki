@@ -4,11 +4,11 @@ Router.map(function () {
 	this.route('frameCalendar', {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
-		layoutTemplate: 'frameCalendar',
+		layoutTemplate: 'frameLayout',
 		data: function() {
 			var cssRules = new CssRules();
 			cssRules.read(this.params.query);
-
+			
 			return { cssRules: cssRules };
 		},
 		onAfterAction: function() {
@@ -59,12 +59,22 @@ Template.frameCalendar.helpers({
 });
 
 
+Template.frameCalendarEvent.onCreated(function() {
+	this.expanded = new ReactiveVar(false);
+});
+
+
+Template.frameCalendarEvent.helpers({
+	'expanded': function() {
+		return Template.instance().expanded.get();
+	},
+});
+
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
 		var jQueryTarget = $(e.currentTarget);
-
 		jQueryTarget.toggleClass('active');
-		jQueryTarget.nextAll('.frame-calendar-event-body').toggle();
 		jQueryTarget.children('.frame-calendar-event-time').toggle();
+		instance.expanded.set(!instance.expanded.get());
 	}
 });

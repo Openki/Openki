@@ -33,3 +33,22 @@ Router.map(function () {
 		}
 	});
 });
+
+_.each([Template.listCourseWithEvents, Template.listCourseWithoutEvents], function(template) {
+	template.onCreated(function() {
+		this.expanded = new ReactiveVar(false);
+	});
+
+	template.helpers({
+		'expanded': function() {
+			return Template.instance().expanded.get();
+		}
+	});
+
+	template.events({
+		'click .js-toggle-event-details': function(e, instance) {
+			$(e.currentTarget).toggleClass('active');
+			instance.expanded.set(!instance.expanded.get());
+		}
+	});
+});

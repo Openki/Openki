@@ -1,0 +1,53 @@
+.list-style-item {
+	background-color: $blue-lighter;
+}
+
+.list-style-item + .list-style-item {
+	margin-top: 5px;
+}
+
+.list-style-title {
+	font-size: 1.2em
+}
+
+.list-style-item-header {
+	font-size: 1.1em;
+}
+
+.list-style-item-header {
+	font-weight: bold;
+	margin: 0;
+	padding: 7px;
+	transition: background-color $default-transition-time;
+
+	&:hover,
+	&.active {
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.list-style-item-body {
+	padding: 7px;
+}
+
+.list-style-item-property {
+	@include make-row;
+}
+
+.list-style-item-links {
+	@include clearfix;
+	margin-top: 5px;
+	@include td-text-align(right);
+}
+
+.list-style-item-links > a:hover {
+	cursor: pointer;
+}
+
+.list-style-item-links > a + a {
+	@include td-margin(left, 10px);
+}

@@ -1,6 +1,8 @@
 function sendIcal(events, response) {
 	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
+	var dname;
+
 	events.forEach(function(dbevent) {
 		var end = dbevent.end || dbevent.start;
 
@@ -18,11 +20,21 @@ function sendIcal(events, response) {
 			description: textPlain(dbevent.description),
 			url: Router.routes.showEvent.url(dbevent)
 		});
+
+		if (!dname) {
+			var sName = getSlug(dbevent.title);
+			var sDate = moment(dbevent.start).format("YYYY-MM-DD");
+			dname = "openki-" + sName + '-' + sDate + '.ics';
+		} else {
+			dname = "openki-calendar.ics";
+		}
 	});
 
 	var calendarstring = calendar.toString();
+
 	response.writeHead(200, {
-		'Content-Type': 'text/calendar; charset=UTF-8'
+		'Content-Type': 'text/calendar; charset=UTF-8',
+		'Content-Disposition': 'attachment; filename="' + dname + '"'
 	});
 
 	response.write(calendarstring);
