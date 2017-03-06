@@ -34,11 +34,21 @@ Router.map(function () {
 	});
 });
 
-Template.frameList.events({
-	'click .js-toggle-event-details': function(e, instance) {
-		var jQueryTarget = $(e.currentTarget);
+_.each([Template.listCourseWithEvents, Template.listCourseWithoutEvents], function(template) {
+	template.onCreated(function() {
+		this.expanded = new ReactiveVar(false);
+	});
 
-		jQueryTarget.toggleClass('active');
-		jQueryTarget.nextAll('.list-style-item-body').toggle();
-	}
+	template.helpers({
+		'expanded': function() {
+			return Template.instance().expanded.get();
+		}
+	});
+
+	template.events({
+		'click .js-toggle-event-details': function(e, instance) {
+			$(e.currentTarget).toggleClass('active');
+			instance.expanded.set(!instance.expanded.get());
+		}
+	});
 });

@@ -108,9 +108,11 @@ Template.frameCalendarEvent.helpers({
 	},
 });
 
-
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
+		var jQueryTarget = $(e.currentTarget);
+		jQueryTarget.toggleClass('active');
+		jQueryTarget.children('.frame-calendar-event-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
 	}
 });
