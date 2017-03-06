@@ -45,7 +45,7 @@ Template.loginFrame.onRendered(function() {
 
 	function resetWarnings() {
 		instance.$('.form-group').removeClass('has-error');
-		instance.$('.help-block').remove();
+		instance.$('.warning-block').remove();
 	}
 
 	instance.autorun(function() {
@@ -59,7 +59,7 @@ Template.loginFrame.onRendered(function() {
 
 				if (index === selectors.length -1) {
 					formGroup.append(
-						'<span class="help-block">'
+						'<span class="help-block warning-block">'
 						+ activeWarning.text
 						+ '</span>'
 					);
@@ -181,7 +181,7 @@ Template.registerFrame.onRendered(function() {
 
 	function resetWarnings() {
 		instance.$('.form-group').removeClass('has-error');
-		instance.$('.help-block').remove();
+		instance.$('.warning-block').remove();
 	}
 
 	instance.autorun(function() {
@@ -195,7 +195,7 @@ Template.registerFrame.onRendered(function() {
 
 				if (index === selectors.length -1) {
 					formGroup.append(
-						'<span class="help-block">'
+						'<span class="help-block warning-block">'
 						+ activeWarning.text
 						+ '</span>'
 					);

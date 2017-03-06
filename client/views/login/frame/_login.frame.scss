@@ -26,9 +26,9 @@
 	padding: 0 ($grid-gutter-width / 2);
 }
 
-.registering-disclaimer {
-	margin-top: -10px;
-	text-align: justify;
+.login .help-block,
+.register .help-block {
+	margin-bottom: 0;
 }
 
 .forgot-pwd-btn-container {
@@ -44,8 +44,6 @@
 		color: darken($color, 20%)
 	}
 }
-
-
 
 .external-service-login {
 	text-align: center;
