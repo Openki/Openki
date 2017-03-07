@@ -35,7 +35,7 @@ Template.courseCompact.helpers({
 			filterPreviewClasses.push('group-' + group);
 		});
 
-		filterPreviewClasses.push(course.region);
+		filterPreviewClasses.push('region-' + course.region);
 
 		return filterPreviewClasses.join(' ');
 	}

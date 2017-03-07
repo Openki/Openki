@@ -115,7 +115,7 @@ Template.regionSelection.events({
 		if (regionID && Session.equals('region', 'all')) {
 			var activate = e.type == 'mouseover' || e.type == 'focusin';
 
-			courseFilterPreview('.' + regionID, activate);
+			courseFilterPreview('.region-' + regionID, activate);
 		}
 	},
 
