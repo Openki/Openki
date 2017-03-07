@@ -14,12 +14,12 @@ Template.filter.events({
 
 	'mouseover .js-category-selection-label': function() {
 		var category = this;
-		courseFilterPreview(('.' + category), true);
+		courseFilterPreview(('.category-' + category), true);
 	},
 
 	'mouseout .js-category-selection-label': function() {
 		var category = this;
-		courseFilterPreview(('.' + category), false);
+		courseFilterPreview(('.category-' + category), false);
 	},
 
 	'keyup .js-search-categories': function(event, instance) {
@@ -115,12 +115,12 @@ Template.filter.onRendered(function() {
 
 	instance.$('.js-filter-needs-host').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needsHost', activate);
+		courseFilterPreview('.needs-host', activate);
 	});
 
 	instance.$('.js-filter-needs-mentor').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needsMentor', activate);
+		courseFilterPreview('.needs-mentor', activate);
 	});
 
 	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {

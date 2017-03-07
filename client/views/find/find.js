@@ -153,19 +153,19 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-label': function() {
-		courseFilterPreview(('.'+this), true, true);
+		courseFilterPreview(('.category-' + this), true, true);
 	},
 
 	'mouseout .js-category-label': function() {
-		courseFilterPreview(('.'+this), false, true);
+		courseFilterPreview(('.category-' + this), false, true);
 	},
 
 	'mouseover .js-group-label': function() {
-		courseFilterPreview(('.'+this), true, true);
+		courseFilterPreview(('.group-' + this), true, true);
 	},
 
 	'mouseout .js-group-label': function() {
-		courseFilterPreview(('.'+this), false, true);
+		courseFilterPreview(('.group-' + this), false, true);
 	},
 
 	'click .js-category-label': function(event, instance) {
