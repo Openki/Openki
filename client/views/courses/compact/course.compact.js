@@ -87,6 +87,13 @@ Template.courseCompactRoles.helpers({
 		}
 
 		return roleStateTooltip;
+	},
+
+	roleIcon: function(roletype) {
+		var role = _.find(Roles, function(role) {
+			return role.type == roletype;
+		});
+		return role.icon;
 	}
 });
 
