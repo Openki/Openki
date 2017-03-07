@@ -19,8 +19,10 @@ Template.courseCompact.helpers({
 		var course = this;
 
 		var roles = _.map(Roles, function(role) { return role.type; });
+
 		_.each(roles, function(role) {
-			if (!hasRole(course.members, role)) {
+			var roleDisengaged = !hasRole(course.members, role);
+			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
 				filterPreviewClasses.push('needs-' + role);
 			}
 		});
