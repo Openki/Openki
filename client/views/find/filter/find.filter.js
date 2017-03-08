@@ -14,13 +14,21 @@ Template.filter.events({
 
 	'mouseover .js-category-selection-label': function() {
 		var category = this;
-		courseFilterPreview(('.category-' + category), true);
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: true,
+		};
+		courseFilterPreview(previewOptions);
 		$('.js-category-label.category-' + category).addClass('highlight');
 	},
 
 	'mouseout .js-category-selection-label': function() {
 		var category = this;
-		courseFilterPreview(('.category-' + category), false);
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: false,
+		};
+		courseFilterPreview(previewOptions);
 		$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
@@ -112,17 +120,29 @@ Template.filter.onRendered(function() {
 
 	instance.$('.js-filter-upcoming-events').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
-		courseFilterPreview('.has-upcoming-events', activate);
+		var previewOptions = {
+			selector: '.has-upcoming-events',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
 	});
 
 	instance.$('.js-filter-needs-host').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needs-host', activate);
+		var previewOptions = {
+			selector: '.needs-host',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
 	});
 
 	instance.$('.js-filter-needs-mentor').on('mouseover mouseout', function(e) {
 		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needs-mentor', activate);
+		var previewOptions = {
+			selector: '.needs-mentor',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
 	});
 
 	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {

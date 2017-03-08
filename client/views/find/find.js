@@ -153,22 +153,46 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-label': function(event, instance) {
-		courseFilterPreview(('.category-' + this), true, true);
+		var previewOptions = {
+			selector: ('.category-' + this),
+			activate: true,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
 		instance.$('.js-category-label.category-' + this).addClass('highlight');
 	},
 
 	'mouseout .js-category-label': function(event, instance) {
-		courseFilterPreview(('.category-' + this), false, true);
+		var previewOptions = {
+			selector: ('.category-' + this),
+			activate: false,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
 		instance.$('.js-category-label.category-' + this).removeClass('highlight');
 	},
 
 	'mouseover .js-group-label': function(event, instance) {
-		courseFilterPreview(('.group-' + this), true, true);
+		var previewOptions = {
+			selector: ('.group-' + this),
+			activate: true,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
 		instance.$('.js-group-label.group-' + this).addClass('highlight');
 	},
 
 	'mouseout .js-group-label': function(event, instance) {
-		courseFilterPreview(('.group-' + this), false, true);
+		var previewOptions = {
+			selector: ('.group-' + this),
+			activate: false,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
 		instance.$('.js-group-label.group-' + this).removeClass('highlight');
 	},
 
