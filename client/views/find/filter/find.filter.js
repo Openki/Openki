@@ -47,6 +47,7 @@ Template.filter.events({
 			activate: activate
 		};
 		courseFilterPreview(previewOptions);
+
 		$('.js-category-label.category-' + category).toggleClass('highlight');
 	},
 

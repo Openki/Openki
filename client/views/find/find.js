@@ -153,27 +153,47 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-label, mouseout .js-category-label': function(e, instance) {
+		var category = this;
 		var activate = e.type == 'mouseover';
+
 		var previewOptions = {
-			selector: ('.category-' + this),
+			selector: ('.category-' + category),
 			activate: activate,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
-		instance.$('.js-category-label.category-' + this).toggleClass('highlight');
+
+		var categoryLabels = instance.$('.js-category-label.category-' + category);
+		if (activate) {
+			setTimeout(function() {
+				categoryLabels.toggleClass('highlight');
+			}, 300);
+		} else {
+			categoryLabels.toggleClass('highlight');
+		}
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
+		var group = this;
 		var activate = e.type == 'mouseover';
+
 		var previewOptions = {
-			selector: ('.group-' + this),
+			selector: ('.group-' + group),
 			activate: activate,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
-		instance.$('.js-group-label.group-' + this).addClass('highlight');
+
+		var groupLabels = instance.$('.js-group-label.group-' + group);
+		if (activate) {
+			setTimeout(function() {
+				groupLabels.toggleClass('highlight');
+			}, 300);
+		} else {
+			groupLabels.toggleClass('highlight');
+		}
 	},
 
 	'click .js-category-label': function(event, instance) {
