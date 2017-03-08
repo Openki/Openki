@@ -152,20 +152,24 @@ Template.find.events({
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label': function() {
+	'mouseover .js-category-label': function(event, instance) {
 		courseFilterPreview(('.category-' + this), true, true);
+		instance.$('.js-category-label.category-' + this).addClass('highlight');
 	},
 
-	'mouseout .js-category-label': function() {
+	'mouseout .js-category-label': function(event, instance) {
 		courseFilterPreview(('.category-' + this), false, true);
+		instance.$('.js-category-label.category-' + this).removeClass('highlight');
 	},
 
-	'mouseover .js-group-label': function() {
+	'mouseover .js-group-label': function(event, instance) {
 		courseFilterPreview(('.group-' + this), true, true);
+		instance.$('.js-group-label.group-' + this).addClass('highlight');
 	},
 
-	'mouseout .js-group-label': function() {
+	'mouseout .js-group-label': function(event, instance) {
 		courseFilterPreview(('.group-' + this), false, true);
+		instance.$('.js-group-label.group-' + this).removeClass('highlight');
 	},
 
 	'click .js-category-label': function(event, instance) {

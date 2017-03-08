@@ -15,11 +15,13 @@ Template.filter.events({
 	'mouseover .js-category-selection-label': function() {
 		var category = this;
 		courseFilterPreview(('.category-' + category), true);
+		instance.$('.js-category-label.category-' + category).addClass('highlight');
 	},
 
 	'mouseout .js-category-selection-label': function() {
 		var category = this;
 		courseFilterPreview(('.category-' + category), false);
+		instance.$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
 	'keyup .js-search-categories': function(event, instance) {
