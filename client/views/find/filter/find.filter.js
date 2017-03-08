@@ -12,16 +12,16 @@ Template.filter.events({
 		parentInstance.updateUrl();
 	},
 
-	'mouseover .js-category-selection-label': function(event, instance) {
+	'mouseover .js-category-selection-label': function() {
 		var category = this;
 		courseFilterPreview(('.category-' + category), true);
-		instance.$('.js-category-label.category-' + category).addClass('highlight');
+		$('.js-category-label.category-' + category).addClass('highlight');
 	},
 
-	'mouseout .js-category-selection-label': function(event, instance) {
+	'mouseout .js-category-selection-label': function() {
 		var category = this;
 		courseFilterPreview(('.category-' + category), false);
-		instance.$('.js-category-label.category-' + category).removeClass('highlight');
+		$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
 	'keyup .js-search-categories': function(event, instance) {
