@@ -12,13 +12,13 @@ Template.filter.events({
 		parentInstance.updateUrl();
 	},
 
-	'mouseover .js-category-selection-label': function() {
+	'mouseover .js-category-selection-label': function(event, instance) {
 		var category = this;
 		courseFilterPreview(('.category-' + category), true);
 		instance.$('.js-category-label.category-' + category).addClass('highlight');
 	},
 
-	'mouseout .js-category-selection-label': function() {
+	'mouseout .js-category-selection-label': function(event, instance) {
 		var category = this;
 		courseFilterPreview(('.category-' + category), false);
 		instance.$('.js-category-label.category-' + category).removeClass('highlight');
