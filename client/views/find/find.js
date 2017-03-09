@@ -152,26 +152,32 @@ Template.find.events({
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label, mouseout .js-category-label': function(e, instance) {
+	'mouseover .js-category-label': function(e, instance) {
 		var category = this;
-		var activate = e.type == 'mouseover';
 
 		var previewOptions = {
 			selector: ('.category-' + category),
-			activate: activate,
+			activate: true,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
 
-		var categoryLabels = instance.$('.js-category-label.category-' + category);
-		if (activate) {
-			setTimeout(function() {
-				categoryLabels.toggleClass('highlight');
-			}, 300);
-		} else {
-			categoryLabels.toggleClass('highlight');
-		}
+		instance.$('.js-category-label.category-' + category).addClass('highlight');
+	},
+
+	'mouseout .js-category-label': function(e, instance) {
+		var category = this;
+
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: false,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
+
+		instance.$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {

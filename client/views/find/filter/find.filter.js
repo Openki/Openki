@@ -51,6 +51,29 @@ Template.filter.events({
 		$('.js-category-label.category-' + category).toggleClass('highlight');
 	},
 
+	'mouseover .js-category-selection-label': function(e) {
+		var category = this;
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: true
+		};
+		courseFilterPreview(previewOptions);
+
+		$('.js-category-label.category-' + category).addClass('highlight');
+	},
+
+	'mouseout .js-category-selection-label': function(e) {
+		var category = this;
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: false
+		};
+		courseFilterPreview(previewOptions);
+
+		$('.js-category-label.category-' + category).removeClass('highlight');
+	},
+
+
 	'keyup .js-search-categories': function(event, instance) {
 		var parentInstance = instance.parentInstance();
 		var query = instance.$('.js-search-categories').val();
