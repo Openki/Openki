@@ -47,7 +47,7 @@ Template.categoriesMenu.onRendered(function() {
 	var instance = this;
 	var lastPosition = 0;
 	var scrollingUp = false;
-	var turn;
+	var turningPoint;
 
 	$(window).scroll(function() {
 		var position = $(window).scrollTop();
@@ -59,14 +59,14 @@ Template.categoriesMenu.onRendered(function() {
 			categoriesMenu.slideUp(300);
 		} else {
 			// store position of when changing scrolling direction
-			if (scrollingUp === false) {
-				turn = position;
+			if (!scrollingUp) {
+				turningPoint = position;
 				scrollingUp = true;
 			} else {
 				// and use it as a reference point to allow some distance
 				// being scrolled up before the menu slides down again
 				var tolerance = 200;
-				if (turn - position >= tolerance) {
+				if (turningPoint - position >= tolerance) {
 					categoriesMenu.slideDown(300);
 				}
 			}
