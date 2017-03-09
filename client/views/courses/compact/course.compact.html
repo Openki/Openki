@@ -3,14 +3,10 @@
 		<div class="course-compact-wrap">
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course-compact
-					{{courseState}}
-					course-compact-category-{{courseCategoryIdentifier}}
-					{{#if needsRole 'host'}}needsHost{{/if}}
-					{{#if needsRole 'mentor'}}needsMentor{{/if}}
-					{{#each categories}}{{this}} {{/each}}
-					{{#each this.groups}}{{this}} {{/each}}
-					{{courseRegionId}}">
-					<div class="course-compact-content {{courseState}}">
+				     course-compact-category-{{courseCategoryIdentifier}}
+				     {{courseState}}
+				     {{filterPreviewClasses}}">
+					<div class="course-compact-content">
 						<div class="course-compact-title">
 							<h4>{{name}}</h4>
 						</div>
@@ -19,11 +15,11 @@
 								<span class="fa fa-{{icon}} {{#if multipleMainCategories}}category-{{categoryIdentifier}}{{/if}}" aria-hidden="true"></span>
 							{{/each}}
 						</div>
-						{{#unless hasUpcomingEvents}}
+						{{#unless nextEvent}}
 							{{> groupList}}
 						{{/unless}}
 					</div>
-					{{#if hasUpcomingEvents}}
+					{{#if nextEvent}}
 						{{> courseCompactEvent}}
 						{{> groupList}}
 					{{else}}
@@ -39,18 +35,21 @@
 	<div class="course-compact-next-event">
 		{{#with nextEvent}}
 			<div class="course-compact-next-event-date">
-				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-				{{dateformat_mini this.start}}
+				<span class="fa fa-calendar fa-fw"
+				      aria-hidden="true"></span>
+				{{dateformat_mini start}}
 			</div>
 			<div class="course-compact-next-event-time">
-				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-				{{timeformat this.start}}
+				<span class="fa fa-clock-o fa-fw"
+				      aria-hidden="true"></span>
+				{{timeformat start}}
 			</div>
-			{{this.description}}
-			{{#if this.venue.name}}
+			{{#if venue.name}}
 				<div class="course-compact-next-event-venue">
-					<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-					{{this.venue.name}}
+					<span class="glyphicon glyphicon-home fa-fw"
+					      aria-hidden="true">
+					</span>
+					{{venue.name}}
 				</div>
 			{{/if}}
 		{{/with}}
@@ -59,32 +58,23 @@
 
 <template name="courseCompactRoles">
 	<div class="course-compact-roles max-{{maxRoles}}-roles">
-		<div class="course-compact-role
-				{{#if needsRole 'team'}}
-					course-compact-role-needed
-				{{else}}
-					course-compact-role-occupied{{#if userHasRole 'team'}}-by-user{{/if}}
-				{{/if}}">
-			<span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+		<div class="course-compact-role {{roleStateClass 'team'}}">
+			<span class="{{roleIcon 'team'}}"
+			      aria-hidden="true">
+			</span>
 		</div>
 		{{#if requiresRole 'mentor'}}
-			<div class="course-compact-role
-					{{#if needsRole 'mentor'}}
-						course-compact-role-needed
-					{{else}}
-						course-compact-role-occupied{{#if userHasRole 'mentor'}}-by-user{{/if}}
-					{{/if}}">
-				<span class="fa fa-graduation-cap" aria-hidden="true"></span>
+			<div class="course-compact-role {{roleStateClass 'mentor'}}">
+				<span class="{{roleIcon 'mentor'}}"
+				      aria-hidden="true">
+				</span>
 			</div>
 		{{/if}}
 		{{#if requiresRole 'host'}}
-			<div class="course-compact-role
-					{{#if needsRole 'host'}}
-						course-compact-role-needed
-					{{else}}
-						course-compact-role-occupied{{#if userHasRole 'host'}}-by-user{{/if}}
-					{{/if}}">
-				<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+			<div class="course-compact-role {{roleStateClass 'host'}}">
+				<span class="{{roleIcon 'host'}}"
+				      aria-hidden="true">
+				</span>
 			</div>
 		{{/if}}
 	</div>

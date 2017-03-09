@@ -1,16 +1,25 @@
 <template name="frameList">
+	<style type="text/css">
+		{{#each cssRules}}
+			{{selector}} { {{name}}: {{value}}; }
+		{{/each}}
+	</style>
+
 	<div class="container-fluid">
-		<div class="frame-list-row">
-			{{>listCoursesWithEvents}}
-		</div>
-		<div class="frame-list-row">
-			{{>listCoursesWithoutEvents}}
+		<div class="frame-list">
+			<div class="frame-list-column">
+				{{>listCoursesWithEvents}}
+			</div>
+			<div class="frame-list-column">
+				{{>listCoursesWithoutEvents}}
+			</div>
 		</div>
 		{{#if group}}
-			<div class="list-style-item-links frame-list-footer">
+			<div class="clearfix"></div>
+			<div class="frame-list-footer">
 				<a href="{{pathFor 'groupDetails' _id=group._id}}" target="_blank">
-					{{mf 'frame.list.allCoursesOfGroup' 
-					"You're looking at a list of the courses of {GROUP} on openki.net" 
+					{{mf 'frame.list.allCoursesOfGroup'
+					"You're looking at a list of the courses of {GROUP} on openki.net"
 					GROUP=group.name}}
 				</a>
 			</div>
@@ -23,10 +32,16 @@
 		{{mf 'frame.list.coursesWithEvents' 'Courses with upcoming events'}}
 	</h4>
 	{{#each coursesWithEvents}}
-		<div class="list-style-item">
-			<h4 class="list-style-item-header js-toggle-event-details">
-				{{name}}
-			</h4>
+		{{> listCourseWithEvents}}
+	{{/each}}
+</template>
+
+<template name="listCourseWithEvents">
+	<div class="list-style-item">
+		<h4 class="list-style-item-header js-toggle-event-details">
+			{{name}}
+		</h4>
+		{{#if expanded}}
 			<div class="list-style-item-body">
 				<div class="list-style-item-property">
 					<div class="frame-list-item-description">
@@ -54,8 +69,8 @@
 					</a>
 				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/if}}
+	</div>
 </template>
 
 <template name="listCoursesWithoutEvents">
@@ -63,10 +78,16 @@
 		{{mf 'frame.list.coursesWithoutEvents' 'Courses without upcoming events'}}
 	</h4>
 	{{#each coursesWithoutEvents}}
-		<div class="list-style-item">
-			<h4 class="list-style-item-header js-toggle-event-details">
-					{{name}}
-			</h4>
+		{{> listCourseWithoutEvents}}
+	{{/each}}
+</template>
+
+<template name="listCourseWithoutEvents">
+	<div class="list-style-item">
+		<h4 class="list-style-item-header js-toggle-event-details">
+			{{name}}
+		</h4>
+		{{#if expanded}}
 			<div class="list-style-item-body">
 				<div class="list-style-item-property">
 					<div class="frame-list-item-description">
@@ -83,6 +104,6 @@
 					</a>
 				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/if}}
+	</div>
 </template>

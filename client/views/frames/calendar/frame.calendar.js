@@ -1,53 +1,18 @@
+import '/client/views/frames/imports/CssRules.js';
+
 Router.map(function () {
 	this.route('frameCalendar', {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data: function() {
-			var customizableProperties = [];
-			customizableProperties.add = function(key, name, selector) {
-				this.push({
-					key: key,
-					name: name,
-					selector: selector
-				});
-				return this;
-			};
-
-			customizableProperties
-				.add('bgcolor', 'background-color', 'body')
-				.add('color', 'color', 'body')
-				.add('eventbg', 'background-color', '.list-style-item')
-				.add('eventcolor', 'color', '.list-style-item')
-				.add('linkcolor', 'color', '.list-style-item a')
-				.add('fontsize', 'font-size', '*');
-
-			var cssRules = [];
-			var query = this.params.query;
-			_.forEach(customizableProperties, function(property) {
-				var queryValue = query[property.key];
-				var cssValue;
-				if (typeof queryValue !== 'undefined') {
-					// hexify color values
-					if (property.name.indexOf('color') >= 0) {
-						if (queryValue.match(/^[0-9A-F]+$/i)) {
-							cssValue = '#' + queryValue.substr(0, 6);
-						}
-					} else {
-						var intVal = parseInt(queryValue, 10);
-						if (!Number.isNaN(intVal)) {
-							cssValue = Math.max(0, Math.min(1000, intVal)) + 'px';
-						}
-					}
-
-					if (cssValue) {
-						cssRules.push({ selector: property.selector, name: property.name, value: cssValue });
-					}
-				}
-			});
+			var cssRules = new CssRules();
+			cssRules
+				.add('regionbg', 'background-color', '.frame-calendar-event-region')
+				.add('regioncolor', 'color', '.frame-calendar-event-region')
+				.read(this.params.query);
 
 			return { cssRules: cssRules };
-
 		},
 		onAfterAction: function() {
 			document.title = webpagename + ' Calendar';
@@ -79,6 +44,8 @@ Template.frameCalendar.onCreated(function() {
 		instance.groupedEvents.set(groupedEvents);
 		instance.days.set(Object.keys(groupedEvents));
 	});
+
+	this.allRegions = Session.get('region') == 'all';
 });
 
 Template.frameCalendar.helpers({
@@ -103,14 +70,24 @@ Template.frameCalendarEvent.onCreated(function() {
 
 
 Template.frameCalendarEvent.helpers({
+	'allRegions': function() {
+		return Template.instance().parentInstance().allRegions;
+	},
+
+	'regionName': function() {
+		return Regions.findOne(this.region).name;
+	},
+
 	'expanded': function() {
 		return Template.instance().expanded.get();
-	},
+	}
 });
-
 
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
+		var jQueryTarget = $(e.currentTarget);
+		jQueryTarget.toggleClass('active');
+		jQueryTarget.children('.frame-calendar-event-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
 	}
 });

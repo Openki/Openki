@@ -2,7 +2,11 @@
 	color: $text-color;
 }
 
-.frame-list-row {
+.frame-list {
+	@include make-row;
+}
+
+.frame-list-column {
 	@include td-make-xs-column(12);
 	@media (min-width: $screen-xsm) {
 		@include td-make-xs-column(6);
@@ -11,6 +15,7 @@
 
 .frame-list-footer {
 	text-align: center;
+	margin-top: 5px;
 	padding: 5px;
 }
 

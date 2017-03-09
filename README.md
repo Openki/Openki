@@ -3,7 +3,11 @@ Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](
 
 **Platform for open education** – Free software built with [Meteor.js](http://meteor.com)
 
-An interactive web-platform in development with the ambition to facilitate a barrier-free access to education for everyone. It is a simple to use open-source tool for local, self-organized knowledge-exchange: As the foundation for mediating non-commercial education opportunities, as the interface between people who embrace themselves for similar subjects and as an instrument, which simplifies the organization of a “peer-to-peer” sharing of knowledge.
+An interactive web-platform to provide barrier-free access to education for everyone.
+It is a simple to use open-source tool for local, self-organized knowledge-exchange:
+As a foundation for mediating non-commercial education opportunities,
+as interface between people who are interested in similar subjects,
+and as an instrument which simplifies the organization of “peer-to-peer” sharing of knowledge.
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 <br>
@@ -36,7 +40,6 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :iphone: Responsive design: Mobile, tablet and desktop computers
 - :ideograph_advantage: I18n: In-browser-GUI for crowdsourced, live translation (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
 - :envelope: Email notifications
-- :bird: funny icons for the feature-list in our github-readme :)
 
 #### Intended features
 - :white_large_square: White-labeling for groups, locations and regions
@@ -53,6 +56,7 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
 - [Download](https://github.com/Openki/Openki/archive/master.zip) and unzip or `git clone https://github.com/Openki/Openki.git` Openki into /some/path.
 - `cd /some/path/hmmm`
+- `meteor npm install`
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 

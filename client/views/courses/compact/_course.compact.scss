@@ -93,7 +93,8 @@
 
 		.js-group-label,
 		.js-group-label:hover,
-		.js-group-label:focus {
+		.js-group-label:focus,
+		.js-group-label.highlight {
 			background-color: rgba($blue-light, .2);
 			color: rgba($blue-light, 1);
 		}
@@ -140,7 +141,8 @@
 
 		.js-group-label,
 		.js-group-label:hover,
-		.js-group-label:focus {
+		.js-group-label:focus,
+		.js-group-label.highlight {
 			background-color: rgba($category-color, 0.2);
 			color: $category-color;
 		}
@@ -162,11 +164,11 @@
 	@include td-make-xs-column(10);
 	height: 100%;
 	@include td-padding-all(0, 0, 0, 15px);
+}
 
-	&.has-upcoming-events {
-		@include td-make-xs-column(7.5);
-		@include td-padding-all($course-border-width, 5px, $course-border-width, 15px);
-	}
+.has-upcoming-events .course-compact-content {
+	@include td-make-xs-column(7.5);
+	@include td-padding-all($course-border-width, 5px, $course-border-width, 15px);
 }
 
 // ** Title

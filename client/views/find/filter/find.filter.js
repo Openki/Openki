@@ -12,15 +12,65 @@ Template.filter.events({
 		parentInstance.updateUrl();
 	},
 
-
-	'mouseover .js-category-selection-label': function() {
-		var category = this;
-		courseFilterPreview(('.' + category), true);
+	'mouseover .js-filter-upcoming-events, mouseout .js-filter-upcoming-events': function(e) {
+		var activate = e.type == 'mouseover';
+		var previewOptions = {
+			selector: '.has-upcoming-events',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
 	},
 
-	'mouseout .js-category-selection-label': function() {
+	'mouseover .js-filter-needs-host, mouseout .js-filter-needs-host': function(e) {
+		var activate = e.type == 'mouseover';
+		var previewOptions = {
+			selector: '.needs-host',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
+	},
+
+	'mouseover .js-filter-needs-mentor, mouseout .js-filter-needs-mentor': function(e) {
+		var activate = e.type == 'mouseover';
+		var previewOptions = {
+			selector: '.needs-mentor',
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
+	},
+
+	'mouseover .js-category-selection-label, mouseout .js-category-selection-label': function(e) {
 		var category = this;
-		courseFilterPreview(('.' + category), false);
+		var activate = e.type == 'mouseover';
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: activate
+		};
+		courseFilterPreview(previewOptions);
+
+		$('.js-category-label.category-' + category).toggleClass('highlight');
+	},
+
+	'mouseover .js-category-selection-label': function(e) {
+		var category = this;
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: true
+		};
+		courseFilterPreview(previewOptions);
+
+		$('.js-category-label.category-' + category).addClass('highlight');
+	},
+
+	'mouseout .js-category-selection-label': function(e) {
+		var category = this;
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: false
+		};
+		courseFilterPreview(previewOptions);
+
+		$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
 	'keyup .js-search-categories': function(event, instance) {
@@ -130,21 +180,6 @@ Template.filter.helpers({
 
 Template.filter.onRendered(function() {
 	var instance = this;
-
-	instance.$('.js-filter-upcoming-events').on('mouseover mouseout', function(e) {
-		var activate = e.type == 'mouseover';
-		courseFilterPreview('.has-upcoming-events', activate);
-	});
-
-	instance.$('.js-filter-needs-host').on('mouseover mouseout', function(e) {
-		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needsHost', activate);
-	});
-
-	instance.$('.js-filter-needs-mentor').on('mouseover mouseout', function(e) {
-		var activate = e.type == 'mouseover';
-		courseFilterPreview('.needsMentor', activate);
-	});
 
 	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {
 		var dropdownMenu = $(e.target).find('.dropdown-menu').first();

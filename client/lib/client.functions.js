@@ -134,11 +134,23 @@ getViewportWidth = function() {
 };
 
 
-courseFilterPreview = function(selector, activate, delayed) {
-	var negativeSelection = $('.course-compact').not(selector);
-	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
+courseFilterPreview = function(options) {
+	var selector = options.selector;
+	var activate = options.activate;
+	var instance = options.instance || false;
+	var delayed = options.delayed || false;
 
-	negativeSelection.toggleClass(filterClass, activate);
+	var filterClass = delayed
+		? 'filter-no-match-delayed'
+		: 'filter-no-match';
+
+	var course = instance
+		? instance.$('.course-compact')
+		: $('.course-compact');
+
+	course
+		.not(selector)
+		.toggleClass(filterClass, activate);
 };
 
 showServerError = function(message, err) {

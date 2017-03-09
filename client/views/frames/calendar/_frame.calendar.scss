@@ -1,9 +1,11 @@
-
-
 .frame-calendar-event-time {
-	font-size: 1em;
 	font-weight: normal;
 	@include td-margin(right, 10px);
+}
+
+.frame-calendar-event-region {
+	font-size: .8em;
+	margin-left: 5px;
 }
 
 .frame-calendar-event-description {
