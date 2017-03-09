@@ -15,15 +15,17 @@
 								<span class="fa fa-{{icon}} {{#if multipleMainCategories}}category-{{categoryIdentifier}}{{/if}}" aria-hidden="true"></span>
 							{{/each}}
 						</div>
-						{{#unless nextEvent}}
+						{{#unless spaceForGrouplist}}
 							{{> groupList}}
 						{{/unless}}
 					</div>
 					{{#if nextEvent}}
 						{{> courseCompactEvent}}
-						{{> groupList}}
 					{{else}}
 						{{> courseCompactRoles}}
+					{{/if}}
+					{{#if spaceForGrouplist}}
+						{{> groupList}}
 					{{/if}}
 				</div>
 			</a>

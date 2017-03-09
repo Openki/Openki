@@ -242,30 +242,21 @@
 
 // ** Grouplist
 //========================================================================================
-.course-compact > .grouplist {
+.course-compact .grouplist {
+	bottom: $course-border-width * 2;
 	margin: 0;
 	position: absolute;
-}
-
-.course-compact.proposal > .grouplist,
-.course-compact.has-past-events > .grouplist {
-	bottom: $course-border-width;
-	@include td-pos(right, $course-border-width);
-}
-
-.course-compact.has-upcoming-events > .grouplist {
-	bottom: $course-border-width * 2;
 	@include td-pos(right, $course-border-width * 2);
 }
 
-.course-compact > .grouplist > li {
+.course-compact .grouplist > li {
 	@include td-float(right);
-	@include td-margin(left, 4px);
+}
+
+.course-compact .grouplist > li + li {
+	@include td-margin(right, 5px);
 }
 
 .course-compact-content > .grouplist {
-	position: absolute;
 	right: 0;
-	bottom: 0;
-	margin-bottom: $course-border-width * 1.5;
 }

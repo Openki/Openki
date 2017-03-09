@@ -94,6 +94,13 @@ Template.courseCompact.helpers({
 
 	categoryIdentifier: function() {
 		return Categories.indexOf(this) + 1;
+	},
+
+	spaceForGrouplist: function() {
+		var course = this;
+		var notAllRolesRequired = course.roles.length != Roles.length;
+
+		return course.nextEvent || notAllRolesRequired;
 	}
 });
 
