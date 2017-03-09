@@ -218,10 +218,16 @@ Template.find.events({
 
 	'click .js-category-icon': function(event, instance) {
 		event.preventDefault();
-		instance.filter
-			.clear()
+
+		var filter = instance.filter;
+		_.each(filter.get('categories'), function(category) {
+			filter.remove('categories', category);
+		});
+
+		filter
 			.add('categories', '' + this.name)
 			.done();
+
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
 		instance.updateUrl();
