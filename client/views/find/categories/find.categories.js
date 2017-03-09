@@ -42,3 +42,22 @@ Template.categoriesMenu.events({
 		window.scrollTo(0, 0);
 	}
 });
+
+Template.categoriesMenu.onRendered(function() {
+	var instance = this;
+	var lastPos = 0;
+
+	$(window).scroll(function() {
+		var pos = $(window).scrollTop();
+
+		var categoriesMenu = instance.$('.categories-menu');
+
+		if (pos > lastPos) {
+			categoriesMenu.slideUp(300);
+		} else {
+			categoriesMenu.slideDown(300);
+		}
+
+		lastPos = pos;
+	});
+});
