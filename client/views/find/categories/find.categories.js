@@ -45,19 +45,33 @@ Template.categoriesMenu.events({
 
 Template.categoriesMenu.onRendered(function() {
 	var instance = this;
-	var lastPos = 0;
+	var lastPosition = 0;
+	var scrollingUp = false;
+	var turn;
 
 	$(window).scroll(function() {
-		var pos = $(window).scrollTop();
-
+		var position = $(window).scrollTop();
 		var categoriesMenu = instance.$('.categories-menu');
 
-		if (pos > lastPos) {
+		// hide submenu when scrolling down
+		if (position > lastPosition) {
+			scrollingUp = false;
 			categoriesMenu.slideUp(300);
 		} else {
-			categoriesMenu.slideDown(300);
+			// store position of when changing scrolling direction
+			if (scrollingUp === false) {
+				turn = position;
+				scrollingUp = true;
+			} else {
+				// and use it as a reference point to allow some distance
+				// being scrolled up before the menu slides down again
+				var tolerance = 200;
+				if (turn - position >= tolerance) {
+					categoriesMenu.slideDown(300);
+				}
+			}
 		}
 
-		lastPos = pos;
+		lastPosition = position;
 	});
 });
