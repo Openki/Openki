@@ -45,8 +45,7 @@
 }
 
 .toggle-property-filter-icon {
-	background: $role-needed-bg;
-	color: $role-needed-color;
+	color: $brand-primary;
 	display: inline-block;
 	text-align: center;
 	width: 28px;
@@ -58,7 +57,7 @@
 }
 
 .eventcaption_upcoming {
-	background: $has-upcoming-events-bg;
+	background: $blue-lighter;
 	display: inline-block;
 	height: 20px;
 	position: relative;
@@ -67,7 +66,7 @@
 }
 
 .eventcaption_upcoming_box {
-	background: $course-compact-next-event-bg;
+	background: $blue-light;
 	height: 10px;
 	position: absolute;
 	@include td-pos(right, 0);
@@ -76,7 +75,7 @@
 }
 
 .eventcaption_upcoming_text {
-	background: $course-compact-next-event-color;
+	background: $white;
 	height: 1px;
 	@include td-pos(left, 3px);
 	position: absolute;

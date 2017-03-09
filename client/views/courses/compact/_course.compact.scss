@@ -113,13 +113,20 @@
 	.category-#{$category-index} {
 		color: rgba($category-color, .2);
 		transition-duration: .2s;
-		transition-property: text-shadow;
 
+		&:hover,
+		&.highlight {
+			color: rgba($category-color, .5);
+			text-shadow: rgba(177, 173, 173, 0.35) 1px 1px 1px;
+			transition-delay: .3s;
+		}
 
 		&:hover {
-			color: rgba($category-color, .5);
-			text-shadow: rgba(177, 173, 173, 0.25) 1px 1px 1px;
-			transition-delay: .3s;
+			transition-property: text-shadow;
+		}
+
+		&.highlight {
+			transition-property: #{'color text-shadow'}
 		}
 	}
 

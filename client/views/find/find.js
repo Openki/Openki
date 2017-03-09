@@ -169,31 +169,29 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-icon': function(e, instance) {
-		var categoryName = this.name;
-
+		var category = this;
 		var previewOptions = {
-			selector: ('.category-' + categoryName),
+			selector: ('.category-' + category.name),
 			activate: true,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + categoryName).addClass('highlight');
+		instance.$('.js-category-icon.category-' + category._id).addClass('highlight');
 	},
 
 	'mouseout .js-category-icon': function(e, instance) {
-		var categoryName = this.name;
-
+		var category = this;
 		var previewOptions = {
-			selector: ('.category-' + categoryName),
+			selector: ('.category-' + category.name),
 			activate: false,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + categoryName).removeClass('highlight');
+		instance.$('.js-category-icon.category-' + category._id).removeClass('highlight');
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
