@@ -12,7 +12,9 @@
 						</div>
 						<div class="course-compact-categories">
 							{{#each mainCategories 4}}
-								<span class="fa fa-{{icon}} {{#if multipleMainCategories}}category-{{categoryIdentifier}}{{/if}}" aria-hidden="true"></span>
+								<span class="{{categoryIconClasses}}"
+								      aria-hidden="true">
+								</span>
 							{{/each}}
 						</div>
 						{{#unless spaceForGrouplist}}

@@ -168,32 +168,32 @@ Template.find.events({
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label': function(e, instance) {
-		var category = this;
+	'mouseover .js-category-icon': function(e, instance) {
+		var categoryName = this.name;
 
 		var previewOptions = {
-			selector: ('.category-' + category),
+			selector: ('.category-' + categoryName),
 			activate: true,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + category).addClass('highlight');
+		instance.$('.js-category-label.category-' + categoryName).addClass('highlight');
 	},
 
-	'mouseout .js-category-label': function(e, instance) {
-		var category = this;
+	'mouseout .js-category-icon': function(e, instance) {
+		var categoryName = this.name;
 
 		var previewOptions = {
-			selector: ('.category-' + category),
+			selector: ('.category-' + categoryName),
 			activate: false,
 			instance: instance,
 			delayed: true
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + category).removeClass('highlight');
+		instance.$('.js-category-label.category-' + categoryName).removeClass('highlight');
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
@@ -218,12 +218,17 @@ Template.find.events({
 		}
 	},
 
-	'click .js-category-label': function(event, instance) {
-		instance.filter.add('categories', ""+this).done();
+	'click .js-category-icon': function(event, instance) {
+		event.preventDefault();
+		instance.filter
+			.clear()
+			.add('categories', '' + this.name)
+			.done();
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
 		instance.updateUrl();
 		window.scrollTo(0, 0);
+		$('.categories-menu').slideDown(200);
 	},
 
 	'click .js-group-label': function(event, instance) {

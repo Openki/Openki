@@ -112,6 +112,15 @@
 @each $category-index, $category-color in $category-computed-colors {
 	.category-#{$category-index} {
 		color: rgba($category-color, .2);
+		transition-duration: .2s;
+		transition-property: text-shadow;
+
+
+		&:hover {
+			color: rgba($category-color, .5);
+			text-shadow: rgba(177, 173, 173, 0.25) 1px 1px 1px;
+			transition-delay: .3s;
+		}
 	}
 
 	.course-compact-category-#{$category-index} {

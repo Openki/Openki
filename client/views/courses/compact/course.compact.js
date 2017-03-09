@@ -11,7 +11,6 @@ Template.courseCompact.onCreated(function() {
 	});
 
 	instance.mainCategories = mainCategories;
-	instance.mainCategoriesCount = mainCategories.length;
 });
 
 Template.courseCompact.helpers({
@@ -59,9 +58,8 @@ Template.courseCompact.helpers({
 	courseCategoryIdentifier: function() {
 		var instance = Template.instance();
 		var mainCategories = instance.mainCategories;
-		var mainCategoriesCount = instance.mainCategoriesCount;
 
-		if (!mainCategoriesCount) return 'no-category';
+		if (instance.mainCategories.length === 0) return 'no-category';
 
 		// limit number of main categories taken into account
 		mainCategories = mainCategories.slice(0, 2);
@@ -85,15 +83,18 @@ Template.courseCompact.helpers({
 		return mainCategories.slice(0, limit);
 	},
 
-	multipleMainCategories: function() {
-		var instance = Template.instance();
-		var mainCategoriesCount = instance.mainCategoriesCount;
+	categoryIconClasses: function() {
+		var category = this;
+		var classes = ['fa'];
 
-		return mainCategoriesCount > 1;
-	},
+		classes.push('fa-' + category.icon);
 
-	categoryIdentifier: function() {
-		return Categories.indexOf(this) + 1;
+		var categoryIdentifier = Categories.indexOf(category) + 1;
+		classes.push('category-' + categoryIdentifier);
+
+		classes.push('js-category-icon');
+
+		return classes.join(' ');
 	},
 
 	spaceForGrouplist: function() {
@@ -168,6 +169,10 @@ Template.courseCompactRoles.helpers({
 
 Template.courseCompact.events({
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
+		instance.$('.course-compact').toggleClass('elevate_child');
+	},
+
+	'mouseover .js-category-icon, mouseout .js-category-icon': function(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate_child');
 	}
 });
