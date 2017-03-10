@@ -26,7 +26,7 @@ Template.frameCalendar.onCreated(function() {
 	instance.groupedEvents = new ReactiveVar([]);
 	instance.days = new ReactiveVar([]);
 
-	this.autorun(function() {
+	instance.autorun(function() {
 		var filter = Filtering(EventPredicates)
 		             .read(Router.current().params.query)
 		             .done();
@@ -45,7 +45,7 @@ Template.frameCalendar.onCreated(function() {
 		instance.days.set(Object.keys(groupedEvents));
 	});
 
-	this.allRegions = Session.get('region') == 'all';
+	instance.allRegions = Session.get('region') == 'all';
 });
 
 Template.frameCalendar.helpers({
@@ -85,9 +85,8 @@ Template.frameCalendarEvent.helpers({
 
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
-		var jQueryTarget = $(e.currentTarget);
-		jQueryTarget.toggleClass('active');
-		jQueryTarget.children('.frame-calendar-event-time').toggle();
+		$(e.currentTarget).toggleClass('active');
+		instance.$('.frame-calendar-event-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
 	}
 });
