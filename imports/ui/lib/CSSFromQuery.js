@@ -1,4 +1,4 @@
-CssRules = function() {
+export default CSSFromQuery = function() {
 	var self = [];
 	var customizableProperties = [];
 

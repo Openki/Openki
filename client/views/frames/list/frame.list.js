@@ -1,4 +1,4 @@
-import '/client/views/frames/imports/CssRules.js';
+import '/imports/ui/lib/CSSFromQuery.js';
 
 Router.map(function () {
 	this.route('frameList', {
@@ -22,7 +22,7 @@ Router.map(function () {
 		},
 
 		data: function() {
-			var cssRules = new CssRules();
+			var cssRules = new CSSFromQuery();
 			cssRules
 				.add('footerbg', 'background-color', '.frame-list-footer')
 				.add('footercolor', 'color', '.frame-list-footer a')

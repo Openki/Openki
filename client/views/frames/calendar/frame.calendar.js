@@ -1,4 +1,4 @@
-import '/client/views/frames/imports/CssRules.js';
+import '/imports/ui/lib/CSSFromQuery.js';
 
 Router.map(function () {
 	this.route('frameCalendar', {
@@ -6,7 +6,7 @@ Router.map(function () {
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data: function() {
-			var cssRules = new CssRules();
+			var cssRules = new CSSFromQuery();
 			cssRules
 				.add('regionbg', 'background-color', '.frame-calendar-event-region')
 				.add('regioncolor', 'color', '.frame-calendar-event-region')
