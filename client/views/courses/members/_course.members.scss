@@ -60,18 +60,17 @@
 }
 
 .remove-team-btn {
-	margin-top: -1px;
-	padding: 3px 6px;
+	padding: 0;
+	vertical-align: baseline;
 	color: $white;
 	background: $blue;
-	border: 0px;
-	transition: all $default-transition-time;
+	border: none;
 
 	&:hover,
 	&:focus {
 		background: darken($blue, 10%);
 		color: $white;
-		border: 0px;
+		border: none;
 	}
 }
 

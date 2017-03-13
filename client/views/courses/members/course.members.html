@@ -27,18 +27,16 @@
 		{{#if showMemberRoles}}
 			<ul class='course-member-roles'>
 				{{#each member.roles}}
-					<li class='{{this}}'>
-						<span class="course-member-role">
-							<span class="course-member-role-text">
-								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-								<span class="role-short">{{mf roleShort}}</span>
-							</span>
-							{{#with ..}}
-								{{#if mayUnsubscribeFromTeam ..}}
-									{{> removeFromTeamDropdown}}
-								{{/if}}
-							{{/with}}
+					<li class='{{this}} course-member-role'>
+						<span class="course-member-role-text">
+							<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
+							<span class="role-short">{{mf roleShort}}</span>
 						</span>
+						{{#with ..}}
+							{{#if mayUnsubscribeFromTeam ..}}
+								{{> removeFromTeamDropdown}}
+							{{/if}}
+						{{/with}}
 					</li>
 				{{/each}}
 			</ul>
