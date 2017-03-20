@@ -1,4 +1,5 @@
 import '/imports/Profile.js';
+import '/imports/LocalTime.js';
 
 Router.configure({
 	layoutTemplate: 'layout',
@@ -42,7 +43,7 @@ Router.map(function () {
 			var event;
 			var create = 'create' == this.params._id;
 			if (create) {
-				var propose = moment().add(1, 'week').startOf('hour');
+				var propose = LocalTime.now().add(1, 'week').startOf('hour');
 				event = {
 					new: true,
 					start: propose.toDate(),

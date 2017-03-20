@@ -1,12 +1,13 @@
 import '/imports/Notification.js';
+import '/imports/LocalTime.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
 // region          -> ID_region
 // title           -> String
 // description     -> String
-// start:          -> Date      (Time the events starts)
-// end:            -> Date      (Time the event ends)
+// start:          -> String of local date when event starts (Faux-UTC date object)
+// end:            -> String of local date when event ends (Faux-UTC date object)
 //
 // venue {
 //       _id:          Optional reference to a document in the Venues collection
@@ -33,6 +34,8 @@ import '/imports/Notification.js';
   * courseGroups: list of group._id inherited from course (if courseId is set)
   * allGroups: all groups that promote this course, both inherited from course and set on the event itself
   * editors: list of user and group _id that are allowed to edit the event
+  * startUTC: date object calculated from start field. Use this for ordering
+  *           between events.
   */
 
 // ===========================
@@ -224,8 +227,8 @@ Meteor.methods({
 				if (!course.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 			}
 
-			if (!changes.start || changes.start < now) {
-				throw new Meteor.Error(400, "Event date in the past or not provided");
+			if (!changes.start) {
+				throw new Meteor.Error(400, "Event date not provided");
 			}
 
 			var tested_groups = [];
@@ -246,7 +249,7 @@ Meteor.methods({
 			changes.internal = !!changes.internal;
 
 			// Synthesize event document because the code below relies on it
-			event = _.extend(new OEvent(), { courseId: changes.courseId, editors: [user._id] });
+			event = _.extend(new OEvent(), { region: changes.region, courseId: changes.courseId, editors: [user._id] });
 		} else {
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
@@ -254,14 +257,27 @@ Meteor.methods({
 
 		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
+		var region = Regions.findOne(event.region);
 
-		// Don't allow moving past events or moving events into the past
-		if (!changes.start || changes.start < now) {
-			changes.start = event.start;
+		if (!region) {
+			throw new Meteor.Error(400, "Region not found");
 		}
 
-		if (changes.end && changes.end < changes.start) {
-			throw new Meteor.Error(400, "End before start");
+		var localNow = LocalTime.regionTime(region._id);
+
+		// Don't allow moving past events or moving events into the past
+		if (changes.start) {
+			if (changes.start < localNow) {
+				changes.start = event.start;
+			}
+			changes.startUTC = LocalTime.toGlobal(changes.start, region._id);
+		}
+
+		if (changes.end) {
+			if (changes.end < changes.start) {
+				throw new Meteor.Error(400, "End before start");
+			}
+			changes.endUTC = LocalTime.toGlobal(changes.end,   region._id);
 		}
 
 		if (Meteor.isServer) {

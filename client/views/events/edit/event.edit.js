@@ -1,3 +1,11 @@
+// NOTE All dates are in local time unless otherwise noted. Moment doesn't have
+// a "timezone-unaware" mode. Thus Momentjs is kept in the belief that the dates
+// are all UTC even though we mean local time. The reason for this is that
+// the timezone might actually change when a different region is selected. We
+// wouldn't want the time or even date field to change because of this switch.
+
+import '/imports/LocalTime.js';
+
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
@@ -16,6 +24,12 @@ Template.eventEdit.onCreated(function() {
 		data.editableDescription = instance.editableDescription;
 		instance.editableDescription.setText(data.description);
 	});
+
+	/** Get current local time depending on selected region
+	  * Returned as faux-UTC moment-object. */
+	instance.now = function() {
+		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
+	};
 });
 
 Template.eventEdit.onRendered(function() {
@@ -40,10 +54,10 @@ Template.eventEdit.onRendered(function() {
 			startDate: new Date(),
 			format: {
 				toDisplay: function(date) {
-					return moment(date).format('L');
+					return moment.utc(date).format('L');
 				},
 				toValue: function(date) {
-					return moment(date, 'L').toDate();
+					return moment.utc(date, 'L').toDate();
 				}
 			}
 		});
@@ -58,7 +72,7 @@ Template.eventEdit.helpers({
 	},
 
 	localDate: function(date) {
-		return moment(date).format("L");
+		return moment.utc(date).format("L");
 	},
 
 	affectedReplicaCount: function() {
@@ -89,7 +103,7 @@ Template.eventEdit.helpers({
 	},
 
 	disableForPast: function() {
-		return this.start > new Date() ? '' : 'disabled';
+		return this.startUTC && this.startUTC < new Date() ? 'disabled' : '';
 	},
 
 	isInternal: function() {
@@ -112,7 +126,7 @@ Template.eventEdit.helpers({
 });
 
 var readDateTime = function(dateStr, timeStr) {
-	return moment(dateStr+' '+timeStr, 'L LT');
+	return moment.utc(dateStr+' '+timeStr, 'L LT');
 };
 
 
@@ -154,7 +168,7 @@ var getEventDuration = function(template) {
 
 
 /* Patch the end time and the duration when start, end or duration changes */
-var updateTimes = function(template, updateEnd) {
+function updateTimes(template, updateEnd) {
 	var start = getEventStartMoment(template);
 	var end = getEventEndMoment(template);
 	var duration = getEventDuration(template);
@@ -178,7 +192,7 @@ var updateTimes = function(template, updateEnd) {
 	template.$('#editEventStartTime').val(start.format('LT'));
 	template.$('#editEventEndTime').val(end.format('LT'));
 	template.$('#editEventDuration').val(duration.toString());
-};
+}
 
 Template.eventEdit.events({
 	'submit': function(event, instance) {
@@ -218,7 +232,7 @@ Template.eventEdit.events({
 
 		var eventId = this._id;
 		var isNew = !this._id;
-		var now = moment();
+		var now = LocalTime.now();
 		if (isNew) {
 			eventId = '';
 

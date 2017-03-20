@@ -4,7 +4,7 @@
 	"node": true,
 	"laxcomma": true,
 	"esversion": 6,
-	"latedef": true,
+	"latedef": "nofunc",
 	"unused": "vars",
 	"loopfunc": true, 
 

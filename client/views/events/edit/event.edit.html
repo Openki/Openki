@@ -72,7 +72,8 @@
 						       class="form-control"
 						       id="editEventDuration"
 						       value="{{timeformat Duration}}"
-						       size="5">
+						       size="5"
+						       {{disableForPast}}>
 					</div>
 					<label>
 						{{mf 'course.event.edit.time_end' 'Time end'}}
@@ -90,7 +91,8 @@
 						       class="form-control"
 						       id="editEventEndTime"
 						       size="5"
-						       value="{{timeformat end}}">
+						       value="{{timeformat end}}
+						       {{disableForPast}}">
 					</div>
 				</div>
 			</div>
