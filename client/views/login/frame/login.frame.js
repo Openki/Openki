@@ -176,6 +176,12 @@ Template.registerFrame.onCreated(function() {
 	instance.activeWarning = new ReactiveVar(false);
 });
 
+Template.registerModal.events({
+	'click .js-close': function(event, instance){
+		instance.$('#registerFrame').modal('hide');
+	}
+});
+
 Template.registerFrame.onRendered(function() {
 	var instance = this;
 
