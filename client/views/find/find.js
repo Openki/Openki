@@ -152,20 +152,54 @@ Template.find.events({
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label': function() {
-		courseFilterPreview(('.'+this), true, true);
+	'mouseover .js-category-label': function(e, instance) {
+		var category = this;
+
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: true,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
+
+		instance.$('.js-category-label.category-' + category).addClass('highlight');
 	},
 
-	'mouseout .js-category-label': function() {
-		courseFilterPreview(('.'+this), false, true);
+	'mouseout .js-category-label': function(e, instance) {
+		var category = this;
+
+		var previewOptions = {
+			selector: ('.category-' + category),
+			activate: false,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
+
+		instance.$('.js-category-label.category-' + category).removeClass('highlight');
 	},
 
-	'mouseover .js-group-label': function() {
-		courseFilterPreview(('.'+this), true, true);
-	},
+	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
+		var group = this;
+		var activate = e.type == 'mouseover';
 
-	'mouseout .js-group-label': function() {
-		courseFilterPreview(('.'+this), false, true);
+		var previewOptions = {
+			selector: ('.group-' + group),
+			activate: activate,
+			instance: instance,
+			delayed: true
+		};
+		courseFilterPreview(previewOptions);
+
+		var groupLabels = instance.$('.js-group-label.group-' + group);
+		if (activate) {
+			setTimeout(function() {
+				groupLabels.toggleClass('highlight');
+			}, 300);
+		} else {
+			groupLabels.toggleClass('highlight');
+		}
 	},
 
 	'click .js-category-label': function(event, instance) {

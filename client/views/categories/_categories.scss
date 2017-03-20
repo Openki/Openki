@@ -16,7 +16,8 @@ $category-label-color: $blue;
 	@extend .category-label;
 	transition: box-shadow $default-transition-time;
 
-	&:hover {
+	&:hover,
+	&.highlight {
 		background: darken($category-bg, 10%);
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 		color: darken($category-label-color, 10%);
