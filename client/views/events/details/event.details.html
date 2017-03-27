@@ -41,13 +41,13 @@
 <template name="eventDisplay">
 	<div class="page-component">
 		<div class="details-header event-details-header">
-				<span class="day">{{weekday start}}</span><br>
+				<span class="day">{{weekday startLocal}}</span><br>
 				<span class="date">
 					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					{{dateformat_mini_fullmonth start}}
+					{{dateformat_mini_fullmonth startLocal}}
 				</span>
 				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-				{{timeformat start}} - {{timeformat end}}
+				{{timeformat startLocal}} - {{timeformat endLocal}}
 		</div>
 		<div class="details-body event-details-body">
 			{{> regionTag}}
