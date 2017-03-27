@@ -212,8 +212,8 @@ Template.eventEdit.events({
 			title: instance.$('#eventEditTitle').val(),
 			venue: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
-			start: start.toDate(),
-			end:   end.toDate(),
+			start: LocalTime.toString(start),
+			end:   LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
@@ -232,14 +232,8 @@ Template.eventEdit.events({
 
 		var eventId = this._id;
 		var isNew = !this._id;
-		var now = LocalTime.now();
 		if (isNew) {
 			eventId = '';
-
-			if (start.isBefore(now)) {
-				alert("Date must be in future");
-				return;
-			}
 
 			if (this.courseId) {
 				var course = Courses.findOne(this.courseId);
@@ -259,14 +253,6 @@ Template.eventEdit.events({
 					groups.push(Router.current().params.query.group);
 				}
 				editevent.groups = groups;
-			}
-		} else {
-			// Don't allow setting dates in the past
-			if (start.isBefore(now)) {
-				delete editevent.start;
-			}
-			if (end.isBefore(now)) {
-				delete editevent.end;
 			}
 		}
 

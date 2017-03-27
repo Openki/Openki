@@ -6,8 +6,8 @@ import '/imports/LocalTime.js';
 // region          -> ID_region
 // title           -> String
 // description     -> String
-// start:          -> String of local date when event starts (Faux-UTC date object)
-// end:            -> String of local date when event ends (Faux-UTC date object)
+// startLocal      -> String of local date when event starts
+// endLocal        -> String of local date when event ends
 //
 // venue {
 //       _id:          Optional reference to a document in the Venues collection
@@ -34,8 +34,9 @@ import '/imports/LocalTime.js';
   * courseGroups: list of group._id inherited from course (if courseId is set)
   * allGroups: all groups that promote this course, both inherited from course and set on the event itself
   * editors: list of user and group _id that are allowed to edit the event
-  * startUTC: date object calculated from start field. Use this for ordering
+  * start: date object calculated from startLocal field. Use this for ordering
   *           between events.
+  * end: date object calculated from endLocal field.
   */
 
 // ===========================
@@ -189,8 +190,8 @@ Meteor.methods({
 			description: String,
 			venue:       Match.Optional(Object),
 			room:        Match.Optional(String),
-			start:       Match.Optional(Date),
-			end:         Match.Optional(Date),
+			start:       Match.Optional(String),
+			end:         Match.Optional(String),
 			internal:    Match.Optional(Boolean),
 		};
 
@@ -263,22 +264,38 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Region not found");
 		}
 
-		var localNow = LocalTime.regionTime(region._id);
+		var regionZone = LocalTime.zone(region._id);
 
 		// Don't allow moving past events or moving events into the past
+		// This section needs a rewrite even more than the rest of this method
 		if (changes.start) {
-			if (changes.start < localNow) {
-				changes.start = event.start;
+			var startMoment = regionZone.fromString(changes.start);
+			if (!startMoment.isValid()) throw new Meteor.Error(400, "Invalid start date");
+
+			if (startMoment.isBefore(new Date())) {
+				// No changing the date of past events
+				delete changes.start;
+				delete changes.end;
+			} else {
+				changes.startLocal = regionZone.toString(startMoment); // Round-trip for security
+				changes.start = startMoment.toDate();
+
+				var endMoment;
+				if (changes.end) {
+					endMoment = regionZone.fromString(changes.end);
+					if (!endMoment.isValid()) throw new Meteor.Error(400, "Invalid end date");
+				} else {
+					endMoment = regionZone.fromString(event.endLocal);
+				}
+
+				if (endMoment.isBefore(startMoment)) {
+					endMoment = startMoment; // Enforce invariant
+				}
+				changes.endLocal = regionZone.toString(endMoment);
+				changes.end = endMoment.toDate();
 			}
-			changes.startUTC = LocalTime.toGlobal(changes.start, region._id);
 		}
 
-		if (changes.end) {
-			if (changes.end < changes.start) {
-				throw new Meteor.Error(400, "End before start");
-			}
-			changes.endUTC = LocalTime.toGlobal(changes.end,   region._id);
-		}
 
 		if (Meteor.isServer) {
 			changes.description = saneHtml(changes.description);

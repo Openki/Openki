@@ -37,7 +37,7 @@
 						</span>
 						<input type="text"
 						       class="form-control js-event-start-date"
-						       value="{{localDate start}}"
+						       value="{{localDate startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 						       class="form-control"
 						       id="editEventStartTime"
 						       size="5"
-						       value="{{timeformat start}}"
+						       value="{{timeformat startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -71,7 +71,7 @@
 						<input type="number"
 						       class="form-control"
 						       id="editEventDuration"
-						       value="{{timeformat Duration}}"
+						       value=""
 						       size="5"
 						       {{disableForPast}}>
 					</div>
@@ -91,7 +91,7 @@
 						       class="form-control"
 						       id="editEventEndTime"
 						       size="5"
-						       value="{{timeformat end}}
+						       value="{{timeformat endLocal}}
 						       {{disableForPast}}">
 					</div>
 				</div>

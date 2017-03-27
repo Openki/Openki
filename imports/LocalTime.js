@@ -1,19 +1,19 @@
 /** Serialize local time for mongo
   *
-  * References to future wall-clock time are stored as ISO 8601 date strings
+  * References to future local time are stored as ISO 8601 date strings
   * with no seconds and no timezone offset.
   *
   * Example string as stored in the DB:
   *
   * "2016-06-07T09:30"
   *
-  * This means some points in time (e.g. when DST starts) will be impossible
+  * This means some points in time (e.g. when DST ends) will be impossible
   * to express unambiguously. This is acceptable as we don't have the UI to
   * handle these either.
   *
   * Rationale for the use of this format:
   * Mongo has no concept of localized dates. All date objects are stored in UTC.
-  * This poses a problem when we try to pin an event to a wall-clock time in a
+  * This poses a problem when we try to pin an event to a future local time in a
   * timezone.
   *
   * Due to frequent changes in timezones, if we store the date as UTC it might
@@ -27,6 +27,22 @@ import moment from 'moment-timezone';
 
 LocalTime = {};
 
+
+LocalTime.zone = function(regionId) {
+	var region = Regions.findOne(regionId);
+	if (!region) {
+		throw "Unable to load region";
+	}
+
+	var tz = region.tz;
+
+	return {
+		fromString: function(date) { return moment.tz(date, tz); },
+		toString: function(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); }
+	};
+};
+
+
 /** Turn a moment object into a local date string without time offset
   */
 LocalTime.toString = function(date) {
@@ -35,18 +51,10 @@ LocalTime.toString = function(date) {
 
 /** Read local date from string
   *
-  * Note that the returned date will be faux UTC if you don't provide the tz
-  * parameter. As long as you don't try to compare it to other dates or display
-  * it in another timezone this will pose few problems.
+  * Note that the returned date will be faux UTC.
   */
 LocalTime.fromString = function(dateStr, tz) {
-	// Because the string is written in ISO 8601 form, moment can read it
-	// without us having to specify the format.
-	if (tz) {
-		return moment.tz(dateStr, tz);
-	} else {
-		return moment.utc(dateStr);
-	}
+	return moment.utc(dateStr);
 };
 
 /** Return the current local time for given region as moment object that thinks it's UTC
@@ -77,12 +85,12 @@ LocalTime.toGlobal = function(time, regionId) {
 	return moment.tz(moment(time).format("YYYY-MM-DD[T]HH:mm"), tz);
 };
 
-LocalTime.fromGlobal = function(time, regionId) {
+LocalTime.fromDate = function(time, regionId) {
 	var region = Regions.findOne(regionId);
 	if (!region) {
 		throw "Unable to load region";
 	}
 	tz = region.tz;
 
-	return moment.utc(moment.tz(time, tz).format("YYYY-MM-DD[T]HH:mm"));
+	return moment(time).tz(time, tz).format("YYYY-MM-DD[T]HH:mm");
 };
