@@ -1,7 +1,12 @@
 <template name="buttonSave">
-	<button type="submit" class="btn btn-save {{event}}">
-		<span class="fa fa-download fa-fw" aria-hidden="true"></span>
-		{{mf '_button.save'}}
+	<button type="submit" class="btn btn-save {{event}}" {{disabled}}>
+		{{#if saving}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf '_button.saving' 'Saving...'}}
+		{{else}}
+			<span class="fa fa-download fa-fw" aria-hidden="true"></span>
+			{{mf '_button.save'}}
+		{{/if}}
 	</button>
 </template>
 
