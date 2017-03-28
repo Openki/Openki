@@ -153,6 +153,12 @@ courseFilterPreview = function(options) {
 		.toggleClass(filterClass, activate);
 };
 
+stopSaving = function(instance, mfString) {
+	if (mfString) alert(mfString);
+	instance.saving.set(false);
+	return null;
+};
+
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };

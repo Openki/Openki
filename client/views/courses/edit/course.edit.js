@@ -6,6 +6,8 @@ Template.courseEdit.created = function() {
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
 
+	instance.saving = new ReactiveVar(false);
+
 	instance.editableDescription = Editable(
 		false,
 		false,
@@ -115,6 +117,10 @@ Template.courseEdit.helpers({
 		} else {
 			return false;
 		}
+	},
+
+	saving: function() {
+		return Template.instance().saving.get();
 	}
 });
 
@@ -123,7 +129,9 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
-		if (pleaseLogin()) return;
+		instance.saving.set(true);
+
+		if (pleaseLogin()) return stopSaving(instance);
 
 		var course = instance.data;
 		var courseId = course._id ? course._id : '';
@@ -148,15 +156,13 @@ Template.courseEdit.events({
 		changes.name = saneText(changes.name);
 
 		if (changes.name.length === 0) {
-			alert("Please provide a title");
-			return;
+			return stopSaving(instance, "Please provide a title");
 		}
 
 		if (isNew) {
 			changes.region = $('.region_select').val();
 			if (!changes.region) {
-				alert("Please select a region");
-				return;
+				return stopSaving(instance, "Please select a region");
 			}
 
 			var groups = [];
@@ -167,6 +173,7 @@ Template.courseEdit.events({
 		}
 
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
+			instance.saving.set(false);
 			if (err) {
 				showServerError('Saving the course went wrong', err);
 			} else {

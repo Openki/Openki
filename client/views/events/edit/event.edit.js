@@ -190,20 +190,13 @@ Template.eventEdit.events({
 		event.preventDefault();
 
 		instance.saving.set(true);
-		function stopSaving(mfString) {
-			if (mfString) alert(mfString);
-			instance.saving.set(false);
-			return null;
-		}
 
-		if (pleaseLogin()) {
-			return stopSaving();
-		}
+		if (pleaseLogin()) return stopSaving(instance);
 
 		var start = getEventStartMoment(instance);
 		if(!start.isValid()) {
 			var exampleDate = moment().format('L');
-			return stopSaving(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
+			return stopSaving(instance, mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
 		}
 		var end = getEventEndMoment(instance);
 
@@ -220,11 +213,11 @@ Template.eventEdit.events({
 		if (newDescription) editevent.description = newDescription;
 
 		if (editevent.title.length === 0) {
-			return stopSaving(mf('event.edit.plzProvideTitle', "Please provide a title"));
+			return stopSaving(instance, mf('event.edit.plzProvideTitle', "Please provide a title"));
 		}
 
 		if (!editevent.description) {
-			return stopSaving(mf('event.edit.plzProvideDescr', "Please provide a description"));
+			return stopSaving(instance, mf('event.edit.plzProvideDescr', "Please provide a description"));
 		}
 
 		var eventId = this._id;
@@ -234,7 +227,7 @@ Template.eventEdit.events({
 			eventId = '';
 
 			if (start.isBefore(now)) {
-				return stopSaving("Date must be in future");
+				return stopSaving(instance, "Date must be in future");
 			}
 
 			if (this.courseId) {
@@ -244,7 +237,7 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					return stopSaving(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					return stopSaving(instance, mf('event.edit.plzSelectRegion', "Please select the region for this event"));
 				}
 
 				// We have this 'secret' feature where you can set a group ID

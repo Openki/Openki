@@ -45,6 +45,7 @@ Template.groupDetails.onCreated(function() {
 	var groupId = instance.data.group._id;
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
+	instance.saving = new ReactiveVar(false);
 
 	var handleSaving = function(err, groupId) {
 		if (err) {
@@ -141,7 +142,9 @@ Template.groupDetails.events({
 	},
 
 	'click .js-group-save': function(event, instance) {
-		if (pleaseLogin()) return false;
+		instance.saving.set(true);
+
+		if (pleaseLogin()) return stopSaving(instance);
 
 		var group = {};
 
@@ -151,6 +154,7 @@ Template.groupDetails.events({
 		group.description = instance.editableDescription.getEdited();
 
 		Meteor.call("saveGroup", "create", group, function(err, groupId) {
+			instance.saving.set(false);
 			if (err) {
 				showServerError('Saving the group went wrong', err);
 			} else {
