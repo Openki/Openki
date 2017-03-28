@@ -53,16 +53,16 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :iphone: Smartphone App
 
 ### Installation (Linux, OSX and Windows)
-- To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download [Installer](https://install.meteor.com/windows) for Win)
+- To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
 - [Download](https://github.com/Openki/Openki/archive/master.zip) and unzip or `git clone https://github.com/Openki/Openki.git` Openki into /some/path.
-- `cd /some/path/hmmm`
+- `cd /some/path/Openki`
 - `meteor npm install`
 - Run `meteor --settings settings.dev.json`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
 ### Documentation
 - The technical documentation is here on Github in the :book: [Wiki](https://github.com/Openki/Openki/wiki)
-- More documentation can be found on our  [blog](http://about.openki.net/?page_id=1043)
+- More documentation can be found on our [blog](http://about.openki.net/?page_id=1043)
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode)
