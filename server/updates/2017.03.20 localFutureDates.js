@@ -18,7 +18,7 @@ UpdatesAvailable['2017.03.20 localFutureDates'] = function() {
 	setTz('4Je2iee208aLHS1Km', 'Africa/Lagos'); // Limbe
 	setTz('nH6iit84MueHhnl04', 'Europe/Copenhagen'); // Aarhus
 	setTz('eK4J208d720baaLHSzHj0', 'Europe/Athens'); // Θεσσαλονίκη
-	setTz('wj39hF2fen4fJ20822aa', 'Europe/Athen'); // Αθήνα
+	setTz('wj39hF2fen4fJ20822aa', 'Europe/Athens'); // Αθήνα
 	setTz('Xj3EfKDQ4S1nzFo9', 'Europe/Zurich'); // Jura
 	setTz('kEu49vBsKjei0opFs', 'Europe/Berlin'); // Berlin
 	setTz('94HdfKJe2i34ht8aLdm"', 'Europe/Zurich'); // HomeMade2016
