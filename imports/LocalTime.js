@@ -57,19 +57,6 @@ LocalTime.fromString = function(dateStr, tz) {
 	return moment.utc(dateStr);
 };
 
-/** Return the current local time for given region as moment object that thinks it's UTC
-  */
-LocalTime.regionTime = function(regionId) {
-	var tz = 'Antarctica/Troll'; // Happens to be "+0 UTC" and looks sufficiently wrong that it wouldn't be mistaken for actual data
-	var region = Regions.findOne(regionId);
-	if (region) {
-		tz = region.tz;
-	}
-
-	var now = moment.tz(tz);
-	var fauxUTC = moment.utc(now).add(now.utcOffset(), 'minutes');
-	return fauxUTC;
-};
 
 LocalTime.now = function() {
 	return moment().add(moment().utcOffset(), 'minutes');

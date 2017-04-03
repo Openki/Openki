@@ -6,6 +6,8 @@
 
 import '/imports/LocalTime.js';
 
+TemplateMixins.Saving(Template.eventEdit);
+
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
@@ -31,6 +33,77 @@ Template.eventEdit.onCreated(function() {
 		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
 	};
 });
+
+
+var readDateTime = function(dateStr, timeStr) {
+	return moment.utc(dateStr+' '+timeStr, 'L LT');
+};
+
+
+var getEventStartMoment = function(template) {
+	return readDateTime(
+		template.$('.js-event-start-date').val(),
+		template.$('#editEventStartTime').val()
+	);
+};
+
+
+var getEventEndMoment = function(template) {
+	var startMoment = getEventStartMoment(template);
+	var endMoment = readDateTime(
+		startMoment.format('L'),
+		template.$('#editEventEndTime').val()
+	);
+
+	// If the end time is earlier than the start time, assume the event
+	// spans into the next day. This might result in some weird behavior
+	// around hour-lapses due to DST (where 1:30 may be 'later'	than 2:00).
+	// Well maybe you shouldn't schedule your events to start or end
+	// in these politically fucked hours.
+	if (endMoment.diff(startMoment) < 0) {
+		endMoment = readDateTime(
+			startMoment.add(1, 'day').format('L'),
+			template.$('#editEventEndTime').val()
+		);
+	}
+
+	return endMoment;
+};
+
+
+var getEventDuration = function(template) {
+	var duration = parseInt(template.$('#editEventDuration').val(), 10);
+	return Math.max(0,duration);
+};
+
+
+/* Patch the end time and the duration when start, end or duration changes */
+function updateTimes(template, updateEnd) {
+	var start = getEventStartMoment(template);
+	var end = getEventEndMoment(template);
+	var duration = getEventDuration(template);
+	if (!start.isValid() || !end.isValid()) {
+		// If you put into the machine wrong figures, will the right answers come out?
+		return;
+	}
+
+	if (updateEnd) {
+		end = moment(start).add(duration, 'minutes');
+	}
+
+	if (end.isBefore(start)) {
+		// Let sanity prevail
+		end = start;
+		duration = 0;
+	}
+
+	duration = end.diff(start, 'minutes');
+	template.$('#edit_event_startdate').val(start.format('L'));
+	template.$('#editEventStartTime').val(start.format('LT'));
+	template.$('#editEventEndTime').val(end.format('LT'));
+	template.$('#editEventDuration').val(duration.toString());
+}
+
 
 Template.eventEdit.onRendered(function() {
 	var instance = this;
@@ -125,74 +198,6 @@ Template.eventEdit.helpers({
 	}
 });
 
-var readDateTime = function(dateStr, timeStr) {
-	return moment.utc(dateStr+' '+timeStr, 'L LT');
-};
-
-
-var getEventStartMoment = function(template) {
-	return readDateTime(
-		template.$('.js-event-start-date').val(),
-		template.$('#editEventStartTime').val()
-	);
-};
-
-
-var getEventEndMoment = function(template) {
-	var startMoment = getEventStartMoment(template);
-	var endMoment = readDateTime(
-		startMoment.format('L'),
-		template.$('#editEventEndTime').val()
-	);
-
-	// If the end time is earlier than the start time, assume the event
-	// spans into the next day. This might result in some weird behavior
-	// around hour-lapses due to DST (where 1:30 may be 'later'	than 2:00).
-	// Well maybe you shouldn't schedule your events to start or end
-	// in these politically fucked hours.
-	if (endMoment.diff(startMoment) < 0) {
-		endMoment = readDateTime(
-			startMoment.add(1, 'day').format('L'),
-			template.$('#editEventEndTime').val()
-		);
-	}
-
-	return endMoment;
-};
-
-
-var getEventDuration = function(template) {
-	var duration = parseInt(template.$('#editEventDuration').val(), 10);
-	return Math.max(0,duration);
-};
-
-
-/* Patch the end time and the duration when start, end or duration changes */
-function updateTimes(template, updateEnd) {
-	var start = getEventStartMoment(template);
-	var end = getEventEndMoment(template);
-	var duration = getEventDuration(template);
-	if (!start.isValid() || !end.isValid()) {
-		// If you put into the machine wrong figures, will the right answers come out?
-		return;
-	}
-
-	if (updateEnd) {
-		end = moment(start).add(duration, 'minutes');
-	}
-
-	if (end.isBefore(start)) {
-		// Let sanity prevail
-		end = start;
-		duration = 0;
-	}
-
-	duration = end.diff(start, 'minutes');
-	template.$('#edit_event_startdate').val(start.format('L'));
-	template.$('#editEventStartTime').val(start.format('LT'));
-	template.$('#editEventEndTime').val(end.format('LT'));
-	template.$('#editEventDuration').val(duration.toString());
-}
 
 Template.eventEdit.events({
 	'submit': function(event, instance) {
@@ -204,7 +209,7 @@ Template.eventEdit.events({
 		if(!start.isValid()) {
 			var exampleDate = moment().format('L');
 			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
-			return null;
+			return;
 		}
 		var end = getEventEndMoment(instance);
 
@@ -243,7 +248,7 @@ Template.eventEdit.events({
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
 					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
-					return null;
+					return;
 				}
 
 				// We have this 'secret' feature where you can set a group ID
@@ -259,7 +264,9 @@ Template.eventEdit.events({
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
+		instance.saving(true);
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
+			instance.saving(false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

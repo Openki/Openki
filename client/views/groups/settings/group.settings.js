@@ -1,3 +1,5 @@
+TemplateMixins.Saving(Template.groupSettings);
+
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 	instance.userSearch = new ReactiveVar('');
@@ -74,15 +76,21 @@ Template.groupSettings.events({
 	},
 
 	'click .js-group-edit-save': function(event, instance) {
+		event.preventDefault();
+
+		var parentInstance = instance.parentInstance(); // Not available in callback
+
+		instance.saving(true);
 		Meteor.call("saveGroup", instance.data.group._id, {
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val(),
 		}, function(err) {
+			instance.saving(false);
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
-				instance.parentInstance().editingSettings.set(false);
+				parentInstance.editingSettings.set(false);
 			}
 		});
 	},
