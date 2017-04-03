@@ -1,11 +1,14 @@
 import '/imports/LocalTime.js';
+import '/imports/collections/Log.js';
 
-UpdatesAvailable['2017.03.20 localFutureDates'] = function() {
+var updateName = '2017.03.20 localFutureDates';
+
+UpdatesAvailable[updateName] = function() {
 	var count = 0;
 
 	var setTz = function(regionId, tz) {
 		count += 1;
-		Regions.update(regionId, { $set: { tz: tz } });
+		Regions.update(regionId, { $set: { tz: tz }, $unset: { timeZone: true } });
 	};
 
 	setTz('9JyFCoKWkxnf8LWPh', 'Europe/Zurich'); // Testistan
@@ -27,13 +30,25 @@ UpdatesAvailable['2017.03.20 localFutureDates'] = function() {
 	setTz('wvoJEz0eSerrAJ', 'Europe/Zurich'); // Winterthur
 
 	Events.find().forEach(function(event) {
-		var regionZone = LocalTime.zone(event.region);
-		count += 1;
-		Events.update(event._id, { $set:
-			{ startLocal:    regionZone.toString(event.start)
-			, endLocal:      regionZone.toString(event.end)
-			}
-		});
+		try {
+			var regionZone = LocalTime.zone(event.region);
+			Events.update(event._id, { $set:
+				{ startLocal:    regionZone.toString(event.start)
+				, endLocal:      regionZone.toString(event.end)
+				}
+			});
+			count += 1;
+		}
+		catch (e) {
+			var rel = [updateName, event._id];
+			Log.record('Update.Error', rel,
+				{ event: event._id
+				, error: e
+				, update: updateName
+				}
+			);
+			console.log("Unable to update local time for event "+ event._id + ": " + e);
+		}
 	});
 	return count;
 };

@@ -31,7 +31,7 @@ LocalTime = {};
 LocalTime.zone = function(regionId) {
 	var region = Regions.findOne(regionId);
 	if (!region) {
-		throw "Unable to load region";
+		throw "Unable to load region " + regionId;
 	}
 
 	var tz = region.tz;
