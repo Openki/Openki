@@ -12,66 +12,71 @@ Template.userFrame.helpers({
 	}
 });
 
-Template.loginFrame.onCreated(function() {
-	var instance = this;
+var warnings = function(template, warnings) {
+	template.onCreated(function() {
+		var instance = this;
 
-	instance.warnings = {
-		noUserName:
-			{ text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
-			, selectors: ['#loginName']
-			}
-		,
-		noCredentials:
-			{ text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
-			, selectors: ['#loginName', '#loginPassword']
-			}
-		,
-		noPassword:
-			{ text: mf('login.password.password_incorrect', 'Incorrect password')
-			, selectors: ['#loginPassword']
-			}
-		,
-		userNotFound:
-			{ text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
-			, selectors: ['#loginName']
-			}
-	};
+		instance.warnings = warnings;
+		instance.hasWarning = new ReactiveVar(false);
 
-	instance.activeWarning = new ReactiveVar(false);
-});
+		instance.resetWarnings = function() {
+			instance.$('.form-group').removeClass('has-error');
+			instance.$('.warning-block').remove();
+		};
 
-Template.loginFrame.onRendered(function() {
-	var instance = this;
+		instance.setWarning = function(warningID) {
+			if (instance.hasWarning.get()) instance.resetWarnings();
 
-	function resetWarnings() {
-		instance.$('.form-group').removeClass('has-error');
-		instance.$('.warning-block').remove();
-	}
+			var warning = _.find(warnings, function(warning) {
+				return warning._id == warningID;
+			});
 
-	instance.autorun(function() {
-		var activeWarning = instance.activeWarning.get();
-		if (activeWarning) {
-			resetWarnings();
-			var selectors = activeWarning.selectors;
+			var selectors = warning.selectors;
 			_.each(selectors, function(selector, index) {
 				var formGroup = $(selector).parents('.form-group');
 				formGroup.addClass('has-error');
 
-				if (index === selectors.length -1) {
+				if (index === selectors.length - 1) {
 					formGroup.append(
 						'<span class="help-block warning-block">'
-						+ activeWarning.text
+						+ warning.text
 						+ '</span>'
 					);
 				}
 			});
-		} else {
-			resetWarnings();
-		}
+
+			instance.hasWarning.set(true);
+		};
 	});
+};
+
+warnings(Template.loginFrame, [
+	{ _id: 'noUserName'
+	, text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
+	, selectors: ['#loginName']
+	}
+	,
+	{ _id: 'noCredentials'
+	, text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
+	, selectors: ['#loginName', '#loginPassword']
+	}
+	,
+	{ _id: 'noPassword'
+	, text: mf('login.password.password_incorrect', 'Incorrect password')
+	, selectors: ['#loginPassword']
+	}
+	,
+	{ _id: 'userNotFound'
+	, text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
+	, selectors: ['#loginName']
+	}
+]);
+
+Template.loginFrame.onRendered(function() {
+	var instance = this;
 
 	$('.login-link').on('hide.bs.dropdown', function() {
-		resetWarnings();
+		instance.resetWarnings();
 	});
 });
 
@@ -104,23 +109,19 @@ Template.loginFrame.events({
 		var password = instance.$('#loginPassword').val();
 		Meteor.loginWithPassword(user, password, function(err) {
 			if (err) {
-				var activeWarning = instance.activeWarning;
-				var warnings = instance.warnings;
 				var reason = err.reason;
-
 				if (reason == 'Match failed') {
-					var noPassword = !instance.$('#loginPassword').val();
-					activeWarning.set(noPassword
-					                  ? warnings.noCredentials
-								      : warnings.noUserName);
+					instance.setWarning(!instance.$('#loginPassword').val()
+						? 'noCredentials'
+						: 'noUserName');
 				}
 
 				if (reason == 'Incorrect password') {
-					activeWarning.set(warnings.noPassword);
+					instance.setWarning('noPassword');
 				}
 
 				if (reason == 'User not found') {
-					activeWarning.set(warnings.userNotFound);
+					instance.setWarning('userNotFound');
 				}
 			} else {
 				$('.loginButton').dropdown('toggle');
@@ -148,72 +149,39 @@ Template.loginFrame.events({
 	}
 });
 
-Template.registerFrame.onCreated(function() {
-	var instance = this;
-
-	instance.warnings = {
-		noUserName:
-			{ text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
-			, selectors: ['#registerName']
-			}
-		,
-		noPassword:
-			{ text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
-			, selectors: ['#registerPassword']
-			}
-		,
-		noCredentials:
-			{ text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
-			, selectors: ['#registerName', '#registerPassword']
-			}
-		,
-		userExists:
-			{ text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
-			, selectors: ['#registerName']
-			}
-	};
-
-	instance.activeWarning = new ReactiveVar(false);
-});
-
 Template.registerModal.events({
 	'click .js-close': function(event, instance){
 		instance.$('#registerFrame').modal('hide');
 	}
 });
 
+warnings(Template.registerFrame, [
+	{ _id: 'noUserName'
+	, text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
+	, selectors: ['#registerName']
+	}
+	,
+	{ _id: 'noPassword'
+	, text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
+	, selectors: ['#registerPassword']
+	}
+	,
+	{ _id: 'noCredentials'
+	, text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
+	, selectors: ['#registerName', '#registerPassword']
+	}
+	,
+	{ _id: 'userExists'
+	, text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
+	, selectors: ['#registerName']
+	}
+]);
+
 Template.registerFrame.onRendered(function() {
 	var instance = this;
 
-	function resetWarnings() {
-		instance.$('.form-group').removeClass('has-error');
-		instance.$('.warning-block').remove();
-	}
-
-	instance.autorun(function() {
-		var activeWarning = instance.activeWarning.get();
-		if (activeWarning) {
-			resetWarnings();
-			var selectors = activeWarning.selectors;
-			_.each(selectors, function(selector, index) {
-				var formGroup = $(selector).parents('.form-group');
-				formGroup.addClass('has-error');
-
-				if (index === selectors.length -1) {
-					formGroup.append(
-						'<span class="help-block warning-block">'
-						+ activeWarning.text
-						+ '</span>'
-					);
-				}
-			});
-		} else {
-			resetWarnings();
-		}
-	});
-
 	$('#registerFrame').on('hide.bs.modal', function() {
-		resetWarnings();
+		instance.resetWarnings();
 	});
 });
 
@@ -231,23 +199,20 @@ Template.registerFrame.events({
 			email: email
 		}, function (err) {
 			if (err) {
-				var activeWarning = instance.activeWarning;
-				var warnings = instance.warnings;
+				// var activeWarning = instance.activeWarning;
 				var reason = err.reason;
-
 				if (reason == 'Need to set a username or email') {
-					activeWarning.set(warnings.noUserName);
+					instance.setWarning('noUserName');
 				}
 
 				if (reason == 'Password may not be empty') {
-					var noName = !instance.$('#registerName').val();
-					activeWarning.set(noName
-					                  ? warnings.noCredentials
-									  : warnings.noPassword);
+					instance.setWarning(!instance.$('#registerName').val()
+						? 'noCredentials'
+						: 'noPassword');
 				}
 
 				if (reason == 'Username already exists.') {
-					activeWarning.set(warnings.userExists);
+					instance.setWarning('userExists');
 				}
 			} else {
 				$('#registerFrame').modal('hide');
