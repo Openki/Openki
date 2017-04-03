@@ -16,9 +16,7 @@ var warnings = function(template, warnings) {
 	template.onCreated(function() {
 		var instance = this;
 
-		instance.warnings = warnings;
 		instance.hasWarning = new ReactiveVar(false);
-
 		instance.resetWarnings = function() {
 			instance.$('.form-group').removeClass('has-error');
 			instance.$('.warning-block').remove();
