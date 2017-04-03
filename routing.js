@@ -46,8 +46,8 @@ Router.map(function () {
 				var propose = LocalTime.now().add(1, 'week').startOf('hour');
 				event = {
 					new: true,
-					start: propose.toDate(),
-					end: moment(propose).add(2, 'hour').toDate(),
+					startLocal: LocalTime.toString(propose),
+					endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
 				};
 				var course = Courses.findOne(this.params.query.courseId);
 				if (course) {
