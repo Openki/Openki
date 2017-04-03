@@ -1,5 +1,3 @@
-"use strict";
-
 import '/imports/LocalTime.js';
 
 var replicaStartDate = function(originalDate) {
@@ -159,7 +157,6 @@ var getEventFrequency = function(instance) {
 
 	var eventStart = moment(instance.data.start);
 	var originDay = moment(eventStart).startOf('day');
-	var eventEnd = moment(instance.data.end);
 
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
