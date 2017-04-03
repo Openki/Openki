@@ -38,7 +38,8 @@ LocalTime.zone = function(regionId) {
 
 	return {
 		fromString: function(date) { return moment.tz(date, tz); },
-		toString: function(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); }
+		toString: function(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
+		at: function(date) { return moment.tz(date, tz); }
 	};
 };
 
