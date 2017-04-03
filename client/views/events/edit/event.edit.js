@@ -1,3 +1,5 @@
+TemplateMixins.Saving(Template.eventEdit);
+
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
@@ -193,7 +195,7 @@ Template.eventEdit.events({
 		if(!start.isValid()) {
 			var exampleDate = moment().format('L');
 			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
-			return null;
+			return;
 		}
 		var end = getEventEndMoment(instance);
 
@@ -238,7 +240,7 @@ Template.eventEdit.events({
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
 					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
-					return null;
+					return;
 				}
 
 				// We have this 'secret' feature where you can set a group ID
@@ -262,7 +264,9 @@ Template.eventEdit.events({
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
+		instance.saving(true);
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
+			instance.saving(false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

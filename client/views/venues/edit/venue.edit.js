@@ -1,7 +1,10 @@
 "use strict";
 
+TemplateMixins.Saving(Template.venueEdit);
+
 Template.venueEdit.onCreated(function() {
 	var instance = this;
+
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
@@ -116,7 +119,7 @@ Template.venueEdit.helpers({
 		return function() {
 			return locationTracker.markers.findOne({ main: true });
 		};
-	},
+	}
 });
 
 Template.venueEditAdditionalInfo.helpers({
@@ -134,6 +137,7 @@ Template.venueEditAdditionalInfo.helpers({
 Template.venueEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
+
 
 		if (pleaseLogin()) return;
 
@@ -159,6 +163,7 @@ Template.venueEdit.events({
 
 		if (changes.description.trim().length === 0) {
 			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			return;
 		}
 
 		_.each(Venues.facilityOptions, function(f) {
@@ -185,7 +190,10 @@ Template.venueEdit.events({
 
 		var venueId = this._id ? this._id : '';
 		var parentInstance = instance.parentInstance();
+
+		instance.saving(true);
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
+			instance.saving(false);
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {

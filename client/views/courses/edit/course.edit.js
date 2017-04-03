@@ -1,3 +1,6 @@
+
+TemplateMixins.Saving(Template.courseEdit);
+
 Template.courseEdit.created = function() {
 	var instance = this;
 
@@ -123,6 +126,7 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
+
 		if (pleaseLogin()) return;
 
 		var course = instance.data;
@@ -166,7 +170,9 @@ Template.courseEdit.events({
 			changes.groups = groups;
 		}
 
+		instance.saving(true);
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
+			instance.saving(false);
 			if (err) {
 				showServerError('Saving the course went wrong', err);
 			} else {
