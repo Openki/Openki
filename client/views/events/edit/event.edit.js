@@ -217,8 +217,8 @@ Template.eventEdit.events({
 			title: instance.$('#eventEditTitle').val(),
 			venue: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
-			start: LocalTime.toString(start),
-			end:   LocalTime.toString(end),
+			startLocal: LocalTime.toString(start),
+			endLocal:   LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 

@@ -190,8 +190,8 @@ Meteor.methods({
 			description: String,
 			venue:       Match.Optional(Object),
 			room:        Match.Optional(String),
-			start:       Match.Optional(String),
-			end:         Match.Optional(String),
+			startLocal:  Match.Optional(String),
+			endLocal:    Match.Optional(String),
 			internal:    Match.Optional(Boolean),
 		};
 
@@ -228,7 +228,7 @@ Meteor.methods({
 				if (!course.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 			}
 
-			if (!changes.start) {
+			if (!changes.startLocal) {
 				throw new Meteor.Error(400, "Event date not provided");
 			}
 
@@ -243,8 +243,8 @@ Meteor.methods({
 			changes.groups = tested_groups;
 
 			// Coerce faulty end dates
-			if (!changes.end || changes.end < changes.start) {
-				changes.end = changes.start;
+			if (!changes.endLocal || changes.endLocal < changes.startLocal) {
+				changes.endLocal = changes.startLocal;
 			}
 
 			changes.internal = !!changes.internal;
@@ -268,23 +268,23 @@ Meteor.methods({
 
 		// Don't allow moving past events or moving events into the past
 		// This section needs a rewrite even more than the rest of this method
-		if (changes.start) {
-			var startMoment = regionZone.fromString(changes.start);
+		if (changes.startLocal) {
+			var startMoment = regionZone.fromString(changes.startLocal);
 			if (!startMoment.isValid()) throw new Meteor.Error(400, "Invalid start date");
 
 			if (startMoment.isBefore(new Date())) {
 				if (isNew) throw new Meteor.Error(400, "Event start in the past");
 
 				// No changing the date of past events
-				delete changes.start;
-				delete changes.end;
+				delete changes.startLocal;
+				delete changes.endLocal;
 			} else {
 				changes.startLocal = regionZone.toString(startMoment); // Round-trip for security
 				changes.start = startMoment.toDate();
 
 				var endMoment;
-				if (changes.end) {
-					endMoment = regionZone.fromString(changes.end);
+				if (changes.endLocal) {
+					endMoment = regionZone.fromString(changes.endLocal);
 					if (!endMoment.isValid()) throw new Meteor.Error(400, "Invalid end date");
 				} else {
 					endMoment = regionZone.fromString(event.endLocal);
