@@ -374,7 +374,11 @@ Template.registerHelper('dateformat_mini', function(date) {
 
 Template.registerHelper('dateformat_mini_fullmonth', function(date) {
 	Session.get('timeLocale'); // it depends
-	if (date) return moment(date).format('D. MMMM');
+	if (date) {
+		var m = moment(date);
+		var year = m.year() != moment().year() ? " " + m.format('YYYY') : '';
+		return moment(date).format('D. MMMM') + year;
+	}
 });
 
 Template.registerHelper('timeformat', function(date) {
