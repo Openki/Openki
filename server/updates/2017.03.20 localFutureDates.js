@@ -50,5 +50,9 @@ UpdatesAvailable[updateName] = function() {
 			console.log("Unable to update local time for event "+ event._id + ": " + e);
 		}
 	});
+
+	// Update calculated fields so they include the startLocal field.
+	Meteor.call('updateNextEvent', {});
+
 	return count;
 };
