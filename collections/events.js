@@ -273,6 +273,8 @@ Meteor.methods({
 			if (!startMoment.isValid()) throw new Meteor.Error(400, "Invalid start date");
 
 			if (startMoment.isBefore(new Date())) {
+				if (isNew) throw new Meteor.Error(400, "Event start in the past");
+
 				// No changing the date of past events
 				delete changes.start;
 				delete changes.end;
