@@ -70,14 +70,6 @@ warnings(Template.loginFrame, [
 	}
 ]);
 
-Template.loginFrame.onRendered(function() {
-	var instance = this;
-
-	$('.login-link').on('hide.bs.dropdown', function() {
-		instance.resetWarnings();
-	});
-});
-
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
 		instance.parentInstance().forgot.set(true);
