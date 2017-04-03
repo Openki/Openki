@@ -1,11 +1,12 @@
 "use strict";
 
+TemplateMixins.Saving(Template.venueEdit);
+
 Template.venueEdit.onCreated(function() {
 	var instance = this;
 
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
-	instance.saving = new ReactiveVar(false);
 
 	instance.locationTracker = LocationTracker();
 	instance.locationTracker.setLocation(this.data, true);
@@ -118,10 +119,6 @@ Template.venueEdit.helpers({
 		return function() {
 			return locationTracker.markers.findOne({ main: true });
 		};
-	},
-
-	saving: function() {
-		return Template.instance().saving.get();
 	}
 });
 
@@ -141,9 +138,8 @@ Template.venueEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-		instance.saving.set(true);
 
-		if (pleaseLogin()) return stopSaving(instance);
+		if (pleaseLogin()) return;
 
 		var changes =
 			{ name:            instance.$('.js-name').val()
@@ -158,14 +154,16 @@ Template.venueEdit.events({
 		    };
 
 		if (!changes.name) {
-			return stopSaving(instance, mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			return;
 		}
 
 		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
 		if (changes.description.trim().length === 0) {
-			return stopSaving(instance, mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			return;
 		}
 
 		_.each(Venues.facilityOptions, function(f) {
@@ -177,7 +175,8 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				return stopSaving(instance, mf('venue.create.plsSelectRegion', 'Please select a region'));
+				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
+				return;
 			}
 		}
 
@@ -185,13 +184,16 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
-			return stopSaving(instance, mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			return;
 		}
 
 		var venueId = this._id ? this._id : '';
 		var parentInstance = instance.parentInstance();
+
+		instance.saving(true);
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
-			instance.saving.set(false);
+			instance.saving(false);
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {

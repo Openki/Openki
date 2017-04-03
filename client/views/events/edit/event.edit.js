@@ -1,9 +1,10 @@
+TemplateMixins.Saving(Template.eventEdit);
+
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
-	instance.saving = new ReactiveVar(false);
 
 	instance.editableDescription = Editable(
 		false,
@@ -109,10 +110,6 @@ Template.eventEdit.helpers({
 
 			return Courses.findOne({_id: courseId});
 		}
-	},
-
-	'saving': function() {
-		return Template.instance().saving.get();
 	}
 });
 
@@ -189,14 +186,13 @@ Template.eventEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-		instance.saving.set(true);
-
-		if (pleaseLogin()) return stopSaving(instance);
+		if (pleaseLogin()) return;
 
 		var start = getEventStartMoment(instance);
 		if(!start.isValid()) {
 			var exampleDate = moment().format('L');
-			return stopSaving(instance, mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
+			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
+			return;
 		}
 		var end = getEventEndMoment(instance);
 
@@ -213,11 +209,13 @@ Template.eventEdit.events({
 		if (newDescription) editevent.description = newDescription;
 
 		if (editevent.title.length === 0) {
-			return stopSaving(instance, mf('event.edit.plzProvideTitle', "Please provide a title"));
+			alert(mf('event.edit.plzProvideTitle', "Please provide a title"));
+			return;
 		}
 
 		if (!editevent.description) {
-			return stopSaving(instance, mf('event.edit.plzProvideDescr', "Please provide a description"));
+			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
+			return;
 		}
 
 		var eventId = this._id;
@@ -227,7 +225,8 @@ Template.eventEdit.events({
 			eventId = '';
 
 			if (start.isBefore(now)) {
-				return stopSaving(instance, "Date must be in future");
+				alert("Date must be in future");
+				return;
 			}
 
 			if (this.courseId) {
@@ -237,7 +236,8 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					return stopSaving(instance, mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					alert(mf('event.edit.plzSelectRegion', "Please select the region for this event"));
+					return;
 				}
 
 				// We have this 'secret' feature where you can set a group ID
@@ -261,8 +261,9 @@ Template.eventEdit.events({
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
+		instance.saving(true);
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
-			instance.saving.set(false);
+			instance.saving(false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {
