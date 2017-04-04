@@ -41,8 +41,7 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								{{> buttonDelete event="js-delete-course"}}
-								{{> buttonEdit event="js-course-edit"}}
+								{{> buttonsCourse}}
 							</div>
 						{{/if}}
 					{{/with}}
@@ -71,6 +70,31 @@
 		</div>
 	</div>
 </template>
+
+<template name="buttonsCourse">
+	<span class="dropdown">
+		<button type="button" class="btn btn-delete delete-course-btn dropdown-toggle"
+			aria-expanded="false"
+			aria-haspopup="true"
+			data-toggle="dropdown">
+			<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
+			{{mf '_button.delete'}}
+		</button>
+		{{> buttonEdit event="js-course-edit"}}
+		<ul class="dropdown-menu">
+			<li>
+				{{mf 'course.detail.remove' 'Remove course and all its events?'}}
+			</li>
+			<li>
+				<button type="button" class="btn btn-delete js-delete-course">
+					<span class="fa fa-trash"></span>
+					{{mf '_button.delete'}}
+				</button>
+			</li>
+		</ul>
+	</span>
+</template>
+
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">

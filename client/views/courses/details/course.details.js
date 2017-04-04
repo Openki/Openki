@@ -133,16 +133,14 @@ Template.courseDetailsPage.events({
 		if (pleaseLogin()) return;
 
 		var course = instance.data.course;
-		if (confirm(mf("course.detail.remove", "Remove course and all its events?"))) {
-			Meteor.call('remove_course', course._id, function(error) {
-				if (error) {
-					showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
-				} else {
-					addMessage("\u2713 " + mf('_message.removed'), 'success');
-				}
-			});
-			Router.go('/');
-		}
+		Meteor.call('remove_course', course._id, function(error) {
+			if (error) {
+				showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
+			} else {
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
+			}
+		});
+		Router.go('/');
 	},
 
 	'click .js-course-edit': function (event, instance) {
