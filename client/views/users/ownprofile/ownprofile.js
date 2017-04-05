@@ -4,6 +4,7 @@ Template.profile.created = function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.sending = new ReactiveVar(false);
+	this.verifyDelete = new ReactiveVar(false);
 };
 
 Template.profile.helpers({
@@ -19,7 +20,7 @@ Template.profile.helpers({
 	},
 
 	verifyDelete: function() {
-		return Session.equals('verify', 'delete');
+		return Template.instance().verifyDelete.get();
 	},
 
 	groupCount: function() {
@@ -68,6 +69,7 @@ Template.profile.events({
 	'click .js-profile-info-edit': function(event, template) {
 		Tooltips.hide();
 		Template.instance().editing.set(true);
+		Template.instance().verifyDelete.set(false);
 	},
 
 	'click .js-profile-info-cancel': function() {
@@ -77,6 +79,7 @@ Template.profile.events({
 
 	'click .js-change-pwd-btn': function() {
 		Template.instance().changingPass.set(true);
+		Template.instance().verifyDelete.set(false);
 	},
 
 	'click .js-change-pwd-cancel': function() {
@@ -84,19 +87,20 @@ Template.profile.events({
 		return false;
 	},
 
-	'click .js-profile-delete': function (event, template) {
-		Session.set('verify', 'delete');
+	'click .js-profile-delete': function(event, template) {
+		Template.instance().changingPass.set(false);
+		Template.instance().verifyDelete.set(true);
 	},
 
-	'click .js-profile-delete-confirm-btn': function () {
+	'click .js-profile-delete-confirm-btn': function() {
 		Meteor.call('delete_profile', function() {
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
-		Session.set('verify', false);
+		Template.instance().verifyDelete.set(false);
 	},
 
-	'click .js-profile-delete-cancel': function () {
-		Session.set('verify', false);
+	'click .js-profile-delete-cancel': function() {
+		Template.instance().verifyDelete.set(false);
 	},
 
 	'submit .profile-info-edit': function(event) {
@@ -144,7 +148,7 @@ Template.profile.events({
 		}
 	},
 
-	'click .js-verify-mail-btn': function (event, instance) {
+	'click .js-verify-mail-btn': function(event, instance) {
 		instance.sending.set(true);
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
