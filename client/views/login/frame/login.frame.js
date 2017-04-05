@@ -89,9 +89,10 @@ Template.loginFrame.events({
 
 		// Sometimes people register with their email address in the first field
 		// Move entered username over to email field if it contains a @
-		if (~name.indexOf('@')) {
+		var atPos = name.indexOf('@');
+		if (atPos >= 0) {
 			email = name;
-			name = '';
+			name = name.substr(0, atPos);
 		}
 
 		$('#registerName').val(name);
