@@ -12,11 +12,17 @@ Template.userFrame.helpers({
 	}
 });
 
+/** Setup (re-)setting of login/register warnings for a template
+  *
+  * @param {Object} template
+  * @param {Array}  warnings - an array containing objects obtaining the different
+  *                            warning messages, depending on the type of error
+  */
 var warnings = function(template, warnings) {
 	template.onCreated(function() {
 		var instance = this;
-
 		instance.hasWarning = new ReactiveVar(false);
+
 		instance.resetWarnings = function() {
 			instance.$('.form-group').removeClass('has-error');
 			instance.$('.warning-block').remove();
