@@ -196,7 +196,6 @@ Template.registerFrame.events({
 			email: email
 		}, function (err) {
 			if (err) {
-				// var activeWarning = instance.activeWarning;
 				var reason = err.reason;
 				if (reason == 'Need to set a username or email') {
 					instance.setWarning('noUserName');
