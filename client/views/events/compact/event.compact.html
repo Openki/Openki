@@ -5,13 +5,13 @@
 				<div class="event-compact-header">
 					{{#if withDate}}
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-						{{weekday_short start}}
-						{{dateformat_mini_fullmonth start}}
+						{{weekday_short startLocal}}
+						{{dateformat_mini_fullmonth startLocal}}
 						<br>
 					{{/if}}
 					<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 					<span class="event-compact-time">
-						{{timeformat start}} - {{timeformat end}}
+						{{timeformat startLocal}} - {{timeformat endLocal}}
 					</span>
 					<br>
 					{{> venueLink}}

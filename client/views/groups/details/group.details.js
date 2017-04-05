@@ -40,6 +40,8 @@ Router.map(function () {
 	});
 });
 
+TemplateMixins.Saving(Template.groupDetails);
+
 Template.groupDetails.onCreated(function() {
 	var instance = this;
 	var groupId = instance.data.group._id;
@@ -141,7 +143,8 @@ Template.groupDetails.events({
 	},
 
 	'click .js-group-save': function(event, instance) {
-		if (pleaseLogin()) return false;
+
+		if (pleaseLogin()) return;
 
 		var group = {};
 
@@ -150,7 +153,9 @@ Template.groupDetails.events({
 		group.claim = instance.editableClaim.getEdited();
 		group.description = instance.editableDescription.getEdited();
 
+		instance.saving(true);
 		Meteor.call("saveGroup", "create", group, function(err, groupId) {
+			instance.saving(false);
 			if (err) {
 				showServerError('Saving the group went wrong', err);
 			} else {

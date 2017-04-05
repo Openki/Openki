@@ -37,7 +37,7 @@
 						</span>
 						<input type="text"
 						       class="form-control js-event-start-date"
-						       value="{{localDate start}}"
+						       value="{{localDate startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 						       class="form-control"
 						       id="editEventStartTime"
 						       size="5"
-						       value="{{timeformat start}}"
+						       value="{{timeformat startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -71,8 +71,9 @@
 						<input type="number"
 						       class="form-control"
 						       id="editEventDuration"
-						       value="{{timeformat Duration}}"
-						       size="5">
+						       value=""
+						       size="5"
+						       {{disableForPast}}>
 					</div>
 					<label>
 						{{mf 'course.event.edit.time_end' 'Time end'}}
@@ -90,7 +91,8 @@
 						       class="form-control"
 						       id="editEventEndTime"
 						       size="5"
-						       value="{{timeformat end}}">
+						       value="{{timeformat endLocal}}
+						       {{disableForPast}}">
 					</div>
 				</div>
 			</div>
@@ -210,7 +212,7 @@
 
 			<div class="form-actions">
 				{{> buttonCancel event="js-event-edit-cancel"}}
-				{{> buttonSave}}
+				{{> buttonSave saving=saving}}
 			</div>
 		</div>
 	</div>

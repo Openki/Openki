@@ -121,8 +121,14 @@ Meteor.methods({
 
 			event.venue = ensure.venue(event.venue, event.region);
 			event.internal = !!event.internal;
-			event.start = new Date(event.start.$date + dateOffset);
-			event.end = new Date(event.end.$date + dateOffset);
+
+
+			var regionZone = LocalTime.zone(event.region);
+
+			event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
+			event.start = regionZone.fromString(event.startLocal).toDate();
+			event.endLocal = new Date(event.end.$date + dateOffset);
+			event.end = regionZone.fromString(event.endLocal).toDate();
 			event.time_created = new Date(event.time_created.$date);
 			event.time_lastedit = new Date(event.time_lastedit.$date);
 			Events.insert(event);
@@ -274,8 +280,13 @@ Meteor.methods({
 
 				// Quarter hours should be most common
 				if (prng() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
-				event.start = date;
-				event.end = new Date(date.getTime() + humandistrib(prng) * 1000 * 60);
+
+				var regionZone = LocalTime.zone(event.region);
+
+				event.startLocal = LocalTime.toString(date);
+				event.start = regionZone.fromString(event.startLocal).toDate();
+				event.endLocal = LocalTime.toString(new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4));
+				event.end = regionZone.fromString(event.endLocal).toDate();
 
 				var members = course.members;
 				var randomMember = members[Math.floor(Math.random()*members.length)];

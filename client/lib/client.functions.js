@@ -153,6 +153,7 @@ courseFilterPreview = function(options) {
 		.toggleClass(filterClass, activate);
 };
 
+
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };
@@ -189,7 +190,7 @@ cleanedRegion = function(region) {
 TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	*
-	* @param {Object} template
+	* @param {Object} template instance
 	*
 	* This mixin extends the given template with an `expanded` helper and
 	* two click handlers `js-expand` and `js-close`. Only one expandible template
@@ -232,6 +233,29 @@ TemplateMixins = {
 			'click .js-collapse': function(event, instance) {
 				Session.set('verify', false);
 			},
+		});
+	},
+
+	/** Setup disabling of save buttons for a template
+	  *
+	  * @param {Object} template instance
+	  *
+	  * The template instance gains a saving() method to set saving status and
+	  * a helper that returns {saving} status.
+	  */
+	Saving: function(template) {
+		var saving = new ReactiveVar(false);
+
+		template.onCreated(function() {
+			this.saving = function(val) {
+				saving.set(!!val);
+			};
+		});
+
+		template.helpers({
+			'saving': function() {
+				return saving.get();
+			}
 		});
 	}
 };
@@ -350,7 +374,11 @@ Template.registerHelper('dateformat_mini', function(date) {
 
 Template.registerHelper('dateformat_mini_fullmonth', function(date) {
 	Session.get('timeLocale'); // it depends
-	if (date) return moment(date).format('D. MMMM');
+	if (date) {
+		var m = moment(date);
+		var year = m.year() != moment().year() ? " " + m.format('YYYY') : '';
+		return moment(date).format('D. MMMM') + year;
+	}
 });
 
 Template.registerHelper('timeformat', function(date) {

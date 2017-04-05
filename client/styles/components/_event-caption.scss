@@ -89,6 +89,10 @@ $event-caption-body-bg: $event-body-bg;
 	border-color: $event-caption-border-highlighted;
 }
 
+.event-caption-add.placeholder .event-caption-body {
+	text-shadow: 0 0 0;
+}
+
 .event-caption-add-text {
 	font-size: medium;
 	line-height: 50px;
