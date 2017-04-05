@@ -41,10 +41,16 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								{{> buttonsCourse}}
+								{{#unless verifyDelete}}
+									{{> buttonDelete event="js-delete-course"}}
+								{{/unless}}
+								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
+					{{#if verifyDelete}}
+						{{> confirmDialog}}
+					{{/if}}
 					{{> courseRoles roles_details}}
 				</div>
 			{{/if}}
@@ -71,28 +77,17 @@
 	</div>
 </template>
 
-<template name="buttonsCourse">
-	<span class="dropdown">
-		<button type="button" class="btn btn-delete delete-course-btn dropdown-toggle"
-			aria-expanded="false"
-			aria-haspopup="true"
-			data-toggle="dropdown">
-			<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
-			{{mf '_button.delete'}}
-		</button>
-		{{> buttonEdit event="js-course-edit"}}
-		<ul class="dropdown-menu">
-			<li>
-				{{mf 'course.detail.remove' 'Remove course and all its events?'}}
-			</li>
-			<li>
-				<button type="button" class="btn btn-delete js-delete-course">
-					<span class="fa fa-trash"></span>
-					{{mf '_button.delete'}}
-				</button>
-			</li>
-		</ul>
-	</span>
+<template name="confirmDialog">
+	<div class="course-delete-confirmation">
+		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-delete-course-cancel"}}
+			<button type="button" class="btn btn-danger js-delete-course-confirm">
+				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+				{{mf 'course.delete.confirm.button' 'Delete this course and its events.'}}
+			</button>
+		</div>
+	</div>
 </template>
 
 
