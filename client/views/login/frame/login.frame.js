@@ -31,9 +31,7 @@ var warnings = function(template, warnings) {
 		instance.setWarning = function(warningID) {
 			if (instance.hasWarning.get()) instance.resetWarnings();
 
-			var warning = _.find(warnings, function(warning) {
-				return warning._id == warningID;
-			});
+			var warning = _.findWhere(warnings, {_id: warningID});
 
 			var selectors = warning.selectors;
 			_.each(selectors, function(selector, index) {
