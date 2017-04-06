@@ -92,10 +92,7 @@ Template.courseCompactRoles.helpers({
 	},
 
 	roleIcon: function(roletype) {
-		var role = _.find(Roles, function(role) {
-			return role.type == roletype;
-		});
-		return role.icon;
+		return _.findWhere(Roles, {type: roletype}).icon;
 	}
 });
 
