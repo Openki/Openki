@@ -74,6 +74,27 @@ warnings(Template.loginFrame, [
 	}
 ]);
 
+Template.loginFrame.onCreated(function() {
+	var instance = this;
+
+	instance.OAuthServices = [
+		{ '_id': 'google-plus'
+		, 'service': 'Google'
+		, 'name': 'Google+'
+		}
+		,
+		{ '_id': 'facebook'
+		, 'service': 'Facebook'
+		, 'name': 'GitHub'
+		}
+		,
+		{ '_id': 'github'
+		, 'service': 'Github'
+		, 'name': 'GitHub'
+		}
+	];
+});
+
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
 		instance.parentInstance().forgot.set(true);
@@ -124,7 +145,7 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-external-service-login-btn': function(event, instance) {
+	'click .js-OAuth-btn': function(event, instance) {
 		event.preventDefault();
 
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
@@ -141,6 +162,12 @@ Template.loginFrame.events({
 				$('.loginButton').dropdown('toggle');
 			}
 		});
+	}
+});
+
+Template.loginFrame.helpers({
+	OAuthServices: function() {
+		return Template.instance().OAuthServices;
 	}
 });
 
