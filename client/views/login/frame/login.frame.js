@@ -85,7 +85,7 @@ Template.loginFrame.onCreated(function() {
 		,
 		{ '_id': 'facebook'
 		, 'service': 'Facebook'
-		, 'name': 'GitHub'
+		, 'name': 'Facebook'
 		}
 		,
 		{ '_id': 'github'
