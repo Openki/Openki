@@ -15,6 +15,30 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
+			<div class="form-group external-service-login">
+				<button class="btn btn-google-plus form-control js-external-service-login-btn"
+				        data-service='Google'
+				        type="button">
+					<span class="fa fa-google-plus fa-fw" aria-hidden="true"></span>
+					|
+					{{mf 'login.oauth.googlePlus' 'Login with Google+'}}
+				</button>
+				<button class="btn btn-facebook form-control js-external-service-login-btn"
+				        data-service='Facebook'
+				        type="button">
+					<span class="fa fa-facebook fa-fw" aria-hidden="true"></span>
+					|
+					{{mf 'login.oauth.facebook' 'Login with Facebook'}}
+				</button>
+				<button class="btn btn-github form-control js-external-service-login-btn"
+				        data-service='Github'
+				        type="button">
+					<span class="fa fa-github fa-fw" aria-hidden="true"></span>
+					|
+					{{mf 'login.oauth.github' 'Login with Github'}}
+				</button>
+			</div>
+			<hr>
 			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -41,6 +65,7 @@
 			</div>
 			<div class="form-group forgot-pwd-btn-container">
 				<button type="button" class="btn btn-link js-forgot-pwd-btn">
+					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
 					{{mf 'forgot' "I forgot my password"}}
 				</button>
 			</div>
@@ -50,6 +75,7 @@
 						{{mf 'login.login.submit' 'Login'}}
 				</button>
 			</div>
+			<hr>
 			<div class="form-group">
 				<button class="btn btn-add form-control js-register-open"
 				        data-toggle="modal"
@@ -57,27 +83,6 @@
 						type="button">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit' 'Create account'}}
-				</button>
-			</div>
-			<div class="form-group external-service-login">
-				<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
-				<button class="js-external-service-login-btn"
-				        data-service='Google'
-				        title="Login with Google+"
-				        type="button">
-					<span class="fa fa-google-plus-square"></span>
-				</button>
-				<button class="js-external-service-login-btn"
-				        data-service='Facebook'
-				        title="Login with Facebook"
-				        type="button">
-					<span class="fa fa-facebook-square"></span>
-				</button>
-				<button class="js-external-service-login-btn"
-				        data-service='Github'
-				        title="Login with Github"
-				        type="button">
-					<span class="fa fa-github-square"></span>
 				</button>
 			</div>
 		</div>

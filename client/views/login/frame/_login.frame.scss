@@ -23,7 +23,7 @@
 }
 
 .login {
-	padding: 0 ($grid-gutter-width / 2);
+	padding: 10px ($grid-gutter-width / 2) 0;
 }
 
 .login .help-block,
@@ -45,19 +45,16 @@
 	}
 }
 
-.external-service-login {
-	text-align: center;
+.login hr {
+	border-top: 1px solid $gray-lighter;
 }
 
 .js-external-service-login-btn {
-	background: none;
-	border: 0;
-	color: $gray-light;
-	padding: 0 9px;
+	font-weight: bold;
 }
 
-.js-external-service-login-btn .fa {
-	font-size: xx-large;
+.js-external-service-login-btn + .js-external-service-login-btn {
+	margin-top: 10px;
 }
 
 $external-servies: (
@@ -67,13 +64,8 @@ $external-servies: (
 );
 
 @each $service, $color in $external-servies {
-	.fa-#{$service}-square {
-		color: rgba($color, .5);
-
-		&:hover,
-		&:focus {
-			color: $color;
-		}
+	.btn-#{$service} {
+		@include button-variant($white, $color, darken($color, 5%));
 	}
 }
 
