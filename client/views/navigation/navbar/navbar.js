@@ -1,18 +1,11 @@
 Template.navbar.onRendered(function() {
 	var instance = this;
-	var dropdown = instance.$('.dropdown');
+	var viewportWidth = Session.get('viewportWidth');
 	var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
-	var notCollapsed = Session.get('viewportWidth') > gridFloatBreakpoint;
 
-	if (notCollapsed) {
-		// animate navbar dropdowns with a sliding motion
-		dropdown.on('show.bs.dropdown hide.bs.dropdown', function(e) {
-			var dropdownMenu = $(e.currentTarget).find('.dropdown-menu').first();
-
-			dropdownMenu.stop(true, true).slideToggle();
-		});
-
-		// give the navbar and active menu item a class for when not at top
+	// if not collapsed give the navbar and active menu item a
+	// class for when not at top
+	if (viewportWidth > gridFloatBreakpoint) {
 		$(window).scroll(function () {
 			var navbar = instance.$('.navbar');
 			var activeNavLink = instance.$('.navbar-link-active');
@@ -20,22 +13,6 @@ Template.navbar.onRendered(function() {
 
 			navbar.toggleClass('navbar-covering', notAtTop);
 			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
-		});
-	} else {
-		var container = instance.$('#bs-navbar-collapse-1');
-
-		// make menu item scroll up when opening the dropdown menu
-		dropdown.on('show.bs.dropdown', _.debounce(function(e){
-			var scrollTo = $(e.currentTarget);
-			container.animate({
-				scrollTop: scrollTo.offset().top
-				           - container.offset().top
-				           + container.scrollTop()
-			});
-		}, 1));
-
-		dropdown.on('hide.bs.dropdown', function(e){
-			container.scrollTop(0);
 		});
 	}
 });
@@ -81,5 +58,34 @@ Template.navbar.helpers({
 Template.navbar.events({
 	'click .js-nav-dropdown-close': function(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
+	},
+
+	'show.bs.dropdown, hide.bs.dropdown .dropdown': function(e, instance) {
+		var viewportWidth = Session.get('viewportWidth');
+		var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
+
+		if (viewportWidth <= gridFloatBreakpoint) {
+			var container = instance.$('#bs-navbar-collapse-1');
+
+			// make menu item scroll up when opening the dropdown menu
+			if (e.type == 'show') {
+				var scrollTo = $(e.currentTarget);
+
+				container.animate({
+					scrollTop: scrollTo.offset().top
+						- container.offset().top
+						+ container.scrollTop()
+				});
+			} else {
+				container.scrollTop(0);
+			}
+		} else {
+			// animate navbar dropdowns with a sliding motion
+			$(e.currentTarget)
+				.find('.dropdown-menu')
+				.first()
+				.stop(true, true)
+				.slideToggle();
+		}
 	},
 });
