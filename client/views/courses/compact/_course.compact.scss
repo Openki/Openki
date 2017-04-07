@@ -84,14 +84,10 @@
 //========================================================================================
 .course-compact-title {
 	color: $gray-dark;
-	line-height: 24px;
-	margin: 8px 0 0;
-	max-height: 60px;
-}
-
-.course-compact-title > h4 {
 	font-size: 20px;
-	line-height: 20px;
+	line-height: 24px;
+	margin: 9.5px 0;
+	max-height: 60px;
 }
 
 // ** Categories
