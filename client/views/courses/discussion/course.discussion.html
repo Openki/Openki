@@ -62,18 +62,17 @@
 							last update:{{fromNow time_updated}}
 						</span>
 					{{/if}}
-					{{#if mayDelete}}
-						<button type="button" class="discussion-delete-btn delete"
-							data-tooltip="{{mf '_button.delete'}}">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					{{/if}}
-					{{#if mayEdit}}
-						<button type="button" class="js-discussion-edit discussion-edit-btn"
-							data-tooltip="{{mf '_button.edit'}}">
-							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-						</button>
-					{{/if}}
+					<span class="discussion-buttons">
+						{{#if mayEdit}}
+							<button type="button" class="js-discussion-edit discussion-edit-btn"
+								data-tooltip="{{mf '_button.edit'}}">
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+							</button>
+						{{/if}}
+						{{#if mayDelete}}
+							{{> removeCommentDropdown}}
+						{{/if}}
+					</span>
 				</div>
 				<div class="discussion-post-body">
 					{{#if this.title}}
@@ -178,4 +177,26 @@
 				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
 		{{/if}}
 	</div>
+</template>
+
+
+<template name="removeCommentDropdown">
+	<span class="discussion-remove-dropdown dropdown">
+		<button type="button" class="discussion-delete-btn dropdown-toggle"
+			aria-expanded="false"
+			aria-haspopup="true"
+			data-toggle="dropdown"
+			data-tooltip="{{mf '_button.delete'}}">
+			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</button>
+		<span class="dropdown-menu">
+			<span>
+				{{mf 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
+			</span>
+			<button type="button" class="btn btn-remove js-delete-comment">
+				<span class="fa fa-remove"></span>
+				{{mf 'course.discussion.deleteCommentButton' 'Delete'}}
+			</button>
+		</span>
+	</span>
 </template>

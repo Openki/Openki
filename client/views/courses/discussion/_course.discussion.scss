@@ -57,16 +57,8 @@ $discussion-post-bg: $blue-lighter;
 	font-weight: bold;
 }
 
-.discussion-edit-btn,
-.discussion-delete-btn {
-	background: none;
-	border: 0;
-	color: $gray-light;
+.discussion-buttons {
 	@include td-float(right);
-
-	&:hover {
-		color: $gray-dark;
-	}
 }
 
 .discussion-edit-btn {
@@ -75,6 +67,28 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-delete-btn {
 	@include td-margin(right, -10px);
+}
+
+button.js-delete-comment {
+	padding: 6px 24px;
+	margin-top: 5px;
+}
+
+.discussion-remove-dropdown .dropdown-menu {
+	left: auto;
+	right: 0;
+	padding: 10px 15px;
+}
+
+.discussion-edit-btn,
+.discussion-delete-btn {
+	background: none;
+	border: 0;
+	color: $gray-light;
+
+	&:hover {
+		color: $gray-dark;
+	}
 }
 
 .discussion-post-time {
