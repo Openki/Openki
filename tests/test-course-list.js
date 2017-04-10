@@ -24,15 +24,14 @@ describe('Frontpage', function () {
     // Wait until all courses have loaded.
     // http://www.webdriver.io/api/utility/waitUntil.html
     browser.waitUntil(function() {
-      var divcount = browser.selectorExecute('.course-compact-wrap', function(divs) {
+      var divcount = browser.selectorExecute('.course-compact-title', function(divs) {
         return divs.length;
       });
       return divcount == 8;
     });
 
     // Then collect data and assert stuff.
-    var titles = browser.getText('.course-compact-wrap h4');
-
+    var titles = browser.getText('.course-compact-title');
     expect(titles[0]).to.equal('Sprachaustausch');
     expect(titles[1]).to.equal('Game Design mit Unity');
     expect(titles[2]).to.equal('Aikido');
