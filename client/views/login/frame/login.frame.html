@@ -202,9 +202,9 @@
 
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
-		<h3>
+		<div class="form-group ownuser-frame-welcome">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-		</h3>
+		</div>
 		<div class="form-group">
 			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
