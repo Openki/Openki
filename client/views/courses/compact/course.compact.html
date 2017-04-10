@@ -16,7 +16,11 @@
 					{{else}}
 						{{> courseCompactRoles}}
 					{{/if}}
-					{{> groupList}}
+					<div class="tag-group course-groups">
+						{{#each groups}}
+							{{> groupName}}
+						{{/each}}
+					</div>
 				</div>
 			</a>
 		</div>

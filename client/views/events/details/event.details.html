@@ -53,11 +53,13 @@
 			{{> regionTag}}
 			<div class="details-content">
 				<h3>{{this.title}}</h3>
-				<div class="location">
+				<div class="tag-group multiline">
 					{{> venueLink}}
 					{{#if venue.address}}
-						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-						{{venue.address}}
+						<div class="tag">
+							<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+							{{venue.address}}
+						</div>
 					{{/if}}
 				</div>
 
@@ -116,41 +118,39 @@
 -->
 
 <template name="eventGroupList">
-	<ul class="grouplist">
+	<div class="tag-group multiline">
 		{{#each allGroups}}
-			<li>
-				{{> groupName}}
-				{{#if isOrganizer}}
-					<span class="group-label-addon">
-						<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
-					</span>
-				{{/if}}
-				{{#if tools}}
-					<div class="dropdown">
-						<button type="button" class="group-label-addon-btn dropdown-toggle"
-							aria-expanded="false"
-							aria-haspopup="true"
-							data-toggle="dropdown">
-							<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
-						</button>
-							<ul class="dropdown-menu">
-							{{#each tools}}
-								<li>{{> toolTemplate}}</li>
-							{{/each}}
-						</ul>
-					</div>
-				{{/if}}
-			</li>
+			{{> groupName}}
+			{{#if isOrganizer}}
+				<div class="tag addon">
+					<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
+				</div>
+			{{/if}}
+			{{#if tools}}
+				<div class="btn-group group-tag-btn addon">
+					<button type="button" class="dropdown-toggle"
+						aria-expanded="false"
+						aria-haspopup="true"
+						data-toggle="dropdown">
+						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
+					</button>
+					<ul class="dropdown-menu">
+						{{#each tools}}
+							<li>{{> toolTemplate}}</li>
+						{{/each}}
+					</ul>
+				</div>
+			{{/if}}
 		{{/each}}
 		{{> eventGroupAdd}}
-	</ul>
+	</div>
 </template>
 
 
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="dropdown">
-			<button type="button" class="group-label-btn dropdown-toggle"
+		<div class="btn-group group-tag-btn">
+			<button type="button" class="dropdown-toggle"
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">

@@ -1,68 +1,45 @@
-.grouplist {
-	list-style: none;
-	margin-bottom: 0;
-	@include td-padding(left, 0);
-}
-
-.grouplist > li,
-.grouplist > .dropdown,
-.grouplist > li > .dropdown {
-	display: inline-block;
-}
-
 $group-label-color: $blue;
 
-%group-label {
-	background: $group-bg;
+.group-tag {
+	@include tag-variation($group-bg, $group-label-color);
+}
+
+.tag.addon {
+	background-color: $group-bg;
 	color: $group-label-color;
-	transition: all $default-transition-time;
+	margin-left: 0;
+	padding: 1px 4px;
+}
+
+.group-tag-btn {
+	vertical-align: top;
+}
+
+.group-tag-btn > button {
+	background-color: $group-bg;
+	border: none;
+	color: $group-label-color;
+	font-size: $font-size-base;
+	margin-bottom: 5px;
+	padding: 1px 4px;
 
 	&:hover,
 	&:focus,
 	&.highlight {
-		background: darken($group-bg, 10%);
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-		color: $group-label-color;
+		background-color: darken($group-bg, 5%);
 	}
 }
 
-.js-group-label {
-	@extend %group-label;
-	padding: 0 4px 1px;
-
-	&:hover {
-		text-decoration: none;
-	}
+.tag + .group-tag-btn:not(.addon),
+.group-tag-btn:not(.addon),
+.group-tag-btn.addon + .tag {
+	margin-left: 5px;
 }
 
-.group-label-addon {
-	background: $group-bg;
-	color: $group-label-color;
-	padding: 1px 1px 0;
-	vertical-align: middle;
-}
-
-.group-label-addon-btn {
-	@extend %group-label;
-	border-color: darken($group-bg, 5%);
+.group-tag-btn.addon > button {
+	border-color: darken($group-bg, 10%);
 	border-style: solid;
 	border-width: 0 0 0 1px;
-	padding: 0 1px;
-
-	&:hover,
-	&:focus {
-		border-left-color: $group-bg;
-	}
-}
-
-.group-label-btn {
-	@extend %group-label;
-	border: 0;
-	padding: 0 3px;
-}
-
-.js-add-group {
-	border: 0;
 }
 
 .group-tool-dialog {
