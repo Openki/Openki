@@ -42,6 +42,10 @@ $group-label-color: $blue;
 	border-width: 0 0 0 1px;
 }
 
+.group-editor {
+	min-width: 250px;
+}
+
 .group-tools,
 .group-editor {
 	padding: 10px 0;
@@ -56,14 +60,17 @@ li + .group-editor-btn,
 	margin: 0 10px;
 }
 
-.btn-link > .group-tag,
-.btn-link:hover > .group-tag,
-.btn-link:focus > .group-tag {
-	color: $group-label-color;
-}
-
 .group-tool-dialog {
-	padding: 10px 10px 0;
+	margin: 0 10px;
+	padding: 10px 10px;
+
+	&.add {
+		background-color: rgba($brand-success, .35);
+	}
+
+	&.danger {
+		background-color: rgba($brand-danger, .2);
+	}
 }
 
 .group-tool-dialog > .btn {

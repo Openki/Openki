@@ -165,7 +165,7 @@
 				{{#each groupsToAdd}}
 					<li>
 						<button type="button" class="btn-link js-add-group" value="{{this}}">
-							<div class="tag group-tag">{{short}}</div>
+							{{> groupName}}
 							{{name}}
 						</button>
 					</li>
@@ -183,30 +183,27 @@
 
 
 <template name="courseGroupRemove">
-	<a href="#" class="js-expand btn btn-remove">
-		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
-		{{mf 'course.group.remove' 'Remove'}}
-	</a>
 	{{#if expanded}}
-		<div class="group-tool-dialog">
+		<div class="group-tool-dialog danger">
 			{{#with groupId}}
 				{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
 			{{/with}}
-			<button type="button" class="btn btn-remove js-remove">
+			<button type="button" class="btn btn-danger js-remove">
 				{{mf 'course.group.confirmRemoveButton' "Delist"}}
 			</button>
 		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-remove">
+			<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
+			{{mf 'course.group.remove' 'Remove'}}
+		</a>
 	{{/if}}
 </template>
 
 
 <template name="courseGroupMakeOrganizer">
-	<a href="#" class="js-expand btn btn-add">
-		<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
-		{{mf 'course.group.addOrgText' "Give editing rights"}}
-	</a>
 	{{#if expanded}}
-		<div class="group-tool-dialog">
+		<div class="group-tool-dialog add">
 			{{#with groupId}}
 				{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
 			{{/with}}
@@ -215,22 +212,28 @@
 				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
 			</button>
 		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-add">
+			<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
+			{{mf 'course.group.addOrgText' "Give editing rights"}}
+		</a>
 	{{/if}}
 </template>
 
 <template name="courseGroupRemoveOrganizer">
-	<a href="#" class="js-expand btn btn-remove">
-		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
-		{{mf 'course.group.removeOrgText' "Remove editing rights"}}
-	</a>
 	{{#if expanded}}
-		<div class="group-tool-dialog">
+		<div class="group-tool-dialog danger">
 			{{#with groupId}}
 				{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
 			{{/with}}
-			<button type="button" class="btn btn-remove js-removeOrganizer">
+			<button type="button" class="btn btn-danger js-removeOrganizer">
 				{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
 			</button>
 		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-remove">
+			<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
+			{{mf 'course.group.removeOrgText' "Remove editing rights"}}
+		</a>
 	{{/if}}
 </template>
