@@ -17,7 +17,7 @@
 	margin-left: -5px;
 }
 
-.tag-group .tag {
+.tag-group > .tag {
 	margin-left: 5px;
 }
 
@@ -27,7 +27,7 @@
 
 // Set the font-size of the parent element to 0, in order to remove whitespace
 // made visible because of 'display: inline-block' property
-// https://stackoverflow.com/questions/19038799/why-is-there-an-unexplainable-gap-between-these-inline-block-div-elements#19038859
+// https://stackoverflow.com/questions/19038799#19038859
 .tag-group {
 	font-size: 0;
 }

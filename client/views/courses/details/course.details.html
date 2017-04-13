@@ -127,9 +127,14 @@
 						data-toggle="dropdown">
 						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 					</button>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu group-editor">
+						<li class="dropdown-header">
+							{{mf 'grouplist.editgroup.header' 'Edit group'}}
+							<button class="close">&times;</button>
+						</li>
+						<li role="seperator" class="divider"></li>
 						{{#each tools}}
-							<li>{{> toolTemplate}}</li>
+							<li class="group-editor-btn">{{> toolTemplate}}</li>
 						{{/each}}
 					</ul>
 				</div>
@@ -152,16 +157,21 @@
 				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu group-editor">
+				<li class="dropdown-header">
+					{{mf 'grouplist.addgroups.header' 'Add groups'}}
+					<button class="close">&times;</button>
+				</li>
+				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
 						<button type="button" class="btn-link js-add-group" value="{{this}}">
-							<span class="js-group-label">{{short}}</span>
+							<div class="tag group-tag">{{short}}</div>
 							{{name}}
 						</button>
 					</li>
 				{{/each}}
-				<li>
-					<a href="/group/create">
+				<li class="group-editor-btn">
+					<a href="/group/create" class="btn btn-add">
 						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'profile.createNewGroup.button'}}
 					</a>
@@ -173,7 +183,7 @@
 
 
 <template name="courseGroupRemove">
-	<a href="#" class="js-expand">
+	<a href="#" class="js-expand btn btn-remove">
 		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.remove' 'Remove'}}
 	</a>
@@ -191,7 +201,7 @@
 
 
 <template name="courseGroupMakeOrganizer">
-	<a href="#" class="js-expand">
+	<a href="#" class="js-expand btn btn-add">
 		<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.addOrgText' "Give editing rights"}}
 	</a>
@@ -209,7 +219,7 @@
 </template>
 
 <template name="courseGroupRemoveOrganizer">
-	<a href="#" class="js-expand">
+	<a href="#" class="js-expand btn btn-remove">
 		<span class="glyphicon glyphicon-remove fa-fw" aria-hidden="true"></span>
 		{{mf 'course.group.removeOrgText' "Remove editing rights"}}
 	</a>
