@@ -1,4 +1,5 @@
 @mixin tag-variation($bg, $color) {
+	color: $color;
 	background-color: $bg;
 	padding: 1px 4px;
 
