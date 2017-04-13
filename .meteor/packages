@@ -3,18 +3,18 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-accounts-password@1.3.3
-accounts-base@1.2.14
+accounts-password@1.3.4
+accounts-base@1.2.15
 email@1.1.18
 standard-app-packages@1.0.9
-check@1.2.4
+check@1.2.5
 iron:router
 reactive-var@1.0.11
-accounts-github@1.0.11
+accounts-github@1.2.1
 service-configuration@1.0.11
 mediumeditor:mediumeditor
 djedi:sanitize-html
-accounts-facebook@1.0.11
+accounts-facebook@1.1.1
 archive:jquery-dotdotdot
 ical
 rzymek:moment-locale-ar
@@ -34,14 +34,14 @@ fortawesome:fontawesome
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
-accounts-google@1.0.11
+accounts-google@1.1.1
 msavin:mongol
 bevanhunt:leaflet
-http@1.2.10
+http@1.2.12
 es5-shim@4.6.15
 router-autoscroll
 meteorhacks:ssr
-standard-minifier-js@1.2.1
+standard-minifier-js@1.2.3
 rajit:bootstrap3-datepicker
 prng
 ccorcos:subs-cache
@@ -51,7 +51,7 @@ lookback:tooltips
 ongoworks:spiderable
 seba:minifiers-autoprefixer
 gadicohen:robots-txt
-shell-server@0.2.1
-ecmascript@0.6.1
+shell-server@0.2.3
+ecmascript@0.6.3
 practicalmeteor:mocha
 fixtures
