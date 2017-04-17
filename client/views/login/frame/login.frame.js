@@ -135,8 +135,7 @@ Template.loginFrame.events({
 			return;
 		}
 		Meteor[loginMethod]({
-		}, function (err) {				// console.log(err.reason);
-
+		}, function (err) {
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
