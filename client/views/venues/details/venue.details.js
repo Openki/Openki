@@ -1,12 +1,13 @@
 "use strict";
 
+var maxEvents = 12;
+
 Router.map(function() {
 	this.route('venueDetails', {
 		path: 'venue/:_id/:name?',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),
-				Meteor.subscribe('eventsFind', { venue: this.params._id })
 			];
 		},
 
@@ -23,8 +24,6 @@ Router.map(function() {
 			} else {
 				venue = Venues.findOne({_id: this.params._id});
 				if (!venue) return false; // Not found
-
-				data.eventsList = eventsFind({venue: id, after: minuteTime.get()}, 12);
 			}
 
 			data.venue = venue;
@@ -53,6 +52,7 @@ Router.map(function() {
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {
+	var self = this;
 	var isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
 
@@ -78,6 +78,14 @@ Template.venueDetails.onCreated(function() {
 			});
 		}
 	};
+
+	this.eventsPredicate = function() {
+		return { venue: self.data.venue._id, after: minuteTime.get() };
+	};
+
+	this.autorun(function() {
+		subs.subscribe('eventsFind', self.eventsPredicate(), maxEvents);
+	});
 });
 
 Template.venueDetails.onRendered(function() {
@@ -126,6 +134,10 @@ Template.venueDetails.helpers({
 
 	facilityNames: function() {
 		return Object.keys(this.facilities);
+	},
+
+	eventsList: function() {
+		return eventsFind(Template.instance().eventsPredicate(), maxEvents);
 	}
 });
 
