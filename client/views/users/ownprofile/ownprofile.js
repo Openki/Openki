@@ -79,7 +79,7 @@ Template.profile.events({
 	},
 
 	'click .js-change-pwd-btn': function(event, instance) {
-		Template.instance().changingPass.set(true);
+		instance.changingPass.set(true);
 		instance.collapse();
 	},
 
