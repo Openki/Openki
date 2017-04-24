@@ -42,22 +42,8 @@ $group-label-color: $blue;
 	border-width: 0 0 0 1px;
 }
 
-.group-editor {
-	min-width: 250px;
-}
-
-.group-tools,
-.group-editor {
+.group-tools {
 	padding: 10px 0;
-}
-
-li + .group-editor-btn,
-.group-editor-btn + .group-editor-btn {
-	margin-top: 10px;
-}
-
-.group-editor-btn > .btn {
-	margin: 0 10px;
 }
 
 .group-tool-dialog {

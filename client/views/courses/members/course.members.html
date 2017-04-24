@@ -73,7 +73,16 @@
 			data-tooltip-direction="e">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 		</button>
-		<ul class="dropdown-menu">
+		<ul class="dropdown-menu dialog-dropdown">
+			<li class="dropdown-header">
+				{{#if isNotPriviledgedSelf}}
+					{{mf 'course.details.removeTeam.self.header' 'Remove yourself from team'}}
+				{{else}}
+					{{mf 'course.details.removeTeam.others.header' 'Remove member from team'}}
+				{{/if}}
+				<button class="close">&times;</button>
+			</li>
+			<li role="separator" class="divider"></li>
 			<li>
 				{{#if isNotPriviledgedSelf}}
 					{{mf 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
@@ -81,7 +90,7 @@
 					{{mf 'course.detail.remove.other.team' 'Do you really want to remove this member from the team?'}}
 				{{/if}}
 			</li>
-			<li>
+			<li class="dialog-dropdown-btn">
 				<button type="button" class="btn btn-remove js-remove-team">
 					<span class="fa fa-remove"></span>
 					{{mf 'course.group.remove' 'Remove'}}

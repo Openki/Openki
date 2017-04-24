@@ -1,0 +1,25 @@
+.dialog-dropdown {
+	min-width: 250px;
+}
+
+.dialog-dropdown {
+	padding: 10px;
+}
+
+.dialog-dropdown > .dropdown-header {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.dialog-dropdown-btn {
+	position: relative;
+}
+
+li + .dialog-dropdown-btn,
+.dialog-dropdown-btn + .dialog-dropdown-btn {
+	margin-top: 10px;
+}
+
+.dialog-dropdown-btn > .btn {
+	width: 100%;
+}
