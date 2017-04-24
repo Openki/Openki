@@ -46,7 +46,7 @@ Template.profile.helpers({
 		var userID = templateData.user._id;
 		var coursesForRole = [];
 
-		involvedIn.forEach(function(course) {			
+		involvedIn.forEach(function(course) {
 			if(!!hasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
