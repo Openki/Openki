@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<th>{{mf "notification.event.mail.time" "Time" LOCALE=locale}}</th>
-		<td>{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{/if}} <span style="color: gray; font-weight: lighter">{{timeZone}}</span></td>
+		<td>{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{/if}}</td>
 	</tr>
 	<tr>
 		<th>{{mf "notification.event.mail.link" "Link" LOCALE=locale}}</th>
@@ -32,7 +32,11 @@
 </table>
 
 <small>
-	{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
-	<a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a>
-	<a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+	<div>
+		{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
+	    {{mf "notification.event.mail.timezone" "Event times are in local time for {REGION}: {ZONE}" REGION=regionName ZONE=timeZone LOCALE=locale}}
+	</div>
+
+	<div><a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a></div>
+	<div><a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a></div>
 </small>

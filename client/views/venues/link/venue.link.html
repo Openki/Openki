@@ -1,20 +1,26 @@
 <template name="venueLink">
 	{{#if venue.name}}
 		{{#if venue._id}}
-			<a class="js-venue-link"
-			   data-tooltip="{{mf 'location.link.tooltip' 'Show details of {VENUE}' VENUE=venue.name}}"
-			   href="{{pathFor 'venueDetails' data=venue}}"
-			   target="{{#if openInNewTab}}_blank{{/if}}">
-				<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-				{{venue.name}}
-			</a>
+			<div class="tag tag-link venue-tag">
+				<a class="js-venue-link"
+				   data-tooltip="{{mf 'location.link.tooltip' 'Show details of {VENUE}' VENUE=venue.name}}"
+				   href="{{pathFor 'venueDetails' data=venue}}"
+				   target="{{#if openInNewTab}}_blank{{/if}}">
+					<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+					{{venue.name}}
+				</a>
+			</div>
 		{{else}}
-			<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
-			<span>{{venue.name}}</span>
+			<div class="tag">
+				<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+				{{venue.name}}
+			</div>
 		{{/if}}
 		{{#if room}}
-			<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
-			<span>{{this.room}}</span>
+			<div class="tag">
+				<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+				{{this.room}}
+			</div>
 		{{/if}}
 	{{/if}}
 </template>

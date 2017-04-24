@@ -7,7 +7,7 @@
 				     {{filterPreviewClasses}}">
 					<div class="course-compact-content">
 						<div class="course-compact-title">
-							<h4>{{name}}</h4>
+							{{name}}
 						</div>
 						{{> courseCategories}}
 					</div>
@@ -16,7 +16,11 @@
 					{{else}}
 						{{> courseCompactRoles}}
 					{{/if}}
-					{{> groupList}}
+					<div class="tag-group course-groups">
+						{{#each groups}}
+							{{> groupName}}
+						{{/each}}
+					</div>
 				</div>
 			</a>
 		</div>

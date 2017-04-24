@@ -3,10 +3,6 @@
 	height: calc(#{'100% - 70px'});
 }
 
-.event-details-body .location {
-	@include td-margin(right, 5px);
-}
-
 .event-details-body .grouplist {
 	margin-bottom: 10px;
 }

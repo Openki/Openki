@@ -59,6 +59,7 @@ Notification.Event.handler = function(entry) {
 	if (event && event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
+	var region = Regions.findOne(event.region);
 
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
@@ -69,6 +70,7 @@ Notification.Event.handler = function(entry) {
 			try {
 				if (!event) throw "Event does not exist (0.o)";
 				if (!course) throw "Course does not exist (0.o)";
+				if (!region) throw "Region does not exist (0.o)";
 
 				var user = Meteor.users.findOne(recipient);
 				userId = user._id;
@@ -117,6 +119,7 @@ Notification.Event.handler = function(entry) {
 					, eventDate: startMoment.format('LL')
 					, eventStart: startMoment.format('LT')
 					, eventEnd: endMoment.format('LT')
+					, regionName: region.name
 					, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 					, locale: userLocale
 					, eventLink: Router.url('showEvent', event)

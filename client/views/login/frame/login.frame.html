@@ -1,35 +1,13 @@
 <template name='userFrame'>
 	<div class="user-frame">
-		{{#if currentUser}}
-			<div class="ownuser-frame">
-				<h3>
-					{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-				</h3>
-				<div class="form-group">
-					<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-						{{mf 'login.frame.profile' 'Visit my profile'}}
-					</a>
-				</div>
-				<div class="form-group">
-					<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
-						<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
-						{{mf 'login.frame.settings' 'Account settings'}}
-					</a>
-				</div>
-				<div class="form-group">
-					<button type="button" class="btn btn-default js-logout-btn form-control">
-						<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
-						{{mf 'login.logout' 'Logout'}}
-					</button>
-				</div>
-			</div>
+		{{#if login}}
+			{{> loginFrame}}
 		{{/if}}
 		{{#if forgot}}
 			{{> forgotPwdFrame}}
 		{{/if}}
-		{{#if login}}
-			{{> loginFrame}}
+		{{#if currentUser}}
+			{{> ownUserFrame}}
 		{{/if}}
 	</div>
 </template>
@@ -37,114 +15,144 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group {{#if userNotFound}}has-error{{/if}}{{#if userAlreadyExists}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}">
+			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
-					<input class="js-login-name form-control"
-						id="login-name"
-						type="text"
-						placeholder={{loginNamePlaceholder}}>
+					<input class="form-control"
+					       id="loginName"
+					       placeholder={{mf 'frame.login.usernameOrEmail' 'Username or Email'}}
+					       type="text"
+					/>
 				</div>
-				{{#if hasWarnings}}
-					<span class="help-block">
-						{{#if userNotFound}}
-							{{mf 'login.username.usr_doesnt_exist' 'This user does not exist.'}}
-						{{/if}}
-						{{#if userAlreadyExists}}
-							{{mf 'login.username.username_exists' 'This username already exists.'}}<br>
-							{{mf 'login.username.choose_another' 'Please choose another one.'}}
-						{{/if}}
-					</span>
-				{{/if}}
 			</div>
-			<div class="form-group {{#if incorrectPassword}}has-error{{/if}}{{#if emptyLogin}}has-error{{/if}}{{#if noPasswordProvided}}has-error{{/if}}">
+			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 					</span>
-					<input class="js-login-password form-control"
-						id="login-password"
-						placeholder="{{mf '_inputField.password'}}"
-						type="password"/>
+					<input class="form-control"
+					       id="loginPassword"
+					       placeholder="{{mf '_inputField.password'}}"
+					       type="password"
+					/>
 				</div>
-				{{#if hasWarnings}}
-					<span class="help-block">
-						{{#if incorrectPassword}}
-							{{mf 'login.password.password_incorrect' 'Incorrect password'}}
-						{{/if}}
-						{{#if emptyLogin}}
-							{{mf 'login.login.warning' 'Please enter your username or email and password to login.'}}
-						{{/if}}
-						{{#if noPasswordProvided}}
-							{{mf 'login.warning.noPasswordProvided' 'Please enter a password to register.'}}
-						{{/if}}
-					</span>
-				{{/if}}
 			</div>
-			{{#if registering}}
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
-						</span>
-						<input class="js-login-email form-control"
-							type="email"
-							id="login-email"
-							value={{transEmail}}
-							placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
-					</div>
+			<div class="form-group forgot-pwd-btn-container">
+				<button type="button" class="btn btn-link js-forgot-pwd-btn">
+					{{mf 'forgot' "I forgot my password"}}
+				</button>
+			</div>
+			<div class="form-group">
+				<button type="submit" class='btn btn-default js-login form-control'>
+					<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+						{{mf 'login.login.submit' 'Login'}}
+				</button>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-add form-control js-register-open"
+				        data-toggle="modal"
+						data-target="#registerFrame"
+						type="button">
+					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+					{{mf 'login.register.submit' 'Create account'}}
+				</button>
+			</div>
+			<div class="form-group external-service-login">
+				<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
+				<button class="js-external-service-login-btn"
+				        data-service='Google'
+				        title="Login with Google+"
+				        type="button">
+					<span class="fa fa-google-plus-square"></span>
+				</button>
+				<button class="js-external-service-login-btn"
+				        data-service='Facebook'
+				        title="Login with Facebook"
+				        type="button">
+					<span class="fa fa-facebook-square"></span>
+				</button>
+				<button class="js-external-service-login-btn"
+				        data-service='Github'
+				        title="Login with Github"
+				        type="button">
+					<span class="fa fa-github-square"></span>
+				</button>
+			</div>
+		</div>
+	</form>
+</template>
+
+<template name="registerModal">
+	<div class="modal fade register" tabindex="-1" role="dialog" id="registerFrame">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<span class="fa fa-user-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'login.register.submit'}}
+						<span class="close js-close">&times;</span>
+					</h4>
 				</div>
-				<div class="form-group">
-					<button type="submit" class='btn btn-add js-register-btn form-control'>
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-						{{mf 'login.register.submit' 'Create account'}}
-					</button>
+				<div class="modal-body">
+					{{> registerFrame}}
 				</div>
-				<div class="form-group">
-					<button type="submit" class='btn btn-default js-login-btn form-control'>
-						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
-							{{mf 'login.login.back_to_login' 'Back to login'}}
-					</button>
-				</div>
-			{{else}}
-				<div class="form-group forgot-pwd-btn-container">
-					<button type="button" class="{{#if incorrectPassword}}btn btn-warning form-control{{else}}btn-link{{/if}} js-forgot-pwd-btn">
-						{{mf 'forgot' "I forgot my password"}}
-					</button>
-				</div>
-				<div class="form-group">
-					<button type="submit" class='btn btn-default js-login-btn form-control'>
-						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
-							{{mf 'login.login.submit' 'Login'}}
-					</button>
-				</div>
-				<div class="form-group">
-					<button type="submit" class='btn btn-add js-register-btn form-control'>
-						<span class="glyphicon glyphicon-plus"></span>&nbsp;
-						{{mf 'login.register.submit' 'Create account'}}
-					</button>
-				</div>
-			{{/if}}
-				<div class="form-group external-service-login">
-					<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
-					<button type="button" class="js-external-service-login-btn"
-						data-service='Google'
-						title="Login with Google+">
-						<span class="fa fa-google-plus-square"></span>
-					</button>
-					<button type="button" class="js-external-service-login-btn"
-						data-service='Facebook'
-						title="Login with Facebook">
-						<span class="fa fa-facebook-square"></span>
-					</button>
-					<button type="button" class="js-external-service-login-btn"
-						data-service='Github'
-						title="Login with Github">
-						<span class="fa fa-github-square"></span>
-					</button>
-				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="registerFrame">
+	<form>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control"
+				       id="registerName"
+				       type="text"
+				       placeholder={{mf 'frame.login.username' 'Username'}}
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control"
+				       id="registerPassword"
+				       placeholder="{{mf '_inputField.password'}}"
+				       type="password"
+				/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control"
+				       id="registerEmail"
+				       placeholder="{{mf 'frame.login.email' 'E-Mail'}} {{mf '_inputField.optional'}}"
+				       type="email"
+				/>
+			</div>
+			<span class="help-block">
+				<span class="fa fa-info-circle fa-fw" aria-hidden="true"></span>
+				{{#mf KEY='login.frame.register.mailDisclaimer'}}
+					Providing an e-mail address allows other users to contact you
+					and is needed to recover your password in case you forget it.
+				{{/mf}}
+			</span>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-add form-control js-register">
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				{{mf 'login.register.submit'}}
+			</button>
 		</div>
 	</form>
 </template>
@@ -161,21 +169,23 @@
 				<span class="input-group-addon">
 					<span class="fa fa-envelope"></span>
 				</span>
-				<input class="js-login-email form-control"
-					aria-describedby="forgotPwdMailHelp"
-					id="login-email"
-					type="email"
-					placeholder="{{mf 'frame.login.email' 'E-Mail'}}"/>
+				<input class="form-control"
+				       aria-describedby="forgotPwdMailHelp"
+				       id="resetPwdEmail"
+				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
+				       type="email"
+				/>
 			</div>
-			{{#unless validEmail}}
+			{{#if noValidEmail}}
 				<span id="forgotPwdMailHelp" class="help-block">
 					{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
 				</span>
-			{{/unless}}
+			{{/if}}
 		</div>
 		<div class="form-group">
-			<button type="button" class="btn btn-save js-reset-pwd-btn form-control"
-				{{disableForInvalidEmail}}>
+			<button class="btn btn-save js-reset-pwd-btn form-control"
+			        disabled="{{#if noValidEmail}}disabled{{/if}}"
+			        type="button">
 				<span class="fa fa-envelope"></span>
 				{{mf 'forgot.send' 'Reset my password'}}
 			</button>
@@ -188,4 +198,30 @@
 		</div>
 	</div>
 	</form>
+</template>
+
+<template name="ownUserFrame">
+	<div class="ownuser-frame">
+		<div class="form-group ownuser-frame-welcome">
+			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.profile' 'Visit my profile'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings' 'Account settings'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-default js-logout form-control">
+				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
+				{{mf 'login.logout' 'Logout'}}
+			</button>
+		</div>
+	</div>
 </template>

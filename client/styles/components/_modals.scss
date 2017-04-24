@@ -1,0 +1,13 @@
+.modal-header {
+	background: $brand-primary;
+	color: $white;
+}
+
+.modal-header .close {
+	color: $white;
+	opacity: .7;
+
+	&:hover {
+		opacity: 1;
+	}
+}

@@ -48,29 +48,9 @@ Template.filter.events({
 		};
 		courseFilterPreview(previewOptions);
 
-		$('.js-category-label.category-' + category).toggleClass('highlight');
-	},
-
-	'mouseover .js-category-selection-label': function(e) {
-		var category = this;
-		var previewOptions = {
-			selector: ('.category-' + category),
-			activate: true
-		};
-		courseFilterPreview(previewOptions);
-
-		$('.js-category-label.category-' + category).addClass('highlight');
-	},
-
-	'mouseout .js-category-selection-label': function(e) {
-		var category = this;
-		var previewOptions = {
-			selector: ('.category-' + category),
-			activate: false
-		};
-		courseFilterPreview(previewOptions);
-
-		$('.js-category-label.category-' + category).removeClass('highlight');
+		$('.js-category-label.category-' + category)
+			.parent()
+			.toggleClass('highlight');
 	},
 
 
