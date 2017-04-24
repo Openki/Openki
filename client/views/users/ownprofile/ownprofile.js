@@ -48,7 +48,7 @@ Template.profile.helpers({
 		var userID = templateData.user._id;
 		var coursesForRole = [];
 
-		involvedIn.forEach(function(course) {			
+		involvedIn.forEach(function(course) {
 			if(!!hasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
@@ -81,6 +81,10 @@ Template.profile.events({
 	'click .js-change-pwd-btn': function(event, instance) {
 		Template.instance().changingPass.set(true);
 		instance.collapse();
+	},
+
+	'click .js-change-pwd-cancel': function(event, instance) {
+		instance.changingPass.set(false);
 	},
 
 	'click .js-expand': function(event, instance) {
