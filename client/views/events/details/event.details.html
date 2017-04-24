@@ -80,8 +80,8 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				{{#unless verifyDelete}}
-					{{> buttonDelete event="js-event-delete"}}
+				{{#unless expanded}}
+					{{> buttonDelete event="js-expand"}}
 				{{/unless}}
 				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
@@ -96,7 +96,7 @@
 					</button>
 				{{/if}}
 			</div>
-			{{#if verifyDelete}}
+			{{#if expanded}}
 				{{> eventDeleteConfirmDialog}}
 			{{/if}}
 		{{/if}}
@@ -125,7 +125,7 @@
 	<div class="event-delete-confirmation">
 		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-event-delete-cancel"}}
+			{{> buttonCancel event="js-collapse"}}
 			<button type="button" class="btn btn-danger js-event-delete-confirm">
 				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 				{{mf 'event.delete.confirm.button' 'Delete this event'}}

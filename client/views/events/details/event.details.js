@@ -5,10 +5,10 @@ Template.event.onCreated(function() {
 });
 
 
+TemplateMixins.Expandible(Template.eventDisplay);
 Template.eventDisplay.onCreated(function() {
 	this.locationTracker = LocationTracker();
 	this.replicating = new ReactiveVar(false);
-	this.verifyDeleteEvent = new ReactiveVar(false);
 });
 
 
@@ -57,9 +57,6 @@ Template.eventDisplay.helpers({
 	replicating: function() {
 		return Template.instance().replicating.get();
 	},
-	verifyDelete: function() {
-		return Template.instance().verifyDeleteEvent.get();
-	}
 });
 
 Template.event.events({
@@ -90,17 +87,10 @@ Template.event.events({
 });
 
 Template.eventDisplay.events({
-	'click .js-event-delete': function () {
-		Template.instance().verifyDeleteEvent.set(true);
-	},
-
-	'click .js-event-delete-cancel': function () {
-		Template.instance().verifyDeleteEvent.set(false);
-	},
 	'click .js-toggle-replication': function(event, instance) {
 		var replicating = instance.replicating;
 		replicating.set(!replicating.get());
-		Template.instance().verifyDeleteEvent.set(false);
+		instance.collapse();
 	}
 });
 

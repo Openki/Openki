@@ -64,11 +64,11 @@ Router.map(function () {
 	});
 });
 
+
+TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
 	var instance = this;
 	var course = instance.data.course;
-
-	instance.verifyDeleteCourse = new ReactiveVar(false);
 
 	instance.editableName = Editable(
 		true,
@@ -128,20 +128,9 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	isProposal: function() {
 		return !this.course.nextEvent && !this.course.lastEvent;
 	},
-	verifyDelete: function() {
-		return Template.instance().verifyDeleteCourse.get();
-	},
 });
 
 Template.courseDetailsPage.events({
-	'click .js-delete-course': function () {
-		Template.instance().verifyDeleteCourse.set(true);
-	},
-
-	'click .js-delete-course-cancel': function () {
-		Template.instance().verifyDeleteCourse.set(false);
-	},
-
 	'click .js-delete-course-confirm': function (event, instance) {
 		if (pleaseLogin()) return;
 
@@ -157,7 +146,7 @@ Template.courseDetailsPage.events({
 	},
 
 	'click .js-course-edit': function (event, instance) {
-		Template.instance().verifyDeleteCourse.set(false);
+		instance.collapse();
 		if (pleaseLogin()) return;
 
 		var course = instance.data.course;

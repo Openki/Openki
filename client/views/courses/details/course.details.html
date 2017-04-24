@@ -41,14 +41,14 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								{{#unless verifyDelete}}
-									{{> buttonDelete event="js-delete-course"}}
+								{{#unless expanded}}
+									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
 								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
-					{{#if verifyDelete}}
+					{{#if expanded}}
 						{{> confirmDialog}}
 					{{/if}}
 					{{> courseRoles roles_details}}
@@ -81,7 +81,7 @@
 	<div class="course-delete-confirmation">
 		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-delete-course-cancel"}}
+			{{> buttonCancel event="js-collapse"}}
 			<button type="button" class="btn btn-danger js-delete-course-confirm">
 				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 				{{mf 'course.delete.confirm.button' 'Delete this course and its events.'}}
