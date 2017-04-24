@@ -213,7 +213,7 @@ TemplateMixins = {
 	Expandible: function(template) {
 		template.onCreated(function() {
 			var expander = Random.id(); // Token to keep track of which Expandible is open
-			this.expander = expander;
+			this.expander = expander; // Read by event handlers
 			this.collapse = function() {
 				if (Session.equals('verify', expander)) {
 					Session.set('verify', false);
