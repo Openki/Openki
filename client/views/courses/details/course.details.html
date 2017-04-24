@@ -41,11 +41,16 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
-								{{> buttonDelete event="js-delete-course"}}
+								{{#unless expanded}}
+									{{> buttonDelete event="js-expand"}}
+								{{/unless}}
 								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
+					{{#if expanded}}
+						{{> confirmDialog}}
+					{{/if}}
 					{{> courseRoles roles_details}}
 				</div>
 			{{/if}}
@@ -71,6 +76,20 @@
 		</div>
 	</div>
 </template>
+
+<template name="confirmDialog">
+	<div class="course-delete-confirmation">
+		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-collapse"}}
+			<button type="button" class="btn btn-danger js-delete-course-confirm">
+				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+				{{mf 'course.delete.confirm.button' 'Delete this course and its events.'}}
+			</button>
+		</div>
+	</div>
+</template>
+
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
@@ -140,6 +159,7 @@
 				</div>
 			{{/if}}
 		{{/each}}
+
 		{{> courseGroupAdd}}
 	</div>
 </template>

@@ -165,8 +165,8 @@
 					</div>
 					{{/if}}
 					<div class="actions">
-						{{#unless verifyDelete}}
-							{{> buttonDelete event="js-profile-delete"}}
+						{{#unless expanded}}
+							{{> buttonDelete event="js-expand"}}
 						{{/unless}}
 							{{> buttonEdit event="js-profile-info-edit"}}
 						{{#unless changingPass}}
@@ -177,11 +177,11 @@
 						{{/unless}}
 					</div>
 				{{/if}}
-				{{#if verifyDelete}}
+				{{#if expanded}}
 					<div class="profile-delete-confirmation">
 						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 						<div class="form-actions">
-							{{> buttonCancel event="js-profile-delete-cancel"}}
+							{{> buttonCancel event="js-collapse"}}
 							<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
 								<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}

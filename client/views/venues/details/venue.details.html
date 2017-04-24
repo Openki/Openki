@@ -105,9 +105,14 @@
 					</div>
 					{{#if mayEdit}}
 						<div class="actions">
-							{{> buttonDelete event="js-venue-delete"}}
+							{{#unless verifyDelete}}
+								{{> buttonDelete event="js-venue-delete"}}
+							{{/unless}}
 							{{> buttonEdit event="js-venue-edit"}}
 						</div>
+						{{#if verifyDelete}}
+							{{> venueDeleteConfirmDialog}}
+						{{/if}}
 					{{/if}}
 				</div>
 			{{/with}}
@@ -118,5 +123,18 @@
 				{{> eventList dataEvents=eventsList withDate=true}}
 			</div>
 		{{/if}}
+	</div>
+</template>
+
+<template name="venueDeleteConfirmDialog">
+	<div class="venue-delete-confirmation">
+		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-venue-delete-cancel"}}
+			<button type="button" class="btn btn-danger js-venue-delete-confirm">
+				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+				{{mf 'venue.detail.remove' 'Remove this venue'}}
+			</button>
+		</div>
 	</div>
 </template>

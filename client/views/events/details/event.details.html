@@ -80,11 +80,13 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				{{> buttonDelete event="js-event-delete"}}
+				{{#unless expanded}}
+					{{> buttonDelete event="js-expand"}}
+				{{/unless}}
 				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
 					<button type="button" class="btn btn-cancel js-toggle-replication">
-						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
+						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
 					</button>
 				{{else}}
@@ -94,6 +96,9 @@
 					</button>
 				{{/if}}
 			</div>
+			{{#if expanded}}
+				{{> eventDeleteConfirmDialog}}
+			{{/if}}
 		{{/if}}
 	</div>
 	<div class="page-component">
@@ -116,6 +121,18 @@
     events. It's the pesky translation strings where I think we'll run into
     trouble when we try to unite them.
 -->
+<template name="eventDeleteConfirmDialog">
+	<div class="event-delete-confirmation">
+		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-collapse"}}
+			<button type="button" class="btn btn-danger js-event-delete-confirm">
+				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+				{{mf 'event.delete.confirm.button' 'Delete this event'}}
+			</button>
+		</div>
+	</div>
+</template>
 
 <template name="eventGroupList">
 	<div class="tag-group multiline">
