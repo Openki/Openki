@@ -4,7 +4,7 @@ Template.discussion.onCreated(function() {
 		courseId: this.data._id,
 		parentId: { $exists: false },
 	}, {
-		sort: {time_created: -1, time_updated: -1}
+		sort: {time_updated: -1}
 	});
 });
 
@@ -37,7 +37,7 @@ Template.post.onCreated(function() {
 		this.responses = CourseDiscussions.find({
 			parentId: this.data._id,
 		}, {
-			sort: {time_created: 1, time_updated: 1}
+			sort: {time_updated: 1}
 		});
 	}
 
@@ -84,6 +84,10 @@ Template.postShow.helpers({
 		var course = Courses.findOne(this.courseId);
 		return mayDeletePost(Meteor.user(), course, this);
 	},
+
+	wasEdited: function() {
+		 return moment(this.time_updated).isAfter(this.time_created);
+	}
 });
 
 
@@ -116,6 +120,10 @@ Template.postEdit.helpers({
 
 	enableWhenValid: function() {
 		return Template.instance().validComment.get() ? '' : 'disabled';
+	},
+
+	wasEdited: function() {
+		 return moment(this.time_updated).isAfter(this.time_created);
 	}
 });
 
