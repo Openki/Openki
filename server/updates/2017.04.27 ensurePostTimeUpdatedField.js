@@ -1,4 +1,4 @@
-UpdatesAvailable.ensurePostTimeUpdatedField = function() {
+UpdatesAvailable["2017.04.27 ensurePostTimeUpdatedField"] = function() {
 	var count = 0;
 
 	// Until now it is not possible to reference a document field during an
