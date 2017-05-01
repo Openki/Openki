@@ -1,10 +1,12 @@
 // See routing.js for the route
 
-Template.profile.created = function() {
+TemplateMixins.Expandible(Template.profile);
+Template.profile.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.sending = new ReactiveVar(false);
-};
+	this.verifyDelete = new ReactiveVar(false);
+});
 
 Template.profile.helpers({
 	editing: function() {
@@ -19,7 +21,7 @@ Template.profile.helpers({
 	},
 
 	verifyDelete: function() {
-		return Session.equals('verify', 'delete');
+		return Template.instance().verifyDelete.get();
 	},
 
 	groupCount: function() {
@@ -65,61 +67,52 @@ Template.profile.helpers({
 });
 
 Template.profile.events({
-	'click .js-profile-info-edit': function(event, template) {
+	'click .js-profile-info-edit': function(event, instance) {
 		Tooltips.hide();
-		Template.instance().editing.set(true);
+		instance.editing.set(true);
+		instance.collapse();
 	},
 
-	'click .js-profile-info-cancel': function() {
-		Template.instance().editing.set(false);
+	'click .js-profile-info-cancel': function(event, instance) {
+		instance.editing.set(false);
 		return false;
 	},
 
-	'click .js-change-pwd-btn': function() {
+	'click .js-change-pwd-btn': function(event, instance) {
 		Template.instance().changingPass.set(true);
+		instance.collapse();
 	},
 
-	'click .js-change-pwd-cancel': function() {
-		Template.instance().changingPass.set(false);
-		return false;
+	'click .js-expand': function(event, instance) {
+		instance.changingPass.set(false);
 	},
 
-	'click .js-profile-delete': function (event, template) {
-		Session.set('verify', 'delete');
-	},
-
-	'click .js-profile-delete-confirm-btn': function () {
+	'click .js-profile-delete-confirm-btn': function(event, instance) {
 		Meteor.call('delete_profile', function() {
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
-		Session.set('verify', false);
+		instance.collapse(); // Wait for server to log us out.
 	},
 
-	'click .js-profile-delete-cancel': function () {
-		Session.set('verify', false);
-	},
-
-	'submit .profile-info-edit': function(event) {
+	'submit .profile-info-edit': function(event, instance) {
 		event.preventDefault();
-		var template = Template.instance();
 		Meteor.call('update_userdata',
 			document.getElementById('editform_username').value,
 			document.getElementById('editform_email').value,
-			template.$('.js-notifications').prop("checked"),
+			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
 					showServerError('Saving your profile failed', err);
 				} else {
 					addMessage(mf('profile.updated', 'Updated profile'), 'success');
-					template.editing.set(false);
+					instance.editing.set(false);
 				}
 			}
 		);
 	},
 
-	'submit #changePwd': function(event) {
+	'submit #changePwd': function(event, instance) {
 		event.preventDefault();
-		var template = Template.instance();
 		var old = document.getElementById('oldpassword').value;
 		var pass = document.getElementById('newpassword').value;
 		if (pass !== "") {
@@ -137,14 +130,14 @@ Template.profile.events({
 						showServerError('Failed to change your password', err);
 					} else {
 						addMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
-						template.changingPass.set(false);
+						instance.changingPass.set(false);
 					}
 				});
 			}
 		}
 	},
 
-	'click .js-verify-mail-btn': function (event, instance) {
+	'click .js-verify-mail-btn': function(event, instance) {
 		instance.sending.set(true);
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {

@@ -5,6 +5,7 @@ Template.event.onCreated(function() {
 });
 
 
+TemplateMixins.Expandible(Template.eventDisplay);
 Template.eventDisplay.onCreated(function() {
 	this.locationTracker = LocationTracker();
 	this.replicating = new ReactiveVar(false);
@@ -55,30 +56,28 @@ Template.eventDisplay.helpers({
 
 	replicating: function() {
 		return Template.instance().replicating.get();
-	}
+	},
 });
 
 Template.event.events({
-	'click .js-event-delete': function (e, instance) {
+	'click .js-event-delete-confirm': function (e, instance) {
 		var event = instance.data;
 
 		var title = event.title;
 		var course = event.courseId;
-		if (confirm(mf('event.removeConfirm', { TITLE: title }, 'Delete event {TITLE}?'))) {
-			Meteor.call('removeEvent', event._id, function (error) {
-				if (error) {
-					showServerError('Could not remove event ' + "'" + title + "'", error);
+		Meteor.call('removeEvent', event._id, function (error) {
+			if (error) {
+				showServerError('Could not remove event ' + "'" + title + "'", error);
+			} else {
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				if (course) {
+					Router.go('showCourse', { _id: course });
 				} else {
-					addMessage("\u2713 " + mf('_message.removed'), 'success');
-					if (course) {
-						Router.go('showCourse', { _id: course });
-					} else {
-						Router.go('/');
-					}
+					Router.go('/');
 				}
-			});
-			Template.instance().editing.set(false);
-		}
+			}
+		});
+		Template.instance().editing.set(false);
 	},
 
 	'click .js-event-edit': function (event, instance) {
@@ -91,6 +90,7 @@ Template.eventDisplay.events({
 	'click .js-toggle-replication': function(event, instance) {
 		var replicating = instance.replicating;
 		replicating.set(!replicating.get());
+		instance.collapse();
 	}
 });
 

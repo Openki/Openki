@@ -59,7 +59,10 @@ Notification.Event.handler = function(entry) {
 	if (event && event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
-	var region = Regions.findOne(event.region);
+	var region = false;
+	if (event && event.region) {
+	    region = Regions.findOne(event.region);
+	}
 
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {

@@ -4,7 +4,7 @@ Template.discussion.onCreated(function() {
 		courseId: this.data._id,
 		parentId: { $exists: false },
 	}, {
-		sort: {time_updated: -1, time_created: -1}
+		sort: {time_created: -1, time_updated: -1}
 	});
 });
 
@@ -37,7 +37,7 @@ Template.post.onCreated(function() {
 		this.responses = CourseDiscussions.find({
 			parentId: this.data._id,
 		}, {
-			sort: {time_updated: 1, time_created: 1}
+			sort: {time_created: 1, time_updated: 1}
 		});
 	}
 
@@ -163,18 +163,16 @@ Template.post.events({
 		Template.instance().editing.set(false);
 	},
 
-	'click button.delete': function (event, instance) {
+	'click button.js-delete-comment': function (event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
-		if (confirm(mf( 'comment.delete.confirm','Really delete comment?' ))) {
-			Meteor.call('deleteComment', this._id, function(err) {
-				if (err) {
-					showServerError('Could not delete comment', err);
-				} else {
-					addMessage("\u2713 " + mf('_message.removed'), 'success');
-				}
-			});
-		}
+		Meteor.call('deleteComment', this._id, function(err) {
+			if (err) {
+				showServerError('Could not delete comment', err);
+			} else {
+				addMessage("\u2713 " + mf('_message.removed'), 'success');
+			}
+		});
 	},
 });
 

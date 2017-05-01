@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 describe('Event save', function () {
 	var eventId;
 	var event;
@@ -19,13 +21,15 @@ describe('Event save', function () {
 		var evenLater = new Date();
 		evenLater.setHours(1002);
 
+		var regionId = "9JyFCoKWkxnf8LWPh"; // Testistan
+
 		event = {
 			title: "Intentionally clever title for a generated test-event",
 			description: "This space intentionally filled with bland verbiage. You are safe to ignore this. ",
 			venue: { name: "Undisclosed place where heavy testing takes place" },
-			start: theFuture,
-			end: evenLater,
-			region: 'testId',
+			startLocal: moment(theFuture).format("YYYY-MM-DD[T]HH:mm"),
+			endLocal:   moment(evenLater).format("YYYY-MM-DD[T]HH:mm"),
+			region: regionId,
 			internal: true,
 		};
 
