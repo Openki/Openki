@@ -85,7 +85,7 @@ Template.postShow.helpers({
 		return mayDeletePost(Meteor.user(), course, this);
 	},
 
-	wasEdited: function() {
+	hasBeenEdited: function() {
 		 return moment(this.time_updated).isAfter(this.time_created);
 	}
 });
@@ -122,7 +122,7 @@ Template.postEdit.helpers({
 		return Template.instance().validComment.get() ? '' : 'disabled';
 	},
 
-	wasEdited: function() {
+	hasBeenEdited: function() {
 		 return moment(this.time_updated).isAfter(this.time_created);
 	}
 });

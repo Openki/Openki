@@ -56,7 +56,7 @@
 						title="{{dateformat time_created}}">
 						{{fromNow time_created}}
 					</span>
-					{{#if wasEdited}}
+					{{#if hasBeenEdited}}
 						<span class="comment-time-updated"
 							title="{{dateformat time_updated}}">
 							last update:{{fromNow time_updated}}
@@ -103,7 +103,7 @@
 						{{fromNow time_created}}
 					{{/unless}}
 				</span>
-				{{#if wasEdited}}
+				{{#if hasBeenEdited}}
 					<span class="comment-time-updated">
 						last update:{{fromNow time_updated}}
 					</span>
