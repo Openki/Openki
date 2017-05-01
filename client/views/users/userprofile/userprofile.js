@@ -136,7 +136,11 @@ Template.emailBox.onCreated(function() {
 });
 
 Template.emailBox.helpers({
-	hasVerifiedEMail: function() {
+	hasEmail: function() {
+		return !!Meteor.user().emails[0];
+	},
+
+	hasVerifiedEmail: function() {
 		return Meteor.user().emails[0].verified;
 	},
 

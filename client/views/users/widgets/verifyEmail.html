@@ -1,0 +1,10 @@
+<template name="verifyEmail">
+	{{#if sending}}
+		{{mf 'profile.sendingVerificationMail' "We're sending a verification mail to your address, it should arrive shortly. Please click the link in that message."}}
+	{{else}}
+		<button type="button" class="btn btn-success js-verify-mail-btn">
+			<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
+			{{mf 'profile.verifymail' 'Verify my E-Mail'}}
+		</button>
+	{{/if}}
+</template>

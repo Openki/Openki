@@ -96,7 +96,8 @@
 					placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
 					rows="3"></textarea>
 			</div>
-			{{#if hasVerifiedEMail}}
+		{{#if hasEmail}}
+			{{#if hasVerifiedEmail}}
 				<div class="form-group">
 					<div class="btn-group" data-toggle="buttons">
 						<label class="btn btn-default">
@@ -117,26 +118,17 @@
 				</div>
 			{{else}}
 				<div class="form-group">
-					{{#if verificationMailSent}}
-						<p>
-							<i class="fa fa-info fa-fw" aria-hidden="true"></i>
-							{{mf 'profile.sendingVerificationMail'}}
-						</p>
-					{{else}}
-						<p class="help-block">
-							<i class="fa fa-info fa-fw" aria-hidden="true"></i>
-							{{#mf KEY='userprofile.infoForUnverifiedMail'}}
-								In order to receive a copy to your E-Mail address or
-								attach it to the message, you need to verify your address.
-							{{/mf}}
-						</p>
-						<button class="btn btn-default js-verify-mail" type="button">
-							<i class="fa fa-check-circle-o fa-fw" aria-hidden="true"></i>
-							{{mf 'profile.verifymail'}}
-						</button>
-					{{/if}}
+                    <p class="help-block">
+                        <i class="fa fa-info fa-fw" aria-hidden="true"></i>
+                        {{#mf KEY='userprofile.infoForUnverifiedMail'}}
+                            In order to receive a copy to your E-Mail address or
+                            attach it to the message, you need to verify your address.
+                        {{/mf}}
+                    </p>
+                    {{> verifyEmail}}
 				</div>
 			{{/if}}
+		{{/if}}
 			<div class="form-actions">
 				<button type="submit" class="btn btn-save">
 					<span class="fa fa-send fa-fw" aria-hidden="true"></span>
