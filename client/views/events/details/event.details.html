@@ -126,10 +126,10 @@
 		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
 		<div class="form-actions">
 			{{> buttonCancel event="js-collapse"}}
-			<button type="button" class="btn btn-danger js-event-delete-confirm">
-				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-				{{mf 'event.delete.confirm.button' 'Delete this event'}}
-			</button>
+			{{> buttonDeleteConfirm
+				event="js-event-delete-confirm"
+				text=(mf 'event.delete.confirm.button' 'Delete this event')
+			}}
 		</div>
 	</div>
 </template>

@@ -131,10 +131,10 @@
 		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
 		<div class="form-actions">
 			{{> buttonCancel event="js-venue-delete-cancel"}}
-			<button type="button" class="btn btn-danger js-venue-delete-confirm">
-				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-				{{mf 'venue.detail.remove' 'Remove this venue'}}
-			</button>
+			{{> buttonDeleteConfirm
+				event="js-venue-delete-confirm"
+				text=(mf 'venue.detail.remove' 'Remove this venue')
+			}}
 		</div>
 	</div>
 </template>

@@ -173,10 +173,10 @@
 						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 						<div class="form-actions">
 							{{> buttonCancel event="js-collapse"}}
-							<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
-								<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
-							</button>
+							{{> buttonDeleteConfirm
+								event="js-profile-delete-confirm-btn"
+								text=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+							}}
 						</div>
 					</div>
 				{{/if}}
