@@ -32,7 +32,7 @@ Accounts.onCreateUser(function(options, user) {
 	if (services) {
 		for (let provider of ['facebook', 'google', 'github']) {
 			let provided = services[provider];
-			if (provided.email) {
+			if (provided && provided.email) {
 				providedEmail = provided.email;
 				if (typeof provided.verified_email === "boolean") {
 					verified = provided.verified_email;
