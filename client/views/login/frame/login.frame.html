@@ -169,9 +169,8 @@
 				<span class="input-group-addon">
 					<span class="fa fa-envelope"></span>
 				</span>
-				<input class="form-control"
+				<input class="form-control js-reset-pw-email"
 				       aria-describedby="forgotPwdMailHelp"
-				       id="resetPwdEmail"
 				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 				       type="email"
 				/>
@@ -185,7 +184,7 @@
 		<div class="form-group">
 			<button class="btn btn-save js-reset-pwd-btn form-control"
 			        disabled="{{#if noValidEmail}}disabled{{/if}}"
-			        type="button">
+			        type="submit">
 				<span class="fa fa-envelope"></span>
 				{{mf 'forgot.send' 'Reset my password'}}
 			</button>
