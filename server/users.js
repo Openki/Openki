@@ -25,9 +25,24 @@ Accounts.onCreateUser(function(options, user) {
 		user.privileges = [];
 	}
 
-	// puting facebooks emailadress into our email field
-	if (user.services && user.services.facebook && user.services.facebook.email){
-		user.emails = [{'address': user.services.facebook.email, "verified": true}];
+	// Read email-address if provided
+	var providedEmail = false;
+	var verified = true; // Assume verified unless there is a flag that says it's not
+	let services = user.services;
+	if (services) {
+		for (let provider of ['facebook', 'google', 'github']) {
+			let provided = services[provider];
+			if (provided.email) {
+				providedEmail = provided.email;
+				if (typeof provided.verified_email === "boolean") {
+					verified = provided.verified_email;
+				}
+			}
+		}
+	}
+
+	if (providedEmail) {
+		user.emails = [{ 'address': providedEmail, 'verified': verified }];
 	}
 
 	user.groups = [];
