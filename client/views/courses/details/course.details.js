@@ -135,7 +135,9 @@ Template.courseDetailsPage.events({
 		if (pleaseLogin()) return;
 
 		var course = instance.data.course;
+		Session.set('busy', 'deleting');
 		Meteor.call('remove_course', course._id, function(error) {
+			Session.set('busy', false);
 			if (error) {
 				showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 			} else {

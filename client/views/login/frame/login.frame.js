@@ -174,6 +174,7 @@ warnings(Template.registerFrame,
 		}
 	]
 );
+TemplateMixins.Busy(Template.registerFrame);
 
 Template.registerFrame.onRendered(function() {
 	var instance = this;
@@ -191,11 +192,13 @@ Template.registerFrame.events({
 		var password = instance.$('#registerPassword').val();
 		var email = instance.$('#registerEmail').val();
 
+		Session.set('busy', 'registering');
 		Accounts.createUser({
 			username: name,
 			password: password,
 			email: email
 		}, function (err) {
+			Session.set('busy', false);
 			if (err) {
 				var reason = err.reason;
 				if (reason == 'Need to set a username or email') {

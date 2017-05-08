@@ -84,7 +84,8 @@
 			{{> buttonCancel event="js-collapse"}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
-				text=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
+				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
+				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
 		</div>
 	</div>

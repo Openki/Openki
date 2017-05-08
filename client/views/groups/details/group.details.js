@@ -40,7 +40,7 @@ Router.map(function () {
 	});
 });
 
-TemplateMixins.Saving(Template.groupDetails);
+TemplateMixins.Busy(Template.groupDetails);
 
 Template.groupDetails.onCreated(function() {
 	var instance = this;
@@ -153,9 +153,9 @@ Template.groupDetails.events({
 		group.claim = instance.editableClaim.getEdited();
 		group.description = instance.editableDescription.getEdited();
 
-		instance.saving(true);
+		Session.set('busy', 'saving');
 		Meteor.call("saveGroup", "create", group, function(err, groupId) {
-			instance.saving(false);
+			Session.set('busy', false);
 			if (err) {
 				showServerError('Saving the group went wrong', err);
 			} else {

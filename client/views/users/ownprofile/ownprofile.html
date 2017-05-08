@@ -175,7 +175,8 @@
 							{{> buttonCancel event="js-collapse"}}
 							{{> buttonDeleteConfirm
 								event="js-profile-delete-confirm-btn"
-								text=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+								textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+								textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
 							}}
 						</div>
 					</div>

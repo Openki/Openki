@@ -133,7 +133,8 @@
 			{{> buttonCancel event="js-venue-delete-cancel"}}
 			{{> buttonDeleteConfirm
 				event="js-venue-delete-confirm"
-				text=(mf 'venue.detail.remove' 'Remove this venue')
+				textIdle=(mf 'venue.detail.remove' 'Remove this venue')
+				textBusy=(mf 'venue.detail.remove.busy' 'Deleting venue...')
 			}}
 		</div>
 	</div>

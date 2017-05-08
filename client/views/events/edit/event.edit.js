@@ -6,7 +6,7 @@
 
 import '/imports/LocalTime.js';
 
-TemplateMixins.Saving(Template.eventEdit);
+TemplateMixins.Busy(Template.eventEdit);
 
 Template.eventEdit.onCreated(function() {
 	var instance = this;
@@ -264,9 +264,9 @@ Template.eventEdit.events({
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
-		instance.saving(true);
+		Session.set('busy', 'saving');
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
-			instance.saving(false);
+			Session.set('busy', false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

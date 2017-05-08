@@ -149,9 +149,14 @@
 			</span>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-add form-control js-register">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-				{{mf 'login.register.submit'}}
+			<button type="submit" class="btn btn-add form-control js-register" {{disabled}}>
+				{{#if busy 'registering'}}
+					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{mf 'login.register.submit.busy' 'Registering...'}}
+				{{else}}
+					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+					{{mf 'login.register.submit'}}
+				{{/if}}
 			</button>
 		</div>
 	</form>

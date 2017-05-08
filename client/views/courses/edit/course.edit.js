@@ -1,5 +1,5 @@
 
-TemplateMixins.Saving(Template.courseEdit);
+TemplateMixins.Busy(Template.courseEdit);
 
 Template.courseEdit.created = function() {
 	var instance = this;
@@ -170,9 +170,9 @@ Template.courseEdit.events({
 			changes.groups = groups;
 		}
 
-		instance.saving(true);
+		Session.set('busy', 'saving');
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
-			instance.saving(false);
+			Session.set('busy', false);
 			if (err) {
 				showServerError('Saving the course went wrong', err);
 			} else {

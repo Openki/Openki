@@ -236,25 +236,24 @@ TemplateMixins = {
 		});
 	},
 
-	/** Setup disabling of save buttons for a template
+	/** Setup disabling of buttons for a template
 	  *
 	  * @param {Object} template instance
 	  *
-	  * The template instance gains a saving() method to set saving status and
-	  * a helper that returns {saving} status.
+	  * The template instance gains two helpers, one disabling the button whenever
+	  * the {busy} value is truthy and one comparing the {busy} value to a given
+	  * action name (e.g. 'saving').
 	  */
-	Saving: function(template) {
-		var saving = new ReactiveVar(false);
-
-		template.onCreated(function() {
-			this.saving = function(val) {
-				saving.set(!!val);
-			};
-		});
-
+	Busy: function(template) {
 		template.helpers({
-			'saving': function() {
-				return saving.get();
+			'disabled': function() {
+				if (Session.get('busy')) {
+					return 'disabled';
+				}
+			},
+
+			'busy': function(action) {
+				return Session.equals('busy', action);
 			}
 		});
 	}
