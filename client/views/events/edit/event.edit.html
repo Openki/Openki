@@ -210,6 +210,24 @@
 				{{/if}}
 			</div>
 
+			{{#if notifyChecked}}
+				<div class="form-group">
+					<label>
+						{{mf 'course.event.edit.addMessage' 'Add message'}}
+						<small> {{mf '_inputField.optional'}}</small>
+					</label>
+					<div class="input-group" id="editform_message" name="editform_message">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
+						</span>
+						<input type="text"
+						       class="form-control"
+						       id="eventEditRoom"
+						       size="200">
+					</div>
+				</div>
+			{{/if}}
+
 			<div class="form-actions">
 				{{> buttonCancel event="js-event-edit-cancel"}}
 				{{> buttonSave saving=saving}}

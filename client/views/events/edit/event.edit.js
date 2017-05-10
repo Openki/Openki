@@ -13,6 +13,7 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
+	instance.notifyCheckbox = new ReactiveVar(false);
 
 	instance.editableDescription = Editable(
 		false,
@@ -195,6 +196,9 @@ Template.eventEdit.helpers({
 
 			return Courses.findOne({_id: courseId});
 		}
+	},
+	notifyChecked: function() {
+		return Template.instance().notifyCheckbox.get();
 	}
 });
 
@@ -293,6 +297,10 @@ Template.eventEdit.events({
 	'click .js-toggle-duration': function(event, instance){
 		Tooltips.hide();
 		$('.time-end > *').toggle();
+	},
+
+	'click .js-check-notify': function(event, instance){
+		instance.notifyCheckbox.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
 	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
