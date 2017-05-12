@@ -1,7 +1,7 @@
 {{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
 <br>
 {{#if additionalMessage}}
-	{{mf "notification.event.mail.personalMessage" "The Organizer left a message for you:"}}
+	{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
 	{{additionalMessage}}
 	<br>
 {{/if}}
