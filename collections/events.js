@@ -182,7 +182,7 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas, sendNotifications) {
+	saveEvent: function(eventId, changes, updateReplicas, sendNotifications, addNotificationMessage) {
 		check(eventId, String);
 
 		var expectedFields = {
@@ -324,7 +324,7 @@ Meteor.methods({
 		}
 
 		if (sendNotifications) {
-			Notification.Event.record(eventId, isNew);
+			Notification.Event.record(eventId, isNew, addNotificationMessage);
 		}
 
 		if (Meteor.isServer) {

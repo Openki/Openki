@@ -267,9 +267,10 @@ Template.eventEdit.events({
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
+		var addNotificationMessage = instance.$("#eventEditAddMessage").val();
 
 		instance.saving(true);
-		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
 			instance.saving(false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
