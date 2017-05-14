@@ -82,6 +82,7 @@ $event-caption-body-bg: $event-body-bg;
 .event-caption-add {
 	@include td-float(left);
 	@include td-margin(right, 10px);
+	width: 65px;
 }
 
 .event-caption-add .event-caption-body,
