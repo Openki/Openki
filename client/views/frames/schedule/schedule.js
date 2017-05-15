@@ -254,7 +254,7 @@ Template.frameSchedule.helpers({
 	customStartTime: function(intervalStart) {
 		var event = this;
 		var startTime = moment(LocalTime.fromString(event.startLocal));
-		startTime.locale("de");
+		startTime.locale(intervalStart.locale());
 		var isSame = startTime.hours() == intervalStart.hours()
 		          && startTime.minutes() == intervalStart.minutes();
 		return isSame ? false : startTime.format("LT");
