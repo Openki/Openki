@@ -4,46 +4,44 @@
 
 .group-details-header {
 	@include clearfix;
-	background-color: darken($group-bg, 10%);
+	background-color: darken($group-bg, 20%);
 	font-size: x-large;
+	padding-top: 0;
+
+	&.has-logo,
+	&.is-editable {
+		padding-top: 10px;
+	}
 }
 
-.group-details-logo {
-	@include td-float(left);
+.group-details-titlebar {
+	background-color: darken($group-bg, 20%);
+	padding: 10px 15px 0;
 }
 
-.group-details-name {
-	@include td-float(left);
-	padding: 7px;
+.titlebar-btn {
+	@extend .close;
+	font-size: 18px;
+
+	& + & {
+		margin-right: 5px;
+	}
 }
 
-.js-group-settings {
-	font-size: x-large;
-	line-height: $line-height-base;
-	// padding: 7px;
-	position: absolute;
-	@include td-pos(right, 6px);
-	top: 25px;
+.group-details-logo > img {
+	@include td-margin(right, 5px);
+	width: 50px;
+	vertical-align: middle;
 }
 
-.js-group-remove-filter {
-	font-size: x-large;
-	line-height: $line-height-base;
-	// padding: 7px;
-	position: absolute;
-	@include td-pos(right, 0);
-	top: 0;
-}
-
+.group-details-logo,
+.group-details-name,
 .group-details-short {
-	@include td-float(right);
-	@include td-margin(right, 7px);
-	padding: 7px;
-	@include td-text-align(right);
+	display: inline-block;
 }
 
 .group-details-body {
-	background: $group-bg;
+	background: lighten($group-bg, 10%);
 }
 
 .group-details-claim {
@@ -52,6 +50,16 @@
 
 .group-details-description {
 	height: auto;
-	max-height: 150px;
-	min-height: 100px;
+
+	&.is-editable {
+		min-height: 100px;
+	}
+}
+
+.group-details-description > p {
+	margin: 0;
+}
+
+.group-details-claim + .group-details-description {
+	margin-top: 10px;
 }

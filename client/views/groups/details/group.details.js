@@ -110,6 +110,12 @@ Template.groupDetails.onCreated(function() {
 });
 
 Template.groupDetails.helpers({
+	headerClasses: function() {
+		var classes = [];
+		if (this.group.logo) classes.push('has-logo');
+		if (Template.instance().mayEdit.get()) classes.push('is-editable');
+		return classes.join(' ');
+	},
 	editableName: function() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableName;
@@ -117,6 +123,15 @@ Template.groupDetails.helpers({
 	editableShort: function() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableShort;
+	},
+	hasContent: function() {
+		var group = this.group;
+		var isNew = this.isNew;
+		if (isNew) {
+			return true
+		} else {
+			return group.claim || group.description;
+		}
 	},
 	editableClaim: function() {
 		var instance = Template.instance();
@@ -128,7 +143,7 @@ Template.groupDetails.helpers({
 	},
 	mayEdit: function() {
 		var instance = Template.instance();
-			return instance.mayEdit.get();
+		return instance.mayEdit.get();
 	},
 	editingSettings: function() {
 		var instance = Template.instance();
