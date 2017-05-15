@@ -1,45 +1,11 @@
 $group-label-color: $blue;
 
 .group-tag {
-	@include tag-variation($group-bg, $group-label-color);
-}
-
-.tag.addon {
-	background-color: $group-bg;
-	color: $group-label-color;
-	margin-left: 0;
-	padding: 1px 4px;
+	@include tag($group-bg, $group-label-color);
 }
 
 .group-tag-btn {
-	vertical-align: top;
-}
-
-.group-tag-btn > button {
-	background-color: $group-bg;
-	border: none;
-	color: $group-label-color;
-	font-size: $font-size-base;
-	margin-bottom: 5px;
-	padding: 1px 4px;
-
-	&:hover,
-	&:focus,
-	&.highlight {
-		background-color: darken($group-bg, 5%);
-	}
-}
-
-.tag + .group-tag-btn:not(.addon),
-.group-tag-btn:not(.addon),
-.group-tag-btn.addon + .tag {
-	margin-left: 5px;
-}
-
-.group-tag-btn.addon > button {
-	border-color: darken($group-bg, 10%);
-	border-style: solid;
-	border-width: 0 0 0 1px;
+	@include tag-btn($group-bg, $group-label-color);
 }
 
 .group-editor {

@@ -35,3 +35,30 @@
 .tag-group > .tag {
 	font-size: $font-size-base;
 }
+
+.tag.addon {
+	margin-left: 0;
+}
+
+.tag-btn {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.tag-btn > button {
+	border: none;
+	font-size: $font-size-base;
+	margin-bottom: 5px;
+	padding: 1px 4px;
+}
+
+.tag-btn.addon > button {
+	border-style: solid;
+	border-width: 0 0 0 1px;
+}
+
+.tag-btn:not(.addon),
+.tag-btn.addon + .tag,
+.tag + .tag-btn:not(.addon) {
+	@include td-margin(left, 5px);
+}
