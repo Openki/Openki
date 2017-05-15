@@ -182,7 +182,7 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas, sendNotifications, addNotificationMessage) {
+	saveEvent: function(eventId, changes, updateReplicas, sendNotifications, additionalMessage) {
 		check(eventId, String);
 
 		var expectedFields = {
@@ -204,6 +204,7 @@ Meteor.methods({
 		}
 
 		check(changes, expectedFields);
+		check(additionalMessage, Match.Maybe(String));
 
 		var user = Meteor.user();
 		if (!user) {
@@ -324,7 +325,8 @@ Meteor.methods({
 		}
 
 		if (sendNotifications) {
-			Notification.Event.record(eventId, isNew, addNotificationMessage);
+			additionalMessage = additionalMessage.trim().substr(0, 2000);
+			Notification.Event.record(eventId, isNew, additionalMessage);
 		}
 
 		if (Meteor.isServer) {
