@@ -236,8 +236,10 @@ Template.frameSchedule.helpers({
 		var slots = Template.instance().slots.get();
 
 		return _.map(Template.instance().intervals.get(), function(mins) {
+			var intervalStart = moment().hour(0).minute(mins);
 			return {
-				interval: moment().hour(0).minute(mins).format('LT'),
+				intervalStart: intervalStart,
+				intervalLabel: intervalStart.format('LT'),
 				slots: _.map(Template.instance().days.get(), function(day) {
 					return slots[mins] && slots[mins][day] || [];
 				})
@@ -249,10 +251,13 @@ Template.frameSchedule.helpers({
 		return Template.instance().kindMap(this.title) || 'other';
 	},
 
-	customStartTime: function(interval) {
+	customStartTime: function(intervalStart) {
 		var event = this;
-		var startTime = LocalTime.fromString(event.startLocal).format('LT');
-		return (interval !== startTime) ? startTime : false;
+		var startTime = moment(LocalTime.fromString(event.startLocal));
+		startTime.locale("de");
+		var isSame = startTime.hours() == intervalStart.hours()
+		          && startTime.minutes() == intervalStart.minutes();
+		return isSame ? false : startTime.format("LT");
 	},
 
 	single: function() {
