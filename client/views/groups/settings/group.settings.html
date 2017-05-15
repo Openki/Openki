@@ -47,9 +47,11 @@
 					</h3>
 					<div class="tag-group multiline">
 						{{#each members}}
-							<div class="tag group-member-tag">
-								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-								{{username this}}
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</a>
 							</div>
 							<div class="tag-btn group-member-tag-btn-remove addon">
 								<button
@@ -76,9 +78,11 @@
 					</div>
 					<div class="tag-group multiline">
 						{{#each foundUsers}}
-							<div class="tag group-member-tag">
-								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-								{{username this._id}}
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this._id}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</a>
 							</div>
 							<div class="tag-btn group-member-tag-btn-add addon">
 								<button

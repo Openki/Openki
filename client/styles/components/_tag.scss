@@ -2,14 +2,8 @@
 	display: inline-block;
 }
 
-.tag-link {
+.tag-link > a {
 	transition: all $default-transition-time;
-
-	&:hover,
-	&:focus,
-	&.highlight {
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-	}
 }
 
 .tag-group {
@@ -42,13 +36,13 @@
 
 .tag-btn {
 	display: inline-block;
+	margin-bottom: 5px;
 	vertical-align: top;
 }
 
 .tag-btn > button {
 	border: none;
 	font-size: $font-size-base;
-	margin-bottom: 5px;
 	padding: 1px 4px;
 }
 
@@ -61,4 +55,15 @@
 .tag-btn.addon + .tag,
 .tag + .tag-btn:not(.addon) {
 	@include td-margin(left, 5px);
+}
+
+.tag-link,
+.tag-btn > button {
+	transition: all $default-transition-time;
+
+	&:hover,
+	&:focus,
+	&.highlight {
+		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+	}
 }

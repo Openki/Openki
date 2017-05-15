@@ -1,17 +1,20 @@
-@mixin tag($bg, $color) {
+@mixin tag($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
 	color: $color;
 	background-color: $bg;
 	padding: 1px 4px;
 
-	&:hover,
-	&:focus,
-	&.highlight {
-		background-color: darken($bg, 5%);
+	& > a {
+		color: $color;
 	}
 
-	& a,
-	&:hover a {
-		color: $color;
+	&.tag-link:hover,
+	&.tag-link:focus,
+	&.tag-link.highlight {
+		background-color: $bg-hover;
+	}
+
+	&.tag-link:hover > a {
+		color: $color-hover;
 	}
 }
 

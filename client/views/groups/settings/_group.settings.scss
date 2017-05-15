@@ -1,15 +1,30 @@
 $group-member-bg: rgba($gray-light, .15);
 
 .group-member-tag {
-	@include tag($group-member-bg, $text-color);
+	@include tag(
+		$group-member-bg,
+		$text-color,
+		$group-member-bg,
+		$brand-primary
+	);
 }
 
 .group-member-tag-btn-remove {
-	@include tag-btn($group-member-bg, $text-color, $brand-danger, darken($brand-danger, 25%));
+	@include tag-btn(
+		$group-member-bg,
+		$text-color,
+		$brand-danger,
+		darken($brand-danger, 30%)
+	);
 }
 
 .group-member-tag-btn-add {
-	@include tag-btn($group-member-bg, $text-color, $brand-success, darken($brand-success, 35%));
+	@include tag-btn(
+		darken($group-member-bg, 10%),
+		$text-color,
+		$brand-success,
+		darken($brand-success, 45%)
+	);
 }
 
 .group-links {
