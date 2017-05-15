@@ -29,7 +29,7 @@
 										{{#if showDate}}
 											<br>
 											<span class="schedule-event-time">
-												{{#unless single}}start:{{/unless}}
+												{{#unless single}}{{mf 'schedule.startDateLabel' "start:"}}{{/unless}}
 												{{dateformat start}}
 											</span>
 										{{/if}}
