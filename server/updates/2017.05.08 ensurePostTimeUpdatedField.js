@@ -1,4 +1,4 @@
-UpdatesAvailable["2017.04.27 ensurePostTimeUpdatedField"] = function() {
+UpdatesAvailable["2017.05.08 ensurePostTimeUpdatedField"] = function() {
 	var count = 0;
 
 	// Until now it is not possible to reference a document field during an
@@ -8,7 +8,7 @@ UpdatesAvailable["2017.04.27 ensurePostTimeUpdatedField"] = function() {
 		count += 1;
 		CourseDiscussions.update(
 			{ _id: post._id },
-			{ time_updated: post.time_created }
+			{ $set: { time_updated: post.time_created } }
 		);
 	});
 
