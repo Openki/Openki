@@ -325,7 +325,7 @@ Meteor.methods({
 		}
 
 		if (sendNotifications) {
-			comment = comment.trim().substr(0, 2000);
+			if(comment != null) comment = comment.trim().substr(0, 2000);
 			Notification.Event.record(eventId, isNew, comment);
 		}
 

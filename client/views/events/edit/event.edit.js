@@ -13,7 +13,7 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
-	instance.notifyChecked = new ReactiveVar(false);
+	instance.notifyChecked = new ReactiveVar(instance.data.new);
 
 	instance.editableDescription = Editable(
 		false,
