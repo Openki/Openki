@@ -220,10 +220,10 @@
 						<span class="input-group-addon">
 							<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
 						</span>
-						<input type="text"
-						       class="form-control"
-						       id="eventEditAddMessage"
-						       size="200">
+						<textarea rows="3"
+						       class="form-control js-event-edit-add-message"
+						       maxlength="2000"
+						       placeholder="{{mf 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
 					</div>
 				</div>
 			{{/if}}

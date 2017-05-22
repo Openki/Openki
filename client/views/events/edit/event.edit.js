@@ -13,7 +13,7 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
-	instance.notifyCheckbox = new ReactiveVar(false);
+	instance.notifyChecked = new ReactiveVar(instance.data.new);
 
 	instance.editableDescription = Editable(
 		false,
@@ -198,7 +198,7 @@ Template.eventEdit.helpers({
 		}
 	},
 	notifyChecked: function() {
-		return Template.instance().notifyCheckbox.get();
+		return Template.instance().notifyChecked.get();
 	}
 });
 
@@ -267,7 +267,7 @@ Template.eventEdit.events({
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
-		var addNotificationMessage = instance.$("#eventEditAddMessage").val();
+		var addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.saving(true);
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
@@ -301,7 +301,7 @@ Template.eventEdit.events({
 	},
 
 	'click .js-check-notify': function(event, instance){
-		instance.notifyCheckbox.set(instance.$(".js-check-notify").is(':checked'));
+		instance.notifyChecked.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
 	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
