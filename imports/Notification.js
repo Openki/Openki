@@ -25,7 +25,7 @@ Notification.Event.record = function(eventId, isNew, additionalMessage) {
 	var entry = {};
 	entry.new = isNew;
 	entry.eventId = event._id;
-	entry.additionalMessage = addtitionalMessage;
+	entry.additionalMessage = additionalMessage;
 
 	// The list of recipients is built right away so that only course members
 	// at the time of event creation will get the notice even if sending is
