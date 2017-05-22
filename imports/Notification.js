@@ -46,6 +46,7 @@ Notification.Event.handler = function(entry) {
 	// Find out for which recipients sending has already been attempted.
 	var concluded = {};
 
+// GNERAL
 	Log.find(
 		{ tr: 'Notification.EventResult'
 		, rel: entry._id
@@ -53,28 +54,31 @@ Notification.Event.handler = function(entry) {
 	).forEach(function(result) {
 		concluded[result.body.recipient] = true;
 	});
-
+// EVENT
 	var event = Events.findOne(entry.body.eventId);
 	var course = false;
 	if (event && event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
+
 	var region = false;
 	if (event && event.region) {
 	    region = Regions.findOne(event.region);
 	}
-
+// GENERAL
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
+// GENERAL
 			var mail = null;
 			var unsubToken = null;
 			var userId = null;
 
 			try {
+// EVENT
 				if (!event) throw "Event does not exist (0.o)";
 				if (!course) throw "Course does not exist (0.o)";
 				if (!region) throw "Region does not exist (0.o)";
-
+// GENERAL
 				var user = Meteor.users.findOne(recipient);
 				userId = user._id;
 
@@ -88,33 +92,36 @@ Notification.Event.handler = function(entry) {
 
 				var	email = user.emails[0];
 				var address = email.address;
-
+// EVENT
 				// Show dates in local time and in users locale
 				var regionZone = LocalTime.zone(event.region);
+// GENERAL
 				var userLocale = user.profile && user.profile.locale || 'en';
-
+// EVENT
 				var startMoment = regionZone.at(event.start);
 				startMoment.locale(userLocale);
 
 				var endMoment = regionZone.at(event.end);
 				endMoment.locale(userLocale);
 
-
+// EVENT
 				var subjectvars =
 					{ TITLE: event.title.substr(0,30)
 					, DATE: startMoment.format('LL')
 					};
-
+// GENERAL
 				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
 				var subject;
+// EVENT
 				if (entry.new) {
 					subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
 				} else {
 					subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
 				}
 
+// GENERAL
 				unsubToken = Random.secret();
-
+// EVENT
 				var vars =
 					{ event: event
 					, course: course
@@ -130,10 +137,11 @@ Notification.Event.handler = function(entry) {
 					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 					, new: entry.body.new
 					};
-
+// GENERAL
 				var message = SSR.render("notificationEventMail", vars);
 
 
+// GENERAL
 				mail =
 					{ from: Accounts.emailTemplates.from
 					, to: address
@@ -141,10 +149,13 @@ Notification.Event.handler = function(entry) {
 					, html: message
 					};
 
+// GENERAL
 				Email.send(mail);
 
+// GENERAL
 				Notification.EventResult.record(entry, unsubToken, true, recipient, mail, "success");
 			}
+// GENERAL
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
