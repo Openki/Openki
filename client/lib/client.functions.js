@@ -472,3 +472,24 @@ Template.registerHelper('groupLogo', function(groupId) {
 	}
 	return "";
 });
+
+/** Return the instance for use in the template
+  * This can be used to directly access instance methods without declaring
+	* helpers.
+	*/
+Template.registerHelper('$instance', function() {
+	return Template.instance();
+});
+
+Blaze.TemplateInstance.prototype.setBusy('busy', function(activity, state) {
+	var instance = Template.instance();
+	if (!instance.busy) instance.busy = {};
+	if (!instance.busy[activity]) instance.busy[activity] = new ReactiveVar(false);
+	return instance.busy[activity].set(state);
+});
+
+Template.registerHelper('busy', function(activity) {
+	var instance = Template.instance();
+	if (!instance.busy || !instance.busy[activity]) throw "Busy state for "+activity+" not initialized.";
+	return instance.busy[activity].get();
+});
