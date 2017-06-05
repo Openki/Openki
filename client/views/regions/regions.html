@@ -1,18 +1,14 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
 		{{#if searchingRegions}}
-			{{> regionSelectionNavbar}}
+			<li class="navbar-form navbar-form-selection dropdown">
+				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+				{{> regionSelection}}
+			</li>
 		{{else}}
 			{{> regionDisplay}}
 		{{/if}}
 	{{/if}}
-</template>
-
-<template name="regionSelectionNavbar">
-	<li class="navbar-form navbar-form-selection dropdown">
-		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-		{{> regionSelection}}
-	</li>
 </template>
 
 <template name="regionSelection">

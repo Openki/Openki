@@ -1,7 +1,7 @@
 Template.regionSelectionWrap.created = function() {
-	 this.subscribe("Regions");
-	 var instance = this;
-	 instance.searchingRegions = new ReactiveVar(false);
+	var instance = this;
+	instance.subscribe("Regions");
+	instance.searchingRegions = new ReactiveVar(false);
 };
 
 Template.regionSelectionWrap.helpers({
@@ -12,8 +12,7 @@ Template.regionSelectionWrap.helpers({
 
 Template.regionDisplay.helpers({
 	region: function() {
-		var region = Regions.findOne(Session.get('region'));
-		return region;
+		return Regions.findOne(Session.get('region'));
 	}
 });
 
@@ -24,12 +23,17 @@ Template.regionDisplay.events({
 });
 
 Template.regionSelection.onCreated(function() {
-	this.regionSearch = new ReactiveVar('');
-});
+	var instance = this;
 
-Template.regionSelection.rendered = function() {
-	Template.instance().$('.js-region-search').select();
-};
+	instance.regionSearch = new ReactiveVar('');
+
+	// create a function to toggle displaying the regionSelection
+	// only if it is placed inside a wrap
+	instance.close = function() {
+		var searchingRegions = instance.parentInstance().searchingRegions;
+		if (searchingRegions) searchingRegions.set(false);
+	};
+});
 
 Template.regionSelection.helpers({
 	regions: function() {
@@ -48,8 +52,7 @@ Template.regionSelection.helpers({
 	},
 
 	region: function() {
-		var region = Regions.findOne(Session.get('region'));
-		return region;
+		return Regions.findOne(Session.get('region'));
 	},
 
 	allCourses: function() {
@@ -66,26 +69,9 @@ Template.regionSelection.helpers({
 
 	currentRegion: function() {
 		var region = this._id || "all";
-		return region == Session.get('region');
+		return Session.equals('region', region);
 	}
 });
-
-var handleKeyup = _.debounce(function(event, instance, parentInstance) {
-	var search = instance.$('.js-region-search').val();
-	search = String(search).trim();
-
-	if (event.which === 13) {
-		if (instance.regionSearch.get() === '') {
-			parentInstance.searchingRegions.set(false);
-		} else {
-			var regionLinks = instance.$('.js-region-link');
-			var first = (regionLinks.length == 1) ? 0 : 1;
-			regionLinks.eq(first).click();
-		}
-	} else {
-		instance.regionSearch.set(search);
-	}
-}, 100);
 
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
@@ -107,7 +93,7 @@ Template.regionSelection.events({
 			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
 			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
-		instance.parentInstance().searchingRegions.set(false);
+		instance.close();
 	},
 
 	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
@@ -123,8 +109,20 @@ Template.regionSelection.events({
 	},
 
 	'keyup .js-region-search': function(event, instance) {
-		var parentInstance = instance.parentInstance();
-		handleKeyup(event, instance, parentInstance);
+		var search = instance.$('.js-region-search').val();
+		search = String(search).trim();
+
+		if (event.which === 13) {
+			if (instance.regionSearch.get() === '') {
+				instance.close();
+			} else {
+				var regionLinks = instance.$('.js-region-link');
+				var first = (regionLinks.length == 1) ? 0 : 1;
+				regionLinks.eq(first).click();
+			}
+		} else {
+			instance.regionSearch.set(search);
+		}
 	},
 
 	'focus .js-region-search': function(event, instance) {
@@ -142,8 +140,11 @@ Template.regionSelection.events({
 });
 
 Template.regionSelection.onRendered(function() {
-	var parentInstance = this.parentInstance();
-	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
+	var instance = this;
+
+	instance.$('.js-region-search').select();
+
+	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
 		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
@@ -152,6 +153,6 @@ Template.regionSelection.onRendered(function() {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
-		parentInstance.searchingRegions.set(false);
+		instance.close();
 	});
 });
