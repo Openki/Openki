@@ -15,19 +15,6 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group external-service-login">
-				{{#each service in OAuthServices}}
-					<button class="btn btn-{{service._id}} form-control js-OAuth-btn"
-					        data-service="{{service.service}}"
-					        type="button">
-						<span class="fa fa-{{service._id}} fa-fw" aria-hidden="true"></span>
-						|
-						{{mf 'login.OAuth.loginWith' 'Login with '}}
-						{{service.name}}
-					</button>
-				{{/each}}
-			</div>
-			<hr>
 			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon">
@@ -63,6 +50,19 @@
 					<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 						{{mf 'login.login.submit' 'Login'}}
 				</button>
+			</div>
+			<hr>
+			<div class="form-group">
+				{{#each service in OAuthServices}}
+					<button class="btn btn-{{service._id}} form-control js-oauth-btn"
+					        data-service="{{service.service}}"
+					        type="button">
+						<span class="fa fa-{{service._id}} fa-fw" aria-hidden="true"></span>
+						|
+						{{mf 'login.OAuth.loginWith' 'Login with '}}
+						{{service.name}}
+					</button>
+				{{/each}}
 			</div>
 			<hr>
 			<div class="form-group">

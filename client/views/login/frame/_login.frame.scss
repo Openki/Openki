@@ -47,14 +47,15 @@
 }
 
 .login hr {
-	border-top: 1px solid $gray-lighter;
+	border-top: 1px solid lighten($gray-lighter, 10%);
+	margin: 15px 0;
 }
 
-.js-OAuth-btn {
+.js-oauth-btn {
 	font-weight: bold;
 }
 
-.js-OAuth-btn + .js-OAuth-btn {
+.js-oauth-btn + .js-oauth-btn {
 	margin-top: 10px;
 }
 

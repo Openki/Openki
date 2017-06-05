@@ -147,7 +147,7 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-OAuth-btn': function(event, instance) {
+	'click .js-oauth-btn': function(event, instance) {
 		event.preventDefault();
 
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
