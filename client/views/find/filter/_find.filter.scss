@@ -132,14 +132,14 @@
 }
 
 .filter-categories-select > .dropdown-toggle {
-	background: $white;
+	background: transparent;
 	border: 0;
 	display: block;
 	line-height: $line-height-base;
 	padding: $padding-base-vertical $padding-base-horizontal;
 	position: absolute;
 	@include td-pos(right, 3px);
-	top: 1px;
+	top: 0;
 }
 
 .js-search-categories {
