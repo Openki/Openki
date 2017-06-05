@@ -27,12 +27,14 @@
 
 // Find
 @import 'find/find';
+@import 'find/filter/find.filter';
 
 // Frames
 @import 'frames/calendar/frame.calendar';
 @import 'frames/events/frame.events';
 @import 'frames/list/frame.list';
 @import 'frames/schedule/schedule';
+@import 'frames/week/frame.week';
 
 // Groups
 @import 'groups/details/group.details';

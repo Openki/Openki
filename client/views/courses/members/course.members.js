@@ -32,11 +32,7 @@ Template.courseMember.onCreated(function() {
 Template.courseMember.helpers({
 	showMemberRoles: function() {
 		var memberRoles = this.member.roles;
-		if (memberRoles.length == 1) {
-			return memberRoles[0] != "participant" ? true : false;
-		} else {
-			return true;
-		}
+		return memberRoles.length != 1 || memberRoles[0] != "participant";
 	},
 	
 	roleShort: function() { return 'roles.'+this+'.short'; },
@@ -59,7 +55,14 @@ Template.courseMember.helpers({
 	mayUnsubscribeFromTeam: function(label) {
 		return label == 'team'
 			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
-	},
+	}
+});
+
+Template.removeFromTeamDropdown.helpers({
+	isNotPriviledgedSelf: function() {
+		var notPriviledgedUser = !privileged(Meteor.userId(), 'admin');
+		return (this.member.user === Meteor.userId() && notPriviledgedUser);
+	}
 });
 
 Template.courseMember.events({
@@ -67,7 +70,7 @@ Template.courseMember.events({
 		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
-	'click .js-remove-from-team-btn': function(e, template) {
+	'click .js-remove-team': function(e, template) {
 		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
 	}

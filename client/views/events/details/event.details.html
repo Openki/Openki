@@ -22,7 +22,7 @@
 		{{#if course}}
 			{{#if referredByCourse}}
 				<a href="{{pathFor 'showCourse' _id=course._id}}">
-					<span class="fa fa-arrow-left fa-fw" aria-hidden="true"></span>
+					{{backArrow}}
 					{{mf 'course.event.detail.back' 'Back to course'}} "{{course.name}}"
 				</a>
 			{{else}}
@@ -41,23 +41,25 @@
 <template name="eventDisplay">
 	<div class="page-component">
 		<div class="details-header event-details-header">
-				<span class="day">{{weekday start}}</span><br>
+				<span class="day">{{weekday startLocal}}</span><br>
 				<span class="date">
 					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					{{dateformat_mini_fullmonth start}}
+					{{dateformat_mini_fullmonth startLocal}}
 				</span>
 				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-				{{timeformat start}} - {{timeformat end}}
+				{{timeformat startLocal}} - {{timeformat endLocal}}
 		</div>
 		<div class="details-body event-details-body">
 			{{> regionTag}}
 			<div class="details-content">
 				<h3>{{this.title}}</h3>
-				<div class="location">
+				<div class="tag-group multiline">
 					{{> venueLink}}
 					{{#if venue.address}}
-						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-						{{venue.address}}
+						<div class="tag">
+							<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+							{{venue.address}}
+						</div>
 					{{/if}}
 				</div>
 
@@ -78,11 +80,13 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				{{> buttonDelete event="js-event-delete"}}
+				{{#unless expanded}}
+					{{> buttonDelete event="js-expand"}}
+				{{/unless}}
 				{{> buttonEdit event="js-event-edit"}}
 				{{#if replicating}}
 					<button type="button" class="btn btn-cancel js-toggle-replication">
-						<span class="fa fa-minus fa-fw" aria-hidden="true"></span>
+						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 						{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
 					</button>
 				{{else}}
@@ -92,10 +96,13 @@
 					</button>
 				{{/if}}
 			</div>
+			{{#if expanded}}
+				{{> eventDeleteConfirmDialog}}
+			{{/if}}
 		{{/if}}
 	</div>
 	<div class="page-component">
-		<a href="{{pathFor 'calEvent' this}}">
+		<a href="{{pathFor 'calEvent' this}}" class="js-download">
 			<i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i>
 			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
 		</a>
@@ -114,61 +121,86 @@
     events. It's the pesky translation strings where I think we'll run into
     trouble when we try to unite them.
 -->
+<template name="eventDeleteConfirmDialog">
+	<div class="event-delete-confirmation">
+		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-collapse"}}
+			{{> buttonDeleteConfirm
+				event="js-event-delete-confirm"
+				textIdle=(mf 'event.delete.confirm.button' 'Delete this event')
+				textBusy=(mf 'event.delete.confirm.button.busy' 'Deleting event...')
+			}}
+		</div>
+	</div>
+</template>
 
 <template name="eventGroupList">
-	<ul class="grouplist">
+	<div class="tag-group multiline">
 		{{#each allGroups}}
-			<li>
-				{{> groupName}}
-				{{#if isOrganizer}}
-					<span class="group-label-addon">
-						<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
-					</span>
-				{{/if}}
-				{{#if tools}}
-					<div class="dropdown">
-						<button type="button" class="group-label-addon-btn dropdown-toggle"
-							aria-expanded="false"
-							aria-haspopup="true"
-							data-toggle="dropdown">
-							<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
-						</button>
-							<ul class="dropdown-menu">
-							{{#each tools}}
-								<li>{{> toolTemplate}}</li>
-							{{/each}}
-						</ul>
-					</div>
-				{{/if}}
-			</li>
+			{{> groupName}}
+			{{#if isOrganizer}}
+				<div class="tag addon">
+					<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
+				</div>
+			{{/if}}
+			{{#if tools}}
+				<div class="btn-group tag-btn group-tag-btn addon">
+					<button type="button" class="dropdown-toggle"
+						aria-expanded="false"
+						aria-haspopup="true"
+						data-toggle="dropdown">
+						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
+					</button>
+					<ul class="dropdown-menu group-editor">
+						<li class="dropdown-header">
+							{{mf 'grouplist.editgroup.header'}}
+							<button class="close">&times;</button>
+						</li>
+						<li role="seperator" class="divider"></li>
+						{{#each tools}}
+							<li class="group-editor-btn">{{> toolTemplate}}</li>
+						{{/each}}
+					</ul>
+				</div>
+			{{/if}}
 		{{/each}}
 		{{> eventGroupAdd}}
-	</ul>
+	</div>
 </template>
 
 
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="dropdown">
-			<button type="button" class="group-label-btn dropdown-toggle"
+		<div class="btn-group tag-btn group-tag-btn">
+			<button type="button" class="dropdown-toggle"
 				aria-expanded="false"
 				aria-haspopup="true"
 				data-toggle="dropdown">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"
-					title="{{mf 'course.group.addText' 'Add a group'}}">
-				</span>
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				<span>{{mf 'course.group.addText' 'link a group'}}</span>
+				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu group-editor">
+				<li class="dropdown-header">
+					{{mf 'grouplist.addgroups.header'}}
+					<button class="close">&times;</button>
+				</li>
+				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<a href="#">
-							{{> groupName}}&nbsp;
-							<button type="button" class="btn btn-add js-add-group" value="{{this}}">
-								{{mf 'course.group.confirmAddButton'}}
-							</button>
-						</a>
+						<button type="button" class="btn-link js-add-group" value="{{this}}">
+							{{> groupName}}
+							{{name}}
+						</button>
 					</li>
 				{{/each}}
+				<li class="group-editor-btn">
+					<a href="/group/create" class="btn btn-add">
+						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+						{{mf 'profile.createNewGroup.button'}}
+					</a>
+				</li>
 			</ul>
 		</div>
 	{{/if}}
@@ -176,30 +208,28 @@
 
 
 <template name="eventGroupRemove">
-		<a href="#" class="js-expand">
+
+	{{#if expanded}}
+		<div class="group-tool-dialog danger">
+			{{#with groupId}}
+				{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
+			{{/with}}
+			<button type="button" class="btn btn-remove js-remove">
+				{{mf 'course.group.confirmRemoveButton'}}
+			</button>
+		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 			{{mf 'course.group.remove' 'Remove'}}
 		</a>
-		{{#if expanded}}
-			<div class="group-tool-dialog">
-				{{#with groupId}}
-					{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
-				{{/with}}
-				<button type="button" class="btn btn-remove js-remove">
-					{{mf 'course.group.confirmRemoveButton'}}
-				</button>
-			</div>
-		{{/if}}
+	{{/if}}
 </template>
 
 
 <template name="eventGroupMakeOrganizer">
-	<a href="#" class="js-expand">
-		<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
-		{{mf 'course.group.addOrgText'}}
-	</a>
 	{{#if expanded}}
-		<div class="group-tool-dialog">
+		<div class="group-tool-dialog add">
 			{{#with groupId}}
 				{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}
 			{{/with}}
@@ -208,16 +238,17 @@
 				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
 			</button>
 		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-add">
+			<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
+			{{mf 'course.group.addOrgText'}}
+		</a>
 	{{/if}}
 </template>
 
 <template name="eventGroupRemoveOrganizer">
-	<a href="#" class="js-expand">
-		<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-		{{mf 'course.group.removeOrgText' NAME=name}}
-	</a>
 	{{#if expanded}}
-		<div class="group-tool-dialog">
+		<div class="group-tool-dialog danger">
 			{{#with groupId}}
 				{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}
 			{{/with}}
@@ -225,5 +256,10 @@
 				{{mf 'course.group.confimRemoveOrgButton'}}
 			</button>
 		</div>
+	{{else}}
+		<a href="#" class="js-expand btn btn-remove">
+			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+			{{mf 'course.group.removeOrgText' NAME=name}}
+		</a>
 	{{/if}}
 </template>

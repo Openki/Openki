@@ -8,20 +8,6 @@
 						{{mf 'group.settings.title' 'Settings'}}
 					</h3>
 					<div class="form-group">
-						<label>{{mf 'group.settings.field.infos' 'Internal informations'}}</label>
-						<div class="input-group">
-							<div class="input-group-addon">
-								<span class="fa fa-info fa-fw" aria-hidden="true"></span>
-							</div>
-							<input class= "setInfos form-control"
-								id="setInfos"
-								placeholder="{{mf 'group.settings.infos.placeholder' 'Add some notes for your group-members'}}"
-								size="60"
-								type="text"
-								value="{{infos}}"/>
-						</div>
-					</div>
-					<div class="form-group">
 						<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
@@ -50,7 +36,7 @@
 					</div>
 					<div class="form-actions">
 						{{> buttonCancel event="js-group-edit-cancel"}}
-						{{> buttonSave event="js-group-edit-save"}}
+						{{> buttonSave event="js-group-edit-save" saving=saving}}
 					</div>
 				</div>
 
@@ -59,17 +45,24 @@
 						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
 						{{mf 'group.settings.title.Members' 'Members'}}
 					</h3>
-					<ul class="group-members">
+					<div class="tag-group multiline">
 						{{#each members}}
-							<li class="group-member">
-								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-								{{username this}}
-								<button type="button" class="js-member-remove-btn btn">
-									<span class="fa fa-remove" title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"></span>
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</a>
+							</div>
+							<div class="tag-btn group-member-tag-btn-remove addon">
+								<button
+									class="js-member-remove-btn"
+									title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
+									type="button">
+									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
-							</li>
+							</div>
 						{{/each}}
-					</ul>
+					</div>
 					<div class="form-group">
 						<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
 						<div class="input-group">
@@ -83,18 +76,24 @@
 								type="text"/>
 						</div>
 					</div>
-					<ul class="group-members">
+					<div class="tag-group multiline">
 						{{#each foundUsers}}
-							<li class="group-member">
-								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-								{{username this._id}}
-								<button type="button" class="btn js-member-add-btn"
-									title="{{mf 'group.settings.addMember' 'add as member'}}">
-									<span class="fa fa-plus" aria-hidden="true"></span>
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this._id}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</a>
+							</div>
+							<div class="tag-btn group-member-tag-btn-add addon">
+								<button
+									class="js-member-add-btn"
+									title="{{mf 'group.settings.addMember' 'add as member'}}"
+									type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
-							</li>
+							</div>
 						{{/each}}
-					</ul>
+					</div>
 				</div>
 			</div>
 			<div class="details-addition">
@@ -107,7 +106,8 @@
 					<li>Timetable-Link: <a href="{{timetableURL}}">{{timetableURL}}</a></li>
 					<li>Schedule-Link: <a href="{{scheduleURL}}">{{scheduleURL}}</a></li>
 					<li>iframe-Eventboxes-Link: <a href="{{frameEventsURL}}">{{frameEventsURL}}</a></li>
-					<li>iframe-Calendar-Link: <a href="{{frameCalendarURL}}">{{frameCalendarURL}}</a></li>
+					<li>iframe-weekly-calendar-Link: <a href="{{frameWeekURL}}">{{frameWeekURL}}</a></li>
+					<li>iframe-calendar-Link: <a href="{{frameCalendarURL}}">{{frameCalendarURL}}</a></li>
 					<li>iframe-List-Link: <a href="{{frameListURL}}">{{frameListURL}}</a></li>
 				</ul>
 			</div>

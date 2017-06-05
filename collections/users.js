@@ -143,13 +143,11 @@ Meteor.methods({
 		check(username, String);
 		check(email, String);
 		check(notifications, Boolean);
-		check(privacy, Boolean);
 
 		var user = Meteor.user();
 
 		var changes = {};
 		if (user.username !== username) { changes.username = saneText(username).substring(0, 200); }
-		if (user.privacy !== privacy) { changes.privacy = !!privacy; }
 		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
 			// Working under the assumption that there is only one address
 			// if there was more than one address oops I accidentally your addresses

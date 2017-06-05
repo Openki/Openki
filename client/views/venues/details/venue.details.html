@@ -4,86 +4,138 @@
 			{{> venueEdit venue}}
 		{{else}}
 			{{#with venue}}
-			<div class="page-component">
-				<div class="details-header location-details-header">
-					{{#if picture}}
-						<img src="{{picture}}">
-					{{/if}}
-					<h3>{{name}}</h3>
-					<p>{{{description}}}</p>
-					<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
-				</div>
-
-				<div class="details-body location-details-body">
-					<div class="details-content">
-						{{#if editor}}
-						<span class="title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
-						<ul class='hosts'>
-								<li>
-									{{>profilelink editor}}
-								</li>
-						</ul>
+				<div class="page-component">
+					<div class="details-header location-details-header">
+						{{#if picture}}
+							<img src="{{picture}}">
 						{{/if}}
-
-						{{#if contact.web}}
-						<div>
-							<span class="title">{{mf 'location.details.online' 'Website:'}} </span>
-							<a href="{{contact.web}}">{{contact.web}}</a>
-						</div>
-						{{/if}}
-						<div>
-							<span class="title">{{mf 'venue.details.address' 'Address:'}}</span> {{address}}
-						</div>
-						{{#if route}}
-						<div>
-							<span class="title">{{mf 'venue.details.route' 'How to go there:'}}</span> {{route}}
-						</div>
-						{{/if}}
-						{{#if maxPeople}}
-						<div>
-							<span class="title">{{mf 'venue.details.max_ppl' 'Maximum People:'}}</span> {{maxPeople}}
-						</div>
-						{{/if}}
-						{{#if maxWorkplaces}}
-						<div>
-							<span class="title">{{mf 'venue.details.max_workplaces' 'Maximum Workplaces:'}}</span> {{maxWorkplaces}}
-						</div>
-						{{/if}}
-						{{#if infra2.def }}
-						<div>
-							<span class="title">{{mf 'venue.details.has_projector' 'Has a Projector!'}} </span>
-						</div>
-						{{/if}}
-						{{#if specials}}
-						<div>
-							<span class="title">{{mf 'venue.details.specials' 'Specials:'}}</span> {{specials}}
-						</div>
-						{{/if}}
+						<h3>
+							{{name}}
+							{{#if short}}
+								<small>{{short}}</small>
+							{{/if}}
+						</h3>
+						<p>{{{description}}}</p>
+						<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
 					</div>
 
-					{{#if loc}}
-					<div class="details-map">
-						{{> map markers=markers}}
-						<div class="coordinates">
-							{{coords}}
+					<div class="details-body location-details-body">
+						<div class="details-content">
+							{{#if loc}}
+								<div class="details-map">
+									{{> map markers=markers}}
+									<div class="coordinates">
+										{{coords}}
+									</div>
+								</div>
+							{{/if}}
+							{{#if editor}}
+								<p>
+									<span class="venue-property-title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
+									<ul class='hosts'>
+										<li>
+											{{>profilelink editor}}
+										</li>
+									</ul>
+								</p>
+							{{/if}}
+							{{#if contact.web}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'location.details.online' 'Website:'}}
+									</span>
+									<a href="{{contact.web}}">{{contact.web}}</a>
+								</p>
+							{{/if}}
+							{{#if address}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.address' 'Address:'}}
+									</span>
+									{{address}}
+								</p>
+							{{/if}}
+							{{#if route}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.route' 'How to go there:'}}
+									</span>
+									<br>
+									{{route}}
+								</p>
+							{{/if}}
+							{{#if maxPeople}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.max_ppl' 'Maximum People:'}}
+									</span>
+									{{maxPeople}}
+								</p>
+							{{/if}}
+							{{#if maxWorkplaces}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.max_workplaces' 'Maximum Workplaces:'}}
+									</span>
+									{{maxWorkplaces}}
+								</p>
+							{{/if}}
+							{{#if facilityNames}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
+									</span>
+									<ul>
+										{{#each facilityNames}}
+											<li>{{this}}</li>
+										{{/each}}
+									</ul>
+								</p>
+							{{/if}}
+							{{#if otherFacilities}}
+								<p>
+									<span class="venue-property-title">
+										{{mf 'venue.details.additionalEquipment' 'Additional equipment:'}}
+									</span>
+									<br>
+									{{otherFacilities}}
+								</p>
+							{{/if}}
 						</div>
 					</div>
+					{{#if mayEdit}}
+						<div class="actions">
+							{{#unless verifyDelete}}
+								{{> buttonDelete event="js-venue-delete"}}
+							{{/unless}}
+							{{> buttonEdit event="js-venue-edit"}}
+						</div>
+						{{#if verifyDelete}}
+							{{> venueDeleteConfirmDialog}}
+						{{/if}}
 					{{/if}}
 				</div>
-			{{#if mayEdit}}
-				<div class="actions">
-					{{> buttonDelete event="js-venue-delete"}}
-					{{> buttonEdit event="js-venue-edit"}}
-				</div>
-			{{/if}}
-			</div>
 			{{/with}}
 		{{/if}}
 		{{#if eventsList.count}}
-		<div class="page-component">
-			<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
-			{{> frameEvents eventsList}}
-		</div>
+			<div class="page-component">
+				<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
+				{{> eventList dataEvents=eventsList withDate=true}}
+			</div>
 		{{/if}}
+	</div>
+</template>
+
+<template name="venueDeleteConfirmDialog">
+	<div class="venue-delete-confirmation">
+		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
+		<div class="form-actions">
+			{{> buttonCancel event="js-venue-delete-cancel"}}
+			{{> buttonDeleteConfirm
+				event="js-venue-delete-confirm"
+				textIdle=(mf 'venue.detail.remove' 'Remove this venue')
+				textBusy=(mf 'venue.detail.remove.busy' 'Deleting venue...')
+			}}
+		</div>
 	</div>
 </template>

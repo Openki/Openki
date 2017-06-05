@@ -1,3 +1,5 @@
+import '/imports/ui/lib/CSSFromQuery.js';
+
 Router.map(function () {
 	this.route('frameList', {
 		path: '/frame/list',
@@ -20,7 +22,14 @@ Router.map(function () {
 		},
 
 		data: function() {
+			var cssRules = new CSSFromQuery();
+			cssRules
+				.add('footerbg', 'background-color', '.frame-list-footer')
+				.add('footercolor', 'color', '.frame-list-footer a')
+				.read(this.params.query);
+
 			var data = {
+				cssRules: cssRules,
 				group: Groups.findOne(this.coursesWithEvents.group),
 				coursesWithEvents: coursesFind(this.coursesWithEvents, 25),
 				coursesWithoutEvents: coursesFind(this.coursesWithoutEvents, 25)
@@ -30,6 +39,25 @@ Router.map(function () {
 
 		onAfterAction: function() {
 			document.title = webpagename + ' Courses';
+		}
+	});
+});
+
+_.each([Template.listCourseWithEvents, Template.listCourseWithoutEvents], function(template) {
+	template.onCreated(function() {
+		this.expanded = new ReactiveVar(false);
+	});
+
+	template.helpers({
+		'expanded': function() {
+			return Template.instance().expanded.get();
+		}
+	});
+
+	template.events({
+		'click .js-toggle-event-details': function(e, instance) {
+			$(e.currentTarget).toggleClass('active');
+			instance.expanded.set(!instance.expanded.get());
 		}
 	});
 });

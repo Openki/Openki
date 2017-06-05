@@ -1,19 +1,28 @@
-Template.eventCompact.events({
-	"mouseover .js-venue-link": function(event, template){
-		template.$('.event-compact').addClass('elevate_child');
-	},
-	"mouseout .js-venue-link": function(event, template){
-		template.$('.event-compact').removeClass('elevate_child');
-	}
+Template.eventCompact.onCreated(function() {
+	this.withDate = this.parentInstance().data.withDate;
 });
 
 Template.eventCompact.helpers({
-	withDate: function() {
-		return Template.instance().parentInstance().data.withDate;
+	eventCompactClasses: function() {
+		var eventCompactClasses = [];
+		if (Template.instance().withDate) {
+			eventCompactClasses.push('has-date');
+		}
+		if (moment().isAfter(this.end)) {
+			eventCompactClasses.push('is-past');
+		}
+
+		return eventCompactClasses.join(' ');
 	},
 
-	pastEvent: function() {
-		return moment().isAfter(this.end);
+	withDate: function() {
+		return Template.instance().withDate;
+	}
+});
+
+Template.eventCompact.events({
+	'mouseover .js-venue-link, mouseout .js-venue-link': function(e, instance){
+		instance.$('.event-compact').toggleClass('elevate_child');
 	}
 });
 

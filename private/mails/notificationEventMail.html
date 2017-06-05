@@ -1,5 +1,10 @@
 {{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
 <br>
+{{#if additionalMessage}}
+	{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
+	{{additionalMessage}}
+	<br>
+{{/if}}
 {{#if new}}
 	{{mf "notification.event.mail.new" "A new event was just published for course {COURSE}:" COURSE=course.name LOCALE=locale}}
 {{else}}
@@ -27,12 +32,16 @@
 	</tr>
 	<tr>
 		<th>{{mf "notification.event.mail.description" "Event description" LOCALE=locale}}</th>
-		<td>{{{description}}}</td>
+		<td>{{{event.description}}}</td>
 	</tr>
 </table>
 
 <small>
-	{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
-	<a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a>
-	<a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+	<div>
+		{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
+	    {{mf "notification.event.mail.timezone" "Event times are in local time for {REGION}: {ZONE}" REGION=regionName ZONE=timeZone LOCALE=locale}}
+	</div>
+
+	<div><a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a></div>
+	<div><a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a></div>
 </small>

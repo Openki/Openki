@@ -6,38 +6,40 @@
 		<div class="timeline-header"></div>
 	</div>
 
-	{{#each events_list_past}}
-	<div class="timeline">
-		<div class="timeline-eventdate {{this._id}}">
-			{{dateformat_mini_fullmonth start}}
+	{{#each pastEventsList}}
+		<div class="timeline">
+			<div class="timeline-eventdate {{this._id}}"
+			     title="{{dateLong start}}">
+				{{fromNow start}}
+			</div>
+			<div class="timeline-eventline-container">
+				<div class="timeline-eventline"></div>
+				<div class="timeline-eventpoint {{this._id}}"></div>
+			</div>
 		</div>
-		<div class="timeline-eventline-container">
-			<div class="timeline-eventline"></div>
-			<div class="timeline-eventpoint {{this._id}}"></div>
+		<div class="coursehistory-event">
+			<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
+			<a href="{{pathFor 'showEvent'}}">
+				{{this.title}}
+			</a>
 		</div>
-	</div>
-	<div class="coursehistory-event">
-		<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
-		<a href="{{pathFor 'showEvent'}}">
-			{{this.title}}
-		</a>
-	</div>
 	{{/each}}
 
 	{{#with course}}
-	<div class="timeline">
-		<div class="timeline-eventdate {{this._id}}">
-			{{dateformat_mini_fullmonth time_created}}
+		<div class="timeline">
+			<div class="timeline-eventdate {{this._id}}"
+			     title="{{dateLong time_created}}">
+				{{fromNow time_created}}
+			</div>
+			<div class="timeline-eventline-container">
+				<div class="timeline-eventline"></div>
+				<div class="timeline-eventpoint {{this._id}}"></div>
+			</div>
 		</div>
-		<div class="timeline-eventline-container">
-			<div class="timeline-eventline"></div>
-			<div class="timeline-eventpoint {{this._id}}"></div>
+		<div class="coursehistory-event">
+			{{mf 'course.history.created_by' 'Course created by:'}}
+			{{>profilelink createdby}}
 		</div>
-	</div>
-	<div class="coursehistory-event">
-		{{mf 'course.history.created_by' 'Course created by:'}}
-		{{>profilelink createdby}}
-	</div>
 	{{/with}}
 
 	<div class="timeline-post">

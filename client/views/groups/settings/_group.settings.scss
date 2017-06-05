@@ -1,38 +1,30 @@
-.group-members {
-	@include list-unstyled;
-}
-
 $group-member-bg: rgba($gray-light, .15);
 
-.group-member {
-	background-color: $group-member-bg;
-	display: inline-block;
-	margin-bottom: 5px;
-	margin-right: 5px;
-	padding-left: 8px;
-	padding-right: 0;
+.group-member-tag {
+	@include tag(
+		$group-member-bg,
+		$text-color,
+		$group-member-bg,
+		$brand-primary
+	);
 }
 
-.js-member-remove-btn,
-.js-member-add-btn {
-	background-color: rgba($group-member-bg, .3);
-	padding: 2px 6px;
+.group-member-tag-btn-remove {
+	@include tag-btn(
+		$group-member-bg,
+		$text-color,
+		$brand-danger,
+		darken($brand-danger, 30%)
+	);
 }
 
-.js-member-remove-btn:hover {
-	background-color: $red;
-}
-
-.js-member-remove-btn .fa {
-	color: $red-darker;
-}
-
-.js-member-add-btn:hover {
-	background-color: $green;
-}
-
-.js-member-add-btn .fa {
-	color: $green-darker;
+.group-member-tag-btn-add {
+	@include tag-btn(
+		darken($group-member-bg, 10%),
+		$text-color,
+		$brand-success,
+		darken($brand-success, 45%)
+	);
 }
 
 .group-links {

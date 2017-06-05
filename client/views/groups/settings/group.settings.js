@@ -1,5 +1,8 @@
 Template.groupSettings.onCreated(function() {
 	var instance = this;
+
+	instance.busy(false);
+
 	instance.userSearch = new ReactiveVar('');
 
 	instance.autorun(function() {
@@ -32,6 +35,9 @@ Template.groupSettings.helpers({
 	},
 	frameEventsURL: function() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
+	},
+	frameWeekURL: function() {
+		return Router.routes.frameWeek.url({}, { query: {group: this._id} });
 	},
 	frameCalendarURL: function() {
 		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
@@ -71,15 +77,21 @@ Template.groupSettings.events({
 	},
 
 	'click .js-group-edit-save': function(event, instance) {
+		event.preventDefault();
+
+		var parentInstance = instance.parentInstance(); // Not available in callback
+
+		instance.busy('saving');
 		Meteor.call("saveGroup", instance.data.group._id, {
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val(),
 		}, function(err) {
+			instance.busy(false);
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
-				instance.parentInstance().editingSettings.set(false);
+				parentInstance.editingSettings.set(false);
 			}
 		});
 	},

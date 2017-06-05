@@ -16,7 +16,7 @@ SCSSVars = {
 	'screenLG': 1200, // defined at client/styles/_bootstrap-variables.scss L328
 
 	// $grid-float-breakpoint
-	'gridFloat': 991, // defined at client/styles/_bootstrap-variables.scss L351
+	'gridFloatBreakpoint': 991, // defined at client/styles/_bootstrap-variables.scss L351
 
 	// == Other Values
 	// $navbar-height

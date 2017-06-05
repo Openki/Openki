@@ -1,17 +1,38 @@
 <template name="calendar">
 	{{> calendarNav date=startDate}}
 	<div class="container calendar-container">
-		<a href="/event/create" class="btn btn-add" role="button">
-			{{mf 'menue.CreateEvent'}}
-		</a>
-		{{#each days}}
-			{{> calendarDay day=this filter=filter}}
-			<hr>
-		{{/each}}
-		<a href="/event/create" class="btn btn-add" role="button">
-			{{mf 'menue.CreateEvent'}}
-		</a>
+		<div class="page-component">
+			{{> calendarAddEvent}}
+		</div>
+		<div class="page-component">
+			{{#each days}}
+				{{> calendarDay day=this filter=filter}}
+				<hr>
+			{{/each}}
+		</div>
+		<div class="page-component">
+			{{> calendarAddEvent}}
+		</div>
 	</div>
+</template>
+
+<template name="calendarAddEvent">
+	<a href="{{pathFor 'showEvent' _id='create'}}">
+		<div class="event-caption placeholder event-caption-add">
+			<div class="event-caption-header-wrap">
+				<div class="event-caption-header">
+					<span class="fa fa-map-pin"></span>
+					<div class="event-caption-pseudoborder"></div>
+				</div>
+			</div>
+			<div class="event-caption-body-wrap">
+				<div class="event-caption-body"></div>
+			</div>
+		</div>
+		<span class="event-caption-add-text">
+			{{mf 'menue.CreateEvent'}}
+		</span>
+	</a>
 </template>
 
 <template name="calendarDay">
@@ -55,7 +76,7 @@
 		<div class="btn-group">
 			<button type="button"
 					class="btn btn-default js-change-date">
-					<span class="fa fa-arrow-{{#if isPrevious}}left{{else}}right{{/if}} fa-fw" aria-hidden="true"></span>
+				{{arrow}}
 				{{mfString direction currentUnit 'short'}}
 			</button>
 			<button type="button"

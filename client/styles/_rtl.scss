@@ -1,0 +1,85 @@
+.rtl {
+	.navbar-header {
+		@media (min-width: $grid-float-breakpoint) {
+			float: right;
+		}
+	}
+
+	.navbar-nav > li {
+		@media (min-width: $grid-float-breakpoint) {
+			float: right;
+		}
+	}
+
+	.navbar-nav > li > .dropdown-menu {
+		@media (min-width: $grid-float-breakpoint) {
+			left: 0;
+			right: auto;
+		}
+	}
+
+	.list-unstyled {
+		padding-right: 0;
+	}
+
+	.dropdown-menu {
+		left: auto;
+		text-align: right;
+		right: 0;
+	}
+
+	.input-group .form-control:first-child,
+	.input-group-addon:first-child,
+	.input-group-btn:first-child > .btn,
+	.input-group-btn:first-child > .btn-group > .btn,
+	.input-group-btn:first-child > .dropdown-toggle,
+	.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+	.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+		@include border-right-radius($input-border-radius);
+		@include border-left-radius(0);
+	}
+
+	.input-group-addon:first-child {
+		border-right: 1px solid $input-group-addon-border-color;
+		border-left: 0;
+	}
+
+	.input-group .form-control:last-child,
+	.input-group-addon:last-child,
+	.input-group-btn:last-child > .btn,
+	.input-group-btn:last-child > .btn-group > .btn,
+	.input-group-btn:last-child > .dropdown-toggle,
+	.input-group-btn:first-child > .btn:not(:first-child),
+	.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+		@include border-left-radius($input-border-radius);
+		@include border-right-radius(0);
+	}
+
+	.input-group-addon:last-child {
+		border-left: 1px;
+		border-right: 0;
+	}
+
+	.radio label ,
+	.checkbox  label {
+		padding-left: 0;
+		padding-right: 20px;
+	}
+
+	.radio input[type="radio"],
+	.radio-inline input[type="radio"],
+	.checkbox input[type="checkbox"],
+	.checkbox-inline input[type="checkbox"] {
+		margin-left: 0;
+		margin-right: -20px;
+	}
+
+	.nav-tabs > li {
+	    float: right;
+	}
+
+	.nav-tabs > li > a {
+		margin-right: 0;
+		margin-left: 2px;
+	}
+}

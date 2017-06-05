@@ -110,27 +110,15 @@ Template.regionSelection.events({
 		instance.parentInstance().searchingRegions.set(false);
 	},
 
-	'mouseover .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, true, false);
-		}
-	},
-
-	'mouseout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, false, false);
-		}
-	},
-
-	'focus .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, true, false);
-		}
-	},
-
-	'focusout .js-region-link': function() {
-		if (this._id && Session.equals('region', 'all')) {
-			courseFilterPreview('.' + this._id, false, false);
+	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
+		var regionID = this._id;
+		if (regionID && Session.equals('region', 'all')) {
+			var activate = e.type == 'mouseover' || e.type == 'focusin';
+			var previewOptions = {
+				selector: ('.region-' + regionID),
+				activate: activate
+			};
+			courseFilterPreview(previewOptions);
 		}
 	},
 
@@ -147,13 +135,6 @@ Template.regionSelection.events({
 		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
-		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloat;
-		if (!gridFloatBreakpoint) {
-			instance.$('.dropdown').on('show.bs.dropdown', function(e){
-				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-			});
 		}
 
 		instance.$('.dropdown-toggle').dropdown('toggle');

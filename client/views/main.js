@@ -20,14 +20,15 @@ Template.layout.rendered = function() {
 };
 
 
-Template.layout.events({
-	'click .js-scroll': function(event, instance) {
-		var position = $(event.target.getAttribute('href')).offset();
-		if(typeof position != 'undefined') {
-			// subtract the amount of pixels of the height of the navbar
-			position = position.top - SCSSVars.navbarHeight;
-			$(document.body).animate({'scrollTop': position}, 400);
-		}
-		event.preventDefault();
-	},
-});
+/* Workaround to prevent iron-router from messing with server-side downloads
+ *
+ * Class 'js-download' must be added to those links.
+ */
+var stopPropagationForDownloadClicks = {
+	'click .js-download': function(event, instance) {
+		event.stopPropagation();
+	}
+};
+
+Template.layout.events(stopPropagationForDownloadClicks);
+Template.frameLayout.events(stopPropagationForDownloadClicks);

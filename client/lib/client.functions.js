@@ -1,4 +1,3 @@
-
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
@@ -133,16 +132,26 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
-courseFilterPreview = function(matchSelector, activate, delayed) {
-	var noMatchSelector = $('.course-compact').not(matchSelector);
-	var filterClass = delayed ? 'filter-no-match-delayed' : 'filter-no-match';
 
-	if (activate) {
-		noMatchSelector.addClass(filterClass);
-	} else {
-		noMatchSelector.removeClass(filterClass);
-	}
+courseFilterPreview = function(options) {
+	var selector = options.selector;
+	var activate = options.activate;
+	var instance = options.instance || false;
+	var delayed = options.delayed || false;
+
+	var filterClass = delayed
+		? 'filter-no-match-delayed'
+		: 'filter-no-match';
+
+	var course = instance
+		? instance.$('.course-compact')
+		: $('.course-compact');
+
+	course
+		.not(selector)
+		.toggleClass(filterClass, activate);
 };
+
 
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
@@ -180,7 +189,7 @@ cleanedRegion = function(region) {
 TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	*
-	* @param {Object} template
+	* @param {Object} template instance
 	*
 	* This mixin extends the given template with an `expanded` helper and
 	* two click handlers `js-expand` and `js-close`. Only one expandible template
@@ -203,7 +212,7 @@ TemplateMixins = {
 	Expandible: function(template) {
 		template.onCreated(function() {
 			var expander = Random.id(); // Token to keep track of which Expandible is open
-			this.expander = expander;
+			this.expander = expander; // Read by event handlers
 			this.collapse = function() {
 				if (Session.equals('verify', expander)) {
 					Session.set('verify', false);
@@ -224,7 +233,7 @@ TemplateMixins = {
 				Session.set('verify', false);
 			},
 		});
-	}
+	},
 };
 
 
@@ -269,6 +278,17 @@ Template.registerHelper('currentLocale', function() {
 	return Session.get('locale');
 });
 
+Template.registerHelper('now', function(){
+	return moment(new Date());
+});
+
+Template.registerHelper('backArrow', function() {
+	var isRTL = Session.get('textDirectionality') == 'rtl';
+	var direction = isRTL ? 'right' : 'left';
+	return Spacebars.SafeString(
+		'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+	);
+});
 
 Template.registerHelper('dateformat', function(date) {
 	Session.get('timeLocale');
@@ -330,7 +350,11 @@ Template.registerHelper('dateformat_mini', function(date) {
 
 Template.registerHelper('dateformat_mini_fullmonth', function(date) {
 	Session.get('timeLocale'); // it depends
-	if (date) return moment(date).format('D. MMMM');
+	if (date) {
+		var m = moment(date);
+		var year = m.year() != moment().year() ? " " + m.format('YYYY') : '';
+		return moment(date).format('D. MMMM') + year;
+	}
 });
 
 Template.registerHelper('timeformat', function(date) {
@@ -385,24 +409,88 @@ Template.registerHelper ("venueName", function(venueId) {
 });
 
 // http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
-/**
- * Get the parent template instance
- * @param {Number} [levels] How many levels to go up. Default is 1
- * @returns {Blaze.TemplateInstance}
- */
-
-Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
-    var view = Blaze.currentView;
-    if (typeof levels === "undefined") {
-        levels = 1;
-    }
-    while (view) {
-        if (view.name.substring(0, 9) === "Template." && !(levels--)) {
-            return view.templateInstance();
-        }
-        view = view.parentView;
-    }
+/** Get the parent template instance
+  * @param {Number} [levels] How many levels to go up. Default is 1
+  * @returns {Blaze.TemplateInstance}
+  */
+Blaze.TemplateInstance.prototype.parentInstance = function(levels) {
+	var view = this.view;
+	if (typeof levels === "undefined") {
+		levels = 1;
+	}
+	while (view) {
+		if (view.name.substring(0, 9) === "Template." && !(levels--)) {
+			return view.templateInstance();
+		}
+		view = view.parentView;
+	}
 };
+
+
+/** Set the business of the template instance
+  *
+  * This method will set up the 'business' variable on the template instance.
+  * It needs to be called in onCreated() so the other methods will find the
+  * var. Usually it will be this.busy(false) bout it could also be
+  * this.busy('loading') for example.
+  *
+  * @param {String} [activity] The new business
+  */
+Blaze.TemplateInstance.prototype.busy = function (activity) {
+	if (!this.business) {
+		this.business = new ReactiveVar(activity);
+	} else {
+		this.business.set(activity);
+	}
+};
+
+
+/** Find business state var in this or parent template instance
+  */
+Blaze.TemplateInstance.prototype.findBusiness = function() {
+	if (this.business) return this.business; // Short-circuit common case
+
+	var businessInstance = this;
+	while (businessInstance && !businessInstance.business) {
+		businessInstance = businessInstance.parentInstance();
+	}
+
+	if (!businessInstance) {
+		throw "Unable to find parent instance with business set";
+	}
+
+	// Cache on the local instance
+	this.business = businessInstance.business;
+
+	return this.business;
+};
+
+
+/** Compare activity to template business
+  * This can be used to show a busy state while the template is working.
+  *
+  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+  *
+  * @param {String} [activity] compare to this activity
+  * @returns {Bool} Whether business matches activity
+  */
+Template.registerHelper('busy', function(activity) {
+	var business = Template.instance().findBusiness();
+	return business.get() == activity;
+});
+
+
+/** Disable buttons while there is business to do.
+  *
+  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+  *
+  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+  */
+Template.registerHelper('disabledIfBusy', function() {
+	var business = Template.instance().findBusiness();
+	return business.get() ? 'disabled' : '';
+});
+
 
 Template.registerHelper('groupShort', function(groupId) {
 	var instance = Template.instance();
@@ -424,4 +512,12 @@ Template.registerHelper('groupLogo', function(groupId) {
 		} return "";
 	}
 	return "";
+});
+
+/** Return the instance for use in the template
+  * This can be used to directly access instance methods without declaring
+	* helpers.
+	*/
+Template.registerHelper('$instance', function() {
+	return Template.instance();
 });

@@ -17,22 +17,23 @@
 	padding: 0 ($grid-gutter-width / 2);
 }
 
-.ownuser-frame h3 {
+.ownuser-frame-welcome {
+	font-size: $font-size-h3;
 	text-align: center;
-	margin: 0 0 15px;
+	margin-top: 10px;
 }
 
 .login {
-	padding: 0 ($grid-gutter-width / 2);
+	padding: 10px ($grid-gutter-width / 2) 0;
 }
 
-.registering-disclaimer {
-	margin-top: -10px;
-	text-align: justify;
+.login .help-block,
+.register .help-block {
+	margin-bottom: 0;
 }
 
 .forgot-pwd-btn-container {
-	text-align: right;
+	@include td-text-align(right);
 }
 
 .forgot-pwd-btn-container > .btn-link {
@@ -45,39 +46,28 @@
 	}
 }
 
-
-
-.external-service-login {
-	text-align: center;
+.login hr {
+	border-top: 1px solid lighten($gray-lighter, 10%);
+	margin: 15px 0;
 }
 
-.js-external-service-login-btn {
-	background: none;
-	border: 0;
-	color: $gray-light;
-	padding: 0 9px;
+.js-oauth-btn {
+	font-weight: bold;
 }
 
-.js-external-service-login-btn .fa {
-	font-size: xx-large;
+.js-oauth-btn + .js-oauth-btn {
+	margin-top: 10px;
 }
 
 $external-servies: (
-  google-plus:                                   #dd4b39,
-  facebook:                                      #3b5998,
-  github:                                        #333
+  google-plus: #dd4b39,
+  facebook: #3b5998,
+  github: #333
 );
 
 @each $service, $color in $external-servies {
-	.fa-#{$service}-square {
-		&:hover,
-		&:focus {
-			color: $color;
-		}
-
-		@media (max-width: $screen-xs) {
-			color: $color;
-		}
+	.btn-#{$service} {
+		@include button-variant($white, $color, darken($color, 5%));
 	}
 }
 

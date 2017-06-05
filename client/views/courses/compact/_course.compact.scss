@@ -4,22 +4,22 @@
 // ** Wrap
 //========================================================================================
 .course-compact-wrap {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .container .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
-		@include make-md-column(4);
-		@include make-lg-column(3);
+		@include td-make-xs-column(6);
+		@include td-make-md-column(4);
+		@include td-make-lg-column(3);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
 
 .container-sm .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include make-xs-column(6);
+		@include td-make-xs-column(6);
 		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 	}
 }
@@ -68,44 +68,40 @@
 // ** Content
 //========================================================================================
 .course-compact-content {
-	@include make-xs-column(9);
+	@include td-make-xs-column(9);
 	background: $body-bg;
-	padding: 0 0 0 15px;
+	@include td-padding-all(0, 0, 0, 15px);
 
-	&.has-upcoming-events {
-		@include make-xs-column(7.5);
-		background: $has-upcoming-events-bg;
-		padding: 0 5px 0 15px;
-	}
+}
+
+.has-upcoming-events > .course-compact-content {
+	@include td-make-xs-column(7.5);
+	background: $has-upcoming-events-bg;
+	@include td-padding-all(0, 5px, 0, 15px);
 }
 
 // ** Title
 //========================================================================================
 .course-compact-title {
 	color: $gray-dark;
-	line-height: 24px;
-	margin: 8px 0 0;
-	max-height: 60px;
-}
-
-.course-compact-title > h4 {
 	font-size: 20px;
-	line-height: 20px;
+	line-height: 24px;
+	margin: 9.5px 0;
+	max-height: 60px;
 }
 
 // ** Categories
 //========================================================================================
 .course-compact-content > .course-categories {
-	height: 55px;
+	height: 50px;
 	margin-bottom: 0;
-	margin-left: -2px;
 	overflow: hidden;
 }
 
 // ** Event
 //========================================================================================
 .course-compact-next-event {
-	@include make-xs-column(4.5);
+	@include td-make-xs-column(4.5);
 	background: $course-compact-next-event-bg;
 	color: $course-compact-next-event-color;
 	max-height: 150px;
@@ -116,7 +112,7 @@
 
 .course-compact-next-event-time,
 .course-compact-next-event-date {
-	@include make-xs-column(12);
+	@include td-make-xs-column(12);
 	padding: 0;
 }
 
@@ -128,10 +124,10 @@
 // ** Roles
 //========================================================================================
 .course-compact-roles {
-	@include make-xs-column(3);
+	@include td-make-xs-column(3);
 	padding: 0;
 	position: relative;
-	right: -7px;
+	@include td-pos(right, -7px);
 	top: -7px;
 }
 
@@ -162,23 +158,17 @@
 
 // ** Grouplist
 //========================================================================================
-.course-compact > .grouplist {
-	margin: 0;
+.course-groups {
 	position: absolute;
 }
 
-.course-compact.proposal > .grouplist,
-.course-compact.has-past-events > .grouplist {
+.course-compact.proposal > .course-groups,
+.course-compact.has-past-events > .course-groups {
 	bottom: $course-border-width;
-	right: $course-border-width;
+	@include td-pos(right, $course-border-width);
 }
 
-.course-compact.has-upcoming-events > .grouplist {
+.course-compact.has-upcoming-events > .course-groups {
 	bottom: $course-border-width * 2;
-	right: $course-border-width * 2;
-}
-
-.course-compact > .grouplist > li {
-	float: right;
-	margin-left: 4px;
+	@include td-pos(right, $course-border-width * 2);
 }

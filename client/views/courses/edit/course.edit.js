@@ -1,5 +1,8 @@
+
 Template.courseEdit.created = function() {
 	var instance = this;
+
+	instance.busy(false);
 
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
@@ -123,6 +126,7 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
+
 		if (pleaseLogin()) return;
 
 		var course = instance.data;
@@ -166,7 +170,9 @@ Template.courseEdit.events({
 			changes.groups = groups;
 		}
 
+		instance.busy('saving');
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
+			instance.busy(false);
 			if (err) {
 				showServerError('Saving the course went wrong', err);
 			} else {

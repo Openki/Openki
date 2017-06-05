@@ -26,7 +26,8 @@ Template.languageSelection.onCreated(function() {
 });
 
 Template.languageSelection.onRendered(function() {
-	Template.instance().$('.js-language-search').select();
+	var instance = this;
+	instance.$('.js-language-search').select();
 });
 
 Template.languageSelection.helpers({
@@ -93,13 +94,6 @@ Template.languageSelection.events({
 		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
-		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloat;
-		if (!gridFloatBreakpoint) {
-			instance.$('.dropdown').on('show.bs.dropdown', function(e){
-				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-			});
 		}
 
 		instance.$('.dropdown-toggle').dropdown('toggle');

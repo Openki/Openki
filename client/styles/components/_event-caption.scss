@@ -1,0 +1,100 @@
+.event-caption {
+	display: table;
+	height: 50px;
+	position: relative;
+	text-align: center;
+}
+
+.event-caption-header-wrap {
+	display: table-row;
+}
+
+$event-caption-header-bg: $event-header-bg;
+$event-caption-border: $yellow;
+$event-caption-border-highlighted: darken($green, 25%);
+
+.event-caption-header {
+	background-color: $event-caption-header-bg;
+	border-color: $event-caption-border;
+	border-style: solid;
+	border-width: 1.5px 1.5px 0;
+	font-size: small;
+	display: table-cell;
+	padding: 3px;
+	position: relative;
+	transition: border-color $default-transition-time;
+	vertical-align: top;
+}
+
+.event-caption-header > .fa-map-pin {
+	color: $text-color;
+	font-size: 8px;
+	@include td-pos(left, 50%);
+	position: absolute;
+	top: -5px;
+	transform: rotate(10deg);
+}
+
+.event-caption-pseudoborder {
+	background-color: $white;
+	bottom: 0;
+	left: 0;
+	height: 1px;
+	position: absolute;
+	width: 100%;
+}
+
+.event-caption-body-wrap {
+	display: table-row;
+	height: 70%;
+}
+
+$event-caption-body-bg: $event-body-bg;
+
+.event-caption-body {
+	background-color: $event-caption-body-bg;
+	border-color: $event-caption-border;
+	border-style: solid;
+	border-width: 0 1.5px 1.5px;
+	color: $text-color;
+	display: table-cell;
+	padding: 3px;
+	transition: border-color $default-transition-time;
+	vertical-align: middle;
+}
+
+.event-caption.placeholder .event-caption-header {
+	background-color: rgba(desaturate($event-caption-header-bg, 55%), 0.5);
+}
+
+
+.event-caption.placeholder .event-caption-body {
+	background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
+	color: transparent;
+	text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
+}
+
+.event-caption.placeholder .event-caption-header,
+.event-caption.placeholder .event-caption-body {
+	border-color: $gray-lightest;
+}
+
+.event-caption-add {
+	@include td-float(left);
+	@include td-margin(right, 10px);
+	width: 65px;
+}
+
+.event-caption-add .event-caption-body,
+.event-caption-add .event-caption-header {
+	border-color: $event-caption-border-highlighted;
+}
+
+.event-caption-add.placeholder .event-caption-body {
+	text-shadow: 0 0 0;
+}
+
+.event-caption-add-text {
+	font-size: medium;
+	line-height: 50px;
+}

@@ -18,14 +18,21 @@ Template.report.events({
 	},
 	'click .js-report-send': function(event, instance) {
 		event.preventDefault();
-		Meteor.call('report', document.title, window.location.href, instance.$('#reportMessage').val(), function(error, result) {
-			if (error) {
-				showServerError('Your report could not be sent', error);
-			} else {
-				addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
+		Meteor.call(
+			'report',
+			document.title,
+			window.location.href,
+			navigator.userAgent,
+			instance.$('#reportMessage').val(),
+			function(error, result) {
+				if (error) {
+					showServerError('Your report could not be sent', error);
+				} else {
+					addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
+				}
+				instance.state.set('');
 			}
-			instance.state.set('');
-		});
+		);
 		instance.state.set('sending');
 	}
 });

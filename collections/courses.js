@@ -167,7 +167,7 @@ mayUnsubscribe = function(operatorId, course, userId, role) {
 	}
 
 	// The other roles can only be chosen by the users themselves
-	return operatorId !== userId;
+	return operatorId === userId;
 };
 
 // Update list of editors
@@ -202,10 +202,12 @@ Courses.updateGroups = function(courseId) {
 
 coursesFind = function(filter, limit) {
 	var find = {};
+	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.upcomingEvent === true) {
 		find.futureEvents = { $gt: 0 };
+		sort = {"nextEvent.start": 1, time_lastedit: -1};
 	}
 	if (filter.upcomingEvent === false) {
 		find.futureEvents = 0;
@@ -264,7 +266,7 @@ coursesFind = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
-	var options = { limit: limit, sort: {time_lastedit: -1, time_created: -1} };
+	var options = { limit: limit, sort: sort };
 	return Courses.find(find, options);
 };
 
@@ -524,7 +526,8 @@ Meteor.methods({
 			set.region = region._id;
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
-			set.members = [{ user: user._id, roles: ['team'], comment: '(has proposed this course)'}];
+			set.members = [{ user: user._id, roles: ['team'], comment: mf('courses.creator.defaultMessage', '(has proposed this course)')}];
+			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
 			courseId = Courses.insert(set);
@@ -554,12 +557,12 @@ Meteor.methods({
 
 			var nextEvent = Events.findOne(
 				{ courseId: course._id, start: {$gt: new Date()} },
-				{ sort: {start: 1}, fields: {start: 1, _id: 1, venue: 1} }
+				{ sort: {start: 1}, fields: {startLocal: 1, start: 1, _id: 1, venue: 1} }
 			);
 
 			var lastEvent = Events.findOne(
 				{ courseId: course._id, start: {$lt: new Date()} },
-				{ sort: {start: -1}, fields: {start: 1, _id: 1, venue: 1} }
+				{ sort: {start: -1}, fields: {startLocal: 1, start: 1, _id: 1, venue: 1} }
 			);
 
 			Courses.update(course._id, { $set: {

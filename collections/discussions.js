@@ -54,7 +54,9 @@ Meteor.methods({
 			saneComment.userId = user._id;
 		}
 
-		saneComment.time_created = new Date();
+		var now = new Date();
+		saneComment.time_created = now;
+		saneComment.time_updated = now;
 
 		var course = Courses.findOne(comment.courseId);
 		if (!course) {

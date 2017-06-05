@@ -8,8 +8,9 @@ Notification.Event = {};
   *
   * @param      {ID} eventID   - event to announce
   * @param {Boolean} isNew     - whether the event is a new one
+  * @param {String}  additionalMessage - custom message
   */
-Notification.Event.record = function(eventId, isNew) {
+Notification.Event.record = function(eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
 	var event = Events.findOne(eventId);
@@ -24,6 +25,7 @@ Notification.Event.record = function(eventId, isNew) {
 	var entry = {};
 	entry.new = isNew;
 	entry.eventId = event._id;
+	entry.additionalMessage = additionalMessage;
 
 	// The list of recipients is built right away so that only course members
 	// at the time of event creation will get the notice even if sending is
@@ -59,6 +61,10 @@ Notification.Event.handler = function(entry) {
 	if (event && event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
+	var region = false;
+	if (event && event.region) {
+	    region = Regions.findOne(event.region);
+	}
 
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
@@ -69,6 +75,7 @@ Notification.Event.handler = function(entry) {
 			try {
 				if (!event) throw "Event does not exist (0.o)";
 				if (!course) throw "Course does not exist (0.o)";
+				if (!region) throw "Region does not exist (0.o)";
 
 				var user = Meteor.users.findOne(recipient);
 				userId = user._id;
@@ -84,16 +91,29 @@ Notification.Event.handler = function(entry) {
 				var	email = user.emails[0];
 				var address = email.address;
 
+				// Show dates in local time and in users locale
+				var regionZone = LocalTime.zone(event.region);
 				var userLocale = user.profile && user.profile.locale || 'en';
-				var startMoment = moment(event.start);
+
+				var startMoment = regionZone.at(event.start);
 				startMoment.locale(userLocale);
-				var endMoment = moment(event.end);
+
+				var endMoment = regionZone.at(event.end);
 				endMoment.locale(userLocale);
+
 
 				var subjectvars =
 					{ TITLE: event.title.substr(0,30)
 					, DATE: startMoment.format('LL')
 					};
+
+				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
+				var subject;
+				if (entry.new) {
+					subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
+				} else {
+					subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
+				}
 
 				unsubToken = Random.secret();
 
@@ -104,22 +124,18 @@ Notification.Event.handler = function(entry) {
 					, eventDate: startMoment.format('LL')
 					, eventStart: startMoment.format('LT')
 					, eventEnd: endMoment.format('LT')
+					, regionName: region.name
+					, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 					, locale: userLocale
 					, eventLink: Router.url('showEvent', event)
 					, calLink: Router.url('calEvent', event)
 					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 					, new: entry.body.new
+					, additionalMessage: entry.body.additionalMessage
 					};
 
 				var message = SSR.render("notificationEventMail", vars);
 
-				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
-				var subject;
-				if (entry.new) {
-					subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
-				} else {
-					subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
-				}
 
 				mail =
 					{ from: Accounts.emailTemplates.from

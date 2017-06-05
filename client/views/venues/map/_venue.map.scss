@@ -7,7 +7,7 @@
 }
 
 .venue-map-location-search {
-	@include make-sm-column(2);
+	@include td-make-sm-column(2);
 	text-align: center;
 
 	@media (max-width: $screen-sm) {
@@ -31,7 +31,7 @@
 .venue-map-location-candidates {
 	@include list-unstyled;
 	margin-bottom:10px;
-	text-align: left;
+	@include td-text-align(left);
 }
 
 .venue-map-location-candidate {
@@ -40,7 +40,7 @@
 	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
-	padding-left: 5px;
+	@include td-padding(left, 5px);
 
 	&:hover {
 		cursor: pointer;
@@ -57,7 +57,7 @@
 }
 
 .venue-map-location-map {
-	@include make-sm-column(10);
+	@include td-make-sm-column(10);
 }
 
 .venue-map-location-map > .map-box {

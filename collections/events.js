@@ -1,12 +1,13 @@
 import '/imports/Notification.js';
+import '/imports/LocalTime.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
 // region          -> ID_region
 // title           -> String
 // description     -> String
-// start:          -> Date      (Time the events starts)
-// end:            -> Date      (Time the event ends)
+// startLocal      -> String of local date when event starts
+// endLocal        -> String of local date when event ends
 //
 // venue {
 //       _id:          Optional reference to a document in the Venues collection
@@ -33,6 +34,9 @@ import '/imports/Notification.js';
   * courseGroups: list of group._id inherited from course (if courseId is set)
   * allGroups: all groups that promote this course, both inherited from course and set on the event itself
   * editors: list of user and group _id that are allowed to edit the event
+  * start: date object calculated from startLocal field. Use this for ordering
+  *           between events.
+  * end: date object calculated from endLocal field.
   */
 
 // ===========================
@@ -178,7 +182,7 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas, sendNotifications) {
+	saveEvent: function(eventId, changes, updateReplicas, sendNotifications, comment) {
 		check(eventId, String);
 
 		var expectedFields = {
@@ -186,8 +190,8 @@ Meteor.methods({
 			description: String,
 			venue:       Match.Optional(Object),
 			room:        Match.Optional(String),
-			start:       Match.Optional(Date),
-			end:         Match.Optional(Date),
+			startLocal:  Match.Optional(String),
+			endLocal:    Match.Optional(String),
 			internal:    Match.Optional(Boolean),
 		};
 
@@ -200,6 +204,7 @@ Meteor.methods({
 		}
 
 		check(changes, expectedFields);
+		check(comment, Match.Maybe(String));
 
 		var user = Meteor.user();
 		if (!user) {
@@ -224,8 +229,8 @@ Meteor.methods({
 				if (!course.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 			}
 
-			if (!changes.start || changes.start < now) {
-				throw new Meteor.Error(400, "Event date in the past or not provided");
+			if (!changes.startLocal) {
+				throw new Meteor.Error(400, "Event date not provided");
 			}
 
 			var tested_groups = [];
@@ -239,14 +244,14 @@ Meteor.methods({
 			changes.groups = tested_groups;
 
 			// Coerce faulty end dates
-			if (!changes.end || changes.end < changes.start) {
-				changes.end = changes.start;
+			if (!changes.endLocal || changes.endLocal < changes.startLocal) {
+				changes.endLocal = changes.startLocal;
 			}
 
 			changes.internal = !!changes.internal;
 
 			// Synthesize event document because the code below relies on it
-			event = _.extend(new OEvent(), { courseId: changes.courseId, editors: [user._id] });
+			event = _.extend(new OEvent(), { region: changes.region, courseId: changes.courseId, editors: [user._id] });
 		} else {
 			event = Events.findOne(eventId);
 			if (!event) throw new Meteor.Error(404, "No such event");
@@ -254,15 +259,46 @@ Meteor.methods({
 
 		if (!event.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 
+		var region = Regions.findOne(event.region);
+
+		if (!region) {
+			throw new Meteor.Error(400, "Region not found");
+		}
+
+		var regionZone = LocalTime.zone(region._id);
 
 		// Don't allow moving past events or moving events into the past
-		if (!changes.start || changes.start < now) {
-			changes.start = event.start;
+		// This section needs a rewrite even more than the rest of this method
+		if (changes.startLocal) {
+			var startMoment = regionZone.fromString(changes.startLocal);
+			if (!startMoment.isValid()) throw new Meteor.Error(400, "Invalid start date");
+
+			if (startMoment.isBefore(new Date())) {
+				if (isNew) throw new Meteor.Error(400, "Event start in the past");
+
+				// No changing the date of past events
+				delete changes.startLocal;
+				delete changes.endLocal;
+			} else {
+				changes.startLocal = regionZone.toString(startMoment); // Round-trip for security
+				changes.start = startMoment.toDate();
+
+				var endMoment;
+				if (changes.endLocal) {
+					endMoment = regionZone.fromString(changes.endLocal);
+					if (!endMoment.isValid()) throw new Meteor.Error(400, "Invalid end date");
+				} else {
+					endMoment = regionZone.fromString(event.endLocal);
+				}
+
+				if (endMoment.isBefore(startMoment)) {
+					endMoment = startMoment; // Enforce invariant
+				}
+				changes.endLocal = regionZone.toString(endMoment);
+				changes.end = endMoment.toDate();
+			}
 		}
 
-		if (changes.end && changes.end < changes.start) {
-			throw new Meteor.Error(400, "End before start");
-		}
 
 		if (Meteor.isServer) {
 			changes.description = saneHtml(changes.description);
@@ -289,7 +325,8 @@ Meteor.methods({
 		}
 
 		if (sendNotifications) {
-			Notification.Event.record(eventId, isNew);
+			if(comment != null) comment = comment.trim().substr(0, 2000);
+			Notification.Event.record(eventId, isNew, comment);
 		}
 
 		if (Meteor.isServer) {

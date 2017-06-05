@@ -16,7 +16,7 @@ $discussion-thumb-width: 60;
 }
 
 .discussion-profile-icon {
-	left: 0;
+	@include td-pos(left, 0);
 	position: absolute;
 	top: 0;
 	vertical-align: text-bottom;
@@ -57,24 +57,38 @@ $discussion-post-bg: $blue-lighter;
 	font-weight: bold;
 }
 
+.discussion-buttons {
+	@include td-float(right);
+}
+
+.discussion-edit-btn {
+	@include td-margin(right, -5px);
+}
+
+.discussion-delete-btn {
+	@include td-margin(right, -10px);
+}
+
+button.js-delete-comment {
+	padding: 6px 24px;
+	margin-top: 5px;
+}
+
+.discussion-remove-dropdown .dropdown-menu {
+	left: auto;
+	right: 0;
+	padding: 10px 15px;
+}
+
 .discussion-edit-btn,
 .discussion-delete-btn {
 	background: none;
 	border: 0;
 	color: $gray-light;
-	float: right;
 
 	&:hover {
 		color: $gray-dark;
 	}
-}
-
-.discussion-edit-btn {
-	margin-right: -5px;
-}
-
-.discussion-delete-btn {
-	margin-right: -10px;
 }
 
 .discussion-post-time {
@@ -96,13 +110,13 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-comment {
 	display: table;
-	padding: 7px 0 7px ($discussion-thumb-width * 1px);
+	@include td-padding-all(7px, 0, 7px, ($discussion-thumb-width * 1px));
 	position: relative;
 	width: 100%;
 }
 
 .discussion-comment + .discussion-reply {
-	padding-left: $discussion-thumb-width * 2 * 1px;
+	@include td-padding(left, $discussion-thumb-width * 2 * 1px);
 }
 
 $discussion-edit-bg: lighten($gray-lighter, 10%);
@@ -117,7 +131,7 @@ $discussion-edit-bg: lighten($gray-lighter, 10%);
 }
 
 .discussion-reply {
-	padding-left: $discussion-thumb-width * 1px;
+	@include td-padding(left, $discussion-thumb-width * 1px);
 }
 
 .discussion-post-new {

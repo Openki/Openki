@@ -4,7 +4,7 @@
 	"node": true,
 	"laxcomma": true,
 	"esversion": 6,
-	"latedef": true,
+	"latedef": "nofunc",
 	"unused": "vars",
 	"loopfunc": true, 
 
@@ -20,7 +20,6 @@
 		"Match": false,
 		"check": false,
 		"Tracker": false,
-		"Deps": false,
 		"ReactiveVar": false,
 		"EJSON": false,
 		"HTTP": false,
@@ -125,6 +124,7 @@
 		"goBase":true,
 		"pleaseLogin":true,
 		"showServerError": true,
+		"TemplateMixins": true,
 
 // client/map/map.js
 

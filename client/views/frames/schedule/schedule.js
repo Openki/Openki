@@ -1,3 +1,5 @@
+import '/imports/LocalTime.js';
+
 Router.map(function () {
 	this.route('frameSchedule', {
 		path: '/frame/schedule',
@@ -91,9 +93,11 @@ Template.frameSchedule.onCreated(function() {
 		// weekday at the same time.
 		var dedupedEvents = [];
 		eventsFind(filter.toQuery()).forEach(function(event) {
+			var eventStart = LocalTime.fromString(event.startLocal);
+
 			// Build key that is the same for events of the same course that
 			// start on the same time.
-			var repKey = event.start.getHours()+'-'+ event.start.getMinutes()+'-';
+			var repKey = eventStart.hour()+'-'+ eventStart.minute()+'-';
 
 			// If there is no courseId, we fall back to replicationId, then _id.
 			if (event.courseId) {
@@ -111,7 +115,7 @@ Template.frameSchedule.onCreated(function() {
 				repetitionCount[repKey] = 1;
 			}
 
-			var repKeyDay = event.start.getDay()+'-'+repKey;
+			var repKeyDay = eventStart.day()+'-'+repKey;
 			if (repetitionCountDay[repKeyDay] >= 1) {
 				repetitionCountDay[repKeyDay] += 1;
 			} else {
@@ -145,13 +149,14 @@ Template.frameSchedule.onCreated(function() {
 
 		// Place found events into the slots
 		_.each(dedupedEvents, function(event) {
+			var eventStart = LocalTime.fromString(event.startLocal);
+
 			event.repCount = repetitionCountDay[event.repKeyDay];
 			if (event.repCount < 2 && instance.repeatingOnly.get()) {
 				// Skip
 				return;
 			}
 
-			var eventStart = moment(event.start);
 			var dayStart = moment(eventStart).startOf('day');
 
 			var day = dayStart.diff(scheduleStart, 'days') % 7;
@@ -231,8 +236,10 @@ Template.frameSchedule.helpers({
 		var slots = Template.instance().slots.get();
 
 		return _.map(Template.instance().intervals.get(), function(mins) {
+			var intervalStart = moment().hour(0).minute(mins);
 			return {
-				interval: moment().hour(0).minute(mins).format('LT'),
+				intervalStart: intervalStart,
+				intervalLabel: intervalStart.format('LT'),
 				slots: _.map(Template.instance().days.get(), function(day) {
 					return slots[mins] && slots[mins][day] || [];
 				})
@@ -244,10 +251,13 @@ Template.frameSchedule.helpers({
 		return Template.instance().kindMap(this.title) || 'other';
 	},
 
-	customStartTime: function(interval) {
+	customStartTime: function(intervalStart) {
 		var event = this;
-		var startTime = moment(event.start).format('LT');
-		return (interval !== startTime) ? startTime : false;
+		var startTime = moment(LocalTime.fromString(event.startLocal));
+		startTime.locale(intervalStart.locale());
+		var isSame = startTime.hours() == intervalStart.hours()
+		          && startTime.minutes() == intervalStart.minutes();
+		return isSame ? false : startTime.format("LT");
 	},
 
 	single: function() {
@@ -260,7 +270,7 @@ Template.frameSchedule.helpers({
 
 		// ... or if it doesn't occur this week.
 		var thisWeek = moment().startOf('week');
-		var eventWeek = moment(this.start).startOf('week');
+		var eventWeek = LocalTime.fromString(this.startLocal).startOf('week');
 		return eventWeek.isAfter(thisWeek);
 	}
 });

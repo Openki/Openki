@@ -16,8 +16,8 @@
 	display: inline-block;
 	list-style: none;
 	margin-bottom: 0;
-	margin-left: 10px;
-	padding-left: 0;
+	@include td-margin(left, 10px);
+	@include td-padding(left, 0);
 
 	&:hover {
 		cursor: default;
@@ -25,17 +25,29 @@
 }
 
 .course-member-roles li {
-	background: $blue;
-	color: $white;
 	display: inline-block;
-	font-size: small;
-	font-weight: bold;
-	padding: 4px 6px;
-	vertical-align: middle;
 
 	&.participant {
 		display: none;
 	}
+}
+
+.course-member-roles .dropdown-menu li {
+		padding: 5px 15px;
+}
+
+.course-member-role {
+	vertical-align: middle;
+	padding: 3px 6px 5px 6px;
+	background: $blue;
+}
+.course-member-role-text{
+	color: $white;
+	font-size: small;
+	font-weight: bold;
+}
+.team .course-member-role {
+	padding-right: 0px;
 }
 
 .role-short {
@@ -43,17 +55,29 @@
 }
 
 .js-add-to-team-btn {
-	margin-left: 6px;
-	padding: 2px 8px;
+	@include td-margin(left, 6px);
+	padding: 2px 6px;
 }
 
-.js-remove-from-team-btn {
-	margin-left: 3px;
-	padding: 0px 5px;
-	color: $black;
-	font-size: ceil($font-size-base * .7);
+.remove-team-btn {
+	padding: 2px;
+	margin: -2px;
+	vertical-align: baseline;
+	color: $white;
+	background: $blue;
+	border: none;
+
+	&:hover,
+	&:focus {
+		background: darken($blue, 10%);
+		color: $white;
+		border: none;
+	}
 }
 
+.js-remove-team {
+	padding: 6px 24px;
+}
 
 .course-member-comment {
 	display: block;
@@ -61,5 +85,5 @@
 }
 
 .course-member-comment .editable {
-	padding-left: 0 !important;
+	@include td-padding(left, 0 !important);
 }

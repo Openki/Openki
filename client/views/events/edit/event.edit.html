@@ -37,7 +37,7 @@
 						</span>
 						<input type="text"
 						       class="form-control js-event-start-date"
-						       value="{{localDate start}}"
+						       value="{{localDate startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 						       class="form-control"
 						       id="editEventStartTime"
 						       size="5"
-						       value="{{timeformat start}}"
+						       value="{{timeformat startLocal}}"
 						       {{disableForPast}}>
 					</div>
 				</div>
@@ -71,8 +71,9 @@
 						<input type="number"
 						       class="form-control"
 						       id="editEventDuration"
-						       value="{{timeformat Duration}}"
-						       size="5">
+						       value=""
+						       size="5"
+						       {{disableForPast}}>
 					</div>
 					<label>
 						{{mf 'course.event.edit.time_end' 'Time end'}}
@@ -90,7 +91,8 @@
 						       class="form-control"
 						       id="editEventEndTime"
 						       size="5"
-						       value="{{timeformat end}}">
+						       value="{{timeformat endLocal}}
+						       {{disableForPast}}">
 					</div>
 				</div>
 			</div>
@@ -208,9 +210,27 @@
 				{{/if}}
 			</div>
 
+			{{#if notifyChecked}}
+				<div class="form-group">
+					<label>
+						{{mf 'course.event.edit.addMessage' 'Add message'}}
+						<small> {{mf '_inputField.optional'}}</small>
+					</label>
+					<div class="input-group" id="editform_message" name="editform_message">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
+						</span>
+						<textarea rows="3"
+						       class="form-control js-event-edit-add-message"
+						       maxlength="2000"
+						       placeholder="{{mf 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
+					</div>
+				</div>
+			{{/if}}
+
 			<div class="form-actions">
 				{{> buttonCancel event="js-event-edit-cancel"}}
-				{{> buttonSave}}
+				{{> buttonSave saving=saving}}
 			</div>
 		</div>
 	</div>

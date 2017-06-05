@@ -1,22 +1,40 @@
 function sendIcal(events, response) {
 	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
+	var dname;
+
 	events.forEach(function(dbevent) {
 		var end = dbevent.end || dbevent.start;
+
+		var location = [];
+		if (dbevent.venue) location.push(dbevent.venue.name);
+		if (dbevent.room) location.push(dbevent.room);
+		location = location.join(', ');
+
 		calendar.addEvent({
 			uid: dbevent._id,
 			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
-			location: [dbevent.venue.name, dbevent.room].filter(function(s) { return !!s; }).join(', '),
+			location: location,
 			description: textPlain(dbevent.description),
 			url: Router.routes.showEvent.url(dbevent)
 		});
+
+		if (!dname) {
+			var sName = getSlug(dbevent.title);
+			var sDate = moment(dbevent.start).format("YYYY-MM-DD");
+			dname = "openki-" + sName + '-' + sDate + '.ics';
+		} else {
+			dname = "openki-calendar.ics";
+		}
 	});
 
 	var calendarstring = calendar.toString();
+
 	response.writeHead(200, {
-		'Content-Type': 'text/calendar; charset=UTF-8'
+		'Content-Type': 'text/calendar; charset=UTF-8',
+		'Content-Disposition': 'attachment; filename="' + dname + '"'
 	});
 
 	response.write(calendarstring);
@@ -40,14 +58,14 @@ Router.map(function () {
 		}
 	});
 	this.route('calEvent', {
-		path: 'cal/event/:_id',
+		path: 'cal/event/:_id.ics',
 		where: 'server',
 		action: function () {
 			sendIcal(Events.find({ _id: this.params._id }), this.response);
 		}
 	});
 	this.route('calCourse', {
-		path: 'cal/course/:_id',
+		path: 'cal/course/:slug,:_id.ics',
 		where: 'server',
 		action: function () {
 			sendIcal(Events.find({ courseId: this.params._id }), this.response);

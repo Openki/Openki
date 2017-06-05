@@ -101,18 +101,12 @@
 									</div>
 								</div>
 								{{#unless user.verified}}
-								<div class="details-info-group">
-									<div class="details-info-btn">
-									{{#if sending}}
-										{{mf 'profile.sendingVerificationMail' "We're sending a verification mail to your address, it should arrive shortly. Please click the link in that message."}}
-									{{else}}
-										<button type="button" class="btn btn-success js-verify-mail-btn">
-											<span class="fa fa-check-circle-o fa-lg fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.verifymail' 'Verify my E-Mail'}}
-										</button>
-									{{/if}}
+									<div class="details-info-group">
+										<div class="details-info-label"></div>
+										<div class="details-info-data">
+											{{> verifyEmail}}
+										</div>
 									</div>
-								</div>
 								{{/unless}}
 							{{/if}}
 							<div class="details-info-group">
@@ -165,8 +159,8 @@
 					</div>
 					{{/if}}
 					<div class="actions">
-						{{#unless verifyDelete}}
-							{{> buttonDelete event="js-profile-delete"}}
+						{{#unless expanded}}
+							{{> buttonDelete event="js-expand"}}
 						{{/unless}}
 							{{> buttonEdit event="js-profile-info-edit"}}
 						{{#unless changingPass}}
@@ -177,15 +171,16 @@
 						{{/unless}}
 					</div>
 				{{/if}}
-				{{#if verifyDelete}}
+				{{#if expanded}}
 					<div class="profile-delete-confirmation">
 						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 						<div class="form-actions">
-							{{> buttonCancel event="js-profile-delete-cancel"}}
-							<button type="button" class="btn btn-danger js-profile-delete-confirm-btn">
-								<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.delete.confirm.button' 'Delete my user and all its profile'}}
-							</button>
+							{{> buttonCancel event="js-collapse"}}
+							{{> buttonDeleteConfirm
+								event="js-profile-delete-confirm-btn"
+								textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+								textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
+							}}
 						</div>
 					</div>
 				{{/if}}

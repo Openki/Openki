@@ -1,14 +1,26 @@
-.frame-calendar-date-events {
-	@include clearfix;
-	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
-	padding: 10px 0;
-	width: auto;
+.frame-calendar-event-time {
+	font-weight: normal;
+	@include td-margin(right, 10px);
+}
+
+.frame-calendar-event-region {
+	font-size: .8em;
+	margin-left: 5px;
+}
+
+.frame-calendar-event-description {
+	@include td-make-xs-column(4);
+	font-weight: bold;
 
 	@media (min-width: $screen-xsm) {
-		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+		@include td-make-xs-column(2);
 	}
 }
 
-.frame-calendar-no-events {
-	text-align: center;
+.frame-calendar-event-content {
+	@include td-make-xs-column(8);
+
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(10);
+	}
 }

@@ -2,6 +2,9 @@
 
 Template.venueEdit.onCreated(function() {
 	var instance = this;
+
+	instance.busy(false);
+
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
@@ -116,24 +119,13 @@ Template.venueEdit.helpers({
 		return function() {
 			return locationTracker.markers.findOne({ main: true });
 		};
-	},
-});
-
-Template.venueEditAdditionalInfo.helpers({
-	facilitiesCheck: function(name) {
-		var attrs = { class: 'js-' + name };
-		if (this.facilities[name]) {
-			attrs.checked = 'checked';
-		}
-		return attrs;
 	}
 });
-
-
 
 Template.venueEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
+
 
 		if (pleaseLogin()) return;
 
@@ -149,8 +141,18 @@ Template.venueEdit.events({
 			, website:         instance.$('.js-website').val()
 		    };
 
+		if (!changes.name) {
+			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			return;
+		}
+
 		var newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
+
+		if (changes.description.trim().length === 0) {
+			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			return;
+		}
 
 		_.each(Venues.facilityOptions, function(f) {
 			if (instance.$('.js-'+f).prop('checked')) {
@@ -158,26 +160,32 @@ Template.venueEdit.events({
 			}
 		});
 
-		var marker = instance.locationTracker.markers.findOne({ main: true });
-		if (marker) {
-			changes.loc = marker.loc;
-		}
-
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				alert("Please select a region");
+				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
 		}
 
+		var marker = instance.locationTracker.markers.findOne({ main: true });
+		if (marker) {
+			changes.loc = marker.loc;
+		} else {
+			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			return;
+		}
+
 		var venueId = this._id ? this._id : '';
 		var parentInstance = instance.parentInstance();
+
+		instance.busy('saving');
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
+			instance.busy(false);
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
-				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes venue "{NAME}".'), 'success');
+				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 				if (instance.isNew) {
 					Router.go('venueDetails', { _id: venueId });
 				} else {
@@ -204,4 +212,14 @@ Template.venueEdit.events({
 	'change .js-region': function(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-region').val());
 	},
+});
+
+Template.venueEditAdditionalInfo.helpers({
+	facilitiesCheck: function(name) {
+		var attrs = { class: 'js-' + name };
+		if (this.facilities[name]) {
+			attrs.checked = 'checked';
+		}
+		return attrs;
+	}
 });

@@ -1,12 +1,13 @@
 "use strict";
 
+var maxEvents = 12;
+
 Router.map(function() {
 	this.route('venueDetails', {
 		path: 'venue/:_id/:name?',
 		waitOn: function () {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),
-				Meteor.subscribe('eventsFind', { venue: this.params._id })
 			];
 		},
 
@@ -23,8 +24,6 @@ Router.map(function() {
 			} else {
 				venue = Venues.findOne({_id: this.params._id});
 				if (!venue) return false; // Not found
-
-				data.eventsList = eventsFind({venue: id, after: minuteTime.get()}, 12);
 			}
 
 			data.venue = venue;
@@ -53,8 +52,12 @@ Router.map(function() {
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {
+	var instance = this;
+	instance.busy();
+
 	var isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
+	this.verifyDeleteVenue = new ReactiveVar(false);
 
 	var markers = new Meteor.Collection(null);
 	this.markers = markers;
@@ -78,10 +81,20 @@ Template.venueDetails.onCreated(function() {
 			});
 		}
 	};
+
+	this.eventsPredicate = function() {
+		return { venue: instance.data.venue._id, after: minuteTime.get() };
+	};
+
+	this.autorun(function() {
+		subs.subscribe('eventsFind', instance.eventsPredicate(), maxEvents);
+	});
 });
 
 Template.venueDetails.onRendered(function() {
 	var instance = this;
+
+	instance.busy(false);
 
 	instance.autorun(function() {
 		var data = Template.currentData();
@@ -122,6 +135,18 @@ Template.venueDetails.helpers({
 
 			return mf('venueDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
 		}
+	},
+
+	facilityNames: function() {
+		return Object.keys(this.facilities);
+	},
+
+	verifyDelete: function() {
+		return Template.instance().verifyDeleteVenue.get();
+	},
+
+	eventsList: function() {
+		return eventsFind(Template.instance().eventsPredicate(), maxEvents);
 	}
 });
 
@@ -129,20 +154,29 @@ Template.venueDetails.helpers({
 Template.venueDetails.events({
 	'click .js-venue-edit': function(event, instance) {
 		instance.editing.set(true);
+		instance.verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete': function(event, instance) {
-		if (confirm(mf("venue.detail.remove", "Remove venue?"))) {
-			var venue = instance.data.venue;
-			Meteor.call('venue.remove', venue._id, function(err, result) {
-				if (err) {
-					showServerError('Deleting the venue went wrong', err);
-				} else {
-					addMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
-					Router.go('venues');
-				}
-			});
-		}
+	'click .js-venue-delete': function () {
+		Template.instance().verifyDeleteVenue.set(true);
+	},
+
+	'click .js-venue-delete-cancel': function () {
+		Template.instance().verifyDeleteVenue.set(false);
+	},
+
+	'click .js-venue-delete-confirm': function(event, instance) {
+		var venue = instance.data.venue;
+		instance.busy('deleting');
+		Meteor.call('venue.remove', venue._id, function(err, result) {
+			instance.busy(false);
+			if (err) {
+				showServerError('Deleting the venue went wrong', err);
+			} else {
+				addMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
+				Router.go('profile');
+			}
+		});
 	}
 
 });

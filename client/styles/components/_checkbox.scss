@@ -9,7 +9,7 @@
 }
 
 .checkbox-sub {
-	margin-left: 20px;
+	@include td-margin(left, 20px);
 }
 
 .checkbox-sub + .checkbox:not(.checkbox-sub) {

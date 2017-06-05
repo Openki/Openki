@@ -1,8 +1,19 @@
+import '/imports/ui/lib/CSSFromQuery.js';
+
 Router.map(function () {
 	this.route('frameCalendar', {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
-		layoutTemplate: 'frameCalendar',
+		layoutTemplate: 'frameLayout',
+		data: function() {
+			var cssRules = new CSSFromQuery();
+			cssRules
+				.add('regionbg', 'background-color', '.frame-calendar-event-region')
+				.add('regioncolor', 'color', '.frame-calendar-event-region')
+				.read(this.params.query);
+
+			return { cssRules: cssRules };
+		},
 		onAfterAction: function() {
 			document.title = webpagename + ' Calendar';
 		}
@@ -11,71 +22,71 @@ Router.map(function () {
 
 Template.frameCalendar.onCreated(function() {
 	var instance = this;
-	instance.startOfWeek = new ReactiveVar();
-	instance.weekdays = new ReactiveVar([]);
 
-	this.autorun(function() {
-		minuteTime.get();
-		instance.startOfWeek.set(moment().startOf('week'));
-	});
+	instance.groupedEvents = new ReactiveVar([]);
+	instance.days = new ReactiveVar([]);
 
-	this.autorun(function() {
-		var filter = Filtering(EventPredicates).read(Router.current().params);
+	instance.autorun(function() {
+		var filter = Filtering(EventPredicates)
+		             .read(Router.current().params.query)
+		             .done();
 
 		var filterParams = filter.toParams();
-		var startOfWeek = instance.startOfWeek.get();
-		filterParams.after = startOfWeek.toDate();
-		filterParams.before = moment(startOfWeek).add(1, 'week').toDate();
+		filterParams.after = new Date();
 
 		instance.subscribe('eventsFind', filterParams, 200);
+
+		var events = Events.find({}, {sort: {start: 1}}).fetch();
+		var groupedEvents = _.groupBy(events, function(event) {
+			return moment(event.start).format('LL');
+		});
+
+		instance.groupedEvents.set(groupedEvents);
+		instance.days.set(Object.keys(groupedEvents));
 	});
 
-	this.autorun(function() {
-		var filter = Filtering(EventPredicates).read(Router.current().params);
-		var start = instance.startOfWeek.get();
-		var end = moment(start).add(1, 'week');
-
-		var weekdays = [];
-		var current = moment(start);
-		while (current.isBefore(end)) {
-			var next = moment(current).add(1, 'day');
-			var filterParams = filter.toParams();
-			filterParams.after = current.toDate();
-			filterParams.before = next.toDate();
-
-			weekdays.push({
-				date: current,
-				dayEvents: eventsFind(filterParams, 200)
-			});
-			current = next;
-		}
-		instance.weekdays.set(weekdays);
-	});
+	instance.allRegions = Session.get('region') == 'all';
 });
 
 Template.frameCalendar.helpers({
-	calendarDay: function(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
+	'ready': function() {
+		return Template.instance().subscriptionsReady();
 	},
 
-	hasDayEvents: function() {
-		return this.dayEvents.count() > 0;
+	'days': function() {
+		return Template.instance().days.get();
 	},
 
-	weekdays: function() {
-		return Template.instance().weekdays.get();
+	'eventsOn': function(day) {
+		var groupedEvents = Template.instance().groupedEvents.get();
+		return groupedEvents[day];
 	}
 });
 
-Template.frameCalendar.onRendered(function() {
-	var instance = this;
-	this.autorun(function() {
-		// rerun when subscriptions become ready
-		instance.subscriptionsReady();
-		// wait until subtemplates are rendered
-		setTimeout(function(){
-			instance.$("a").attr("target", "_blank");
-		}, 0);
-	});
+
+Template.frameCalendarEvent.onCreated(function() {
+	this.expanded = new ReactiveVar(false);
+});
+
+
+Template.frameCalendarEvent.helpers({
+	'allRegions': function() {
+		return Template.instance().parentInstance().allRegions;
+	},
+
+	'regionName': function() {
+		return Regions.findOne(this.region).name;
+	},
+
+	'expanded': function() {
+		return Template.instance().expanded.get();
+	}
+});
+
+Template.frameCalendarEvent.events({
+	'click .js-toggle-event-details': function(e, instance) {
+		$(e.currentTarget).toggleClass('active');
+		instance.$('.frame-calendar-event-time').toggle();
+		instance.expanded.set(!instance.expanded.get());
+	}
 });

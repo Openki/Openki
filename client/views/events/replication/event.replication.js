@@ -1,4 +1,4 @@
-"use strict";
+import '/imports/LocalTime.js';
 
 var replicaStartDate = function(originalDate) {
 	var originalMoment = moment(originalDate);
@@ -157,7 +157,6 @@ var getEventFrequency = function(instance) {
 
 	var eventStart = moment(instance.data.start);
 	var originDay = moment(eventStart).startOf('day');
-	var eventEnd = moment(instance.data.end);
 
 	var now = moment();
 	var repStart = moment(startDate).startOf('day');
@@ -179,15 +178,15 @@ var getEventFrequency = function(instance) {
 
 Template.eventReplication.events({
 	'click .js-replicate-btn': function (event, instance) {
-		var start = moment(instance.data.start);
-		var end = moment(instance.data.end);
+		var startLocal = LocalTime.fromString(instance.data.startLocal);
+		var endLocal   = LocalTime.fromString(instance.data.endLocal);
 
 		var replicaDays = instance.activeDays();
 		$.each(replicaDays, function(i, days) {
 			/*create a new event for each time interval */
 			var replicaEvent = {
-				start: moment(start).add(days, 'days').toDate(),
-				end:   moment(end  ).add(days, 'days').toDate(),
+				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
+				endLocal:   LocalTime.toString(moment(endLocal  ).add(days, 'days')),
 				title: instance.data.title,
 				description: instance.data.description,
 				venue: instance.data.venue,
@@ -209,7 +208,7 @@ Template.eventReplication.events({
 				if (error) {
 					showServerError('Replicating the event went wrong', error);
 				} else {
-					var fmtDate = moment(replicaEvent.start).format('LL');
+					var fmtDate = LocalTime.fromString(replicaEvent.startLocal).format('LL');
 					addMessage(mf('event.replicate.success', { TITLE: replicaEvent.title, DATE: fmtDate }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
 				}
 			});

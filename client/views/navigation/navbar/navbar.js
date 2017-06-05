@@ -1,42 +1,18 @@
 Template.navbar.onRendered(function() {
-	var gridFloatBreakpoint = SCSSVars.gridFloat;
-	var isCollapsed = Session.get('viewportWidth') <= gridFloatBreakpoint;
+	var instance = this;
+	var viewportWidth = Session.get('viewportWidth');
+	var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
 
-	if (!isCollapsed) {
-		this.$('.dropdown').on('show.bs.dropdown', function(e){
-			$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-		});
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
-			$(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-		});
-
+	// if not collapsed give the navbar and active menu item a
+	// class for when not at top
+	if (viewportWidth > gridFloatBreakpoint) {
 		$(window).scroll(function () {
-			var navbar = this.$('.navbar');
-			var activeNavLink = this.$('.navbar-link-active');
-			var isCovering = navbar.hasClass('navbar-covering');
-			var atTop = $(window).scrollTop() < 5;
+			var navbar = instance.$('.navbar');
+			var activeNavLink = instance.$('.navbar-link-active');
+			var notAtTop = $(window).scrollTop() > 5;
 
-			if (!isCovering && !atTop) {
-				navbar.addClass('navbar-covering');
-				activeNavLink.addClass('navbar-link-covering');
-			} else if (isCovering && atTop) {
-				navbar.removeClass('navbar-covering');
-				activeNavLink.removeClass('navbar-link-covering');
-			}
-		});
-	} else {
-		this.$('.dropdown').on('show.bs.dropdown', _.debounce(function(e){
-			var container = $('#bs-navbar-collapse-1');
-			var scrollTo = $(this);
-			container.animate({
-				scrollTop: scrollTo.offset().top
-				           - container.offset().top
-				           + container.scrollTop()
-			});
-		}, 1));
-		this.$('.dropdown').on('hide.bs.dropdown', function(e){
-			var container = $('#bs-navbar-collapse-1');
-			container.scrollTop(0);
+			navbar.toggleClass('navbar-covering', notAtTop);
+			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
 		});
 	}
 });
@@ -66,11 +42,50 @@ Template.navbar.helpers({
 		} else {
 			return '';
 		}
+	},
+
+	toggleNavbarRight: function(LTRPos) {
+		var isRTL = Session.get('textDirectionality') == 'rtl';
+
+		if (LTRPos === 'left') {
+			return isRTL ? 'navbar-right' : '';
+		} else {
+			return isRTL ? '' : 'navbar-right';
+		}
 	}
 });
 
 Template.navbar.events({
 	'click .js-nav-dropdown-close': function(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
+	},
+
+	'show.bs.dropdown, hide.bs.dropdown .dropdown': function(e, instance) {
+		var viewportWidth = Session.get('viewportWidth');
+		var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
+
+		if (viewportWidth <= gridFloatBreakpoint) {
+			var container = instance.$('#bs-navbar-collapse-1');
+
+			// make menu item scroll up when opening the dropdown menu
+			if (e.type == 'show') {
+				var scrollTo = $(e.currentTarget);
+
+				container.animate({
+					scrollTop: scrollTo.offset().top
+						- container.offset().top
+						+ container.scrollTop()
+				});
+			} else {
+				container.scrollTop(0);
+			}
+		} else {
+			// animate navbar dropdowns with a sliding motion
+			$(e.currentTarget)
+				.find('.dropdown-menu')
+				.first()
+				.stop(true, true)
+				.slideToggle();
+		}
 	},
 });

@@ -65,7 +65,7 @@ Template.userprofile.helpers({
 		var userID = templateData.user._id;
 		var coursesForRole = [];
 
-		involvedIn.forEach(function(course) {			
+		involvedIn.forEach(function(course) {
 			if(!!hasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
@@ -131,7 +131,37 @@ Template.userprofile.events({
 	},
 });
 
+Template.emailBox.onCreated(function() {
+	this.verificationMailSent = new ReactiveVar(false);
+});
+
+Template.emailBox.helpers({
+	hasEmail: function() {
+		return !!Meteor.user().emails[0];
+	},
+
+	hasVerifiedEmail: function() {
+		return Meteor.user().emails[0].verified;
+	},
+
+	verificationMailSent: function() {
+		return Template.instance().verificationMailSent.get();
+	}
+});
+
 Template.emailBox.events({
+	'click .js-verify-mail': function(e, instance) {
+		instance.verificationMailSent.set(true);
+		Meteor.call('sendVerificationEmail', function(err) {
+			if (err) {
+				instance.verificationMailSent.set(false);
+				showServerError('Failed to send verification mail', err);
+			} else {
+				addMessage(mf('profile.sentVerificationMail'), 'success');
+			}
+		});
+	},
+
 	'change .js-send-own-adress': function (event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
 	},

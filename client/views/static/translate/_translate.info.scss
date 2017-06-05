@@ -16,7 +16,7 @@
 	background-color: $white;
 	margin: 5px;
 	padding: 2px 5px;
-	margin-left: 15px;
+	@include td-margin(left, 15px);
 	border-width: 1px;
 	border-color: $gray-lighter;
 	border-style: solid;
@@ -123,7 +123,7 @@ div.mfTransGraph {
 #mfTransNewText,
 #mfTransNewSubmit {
 	display: inline-block;
-	margin-left: 5px;
+	@include td-margin(left, 5px);
 }
 
 #mfTransNewText {
