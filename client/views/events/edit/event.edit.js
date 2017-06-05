@@ -13,6 +13,7 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
+	instance.notifyChecked = new ReactiveVar(instance.data.new);
 
 	instance.editableDescription = Editable(
 		false,
@@ -195,6 +196,9 @@ Template.eventEdit.helpers({
 
 			return Courses.findOne({_id: courseId});
 		}
+	},
+	notifyChecked: function() {
+		return Template.instance().notifyChecked.get();
 	}
 });
 
@@ -263,10 +267,12 @@ Template.eventEdit.events({
 
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
+		var addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
-		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
+		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
 			instance.busy(false);
+
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {
@@ -293,6 +299,10 @@ Template.eventEdit.events({
 	'click .js-toggle-duration': function(event, instance){
 		Tooltips.hide();
 		$('.time-end > *').toggle();
+	},
+
+	'click .js-check-notify': function(event, instance){
+		instance.notifyChecked.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
 	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {

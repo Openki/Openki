@@ -54,7 +54,7 @@ LocalTime.toString = function(date) {
   *
   * Note that the returned date will be faux UTC.
   */
-LocalTime.fromString = function(dateStr, tz) {
+LocalTime.fromString = function(dateStr) {
 	return moment.utc(dateStr);
 };
 

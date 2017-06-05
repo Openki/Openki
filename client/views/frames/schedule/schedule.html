@@ -17,7 +17,7 @@
 				<tr>
 					<td class="schedule-time" scope="row">
 						<div class="schedule-time-interval">
-							{{interval}}
+							{{intervalLabel}}
 						</div>
 					</td>
 					{{#each slots}}
@@ -29,14 +29,14 @@
 										{{#if showDate}}
 											<br>
 											<span class="schedule-event-time">
-												{{#unless single}}start:{{/unless}}
+												{{#unless single}}{{mf 'schedule.startDateLabel' "start:"}}{{/unless}}
 												{{dateformat start}}
 											</span>
 										{{/if}}
-										{{#if customStartTime ../../interval}}
+										{{#if customStartTime ../../intervalStart}}
 											<br>
 											<span class="schedule-event-time">
-												{{customStartTime ../../interval}}
+												{{customStartTime ../../intervalStart}}
 											</span>
 										{{/if}}
 									</div>

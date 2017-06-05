@@ -1,3 +1,3 @@
 .venue-tag {
-	@include tag-variation($venue-bg, $venue-color);
+	@include tag($venue-bg, $venue-color);
 }

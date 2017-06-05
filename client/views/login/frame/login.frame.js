@@ -250,18 +250,18 @@ Template.forgotPwdFrame.helpers({
 });
 
 Template.forgotPwdFrame.events({
-	'keyup #resetPwdEmail': function(event, instance) {
-		var resetPwdEmail = $(event.currentTarget).val();
+	'input, change, paste, keyup, mouseup': function(event, instance) {
+		var resetPwdEmail = instance.$('.js-reset-pw-email').val();
 		var emailIsValid = ~resetPwdEmail.indexOf('@');
 
 		instance.emailIsValid.set(emailIsValid);
 	},
 
-	'submit .js-reset-pw': function(event, instance) {
+	'submit': function(event, instance) {
 		event.preventDefault();
 		instance.busy('requesting-pw-reset');
 		Accounts.forgotPassword({
-			email: instance.$('.js-login-email').val()
+			email: instance.$('.js-reset-pw-email').val()
 		}, function(err) {
 			instance.busy(false);
 			if (err) {

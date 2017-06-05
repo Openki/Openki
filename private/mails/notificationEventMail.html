@@ -1,5 +1,10 @@
 {{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
 <br>
+{{#if additionalMessage}}
+	{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
+	{{additionalMessage}}
+	<br>
+{{/if}}
 {{#if new}}
 	{{mf "notification.event.mail.new" "A new event was just published for course {COURSE}:" COURSE=course.name LOCALE=locale}}
 {{else}}
@@ -27,7 +32,7 @@
 	</tr>
 	<tr>
 		<th>{{mf "notification.event.mail.description" "Event description" LOCALE=locale}}</th>
-		<td>{{{description}}}</td>
+		<td>{{{event.description}}}</td>
 	</tr>
 </table>
 

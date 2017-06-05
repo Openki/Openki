@@ -60,7 +60,7 @@
 	@include td-margin(left, -8px);
 	margin-top: 15px;
 	position: absolute;
-	z-index: 1;
+	z-index: $zindex-tooltip - 1;
 }
 
 .editable-controls button {
