@@ -78,6 +78,23 @@ warnings(Template.loginFrame,
 
 Template.loginFrame.onCreated(function() {
 	this.busy(false);
+	this.OAuthServices =
+		[
+			{ 'name': 'google-plus'
+			, 'fullName': 'Google+'
+			, 'serviceName': 'Google'
+			}
+		,
+			{ 'name': 'facebook'
+			, 'fullName': 'Facebook'
+			, 'serviceName': 'Facebook'
+			}
+		,
+			{ 'name': 'github'
+			, 'fullName': 'GitHub'
+			, 'serviceName': 'Github'
+			}
+		];
 });
 
 Template.loginFrame.events({
@@ -109,7 +126,7 @@ Template.loginFrame.events({
 		var user = instance.$('#loginName').val();
 		var password = instance.$('#loginPassword').val();
 
-		instance.busy('logging-in')
+		instance.busy('logging-in');
 		Meteor.loginWithPassword(user, password, function(err) {
 			instance.busy(false);
 			if (err) {
@@ -133,7 +150,7 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-external-service-login-btn': function(event, instance) {
+	'click .js-oauth-btn': function(event, instance) {
 		event.preventDefault();
 
 		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
@@ -152,6 +169,12 @@ Template.loginFrame.events({
 				$('.loginButton').dropdown('toggle');
 			}
 		});
+	}
+});
+
+Template.loginFrame.helpers({
+	OAuthServices: function() {
+		return Template.instance().OAuthServices;
 	}
 });
 
