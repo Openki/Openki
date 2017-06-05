@@ -153,13 +153,14 @@ Template.loginFrame.events({
 	'click .js-oauth-btn': function(event, instance) {
 		event.preventDefault();
 
-		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		var service = event.currentTarget.dataset.service;
+		var loginMethod = 'loginWith' + service;
 		if (!Meteor[loginMethod]) {
 			console.log("don't have "+loginMethod);
 			return;
 		}
 
-		instance.busy('logging-in');
+		instance.busy(service);
 		Meteor[loginMethod]({
 		}, function (err) {
 			instance.busy(false);
