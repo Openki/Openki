@@ -23,4 +23,3 @@ function extendPrototypeToJSON(o) {
 // This is useful in serializing errors to the Log
 extendPrototypeToJSON(Error);
 extendPrototypeToJSON(Meteor.Error);
-

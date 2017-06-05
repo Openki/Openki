@@ -6,10 +6,10 @@
 
 import '/imports/LocalTime.js';
 
-TemplateMixins.Saving(Template.eventEdit);
-
 Template.eventEdit.onCreated(function() {
 	var instance = this;
+	instance.busy(false);
+
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
@@ -269,9 +269,10 @@ Template.eventEdit.events({
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 		var addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
-		instance.saving(true);
+		instance.busy('saving');
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
-			instance.saving(false);
+			instance.busy(false);
+
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

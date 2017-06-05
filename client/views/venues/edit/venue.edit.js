@@ -1,7 +1,5 @@
 "use strict";
 
-TemplateMixins.Saving(Template.venueEdit);
-
 Template.venueEdit.onCreated(function() {
 	var instance = this;
 
@@ -191,9 +189,9 @@ Template.venueEdit.events({
 		var venueId = this._id ? this._id : '';
 		var parentInstance = instance.parentInstance();
 
-		instance.saving(true);
+		Session.set('busy', 'saving');
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
-			instance.saving(false);
+			Session.set('busy', false);
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
