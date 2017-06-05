@@ -1,7 +1,8 @@
-TemplateMixins.Busy(Template.groupSettings);
-
 Template.groupSettings.onCreated(function() {
 	var instance = this;
+
+	instance.busy(false);
+
 	instance.userSearch = new ReactiveVar('');
 
 	instance.autorun(function() {
@@ -80,12 +81,12 @@ Template.groupSettings.events({
 
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
-		Session.set('busy', 'saving');
+		instance.busy('saving');
 		Meteor.call("saveGroup", instance.data.group._id, {
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val(),
 		}, function(err) {
-			Session.set('busy', false);
+			instance.busy(false);
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {

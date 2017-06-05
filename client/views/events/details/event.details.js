@@ -1,6 +1,7 @@
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
+	this.busy(false);
 	this.editing = new ReactiveVar(!this.data._id);
 });
 
@@ -65,9 +66,9 @@ Template.event.events({
 
 		var title = event.title;
 		var course = event.courseId;
-		Session.set('busy', 'deleting');
+		instance.busy('deleting');
 		Meteor.call('removeEvent', event._id, function (error) {
-			Session.set('busy', false);
+			instance.busy(false);
 			if (error) {
 				showServerError('Could not remove event ' + "'" + title + "'", error);
 			} else {

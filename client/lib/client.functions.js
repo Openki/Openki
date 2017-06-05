@@ -235,28 +235,6 @@ TemplateMixins = {
 			},
 		});
 	},
-
-	/** Setup disabling of buttons for a template
-	  *
-	  * @param {Object} template instance
-	  *
-	  * The template instance gains two helpers, one disabling the button whenever
-	  * the {busy} value is truthy and one comparing the {busy} value to a given
-	  * action name (e.g. 'saving').
-	  */
-	Busy: function(template) {
-		template.helpers({
-			'disabled': function() {
-				if (Session.get('busy')) {
-					return 'disabled';
-				}
-			},
-
-			'busy': function(action) {
-				return Session.equals('busy', action);
-			}
-		});
-	}
 };
 
 
@@ -451,6 +429,72 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
     }
 };
 
+
+/** Set the business of the template instance
+  *
+  * This method will set up the 'business' variable on the template instance.
+  * It needs to be called in onCreated() so the other methods will find the
+  * var. Usually it will be this.busy(false) bout it could also be
+  * this.busy('loading') for example.
+  *
+  * @param {String} [activity] The new business
+  */
+Blaze.TemplateInstance.prototype.busy = function (activity) {
+	if (!this.business) {
+		this.business = new ReactiveVar(activity);
+	} else {
+		this.business.set(activity);
+	}
+};
+
+
+/** Find business state var in this or parent template instance
+  */
+Blaze.TemplateInstance.prototype.findBusiness = function() {
+	if (this.business) return this.business; // Short-circuit common case
+
+	var businessInstance = this;
+	while (businessInstance && !businessInstance.business) {
+		businessInstance = businessInstance.parentInstance();
+	}
+
+	if (!businessInstance) {
+		throw "Unable to find parent instance with business set";
+	}
+
+	// Cache on the local instance
+	this.business = businessInstance.business;
+
+	return this.business;
+};
+
+
+/** Compare activity to template business
+  * This can be used to show a busy state while the template is working.
+  *
+  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+  *
+  * @param {String} [activity] compare to this activity
+  * @returns {Bool} Whether business matches activity
+  */
+Template.registerHelper('busy', function(activity) {
+	var business = Template.instance().findBusiness();
+	return business.get() == activity;
+});
+
+
+/** Disable buttons while there is business to do.
+  *
+  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+  *
+  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+  */
+Template.registerHelper('disabledIfBusy', function() {
+	var business = Template.instance().findBusiness();
+	return business.get() ? 'disabled' : '';
+});
+
+
 Template.registerHelper('groupShort', function(groupId) {
 	var instance = Template.instance();
 	instance.subscribe('group', groupId);
@@ -479,17 +523,4 @@ Template.registerHelper('groupLogo', function(groupId) {
 	*/
 Template.registerHelper('$instance', function() {
 	return Template.instance();
-});
-
-Blaze.TemplateInstance.prototype.setBusy('busy', function(activity, state) {
-	var instance = Template.instance();
-	if (!instance.busy) instance.busy = {};
-	if (!instance.busy[activity]) instance.busy[activity] = new ReactiveVar(false);
-	return instance.busy[activity].set(state);
-});
-
-Template.registerHelper('busy', function(activity) {
-	var instance = Template.instance();
-	if (!instance.busy || !instance.busy[activity]) throw "Busy state for "+activity+" not initialized.";
-	return instance.busy[activity].get();
 });

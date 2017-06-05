@@ -52,7 +52,9 @@ Router.map(function() {
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {
-	var self = this;
+	var instance = this;
+	instance.busy();
+
 	var isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
 	this.verifyDeleteVenue = new ReactiveVar(false);
@@ -81,11 +83,11 @@ Template.venueDetails.onCreated(function() {
 	};
 
 	this.eventsPredicate = function() {
-		return { venue: self.data.venue._id, after: minuteTime.get() };
+		return { venue: instance.data.venue._id, after: minuteTime.get() };
 	};
 
 	this.autorun(function() {
-		subs.subscribe('eventsFind', self.eventsPredicate(), maxEvents);
+		subs.subscribe('eventsFind', instance.eventsPredicate(), maxEvents);
 	});
 });
 

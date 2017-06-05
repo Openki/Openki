@@ -6,9 +6,9 @@
 
 import '/imports/LocalTime.js';
 
-TemplateMixins.Busy(Template.eventEdit);
-
 Template.eventEdit.onCreated(function() {
+	instance.busy(false);
+
 	var instance = this;
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
@@ -264,9 +264,9 @@ Template.eventEdit.events({
 		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
 		var sendNotification = instance.$(".js-check-notify").is(':checked');
 
-		Session.set('busy', 'saving');
+		instance.busy('saving');
 		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, function(error, eventId) {
-			Session.set('busy', false);
+			instance.busy(false);
 			if (error) {
 				showServerError('Saving the event went wrong', error);
 			} else {

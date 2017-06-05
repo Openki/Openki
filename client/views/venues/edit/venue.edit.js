@@ -1,7 +1,5 @@
 "use strict";
 
-TemplateMixins.Busy(Template.venueEdit);
-
 Template.venueEdit.onCreated(function() {
 	var instance = this;
 
