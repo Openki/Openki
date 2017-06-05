@@ -417,7 +417,8 @@ Template.registerHelper ("venueName", function(venueId) {
  */
 
 Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
-    var view = Blaze.currentView;
+	var view = this.view;
+
     if (typeof levels === "undefined") {
         levels = 1;
     }
