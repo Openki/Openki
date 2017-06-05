@@ -1,6 +1,6 @@
 <template name="buttonSave">
-	<button type="submit" class="btn btn-save {{event}}" {{disabled}}>
-		{{#if saving}}
+	<button type="submit" class="btn btn-save {{event}}" {{disabledIfBusy}}>
+		{{#if busy 'saving'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.saving' 'Saving...'}}
 		{{else}}
@@ -11,22 +11,34 @@
 </template>
 
 <template name="buttonCancel">
-	<button type="button" class="btn btn-cancel {{event}}">
+	<button type="button" class="btn btn-cancel {{event}}" {{disabledIfBusy}}>
 		<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 		{{mf '_button.cancel'}}
 	</button>
 </template>
 
 <template name="buttonEdit">
-	<button type="button" class="btn btn-edit {{event}}">
+	<button type="button" class="btn btn-edit {{event}}" {{disabledIfBusy}}>
 		<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 		{{mf '_button.edit'}}
 	</button>
 </template>
 
 <template name="buttonDelete">
-	<button type="button" class="btn btn-delete {{event}}">
+	<button type="button" class="btn btn-delete {{event}}" {{disabledIfBusy}}>
 		<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
 		{{mf '_button.delete'}}
+	</button>
+</template>
+
+<template name="buttonDeleteConfirm">
+	<button type="button" class="btn btn-danger {{event}}" {{disabledIfBusy}}>
+		{{#if busy 'deleting'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{textBusy}}
+		{{else}}
+			<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
+			{{textIdle}}
+		{{/if}}
 	</button>
 </template>

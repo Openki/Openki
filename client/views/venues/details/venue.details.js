@@ -52,7 +52,9 @@ Router.map(function() {
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {
-	var self = this;
+	var instance = this;
+	instance.busy();
+
 	var isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
 	this.verifyDeleteVenue = new ReactiveVar(false);
@@ -81,16 +83,18 @@ Template.venueDetails.onCreated(function() {
 	};
 
 	this.eventsPredicate = function() {
-		return { venue: self.data.venue._id, after: minuteTime.get() };
+		return { venue: instance.data.venue._id, after: minuteTime.get() };
 	};
 
 	this.autorun(function() {
-		subs.subscribe('eventsFind', self.eventsPredicate(), maxEvents);
+		subs.subscribe('eventsFind', instance.eventsPredicate(), maxEvents);
 	});
 });
 
 Template.venueDetails.onRendered(function() {
 	var instance = this;
+
+	instance.busy(false);
 
 	instance.autorun(function() {
 		var data = Template.currentData();
@@ -163,7 +167,9 @@ Template.venueDetails.events({
 
 	'click .js-venue-delete-confirm': function(event, instance) {
 		var venue = instance.data.venue;
+		instance.busy('deleting');
 		Meteor.call('venue.remove', venue._id, function(err, result) {
+			instance.busy(false);
 			if (err) {
 				showServerError('Deleting the venue went wrong', err);
 			} else {

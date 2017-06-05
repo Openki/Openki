@@ -41,15 +41,41 @@
 			</div>
 			<div class="form-group forgot-pwd-btn-container">
 				<button type="button" class="btn btn-link js-forgot-pwd-btn">
+					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
 					{{mf 'forgot' "I forgot my password"}}
 				</button>
 			</div>
 			<div class="form-group">
-				<button type="submit" class='btn btn-default js-login form-control'>
-					<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+				<button type="submit" class='btn btn-default js-login form-control' {{disabledIfBusy}}>
+					{{#if busy 'logging-in'}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						{{mf 'login.login.submit.busy' 'Logging in...'}}
+					{{else}}
+						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 						{{mf 'login.login.submit' 'Login'}}
+					{{/if}}
 				</button>
 			</div>
+			<hr>
+			<div class="form-group">
+				{{#each service in OAuthServices}}
+					<button
+						class="btn btn-{{service.name}} form-control js-oauth-btn"
+					    data-service="{{service.serviceName}}"
+					    type="button"
+						{{disabledIfBusy}}>
+						{{#if busy service.serviceName}}
+							<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+							{{mf 'login.OAuth.busy' 'Logging in with '}}
+						{{else}}
+							<span class="fa fa-{{service.name}} fa-fw" aria-hidden="true"></span>
+							{{mf 'login.OAuth.loginWith' 'Login with '}}
+						{{/if}}
+						{{service.fullName}}
+					</button>
+				{{/each}}
+			</div>
+			<hr>
 			<div class="form-group">
 				<button class="btn btn-add form-control js-register-open"
 				        data-toggle="modal"
@@ -57,27 +83,6 @@
 						type="button">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit' 'Create account'}}
-				</button>
-			</div>
-			<div class="form-group external-service-login">
-				<h5>{{mf 'frame.login_external_services' 'Or login with:'}}</h5>
-				<button class="js-external-service-login-btn"
-				        data-service='Google'
-				        title="Login with Google+"
-				        type="button">
-					<span class="fa fa-google-plus-square"></span>
-				</button>
-				<button class="js-external-service-login-btn"
-				        data-service='Facebook'
-				        title="Login with Facebook"
-				        type="button">
-					<span class="fa fa-facebook-square"></span>
-				</button>
-				<button class="js-external-service-login-btn"
-				        data-service='Github'
-				        title="Login with Github"
-				        type="button">
-					<span class="fa fa-github-square"></span>
 				</button>
 			</div>
 		</div>
@@ -149,9 +154,14 @@
 			</span>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-add form-control js-register">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-				{{mf 'login.register.submit'}}
+			<button type="submit" class="btn btn-add form-control js-register" {{disabledIfBusy}}>
+				{{#if busy 'registering'}}
+					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{mf 'login.register.submit.busy' 'Registering...'}}
+				{{else}}
+					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+					{{mf 'login.register.submit'}}
+				{{/if}}
 			</button>
 		</div>
 	</form>
@@ -182,16 +192,23 @@
 			{{/if}}
 		</div>
 		<div class="form-group">
-			<button class="btn btn-save js-reset-pwd-btn form-control"
-			        disabled="{{#if noValidEmail}}disabled{{/if}}"
-			        type="submit">
-				<span class="fa fa-envelope"></span>
-				{{mf 'forgot.send' 'Reset my password'}}
+			<button
+				class="btn btn-save js-reset-pwd-btn form-control"
+			    disabled="{{#if noValidEmail}}disabled{{/if}}"
+			    type="submit"
+				{{disabledIfBusy}}>
+				{{#if busy 'requesting-pw-reset'}}
+					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{mf 'forgot.send.busy' 'Resetting password...'}}
+				{{else}}
+					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+					{{mf 'forgot.send' 'Reset my password'}}
+				{{/if}}
 			</button>
 		</div>
 		<div class="form-group">
 			<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
-				<span class="glyphicon glyphicon-remove"></span>
+				<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 				{{mf '_button.cancel'}}
 			</button>
 		</div>

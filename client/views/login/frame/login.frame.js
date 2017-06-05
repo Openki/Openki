@@ -76,6 +76,27 @@ warnings(Template.loginFrame,
 	]
 );
 
+Template.loginFrame.onCreated(function() {
+	this.busy(false);
+	this.OAuthServices =
+		[
+			{ 'name': 'google-plus'
+			, 'fullName': 'Google+'
+			, 'serviceName': 'Google'
+			}
+		,
+			{ 'name': 'facebook'
+			, 'fullName': 'Facebook'
+			, 'serviceName': 'Facebook'
+			}
+		,
+			{ 'name': 'github'
+			, 'fullName': 'GitHub'
+			, 'serviceName': 'Github'
+			}
+		];
+});
+
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
 		instance.parentInstance().forgot.set(true);
@@ -104,7 +125,10 @@ Template.loginFrame.events({
 		event.preventDefault();
 		var user = instance.$('#loginName').val();
 		var password = instance.$('#loginPassword').val();
+
+		instance.busy('logging-in');
 		Meteor.loginWithPassword(user, password, function(err) {
+			instance.busy(false);
 			if (err) {
 				var reason = err.reason;
 				if (reason == 'Match failed') {
@@ -126,22 +150,32 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-external-service-login-btn': function(event, instance) {
+	'click .js-oauth-btn': function(event, instance) {
 		event.preventDefault();
 
-		var loginMethod = 'loginWith' + event.currentTarget.dataset.service;
+		var service = event.currentTarget.dataset.service;
+		var loginMethod = 'loginWith' + service;
 		if (!Meteor[loginMethod]) {
 			console.log("don't have "+loginMethod);
 			return;
 		}
+
+		instance.busy(service);
 		Meteor[loginMethod]({
 		}, function (err) {
+			instance.busy(false);
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
 				$('.loginButton').dropdown('toggle');
 			}
 		});
+	}
+});
+
+Template.loginFrame.helpers({
+	OAuthServices: function() {
+		return Template.instance().OAuthServices;
 	}
 });
 
@@ -175,6 +209,10 @@ warnings(Template.registerFrame,
 	]
 );
 
+Template.registerFrame.onCreated(function() {
+	this.busy(false);
+});
+
 Template.registerFrame.onRendered(function() {
 	var instance = this;
 
@@ -191,11 +229,13 @@ Template.registerFrame.events({
 		var password = instance.$('#registerPassword').val();
 		var email = instance.$('#registerEmail').val();
 
+		instance.busy('registering');
 		Accounts.createUser({
 			username: name,
 			password: password,
 			email: email
 		}, function (err) {
+			instance.busy(false);
 			if (err) {
 				var reason = err.reason;
 				if (reason == 'Need to set a username or email') {
@@ -223,6 +263,7 @@ Template.registerFrame.events({
 });
 
 Template.forgotPwdFrame.onCreated(function() {
+	this.busy(false);
 	this.emailIsValid = new ReactiveVar(false);
 });
 
@@ -242,9 +283,11 @@ Template.forgotPwdFrame.events({
 
 	'submit': function(event, instance) {
 		event.preventDefault();
+		instance.busy('requesting-pw-reset');
 		Accounts.forgotPassword({
 			email: instance.$('.js-reset-pw-email').val()
 		}, function(err) {
+			instance.busy(false);
 			if (err) {
 				showServerError('We were unable to send a mail to this address', err);
 			} else {

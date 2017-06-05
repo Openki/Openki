@@ -1,4 +1,3 @@
-
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
@@ -235,29 +234,6 @@ TemplateMixins = {
 			},
 		});
 	},
-
-	/** Setup disabling of save buttons for a template
-	  *
-	  * @param {Object} template instance
-	  *
-	  * The template instance gains a saving() method to set saving status and
-	  * a helper that returns {saving} status.
-	  */
-	Saving: function(template) {
-		var saving = new ReactiveVar(false);
-
-		template.onCreated(function() {
-			this.saving = function(val) {
-				saving.set(!!val);
-			};
-		});
-
-		template.helpers({
-			'saving': function() {
-				return saving.get();
-			}
-		});
-	}
 };
 
 
@@ -433,24 +409,88 @@ Template.registerHelper ("venueName", function(venueId) {
 });
 
 // http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
-/**
- * Get the parent template instance
- * @param {Number} [levels] How many levels to go up. Default is 1
- * @returns {Blaze.TemplateInstance}
- */
-
-Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
-    var view = Blaze.currentView;
-    if (typeof levels === "undefined") {
-        levels = 1;
-    }
-    while (view) {
-        if (view.name.substring(0, 9) === "Template." && !(levels--)) {
-            return view.templateInstance();
-        }
-        view = view.parentView;
-    }
+/** Get the parent template instance
+  * @param {Number} [levels] How many levels to go up. Default is 1
+  * @returns {Blaze.TemplateInstance}
+  */
+Blaze.TemplateInstance.prototype.parentInstance = function(levels) {
+	var view = this.view;
+	if (typeof levels === "undefined") {
+		levels = 1;
+	}
+	while (view) {
+		if (view.name.substring(0, 9) === "Template." && !(levels--)) {
+			return view.templateInstance();
+		}
+		view = view.parentView;
+	}
 };
+
+
+/** Set the business of the template instance
+  *
+  * This method will set up the 'business' variable on the template instance.
+  * It needs to be called in onCreated() so the other methods will find the
+  * var. Usually it will be this.busy(false) bout it could also be
+  * this.busy('loading') for example.
+  *
+  * @param {String} [activity] The new business
+  */
+Blaze.TemplateInstance.prototype.busy = function (activity) {
+	if (!this.business) {
+		this.business = new ReactiveVar(activity);
+	} else {
+		this.business.set(activity);
+	}
+};
+
+
+/** Find business state var in this or parent template instance
+  */
+Blaze.TemplateInstance.prototype.findBusiness = function() {
+	if (this.business) return this.business; // Short-circuit common case
+
+	var businessInstance = this;
+	while (businessInstance && !businessInstance.business) {
+		businessInstance = businessInstance.parentInstance();
+	}
+
+	if (!businessInstance) {
+		throw "Unable to find parent instance with business set";
+	}
+
+	// Cache on the local instance
+	this.business = businessInstance.business;
+
+	return this.business;
+};
+
+
+/** Compare activity to template business
+  * This can be used to show a busy state while the template is working.
+  *
+  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+  *
+  * @param {String} [activity] compare to this activity
+  * @returns {Bool} Whether business matches activity
+  */
+Template.registerHelper('busy', function(activity) {
+	var business = Template.instance().findBusiness();
+	return business.get() == activity;
+});
+
+
+/** Disable buttons while there is business to do.
+  *
+  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+  *
+  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+  */
+Template.registerHelper('disabledIfBusy', function() {
+	var business = Template.instance().findBusiness();
+	return business.get() ? 'disabled' : '';
+});
+
 
 Template.registerHelper('groupShort', function(groupId) {
 	var instance = Template.instance();
@@ -472,4 +512,12 @@ Template.registerHelper('groupLogo', function(groupId) {
 		} return "";
 	}
 	return "";
+});
+
+/** Return the instance for use in the template
+  * This can be used to directly access instance methods without declaring
+	* helpers.
+	*/
+Template.registerHelper('$instance', function() {
+	return Template.instance();
 });

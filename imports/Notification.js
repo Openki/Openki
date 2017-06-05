@@ -8,8 +8,9 @@ Notification.Event = {};
   *
   * @param      {ID} eventID   - event to announce
   * @param {Boolean} isNew     - whether the event is a new one
+  * @param {String}  additionalMessage - custom message
   */
-Notification.Event.record = function(eventId, isNew) {
+Notification.Event.record = function(eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
 	var event = Events.findOne(eventId);
@@ -24,6 +25,7 @@ Notification.Event.record = function(eventId, isNew) {
 	var body = {};
 	body.new = isNew;
 	body.eventId = event._id;
+	body.additionalMessage = additionalMessage;
 
 	// The list of recipients is built right away so that only course members
 	// at the time of event creation will get the notice even if sending is
@@ -93,6 +95,7 @@ Notification.Event.Content = function(entry) {
 				, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 				, new: entry.body.new
 				, subject: subject
+				, additionalMessage: entry.body.additionalMessage
 				}
 			);
 		},
