@@ -21,40 +21,26 @@ Notification.Event.record = function(eventId, isNew) {
 	var course = false;
 	if (event.courseId) course = Courses.findOne(event.courseId);
 
-	var entry = {};
-	entry.new = isNew;
-	entry.eventId = event._id;
+	var body = {};
+	body.new = isNew;
+	body.eventId = event._id;
 
 	// The list of recipients is built right away so that only course members
 	// at the time of event creation will get the notice even if sending is
 	// delayed.
-	entry.recipients = [];
+	body.recipients = [];
 	if (course) {
-		entry.recipients = _.pluck(course.members, 'user');
-		entry.courseId = course._id;
+		body.recipients = _.pluck(course.members, 'user');
+		body.courseId = course._id;
 	}
 
-	Log.record('Notification.Event', [course._id], entry);
+	body.model = 'Event';
+
+	Log.record('Notification.Event', [course._id], body);
 };
 
 
-/** Handle event notification
-  *
-  * @param entry Notification.Event log entry to process
-  */
-Notification.Event.handler = function(entry) {
-	// Find out for which recipients sending has already been attempted.
-	var concluded = {};
-
-// GNERAL
-	Log.find(
-		{ tr: 'Notification.SendResult'
-		, rel: entry._id
-		}
-	).forEach(function(result) {
-		concluded[result.body.recipient] = true;
-	});
-// EVENT
+Notification.Event.Content = function(entry) {
 	var event = Events.findOne(entry.body.eventId);
 	var course = false;
 	if (event && event.courseId) {
@@ -65,20 +51,80 @@ Notification.Event.handler = function(entry) {
 	if (event && event.region) {
 	    region = Regions.findOne(event.region);
 	}
-// GENERAL
+
+	return {
+		vars: function(userLocale) {
+			if (!event) throw "Event does not exist (0.o)";
+			if (!course) throw "Course does not exist (0.o)";
+			if (!region) throw "Region does not exist (0.o)";
+
+			// Show dates in local time and in users locale
+			var regionZone = LocalTime.zone(event.region);
+
+			var startMoment = regionZone.at(event.start);
+			startMoment.locale(userLocale);
+
+			var endMoment = regionZone.at(event.end);
+			endMoment.locale(userLocale);
+
+			var subjectvars =
+				{ TITLE: event.title.substr(0,30)
+				, DATE: startMoment.format('LL')
+				};
+
+			var subject;
+			if (entry.new) {
+				subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
+			} else {
+				subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
+			}
+
+			return (
+			    { event: event
+				, course: course
+				, eventDate: startMoment.format('LL')
+				, eventStart: startMoment.format('LT')
+				, eventEnd: endMoment.format('LT')
+				, regionName: region.name
+				, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
+				, locale: userLocale
+				, eventLink: Router.url('showEvent', event)
+				, calLink: Router.url('calEvent', event)
+				, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
+				, new: entry.body.new
+				, subject: subject
+				}
+			);
+		},
+		template: "notificationEventMail"
+	};
+}
+
+/** Handle event notification
+  *
+  * @param entry Notification.Event log entry to process
+  */
+Notification.send = function(entry) {
+	// Find out for which recipients sending has already been attempted.
+	var concluded = {};
+
+	Log.find(
+		{ tr: 'Notification.SendResult'
+		, rel: entry._id
+		}
+	).forEach(function(result) {
+		concluded[result.body.recipient] = true;
+	});
+
+	var model = Notfication[entry.body.model](entry);
+
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
-// GENERAL
 			var mail = null;
 			var unsubToken = null;
 			var userId = null;
 
 			try {
-// EVENT
-				if (!event) throw "Event does not exist (0.o)";
-				if (!course) throw "Course does not exist (0.o)";
-				if (!region) throw "Region does not exist (0.o)";
-// GENERAL
 				var user = Meteor.users.findOne(recipient);
 				userId = user._id;
 
@@ -92,76 +138,33 @@ Notification.Event.handler = function(entry) {
 
 				var	email = user.emails[0];
 				var address = email.address;
-// EVENT
-				// Show dates in local time and in users locale
-				var regionZone = LocalTime.zone(event.region);
-// GENERAL
+
+				var username = user.username;
 				var userLocale = user.profile && user.profile.locale || 'en';
-// EVENT
-				var startMoment = regionZone.at(event.start);
-				startMoment.locale(userLocale);
 
-				var endMoment = regionZone.at(event.end);
-				endMoment.locale(userLocale);
 
-// EVENT
-				var subjectvars =
-					{ TITLE: event.title.substr(0,30)
-					, DATE: startMoment.format('LL')
-					};
-// GENERAL
+				var vars = model.vars(userLocale);
+				vars.unsubToken = Random.secret();
+
 				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
-				var subject;
-// EVENT
-				if (entry.new) {
-					subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
-				} else {
-					subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
-				}
 
-// GENERAL
-				unsubToken = Random.secret();
-// EVENT
-				var vars =
-					{ event: event
-					, course: course
-					, username: user.username
-					, eventDate: startMoment.format('LL')
-					, eventStart: startMoment.format('LT')
-					, eventEnd: endMoment.format('LT')
-					, regionName: region.name
-					, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-					, locale: userLocale
-					, eventLink: Router.url('showEvent', event)
-					, calLink: Router.url('calEvent', event)
-					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
-					, new: entry.body.new
-					};
-// GENERAL
-				var message = SSR.render("notificationEventMail", vars);
-
-
-// GENERAL
+				var message = SSR.render(model.template, vars);
 				mail =
 					{ from: Accounts.emailTemplates.from
 					, to: address
-					, subject: subjectPrefix + subject
+					, subject: subjectPrefix + vars.subject
 					, html: message
 					};
 
-// GENERAL
 				Email.send(mail);
 
-// GENERAL
 				Notification.SendResult.record(entry, unsubToken, true, recipient, mail, "success");
 			}
-// GENERAL
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
 				Notification.SendResult.record(entry, unsubToken, false, recipient, mail, reason);
 			}
-
 		}
 	});
 };
