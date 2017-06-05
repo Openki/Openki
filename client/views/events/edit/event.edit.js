@@ -7,9 +7,9 @@
 import '/imports/LocalTime.js';
 
 Template.eventEdit.onCreated(function() {
+	var instance = this;
 	instance.busy(false);
 
-	var instance = this;
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
