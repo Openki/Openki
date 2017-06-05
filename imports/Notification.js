@@ -48,7 +48,7 @@ Notification.Event.handler = function(entry) {
 
 // GNERAL
 	Log.find(
-		{ tr: 'Notification.EventResult'
+		{ tr: 'Notification.SendResult'
 		, rel: entry._id
 		}
 	).forEach(function(result) {
@@ -153,13 +153,13 @@ Notification.Event.handler = function(entry) {
 				Email.send(mail);
 
 // GENERAL
-				Notification.EventResult.record(entry, unsubToken, true, recipient, mail, "success");
+				Notification.SendResult.record(entry, unsubToken, true, recipient, mail, "success");
 			}
 // GENERAL
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
-				Notification.EventResult.record(entry, unsubToken, false, recipient, mail, reason);
+				Notification.SendResult.record(entry, unsubToken, false, recipient, mail, reason);
 			}
 
 		}
@@ -167,7 +167,7 @@ Notification.Event.handler = function(entry) {
 };
 
 
-Notification.EventResult = {};
+Notification.SendResult = {};
 
 /** Record the result of a notification delivery attempt
   * @param  {object} note      - notification log-entry
@@ -179,7 +179,7 @@ Notification.EventResult = {};
   *                              that far)
   * @param  {String} reason    - why this log entry was recorded
   */
-Notification.EventResult.record = function(note, unsubToken, sent, recipient, message, reason) {
+Notification.SendResult.record = function(note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));
 	check(recipient, String);
@@ -195,5 +195,5 @@ Notification.EventResult.record = function(note, unsubToken, sent, recipient, me
 	var rel = [ note._id ];
 	if (unsubToken) rel.push(unsubToken);
 
-	Log.record('Notification.EventResult', rel, entry);
+	Log.record('Notification.SendResult', rel, entry);
 };
