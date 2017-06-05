@@ -1,21 +1,23 @@
 <template name="categoryLabel">
-	<span class="category-label">
+	<div class="tag category-tag">
 		{{categoryName}}
-	</span>
+	</div>
 </template>
 
 <template name="categoryLabelLinked">
-	<a class='js-category-label category-{{this}}'
-		data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
-		href="/find?categories={{this}}">
-		{{categoryName}}
-	</a>
+	<div class="tag tag-link category-tag">
+		<a class='js-category-label category-{{this}}'
+			data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
+			href="/find?categories={{this}}">
+			{{categoryName}}
+		</a>
+	</div>
 </template>
 
 <template name="courseCategories">
-	<ul class="course-categories">
+	<div class="tag-group multiline course-categories">
 		{{#each categories}}
-			<li>{{> categoryLabelLinked}}</li>
+			{{> categoryLabelLinked}}
 		{{/each}}
-	</ul>
+	</div>
 </template>

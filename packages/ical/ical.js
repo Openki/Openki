@@ -65,7 +65,7 @@ Router.map(function () {
 		}
 	});
 	this.route('calCourse', {
-		path: 'cal/course/:slug-:_id.ics',
+		path: 'cal/course/:slug,:_id.ics',
 		where: 'server',
 		action: function () {
 			sendIcal(Events.find({ courseId: this.params._id }), this.response);

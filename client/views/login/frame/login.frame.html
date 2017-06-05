@@ -163,9 +163,8 @@
 				<span class="input-group-addon">
 					<span class="fa fa-envelope"></span>
 				</span>
-				<input class="form-control"
+				<input class="form-control js-reset-pw-email"
 				       aria-describedby="forgotPwdMailHelp"
-				       id="resetPwdEmail"
 				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 				       type="email"
 				/>
@@ -179,7 +178,7 @@
 		<div class="form-group">
 			<button class="btn btn-save js-reset-pwd-btn form-control"
 			        disabled="{{#if noValidEmail}}disabled{{/if}}"
-			        type="button">
+			        type="submit">
 				<span class="fa fa-envelope"></span>
 				{{mf 'forgot.send' 'Reset my password'}}
 			</button>
@@ -196,9 +195,9 @@
 
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
-		<h3>
+		<div class="form-group ownuser-frame-welcome">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
-		</h3>
+		</div>
 		<div class="form-group">
 			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>

@@ -84,22 +84,17 @@
 //========================================================================================
 .course-compact-title {
 	color: $gray-dark;
-	line-height: 24px;
-	margin: 8px 0 0;
-	max-height: 60px;
-}
-
-.course-compact-title > h4 {
 	font-size: 20px;
-	line-height: 20px;
+	line-height: 24px;
+	margin: 9.5px 0;
+	max-height: 60px;
 }
 
 // ** Categories
 //========================================================================================
 .course-compact-content > .course-categories {
-	height: 55px;
+	height: 50px;
 	margin-bottom: 0;
-	@include td-margin(left, -2px);
 	overflow: hidden;
 }
 
@@ -163,23 +158,17 @@
 
 // ** Grouplist
 //========================================================================================
-.course-compact > .grouplist {
-	margin: 0;
+.course-groups {
 	position: absolute;
 }
 
-.course-compact.proposal > .grouplist,
-.course-compact.has-past-events > .grouplist {
+.course-compact.proposal > .course-groups,
+.course-compact.has-past-events > .course-groups {
 	bottom: $course-border-width;
 	@include td-pos(right, $course-border-width);
 }
 
-.course-compact.has-upcoming-events > .grouplist {
+.course-compact.has-upcoming-events > .course-groups {
 	bottom: $course-border-width * 2;
 	@include td-pos(right, $course-border-width * 2);
-}
-
-.course-compact > .grouplist > li {
-	@include td-float(right);
-	@include td-margin(left, 4px);
 }

@@ -46,6 +46,33 @@
 	color: $dropdown-link-color;
 }
 
+.dropdown-menu > li > a.btn {
+	padding: $padding-base-vertical $padding-base-horizontal;
+
+	&.btn-add {
+		&:hover,
+		&:focus {
+			color: $btn-success-color;
+		}
+	}
+
+	&.btn-remove {
+		&:hover,
+		&:focus {
+			color: $btn-default-color;
+		}
+	}
+}
+
+.dropdown-header {
+	font-size: $font-size-base;
+	text-align: center;
+}
+
+.dropdown-header > .close {
+	font-size: 20px;
+}
+
 select:hover {
 	cursor: pointer;
 }

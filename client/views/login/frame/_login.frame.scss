@@ -17,9 +17,10 @@
 	padding: 0 ($grid-gutter-width / 2);
 }
 
-.ownuser-frame h3 {
+.ownuser-frame-welcome {
+	font-size: $font-size-h3;
 	text-align: center;
-	margin: 0 0 15px;
+	margin-top: 10px;
 }
 
 .login {

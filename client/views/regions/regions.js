@@ -137,13 +137,6 @@ Template.regionSelection.events({
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
-		var gridFloatBreakpoint = viewportWidth <= SCSSVars.gridFloatBreakpoint;
-		if (!gridFloatBreakpoint) {
-			instance.$('.dropdown').on('show.bs.dropdown', function(e){
-				$(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-			});
-		}
-
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });

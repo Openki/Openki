@@ -163,7 +163,8 @@ Template.find.events({
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + category).addClass('highlight');
+		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
+		categoryTags.addClass('highlight');
 	},
 
 	'mouseout .js-category-label': function(e, instance) {
@@ -177,7 +178,8 @@ Template.find.events({
 		};
 		courseFilterPreview(previewOptions);
 
-		instance.$('.js-category-label.category-' + category).removeClass('highlight');
+		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
+		categoryTags.removeClass('highlight');
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
@@ -192,7 +194,7 @@ Template.find.events({
 		};
 		courseFilterPreview(previewOptions);
 
-		var groupLabels = instance.$('.js-group-label.group-' + group);
+		var groupLabels = instance.$('.js-group-label.group-' + group).parent();
 		if (activate) {
 			setTimeout(function() {
 				groupLabels.toggleClass('highlight');

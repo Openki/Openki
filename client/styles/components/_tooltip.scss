@@ -10,7 +10,7 @@
 	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
 	transition: opacity .1s ease-out;
 	white-space: nowrap;
-	z-index: 1001;
+	z-index: $zindex-tooltip;
 
 	&::after {
 		border-color: $brand-primary transparent transparent;
@@ -39,5 +39,12 @@
 .tooltip--right::after {
 	border-color: transparent $brand-primary transparent transparent;
 	left: -15px;
+	top: 5px;
+}
+
+.tooltip--left::after {
+	border-color: transparent transparent transparent $brand-primary;
+	left: auto;
+	right: -15px;
 	top: 5px;
 }

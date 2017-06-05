@@ -243,7 +243,7 @@ $cursor-disabled: not-allowed !default;
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-$dropdown-bg: $blue-lighter !default;
+$dropdown-bg: lighten($blue-lighter, 8.7%) !default;
 
 //** Dropdown menu `border-color`.
 $dropdown-border: $brand-primary !default;

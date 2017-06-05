@@ -52,27 +52,29 @@ var warnings = function(template, warnings) {
 	});
 };
 
-warnings(Template.loginFrame, [
-	{ _id: 'noUserName'
-	, text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
-	, selectors: ['#loginName']
-	}
+warnings(Template.loginFrame,
+	[
+		{ _id: 'noUserName'
+		, text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
+		, selectors: ['#loginName']
+		}
 	,
-	{ _id: 'noCredentials'
-	, text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
-	, selectors: ['#loginName', '#loginPassword']
-	}
+		{ _id: 'noCredentials'
+		, text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
+		, selectors: ['#loginName', '#loginPassword']
+		}
 	,
-	{ _id: 'noPassword'
-	, text: mf('login.password.password_incorrect', 'Incorrect password')
-	, selectors: ['#loginPassword']
-	}
+		{ _id: 'noPassword'
+		, text: mf('login.password.password_incorrect', 'Incorrect password')
+		, selectors: ['#loginPassword']
+		}
 	,
-	{ _id: 'userNotFound'
-	, text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
-	, selectors: ['#loginName']
-	}
-]);
+		{ _id: 'userNotFound'
+		, text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
+		, selectors: ['#loginName']
+		}
+	]
+);
 
 Template.loginFrame.onCreated(function() {
 	var instance = this;
@@ -176,27 +178,29 @@ Template.registerModal.events({
 	}
 });
 
-warnings(Template.registerFrame, [
-	{ _id: 'noUserName'
-	, text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
-	, selectors: ['#registerName']
-	}
+warnings(Template.registerFrame,
+	[
+		{ _id: 'noUserName'
+		, text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
+		, selectors: ['#registerName']
+		}
 	,
-	{ _id: 'noPassword'
-	, text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
-	, selectors: ['#registerPassword']
-	}
+		{ _id: 'noPassword'
+		, text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
+		, selectors: ['#registerPassword']
+		}
 	,
-	{ _id: 'noCredentials'
-	, text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
-	, selectors: ['#registerName', '#registerPassword']
-	}
+		{ _id: 'noCredentials'
+		, text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
+		, selectors: ['#registerName', '#registerPassword']
+		}
 	,
-	{ _id: 'userExists'
-	, text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
-	, selectors: ['#registerName']
-	}
-]);
+		{ _id: 'userExists'
+		, text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
+		, selectors: ['#registerName']
+		}
+	]
+);
 
 Template.registerFrame.onRendered(function() {
 	var instance = this;
@@ -256,17 +260,17 @@ Template.forgotPwdFrame.helpers({
 });
 
 Template.forgotPwdFrame.events({
-	'keyup #resetPwdEmail': function(event, instance) {
-		var resetPwdEmail = $(event.currentTarget).val();
+	'input, change, paste, keyup, mouseup': function(event, instance) {
+		var resetPwdEmail = instance.$('.js-reset-pw-email').val();
 		var emailIsValid = ~resetPwdEmail.indexOf('@');
 
 		instance.emailIsValid.set(emailIsValid);
 	},
 
-	'submit .js-reset-pw': function(event, instance) {
+	'submit': function(event, instance) {
 		event.preventDefault();
 		Accounts.forgotPassword({
-			email: instance.$('.js-login-email').val()
+			email: instance.$('.js-reset-pw-email').val()
 		}, function(err) {
 			if (err) {
 				showServerError('We were unable to send a mail to this address', err);
