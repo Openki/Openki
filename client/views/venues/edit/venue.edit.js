@@ -3,6 +3,8 @@
 Template.venueEdit.onCreated(function() {
 	var instance = this;
 
+	instance.busy(false);
+
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
@@ -120,18 +122,6 @@ Template.venueEdit.helpers({
 	}
 });
 
-Template.venueEditAdditionalInfo.helpers({
-	facilitiesCheck: function(name) {
-		var attrs = { class: 'js-' + name };
-		if (this.facilities[name]) {
-			attrs.checked = 'checked';
-		}
-		return attrs;
-	}
-});
-
-
-
 Template.venueEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
@@ -189,9 +179,9 @@ Template.venueEdit.events({
 		var venueId = this._id ? this._id : '';
 		var parentInstance = instance.parentInstance();
 
-		Session.set('busy', 'saving');
+		instance.busy('saving');
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
-			Session.set('busy', false);
+			instance.busy(false);
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
@@ -222,4 +212,14 @@ Template.venueEdit.events({
 	'change .js-region': function(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-region').val());
 	},
+});
+
+Template.venueEditAdditionalInfo.helpers({
+	facilitiesCheck: function(name) {
+		var attrs = { class: 'js-' + name };
+		if (this.facilities[name]) {
+			attrs.checked = 'checked';
+		}
+		return attrs;
+	}
 });

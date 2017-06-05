@@ -94,6 +94,8 @@ Template.venueDetails.onCreated(function() {
 Template.venueDetails.onRendered(function() {
 	var instance = this;
 
+	instance.busy(false);
+
 	instance.autorun(function() {
 		var data = Template.currentData();
 
@@ -165,9 +167,9 @@ Template.venueDetails.events({
 
 	'click .js-venue-delete-confirm': function(event, instance) {
 		var venue = instance.data.venue;
-		Session.set('busy', 'deleting');
+		instance.busy('deleting');
 		Meteor.call('venue.remove', venue._id, function(err, result) {
-			Session.set('busy', false);
+			instance.busy(false);
 			if (err) {
 				showServerError('Deleting the venue went wrong', err);
 			} else {

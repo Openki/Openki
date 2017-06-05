@@ -2,6 +2,7 @@
 
 TemplateMixins.Expandible(Template.profile);
 Template.profile.onCreated(function() {
+	this.busy(false);
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
@@ -87,9 +88,9 @@ Template.profile.events({
 	},
 
 	'click .js-profile-delete-confirm-btn': function(event, instance) {
-		Session.set('busy', 'deleting');
+		instance.busy('deleting');
 		Meteor.call('delete_profile', function() {
-			Session.set('busy', false);
+			instance.busy(false);
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		instance.collapse(); // Wait for server to log us out.
