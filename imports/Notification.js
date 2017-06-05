@@ -38,11 +38,11 @@ Notification.Event.record = function(eventId, isNew, additionalMessage) {
 
 	body.model = 'Event';
 
-	Log.record('Notification.Event', [course._id], body);
+	Log.record('Notification.Send', [course._id], body);
 };
 
 
-Notification.Event.Content = function(entry) {
+Notification.Event.Model = function(entry) {
 	var event = Events.findOne(entry.body.eventId);
 	var course = false;
 	if (event && event.courseId) {
@@ -92,7 +92,6 @@ Notification.Event.Content = function(entry) {
 				, locale: userLocale
 				, eventLink: Router.url('showEvent', event)
 				, calLink: Router.url('calEvent', event)
-				, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 				, new: entry.body.new
 				, subject: subject
 				, additionalMessage: entry.body.additionalMessage
@@ -119,7 +118,7 @@ Notification.send = function(entry) {
 		concluded[result.body.recipient] = true;
 	});
 
-	var model = Notfication[entry.body.model](entry);
+	var model = Notification[entry.body.model].Model(entry);
 
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
@@ -145,10 +144,10 @@ Notification.send = function(entry) {
 				var username = user.username;
 				var userLocale = user.profile && user.profile.locale || 'en';
 
+				var unsubToken = Random.secret();
 
 				var vars = model.vars(userLocale);
-				vars.unsubToken = Random.secret();
-
+				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
 				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
 
 				var message = SSR.render(model.template, vars);

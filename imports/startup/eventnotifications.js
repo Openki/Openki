@@ -11,7 +11,7 @@ Meteor.startup(function() {
 	gracePeriod.setHours(gracePeriod.getHours() - 12);
 
 	// The Log is append-only so we only watch for additions
-	Log.find({ tr: 'Notification.Event', ts: { $gte: gracePeriod } }).observe({
-		added: Notification.Event.handler
+	Log.find({ tr: 'Notification.Send', ts: { $gte: gracePeriod } }).observe({
+		added: Notification.send
 	});
 });
