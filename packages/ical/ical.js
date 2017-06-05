@@ -7,8 +7,12 @@ function sendIcal(events, response) {
 		var end = dbevent.end || dbevent.start;
 
 		var location = [];
-		if (dbevent.venue) location.push(dbevent.venue.name);
 		if (dbevent.room) location.push(dbevent.room);
+		if (dbevent.venue) {
+			var venue = dbevent.venue;
+			location.push(venue.name);
+			if (venue.address) location.push(venue.address);
+		}
 		location = location.join(', ');
 
 		calendar.addEvent({
