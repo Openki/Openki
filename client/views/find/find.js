@@ -130,7 +130,6 @@ Template.find.onCreated(function() {
 		eventQuery.after = minuteTime.get();
 		instance.subscribe('eventsFind', eventQuery, 12);
 	});
-
 });
 
 Template.find.events({
