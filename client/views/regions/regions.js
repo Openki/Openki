@@ -108,20 +108,22 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': function(event, instance) {
+	'keyup .js-region-search': function(e, instance) {
 		var search = instance.$('.js-region-search').val();
 		search = String(search).trim();
 
-		if (event.which === 13) {
-			if (instance.regionSearch.get() === '') {
-				instance.close();
-			} else {
-				var regionLinks = instance.$('.js-region-link');
-				var first = (regionLinks.length == 1) ? 0 : 1;
-				regionLinks.eq(first).click();
-			}
+		instance.regionSearch.set(search);
+	},
+
+	'submit .js-region-search': function(e, instance) {
+		if (instance.regionSearch.get() === '') {
+			instance.close();
 		} else {
-			instance.regionSearch.set(search);
+			var regionLinks = instance.$('.js-region-link');
+
+			// If there's only the 'all regions' option in results choose this.
+			var first = (regionLinks.length == 1) ? 0 : 1;
+			regionLinks.eq(first).click();
 		}
 	},
 
