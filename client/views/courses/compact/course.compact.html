@@ -2,13 +2,9 @@
 	{{#if ready}}
 		<div class="course-compact-wrap">
 			<a href="{{pathFor 'showCourse'}}">
-				<div class="course-compact
-				     {{courseState}}
-				     {{filterPreviewClasses}}">
+				<div class="course-compact {{courseState}} {{filterPreviewClasses}}">
 					<div class="course-compact-content">
-						<div class="course-compact-title">
-							{{name}}
-						</div>
+						<div class="course-compact-title">{{name}}</div>
 						{{> courseCategories}}
 					</div>
 					{{#if nextEvent}}
@@ -29,54 +25,45 @@
 
 <template name="courseCompactEvent">
 	<div class="course-compact-next-event">
-		{{#with nextEvent}}
-			<div class="course-compact-next-event-date">
-				<span class="fa fa-calendar fa-fw"
-				      aria-hidden="true"></span>
-				{{dateformat_mini startLocal}}
+		<div class="course-compact-next-event-component">
+			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+			{{dateformat_mini nextEvent.startLocal}}
+		</div>
+		<div class="course-compact-next-event-component">
+			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+			{{timeformat nextEvent.startLocal}}
+		</div>
+		{{#if nextEvent.venue.name}}
+			<div class="course-compact-next-event-component">
+				<i class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></i>
+				{{nextEvent.venue.name}}
 			</div>
-			<div class="course-compact-next-event-time">
-				<span class="fa fa-clock-o fa-fw"
-				      aria-hidden="true"></span>
-				{{timeformat startLocal}}
-			</div>
-			{{#if venue.name}}
-				<div class="course-compact-next-event-venue">
-					<span class="glyphicon glyphicon-home fa-fw"
-					      aria-hidden="true">
-					</span>
-					{{venue.name}}
-				</div>
-			{{/if}}
-		{{/with}}
+		{{/if}}
 	</div>
 </template>
 
 <template name="courseCompactRoles">
 	<div class="course-compact-roles">
-		<div class="course-compact-role {{roleStateClass 'team'}}"
-		     data-tooltip="{{roleStateTooltip 'team'}}"
-		     href="#">
-			<span class="{{roleIcon 'team'}}"
-			      aria-hidden="true">
-			</span>
+		<div
+			class="course-compact-role {{roleStateClass 'team'}}"
+			data-tooltip="{{roleStateTooltip 'team'}}"
+			href="#">
+			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>
 		</div>
 		{{#if requiresRole 'mentor'}}
-			<div class="course-compact-role {{roleStateClass 'mentor'}}"
-			     data-tooltip="{{roleStateTooltip 'mentor'}}"
-			     href="#">
-				<span class="{{roleIcon 'mentor'}}"
-				      aria-hidden="true">
-				</span>
+			<div
+				class="course-compact-role {{roleStateClass 'mentor'}}"
+				data-tooltip="{{roleStateTooltip 'mentor'}}"
+				href="#">
+				<i class="{{roleIcon 'mentor'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 		{{#if requiresRole 'host'}}
-			<div class="course-compact-role {{roleStateClass 'host'}}"
-			     data-tooltip="{{roleStateTooltip 'host'}}"
-			     href="#">
-				<span class="{{roleIcon 'host'}}"
-				      aria-hidden="true">
-				</span>
+			<div
+				class="course-compact-role {{roleStateClass 'host'}}"
+				data-tooltip="{{roleStateTooltip 'host'}}"
+				href="#">
+				<i class="{{roleIcon 'host'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 	</div>
