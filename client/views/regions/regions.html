@@ -12,22 +12,28 @@
 </template>
 
 <template name="regionSelection">
-	<input type="text" class="form-control js-region-search"
-		value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
-	<span class="dropdown-toggle"
+	<input
+		class="form-control js-region-search"
+		type="text"
+		value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
+	>
+	<span
+		aria-expanded="false"
+		class="dropdown-toggle"
 		data-toggle="dropdown"
-		role="button"
-		aria-expanded="false">
+		role="button">
 	</span>
 	<ul class="dropdown-menu" role="menu">
 		<li>
 			<a class="js-region-link js-nav-dropdown-close" href="#">
 				<div class="region-badges">
-					<span class="badge badge-courses"
+					<span
+						class="badge badge-courses"
 						title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 						{{allCourses}}
 					</span>
-					<span class="badge badge-events"
+					<span
+						class="badge badge-events"
 						title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 						{{allUpcomingEvents}}
 					</span>
@@ -42,11 +48,13 @@
 			<li>
 				<a href="#" class="js-region-link js-nav-dropdown-close">
 					<div class="region-badges">
-						<span class="badge badge-courses"
+						<span
+							class="badge badge-courses"
 							title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 							{{courseCount}}
 						</span>
-						<span class="badge badge-events"
+						<span
+							class="badge badge-events"
 							title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 							{{futureEventCount}}
 						</span>
