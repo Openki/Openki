@@ -97,7 +97,6 @@ Template.filter.events({
 
 		parentInstance.filter.remove('categories', '' + category).done();
 		parentInstance.updateUrl();
-		$('#find').select();
 	},
 });
 
