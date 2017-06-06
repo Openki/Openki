@@ -51,7 +51,7 @@ Meteor.subscribe('regions', function() {
 		return false;
 	};
 
-	// The region m,ight have been chosen already because the user is logged-in.
+	// The region might have been chosen already because the user is logged-in.
 	// See Accounts.onLogin().
 	if (useRegion(Session.get('region'))) return;
 
@@ -64,6 +64,9 @@ Meteor.subscribe('regions', function() {
 	Meteor.call('autoSelectRegion', function(error, regionId) {
 		useRegion(regionId);
 	});
+
+	// Show splash screen if the region has been guessed by geolocation
+	Session.set('regionGuessed', true);
 });
 
 

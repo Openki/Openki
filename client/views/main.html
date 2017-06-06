@@ -9,7 +9,9 @@
 </head>
 
 <template name="layout">
-	{{> regionsSplash}}
+	{{#if chooseRegion}}
+		{{> regionsSplash}}
+	{{/if}}
 	{{> registerModal}}
 	<div id="wrap">
 		<div id="topBar">
