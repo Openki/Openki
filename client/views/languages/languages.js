@@ -22,12 +22,14 @@ Template.languageDisplay.events({
 });
 
 Template.languageSelection.onCreated(function() {
-	this.languageSearch = new ReactiveVar('');
-});
-
-Template.languageSelection.onRendered(function() {
 	var instance = this;
-	instance.$('.js-language-search').select();
+	instance.languageSearch = new ReactiveVar('');
+	instance.close = function() {
+		instance.$('.dropdown-menu').one(
+			'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
+			function() { instance.parentInstance().searchingLanguages.set(false); }
+		);
+	};
 });
 
 Template.languageSelection.helpers({
@@ -75,7 +77,8 @@ Template.languageSelection.events({
 		if (Meteor.user()){
 			Meteor.call('updateUserLocale', lg);
 		}
-		instance.parentInstance().searchingLanguages.set(false);
+
+		instance.close();
 	},
 
 	'keyup .js-language-search': function(event, instance) {
@@ -101,8 +104,11 @@ Template.languageSelection.events({
 });
 
 Template.languageSelection.onRendered(function() {
-	var parentInstance = this.parentInstance();
-	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
+	var instance = this;
+
+	instance.$('.js-language-search').select();
+
+	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
 		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
@@ -111,6 +117,7 @@ Template.languageSelection.onRendered(function() {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
-		parentInstance.searchingLanguages.set(false);
+
+		instance.close();
 	});
 });

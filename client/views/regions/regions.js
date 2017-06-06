@@ -30,8 +30,13 @@ Template.regionSelection.onCreated(function() {
 	// create a function to toggle displaying the regionSelection
 	// only if it is placed inside a wrap
 	instance.close = function() {
-		var searchingRegions = instance.parentInstance().searchingRegions;
-		if (searchingRegions) searchingRegions.set(false);
+		var parentInstance = instance.parentInstance();
+		if (parentInstance.searchingRegions) {
+			instance.$('.dropdown-menu').one(
+				'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
+				function() { parentInstance.searchingRegions.set(false); }
+			);
+		}
 	};
 });
 
@@ -146,6 +151,10 @@ Template.regionSelection.onRendered(function() {
 
 	instance.$('.js-region-search').select();
 
+	instance.parentInstance().$('.dropdown').on('shown.bs.dropdown', function(e) {
+		console.log('wieder do');
+	});
+
 	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
@@ -155,6 +164,7 @@ Template.regionSelection.onRendered(function() {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
+
 		instance.close();
 	});
 });

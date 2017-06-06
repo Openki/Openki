@@ -141,9 +141,6 @@ Template.filter.onRendered(function() {
 	var instance = this;
 
 	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {
-		var dropdownMenu = $(e.target).find('.dropdown-menu').first();
-
-		dropdownMenu.stop(true, true).slideToggle(200);
 		instance.$('.dropdown-toggle').fadeToggle(200);
 	});
 
