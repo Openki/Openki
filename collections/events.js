@@ -15,6 +15,7 @@ import '/imports/LocalTime.js';
 //       name:         Descriptive name for the venue
 //       loc:          Event location in GeoJSON format
 //       address:      Address string where the event will take place
+//       editor:       user ID of venue creator
 // }
 // room            -> String    (Where inside the building the event will take place)
 // createdBy       -> userId
