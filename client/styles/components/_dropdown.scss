@@ -1,28 +1,5 @@
 $dropdown-transition-time: .3s;
 
-// https://stackoverflow.com/questions/12115833#comment-66854052
-.dropdown .dropdown-menu {
-    display: block;
-	max-height: 0;
-	opacity: 0;
-    overflow: hidden;
-	transition:
-		max-height $dropdown-transition-time,
-		opacity ($dropdown-transition-time / 3 * 2) ($dropdown-transition-time / 3 * 1),
-		visibility 0s $dropdown-transition-time;
-    visibility: hidden;
-}
-
-.dropdown.open .dropdown-menu {
-    max-height: 1000px;
-    opacity: 1;
-	transition:
-		max-height $dropdown-transition-time,
-		opacity ($dropdown-transition-time / 3 * 2),
-		visibility 0s;
-    visibility: visible;
-}
-
 .dropdown-menu {
 	border: 0;
 	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;

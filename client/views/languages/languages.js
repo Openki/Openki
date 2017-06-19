@@ -22,14 +22,7 @@ Template.languageDisplay.events({
 });
 
 Template.languageSelection.onCreated(function() {
-	var instance = this;
-	instance.languageSearch = new ReactiveVar('');
-	instance.close = function() {
-		instance.$('.dropdown-menu').one(
-			'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
-			function() { instance.parentInstance().searchingLanguages.set(false); }
-		);
-	};
+	this.languageSearch = new ReactiveVar('');
 });
 
 Template.languageSelection.helpers({
@@ -78,7 +71,7 @@ Template.languageSelection.events({
 			Meteor.call('updateUserLocale', lg);
 		}
 
-		instance.close();
+		instance.parentInstance().searchingLanguages.set(false);
 	},
 
 	'keyup .js-language-search': function(event, instance) {
@@ -118,6 +111,6 @@ Template.languageSelection.onRendered(function() {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
 
-		instance.close();
+		instance.parentInstance().searchingLanguages.set(false);
 	});
 });
