@@ -1,7 +1,7 @@
 Template.regionSelectionWrap.created = function() {
-	 this.subscribe("Regions");
-	 var instance = this;
-	 instance.searchingRegions = new ReactiveVar(false);
+	var instance = this;
+	instance.subscribe("Regions");
+	instance.searchingRegions = new ReactiveVar(false);
 };
 
 Template.regionSelectionWrap.helpers({
@@ -12,8 +12,7 @@ Template.regionSelectionWrap.helpers({
 
 Template.regionDisplay.helpers({
 	region: function() {
-		var region = Regions.findOne(Session.get('region'));
-		return region;
+		return Regions.findOne(Session.get('region'));
 	}
 });
 
@@ -24,21 +23,50 @@ Template.regionDisplay.events({
 });
 
 Template.regionSelection.onCreated(function() {
-	this.regionSearch = new ReactiveVar('');
-});
+	var instance = this;
 
-Template.regionSelection.rendered = function() {
-	Template.instance().$('.js-region-search').select();
-};
+	instance.regionSearch = new ReactiveVar('');
+
+	instance.regions = function() {
+		var search = instance.regionSearch.get();
+		var query = {};
+		if (search !== '') query = { name: new RegExp(search, 'i') };
+		var options = { sort: {futureEventCount: -1} };
+
+		return Regions.find(query, options);
+	};
+
+	instance.changeRegion = function(regionId) {
+		var changed = !Session.equals('region', regionId);
+
+		localStorage.setItem("region", regionId); // to survive page reload
+		Session.set('region', regionId);
+		if (regionId !== 'all' && Meteor.userId()) {
+			Meteor.call('user.regionChange', regionId);
+		}
+
+		// When the region changes, we want the content of the page to update
+		// Many pages do not change when the region changed, so we go to
+		// the homepage for those
+		if (changed) {
+			var routeName = Router.current().route.getName();
+			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
+			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
+		}
+		instance.close();
+	};
+
+	// create a function to toggle displaying the regionSelection
+	// only if it is placed inside a wrap
+	instance.close = function() {
+		var searchingRegions = instance.parentInstance().searchingRegions;
+		if (searchingRegions) {	searchingRegions.set(false); }
+	};
+});
 
 Template.regionSelection.helpers({
 	regions: function() {
-		var search = Template.instance().regionSearch.get();
-		var query = {};
-		if (search !== '') query = { name: new RegExp(search, 'i') };
-		var options = {sort: {futureEventCount: -1}};
-
-		return Regions.find(query, options);
+		return Template.instance().regions();
 	},
 
 	regionNameMarked: function() {
@@ -48,8 +76,7 @@ Template.regionSelection.helpers({
 	},
 
 	region: function() {
-		var region = Regions.findOne(Session.get('region'));
-		return region;
+		return Regions.findOne(Session.get('region'));
 	},
 
 	allCourses: function() {
@@ -66,48 +93,15 @@ Template.regionSelection.helpers({
 
 	currentRegion: function() {
 		var region = this._id || "all";
-		return region == Session.get('region');
+		return Session.equals('region', region);
 	}
 });
-
-var handleKeyup = _.debounce(function(event, instance, parentInstance) {
-	var search = instance.$('.js-region-search').val();
-	search = String(search).trim();
-
-	if (event.which === 13) {
-		if (instance.regionSearch.get() === '') {
-			parentInstance.searchingRegions.set(false);
-		} else {
-			var regionLinks = instance.$('.js-region-link');
-			var first = (regionLinks.length == 1) ? 0 : 1;
-			regionLinks.eq(first).click();
-		}
-	} else {
-		instance.regionSearch.set(search);
-	}
-}, 100);
 
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
-		var region_id = this._id ? this._id : 'all';
-		var changed = !Session.equals('region', region_id);
-
-		localStorage.setItem("region", region_id); // to survive page reload
-		Session.set('region', region_id);
-		if (region_id !== 'all' && Meteor.userId()) {
-			Meteor.call('user.regionChange', region_id);
-		}
-
-		// When the region changes, we want the content of the page to update
-		// Many pages do not change when the region changed, so we go to
-		// the homepage for those
-		if (changed) {
-			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
-			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
-		}
-		instance.parentInstance().searchingRegions.set(false);
+		var regionId = this._id ? this._id : 'all';
+		instance.changeRegion(regionId);
 	},
 
 	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
@@ -122,9 +116,26 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': function(event, instance) {
-		var parentInstance = instance.parentInstance();
-		handleKeyup(event, instance, parentInstance);
+	'keyup .js-region-search': function(e, instance) {
+		var search = instance.$('.js-region-search').val();
+		search = String(search).trim();
+
+		instance.regionSearch.set(search);
+	},
+
+	'submit .js-region-search-form': function(event, instance) {
+		event.preventDefault();
+		instance.$('.dropdown-toggle').dropdown('toggle');
+		if (instance.regionSearch.get() === '') {
+			instance.close();
+		} else {
+			var selectedRegion = instance.regions().fetch()[0];
+			if (selectedRegion) {
+				instance.changeRegion(selectedRegion._id);
+			} else {
+				instance.changeRegion('all');
+			}
+		}
 	},
 
 	'focus .js-region-search': function(event, instance) {
@@ -142,8 +153,11 @@ Template.regionSelection.events({
 });
 
 Template.regionSelection.onRendered(function() {
-	var parentInstance = this.parentInstance();
-	parentInstance.$('.dropdown').on('hide.bs.dropdown', function(e) {
+	var instance = this;
+
+	instance.$('.js-region-search').select();
+
+	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
 		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
@@ -152,6 +166,7 @@ Template.regionSelection.onRendered(function() {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
 		}
-		parentInstance.searchingRegions.set(false);
+
+		instance.close();
 	});
 });

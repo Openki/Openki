@@ -1,0 +1,25 @@
+<template name="regionsSplash">
+	<div class="modal fade regions-splash" tabindex="-1" role="dialog" id="regionsSplash">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close"
+					        type="button"
+					        data-dismiss="modal"
+					        aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">
+						<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+						{{#mf KEY='regionsSplash.hiChooseRegion' SITE=siteName}}
+							Welcome to {SITE}! Please choose a region.
+						{{/mf}}
+					</h4>
+				</div>
+				<div class="modal-body">
+					{{> regionSelection}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
