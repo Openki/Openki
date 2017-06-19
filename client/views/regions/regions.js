@@ -27,6 +27,35 @@ Template.regionSelection.onCreated(function() {
 
 	instance.regionSearch = new ReactiveVar('');
 
+	instance.regions = function() {
+		var search = instance.regionSearch.get();
+		var query = {};
+		if (search !== '') query = { name: new RegExp(search, 'i') };
+		var options = { sort: {futureEventCount: -1} };
+
+		return Regions.find(query, options);
+	};
+
+	instance.changeRegion = function(regionId) {
+		var changed = !Session.equals('region', regionId);
+
+		localStorage.setItem("region", regionId); // to survive page reload
+		Session.set('region', regionId);
+		if (regionId !== 'all' && Meteor.userId()) {
+			Meteor.call('user.regionChange', regionId);
+		}
+
+		// When the region changes, we want the content of the page to update
+		// Many pages do not change when the region changed, so we go to
+		// the homepage for those
+		if (changed) {
+			var routeName = Router.current().route.getName();
+			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
+			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
+		}
+		instance.close();
+	};
+
 	// create a function to toggle displaying the regionSelection
 	// only if it is placed inside a wrap
 	instance.close = function() {
@@ -42,12 +71,7 @@ Template.regionSelection.onCreated(function() {
 
 Template.regionSelection.helpers({
 	regions: function() {
-		var search = Template.instance().regionSearch.get();
-		var query = {};
-		if (search !== '') query = { name: new RegExp(search, 'i') };
-		var options = {sort: {futureEventCount: -1}};
-
-		return Regions.find(query, options);
+		return Template.instance().regions();
 	},
 
 	regionNameMarked: function() {
@@ -81,24 +105,8 @@ Template.regionSelection.helpers({
 Template.regionSelection.events({
 	'click .js-region-link': function(event, instance) {
 		event.preventDefault();
-		var region_id = this._id ? this._id : 'all';
-		var changed = !Session.equals('region', region_id);
-
-		localStorage.setItem("region", region_id); // to survive page reload
-		Session.set('region', region_id);
-		if (region_id !== 'all' && Meteor.userId()) {
-			Meteor.call('user.regionChange', region_id);
-		}
-
-		// When the region changes, we want the content of the page to update
-		// Many pages do not change when the region changed, so we go to
-		// the homepage for those
-		if (changed) {
-			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
-			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
-		}
-		instance.close();
+		var regionId = this._id ? this._id : 'all';
+		instance.changeRegion(regionId);
 	},
 
 	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
@@ -120,15 +128,18 @@ Template.regionSelection.events({
 		instance.regionSearch.set(search);
 	},
 
-	'submit .js-region-search': function(e, instance) {
+	'submit .js-region-search-form': function(event, instance) {
+		event.preventDefault();
+		instance.$('.dropdown-toggle').dropdown('toggle');
 		if (instance.regionSearch.get() === '') {
 			instance.close();
 		} else {
-			var regionLinks = instance.$('.js-region-link');
-
-			// If there's only the 'all regions' option in results choose this.
-			var first = (regionLinks.length == 1) ? 0 : 1;
-			regionLinks.eq(first).click();
+			var selectedRegion = instance.regions().fetch()[0];
+			if (selectedRegion) {
+				instance.changeRegion(selectedRegion._id);
+			} else {
+				instance.changeRegion('all');
+			}
 		}
 	},
 

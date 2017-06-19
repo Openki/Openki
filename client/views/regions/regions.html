@@ -12,11 +12,14 @@
 </template>
 
 <template name="regionSelection">
-	<input
-		class="form-control js-region-search"
-		type="text"
-		value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
-	>
+	<form class="js-region-search-form" style="display: inline">
+		<input
+			class="form-control js-region-search"
+			type="text"
+			value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
+		>
+		<input type="submit" style="display: none"/>
+	</form>
 	<span
 		aria-expanded="false"
 		class="dropdown-toggle"
