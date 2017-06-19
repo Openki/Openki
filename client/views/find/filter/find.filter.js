@@ -97,7 +97,6 @@ Template.filter.events({
 
 		parentInstance.filter.remove('categories', '' + category).done();
 		parentInstance.updateUrl();
-		$('#find').select();
 	},
 });
 
@@ -115,7 +114,7 @@ Template.filter.helpers({
 
 	'availableCategories': function() {
 		var parentInstance = Template.instance().parentInstance();
-		return Object.keys(parentInstance.categorySearchResults.get('categorySearchResults'));
+		return Object.keys(parentInstance.categorySearchResults.get());
 	},
 
 	'availableSubcategories': function(mainCategory) {

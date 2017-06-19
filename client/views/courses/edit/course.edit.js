@@ -27,7 +27,7 @@ Template.courseEdit.helpers({
 	},
 
 	availableCategories: function() {
-		return Object.keys(categories);
+		return Object.keys(Categories);
 	},
 
 	availableSubcategories: function(category) {
@@ -35,7 +35,7 @@ Template.courseEdit.helpers({
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.indexOf(category) < 0) return [];
 
-		return categories[category];
+		return Categories[category];
 	},
 
 	editingCategories: function() {
@@ -216,9 +216,9 @@ Template.courseEdit.events({
 		} else {
 			selectedCategories = _.without(selectedCategories, catKey);
 
-			if (categories[catKey]) {
+			if (Categories[catKey]) {
 				// Remove all the subcategories as well
-				selectedCategories = _.difference(selectedCategories, categories[catKey]);
+				selectedCategories = _.difference(selectedCategories, Categories[catKey]);
 			}
 		}
 
