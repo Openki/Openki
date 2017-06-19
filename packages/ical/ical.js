@@ -7,17 +7,25 @@ function sendIcal(events, response) {
 		var end = dbevent.end || dbevent.start;
 
 		var location = [];
-		if (dbevent.venue) location.push(dbevent.venue.name);
 		if (dbevent.room) location.push(dbevent.room);
+		if (dbevent.venue) {
+			var venue = dbevent.venue;
+			location.push(venue.name);
+			if (venue.address) location.push(venue.address);
+		}
 		location = location.join(', ');
 
+		var twoLines = /<(p|div|h[0-9])>/g;
+		var oneLine = /<(ul|ol|li|br ?\/?)>/g;
+		var lineDescription = dbevent.description.replace(twoLines, "\n\n").replace(oneLine, "\n").trim();
+		var plainDescription = textPlain(lineDescription);
 		calendar.addEvent({
 			uid: dbevent._id,
 			start: dbevent.start,
 			end: end,
 			summary: dbevent.title,
 			location: location,
-			description: textPlain(dbevent.description),
+			description: plainDescription,
 			url: Router.routes.showEvent.url(dbevent)
 		});
 
