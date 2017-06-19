@@ -1,9 +1,3 @@
-.course-role,
-.course-role-enrol {
-	transition-duration: .3s;
-	transition-property: #{'box-shadow, margin'};
-}
-
 .course-role-title,
 .course-role-title-enrol {
 	font-size: large;
@@ -24,11 +18,6 @@
 	font-size: medium;
 	@include td-margin(left, 5px);
 	padding: 3px 12px;
-}
-
-.course-role-enrol {
-	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-	margin-bottom: 10px;
 }
 
 .course-role-enrol,
