@@ -31,8 +31,18 @@ Router.onStop(function() {
 // This checks client storage for a region setting. When there is no previously
 // selected region, we ask the server to do geolocation. If that fails too,
 // we just set it to 'all regions'.
+
+var regionSelectors =
+	[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
+	, UrlTools.queryParam('region')
+	, localStorage.getItem('region')
+	].filter(Boolean);
+
+// When the region is not provided we show a splash screen
+Session.set('regionGuessed', regionSelectors.length < 1);
+
 Meteor.subscribe('regions', function() {
-	var useRegion = function(regionId) {
+	var useAsRegion = function(regionId) {
 		if (!regionId) return;
 		if (regionId == 'all') {
 			Session.set("region", regionId);
@@ -51,22 +61,15 @@ Meteor.subscribe('regions', function() {
 		return false;
 	};
 
-	// The region might have been chosen already because the user is logged-in.
-	// See Accounts.onLogin().
-	if (useRegion(Session.get('region'))) return;
-
-	// Region parameter in URL or in storage?
-	if (useRegion(UrlTools.queryParam('region'))) return;
-	if (useRegion(localStorage.getItem("region"))) return;
+	if (regionSelectors.some(useAsRegion)) return;
 
 	// Give up and ask the server to place us
-	useRegion('all');
 	Meteor.call('autoSelectRegion', function(error, regionId) {
-		useRegion(regionId);
-	});
+		if (useAsRegion(regionId)) return;
 
-	// Show splash screen if the region has been guessed by geolocation
-	Session.set('regionGuessed', true);
+		// Give up
+		useAsRegion('all');
+	});
 });
 
 
