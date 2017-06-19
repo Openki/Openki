@@ -105,20 +105,13 @@
 	background: $course-compact-next-event-bg;
 	color: $course-compact-next-event-color;
 	max-height: 150px;
-	padding: 3px;
+	padding: 5px;
 	position: relative;
 	text-align: center;
 }
 
-.course-compact-next-event-time,
-.course-compact-next-event-date {
-	@include td-make-xs-column(12);
-	padding: 0;
-}
-
-.course-compact-next-event-venue {
+.course-compact-next-event-component {
 	@include ellipsis;
-	padding: 0 4px;
 }
 
 // ** Roles
@@ -133,10 +126,10 @@
 
 .course-compact-role {
 	text-align: center;
+}
 
-	&:not(:first-child) {
-		margin-top: 3px;
-	}
+.course-compact-role + .course-compact-role {
+	margin-top: 3px;
 }
 
 .course-compact-role-needed {
