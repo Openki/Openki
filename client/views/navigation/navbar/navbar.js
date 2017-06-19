@@ -79,13 +79,6 @@ Template.navbar.events({
 			} else {
 				container.scrollTop(0);
 			}
-		} else {
-			// animate navbar dropdowns with a sliding motion
-			$(e.currentTarget)
-				.find('.dropdown-menu')
-				.first()
-				.stop(true, true)
-				.slideToggle();
 		}
 	},
 });
