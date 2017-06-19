@@ -63,11 +63,13 @@ Meteor.subscribe('regions', function() {
 
 	if (regionSelectors.some(useAsRegion)) return;
 
-	// Give up and ask the server to place us
-	Meteor.call('autoSelectRegion', function(error, regionId) {
-		if (useAsRegion(regionId)) return;
-
-		// Give up
+	import '/imports/IpLocation.js';
+	IpLocation.detect(function(region, reason) {
+		console.log("Region autodetection: "+reason);
+		if (region) {
+			useAsRegion(region._id);
+			return;
+		}
 		useAsRegion('all');
 	});
 });
