@@ -1,5 +1,5 @@
 .course-role-title,
-.course-role-title-enrol {
+.course-role-title-enroll {
 	font-size: large;
 	line-height: 1.1;
 	padding: 10px ($grid-gutter-width / 2);
@@ -10,7 +10,7 @@
 	background: $user-bg;
 }
 
-.course-role-title-enrol {
+.course-role-title-enroll {
 	background: $green;
 }
 
@@ -20,12 +20,12 @@
 	padding: 3px 12px;
 }
 
-.course-role-enrol,
+.course-role-enroll,
 .course-role-enrolled {
 	margin-top: $course-details-seperator-height;
 }
 
-.course-role-enrol-options {
+.course-role-enroll-options {
 	@include clearfix;
 	background: $course-page-component-bg;
 	padding: 15px 15px 0;

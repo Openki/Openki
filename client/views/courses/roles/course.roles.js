@@ -27,7 +27,7 @@ Template.courseRole.helpers({
 });
 
 Template.courseRole.events({
-	'click .js-role-enrol-btn': function(e, template) {
+	'click .js-role-enroll-btn': function(e, template) {
 		if (pleaseLogin()) return;
 		template.enrolling.set(true);
 		return false;
@@ -43,7 +43,7 @@ Template.courseRole.events({
 		return false;
 	},
 
-	'click .js-role-enrol-cancel': function (e, template) {
+	'click .js-role-enroll-cancel': function (e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
