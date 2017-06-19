@@ -1,8 +1,11 @@
 <template name="eventEditVenue">
 	<div class="form-group">
-		<label>{{mf 'course.event.edit.location' 'Venue'}}</label>
+		<label>
+			{{mf 'course.event.edit.location' 'Venue'}}
+			<small> {{mf '_inputField.optional'}}</small>
+		</label>
 		<div class="event-edit-location-info">
-			{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
+			{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map or create a new venue.'}}
 		</div>
 		<div class="event-edit-location">
 			<div class="event-edit-location-search">

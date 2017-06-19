@@ -68,6 +68,9 @@ Router.map(function () {
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
 	var instance = this;
+
+	instance.busy(false);
+
 	var course = instance.data.course;
 
 	instance.editableName = Editable(
@@ -135,7 +138,9 @@ Template.courseDetailsPage.events({
 		if (pleaseLogin()) return;
 
 		var course = instance.data.course;
+		instance.busy('deleting');
 		Meteor.call('remove_course', course._id, function(error) {
+			instance.busy(false);
 			if (error) {
 				showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 			} else {

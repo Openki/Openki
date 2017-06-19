@@ -45,17 +45,24 @@
 						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
 						{{mf 'group.settings.title.Members' 'Members'}}
 					</h3>
-					<ul class="group-members">
+					<div class="tag-group multiline">
 						{{#each members}}
-							<li class="group-member">
-								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-								{{username this}}
-								<button type="button" class="js-member-remove-btn btn">
-									<span class="fa fa-remove" title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"></span>
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</a>
+							</div>
+							<div class="tag-btn group-member-tag-btn-remove addon">
+								<button
+									class="js-member-remove-btn"
+									title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
+									type="button">
+									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
-							</li>
+							</div>
 						{{/each}}
-					</ul>
+					</div>
 					<div class="form-group">
 						<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
 						<div class="input-group">
@@ -69,18 +76,24 @@
 								type="text"/>
 						</div>
 					</div>
-					<ul class="group-members">
+					<div class="tag-group multiline">
 						{{#each foundUsers}}
-							<li class="group-member">
-								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-								{{username this._id}}
-								<button type="button" class="btn js-member-add-btn"
-									title="{{mf 'group.settings.addMember' 'add as member'}}">
-									<span class="fa fa-plus" aria-hidden="true"></span>
+							<div class="tag tag-link group-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this._id}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</a>
+							</div>
+							<div class="tag-btn group-member-tag-btn-add addon">
+								<button
+									class="js-member-add-btn"
+									title="{{mf 'group.settings.addMember' 'add as member'}}"
+									type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
-							</li>
+							</div>
 						{{/each}}
-					</ul>
+					</div>
 				</div>
 			</div>
 			<div class="details-addition">

@@ -1,0 +1,39 @@
+@mixin tag($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
+	color: $color;
+	background-color: $bg;
+	padding: 1px 4px;
+
+	& > a {
+		color: $color;
+	}
+
+	&.tag-link:hover,
+	&.tag-link:focus,
+	&.tag-link.highlight {
+		background-color: $bg-hover;
+	}
+
+	&.tag-link:hover > a {
+		color: $color-hover;
+	}
+}
+
+@mixin tag-btn($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
+	& > button {
+		background-color: $bg;
+		border: none;
+		color: $color;
+		font-size: $font-size-base;
+
+		&:hover,
+		&:focus,
+		&.highlight {
+			background-color: $bg-hover;
+			color: $color-hover;
+		}
+	}
+
+	&.addon > button {
+		border-color: darken($bg, 10%);
+	}
+}

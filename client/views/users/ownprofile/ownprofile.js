@@ -2,9 +2,9 @@
 
 TemplateMixins.Expandible(Template.profile);
 Template.profile.onCreated(function() {
+	this.busy(false);
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
-	this.sending = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
 });
 
@@ -92,7 +92,9 @@ Template.profile.events({
 	},
 
 	'click .js-profile-delete-confirm-btn': function(event, instance) {
+		instance.busy('deleting');
 		Meteor.call('delete_profile', function() {
+			instance.busy(false);
 			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		instance.collapse(); // Wait for server to log us out.
@@ -140,16 +142,4 @@ Template.profile.events({
 			}
 		}
 	},
-
-	'click .js-verify-mail-btn': function(event, instance) {
-		instance.sending.set(true);
-		Meteor.call('sendVerificationEmail', function(err) {
-			if (err) {
-				instance.sending.set(false);
-				showServerError('Failed to send verification mail', err);
-			} else {
-				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
-			}
-		});
-	}
 });

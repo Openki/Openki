@@ -82,10 +82,11 @@
 		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
 		<div class="form-actions">
 			{{> buttonCancel event="js-collapse"}}
-			<button type="button" class="btn btn-danger js-delete-course-confirm">
-				<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
-				{{mf 'course.delete.confirm.button' 'Delete this course and its events.'}}
-			</button>
+			{{> buttonDeleteConfirm
+				event="js-delete-course-confirm"
+				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
+				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
+			}}
 		</div>
 	</div>
 </template>
@@ -139,7 +140,7 @@
 				</div>
 			{{/if}}
 			{{#if tools}}
-				<div class="btn-group group-tag-btn addon">
+				<div class="btn-group tag-btn group-tag-btn addon">
 					<button type="button" class="dropdown-toggle"
 						aria-expanded="false"
 						aria-haspopup="true"
@@ -167,7 +168,7 @@
 
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="btn-group group-tag-btn">
+		<div class="btn-group tag-btn group-tag-btn">
 			<button type="button" class="dropdown-toggle"
 				aria-expanded="false"
 				aria-haspopup="true"

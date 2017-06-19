@@ -8,8 +8,9 @@ Notification.Event = {};
   *
   * @param      {ID} eventID   - event to announce
   * @param {Boolean} isNew     - whether the event is a new one
+  * @param {String}  additionalMessage - custom message
   */
-Notification.Event.record = function(eventId, isNew) {
+Notification.Event.record = function(eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
 	var event = Events.findOne(eventId);
@@ -24,6 +25,7 @@ Notification.Event.record = function(eventId, isNew) {
 	var entry = {};
 	entry.new = isNew;
 	entry.eventId = event._id;
+	entry.additionalMessage = additionalMessage;
 
 	// The list of recipients is built right away so that only course members
 	// at the time of event creation will get the notice even if sending is
@@ -59,7 +61,10 @@ Notification.Event.handler = function(entry) {
 	if (event && event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
-	var region = Regions.findOne(event.region);
+	var region = false;
+	if (event && event.region) {
+	    region = Regions.findOne(event.region);
+	}
 
 	_.each(entry.body.recipients, function(recipient) {
 		if (!concluded[recipient]) {
@@ -126,6 +131,7 @@ Notification.Event.handler = function(entry) {
 					, calLink: Router.url('calEvent', event)
 					, unsubLink: Router.url('profile.unsubscribe', { token: unsubToken })
 					, new: entry.body.new
+					, additionalMessage: entry.body.additionalMessage
 					};
 
 				var message = SSR.render("notificationEventMail", vars);
