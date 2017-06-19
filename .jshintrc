@@ -192,13 +192,6 @@
 		"logAsyncErrors":true,
 		"untilClean":true,
 
-
-// Packages
-
-		"GeoIP":true
-
-
-
 	}
 }
 
