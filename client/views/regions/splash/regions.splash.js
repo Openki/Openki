@@ -8,7 +8,7 @@ Template.regionsSplash.onRendered(function () {
 });
 
 Template.regionsSplash.events({
-	'click .js-region-link, submit .js-region-search': function(e, instance) {
+	'click .js-region-link, submit .js-region-search-form': function(e, instance) {
 		var regionsSplash = instance.$('#regionsSplash');
 
 		regionsSplash.modal('hide');
