@@ -24,16 +24,12 @@
 	}
 }
 
-.course-member-roles li {
+.course-member-roles > li {
 	display: inline-block;
 
 	&.participant {
 		display: none;
 	}
-}
-
-.course-member-roles .dropdown-menu li {
-		padding: 5px 15px;
 }
 
 .course-member-role {
@@ -73,10 +69,6 @@
 		color: $white;
 		border: none;
 	}
-}
-
-.js-remove-team {
-	padding: 6px 24px;
 }
 
 .course-member-comment {

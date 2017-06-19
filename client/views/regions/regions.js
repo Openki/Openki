@@ -59,13 +59,8 @@ Template.regionSelection.onCreated(function() {
 	// create a function to toggle displaying the regionSelection
 	// only if it is placed inside a wrap
 	instance.close = function() {
-		var parentInstance = instance.parentInstance();
-		if (parentInstance.searchingRegions) {
-			instance.$('.dropdown-menu').one(
-				'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd',
-				function() { parentInstance.searchingRegions.set(false); }
-			);
-		}
+		var searchingRegions = instance.parentInstance().searchingRegions;
+		if (searchingRegions) {	searchingRegions.set(false); }
 	};
 });
 

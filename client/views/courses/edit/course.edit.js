@@ -179,11 +179,11 @@ Template.courseEdit.events({
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
-				$('.js-check-enrol').each(function(_, enrolcheck) {
-					if (enrolcheck.checked) {
-						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
+				$('.js-check-enroll').each(function(_, enrollcheck) {
+					if (enrollcheck.checked) {
+						Meteor.call('add_role', courseId, Meteor.userId(), enrollcheck.name, false);
 					} else {
-						Meteor.call('remove_role', courseId, Meteor.userId(), enrolcheck.name);
+						Meteor.call('remove_role', courseId, Meteor.userId(), enrollcheck.name);
 					}
 				});
 			}
