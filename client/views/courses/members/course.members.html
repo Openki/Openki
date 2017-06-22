@@ -13,7 +13,7 @@
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#each members}}
+			{{#each sortedMembers}}
 				{{> courseMember member=this course=..}}
 			{{/each}}
 		</div>

@@ -1,6 +1,17 @@
 Template.courseMembers.helpers({
 	howManyEnrolled: function() {
 		return this.members.length;
+	},
+
+	sortedMembers: function() {
+		var sortedMembers = this.members.sort(function(a, b) {
+			var aRoles = _.without(a.roles, 'participant');
+			var bRoles = _.without(b.roles, 'participant');
+
+			return aRoles.length < bRoles.length;
+		});
+
+		return sortedMembers;
 	}
 });
 
