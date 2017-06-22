@@ -1,6 +1,15 @@
+Template.courseMembers.onCreated(function() {
+	this.membersLimit = new ReactiveVar(10);
+});
+
 Template.courseMembers.helpers({
 	howManyEnrolled: function() {
 		return this.members.length;
+	},
+
+	limited: function() {
+		var membersLimit = Template.instance().membersLimit.get();
+		return membersLimit && this.members.length >= membersLimit;
 	},
 
 	sortedMembers: function() {
@@ -11,10 +20,20 @@ Template.courseMembers.helpers({
 			return aRoles.length < bRoles.length;
 		});
 
+		var membersLimit = Template.instance().membersLimit.get();
+		if (membersLimit) {
+			sortedMembers = sortedMembers.slice(0, membersLimit);
+		}
+
 		return sortedMembers;
 	}
 });
 
+Template.courseMembers.events({
+	'click .js-show-all-members': function(e, instance) {
+		instance.membersLimit.set(false);
+	}
+});
 
 Template.courseMember.onCreated(function() {
 	var instance = this;
