@@ -3,8 +3,10 @@ export default Notification = {};
 import '/imports/collections/Log.js';
 
 import notificationEvent from '/imports/notification/Notification.Event.js';
+import notificationComment from '/imports/notification/Notification.Comment.js';
 
 Notification.Event = notificationEvent;
+Notification.Comment = notificationComment;
 
 /** Handle event notification
   *
@@ -56,6 +58,8 @@ Notification.send = function(entry) {
 				var vars = model.vars(userLocale);
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
 				vars.siteName = siteName;
+				vars.locale = userLocale;
+				vars.username = username;
 
 				var message = SSR.render(model.template, vars);
 

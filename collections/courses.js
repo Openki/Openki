@@ -46,6 +46,20 @@ Course.prototype.editableBy = function(user) {
 		|| _.intersection(user.badges, this.editors).length > 0;
 };
 
+
+/** Get list of members with specified role
+  *
+  * @param {String} role like 'team'
+  * @return {List} of members
+  */
+Course.prototype.membersWithRole = function(role) {
+	check(role, String);
+	return this.members.filter(function(member) {
+		return member.roles.indexOf(role) >= 0;
+	});
+};
+
+
 Courses = new Meteor.Collection("Courses", {
 	transform: function(course) {
 		return _.extend(new Course(), course);

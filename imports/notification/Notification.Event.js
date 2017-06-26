@@ -73,9 +73,9 @@ notificationEvent.Model = function(entry) {
 
 			var subject;
 			if (entry.new) {
-				subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}");
+				subject = mf('notification.event.mail.subject.new', subjectvars, "On {DATE}: {TITLE}", userLocale);
 			} else {
-				subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}");
+				subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}", userLocale);
 			}
 
 			return (
@@ -86,7 +86,6 @@ notificationEvent.Model = function(entry) {
 				, eventEnd: endMoment.format('LT')
 				, regionName: region.name
 				, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-				, locale: userLocale
 				, eventLink: Router.url('showEvent', event)
 				, calLink: Router.url('calEvent', event)
 				, new: entry.body.new
