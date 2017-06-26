@@ -1,47 +1,134 @@
-{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
-<br>
-{{#if additionalMessage}}
-	{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
-	{{additionalMessage}}
-	<br>
-{{/if}}
-{{#if new}}
-	{{mf "notification.event.mail.new" "A new event was just published for course {COURSE}:" COURSE=course.name LOCALE=locale}}
-{{else}}
-	{{mf "notification.event.mail.changed" "The event {EVENT} for course {COURSE} changed:" EVENT=event.title COURSE=course.name LOCALE=locale}}
-{{/if}}
-<table>
-	<tr>
-		<th>{{mf "notification.event.mail.title" "Title" LOCALE=locale}}</th>
-		<td>{{event.title}}</td>
-	</tr>
-	<tr>
-		<th>{{mf "notification.event.mail.date" "Date" LOCALE=locale}}</th>
-		<td>{{eventDate}}</td>
-	</tr>
-	<tr>
-		<th>{{mf "notification.event.mail.time" "Time" LOCALE=locale}}</th>
-		<td>{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{/if}}</td>
-	</tr>
-	<tr>
-		<th>{{mf "notification.event.mail.link" "Link" LOCALE=locale}}</th>
-		<td>
-			<a href="{{eventLink}}">{{mf "notification.event.mail.linkText" "Visit page" LOCALE=locale}}</a><br>
-			<a href="{{calLink}}">{{mf "notification.event.mail.linkCalendar" "Add to my calendar" LOCALE=locale}}</a><br>
-		</td>
-	</tr>
-	<tr>
-		<th>{{mf "notification.event.mail.description" "Event description" LOCALE=locale}}</th>
-		<td>{{{event.description}}}</td>
-	</tr>
-</table>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<small>
-	<div>
-		{{mf "notification.event.mail.notice" "This mail was sent by Openki." LOCALE=locale}}
-	    {{mf "notification.event.mail.timezone" "Event times are in local time for {REGION}: {ZONE}" REGION=regionName ZONE=timeZone LOCALE=locale}}
-	</div>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>{{subject}}</title>
+	<style type="text/css">
+		table td {border-collapse: collapse;}
+	</style>
+</head>
+<body>
+	<table cellpadding="0" cellspacing="0" border="0" align="center">
+		<tr>
+			<td>
+				<table cellpadding="0" cellspacing="0" border="0" align="center">
+						<tr bgcolor="#3f819e">
+							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
+								<a href="https://openki.net/">
+								<img src="https://openki.net/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
+									width="45"
+									height="45"
+									border="0"
+									alt="{{siteName}} Logo"
+									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
+								</img>
+								</a>
+								</td>
+							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
+								<a href="https://openki.net/" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+							</td>
+						</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+					<span style="font-size: 16px; font-weight: bold;">
+						{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
+					</span>
+					<p style="margin: 1em 0;">
+						{{#if new}}
+							{{mf "notification.event.mail.new" "A new event was just published for course {COURSE}:" COURSE=course.name LOCALE=locale}}
+						{{else}}
+							{{mf "notification.event.mail.changed" "The event {EVENT} for course {COURSE} changed:"	 EVENT=event.title COURSE=course.name LOCALE=locale}}
+						{{/if}}
+					</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
+				<table cellpadding="0" cellspacing="0" border="0" align="center">
+					<tr>
+						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
+								{{eventDate}}
+								<br>
+								{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{/if}}
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td width="400" valign="top" height="2px" style="font-size:2px;">
+						</td>
+					</tr>
+					<tr>
+						<td width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
+								<span style="font-size: 14px; font-weight: bold;">
+									{{event.title}}
+								</span>
+								<br>
+								{{{event.description}}}
+							</a>
+						</td>
+					</tr>
+					</a>
+						<tr>
+							<td width="350" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px;">
+									<a href="{{calLink}}" style="color: blue !important; text-decoration: underline;">
+										{{mf "notification.event.mail.linkCalendar" "Add to my calendar" LOCALE=locale}}
+									</a>
+								<br>
+							</td>
+						</tr>
+				</table>
+			</td>
+		</tr>
+		{{#if additionalMessage}}
+		<tr>
+			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+					<p style="margin: 1em 0;">
+						{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
 
-	<div><a href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}</a></div>
-	<div><a href="{{urlFor 'profile'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a></div>
-</small>
+					</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="400" valign="top" style="padding: 0px 20px 20px 20px;">
+				<table cellpadding="0" cellspacing="0" border="0" align="center">
+					<tr>
+						<td colspan="2" width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; color: #333333; padding: 6px;">
+								{{additionalMessage}}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		{{/if}}
+		<tr>
+			<td width="500" valign="top" bgcolor="#3f819e">
+				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
+					<tr>
+						<td width="500" valign="top" style="padding: 5px 15px 0px 15px;">
+							{{mf "notification.event.mail.notice" "This mail was sent by Openki because you are involved in a course/event." LOCALE=locale}}
+							{{mf "notification.event.mail.timezone" "Event times are in local time for {REGION}: {ZONE}" REGION=regionName ZONE=timeZone LOCALE=locale}}
+						</td>
+					</tr>
+					<tr>
+						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
+							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
+								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}
+							</a>
+							&nbsp;
+							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
+								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
+							</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>

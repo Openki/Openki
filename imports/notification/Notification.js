@@ -48,11 +48,14 @@ Notification.send = function(entry) {
 				var username = user.username;
 				var userLocale = user.profile && user.profile.locale || 'en';
 
+				var siteName = Accounts.emailTemplates.siteName;
+				var subjectPrefix = '['+siteName+'] ';
+
 				var unsubToken = Random.secret();
 
 				var vars = model.vars(userLocale);
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
-				var subjectPrefix = '['+Accounts.emailTemplates.siteName+'] ';
+				vars.siteName = siteName;
 
 				var message = SSR.render(model.template, vars);
 				mail =
