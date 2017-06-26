@@ -21,8 +21,8 @@
 					class="btn btn-add course-page-btn js-show-all-members"
 					type="button">
 					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-					{{#mf KEY='course.members.showAllMembers' NUM=howManyEnrolled}}
-						Show all {NUM} members
+					{{#mf KEY='course.members.showNextMembers' NUM=increaseBy}}
+						Show next {NUM} participants
 					{{/mf}}
 				</button>
 			{{/if}}
