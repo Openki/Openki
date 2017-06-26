@@ -1,4 +1,4 @@
-import '/imports/startup/eventnotifications.js';
+import '/imports/startup/notifications.js';
 
 Meteor.startup(function () {
 
