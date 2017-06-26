@@ -97,7 +97,6 @@ Template.filter.events({
 
 		parentInstance.filter.remove('categories', '' + category).done();
 		parentInstance.updateUrl();
-		$('#find').select();
 	},
 });
 
@@ -115,7 +114,7 @@ Template.filter.helpers({
 
 	'availableCategories': function() {
 		var parentInstance = Template.instance().parentInstance();
-		return Object.keys(parentInstance.categorySearchResults.get('categorySearchResults'));
+		return Object.keys(parentInstance.categorySearchResults.get());
 	},
 
 	'availableSubcategories': function(mainCategory) {
@@ -141,9 +140,6 @@ Template.filter.onRendered(function() {
 	var instance = this;
 
 	instance.$('.filter-categories-select').on('show.bs.dropdown hide.bs.dropdown', function(e) {
-		var dropdownMenu = $(e.target).find('.dropdown-menu').first();
-
-		dropdownMenu.stop(true, true).slideToggle(200);
 		instance.$('.dropdown-toggle').fadeToggle(200);
 	});
 

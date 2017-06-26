@@ -72,7 +72,7 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.busy(false);
 
 	var course = instance.data.course;
-
+	
 	instance.editableName = Editable(
 		true,
 		function(newName) {

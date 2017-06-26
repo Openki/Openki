@@ -9,6 +9,10 @@ Template.layout.helpers({
 
 	mayTranslate: function() {
 		return !!Meteor.user();
+	},
+
+	chooseRegion: function() {
+		return !!Session.get('regionGuessed');
 	}
 });
 

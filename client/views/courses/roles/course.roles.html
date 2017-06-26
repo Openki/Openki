@@ -17,13 +17,13 @@
 			</div>
 		</div>
 	{{else}}
-		<div class="course-role{{#if enrolling}}-enrol{{/if}}">
+		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
 			{{#if enrolling}}
-				<div class="course-role-title-enrol">
+				<div class="course-role-title-enroll">
 					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
 					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
 				</div>
-				<div class="course-role-enrol-options">
+				<div class="course-role-enroll-options">
 					<div class="form-group">
 						<label>
 							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
@@ -32,16 +32,16 @@
 							>{{../../member.comment}}</textarea>
 					</div>
 					<div class="form-actions">
-						{{> buttonCancel event="js-role-enrol-cancel"}}
+						{{> buttonCancel event="js-role-enroll-cancel"}}
 						<button type="button" class="btn btn-save js-role-subscribe-btn">
 							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
-							{{mf 'course.roles.enrol' 'Enroll'}}
+							{{mf 'course.roles.enroll' 'Enroll'}}
 						</button>
 					</div>
 				</div>
 			{{else}}
 				{{#if maySubscribe roletype.type}}
-					<button type="button" class="btn btn-add course-page-btn js-role-enrol-btn" name="participant">
+					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn" name="participant">
 						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
 						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 					</button>

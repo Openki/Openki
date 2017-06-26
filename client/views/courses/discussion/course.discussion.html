@@ -181,7 +181,7 @@
 
 
 <template name="removeCommentDropdown">
-	<span class="discussion-remove-dropdown dropdown">
+	<span class="dropdown">
 		<button type="button" class="discussion-delete-btn dropdown-toggle"
 			aria-expanded="false"
 			aria-haspopup="true"
@@ -189,14 +189,21 @@
 			data-tooltip="{{mf '_button.delete'}}">
 			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</button>
-		<span class="dropdown-menu">
-			<span>
+		<ul class="dropdown-menu dialog-dropdown right">
+			<li class="dropdown-header">
+				{{mf 'comment.delete.header' 'Delete comment'}}
+				<button class="close">&times;</button>
+			</li>
+			<li class="divider" role="seperator"></li>
+			<li>
 				{{mf 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
-			</span>
-			<button type="button" class="btn btn-remove js-delete-comment">
-				<span class="fa fa-remove"></span>
-				{{mf 'course.discussion.deleteCommentButton' 'Delete'}}
-			</button>
-		</span>
+			</li>
+			<li class="dialog-dropdown-btn">
+				<button type="button" class="btn btn-remove js-delete-comment">
+					<span class="fa fa-remove"></span>
+					{{mf 'course.discussion.deleteCommentButton' 'Delete'}}
+				</button>
+			</li>
+		</ul>
 	</span>
 </template>

@@ -27,7 +27,7 @@ Template.courseEdit.helpers({
 	},
 
 	availableCategories: function() {
-		return Object.keys(categories);
+		return Object.keys(Categories);
 	},
 
 	availableSubcategories: function(category) {
@@ -35,7 +35,7 @@ Template.courseEdit.helpers({
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.indexOf(category) < 0) return [];
 
-		return categories[category];
+		return Categories[category];
 	},
 
 	editingCategories: function() {
@@ -134,16 +134,15 @@ Template.courseEdit.events({
 		var isNew = courseId === '';
 
 		var roles = {};
-		$('.js-check-role').each(function(_, rolecheck) {
-			roles[rolecheck.name] = rolecheck.checked;
+		instance.$('.js-check-role').each(function() {
+			roles[this.name] = this.checked;
 		});
-
 
 		var changes = {
 			categories: instance.selectedCategories.get(),
-			name: $('#editform_name').val(),
+			name: instance.$('#editform_name').val(),
 			roles: roles,
-			internal: $('.js-check-internal').is(':checked'),
+			internal: instance.$('.js-check-internal').is(':checked'),
 		};
 
 		var newDescription = instance.editableDescription.getEdited();
@@ -157,7 +156,7 @@ Template.courseEdit.events({
 		}
 
 		if (isNew) {
-			changes.region = $('.region_select').val();
+			changes.region = instance.$('.region_select').val();
 			if (!changes.region) {
 				alert("Please select a region");
 				return;
@@ -179,12 +178,10 @@ Template.courseEdit.events({
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
-				$('.js-check-enrol').each(function(_, enrolcheck) {
-					if (enrolcheck.checked) {
-						Meteor.call('add_role', courseId, Meteor.userId(), enrolcheck.name, false);
-					} else {
-						Meteor.call('remove_role', courseId, Meteor.userId(), enrolcheck.name);
-					}
+				instance.$('.js-check-enroll').each(function() {
+					var method = this.checked ? 'add_role' : 'remove_role';
+
+					Meteor.call(method, courseId, Meteor.userId(), this.name);
 				});
 			}
 		});
@@ -216,9 +213,9 @@ Template.courseEdit.events({
 		} else {
 			selectedCategories = _.without(selectedCategories, catKey);
 
-			if (categories[catKey]) {
+			if (Categories[catKey]) {
 				// Remove all the subcategories as well
-				selectedCategories = _.difference(selectedCategories, categories[catKey]);
+				selectedCategories = _.difference(selectedCategories, Categories[catKey]);
 			}
 		}
 
