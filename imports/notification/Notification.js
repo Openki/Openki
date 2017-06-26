@@ -58,6 +58,11 @@ Notification.send = function(entry) {
 				vars.siteName = siteName;
 
 				var message = SSR.render(model.template, vars);
+
+				// Template can't handle DOCTYPE header, so we add the thing here.
+				var DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+				message = DOCTYPE.message;
+
 				mail =
 					{ from: Accounts.emailTemplates.from
 					, to: address
