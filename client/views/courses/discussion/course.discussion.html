@@ -7,12 +7,22 @@
 			</h4>
 		</div>
 		{{> post newPost}}
-		{{#if havePosts}}
+		{{#if posts}}
 			{{#each posts}}
 				<div class="discussion-conversation">
 					{{> post}}
 				</div>
 			{{/each}}
+			{{#if limited}}
+				<button
+					class="btn btn-add course-page-btn js-show-all-posts"
+					type="button">
+					<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+					{{#mf KEY='course.discussions.showAllComments' NUM=count}}
+						Show all {NUM} comments
+					{{/mf}}
+				</button>
+			{{/if}}
 		{{/if}}
 	</div>
 </template>
@@ -22,6 +32,23 @@
 		{{> postEdit}}
 	{{else}}
 		{{> postShow}}
+	{{/if}}
+	{{#if responsesLimited}}
+		<button
+			class="btn-link show-all-responses js-toggle-all-responses"
+			type="button">
+			{{#if allResponsesShown}}
+				<i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
+				{{#mf KEY='course.discussions.hideAnswers'}}
+					Hide answers
+				{{/mf}}
+			{{else}}
+				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+				{{#mf KEY='course.discussions.showAllAnswers' NUM=count}}
+					Show all {NUM} answers
+				{{/mf}}
+			{{/if}}
+		</button>
 	{{/if}}
 	{{#each responses}}
 		{{> post}}

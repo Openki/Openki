@@ -102,6 +102,10 @@ button.js-delete-comment {
 	padding-top: 0;
 }
 
+.toggle-all-responses {
+	@include td-margin(left, ($discussion-thumb-width * 1px));
+}
+
 .discussion-comment {
 	display: table;
 	@include td-padding-all(7px, 0, 7px, ($discussion-thumb-width * 1px));
