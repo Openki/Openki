@@ -40,7 +40,7 @@ Template.discussion.helpers({
 		var instance = Template.instance();
 		var limit = instance.limit.get();
 
-		if (limit) return instance.count.get() >= limit;
+		if (limit) return instance.count.get() > limit;
 	},
 
 	count: function() {
