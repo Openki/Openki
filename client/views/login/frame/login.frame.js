@@ -95,6 +95,14 @@ Template.loginFrame.onCreated(function() {
 			, 'serviceName': 'Github'
 			}
 		];
+
+	this.closeMenu = function() {
+		if (Session.get('viewportWidth') <= SCSSVars.gridFloatBreakpoint) {
+			$('.collapse').collapse('hide');
+		} else {
+			$('.loginButton').dropdown('toggle');
+		}
+	};
 });
 
 Template.loginFrame.events({
@@ -145,7 +153,7 @@ Template.loginFrame.events({
 					instance.setWarning('userNotFound');
 				}
 			} else {
-				$('.loginButton').dropdown('toggle');
+				instance.closeMenu();
 			}
 		});
 	},
@@ -167,7 +175,7 @@ Template.loginFrame.events({
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
-				$('.loginButton').dropdown('toggle');
+				instance.closeMenu();
 			}
 		});
 	}
@@ -313,4 +321,8 @@ Template.ownUserFrame.events({
 		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
 		return false;
 	},
+
+	'click .btn': function() {
+		$('.collapse').collapse('hide');
+	}
 });
