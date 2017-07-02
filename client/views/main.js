@@ -11,8 +11,13 @@ Template.layout.helpers({
 		return !!Meteor.user();
 	},
 
-	chooseRegion: function() {
-		return !!Session.get('regionGuessed');
+	showSplash: function() {
+		var route = Router.current().route.getName();
+		var showSplash =
+			RoutesToKeep.indexOf(route) >= 0
+			&& Session.get('showSplash');
+
+		return showSplash;
 	}
 });
 

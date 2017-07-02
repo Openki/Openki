@@ -50,8 +50,7 @@ Template.regionSelection.onCreated(function() {
 		// the homepage for those
 		if (changed) {
 			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
-			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
+			if (RoutesToKeep.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.close();
 	};
