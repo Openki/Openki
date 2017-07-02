@@ -12,9 +12,11 @@ Template.layout.helpers({
 	},
 
 	showSplash: function() {
-		var route = Router.current().route.getName();
+		var route = Router.current().route;
+		if (!route) return false;
+		
 		var showSplash =
-			RoutesToKeep.indexOf(route) >= 0
+			RoutesToKeep.indexOf(route.getName()) >= 0
 			&& Session.get('showSplash');
 
 		return showSplash;
