@@ -1,4 +1,4 @@
-
+import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
 
@@ -26,58 +26,6 @@ Router.onStop(function() {
 	var route = Router.current().route;
 	if (route) Session.set('previousRouteName', route.getName());
 });
-
-// Subscribe to list of regions and configure the regions
-// This checks client storage for a region setting. When there is no previously
-// selected region, we ask the server to do geolocation. If that fails too,
-// we just set it to 'all regions'.
-
-var regionSelectors =
-	[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
-	, UrlTools.queryParam('region')
-	, localStorage.getItem('region')
-	].filter(Boolean);
-
-// When the region is not provided we show a splash screen
-Session.set('showSplash', regionSelectors.length < 1);
-
-// Define routes where we don't go to the homepage when selecting a region
-// and therefore show the region splash.
-
-RoutesToKeep = ['home', 'find', 'venue', 'calendar', 'venueMap'];
-
-
-Meteor.subscribe('regions', function() {
-	var useAsRegion = function(regionId) {
-		if (!regionId) return;
-		if (regionId == 'all') {
-			Session.set("region", regionId);
-			return true;
-		}
-		if (Regions.findOne({ _id: regionId })) {
-			Session.set("region", regionId);
-			return true;
-		}
-
-		var region = Regions.findOne({ name: regionId });
-		if (region) {
-			Session.set("region", region._id);
-			return true;
-		}
-		return false;
-	};
-
-	if (regionSelectors.some(useAsRegion)) return;
-
-	// Give up and ask the server to place us
-	Meteor.call('autoSelectRegion', function(error, regionId) {
-		if (useAsRegion(regionId)) return;
-
-		// Give up
-		useAsRegion('all');
-	});
-});
-
 
 // We keep two subscription caches around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
@@ -171,6 +119,7 @@ Meteor.startup(function() {
 	});
 });
 
+Meteor.startup(RegionSelection.init);
 Meteor.startup(Assistant.init);
 
 Meteor.startup(getViewportWidth);
