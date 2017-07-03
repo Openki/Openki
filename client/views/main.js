@@ -1,3 +1,5 @@
+import "/imports/RegionSelection.js";
+
 Template.layout.helpers({
 	testWarning: function() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
@@ -11,15 +13,14 @@ Template.layout.helpers({
 		return !!Meteor.user();
 	},
 
-	showSplash: function() {
+	showRegionSplash: function() {
 		var route = Router.current().route;
 		if (!route) return false;
-		
-		var showSplash =
-			RoutesToKeep.indexOf(route.getName()) >= 0
-			&& Session.get('showSplash');
 
-		return showSplash;
+		return (
+			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
+			&& Session.get('showRegionSplash')
+		);
 	}
 });
 

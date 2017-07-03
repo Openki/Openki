@@ -1,3 +1,5 @@
+import "/imports/RegionSelection.js";
+
 Template.regionSelectionWrap.created = function() {
 	var instance = this;
 	instance.subscribe("Regions");
@@ -50,7 +52,7 @@ Template.regionSelection.onCreated(function() {
 		// the homepage for those
 		if (changed) {
 			var routeName = Router.current().route.getName();
-			if (RoutesToKeep.indexOf(routeName) < 0) Router.go('/');
+			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.close();
 	};
