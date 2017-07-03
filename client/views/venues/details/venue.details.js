@@ -93,15 +93,16 @@ Template.venueDetails.onCreated(function() {
 	});
 
 	this.getEvents = function(past) {
-		var predicate, limit, count;
+		var limit, count;
+		var predicate = { venue: this.data.venue._id };
 		var now = minuteTime.get();
 
 		if (past) {
-			predicate = { before: now };
+			predicate.before = now;
 			limit = instance.maxPastEvents.get();
 			count = instance.pastEventsCount;
 		} else {
-			predicate = { after: now };
+			predicate.after = now;
 			limit = instance.maxEvents.get();
 			count = instance.eventsCount;
 		}
