@@ -117,10 +117,38 @@
 				</div>
 			{{/with}}
 		{{/if}}
-		{{#if eventsList.count}}
+		{{#if events}}
 			<div class="page-component">
 				<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
-				{{> eventList dataEvents=eventsList withDate=true}}
+				{{> eventList dataEvents=events withDate=true}}
+				{{#if eventsLimited}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-events">
+						{{#mf KEY='venue.details.showMoreEvents' NUM=unloadedEvents}}
+							Show {NUM, plural,
+								one {one more event}
+								other {# more events}
+							}
+						{{/mf}}
+					</button>
+				{{/if}}
+			</div>
+		{{/if}}
+		{{#if pastEvents}}
+			<div class="page-component">
+				<h2>Past events:</h2>
+				{{> eventList dataEvents=pastEvents withDate=true}}
+				{{#if pastEventsLimited}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-past-events">
+						{{#mf KEY='venue.details.showMorePastEvents' NUM=unloadedPastEvents}}
+							Show {NUM, plural,
+								one {one more event}
+								other {# more events}
+							}
+						{{/mf}}
+					</button>
+				{{/if}}
 			</div>
 		{{/if}}
 	</div>
