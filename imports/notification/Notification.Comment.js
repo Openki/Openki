@@ -1,6 +1,7 @@
 export default notificationComment = {};
 import '/imports/collections/Log.js';
 import '/imports/StringTools.js';
+import "/imports/HtmlTools.js";
 
 /** Record the intent to send event notifications
   *
@@ -58,6 +59,7 @@ notificationComment.Model = function(entry) {
 				, courseLink: Router.url('showCourse', course, { hash: 'comment'+comment._id })
 				, subject: subject
 				, comment: comment
+				, commentTextHtml: HtmlTools.plainToHtml(comment.text)
 				, commenter: commenter
 				}
 			);
