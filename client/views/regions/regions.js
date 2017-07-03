@@ -29,8 +29,8 @@ Template.regionSelection.onCreated(function() {
 
 	instance.regions = function() {
 		var search = instance.regionSearch.get();
-		var query = {};
-		if (search !== '') query = { name: new RegExp(search, 'i') };
+		var query = {futureEventCount:{$gt:0}};
+		if (search !== '') query = { name: new RegExp(search, 'i')};
 		var options = { sort: {futureEventCount: -1} };
 
 		return Regions.find(query, options);
