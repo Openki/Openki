@@ -1,10 +1,14 @@
 .discussion-conversation {
 	background: $blue-lighter;
-	padding: 15px ($grid-gutter-width / 2) 10px;
+	padding: 15px ($grid-gutter-width / 2);
 }
 
-.discussion > div:nth-child(3) {
-	border-top: $course-details-seperator-height solid $body-bg;
+.discussion-conversation + .discussion-conversation {
+	padding-top: 0;
+}
+
+.course-page-btn + .discussion-conversation {
+	margin-top: $course-details-seperator-height;
 }
 
 $discussion-thumb-width: 60;
@@ -45,7 +49,7 @@ $discussion-post-bg: $blue-lighter;
 .discussion-post {
 	background: $discussion-post-bg;
 	display: table;
-	padding: 7px 0;
+	padding: 0 0 7px;
 	width: 100%;
 }
 
@@ -53,8 +57,10 @@ $discussion-post-bg: $blue-lighter;
 	background: darken($discussion-post-bg, 5%);
 }
 
-.discussion-post-header .profilelink {
+.discussion-post-header .profilelink,
+.discussion-post-header .username {
 	font-weight: bold;
+	@include td-padding(right, 5px);
 }
 
 .discussion-buttons {
@@ -108,7 +114,7 @@ button.js-delete-comment {
 
 .discussion-comment {
 	display: table;
-	@include td-padding-all(7px, 0, 7px, ($discussion-thumb-width * 1px));
+	@include td-padding-all(7px, 0, 0, ($discussion-thumb-width * 1px));
 	position: relative;
 	width: 100%;
 }
@@ -133,8 +139,11 @@ $discussion-edit-bg: lighten($gray-lighter, 10%);
 }
 
 .discussion-post-new {
-	background-color: $green;
 	margin-top: $course-details-seperator-height;
-	padding: 10px ($grid-gutter-width / 2);
+	padding: 15px ($grid-gutter-width / 2);
 	width: 100%;
+}
+
+.discussion-post-new + .discussion-conversation {
+	padding-top: 0;
 }
