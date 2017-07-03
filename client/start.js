@@ -43,7 +43,7 @@ Session.set('showSplash', regionSelectors.length < 1);
 
 // Define routes where we don't go to the homepage when selecting a region
 // and therefore show the region splash.
-RoutesToKeep = ['home', 'find', 'venue', 'calendar'];
+RoutesToKeep = ['home', 'find', 'venue', 'calendar', 'venues'];
 
 Meteor.subscribe('regions', function() {
 	var useAsRegion = function(regionId) {
