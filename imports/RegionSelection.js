@@ -3,7 +3,7 @@ export default RegionSelection = {};
 /** List of routes that show different results when the region changes.
   */
 RegionSelection.regionDependentRoutes =
-	['home', 'find', 'venue', 'calendar'];
+	['home', 'find', 'calendar', 'venueMap'];
 
 /** Subscribe to list of regions and configure the regions
   * This checks client storage for a region setting. When there is no previously
@@ -49,4 +49,4 @@ RegionSelection.init = function() {
 			useAsRegion('all');
 		});
 	});
-}
+};
