@@ -104,7 +104,6 @@
 		"saneHtml":true,
 		"sanitizeHtml":true,
 		"textPlain":true,
-		"htmlize":true,
 		"saneText":true,
 
 // client/editable/...
