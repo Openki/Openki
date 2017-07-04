@@ -30,10 +30,12 @@ notificationComment.Model = function(entry) {
 	var comment = CourseDiscussions.findOne(entry.body.commentId);
 	var course = false;
 	var commenter = false;
+	var commenterName = false;
 
 	if (comment) {
 		course = Courses.findOne(comment.courseId);
 		commenter = Meteor.users.findOne(comment.userId);
+		commenterName = commenter.username;
 	}
 
 	return {
@@ -48,7 +50,7 @@ notificationComment.Model = function(entry) {
 
 			var subject;
 			if (commenter) {
-				subjectvars.COMMENTER = StringTools.truncate(commenter.username, 10);
+				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
 				subject = mf('notification.comment.mail.subject', subjectvars, "Comment on {COURSE} by {COMMENTER}: {TITLE}", userLocale);
 			} else {
 				subject = mf('notification.comment.mail.subject.anon', subjectvars, "Anonymous comment on {COURSE}: {TITLE}", userLocale);
@@ -61,6 +63,7 @@ notificationComment.Model = function(entry) {
 				, comment: comment
 				, commentTextHtml: HtmlTools.plainToHtml(comment.text)
 				, commenter: commenter
+				, commenterName: commenterName
 				}
 			);
 		},

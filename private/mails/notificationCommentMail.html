@@ -38,9 +38,9 @@
 				<a href="{{courseLink}}">
 					<p style="margin: 1em 0;">
 						{{#if commenter}}
-							{{mf "notification.comment.mail.intro" 'Ein Kommentar von "{USERNAME}" zum Kurs "{COURSE}":' USERNAME=username COURSE=course.name LOCALE=locale}}
+							{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
 						{{else}}
-							{{mf "notification.comment.mail.intro.anon" 'Ein anonymer Kommentar zum Kurs "{COURSE}":' COURSE=course.name LOCALE=locale}}
+							{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
 						{{/if}}
 					</p>
 				</a>
