@@ -6,7 +6,7 @@
 	"esversion": 6,
 	"latedef": "nofunc",
 	"unused": "vars",
-	"loopfunc": true, 
+	"loopfunc": true,
 
 	"globals": {
 		"Meteor": false,
@@ -200,6 +200,3 @@
 
 	}
 }
-
-
-
