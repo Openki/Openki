@@ -113,7 +113,7 @@ Notification.SendResult.record = function(note, unsubToken, sent, recipient, mes
 		unsubToken: unsubToken
 	};
 
-	var rel = [ note._id ];
+	var rel = [ note._id, recipient ];
 	if (unsubToken) rel.push(unsubToken);
 
 	Log.record('Notification.SendResult', rel, entry);

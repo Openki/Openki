@@ -168,7 +168,7 @@ Meteor.methods({
 		}
 
 		if (user.notifications !== notifications) {
-			Profile.Notifications.change(user._id, notifications, false, "profile change");
+			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
 		}
 	},
 
