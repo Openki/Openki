@@ -35,15 +35,13 @@
 				<span style="font-size: 16px; font-weight: bold;">
 						{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
 				</span>
-				<a href="{{courseLink}}">
-					<p style="margin: 1em 0;">
-						{{#if commenter}}
-							{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
-						{{else}}
-							{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
-						{{/if}}
-					</p>
-				</a>
+				<p style="margin: 1em 0;">
+					{{#if commenter}}
+						{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
+					{{else}}
+						{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
+					{{/if}}
+				</p>
 			</td>
 		</tr>
 		<tr>
