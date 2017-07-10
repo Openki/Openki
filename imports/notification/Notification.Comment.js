@@ -34,8 +34,12 @@ notificationComment.Model = function(entry) {
 
 	if (comment) {
 		course = Courses.findOne(comment.courseId);
-		commenter = Meteor.users.findOne(comment.userId);
-		commenterName = commenter.username;
+		if (comment.userId) {
+			commenter = Meteor.users.findOne(comment.userId);
+		}
+		if (commenter) {
+			commenterName = commenter.username;
+		}
 	}
 
 	return {
