@@ -13,6 +13,7 @@ Template.discussion.onCreated(function() {
 				// Jump to the selected comment.
 				// This method should work for screenreaders too.
 				location.hash = '#comment' + select;
+				RouterAutoscroll.scheduleScroll();
 			});
 		}
 	});
