@@ -113,7 +113,8 @@ Router.map(function () {
 				edit: !!this.params.query.edit,
 				roles_details: loadroles(course),
 				course: course,
-				member: member
+				member: member,
+				select: this.params.query.select
 			};
 			return data;
 		},

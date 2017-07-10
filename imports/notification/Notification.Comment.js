@@ -58,7 +58,7 @@ notificationComment.Model = function(entry) {
 
 			return (
 			    { course: course
-				, courseLink: Router.url('showCourse', course, { hash: 'comment'+comment._id })
+				, courseLink: Router.url('showCourse', course, { query: 'select='+comment._id })
 				, subject: subject
 				, comment: comment
 				, commentTextHtml: HtmlTools.plainToHtml(comment.text)
