@@ -13,7 +13,7 @@ Template.regionsSplash.events({
 
 		regionsSplash.modal('hide');
 		regionsSplash.on('hidden.bs.modal', function() {
-			Session.set('regionGuessed', false);
+			Session.set('showRegionSplash', false);
 		});
 	}
 });
