@@ -9003,6 +9003,24 @@ mfPkg.syncAll({
       "revisionId": "M2vEmKxCEtCHxJNBB",
       "_id": "EKJqJugnfe74GGmAX"
     },
+    "venueDetails.coordinates": {
+      "key": "venueDetails.coordinates",
+      "lang": "de",
+      "text": "Koordinaten: {LAT} {LON}",
+      "ctime": 1499818870032,
+      "mtime": 1499818870032,
+      "revisionId": "zkFRT3HuQkxQ5aTzK",
+      "_id": "k2NNJFePc8howRcXe"
+    },
+    "venues.list.mayHost": {
+      "key": "venues.list.mayHost",
+      "lang": "de",
+      "text": "Du kannst hier hosten",
+      "ctime": 1499818842196,
+      "mtime": 1499818842196,
+      "revisionId": "BSeWkewGFejEwbsF8",
+      "_id": "DHoEDgEiaez5nNrg8"
+    },
     "venues.list.noneFound": {
       "key": "venues.list.noneFound",
       "lang": "de",
@@ -26624,14 +26642,13 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "group.settings.field.backgroundImg": {
-      "_id": "WuZrvdoznkYFmLR2d",
       "key": "group.settings.field.backgroundImg",
       "lang": "fr",
-      "text": "Image en arrière-plan:",
+      "text": "Image en arrière-plan",
       "ctime": 1467376489091,
-      "mtime": 1467376489091,
-      "revisionId": "Rcns4mQFHpYCCfMe5",
-      "fuzzy": true
+      "mtime": 1499819469874,
+      "revisionId": "KMs8LE2WtwSa7piFd",
+      "_id": "WuZrvdoznkYFmLR2d"
     },
     "group.settings.field.backgroundImg.placeholder": {
       "_id": "xQ2D2c6JmZqJu6Gne",
@@ -26653,14 +26670,13 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "group.settings.field.logo": {
-      "_id": "4ioW5mkgquRjRunLQ",
       "key": "group.settings.field.logo",
       "lang": "fr",
-      "text": "Logo:",
+      "text": "Logo",
       "ctime": 1467373249250,
-      "mtime": 1467373249251,
-      "revisionId": "azidENov3LgXKADyb",
-      "fuzzy": true
+      "mtime": 1499819498405,
+      "revisionId": "dvqgfczqdDLvzn8xQ",
+      "_id": "4ioW5mkgquRjRunLQ"
     },
     "group.settings.field.logo.placeholder": {
       "_id": "aqWC3dvHpJiaT3qyM",
@@ -26799,13 +26815,13 @@ mfPkg.syncAll({
       "revisionId": "eMZjmmP6x3cMq9ver"
     },
     "introduction.Title": {
-      "_id": "Q4m2P7zJbayedHda6",
       "key": "introduction.Title",
       "lang": "fr",
-      "text": "Qu'est ce que {SITENAME} fait pour vous?",
+      "text": "Qu'est ce que {SITENAME} fait pour toi?",
       "ctime": 1467373138770,
-      "mtime": 1467373138770,
-      "revisionId": "MqGSyGCk9znzjrCaR"
+      "mtime": 1499819314835,
+      "revisionId": "xkfxAxrP7Ze7GdJm3",
+      "_id": "Q4m2P7zJbayedHda6"
     },
     "introduction.close.title": {
       "_id": "en7uLS62MukuMkfFf",
@@ -27740,14 +27756,13 @@ mfPkg.syncAll({
       "revisionId": "vtN6jNETmrZ8grjLR"
     },
     "profile.input.username": {
-      "_id": "7DiQyZEfzmGLTtNNc",
       "key": "profile.input.username",
       "lang": "fr",
       "text": "Nom d'utilisateur",
       "ctime": 1467372921412,
-      "mtime": 1467372921412,
-      "revisionId": "bqAT7wu8nRi6ZzpqW",
-      "fuzzy": true
+      "mtime": 1499819517104,
+      "revisionId": "2aw2jBrZ6JjSxzCGs",
+      "_id": "7DiQyZEfzmGLTtNNc"
     },
     "profile.its_you": {
       "_id": "558QM7s7WEWRZ4oSX",
@@ -27885,14 +27900,13 @@ mfPkg.syncAll({
       "revisionId": "pgL6pH2C4naoGWgbk"
     },
     "profile.username": {
-      "_id": "F3hLjjz8c2WNkZyn9",
       "key": "profile.username",
       "lang": "fr",
-      "text": "Nom d'utilisateur:",
+      "text": "Nom d'utilisateur",
       "ctime": 1467372904977,
-      "mtime": 1467372904977,
-      "revisionId": "eC7kiTSTvqSCnhNtg",
-      "fuzzy": true
+      "mtime": 1499819505588,
+      "revisionId": "dqXn6QKr3MbCDTPDw",
+      "_id": "F3hLjjz8c2WNkZyn9"
     },
     "profile.users_profile_page": {
       "_id": "NsZ3SYFabw7paxBez",
@@ -33496,6 +33510,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1499818093989,
-  "updatedAt": 1499818572420
+  "exportedAt": 1499902295563,
+  "updatedAt": 1499819517104
 });
