@@ -41,10 +41,10 @@ Router.map(function () {
         where: 'server',
         action: function () {
             var eventQuery = Filtering(EventPredicates).read(this.params.query).done().toQuery();
-            var events = Events.find(eventQuery).fetch();
+            var events = eventsFind(eventQuery).fetch();
 
 			var result = _.map(events, function(ev) {
-				return (
+				var evr =
 					{ id: ev._id
 					, title: ev.title
 					, description: ev.description
@@ -53,9 +53,46 @@ Router.map(function () {
 					, start: ev.start
 					, end: ev.end
 					, duration: moment(ev.end).diff(ev.start) / 60000 // Minutes
-					, sourceLink: Router.url('showEvent', ev)
+					, link: Router.url('showEvent', ev)
+					, internal: ev.internal
+					, room: ev.room
+					};
+
+				if (ev.venue) {
+					evr.venue =
+						{ id: ev.venue._id
+						, name: ev.venue.name
+						, loc: ev.venue.loc
+						, link: Router.url('venueDetails', ev.venue)
+						};
+				}
+
+				if (ev.courseId) {
+					let course = Courses.findOne(ev.courseId);
+					if (course) {
+						evr.course =
+							{ id: ev.courseId
+							, name: course.name
+							, link: Router.url('showCourse', course)
+							};
 					}
-				);
+				}
+
+				evr.groups = [];
+				for(var groupId of ev.groups) {
+					let group = Groups.findOne(groupId);
+					if (group) {
+						evr.groups.push(
+							{ id: group._id
+							, name: group.name
+							, short: group.short
+							, link: Router.url('groupDetails', group)
+							}
+						);
+					}
+				};
+
+				return evr;
 			});
 
             this.response.setHeader('Content-Type', 'application/json; charset=utf-8');
