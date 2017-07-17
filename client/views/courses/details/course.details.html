@@ -57,7 +57,7 @@
 			{{#if mobileViewport}}
 				{{> courseEvents}}
 			{{else}}
-				{{> discussion course}}
+				{{> discussion courseId=course._id select=select}}
 			{{/if}}
 		</div>
 		<div class="course-page-column-right">
@@ -68,7 +68,7 @@
 				{{> courseMembers course}}
 			</div>
 			{{#if mobileViewport}}
-				{{> discussion course}}
+				{{> discussion courseId=course._id select=select}}
 			{{/if}}
 			<div class="page-component">
 				{{> report}}

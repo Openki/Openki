@@ -1,4 +1,4 @@
-import '/imports/Notification.js';
+import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
 
 // ======== DB-Model: ========

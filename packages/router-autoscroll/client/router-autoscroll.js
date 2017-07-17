@@ -39,13 +39,7 @@ function getScrollToPosition () {
     return undefined;
   }
 
-  //HTML5 allows all kinds of ids, so we can't whitelist characters, only
-  //decide the hash doesn't represent a DOM id if we fail
-  try {
-    element = document.getElementById(id);
-  } catch (ex) {
-    element = false;
-  }
+  element = document.getElementById(id);
   if (element) {
     return element.getBoundingClientRect().top + scrollTop();
   }
@@ -53,8 +47,7 @@ function getScrollToPosition () {
   return 0;
 }
 
-//Do the scroll, after the DOM update so that the position can be correct
-var scheduleScroll = function () {
+RouterAutoscroll.scheduleScroll = function () {
   Tracker.afterFlush(function () {
     Meteor.defer(function () {
       var position = getScrollToPosition();
@@ -63,12 +56,13 @@ var scheduleScroll = function () {
   });
 };
 
-function ironWhenReady (callFn) {
+function ironWhenReady(callFn) {
   return function () {
     var self = this;
-    self.next();
-    // XXX in iron, why do we abort if not ready, shouldn't we try once ready?
-    if (self.ready()) callFn();
+    if (self.ready()) {
+      var position = getScrollToPosition();
+      scrollToPos(position);
+    }
   };
 }
 
@@ -85,7 +79,7 @@ var scrollToPos = function (position) {
 };
 
 if (Package['iron:router']) {
-  Package['iron:router'].Router.onRun(ironWhenReady(scheduleScroll));
+  Package['iron:router'].Router.onAfterAction(ironWhenReady(RouterAutoscroll.scheduleScroll));
   Package['iron:router'].Router.onStop(saveScrollPosition);
 }
 

@@ -1,8 +1,23 @@
 Template.discussion.onCreated(function() {
-	subs.subscribe('discussion', this.data._id);
-
 	this.count = new ReactiveVar(0);
-	this.limit = new ReactiveVar(3);
+
+	// If we want to jump to a comment we don't fold the comments
+	var select = this.data.select;
+	var limit = select ? 0 : 3;
+	this.limit = new ReactiveVar(limit);
+
+	subs.subscribe('discussion', this.data.courseId, function() {
+		if (select) {
+			// Wait for the templates to render before trying to jump there.
+			Tracker.afterFlush(function() {
+				// Jump to the selected comment.
+				// This method should work for screenreaders too.
+				location.hash = '#comment' + select;
+				RouterAutoscroll.scheduleScroll();
+			});
+		}
+	});
+
 });
 
 Template.discussion.helpers({
@@ -10,7 +25,7 @@ Template.discussion.helpers({
 		var instance = Template.instance();
 		var posts = CourseDiscussions.find(
 			{
-				courseId: this._id,
+				courseId: this.courseId,
 				parentId: { $exists: false }
 			},
 			{
@@ -30,7 +45,7 @@ Template.discussion.helpers({
 	newPost: function() {
 		return {
 			'new': true,
-			courseId: this._id,
+			courseId: this.courseId,
 			userId: Meteor.userId(),
 			text: ''
 		};
