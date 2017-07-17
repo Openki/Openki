@@ -79,7 +79,8 @@ Router.map(function () {
 				}
 
 				evr.groups = [];
-				for(var groupId of ev.groups) {
+				var groups = ev.groups || [];
+				for(var groupId of groups) {
 					let group = Groups.findOne(groupId);
 					if (group) {
 						evr.groups.push(
