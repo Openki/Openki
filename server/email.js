@@ -1,3 +1,4 @@
+import "/imports/HtmlTools.js";
 
 if (Meteor.settings.siteEmail) {
 	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
@@ -49,7 +50,7 @@ Meteor.methods({
 		}
 
 		var names = {
-			SENDER: htmlize(sender.username),
+			SENDER: HtmlTools.plainToHtml(sender.username),
 			RECIPIENT: recipient.username,
 			ADMINS: 'admins@openki.net'
 		};
@@ -59,7 +60,7 @@ Meteor.methods({
 		mail.html =
 			mf('sendEmail.greeting', names, 'Message from {SENDER} to {RECIPIENT}:', lg)+ '<br>'
 			+ '--------------------------------------------------------------------<br>'
-			+ htmlize(text.substr(0, 10000)) + '<br>'
+			+ HtmlTools.plainToHtml(text.substr(0, 10000)) + '<br>'
 			+ '--------------------------------------------------------------------<br>'
 			+ mf('sendEmail.endMessage', 'End of message.', lg)
 			+ contactString +'<br><br>'
@@ -85,7 +86,7 @@ Meteor.methods({
 		if (this.userId) {
 			var user = Meteor.users.findOne(this.userId);
 			if (user) {
-				reporter = "<a href='"+rootUrl+'user/'+this.userId+"'>"+htmlize(user.username)+"</a>";
+				reporter = "<a href='"+rootUrl+'user/'+this.userId+"'>"+HtmlTools.plainToHtml(user.username)+"</a>";
 			}
 		}
 		moment.locale('en');

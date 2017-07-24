@@ -77,6 +77,75 @@ Router.map(function () {
 });
 
 
+function loadroles(course) {
+	var userId = Meteor.userId();
+	return _.reduce(Roles, function(goodroles, roletype) {
+		var role = roletype.type;
+		var sub = hasRoleUser(course.members, role, userId);
+		if (course.roles && course.roles.indexOf(role) !== -1) {
+			goodroles.push({
+				roletype: roletype,
+				role: role,
+				subscribed: !!sub,
+				course: course
+			});
+		}
+		return goodroles;
+	}, []);
+}
+
+
+Router.map(function () {
+	this.route('showCourse', {
+		path: 'course/:_id/:slug?',
+		template: 'courseDetailsPage',
+		waitOn: function () {
+			return subs.subscribe('courseDetails', this.params._id);
+		},
+		data: function() {
+			var course = Courses.findOne({_id: this.params._id});
+
+			if (!course) return false;
+
+			var userId = Meteor.userId();
+			var member = getMember(course.members, userId);
+			var data = {
+				edit: !!this.params.query.edit,
+				roles_details: loadroles(course),
+				course: course,
+				member: member,
+				select: this.params.query.select
+			};
+			return data;
+		},
+		onAfterAction: function() {
+			var data = this.data();
+			if (data) {
+				var course = data.course;
+				document.title = webpagename + 'Course: ' + course.name;
+			}
+		}
+	});
+
+	this.route('showCourseHistory', {
+		path: 'course/:_id/:slug/History',
+		//template: 'coursehistory',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('courseDetails', this.params._id)
+			];
+		},
+		data: function () {
+			var course = Courses.findOne({_id: this.params._id});
+			return {
+				course: course
+			};
+		}
+	});
+});
+
+
+
 Router.map(function () {
 	this.route('profile', {
 		path: 'profile',
@@ -118,6 +187,93 @@ Router.map(function () {
 		}
 	});
 });
+
+Router.map(function () {
+	this.route('groupDetails', {
+		path: 'group/:_id/:short?',
+		waitOn: function () {
+			return [
+				subs.subscribe('group', this.params._id),
+			];
+		},
+		data: function () {
+			var group;
+			var isNew = this.params._id === 'create';
+			if (isNew) {
+				group = {
+					_id: 'create'
+				};
+			} else {
+				group = Groups.findOne({_id: this.params._id});
+			}
+
+			if (!group) return false;
+
+			var data = {
+				group: group,
+				courseQuery: _.extend(this.params.query, {group: group._id}),
+				isNew: isNew,
+				showCourses: !isNew,
+			};
+
+
+			return data;
+		},
+		onAfterAction: function() {
+			var group = Groups.findOne({_id: this.params._id});
+			if (group) {
+				document.title = webpagename + group.name;
+			}
+		}
+	});
+});
+
+
+Router.map(function() {
+	this.route('venueDetails', {
+		path: 'venue/:_id/:name?',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('venueDetails', this.params._id),
+			];
+		},
+
+		data: function() {
+			var id = this.params._id;
+
+			var venue;
+			var data = {};
+			if (id === 'create') {
+				var userId = Meteor.userId();
+				venue = new Venue();
+				venue.region = cleanedRegion(Session.get('region'));
+				venue.editor = userId;
+			} else {
+				venue = Venues.findOne({_id: this.params._id});
+				if (!venue) return false; // Not found
+			}
+
+			data.venue = venue;
+
+			return data;
+		},
+
+		onAfterAction: function() {
+			var data = this.data();
+			if (!data) return;
+
+			var venue = data.venue;
+			var title;
+			if (venue._id) {
+				title = venue.name;
+			} else {
+				title = mf('venue.edit.siteTitle.create', "Create Venue");
+			}
+			document.title = webpagename + title;
+		}
+	});
+});
+
 
 Router.route('/profile/unsubscribe/:token', function() {
 

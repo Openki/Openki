@@ -2,53 +2,6 @@
 
 var maxEvents = 12;
 
-Router.map(function() {
-	this.route('venueDetails', {
-		path: 'venue/:_id/:name?',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('venueDetails', this.params._id),
-			];
-		},
-
-		data: function() {
-			var id = this.params._id;
-
-			var venue;
-			var data = {};
-			if (id === 'create') {
-				var userId = Meteor.userId();
-				venue = new Venue();
-				venue.region = cleanedRegion(Session.get('region'));
-				venue.editor = userId;
-			} else {
-				venue = Venues.findOne({_id: this.params._id});
-				if (!venue) return false; // Not found
-			}
-
-			data.venue = venue;
-
-			return data;
-		},
-
-		onAfterAction: function() {
-			var data = this.data();
-			if (!data) return;
-
-			var venue = data.venue;
-			var title;
-			if (venue._id) {
-				title = venue.name;
-			} else {
-				title = mf('venue.edit.siteTitle.create', "Create Venue");
-			}
-			document.title = webpagename + title;
-		}
-	});
-});
-
-
-
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {

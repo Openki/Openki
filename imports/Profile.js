@@ -11,6 +11,11 @@ Profile.Notifications = {};
   *
   */
 Profile.Notifications.change = function(userId, enable, relId, reason) {
+	check(userId, String);
+	check(enable, Boolean);
+	check(relId, Match.Optional(String));
+	check(reason, String);
+
 	var rel = [userId];
 	if (relId) rel.push(relId);
 	Log.record('Profile.Notifications', rel,
@@ -37,11 +42,12 @@ Profile.Notifications.unsubscribe = function(token) {
 	Log.find({
 		rel: token
 	}).forEach(function(entry) {
+		console.log(entry)
 		// See whether it was indeed a secret token.
 		// This check is not redundant because public ID like courseID
 		// are also written into the rel-index and would be found if provided.
 		if (entry.body.unsubToken === token) {
-			Profile.Notifications.change(entry.body.userId, false, entry._id, "unsubscribe token");
+			Profile.Notifications.change(entry.body.recipient, false, entry._id, "unsubscribe token");
 			accepted = true;
 		}
 	});

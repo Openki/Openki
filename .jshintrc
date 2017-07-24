@@ -6,7 +6,7 @@
 	"esversion": 6,
 	"latedef": "nofunc",
 	"unused": "vars",
-	"loopfunc": true, 
+	"loopfunc": true,
 
 	"globals": {
 		"Meteor": false,
@@ -104,7 +104,6 @@
 		"saneHtml":true,
 		"sanitizeHtml":true,
 		"textPlain":true,
-		"htmlize":true,
 		"saneText":true,
 
 // client/editable/...
@@ -201,6 +200,3 @@
 
 	}
 }
-
-
-

@@ -42,3 +42,5 @@ var stopPropagationForDownloadClicks = {
 
 Template.layout.events(stopPropagationForDownloadClicks);
 Template.frameLayout.events(stopPropagationForDownloadClicks);
+
+RouterAutoscroll.marginTop = 50; // Wild guess

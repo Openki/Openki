@@ -1,3 +1,5 @@
+import '/imports/notification/Notification.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "title"        -> String
@@ -86,7 +88,11 @@ Meteor.methods({
 			saneComment.parentId = parentComment._id;
 		}
 
-		return CourseDiscussions.insert(saneComment);
+		var commentId = CourseDiscussions.insert(saneComment);
+
+		Notification.Comment.record(commentId);
+
+		return commentId;
 	},
 
 
