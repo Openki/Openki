@@ -21,6 +21,10 @@
 	border-top-color: $dropdown-bg;
 }
 
+.leaflet-top {
+	z-index: auto;
+}
+
 select:hover {
 	cursor: pointer;
 }
