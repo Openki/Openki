@@ -140,15 +140,6 @@ Template.regionSelection.events({
 	},
 
 	'focus .js-region-search': function(event, instance) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });
@@ -159,15 +150,6 @@ Template.regionSelection.onRendered(function() {
 	instance.$('.js-region-search').select();
 
 	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
-		}
-
 		instance.close();
 	});
 });
