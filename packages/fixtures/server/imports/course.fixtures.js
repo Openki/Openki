@@ -165,7 +165,7 @@ export default courses = [{
 	'groups':     ['CCC-ZH'],
 	'createdby':   'Mike_85',
 	'description': '<p> Ein paar Leute veranstalten am Freitag 28. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi... </p> <p>Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die, die können und wollen, werden sich gegenseitig und Allen Themen vorstellen </p>',
-	'roles':      ['team','host'],
+	'roles':      ['team','participant','host'],
 	'members': [
 		{'user':'31337', 'roles': ['team']},
 		{'user':'INYORBASE', 'roles': ['team']},
