@@ -302,7 +302,7 @@ if (Meteor.isServer) {
 
 			if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
 
-			// do nothing if user is allready subscribed with this role
+			// do nothing if user is already subscribed with this role
 			if (hasRoleUser(course.members, role, userId)) return true;
 
 			// Check permissions
