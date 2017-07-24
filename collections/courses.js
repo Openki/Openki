@@ -314,6 +314,9 @@ if (Meteor.isServer) {
 
 			// Update the modification date
 			Courses.update(courseId, { $set: {time_lastedit: new Date()} });
+
+			// Send notifications
+			Notification.Join.record(course._id, user._id, role);
 		},
 
 		remove_role: function(courseId, userId, role) {
