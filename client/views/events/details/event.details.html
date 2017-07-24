@@ -80,10 +80,7 @@
 		{{/if}}
 		{{#if mayEdit}}
 			<div class="actions">
-				{{#unless expanded}}
-					{{> buttonDelete event="js-expand"}}
-				{{/unless}}
-				{{> buttonEdit event="js-event-edit"}}
+
 				{{#if replicating}}
 					<button type="button" class="btn btn-cancel js-toggle-replication">
 						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
@@ -95,6 +92,10 @@
 						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 					</button>
 				{{/if}}
+				{{> buttonEdit event="js-event-edit"}}
+				{{#unless expanded}}
+					{{> buttonDelete event="js-expand"}}
+				{{/unless}}
 			</div>
 			{{#if expanded}}
 				{{> eventDeleteConfirmDialog}}
@@ -125,12 +126,12 @@
 	<div class="event-delete-confirmation">
 		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-collapse"}}
 			{{> buttonDeleteConfirm
 				event="js-event-delete-confirm"
 				textIdle=(mf 'event.delete.confirm.button' 'Delete this event')
 				textBusy=(mf 'event.delete.confirm.button.busy' 'Deleting event...')
 			}}
+			{{> buttonCancel event="js-collapse"}}
 		</div>
 	</div>
 </template>

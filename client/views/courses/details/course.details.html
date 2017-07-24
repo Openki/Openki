@@ -41,10 +41,10 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
+								{{> buttonEdit event="js-course-edit"}}
 								{{#unless expanded}}
 									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
-								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
@@ -81,12 +81,12 @@
 	<div class="course-delete-confirmation">
 		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-collapse"}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
 				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
 				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
+			{{> buttonCancel event="js-collapse"}}
 		</div>
 	</div>
 </template>

@@ -105,10 +105,10 @@
 					</div>
 					{{#if mayEdit}}
 						<div class="actions">
+							{{> buttonEdit event="js-venue-edit"}}
 							{{#unless verifyDelete}}
 								{{> buttonDelete event="js-venue-delete"}}
 							{{/unless}}
-							{{> buttonEdit event="js-venue-edit"}}
 						</div>
 						{{#if verifyDelete}}
 							{{> venueDeleteConfirmDialog}}
@@ -158,12 +158,12 @@
 	<div class="venue-delete-confirmation">
 		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-venue-delete-cancel"}}
 			{{> buttonDeleteConfirm
 				event="js-venue-delete-confirm"
 				textIdle=(mf 'venue.detail.remove' 'Remove this venue')
 				textBusy=(mf 'venue.detail.remove.busy' 'Deleting venue...')
 			}}
+			{{> buttonCancel event="js-venue-delete-cancel"}}
 		</div>
 	</div>
 </template>

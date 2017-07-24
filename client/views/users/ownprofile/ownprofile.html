@@ -69,8 +69,8 @@
 								</div>
 							</div>
 							<div class="form-actions">
-								{{> buttonCancel event="js-profile-info-cancel"}}
 								{{> buttonSave}}
+								{{> buttonCancel event="js-profile-info-cancel"}}
 							</div>
 						</form>
 					</div>
@@ -152,22 +152,22 @@
 								</div>
 							</div>
 							<div class="form-actions">
-								{{> buttonCancel event="js-change-pwd-cancel"}}
 								{{> buttonSave}}
+								{{> buttonCancel event="js-change-pwd-cancel"}}
 							</div>
 						</form>
 					</div>
 					{{/if}}
 					<div class="actions">
-						{{#unless expanded}}
-							{{> buttonDelete event="js-expand"}}
-						{{/unless}}
-							{{> buttonEdit event="js-profile-info-edit"}}
 						{{#unless changingPass}}
 							<button type="button" class="btn btn-default js-change-pwd-btn">
 								<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 								{{mf 'profile.changePass' 'Change my password'}}
 							</button>
+						{{/unless}}
+						{{> buttonEdit event="js-profile-info-edit"}}
+						{{#unless expanded}}
+							{{> buttonDelete event="js-expand"}}
 						{{/unless}}
 					</div>
 				{{/if}}
@@ -175,12 +175,12 @@
 					<div class="profile-delete-confirmation">
 						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
 						<div class="form-actions">
-							{{> buttonCancel event="js-collapse"}}
 							{{> buttonDeleteConfirm
 								event="js-profile-delete-confirm-btn"
 								textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
 								textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
 							}}
+							{{> buttonCancel event="js-collapse"}}
 						</div>
 					</div>
 				{{/if}}
