@@ -70,7 +70,8 @@ return
 				, courseLink: Router.url('showCourse', course)
 				, subject: subject
 				, memberCount: course.members.length
-				, rolteTitle: roleTitle
+				, roleTitle: roleTitle
+				, username: user.username 
 				, figures: figures
 				}
 			);
