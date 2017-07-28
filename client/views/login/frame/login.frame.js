@@ -107,7 +107,14 @@ Template.loginFrame.onCreated(function() {
 
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
-		instance.parentInstance().forgot.set(true);
+		var parentInstance = instance.parentInstance();
+
+		var username = instance.$('#loginName').val();
+		if (username.indexOf('@') >= 0) {
+			parentInstance.loginEmail = username;
+		}
+
+		parentInstance.forgot.set(true);
 		return false;
 	},
 
@@ -273,6 +280,14 @@ Template.registerFrame.events({
 Template.forgotPwdFrame.onCreated(function() {
 	this.busy(false);
 	this.emailIsValid = new ReactiveVar(false);
+});
+
+Template.forgotPwdFrame.onRendered(function() {
+	var loginEmail = this.parentInstance().loginEmail;
+	if (loginEmail) {
+		this.$('.js-reset-pw-email').val(loginEmail);
+		this.emailIsValid.set(true);
+	}
 });
 
 Template.forgotPwdFrame.helpers({
