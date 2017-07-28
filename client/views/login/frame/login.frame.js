@@ -1,3 +1,5 @@
+import { isEmail } from '/imports/ValidationTools.js';
+
 Template.userFrame.onCreated(function() {
 	this.forgot = new ReactiveVar(false);
 });
@@ -105,33 +107,34 @@ Template.loginFrame.onCreated(function() {
 	};
 });
 
+Template.loginFrame.onRendered(function() {
+	var loginEmail = this.parentInstance().loginEmail;
+	if (loginEmail) this.$('#loginName').val(loginEmail);
+});
+
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
 		var parentInstance = instance.parentInstance();
-
 		var username = instance.$('#loginName').val();
-		if (username.indexOf('@') >= 0) {
-			parentInstance.loginEmail = username;
-		}
 
+		if (isEmail(username)) parentInstance.loginEmail = username;
 		parentInstance.forgot.set(true);
 		return false;
 	},
 
 	'click .js-register-open': function(event, instance) {
-		var name = instance.$('#loginName').val();
+		var username = instance.$('#loginName').val();
 		var password = instance.$('#loginPassword').val();
 		var email;
 
 		// Sometimes people register with their email address in the first field
 		// Move entered username over to email field if it contains a @
-		var atPos = name.indexOf('@');
-		if (atPos >= 0) {
-			email = name;
-			name = name.substr(0, atPos);
+		if (isEmail(username)) {
+			email = username;
+			username = email.substr(0, email.indexOf('@'));
 		}
 
-		$('#registerName').val(name);
+		$('#registerName').val(username);
 		$('#registerPassword').val(password);
 		$('#registerEmail').val(email);
 	},
@@ -298,10 +301,8 @@ Template.forgotPwdFrame.helpers({
 
 Template.forgotPwdFrame.events({
 	'input, change, paste, keyup, mouseup': function(event, instance) {
-		var resetPwdEmail = instance.$('.js-reset-pw-email').val();
-		var emailIsValid = ~resetPwdEmail.indexOf('@');
-
-		instance.emailIsValid.set(emailIsValid);
+		var email = instance.$('.js-reset-pw-email').val();
+		instance.emailIsValid.set(isEmail(email));
 	},
 
 	'submit': function(event, instance) {
