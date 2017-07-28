@@ -1,19 +1,3 @@
-import { isEmail } from '/imports/ValidationTools.js';
-
-Template.userFrame.onCreated(function() {
-	this.forgot = new ReactiveVar(false);
-});
-
-Template.userFrame.helpers({
-	forgot: function() {
-		return !Meteor.user() && Template.instance().forgot.get();
-	},
-
-	login: function() {
-		return !Meteor.user() && !Template.instance().forgot.get();
-	}
-});
-
 /** Setup (re-)setting of login/register warnings for a template
   *
   * @param {Object} template
@@ -30,16 +14,16 @@ var warnings = function(template, warnings) {
 			instance.$('.warning-block').remove();
 		};
 
-		instance.setWarning = function(warningID) {
+		instance.setWarning = function(name) {
 			if (instance.hasWarning.get()) instance.resetWarnings();
 
-			var warning = _.findWhere(warnings, {_id: warningID});
-
+			var warning = _.findWhere(warnings, { name: name });
 			var selectors = warning.selectors;
+
 			_.each(selectors, function(selector, index) {
 				var formGroup = $(selector).parents('.form-group');
-				formGroup.addClass('has-error');
 
+				formGroup.addClass('has-error');
 				if (index === selectors.length - 1) {
 					formGroup.append(
 						'<span class="help-block warning-block">'
@@ -54,24 +38,48 @@ var warnings = function(template, warnings) {
 	});
 };
 
+/** Check a string if it is a valid email adress
+  *
+  * @param {String} the string to be checked
+  */
+var isEmail = function(str) {
+	// consider string as valid email if it matches this pattern:
+	// (1+ characters)@(1+ characters).(1+ characters)
+	return str.search(/^[^@\s]+@[^@.\s]+\.\w+$/g) >= 0;
+};
+
+Template.userFrame.onCreated(function() {
+	this.forgot = new ReactiveVar(false);
+});
+
+Template.userFrame.helpers({
+	forgot: function() {
+		return !Meteor.user() && Template.instance().forgot.get();
+	},
+
+	login: function() {
+		return !Meteor.user() && !Template.instance().forgot.get();
+	}
+});
+
 warnings(Template.loginFrame,
 	[
-		{ _id: 'noUserName'
+		{ name: 'noUserName'
 		, text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
 		, selectors: ['#loginName']
 		}
 	,
-		{ _id: 'noCredentials'
+		{ name: 'noCredentials'
 		, text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
 		, selectors: ['#loginName', '#loginPassword']
 		}
 	,
-		{ _id: 'noPassword'
+		{ name: 'noPassword'
 		, text: mf('login.password.password_incorrect', 'Incorrect password')
 		, selectors: ['#loginPassword']
 		}
 	,
-		{ _id: 'userNotFound'
+		{ name: 'userNotFound'
 		, text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
 		, selectors: ['#loginName']
 		}
@@ -114,12 +122,12 @@ Template.loginFrame.onRendered(function() {
 
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
+		event.preventDefault();
 		var parentInstance = instance.parentInstance();
 		var username = instance.$('#loginName').val();
 
 		if (isEmail(username)) parentInstance.loginEmail = username;
 		parentInstance.forgot.set(true);
-		return false;
 	},
 
 	'click .js-register-open': function(event, instance) {
@@ -205,22 +213,22 @@ Template.registerModal.events({
 
 warnings(Template.registerFrame,
 	[
-		{ _id: 'noUserName'
+		{ name: 'noUserName'
 		, text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
 		, selectors: ['#registerName']
 		}
 	,
-		{ _id: 'noPassword'
+		{ name: 'noPassword'
 		, text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
 		, selectors: ['#registerPassword']
 		}
 	,
-		{ _id: 'noCredentials'
+		{ name: 'noCredentials'
 		, text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
 		, selectors: ['#registerName', '#registerPassword']
 		}
 	,
-		{ _id: 'userExists'
+		{ name: 'userExists'
 		, text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
 		, selectors: ['#registerName']
 		}
