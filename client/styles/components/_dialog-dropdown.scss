@@ -3,7 +3,7 @@
 }
 
 .dialog-dropdown {
-	padding: 10px;
+	padding: 10px 0;
 
 	&.right {
 		left: auto;
@@ -12,11 +12,22 @@
 }
 
 .dialog-dropdown > .dropdown-header {
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.dialog-dropdown > .divider {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.dialog-dropdown > li > .btn-link {
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .dialog-dropdown-btn {
+	padding: 0 10px;
 	position: relative;
 }
 
