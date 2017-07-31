@@ -36,7 +36,7 @@
 						{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
 				</span>
 				<p style="margin: 1em 0;">
-					{{mf "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=username COURSE=course.name ROLE=roleTitle LOCALE=locale}}
+					{{mf "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=newParticipant.username COURSE=course.name ROLE=roleTitle LOCALE=locale}}
 				</p>
 				<p style="margin: 1em 0;">
 					{{#each figures}}
