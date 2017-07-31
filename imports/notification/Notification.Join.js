@@ -49,8 +49,6 @@ notificationJoin.Model = function(entry) {
 				, USER: StringTools.truncate(newParticipant.username, 50)
 				, ROLE: roleTitle
 				};
-console.log(subjectvars)
-return
 			var subject = mf('notification.join.mail.subject', subjectvars, "{USER} joined {COURSE}: {ROLE}", userLocale);
 
 			var figures = [];
