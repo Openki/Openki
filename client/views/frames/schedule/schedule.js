@@ -269,7 +269,8 @@ Template.frameSchedule.helpers({
 		if (this.repCount < 2) return true;
 
 		// ... or if it doesn't occur this week.
-		var thisWeek = moment().startOf('week');
+		var instance = Template.instance();
+		var thisWeek = moment(instance.scheduleStart.get()).startOf('week');
 		var eventWeek = LocalTime.fromString(this.startLocal).startOf('week');
 		return eventWeek.isAfter(thisWeek);
 	}
