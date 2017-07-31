@@ -16,8 +16,33 @@
 	}
 }
 
+.regions-splash-header {
+	margin-top: 0;
+}
+
+.regions-splash-header > .fa {
+	color: $brand-primary;
+}
+
+.regions-splash input {
+	width: 100%;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.regions-splash-login {
+	margin-top: 15px;
+	text-align: center;
+}
+
 .regions-splash .dropdown-menu {
-	left: 15px;
-	top: 80%;
-	width: calc(#{'100% - 30px'});
+	width: 100%;
+}
+
+.regions-splash .js-region-search-form {
+	display: inline-block;
+	position: relative;
+	width: 100%;
 }
