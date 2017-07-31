@@ -1,0 +1,23 @@
+<template name="captionsFilter">
+	<div class="filter-captions-wrap">
+		<h4 class="filter-captions-header">
+			<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
+			{{mf 'filterCaptions.filterByState' 'Filter search'}}
+		</h4>
+		<div class="filter-captions">
+			{{#each state in courseStates}}
+				<div class="filter-captions-column">
+					<div class="filter-caption-wrap">
+						<div
+							class="filter-caption js-filter-caption {{classes state}}"
+							data-filter-name="{{state.filterName}}">
+							<span class="filter-caption-text">
+								{{state.mfString}}
+							</span>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>

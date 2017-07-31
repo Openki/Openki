@@ -219,12 +219,21 @@ coursesFind = function(filter, limit) {
 	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvent === true) {
-		find.futureEvents = { $gt: 0 };
-		sort = {"nextEvent.start": 1, time_lastedit: -1};
+	if (filter.state === 'proposal') {
+		find.lastEvent = { $eq: null };
+		find.futureEvents = { $eq: 0 };
+		sort = { time_lastedit: -1 };
 	}
-	if (filter.upcomingEvent === false) {
-		find.futureEvents = 0;
+
+	if (filter.state === 'pastEvent') {
+		find.lastEvent = { $ne: null };
+		find.futureEvents = { $eq: 0 };
+		sort = { "lastEvent.start": 1, time_lastedit: -1 };
+	}
+
+	if (filter.state === 'upcomingEvent') {
+		find.futureEvents = { $gt: 0 };
+		sort = { "nextEvent.start": 1, time_lastedit: -1 };
 	}
 
 	var mustHaveRoles = [];
