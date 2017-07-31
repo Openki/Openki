@@ -1,0 +1,66 @@
+$filter-captions-gutter-width: 20px;
+
+.filter-captions-wrap {
+	float: right;
+	width: 350px;
+}
+
+.filter-captions-header {
+	border-bottom: 1px solid $blue-lighter;
+	color: $brand-primary;
+	padding-bottom: 10px;
+}
+
+.filter-captions {
+	@include make-row($filter-captions-gutter-width);
+}
+
+.filter-captions-column {
+	@include make-sm-column(4, $filter-captions-gutter-width);
+}
+
+.filter-caption-wrap {
+	height: 50px;
+}
+
+.filter-caption {
+	display: table;
+	font-size: large;
+	height: 100%;
+	text-align: center;
+	transition: box-shadow .15s;
+	width: 100%;
+
+	&.is-proposal,
+	&.has-past-events {
+		border-color: $blue-lighter;
+		border-width: 4px;
+	}
+
+	&.is-proposal {
+		border-style: dashed;
+	}
+
+	&.has-past-events {
+		border-style: solid;
+	}
+
+	&.has-upcoming-events {
+		background-color: $blue-lighter;
+	}
+
+	&.active,
+	&:hover {
+		box-shadow: 0 0 8px rgba(67, 223, 37, 1);
+		transition: box-shadow .15s;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.filter-caption-text {
+	display: table-cell;
+	vertical-align: middle;
+}
