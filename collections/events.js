@@ -318,7 +318,9 @@ Meteor.methods({
 
 			if (updateReplicas) {
 				delete changes.start;
+				delete changes.startLocal;
 				delete changes.end;
+				delete changes.endLocal;
 
 				Events.update(affectedReplicaSelectors(event), { $set: changes }, { multi: true });
 			}
