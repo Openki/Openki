@@ -2,11 +2,13 @@
 export default Notification = {};
 import '/imports/collections/Log.js';
 
-import notificationEvent from '/imports/notification/Notification.Event.js';
+import notificationEvent   from '/imports/notification/Notification.Event.js';
 import notificationComment from '/imports/notification/Notification.Comment.js';
+import notificationJoin    from '/imports/notification/Notification.Join.js';
 
-Notification.Event = notificationEvent;
+Notification.Event   = notificationEvent;
 Notification.Comment = notificationComment;
+Notification.Join    = notificationJoin;
 
 /** Handle event notification
   *
