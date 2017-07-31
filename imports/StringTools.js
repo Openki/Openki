@@ -11,6 +11,16 @@ StringTools.truncate = function(src, max, ellipsis = '…') {
 	check(max, Number);
 	if (src.length > max) {
 		return src.substring(0, max) + ellipsis;
-	}			
+	}
 	return src;
+}
+
+/** Capitalize first letter of String
+  *
+  * @param {String} input the string to be capitalized
+  * @return the capitalized string
+  */
+StringTools.capitalize = function(input) {
+	check(input, String);
+    return input.charAt(0).toUpperCase() + input.slice(1);
 }
