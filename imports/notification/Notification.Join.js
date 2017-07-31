@@ -69,7 +69,7 @@ notificationJoin.Model = function(entry) {
 				, subject: subject
 				, memberCount: course.members.length
 				, roleTitle: roleTitle
-				, username: user.username 
+				, username: newParticipant.username
 				, figures: figures
 				}
 			);
