@@ -273,8 +273,7 @@ Template.frameSchedule.helpers({
 
 		// ... or if it doesn't occur this week.
 		var instance = Template.instance();
-		var thisWeek = moment(instance.scheduleStart.get()).startOf('week');
-		var eventWeek = LocalTime.fromString(this.startLocal).startOf('week');
-		return eventWeek.isAfter(thisWeek);
+		var oneWeekAfterScheduleStart = moment(instance.scheduleStart.get()).add(1, 'week');
+		return moment.utc(this.start).isAfter(oneWeekAfterScheduleStart);
 	}
 });
