@@ -227,20 +227,23 @@ Template.frameSchedule.helpers({
 	days: function() {
 		var instance = Template.instance();
 		var scheduleStart = instance.scheduleStart.get();
-		return _.map(Template.instance().days.get(), function(day) {
+		console.log(instance.days.get())
+		return _.map(instance.days.get(), function(day) {
+			console.log(day)
 			return moment(scheduleStart).add(day, 'days').format('dddd');
 		});
 	},
 
 	intervals: function() {
-		var slots = Template.instance().slots.get();
+		var instance = Template.instance();
+		var slots = instance.slots.get();
 
-		return _.map(Template.instance().intervals.get(), function(mins) {
+		return _.map(instance.intervals.get(), function(mins) {
 			var intervalStart = moment().hour(0).minute(mins);
 			return {
 				intervalStart: intervalStart,
 				intervalLabel: intervalStart.format('LT'),
-				slots: _.map(Template.instance().days.get(), function(day) {
+				slots: _.map(instance.days.get(), function(day) {
 					return slots[mins] && slots[mins][day] || [];
 				})
 			};
@@ -269,8 +272,8 @@ Template.frameSchedule.helpers({
 		if (this.repCount < 2) return true;
 
 		// ... or if it doesn't occur this week.
-		var thisWeek = moment().startOf('week');
-		var eventWeek = LocalTime.fromString(this.startLocal).startOf('week');
-		return eventWeek.isAfter(thisWeek);
+		var instance = Template.instance();
+		var oneWeekAfterScheduleStart = moment(instance.scheduleStart.get()).add(1, 'week');
+		return moment.utc(this.start).isAfter(oneWeekAfterScheduleStart);
 	}
 });

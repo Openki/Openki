@@ -117,7 +117,7 @@ Template.eventEdit.onRendered(function() {
 		var $dateInput = instance.$('.js-event-start-date');
 
 		// remove, re-add the datepicker when the locale changed
-		$dateInput.datepicker('remove');
+		$dateInput.datepicker('destroy');
 
 		// I don't know why, but language: moment.locale() does not work here.
 		// So instead we clobber the 'en' settings with settings for the
