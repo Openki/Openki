@@ -1,129 +1,172 @@
 .filter {
-	@include td-make-xs-column(12);
-	@include td-make-md-column(7);
-	margin-top: $form-group-margin-bottom;
-	padding: 0;
+	margin-top: 15px;
 
-	@media (min-width: $screen-md) {
-		margin-top: 0;
-		@include td-padding(left, 15px);
+	@media (min-width: $screen-md-min) {
+		&:not(.active) {
+			margin-top: 0;
+		}
 	}
 }
 
-.filter-header {
+.filter-heading {
+	color: $brand-primary;
+	display: none;
+	margin: 0 0 15px;
+}
+
+.filter.active .filter-heading {
 	border-bottom: 1px solid $blue-lighter;
-	color: $blue;
+	display: block;
+	padding-bottom: 10px;
+}
+
+.filter-captions-header-buttons {
+	display: block;
+	float: right;
+}
+
+.filter-components {
+	@include make-row;
+}
+
+.filter-component ~ .filter-component {
+	@media (max-width: $screen-sm-max) {
+		margin-top: 15px;
+	}
+}
+
+.filter-component-header {
+	color: $brand-primary;
+	display: none;
+	margin: 0 0 10px;
+}
+
+.filter.active .filter-component-header {
+	display: block;
+}
+
+.filter-course-states {
+	@include make-xs-column(12);
+}
+
+$filter-course-states-sm-column: 6;
+
+.filter-expanded .filter-course-states {
+	@include make-md-column($filter-course-states-sm-column);
+}
+
+.filter-course-state-captions {
+	@include make-row;
+}
+
+.filter-captions-column {
+	@include make-xs-column(4);
+}
+
+.filter-caption-wrap {
+	height: 50px;
+}
+
+.filter-caption {
+	display: table;
+	font-size: large;
+	height: 100%;
+	opacity: .75;
+	text-align: center;
+	transition-duration: .15s;
+	transition-property: #{"box-shadow opacity"};
 	width: 100%;
-}
 
-.filter-header > h4 {
-	margin-top: 0;
-}
+	&.is-proposal,
+	&.has-past-events {
+		border-color: $blue-lighter;
+		border-width: 4px;
+	}
 
-.filter-course-properties,
-.filter-categories {
-	@include td-float(left);
-}
+	&.is-proposal {
+		border-style: dashed;
+	}
 
-.filter-course-properties {
-	@include td-padding-all(10px, 15px, 10px, 0);
+	&.has-past-events {
+		border-style: solid;
+	}
 
-	@media (max-width: $screen-xs) {
-		@include td-padding(right, 0);
-		width: 100%;
+	&.has-upcoming-events {
+		background-color: $blue-lighter;
+	}
+
+	&:hover {
+		color: darken($green, 50%);
+		cursor: pointer;
+	}
+
+	&.active,
+	&:hover {
+		box-shadow: 0 0 4px rgba(67, 223, 37, 1);
+		opacity: 1;
+		transition-duration: .15s;
+		transition-property: #{"box-shadow opacity"};
 	}
 }
 
-.filter-course-properties > .btn-group-vertical {
-	@media (max-width: $screen-xs) {
-		width: 100%;
+.filter-caption-text {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.filter-course-roles {
+	@include make-sm-column(6);
+	@include make-md-column((12 - $filter-course-states-sm-column) / 2);
+}
+
+.filter-course-role {
+	background-color: transparent;
+	border: 0;
+	display: block;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+
+	&:hover {
+		color: $brand-primary;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&.active {
+		color: darken($green, 50%);
 	}
 }
 
-.js-toggle-property-filter {
-	@include td-text-align(left);
+.filter-course-role + .filter-course-role {
+	margin-top: 5px;
 }
 
-.toggle-property-filter-icon {
-	background: $role-needed-bg;
+.filter-course-role-icon {
+	background-color: $role-needed-bg;
 	color: $role-needed-color;
 	display: inline-block;
-	text-align: center;
-	width: 28px;
+	@include td-margin(right, 5px);
+	padding: 3px 5px;
 }
 
-.toggle-property-filter-icon > .glyphicon {
-	position: relative;
-	top: 2px;
+.filter-course-role.active .filter-course-role-icon {
+	box-shadow: 0 0 4px rgba(67, 223, 37, 1);
 }
 
-.eventcaption_upcoming {
-	background: $has-upcoming-events-bg;
-	display: inline-block;
-	height: 20px;
-	position: relative;
-	vertical-align: bottom;
-	width: 28px;
+.filter-course-role .checkmark {
+	display: none;
 }
 
-.eventcaption_upcoming_box {
-	background: $course-compact-next-event-bg;
-	height: 10px;
-	position: absolute;
-	@include td-pos(right, 0);
-	top: 0;
-	width: 10px;
+.filter-course-role.active .checkmark {
+	display: inline;
 }
 
-.eventcaption_upcoming_text {
-	background: $course-compact-next-event-color;
-	height: 1px;
-	@include td-pos(left, 3px);
-	position: absolute;
-	width: 3px;
-
-	&.first-line {
-		top: 2px;
-	}
-
-	&.second-line {
-		top: 4px;
-	}
-
-	&.third-line {
-		top: 6px;
-	}
-}
-
-.eventcaption_upcoming,
-.toggle-property-filter-icon {
-	@include opacity(.7);
-	transition: opacity .15s;
-}
-
-.js-toggle-property-filter:hover > .eventcaption_upcoming,
-.js-toggle-property-filter:hover > .toggle-property-filter-icon,
-.active > .eventcaption_upcoming,
-.active > .toggle-property-filter-icon {
-	@include opacity(1);
-}
-
-.filter-categories {
-	padding: 10px 0;
-
-	@media (max-width: $screen-xs) {
-		padding: 0;
-		width: 100%;
-	}
-}
-
-.filter-categories > h4 {
-	color: $blue;
-	margin-top: 0;
-
-	@media (max-width: $screen-xs) {
-		display: none;
-	}
+.filter-course-categories {
+	@include make-sm-column(6);
+	@include make-md-column((12 - $filter-course-states-sm-column) / 2);
 }
 
 .filter-categories-select {
@@ -145,6 +188,10 @@
 .js-search-categories {
 	border: 1px dashed $category-bg;
 	box-shadow: none;
+
+	&:hover {
+		cursor: pointer;
+	}
 
 	&:focus {
 		border-style: solid;
@@ -216,4 +263,9 @@
 
 .category-label + .remove-btn {
 	@include td-margin(left, 5px);
+}
+
+.filter-actions {
+	margin-top: 5px;
+	text-align: right;
 }

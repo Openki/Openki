@@ -1,23 +1,141 @@
 <template name="captionsFilter">
-	<div class="filter-captions-wrap">
-		<h4 class="filter-captions-header">
+	<div class="filter-header">
+		<h4 class="filter-heading">
 			<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
-			{{mf 'filterCaptions.filterByState' 'Filter search'}}
+			{{mf 'find.search_filter.title' 'Filter search'}}
+			<span class="filter-captions-header-buttons">
+				<button
+					class="btn-link"
+					id="toggleFilters"
+					type="button">
+					<i class="fa fa-plus" aria-hidden="true"></i>
+					More filters
+				</button>
+			</span>
 		</h4>
-		<div class="filter-captions">
-			{{#each state in courseStates}}
-				<div class="filter-captions-column">
-					<div class="filter-caption-wrap">
-						<div
-							class="filter-caption js-filter-caption {{classes state}}"
-							data-filter-name="{{state.filterName}}">
-							<span class="filter-caption-text">
-								{{state.mfString}}
-							</span>
-						</div>
+	</div>
+	<div class="filter-component">
+		<h4 class="filter-component-header">
+			Course states
+		</h4>
+		{{#each stateFilter in stateFilters}}
+			<div class="filter-captions-column">
+				<div class="filter-caption-wrap">
+					<div
+						class="filter-caption js-filter-caption {{stateFilterClasses stateFilter}}"
+						data-filter-name="{{stateFilter.name}}"
+						title="{{stateFilter.title}}">
+						<span class="filter-caption-text">
+							{{stateFilter.label}}
+						</span>
 					</div>
 				</div>
-			{{/each}}
-		</div>
+			</div>
+		{{/each}}
 	</div>
+	{{#if showAllFilters}}
+		<div class="filter-component">
+			<div
+				class="filter-course-roles"
+				role="group"
+				aria-label="filter-course-roles">
+				<h4 class="filter-component-header">
+					Course roles
+				</h4>
+				{{#each roleFilter in roleFilters}}
+					<button
+						class="filter-course-role js-filter-course-role {{roleFilterClasses roleFilter}}"
+						data-filter-name="{{roleFilter.name}}"
+						type="button">
+						<span class="filter-course-role-icon">
+							<i class="{{roleFilter.icon}} fa-fw" aria-hidden="true"></i>
+						</span>
+						{{roleFilter.label}}
+						<!-- <span class="checkmark glyphicon glyphicon-ok"></span> -->
+					</button>
+				{{/each}}
+			</div>
+			<div class="filter-course-categories">
+				<h4 class="filter-component-header">
+					{{mf 'find.filter.categories' 'Categories'}}
+				</h4>
+				{{#unless isMobile}}
+					{{#if categories}}
+						<ul class="filter-selected-categories">
+						{{#each categories}}
+							<li>
+								{{> categoryLabel}}
+								<button type="button" class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+								</button>
+							</li>
+						{{/each}}
+						</ul>
+					{{/if}}
+				{{/unless}}
+				<div class="dropdown filter-categories-select">
+					<input
+						class="js-search-categories form-control"
+						placeholder="{{mf 'find.searchCategories.placeholder' 'Choose categories'}}"
+						type="text"
+					>
+					<button
+						aria-expanded="false"
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						type="button">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu filter-categories-dropdown" role="menu">
+						{{#if availableCategories}}
+							{{#each availableCategories}}
+								<li class="{{this}}">
+									<a
+										class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+										href="#">
+										{{categoryNameMarked}}
+										{{#if availableSubcategories this}}
+											<small
+												class="js-toggle-subcategories {{this}}"
+												title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
+												<span class="fa fa-angle-down" aria-hidden="true"></span>
+											</small>
+										{{/if}}
+									</a>
+								</li>
+								{{#each availableSubcategories this}}
+									<li class="js-sub-category {{..}}">
+										<a class="js-category-selection-label" href="#">
+											{{categoryNameMarked}}
+										</a>
+									</li>
+								{{/each}}
+							{{/each}}
+						{{else}}
+							<span class="filter-no-categories-found">
+								<span class="fa fa-exclamation fa-fw" aria-hidden="true"></span>
+								{{mf 'find.filter-no-categories-found' 'No categories found.'}}
+							</span>
+						{{/if}}
+					</ul>
+				</div>
+				{{#if isMobile}}
+					{{#if categories}}
+						<ul class="filter-selected-categories">
+						{{#each categories}}
+							<li>
+								<a class="js-category-label" href="#">{{categoryName}}</a>
+								<button
+									class="remove-btn js-remove-category-btn glyphicon glyphicon-remove"
+									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"
+									type="button">
+								</button>
+							</li>
+						{{/each}}
+						</ul>
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+	{{/if}}
 </template>

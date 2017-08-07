@@ -1,47 +1,35 @@
 <template name="findWrap">
 	<div class="find container">
-		<h1 class="find-heading">
-			{{mf 'find.WhatLearn?' 'What do I want to learn?'}}
-		</h1>
 		{{> find}}
 	</div>
 </template>
 
 <template name="find">
-	<div class="page-component">
-		<div class="js-search-field">
-			<div class="input-group">
-				<input class="js-search-input form-control"
-					type="text"
-					id="find"
-					value="{{search}}"
-					placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-success js-find-btn">
-						{{mf 'find.search_go' 'Go!'}}
-					</button>
-						{{#if showingFilters}}
-							<button type="button" class="btn btn-cancel js-toggle-filter">
-								{{#if isMobile}}
-									<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-								{{else}}
-									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-									{{mf 'find.hideFilters' 'Remove all filters'}}
-								{{/if}}
-							</button>
-						{{else}}
-							<button type="button" class="btn btn-default js-toggle-filter">
-								<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-								{{mf 'find.showFilters' 'Filter'}}
-							</button>
-						{{/if}}
-				</span>
+	<div class="page-component find-header {{#if showingFilters}}filter-expanded{{/if}}">
+		<div class="find-header-heading">
+			<h1 class="find-heading">
+				{{mf 'find.WhatLearn?' 'What do I want to learn?'}}
+			</h1>
+		</div>
+		<div class="find-header-search">
+			<div class="js-search-field">
+				<div class="input-group">
+					<input class="js-search-input form-control"
+						type="text"
+						id="find"
+						value="{{search}}"
+						placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-success js-find-btn">
+							{{mf 'find.search_go' 'Go!'}}
+						</button>
+					</span>
+				</div>
 			</div>
 		</div>
-		{{#if showingFilters}}
+		<div class="find-header-filter">
 			{{> filter}}
-		{{/if}}
-		{{> captionsFilter}}
+		</div>
 	</div>
 	<div class="page-component">
 		{{#if hasResults}}
