@@ -239,19 +239,22 @@ coursesFind = function(filter, limit) {
 	var mustHaveRoles = [];
 	var missingRoles = [];
 
-	if (filter.needsHost) {
-		missingRoles.push('host');
-		mustHaveRoles.push('host');
-	}
+	var needsRole = filter.needsRole;
+	if (needsRole) {
+		if (needsRole.indexOf('host') >= 0) {
+			missingRoles.push('host');
+			mustHaveRoles.push('host');
+		}
 
-	if (filter.needsMentor) {
-		missingRoles.push('mentor');
-		mustHaveRoles.push('mentor');
-	}
+		if (needsRole.indexOf('mentor') >= 0) {
+			missingRoles.push('mentor');
+			mustHaveRoles.push('mentor');
+		}
 
-	if (filter.missingTeam) {
-		missingRoles.push('team');
-		// All courses have the team role so we don't need to restrict to those having it
+		if (needsRole.indexOf('team') >= 0) {
+			missingRoles.push('team');
+			// All courses have the team role so we don't need to restrict to those having it
+		}
 	}
 
 	if (filter.userInvolved) {
