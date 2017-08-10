@@ -8,7 +8,7 @@
 	</style>
 </head>
 <body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center">
+	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4" style="-webkit-box-shadow: 1px 3px 14px 7px #dfe7e8; -moz-box-shadow: 1px 3px 14px 7px #dfe7e8; box-shadow: 1px 3px 14px 7px #dfe7e8;">
 		<tr>
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
@@ -37,9 +37,9 @@
 					</span>
 					<p style="margin: 1em 0;">
 						{{#if new}}
-							{{mf "notification.event.mail.new" "A new event was just published for course {COURSE}:" COURSE=course.name LOCALE=locale}}
+							{{mf "notification.event.mail.new" "A new event was just published for course <b>{COURSE}</b>:" COURSE=course.name LOCALE=locale}}
 						{{else}}
-							{{mf "notification.event.mail.changed" "The event {EVENT} for course {COURSE} changed:"	 EVENT=event.title COURSE=course.name LOCALE=locale}}
+							{{mf "notification.event.mail.changed" "The event <b>{EVENT}</b> for course <b>{COURSE}</b> changed:"	 EVENT=event.title COURSE=course.name LOCALE=locale}}
 						{{/if}}
 					</p>
 			</td>
@@ -48,7 +48,7 @@
 			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
-						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
 							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
 								{{eventDate}}
 								<br />
@@ -61,7 +61,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+						<td width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
 							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
 								<span style="font-size: 14px; font-weight: bold;">
 									{{event.title}}
@@ -72,8 +72,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="350" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px;">
-								<a href="{{calLink}}" style="color: blue !important; text-decoration: underline;">
+						<td width="350" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; text-align:right; padding: 5px;">
+								<a href="{{calLink}}" style="color: blue !important; text-decoration: none !important;">
 									{{mf "notification.event.mail.linkCalendar" "Add this event to my calendar" LOCALE=locale}}
 								</a>
 							<br />
@@ -86,7 +86,7 @@
 		<tr>
 			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
 					<p style="margin: 1em 0;">
-						{{mf "notification.event.mail.personalMessage" "The Organizer of the event {EVENT} left a message for you:" EVENT=event.title LOCALE=locale}}
+						{{mf "notification.event.mail.personalMessage" "The Organizer of the event <b>{EVENT}</b> left a message for you:" EVENT=event.title LOCALE=locale}}
 
 					</p>
 			</td>
@@ -95,7 +95,7 @@
 			<td width="400" valign="top" style="padding: 0px 20px 20px 20px;">
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
-						<td colspan="2" width="400" valign="top" bgcolor="#ddd" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; color: #333333; padding: 6px;">
+						<td colspan="2" width="400" valign="top" bgcolor="#ddd" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; color: #333333; padding: 15px;">
 								{{additionalMessage}}
 						</td>
 					</tr>
@@ -105,20 +105,19 @@
 		{{/if}}
 		<tr>
 			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
+				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#dddddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
 						<td width="500" valign="top" style="padding: 5px 15px 0px 15px;">
 							{{mf "notification.event.mail.notice" "You receive this mail because you are involved in the course {COURSE}." COURSE=course.name LOCALE=locale}}
-							{{mf "notification.event.mail.timezone" "Event times are in local time for {REGION}: {ZONE}" REGION=regionName ZONE=timeZone LOCALE=locale}}
 						</td>
 					</tr>
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
-							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
+							<a href="{{unsubLink}}" style="color:#dddddd !important; text-decoration: underline;">
 								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}
 							</a>
 							&nbsp;
-							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
+							<a href="{{urlFor 'profile'}}" style="color:#dddddd !important; text-decoration: underline;">
 								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
 							</a>
 						</td>
