@@ -71,7 +71,10 @@ Meteor.publish('affectedReplica', function(eventId) {
 
 
 Meteor.publish('user', function(userId) {
-	var fields = {username: 1};
+	var fields =
+		{ 'username': 1
+		, 'notifications': 1
+		};
 
 	// Admins may see other's privileges
 	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
