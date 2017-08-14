@@ -5,7 +5,7 @@ import '/imports/collections/Log.js';
 import notificationEvent   from '/imports/notification/Notification.Event.js';
 import notificationComment from '/imports/notification/Notification.Comment.js';
 import notificationJoin    from '/imports/notification/Notification.Join.js';
-import notificationJoin    from '/imports/notification/Notification.PrivateMessage.js';
+import notificationPrivateMessage from '/imports/notification/Notification.PrivateMessage.js';
 
 Notification.Event   = notificationEvent;
 Notification.Comment = notificationComment;

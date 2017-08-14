@@ -43,6 +43,11 @@ Template.userprofile.helpers({
 		return this.user && this.user._id === Meteor.userId();
 	},
 
+	acceptsMessages: function() {
+		return this.user
+			&& this.user.notifications;
+	},
+
 	groupMember: function(group, user) {
 		return user && group && group.members && group.members.indexOf(user._id) >= 0;
 	},
