@@ -40,7 +40,7 @@ Notification.send = function(entry) {
 				var user = Meteor.users.findOne(recipient);
 				userId = user._id;
 
-				if (user.profile.notifications === false) {
+				if (user.notifications === false) {
 					throw "User wishes to not receive notifications";
 				}
 
