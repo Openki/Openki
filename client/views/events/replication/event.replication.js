@@ -34,7 +34,7 @@ Template.eventReplication.onRendered(function() {
 	instance.autorun(function() {
 		Session.get('locale');
 
-		instance.$('.js-replicate-date').datepicker('remove');
+		instance.$('.js-replicate-date').datepicker('destroy');
 		instance.$('.js-replicate-date').datepicker({
 			weekStart: moment.localeData().firstDayOfWeek(),
 			language: moment.locale(),
@@ -58,7 +58,7 @@ Template.eventReplication.onRendered(function() {
 			}
 		});
 
-		instance.$('.js-replicate-datepick').datepicker('remove');
+		instance.$('.js-replicate-datepick').datepicker('destroy');
 		instance.$('.js-replicate-datepick').datepicker({
 			weekStart: moment.localeData().firstDayOfWeek(),
 			language: moment.locale(),
