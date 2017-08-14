@@ -54,7 +54,7 @@ notificationPrivateMessage.Model = function(entry) {
 			    { sender: sender
 				, senderLink: Router.url('userprofile', sender)
 				, subject: subject
-				, message: entry.body.message
+				, message: htmlizedMessage
 				}
 			);
 		},
