@@ -11,7 +11,7 @@ and as an instrument which simplifies the organization of “peer-to-peer” sha
 
 <div align="center"><img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars"></div>
 <br>
-Beside longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
+Beside the longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
 [  read on...](http://about.openki.net "our blog")
 <div align="right"> (★ Star us if you like the idea)</div>
