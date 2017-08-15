@@ -10,53 +10,77 @@ import "/imports/HtmlTools.js";
   * @param  {String} message - the message to transmit
   * @param    {Bool} revealSenderAddress
   */
-notificationPrivateMessage.record = function(senderId, recipientId, message, revealSenderAddress) {
+notificationPrivateMessage.record = function(senderId, recipientId, message, revealSenderAddress, sendCopyToSender) {
 	check(senderId, String);
 	check(recipientId, String);
 	check(message, String);
 	check(revealSenderAddress, Boolean);
+	check(sendCopyToSender, Boolean);
 
-	var sender = Meteor.users.findOne(senderId);
-	if (!sender) throw new Meteor.Error("No user entry for sender " + recipientId);
+	const recipients = [recipientId];
+	if (sendCopyToSender) {
+		let sender = Users.findOne(senderId);
+		if (!sender) throw new Meteor.Error(404, "Sender not found");
 
-	var recipient = Meteor.users.findOne(recipientId);
-	if (!recipient) throw new Meteor.Error("No user entry for recipient " + recipientId);
+		const senderAddress = sender.emailAddress();
+		if (senderAddress) {
+			recipients.push(senderId);
+		} else {
+			throw new Meteor.Error(404, "Sender has no email address");
+		}
+	}
 
-	var body = {};
-	body.message = message;
-	body.sender = sender._id;
-	body.recipients = [recipient._id];
-	body.revealSenderAddress = revealSenderAddress;
+	var body =
+		{ message: message
+		, sender: senderId
+		, recipients: recipients
+		, targetRecipient: recipientId
+		, revealSenderAddress: revealSenderAddress
+		, model: 'PrivateMessage'
+		};
 
-	body.model = 'PrivateMessage';
-
-	Log.record('Notification.Send', [sender._id, recipient._id], body);
+	Log.record('Notification.Send', [senderId, recipientId], body);
 };
 
 
 notificationPrivateMessage.Model = function(entry) {
-	var sender = Meteor.users.findOne(senderId);
-	var recipient = Meteor.users.findOne(recipientId);
+	const body = entry.body;
+	const sender = Meteor.users.findOne(body.sender);
+	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
 
 	return {
-		vars: function(userLocale) {
+		vars: function(userLocale, actualRecipient) {
 			if (!sender) throw "Sender does not exist (0.o)";
-			if (!recipient) throw "Recipient does not exist (0.o)";
+			if (!targetRecipient) throw "targetRecipient does not exist (0.o)";
 
-			var subjectvars =
+			const subjectvars =
 				{ SENDER: StringTools.truncate(sender.username, 10)
 				};
+			const subject = mf('notification.privateMessage.mail.subject', subjectvars, "Private message from {SENDER}", userLocale);
+			const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 
-			var subject = mf('notification.privateMessage.mail.subject', subjectvars, "Private message from {SENDER}", userLocale);
+			// Find out whether this is the copy sent to the sender.
+			const senderCopy = sender._id === actualRecipient._id;
 
-			var htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
-			return (
+			const vars =
 			    { sender: sender
 				, senderLink: Router.url('userprofile', sender)
 				, subject: subject
 				, message: htmlizedMessage
+				, senderCopy: senderCopy
+				, recipientName: targetRecipient.username
+			    };
+
+			if (!senderCopy && body.revealSenderAddress) {
+				const senderAddress = sender.verifiedEmailAddress();
+				if (senderAddress) {
+					vars.fromAddress = senderAddress;
+				} else {
+					throw new Meteor.Error(400, "no verified email address");
 				}
-			);
+			}
+
+			return vars;
 		},
 		template: "notificationPrivateMessageMail"
 	};
