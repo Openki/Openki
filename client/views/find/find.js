@@ -27,7 +27,7 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
+var hiddenFilters = ['needsRole', 'categories'];
 
 Template.find.onCreated(function() {
 	var instance = this;
@@ -296,22 +296,18 @@ Template.find.helpers({
 
 	'activeFilters': function() {
 		var activeFilters = Template.instance().filter;
-		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
-		for (var i = 0; i < filters.length; i++) {
-			var isActive = !!activeFilters.get(filters[i]);
-			if (isActive) return true;
-		}
-		return false;
+		return _.any(hiddenFilters, function(filter) {
+			return !!activeFilters.get(filter);
+		});
 	},
 
 	'searchIsLimited': function() {
 		var activeFilters = Template.instance().filter;
-		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories', 'region'];
-		for (var i = 0; i < filters.length; i++) {
-			var isActive = !!activeFilters.get(filters[i]);
-			if (isActive) return true;
-		}
-		return false;
+		var relevantFilters = hiddenFilters.slice(); // clone
+		relevantFilters.push('region');
+		return _.any(relevantFilters, function(filter) {
+			return !!activeFilters.get(filter);
+		});
 	},
 
 	'isMobile': function() {
