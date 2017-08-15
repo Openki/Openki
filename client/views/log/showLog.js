@@ -99,7 +99,21 @@ Template.showLog.helpers({
 	'results': function() {
 		var instance = Template.instance();
 		var filterQuery = instance.filter.toQuery();
-		return Log.findFilter(filterQuery, instance.limit.get());
+		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
+		let last = false;
+		const inter = [];
+		_.each(entries, (entry) => {
+			const ts = moment(entry.ts);
+			if (last) {
+				let interval = moment.duration(last.diff(ts));
+				if (interval.asMinutes() > 1) {
+					inter.push({ interval: interval.humanize() });
+				}
+			}
+			inter.push(entry);
+			last = ts;
+		});
+		return inter;
 	},
 
 
