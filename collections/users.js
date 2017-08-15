@@ -46,6 +46,9 @@ import '/imports/Profile.js';
 // badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()
 // ===========================
 
+// Alias users collection to the expected name
+Users = Meteor.users;
+
 User = function() {};
 
 
@@ -102,7 +105,6 @@ UserLib = {
 	}
 };
 
-Users = {};
 
 // Update list of groups and badges
 Users.updateBadges = function(userId) {
