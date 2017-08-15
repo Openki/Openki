@@ -36,6 +36,7 @@ Profile.Username.change = function(userId, newName) {
 	}
 	Log.record('Profile.Username', [userId],
 		{ userId: userId
+		, name: newName
 		, success
 		, result
 		, cause: "profile change"
