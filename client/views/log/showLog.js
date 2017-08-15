@@ -148,7 +148,7 @@ Template.showLog.events({
 	},
 
 	'click .js-more': function(event, instance) {
-		var limit = instance.courseLimit;
+		var limit = instance.limit;
 		limit.set(limit.get() + 50);
 	}
 });
