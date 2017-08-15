@@ -85,7 +85,7 @@ User.prototype.verifiedEmailAddress = function() {
 	               && this.emails[0];
 	return emailRecord
 	    && emailRecord.verified
-		&& emailRecordAddress
+		&& emailRecord.address
 		|| false;
 }
 
