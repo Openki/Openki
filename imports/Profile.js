@@ -3,16 +3,18 @@ import '/imports/collections/Log.js';
 
 
 Profile.updateAcceptsMessages = function(userSelector) {
-	var users = Meteor.users.find(userSelector);
+	let changed = 0;
 
-	users.forEach(user => {
+	Meteor.users.find(userSelector).forEach(user => {
 		var newValue = user.emailAddress()
 					&& user.notifications
 
-		Users.update(user._id, {
+		changed += Users.update(user._id, {
 			$set: { acceptsMessages: !!newValue }
 		});
 	});
+
+	return changed;
 };
 
 
