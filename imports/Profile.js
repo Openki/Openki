@@ -1,6 +1,74 @@
 export default Profile = {};
 import '/imports/collections/Log.js';
 
+
+Profile.updateAcceptsMessages = function(userSelector) {
+	var users = Meteor.users.find(userSelector);
+
+	users.forEach(user => {
+		var newValue = user.emailAddress()
+					&& user.notifications
+
+		Users.update(user._id, {
+			$set: { acceptsMessages: !!newValue }
+		});
+	});
+};
+
+
+Profile.Username = {};
+
+Profile.Username.change = function(userId, newName) {
+	check(userId, String);
+	check(newName, String);
+
+	let result, success;
+	try {
+		result = Meteor.users.update(userId, {
+			$set: { username: newName }
+		});
+		success = result > 0;
+	} catch (e) {
+		result = e;
+		success = false;
+	}
+	Log.record('Profile.Username', [userId],
+		{ userId: userId
+		, success
+		, result
+		, cause: "profile change"
+		}
+	);
+
+	return success;
+};
+
+
+Profile.Email = {};
+
+Profile.Email.change = function(userId, email, reason) {
+	check(userId, String);
+	check(email, Match.Optional(String));
+	check(reason, String);
+
+	Log.record('Profile.Email', [userId],
+		{ userId: userId
+		, email: email
+		, reason: reason
+		}
+	);
+
+	var newValue = [];
+	if (email) {
+		newValue = [{ address: email, verified: false }];
+	}
+
+	Meteor.users.update(userId, {
+		$set: { emails: newValue }
+	});
+	Profile.updateAcceptsMessages(userId);
+};
+
 Profile.Notifications = {};
 
 /** Update the receiveNotifications setting for a user
@@ -25,7 +93,10 @@ Profile.Notifications.change = function(userId, enable, relId, reason) {
 		}
 	);
 
-	Meteor.users.update(userId, { $set: { 'notifications': enable } });
+	Meteor.users.update(userId, {
+		$set: { 'notifications': enable }
+	});
+	Profile.updateAcceptsMessages(userId);
 };
 
 /** Handle unsubscribe token

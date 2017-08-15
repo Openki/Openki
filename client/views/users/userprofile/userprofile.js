@@ -45,7 +45,7 @@ Template.userprofile.helpers({
 
 	acceptsMessages: function() {
 		return this.user
-			&& this.user.notifications;
+			&& this.user.acceptsMessages;
 	},
 
 	groupMember: function(group, user) {

@@ -73,7 +73,7 @@ Meteor.publish('affectedReplica', function(eventId) {
 Meteor.publish('user', function(userId) {
 	var fields =
 		{ 'username': 1
-		, 'notifications': 1
+		, 'acceptsMessages': 1
 		};
 
 	// Admins may see other's privileges
