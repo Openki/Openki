@@ -37,9 +37,9 @@
 					</span>
 					<p style="margin: 1em 0;">
 						{{#if new}}
-							{{mf "notification.event.mail.new" "A new event was just published for course <b>{COURSE}</b>:" COURSE=course.name LOCALE=locale}}
+							{{mf 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name LOCALE=locale}}
 						{{else}}
-							{{mf "notification.event.mail.changed" "The event <b>{EVENT}</b> for course <b>{COURSE}</b> changed:"	 EVENT=event.title COURSE=course.name LOCALE=locale}}
+							{{mf 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name LOCALE=locale}}
 						{{/if}}
 					</p>
 			</td>
@@ -52,7 +52,17 @@
 							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
 								{{eventDate}}
 								<br />
-								{{eventStart}}{{#if eventEnd}} - {{eventEnd}}{{/if}}
+								{{eventStart}}
+								{{#if eventEnd}}
+									 - {{eventEnd}}
+								{{/if}}
+								{{#if event.venue.name}}
+									<br />
+									{{event.venue.name}}
+									{{#if event.venue.address}}
+										, {{event.venue.address}}
+									{{/if}}
+								{{/if}}
 							</a>
 						</td>
 					</tr>
@@ -86,7 +96,7 @@
 		<tr>
 			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
 					<p style="margin: 1em 0;">
-						{{mf "notification.event.mail.personalMessage" "The Organizer of the event <b>{EVENT}</b> left a message for you:" EVENT=event.title LOCALE=locale}}
+						{{mf "notification.event.mail.personalMessage" "The Organizer left a message for you:"}}
 
 					</p>
 			</td>
@@ -108,7 +118,7 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#dddddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
 						<td width="500" valign="top" style="padding: 5px 15px 0px 15px;">
-							{{mf "notification.event.mail.notice" "You receive this mail because you are involved in the course {COURSE}." COURSE=course.name LOCALE=locale}}
+							{{mf 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name LOCALE=locale}}
 						</td>
 					</tr>
 					<tr>
