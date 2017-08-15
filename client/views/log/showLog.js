@@ -55,7 +55,7 @@ Template.showLog.onCreated(function() {
 
 		// Have some extra log entries ready so that they are shown immediately
 		// when more is demanded
-		const overLimit = instance.limit.get() + 50;
+		const overLimit = instance.limit.get() + 101;
 		subs.subscribe('log', filterQuery, overLimit, function() {
 			instance.ready.set(true);
 		});
@@ -80,6 +80,10 @@ Template.showLog.helpers({
 
 	'shortId': function(id) {
 		return id.substr(0, 8);
+	},
+
+	isodate: function(date) {
+		return moment(date).toISOString();
 	},
 
 	'hasMore': function() {
@@ -145,6 +149,6 @@ Template.showLog.events({
 
 	'click .js-more': function(event, instance) {
 		var limit = instance.limit;
-		limit.set(limit.get() + 50);
+		limit.set(limit.get() + 100);
 	}
 });
