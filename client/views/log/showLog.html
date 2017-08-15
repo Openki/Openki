@@ -1,0 +1,52 @@
+<template name="showLog">
+	{{#unless privileged}}
+		<h1>PLZ login as admin!</h1>
+	{{else}}
+	<div class="page-component">
+		<div class="js-search-field">
+			<div class="input-group">
+				<input class="js-date-input .js-update-url form-control"
+					type="text"
+					value="{{date}}"
+					placeholder="YYYY-MM-DD hh:mm:ss"/>
+				<input class="js-rel-input .js-update-url form-control"
+					type="text"
+					value="{{rel}}"
+					placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855"/>
+			</div>
+		</div>
+	</div>
+	<div class="page-component">
+	{{#if loading}}
+		<div style="position: fixed; width: 15em; left: 0; bottom: 0;">
+			<marquee>LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
+		</div>
+	{{/if}}
+		<table class="table">
+			<tr><th>ID</th><th>Track</th><th>Timestamp</th><th>Rel</th><th>Body</th></tr>
+		{{#each results}}
+			<tr>
+				<td><a class="js-rel-id" style="border: 1px black solid;">{{shortId _id}}</a></td>
+				<td>{{tr}}</td>
+				<td>{{ts}}</td>
+				<td>{{#each relShort}}<a class="js-rel-id" style="border: 1px black solid;">{{this}}</a> {{/each}}</td>
+				<td>{{body}}</td>
+			</tr>
+		{{else}}
+			{{#unless loading}}
+			<tr><td>Nothing found.</td></tr>
+			{{/unless}}
+		{{/each}}
+		</table>
+
+	{{#if hasMore}}
+		<div class="show-more-courses">
+			<button type="button" class="btn btn-success js-more">
+				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				Show more
+			</button>
+		</div>
+	{{/if}}
+	</div>
+	{{/unless}}
+</template>

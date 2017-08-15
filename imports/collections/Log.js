@@ -56,3 +56,15 @@ Log.record = function(track, rel, body) {
 
 	Log.insert(entry);
 };
+
+
+Log.findFilter = function(filter, limit) {
+	check(filter, { date: Match.Optional(Date), rel: Match.Optional([String]) });
+	check(limit, Number);
+
+	const query = {};
+	if (filter.start) query.ts = { $leq: filter.start };
+	if (filter.rel) query.$or = [ { _id: { $in: filter.rel} }, { rel: { $in: filter.rel } } ];
+
+	return Log.find(query, { sort: { ts: -1 }, limit: limit });
+}
