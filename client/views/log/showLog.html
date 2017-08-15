@@ -11,7 +11,7 @@
 					placeholder="YYYY-MM-DD hh:mm:ss"/>
 				<input class="js-rel-input .js-update-url form-control"
 					type="text"
-					value="{{rel}}"
+					value="{{relFilter}}"
 					placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855"/>
 			</div>
 		</div>
@@ -26,10 +26,10 @@
 			<tr><th>ID</th><th>Track</th><th>Timestamp</th><th>Rel</th><th>Body</th></tr>
 		{{#each results}}
 			<tr>
-				<td><a class="js-rel-id" style="border: 1px black solid;">{{shortId _id}}</a></td>
+				<td>{{#with _id}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a>{{/with}}</td>
 				<td>{{tr}}</td>
 				<td>{{ts}}</td>
-				<td>{{#each relShort}}<a class="js-rel-id" style="border: 1px black solid;">{{this}}</a> {{/each}}</td>
+				<td>{{#each rel}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a> {{/each}}</td>
 				<td>{{body}}</td>
 			</tr>
 		{{else}}

@@ -78,10 +78,6 @@ Template.showLog.helpers({
 		return rel || "";
 	},
 
-	'relShort': function() {
-		return _.map(this.rel, function(relId) { return relId.substr(0, 8); });
-	},
-
 	'shortId': function(id) {
 		return id.substr(0, 8);
 	},
@@ -136,7 +132,7 @@ Template.showLog.events({
 	}, 200),
 
 	'click .js-rel-id': function(event, instance) {
-		instance.filter.add('rel', ""+this._id).done();
+		instance.filter.add('rel', ""+this).done();
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
