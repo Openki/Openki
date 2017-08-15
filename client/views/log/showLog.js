@@ -104,7 +104,7 @@ Template.showLog.helpers({
 
 
 	'loading': function() {
-		return Template.instance().ready.get();
+		return !Template.instance().ready.get();
 	},
 });
 
