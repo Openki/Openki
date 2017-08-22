@@ -5,18 +5,16 @@
 		{{/each}}
 	</style>
 
-	<div class="container-fluid">
-		{{#if ready}}
-			{{#each day in days}}
-				<h4 class="list-style-title">{{day}}</h4>
-				{{#each event in (eventsOn day)}}
-					{{> frameCalendarEvent event}}
-				{{/each}}
+	{{#if ready}}
+		{{#each day in days}}
+			<h4 class="list-style-title">{{day}}</h4>
+			{{#each event in (eventsOn day)}}
+				{{> frameCalendarEvent event}}
 			{{/each}}
-		{{else}}
-			{{> loadingRow}}
-		{{/if}}
-	</div>
+		{{/each}}
+	{{else}}
+		{{> loadingRow}}
+	{{/if}}
 </template>
 
 <template name="frameCalendarEvent">
@@ -33,7 +31,7 @@
 		{{#if expanded}}
 			<div class="list-style-item-body">
 				<div class="list-style-item-property">
-					<div class="frame-calendar-event-description">
+					<div class="frame-calendar-event-label">
 						{{mf 'frame.eventsList.when' 'When:'}}
 					</div>
 					<div class="frame-calendar-event-content">
@@ -42,7 +40,7 @@
 					</div>
 				</div>
 				<div class="list-style-item-property">
-					<div class="frame-calendar-event-description">
+					<div class="frame-calendar-event-label">
 						{{mf 'frame.eventsList.where' 'Where:'}}
 					</div>
 					<div class="frame-calendar-event-content">
@@ -59,8 +57,8 @@
 						{{/if}}
 					</div>
 				</div>
-				<div class="list-style-item-property">
-					<div class="frame-calendar-event-description">
+				<div class="list-style-item-property frame-calendar-event-description">
+					<div class="frame-calendar-event-label">
 						{{mf 'frame.eventsList.description' 'Description:'}}
 					</div>
 					<div class="frame-calendar-event-content">
@@ -73,8 +71,11 @@
 						{{mf 'frame.eventsList.showMore' 'show more'}}
 					</a>
 					<a href="{{pathFor 'calEvent' this}}" class="js-download">
-						<i class="fa fa-arrow-circle-down fa-fw" aria-hidden="true"></i>
-						{{mf 'frame.eventsList.download_cal' 'download event to my calendar'}}
+						<i
+							aria-hidden="true"
+							class="fa fa-download fa-fw"
+							title="{{mf 'frame.eventsList.download_cal' 'download event to my calendar'}}">
+						</i>
 					</a>
 				</div>
 			</div>
