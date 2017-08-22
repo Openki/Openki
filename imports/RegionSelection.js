@@ -11,13 +11,24 @@ RegionSelection.regionDependentRoutes =
   * we just set the region to 'all regions'. */
 RegionSelection.init = function() {
 	var selectors =
-		[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
-		, UrlTools.queryParam('region')
+		[ UrlTools.queryParam('region')
 		, localStorage.getItem('region')
 		].filter(Boolean);
 
-	// When the region is not provided we show a splash screen
-	Session.set('showRegionSplash', selectors.length < 1);
+	Tracker.autorun(function() {
+		const user = Meteor.user();
+
+		if (user) {
+			// The region might have been chosen already because the user is logged-in.
+			// See Accounts.onLogin().
+			selectors.unshift(Session.get('region'));
+		}
+
+		if (user !== undefined) {
+			// When the region is not provided we show a splash screen
+			Session.set('showRegionSplash', selectors.length < 1);
+		}
+	});
 
 	Meteor.subscribe('regions', function() {
 		var useAsRegion = function(regionId) {
