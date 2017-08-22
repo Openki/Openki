@@ -151,7 +151,6 @@ Router.map(function () {
 		path: 'profile',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('groupsFind', { own: true }),
 				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
 			];
