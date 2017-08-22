@@ -1,3 +1,34 @@
+/** The Application Log records user and system decisions. It is intended to
+  * become the single source of truth within the application.
+  *
+  * The log is helpful in reconstructing the state of the app when things
+  * went wrong. when wrong values were recorded, these log entries are not
+  * changed, but new ones with the corrected values written.
+  * It is important that log entries are not changed once written. Only in these
+  * instances should we consider it:
+  *  - An update needs to rename the track names or add relation ID
+  *  - An update needs to update the body of a track
+  *  - When we really want to.
+  * So Changes should only happen while the service is down and we boot into a
+  * new world.
+  *
+  * There are four fields to every log-entry:
+  *    tr (track String)
+  *       This separates log entries into classes.
+  *       Entries on the same track are expected to have a similarily
+  *       structured body, but this structure may change over time.
+  *
+  *   rel (list of relation ID)
+  *       List of lookup ID strings. These are used to select log-entries in
+  *       queries.
+  *
+  *    ts (timestamp Date)
+  *       The time the log entry was recorded.
+  *
+  *  body (Object)
+  *       Contents of the log entry. These are not indexed and depend on the
+  *       track.
+  */
 export default Log = new Meteor.Collection('Log');
 
 if (Meteor.isServer) {
