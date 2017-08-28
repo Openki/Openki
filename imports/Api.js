@@ -52,9 +52,9 @@ let Api =
 			});
 		}
 	, events:
-		() => {
-	        var eventQuery = Filtering(EventPredicates).readAndValidate(route.params.query).done().toQuery();
-	        return eventsFind(eventQuery).map(ev => {
+		(filter) => {
+			var eventQuery = Filtering(EventPredicates).readAndValidate(filter).done().toQuery();
+			return eventsFind(eventQuery).map(ev => {
 				var evr =
 					{ id: ev._id
 					, title: ev.title
