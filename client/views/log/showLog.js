@@ -15,6 +15,7 @@ Router.map(function () {
 
 Template.showLog.onCreated(function() {
 	const instance = this;
+	const batchLoad = 100;
 	instance.updateUrl = () => {
 		var filterParams = instance.filter.toParams();
 		var queryString = UrlTools.paramsToQueryString(filterParams);
@@ -34,7 +35,7 @@ Template.showLog.onCreated(function() {
 	};
 
 	instance.ready = new ReactiveVar(false);
-	instance.limit = new ReactiveVar(100);
+	instance.limit = new ReactiveVar(batchLoad);
 
 	var filter = Filtering(LogPredicates);
 	instance.filter = filter;
@@ -55,7 +56,7 @@ Template.showLog.onCreated(function() {
 
 		// Have some extra log entries ready so that they are shown immediately
 		// when more is demanded
-		const overLimit = instance.limit.get() + 101;
+		const overLimit = instance.limit.get() + batchLoad + 1;
 		subs.subscribe('log', filterQuery, overLimit, function() {
 			instance.ready.set(true);
 		});
@@ -78,12 +79,21 @@ Template.showLog.helpers({
 		return rel || "";
 	},
 
+	'trFilter': function() {
+		const tr = Template.instance().filter.toParams().tr;
+		return tr || "";
+	},
+
 	'shortId': function(id) {
 		return id.substr(0, 8);
 	},
 
 	isodate: function(date) {
 		return moment(date).toISOString();
+	},
+
+	jsonBody: function() {
+		return JSON.stringify(this.body, null, '   ');
 	},
 
 	'hasMore': function() {
@@ -124,20 +134,31 @@ Template.showLog.helpers({
 
 
 Template.showLog.events({
+	// Update the URI when the search-field was changed an loses focus
+	'change .js-update-url': function(event, instance) {
+		console.log("uu")
+		instance.updateUrl();
+	},
+
+	'keyup .js-tr-input': _.debounce(function(event, instance) {
+		const filter = instance.filter;
+		filter.disable('tr');
+
+		const trStr = $('.js-tr-input').val().trim();
+		if (trStr) filter.add('tr', trStr)
+
+		filter.done();
+	}, 200),
+
 	'keyup .js-date-input': _.debounce(function(event, instance) {
 		const filter = instance.filter;
-		var dateStr = $('.js-rel-input').val().trim();
+		var dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
 			filter.disable('date').done();
 		} else {
 			filter.add('date', dateStr).done();
 		}
 	}, 200),
-
-	// Update the URI when the search-field was changed an loses focus
-	'change .js-update-url': function(event, instance) {
-		instance.updateUrl();
-	},
 
 	'keyup .js-rel-input': _.debounce(function(event, instance) {
 		const filter = instance.filter;
@@ -149,14 +170,14 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'click .js-rel-id': function(event, instance) {
-		instance.filter.add('rel', ""+this).done();
+	'click .js-tr': function(event, instance) {
+		instance.filter.add('tr', ""+this).done();
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-track': function(event, instance) {
-		instance.filter.add('track', ""+this._id).done();
+	'click .js-rel-id': function(event, instance) {
+		instance.filter.add('rel', ""+this).done();
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},

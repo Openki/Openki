@@ -5,14 +5,25 @@
 	<div class="page-component">
 		<div class="js-search-field">
 			<div class="input-group">
-				<input class="js-date-input .js-update-url form-control"
-					type="text"
-					value="{{date}}"
-					placeholder="YYYY-MM-DD hh:mm:ss"/>
-				<input class="js-rel-input .js-update-url form-control"
+				<span class="input-group-addon">ID</span>
+				<input class="js-rel-input js-update-url form-control"
 					type="text"
 					value="{{relFilter}}"
 					placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Track</span>
+				<input class="js-tr-input js-update-url form-control"
+					type="text"
+					value="{{trFilter}}"
+					placeholder="Profile.Region"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Date</span>
+				<input class="js-date-input js-update-url form-control"
+					type="text"
+					value="{{date}}"
+					placeholder="YYYY-MM-DD hh:mm:ss"/>
 			</div>
 		</div>
 	</div>
@@ -30,10 +41,10 @@
 				<td></td><td></td><td colspan="3" style="color: gray">{{interval}}</td>
 			{{else}}
 				<td>{{#with _id}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a>{{/with}}</td>
-				<td>{{tr}}</td>
+				<td>{{#with tr}}<a class="js-tr" style="border: 1px black solid;">{{this}}</a>{{/with}}</td>
 				<td>{{isodate ts}}</td>
 				<td>{{#each rel}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a> {{/each}}</td>
-				<td>{{body}}</td>
+				<td><pre>{{jsonBody}}</pre></td>
 			{{/if}}
 			</tr>
 		{{else}}
