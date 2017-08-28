@@ -1,6 +1,5 @@
 var jSendResponder = function(res, process) {
 	try {
-		var data = process();
 		let body =
 			{ status: "success"
 			, data: process()
@@ -29,45 +28,27 @@ var jSendResponder = function(res, process) {
 	}
 }
 
-Router.map(function () {
-	this.route('api.0.json.groups', {
-		path: '/api/0/json/groups',
-		where: 'server',
-		action: function () {
-			jSendResponder(this.response, () => {
-				var groupQuery = Filtering(GroupPredicates).readAndValidate(this.params.query).done().toQuery();
+let Api = filter => {
+	return (
+		{ groups:
+			() => {
+				var groupQuery = Filtering(GroupPredicates).readAndValidate(filter).done().toQuery();
 				return GroupLib.find(groupQuery).map(group => {
 					group.link = Router.url('groupDetails', group);
 				});
-			});
-		}
-	});
-});
-
-Router.map(function () {
-    this.route('api.0.json.venues', {
-        path: '/api/0/json/venues',
-        where: 'server',
-        action: function () {
-			jSendResponder(this.response, () => {
-				var venueQuery = Filtering(VenuePredicates).readAndValidate(this.params.query).done().toQuery();
+			}
+		, venues:
+			() => {
+				var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
 				return Venues.find(venueQuery).map(venue => {
 					venue.link = Router.url('venueDetails', venue);
 					return venue;
 				});
-			});
-        }
-    });
-});
-
-Router.map(function () {
-    this.route('api.0.json.events', {
-        path: '/api/0/json/events',
-        where: 'server',
-        action: function () {
-			jSendResponder(this.response, () => {
-	            var eventQuery = Filtering(EventPredicates).readAndValidate(this.params.query).done().toQuery();
-	            return eventsFind(eventQuery).map(ev => {
+			}
+		, events:
+			() => {
+		        var eventQuery = Filtering(EventPredicates).readAndValidate(route.params.query).done().toQuery();
+		        return eventsFind(eventQuery).map(ev => {
 					var evr =
 						{ id: ev._id
 						, title: ev.title
@@ -119,7 +100,37 @@ Router.map(function () {
 
 					return evr;
 				});
-			});
+			}
+		}
+	);
+}
+
+Router.map(function () {
+	this.route('api.0.json.groups', {
+		path: '/api/0/json/groups',
+		where: 'server',
+		action: function () {
+			jSendResponder(this.response, Api(this.params.query).groups);
+		}
+	});
+});
+
+Router.map(function () {
+    this.route('api.0.json.venues', {
+        path: '/api/0/json/venues',
+        where: 'server',
+        action: function () {
+			jSendResponder(this.response, Api(this.params.query).venues);
+        }
+    });
+});
+
+Router.map(function () {
+    this.route('api.0.json.events', {
+        path: '/api/0/json/events',
+        where: 'server',
+        action: function () {
+			jSendResponder(this.response, Api(this.params.query).events);
         }
     });
 });
