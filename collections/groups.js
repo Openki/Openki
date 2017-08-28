@@ -15,6 +15,7 @@ GroupLib = {};
  * filter: dictionary with filter options
  *   own: Limit to groups where logged-in user is a member
  *   user: Limit to groups where given user ID is a member (client only)
+ *   tags: Group must have all of the given tags
  *
  */
 GroupLib.find = function(filter) {
@@ -31,6 +32,10 @@ GroupLib.find = function(filter) {
 	if (filter.hasOwnProperty('user')) {
 		if (!filter.user) return [];
 		find.members = filter.user;
+	}
+
+	if (filter.tags && filter.tags.length > 0) {
+    	find.tags = { $all: filter.tags };
 	}
 
 	return Groups.find(find);

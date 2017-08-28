@@ -2,7 +2,6 @@ import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
 
-Meteor.subscribe('currentUser');
 Meteor.subscribe('version');
 
 // Always load english translation
