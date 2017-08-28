@@ -82,7 +82,10 @@ Meteor.publish('user', function(userId) {
 	);
 });
 
-Meteor.publish('currentUser', function() {
+
+// Always publish their own data for logged-in users
+// https://github.com/meteor/guide/issues/651
+Meteor.publish(null, function() {
 	return Meteor.users.find(this.userId);
 });
 
