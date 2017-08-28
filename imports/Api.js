@@ -35,12 +35,9 @@ Router.map(function () {
 		action: function () {
 			jSendResponder(this.response, () => {
 				var groupQuery = Filtering(GroupPredicates).readAndValidate(this.params.query).done().toQuery();
-				var groups = GroupLib.find(groupQuery).fetch();
-
-				_.each(groups, function(group) {
+				return GroupLib.find(groupQuery).map(group => {
 					group.link = Router.url('groupDetails', group);
 				});
-				return groups;
 			});
 		}
 	});
@@ -52,12 +49,11 @@ Router.map(function () {
         where: 'server',
         action: function () {
 			jSendResponder(this.response, () => {
-	            var venueQuery = Filtering(VenuePredicates).readAndValidate(this.params.query).done().toQuery();
-	            var venues = Venues.find(venueQuery).fetch();
-				_.each(venues, function(venue) {
+				var venueQuery = Filtering(VenuePredicates).readAndValidate(this.params.query).done().toQuery();
+				return Venues.find(venueQuery).map(venue => {
 					venue.link = Router.url('venueDetails', venue);
+					return venue;
 				});
-				return venues;
 			});
         }
     });
@@ -70,9 +66,7 @@ Router.map(function () {
         action: function () {
 			jSendResponder(this.response, () => {
 	            var eventQuery = Filtering(EventPredicates).readAndValidate(this.params.query).done().toQuery();
-	            var events = eventsFind(eventQuery).fetch();
-
-				var result = _.map(events, function(ev) {
+	            return eventsFind(eventQuery).map(ev => {
 					var evr =
 						{ id: ev._id
 						, title: ev.title
@@ -124,7 +118,6 @@ Router.map(function () {
 
 					return evr;
 				});
-				return result;
 			});
         }
     });
