@@ -1,3 +1,7 @@
+NoActionError = function(message) {
+	this.message = message;
+}
+
 var jSendResponder = function(res, process) {
 	try {
 		let body =
@@ -9,7 +13,9 @@ var jSendResponder = function(res, process) {
 		res.end(JSON.stringify(body, null, "\t"));
 	} catch(e) {
 		let body = {};
-		if (e instanceof FilteringReadError) {
+		if (e instanceof FilteringReadError
+		 || e instanceof NoActionError
+		) {
 			res.statusCode = 400;
 			body.status = "fail";
 			body.data = {};
@@ -28,109 +34,94 @@ var jSendResponder = function(res, process) {
 	}
 }
 
-let Api = filter => {
-	return (
-		{ groups:
-			() => {
-				var groupQuery = Filtering(GroupPredicates).readAndValidate(filter).done().toQuery();
-				return GroupLib.find(groupQuery).map(group => {
-					group.link = Router.url('groupDetails', group);
-				});
-			}
-		, venues:
-			() => {
-				var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
-				return Venues.find(venueQuery).map(venue => {
-					venue.link = Router.url('venueDetails', venue);
-					return venue;
-				});
-			}
-		, events:
-			() => {
-		        var eventQuery = Filtering(EventPredicates).readAndValidate(route.params.query).done().toQuery();
-		        return eventsFind(eventQuery).map(ev => {
-					var evr =
-						{ id: ev._id
-						, title: ev.title
-						, description: ev.description
-						, startLocal: ev.startLocal
-						, endLocal: ev.endLocal
-						, start: ev.start
-						, end: ev.end
-						, duration: moment(ev.end).diff(ev.start) / 60000 // Minutes
-						, link: Router.url('showEvent', ev)
-						, internal: ev.internal
-						, room: ev.room
-						};
-
-					if (ev.venue) {
-						evr.venue =
-							{ id: ev.venue._id
-							, name: ev.venue.name
-							, loc: ev.venue.loc
-							, link: Router.url('venueDetails', ev.venue)
-							};
-					}
-
-					if (ev.courseId) {
-						let course = Courses.findOne(ev.courseId);
-						if (course) {
-							evr.course =
-								{ id: ev.courseId
-								, name: course.name
-								, link: Router.url('showCourse', course)
-								};
-						}
-					}
-
-					evr.groups = [];
-					var groups = ev.groups || [];
-					for(var groupId of groups) {
-						let group = Groups.findOne(groupId);
-						if (group) {
-							evr.groups.push(
-								{ id: group._id
-								, name: group.name
-								, short: group.short
-								, link: Router.url('groupDetails', group)
-								}
-							);
-						}
+let Api =
+	{ groups:
+		(filter) => {
+			var groupQuery = Filtering(GroupPredicates).readAndValidate(filter).done().toQuery();
+			return GroupLib.find(groupQuery).map(group => {
+				group.link = Router.url('groupDetails', group);
+				return group;
+			});
+		}
+	, venues:
+		(filter) => {
+			var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
+			return Venues.find(venueQuery).map(venue => {
+				venue.link = Router.url('venueDetails', venue);
+				return venue;
+			});
+		}
+	, events:
+		() => {
+	        var eventQuery = Filtering(EventPredicates).readAndValidate(route.params.query).done().toQuery();
+	        return eventsFind(eventQuery).map(ev => {
+				var evr =
+					{ id: ev._id
+					, title: ev.title
+					, description: ev.description
+					, startLocal: ev.startLocal
+					, endLocal: ev.endLocal
+					, start: ev.start
+					, end: ev.end
+					, duration: moment(ev.end).diff(ev.start) / 60000 // Minutes
+					, link: Router.url('showEvent', ev)
+					, internal: ev.internal
+					, room: ev.room
 					};
 
-					return evr;
-				});
-			}
+				if (ev.venue) {
+					evr.venue =
+						{ id: ev.venue._id
+						, name: ev.venue.name
+						, loc: ev.venue.loc
+						, link: Router.url('venueDetails', ev.venue)
+						};
+				}
+
+				if (ev.courseId) {
+					let course = Courses.findOne(ev.courseId);
+					if (course) {
+						evr.course =
+							{ id: ev.courseId
+							, name: course.name
+							, link: Router.url('showCourse', course)
+							};
+					}
+				}
+
+				evr.groups = [];
+				var groups = ev.groups || [];
+				for(var groupId of groups) {
+					let group = Groups.findOne(groupId);
+					if (group) {
+						evr.groups.push(
+							{ id: group._id
+							, name: group.name
+							, short: group.short
+							, link: Router.url('groupDetails', group)
+							}
+						);
+					}
+				};
+
+				return evr;
+			});
 		}
-	);
-}
+	};
 
 Router.map(function () {
-	this.route('api.0.json.groups', {
-		path: '/api/0/json/groups',
+	this.route('api.0.json', {
+		path: '/api/0/json/:handler',
 		where: 'server',
-		action: function () {
-			jSendResponder(this.response, Api(this.params.query).groups);
+		action: function() {
+			jSendResponder(this.response, () => {
+				let handler = this.params.handler;
+				if (!Api.hasOwnProperty(handler)) {
+					throw new NoActionError("Invalid action")
+				}
+				let query = this.params.query;
+				return Api[handler](query);
+			});
 		}
 	});
-});
-
-Router.map(function () {
-    this.route('api.0.json.venues', {
-        path: '/api/0/json/venues',
-        where: 'server',
-        action: function () {
-			jSendResponder(this.response, Api(this.params.query).venues);
-        }
-    });
-});
-
-Router.map(function () {
-    this.route('api.0.json.events', {
-        path: '/api/0/json/events',
-        where: 'server',
-        action: function () {
-			jSendResponder(this.response, Api(this.params.query).events);
-        }
-    });
 });
