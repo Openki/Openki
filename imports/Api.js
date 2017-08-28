@@ -20,6 +20,7 @@ var jSendResponder = function(res, process) {
 				body.data.error = e.message;
 			}
 		} else {
+			console.log(e)
 			res.statusCode = 500;
 			body.status = "error";
 			body.message = "Server error";
