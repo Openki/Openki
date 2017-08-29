@@ -10,16 +10,22 @@ RegionSelection.regionDependentRoutes =
   * selected region, we ask the server to do geolocation. If that fails too,
   * we just set the region to 'all regions'. */
 RegionSelection.init = function() {
-	var selectors =
-		[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
-		, UrlTools.queryParam('region')
-		, localStorage.getItem('region')
-		].filter(Boolean);
+	// We assume the initial onLogin() callback comes before the regions' ready.
+	// We have no guarantee for this however!
+	Accounts.onLogin(function() {
+		var user = Meteor.user();
 
-	// When the region is not provided we show a splash screen
-	Session.set('showRegionSplash', selectors.length < 1);
+		var regionId = user.profile.regionId;
+		if (regionId) Session.set('region', regionId);
+	});
 
 	Meteor.subscribe('regions', function() {
+		var selectors =
+			[ Session.get('region')
+			, UrlTools.queryParam('region')
+			, localStorage.getItem('region')
+			].filter(Boolean);
+
 		var useAsRegion = function(regionId) {
 			if (!regionId) return;
 			if (regionId == 'all') {
@@ -39,9 +45,14 @@ RegionSelection.init = function() {
 			return false;
 		};
 
+		// If any of these regions are usable we stop here
 		if (selectors.some(useAsRegion)) return;
 
-		// Give up and ask the server to place us
+		// If no region has been selected previously, we show the splash-screen.
+		Session.set('showRegionSplash', selectors.length < 1);
+
+		// Ask the server to place us so the splash=screen has our best
+		// guess selected.
 		Meteor.call('autoSelectRegion', function(error, regionId) {
 			if (useAsRegion(regionId)) return;
 
