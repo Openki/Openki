@@ -4,6 +4,9 @@
 			<h4 class="filter-heading">
 				<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
 				{{mf 'find.search_filter.title' 'Filter search'}}
+				<span class="filter-active-tag">
+					{{mf 'find.filter.isActive' 'active'}}
+				</span>
 				<div class="filter-captions-header-buttons">
 					<button
 						class="btn-link"
@@ -30,6 +33,7 @@
 									title="{{stateFilter.title}}">
 									<span class="filter-caption-text">
 										{{stateFilter.label}}
+										<i class="fa fa-check" aria-hidden="true"></i>
 									</span>
 								</div>
 							</div>
@@ -73,6 +77,8 @@
 					<i class="{{role.icon}} fa-fw" aria-hidden="true"></i>
 				</span>
 				{{role.label}}
+				<i class="fa fa-check" aria-hidden="true"></i>
+
 			</button>
 		{{/each}}
 	</div>

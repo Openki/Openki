@@ -19,14 +19,25 @@ Template.filter.onCreated(function() {
 			, title: mf('filterCaptions.passed.title', 'Show all courses with passed events')
 			}
 		];
+
+	this.visibleFilters = ['state', 'needsRole', 'categories'];
 });
 
 Template.filter.helpers({
 	filterClasses() {
 		const classes = [];
-		const parentInstance = Template.instance().parentInstance();
+		const instance = Template.instance();
+		const parentInstance = instance.parentInstance();
 
-		if (parentInstance.showingFilters.get()) classes.push('active');
+		// check if one of the filters indicated as filters is active
+		let activeVisibleFilter = false;
+		instance.visibleFilters.forEach(filter => {
+			if (parentInstance.filter.get(filter)) activeVisibleFilter = true;
+		});
+
+		if (activeVisibleFilter) classes.push('active');
+
+		if (parentInstance.showingFilters.get()) classes.push('open');
 
 		return classes.join(' ');
 	},
@@ -59,12 +70,11 @@ Template.filter.events({
 		const showingFilters = parentInstance.showingFilters;
 
 		if (showingFilters.get()) {
-			parentInstance.filter
-				.disable('state')
-				.disable('needsRole')
-				.disable('categories')
-				.done();
+			instance.visibleFilters.forEach(filter => {
+				parentInstance.filter.disable(filter);
+			});
 
+			parentInstance.filter.done();
 			parentInstance.updateUrl();
 			showingFilters.set(false);
 		} else {
