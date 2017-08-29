@@ -136,7 +136,6 @@ Template.showLog.helpers({
 Template.showLog.events({
 	// Update the URI when the search-field was changed an loses focus
 	'change .js-update-url': function(event, instance) {
-		console.log("uu")
 		instance.updateUrl();
 	},
 
