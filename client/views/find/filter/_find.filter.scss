@@ -1,8 +1,8 @@
 .filter {
-	margin-top: 15px;
+	margin-top: 20px;
 
 	@media (min-width: $screen-md-min) {
-		&:not(.active) {
+		&:not(.open) {
 			margin-top: 0;
 		}
 	}
@@ -14,10 +14,23 @@
 	margin: 0 0 15px;
 }
 
-.filter.active .filter-heading {
+.filter.open .filter-heading {
 	border-bottom: 1px solid $blue-lighter;
 	display: block;
 	padding-bottom: 10px;
+}
+
+.filter-active-tag {
+	display: none;
+}
+
+.filter.active .filter-active-tag {
+	background-color: darken($green, 35%);
+	color: $white;
+	display: inline;
+	font-size: smaller;
+	@include td-margin(left, 5px);
+	padding: 3px 5px;
 }
 
 .filter-captions-header-buttons {
@@ -41,8 +54,17 @@
 	margin: 0 0 10px;
 }
 
-.filter.active .filter-component-header {
+.filter.open .filter-component-header {
 	display: block;
+}
+
+.filter-component .fa-check {
+	display: none;
+}
+
+.filter-component .active .fa-check {
+	color: darken($brand-success, 20%);
+	display: inline;
 }
 
 .filter-course-states {
@@ -96,7 +118,6 @@ $filter-course-states-sm-column: 6;
 	}
 
 	&:hover {
-		color: darken($green, 50%);
 		cursor: pointer;
 	}
 
