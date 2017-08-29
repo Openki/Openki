@@ -1,4 +1,4 @@
-"use strict";
+import '/imports/collections/Log.js';
 
 Meteor.publish('version', function() {
 	return Version.find();
@@ -104,4 +104,14 @@ Meteor.publish('groupsFind', function(filter) {
 
 Meteor.publish('group', function(groupId) {
 	return Groups.find(groupId);
+});
+
+
+Meteor.publish('log', function(filter, limit) {
+	// Non-admins get an empty list
+	if (!privileged(this.userId, 'admin')) {
+		return [];
+	}
+
+	return Log.findFilter(filter, limit);
 });
