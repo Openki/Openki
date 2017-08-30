@@ -1,7 +1,7 @@
 .filter {
 	margin-top: 20px;
 
-	@media (min-width: $screen-md-min) {
+	@media (min-width: $screen-sm-min) {
 		&:not(.open) {
 			margin-top: 0;
 		}
@@ -36,6 +36,14 @@
 .filter-captions-header-buttons {
 	display: block;
 	float: right;
+}
+
+.filter-remove-btn-text {
+	display: none;
+
+	@media (min-width: $screen-xxs) {
+		display: inline;
+	}
 }
 
 .filter-components {
@@ -83,6 +91,16 @@ $filter-course-states-sm-column: 6;
 
 .filter-captions-column {
 	@include make-xs-column(4);
+
+	@media (max-width: $screen-xxs) {
+		@include make-xs-column(12);
+	}
+}
+
+.filter-captions-column + .filter-captions-column {
+	@media (max-width: $screen-xxs) {
+		margin-top: 10px;
+	}
 }
 
 .filter-caption-wrap {
@@ -91,7 +109,7 @@ $filter-course-states-sm-column: 6;
 
 .filter-caption {
 	display: table;
-	font-size: large;
+	font-size: medium;
 	height: 100%;
 	opacity: .75;
 	text-align: center;
@@ -102,7 +120,7 @@ $filter-course-states-sm-column: 6;
 	&.is-proposal,
 	&.has-past-events {
 		border-color: $blue-lighter;
-		border-width: 4px;
+		border-width: 5px;
 	}
 
 	&.is-proposal {
@@ -127,6 +145,10 @@ $filter-course-states-sm-column: 6;
 		opacity: 1;
 		transition-duration: .15s;
 		transition-property: #{"box-shadow opacity"};
+	}
+
+	@media (min-width: $screen-xs-min) {
+		font-size: large;
 	}
 }
 
@@ -171,10 +193,6 @@ $filter-course-states-sm-column: 6;
 	display: inline-block;
 	@include td-margin(right, 5px);
 	padding: 3px 5px;
-}
-
-.filter-course-role.active .filter-course-role-icon {
-	box-shadow: 0 0 4px rgba(67, 223, 37, 1);
 }
 
 .filter-course-role .checkmark {
