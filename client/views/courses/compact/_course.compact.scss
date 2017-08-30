@@ -36,13 +36,13 @@
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 	}
 
-	&.proposal,
+	&.is-proposal,
 	&.has-past-events {
 		border-width: $course-border-width;
 		border-color: $course-border-color;
 	}
 
-	&.proposal {
+	&.is-proposal {
 		border-style: $proposal-border-style;
 	}
 
@@ -155,7 +155,7 @@
 	position: absolute;
 }
 
-.course-compact.proposal > .course-groups,
+.course-compact.is-proposal > .course-groups,
 .course-compact.has-past-events > .course-groups {
 	bottom: $course-border-width;
 	@include td-pos(right, $course-border-width);

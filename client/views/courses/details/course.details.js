@@ -5,7 +5,7 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.busy(false);
 
 	var course = instance.data.course;
-	
+
 	instance.editableName = Editable(
 		true,
 		function(newName) {
@@ -54,7 +54,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	coursestate: function() {
 		if (this.nextEvent) return 'has-upcoming-events';
 		if (this.lastEvent) return 'has-past-events';
-		return 'proposal';
+		return 'is-proposal';
 	},
 	mobileViewport: function() {
 		var viewportWidth = Session.get('viewportWidth');

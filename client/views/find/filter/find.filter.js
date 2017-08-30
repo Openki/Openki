@@ -1,9 +1,11 @@
+import '/imports/ui/FilterPreview.js';
+
 Template.filter.onCreated(function() {
 	this.stateFilters =
 		[
 			{ name: 'proposal'
 			, cssClass: 'is-proposal'
-			, label: mf('filterCaptions.proposal', 'Proposal')
+			, label: mf('filterCaptions.is-proposal', 'Proposal')
 			, title: mf('filterCaptions.showProposal', 'Show all proposed courses')
 			}
 		,
@@ -91,6 +93,19 @@ Template.filter.events({
 			.done();
 
 		parentInstance.updateUrl();
+	},
+
+	'mouseover .js-filter-caption, mouseout .js-filter-caption'(e, instance) {
+		const name = instance.$(e.currentTarget).data('filter-name');
+		const state = _.findWhere(instance.stateFilters, { name });
+
+		if (!instance.parentInstance().filter.get('state')) {
+			FilterPreview({
+				property: 'state',
+				id: state.cssClass,
+				activate: e.type == 'mouseover'
+			});
+		}
 	}
 });
 
@@ -190,17 +205,20 @@ Template.additionalFilters.events({
 		findInstance.updateUrl();
 	},
 
-	'mouseout .js-category-selection-label, mouseover .js-category-selection-label'(e) {
-		const activate = e.type == 'mouseover';
-		const previewOptions = {
-			selector: ('.category-' + this),
-			activate
-		};
-		courseFilterPreview(previewOptions);
+	'mouseover .js-filter-course-role, mouseout .js-filter-course-role'(e, instance) {
+		FilterPreview({
+			property: 'role',
+			id: instance.$(e.currentTarget).data('filter-name'),
+			activate: e.type == 'mouseover'
+		});
+	},
 
-		$('.js-category-label.category-' + this)
-			.parent()
-			.toggleClass('highlight');
+	'mouseout .js-category-selection-label, mouseover .js-category-selection-label'(e) {
+		FilterPreview({
+			property: 'category',
+			id: this,
+			activate: e.type == 'mouseover'
+		});
 	},
 
 	'keyup .js-search-categories'(e, instance) {

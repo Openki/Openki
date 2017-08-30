@@ -1,3 +1,5 @@
+import '/imports/ui/FilterPreview.js';
+
 function finderRoute(path) {
 	return {
 		path: path,
@@ -153,55 +155,33 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-label': function(e, instance) {
-		var category = this;
-
-		var previewOptions = {
-			selector: ('.category-' + category),
+		FilterPreview({
+			property: 'category',
+			id: this,
 			activate: true,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
-		categoryTags.addClass('highlight');
+			delayed: true,
+			instance
+		});
 	},
 
 	'mouseout .js-category-label': function(e, instance) {
-		var category = this;
-
-		var previewOptions = {
-			selector: ('.category-' + category),
+		FilterPreview({
+			property: 'category',
+			id: this,
 			activate: false,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
-		categoryTags.removeClass('highlight');
+			delayed: true,
+			instance
+		});
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
-		var group = this;
-		var activate = e.type == 'mouseover';
-
-		var previewOptions = {
-			selector: ('.group-' + group),
-			activate: activate,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var groupLabels = instance.$('.js-group-label.group-' + group).parent();
-		if (activate) {
-			setTimeout(function() {
-				groupLabels.toggleClass('highlight');
-			}, 300);
-		} else {
-			groupLabels.toggleClass('highlight');
-		}
+		FilterPreview({
+			property: 'group',
+			id: this,
+			activate: e.type == 'mouseover',
+			delayed: true,
+			instance
+		});
 	},
 
 	'click .js-category-label': function(event, instance) {
