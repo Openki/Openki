@@ -1,4 +1,5 @@
 import "/imports/RegionSelection.js";
+import '/imports/ui/FilterPreview.js';
 
 Template.regionSelectionWrap.created = function() {
 	var instance = this;
@@ -106,14 +107,13 @@ Template.regionSelection.events({
 	},
 
 	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
-		var regionID = this._id;
-		if (regionID && Session.equals('region', 'all')) {
-			var activate = e.type == 'mouseover' || e.type == 'focusin';
-			var previewOptions = {
-				selector: ('.region-' + regionID),
-				activate: activate
-			};
-			courseFilterPreview(previewOptions);
+		var id = this._id;
+		if (id && Session.equals('region', 'all')) {
+			FilterPreview({
+				property: 'region',
+				id,
+				activate: e.type == 'mouseover' || e.type == 'focusin'
+			});
 		}
 	},
 
