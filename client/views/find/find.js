@@ -30,6 +30,7 @@ Router.map(function () {
 });
 
 var hiddenFilters = ['needsRole', 'categories'];
+var filters = hiddenFilters.concat(['state']);
 
 Template.find.onCreated(function() {
 	var instance = this;
@@ -201,7 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
+			for (var i in filters) instance.filter.disable(filters[i]);
 			instance.filter.done();
 			instance.updateUrl();
 		}
