@@ -18,7 +18,11 @@ Template.eventEdit.onCreated(function() {
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(instance.data.venue || {});
-	instance.notifyChecked = new ReactiveVar(instance.data.new);
+
+	// Sending an event notification is only possible when the event is
+	// attached to a course. Otherwise there is nobody to inform.
+	var notifyPreset = courseId && instance.data.new;
+	instance.notifyChecked = new ReactiveVar(notifyPreset);
 
 	instance.editableDescription = Editable(
 		false,
