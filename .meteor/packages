@@ -54,3 +54,4 @@ shell-server@0.2.4
 ecmascript@0.8.1
 practicalmeteor:mocha
 fixtures
+dferber:prerender
