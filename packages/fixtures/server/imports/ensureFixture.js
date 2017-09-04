@@ -27,7 +27,8 @@ export default ensure = {
 				username: name,
 				email: email,
 				profile: { name : name },
-				notifications: true
+				notifications: true,
+				acceptsMessages: true
 			});
 
 			var age = Math.floor(prng() * 100000000000);

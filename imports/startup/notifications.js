@@ -5,6 +5,7 @@ Meteor.startup(function() {
 	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
 	SSR.compileTemplate('notificationCommentMail', Assets.getText('mails/notificationCommentMail.html'));
 	SSR.compileTemplate('notificationJoinMail', Assets.getText('mails/notificationJoinMail.html'));
+	SSR.compileTemplate('notificationPrivateMessageMail', Assets.getText('mails/notificationPrivateMessageMail.html'));
 
 	// To avoid sending stale notifications, only consider records added in the
 	// last hours. This way, if the server should have failed for a longer time,
