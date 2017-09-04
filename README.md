@@ -21,9 +21,7 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - Concept: [about.openki.net](http://about.openki.net "our blog")
 - Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
 
-
-All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](https://github.com/Openki/Openki/compare).
-
+----
 
 ### Features
 - :pencil: Easily propose courses and events
@@ -51,6 +49,12 @@ All submissions are welcome. To submit a change, [fork this repo](https://github
 - :ghost: Customizability
 - :8ball: Connection to SocialNetworks APIs
 - :iphone: Smartphone App
+
+----
+
+## Contribution
+All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](https://github.com/Openki/Openki/compare).<br />
+In the interest of having a open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://github.com/Openki/Openki/wiki/Code-of-Conduct). By participating in this project you agree to abide by its terms.
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
