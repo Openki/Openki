@@ -231,11 +231,11 @@ Template.additionalFilters.events({
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
-	'click .js-toggle-subcategories'(e, instance) {
+	'click .js-toggle-subcategories'(event, instance) {
+		event.stopPropagation();
 		instance.$(".js-sub-category" + "." + this).toggle();
 		instance.$(".js-toggle-subcategories." + this + " span")
 			.toggleClass('fa-angle-down fa-angle-up');
-		event.stopPropagation();
 	},
 
 	'click .js-category-selection-label'(e, instance) {
