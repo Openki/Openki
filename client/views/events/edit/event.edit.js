@@ -10,9 +10,14 @@ Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.busy(false);
 
+	var courseId = this.data.courseId;
+	if (courseId) {
+		instance.subscribe('courseDetails', courseId);
+	}
+
 	instance.parent = instance.parentInstance();
-	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
-	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
+	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
+	instance.selectedLocation = new ReactiveVar(instance.data.venue || {});
 	instance.notifyChecked = new ReactiveVar(instance.data.new);
 
 	instance.editableDescription = Editable(
@@ -191,9 +196,6 @@ Template.eventEdit.helpers({
 	course: function() {
 		var courseId = this.courseId;
 		if (courseId) {
-			// Very bad?
-			Template.instance().subscribe('courseDetails', courseId);
-
 			return Courses.findOne({_id: courseId});
 		}
 	},
