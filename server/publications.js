@@ -108,7 +108,6 @@ Meteor.publish('groupsFind', function(filter) {
 Meteor.publish('group', function(groupId) {
 	return Groups.find(groupId);
 });
-<<<<<<< HEAD
 
 
 Meteor.publish('log', function(filter, limit) {
@@ -119,5 +118,3 @@ Meteor.publish('log', function(filter, limit) {
 
 	return Log.findFilter(filter, limit);
 });
-=======
->>>>>>> messagenotification
