@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>{{subject}}</title>
+	<style type="text/css">
+		table td {border-collapse: collapse;}
+	</style>
+</head>
+<body>
+	<table cellpadding="0" cellspacing="0" border="0" align="center">
+		<tr>
+			<td>
+				<table cellpadding="0" cellspacing="0" border="0" align="center">
+						<tr bgcolor="#3f819e">
+							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
+								<a href="https://openki.net/">
+								<img src="https://openki.net/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
+									width="45"
+									height="45"
+									border="0"
+									alt="{{siteName}} Logo"
+									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
+								</a>
+								</td>
+							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
+								<a href="https://openki.net/" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+							</td>
+						</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+				<span style="font-size: 16px; font-weight: bold;">
+					{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+				</span>
+			{{#if senderCopy}}
+				<p style="margin: 1em 0;">
+					{{mf
+						"notification.privateMessage.mail.copyintro"
+						'This is your copy of your message that was sent to "{RECIPIENT}"'
+						RECIPIENT=recipientName LOCALE=locale
+					}}
+				</p>
+			{{/if}}
+				<p style="margin: 1em 0;">
+					{{mf
+						"notification.privateMessage.mail.intro"
+						'Private message from "{SENDER}"'
+						SENDER=sender.username LOCALE=locale
+					}}
+					{{#if fromAddress}}
+						<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
+					{{/if}}
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
+				<table cellpadding="0" cellspacing="0" border="0" align="center">
+					<tr>
+						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+							{{{message}}}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" style="padding: 10px;">
+				<a href="{{senderLink}}">{{mf "notification.privateMessage.mail.linktext" '➜ See profile of "{SENDER}"' SENDER=sender.username LOCALE=locale}}</a>
+			</td>
+		</tr>
+		<tr>
+			<td width="500" valign="top" bgcolor="#3f819e">
+				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
+					<tr>
+						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
+							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
+								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}
+							</a>
+							&nbsp;
+							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
+								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
+							</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

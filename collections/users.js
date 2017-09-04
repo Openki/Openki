@@ -46,6 +46,9 @@ import '/imports/Profile.js';
 // badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()
 // ===========================
 
+// Alias users collection to the expected name
+Users = Meteor.users;
+
 User = function() {};
 
 
@@ -61,6 +64,32 @@ User.prototype.mayPromoteWith = function(group) {
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
+
+/** Get email address of user
+  *
+  * @returns String with email address or Boolean false
+  */
+User.prototype.emailAddress = function() {
+	return this.emails
+	    && this.emails[0]
+		&& this.emails[0].address
+		|| false;
+}
+
+/** Get verified email address of user
+  *
+  * @returns String with verified email address or Boolean false
+  */
+User.prototype.verifiedEmailAddress = function() {
+	let emailRecord = this.emails
+	               && this.emails[0];
+	return emailRecord
+	    && emailRecord.verified
+		&& emailRecord.address
+		|| false;
+}
+
+
 
 
 Meteor.users._transform = function(user) {
@@ -102,7 +131,6 @@ UserLib = {
 	}
 };
 
-Users = {};
 
 // Update list of groups and badges
 Users.updateBadges = function(userId) {
@@ -144,27 +172,43 @@ Meteor.methods({
 		check(email, String);
 		check(notifications, Boolean);
 
+		// The error handling in this function is flawed in that we drop
+		// out on the first error instead of collecting them. So fields
+		// that are validated later will not be saved if an earlier field
+		// causes us to fail.
+
 		var user = Meteor.user();
 
-		var changes = {};
-		if (user.username !== username) { changes.username = saneText(username).substring(0, 200); }
-		if (!user.emails || !user.emails[0] || user.emails[0].address !== email) {
+		const saneUsername = saneText(username).trim().substring(0, 200);
+		if (saneUsername && user.username !== saneUsername) {
+			let result = Profile.Username.change(user._id, saneUsername, "profile change");
+			if (!result) {
+				throw new Meteor.Error("nameError", "Failed to update username");
+			}
+		}
+
+		const trimmedEmail = email.trim();
+		const newEmail = trimmedEmail || false;
+		const previousEmail = user.emailAddress();
+
+		if (newEmail !== previousEmail) {
 			// Working under the assumption that there is only one address
 			// if there was more than one address oops I accidentally your addresses
-			email = email.trim();
-			if (email && email.length > 3) {
+			if (email) {
+				// Very lenient address validation routine
+				if (email.length < 3) {
+					throw new Meteor.Error('emailInvalid', 'Email address invalid');
+				}
+
+				// Don't allow using an address somebody else uses
 				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
 					throw new Meteor.Error('emailExists', 'Email address already in use');
 				}
-				changes.emails = [{ address: email, verified: false }];
+				Profile.Email.change(user._id, email, "profile change");
 			} else {
-				changes.emails = [];
+				// Remove email-address
+				Profile.Email.change(user._id, false, "profile change");
 			}
-		}
-		if (!_.isEmpty(changes)) {
-			Meteor.users.update(Meteor.userId(), {
-				$set: changes
-			});
 		}
 
 		if (user.notifications !== notifications) {

@@ -5,10 +5,12 @@ import '/imports/collections/Log.js';
 import notificationEvent   from '/imports/notification/Notification.Event.js';
 import notificationComment from '/imports/notification/Notification.Comment.js';
 import notificationJoin    from '/imports/notification/Notification.Join.js';
+import notificationPrivateMessage from '/imports/notification/Notification.PrivateMessage.js';
 
 Notification.Event   = notificationEvent;
 Notification.Comment = notificationComment;
 Notification.Join    = notificationJoin;
+Notification.PrivateMessage = notificationPrivateMessage;
 
 /** Handle event notification
   *
@@ -28,14 +30,14 @@ Notification.send = function(entry) {
 
 	var model = Notification[entry.body.model].Model(entry);
 
-	_.each(entry.body.recipients, function(recipient) {
-		if (!concluded[recipient]) {
+	_.each(entry.body.recipients, (recipientId) => {
+		if (!concluded[recipientId]) {
 			var mail = null;
 			var unsubToken = null;
 			var userId = null;
 
 			try {
-				var user = Meteor.users.findOne(recipient);
+				var user = Meteor.users.findOne(recipientId);
 				userId = user._id;
 
 				if (user.notifications === false) {
@@ -57,7 +59,11 @@ Notification.send = function(entry) {
 
 				var unsubToken = Random.secret();
 
-				var vars = model.vars(userLocale);
+				var vars = model.vars(userLocale, user);
+
+				const fromAddress = vars.fromAddress
+				                 || Accounts.emailTemplates.from;
+
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
 				vars.siteName = siteName;
 				vars.locale = userLocale;
@@ -70,7 +76,8 @@ Notification.send = function(entry) {
 				message = DOCTYPE + message;
 
 				mail =
-					{ from: Accounts.emailTemplates.from
+					{ from: fromAddress
+					, sender: Accounts.emailTemplates.from
 					, to: address
 					, subject: subjectPrefix + vars.subject
 					, html: message
@@ -78,12 +85,12 @@ Notification.send = function(entry) {
 
 				Email.send(mail);
 
-				Notification.SendResult.record(entry, unsubToken, true, recipient, mail, "success");
+				Notification.SendResult.record(entry, unsubToken, true, recipientId, mail, "success");
 			}
 			catch(e) {
 				var reason = e;
 				if (typeof e == 'object' && 'toJSON' in e) reason = e.toJSON();
-				Notification.SendResult.record(entry, unsubToken, false, recipient, mail, reason);
+				Notification.SendResult.record(entry, unsubToken, false, recipientId, mail, reason);
 			}
 		}
 	});
