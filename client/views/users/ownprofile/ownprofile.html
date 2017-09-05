@@ -25,7 +25,7 @@
 			</div>
 		{{/if}}
 		{{#unless loggedIn}}
-			{{mf "profile.not_logged_in"}}
+			{{mf 'profile.not_logged_in' 'You are not logged in'}}
 		{{else}}
 			<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
