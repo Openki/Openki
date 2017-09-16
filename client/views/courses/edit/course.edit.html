@@ -7,7 +7,12 @@
 				{{#if _id}}
 					<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
 				{{else}}
+					{{#if (newCourseGroupName)}}
+					<h2>{{mf 'course.edit.proposeInGroup' 'Propose new course in group {GROUP}' GROUP=(newCourseGroupName)}}</h2>
+					{{else}}
 					<h2>{{mf 'course.edit.propose' 'Propose new course'}}</h2>
+					{{/if}}
+
 					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
 					{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
 					<a href="/event/create">{{mf 'menue.CreateEvent'}}</a>
