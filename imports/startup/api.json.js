@@ -1,5 +1,10 @@
 import '/imports/Api.js';
 
+WebApp.rawConnectHandlers.use("/api", function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  return next();
+});
+
 let NoActionError = function(message) {
 	this.message = message;
 }
