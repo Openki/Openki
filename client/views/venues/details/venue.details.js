@@ -2,53 +2,6 @@
 
 var maxEvents = 12;
 
-Router.map(function() {
-	this.route('venueDetails', {
-		path: 'venue/:_id/:name?',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('venueDetails', this.params._id),
-			];
-		},
-
-		data: function() {
-			var id = this.params._id;
-
-			var venue;
-			var data = {};
-			if (id === 'create') {
-				var userId = Meteor.userId();
-				venue = new Venue();
-				venue.region = cleanedRegion(Session.get('region'));
-				venue.editor = userId;
-			} else {
-				venue = Venues.findOne({_id: this.params._id});
-				if (!venue) return false; // Not found
-			}
-
-			data.venue = venue;
-
-			return data;
-		},
-
-		onAfterAction: function() {
-			var data = this.data();
-			if (!data) return;
-
-			var venue = data.venue;
-			var title;
-			if (venue._id) {
-				title = venue.name;
-			} else {
-				title = mf('venue.edit.siteTitle.create', "Create Venue");
-			}
-			document.title = webpagename + title;
-		}
-	});
-});
-
-
-
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {
@@ -58,6 +11,12 @@ Template.venueDetails.onCreated(function() {
 	var isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
 	this.verifyDeleteVenue = new ReactiveVar(false);
+
+	this.increaseBy = 10;
+	this.maxEvents = new ReactiveVar(12);
+	this.maxPastEvents = new ReactiveVar(3);
+	this.eventsCount = new ReactiveVar();
+	this.pastEventsCount = new ReactiveVar();
 
 	var markers = new Meteor.Collection(null);
 	this.markers = markers;
@@ -82,13 +41,51 @@ Template.venueDetails.onCreated(function() {
 		}
 	};
 
-	this.eventsPredicate = function() {
-		return { venue: instance.data.venue._id, after: minuteTime.get() };
+	this.autorun(function() {
+		subs.subscribe('eventsFind', { venue: instance.data.venue._id });
+	});
+
+	this.getEvents = function(past) {
+		var limit, count;
+		var predicate = { venue: this.data.venue._id };
+		var now = minuteTime.get();
+
+		if (past) {
+			predicate.before = now;
+			limit = instance.maxPastEvents.get();
+			count = instance.pastEventsCount;
+		} else {
+			predicate.after = now;
+			limit = instance.maxEvents.get();
+			count = instance.eventsCount;
+		}
+
+		var events = eventsFind(predicate).fetch();
+		count.set(events.length);
+		if (limit) events = events.slice(0, limit);
+
+		return events;
 	};
 
-	this.autorun(function() {
-		subs.subscribe('eventsFind', instance.eventsPredicate(), maxEvents);
-	});
+	this.unloadedEvents = function(past) {
+		var instance = Template.instance();
+		var limit, count;
+
+		if (past) {
+			limit = instance.maxPastEvents.get();
+			count = instance.pastEventsCount.get();
+		} else {
+			limit = instance.maxEvents.get();
+			count = instance.eventsCount.get();
+		}
+
+		var unloaded = count - limit;
+
+		var increaseBy = instance.increaseBy;
+		unloaded = (unloaded > increaseBy) ? increaseBy : unloaded;
+
+		return unloaded;
+	};
 });
 
 Template.venueDetails.onRendered(function() {
@@ -145,8 +142,30 @@ Template.venueDetails.helpers({
 		return Template.instance().verifyDeleteVenue.get();
 	},
 
-	eventsList: function() {
-		return eventsFind(Template.instance().eventsPredicate(), maxEvents);
+	events: function() {
+		return Template.instance().getEvents();
+	},
+
+	eventsLimited: function() {
+		var instance = Template.instance();
+		return instance.eventsCount.get() > instance.maxEvents.get();
+	},
+
+	unloadedEvents: function() {
+		return Template.instance().unloadedEvents();
+	},
+
+	pastEvents: function() {
+		return Template.instance().getEvents(true);
+	},
+
+	pastEventsLimited: function() {
+		var instance = Template.instance();
+		return instance.pastEventsCount.get() > instance.maxPastEvents.get();
+	},
+
+	unloadedPastEvents: function() {
+		return Template.instance().unloadedEvents(true);
 	}
 });
 
@@ -177,6 +196,15 @@ Template.venueDetails.events({
 				Router.go('profile');
 			}
 		});
-	}
+	},
 
+	'click .js-show-more-events': function(e, instance) {
+		var limit = instance.maxEvents;
+		limit.set(limit.get() + instance.increaseBy);
+	},
+
+	'click .js-show-more-past-events': function(e, instance) {
+		var limit = instance.maxPastEvents;
+		limit.set(limit.get() + instance.increaseBy);
+	}
 });

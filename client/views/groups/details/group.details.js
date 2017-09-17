@@ -1,45 +1,5 @@
 "use strict";
 
-Router.map(function () {
-	this.route('groupDetails', {
-		path: 'group/:_id/:short?',
-		waitOn: function () {
-			return [
-				subs.subscribe('group', this.params._id),
-			];
-		},
-		data: function () {
-			var group;
-			var isNew = this.params._id === 'create';
-			if (isNew) {
-				group = {
-					_id: 'create'
-				};
-			} else {
-				group = Groups.findOne({_id: this.params._id});
-			}
-
-			if (!group) return false;
-
-			var data = {
-				group: group,
-				courseQuery: _.extend(this.params.query, {group: group._id}),
-				isNew: isNew,
-				showCourses: !isNew,
-			};
-
-
-			return data;
-		},
-		onAfterAction: function() {
-			var group = Groups.findOne({_id: this.params._id});
-			if (group) {
-				document.title = webpagename + group.name;
-			}
-		}
-	});
-});
-
 Template.groupDetails.onCreated(function() {
 	var instance = this;
 
@@ -180,7 +140,7 @@ Template.groupDetails.events({
 				instance.editableClaim.end();
 				instance.editableDescription.end();
 
-				addMessage(mf('group.create.success', 'Created group'));
+				addMessage(mf('group.create.success', 'Created group'), 'success');
 				Router.go('groupDetails', { _id: groupId });
 			}
 		});

@@ -1,3 +1,6 @@
+import "/imports/RegionSelection.js";
+import '/imports/ui/FilterPreview.js';
+
 Template.regionSelectionWrap.created = function() {
 	var instance = this;
 	instance.subscribe("Regions");
@@ -50,8 +53,7 @@ Template.regionSelection.onCreated(function() {
 		// the homepage for those
 		if (changed) {
 			var routeName = Router.current().route.getName();
-			var routesToKeep = ['home', 'find', 'venue', 'calendar'];
-			if (routesToKeep.indexOf(routeName) < 0) Router.go('/');
+			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) Router.go('/');
 		}
 		instance.close();
 	};
@@ -105,14 +107,13 @@ Template.regionSelection.events({
 	},
 
 	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
-		var regionID = this._id;
-		if (regionID && Session.equals('region', 'all')) {
-			var activate = e.type == 'mouseover' || e.type == 'focusin';
-			var previewOptions = {
-				selector: ('.region-' + regionID),
-				activate: activate
-			};
-			courseFilterPreview(previewOptions);
+		var id = this._id;
+		if (id && Session.equals('region', 'all')) {
+			FilterPreview({
+				property: 'region',
+				id,
+				activate: e.type == 'mouseover' || e.type == 'focusin'
+			});
 		}
 	},
 
@@ -139,15 +140,6 @@ Template.regionSelection.events({
 	},
 
 	'focus .js-region-search': function(event, instance) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });
@@ -158,15 +150,6 @@ Template.regionSelection.onRendered(function() {
 	instance.$('.js-region-search').select();
 
 	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
-		}
-
 		instance.close();
 	});
 });

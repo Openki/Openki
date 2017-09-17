@@ -1,8 +1,7 @@
-
+import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
 
-Meteor.subscribe('currentUser');
 Meteor.subscribe('version');
 
 // Always load english translation
@@ -26,54 +25,6 @@ Router.onStop(function() {
 	var route = Router.current().route;
 	if (route) Session.set('previousRouteName', route.getName());
 });
-
-// Subscribe to list of regions and configure the regions
-// This checks client storage for a region setting. When there is no previously
-// selected region, we ask the server to do geolocation. If that fails too,
-// we just set it to 'all regions'.
-
-var regionSelectors =
-	[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
-	, UrlTools.queryParam('region')
-	, localStorage.getItem('region')
-	].filter(Boolean);
-
-// When the region is not provided we show a splash screen
-Session.set('regionGuessed', regionSelectors.length < 1);
-
-Meteor.subscribe('regions', function() {
-	var useAsRegion = function(regionId) {
-		if (!regionId) return;
-		if (regionId == 'all') {
-			Session.set("region", regionId);
-			return true;
-		}
-		if (Regions.findOne({ _id: regionId })) {
-			Session.set("region", regionId);
-			return true;
-		}
-
-		var region = Regions.findOne({ name: regionId });
-		if (region) {
-			Session.set("region", region._id);
-			return true;
-		}
-		return false;
-	};
-
-	if (regionSelectors.some(useAsRegion)) return;
-
-	import '/imports/IpLocation.js';
-	IpLocation.detect(function(region, reason) {
-		console.log("Region autodetection: "+reason);
-		if (region) {
-			useAsRegion(region._id);
-			return;
-		}
-		useAsRegion('all');
-	});
-});
-
 
 // We keep two subscription caches around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
@@ -167,6 +118,7 @@ Meteor.startup(function() {
 	});
 });
 
+Meteor.startup(RegionSelection.init);
 Meteor.startup(Assistant.init);
 
 Meteor.startup(getViewportWidth);
@@ -176,9 +128,6 @@ Accounts.onLogin(function() {
 
 	var locale = user.profile.locale;
 	if (locale) Session.set('locale', locale);
-
-	var regionId = user.profile.regionId;
-	if (regionId) Session.set('region', regionId);
 });
 
 Accounts.onEmailVerificationLink(function(token, done) {

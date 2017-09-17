@@ -13,9 +13,19 @@
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#each members}}
+			{{#each sortedMembers}}
 				{{> courseMember member=this course=..}}
 			{{/each}}
+			{{#if limited}}
+				<button
+					class="btn btn-add course-page-btn js-show-all-members"
+					type="button">
+					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+					{{#mf KEY='course.members.showNextMembers' NUM=increaseBy}}
+						Show next {NUM} participants
+					{{/mf}}
+				</button>
+			{{/if}}
 		</div>
 	{{/if}}
 </template>
@@ -83,7 +93,7 @@
 				<button class="close">&times;</button>
 			</li>
 			<li role="separator" class="divider"></li>
-			<li>
+			<li class="dialog-dropdown-text">
 				{{#if isNotPriviledgedSelf}}
 					{{mf 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
 				{{else}}

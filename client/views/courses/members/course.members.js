@@ -1,9 +1,48 @@
+Template.courseMembers.onCreated(function() {
+	this.increaseBy = 10;
+	this.membersLimit = new ReactiveVar(this.increaseBy);
+});
+
 Template.courseMembers.helpers({
 	howManyEnrolled: function() {
 		return this.members.length;
+	},
+
+	sortedMembers: function() {
+		var members = this.members.map(function(member) {
+			member.roles = _.without(member.roles, 'participant');
+			return member;
+		});
+
+		var sortedMembers = members.sort(function(a, b) {
+			return b.roles.length - a.roles.length;
+		});
+
+		var membersLimit = Template.instance().membersLimit.get();
+		if (membersLimit) {
+			sortedMembers = sortedMembers.slice(0, membersLimit);
+		}
+
+		return sortedMembers;
+	},
+
+	limited: function() {
+		var membersLimit = Template.instance().membersLimit.get();
+		return membersLimit && this.members.length >= membersLimit;
+	},
+
+	increaseBy: function() {
+		return Template.instance().increaseBy;
 	}
 });
 
+Template.courseMembers.events({
+	'click .js-show-all-members': function(e, instance) {
+		var membersLimit = instance.membersLimit;
+
+		membersLimit.set(membersLimit.get() + instance.increaseBy);
+	}
+});
 
 Template.courseMember.onCreated(function() {
 	var instance = this;
@@ -34,7 +73,7 @@ Template.courseMember.helpers({
 		var memberRoles = this.member.roles;
 		return memberRoles.length != 1 || memberRoles[0] != "participant";
 	},
-	
+
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {

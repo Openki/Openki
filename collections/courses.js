@@ -46,6 +46,20 @@ Course.prototype.editableBy = function(user) {
 		|| _.intersection(user.badges, this.editors).length > 0;
 };
 
+
+/** Get list of members with specified role
+  *
+  * @param {String} role like 'team'
+  * @return {List} of members
+  */
+Course.prototype.membersWithRole = function(role) {
+	check(role, String);
+	return this.members.filter(function(member) {
+		return member.roles.indexOf(role) >= 0;
+	});
+};
+
+
 Courses = new Meteor.Collection("Courses", {
 	transform: function(course) {
 		return _.extend(new Course(), course);
@@ -205,30 +219,42 @@ coursesFind = function(filter, limit) {
 	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
-	if (filter.upcomingEvent === true) {
-		find.futureEvents = { $gt: 0 };
-		sort = {"nextEvent.start": 1, time_lastedit: -1};
+	if (filter.state === 'proposal') {
+		find.lastEvent = { $eq: null };
+		find.futureEvents = { $eq: 0 };
+		sort = { time_lastedit: -1 };
 	}
-	if (filter.upcomingEvent === false) {
-		find.futureEvents = 0;
+
+	if (filter.state === 'pastEvent') {
+		find.lastEvent = { $ne: null };
+		find.futureEvents = { $eq: 0 };
+		sort = { "lastEvent.start": 1, time_lastedit: -1 };
+	}
+
+	if (filter.state === 'upcomingEvent') {
+		find.futureEvents = { $gt: 0 };
+		sort = { "nextEvent.start": 1, time_lastedit: -1 };
 	}
 
 	var mustHaveRoles = [];
 	var missingRoles = [];
 
-	if (filter.needsHost) {
-		missingRoles.push('host');
-		mustHaveRoles.push('host');
-	}
+	var needsRole = filter.needsRole;
+	if (needsRole) {
+		if (needsRole.indexOf('host') >= 0) {
+			missingRoles.push('host');
+			mustHaveRoles.push('host');
+		}
 
-	if (filter.needsMentor) {
-		missingRoles.push('mentor');
-		mustHaveRoles.push('mentor');
-	}
+		if (needsRole.indexOf('mentor') >= 0) {
+			missingRoles.push('mentor');
+			mustHaveRoles.push('mentor');
+		}
 
-	if (filter.missingTeam) {
-		missingRoles.push('team');
-		// All courses have the team role so we don't need to restrict to those having it
+		if (needsRole.indexOf('team') >= 0) {
+			missingRoles.push('team');
+			// All courses have the team role so we don't need to restrict to those having it
+		}
 	}
 
 	if (filter.userInvolved) {
@@ -288,7 +314,7 @@ if (Meteor.isServer) {
 
 			if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
 
-			// do nothing if user is allready subscribed with this role
+			// do nothing if user is already subscribed with this role
 			if (hasRoleUser(course.members, role, userId)) return true;
 
 			// Check permissions
@@ -300,6 +326,9 @@ if (Meteor.isServer) {
 
 			// Update the modification date
 			Courses.update(courseId, { $set: {time_lastedit: new Date()} });
+
+			// Send notifications
+			Notification.Join.record(course._id, user._id, role);
 		},
 
 		remove_role: function(courseId, userId, role) {

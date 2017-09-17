@@ -7,12 +7,20 @@
 			</h4>
 		</div>
 		{{> post newPost}}
-		{{#if havePosts}}
-			{{#each posts}}
-				<div class="discussion-conversation">
-					{{> post}}
-				</div>
-			{{/each}}
+		{{#each posts}}
+			<div class="discussion-conversation">
+				{{> post}}
+			</div>
+		{{/each}}
+		{{#if limited}}
+			<button
+				class="btn btn-add course-page-btn js-show-all-posts"
+				type="button">
+				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+				{{#mf KEY='course.discussions.showAllComments' NUM=count}}
+					Show all {NUM} comments
+				{{/mf}}
+			</button>
 		{{/if}}
 	</div>
 </template>
@@ -22,6 +30,23 @@
 		{{> postEdit}}
 	{{else}}
 		{{> postShow}}
+	{{/if}}
+	{{#if responsesLimited}}
+		<button
+			class="btn-link toggle-all-responses js-toggle-all-responses"
+			type="button">
+			{{#if allResponsesShown}}
+				<i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
+				{{#mf KEY='course.discussions.hideAnswers'}}
+					Hide answers
+				{{/mf}}
+			{{else}}
+				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+				{{#mf KEY='course.discussions.showAllAnswers' NUM=count}}
+					Show all {NUM} answers
+				{{/mf}}
+			{{/if}}
+		</button>
 	{{/if}}
 	{{#each responses}}
 		{{> post}}
@@ -47,7 +72,7 @@
 			</button>
 		{{/if}}
 	{{else}}
-		<div class="{{postClass}}">
+		<div class="{{postClass}}" id="comment{{_id}}">
 			{{> profileIcon userId}}
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
@@ -133,7 +158,6 @@
 					</div>
 				{{/if}}
 				<div class="form-actions">
-					{{> buttonCancel event="js-discussion-cancel"}}
 					<button type="submit" class="btn btn-save discussion-save-btn">
 						<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 						{{#if new}}
@@ -146,6 +170,7 @@
 								{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
 						{{/if}}
 					</button>
+					{{> buttonCancel event="js-discussion-cancel"}}
 				</div>
 			</div>
 			</form>
@@ -159,7 +184,7 @@
 			{{username this}}
 		</a>
 	{{else}}
-		<span class="profilelink">
+		<span class="username">
 			Anonymous
 		</span>
 	{{/if}}

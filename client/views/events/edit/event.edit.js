@@ -10,10 +10,19 @@ Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.busy(false);
 
+	var courseId = this.data.courseId;
+	if (courseId) {
+		instance.subscribe('courseDetails', courseId);
+	}
+
 	instance.parent = instance.parentInstance();
-	instance.selectedRegion = new ReactiveVar(this.data.region || Session.get('region'));
-	instance.selectedLocation = new ReactiveVar(this.data.venue || {});
-	instance.notifyChecked = new ReactiveVar(instance.data.new);
+	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
+	instance.selectedLocation = new ReactiveVar(instance.data.venue || {});
+
+	// Sending an event notification is only possible when the event is
+	// attached to a course. Otherwise there is nobody to inform.
+	var notifyPreset = courseId && instance.data.new;
+	instance.notifyChecked = new ReactiveVar(notifyPreset);
 
 	instance.editableDescription = Editable(
 		false,
@@ -117,7 +126,7 @@ Template.eventEdit.onRendered(function() {
 		var $dateInput = instance.$('.js-event-start-date');
 
 		// remove, re-add the datepicker when the locale changed
-		$dateInput.datepicker('remove');
+		$dateInput.datepicker('destroy');
 
 		// I don't know why, but language: moment.locale() does not work here.
 		// So instead we clobber the 'en' settings with settings for the
@@ -191,9 +200,6 @@ Template.eventEdit.helpers({
 	course: function() {
 		var courseId = this.courseId;
 		if (courseId) {
-			// Very bad?
-			Template.instance().subscribe('courseDetails', courseId);
-
 			return Courses.findOne({_id: courseId});
 		}
 	},

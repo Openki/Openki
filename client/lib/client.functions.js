@@ -132,27 +132,6 @@ getViewportWidth = function() {
 	Session.set('viewportWidth', viewportWidth);
 };
 
-
-courseFilterPreview = function(options) {
-	var selector = options.selector;
-	var activate = options.activate;
-	var instance = options.instance || false;
-	var delayed = options.delayed || false;
-
-	var filterClass = delayed
-		? 'filter-no-match-delayed'
-		: 'filter-no-match';
-
-	var course = instance
-		? instance.$('.course-compact')
-		: $('.course-compact');
-
-	course
-		.not(selector)
-		.toggleClass(filterClass, activate);
-};
-
-
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };

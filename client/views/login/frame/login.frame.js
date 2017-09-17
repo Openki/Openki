@@ -1,17 +1,3 @@
-Template.userFrame.onCreated(function() {
-	this.forgot = new ReactiveVar(false);
-});
-
-Template.userFrame.helpers({
-	forgot: function() {
-		return !Meteor.user() && Template.instance().forgot.get();
-	},
-
-	login: function() {
-		return !Meteor.user() && !Template.instance().forgot.get();
-	}
-});
-
 /** Setup (re-)setting of login/register warnings for a template
   *
   * @param {Object} template
@@ -28,16 +14,16 @@ var warnings = function(template, warnings) {
 			instance.$('.warning-block').remove();
 		};
 
-		instance.setWarning = function(warningID) {
+		instance.setWarning = function(name) {
 			if (instance.hasWarning.get()) instance.resetWarnings();
 
-			var warning = _.findWhere(warnings, {_id: warningID});
-
+			var warning = _.findWhere(warnings, { name: name });
 			var selectors = warning.selectors;
+
 			_.each(selectors, function(selector, index) {
 				var formGroup = $(selector).parents('.form-group');
-				formGroup.addClass('has-error');
 
+				formGroup.addClass('has-error');
 				if (index === selectors.length - 1) {
 					formGroup.append(
 						'<span class="help-block warning-block">'
@@ -52,24 +38,48 @@ var warnings = function(template, warnings) {
 	});
 };
 
+/** Check a string if it is a valid email adress
+  *
+  * @param {String} the string to be checked
+  */
+var isEmail = function(str) {
+	// consider string as valid email if it matches this pattern:
+	// (1+ characters)@(1+ characters).(1+ characters)
+	return str.search(/^[^@\s]+@[^@.\s]+\.\w+$/g) >= 0;
+};
+
+Template.userFrame.onCreated(function() {
+	this.forgot = new ReactiveVar(false);
+});
+
+Template.userFrame.helpers({
+	forgot: function() {
+		return !Meteor.user() && Template.instance().forgot.get();
+	},
+
+	login: function() {
+		return !Meteor.user() && !Template.instance().forgot.get();
+	}
+});
+
 warnings(Template.loginFrame,
 	[
-		{ _id: 'noUserName'
+		{ name: 'noUserName'
 		, text: mf('login.warning.noUserName', 'Please enter your username or email to log in.')
 		, selectors: ['#loginName']
 		}
 	,
-		{ _id: 'noCredentials'
+		{ name: 'noCredentials'
 		, text: mf('login.login.warning', 'Please enter your username or email and password to log in.')
 		, selectors: ['#loginName', '#loginPassword']
 		}
 	,
-		{ _id: 'noPassword'
+		{ name: 'noPassword'
 		, text: mf('login.password.password_incorrect', 'Incorrect password')
 		, selectors: ['#loginPassword']
 		}
 	,
-		{ _id: 'userNotFound'
+		{ name: 'userNotFound'
 		, text: mf('login.username.usr_doesnt_exist', 'This user does not exist.')
 		, selectors: ['#loginName']
 		}
@@ -95,28 +105,44 @@ Template.loginFrame.onCreated(function() {
 			, 'serviceName': 'Github'
 			}
 		];
+
+	this.closeMenu = function() {
+		if (Session.get('viewportWidth') <= SCSSVars.gridFloatBreakpoint) {
+			$('.collapse').collapse('hide');
+		} else {
+			$('.loginButton').dropdown('toggle');
+		}
+	};
+});
+
+Template.loginFrame.onRendered(function() {
+	var loginEmail = this.parentInstance().loginEmail;
+	if (loginEmail) this.$('#loginName').val(loginEmail);
 });
 
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn': function(event, instance) {
-		instance.parentInstance().forgot.set(true);
-		return false;
+		event.preventDefault();
+		var parentInstance = instance.parentInstance();
+		var username = instance.$('#loginName').val();
+
+		if (isEmail(username)) parentInstance.loginEmail = username;
+		parentInstance.forgot.set(true);
 	},
 
 	'click .js-register-open': function(event, instance) {
-		var name = instance.$('#loginName').val();
+		var username = instance.$('#loginName').val();
 		var password = instance.$('#loginPassword').val();
 		var email;
 
 		// Sometimes people register with their email address in the first field
 		// Move entered username over to email field if it contains a @
-		var atPos = name.indexOf('@');
-		if (atPos >= 0) {
-			email = name;
-			name = name.substr(0, atPos);
+		if (isEmail(username)) {
+			email = username;
+			username = email.substr(0, email.indexOf('@'));
 		}
 
-		$('#registerName').val(name);
+		$('#registerName').val(username);
 		$('#registerPassword').val(password);
 		$('#registerEmail').val(email);
 	},
@@ -145,7 +171,7 @@ Template.loginFrame.events({
 					instance.setWarning('userNotFound');
 				}
 			} else {
-				$('.loginButton').dropdown('toggle');
+				instance.closeMenu();
 			}
 		});
 	},
@@ -167,7 +193,7 @@ Template.loginFrame.events({
 			if (err) {
 				addMessage(err.reason || 'Unknown error', 'danger');
 			} else {
-				$('.loginButton').dropdown('toggle');
+				instance.closeMenu();
 			}
 		});
 	}
@@ -187,22 +213,22 @@ Template.registerModal.events({
 
 warnings(Template.registerFrame,
 	[
-		{ _id: 'noUserName'
+		{ name: 'noUserName'
 		, text: mf('register.warning.noUserName', 'Please enter a name for your new user.')
 		, selectors: ['#registerName']
 		}
 	,
-		{ _id: 'noPassword'
+		{ name: 'noPassword'
 		, text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.')
 		, selectors: ['#registerPassword']
 		}
 	,
-		{ _id: 'noCredentials'
+		{ name: 'noCredentials'
 		, text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.')
 		, selectors: ['#registerName', '#registerPassword']
 		}
 	,
-		{ _id: 'userExists'
+		{ name: 'userExists'
 		, text: mf('register.warning.userExists', 'This username already exists. Please choose another one.')
 		, selectors: ['#registerName']
 		}
@@ -267,6 +293,14 @@ Template.forgotPwdFrame.onCreated(function() {
 	this.emailIsValid = new ReactiveVar(false);
 });
 
+Template.forgotPwdFrame.onRendered(function() {
+	var loginEmail = this.parentInstance().loginEmail;
+	if (loginEmail) {
+		this.$('.js-reset-pw-email').val(loginEmail);
+		this.emailIsValid.set(true);
+	}
+});
+
 Template.forgotPwdFrame.helpers({
 	noValidEmail: function() {
 		return !Template.instance().emailIsValid.get();
@@ -275,10 +309,8 @@ Template.forgotPwdFrame.helpers({
 
 Template.forgotPwdFrame.events({
 	'input, change, paste, keyup, mouseup': function(event, instance) {
-		var resetPwdEmail = instance.$('.js-reset-pw-email').val();
-		var emailIsValid = ~resetPwdEmail.indexOf('@');
-
-		instance.emailIsValid.set(emailIsValid);
+		var email = instance.$('.js-reset-pw-email').val();
+		instance.emailIsValid.set(isEmail(email));
 	},
 
 	'submit': function(event, instance) {
@@ -313,4 +345,8 @@ Template.ownUserFrame.events({
 		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
 		return false;
 	},
+
+	'click .btn': function() {
+		$('.collapse').collapse('hide');
+	}
 });

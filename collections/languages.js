@@ -7,13 +7,6 @@
 
 
 Languages = {
-	'am':
-		{ lg:      'am'
-		, name:    'አማርኛ'
-		, short:   'አማርኛ'
-		, english: 'Amharic'
-		}
-	,
 	'ar':
 		{ lg:      'ar'
 		, name:    'العربية'
@@ -56,46 +49,11 @@ Languages = {
 		, english: 'Spanish'
 		}
 	,
-	'fa':
-		{ lg:      'fa'
-		, name:    'فارسی'
-		, short:   'فارسی'
-		, english: 'Farsi, Persian'
-		}
-	,
 	'fr':
 		{ lg:      'fr'
 		, name:    'Français'
 		, short:   'fr'
 		, english: 'French'
-		}
-	,
-	'hu':
-		{ lg:      'hu'
-		, name:    'Magyar'
-		, short:   'hu'
-		, english: 'Hungarian'
-		}
-	,
-	// 'it':
-	// 	{ lg:      'it'
-	// 	, name:    'Italiano'
-	// 	, short:   'it'
-	// 	, english: 'Italian'
-	// 	}
-	// ,
-	// 'ja':
-	// 	{ lg:      'ja'
-	// 	, name:    '日本語'
-	// 	, short:   '日本語'
-	// 	, english: 'Japanese'
-	// 	}
-	// ,
-	'ku':
-		{ lg:      'ku'
-		, name:    'Kurdî'
-		, short:   'ku'
-		, english: 'Kurdish'
 		}
 	,
 	'tr':

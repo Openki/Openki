@@ -1,4 +1,5 @@
-import '/imports/startup/eventnotifications.js';
+import '/imports/startup/notifications.js';
+import '/imports/startup/api.json.js';
 
 Meteor.startup(function () {
 

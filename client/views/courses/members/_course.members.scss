@@ -6,10 +6,10 @@
 .course-member {
 	background: $course-page-component-bg;
 	padding: 10px ($grid-gutter-width / 2);
+}
 
-	&:not(:last-child) {
-		margin-bottom: 1px;
-	}
+.course-member + .course-member {
+	margin-top: $course-details-seperator-height;
 }
 
 .course-member-roles {

@@ -1,61 +1,135 @@
 Template.discussion.onCreated(function() {
-	subs.subscribe('discussion', this.data._id);
-	this.posts = CourseDiscussions.find({
-		courseId: this.data._id,
-		parentId: { $exists: false },
-	}, {
-		sort: {time_updated: -1}
+	this.count = new ReactiveVar(0);
+
+	// If we want to jump to a comment we don't fold the comments
+	var select = this.data.select;
+	var limit = select ? 0 : 3;
+	this.limit = new ReactiveVar(limit);
+
+	subs.subscribe('discussion', this.data.courseId, function() {
+		if (select) {
+			// Wait for the templates to render before trying to jump there.
+			Tracker.afterFlush(function() {
+				// Jump to the selected comment.
+				// This method should work for screenreaders too.
+				location.hash = '#comment' + select;
+				RouterAutoscroll.scheduleScroll();
+			});
+		}
 	});
+
 });
 
 Template.discussion.helpers({
-	havePosts: function() {
-		return 0 < Template.instance().posts.count();
-	},
-
 	posts: function() {
-		return Template.instance().posts;
+		var instance = Template.instance();
+		var posts = CourseDiscussions.find(
+			{
+				courseId: this.courseId,
+				parentId: { $exists: false }
+			},
+			{
+				sort: { time_updated: -1 }
+			})
+			.fetch();
+
+		var count = posts.length;
+		instance.count.set(count);
+
+		var limit = instance.limit.get();
+		if (limit) posts = posts.slice(0, limit);
+
+		return posts;
 	},
 
 	newPost: function() {
 		return {
 			'new': true,
-			courseId: this._id,
+			courseId: this.courseId,
 			userId: Meteor.userId(),
 			text: ''
 		};
+	},
+
+	limited: function() {
+		var instance = Template.instance();
+		var limit = instance.limit.get();
+
+		if (limit) return instance.count.get() > limit;
+	},
+
+	count: function() {
+		return Template.instance().count.get();
+	}
+});
+
+Template.discussion.events({
+	'click .js-show-all-posts': function(e, instance) {
+		 instance.limit.set(0);
 	}
 });
 
 
 Template.post.onCreated(function() {
-	// Note that the 'discussion' subscription from the 'discussion' template
-	// covers responses as well
-	this.responses = false;
+	var post = this.data;
 
-	if (!this.data.new && !this.data.parentId) {
-		this.responses = CourseDiscussions.find({
-			parentId: this.data._id,
-		}, {
-			sort: {time_updated: 1}
-		});
-	}
-
+	this.isParent = !post.new && !post.parentId;
+	this.count = new ReactiveVar(0);
 	this.editing = new ReactiveVar(false);
+
+	this.initialLimit = 1;
+	this.limit = new ReactiveVar(this.initialLimit);
 });
 
 
 Template.post.helpers({
-	responses: function() {
-		return Template.instance().responses;
-	},
-
 	editing: function() {
 		return Template.instance().editing.get();
 	},
 
+	responses: function() {
+		// Note that the 'discussion' subscription from the 'discussion' template
+		// covers responses as well
+		var instance = Template.instance();
+		var responses = false;
+
+		if (instance.isParent) {
+			var limit = instance.limit.get();
+
+			// if only one response is shown, show newest
+			var sort = limit ? -1 : 1;
+
+			responses = CourseDiscussions.find(
+				{ parentId: this._id },
+				{ sort: { time_updated: sort } })
+				.fetch();
+
+			var count = responses.length;
+			instance.count.set(count);
+
+			if (limit) responses = responses.slice(0, limit);
+		}
+
+		return responses;
+	},
+
+	responsesLimited: function() {
+		var instance = Template.instance();
+		var limit = instance.limit.get();
+
+		return instance.count.get() > limit;
+	},
+
+	allResponsesShown: function() {
+		return !Template.instance().limit.get();
+	},
+
+	count: function() {
+		return Template.instance().count.get();
+	},
+
 	allowResponse: function() {
-		return !this.new && !this.parentId;
+		return Template.instance().isParent;
 	},
 
 	newResponse: function() {
@@ -67,6 +141,15 @@ Template.post.helpers({
 			userId: Meteor.userId(),
 			text: '',
 		};
+	}
+});
+
+Template.post.events({
+	'click .js-toggle-all-responses': function(e, instance) {
+		var limit = instance.limit;
+		var newLimit = (limit.get() === 0) ? instance.initialLimit : 0;
+
+		limit.set(newLimit);
 	}
 });
 

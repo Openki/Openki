@@ -13,7 +13,7 @@
 								{{#if isProposal}}
 									<div class="proposal-tag">
 										<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
-										{{mf 'course.details.proposalTag' 'Proposal'}}
+										{{mf 'course.details.is-proposalTag' 'Proposal'}}
 									</div>
 								{{/if}}
 								{{#with course}}
@@ -41,10 +41,10 @@
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
+								{{> buttonEdit event="js-course-edit"}}
 								{{#unless expanded}}
 									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
-								{{> buttonEdit event="js-course-edit"}}
 							</div>
 						{{/if}}
 					{{/with}}
@@ -57,7 +57,7 @@
 			{{#if mobileViewport}}
 				{{> courseEvents}}
 			{{else}}
-				{{> discussion course}}
+				{{> discussion courseId=course._id select=select}}
 			{{/if}}
 		</div>
 		<div class="course-page-column-right">
@@ -68,7 +68,7 @@
 				{{> courseMembers course}}
 			</div>
 			{{#if mobileViewport}}
-				{{> discussion course}}
+				{{> discussion courseId=course._id select=select}}
 			{{/if}}
 			<div class="page-component">
 				{{> report}}
@@ -81,12 +81,12 @@
 	<div class="course-delete-confirmation">
 		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-collapse"}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
 				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
 				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
+			{{> buttonCancel event="js-collapse"}}
 		</div>
 	</div>
 </template>
@@ -135,7 +135,7 @@
 		{{#each groups}}
 			{{> groupName}}
 			{{#if isOrganizer}}
-				<div class="tag addon">
+				<div class="tag group-tag addon">
 					<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 				</div>
 			{{/if}}
@@ -179,14 +179,16 @@
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
 				<li class="dropdown-header">
-					{{mf 'grouplist.addgroups.header' 'Add groups'}}
+					{{mf 'grouplist.addgroups.header' 'Add group'}}
 					<button class="close">&times;</button>
 				</li>
 				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<button type="button" class="btn-link js-add-group" value="{{this}}">
-							{{> groupName}}
+						<button
+							class="btn-link js-add-group"
+							type="button"
+							value="{{this}}">
 							{{name}}
 						</button>
 					</li>

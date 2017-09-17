@@ -1,17 +1,48 @@
+.find-header {
+	@include make-row;
+}
+
+.find-header-heading {
+	@include make-xs-column(12);
+}
+
+$find-search-column-md: 7.5;
+
+.find-header-search {
+	@include make-sm-column(6);
+	@include make-md-column($find-search-column-md);
+}
+
+.filter-expanded > .find-header-search {
+	@include make-xs-column(12);
+}
+
+.find-header-filter {
+	@include make-sm-column(6);
+	@include make-md-column(12 - $find-search-column-md);
+}
+
+.filter-expanded > .find-header-filter {
+	@include make-xs-column(12);
+	margin-bottom: 15px;
+}
+
 .find-heading {
 	color: $blue;
 	margin-top: 0;
 
-	@media (max-width: $screen-xs) {
+	@media (max-width: $screen-xs-max) {
 		font-size: x-large;
 		margin: 0 0 10px;
 	}
 }
 
 .js-search-field {
-	@include td-make-xs-column(12);
-	@include td-make-md-column(5);
-	padding: 0;
+	width: 100%;
+
+	@media (min-width: $screen-md-min) {
+		max-width: 500px;
+	}
 }
 
 .js-search-input {
