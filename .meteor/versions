@@ -29,6 +29,7 @@ ddp-common@1.2.9
 ddp-rate-limiter@1.0.7
 ddp-server@2.0.0
 deps@1.0.12
+dferber:prerender@2.2.2_3
 diff-sequence@1.0.7
 djedi:sanitize-html@1.11.3
 djedi:sanitize-html-client@1.11.3
