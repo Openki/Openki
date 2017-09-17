@@ -1,70 +1,3 @@
-function loadroles(course) {
-	var userId = Meteor.userId();
-	return _.reduce(Roles, function(goodroles, roletype) {
-		var role = roletype.type;
-		var sub = hasRoleUser(course.members, role, userId);
-		if (course.roles && course.roles.indexOf(role) !== -1) {
-			goodroles.push({
-				roletype: roletype,
-				role: role,
-				subscribed: !!sub,
-				course: course
-			});
-		}
-		return goodroles;
-	}, []);
-}
-
-
-Router.map(function () {
-	this.route('showCourse', {
-		path: 'course/:_id/:slug?',
-		template: 'courseDetailsPage',
-		waitOn: function () {
-			return subs.subscribe('courseDetails', this.params._id);
-		},
-		data: function() {
-			var course = Courses.findOne({_id: this.params._id});
-
-			if (!course) return false;
-
-			var userId = Meteor.userId();
-			var member = getMember(course.members, userId);
-			var data = {
-				edit: !!this.params.query.edit,
-				roles_details: loadroles(course),
-				course: course,
-				member: member
-			};
-			return data;
-		},
-		onAfterAction: function() {
-			var data = this.data();
-			if (data) {
-				var course = data.course;
-				document.title = webpagename + 'Course: ' + course.name;
-			}
-		}
-	});
-
-	this.route('showCourseHistory', {
-		path: 'course/:_id/:slug/History',
-		//template: 'coursehistory',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('courseDetails', this.params._id)
-			];
-		},
-		data: function () {
-			var course = Courses.findOne({_id: this.params._id});
-			return {
-				course: course
-			};
-		}
-	});
-});
-
-
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
 	var instance = this;
@@ -121,7 +54,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	coursestate: function() {
 		if (this.nextEvent) return 'has-upcoming-events';
 		if (this.lastEvent) return 'has-past-events';
-		return 'proposal';
+		return 'is-proposal';
 	},
 	mobileViewport: function() {
 		var viewportWidth = Session.get('viewportWidth');

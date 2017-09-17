@@ -1,4 +1,4 @@
-import '/imports/Notification.js';
+import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
 
 // ======== DB-Model: ========
@@ -318,7 +318,9 @@ Meteor.methods({
 
 			if (updateReplicas) {
 				delete changes.start;
+				delete changes.startLocal;
 				delete changes.end;
+				delete changes.endLocal;
 
 				Events.update(affectedReplicaSelectors(event), { $set: changes }, { multi: true });
 			}

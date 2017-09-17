@@ -111,6 +111,15 @@ Template.courseEdit.helpers({
 	editableDescription: function() {
 		return Template.instance().editableDescription;
 	},
+
+	newCourseGroupName: function () {
+		if (this.groups && this.groups.length > 0) {
+			var groupId = this.groups[0];
+			var group = Groups.findOne(groupId);
+			if (group) return group.name;
+		}
+	},
+
 	userIsInGroup: function() {
 		var user = Meteor.user();
 		if (user && user.groups) {
@@ -134,16 +143,15 @@ Template.courseEdit.events({
 		var isNew = courseId === '';
 
 		var roles = {};
-		$('.js-check-role').each(function(_, rolecheck) {
-			roles[rolecheck.name] = rolecheck.checked;
+		instance.$('.js-check-role').each(function() {
+			roles[this.name] = this.checked;
 		});
-
 
 		var changes = {
 			categories: instance.selectedCategories.get(),
-			name: $('#editform_name').val(),
+			name: instance.$('#editform_name').val(),
 			roles: roles,
-			internal: $('.js-check-internal').is(':checked'),
+			internal: instance.$('.js-check-internal').is(':checked'),
 		};
 
 		var newDescription = instance.editableDescription.getEdited();
@@ -157,7 +165,7 @@ Template.courseEdit.events({
 		}
 
 		if (isNew) {
-			changes.region = $('.region_select').val();
+			changes.region = instance.$('.region_select').val();
 			if (!changes.region) {
 				alert("Please select a region");
 				return;
@@ -179,12 +187,10 @@ Template.courseEdit.events({
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				addMessage("\u2713 " + mf('_message.saved'), 'success');
 
-				$('.js-check-enroll').each(function(_, enrollcheck) {
-					if (enrollcheck.checked) {
-						Meteor.call('add_role', courseId, Meteor.userId(), enrollcheck.name, false);
-					} else {
-						Meteor.call('remove_role', courseId, Meteor.userId(), enrollcheck.name);
-					}
+				instance.$('.js-check-enroll').each(function() {
+					var method = this.checked ? 'add_role' : 'remove_role';
+
+					Meteor.call(method, courseId, Meteor.userId(), this.name);
 				});
 			}
 		});

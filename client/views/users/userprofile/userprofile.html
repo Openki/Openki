@@ -19,7 +19,9 @@
 					{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
 				</a>
 			{{else}}
+				{{#if acceptsMessages}}
 				{{>emailBox}}
+				{{/if}}
 			{{/if}}
 			{{#if showSettings}}
 				<div class="form-group">

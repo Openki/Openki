@@ -1,46 +1,12 @@
-Router.map(function() {
-	this.route('userprofile', {
-		path: 'user/:_id/:username?',
-		waitOn: function () {
-			return [
-				Meteor.subscribe('user', this.params._id),
-				Meteor.subscribe('groupsFind', { own: true }),
-			];
-		},
-		data: function () {
-			var user = Meteor.users.findOne({_id: this.params._id});
-			if (!user) return; // not loaded?
-
-			// What privileges the user has
-			var privileges = _.reduce(['admin'], function(ps, p) {
-				ps[p] = privileged(user, p);
-				return ps;
-			}, {});
-
-			var alterPrivileges = privilegedTo('admin');
-			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
-
-			return {
-				'user': user,
-				'alterPrivileges': alterPrivileges,
-				'privileges': privileges,
-				'inviteGroups': GroupLib.find({ own: true }),
-				'showPrivileges': showPrivileges
-			};
-		},
-		onAfterAction: function() {
-			var user = Meteor.users.findOne({_id: this.params._id});
-			if (!user) return; // wtf
-			document.title = webpagename + '' + user.username + "'s Profile";
-		}
-	});
-});
-
-
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser: function () {
 		return this.user && this.user._id === Meteor.userId();
+	},
+
+	acceptsMessages: function() {
+		return this.user
+			&& this.user.acceptsMessages;
 	},
 
 	groupMember: function(group, user) {
@@ -137,7 +103,11 @@ Template.emailBox.onCreated(function() {
 
 Template.emailBox.helpers({
 	hasEmail: function() {
-		return !!Meteor.user().emails[0];
+		var user = Meteor.user();
+		if (!user) return false;
+
+		var emails = user.emails;
+		return emails && emails[0];
 	},
 
 	hasVerifiedEmail: function() {

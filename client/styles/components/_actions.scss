@@ -1,13 +1,9 @@
 %actions {
-	@include clearfix;
-}
-
-%actions .btn {
-	@include td-float(right);
+	text-align: right;
 }
 
 %actions .btn + .btn {
-	@include td-margin(right, 5px);
+	@include td-margin(left, 5px);
 }
 
 .actions {

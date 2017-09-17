@@ -1,8 +1,8 @@
 $bootstrap-sass-asset-helper: false;
 
 // == Core variables and mixins
-// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/variables";
 @import 'bootstrap-variables';
+// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/variables";
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/mixins";
 
 // == Reset and dependencies
@@ -29,16 +29,16 @@ $bootstrap-sass-asset-helper: false;
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/breadcrumbs";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/pagination";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/pager";
-@import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/labels";
+// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/labels";
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/badges";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/jumbotron";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/thumbnails";
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/alerts";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/progress-bars";
-@import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/media";
+// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/media";
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/list-group";
-@import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/panels";
-@import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/responsive-embed";
+// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/panels";
+// @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/responsive-embed";
 // @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/wells";
 @import "{reywood:bootstrap3-sass}/assets/stylesheets/bootstrap/close";
 

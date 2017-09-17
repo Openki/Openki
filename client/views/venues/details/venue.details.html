@@ -16,7 +16,6 @@
 							{{/if}}
 						</h3>
 						<p>{{{description}}}</p>
-						<p class="small">{{mf 'location.details.time_created' 'Time created:'}} {{dateformat time_created}}, {{mf 'location.details.last_edited' 'Last edited:'}} {{dateformat time_lastedit}} {{mf 'location.details.created_by' 'Created by:'}} {{username createdby}}, </p>
 					</div>
 
 					<div class="details-body location-details-body">
@@ -105,10 +104,10 @@
 					</div>
 					{{#if mayEdit}}
 						<div class="actions">
+							{{> buttonEdit event="js-venue-edit"}}
 							{{#unless verifyDelete}}
 								{{> buttonDelete event="js-venue-delete"}}
 							{{/unless}}
-							{{> buttonEdit event="js-venue-edit"}}
 						</div>
 						{{#if verifyDelete}}
 							{{> venueDeleteConfirmDialog}}
@@ -117,10 +116,38 @@
 				</div>
 			{{/with}}
 		{{/if}}
-		{{#if eventsList.count}}
+		{{#if events}}
 			<div class="page-component">
 				<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
-				{{> eventList dataEvents=eventsList withDate=true}}
+				{{> eventList dataEvents=events withDate=true}}
+				{{#if eventsLimited}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-events">
+						{{#mf KEY='venue.details.showMoreEvents' NUM=unloadedEvents}}
+							Show {NUM, plural,
+								one {one more event}
+								other {# more events}
+							}
+						{{/mf}}
+					</button>
+				{{/if}}
+			</div>
+		{{/if}}
+		{{#if pastEvents}}
+			<div class="page-component">
+				<h2>Past events:</h2>
+				{{> eventList dataEvents=pastEvents withDate=true}}
+				{{#if pastEventsLimited}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-past-events">
+						{{#mf KEY='venue.details.showMorePastEvents' NUM=unloadedPastEvents}}
+							Show {NUM, plural,
+								one {one more event}
+								other {# more events}
+							}
+						{{/mf}}
+					</button>
+				{{/if}}
 			</div>
 		{{/if}}
 	</div>
@@ -130,12 +157,12 @@
 	<div class="venue-delete-confirmation">
 		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
 		<div class="form-actions">
-			{{> buttonCancel event="js-venue-delete-cancel"}}
 			{{> buttonDeleteConfirm
 				event="js-venue-delete-confirm"
 				textIdle=(mf 'venue.detail.remove' 'Remove this venue')
 				textBusy=(mf 'venue.detail.remove.busy' 'Deleting venue...')
 			}}
+			{{> buttonCancel event="js-venue-delete-cancel"}}
 		</div>
 	</div>
 </template>
