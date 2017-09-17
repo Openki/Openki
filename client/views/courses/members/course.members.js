@@ -9,14 +9,12 @@ Template.courseMembers.helpers({
 	},
 
 	sortedMembers: function() {
-		var members = this.members.map(function(member) {
-			member.roles = _.without(member.roles, 'participant');
-			return member;
-		});
+    	var sortedMembers = this.members.sort(function(a, b) {
+	        var aRoles = _.without(a.roles, 'participant');
+	        var bRoles = _.without(b.roles, 'participant');
 
-		var sortedMembers = members.sort(function(a, b) {
-			return b.roles.length - a.roles.length;
-		});
+	        return aRoles.length < bRoles.length;
+        });
 
 		var membersLimit = Template.instance().membersLimit.get();
 		if (membersLimit) {
