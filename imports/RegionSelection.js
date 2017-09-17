@@ -28,20 +28,27 @@ RegionSelection.init = function() {
 
 		var useAsRegion = function(regionId) {
 			if (!regionId) return;
+
+			// Special case 'all'
 			if (regionId == 'all') {
 				Session.set("region", regionId);
 				return true;
 			}
+
+			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
 				Session.set("region", regionId);
 				return true;
 			}
 
+			// Special case by name so you can do ?region=Spilistan
 			var region = Regions.findOne({ name: regionId });
 			if (region) {
 				Session.set("region", region._id);
 				return true;
 			}
+
+			// Ignore invalid region ID
 			return false;
 		};
 
