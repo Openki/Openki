@@ -162,22 +162,31 @@ Template.showLog.events({
 	}, 200),
 
 	'click .js-tr': function(event, instance) {
-		instance.filter.add('tr', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('tr', ""+this)
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-date': function(event, instance) {
 		var start = moment(this).toISOString();
-		instance.filter.add('start', start).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('start', start)
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-rel-id': function(event, instance) {
-		instance.filter.add('rel', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('rel', ""+this);
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-more': function(event, instance) {
