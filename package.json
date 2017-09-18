@@ -14,7 +14,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "bin/test"
+    "test": "bin/test",
+    "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
+    "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha"
   },
   "repository": {
     "type": "git",

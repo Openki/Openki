@@ -20,14 +20,21 @@ before_install:
   - PATH=$PATH:$HOME/.meteor
   - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
 
-  # Install chimp
+  # Install chimp and cache Selenium & ChromeDriver (deprecated)
   - npm install -g chimp
-
-  # Cache Selenium & ChromeDriver
   - chimp --browser=phantomjs --path=bin
+
+  # Meteor test framework: meteortesting:meteor-mocha
+  - meteor npm install phantomjs-prebuilt
+  - meteor npm install -E selenium-webdriver@3.0.0-beta-2
 
 install:
   - meteor npm install
 
 script:
+  # Run end-to-end tests (deprecated)
   - ./bin/test
+  # Run unit-tests
+  - meteor npm run test-phantom
+  # Run end-to-end tests
+  - meteor npm run test-app-phantom

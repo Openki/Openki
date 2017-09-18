@@ -74,6 +74,8 @@ meteor@1.7.1
 meteor-platform@1.2.6
 meteorhacks:inject-initial@1.0.4
 meteorhacks:ssr@2.2.0
+meteortesting:browser-tests@0.1.1
+meteortesting:mocha@0.4.4
 meteortoys:toykit@3.0.4
 minifier-css@1.2.16
 minifier-js@2.1.1

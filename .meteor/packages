@@ -53,3 +53,4 @@ ecmascript@0.8.1
 practicalmeteor:mocha
 dferber:prerender
 wanglian:bootstrap3-datepicker
+meteortesting:mocha
