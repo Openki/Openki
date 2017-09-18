@@ -28,20 +28,27 @@ RegionSelection.init = function() {
 
 		var useAsRegion = function(regionId) {
 			if (!regionId) return;
+
+			// Special case 'all'
 			if (regionId == 'all') {
 				Session.set("region", regionId);
 				return true;
 			}
+
+			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
 				Session.set("region", regionId);
 				return true;
 			}
 
+			// Special case by name so you can do ?region=Spilistan
 			var region = Regions.findOne({ name: regionId });
 			if (region) {
 				Session.set("region", region._id);
 				return true;
 			}
+
+			// Ignore invalid region ID
 			return false;
 		};
 
@@ -51,10 +58,15 @@ RegionSelection.init = function() {
 		// If no region has been selected previously, we show the splash-screen.
 		Session.set('showRegionSplash', selectors.length < 1);
 
-		// Ask the server to place us so the splash=screen has our best
+		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
-		Meteor.call('autoSelectRegion', function(error, regionId) {
-			if (useAsRegion(regionId)) return;
+		import '/imports/IpLocation.js';
+		IpLocation.detect(function(region, reason) {
+			console.log("Region autodetection: " + reason);
+			if (region) {
+				useAsRegion(region._id);
+				return;
+			}
 
 			// Give up
 			useAsRegion('all');
