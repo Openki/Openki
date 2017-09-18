@@ -216,6 +216,12 @@ TemplateMixins = {
 
 	/** Like Expandible but multiple expandibles can be open at the same time. */
 	MultiExpandible: function(template) {
+		var dx = -1000;
+		var dy = -1000;
+		var nomove = function(e) {
+			return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
+		}
+
 		template.onCreated(function() {
 			this.expanded = new ReactiveVar(false);
 		});
@@ -225,11 +231,15 @@ TemplateMixins = {
 			}
 		});
 		template.events({
-			'click .js-expand': function(event, instance) {
-				instance.expanded.set(true);
+			'mousedown': function(event) {
+				dx = event.screenX;
+				dy = event.screenY;
 			},
-			'click .js-collapse': function(event, instance) {
-				instance.expanded.set(false);
+			'mouseup .js-expand': function(event, instance) {
+				nomove(event) && instance.expanded.set(true);
+			},
+			'mouseup .js-collapse': function(event, instance) {
+				nomove(event) && instance.expanded.set(false);
 			},
 		});
 	},
