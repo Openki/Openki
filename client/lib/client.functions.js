@@ -213,6 +213,26 @@ TemplateMixins = {
 			},
 		});
 	},
+
+	/** Like Expandible but multiple expandibles can be open at the same time. */
+	MultiExpandible: function(template) {
+		template.onCreated(function() {
+			this.expanded = new ReactiveVar(false);
+		});
+		template.helpers({
+			'expanded': function() {
+				return Template.instance().expanded.get();
+			}
+		});
+		template.events({
+			'click .js-expand': function(event, instance) {
+				instance.expanded.set(true);
+			},
+			'click .js-collapse': function(event, instance) {
+				instance.expanded.set(false);
+			},
+		});
+	},
 };
 
 
