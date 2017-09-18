@@ -50,13 +50,6 @@
 @import 'kiosk/link/kiosk.link';
 @import 'kiosk/list/kiosk.list';
 
-// Locations
-@import 'venues/venue';
-@import 'venues/map/venue.map';
-@import 'venues/details/venue.details';
-@import 'venues/link/venue.link';
-@import 'venues/edit/venue.edit';
-
 // Login
 @import 'login/frame/login.frame';
 @import 'login/resetPassword/resetPassword';
@@ -81,3 +74,10 @@
 // Users
 @import 'users/courselist/users.courselist';
 @import 'users/ownprofile/ownprofile';
+
+// Venues
+@import 'venues/venue';
+@import 'venues/map/venue.map';
+@import 'venues/details/venue.details';
+@import 'venues/link/venue.link';
+@import 'venues/edit/venue.edit';
