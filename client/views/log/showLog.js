@@ -70,8 +70,8 @@ Template.showLog.helpers({
 	},
 
 	'date': function() {
-		const date = Template.instance().filter.toParams().date;
-		return date && date.toISOString() || "";
+		const start = Template.instance().filter.get('start');
+		return start && start.toISOString() || "";
 	},
 
 	'relFilter': function() {
@@ -163,6 +163,13 @@ Template.showLog.events({
 
 	'click .js-tr': function(event, instance) {
 		instance.filter.add('tr', ""+this).done();
+		instance.updateUrl();
+		window.scrollTo(0, 0);
+	},
+
+	'click .js-date': function(event, instance) {
+		var start = moment(this).toISOString();
+		instance.filter.add('start', start).done();
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
