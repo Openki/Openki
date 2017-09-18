@@ -1,0 +1,24 @@
+.log-pane {
+	.nowrap {
+		 white-space: nowrap;
+	}
+
+	.loading {
+		position: fixed;
+		width: 15em;
+		right: 0;
+		top: 50px;
+	}
+
+	.id {
+		font-family: monospace;
+	}
+
+	.clickable {
+		padding: 2px;
+	}
+	.clickable:hover {
+		padding: 1px;
+		border: 1px black solid;
+	}
+}
