@@ -78,12 +78,19 @@ notificationEvent.Model = function(entry) {
 				subject = mf('notification.event.mail.subject.changed', subjectvars, "Fixed {DATE}: {TITLE}", userLocale);
 			}
 
+			const venue = event.venue;
+			let venueLine = false;
+			if (venue) {
+				venueLine = [ venue.name, venue.address ].filter(Boolean).join(', ');
+			}
+
 			return (
 			    { event: event
 				, course: course
 				, eventDate: startMoment.format('LL')
 				, eventStart: startMoment.format('LT')
 				, eventEnd: endMoment.format('LT')
+				, venueLine: venueLine
 				, regionName: region.name
 				, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 				, eventLink: Router.url('showEvent', event)
