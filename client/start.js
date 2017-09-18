@@ -20,12 +20,6 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
-// Store routeName to be able to refer to previous route
-Router.onStop(function() {
-	var route = Router.current().route;
-	if (route) Session.set('previousRouteName', route.getName());
-});
-
 // We keep two subscription caches around. One is for the regular subscriptions like list of courses,
 // the other (miniSubs) is for the name lookups we do all over the place.
 subs = new SubsCache({ cacheLimit: 5, expireAfter: 1 });

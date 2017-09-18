@@ -18,25 +18,6 @@ Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setLocation(this.data.venue);
 });
 
-
-Template.eventBackToLink.helpers({
-	course: function() {
-		var courseId = this.courseId;
-		if (courseId) {
-			// Very bad?
-			Template.instance().subscribe('courseDetails', courseId);
-
-			return Courses.findOne({_id: courseId});
-		}
-	},
-
-	referredByCourse: function() {
-		var previousRouteName = Session.get("previousRouteName");
-		return previousRouteName == "showCourse";
-	}
-});
-
-
 Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
