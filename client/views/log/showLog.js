@@ -84,16 +84,8 @@ Template.showLog.helpers({
 		return tr || "";
 	},
 
-	'shortId': function(id) {
-		return id.substr(0, 8);
-	},
-
 	isodate: function(date) {
 		return moment(date).toISOString();
-	},
-
-	jsonBody: function() {
-		return JSON.stringify(this.body, null, '   ');
 	},
 
 	'hasMore': function() {
