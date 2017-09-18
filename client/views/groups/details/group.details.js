@@ -140,7 +140,7 @@ Template.groupDetails.events({
 				instance.editableClaim.end();
 				instance.editableDescription.end();
 
-				addMessage(mf('group.create.success', 'Created group'));
+				addMessage(mf('group.create.success', 'Created group'), 'success');
 				Router.go('groupDetails', { _id: groupId });
 			}
 		});

@@ -2,7 +2,6 @@ import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
 
-Meteor.subscribe('currentUser');
 Meteor.subscribe('version');
 
 // Always load english translation
@@ -129,9 +128,6 @@ Accounts.onLogin(function() {
 
 	var locale = user.profile.locale;
 	if (locale) Session.set('locale', locale);
-
-	var regionId = user.profile.regionId;
-	if (regionId) Session.set('region', regionId);
 });
 
 Accounts.onEmailVerificationLink(function(token, done) {

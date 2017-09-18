@@ -63,13 +63,13 @@
 
 // ** Header
 //========================================================================================
-.proposal > .details-header,
+.is-proposal > .details-header,
 .has-past-events > .details-header {
 	border-color: $course-border-color;
 	border-width: $course-border-width $course-border-width 0;
 }
 
-.proposal > .details-header {
+.is-proposal > .details-header {
 	border-style: $proposal-border-style;
 }
 
@@ -89,7 +89,7 @@
 	top: 0;
 }
 
-.proposal .details-header-tags,
+.is-proposal .details-header-tags,
 .has-past-events .details-header-tags {
 	@include td-pos(right, -$course-border-width);
 	top: -$course-border-width;
@@ -150,13 +150,13 @@
 	padding: 0 $details-header-padding-horizontal;
 }
 
-.proposal .course-details-nav,
+.is-proposal .course-details-nav,
 .has-past-events .course-details-nav {
 	border-color: $course-border-color;
 	border-width: 0 $course-border-width;
 }
 
-.proposal .course-details-nav {
+.is-proposal .course-details-nav {
 	border-style: $proposal-border-style;
 }
 
@@ -195,7 +195,7 @@
 
 $course-details-content-padding-horizontal: ($details-header-padding-horizontal + $course-border-width);
 
-.proposal .course-details-content {
+.is-proposal .course-details-content {
 	padding: 15px $course-details-content-padding-horizontal;
 }
 
@@ -203,8 +203,8 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 	padding: 15px $course-details-content-padding-horizontal;
 }
 
-.proposal .course-details-content::after,
-.proposal .course-details-content::before,
+.is-proposal .course-details-content::after,
+.is-proposal .course-details-content::before,
 .has-past-events .course-details-content::after,
 .has-past-events .course-details-content::before {
 	width: $course-details-content-padding-horizontal;

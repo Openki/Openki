@@ -10,40 +10,63 @@ RegionSelection.regionDependentRoutes =
   * selected region, we ask the server to do geolocation. If that fails too,
   * we just set the region to 'all regions'. */
 RegionSelection.init = function() {
-	var selectors =
-		[ Session.get('region') // The region might have been chosen already because the user is logged-in. See Accounts.onLogin().
-		, UrlTools.queryParam('region')
-		, localStorage.getItem('region')
-		].filter(Boolean);
+	// We assume the initial onLogin() callback comes before the regions' ready.
+	// We have no guarantee for this however!
+	Accounts.onLogin(function() {
+		var user = Meteor.user();
 
-	// When the region is not provided we show a splash screen
-	Session.set('showRegionSplash', selectors.length < 1);
+		var regionId = user.profile.regionId;
+		if (regionId) Session.set('region', regionId);
+	});
 
 	Meteor.subscribe('regions', function() {
+		var selectors =
+			[ Session.get('region')
+			, UrlTools.queryParam('region')
+			, localStorage.getItem('region')
+			].filter(Boolean);
+
 		var useAsRegion = function(regionId) {
 			if (!regionId) return;
+
+			// Special case 'all'
 			if (regionId == 'all') {
 				Session.set("region", regionId);
 				return true;
 			}
+
+			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
 				Session.set("region", regionId);
 				return true;
 			}
 
+			// Special case by name so you can do ?region=Spilistan
 			var region = Regions.findOne({ name: regionId });
 			if (region) {
 				Session.set("region", region._id);
 				return true;
 			}
+
+			// Ignore invalid region ID
 			return false;
 		};
 
+		// If any of these regions are usable we stop here
 		if (selectors.some(useAsRegion)) return;
 
-		// Give up and ask the server to place us
-		Meteor.call('autoSelectRegion', function(error, regionId) {
-			if (useAsRegion(regionId)) return;
+		// If no region has been selected previously, we show the splash-screen.
+		Session.set('showRegionSplash', selectors.length < 1);
+
+		// Ask geolocation server to place us so the splash-screen has our best
+		// guess selected.
+		import '/imports/IpLocation.js';
+		IpLocation.detect(function(region, reason) {
+			console.log("Region autodetection: " + reason);
+			if (region) {
+				useAsRegion(region._id);
+				return;
+			}
 
 			// Give up
 			useAsRegion('all');

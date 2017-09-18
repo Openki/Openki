@@ -1,3 +1,5 @@
+import '/imports/ui/FilterPreview.js';
+
 function finderRoute(path) {
 	return {
 		path: path,
@@ -27,7 +29,8 @@ Router.map(function () {
 	this.route('home', finderRoute('/'));
 });
 
-var hiddenFilters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
+var hiddenFilters = ['needsRole', 'categories'];
+var filters = hiddenFilters.concat(['state']);
 
 Template.find.onCreated(function() {
 	var instance = this;
@@ -153,55 +156,33 @@ Template.find.events({
 	},
 
 	'mouseover .js-category-label': function(e, instance) {
-		var category = this;
-
-		var previewOptions = {
-			selector: ('.category-' + category),
+		FilterPreview({
+			property: 'category',
+			id: this,
 			activate: true,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
-		categoryTags.addClass('highlight');
+			delayed: true,
+			instance
+		});
 	},
 
 	'mouseout .js-category-label': function(e, instance) {
-		var category = this;
-
-		var previewOptions = {
-			selector: ('.category-' + category),
+		FilterPreview({
+			property: 'category',
+			id: this,
 			activate: false,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var categoryTags = instance.$('.js-category-label.category-' + category).parent();
-		categoryTags.removeClass('highlight');
+			delayed: true,
+			instance
+		});
 	},
 
 	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
-		var group = this;
-		var activate = e.type == 'mouseover';
-
-		var previewOptions = {
-			selector: ('.group-' + group),
-			activate: activate,
-			instance: instance,
-			delayed: true
-		};
-		courseFilterPreview(previewOptions);
-
-		var groupLabels = instance.$('.js-group-label.group-' + group).parent();
-		if (activate) {
-			setTimeout(function() {
-				groupLabels.toggleClass('highlight');
-			}, 300);
-		} else {
-			groupLabels.toggleClass('highlight');
-		}
+		FilterPreview({
+			property: 'group',
+			id: this,
+			activate: e.type == 'mouseover',
+			delayed: true,
+			instance
+		});
 	},
 
 	'click .js-category-label': function(event, instance) {
@@ -221,7 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			for (var i in hiddenFilters) instance.filter.disable(hiddenFilters[i]);
+			for (var i in filters) instance.filter.disable(filters[i]);
 			instance.filter.done();
 			instance.updateUrl();
 		}
@@ -250,6 +231,10 @@ Template.find.helpers({
 		var instance = Template.instance();
 		var course = courseTemplate();
 		course.name = instance.filter.get('search');
+		var groupId = instance.filter.get('group');
+		if (groupId) {
+			course.groups = [ groupId ];
+		}
 		return course;
 	},
 
@@ -296,22 +281,18 @@ Template.find.helpers({
 
 	'activeFilters': function() {
 		var activeFilters = Template.instance().filter;
-		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories'];
-		for (var i = 0; i < filters.length; i++) {
-			var isActive = !!activeFilters.get(filters[i]);
-			if (isActive) return true;
-		}
-		return false;
+		return _.any(hiddenFilters, function(filter) {
+			return !!activeFilters.get(filter);
+		});
 	},
 
 	'searchIsLimited': function() {
 		var activeFilters = Template.instance().filter;
-		var filters = ['upcomingEvent', 'needsHost', 'needsMentor', 'categories', 'region'];
-		for (var i = 0; i < filters.length; i++) {
-			var isActive = !!activeFilters.get(filters[i]);
-			if (isActive) return true;
-		}
-		return false;
+		var relevantFilters = hiddenFilters.slice(); // clone
+		relevantFilters.push('region');
+		return _.any(relevantFilters, function(filter) {
+			return !!activeFilters.get(filter);
+		});
 	},
 
 	'isMobile': function() {

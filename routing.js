@@ -24,6 +24,45 @@ Router.map(function () {
 });
 
 
+Router.map(function() {
+	this.route('userprofile', {
+		path: 'user/:_id/:username?',
+		waitOn: function () {
+			return [
+				Meteor.subscribe('user', this.params._id),
+				Meteor.subscribe('groupsFind', { own: true }),
+			];
+		},
+		data: function () {
+			var user = Meteor.users.findOne({_id: this.params._id});
+			if (!user) return; // not loaded?
+
+			// What privileges the user has
+			var privileges = _.reduce(['admin'], function(ps, p) {
+				ps[p] = privileged(user, p);
+				return ps;
+			}, {});
+
+			var alterPrivileges = privilegedTo('admin');
+			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
+
+			return {
+				'user': user,
+				'alterPrivileges': alterPrivileges,
+				'privileges': privileges,
+				'inviteGroups': GroupLib.find({ own: true }),
+				'showPrivileges': showPrivileges
+			};
+		},
+		onAfterAction: function() {
+			var user = Meteor.users.findOne({_id: this.params._id});
+			if (!user) return; // wtf
+			document.title = webpagename + '' + user.username + "'s Profile";
+		}
+	});
+});
+
+
 Router.map(function () {
 	this.route('showEvent', {
 		path: 'event/:_id/:slug?',
@@ -151,7 +190,6 @@ Router.map(function () {
 		path: 'profile',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('currentUser'),
 				Meteor.subscribe('groupsFind', { own: true }),
 				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
 			];
