@@ -145,9 +145,9 @@ Template.showLog.events({
 		const filter = instance.filter;
 		var dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
-			filter.disable('date').done();
+			filter.disable('start').done();
 		} else {
-			filter.add('date', dateStr).done();
+			filter.add('start', dateStr).done();
 		}
 	}, 200),
 
