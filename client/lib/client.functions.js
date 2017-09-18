@@ -100,8 +100,7 @@ pleaseLogin = function() {
 	alert(mf('Please.login', 'Please login or register'));
 
 	var viewportWidth = Session.get('viewportWidth');
-	var screenSM = SCSSVars.screenSM;
-	if (viewportWidth <= screenSM) {
+	if (viewportWidth <= SCSSVars.gridFloatBreakpoint) {
 		$('.collapse').collapse('show');
 	}
 
