@@ -1,3 +1,4 @@
+import "/imports/notification/Notification.js";
 import "/imports/HtmlTools.js";
 
 if (Meteor.settings.siteEmail) {
@@ -15,69 +16,27 @@ Meteor.methods({
 	},
 
 
-	sendEmail: function (userId, text, revealAddress, sendCopy) {
-		check([userId, text], [String]);
+	sendEmail: function (userId, message, revealAddress, sendCopy) {
+		check(userId       , String);
+		check(message      , String);
+		check(revealAddress, Boolean);
+		check(sendCopy     , Boolean);
 
-		var mail = {
-			sender: Accounts.emailTemplates.from
-		};
-
-		var recipient = Meteor.users.findOne({
-			_id: userId
-		});
-
-		if (recipient && recipient.emails && recipient.emails[0] && recipient.emails[0].address){
-			mail.to = recipient.emails[0].address;
-		} else {
-			throw new Meteor.Error(401, "this user has no email");
+		var recipient = Meteor.users.findOne(userId);
+		if (!recipient) {
+			throw new Meteor.error(404, "no such user");
+		}
+		if (!recipient.acceptsMessages){
+			throw new Meteor.Error(401, "this user does not accept messages");
 		}
 
-		var lg = (recipient.profile.locale || 'en');
-		var sender = Meteor.user();
-		var senderAddress = false;
-		if (sender.emails && sender.emails[0] && sender.emails[0].address && sender.emails[0].verified) {
-			senderAddress = sender.emails[0].address;
-		}
-		var contactString = '';
-		mail.from = mail.sender;
-		if (revealAddress) {
-			if (senderAddress) {
-				mail.from = senderAddress;
-				contactString = mf('mail.contact.address', {SENDERMAIL:senderAddress}, 'Their mail address is {SENDERMAIL}', lg);
-			} else {
-				throw new Meteor.Error(400, "no verified email address");
-			}
-		}
-
-		var names = {
-			SENDER: HtmlTools.plainToHtml(sender.username),
-			RECIPIENT: recipient.username,
-			ADMINS: 'admins@openki.net'
-		};
-
-		mail.subject = '['+Accounts.emailTemplates.siteName+'] ' + mf('sendEmail.subject', names, 'You got a Message from {SENDER}', lg);
-
-		mail.html =
-			mf('sendEmail.greeting', names, 'Message from {SENDER} to {RECIPIENT}:', lg)+ '<br>'
-			+ '--------------------------------------------------------------------<br>'
-			+ HtmlTools.plainToHtml(text.substr(0, 10000)) + '<br>'
-			+ '--------------------------------------------------------------------<br>'
-			+ mf('sendEmail.endMessage', 'End of message.', lg)
-			+ contactString +'<br><br>'
-			+ mf('sendEmail.footer', names, 'If these messages are bothering you please let us know immediately {ADMINS}', lg);
-
-
-		// Let other method calls from the same client start running,
-		// without waiting for the email sending to complete.
-		this.unblock();
-		Email.send(mail);
-
-		if (sendCopy && senderAddress) {
-			mail.from = mail.sender;
-			mail.to = senderAddress;
-			mail.subject = '[Openki] ' + mf('sendEmail.copy.subject', names, 'Copy of your message to {RECIPIENT}', lg);
-			Email.send(mail);
-		}
+		Notification.PrivateMessage.record
+			( Meteor.userId()
+			, recipient._id
+			, message
+			, revealAddress
+			, sendCopy
+			);
 	},
 
 	report: function(subject, location, userAgent, report) {

@@ -1,4 +1,4 @@
-"use strict";
+import '/imports/collections/Log.js';
 
 Meteor.publish('version', function() {
 	return Version.find();
@@ -71,7 +71,10 @@ Meteor.publish('affectedReplica', function(eventId) {
 
 
 Meteor.publish('user', function(userId) {
-	var fields = {username: 1};
+	var fields =
+		{ 'username': 1
+		, 'acceptsMessages': 1
+		};
 
 	// Admins may see other's privileges
 	if (privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
@@ -82,7 +85,10 @@ Meteor.publish('user', function(userId) {
 	);
 });
 
-Meteor.publish('currentUser', function() {
+
+// Always publish their own data for logged-in users
+// https://github.com/meteor/guide/issues/651
+Meteor.publish(null, function() {
 	return Meteor.users.find(this.userId);
 });
 
@@ -101,4 +107,14 @@ Meteor.publish('groupsFind', function(filter) {
 
 Meteor.publish('group', function(groupId) {
 	return Groups.find(groupId);
+});
+
+
+Meteor.publish('log', function(filter, limit) {
+	// Non-admins get an empty list
+	if (!privileged(this.userId, 'admin')) {
+		return [];
+	}
+
+	return Log.findFilter(filter, limit);
 });

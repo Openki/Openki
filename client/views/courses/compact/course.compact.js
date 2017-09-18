@@ -10,7 +10,7 @@ Template.courseCompact.helpers({
 		} else if (this.lastEvent) {
 			return 'has-past-events';
 		} else {
-			return 'proposal';
+			return 'is-proposal';
 		}
 	},
 
@@ -23,7 +23,7 @@ Template.courseCompact.helpers({
 		_.each(roles, function(role) {
 			var roleDisengaged = !hasRole(course.members, role);
 			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
-				filterPreviewClasses.push('needs-' + role);
+				filterPreviewClasses.push('needs-role-' + role);
 			}
 		});
 

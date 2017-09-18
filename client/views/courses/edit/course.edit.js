@@ -111,6 +111,15 @@ Template.courseEdit.helpers({
 	editableDescription: function() {
 		return Template.instance().editableDescription;
 	},
+
+	newCourseGroupName: function () {
+		if (this.groups && this.groups.length > 0) {
+			var groupId = this.groups[0];
+			var group = Groups.findOne(groupId);
+			if (group) return group.name;
+		}
+	},
+
 	userIsInGroup: function() {
 		var user = Meteor.user();
 		if (user && user.groups) {
