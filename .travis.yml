@@ -5,14 +5,15 @@ node_js:
 
 cache:
   directories:
-    - "$HOME/node_modules"
-    - "$HOME/.npm"
     - "$HOME/.meteor"
-    - "src/.meteor/local/build"
-    - "src/.meteor/local/bundler-cache"
-    - "src/.meteor/local/isopacks"
-    - "src/.meteor/local/plugin-cache"
-    - "src/.meteor/local/mirrors"
+    - "$HOME/.npm"
+    - "$HOME/node_modules"
+    - ".meteor/local/build"
+    - ".meteor/local/bundler-cache"
+    - ".meteor/local/isopacks"
+    - ".meteor/local/mirrors"
+    - ".meteor/local/plugin-cache"
+    - "node_modules"
 
 before_install:
   # Download Meteor
@@ -26,6 +27,7 @@ before_install:
   - chimp --browser=phantomjs --path=bin
 
 install:
+  - meteor npm install
 
 script:
   - ./bin/test
