@@ -226,11 +226,9 @@ TemplateMixins = {
 		});
 		template.events({
 			'click .js-expand': function(event, instance) {
-				console.log("EXPAND")
 				instance.expanded.set(true);
 			},
 			'click .js-collapse': function(event, instance) {
-				console.log("COLLAPS#")
 				instance.expanded.set(false);
 			},
 		});
