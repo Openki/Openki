@@ -235,10 +235,14 @@ TemplateMixins = {
 				dy = event.screenY;
 			},
 			'mouseup .js-expand': function(event, instance) {
-				nomove(event) && instance.expanded.set(true);
+				if (nomove(event)) {
+					instance.expanded.set(true);
+				}
 			},
 			'mouseup .js-collapse': function(event, instance) {
-				nomove(event) && instance.expanded.set(false);
+				if (nomove(event)) {
+					instance.expanded.set(false);
+				}
 			},
 		});
 	},
