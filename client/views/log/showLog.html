@@ -27,26 +27,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="page-component">
+	<div class="page-component log-pane">
 	{{#if loading}}
-		<div style="position: fixed; width: 15em; right: 0; top: 50px;">
+		<div class="loading">
 			<h1><marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee></h1>
 		</div>
 	{{/if}}
 		<table class="table">
 			<tr><th>ID</th><th>Track</th><th>Timestamp</th><th>Rel</th><th>Body</th></tr>
 		{{#each results}}
-			<tr>
-			{{#if interval}}
-				<td></td><td></td><td colspan="3" style="color: gray">{{interval}}</td>
-			{{else}}
-				<td>{{#with _id}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a>{{/with}}</td>
-				<td>{{#with tr}}<a class="js-tr" style="border: 1px black solid;">{{this}}</a>{{/with}}</td>
-				<td>{{isodate ts}}</td>
-				<td>{{#each rel}}<a class="js-rel-id" style="border: 1px black solid;">{{shortId this}}</a> {{/each}}</td>
-				<td><pre>{{jsonBody}}</pre></td>
-			{{/if}}
-			</tr>
+			{{> showLogEntry}}
 		{{else}}
 			{{#unless loading}}
 			<tr><td>Nothing found.</td></tr>

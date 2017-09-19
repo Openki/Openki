@@ -10,7 +10,7 @@
 Roles =
 	[
 		{ 'type':        'participant'
-		, 'icon':        'fa fa-user-plus'
+		, 'icon':        'fa fa-user'
 		, 'alt_icon':    'glyphicon glyphicon-user'
 		, 'preset':      true
 		, 'show_subscribers': true

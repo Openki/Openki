@@ -55,7 +55,7 @@ Template.showLog.onCreated(function() {
 		instance.ready.set(false);
 
 		// Have some extra log entries ready so that they are shown immediately
-		// when more is demanded
+		// when more are demanded
 		const overLimit = instance.limit.get() + batchLoad + 1;
 		subs.subscribe('log', filterQuery, overLimit, function() {
 			instance.ready.set(true);
@@ -70,8 +70,8 @@ Template.showLog.helpers({
 	},
 
 	'date': function() {
-		const date = Template.instance().filter.toParams().date;
-		return date && date.toISOString() || "";
+		const start = Template.instance().filter.get('start');
+		return start && start.toISOString() || "";
 	},
 
 	'relFilter': function() {
@@ -84,16 +84,8 @@ Template.showLog.helpers({
 		return tr || "";
 	},
 
-	'shortId': function(id) {
-		return id.substr(0, 8);
-	},
-
 	isodate: function(date) {
 		return moment(date).toISOString();
-	},
-
-	jsonBody: function() {
-		return JSON.stringify(this.body, null, '   ');
 	},
 
 	'hasMore': function() {
@@ -153,9 +145,9 @@ Template.showLog.events({
 		const filter = instance.filter;
 		var dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
-			filter.disable('date').done();
+			filter.disable('start').done();
 		} else {
-			filter.add('date', dateStr).done();
+			filter.add('start', dateStr).done();
 		}
 	}, 200),
 
@@ -170,15 +162,31 @@ Template.showLog.events({
 	}, 200),
 
 	'click .js-tr': function(event, instance) {
-		instance.filter.add('tr', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('tr', ""+this)
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
+	},
+
+	'click .js-date': function(event, instance) {
+		var start = moment(this).toISOString();
+		instance.filter.add('start', start)
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-rel-id': function(event, instance) {
-		instance.filter.add('rel', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('rel', ""+this);
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-more': function(event, instance) {

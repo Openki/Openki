@@ -41,9 +41,28 @@ Template.courseCompact.helpers({
 	}
 });
 
+Template.courseCompactEvent.helpers({
+	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
+});
+
 Template.courseCompactRoles.helpers({
 	requiresRole: function(role) {
 		return this.roles.indexOf(role) >= 0;
+	},
+
+	participantClass() {
+		let participantClass = 'course-compact-role-';
+
+		const members = this.members;
+		if (members.length) {
+			participantClass += 'occupied';
+		} else if (hasRoleUser(members, 'participant', Meteor.userId())) {
+			participantClass += 'occupied-by-user';
+		} else {
+			participantClass += 'needed';
+		}
+
+		return participantClass;
 	},
 
 	roleStateClass: function(role) {
@@ -91,9 +110,7 @@ Template.courseCompactRoles.helpers({
 		return roleStateTooltip;
 	},
 
-	roleIcon: function(roletype) {
-		return _.findWhere(Roles, {type: roletype}).icon;
-	}
+	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
 });
 
 Template.courseCompact.events({
