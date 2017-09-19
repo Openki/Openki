@@ -42,6 +42,15 @@ var discriminatoryReporting = function(arguments) {
 		);
 		return;
 	}
+
+	// Sometimes an error is passed as second argument
+	if (arguments[1] instanceof Error) {
+		reportToServer(arguments[1]);
+		return;
+	}
+
+	// Log all the things!
+	reportToServer({ name: "Meteor._debug", message: arguments[0] });
 };
 
 // wrap the Meteor debug function
