@@ -1,3 +1,35 @@
+$course-header-bg: darken($blue-lighter, 5%);
+
+.event-course-header {
+	background-color: $course-header-bg;
+	cursor: pointer;
+	padding: 15px;
+	position: relative;
+	transition: background-color .15s;
+
+	&.highlight {
+		background-color: darken($course-header-bg, 2%);
+	}
+}
+
+.event-course-header > h2 {
+	margin: 0;
+	padding-bottom: 5px;
+}
+
+.event-course-header > h2 > a {
+	font-size: $font-size-base;
+	margin-left: 5px;
+}
+
+.event-course-header + .event {
+	background-color: rgba($green, .35);
+	border-color: $course-header-bg;
+	border-style: solid;
+	border-width: 0 5px 5px;
+	padding: 15px;
+}
+
 .event-details-body {
 	background: $event-body-bg;
 	height: calc(#{'100% - 70px'});
@@ -27,8 +59,8 @@
 	font-size: small;
 }
 
-.event-files-list {
-	@include list-unstyled;
+.event-details-description {
+	margin-top: 10px;
 }
 
 .event-delete-confirmation {
