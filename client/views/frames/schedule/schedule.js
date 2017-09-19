@@ -80,8 +80,6 @@ Template.frameSchedule.onCreated(function() {
 
 	this.autorun(function() {
 		var scheduleStart = moment(filter.get('after'));
-		var end = moment(filter.get('end'));
-		var dayCount = end.diff(scheduleStart, 'days');
 		var interval = instance.interval.get();
 
 		// Track repeating events so we know how often they occur.
@@ -227,9 +225,7 @@ Template.frameSchedule.helpers({
 	days: function() {
 		var instance = Template.instance();
 		var scheduleStart = instance.scheduleStart.get();
-		console.log(instance.days.get())
 		return _.map(instance.days.get(), function(day) {
-			console.log(day)
 			return moment(scheduleStart).add(day, 'days').format('dddd');
 		});
 	},
