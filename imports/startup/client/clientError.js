@@ -5,7 +5,9 @@ const reportToServer = function(error) {
 		, location: window.location.href
 		, tsClient: new Date()
 		};
-	Meteor.call('clientError', report);
+	Meteor.call('clientError', report, function(err, result) {
+		if (err) console.log(err);
+	});
 }
 
 window.addEventListener("error", function(event) {
