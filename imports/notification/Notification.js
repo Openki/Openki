@@ -57,7 +57,7 @@ Notification.send = function(entry) {
 				var siteName = Accounts.emailTemplates.siteName;
 				var subjectPrefix = '['+siteName+'] ';
 
-				var unsubToken = Random.secret();
+				unsubToken = Random.secret();
 
 				var vars = model.vars(userLocale, user);
 
