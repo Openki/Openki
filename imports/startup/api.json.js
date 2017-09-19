@@ -57,29 +57,29 @@ const genComp = function(a, b) {
 // Read a sorting specification of the form "name,-age" and return a function
 // that sorts a list according to that spec.
 const SortByFields = function(sortSpec) {
-    // Return id function if there are no sort directives
-    if (!sortSpec) return list => list;
+	// Return id function if there are no sort directives
+	if (!sortSpec) return list => list;
 
-    // Build chain of compare functions that refer to the next field
-    // if the current field values are equal.
-    const equal = (a, b) => 0;
-    const fieldsCmp = sortSpec.split(',').reduceRight((lowerSort, fieldStr) => {
-        const cmpChain = (a, b) => {
-            return genComp(a, b) || lowerSort(a, b);
-        };
+	// Build chain of compare functions that refer to the next field
+	// if the current field values are equal.
+	const equal = (a, b) => 0;
+	const fieldsCmp = sortSpec.split(',').reduceRight((lowerSort, fieldStr) => {
+		const cmpChain = (a, b) => {
+			return genComp(a, b) || lowerSort(a, b);
+		};
 
-        // Descending case
-        if (fieldStr.indexOf('-') === 0) {
-            let field = fieldStr.slice(1);
-            // Revert the arguments for descending sort order
-            return (a, b) => cmpChain(b[field], a[field]);
-        }
+		// Descending case
+		if (fieldStr.indexOf('-') === 0) {
+			let field = fieldStr.slice(1);
+			// Revert the arguments for descending sort order
+			return (a, b) => cmpChain(b[field], a[field]);
+		}
 
-        // Ascending case
-        return (a, b) => cmpChain(a[fieldStr], b[fieldStr]);
-    }, equal);
+		// Ascending case
+		return (a, b) => cmpChain(a[fieldStr], b[fieldStr]);
+	}, equal);
 
-    return list => list.sort(fieldsCmp);
+	return list => list.sort(fieldsCmp);
 };
 
 Router.route('api.0.json', {
