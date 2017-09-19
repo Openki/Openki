@@ -19,8 +19,8 @@ var discriminatoryReporting = function(arguments) {
 	var msg = arguments[0];
 
 	// "Exception from Tracker recompute function:"
-	if (msg.indexOf("Exception ") === 0) {
-		// Boring
+	if (msg.indexOf("Exception from Tracker") === 0) {
+		// Boring, followed by "Error: ..."
 		return;
 	}
 
