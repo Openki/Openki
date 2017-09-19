@@ -9,11 +9,26 @@
 </template>
 
 <template name="event">
-	{{#if editing}}
-		{{> eventEdit}}
-	{{else}}
-		{{> eventDisplay}}
+	{{#if course}}
+		<div class="event-course-header">
+			<h2>
+				{{course.name}}
+				<a href="{{pathFor 'showCourse' _id=courseId}}">
+					<i class="fa fa-external-link"></i>
+					{{mf 'event.details.viewCourse' 'view course'}}
+				</a>
+			</h2>
+			{{> courseCategories course}}
+			{{> regionTag}}
+		</div>
 	{{/if}}
+	<div class="event">
+		{{#if editing}}
+			{{> eventEdit}}
+		{{else}}
+			{{> eventDisplay}}
+		{{/if}}
+	</div>
 </template>
 
 <template name="eventDisplay">
@@ -28,7 +43,9 @@
 				{{timeformat startLocal}} - {{timeformat endLocal}}
 		</div>
 		<div class="details-body event-details-body">
-			{{> regionTag}}
+			{{#unless courseId}}
+				{{> regionTag}}
+			{{/unless}}
 			<div class="details-content">
 				<h3>{{this.title}}</h3>
 				<div class="tag-group multiline">
@@ -43,7 +60,7 @@
 
 				{{> eventGroupList}}
 
-				<p>
+				<p class="event-details-description">
 					{{#if hasVenue}}
 						<div class="details-map">
 							{{>map markers=eventMarkers}}
@@ -57,34 +74,33 @@
 			{{>eventReplication}}
 		{{/if}}
 		{{#if mayEdit}}
-			<div class="actions">
-
-				{{#if replicating}}
-					<button type="button" class="btn btn-cancel js-toggle-replication">
-						<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-						{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
-					</button>
-				{{else}}
-					<button type="button" class="btn btn-add js-toggle-replication">
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-						{{mf 'course.details.repl_menu_btn' 'Repeat'}}
-					</button>
-				{{/if}}
-				{{> buttonEdit event="js-event-edit"}}
-				{{#unless expanded}}
-					{{> buttonDelete event="js-expand"}}
-				{{/unless}}
-			</div>
 			{{#if expanded}}
 				{{> eventDeleteConfirmDialog}}
+			{{else}}
+				<div class="actions">
+					{{#if replicating}}
+						<button type="button" class="btn btn-cancel js-toggle-replication">
+							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+							{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
+						</button>
+					{{else}}
+						{{> buttonEdit event="js-event-edit"}}
+						<button type="button" class="btn btn-edit js-toggle-replication">
+							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+							{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+						</button>
+						<a
+							class="btn btn-edit js-download"
+							href="{{pathFor 'calEvent' this}}"
+							title="{{mf 'event.detail.download_cal' 'Download event to my calendar'}}">
+							<i class="fa fa-download fa-fw" aria-hidden="true"></i>
+							{{mf 'event.details.download' 'Download'}}
+						</a>
+						{{> buttonDelete event="js-expand"}}
+					{{/if}}
+				</div>
 			{{/if}}
 		{{/if}}
-	</div>
-	<div class="page-component">
-		<a href="{{pathFor 'calEvent' this}}" class="js-download">
-			<i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i>
-			{{mf 'event.detail.download_cal' 'Download event to my calendar'}}
-		</a>
 	</div>
 	<div class="page-component">
 		{{> report}}
