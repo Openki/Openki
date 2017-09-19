@@ -15,6 +15,7 @@
   "devDependencies": {
     "jshint": "^2.9.5",
     "phantomjs-prebuilt": "^2.1.15",
+    "sass-lint": "^1.11.1",
     "selenium-webdriver": "3.0.0-beta-2"
   },
   "scripts": {
@@ -22,7 +23,8 @@
     "test": "bin/test",
     "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
     "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
-    "js-lint": "jshint"
+    "js-lint": "jshint",
+    "sass-lint": "sass-lint --verbose"
   },
   "repository": {
     "type": "git",
