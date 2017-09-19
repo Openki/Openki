@@ -189,7 +189,7 @@
 		"UpdatesApplied":true,
 		"applyUpdates":true,
 		"logAsyncErrors":true,
-		"untilClean":true,
+		"untilClean":true
 
 	}
 }

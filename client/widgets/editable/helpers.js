@@ -37,7 +37,6 @@ template.onRendered(function() {
 	// protects the user's changes but at the same time it allows overwriting
 	// other people's changes.
 	instance.autorun(function() {
-		var changed = instance.state.changed.get();
 		if (!changedByUser || !initialized) {
 			instance.reset();
 			initialized = true;
