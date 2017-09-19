@@ -75,4 +75,4 @@ notificationJoin.Model = function(entry) {
 		},
 		template: "notificationJoinMail"
 	};
-}
+};

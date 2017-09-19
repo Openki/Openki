@@ -74,7 +74,7 @@ User.prototype.emailAddress = function() {
 	    && this.emails[0]
 		&& this.emails[0].address
 		|| false;
-}
+};
 
 /** Get verified email address of user
   *
@@ -87,7 +87,7 @@ User.prototype.verifiedEmailAddress = function() {
 	    && emailRecord.verified
 		&& emailRecord.address
 		|| false;
-}
+};
 
 
 

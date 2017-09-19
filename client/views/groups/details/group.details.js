@@ -89,7 +89,7 @@ Template.groupDetails.helpers({
 		var group = this.group;
 		var isNew = this.isNew;
 		if (isNew) {
-			return true
+			return true;
 		} else {
 			return group.claim || group.description;
 		}

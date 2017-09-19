@@ -7,7 +7,7 @@ WebApp.rawConnectHandlers.use("/api", function(req, res, next) {
 
 const NoActionError = function(message) {
 	this.message = message;
-}
+};
 
 const jSendResponder = function(res, process) {
 	try {
@@ -32,14 +32,14 @@ const jSendResponder = function(res, process) {
 				body.data.error = e.message;
 			}
 		} else {
-			console.log(e)
+			console.log(e);
 			res.statusCode = 500;
 			body.status = "error";
 			body.message = "Server error";
 		}
 		res.end(JSON.stringify(body, null, "\t"));
 	}
-}
+};
 
 // A general comparison function that uses localeCompare() when comparing
 // strings.
@@ -52,7 +52,7 @@ const genComp = function(a, b) {
 	if (a < b) return -1;
 	if (a > b) return 1;
 	return 0;
-}
+};
 
 // Read a sorting specification of the form "name,-age" and return a function
 // that sorts a list according to that spec.
@@ -89,7 +89,7 @@ Router.route('api.0.json', {
 		jSendResponder(this.response, () => {
 			let handler = this.params.handler;
 			if (!Api.hasOwnProperty(handler)) {
-				throw new NoActionError("Invalid action")
+				throw new NoActionError("Invalid action");
 			}
 			const query = this.params.query;
 			const sortSpec = query.sort;

@@ -103,4 +103,4 @@ notificationEvent.Model = function(entry) {
 		},
 		template: "notificationEventMail"
 	};
-}
+};
