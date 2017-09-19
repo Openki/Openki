@@ -5,11 +5,11 @@ WebApp.rawConnectHandlers.use("/api", function(req, res, next) {
   return next();
 });
 
-let NoActionError = function(message) {
+const NoActionError = function(message) {
 	this.message = message;
 }
 
-let jSendResponder = function(res, process) {
+const jSendResponder = function(res, process) {
 	try {
 		let body =
 			{ status: "success"
