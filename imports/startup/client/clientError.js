@@ -8,15 +8,15 @@ const reportToServer = function(error) {
 	Meteor.call('clientError', report, function(err, result) {
 		if (err) console.log(err);
 	});
-}
+};
 
 window.addEventListener("error", function(event) {
 	reportToServer(event.error);
 });
 
 var buffer = [];
-var discriminatoryReporting = function(arguments) {
-	var msg = arguments[0];
+var discriminatoryReporting = function(args) {
+	var msg = args[0];
 
 	// "Exception from Tracker recompute function:"
 	if (msg.indexOf("Exception from Tracker") === 0) {
@@ -44,13 +44,13 @@ var discriminatoryReporting = function(arguments) {
 	}
 
 	// Sometimes an error is passed as second argument
-	if (arguments[1] instanceof Error) {
-		reportToServer(arguments[1]);
+	if (args[1] instanceof Error) {
+		reportToServer(args[1]);
 		return;
 	}
 
 	// Log all the things!
-	reportToServer({ name: "Meteor._debug", message: arguments[0] });
+	reportToServer({ name: "Meteor._debug", message: args[0] });
 };
 
 // wrap the Meteor debug function
@@ -58,4 +58,4 @@ const meteorDebug = Meteor._debug;
 Meteor._debug = function(/* arguments */) {
 	meteorDebug.apply(this, arguments);
 	discriminatoryReporting(arguments);
-}
+};
