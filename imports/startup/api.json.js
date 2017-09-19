@@ -1,8 +1,8 @@
 import '/imports/Api.js';
 
 WebApp.rawConnectHandlers.use("/api", function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  return next();
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	return next();
 });
 
 const NoActionError = function(message) {
@@ -41,6 +41,32 @@ const jSendResponder = function(res, process) {
 	}
 }
 
+// Read a sorting specification of the form "name,-age" and return a function
+// that sorts a list according to that spec.
+const SortByFields = function(sortSpec) {
+    // Return id function if there are no sort directives
+    if (!sortSpec) return list => list;
+
+    // Build chain of compare functions that refer to the next field
+    // if the current field values are equal.
+    const equal = (a, b) => 0;
+    const fieldsCmp = sortSpec.split(',').reduceRight((lowerSort, fieldStr) => {
+        const fieldCmp = field => { return (a, b) => {
+            if (a[field] < b[field]) return -1;
+            if (a[field] > b[field]) return 1;
+            return lowerSort(a, b);
+        } };
+
+        if (fieldStr.indexOf('-') === 0) {
+            // Revert the arguments for descending sort order
+            return (a, b) => fieldCmp(fieldStr.slice(1))(b, a);
+        }
+        return fieldCmp(fieldStr);
+    }, equal);
+
+    return list => list.sort(fieldsCmp);
+};
+
 Router.route('api.0.json', {
 	path: '/api/0/json/:handler',
 	where: 'server',
@@ -50,8 +76,13 @@ Router.route('api.0.json', {
 			if (!Api.hasOwnProperty(handler)) {
 				throw new NoActionError("Invalid action")
 			}
-			let query = this.params.query;
-			return Api[handler](query);
+			const query = this.params.query;
+			const sortSpec = query.sort;
+			const order = SortByFields(sortSpec);
+			const filter = Object.assign({}, query);
+			delete filter.sort;
+
+			return order(Api[handler](filter));
 		});
 	}
 });
