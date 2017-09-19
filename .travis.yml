@@ -24,10 +24,6 @@ before_install:
   - npm install -g chimp
   - chimp --browser=phantomjs --path=bin
 
-  # Meteor test framework: meteortesting:meteor-mocha
-  - meteor npm install phantomjs-prebuilt
-  - meteor npm install -E selenium-webdriver@3.0.0-beta-2
-
 install:
   - meteor npm install
 
