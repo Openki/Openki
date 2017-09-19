@@ -54,10 +54,10 @@ Template.courseCompactRoles.helpers({
 		let participantClass = 'course-compact-role-';
 
 		const members = this.members;
-		if (members.length) {
-			participantClass += 'occupied';
-		} else if (hasRoleUser(members, 'participant', Meteor.userId())) {
+		if (hasRoleUser(members, 'participant', Meteor.userId())) {
 			participantClass += 'occupied-by-user';
+		} else if (members.length) {
+			participantClass += 'occupied';
 		} else {
 			participantClass += 'needed';
 		}
