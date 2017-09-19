@@ -1,7 +1,5 @@
 "use strict";
 
-var maxEvents = 12;
-
 /////////////////////////////////////////////////// map
 
 Template.venueDetails.onCreated(function() {

@@ -38,7 +38,7 @@ function runChimp() {
 function runMeteor() {
 	var proc = execFile(
 		'meteor',
-		[ '--production', '--settings=settings.ci.json' ]
+		[ '--production', '--settings=settings.ci.json', '--extra-packages', 'fixtures']
 	);
 
 	proc.stdout.pipe(process.stdout);

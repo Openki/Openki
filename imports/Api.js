@@ -66,7 +66,7 @@ export default Api =
 							}
 						);
 					}
-				};
+				}
 
 				return evr;
 			});
