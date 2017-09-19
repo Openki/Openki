@@ -41,6 +41,19 @@ const jSendResponder = function(res, process) {
 	}
 }
 
+// A general comparison function that uses localeCompare() when comparing
+// strings.
+const genComp = function(a, b) {
+	if (typeof a === 'string' && typeof b === 'string') {
+		// At the moment we don't provide a way to choose the locale :-(
+		// So it will be sorted under whatever locale the server is running.
+		return a.localeCompare(b);
+	}
+	if (a < b) return -1;
+	if (a > b) return 1;
+	return 0;
+}
+
 // Read a sorting specification of the form "name,-age" and return a function
 // that sorts a list according to that spec.
 const SortByFields = function(sortSpec) {
@@ -51,17 +64,19 @@ const SortByFields = function(sortSpec) {
     // if the current field values are equal.
     const equal = (a, b) => 0;
     const fieldsCmp = sortSpec.split(',').reduceRight((lowerSort, fieldStr) => {
-        const fieldCmp = field => { return (a, b) => {
-            if (a[field] < b[field]) return -1;
-            if (a[field] > b[field]) return 1;
-            return lowerSort(a, b);
-        } };
+        const cmpChain = (a, b) => {
+            return genComp(a, b) || lowerSort(a, b);
+        };
 
+        // Descending case
         if (fieldStr.indexOf('-') === 0) {
+            let field = fieldStr.slice(1);
             // Revert the arguments for descending sort order
-            return (a, b) => fieldCmp(fieldStr.slice(1))(b, a);
+            return (a, b) => cmpChain(b[field], a[field]);
         }
-        return fieldCmp(fieldStr);
+
+        // Ascending case
+        return (a, b) => cmpChain(a[fieldStr], b[fieldStr]);
     }, equal);
 
     return list => list.sort(fieldsCmp);
