@@ -45,4 +45,4 @@ IpLocation.detect = function(handler) {
 
 		handler(region, 'No region found within ' + maxDistance/1000 + ' km.');
 	}, 'jsonp');
-}
+};

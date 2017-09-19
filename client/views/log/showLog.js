@@ -136,7 +136,7 @@ Template.showLog.events({
 		filter.disable('tr');
 
 		const trStr = $('.js-tr-input').val().trim();
-		if (trStr) filter.add('tr', trStr)
+		if (trStr) filter.add('tr', trStr);
 
 		filter.done();
 	}, 200),
@@ -156,13 +156,13 @@ Template.showLog.events({
 		filter.disable('rel');
 
 		const relStr = $('.js-rel-input').val().trim();
-		if (relStr) filter.add('rel', relStr)
+		if (relStr) filter.add('rel', relStr);
 
 		filter.done();
 	}, 200),
 
 	'click .js-tr': function(event, instance) {
-		instance.filter.add('tr', ""+this)
+		instance.filter.add('tr', ""+this);
 		if (!event.shiftKey) {
 			instance.filter.done();
 			instance.updateUrl();
@@ -172,7 +172,7 @@ Template.showLog.events({
 
 	'click .js-date': function(event, instance) {
 		var start = moment(this).toISOString();
-		instance.filter.add('start', start)
+		instance.filter.add('start', start);
 		if (!event.shiftKey) {
 			instance.filter.done();
 			instance.updateUrl();

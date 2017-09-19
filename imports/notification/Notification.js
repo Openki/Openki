@@ -64,7 +64,7 @@ Notification.send = function(entry) {
 				const fromAddress = vars.fromAddress
 				                 || Accounts.emailTemplates.from;
 
-				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
+				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				vars.siteName = siteName;
 				vars.locale = userLocale;
 				vars.username = username;

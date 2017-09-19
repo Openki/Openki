@@ -219,7 +219,7 @@ TemplateMixins = {
 		var dy = -1000;
 		var nomove = function(e) {
 			return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
-		}
+		};
 
 		template.onCreated(function() {
 			this.expanded = new ReactiveVar(false);

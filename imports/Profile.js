@@ -7,7 +7,7 @@ Profile.updateAcceptsMessages = function(userSelector) {
 
 	Meteor.users.find(userSelector).forEach(user => {
 		var newValue = user.emailAddress()
-					&& user.notifications
+					&& user.notifications;
 
 		changed += Users.update(user._id, {
 			$set: { acceptsMessages: !!newValue }
