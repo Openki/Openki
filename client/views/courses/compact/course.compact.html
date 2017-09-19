@@ -39,11 +39,21 @@
 				{{nextEvent.venue.name}}
 			</div>
 		{{/if}}
+		<div class="course-compact-next-event-component">
+			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
+			{{members.length}}
+		</div>
 	</div>
 </template>
 
 <template name="courseCompactRoles">
 	<div class="course-compact-roles">
+		<div
+			class="course-compact-role {{participantClass}}"
+			data-tooltip="{{mf 'course.compact.membersCount' 'Has {NUM, plural, =0 {no participants} one {one participant} other {# participants}}' NUM=members.length}}">
+			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
+			{{members.length}}
+		</div>
 		<div
 			class="course-compact-role {{roleStateClass 'team'}}"
 			data-tooltip="{{roleStateTooltip 'team'}}"
