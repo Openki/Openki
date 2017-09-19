@@ -61,7 +61,7 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - [Download](https://github.com/Openki/Openki/archive/master.zip) and unzip or `git clone https://github.com/Openki/Openki.git` Openki into /some/path.
 - `cd /some/path/Openki`
 - `meteor npm install`
-- Run `meteor --settings settings.dev.json`
+- Run `meteor npm run dev`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
 ### Documentation

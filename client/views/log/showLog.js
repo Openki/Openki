@@ -136,7 +136,7 @@ Template.showLog.events({
 		filter.disable('tr');
 
 		const trStr = $('.js-tr-input').val().trim();
-		if (trStr) filter.add('tr', trStr)
+		if (trStr) filter.add('tr', trStr);
 
 		filter.done();
 	}, 200),
@@ -145,9 +145,9 @@ Template.showLog.events({
 		const filter = instance.filter;
 		var dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
-			filter.disable('date').done();
+			filter.disable('start').done();
 		} else {
-			filter.add('date', dateStr).done();
+			filter.add('start', dateStr).done();
 		}
 	}, 200),
 
@@ -156,28 +156,37 @@ Template.showLog.events({
 		filter.disable('rel');
 
 		const relStr = $('.js-rel-input').val().trim();
-		if (relStr) filter.add('rel', relStr)
+		if (relStr) filter.add('rel', relStr);
 
 		filter.done();
 	}, 200),
 
 	'click .js-tr': function(event, instance) {
-		instance.filter.add('tr', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('tr', ""+this);
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-date': function(event, instance) {
 		var start = moment(this).toISOString();
-		instance.filter.add('start', start).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('start', start);
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-rel-id': function(event, instance) {
-		instance.filter.add('rel', ""+this).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
+		instance.filter.add('rel', ""+this);
+		if (!event.shiftKey) {
+			instance.filter.done();
+			instance.updateUrl();
+			window.scrollTo(0, 0);
+		}
 	},
 
 	'click .js-more': function(event, instance) {

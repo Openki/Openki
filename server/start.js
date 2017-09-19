@@ -1,5 +1,6 @@
 import '/imports/startup/notifications.js';
 import '/imports/startup/api.json.js';
+import '/imports/api/clientError/methods.js';
 
 Meteor.startup(function () {
 

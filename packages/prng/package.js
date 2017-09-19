@@ -7,4 +7,4 @@ Package.onUse(function (api, where) {
 	api.export('Prng');
 });
 
-Npm.depends({'seedrandom': '2.4.2'})
+Npm.depends({'seedrandom': '2.4.2'});

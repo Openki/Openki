@@ -12,9 +12,17 @@
     "bson": "^0.5.6",
     "moment-timezone": "^0.5.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jshint": "^2.9.5",
+    "phantomjs-prebuilt": "^2.1.15",
+    "selenium-webdriver": "3.0.0-beta-2"
+  },
   "scripts": {
-    "test": "bin/test"
+    "dev": "meteor --settings settings.dev.json --extra-packages fixture",
+    "test": "bin/test",
+    "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
+    "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
+    "js-lint": "jshint"
   },
   "repository": {
     "type": "git",

@@ -5,27 +5,34 @@ node_js:
 
 cache:
   directories:
-    - "$HOME/node_modules"
-    - "$HOME/.npm"
     - "$HOME/.meteor"
-    - "src/.meteor/local/build"
-    - "src/.meteor/local/bundler-cache"
-    - "src/.meteor/local/isopacks"
-    - "src/.meteor/local/plugin-cache"
-    - "src/.meteor/local/mirrors"
+    - "$HOME/.npm"
+    - "$HOME/node_modules"
+    - ".meteor/local/build"
+    - ".meteor/local/bundler-cache"
+    - ".meteor/local/isopacks"
+    - ".meteor/local/mirrors"
+    - ".meteor/local/plugin-cache"
+    - "node_modules"
 
 before_install:
   # Download Meteor
   - PATH=$PATH:$HOME/.meteor
   - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
 
-  # Install chimp
+  # Install chimp and cache Selenium & ChromeDriver (deprecated)
   - npm install -g chimp
-
-  # Cache Selenium & ChromeDriver
   - chimp --browser=phantomjs --path=bin
 
 install:
+  - meteor npm install
 
 script:
+  # Test for JS errors
+  - meteor npm run js-lint -- .
+  # Run end-to-end tests (deprecated)
   - ./bin/test
+  # Run unit-tests
+  - meteor npm run test-phantom
+  # Run end-to-end tests
+  - meteor npm run test-app-phantom
