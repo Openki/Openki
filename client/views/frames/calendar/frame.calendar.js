@@ -1,3 +1,4 @@
+import Metatags from '/imports/Metatags.js';
 import '/imports/ui/lib/CSSFromQuery.js';
 
 Router.map(function () {
@@ -15,7 +16,7 @@ Router.map(function () {
 			return { cssRules: cssRules };
 		},
 		onAfterAction: function() {
-			document.title = webpagename + ' Calendar';
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
 });
