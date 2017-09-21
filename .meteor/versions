@@ -68,6 +68,7 @@ iron:router@1.1.2
 iron:url@1.1.0
 jag:pince@0.0.9
 jquery@1.11.10
+kadira:dochead@1.5.0
 launch-screen@1.1.1
 livedata@1.0.18
 localstorage@1.1.1

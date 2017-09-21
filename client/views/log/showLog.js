@@ -1,3 +1,4 @@
+import Metatags from '/imports/Metatags.js';
 import '/imports/collections/Log.js';
 
 Router.map(function () {
@@ -8,7 +9,7 @@ Router.map(function () {
 			return this.params.query;
 		},
 		onAfterAction: function() {
-			document.title = webpagename + "LOG";
+			Metatags.setCommonTags(mf('log.list.windowtitle', 'Log'));
 		}
 	});
 });
