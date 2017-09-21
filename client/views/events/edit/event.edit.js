@@ -154,6 +154,12 @@ Template.eventEdit.helpers({
 		return !! this.courseId;
 	},
 
+	showRegionTag() {
+		if (this.courseId) return false;
+		if (!this._id) return false;
+		return true;
+	},
+
 	localDate: function(date) {
 		return moment.utc(date).format("L");
 	},

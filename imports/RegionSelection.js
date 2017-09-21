@@ -1,4 +1,5 @@
 export default RegionSelection = {};
+import '/imports/IpLocation.js';
 
 /** List of routes that show different results when the region changes.
   */
@@ -60,7 +61,6 @@ RegionSelection.init = function() {
 
 		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
-		import '/imports/IpLocation.js';
 		IpLocation.detect(function(region, reason) {
 			console.log("Region autodetection: " + reason);
 			if (region) {

@@ -57,14 +57,14 @@ Notification.send = function(entry) {
 				var siteName = Accounts.emailTemplates.siteName;
 				var subjectPrefix = '['+siteName+'] ';
 
-				var unsubToken = Random.secret();
+				unsubToken = Random.secret();
 
 				var vars = model.vars(userLocale, user);
 
 				const fromAddress = vars.fromAddress
 				                 || Accounts.emailTemplates.from;
 
-				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken })
+				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				vars.siteName = siteName;
 				vars.locale = userLocale;
 				vars.username = username;

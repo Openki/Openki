@@ -28,6 +28,8 @@ install:
   - meteor npm install
 
 script:
+  # Test for JS errors
+  - meteor npm run js-lint -- .
   # Run end-to-end tests (deprecated)
   - ./bin/test
   # Run unit-tests

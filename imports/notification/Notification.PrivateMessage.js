@@ -84,4 +84,4 @@ notificationPrivateMessage.Model = function(entry) {
 		},
 		template: "notificationPrivateMessageMail"
 	};
-}
+};

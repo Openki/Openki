@@ -24,10 +24,7 @@ Editable = function(simple, store, placeholderText, showControls) {
 
 	var text = ReactiveVar('');
 	var changed = ReactiveVar(!showControls);
-	var lastVersion = false;
 	var editingInstance = false;
-
-	var dep = new Tracker.Dependency();
 
 	return {
 		setText: function(newText) { text.set(newText); },
