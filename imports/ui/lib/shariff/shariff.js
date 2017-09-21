@@ -1,4 +1,4 @@
-import './scss/shariff-layout.scss';
+import "./shariff-openki-layout";
 
 import "./scss/services/diaspora";
 import "./scss/services/facebook";
