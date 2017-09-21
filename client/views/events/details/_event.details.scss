@@ -23,11 +23,18 @@ $course-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header + .event {
-	background-color: rgba($green, .35);
 	border-color: $course-header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
-	padding: 15px;
+
+	@media (min-width: $screen-xs-min) {
+		background-color: rgba($green, .35);
+		padding: 15px;
+	}
+}
+
+.event + .page-component {
+	margin-top: 15px;
 }
 
 .event-details-body {
