@@ -1,3 +1,5 @@
+import Metatags from '/imports/Metatags.js';
+
 Router.map(function () {
 	this.route('kioskEvents', {
 		path: '/kiosk/events',
@@ -49,7 +51,7 @@ Router.map(function () {
 			this.timer = Meteor.setInterval(function() {
 				Session.set('seconds', new Date());
 			}, 1000);
-			document.title = webpagename + ' Events';
+			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		},
 		unload: function() {
 			Meteor.clearInterval(this.timer);

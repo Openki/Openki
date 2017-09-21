@@ -1,5 +1,6 @@
 import '/imports/Profile.js';
 import '/imports/LocalTime.js';
+import Metatags from '/imports/Metatags.js';
 
 Router.configure({
 	layoutTemplate: 'layout',
@@ -8,7 +9,10 @@ Router.configure({
 });
 Router.onBeforeAction('dataNotFound');
 
-webpagename = 'Openki - ';                  // global (document title init)
+Router.onBeforeAction(function() {
+	Metatags.removeAll();
+	this.next();
+});
 
 Router.map(function () {
 	this.route('pages', {									///////// static /////////
@@ -17,7 +21,7 @@ Router.map(function () {
 			this.render(this.params.page_name);
 		},
 		onAfterAction: function() {
-			document.title = webpagename + '' + this.params.page_name;
+			Metatags.setCommonTags(this.params.page_name);
 		}
 	});
 
@@ -57,7 +61,8 @@ Router.map(function() {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // wtf
-			document.title = webpagename + '' + user.username + "'s Profile";
+			const title = mf('profile.windowtitle', {USER: user.username}, '{USER}\'s Profile');
+			Metatags.setCommonTags(title);
 		}
 	});
 });
@@ -104,13 +109,19 @@ Router.map(function () {
 			return event;
 		},
 		onAfterAction: function() {
-			var event = Events.findOne({_id: this.params._id});
+			const event = Events.findOne({_id: this.params._id});
+			let title;
+			let description = '';
 			if (event) {
-				document.title = webpagename + mf('event.windowtitle', {EVENT:event.title, DATE: moment(event.start).calendar()}, '{DATE} {EVENT}');
+				title = mf('event.windowtitle', {EVENT:event.title, DATE: moment(event.start).calendar()}, '{DATE} {EVENT}');
+				description = mf('event.metatag.description', {
+					REGION: Regions.findOne({_id: event.region}).name,
+					VENUE: event.venue.name
+				}, '{VENUE} in {REGION}');
 			} else {
-				document.title = webpagename + mf('event.windowtitle.create', 'Create event');
+				title = mf('event.windowtitle.create', 'Create event');
 			}
-
+			Metatags.setCommonTags(title, description);
 		}
 	});
 });
@@ -161,7 +172,7 @@ Router.map(function () {
 			var data = this.data();
 			if (data) {
 				var course = data.course;
-				document.title = webpagename + 'Course: ' + course.name;
+				Metatags.setCommonTags(mf('course.windowtitle', {COURSE: course.name}, 'Course: {COURSE}'));
 			}
 		}
 	});
@@ -221,7 +232,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne();
 			if (!user) return;
-			document.title = webpagename + 'My Profile_Settings - ' + user.username;
+			Metatags.setCommonTags(mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}'));
 		}
 	});
 });
@@ -260,7 +271,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var group = Groups.findOne({_id: this.params._id});
 			if (group) {
-				document.title = webpagename + group.name;
+				Metatags.setCommonTags(group.name);
 			}
 		}
 	});
@@ -307,7 +318,7 @@ Router.map(function() {
 			} else {
 				title = mf('venue.edit.siteTitle.create', "Create Venue");
 			}
-			document.title = webpagename + title;
+			Metatags.setCommonTags(title);
 		}
 	});
 });

@@ -1,5 +1,7 @@
+import Metatags from '/imports/Metatags.js';
+
 Template.translateInfo.helpers({
 	setPageTitle: function() {
-		document.title = webpagename + "Translate";
+		Metatags.setCommonTags(mf('translate.windowtitle', 'Translate'));
 	}
 });

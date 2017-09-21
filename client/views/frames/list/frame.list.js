@@ -1,3 +1,4 @@
+import Metatags from '/imports/Metatags.js';
 import '/imports/ui/lib/CSSFromQuery.js';
 
 Router.map(function () {
@@ -38,7 +39,7 @@ Router.map(function () {
 		},
 
 		onAfterAction: function() {
-			document.title = webpagename + ' Courses';
+			Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 		}
 	});
 });

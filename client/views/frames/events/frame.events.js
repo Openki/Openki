@@ -1,3 +1,5 @@
+import Metatags from '/imports/Metatags.js';
+
 Router.map(function () {
 	this.route('frameEvents', {
 		path: '/frame/events',
@@ -24,7 +26,7 @@ Router.map(function () {
 		},
 
 		onAfterAction: function() {
-			document.title = webpagename + ' Events';
+			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		}
 	});
 });
