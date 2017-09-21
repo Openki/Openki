@@ -1,10 +1,12 @@
+import Metatags from '/imports/Metatags.js';
+
 Router.map(function () {
 	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
 		data: function() { return this.params; },
 		onAfterAction: function() {
-			document.title = webpagename + 'Calendar';
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
 });
