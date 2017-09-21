@@ -167,7 +167,7 @@ Meteor.methods({
 		Profile.Region.change(Meteor.userId(), newRegion, "client call");
 	},
 
-	update_userdata: function(username, email, notifications, privacy) {
+	update_userdata: function(username, email, notifications) {
 		check(username, String);
 		check(email, String);
 		check(notifications, Boolean);
