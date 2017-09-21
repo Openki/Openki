@@ -7,7 +7,7 @@ function getSiteTitlePrefix() {
 }
 
 function getSiteDefaultImage() {
-	return Meteor.settings.siteDefaultImage || 'https://openki.net/logo/OpenkiLogo_groesser_1024_siebdruck_femal_2_cleaned.png';
+	return Meteor.settings.siteDefaultImage || 'https://openki.net/logo/openki_logo_with_byline.png';
 }
 
 Metatags.removeAll = function() {
