@@ -1,5 +1,11 @@
 #!/bin/sh
-meteor npm install
+
+# Check whether there was an NPM package change
+if [ "$1" ] && [ "$2" ] && git diff "$1" "$2" --name-only | grep -q package.json
+then
+	echo "Running npm install because package.json changed"
+	meteor npm install
+fi
 
 ver=$(git describe --abbrev=0)
 completeVer=$(git describe)
