@@ -1,9 +1,12 @@
+const clientId = Random.id();
+
 const reportToServer = function(error) {
 	var report =
 		{ name: error.name
 		, message: error.message
 		, location: window.location.href
 		, tsClient: new Date()
+		, clientId: clientId
 		};
 	Meteor.call('clientError', report, function(err, result) {
 		if (err) console.log(err);
