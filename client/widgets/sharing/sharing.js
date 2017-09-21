@@ -4,7 +4,7 @@ Template.sharing.onRendered(function() {
 	this.autorun(() => {
 		this.shariff = new Shariff(this.find('.shariff'), {
 			lang: Session.get('locale'),
-			mailtoUrl: 'mailto:',
+			mailUrl: 'mailto:',
 			services: [
 				'twitter',
 				'facebook',
