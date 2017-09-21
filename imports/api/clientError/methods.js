@@ -8,6 +8,7 @@ Meteor.methods({
 			, location: String
 			, tsClient: Date
 			, clientId: String
+			, userAgent: String
 			}
 		);
 		report.connectionId = this.connection.id;

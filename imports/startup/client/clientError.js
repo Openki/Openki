@@ -7,6 +7,7 @@ const reportToServer = function(error) {
 		, location: window.location.href
 		, tsClient: new Date()
 		, clientId: clientId
+		, userAgent: window.navigator.userAgent
 		};
 	Meteor.call('clientError', report, function(err, result) {
 		if (err) console.log(err);
