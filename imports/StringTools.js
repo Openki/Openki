@@ -13,7 +13,7 @@ StringTools.truncate = function(src, max, ellipsis = '…') {
 		return src.substring(0, max) + ellipsis;
 	}
 	return src;
-}
+};
 
 /** Capitalize first letter of String
   *
@@ -23,4 +23,4 @@ StringTools.truncate = function(src, max, ellipsis = '…') {
 StringTools.capitalize = function(input) {
 	check(input, String);
     return input.charAt(0).toUpperCase() + input.slice(1);
-}
+};

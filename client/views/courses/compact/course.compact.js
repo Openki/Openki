@@ -54,15 +54,44 @@ Template.courseCompactRoles.helpers({
 		let participantClass = 'course-compact-role-';
 
 		const members = this.members;
-		if (members.length) {
-			participantClass += 'occupied';
-		} else if (hasRoleUser(members, 'participant', Meteor.userId())) {
+		if (hasRoleUser(members, 'participant', Meteor.userId())) {
 			participantClass += 'occupied-by-user';
+		} else if (members.length) {
+			participantClass += 'occupied';
 		} else {
 			participantClass += 'needed';
 		}
 
 		return participantClass;
+	},
+
+	participantTooltip() {
+		let tooltip;
+		const numMembers = this.members.length;
+		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
+
+		if (numMembers === 1 && isParticipant) {
+			tooltip = mf(
+				'course.compact.membersCountOwnOnly',
+				'You are the only participant'
+			);
+		} else {
+			tooltip = mf(
+				'course.compact.membersCount',
+				{ NUM: numMembers },
+				'Has {NUM, plural, =0 {no participants} one {one participant} other {# participants}}'
+			);
+
+			if (numMembers > 1 && isParticipant) {
+				tooltip += ' ';
+				tooltip += mf(
+					'course.compact.membersCountOwn',
+					'and you are one of them'
+				);
+			}
+		}
+
+		return tooltip;
 	},
 
 	roleStateClass: function(role) {
