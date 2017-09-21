@@ -21,7 +21,7 @@ export const subscriptionsReady = () => new Promise(resolve => {
  * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
  */
 export const elementsReady = (test) => new Promise(resolve  => {
-    let result = test([])
+    let result = test([]);
     if (result !== undefined) {
         resolve(result);
     }
@@ -32,10 +32,10 @@ export const elementsReady = (test) => new Promise(resolve  => {
                 observer.disconnect();
                 resolve();
             }
-        })
+        });
 
         observer.observe(document.body, {
             childList: true, subtree: true, attributes: false, characterData: false
-        })
+        });
     }
 });

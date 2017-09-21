@@ -1,31 +1,32 @@
-import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
-import { Promise } from 'meteor/promise';
 import { Router } from 'meteor/iron:router';
-import { expect } from 'meteor/practicalmeteor:chai';
+import { assert } from 'meteor/practicalmeteor:chai';
 
-import { subscriptionsReady, elementsReady } from '/imports/client-utils.app-test.js';
+import { subscriptionsReady, elementsReady } from '/imports/ClientUtils.app-test.js';
 
 if (Meteor.isClient) {
-	describe('Frontpage', function () {
-		it('should list 8 courses for unauthenticated user (Testistan)', async function () {
+	describe('Frontpage', function (done) {
+		it('should list 8 courses for unauthenticated user (Testistan)', function () {
 			Router.go('/');
-			await subscriptionsReady();
-			const titles = await elementsReady(() => {
-				const titles = document.getElementsByClassName('course-compact-title');
-				if (titles.length === 8) {
-					return titles;
-				}
-			});
+			subscriptionsReady().then(() => {
+				return elementsReady(() => {
+					const titles = document.getElementsByClassName('course-compact-title');
+					if (titles.length === 8) {
+						return titles;
+					}
+				});
+			}).then((titles) => {
+				assert.equal(titles[0].textContent, 'Sprachaustausch');
+				assert.equal(titles[1].textContent, 'Game Design mit Unity');
+				assert.equal(titles[2].textContent, 'Aikido');
+				assert.equal(titles[3].textContent, 'Open Lab');
+				assert.equal(titles[4].textContent, 'First-Aid Course');
+				assert.equal(titles[5].textContent, 'Ubuntu auf Mac (dual-Boot)');
+				assert.equal(titles[6].textContent, 'Velo Flicken');
+				assert.equal(titles[7].textContent, 'Meteor.js Workshop');
 
-			expect(titles[0].textContent).to.equal('Sprachaustausch');
-			expect(titles[1].textContent).to.equal('Game Design mit Unity');
-			expect(titles[2].textContent).to.equal('Aikido');
-			expect(titles[3].textContent).to.equal('Open Lab');
-			expect(titles[4].textContent).to.equal('First-Aid Course');
-			expect(titles[5].textContent).to.equal('Ubuntu auf Mac (dual-Boot)');
-			expect(titles[6].textContent).to.equal('Velo Flicken');
-			expect(titles[7].textContent).to.equal('Meteor.js Workshop');
+				done();
+			});
 		});
 	});
 }
