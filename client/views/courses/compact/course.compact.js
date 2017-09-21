@@ -65,6 +65,35 @@ Template.courseCompactRoles.helpers({
 		return participantClass;
 	},
 
+	participantTooltip() {
+		let tooltip;
+		const numMembers = this.members.length;
+		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
+
+		if (numMembers === 1 && isParticipant) {
+			tooltip = mf(
+				'course.compact.membersCountOwnOnly',
+				'You are the only participant'
+			);
+		} else {
+			tooltip = mf(
+				'course.compact.membersCount',
+				{ NUM: numMembers },
+				'Has {NUM, plural, =0 {no participants} one {one participant} other {# participants}}'
+			);
+
+			if (numMembers > 1 && isParticipant) {
+				tooltip += ' ';
+				tooltip += mf(
+					'course.compact.membersCountOwn',
+					'and you are one of them'
+				);
+			}
+		}
+
+		return tooltip;
+	},
+
 	roleStateClass: function(role) {
 		var roleStateClass = 'course-compact-role-';
 		if (!hasRole(this.members, role)) {
