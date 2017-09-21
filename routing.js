@@ -232,7 +232,7 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne();
 			if (!user) return;
-			Metatags.setCommonTags(mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile_Settings - {USER}'));
+			Metatags.setCommonTags(mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}'));
 		}
 	});
 });
