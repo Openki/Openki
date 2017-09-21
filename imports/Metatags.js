@@ -7,7 +7,7 @@ function getSiteTitlePrefix() {
 }
 
 function getSiteDefaultImage() {
-	return Meteor.settings.siteDefaultImage || 'https://openki.net/logo/OpenkiLogo_quadratisch_2kanal_alpha.png';
+	return Meteor.settings.siteDefaultImage || 'OpenkiLogo_groesser_1024_siebdruck_femal_2_cleaned.png';
 }
 
 Metatags.removeAll = function() {
