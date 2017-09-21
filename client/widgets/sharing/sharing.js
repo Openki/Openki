@@ -1,5 +1,4 @@
-import Shariff from 'shariff';
-import 'shariff/build/shariff.min.css';
+import Shariff from '/imports/ui/lib/shariff/shariff';
 
 Template.sharing.onRendered(function() {
 	this.autorun(() => {

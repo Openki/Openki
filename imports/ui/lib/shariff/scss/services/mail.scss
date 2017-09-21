@@ -1,0 +1,26 @@
+.shariff {
+    .mail {
+        a {
+            background-color: #999;
+            &:hover {
+                background-color: #a8a8a8;
+            }
+        }
+        .fa-envelope {
+            font-size: 21px;
+        }
+    }
+    .theme-white {
+        .mail a {
+            color: #999;
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .shariff {
+        .mail .fa-envelope {
+            font-size: 18px;
+        }
+    }
+}
