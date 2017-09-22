@@ -61,13 +61,6 @@
 	width: 100%;
 }
 
-// ** Sharing buttons
-//========================================================================================
-.course-page-column-left .shariff {
-	margin-top: $course-details-seperator-height;
-	width: 100%;
-}
-
 // ** Header
 //========================================================================================
 .is-proposal > .details-header,
@@ -179,6 +172,7 @@
 //========================================================================================
 .course-details-content {
 	border-color: darken($tab-content-bg, 5%);
+	border-bottom-width: 0;
 	position: relative;
 
 	&::before,
@@ -244,7 +238,7 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 //========================================================================================
 .course-page-column-left .shariff {
 	background-color: $tab-content-bg;
-	border: 1px solid darken($tab-content-bg, 5%);
-	padding: 15px;
-	margin-bottom: 10px;
+	border-color: darken($tab-content-bg, 5%);
+	border-style: solid;
+	border-width: 0 1px 1px;
 }
