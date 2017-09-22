@@ -3,12 +3,9 @@ import { assert } from 'meteor/practicalmeteor:chai';
 
 if (Meteor.isClient) {
 	describe('Venue save', function() {
-		let venueId;
-		let venue;
-
 		it('Stores a venue', (done) => {
 			const testCreate = () => {
-				venue = {
+				const venue = {
 					name: "Dönerbude am Ende der Galaxis",
 					description: "Schön, dass sie uns besuchen, bevor Alles zuende ist.",
 					region: '9JyFCoKWkxnf8LWPh', // Testistan
@@ -16,7 +13,7 @@ if (Meteor.isClient) {
 
 				Meteor.call('venue.save', '', venue, (err, createdId) => {
 					if (err) return done(err);
-					venueId = createdId;
+					const venueId = createdId;
 					assert.isString(venueId, "got an event ID");
 
 					// Try saving it again with a change
