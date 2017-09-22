@@ -54,7 +54,7 @@ Router.map(function () {
 		path: 'cal/',
 		where: 'server',
 		action: function () {
-			var filter = Filtering(EventPredicates);
+			var filter = Events.Filtering();
 			var query = this.params.query || {};
 
 			filter
@@ -62,7 +62,7 @@ Router.map(function () {
 				.read(query)
 				.done();
 
-			sendIcal(eventsFind(filter.toQuery()), this.response);
+			sendIcal(Events.findFilter(filter.toQuery()), this.response);
 		}
 	});
 	this.route('calEvent', {

@@ -1,3 +1,6 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
 
@@ -57,6 +60,23 @@ Events = new Meteor.Collection("Events", {
 		return _.extend(new OEvent(), event);
 	}
 });
+
+Events.Filtering = () => Filtering(
+	{ course:     Predicates.id
+	, region:     Predicates.id
+	, search:     Predicates.string
+	, categories: Predicates.ids
+	, group:      Predicates.id
+	, groups:     Predicates.ids
+	, venue:      Predicates.string
+	, room:       Predicates.string
+	, start:      Predicates.date
+	, before:     Predicates.date
+	, after:      Predicates.date
+	, end:        Predicates.date
+	, internal:   Predicates.flag
+	}
+);
 
 
 affectedReplicaSelectors = function(event) {
@@ -148,7 +168,7 @@ Events.updateGroups = function(eventId) {
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		var courseGroups = [];
 		if (event.courseId) {
-			course = Courses.findOne(event.courseId);
+			const course = Courses.findOne(event.courseId);
 			if (!course) throw new Exception("Missing course " + event.courseId + " for event " + event._id);
 
 			courseGroups = course.groups;
@@ -423,7 +443,7 @@ Meteor.methods({
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-eventsFind = function(filter, limit) {
+Events.findFilter = function(filter, limit) {
 	var find = {};
 	var and = [];
 	var options = {

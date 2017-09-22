@@ -1,3 +1,6 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 // _id          ID
 // editor       user ID
 // name         String
@@ -42,6 +45,12 @@ Venues = new Meteor.Collection("Venues", {
 });
 if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
 
+Venues.Filtering = () => Filtering(
+	{ region: Predicates.id
+	}
+);
+
+
 Venues.facilityOptions =
 	[ 'projector', 'screen', 'audio', 'blackboard', 'whiteboard'
 	, 'flipchart', 'wifi', 'kitchen', 'wheelchairs'
@@ -55,7 +64,7 @@ Venues.facilityOptions =
  * limit: how many to find
  *
  */
-venuesFind = function(filter, limit) {
+Venues.findFilter = function(filter, limit) {
 	var find = {};
 	var options = {};
 

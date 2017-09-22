@@ -75,16 +75,13 @@
 		"Version":true,
 		"Course":true,
 		"Courses":true,
-		"coursesFind":true,
 		"Roles":true,
 		"Regions":true,
 		"cleanedRegion": true,
 		"Venue": true,
 		"Venues": true,
-		"venuesFind": true,
 		"CourseDiscussions":true,
 		"Events":true,
-		"eventsFind":true,
 		"affectedReplicaSelectors":true,
 		"privileged":true,
 		"groupsFind":true,
@@ -172,14 +169,6 @@
 		"privilegedTo":true,
 		"UserLib": true,
 		"GroupLib": true,
-
-
-// lib/Filtering.js
-
-		"CoursePredicates":true,
-		"EventPredicates":true,
-		"VenuePredicates":true,
-		"Filtering":true,
 
 
 // server/lib/...
