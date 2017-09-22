@@ -73,4 +73,4 @@ notificationComment.Model = function(entry) {
 		},
 		template: "notificationCommentMail"
 	};
-}
+};

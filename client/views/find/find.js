@@ -1,3 +1,4 @@
+import Metatags from '/imports/Metatags.js';
 import '/imports/ui/FilterPreview.js';
 
 function finderRoute(path) {
@@ -16,9 +17,9 @@ function finderRoute(path) {
 		onAfterAction: function() {
 			var search = this.params.query.search;
 			if (search) {
-				document.title = webpagename + mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"');
+				Metatags.setCommonTags(mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"'));
 			} else {
-				document.title = webpagename + mf('find.WhatLearn?');
+				Metatags.setCommonTags(mf('find.WhatLearn?'));
 			}
 		}
 	};

@@ -1,6 +1,6 @@
 "use strict";
 
-
+import Metatags from '/imports/Metatags.js';
 
 Router.map(function () {
 	this.route('venueMap',{
@@ -10,7 +10,7 @@ Router.map(function () {
 			return Meteor.subscribe('venues', cleanedRegion(Session.get('region')));
 		},
 		onAfterAction: function() {
-			document.title = webpagename + 'Venues map';
+			Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
 		}
 	});
 });

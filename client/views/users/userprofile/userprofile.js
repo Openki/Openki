@@ -99,6 +99,7 @@ Template.userprofile.events({
 
 Template.emailBox.onCreated(function() {
 	this.verificationMailSent = new ReactiveVar(false);
+	this.busy(false);
 });
 
 Template.emailBox.helpers({
@@ -161,6 +162,7 @@ Template.emailBox.events({
 			return;
 		}
 
+		template.busy('sending');
 		Meteor.call(
 			'sendEmail',
 			this.user._id,
@@ -168,6 +170,7 @@ Template.emailBox.events({
 			revealAddress,
 			receiveCopy,
 			function(error, result) {
+				template.busy(false);
 				if (error) {
 					addMessage(error, 'danger');
 				} else {

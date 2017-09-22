@@ -1,3 +1,5 @@
+import Metatags from '/imports/Metatags.js';
+
 courseTemplate = function() {
 	return {
 		roles: ['host', 'mentor'],
@@ -10,7 +12,7 @@ Router.map(function () {
 		path: 'courses/propose',
 		template: 'proposeCourse',
 		onAfterAction: function() {
-			document.title = webpagename + 'Propose new course';
+			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
 		data: courseTemplate
 	});

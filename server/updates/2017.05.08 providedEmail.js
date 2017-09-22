@@ -24,7 +24,7 @@ UpdatesAvailable["2017.05.08 providedEmail"] = function() {
 					{ $set: { emails: [{ address: providedEmail, verified: verified }] } }
 				);
 			} catch(e) {
-				console.log(e)
+				console.log(e);
 			}
 		}
 	});

@@ -1,10 +1,12 @@
+import Metatags from '/imports/Metatags.js';
+
 Router.map(function () {
 	this.route('frameWeek', {
 		path: '/frame/week',
 		template: 'frameWeek',
 		layoutTemplate: 'frameWeek',
 		onAfterAction: function() {
-			document.title = webpagename + ' Calendar';
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
 });

@@ -132,9 +132,14 @@
 			{{/if}}
 		{{/if}}
 			<div class="form-actions">
-				<button type="submit" class="btn btn-save">
-					<span class="fa fa-send fa-fw" aria-hidden="true"></span>
-					{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
+				<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
+					{{#if busy 'sending'}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						{{mf 'userprofile.sendmail-btn.busy' 'Sending E-Mail...'}}
+					{{else}}
+						<span class="fa fa-send fa-fw" aria-hidden="true"></span>
+						{{mf 'userprofile.sendmail-btn' 'Send E-Mail'}}
+					{{/if}}
 				</button>
 			</div>
 		</form>

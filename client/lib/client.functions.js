@@ -219,7 +219,7 @@ TemplateMixins = {
 		var dy = -1000;
 		var nomove = function(e) {
 			return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
-		}
+		};
 
 		template.onCreated(function() {
 			this.expanded = new ReactiveVar(false);
@@ -235,10 +235,14 @@ TemplateMixins = {
 				dy = event.screenY;
 			},
 			'mouseup .js-expand': function(event, instance) {
-				nomove(event) && instance.expanded.set(true);
+				if (nomove(event)) {
+					instance.expanded.set(true);
+				}
 			},
 			'mouseup .js-collapse': function(event, instance) {
-				nomove(event) && instance.expanded.set(false);
+				if (nomove(event)) {
+					instance.expanded.set(false);
+				}
 			},
 		});
 	},
