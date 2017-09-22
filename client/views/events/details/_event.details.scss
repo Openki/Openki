@@ -71,7 +71,8 @@ $course-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-details-body .shariff {
-	margin-top: 20px;
+	background-color: $event-body-bg;
+	margin-bottom: 15px;
 }
 
 .event-delete-confirmation {

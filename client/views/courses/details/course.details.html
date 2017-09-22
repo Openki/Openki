@@ -38,6 +38,7 @@
 						</div>
 						{{> courseDetailsSubmenu}}
 					</div>
+					{{> sharing}}
 					{{#with course}}
 						{{#if currentUserMayEdit}}
 							<div class="actions">
@@ -53,7 +54,6 @@
 					{{/if}}
 					{{> courseRoles roles_details}}
 				</div>
-				{{> sharing}}
 			{{/if}}
 			{{#if mobileViewport}}
 				{{> courseEvents}}
