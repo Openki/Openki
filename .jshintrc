@@ -92,7 +92,6 @@
 
 		"mfPkg":true,
 		"VERSION":true,
-		"getSlug":true,
 		"search_user":true,
 		"escapeRegex":true,
 		"checkInsert":true,

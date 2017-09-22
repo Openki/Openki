@@ -24,3 +24,11 @@ StringTools.capitalize = function(input) {
 	check(input, String);
     return input.charAt(0).toUpperCase() + input.slice(1);
 };
+
+
+StringTools.slug = function(text) {
+	return text
+		.toLowerCase()
+		.replace(/[^\w ]+/g,'')
+		.replace(/ +/g,'-');
+};

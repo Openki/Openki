@@ -1,3 +1,10 @@
+slug = function(text) {
+	return text
+		.toLowerCase()
+		.replace(/[^\w ]+/g,'')
+		.replace(/ +/g,'-');
+};
+
 function sendIcal(events, response) {
 	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
@@ -30,7 +37,7 @@ function sendIcal(events, response) {
 		});
 
 		if (!dname) {
-			var sName = getSlug(dbevent.title);
+			var sName = slug(dbevent.title);
 			var sDate = moment(dbevent.start).format("YYYY-MM-DD");
 			dname = "openki-" + sName + '-' + sDate + '.ics';
 		} else {
