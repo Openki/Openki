@@ -27,6 +27,6 @@ script:
   # Test for JS errors
   - meteor npm run js-lint -- .
   # Run unit-tests
-  - meteor npm run test-phantom
+  - meteor npm run test
   # Run end-to-end tests
-  - meteor npm run test-app-phantom
+  - meteor npm run test-app
