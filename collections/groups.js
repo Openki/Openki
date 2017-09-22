@@ -1,3 +1,6 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -8,7 +11,13 @@
 // ===========================
 
 Groups = new Meteor.Collection("Groups");
-GroupLib = {};
+
+Groups.Filtering = () => Filtering(
+	{ tags: Predicates.ids
+	}
+);
+
+
 
 /* Find groups for given filters
  *
@@ -18,7 +27,7 @@ GroupLib = {};
  *   tags: Group must have all of the given tags
  *
  */
-GroupLib.find = function(filter) {
+Groups.findFilter = function(filter) {
 	var find = {};
 
 	if (filter.own) {
@@ -40,6 +49,8 @@ GroupLib.find = function(filter) {
 
 	return Groups.find(find);
 };
+
+GroupLib = {};
 
 GroupLib.isMember = function(userId, groupId) {
 	check(userId, String);

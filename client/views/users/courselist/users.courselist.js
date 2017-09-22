@@ -2,7 +2,7 @@ Template.usersCourselist.onCreated(function() {
 	var instance = this;
 	var id = instance.data.profileData.user._id;
 
-	instance.courseSub = instance.subscribe('coursesFind',  { userInvolved: id });
+	instance.courseSub = instance.subscribe('Courses.findFilter',  { userInvolved: id });
 
 	instance.coursesByRole = function(role) {
 		return Courses.find({ members: { $elemMatch: {
@@ -47,7 +47,7 @@ Template.usersCourselist.helpers({
 	},
 	isInvolved: function() {
 		var userId = Template.instance().data.profileData.user._id;
-		return coursesFind({ userInvolved: userId }).count() > 0;
+		return Courses.findFilter({ userInvolved: userId }).count() > 0;
 	}
 });
 

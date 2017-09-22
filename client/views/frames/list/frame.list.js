@@ -7,7 +7,7 @@ Router.map(function () {
 		template: 'frameList',
 		layoutTemplate: 'frameLayout',
 		waitOn: function () {
-			var filter = Filtering(EventPredicates).read(this.params.query).done();
+			var filter = Events.Filtering().read(this.params.query).done();
 
 			this.coursesWithEvents = filter.toParams();
 			this.coursesWithEvents.upcomingEvent = true;
@@ -16,8 +16,8 @@ Router.map(function () {
 			this.coursesWithoutEvents.upcomingEvent = false;
 
 			return [
-				Meteor.subscribe('coursesFind', this.coursesWithEvents, 25),
-				Meteor.subscribe('coursesFind', this.coursesWithoutEvents, 25),
+				Meteor.subscribe('Courses.findFilter', this.coursesWithEvents, 25),
+				Meteor.subscribe('Courses.findFilter', this.coursesWithoutEvents, 25),
 				Meteor.subscribe('group', this.coursesWithEvents.group)
 			];
 		},
@@ -32,8 +32,8 @@ Router.map(function () {
 			var data = {
 				cssRules: cssRules,
 				group: Groups.findOne(this.coursesWithEvents.group),
-				coursesWithEvents: coursesFind(this.coursesWithEvents, 25),
-				coursesWithoutEvents: coursesFind(this.coursesWithoutEvents, 25)
+				coursesWithEvents: Courses.findFilter(this.coursesWithEvents, 25),
+				coursesWithoutEvents: Courses.findFilter(this.coursesWithoutEvents, 25)
 			};
 			return data;
 		},

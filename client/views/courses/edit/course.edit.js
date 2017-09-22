@@ -96,7 +96,7 @@ Template.courseEdit.helpers({
 		if (!search) return false;
 
 		var filterQuery = filter.toQuery();
-		var results = coursesFind(filterQuery, 1);
+		var results = Courses.findFilter(filterQuery, 1);
 
 		return (results.count() === 0) && search;
 	},

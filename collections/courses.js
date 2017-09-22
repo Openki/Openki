@@ -1,3 +1,6 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -65,6 +68,19 @@ Courses = new Meteor.Collection("Courses", {
 		return _.extend(new Course(), course);
 	}
 });
+
+
+Courses.Filtering = () => Filtering(
+	{ region:     Predicates.id
+	, search:     Predicates.string
+	, group:      Predicates.string
+	, categories: Predicates.ids
+	, state:      Predicates.string
+	, needsRole:  Predicates.ids
+	, internal:   Predicates.flag
+	}
+);
+
 
 
 function addRole(course, role, user) {
@@ -213,8 +229,7 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-
-coursesFind = function(filter, limit) {
+Courses.findFilter = function(filter, limit) {
 	var find = {};
 	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;

@@ -54,7 +54,7 @@ Router.map(function() {
 				'user': user,
 				'alterPrivileges': alterPrivileges,
 				'privileges': privileges,
-				'inviteGroups': GroupLib.find({ own: true }),
+				'inviteGroups': Groups.findFilter({ own: true }),
 				'showPrivileges': showPrivileges
 			};
 		},
@@ -202,7 +202,7 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('venuesFind', { editor: Meteor.userId() })
+				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() })
 			];
 		},
 		data: function () {
@@ -215,7 +215,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					notifications: user.notifications,
-					groups: GroupLib.find({ own: true }),
+					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id })
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
@@ -225,7 +225,7 @@ Router.map(function () {
 				}
 
 				data.user = userdata;
-				data.involvedIn = coursesFind({ userInvolved: user._id });
+				data.involvedIn = Courses.findFilter({ userInvolved: user._id });
 			}
 			return data;
 		},
