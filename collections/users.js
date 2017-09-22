@@ -1,4 +1,5 @@
 import '/imports/Profile.js';
+import '/imports/api/ApiError.js';
 
 // ======== DB-Model: ========
 // "_id"          -> ID
@@ -178,12 +179,13 @@ Meteor.methods({
 		// causes us to fail.
 
 		var user = Meteor.user();
+		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = saneText(username).trim().substring(0, 200);
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {
-				throw new Meteor.Error("nameError", "Failed to update username");
+				return ApiError("nameError", "Failed to update username");
 			}
 		}
 
@@ -197,12 +199,12 @@ Meteor.methods({
 			if (email) {
 				// Very lenient address validation routine
 				if (email.length < 3) {
-					throw new Meteor.Error('emailInvalid', 'Email address invalid');
+					return ApiError('emailInvalid', 'Email address invalid');
 				}
 
 				// Don't allow using an address somebody else uses
 				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
-					throw new Meteor.Error('emailExists', 'Email address already in use');
+					return ApiError('emailExists', 'Email address already in use');
 				}
 				Profile.Email.change(user._id, email, "profile change");
 			} else {
