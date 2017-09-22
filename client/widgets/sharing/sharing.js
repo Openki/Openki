@@ -1,4 +1,4 @@
-import Shariff from '/imports/ui/lib/shariff/shariff';
+import Shariff from '/imports/ui/lib/shariff';
 
 Template.sharing.onRendered(function() {
 	this.autorun(() => {
@@ -15,5 +15,7 @@ Template.sharing.onRendered(function() {
 				'info',
 			]
 		});
+
+		this.$('.fa').addClass('fa-fw');
 	});
 });

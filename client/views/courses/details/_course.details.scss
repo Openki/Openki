@@ -245,10 +245,6 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 .course-page-column-left .shariff {
 	background-color: $tab-content-bg;
 	border: 1px solid darken($tab-content-bg, 5%);
-	padding: 15px 5px 5px 15px;
+	padding: 15px;
 	margin-bottom: 10px;
-
-	li {
-		margin: 0 10px 10px 0;
-	}
 }
