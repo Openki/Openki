@@ -70,6 +70,11 @@ $course-header-bg: darken($blue-lighter, 5%);
 	margin-top: 10px;
 }
 
+.event-details-body .shariff {
+	background-color: $event-body-bg;
+	margin-bottom: 15px;
+}
+
 .event-delete-confirmation {
 	$background-color: lighten($brand-danger, 20%);
 
