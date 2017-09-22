@@ -52,7 +52,7 @@ notificationJoin.Model = function(entry) {
 			var subject = mf('notification.join.mail.subject', subjectvars, "{USER} joined {COURSE}: {ROLE}", userLocale);
 
 			var figures = [];
-			for (role of ['host', 'mentor', 'participant']) {
+			for (var role of ['host', 'mentor', 'participant']) {
 				if (course.roles.indexOf(role) >= 0) {
 					figures.push(
 						{ role: StringTools.capitalize(mf('roles.'+role+'.short', {}, undefined, userLocale))
@@ -75,4 +75,4 @@ notificationJoin.Model = function(entry) {
 		},
 		template: "notificationJoinMail"
 	};
-}
+};

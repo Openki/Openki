@@ -73,4 +73,4 @@ Log.findFilter = function(filter, limit) {
 	if (filter.tr) query.tr = { $in: filter.tr };
 
 	return Log.find(query, { sort: { ts: -1 }, limit: limit });
-}
+};

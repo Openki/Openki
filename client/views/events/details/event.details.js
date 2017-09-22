@@ -1,8 +1,10 @@
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
+	const event = this.data;
 	this.busy(false);
-	this.editing = new ReactiveVar(!this.data._id);
+	this.editing = new ReactiveVar(!event._id);
+	this.subscribe('courseDetails', event.courseId);
 });
 
 
@@ -18,26 +20,11 @@ Template.eventDisplay.onRendered(function() {
 	this.locationTracker.setLocation(this.data.venue);
 });
 
-
-Template.eventBackToLink.helpers({
-	course: function() {
-		var courseId = this.courseId;
-		if (courseId) {
-			// Very bad?
-			Template.instance().subscribe('courseDetails', courseId);
-
-			return Courses.findOne({_id: courseId});
-		}
+Template.event.helpers({
+	course() {
+		if (this.courseId) return Courses.findOne(this.courseId);
 	},
 
-	referredByCourse: function() {
-		var previousRouteName = Session.get("previousRouteName");
-		return previousRouteName == "showCourse";
-	}
-});
-
-
-Template.event.helpers({
 	editing: function() {
 		return this.new || Template.instance().editing.get();
 	},
@@ -61,6 +48,12 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
+	'mouseover .event-course-header, mouseout .event-course-header'(e, instance) {
+		instance.$(e.currentTarget).toggleClass('highlight', e.type == 'mouseover');
+	},
+
+	'click .event-course-header'() { Router.go('showCourse', { _id: this.courseId }); },
+
 	'click .js-event-delete-confirm': function (e, instance) {
 		var event = instance.data;
 

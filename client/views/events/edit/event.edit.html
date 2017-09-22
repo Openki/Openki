@@ -1,23 +1,23 @@
 <template name="eventEdit">
 	<form>
 	<div class="edit-page">
-		{{#if _id}}
-			<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
-		{{else}}
-			<h2>{{mf 'course.event.edit.add' 'Add event'}}</h2>
-			{{#unless hasParentCourse}}
+		{{#unless hasParentCourse}}
+			{{#if _id}}
+				<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
+			{{else}}
+				<h2>{{mf 'course.event.edit.add' 'Add event'}}</h2>
 				{{#mf KEY='course.createEventInfo'}}
 					Use this form if you want to publish a singular, one-off, allready organised event.
 					Otherwise create or propose a course here:
 				{{/mf}}
-				<a href="/courses/propose">{{mf 'menue.ProposeCourse'}}</a>
-			{{/unless}}
-		{{/if}}
+				<a href="/courses/propose">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
+			{{/if}}
+		{{/unless}}
 
 		<div class="edit-page-header event-edit-header">
-			{{#unless showRegionSelection}}
+			{{#if showRegionTag}}
 				{{> regionTag}}
-			{{/unless}}
+			{{/if}}
 			<div class="form-group">
 				<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
 				<input type="text"

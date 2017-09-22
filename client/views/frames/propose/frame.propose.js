@@ -1,3 +1,5 @@
+import Metatags from '/imports/Metatags.js';
+
 Router.map(function () {
 	this.route('framePropose', {
 		path: '/frame/propose',
@@ -20,7 +22,7 @@ Router.map(function () {
 		},
 
 		onAfterAction: function() {
-			document.title = webpagename + ' Propose';
+			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		}
 	});
 });

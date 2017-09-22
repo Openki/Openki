@@ -50,7 +50,7 @@
 	<div class="course-compact-roles">
 		<div
 			class="course-compact-role {{participantClass}}"
-			data-tooltip="{{mf 'course.compact.membersCount' 'Has {NUM, plural, =0 {no participants} one {one participant} other {# participants}}' NUM=members.length}}">
+			data-tooltip="{{participantTooltip}}">
 			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
 			{{members.length}}
 		</div>

@@ -65,7 +65,6 @@
 		"Template":true,
 		"alert":true,
 		"confirm":true,
-		"webpagename":true,
 		"lgs":true,
 		"categories":true,
 		"ServiceConfiguration":true,
@@ -189,7 +188,7 @@
 		"UpdatesApplied":true,
 		"applyUpdates":true,
 		"logAsyncErrors":true,
-		"untilClean":true,
+		"untilClean":true
 
 	}
 }

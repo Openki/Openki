@@ -1,3 +1,4 @@
+import "/imports/startup/client/clientError.js";
 import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
@@ -18,12 +19,6 @@ Router.onBeforeAction(function() {
 	Session.set('verify', false);
 
 	this.next();
-});
-
-// Store routeName to be able to refer to previous route
-Router.onStop(function() {
-	var route = Router.current().route;
-	if (route) Session.set('previousRouteName', route.getName());
 });
 
 // We keep two subscription caches around. One is for the regular subscriptions like list of courses,
