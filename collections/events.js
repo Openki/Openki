@@ -3,6 +3,7 @@ import '/imports/Predicates.js';
 
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
+import '/imports/StringTools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -326,7 +327,7 @@ Meteor.methods({
 
 		if (changes.title) {
 			changes.title = saneText(changes.title).substring(0, 1000);
-			changes.slug = getSlug(changes.title);
+			changes.slug = StringTools.slug(changes.title);
 		}
 
 		if (isNew) {

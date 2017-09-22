@@ -1,5 +1,7 @@
 import ensure from "./imports/ensureFixture.js";
 
+import '/imports/StringTools.js';
+
 function logResult(error, result) {
 	if (error) throw error;
 	console.log(result);
@@ -175,7 +177,7 @@ Meteor.methods({
 
 			course.createdby = ensure.user(course.createdby)._id;
 
-			course.slug = getSlug(course.name);
+			course.slug = StringTools.slug(course.name);
 			course.internal = !!course.internal;
 
 			course._id = ensure.fixedId([ course.name, course.description ]);

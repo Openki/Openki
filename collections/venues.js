@@ -1,6 +1,8 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
+import '/imports/StringTools.js';
+
 // _id          ID
 // editor       user ID
 // name         String
@@ -130,7 +132,7 @@ Meteor.methods({
 		if (changes.description) set.description = saneHtml(changes.description.trim().substring(0, 640*1024));
 		if (changes.name) {
 			set.name = changes.name.trim().substring(0, 1000);
-			set.slug = getSlug(set.name);
+			set.slug = StringTools.slug(set.name);
 		}
 
 		if (changes.address !== undefined) set.address = changes.address.trim().substring(0, 40*1024);

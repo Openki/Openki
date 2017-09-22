@@ -1,6 +1,8 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
+import '/imports/StringTools.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -545,7 +547,7 @@ Meteor.methods({
 		if (changes.categories) set.categories = changes.categories.slice(0, 20);
 		if (changes.name) {
 			set.name = saneText(changes.name).substring(0, 1000);
-			set.slug = getSlug(set.name);
+			set.slug = StringTools.slug(set.name);
 		}
 		if (changes.internal !== undefined) {
 			set.internal = changes.internal;
