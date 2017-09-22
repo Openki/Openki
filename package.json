@@ -21,9 +21,8 @@
   },
   "scripts": {
     "dev": "meteor --settings settings.dev.json --extra-packages fixtures",
-    "test": "bin/test",
-    "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
-    "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
+    "test": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
     "js-lint": "jshint"
   },
   "repository": {

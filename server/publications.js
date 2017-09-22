@@ -93,6 +93,7 @@ Meteor.publish(null, function() {
 });
 
 Meteor.publish('userSearch', function(search) {
+	check(search, String);
 	return UserLib.searchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });
 
