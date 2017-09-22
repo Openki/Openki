@@ -1,3 +1,4 @@
+import '/imports/startup/msgfmt.js';
 import '/imports/startup/notifications.js';
 import '/imports/startup/api.json.js';
 import '/imports/api/clientError/methods.js';

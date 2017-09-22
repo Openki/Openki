@@ -1,3 +1,4 @@
+import '/imports/startup/msgfmt.js';
 import "/imports/startup/client/clientError.js";
 import "/imports/RegionSelection.js";
 
