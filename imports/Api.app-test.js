@@ -7,12 +7,13 @@ import fetch from 'isomorphic-unfetch';
 // populated. As a result those tests will very likely time out.
 if (Meteor.isClient) {
 	describe('GroupApi', function () {
-		it('should return JSON response', async function () {
+		it('should return JSON response', function (done) {
 			const groups = Meteor.absoluteUrl('/api/0/json/groups');
-			const result = await fetch(groups);
-
-			expect(result.status).to.equal(200);
-			expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
+			fetch(groups).then((result) => {
+				expect(result.status).to.equal(200);
+				expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
+				done();
+			});
 		});
 	});
 }
