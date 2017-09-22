@@ -3,7 +3,7 @@ import { assert } from 'meteor/practicalmeteor:chai';
 
 if (Meteor.isClient) {
 	describe('Venue save', function() {
-		it('Stores a venue', (done) => {
+		it('Stores a venue', function(done) {
 			const testCreate = () => {
 				const venue = {
 					name: "Dönerbude am Ende der Galaxis",
