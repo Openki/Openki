@@ -172,6 +172,7 @@
 //========================================================================================
 .course-details-content {
 	border-color: darken($tab-content-bg, 5%);
+	border-bottom-width: 0;
 	position: relative;
 
 	&::before,
@@ -231,4 +232,13 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 .course-details-description .editable {
 	max-height: 300px;
 	overflow: auto;
+}
+
+// ** Sharing
+//========================================================================================
+.course-page-column-left .shariff {
+	background-color: $tab-content-bg;
+	border-color: darken($tab-content-bg, 5%);
+	border-style: solid;
+	border-width: 0 1px 1px;
 }
