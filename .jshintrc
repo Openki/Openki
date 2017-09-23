@@ -165,9 +165,7 @@
 
 		"UpdatesAvailable":true,
 		"UpdatesApplied":true,
-		"applyUpdates":true,
-		"logAsyncErrors":true,
-		"untilClean":true
+		"applyUpdates":true
 
 	}
 }
