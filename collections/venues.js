@@ -2,6 +2,7 @@ import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
 import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
 
 // _id          ID
 // editor       user ID
@@ -129,7 +130,7 @@ Meteor.methods({
 		var set = { updated: new Date() };
 
 
-		if (changes.description) set.description = saneHtml(changes.description.trim().substring(0, 640*1024));
+		if (changes.description) set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640*1024));
 		if (changes.name) {
 			set.name = changes.name.trim().substring(0, 1000);
 			set.slug = StringTools.slug(set.name);

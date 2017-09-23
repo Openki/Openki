@@ -3,6 +3,7 @@ import '/imports/Predicates.js';
 
 import '/imports/AsyncTools.js';
 import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
 
 // ======== DB-Model: ========
 // "_id"           -> ID
@@ -541,7 +542,7 @@ Meteor.methods({
 		if (changes.description) {
 			set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
-				set.description = saneHtml(set.description);
+				set.description = HtmlTools.saneHtml(set.description);
 			}
 		}
 

@@ -1,6 +1,8 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
+import '/imports/HtmlTools.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -113,7 +115,7 @@ Meteor.methods({
 		if (changes.hasOwnProperty('description')) {
 			updates.description = changes.description.substring(0, 640*1024);
 			if (Meteor.isServer) {
-				updates.description = saneHtml(updates.description);
+				updates.description = HtmlTools.saneHtml(updates.description);
 			}
 		}
 
