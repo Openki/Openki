@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 export default HtmlTools = {};
 
 /** Turn plaintext into HTML by replacing HTML characters with their entities

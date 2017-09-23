@@ -1,3 +1,5 @@
+import '/imports/StringTools.js';
+
 
 Template.courseEdit.created = function() {
 	var instance = this;
@@ -157,7 +159,7 @@ Template.courseEdit.events({
 		var newDescription = instance.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
-		changes.name = saneText(changes.name);
+		changes.name = StringTools.saneText(changes.name);
 
 		if (changes.name.length === 0) {
 			alert("Please provide a title");
