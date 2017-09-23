@@ -33,7 +33,7 @@ function sendIcal(events, response) {
 		});
 
 		if (!dname) {
-			var sName = slug(dbevent.title);
+			var sName = StringTools.slug(dbevent.title);
 			var sDate = moment(dbevent.start).format("YYYY-MM-DD");
 			dname = "openki-" + sName + '-' + sDate + '.ics';
 		} else {
