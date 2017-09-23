@@ -302,8 +302,8 @@ Courses.findFilter = function(filter, limit) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
 			return { $or: [
-				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
-				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+				{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }
 			] };
 		});
 

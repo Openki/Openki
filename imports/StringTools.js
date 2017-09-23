@@ -32,3 +32,8 @@ StringTools.slug = function(text) {
 		.replace(/[^\w ]+/g,'')
 		.replace(/ +/g,'-');
 };
+
+
+StringTools.escapeRegex = function(string) {
+	return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+};

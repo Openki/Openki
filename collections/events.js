@@ -527,8 +527,8 @@ Events.findFilter = function(filter, limit) {
 		var searchTerms = filter.search.split(/\s+/);
 		searchTerms.forEach(function(searchTerm) {
 			and.push({ $or: [
-				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
-				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+				{ title: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }
 			] });
 		});
 	}

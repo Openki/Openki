@@ -91,7 +91,6 @@
 // lib/functions.js
 
 		"mfPkg":true,
-		"escapeRegex":true,
 		"checkInsert":true,
 		"checkUpdateOne":true,
 		"saneHtml":true,
