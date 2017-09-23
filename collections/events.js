@@ -5,6 +5,7 @@ import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';
+import '/imports/AsyncTools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -109,7 +110,7 @@ affectedReplicaSelectors = function(event) {
 
 // Sync venue fields of the event document
 updateEventVenue = function(eventId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
@@ -158,7 +159,7 @@ updateEventVenue = function(eventId) {
   * @param {eventId} the event to update
   */
 Events.updateGroups = function(eventId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
@@ -355,12 +356,12 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 
-			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
-			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
-			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
+			Meteor.call('updateEventVenue', eventId, AsyncTools.logErrors);
+			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
+			Meteor.call('updateRegionCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
-			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, logAsyncErrors);
+			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, AsyncTools.logErrors);
 		}
 
 		return eventId;
@@ -379,7 +380,7 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
-		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
+		Meteor.call('updateRegionCounters', event.region, AsyncTools.logErrors);
 	},
 
 

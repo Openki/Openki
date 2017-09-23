@@ -3,6 +3,7 @@ import '/imports/api/ApiError.js';
 
 import '/imports/StringTools.js';
 import '/imports/AsyncTools.js';
+import '/imports/IdTools.js';
 
 // ======== DB-Model: ========
 // "_id"          -> ID
@@ -64,7 +65,7 @@ User = function() {};
   * The user must be a member of the group to be allowed to promote things with it.
   */
 User.prototype.mayPromoteWith = function(group) {
-	var groupId = _id(group);
+	var groupId = IdTools.extract(group);
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
@@ -138,7 +139,7 @@ UserLib = {
 
 // Update list of groups and badges
 Users.updateBadges = function(userId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var user = Meteor.users.findOne(userId);
 		if (!user) return true;
 

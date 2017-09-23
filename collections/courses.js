@@ -206,7 +206,7 @@ mayUnsubscribe = function(operatorId, course, userId, role) {
 
 // Update list of editors
 Courses.updateGroups = function(courseId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var course = Courses.findOne(courseId);
 		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
 
