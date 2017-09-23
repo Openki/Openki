@@ -1,5 +1,6 @@
 import '/imports/startup/msgfmt.js';
 import "/imports/startup/client/clientError.js";
+import "/imports/startup/client/ical.js";
 import "/imports/RegionSelection.js";
 
 ////////////// db-subscriptions:
