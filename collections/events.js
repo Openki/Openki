@@ -327,7 +327,7 @@ Meteor.methods({
 		}
 
 		if (changes.title) {
-			changes.title = saneText(changes.title).substring(0, 1000);
+			changes.title = StringTools.saneText(changes.title).substring(0, 1000);
 			changes.slug = StringTools.slug(changes.title);
 		}
 
