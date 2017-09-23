@@ -1,6 +1,8 @@
 import '/imports/Profile.js';
 import '/imports/api/ApiError.js';
 
+import '/imports/AsyncTools.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date
@@ -231,7 +233,7 @@ Meteor.methods({
 			Meteor.users.update(
 				{_id: user._id},
 				{ '$addToSet': {'privileges': privilege}},
-				checkUpdateOne
+				AsyncTools.checkUpdateOne
 			);
 		}
 	},
@@ -246,7 +248,7 @@ Meteor.methods({
 			Meteor.users.update(
 				{_id: user._id},
 				{ '$pull': {'privileges': privilege}},
-				checkUpdateOne
+				AsyncTools.checkUpdateOne
 			);
 		}
 	},

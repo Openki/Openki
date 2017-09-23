@@ -176,7 +176,7 @@ Meteor.methods({
 			});
 		}
 
-		Venues.update({ _id: venueId }, { $set: set }, checkUpdateOne);
+		Venues.update({ _id: venueId }, { $set: set }, AsyncTools.checkUpdateOne);
 
 		return venueId;
 	},
