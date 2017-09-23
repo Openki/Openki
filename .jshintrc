@@ -91,7 +91,6 @@
 // lib/functions.js
 
 		"mfPkg":true,
-		"checkUpdateOne":true,
 		"saneHtml":true,
 		"sanitizeHtml":true,
 		"textPlain":true,

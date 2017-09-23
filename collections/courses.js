@@ -1,6 +1,7 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
+import '/imports/AsyncTools.js';
 import '/imports/StringTools.js';
 
 // ======== DB-Model: ========
@@ -511,7 +512,7 @@ Meteor.methods({
 					Courses.update(
 						{ _id: courseId },
 						{ $pull: { roles: type }},
-						checkUpdateOne
+						AsyncTools.checkUpdateOne
 					);
 
 					// HACK
@@ -530,7 +531,7 @@ Meteor.methods({
 						Courses.update(
 							{ _id: courseId },
 							{ $addToSet: { roles: type }},
-							checkUpdateOne
+							AsyncTools.checkUpdateOne
 						);
 					}
 				}
