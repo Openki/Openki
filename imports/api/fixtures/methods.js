@@ -1,4 +1,5 @@
 import ensure from "./ensureFixture.js";
+import "./Prng.js";
 
 import '/imports/StringTools.js';
 
@@ -12,7 +13,7 @@ const Prng = function(staticseed) {
 const humandistrib = function(prng) {
 	var factors = [0,0,1,2,2,3,5,5];
 	return factors[Math.floor(Math.random()*factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) + (prng() > 0.5 ? humandistrib(prng) : 0);
-}
+};
 
 // Select a date that is after the given date
 // For past dates a date between the original date and the present is chosen,

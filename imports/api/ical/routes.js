@@ -1,12 +1,8 @@
-slug = function(text) {
-	return text
-		.toLowerCase()
-		.replace(/[^\w ]+/g,'')
-		.replace(/ +/g,'-');
-};
+import '/imports/StringTools.js';
+
+import ical from 'ical-generator';
 
 function sendIcal(events, response) {
-	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
 	var dname;
 
