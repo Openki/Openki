@@ -81,7 +81,7 @@ Venues.findFilter = function(filter, limit) {
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		find.$and = _.map(searchTerms, function(searchTerm) {
-			return { name: { $regex: escapeRegex(searchTerm), $options: 'i' } };
+			return { name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } };
 		});
 	}
 
