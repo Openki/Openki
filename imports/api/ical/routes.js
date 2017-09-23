@@ -1,4 +1,5 @@
 import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
 
 import ical from 'ical-generator';
 
@@ -21,7 +22,7 @@ function sendIcal(events, response) {
 		var twoLines = /<(p|div|h[0-9])>/g;
 		var oneLine = /<(ul|ol|li|br ?\/?)>/g;
 		var lineDescription = dbevent.description.replace(twoLines, "\n\n").replace(oneLine, "\n").trim();
-		var plainDescription = textPlain(lineDescription);
+		var plainDescription = HtmlTools.textPlain(lineDescription);
 		calendar.addEvent({
 			uid: dbevent._id,
 			start: dbevent.start,

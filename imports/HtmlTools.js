@@ -15,3 +15,25 @@ HtmlTools.plainToHtml = function(text) {
 		.replace(/'/g, "&#039;")
 		.replace(/(?:\r\n|\r|\n)/g, '<br />');
 };
+
+
+HtmlTools.saneHtml = function(unsaneHtml, nofollow) {
+	// The rel=nofollow is added so that our service is less attractive to forum spam
+	var options = {
+		allowedTags: [ 'br', 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote', 'ul', 'ol', 'li' ],
+		allowedAttributes: {
+			'a': [ 'href', 'rel' ]
+		},
+		transformTags: { 'a': sanitizeHtml.simpleTransform('a', { rel: 'nofollow' }, true) }
+	};
+
+	return sanitizeHtml(unsaneHtml, options);
+};
+
+
+HtmlTools.textPlain = function(html) {
+	return sanitizeHtml(html, {
+		allowedTags: [],
+		allowedAttributes: {}
+	});
+};

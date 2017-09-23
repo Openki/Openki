@@ -4,6 +4,7 @@ import '/imports/Predicates.js';
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
 import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -322,7 +323,7 @@ Meteor.methods({
 
 
 		if (Meteor.isServer) {
-			changes.description = saneHtml(changes.description);
+			changes.description = HtmlTools.saneHtml(changes.description);
 		}
 
 		if (changes.title) {
