@@ -1,6 +1,6 @@
 {
   "name": "openki",
-  "version": "0.5.1",
+  "version": "0.6.2",
   "description": "CourseOragnisationPlatform",
   "main": "server/start.js",
   "directories": {
