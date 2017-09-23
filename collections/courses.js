@@ -586,7 +586,7 @@ Meteor.methods({
 
 			Meteor.call('updateNextEvent', courseId);
 		} else {
-			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
+			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
 		}
 
 		return courseId;
