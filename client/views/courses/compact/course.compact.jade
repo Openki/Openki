@@ -1,0 +1,59 @@
+template(name="courseCompact")
+	if ready
+		.course-compact-wrap
+			a(href="#{pathFor 'showCourse'}")
+				.course-compact(class="#{courseState} #{filterPreviewClasses}")
+					.course-compact-content
+						.course-compact-title
+							= name
+						+courseCategories
+					if nextEvent
+						+courseCompactEvent
+					else
+						+courseCompactRoles
+					.tag-group.course-groups
+						each groups
+							+groupName
+
+template(name="courseCompactEvent")
+	.course-compact-next-event
+		.course-compact-next-event-component
+			i.fa.fa-calendar.fa-fw(aria-hidden="true")
+			| #{dateformat_mini nextEvent.startLocal}
+		.course-compact-next-event-component
+			i.fa.fa-clock-o.fa-fw(aria-hidden="true")
+			| #{timeformat nextEvent.startLocal}
+		if nextEvent.venue.name
+			.course-compact-next-event-component
+				i.glyphicon.glyphicon-home.fa-fw(aria-hidden="true")
+				= nextEvent.venue.name
+		.course-compact-next-event-component
+			i(class="#{roleIcon 'participant'}" aria-hidden="true")
+			= members.length
+			
+template(name="courseCompactRoles")
+	.course-compact-roles
+		.course-compact-role(
+			class="#{participantClass}"
+			data-tooltip="#{participantTooltip}")
+			i(class="#{roleIcon 'participant'}" aria-hidden="true")
+			= members.length
+		.course-compact-role(
+			class="#{roleStateClass 'team'}"
+			data-tooltip="#{roleStateTooltip 'team'}"
+			href="#")
+			i(class="#{roleIcon 'team'}" aria-hidden="true")
+		if requiresRole 'mentor'
+			.course-compact-role(
+				class="#{roleStateClass 'mentor'}"
+				data-tooltip="#{roleStateTooltip 'mentor'}"
+				href="#")
+				i(class="#{roleIcon 'mentor'}" aria-hidden="true")
+		if requiresRole 'host'
+			.course-compact-role(
+				class="#{roleStateClass 'host'}"
+				data-tooltip="#{roleStateTooltip 'host'}"
+				href="#")
+				i(class="#{roleIcon 'host'}" aria-hidden="true")
+				
+			
