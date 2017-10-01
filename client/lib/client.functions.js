@@ -99,14 +99,7 @@ pleaseLogin = function() {
 	if (Meteor.userId()) return false;
 	alert(mf('Please.login', 'Please login or register'));
 
-	var viewportWidth = Session.get('viewportWidth');
-	if (viewportWidth <= SCSSVars.gridFloatBreakpoint) {
-		$('.collapse').collapse('show');
-	}
-
-	setTimeout(function(){
-		$('.loginButton').dropdown('toggle');    //or $('.dropdown').addClass('open');
-	},0);
+	$('#accountTasks').modal('show');
 	return true;
 };
 
