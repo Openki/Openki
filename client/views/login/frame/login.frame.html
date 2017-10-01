@@ -1,14 +1,43 @@
 <template name='userFrame'>
 	<div class="user-frame">
-		{{#if login}}
-			{{> loginFrame}}
-		{{/if}}
-		{{#if forgot}}
-			{{> forgotPwdFrame}}
-		{{/if}}
-		{{#if currentUser}}
-			{{> ownUserFrame}}
-		{{/if}}
+		{{> ownUserFrame}}
+	</div>
+</template>
+
+<template name="accountTasks">
+	<div class="modal fade account-tasks" tabindex="-1" role="dialog" id="accountTasks">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						{{#if activeAccountTask 'login'}}
+							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
+							{{mf 'login.login.title' 'Login'}}
+						{{/if}}
+						{{#if activeAccountTask 'register'}}
+							<i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
+							{{mf 'login.register.submit'}}
+						{{/if}}
+						{{#if activeAccountTask 'recoverPwd'}}
+							<i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i>
+							{{mf 'login.recoverPwd.title' 'Recover Password'}}
+						{{/if}}
+						<span class="close" data-dismiss="modal">&times;</span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					{{#if activeAccountTask 'register'}}
+						{{> registerFrame}}
+					{{else}}
+						{{#if activeAccountTask 'recoverPwd'}}
+							{{> forgotPwdFrame}}
+						{{else}}
+							{{> loginFrame}}
+						{{/if}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -60,7 +89,7 @@
 			<div class="form-group">
 				{{#each service in OAuthServices}}
 					<button
-						class="btn btn-{{service.name}} form-control js-oauth-btn"
+						class="btn btn-{{service.key}} form-control js-oauth-btn"
 					    data-service="{{service.serviceName}}"
 					    type="button"
 						{{disabledIfBusy}}>
@@ -68,18 +97,17 @@
 							<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 							{{mf 'login.OAuth.busy' 'Logging in with '}}
 						{{else}}
-							<span class="fa fa-{{service.name}} fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
 							{{mf 'login.OAuth.loginWith' 'Login with '}}
 						{{/if}}
-						{{service.fullName}}
+						{{service.name}}
 					</button>
 				{{/each}}
 			</div>
 			<hr>
 			<div class="form-group">
-				<button class="btn btn-add form-control js-register-open"
-				        data-toggle="modal"
-						data-target="#registerFrame"
+				<button
+						class="btn btn-add form-control js-register-open"
 						type="button">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit' 'Create account'}}
@@ -87,25 +115,6 @@
 			</div>
 		</div>
 	</form>
-</template>
-
-<template name="registerModal">
-	<div class="modal fade register" tabindex="-1" role="dialog" id="registerFrame">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<span class="fa fa-user-plus fa-fw" aria-hidden="true"></span>
-						{{mf 'login.register.submit'}}
-						<span class="close js-close">&times;</span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> registerFrame}}
-				</div>
-			</div>
-		</div>
-	</div>
 </template>
 
 <template name="registerFrame">
