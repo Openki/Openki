@@ -60,6 +60,7 @@
 }
 
 .navbar-link {
+	cursor: pointer;
 	font-size: large;
 	transition-duration: $default-transition-time;
 	transition-property: #{'background-color, box-shadow, text-shadow'};
