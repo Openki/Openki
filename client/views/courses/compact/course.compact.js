@@ -72,20 +72,20 @@ Template.courseCompactRoles.helpers({
 
 		if (numMembers === 1 && isParticipant) {
 			tooltip = mf(
-				'course.compact.membersCountOwnOnly',
-				'You are the only participant'
+				'course.compact.youAreInterested',
+				'You are interested'
 			);
 		} else {
 			tooltip = mf(
-				'course.compact.membersCount',
+				'course.compact.interestedCount',
 				{ NUM: numMembers },
-				'Has {NUM, plural, =0 {no participants} one {one participant} other {# participants}}'
+				'{NUM, plural, =0 {Nobody is} one {One person is} other {# persons are}} interested'
 			);
 
 			if (numMembers > 1 && isParticipant) {
 				tooltip += ' ';
 				tooltip += mf(
-					'course.compact.membersCountOwn',
+					'course.compact.interestedCountOwn',
 					'and you are one of them'
 				);
 			}
