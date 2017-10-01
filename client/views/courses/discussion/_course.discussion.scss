@@ -34,6 +34,10 @@ $discussion-thumb-width: 60;
 	padding: 0;
 }
 
+.discussion-post-content  {
+	word-break: break-all;
+}
+
 .discussion-post-header,
 .discussion-edit-header {
 	padding: 5px ($grid-gutter-width / 2);
@@ -44,11 +48,13 @@ $discussion-thumb-width: 60;
 	padding: 10px ($grid-gutter-width / 2) 0;
 }
 
+
 $discussion-post-bg: $blue-lighter;
 
 .discussion-post {
 	background: $discussion-post-bg;
 	display: table;
+	overflow: hidden;
 	padding: 0 0 7px;
 	width: 100%;
 }
