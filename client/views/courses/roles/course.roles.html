@@ -21,7 +21,7 @@
 			{{#if enrolling}}
 				<div class="course-role-title-enroll">
 					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
-					<span>{{mf 'course.roles.enrol_as' 'Enroll as'}} {{role}}</span>
+					{{#with roletype}}{{mf roleSubscribe}}{{/with}}
 				</div>
 				<div class="course-role-enroll-options">
 					<div class="form-group">

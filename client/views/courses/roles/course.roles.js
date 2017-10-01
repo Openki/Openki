@@ -6,11 +6,17 @@ Template.courseRole.helpers({
 	enrolling: function() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe: function() {
-		return 'roles.'+this.type+'.subscribe';
+		let role = this.type;
+		if (role == 'participant') role = 'interested';
+
+		return 'roles.' + this.type + '.subscribe';
 	},
 
 	roleSubscribed: function() {
-		return 'roles.'+this.type+'.subscribed';
+		let role = this.type;
+		if (role == 'participant') role = 'interested';
+
+		return 'roles.' + this.type + '.subscribed';
 	},
 
 	maySubscribe: function(role) {
