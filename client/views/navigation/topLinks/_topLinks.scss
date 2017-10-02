@@ -1,0 +1,14 @@
+.top-links {
+	@include list-unstyled;
+	margin-right: 15px;
+	margin-top: 15px;
+	text-align: right;
+}
+
+.top-link {
+	display: inline-block;
+}
+
+.top-link + .top-link {
+	margin-left: 5px;
+}
