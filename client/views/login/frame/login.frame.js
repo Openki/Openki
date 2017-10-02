@@ -196,7 +196,7 @@ Template.registerFrame.events({
 	'click .js-register'(event, instance) {
 		event.preventDefault();
 
-		const name = instance.$('#registerName').val();
+		const username = instance.$('#registerName').val();
 		const password = instance.$('#registerPassword').val();
 		const email = instance.$('#registerEmail').val();
 
