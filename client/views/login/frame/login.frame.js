@@ -9,6 +9,16 @@ Template.accountTasks.helpers({
 });
 
 Template.accountTasks.events({
+	'show.bs.modal #accountTasks'(event, instance) {
+		instance.transferUsername = false;
+		instance.transferPassword = false;
+		instance.transferMail = false;
+	},
+
+	'hide.bs.modal #accountTasks'(event, instance) {
+		instance.$('input').val('');
+	},
+
 	'hidden.bs.modal #accountTasks'(event, instance) {
 		instance.accountTask.set('login');
 	}
