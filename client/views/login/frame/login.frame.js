@@ -201,11 +201,7 @@ Template.registerFrame.events({
 		const email = instance.$('#registerEmail').val();
 
 		instance.busy('registering');
-		Accounts.createUser({
-			username,
-			password,
-			email
-		}, function (err) {
+		Accounts.createUser({ username,	password, email	}, (err) => {
 			instance.busy(false);
 			if (err) {
 				const reason = err.reason;
