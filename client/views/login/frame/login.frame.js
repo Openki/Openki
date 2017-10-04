@@ -226,6 +226,10 @@ Template.registerFrame.events({
 				}
 			}
 		});
+	},
+
+	'click #backToLogin'(event, instance) {
+		instance.parentInstance().accountTask.set('login');
 	}
 });
 
