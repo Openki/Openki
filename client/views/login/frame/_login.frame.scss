@@ -19,16 +19,15 @@
 
 .ownuser-frame-welcome {
 	font-size: $font-size-h3;
-	text-align: center;
 	margin-top: 10px;
+	text-align: center;
 }
 
 .login {
-	padding: 10px ($grid-gutter-width / 2) 0;
+	padding-top: 10px;
 }
 
-.login .help-block,
-.register .help-block {
+.account-tasks .help-block {
 	margin-bottom: 0;
 }
 
@@ -40,9 +39,16 @@
 	$color: $blue;
 
 	color: $color;
+	text-align: left;
+	white-space: normal;
+	width: 100%;
 
 	&:hover {
 		color: darken($color, 20%)
+	}
+
+	@media (min-width: $screen-xs-min) {
+		text-align: right;
 	}
 }
 
@@ -68,19 +74,23 @@ $external-servies: (
 @each $service, $color in $external-servies {
 	.btn-#{$service} {
 		@include button-variant($white, $color, darken($color, 5%));
+
+		&[disabled] {
+			background-color: $color;
+		}
 	}
 }
 
-.forgot_login {
-	padding: 0 ($grid-gutter-width / 2);
+.register-mail-disclaimer {
+	background-color: rgba($brand-warning, .25);
+	border: 1px solid $brand-warning;
+	border-radius: 4px;
+	margin-top: 7.5px;
+	padding: 10px;
 }
+
 
 .forgot-pwd-mail-info {
 	display: inline-block;
 	margin-top: -10px;
-}
-
-.registering_disclaimer {
-	margin-top: -10px;
-	text-align: justify;
 }

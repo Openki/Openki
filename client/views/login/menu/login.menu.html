@@ -1,18 +1,24 @@
 <template name='loginButton'>
 	{{#if loginServicesConfigured}}
-		<a class="loginButton dropdown-toggle navbar-link"
-			aria-expanded="false"
-			data-toggle="dropdown"
-			role="button">
-			{{#if currentUser}}
+		{{#if currentUser}}
+			<a
+				class="loginButton dropdown-toggle navbar-link"
+				aria-expanded="false"
+				data-toggle="dropdown"
+				role="button">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
-			{{else}}
+				<div class="nav-marker-caret"></div>
+				<div class="nav-marker-bar"></div>
+			</a>
+		{{else}}
+			<a
+				class="loginButton navbar-link"
+				id="openLogin"
+				role="button">
 				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 				{{mf 'login.navig.unlogged' 'Login/Register'}}
-			{{/if}}
-			<div class="nav-marker-caret"></div>
-			<div class="nav-marker-bar"></div>
-		</a>
+			</a>
+		{{/if}}
 	{{/if}}
 </template>
