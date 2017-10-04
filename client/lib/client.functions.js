@@ -97,8 +97,7 @@ goBase = function() {
 
 pleaseLogin = function() {
 	if (Meteor.userId()) return false;
-	alert(mf('Please.login', 'Please login or register'));
-
+	Session.set('pleaseLogin', true);
 	$('#accountTasks').modal('show');
 	return true;
 };

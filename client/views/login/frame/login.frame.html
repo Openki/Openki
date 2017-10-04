@@ -11,8 +11,13 @@
 				<div class="modal-header">
 					<h4 class="modal-title">
 						{{#if activeAccountTask 'login'}}
-							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
-							{{mf 'login.login.title' 'Login'}}
+							{{#if pleaseLogin}}
+								<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
+								{{mf 'Please.login' 'Please login or register'}}
+							{{else}}
+								<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
+								{{mf 'login.login.title' 'Login'}}
+							{{/if}}
 						{{/if}}
 						{{#if activeAccountTask 'register'}}
 							<i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>

@@ -5,7 +5,8 @@ Template.accountTasks.onCreated(function() {
 });
 
 Template.accountTasks.helpers({
-	activeAccountTask: (task) => Template.instance().accountTask.get() == task
+	activeAccountTask: (task) => Template.instance().accountTask.get() == task,
+	pleaseLogin: () => Session.get('pleaseLogin')
 });
 
 Template.accountTasks.events({
@@ -21,6 +22,7 @@ Template.accountTasks.events({
 
 	'hidden.bs.modal #accountTasks'(event, instance) {
 		instance.accountTask.set('login');
+		Session.set('pleaseLogin', false);
 	}
 });
 
@@ -67,6 +69,10 @@ Template.loginFrame.onCreated(function() {
 Template.loginFrame.onRendered(function() {
 	const transferMail = this.parentInstance().transferMail;
 	if (transferMail) this.$('#loginName').val(transferMail);
+});
+
+Template.loginFrame.onDestroyed(function() {
+	Session.set('pleaseLogin', false);
 });
 
 Template.loginFrame.events({
