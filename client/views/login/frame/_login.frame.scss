@@ -81,6 +81,15 @@ $external-servies: (
 	}
 }
 
+.register-mail-disclaimer {
+	background-color: rgba($brand-warning, .25);
+	border: 1px solid $brand-warning;
+	border-radius: 4px;
+	margin-top: 7.5px;
+	padding: 10px;
+}
+
+
 .forgot-pwd-mail-info {
 	display: inline-block;
 	margin-top: -10px;
