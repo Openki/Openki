@@ -26,7 +26,16 @@ $shariff-button-margin-left: 10px;
 .shariff-button > a {
 	color: $white;
 	font-size: 1.2em;
+	opacity: .75;
 	padding: $shariff-link-padding;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	@media (min-width: $screen-xs-min) {
+		opacity: .5;
+	}
 }
 
 @function map-bg($bg, $bg-hover) {
