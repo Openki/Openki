@@ -16,9 +16,11 @@
 							{{mf 'course.edit.propose' 'Propose new course'}}
 						{{/if}}
 					</h2>
-					<span class="fa fa-info fa-fw" aria-hidden="true"></span>
-					{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
-					<a href="/event/create">{{mf 'menue.CreateEvent' 'Create an event'}}</a>
+					{{#unless isFrame}}
+						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
+						{{mf 'course.propose.EventInfo' 'In case you want to publish a singular event, use the following form instead:'}}
+						<a href="/event/create">{{mf 'menue.CreateEvent' 'Create an event'}}</a>
+					{{/unless}}
 				{{/if}}
 			{{/if}}
 			<div class="edit-page-body course-edit-body">
@@ -130,7 +132,9 @@
 
 				<div class="form-actions">
 					{{> buttonSave event="js-course-edit-save" saving=saving}}
-					{{> buttonCancel event="js-course-edit-cancel"}}
+					{{#unless isFrame}}
+						{{> buttonCancel event="js-course-edit-cancel"}}
+					{{/unless}}
 				</div>
 			</div>
 		</form>
