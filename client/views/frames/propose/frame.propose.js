@@ -13,7 +13,10 @@ Router.map(function () {
 
 			var limit = parseInt(this.params.query.count, 10) || 6;
 
-			return Meteor.subscribe('eventsFind', filterParams, limit*2);
+			return [
+				Meteor.subscribe('eventsFind', filterParams, limit*2),
+				Meteor.subscribe('regions')
+			];
 		},
 
 		data: function() {
