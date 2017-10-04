@@ -3,3 +3,9 @@ Template.loginButton.helpers({
 		return Accounts.loginServicesConfigured();
 	}
 });
+
+Template.loginButton.events({
+	'click #openLogin'() {
+		$('#accountTasks').modal('show');
+	}
+})
