@@ -20,8 +20,7 @@ Router.map(function () {
 		},
 
 		data: function() {
-			regions = Regions.find();
-			return regions;
+			return Regions.find();
 		},
 
 		onAfterAction: function() {
