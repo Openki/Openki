@@ -237,7 +237,14 @@ Template.courseEditRole.onCreated(function() {
 });
 
 Template.courseEditRole.onRendered(function() {
-	this.checked.set(this.data.selected.indexOf(this.data.role.type) >= 0);
+	const data = this.data;
+	const selectedRoles = data.selected;
+
+	if (selectedRoles) {
+		this.checked.set(
+			selectedRoles.indexOf(data.role.type) >= 0
+		);
+	}
 });
 
 Template.courseEditRole.helpers({
