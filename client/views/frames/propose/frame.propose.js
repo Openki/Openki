@@ -3,7 +3,7 @@ import Metatags from '/imports/Metatags.js';
 Router.map(function () {
 	this.route('framePropose', {
 		path: '/frame/propose',
-		template: 'courseEdit',
+		template: 'framePropose',
 		layoutTemplate: 'frameLayout',
 		waitOn: function () {
 			this.filter = Filtering(EventPredicates).read(this.params.query).done();
