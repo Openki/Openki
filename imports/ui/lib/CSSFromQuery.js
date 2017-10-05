@@ -1,6 +1,6 @@
-export default CSSFromQuery = function() {
-	var self = [];
-	var customizableProperties = [];
+export default CSSFromQuery = () => {
+	const self = [];
+	const customizableProperties = [];
 
 	/** Add a customizable Property
 	  *
@@ -9,11 +9,7 @@ export default CSSFromQuery = function() {
 	  * @param {String} selector - html selector of which the css should change
 	  */
 	customizableProperties.add = function(key, name, selector) {
-		this.push({
-			key: key,
-			name: name,
-			selector: selector
-		});
+		this.push({	key, name, selector });
 		return this;
 	};
 
@@ -21,10 +17,12 @@ export default CSSFromQuery = function() {
 	customizableProperties
 		.add('bgcolor', 'background-color', 'body')
 		.add('color', 'color', 'body')
-		.add('eventbg', 'background-color', '.list-style-item')
-		.add('eventcolor', 'color', '.list-style-item')
-		.add('linkcolor', 'color', '.list-style-item a')
-		.add('fontsize', 'font-size', '*');
+		.add('itembg', 'background-color', '.frame-list-item')
+		.add('itemcolor', 'color', '.frame-list-item')
+		.add('linkcolor', 'color', '.frame-list-item a')
+		.add('fontsize', 'font-size', '*')
+		.add('regionbg', 'background-color', '.frame-list-item-region')
+		.add('regioncolor', 'color', '.frame-list-item-region');
 
 	/** Invoke the add method on customizableProperties
 	  *
@@ -32,7 +30,7 @@ export default CSSFromQuery = function() {
 	  * @param {String} name     - name of the css-property to change
 	  * @param {String} selector - html selector of which the css should change
 	  */
-	self.add = function(key, name, selector) {
+	self.add = (key, name, selector) => {
 		customizableProperties.add(key, name, selector);
 		return self;
 	};
@@ -41,10 +39,10 @@ export default CSSFromQuery = function() {
 	  *
 	  * @param {Object} query - Query paramaters of route
 	  */
-	self.read = function(query) {
-		_.forEach(customizableProperties, function(property) {
-			var queryValue = query[property.key];
-			var cssValue;
+	self.read = query => {
+		customizableProperties.forEach(property => {
+			const queryValue = query[property.key];
+			let cssValue;
 			if (typeof queryValue !== 'undefined') {
 				// hexify color values
 				if (property.name.indexOf('color') >= 0) {
@@ -52,7 +50,7 @@ export default CSSFromQuery = function() {
 						cssValue = '#' + queryValue.substr(0, 6);
 					}
 				} else {
-					var intVal = parseInt(queryValue, 10);
+					const intVal = parseInt(queryValue, 10);
 					if (!Number.isNaN(intVal)) {
 						cssValue = Math.max(0, Math.min(1000, intVal)) + 'px';
 					}
@@ -66,7 +64,7 @@ export default CSSFromQuery = function() {
 					});
 				}
 			}
-		});
+		})
 	};
 
 	return self;

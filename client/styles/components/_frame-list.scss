@@ -1,0 +1,89 @@
+.frame-list-title {
+	font-size: 1.2em;
+}
+
+.frame-list-item {
+	background-color: $blue-lighter;
+}
+
+.frame-list-item + .frame-list-item {
+	margin-top: 5px;
+}
+
+.frame-list-item-header {
+	font-size: 1.1em;
+	font-weight: bold;
+	margin: 0;
+	padding: 7px;
+	transition: background-color $default-transition-time;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:hover,
+	&.active {
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+}
+
+.frame-list-item-time {
+	font-weight: normal;
+	@include td-margin(right, 10px);
+}
+
+.frame-list-item-region {
+	font-size: .8em;
+	margin-left: 5px;
+}
+
+.frame-list-item-body {
+	padding: 7px;
+}
+
+.frame-list-item-property {
+	@include make-row;
+}
+
+.frame-list-item-label {
+	@include td-make-xs-column(4);
+	font-weight: bold;
+
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(2);
+	}
+}
+
+.frame-list-item-content {
+	@include td-make-xs-column(8);
+
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(10);
+	}
+}
+
+.frame-list-item-description > .frame-list-item-label,
+.frame-list-item-description > .frame-list-item-content {
+	@media (max-width: $screen-xs) {
+		@include make-xs-column(12);
+	}
+}
+
+.frame-list-item-links {
+	@include clearfix;
+	margin-top: 5px;
+	@include td-text-align(right);
+}
+
+.frame-list-item-links > a:hover {
+	cursor: pointer;
+}
+
+.frame-list-item-links > a + a {
+	@include td-margin(left, 10px);
+}
+
+.show-more {
+	margin-top: 10px;
+	text-align: center;
+}
