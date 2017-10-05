@@ -119,6 +119,9 @@
 		content: '';
 	}
 }
+.introduction-steps > li:last-of-type > h2::after {
+	content: '';
+}
 
 .rtl {
 	.introduction-steps > li > h2::after {
