@@ -9,7 +9,7 @@ export default CSSFromQuery = () => {
 	  * @param {String} selector - html selector of which the css should change
 	  */
 	customizableProperties.add = function(key, name, selector) {
-		this.push({	key, name, selector });
+		this.push({ key, name, selector });
 		return this;
 	};
 
