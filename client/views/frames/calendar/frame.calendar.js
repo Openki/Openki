@@ -8,10 +8,7 @@ Router.map(function () {
 		layoutTemplate: 'frameLayout',
 		data: function() {
 			var cssRules = new CSSFromQuery();
-			cssRules
-				.add('regionbg', 'background-color', '.frame-calendar-event-region')
-				.add('regioncolor', 'color', '.frame-calendar-event-region')
-				.read(this.params.query);
+			cssRules.read(this.params.query);
 
 			return { cssRules: cssRules };
 		},
@@ -87,7 +84,7 @@ Template.frameCalendarEvent.helpers({
 Template.frameCalendarEvent.events({
 	'click .js-toggle-event-details': function(e, instance) {
 		$(e.currentTarget).toggleClass('active');
-		instance.$('.frame-calendar-event-time').toggle();
+		instance.$('.frame-list-item-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
 	}
 });
