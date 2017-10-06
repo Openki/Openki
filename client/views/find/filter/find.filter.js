@@ -15,7 +15,7 @@ Template.filter.onCreated(function() {
 			, title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events')
 			}
 		,
-			{ name: 'pastEvent'
+			{ name: 'resting'
 			, cssClass: 'has-past-events'
 			, label: mf('filterCaptions.resting.label', 'Resting')
 			, title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events')
