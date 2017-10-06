@@ -1,0 +1,28 @@
+.faq {
+	h2 {
+		color: $brand-primary;
+	}
+
+	p + h2,
+	ul + h2 {
+		margin-top: 30px;
+	}
+
+	h3 {
+		border-bottom: 1px solid $blue-lighter;
+		cursor: pointer;
+		padding-bottom: 5px;
+		transition: border-color .15s;
+
+		&:hover,
+		&.active {
+			border-color: $brand-primary;
+		}
+	}
+
+	p,
+	ul {
+		display: none;
+		font-size: 1.05em;
+	}
+}
