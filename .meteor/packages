@@ -59,3 +59,5 @@ github-config-ui
 google-config-ui
 dynamic-import
 kadira:dochead
+markdown
+simple:markdown-templating
