@@ -225,7 +225,7 @@ coursesFind = function(filter, limit) {
 		sort = { time_lastedit: -1 };
 	}
 
-	if (filter.state === 'pastEvent') {
+	if (filter.state === 'resting') {
 		find.lastEvent = { $ne: null };
 		find.futureEvents = { $eq: 0 };
 		sort = { "lastEvent.start": 1, time_lastedit: -1 };
