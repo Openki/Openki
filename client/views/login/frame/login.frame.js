@@ -30,8 +30,8 @@ Template.loginFrame.onCreated(function() {
 	this.busy(false);
 	this.OAuthServices =
 		[
-			{ key: 'google-plus'
-			, name: 'Google+'
+			{ key: 'google'
+			, name: 'Google'
 			, serviceName: 'Google'
 			}
 		,
