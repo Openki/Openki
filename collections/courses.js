@@ -551,7 +551,7 @@ Meteor.methods({
 
 			/* region cannot be changed */
 			var region = Regions.findOne({_id: changes.region});
-			if (!region) throw Meteor.error(404, 'region missing');
+			if (!region) throw new Meteor.Error(404, 'region missing');
 			set.region = region._id;
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
