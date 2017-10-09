@@ -78,4 +78,4 @@ Template.frameCourselistCourse.events({
 		$(event.currentTarget).toggleClass('active');
 		instance.expanded.set(!instance.expanded.get());
 	}
-})
+});
