@@ -94,7 +94,7 @@ mongo@1.2.2
 mongo-dev-server@1.0.1
 mongo-id@1.0.6
 msavin:mongol@2.0.1
-msgfmt:core@2.0.0-preview.22
+msgfmt:core@2.0.0-preview.24
 msgfmt:extract@2.0.2
 msgfmt:ui@2.2.0
 nicolaslopezj:router-layer@0.1.0
