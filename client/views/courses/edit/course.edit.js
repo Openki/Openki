@@ -19,6 +19,10 @@ Template.courseEdit.created = function() {
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
 	});
+
+	if (instance.data.group) {
+		instance.subscribe('group', instance.data.group);
+	}
 };
 
 Template.courseEdit.helpers({
@@ -120,8 +124,8 @@ Template.courseEdit.helpers({
 	},
 
 	newCourseGroupName: function () {
-		if (this.groups && this.groups.length > 0) {
-			var groupId = this.groups[0];
+		if (this.group) {
+			var groupId = this.group;
 			var group = Groups.findOne(groupId);
 			if (group) return group.name;
 		}
@@ -187,8 +191,8 @@ Template.courseEdit.events({
 			}
 
 			var groups = [];
-			if (Router.current().params.query.group) {
-				groups.push(Router.current().params.query.group);
+			if (data.group) {
+				groups.push(data.group);
 			}
 			changes.groups = groups;
 		}
