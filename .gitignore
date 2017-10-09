@@ -16,3 +16,5 @@ dump/
 settings.json
 server/version.js
 node_modules/
+
+extracts.msgfmt*
