@@ -135,8 +135,6 @@ Template.courseEdit.helpers({
 			return false;
 		}
 	},
-
-	isFrame: () => Template.instance().data.isFrame
 });
 
 
