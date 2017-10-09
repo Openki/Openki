@@ -17,7 +17,7 @@ Template.FAQ.onCreated(function() {
 		const targetTitle = this.$(this.headerTag + id);
 		targetTitle.nextUntil(this.headerTag, this.contentTags).show();
 		$(window).scrollTop(targetTitle.position().top - SCSSVars.navbarHeight);
-	}
+	};
 });
 
 Template.FAQ.onRendered(function() {

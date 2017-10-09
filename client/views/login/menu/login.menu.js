@@ -8,4 +8,4 @@ Template.loginButton.events({
 	'click #openLogin'() {
 		$('#accountTasks').modal('show');
 	}
-})
+});
