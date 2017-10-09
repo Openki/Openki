@@ -74,6 +74,13 @@ Template.courseEdit.helpers({
 		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
+	showRegionSelection: function() {
+		// Region can be set for new courses only.
+		// For the proposal frame we hide the region selection when a region
+		// is set.
+		return !this._id && !(this.region && this.isFrame);
+	},
+
 	regions: function() {
 		return Regions.find();
 	},
@@ -167,7 +174,13 @@ Template.courseEdit.events({
 		}
 
 		if (isNew) {
-			changes.region = instance.$('.region_select').val();
+			const data = instance.data;
+			if (data.isFrame && data.region) {
+				// The region was preset for the frame
+				changes.region = data.region;
+			} else {
+				changes.region = instance.$('.region_select').val();
+			}
 			if (!changes.region) {
 				alert("Please select a region");
 				return;

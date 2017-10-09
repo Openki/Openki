@@ -94,7 +94,7 @@
 							{{> courseEditRole selected=../roles role=this members=../members}}
 						{{/each}}
 					</div>
-					{{#unless _id}}
+					{{#if showRegionSelection}}
 						<div class="form-group-element">
 							<label>{{mf 'course.edit.region' 'Region'}}</label>
 							<div class="input-group">
@@ -113,7 +113,7 @@
 								</select>
 							</div>
 						</div>
-					{{/unless}}
+					{{/if}}
 				</div>
 
 				{{#if userIsInGroup}}
