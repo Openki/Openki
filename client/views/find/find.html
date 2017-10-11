@@ -76,31 +76,6 @@
 			{{/if}}
 		{{/if}}
 	</div>
-	{{#if eventResults.count}}
-		<div class="page-component">
-			<div class="course-list">
-				<hr>
-				<h3>
-				{{#if results.count}}
-					{{#mf KEY='find.events.aditional_results' EVENTS=eventResults.count}}
-						{EVENTS, plural,
-							one {In addition, we found this event}
-							other {In addition, we found these # events}
-						}
-					{{/mf}}
-				{{else}}
-					{{#mf KEY='find.events.results_if_no_courses' EVENTS=eventResults.count}}
-						{EVENTS, plural,
-							one {All we found is this one event}
-							other {Yet # Events have been found}
-						}
-					{{/mf}}
-				{{/if}}
-				</h3><br />
-				{{> eventList dataEvents=eventResults withDate=true}}
-			</div>
-		</div>
-	{{/if}}
 	<div class="page-component">
 		<div class="container-sm">
 			{{> courseEdit newCourse}}
