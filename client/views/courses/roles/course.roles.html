@@ -26,15 +26,15 @@
 				<div class="course-role-enroll-options">
 					<div class="form-group">
 						<label>
-							{{mf 'course.roles.leave_message' 'Leave a message/wish/interest here:'}}
+							{{mf 'course.roles.leave_message' 'You can leave a message to appear in the participants list:'}}
 						</label>
-						<textarea class='form-control js-comment'
+						<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfo' 'an (optional) message like a greeting, wish, or interest'}}
 							>{{../../member.comment}}</textarea>
 					</div>
 					<div class="form-actions">
 						<button type="button" class="btn btn-save js-role-subscribe-btn">
 							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
-							{{mf 'course.roles.enroll' 'Enroll'}}
+							{{mf 'course.roles.participate' 'Participate'}}
 						</button>
 						{{> buttonCancel event="js-role-enroll-cancel"}}
 					</div>
