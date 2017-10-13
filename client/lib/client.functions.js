@@ -94,22 +94,6 @@ goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params); // Shirely, you know of a better way?
 };
 
-markedName = function(search, name) {
-	if (search === '') return name;
-	var match = name.match(new RegExp(search, 'i'));
-
-	// To add markup we have to escape all the parts separately
-	var marked;
-	if (match) {
-		var term = match[0];
-		var parts = name.split(term);
-		marked = _.map(parts, Blaze._escape).join('<strong>'+Blaze._escape(term)+'</strong>');
-	} else {
-		marked = Blaze._escape(name);
-	}
-	return Spacebars.SafeString(marked);
-};
-
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };

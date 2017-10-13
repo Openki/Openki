@@ -1,5 +1,6 @@
 import "/imports/RegionSelection.js";
 import '/imports/ui/FilterPreview.js';
+import '/imports/StringTools.js';
 
 Template.regionSelectionWrap.created = function() {
 	var instance = this;
@@ -74,7 +75,7 @@ Template.regionSelection.helpers({
 	regionNameMarked: function() {
 		var search = Template.instance().regionSearch.get();
 		var name = this.name;
-		return markedName(search, name);
+		return StringTools.markedName(search, name);
 	},
 
 	region: function() {

@@ -1,5 +1,6 @@
 import '/imports/ui/FilterPreview.js';
 import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import '/imports/StringTools.js';
 
 Template.filter.onCreated(function() {
 	this.stateFilters =
@@ -186,7 +187,7 @@ Template.additionalFilters.helpers({
 		const search =
 			Template.instance().findInstance.categorySearch.get();
 
-		return markedName(search, mf('category.' + this));
+		return StringTools.markedName(search, mf('category.' + this));
 	},
 
 	isMobile() {

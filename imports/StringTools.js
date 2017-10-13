@@ -24,3 +24,22 @@ StringTools.capitalize = function(input) {
 	check(input, String);
     return input.charAt(0).toUpperCase() + input.slice(1);
 };
+
+StringTools.markedName = (search, name) => {
+	if (search === '') return name;
+	const match = name.match(new RegExp(search, 'i'));
+
+	// To add markup we have to escape all the parts separately
+	let marked;
+	if (match) {
+		const term = match[0];
+		const parts = name.split(term);
+		marked =
+			parts
+			.map(Blaze._escape)
+			.join('<strong>' + Blaze._escape(term) + '</strong>');
+	} else {
+		marked = Blaze._escape(name);
+	}
+	return Spacebars.SafeString(marked);
+};
