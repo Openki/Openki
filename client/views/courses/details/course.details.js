@@ -1,4 +1,5 @@
 import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
@@ -68,7 +69,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 
 Template.courseDetailsPage.events({
 	'click .js-delete-course-confirm': function (event, instance) {
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var course = instance.data.course;
 		instance.busy('deleting');
@@ -85,7 +86,7 @@ Template.courseDetailsPage.events({
 
 	'click .js-course-edit': function (event, instance) {
 		instance.collapse();
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var course = instance.data.course;
 		Router.go('showCourse', course, { query: {edit: 'course'} });

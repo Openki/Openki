@@ -1,3 +1,5 @@
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
@@ -77,7 +79,7 @@ Template.event.events({
 	},
 
 	'click .js-event-edit': function (event, instance) {
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 		instance.editing.set(true);
 	},
 });

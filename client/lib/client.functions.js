@@ -94,14 +94,6 @@ goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params); // Shirely, you know of a better way?
 };
 
-
-pleaseLogin = function() {
-	if (Meteor.userId()) return false;
-	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
-	return true;
-};
-
 markedName = function(search, name) {
 	if (search === '') return name;
 	var match = name.match(new RegExp(search, 'i'));

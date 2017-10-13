@@ -1,5 +1,6 @@
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -209,7 +210,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.isClient) {
-				pleaseLogin();
+				PleaseLogin();
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in");

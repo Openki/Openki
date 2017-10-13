@@ -1,3 +1,4 @@
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 Template.courseEdit.created = function() {
 	var instance = this;
@@ -138,7 +139,7 @@ Template.courseEdit.events({
 		ev.preventDefault();
 
 
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var course = instance.data;
 		var courseId = course._id ? course._id : '';

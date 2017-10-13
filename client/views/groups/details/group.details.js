@@ -1,4 +1,5 @@
 "use strict";
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 Template.groupDetails.onCreated(function() {
 	var instance = this;
@@ -114,13 +115,13 @@ Template.groupDetails.helpers({
 
 Template.groupDetails.events({
 	'click .js-group-settings' : function(event, instance) {
-		if (pleaseLogin()) return false;
+		if (PleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
 	'click .js-group-save': function(event, instance) {
 
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var group = {};
 

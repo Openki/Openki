@@ -1,3 +1,5 @@
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 // _id          ID
 // editor       user ID
 // name         String
@@ -100,7 +102,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.is_client) {
-				pleaseLogin();
+				PleaseLogin();
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in");
