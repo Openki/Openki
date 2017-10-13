@@ -1,4 +1,6 @@
 import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import '/imports/StringTools.js';
+
 
 Template.languageSelectionWrap.created = function() {
 	 var instance = this;
@@ -48,7 +50,7 @@ Template.languageSelection.helpers({
 	languageNameMarked: function() {
 		var search = Template.instance().languageSearch.get();
 		var name = this.name;
-		return markedName(search, name);
+		return StringTools.markedName(search, name);
 	},
 
 	currentLanguage: function() {
