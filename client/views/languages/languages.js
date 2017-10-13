@@ -34,17 +34,23 @@ Template.languageSelection.helpers({
 		return Languages[Session.get('locale')];
 	},
 
-	languages: function() {
-		var search = Template.instance().languageSearch.get();
-		var query = search.toLowerCase();
+	languages() {
+		const search = Template.instance().languageSearch.get().toLowerCase();
+		const results = [];
 
-		var results = {};
-		for (var language in Languages) {
-			if (Languages[language].name.toLowerCase().indexOf(query) >= 0) {
-				results[Languages[language].lg] = Languages[language];
-			}
+		for (const key in Languages) {
+			const language = Languages[key];
+			let pushed = false;
+			[language.name, language.english].forEach(property => {
+				if (pushed) return;
+				if (property.toLowerCase().indexOf(search) >= 0) {
+					results.push(language);
+					pushed = true;
+				}
+			});
 		}
-		return _.values(results);
+
+		return results;
 	},
 
 	languageNameMarked: function() {
