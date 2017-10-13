@@ -1,4 +1,5 @@
 import '/imports/ui/FilterPreview.js';
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
 
 Template.filter.onCreated(function() {
 	this.stateFilters =
@@ -189,7 +190,7 @@ Template.additionalFilters.helpers({
 	},
 
 	isMobile() {
-		return Session.get('viewportWidth') <= SCSSVars.screenXS;
+		return Session.get('viewportWidth') <= ScssVars.screenXS;
 	}
 });
 

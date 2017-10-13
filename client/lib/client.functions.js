@@ -118,11 +118,6 @@ markedName = function(search, name) {
 	return Spacebars.SafeString(marked);
 };
 
-getViewportWidth = function() {
-	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	Session.set('viewportWidth', viewportWidth);
-};
-
 showServerError = function(message, err) {
 	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };
