@@ -1,3 +1,5 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 Router.map(function () {
 	this.route('FAQ', {
 		path: '/FAQ',
@@ -16,7 +18,7 @@ Template.FAQ.onCreated(function() {
 		if (id.indexOf('#') < 0) id = '#' + id;
 		const targetTitle = this.$(this.headerTag + id);
 		targetTitle.nextUntil(this.headerTag, this.contentTags).show();
-		$(window).scrollTop(targetTitle.position().top - SCSSVars.navbarHeight);
+		$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 	}
 });
 

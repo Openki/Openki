@@ -1,5 +1,6 @@
 import Metatags from '/imports/Metatags.js';
 import '/imports/ui/FilterPreview.js';
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
 
 function finderRoute(path) {
 	return {
@@ -297,7 +298,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		var screenXS = SCSSVars.screenXS;
-		return Session.get('viewportWidth') <= screenXS;
+		return Session.get('viewportWidth') <= ScssVars.screenXS;
 	}
 });

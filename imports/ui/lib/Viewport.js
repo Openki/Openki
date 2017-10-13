@@ -1,4 +1,4 @@
-SCSSVars = {
+export const ScssVars = {
 	// == Media Query Breakpoints
 	// $screen-xxs
 	'screenXXS': 380, // defined at client/styles/_variables.scss L84
@@ -21,4 +21,11 @@ SCSSVars = {
 	// == Other Values
 	// $navbar-height
 	'navbarHeight': 50 // defined at client/styles/_bootstrap-variables.scss L383
+};
+
+export const UpdateViewportWidth = () => {
+	const viewportWidth =
+		Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+	Session.set('viewportWidth', viewportWidth);
 };

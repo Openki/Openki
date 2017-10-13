@@ -1,5 +1,6 @@
 import "/imports/startup/client/clientError.js";
 import "/imports/RegionSelection.js";
+import { UpdateViewportWidth } from '/imports/ui/lib/Viewport.js';
 
 ////////////// db-subscriptions:
 
@@ -116,7 +117,7 @@ Meteor.startup(function() {
 Meteor.startup(RegionSelection.init);
 Meteor.startup(Assistant.init);
 
-Meteor.startup(getViewportWidth);
+Meteor.startup(UpdateViewportWidth);
 
 Accounts.onLogin(function() {
 	var user = Meteor.user();

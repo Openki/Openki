@@ -1,3 +1,5 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 Template.usersCourselist.onCreated(function() {
 	var instance = this;
 	var id = instance.data.profileData.user._id;
@@ -56,7 +58,7 @@ Template.usersCourselist.events({
 		var roleLabel = event.currentTarget;
 		var rolePosition = $(roleLabel.getAttribute('href')).offset().top;
 		// subtract the amount of pixels of the height of the navbar
-		$('html, body').animate({'scrollTop': rolePosition - SCSSVars.navbarHeight});
+		$('html, body').animate({'scrollTop': rolePosition - ScssVars.navbarHeight});
 		event.preventDefault();
 	}
 });

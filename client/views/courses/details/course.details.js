@@ -1,3 +1,5 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
 	var instance = this;
@@ -57,9 +59,7 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 		return 'is-proposal';
 	},
 	mobileViewport: function() {
-		var viewportWidth = Session.get('viewportWidth');
-		var screenMD = SCSSVars.screenMD;
-		return viewportWidth <= screenMD;
+		return Session.get('viewportWidth') <= ScssVars.screenMD;
 	},
 	isProposal: function() {
 		return !this.course.nextEvent && !this.course.lastEvent;

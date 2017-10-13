@@ -1,7 +1,9 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 Template.navbar.onRendered(function() {
 	var instance = this;
 	var viewportWidth = Session.get('viewportWidth');
-	var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
+	var gridFloatBreakpoint = ScssVars.gridFloatBreakpoint;
 
 	// if not collapsed give the navbar and active menu item a
 	// class for when not at top
@@ -62,7 +64,7 @@ Template.navbar.events({
 
 	'show.bs.dropdown, hide.bs.dropdown .dropdown': function(e, instance) {
 		var viewportWidth = Session.get('viewportWidth');
-		var gridFloatBreakpoint = SCSSVars.gridFloatBreakpoint;
+		var gridFloatBreakpoint = ScssVars.gridFloatBreakpoint;
 
 		if (viewportWidth <= gridFloatBreakpoint) {
 			var container = instance.$('#bs-navbar-collapse-1');
