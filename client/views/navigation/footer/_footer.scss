@@ -1,17 +1,22 @@
 footer {
 	background: $blue;
 	color: $white;
-	font-size: large;
-	height: $footer-height;
+	font-size: medium;
+	height: $footer-height + 1px;
 	position: relative;
 	text-align: center;
+	width: 100%;
+}
+
+.footer-links {
+	margin: 0 auto;
+	position: relative;
 }
 
 .footer-link {
 	color: $white;
-	padding: 10px 15px 15px;
-	position: relative;
-	top: 10px;
+	line-height: $footer-height;
+	padding: $navbar-padding-vertical 10px;
 
 	&:hover {
 		background: $blue-light;
@@ -22,7 +27,15 @@ footer {
 
 .footer-deployed-version {
 	color: $gray-lighter;
-	@include td-float(right);
+	display: none;
 	font-size: small;
-	padding: .3em;
+	padding-right: 5px;
+	padding-top: $navbar-padding-vertical / 2;
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	@media (min-width: $screen-md-min) {
+		display: block;
+	}
 }
