@@ -40,3 +40,5 @@ Groups are already existing organizations, communities, etc., which use Openki t
 ### Why can not I ask for a fixed price as a mentor?
 
 We believe that education (and thus the events on Openki) should be accessible to all - regardless of one's bank account and income.
+
+{{/template}}
