@@ -7,7 +7,15 @@ Router.map(function () {
 		layoutTemplate: 'frameLayout',
 		waitOn: () => Meteor.subscribe('regions'),
 		data: function() {
-			const params = Filtering(CoursePredicates).read(this.params.query).done();
+			// HACK: Fix up predicates for our use
+			// They are not currently exported so we use
+			// CoursePredicates.region instead of Predicates.id.
+			const predicates =
+				{ region: CoursePredicates.region
+				, group: CoursePredicates.region
+				};
+
+			const params = Filtering(predicates).read(this.params.query).done();
 			const data = params.toParams();
 			data.isFrame = true;
 			return data;
