@@ -2,23 +2,23 @@
 ## Allgemein
 
 ### Was ist Openki?
-Openki ist eine offene Bildungsplattform. Auf ihr können Kurse vorgeschlagen, diskutiert, entwickelt, organisiert und ausgeschrieben werden. Der Fokus liegt dabei auf der Förderung von Selbstorganisation, dem Zusammenbringen von Menschen, Gruppierungen und Initiativen und gewährleistet einen hürdefreien Austausch von Erfahrung und Wissen. Die Kurse sind für alle zugänglich, unabhängig von der finanziellen Situation. Die Organisation ist dabei Non-profit und OpenSource.
+Openki ist eine offene Bildungsplattform. Auf ihr können Kurse vorgeschlagen, diskutiert, entwickelt, organisiert und ausgeschrieben werden. Der Fokus liegt dabei auf der Förderung von Selbstorganisation, dem Zusammenbringen von Menschen, Gruppierungen und Initiativen und gewährleistet einen hürdefreien Austausch von Erfahrung und Wissen. Die Kurse sind für alle zugänglich, unabhängig von der finanziellen Situation. Die Organisation dahinter ist Non-profit und OpenSource.
 
 [Hier](http://about.openki.net/) findest du mehr über Openki und dessen Philosophie. Wie die Webseite konzeptionell funktioniert, erfährst du  [hier](http://about.openki.net/?page_id=1216).
 
 ### Was bedeutet der Name "Openki" eigentlich?
-Openki ist Ukrainisch (опеньки). Das heisst auf deutsch Hallimasch, in der Fachsprache „Armillaria“ und ist ein Pilz. Hier [seine Wikipedia Seite](https://de.wikipedia.org/wiki/Hallimasche).
-Der Name bezieht sich dabei vor allem auf das Myzel. Dies ist der Teil eines Pilzes, den man normalerweise nicht meint, wenn man „Pilz“ sagt. Es besteht aus tausenden dünnen Fäden, die unterirdisch ein dichtes Netz bilden mit einer unglaublichen Grösse.
-Viele Pflanzen sind mit Myzel-Fäden miteinander verbunden, teils für den Nahrungsaustausch oder um zu kommunizieren. Über der Erde poppen die bekannten Fruchtkörper des Pilzes auf – unerwartet und unvorhergesehen.
-Der Pilz Openki ernährt sich sowohl von lebenden Sträuchern und Bäumen, wie später von ihrem toten organischen Material.
+Openki ist Ukrainisch (опеньки), heisst übersetzt auf deutsch Hallimasch und ist ein Pilz. Hier [seine Wikipedia Seite](https://de.wikipedia.org/wiki/Hallimasche).
+Der Name bezieht sich auf das Myzel dieses Pilzes. Das Myzel ist der Teil eines Pilzes den man normalerweise nicht meint, wenn man über einen „Pilz“ spricht. Es besteht aus tausenden dünnen Fäden, die unterirdisch ein dichtes Netz bilden. Beim Openki kann dies bis zu mehreren Quadratkilometern gross und hunderte Tonnen schwer werden.
 
-Philosophisch können die Netzwerke des Openkis als Metapher für ein alternatives Modell der Wissensvermittlung und dessen Verknüpfungen genutzt werden. So kontrastiert ein solches Modell beispielsweise die Ast- und Wurzelstruktur des altgriechischen hierarchischen Wissensbaums und könnte ihn als ein Netzwerk des Wissens ersetzen.
+Viele Pflanzen sind durch solche Myzel-Fäden miteinander verbunden. Sie benötigen diese um zu keimen, für den Nahrungsaustausch oder sogar um miteinander zu kommunizieren. Darüber auf der Erdoberfläche poppen die Fruchtkörper der Pilze auf – unerwartet und unvorhergesehen.
+
+Ein Openki ernährt sich sowohl von lebenden Sträuchern und Bäumen, wie später von ihrem toten organischen Material. Auf philosophischer Ebene sind die Netzwerke des Openki-Myzels eine Metapher für ein alternatives Modell des Wissens und des Wissensaustausches. Es kompostiert die hierarchischen Ast- und Wurzelstruktur des altgriechischen Wissensbaumes (in welchem Fachbereiche voneinander abgetrennt und untergeortnet sind) und verbindet diese zu einem horizontalen Netzwerk des Wissens.
 
 ### Wem gehört Openki?
-Openki gehört mir, dir und allen, die sich daran beteiligen. Die Applikation ist Open Source, steht unter der [GNU AGPL-Lizenz](https://www.gnu.org/licenses/agpl-3.0.de.html) und ist daher für die unkommerzielle Nutzung frei verfügbar. Hinter Openki steht der kollektiv organisierte Verein "KOPF", welcher während der letzten Jahren Openki entwickelt hat.
+Openki gehört mir, dir und allen, die sich daran beteiligen. Die Applikation ist Open Source, steht unter der [GNU AGPL-Lizenz](https://www.gnu.org/licenses/agpl-3.0.de.html) und ist daher für die unkommerzielle Nutzung frei verfügbar. Hinter Openki steht der kollektiv organisierte Verein "KOPF", welcher während der letzten Jahren Openki entwickelt hat. <!-- TODO FIXME: nur unkommerzielle Nutzung ist nicht korrekt... -->
 
 ### Ist Openki ein soziales Netzwerk?
-Jein. Wir bieten ein Werkzeug zur Selbstorganisation. Da gehören soziale Kontakte natürlich dazu. Im Vergleich zu anderen Anbietern wollen wir aber, dass du nur für wenig Zeit auf unserer Seite bleiben musst, um viel gemeinsame Zeit in der realen Welt zu organisieren und dann natürlich zu verbringen.
+Jein. Wir bieten ein Werkzeug zur Selbstorganisation. Da gehören soziale Kontakte natürlich dazu. Im Vergleich zu anderen Anbietern wollen wir aber, dass du nur für wenig Zeit auf unserer Seite bleibst, um gemeinsame Zeit in der realen Welt zu organisieren und dann so viel Zeit wie möglich übrig hast um sie mit netten Leuten zu verbringen.
 
 ### Ich habe eine Idee, wie Openki technisch verbessert werden könnte. Kann ich meine Ideen einbringen?
 Nice! Damit Openki noch besser wird, brauchen wir dein Feedback. Wir haben selbst noch dutzende Ideen, die wir wichtig finden, umsetzen möchten und an denen wir arbeiten. Wir beschränken uns zur Zeit auf die notwendigsten Funktionen. Einerseits wegen unserer begrenzten Kapazität, anderseits um Openki so einfach verständlich wie möglich zu halten.
@@ -29,18 +29,21 @@ Alternativ kannst du einfach auch eine Email mit deinen Vorschlägen an: openki-
 
 Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die benötigten Informationen: [openki.net/translate](https://openki.net/translate)
 
-### Gibt es ähnliche Projekte wie Openki?
-<!-- TODO VERGLICHS-TABELLE EINFÜGEN? -->
+<!-- ### Gibt es ähnliche Projekte wie Openki? TODO VERGLICHS-TABELLE EINFÜGEN? -->
 
 ### Wer administriert die Webseite Openki.net?
 Die Administration und der technische Unterhalt (Unklarheiten der Benutzer\*innen klären, aufräumen, Probleme erkennen und lösen, Verbesserungen vornehmen und vieles mehr) wird von einem Admin-Kollektiv durchgeführt. Für die verschiedenen Regionen, in denen Openki aktiv ist, soll es bald lokale Admin-Kollektive geben.
+
+
+
+
 ## Die Rollen auf Openki
 
 ### Was ist ein Openki-Kurs?
-Ein Openki-Kurs ist nicht nur eine Lehrveranstaltung im klassischen Sinne, sondern beinhaltet auch die Diskussion der Teilnehmenden über seinen Inhalt und Ziele, sowie das Finden von Mentor\*innen oder Veranstaltungsdaten. Wie ein Schiff können alle Teilnehmenden den Kurs steuern und das Ziel kontinuierlich mitbestimmen und ändern. Die Sparte von möglichen Kursen reicht von Frontalunterricht über Workshops, Diskussions- und Arbeitsgruppen bis zum Lesezirkel.
+Ein Openki-Kurs ist nicht nur eine Lehrveranstaltung im klassischen Sinne, sondern beinhaltet auch die Diskussion der Teilnehmenden über seinen Inhalt und Ziele, sowie das Finden von Mentor\*innen oder Veranstaltungsdaten. Wie ein Schiff können alle Teilnehmenden den Kurs steuern und das Ziel kontinuierlich mitbestimmen und ändern. Die Sparte von möglichen Kursen reicht von Vorträgen, Frontalunterricht über Workshops, Diskussions- und Arbeitsgruppen bis zum Lesezirkel.
 
 Ein Openki-Kurs beginnt als "Vorschlag": Jemand bringt ein Kursthema ein - eine Idee, einen Wunsch, eine Frage. Andere Leute können am Kurs "teilnehmen", das heisst ihm beitreten und mitdiskutieren. Es meldet sich ein\*e Mentor\*in und man findet ein Veranstaltungsort.
-Sobald ein Kurs eine geplante Veranstaltung hat "findet er statt".
+Sobald ein Kurs eine geplante Veranstaltung hat, "findet er statt".
 Ein Kurs kann einmalig oder wiederholend sein, auf anderen Kursen aufbauen oder für sich alleine stehen.
 
 ### Was ist ein\*e Teilnehmer\*in?
@@ -53,19 +56,25 @@ _"Im Unterschied zum Coach ist der Mentor üblicherweise nicht eigens für diese
 
 ### Was ist ein O-Team (Organisationsteam)?
 Das O-Team eines spezifischen Kurses hat die Berechtigung diesen Kurs auf Openki zu administrieren - d.h. "Events" erstellen, den Kursbeschrieb ändern und weitere Teilnehmende ins O-Team einladen.
-Sobald eine Person einen Kurs auf Openki vorschlägt, wird sie automatisch zur ersten Person des O-Teams. Sie ist befähigt beliebig weitere Personen ins O-Team des spezifischen Kurses aufzunehmen.
+Sobald eine Person einen Kurs auf Openki vorschlägt, wird sie automatisch zur ersten Person des O-Teams. Sie ist befähigt, beliebig weitere Personen ins O-Team des Kurses aufzunehmen.
 
 ### Was ist ein Host?
-Ein "Host" ist die Person, die sich um den Raum kümmert, in welchem ein Kurs stattfinden soll: Sie besitzt Zugang zum Raum, klärt im Voraus die Verfügbarkeit des Raumes ab, ist Kontaktperson zu den Besitzer\*innen/ Hausabwart\*innen/etc. und ist dafür verantwortlich, dass die jeweiligen Hausrichtlinien kommuniziert und eingehalten werden.
+Ein "Host" ist die Person, die sich um den Ort kümmert, wo ein Kurs stattfinden soll: Sie besitzt Zugang zum Veranstaltungsraum, klärt im Voraus die Verfügbarkeit ab, ist Kontaktperson zu den Besitzer\*innen / Hausabwart\*innen / etc. und ist dafür verantwortlich, dass die jeweiligen Hausrichtlinien kommuniziert und eingehalten werden.
 
 ### Was sind Gruppen?
-Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren.
+Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren. Mehr dazu siehe im Abschnit ["Gruppen"](#Gruppen) unten.
+
+
+
+
 ## Kurse
 
 ### Was ist ein Openki-Kurs?
-siehe [Was ist ein Openki-Kurs?](#was-ist-ein-openki-kurs)
+Siehe oben: ["Was ist ein Openki-Kurs?"](#was-ist-ein-openki-kurs)
 
-### Wie kann ich einen Kurs vorschlagen?
+
+<!-- TODO
+### Wie kann ich einen Kurs vorschlagen? -->
 
 ### Zu welchen Inhalten können Kurse organisiert werden?
 Zu allen - von Kochen über Nuklearphysik und Modern Dance bis hin zu Rainer Maria Rilke. Die Kurse sind in Kategorien eingeteilt (Wissenschaft, Sport, Musik etc.). Ausgeschlossen werden diskriminierende Inhalte, insbesondere sexistische und rassistische.
@@ -81,7 +90,7 @@ Auf Openki gibt es je nach Region eine kurze oder lange Liste mit benutzbaren R�
 ### Wann wird ein Kurs ausgeschrieben?
 Sobald jemand einen Kurs vorschlägt, wird dieser als "Vorschlag" ausgeschrieben und erscheint mit einem gestrichelten Rahmen in der Kursübersicht.
 
-Damit der Kurs aber im Kalender erscheint, muss das O-Team eine Veranstaltung erstellen. Dies erfolgt, nachdem alle Einzelheiten (Mentor, Ort, Datum, etc.), festgelegt worden sind.
+Damit der Kurs aber im Kalender erscheint, muss jemand aus dem O-Team eine Veranstaltung erstellen. Dies erfolgt, nachdem alle Einzelheiten (Mentor, Ort, Datum, etc.) festgelegt worden sind.
 
 <!-- TODO BILD -->
 
@@ -129,18 +138,31 @@ Wenn du unsicher bist, kontaktiere die Person im Vorfeld. Handle nach gesundem M
 ### Weshalb kann ich als Mentor\*in keinen fixen Preis verlangen?
 Wir sind der Meinung, dass Bildung (und somit auch die Veranstaltungen auf Openki) für Alle zugänglich sein soll – unabhängig von deinem Kontostand und Einkommen.
 
+
+
+
 ## Gruppen
 
 ### Was sind Gruppen?
-siehe ["Was sind Gruppen?"](#was-sind-gruppen)
+Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren.
 
 ### Wie können wir uns als Gruppe bei Openki anmelden?
 Jede Benutzerin kann unter ihren Account-Einstellungen eine Gruppe erstellen. [https://openki.net/group/create](https://openki.net/group/create)
+<!-- TODO:
+### Wie kann ich einen Kurs in meine Gruppe nehmen?
+
+### Wie kann ich allen Gruppenmitgliedern editierrechte auf einen Kurs geben?
+
+### Wo ist meine Gruppe auf Openki sichtbar?
+Vorerst nur als Label von promoteten Kursen
+indem ein Kurs von verschiedenen Gruppen promoted wird, verknüpfen sich Gruppen miteinander
+-->
 
 ### Können wir als Gruppe Openki-Kurse auf unserer eigenen Webseite anzeigen?
-Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genäuere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://github.com/Openki/Openki/wiki/Frames)
+Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genauere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://github.com/Openki/Openki/wiki/Frames)
 
-<!-- TODO AUSFÜHREN? -->
+
+
 
 ## Sicherheit
 <!-- TODO Verantwortung bei den Teilehmenden... -->
@@ -158,4 +180,13 @@ Openki verkauft keine Benutzer\*innendaten an Unternehmen, wir verfolgen dein Ve
 
 ### Wie sicher ist die Openki webpage?
 Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technologie, die dein Onlinebanking nutzt. Aber deine Anmeldungen an Kursen sind zum Beispiel für andere Nutzende sichtbar. Wähle daher nicht deinen echten Namen, wenn das vermeiden möchtest.
+
+
+
+
+## Technisches
+
+### Wo gibts Antworten auf technische Fragen?
+Die technische Dokumentation ist im [GithubWiki](https://github.com/Openki/Openki/wiki/) zu finden.
+
 {{/template}}

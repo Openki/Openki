@@ -64,7 +64,7 @@ export default CSSFromQuery = () => {
 					});
 				}
 			}
-		})
+		});
 	};
 
 	return self;
