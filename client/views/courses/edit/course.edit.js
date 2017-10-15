@@ -130,7 +130,15 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	isFrame: () => Template.instance().data.isFrame
+	isFrame: () => Template.instance().data.isFrame,
+
+	editBodyClasses() {
+		const classes = [];
+
+		if (Template.instance().data.isFrame) classes.push('is-frame');
+
+		return classes.join(' ');
+	}
 });
 
 
