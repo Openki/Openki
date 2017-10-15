@@ -130,8 +130,6 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	isFrame: () => Template.instance().data.isFrame,
-
 	editBodyClasses() {
 		const classes = [];
 
