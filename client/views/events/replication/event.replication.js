@@ -10,6 +10,8 @@ var replicaStartDate = function(originalDate) {
 Template.eventReplication.onCreated(function() {
 	var instance = this;
 
+	instance.busy(false);
+
 	// Store the current date selection for replication
 	// Days are stored as difference from the original day
 	instance.calcDays = new ReactiveVar([]); // calculated from the dialog
@@ -178,13 +180,13 @@ var getEventFrequency = function(instance) {
 
 Template.eventReplication.events({
 	'click .js-replicate-btn': function (event, instance) {
-		var startLocal = LocalTime.fromString(instance.data.startLocal);
-		var endLocal   = LocalTime.fromString(instance.data.endLocal);
+		const startLocal = LocalTime.fromString(instance.data.startLocal);
+		const endLocal   = LocalTime.fromString(instance.data.endLocal);
 
-		var replicaDays = instance.activeDays();
-		$.each(replicaDays, function(i, days) {
+		const replicaDays = instance.activeDays();
+		replicaDays.forEach((days, i) => {
 			/*create a new event for each time interval */
-			var replicaEvent = {
+			const replicaEvent = {
 				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
 				endLocal:   LocalTime.toString(moment(endLocal  ).add(days, 'days')),
 				title: instance.data.title,
@@ -196,25 +198,44 @@ Template.eventReplication.events({
 				replicaOf: instance.data.replicaOf || instance.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
 			};
 
-			var courseId = instance.data.courseId;
+			const courseId = instance.data.courseId;
 			if (courseId) {
 				replicaEvent.courseId = courseId;
 			}
 
 			// To create a new event, pass an empty Id
-			var eventId = '';
-
-			Meteor.call('saveEvent', eventId, replicaEvent, function(error, eventId) {
+			const eventId = '';
+			instance.busy('saving');
+			Meteor.call('saveEvent', eventId, replicaEvent, error => {
+				instance.busy(false);
 				if (error) {
 					showServerError('Replicating the event went wrong', error);
 				} else {
-					var fmtDate = LocalTime.fromString(replicaEvent.startLocal).format('LL');
-					addMessage(mf('event.replicate.success', { TITLE: replicaEvent.title, DATE: fmtDate }, 'Cloned event "{TITLE}" for {DATE}'), 'success');
+					const parentInstance = instance.parentInstance();
+					parentInstance.replicating.set(false);
+					parentInstance.collapse();
+
+					// print success message only if it's the last replica and
+					// condense it if multiple replicas have been created
+					if (i == replicaDays.length - 1) {
+						const fmtDate =
+							LocalTime
+							.fromString(replicaEvent.startLocal)
+							.format('LL');
+
+						const message = mf(
+							'event.replicate.successCondensed',
+							{ TITLE: replicaEvent.title
+							, NUM: replicaDays.length
+							, DATE: fmtDate },
+							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}'
+						);
+
+						addMessage(message, 'success');
+					}
 				}
 			});
 		});
-
-		instance.parentInstance().replicating.set(false);
 	},
 
 	'change .js-update-replicas, keyup .js-update-replicas': function(event, instance) {
@@ -228,4 +249,10 @@ Template.eventReplication.events({
 	'mouseout .js-replicate-btn': function(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
 	},
+
+	'click .js-cancel-replication'(event, instance) {
+		const parentInstance = instance.parentInstance();
+		parentInstance.replicating.set(false);
+		parentInstance.collapse();
+	}
 });

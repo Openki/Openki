@@ -81,15 +81,10 @@
 			{{#if expanded}}
 				{{> eventDeleteConfirmDialog}}
 			{{else}}
-				<div class="actions">
-					{{#if replicating}}
-						<button type="button" class="btn btn-cancel js-toggle-replication">
-							<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-							{{mf 'course.details.hideReplicationMenu' 'Cancel replication'}}
-						</button>
-					{{else}}
+				{{#unless replicating}}
+					<div class="actions">
 						{{> buttonEdit event="js-event-edit"}}
-						<button type="button" class="btn btn-edit js-toggle-replication">
+						<button type="button" class="btn btn-edit js-show-replication">
 							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 							{{mf 'course.details.repl_menu_btn' 'Repeat'}}
 						</button>
@@ -101,8 +96,8 @@
 							{{mf 'event.details.download' 'Download'}}
 						</a>
 						{{> buttonDelete event="js-expand"}}
-					{{/if}}
-				</div>
+					</div>
+				{{/unless}}
 			{{/if}}
 		{{/if}}
 	</div>
