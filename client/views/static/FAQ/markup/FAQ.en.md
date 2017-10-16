@@ -41,4 +41,7 @@ Groups are already existing organizations, communities, etc., which use Openki t
 
 We believe that education (and thus the events on Openki) should be accessible to all - regardless of one's bank account and income.
 
+
+## This page is not yet fully translated. More answers can be found in the German version of the FAQ (pls switch to German in the menue)
+
 {{/template}}
