@@ -38,8 +38,6 @@ accountTools.warnings = (instance, warnings) => {
 };
 
 /** Check a string if it is a valid email adress
-  * Consider string as valid email if it matches this pattern:
-  * (1+ characters)@(1+ characters).(1+ characters)
   *
   * @param {String} the string to be checked
   */
