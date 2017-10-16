@@ -1,3 +1,10 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
+import '/imports/AsyncTools.js';
+import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
+
 import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 // ======== DB-Model: ========
@@ -67,6 +74,19 @@ Courses = new Meteor.Collection("Courses", {
 		return _.extend(new Course(), course);
 	}
 });
+
+
+Courses.Filtering = () => Filtering(
+	{ region:     Predicates.id
+	, search:     Predicates.string
+	, group:      Predicates.string
+	, categories: Predicates.ids
+	, state:      Predicates.string
+	, needsRole:  Predicates.ids
+	, internal:   Predicates.flag
+	}
+);
+
 
 
 function addRole(course, role, user) {
@@ -188,7 +208,7 @@ mayUnsubscribe = function(operatorId, course, userId, role) {
 
 // Update list of editors
 Courses.updateGroups = function(courseId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var course = Courses.findOne(courseId);
 		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
 
@@ -215,8 +235,7 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-
-coursesFind = function(filter, limit) {
+Courses.findFilter = function(filter, limit) {
 	var find = {};
 	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
@@ -287,8 +306,8 @@ coursesFind = function(filter, limit) {
 		var searchTerms = filter.search.split(/\s+/);
 		var searchQueries = _.map(searchTerms, function(searchTerm) {
 			return { $or: [
-				{ name: { $regex: escapeRegex(searchTerm), $options: 'i' } },
-				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+				{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }
 			] };
 		});
 
@@ -496,7 +515,7 @@ Meteor.methods({
 					Courses.update(
 						{ _id: courseId },
 						{ $pull: { roles: type }},
-						checkUpdateOne
+						AsyncTools.checkUpdateOne
 					);
 
 					// HACK
@@ -515,7 +534,7 @@ Meteor.methods({
 						Courses.update(
 							{ _id: courseId },
 							{ $addToSet: { roles: type }},
-							checkUpdateOne
+							AsyncTools.checkUpdateOne
 						);
 					}
 				}
@@ -525,14 +544,14 @@ Meteor.methods({
 		if (changes.description) {
 			set.description = changes.description.substring(0, 640*1024); /* 640 k ought to be enough for everybody  -- Mao */
 			if (Meteor.isServer) {
-				set.description = saneHtml(set.description);
+				set.description = HtmlTools.saneHtml(set.description);
 			}
 		}
 
 		if (changes.categories) set.categories = changes.categories.slice(0, 20);
 		if (changes.name) {
-			set.name = saneText(changes.name).substring(0, 1000);
-			set.slug = getSlug(set.name);
+			set.name = StringTools.saneText(changes.name).substring(0, 1000);
+			set.slug = StringTools.slug(set.name);
 		}
 		if (changes.internal !== undefined) {
 			set.internal = changes.internal;
@@ -569,7 +588,7 @@ Meteor.methods({
 
 			Meteor.call('updateNextEvent', courseId);
 		} else {
-			Courses.update({ _id: courseId }, { $set: set }, checkUpdateOne);
+			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
 		}
 
 		return courseId;

@@ -22,7 +22,7 @@ Template.frameWeek.onCreated(function() {
 	});
 
 	this.autorun(function() {
-		var filter = Filtering(EventPredicates)
+		var filter = Events.Filtering()
 		             .read(Router.current().params.query)
 		             .done();
 
@@ -31,11 +31,11 @@ Template.frameWeek.onCreated(function() {
 		filterParams.after = startOfWeek.toDate();
 		filterParams.before = moment(startOfWeek).add(1, 'week').toDate();
 
-		instance.subscribe('eventsFind', filterParams, 200);
+		instance.subscribe('Events.findFilter', filterParams, 200);
 	});
 
 	this.autorun(function() {
-		var filter = Filtering(EventPredicates)
+		var filter = Events.Filtering()
 		             .read(Router.current().params.query)
 		             .done();
 
@@ -52,7 +52,7 @@ Template.frameWeek.onCreated(function() {
 
 			weekdays.push({
 				date: current,
-				dayEvents: eventsFind(filterParams, 200)
+				dayEvents: Events.findFilter(filterParams, 200)
 			});
 			current = next;
 		}

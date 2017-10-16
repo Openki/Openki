@@ -1,4 +1,6 @@
+import '/imports/startup/msgfmt.js';
 import "/imports/startup/client/clientError.js";
+import "/imports/startup/client/ical.js";
 import "/imports/RegionSelection.js";
 import { UpdateViewportWidth } from '/imports/ui/lib/Viewport.js';
 

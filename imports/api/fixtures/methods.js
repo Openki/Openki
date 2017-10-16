@@ -1,27 +1,25 @@
-import ensure from "./imports/ensureFixture.js";
+import ensure from "./ensureFixture.js";
+import "./Prng.js";
 
-function logResult(error, result) {
-	if (error) throw error;
-	console.log(result);
-}
+import '/imports/StringTools.js';
 
-function ifCollectionEmpty(collection, methods) {
-	if (collection.find().count() === 0) {
-		for (var method of methods) Meteor.call(method, logResult);
-	}
-}
+
+import seedrandom from 'seedrandom';
+const Prng = function(staticseed) {
+	return seedrandom(Meteor.settings.prng === "static" ? staticseed : undefined);
+};
 
 // Make a number that looks like a human chose it, favouring 2 and 5
-function humandistrib(prng) {
+const humandistrib = function(prng) {
 	var factors = [0,0,1,2,2,3,5,5];
 	return factors[Math.floor(Math.random()*factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) + (prng() > 0.5 ? humandistrib(prng) : 0);
-}
+};
 
 // Select a date that is after the given date
 // For past dates a date between the original date and the present is chosen,
 // dates closer to the original date preferred.
 // For future dates, a date between the original date and double the time between now and then is chosen.
-var sometimesAfter = function(date) {
+const sometimesAfter = function(date) {
 	var prng = Prng("sometimesAfter");
 
 	// Seconds between then and now
@@ -35,19 +33,10 @@ var sometimesAfter = function(date) {
 };
 
 
-// Unfortunately we can't make this package debugOnly because the integration
+// Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
-
-Meteor.startup(function() {
-	ifCollectionEmpty(Regions, [ 'fixtures.regions.create' ]);
-	ifCollectionEmpty(Groups,  [ 'fixtures.groups.create' ]);
-	ifCollectionEmpty(Venues,  [ 'fixtures.venues.create' ]);
-	ifCollectionEmpty(Courses, [ 'fixtures.courses.create' ]);
-	ifCollectionEmpty(Events,  [ 'fixtures.events.create', 'fixtures.events.generate' ]);
-	ifCollectionEmpty(CourseDiscussions, [ 'fixtures.comments.generate' ]);
-});
 
 Meteor.methods({
 	'fixtures.clean': function() {
@@ -59,7 +48,7 @@ Meteor.methods({
 	},
 
 	'fixtures.regions.create': function() {
-		var regions = require("./imports/region.fixtures.js").default;
+		var regions = require("./data/region.fixtures.js").default;
 
 		for (var region of regions) {
 			if (region.loc) {
@@ -73,7 +62,7 @@ Meteor.methods({
 	},
 
 	'fixtures.groups.create': function() {
-		var groups = require("./imports/group.fixtures.js").default;
+		var groups = require("./data/group.fixtures.js").default;
 
 		for (var group of groups) {
 			group.createdby = 'ServerScript_loadingTestgroups';
@@ -90,7 +79,7 @@ Meteor.methods({
 	},
 
 	'fixtures.events.create': function() {
-		var events = require("./imports/event.fixtures.js").default;
+		var events = require("./data/event.fixtures.js").default;
 
 		// These events are most useful if they show up in the calendar for the
 		// current week, so we move them from their original day into this
@@ -138,7 +127,7 @@ Meteor.methods({
 	},
 
 	'fixtures.venues.create': function() {
-		var venues = require("./imports/venue.fixtures.js").default;
+		var venues = require("./data/venue.fixtures.js").default;
 
 		var prng = Prng("loadLocations");
 
@@ -164,7 +153,7 @@ Meteor.methods({
 
 
 	'fixtures.courses.create': function() {
-		var courses = require("./imports/course.fixtures.js").default;
+		var courses = require("./data/course.fixtures.js").default;
 
 		var prng = Prng("createCourses");
 
@@ -175,7 +164,7 @@ Meteor.methods({
 
 			course.createdby = ensure.user(course.createdby)._id;
 
-			course.slug = getSlug(course.name);
+			course.slug = StringTools.slug(course.name);
 			course.internal = !!course.internal;
 
 			course._id = ensure.fixedId([ course.name, course.description ]);

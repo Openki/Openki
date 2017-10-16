@@ -1,3 +1,5 @@
+import '/imports/StringTools.js';
+
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
@@ -350,7 +352,7 @@ Template.registerHelper('isNull', function(val) {
 
 Template.registerHelper('courseURL', function(_id) {
 	var course=Courses.findOne(_id);
-	var name = getSlug(course.name);
+	var name = StringTools.slug(course.name);
 	return '/course/' + _id + '/' + name;
 });
 

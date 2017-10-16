@@ -1,3 +1,8 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
+import '/imports/HtmlTools.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -8,7 +13,13 @@
 // ===========================
 
 Groups = new Meteor.Collection("Groups");
-GroupLib = {};
+
+Groups.Filtering = () => Filtering(
+	{ tags: Predicates.ids
+	}
+);
+
+
 
 /* Find groups for given filters
  *
@@ -18,7 +29,7 @@ GroupLib = {};
  *   tags: Group must have all of the given tags
  *
  */
-GroupLib.find = function(filter) {
+Groups.findFilter = function(filter) {
 	var find = {};
 
 	if (filter.own) {
@@ -40,6 +51,8 @@ GroupLib.find = function(filter) {
 
 	return Groups.find(find);
 };
+
+GroupLib = {};
 
 GroupLib.isMember = function(userId, groupId) {
 	check(userId, String);
@@ -102,7 +115,7 @@ Meteor.methods({
 		if (changes.hasOwnProperty('description')) {
 			updates.description = changes.description.substring(0, 640*1024);
 			if (Meteor.isServer) {
-				updates.description = saneHtml(updates.description);
+				updates.description = HtmlTools.saneHtml(updates.description);
 			}
 		}
 
