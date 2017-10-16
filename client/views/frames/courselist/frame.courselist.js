@@ -22,12 +22,12 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 
 	this.autorun(() => {
 		const filter =
-			Filtering(CoursePredicates)
+			Courses.Filtering()
 				.read(urlQuery)
 				.done();
 
 		this.subscribe(
-			'coursesFind',
+			'Courses.findFilter',
 			filter.toParams(),
 			this.limit.get() + 1
 		);
