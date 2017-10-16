@@ -9,7 +9,7 @@ export default Api =
 		}
 	, venues:
 		(filter) => {
-			var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
+			var venueQuery = Venues.Filtering().readAndValidate(filter).done().toQuery();
 			return Venues.find(venueQuery).map(venue => {
 				venue.link = Router.url('venueDetails', venue);
 				return venue;
