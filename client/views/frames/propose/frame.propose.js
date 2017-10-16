@@ -1,4 +1,5 @@
 import Metatags from '/imports/Metatags.js';
+import '/imports/Predicates.js';
 
 Router.map(function () {
 	this.route('framePropose', {
@@ -7,12 +8,9 @@ Router.map(function () {
 		layoutTemplate: 'frameLayout',
 		waitOn: () => Meteor.subscribe('regions'),
 		data: function() {
-			// HACK: Fix up predicates for our use
-			// They are not currently exported so we use
-			// CoursePredicates.region instead of Predicates.id.
 			const predicates =
-				{ region: CoursePredicates.region
-				, group: CoursePredicates.region
+				{ region: Predicates.id
+				, group: Predicates.id
 				};
 
 			const params = Filtering(predicates).read(this.params.query).done();
