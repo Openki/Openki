@@ -1,5 +1,3 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
-
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
@@ -113,12 +111,7 @@ Meteor.methods({
 
 		var user = Meteor.user();
 		if (!user) {
-			if (Meteor.is_client) {
-				PleaseLogin();
-				return;
-			} else {
-				throw new Meteor.Error(401, "please log in");
-			}
+			throw new Meteor.Error(401, "please log in");
 		}
 
 		var venue;
