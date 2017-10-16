@@ -1,5 +1,5 @@
 var makeFilterQuery = function(params) {
-	var filter = Filtering(EventPredicates).read(params).done();
+	var filter = Events.Filtering().read(params).done();
 
 	var query = filter.toQuery();
 
@@ -21,7 +21,7 @@ Router.map(function () {
 		path: '/kiosk/timetable',
 		layoutTemplate: 'timetableLayout',
 		waitOn: function () {
-			return subs.subscribe('eventsFind', makeFilterQuery(this.params && this.params.query), 200);
+			return subs.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
 		},
 		data: function() {
 			var query = makeFilterQuery(this.params.query);
@@ -29,7 +29,7 @@ Router.map(function () {
 			var start;
 			var end;
 
-			var events = eventsFind(query, 200).fetch();
+			var events = Events.findFilter(query, 200).fetch();
 
 			// collect time when first event starts and last event ends
 			events.forEach(function(event) {

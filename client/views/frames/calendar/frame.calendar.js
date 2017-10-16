@@ -25,14 +25,14 @@ Template.frameCalendar.onCreated(function() {
 	instance.days = new ReactiveVar([]);
 
 	instance.autorun(function() {
-		var filter = Filtering(EventPredicates)
+		var filter = Events.Filtering()
 		             .read(Router.current().params.query)
 		             .done();
 
 		var filterParams = filter.toParams();
 		filterParams.after = new Date();
 
-		instance.subscribe('eventsFind', filterParams, 200);
+		instance.subscribe('Events.findFilter', filterParams, 200);
 
 		var events = Events.find({}, {sort: {start: 1}}).fetch();
 		var groupedEvents = _.groupBy(events, function(event) {

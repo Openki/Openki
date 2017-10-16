@@ -1,4 +1,5 @@
 import '/imports/notification/Notification.js';
+import '/imports/StringTools.js';
 
 // ======== DB-Model: ========
 // "_id"          -> ID
@@ -26,8 +27,8 @@ mayEditPost = function(user, post){
 
 var sanitizeComment = function(comment) {
 	return {
-		title: saneText(comment.title).substr(0, 200).trim(),
-		text: saneText(comment.text).substr(0, 640*1024).trim(),
+		title: StringTools.saneText(comment.title).substr(0, 200).trim(),
+		text: StringTools.saneText(comment.text).substr(0, 640*1024).trim(),
 	};
 };
 

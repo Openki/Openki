@@ -13,10 +13,8 @@ reactive-var@1.0.11
 accounts-github@1.3.0
 service-configuration@1.0.11
 mediumeditor:mediumeditor
-djedi:sanitize-html
 accounts-facebook@1.2.1
 archive:jquery-dotdotdot
-ical
 rzymek:moment-locale-ar
 rzymek:moment-locale-de
 rzymek:moment-locale-es
