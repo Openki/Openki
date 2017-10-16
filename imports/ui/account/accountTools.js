@@ -43,4 +43,7 @@ accountTools.warnings = (instance, warnings) => {
   *
   * @param {String} the string to be checked
   */
-accountTools.isEmail = str => str.search(/^[^@\s]+@[^@.\s]+\.\w+$/g) >= 0;
+accountTools.isEmail = str => {
+	check(str, String);
+	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
+};
