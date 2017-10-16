@@ -18,8 +18,10 @@ Accounts.onCreateUser(function(options, user) {
 	}
 
 	// We're not picky and try assigning a name no questions asked
-	user.username = username || name;
-	user.profile.name = name || username;
+	const anyName = username || name;
+	if (anyName) {
+		user.username = anyName;
+	}
 
 	if (!user.privileges) {
 		user.privileges = [];
