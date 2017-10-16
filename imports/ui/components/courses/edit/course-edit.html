@@ -148,6 +148,15 @@
 					</div>
 				{{/if}}
 
+				{{#if showSignupField}}
+					<div class="form-group">
+						<label>{{mf 'course.edit.emailSignup' 'Plz gimme mail-address'}}</label>
+						<input class="form-control input-lg js-email-signup"
+							placeholder="{{mf 'course.edit.emailSignup.placeholder' 'Send me spam'}}"
+							type="text" />
+					</div>
+				{{/if}}
+
 				<div class="form-actions">
 					{{> buttonSave event="js-course-edit-save" saving=saving}}
 					{{#unless isFrame}}

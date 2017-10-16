@@ -9,6 +9,8 @@ import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 
+import { IsEmail, PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 import '/imports/StringTools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
@@ -232,6 +234,10 @@ Template.courseEdit.helpers({
 		if (Template.instance().data.isFrame) classes.push('is-frame');
 
 		return classes.join(' ');
+	},
+
+	showSignupField() {
+		return !this._id && !Meteor.userId();
 	}
 });
 
@@ -243,6 +249,16 @@ Template.courseEdit.events({
 
 	'submit form, click .js-course-edit-save'(event, instance) {
 		event.preventDefault();
+
+		const emailSignup = instance.$('.js-email-signup').val();
+		if (emailSignup) {
+			if (!IsEmail(emailSignup)) {
+				alert(mf("course.edit.emailSignup.fixEmail", "Please provide a valid email-address."));
+				return;
+			}
+		} else {
+			if (PleaseLogin()) return;
+		}
 
 		const roles = {};
 		instance.$('.js-check-role').each(function() {
@@ -285,6 +301,10 @@ Template.courseEdit.events({
 				groups.push(data.group);
 			}
 			changes.groups = groups;
+
+			if (emailSignup) {
+				changes.emailSignup = emailSignup;
+			}
 		}
 
 		instance.busy('saving');

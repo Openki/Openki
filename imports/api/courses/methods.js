@@ -17,7 +17,7 @@ import '/imports/AsyncTools.js';
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';
 
-import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { PleaseLogin, IsEmail } from '/imports/ui/lib/please-login.js';
 
 function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
@@ -131,20 +131,30 @@ Meteor.methods({
 			roles:       Match.Optional(Object),
 			groups:      Match.Optional([String]),
 			internal:    Match.Optional(Boolean),
+			emailSignup: Match.Optional(String),
 		});
 
-		var user = Meteor.user();
-		if (!user) {
-			if (Meteor.is_client) {
-				PleaseLogin();
-				return;
+		const isNew = courseId.length === 0;
+		let createVisitor = false;
+
+		 if (!user) {
+			if (isNew && changes.emailSignup) {
+				if (!IsEmail(changes.emailSignup)) {
+					throw new Meteor.Error(400, "email address not accepted");
+				}
+				user = {};
+				createVisitor = true;
 			} else {
-				throw new Meteor.Error(401, "please log in");
+				if (Meteor.isClient) {
+					PleaseLogin();
+					return;
+				} else {
+					throw new Meteor.Error(401, "please log in");
+				}
 			}
 		}
 
 		var course;
-		var isNew = courseId.length === 0;
 		if (isNew) {
 			course = new Course();
 		} else {
@@ -228,14 +238,23 @@ Meteor.methods({
 			if (!region) throw new Meteor.Error(404, 'region missing');
 			set.region = region._id;
 
+			let userId;
+			if (createVisitor) {
+				if (Meteor.isClient) return; // Don't attempt simulating creating a visitor user
+				userId = Accounts.createUser({ email: changes.emailSignup });
+				Accounts.sendEnrollmentEmail(userId);
+			} else {
+				userId = user._id;
+			}
+
 			/* When a course is created, the creator is automatically added as sole member of the team */
 			set.members = [{
-				user: user._id,
+				user: userId,
 				roles: ['participant', 'team'],
 				comment: mf('courses.creator.defaultMessage', '(has proposed this course)')}
 			];
-			set.editors = [user._id];
-			set.createdby = user._id;
+			set.editors = [userId];
+			set.createdby = userId;
 			set.time_created = new Date();
 			courseId = Courses.insert(set);
 
