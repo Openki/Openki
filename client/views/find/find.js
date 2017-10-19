@@ -1,5 +1,6 @@
 import Metatags from '/imports/Metatags.js';
 import '/imports/ui/FilterPreview.js';
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
 
 function finderRoute(path) {
 	return {
@@ -94,7 +95,7 @@ Template.find.onCreated(function() {
 	instance.courseLimit = new ReactiveVar(36);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
-	var filter = Filtering(CoursePredicates);
+	var filter = Courses.Filtering();
 	instance.filter = filter;
 
 	// Read URL state
@@ -123,7 +124,7 @@ Template.find.onCreated(function() {
 		// Add one to the limit so we know there is more to show
 		var limit = instance.courseLimit.get() + 1;
 
-		subs.subscribe('coursesFind', filterQuery, limit, function() {
+		subs.subscribe('Courses.findFilter', filterQuery, limit, function() {
 			instance.coursesReady.set(true);
 		});
 
@@ -132,7 +133,7 @@ Template.find.onCreated(function() {
 		// We show events only when they're not attached to a course
 		eventQuery.standalone = true;
 		eventQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', eventQuery, 12);
+		instance.subscribe('Events.findFilter', eventQuery, 12);
 	});
 });
 
@@ -241,7 +242,7 @@ Template.find.helpers({
 
 	'hasResults': function() {
 		var filterQuery = Template.instance().filter.toQuery();
-		var results = coursesFind(filterQuery, 1);
+		var results = Courses.findFilter(filterQuery, 1);
 
 		return results.count() > 0;
 	},
@@ -252,7 +253,7 @@ Template.find.helpers({
 
 		var filterQuery = instance.filter.toQuery();
 		var limit = instance.courseLimit.get();
-		var results = coursesFind(filterQuery, limit+1);
+		var results = Courses.findFilter(filterQuery, limit+1);
 
 		return results.count() > limit;
 	},
@@ -261,7 +262,7 @@ Template.find.helpers({
 		var instance = Template.instance();
 		var filterQuery = instance.filter.toQuery();
 
-		return coursesFind(filterQuery, instance.courseLimit.get());
+		return Courses.findFilter(filterQuery, instance.courseLimit.get());
 	},
 
 
@@ -269,7 +270,7 @@ Template.find.helpers({
 		var filterQuery = Template.instance().filter.toQuery();
 		filterQuery.standalone = true;
 		filterQuery.after = minuteTime.get();
-		return eventsFind(filterQuery, 12);
+		return Events.findFilter(filterQuery, 12);
 	},
 
 	'ready': function() {
@@ -297,7 +298,6 @@ Template.find.helpers({
 	},
 
 	'isMobile': function() {
-		var screenXS = SCSSVars.screenXS;
-		return Session.get('viewportWidth') <= screenXS;
+		return Session.get('viewportWidth') <= ScssVars.screenXS;
 	}
 });

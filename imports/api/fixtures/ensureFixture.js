@@ -1,4 +1,5 @@
-var crypto = Npm.require('crypto');
+import crypto from 'crypto';
+import './Prng.js';
 
 export default ensure = {
 	'fixedId': function(strings) {

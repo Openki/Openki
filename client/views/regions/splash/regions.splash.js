@@ -1,3 +1,5 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 Template.regionsSplash.onRendered(function () {
 	this.$('#regionsSplash').modal('show');
 });
@@ -20,7 +22,7 @@ Template.regionsSplash.events({
 		instance.$('#regionsSplash').modal('hide');
 
 		var viewportWidth = Session.get('viewportWidth');
-		var screenSM = SCSSVars.screenSM;
+		var screenSM = ScssVars.screenSM;
 		if (viewportWidth <= screenSM) {
 			$('.collapse').collapse('show');
 		}

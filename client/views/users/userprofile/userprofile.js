@@ -1,3 +1,5 @@
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser: function () {
@@ -143,7 +145,7 @@ Template.emailBox.events({
 
 	'submit form.sendMail': function (event, template) {
 		event.preventDefault();
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var rec_user_id = this.user._id;
 		var rec_user = Meteor.users.findOne({_id:rec_user_id});

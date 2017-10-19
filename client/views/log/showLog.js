@@ -38,7 +38,7 @@ Template.showLog.onCreated(function() {
 	instance.ready = new ReactiveVar(false);
 	instance.limit = new ReactiveVar(batchLoad);
 
-	var filter = Filtering(LogPredicates);
+	var filter = Log.Filtering();
 	instance.filter = filter;
 
 	// Read URL state

@@ -14,7 +14,7 @@ Router.map(function () {
 Template.calendar.onCreated(function() {
 	var instance = this;
 
-	var filter = Filtering(EventPredicates);
+	var filter = Events.Filtering();
 	instance.filter = filter;
 
 	// Read URL state
@@ -41,7 +41,7 @@ Template.calendar.onCreated(function() {
 		var limit = filter.get('start').add(1, 'week').toDate();
 
 		filterQuery.period = [start, limit];
-		instance.eventSub = subs.subscribe('eventsFind', filterQuery);
+		instance.eventSub = subs.subscribe('Events.findFilter', filterQuery);
 
 	});
 });
@@ -87,13 +87,13 @@ Template.calendarDay.helpers({
 		var filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
-		return eventsFind(filterQuery).count() > 0;
+		return Events.findFilter(filterQuery).count() > 0;
 	},
 	events: function() {
 		var filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
-		return eventsFind(filterQuery);
+		return Events.findFilter(filterQuery);
 	},
 	calendarDay: function(day) {
 		Session.get('timeLocale');

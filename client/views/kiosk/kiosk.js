@@ -7,7 +7,7 @@ Router.map(function () {
 		waitOn: function () {
 			var now = minuteTime.get(); // Time dependency so this will be reactively updated
 
-			this.filter = Filtering(EventPredicates).read(this.params.query).done();
+			this.filter = Events.Filtering().read(this.params.query).done();
 			Session.set('kioskFilter', this.filter.toParams());
 
 			var queryFuture = this.filter.toParams();
@@ -17,8 +17,8 @@ Router.map(function () {
 			queryOngoing.ongoing = now;
 
 			return [
-				subs.subscribe('eventsFind', queryFuture, 20),
-				subs.subscribe('eventsFind', queryOngoing),
+				subs.subscribe('Events.findFilter', queryFuture, 20),
+				subs.subscribe('Events.findFilter', queryOngoing),
 			];
 		},
 
@@ -41,9 +41,9 @@ Router.map(function () {
 			var filterParams = this.filter.toParams();
 
 			return {
-				today: eventsFind(queryToday, 20),
-				future: eventsFind(queryFuture, 10),
-				now: eventsFind(queryNow),
+				today: Events.findFilter(queryToday, 20),
+				future: Events.findFilter(queryFuture, 10),
+				now: Events.findFilter(queryNow),
 				filter: filterParams
 			};
 		},

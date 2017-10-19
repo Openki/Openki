@@ -1,3 +1,7 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import '/imports/StringTools.js';
+
+
 Template.languageSelectionWrap.created = function() {
 	 var instance = this;
 	 instance.searchingLanguages = new ReactiveVar(false);
@@ -30,23 +34,29 @@ Template.languageSelection.helpers({
 		return Languages[Session.get('locale')];
 	},
 
-	languages: function() {
-		var search = Template.instance().languageSearch.get();
-		var query = search.toLowerCase();
+	languages() {
+		const search = Template.instance().languageSearch.get().toLowerCase();
+		const results = [];
 
-		var results = {};
-		for (var language in Languages) {
-			if (Languages[language].name.toLowerCase().indexOf(query) >= 0) {
-				results[Languages[language].lg] = Languages[language];
-			}
+		for (const key in Languages) {
+			const language = Languages[key];
+			let pushed = false;
+			[language.name, language.english].forEach(property => {
+				if (pushed) return;
+				if (property.toLowerCase().indexOf(search) >= 0) {
+					results.push(language);
+					pushed = true;
+				}
+			});
 		}
-		return _.values(results);
+
+		return results;
 	},
 
 	languageNameMarked: function() {
 		var search = Template.instance().languageSearch.get();
 		var name = this.name;
-		return markedName(search, name);
+		return StringTools.markedName(search, name);
 	},
 
 	currentLanguage: function() {
@@ -85,7 +95,7 @@ Template.languageSelection.events({
 	'focus .js-language-search': function(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
+		var screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
@@ -104,7 +114,7 @@ Template.languageSelection.onRendered(function() {
 	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= SCSSVars.screenSM && viewportWidth <= SCSSVars.screenMD;
+		var screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();

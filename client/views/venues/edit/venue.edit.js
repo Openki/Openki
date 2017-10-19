@@ -1,4 +1,5 @@
 "use strict";
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 Template.venueEdit.onCreated(function() {
 	var instance = this;
@@ -127,7 +128,7 @@ Template.venueEdit.events({
 		event.preventDefault();
 
 
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var changes =
 			{ name:            instance.$('.js-name').val()

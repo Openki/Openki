@@ -1,3 +1,5 @@
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);
 };
@@ -34,7 +36,7 @@ Template.courseRole.helpers({
 
 Template.courseRole.events({
 	'click .js-role-enroll-btn': function(e, template) {
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 		template.enrolling.set(true);
 		return false;
 	},

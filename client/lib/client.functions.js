@@ -1,3 +1,5 @@
+import '/imports/StringTools.js';
+
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
@@ -92,35 +94,6 @@ userName = function() {
 /* Go to the same page removing query parameters */
 goBase = function() {
 	Router.go(Router.current().route.name, Router.current().params); // Shirely, you know of a better way?
-};
-
-
-pleaseLogin = function() {
-	if (Meteor.userId()) return false;
-	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
-	return true;
-};
-
-markedName = function(search, name) {
-	if (search === '') return name;
-	var match = name.match(new RegExp(search, 'i'));
-
-	// To add markup we have to escape all the parts separately
-	var marked;
-	if (match) {
-		var term = match[0];
-		var parts = name.split(term);
-		marked = _.map(parts, Blaze._escape).join('<strong>'+Blaze._escape(term)+'</strong>');
-	} else {
-		marked = Blaze._escape(name);
-	}
-	return Spacebars.SafeString(marked);
-};
-
-getViewportWidth = function() {
-	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	Session.set('viewportWidth', viewportWidth);
 };
 
 showServerError = function(message, err) {
@@ -379,7 +352,7 @@ Template.registerHelper('isNull', function(val) {
 
 Template.registerHelper('courseURL', function(_id) {
 	var course=Courses.findOne(_id);
-	var name = getSlug(course.name);
+	var name = StringTools.slug(course.name);
 	return '/course/' + _id + '/' + name;
 });
 

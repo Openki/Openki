@@ -1,12 +1,10 @@
-export default accountTools = {};
-
 /** Setup (re-)setting of login/register warnings for a template
   *
   * @param {Object} instance
   * @param {Object} warnings - an object containing objects obtaining the different
   *                            warning messages, for each possible error
   */
-accountTools.warnings = (instance, warnings) => {
+export const SetupWarnings = (instance, warnings) => {
 	instance.hasWarning = new ReactiveVar(false);
 
 	instance.setWarning = key => {
@@ -41,7 +39,14 @@ accountTools.warnings = (instance, warnings) => {
   *
   * @param {String} the string to be checked
   */
-accountTools.isEmail = str => {
+export const IsEmail = str => {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
+};
+
+export const PleaseLogin = () => {
+	if (Meteor.userId()) return false;
+	Session.set('pleaseLogin', true);
+	$('#accountTasks').modal('show');
+	return true;
 };

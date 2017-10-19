@@ -1,5 +1,14 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
+
+import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
+import '/imports/AsyncTools.js';
+
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -58,6 +67,23 @@ Events = new Meteor.Collection("Events", {
 	}
 });
 
+Events.Filtering = () => Filtering(
+	{ course:     Predicates.id
+	, region:     Predicates.id
+	, search:     Predicates.string
+	, categories: Predicates.ids
+	, group:      Predicates.id
+	, groups:     Predicates.ids
+	, venue:      Predicates.string
+	, room:       Predicates.string
+	, start:      Predicates.date
+	, before:     Predicates.date
+	, after:      Predicates.date
+	, end:        Predicates.date
+	, internal:   Predicates.flag
+	}
+);
+
 
 affectedReplicaSelectors = function(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
@@ -87,7 +113,7 @@ affectedReplicaSelectors = function(event) {
 
 // Sync venue fields of the event document
 updateEventVenue = function(eventId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
@@ -136,7 +162,7 @@ updateEventVenue = function(eventId) {
   * @param {eventId} the event to update
   */
 Events.updateGroups = function(eventId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var event = Events.findOne(eventId);
 		if (!event) return true; // Nothing was successfully updated, we're done.
 
@@ -148,7 +174,7 @@ Events.updateGroups = function(eventId) {
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		var courseGroups = [];
 		if (event.courseId) {
-			course = Courses.findOne(event.courseId);
+			const course = Courses.findOne(event.courseId);
 			if (!course) throw new Exception("Missing course " + event.courseId + " for event " + event._id);
 
 			courseGroups = course.groups;
@@ -209,7 +235,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		if (!user) {
 			if (Meteor.isClient) {
-				pleaseLogin();
+				PleaseLogin();
 				return;
 			} else {
 				throw new Meteor.Error(401, "please log in");
@@ -301,12 +327,12 @@ Meteor.methods({
 
 
 		if (Meteor.isServer) {
-			changes.description = saneHtml(changes.description);
+			changes.description = HtmlTools.saneHtml(changes.description);
 		}
 
 		if (changes.title) {
-			changes.title = saneText(changes.title).substring(0, 1000);
-			changes.slug = getSlug(changes.title);
+			changes.title = StringTools.saneText(changes.title).substring(0, 1000);
+			changes.slug = StringTools.slug(changes.title);
 		}
 
 		if (isNew) {
@@ -333,12 +359,12 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 
-			Meteor.call('updateEventVenue', eventId, logAsyncErrors);
-			Meteor.call('event.updateGroups', eventId, logAsyncErrors);
-			Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
+			Meteor.call('updateEventVenue', eventId, AsyncTools.logErrors);
+			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
+			Meteor.call('updateRegionCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
-			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, logAsyncErrors);
+			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, AsyncTools.logErrors);
 		}
 
 		return eventId;
@@ -357,7 +383,7 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
-		Meteor.call('updateRegionCounters', event.region, logAsyncErrors);
+		Meteor.call('updateRegionCounters', event.region, AsyncTools.logErrors);
 	},
 
 
@@ -423,7 +449,7 @@ Meteor.methods({
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-eventsFind = function(filter, limit) {
+Events.findFilter = function(filter, limit) {
 	var find = {};
 	var and = [];
 	var options = {
@@ -506,8 +532,8 @@ eventsFind = function(filter, limit) {
 		var searchTerms = filter.search.split(/\s+/);
 		searchTerms.forEach(function(searchTerm) {
 			and.push({ $or: [
-				{ title: { $regex: escapeRegex(searchTerm), $options: 'i' } },
-				{ description: { $regex: escapeRegex(searchTerm), $options: 'i' } }
+				{ title: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }
 			] });
 		});
 	}

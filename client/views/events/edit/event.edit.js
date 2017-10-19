@@ -5,6 +5,7 @@
 // wouldn't want the time or even date field to change because of this switch.
 
 import '/imports/LocalTime.js';
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
 
 Template.eventEdit.onCreated(function() {
 	var instance = this;
@@ -219,7 +220,7 @@ Template.eventEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var start = getEventStartMoment(instance);
 		if(!start.isValid()) {

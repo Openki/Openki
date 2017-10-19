@@ -1,4 +1,7 @@
 
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import '/imports/StringTools.js';
+
 Template.courseEdit.created = function() {
 	var instance = this;
 
@@ -19,6 +22,10 @@ Template.courseEdit.created = function() {
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
 	});
+
+	if (instance.data.group) {
+		instance.subscribe('group', instance.data.group);
+	}
 };
 
 Template.courseEdit.helpers({
@@ -74,6 +81,13 @@ Template.courseEdit.helpers({
 		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
+	showRegionSelection: function() {
+		// Region can be set for new courses only.
+		// For the proposal frame we hide the region selection when a region
+		// is set.
+		return !this._id && !(this.region && this.isFrame);
+	},
+
 	regions: function() {
 		return Regions.find();
 	},
@@ -96,7 +110,7 @@ Template.courseEdit.helpers({
 		if (!search) return false;
 
 		var filterQuery = filter.toQuery();
-		var results = coursesFind(filterQuery, 1);
+		var results = Courses.findFilter(filterQuery, 1);
 
 		return (results.count() === 0) && search;
 	},
@@ -113,8 +127,8 @@ Template.courseEdit.helpers({
 	},
 
 	newCourseGroupName: function () {
-		if (this.groups && this.groups.length > 0) {
-			var groupId = this.groups[0];
+		if (this.group) {
+			var groupId = this.group;
 			var group = Groups.findOne(groupId);
 			if (group) return group.name;
 		}
@@ -129,7 +143,13 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	isFrame: () => Template.instance().data.isFrame
+	editBodyClasses() {
+		const classes = [];
+
+		if (Template.instance().data.isFrame) classes.push('is-frame');
+
+		return classes.join(' ');
+	}
 });
 
 
@@ -138,7 +158,7 @@ Template.courseEdit.events({
 		ev.preventDefault();
 
 
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 
 		var course = instance.data;
 		var courseId = course._id ? course._id : '';
@@ -159,7 +179,7 @@ Template.courseEdit.events({
 		var newDescription = instance.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
-		changes.name = saneText(changes.name);
+		changes.name = StringTools.saneText(changes.name);
 
 		if (changes.name.length === 0) {
 			alert("Please provide a title");
@@ -167,15 +187,21 @@ Template.courseEdit.events({
 		}
 
 		if (isNew) {
-			changes.region = instance.$('.region_select').val();
+			const data = instance.data;
+			if (data.isFrame && data.region) {
+				// The region was preset for the frame
+				changes.region = data.region;
+			} else {
+				changes.region = instance.$('.region_select').val();
+			}
 			if (!changes.region) {
 				alert("Please select a region");
 				return;
 			}
 
 			var groups = [];
-			if (Router.current().params.query.group) {
-				groups.push(Router.current().params.query.group);
+			if (data.group) {
+				groups.push(data.group);
 			}
 			changes.groups = groups;
 		}

@@ -2,15 +2,15 @@
 /* jshint expr:true */
 
 import { expect } from 'meteor/practicalmeteor:chai';
-import './accountTools.js';
+import { IsEmail } from './AccountTools.js';
 
 // This should not be here
 msgfmt.init('en');
 
 describe('Email validation', function() {
-	const isEmail = str => expect(accountTools.isEmail(str)).to.be.true;
-	const isNotEmail = str => expect(accountTools.isEmail(str)).to.be.false;
-	const fails = notaString => expect(() => accountTools.isEmail(notaString)).to.throw();
+	const isEmail = str => expect(IsEmail(str)).to.be.true;
+	const isNotEmail = str => expect(IsEmail(str)).to.be.false;
+	const fails = notaString => expect(() => IsEmail(notaString)).to.throw();
 
 	it("accepts normal emails", function() {
 		isEmail("Jah7reix.poo0Ooz0@geemail.com");
