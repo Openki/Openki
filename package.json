@@ -1,6 +1,6 @@
 {
   "name": "openki",
-  "version": "0.5.1",
+  "version": "0.6.2",
   "description": "CourseOragnisationPlatform",
   "main": "server/start.js",
   "directories": {
@@ -10,8 +10,13 @@
     "babel-runtime": "^6.26.0",
     "bcrypt": "^0.8.7",
     "bson": "^0.5.6",
+    "events": "^1.1.1",
+    "ical-generator": "^0.2.10",
     "isomorphic-unfetch": "^2.0.0",
+    "meteor-node-stubs": "^0.2.11",
     "moment-timezone": "^0.5.11",
+    "sanitize-html": "^1.14.1",
+    "seedrandom": "^2.4.3",
     "shariff": "^1.26.2",
     "url": "^0.11.0"
   },
@@ -21,9 +26,9 @@
     "selenium-webdriver": "3.0.0-beta-2"
   },
   "scripts": {
-    "dev": "meteor --settings settings.dev.json --extra-packages fixtures",
+    "dev": "meteor --settings settings.dev.json",
     "test": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
-    "test-app": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --full-app --once --driver-package meteortesting:mocha",
     "js-lint": "jshint"
   },
   "repository": {

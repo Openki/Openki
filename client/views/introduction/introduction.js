@@ -1,3 +1,5 @@
+import { ScssVars } from '/imports/ui/lib/Viewport.js';
+
 Template.introduction.onRendered(function() {
 	if (!Assistant.openedIntro()) {
 		this.$('.introduction-content').hide();
@@ -14,7 +16,7 @@ Template.introduction.onRendered(function() {
 
 	// use $screen-xxs (from scss) to compare with the width of window
 	var viewportWidth = Session.get('viewportWidth');
-	var screenXXS = SCSSVars.screenXXS;
+	var screenXXS = ScssVars.screenXXS;
 	if (viewportWidth < screenXXS) {
 		Assistant.closeIntro();
 		// dont wait for slideUp
@@ -43,9 +45,9 @@ Template.introduction.helpers({
 		var viewportWidth = Session.get('viewportWidth');
 		var screenSize = '';
 
-		if (viewportWidth < SCSSVars.screenMD && viewportWidth > SCSSVars.screenSM) {
+		if (viewportWidth < ScssVars.screenMD && viewportWidth > ScssVars.screenSM) {
 			screenSize = "screenSM";
-		} else if (viewportWidth < SCSSVars.screenSM && viewportWidth > SCSSVars.screenXXS) {
+		} else if (viewportWidth < ScssVars.screenSM && viewportWidth > ScssVars.screenXXS) {
 			screenSize = "screenXS";
 		}
 

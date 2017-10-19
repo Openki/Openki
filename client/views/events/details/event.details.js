@@ -1,3 +1,7 @@
+import '/imports/IdTools.js';
+
+import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+
 // routing is in /routing.js
 
 Template.event.onCreated(function() {
@@ -77,7 +81,7 @@ Template.event.events({
 	},
 
 	'click .js-event-edit': function (event, instance) {
-		if (pleaseLogin()) return;
+		if (PleaseLogin()) return;
 		instance.editing.set(true);
 	},
 });
@@ -94,7 +98,7 @@ Template.eventDisplay.events({
 
 Template.eventGroupList.helpers({
 	'isOrganizer': function() {
-		return Template.instance().data.editors.indexOf(_id(this)) >= 0;
+		return Template.instance().data.editors.indexOf(IdTools.extract(this)) >= 0;
 	},
 	'tools': function() {
 		var tools = [];

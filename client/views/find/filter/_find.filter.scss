@@ -85,15 +85,17 @@ $filter-course-states-sm-column: 6;
 	@include make-md-column($filter-course-states-sm-column);
 }
 
+$filter-course-state-captions-gutter: 10px;
+
 .filter-course-state-captions {
-	@include make-row;
+	@include make-row($filter-course-state-captions-gutter);
 }
 
 .filter-captions-column {
-	@include make-xs-column(4);
+	@include make-xs-column(4, $filter-course-state-captions-gutter);
 
 	@media (max-width: $screen-xxs) {
-		@include make-xs-column(12);
+		@include make-xs-column(12, $filter-course-state-captions-gutter);
 	}
 }
 

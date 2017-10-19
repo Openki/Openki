@@ -8,7 +8,7 @@ Router.map(function () {
 });
 
 Template.frameSchedule.onCreated(function() {
-	var filter = Filtering(EventPredicates);
+	var filter = Events.Filtering();
 
 	var instance = this;
 	instance.interval = new ReactiveVar(60);
@@ -69,7 +69,7 @@ Template.frameSchedule.onCreated(function() {
 
 
 	this.autorun(function() {
-		subs.subscribe('eventsFind', filter.toQuery(), 500);
+		subs.subscribe('Events.findFilter', filter.toQuery(), 500);
 	});
 
 
@@ -90,7 +90,7 @@ Template.frameSchedule.onCreated(function() {
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
 		var dedupedEvents = [];
-		eventsFind(filter.toQuery()).forEach(function(event) {
+		Events.findFilter(filter.toQuery()).forEach(function(event) {
 			var eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
