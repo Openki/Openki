@@ -1,0 +1,30 @@
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+
+import './price-policy.html';
+
+Template.pricePolicy.helpers({
+	hidePricePolicy() {
+		const hideFlags = [
+			Session.get('hidePricePolicy'),
+			localStorage.getItem('hidePricePolicy')
+		];
+
+		const user = Meteor.user();
+		if (user) hideFlags.push(user.hidePricePolicy);
+
+		return hideFlags.filter(Boolean).length > 0;
+	}
+});
+
+Template.pricePolicyDismissable.events({
+	'click #hidePricePolicy'() {
+		Session.set('hidePricePolicy', true);
+		localStorage.setItem('hidePricePolicy', true);
+
+		// if logged in, hide the policy always for this user
+		const user = Meteor.user()
+		if (user) Meteor.call('user.hidePricePolicy', user);
+	}
+});

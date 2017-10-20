@@ -1,5 +1,7 @@
 import { ScssVars } from '/imports/ui/lib/Viewport.js';
 import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import '/imports/ui/components/price-policy/price-policy.js';
+
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {

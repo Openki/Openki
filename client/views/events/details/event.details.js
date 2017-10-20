@@ -1,4 +1,5 @@
 import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import '/imports/ui/components/price-policy/price-policy.js';
 
 // routing is in /routing.js
 
