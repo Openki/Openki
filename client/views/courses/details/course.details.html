@@ -1,3 +1,4 @@
+
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
@@ -113,6 +114,7 @@
 	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription}}
+			{{> pricePolicy wrap='course-details-price-policy'}}
 		</div>
 		<div class="tab-pane" id="history">
 			{{> coursehistory}}

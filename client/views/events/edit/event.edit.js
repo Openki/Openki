@@ -6,6 +6,7 @@
 
 import '/imports/LocalTime.js';
 import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import '/imports/ui/components/price-policy/price-policy.js';
 
 Template.eventEdit.onCreated(function() {
 	var instance = this;

@@ -1,0 +1,29 @@
+<template name="pricePolicy">
+	{{#unless hidePricePolicy}}
+		{{#if wrap}}
+			<div class="{{wrap}}">
+				{{> pricePolicyDismissable}}
+			</div>
+		{{else}}
+			{{> pricePolicyDismissable}}
+		{{/if}}
+	{{/unless}}
+</template>
+
+<template name="pricePolicyContent">
+	<div class="price-policy-content">
+		<i class="fa fa-dollar fa-fw" aria-hidden="true"></i>
+		All events on Openki shall be free.
+		Therefore prices are to be understood as <b>indicative prices</b>.
+		<span class="close">&times;</span>
+	</div>
+</template>
+
+<template name="pricePolicyDismissable">
+	{{> pricePolicyStatic}}
+	<div class="price-policy-actions">
+		<button type="button" class="btn-link" id="hidePricePolicy">
+			Don't show this anymore
+		</button>
+	</div>
+</template>

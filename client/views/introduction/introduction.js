@@ -1,4 +1,5 @@
 import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import '/imports/ui/components/price-policy/price-policy.js';
 
 Template.introduction.onRendered(function() {
 	if (!Assistant.openedIntro()) {

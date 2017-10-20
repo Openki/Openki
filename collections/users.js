@@ -258,6 +258,13 @@ Meteor.methods({
 			Users.updateBadges(user._id);
 		});
 	},
+
+	'user.hidePricePolicy'(user) {
+		Meteor.users.update(
+			{ _id: user._id },
+			{ '$set': { 'hidePricePolicy': true } }
+		);
+	}
 });
 
 if (Meteor.isServer) {
