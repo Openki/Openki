@@ -1,4 +1,4 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 // ======== DB-Model: ========
 // "_id"           -> ID

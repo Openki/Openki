@@ -1,5 +1,5 @@
 "use strict";
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 Template.groupDetails.onCreated(function() {
 	var instance = this;

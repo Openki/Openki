@@ -1,4 +1,4 @@
-import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
 
 Template.usersCourselist.onCreated(function() {
 	var instance = this;
