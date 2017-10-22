@@ -1,4 +1,4 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user

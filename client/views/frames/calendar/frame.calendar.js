@@ -1,5 +1,5 @@
 import Metatags from '/imports/Metatags.js';
-import '/imports/ui/lib/CSSFromQuery.js';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query.js';
 
 Router.map(function () {
 	this.route('frameCalendar', {
@@ -7,7 +7,7 @@ Router.map(function () {
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data: function() {
-			var cssRules = new CSSFromQuery();
+			var cssRules = new CssFromQuery();
 			cssRules.read(this.params.query);
 
 			return { cssRules: cssRules };

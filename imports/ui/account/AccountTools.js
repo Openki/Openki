@@ -42,10 +42,3 @@ export const SetupWarnings = (instance, warnings) => {
   * @param {String} the string to be checked
   */
 export const IsEmail = str => str.search(/^[^@\s]+@[^@.\s]+\.\w+$/g) >= 0;
-
-export const PleaseLogin = () => {
-	if (Meteor.userId()) return false;
-	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
-	return true;
-};

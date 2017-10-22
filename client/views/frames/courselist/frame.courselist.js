@@ -1,5 +1,5 @@
 import Metatags from '/imports/Metatags.js';
-import CSSFromQuery from '/imports/ui/lib/CSSFromQuery.js';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query.js';
 
 Router.map(function() {
 	this.route('frameCourselist', {
@@ -13,7 +13,7 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 
 	const urlQuery = Router.current().params.query;
-	const cssRules = new CSSFromQuery();
+	const cssRules = new CssFromQuery();
 	cssRules.read(urlQuery);
 	this.cssRules = cssRules;
 

@@ -1,4 +1,4 @@
-export default CSSFromQuery = () => {
+export const CssFromQuery = () => {
 	const self = [];
 	const customizableProperties = [];
 
