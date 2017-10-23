@@ -1,4 +1,4 @@
-import AccountTools from '/imports/ui/account/AccountTools.js';
+import AccountTools from '/imports/ui/lib/account-tools.js';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
@@ -14,6 +14,10 @@ Template.accountTasks.events({
 		instance.transferUsername = false;
 		instance.transferPassword = false;
 		instance.transferMail = false;
+	},
+
+	'shown.bs.modal #accountTasks'(event, instance) {
+		instance.$('input').first().select();
 	},
 
 	'hide.bs.modal #accountTasks'(event, instance) {
@@ -69,6 +73,8 @@ Template.loginFrame.onCreated(function() {
 Template.loginFrame.onRendered(function() {
 	const transferMail = this.parentInstance().transferMail;
 	if (transferMail) this.$('#loginName').val(transferMail);
+
+	this.$('input').first().select();
 });
 
 Template.loginFrame.onDestroyed(function() {
@@ -196,6 +202,8 @@ Template.registerFrame.onRendered(function() {
 
 	const transferMail = parentInstance.transferMail;
 	if (transferMail) this.$('#registerEmail').val(transferMail);
+
+	this.$('input').first().select();
 });
 
 Template.registerFrame.events({
@@ -250,6 +258,8 @@ Template.forgotPwdFrame.onRendered(function() {
 		this.$('.js-reset-pw-email').val(transferMail);
 		this.emailIsValid.set(true);
 	}
+
+	this.$('input').first().select();
 });
 
 Template.forgotPwdFrame.helpers({

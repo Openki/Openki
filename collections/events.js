@@ -3,12 +3,10 @@ import '/imports/Predicates.js';
 
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
-
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';
 import '/imports/AsyncTools.js';
-
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 // ======== DB-Model: ========
 // _id             -> ID

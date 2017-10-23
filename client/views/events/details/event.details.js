@@ -1,8 +1,29 @@
 import '/imports/IdTools.js';
-
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 // routing is in /routing.js
+
+Template.eventPage.onCreated(function eventPageOnCreated() {
+	const event = Events.findOne(Router.current().params._id);
+	let title;
+	let description = '';
+	if (event) {
+		title = mf(
+			'event.windowtitle',
+			{ EVENT:event.title, DATE: moment(event.start).calendar() },
+			'{DATE} {EVENT}'
+		);
+		description = mf(
+			'event.metatag.description',
+			{ REGION: Regions.findOne(event.region).name
+			, VENUE: event.venue.name },
+			'{VENUE} in {REGION}'
+		);
+	} else {
+		title = mf('event.windowtitle.create', 'Create event');
+	}
+	Metatags.setCommonTags(title, description);
+});
 
 Template.event.onCreated(function() {
 	const event = this.data;
@@ -87,9 +108,8 @@ Template.event.events({
 });
 
 Template.eventDisplay.events({
-	'click .js-toggle-replication': function(event, instance) {
-		var replicating = instance.replicating;
-		replicating.set(!replicating.get());
+	'click .js-show-replication': function(event, instance) {
+		instance.replicating.set(true);
 		instance.collapse();
 	}
 });
