@@ -144,7 +144,9 @@ Meteor.methods({
 				if (!IsEmail(changes.emailSignup)) {
 					throw new Meteor.Error(400, "email address not accepted");
 				}
-				const signupUser = Meteor.users.findOne({ profile: { emails: changes.emailSignup } });
+				const signupUser = Meteor.users.findOne(
+					{ "emails.address": changes.emailSignup }
+				);
 				if (signupUser) {
 					// If the email address maps to a visitor-user, we attach
 					// the course to that visitor. Thus, multiple course
