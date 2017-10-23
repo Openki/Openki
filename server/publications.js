@@ -16,7 +16,7 @@ Meteor.publish ('courseDetails', function(id) {
 	return Courses.find({ _id: id });
 });
 
-Meteor.publish  ('coursesFind', coursesFind);
+Meteor.publish('Courses.findFilter', Courses.findFilter);
 
 Meteor.publish ('regions', function(){
 	return Regions.find();
@@ -34,8 +34,8 @@ Meteor.publish ('venueDetails', function(id) {
 	return Venues.find(id);
 });
 
-Meteor.publish('venuesFind', function(find, limit) {
-	return venuesFind(find, limit);
+Meteor.publish('Venues.findFilter', function(find, limit) {
+	return Venues.findFilter(find, limit);
 });
 
 
@@ -57,7 +57,7 @@ Meteor.publish('event', function(eventId) {
 	return Events.find(eventId);
 });
 
-Meteor.publish ('eventsFind', eventsFind);
+Meteor.publish ('Events.findFilter', Events.findFilter);
 
 Meteor.publish('eventsForCourse', function(courseId) {
 	return Events.find({courseId: courseId});
@@ -103,7 +103,7 @@ Meteor.publish('groupsFind', function(filter) {
 		delete filter.own;
 		filter.user = this.userId;
 	}
-	return GroupLib.find(filter);
+	return Groups.findFilter(filter);
 });
 
 Meteor.publish('group', function(groupId) {

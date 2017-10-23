@@ -1,6 +1,11 @@
+import '/imports/startup/msgfmt.js';
 import '/imports/startup/notifications.js';
 import '/imports/startup/api.json.js';
+import '/imports/startup/server/ical.js';
 import '/imports/api/clientError/methods.js';
+import '/imports/startup/server/fixtures.js';
+
+import '/imports/AsyncTools.js';
 
 Meteor.startup(function () {
 
@@ -73,25 +78,25 @@ Meteor.startup(function () {
 	/* Initialize cache-fields on startup */
 
 	// Resync location cache in events
-	Meteor.call('updateEventVenue', {}, logAsyncErrors);
+	Meteor.call('updateEventVenue', {}, AsyncTools.logErrors);
 
 	// Update list of organizers per course
-	Meteor.call('course.updateGroups', {}, logAsyncErrors);
+	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
 
 	// Update List of badges per user
-	Meteor.call('user.updateBadges', {}, logAsyncErrors);
+	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
 
-	Meteor.call('updateRegionCounters', {}, logAsyncErrors);
+	Meteor.call('updateRegionCounters', {}, AsyncTools.logErrors);
 
 	// Keep the nextEvent entry updated
 	// On startup do a full scan to catch stragglers
-	Meteor.call('updateNextEvent', {}, logAsyncErrors);
+	Meteor.call('updateNextEvent', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		function() {
 			// Update nextEvent for courses where it expired
 			Meteor.call('updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
 
-			Meteor.call('updateRegionCounters', {}, logAsyncErrors);
+			Meteor.call('updateRegionCounters', {}, AsyncTools.logErrors);
 		},
 		60*1000 // Check every minute
 	);

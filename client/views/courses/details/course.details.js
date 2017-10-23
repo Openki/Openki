@@ -1,3 +1,4 @@
+import '/imports/IdTools.js';
 import { ScssVars } from '/imports/ui/lib/scss-vars.js';
 import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
@@ -93,10 +94,9 @@ Template.courseDetailsPage.events({
 	}
 });
 
-
 Template.courseGroupList.helpers({
 	'isOrganizer': function() {
-		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
+		return Template.instance().data.groupOrganizers.indexOf(IdTools.extract(this)) >= 0;
 	},
 	'tools': function() {
 		var tools = [];

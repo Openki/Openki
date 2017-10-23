@@ -1,5 +1,9 @@
+import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
+
+import ical from 'ical-generator';
+
 function sendIcal(events, response) {
-	var ical = Npm.require('ical-generator');
 	var calendar = ical({ name: "Openki Calendar" });
 	var dname;
 
@@ -18,7 +22,7 @@ function sendIcal(events, response) {
 		var twoLines = /<(p|div|h[0-9])>/g;
 		var oneLine = /<(ul|ol|li|br ?\/?)>/g;
 		var lineDescription = dbevent.description.replace(twoLines, "\n\n").replace(oneLine, "\n").trim();
-		var plainDescription = textPlain(lineDescription);
+		var plainDescription = HtmlTools.textPlain(lineDescription);
 		calendar.addEvent({
 			uid: dbevent._id,
 			start: dbevent.start,
@@ -30,7 +34,7 @@ function sendIcal(events, response) {
 		});
 
 		if (!dname) {
-			var sName = getSlug(dbevent.title);
+			var sName = StringTools.slug(dbevent.title);
 			var sDate = moment(dbevent.start).format("YYYY-MM-DD");
 			dname = "openki-" + sName + '-' + sDate + '.ics';
 		} else {
@@ -54,7 +58,7 @@ Router.map(function () {
 		path: 'cal/',
 		where: 'server',
 		action: function () {
-			var filter = Filtering(EventPredicates);
+			var filter = Events.Filtering();
 			var query = this.params.query || {};
 
 			filter
@@ -62,7 +66,7 @@ Router.map(function () {
 				.read(query)
 				.done();
 
-			sendIcal(eventsFind(filter.toQuery()), this.response);
+			sendIcal(Events.findFilter(filter.toQuery()), this.response);
 		}
 	});
 	this.route('calEvent', {

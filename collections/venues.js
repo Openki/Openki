@@ -1,4 +1,9 @@
 import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
+import '/imports/StringTools.js';
+import '/imports/HtmlTools.js';
 
 // _id          ID
 // editor       user ID
@@ -44,6 +49,12 @@ Venues = new Meteor.Collection("Venues", {
 });
 if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
 
+Venues.Filtering = () => Filtering(
+	{ region: Predicates.id
+	}
+);
+
+
 Venues.facilityOptions =
 	[ 'projector', 'screen', 'audio', 'blackboard', 'whiteboard'
 	, 'flipchart', 'wifi', 'kitchen', 'wheelchairs'
@@ -57,7 +68,7 @@ Venues.facilityOptions =
  * limit: how many to find
  *
  */
-venuesFind = function(filter, limit) {
+Venues.findFilter = function(filter, limit) {
 	var find = {};
 	var options = {};
 
@@ -72,7 +83,7 @@ venuesFind = function(filter, limit) {
 	if (filter.search) {
 		var searchTerms = filter.search.split(/\s+/);
 		find.$and = _.map(searchTerms, function(searchTerm) {
-			return { name: { $regex: escapeRegex(searchTerm), $options: 'i' } };
+			return { name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } };
 		});
 	}
 
@@ -101,12 +112,7 @@ Meteor.methods({
 
 		var user = Meteor.user();
 		if (!user) {
-			if (Meteor.is_client) {
-				PleaseLogin();
-				return;
-			} else {
-				throw new Meteor.Error(401, "please log in");
-			}
+			throw new Meteor.Error(401, "please log in");
 		}
 
 		var venue;
@@ -120,10 +126,10 @@ Meteor.methods({
 		var set = { updated: new Date() };
 
 
-		if (changes.description) set.description = saneHtml(changes.description.trim().substring(0, 640*1024));
+		if (changes.description) set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640*1024));
 		if (changes.name) {
 			set.name = changes.name.trim().substring(0, 1000);
-			set.slug = getSlug(set.name);
+			set.slug = StringTools.slug(set.name);
 		}
 
 		if (changes.address !== undefined) set.address = changes.address.trim().substring(0, 40*1024);
@@ -167,7 +173,7 @@ Meteor.methods({
 			});
 		}
 
-		Venues.update({ _id: venueId }, { $set: set }, checkUpdateOne);
+		Venues.update({ _id: venueId }, { $set: set }, AsyncTools.checkUpdateOne);
 
 		return venueId;
 	},
