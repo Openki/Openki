@@ -17,7 +17,8 @@ import '/imports/AsyncTools.js';
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';
 
-import { PleaseLogin, IsEmail } from '/imports/ui/lib/please-login.js';
+import IsEmail from '/imports/ui/lib/account-tools.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 function addRole(course, role, user) {
 	// Add the user as member if she's not listed yet
@@ -137,13 +138,28 @@ Meteor.methods({
 		const isNew = courseId.length === 0;
 		let createVisitor = false;
 
-		 if (!user) {
+		var user = Meteor.user();
+		if (!user) {
 			if (isNew && changes.emailSignup) {
 				if (!IsEmail(changes.emailSignup)) {
 					throw new Meteor.Error(400, "email address not accepted");
 				}
-				user = {};
-				createVisitor = true;
+				const signupUser = Meteor.users.findOne({ profile: { emails: changes.emailSignup } });
+				if (signupUser) {
+					// If the email address maps to a visitor-user, we attach
+					// the course to that visitor. Thus, multiple course
+					// proposals can be created giving the same address every
+					// time.
+					if (signupUser.visitor) {
+						user = signupUser;
+					} else {
+						// The user for that email-address is not a visitor.
+						throw new Meteor.Error(401, "please log in");
+					}
+				} else {
+					user = {};
+					createVisitor = true;
+				}
 			} else {
 				if (Meteor.isClient) {
 					PleaseLogin();
@@ -243,6 +259,7 @@ Meteor.methods({
 				if (Meteor.isClient) return; // Don't attempt simulating creating a visitor user
 				userId = Accounts.createUser({ email: changes.emailSignup });
 				Accounts.sendEnrollmentEmail(userId);
+				Meteor.users.update(userId, { $set: { visitor: true } });
 			} else {
 				userId = user._id;
 			}

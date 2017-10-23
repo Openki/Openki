@@ -9,7 +9,8 @@ import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 
-import { IsEmail, PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import IsEmail from '/imports/ui/lib/account-tools.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 import '/imports/StringTools.js';
 import Editable from '/imports/ui/lib/editable.js';

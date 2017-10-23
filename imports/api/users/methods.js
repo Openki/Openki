@@ -34,6 +34,7 @@ Meteor.methods({
 			if (!result) {
 				return ApiError("nameError", "Failed to update username");
 			}
+			Meteor.users.update(user._id, { $set: { visitor: false } });
 		}
 
 		const trimmedEmail = email.trim();
