@@ -19,20 +19,7 @@ Template.regionsSplash.events({
 	},
 
 	'click #loginForRegion': function(e, instance) {
+		$('#accountTasks').modal('show');
 		instance.$('#regionsSplash').modal('hide');
-
-		var viewportWidth = Session.get('viewportWidth');
-		var screenSM = ScssVars.screenSM;
-		if (viewportWidth <= screenSM) {
-			$('.collapse').collapse('show');
-		}
-
-		setTimeout(function() {
-			$('.loginButton').dropdown('toggle');
-		}, 0);
-
-		setTimeout(function() {
-			$('#loginName').focus();
-		}, 0);
 	}
 });
