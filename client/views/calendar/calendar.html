@@ -2,16 +2,10 @@
 	{{> calendarNav date=startDate}}
 	<div class="container calendar-container">
 		<div class="page-component">
-			{{> calendarAddEvent}}
-		</div>
-		<div class="page-component">
 			{{#each days}}
 				{{> calendarDay day=this filter=filter}}
 				<hr>
 			{{/each}}
-		</div>
-		<div class="page-component">
-			{{> calendarAddEvent}}
 		</div>
 	</div>
 </template>
