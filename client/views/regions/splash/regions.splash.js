@@ -1,5 +1,3 @@
-import { ScssVars } from '/imports/ui/lib/scss-vars.js';
-
 Template.regionsSplash.onRendered(function () {
 	this.$('#regionsSplash').modal('show');
 });
