@@ -43,3 +43,11 @@ export const IsEmail = str => {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 };
+
+/** Focus the first input
+  *
+  *
+  */
+// export const focusFirstInput = (instance) => {
+// 	instance.$('input').first().select();
+// };
