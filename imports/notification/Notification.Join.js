@@ -23,8 +23,11 @@ notificationJoin.record = function(courseId, participantId, newRole) {
 	var body = {};
 	body.courseId = course._id;
 	body.participantId = participant._id;
-	body.recipients = [];
 	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+
+	// Don't send to new member, they know
+	body.recipients = body.recipients.filter(r => r !== participantId);
+
 	body.newRole = newRole;
 
 	body.model = 'Join';
