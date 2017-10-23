@@ -22,10 +22,3 @@ export const ScssVars = {
 	// $navbar-height
 	'navbarHeight': 50 // defined at client/styles/_bootstrap-variables.scss L383
 };
-
-export const UpdateViewportWidth = () => {
-	const viewportWidth =
-		Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-
-	Session.set('viewportWidth', viewportWidth);
-};
