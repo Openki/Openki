@@ -2,34 +2,34 @@
 // --------------------------------------------------
 
 // Fonts
-@import 'styles/fonts';
+@import '{}/imports/ui/stylesheets/fonts';
 
 // Base colors
-@import 'styles/base-colors';
+@import '{}/imports/ui/stylesheets/base-colors';
 
 // Bootstrap framework
-@import 'styles/bootstrap';
+@import '{}/imports/ui/stylesheets/bootstrap';
 
 // Variables
-@import 'styles/variables';
+@import '{}/imports/ui/stylesheets/variables';
 
 // Mixins
-@import 'styles/mixins';
+@import '{}/imports/ui/stylesheets/mixins';
 
 // Main layout
-@import 'styles/layout';
+@import '{}/imports/ui/stylesheets/layout';
 
 // Global styles
-@import 'styles/global';
+@import '{}/imports/ui/stylesheets/global';
 
 // UI Components
-@import 'styles/components';
+@import '{}/imports/ui/stylesheets/components';
 
 // Right-to-left styles
-@import 'styles/rtl';
+@import '{}/imports/ui/stylesheets/rtl';
 
 // Shariff
-@import 'styles/shariff';
+@import '{}/imports/ui/stylesheets/shariff';
 
 // Template styles
 @import 'widgets/editable/editable';
