@@ -32,11 +32,10 @@
 				<span class="kiosk-moment-date">{{showDate}}</span>
 			</div>
 		</div>
-
-		{{#if now.count}}
+		{{#if ongoing.count}}
 			<div class="page-component">
-				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=now.count}}</h3>
-				{{> kioskEventList dataEvents=now timePeriod="ongoing"}}
+				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}</h3>
+				{{> kioskEventList dataEvents=ongoing timePeriod="ongoing"}}
 			</div>
 		{{/if}}
 
