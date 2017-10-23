@@ -2,7 +2,7 @@
 /* jshint expr:true */
 
 import { expect } from 'meteor/practicalmeteor:chai';
-import { IsEmail } from './AccountTools.js';
+import { IsEmail } from './account-tools.js';
 
 // This should not be here
 msgfmt.init('en');
