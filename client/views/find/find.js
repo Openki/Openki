@@ -126,13 +126,6 @@ Template.find.onCreated(function() {
 		subs.subscribe('coursesFind', filterQuery, limit, function() {
 			instance.coursesReady.set(true);
 		});
-
-		var eventQuery = filter.toQuery();
-
-		// We show events only when they're not attached to a course
-		eventQuery.standalone = true;
-		eventQuery.after = minuteTime.get();
-		instance.subscribe('eventsFind', eventQuery, 12);
 	});
 });
 
@@ -262,14 +255,6 @@ Template.find.helpers({
 		var filterQuery = instance.filter.toQuery();
 
 		return coursesFind(filterQuery, instance.courseLimit.get());
-	},
-
-
-	'eventResults': function() {
-		var filterQuery = Template.instance().filter.toQuery();
-		filterQuery.standalone = true;
-		filterQuery.after = minuteTime.get();
-		return eventsFind(filterQuery, 12);
 	},
 
 	'ready': function() {
