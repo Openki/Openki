@@ -5,7 +5,7 @@ _.each([Template.editable, Template.editableTextarea], function(template) {
 template.onCreated(function() {
 	// This reeks
 	this.autorun(() => {
-		this.state = this.data.connect(this);
+		if (this.data) this.state = this.data.connect(this);
 	});
 });
 

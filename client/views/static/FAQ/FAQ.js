@@ -1,4 +1,4 @@
-import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
 
 Router.map(function () {
 	this.route('FAQ', {

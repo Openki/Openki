@@ -142,16 +142,11 @@
 				{{/if}}
 			</div>
 		</div>
-		{{#if replicaDateCount}}
-			<button type="button" class="btn btn-save js-replicate-btn">
-				<span class="fa fa-calendar-plus-o fa-fw" aria-hidden="true"></span>
-				{{#mf KEY='course.details.repl_btn' COUNT=replicaDateCount}}
-					Create {COUNT, plural,
-						one {event}
-						other {# events}
-					}
-				{{/mf}}
-			</button>
-		{{/if}}
+		<div class="replicate-actions">
+			{{#if replicaDateCount}}
+				{{> buttonSave event='js-replicate-btn'}}
+			{{/if}}
+			{{> buttonCancel event='js-cancel-replication'}}
+		</div>
 	</div>
 </template>
