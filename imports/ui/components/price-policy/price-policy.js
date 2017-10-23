@@ -18,7 +18,26 @@ Template.pricePolicy.helpers({
 	}
 });
 
-Template.pricePolicyDismissable.events({
+Template.pricePolicyContent.helpers({
+	dismissableClass() {
+		if (this.dismissable) return 'is-dismissable';
+	},
+
+	pricePolicyLink() {
+		let link = '/FAQ';
+		let locale = Session.get('locale');
+		const localizedTitles =
+			new Map()
+			.set('de', 'dürfen-kurse-etwas-kosten');
+
+		if (!localizedTitles.has(locale)) locale = locale.slice(0, 2);
+
+		if (localizedTitles.has(locale)) link += '#' + localizedTitles.get(locale);
+		return link;
+	}
+});
+
+Template.pricePolicyContent.events({
 	'click #hidePricePolicy'() {
 		Session.set('hidePricePolicy', true);
 		localStorage.setItem('hidePricePolicy', true);

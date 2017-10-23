@@ -1,29 +1,30 @@
 <template name="pricePolicy">
-	{{#unless hidePricePolicy}}
-		{{#if wrap}}
-			<div class="{{wrap}}">
-				{{> pricePolicyDismissable}}
-			</div>
-		{{else}}
-			{{> pricePolicyDismissable}}
-		{{/if}}
-	{{/unless}}
+	{{#if dismissable}}
+		{{#unless hidePricePolicy}}
+			{{> pricePolicyContent}}
+		{{/unless}}
+	{{else}}
+		{{> pricePolicyContent}}
+	{{/if}}
 </template>
 
 <template name="pricePolicyContent">
-	<div class="price-policy-content">
-		<i class="fa fa-dollar fa-fw" aria-hidden="true"></i>
-		All events on Openki shall be free.
-		Therefore prices are to be understood as <b>indicative prices</b>.
-		<span class="close">&times;</span>
-	</div>
-</template>
-
-<template name="pricePolicyDismissable">
-	{{> pricePolicyStatic}}
-	<div class="price-policy-actions">
-		<button type="button" class="btn-link" id="hidePricePolicy">
-			Don't show this anymore
-		</button>
+	<div class="price-policy {{wrap}}">
+		<div class="price-policy-content {{dismissableClass}}">
+			<i class="fa fa-dollar fa-fw" aria-hidden="true"></i>
+			{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why we only allow suggested/orientation prices."}}
+		</div>
+		<div class="price-policy-actions">
+			{{#if dismissable}}
+				<button type="button" class="btn-link" id="hidePricePolicy">
+					<i class="fa fa-ban fa-fw" aria-hidden="true"></i>
+					{{mf 'pricePolicy.dontShowAnymore' "Don't show this anymore"}}
+				</button>
+			{{/if}}
+			<a href="{{pricePolicyLink}}">
+				<i class="fa fa-book fa-fw" aria-hidden="true"></i>
+				{{mf 'pricePolicy.readOn' 'Read on'}}
+			</a>
+		</div>
 	</div>
 </template>
