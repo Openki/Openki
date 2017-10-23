@@ -1,15 +1,15 @@
 export default Api =
 	{ groups:
 		(filter) => {
-			var groupQuery = Filtering(GroupPredicates).readAndValidate(filter).done().toQuery();
-			return GroupLib.find(groupQuery).map(group => {
+			var groupQuery = Groups.Filtering().readAndValidate(filter).done().toQuery();
+			return Groups.findFilter(groupQuery).map(group => {
 				group.link = Router.url('groupDetails', group);
 				return group;
 			});
 		}
 	, venues:
 		(filter) => {
-			var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
+			var venueQuery = Venues.Filtering().readAndValidate(filter).done().toQuery();
 			return Venues.find(venueQuery).map(venue => {
 				venue.link = Router.url('venueDetails', venue);
 				return venue;
@@ -17,8 +17,8 @@ export default Api =
 		}
 	, events:
 		(filter) => {
-			var eventQuery = Filtering(EventPredicates).readAndValidate(filter).done().toQuery();
-			return eventsFind(eventQuery).map(ev => {
+			var eventQuery = Events.Filtering().readAndValidate(filter).done().toQuery();
+			return Events.findFilter(eventQuery).map(ev => {
 				var evr =
 					{ id: ev._id
 					, title: ev.title

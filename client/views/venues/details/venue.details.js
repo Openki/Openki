@@ -40,7 +40,7 @@ Template.venueDetails.onCreated(function() {
 	};
 
 	this.autorun(function() {
-		subs.subscribe('eventsFind', { venue: instance.data.venue._id });
+		subs.subscribe('Events.findFilter', { venue: instance.data.venue._id });
 	});
 
 	this.getEvents = function(past) {
@@ -58,7 +58,7 @@ Template.venueDetails.onCreated(function() {
 			count = instance.eventsCount;
 		}
 
-		var events = eventsFind(predicate).fetch();
+		var events = Events.findFilter(predicate).fetch();
 		count.set(events.length);
 		if (limit) events = events.slice(0, limit);
 
