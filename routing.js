@@ -107,21 +107,6 @@ Router.map(function () {
 			}
 
 			return event;
-		},
-		onAfterAction: function() {
-			const event = Events.findOne({_id: this.params._id});
-			let title;
-			let description = '';
-			if (event) {
-				title = mf('event.windowtitle', {EVENT:event.title, DATE: moment(event.start).calendar()}, '{DATE} {EVENT}');
-				description = mf('event.metatag.description', {
-					REGION: Regions.findOne({_id: event.region}).name,
-					VENUE: event.venue.name
-				}, '{VENUE} in {REGION}');
-			} else {
-				title = mf('event.windowtitle.create', 'Create event');
-			}
-			Metatags.setCommonTags(title, description);
 		}
 	});
 });

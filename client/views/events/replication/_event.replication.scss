@@ -50,6 +50,6 @@
 	border-color: $event-caption-border-highlighted;
 }
 
-.js-replicate-btn {
-	@include td-float(right);
+.replicate-actions {
+	@extend %actions;
 }

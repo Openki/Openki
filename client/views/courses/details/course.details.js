@@ -1,7 +1,6 @@
 import '/imports/IdTools.js';
-
-import { ScssVars } from '/imports/ui/lib/Viewport.js';
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {

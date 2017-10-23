@@ -1,4 +1,4 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
 Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);

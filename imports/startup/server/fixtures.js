@@ -13,6 +13,9 @@ if (Meteor.settings.testdata) {
 	};
 
 	Meteor.startup(function() {
+		// Remove the rate-limiting to allow the tests repeated logins
+		Accounts.removeDefaultRateLimit();
+
 		ifCollectionEmpty(Regions, [ 'fixtures.regions.create' ]);
 		ifCollectionEmpty(Groups,  [ 'fixtures.groups.create' ]);
 		ifCollectionEmpty(Venues,  [ 'fixtures.venues.create' ]);

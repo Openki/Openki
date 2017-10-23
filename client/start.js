@@ -2,7 +2,7 @@ import '/imports/startup/msgfmt.js';
 import "/imports/startup/client/clientError.js";
 import "/imports/startup/client/ical.js";
 import "/imports/RegionSelection.js";
-import { UpdateViewportWidth } from '/imports/ui/lib/Viewport.js';
+import { UpdateViewport } from '/imports/ui/lib/update-viewport.js';
 
 ////////////// db-subscriptions:
 
@@ -119,7 +119,7 @@ Meteor.startup(function() {
 Meteor.startup(RegionSelection.init);
 Meteor.startup(Assistant.init);
 
-Meteor.startup(UpdateViewportWidth);
+Meteor.startup(UpdateViewport);
 
 Accounts.onLogin(function() {
 	var user = Meteor.user();
