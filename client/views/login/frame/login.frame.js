@@ -1,4 +1,4 @@
-import AccountTools from '/imports/ui/account/AccountTools.js';
+import AccountTools from '/imports/ui/lib/account-tools.js';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
