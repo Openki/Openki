@@ -39,11 +39,10 @@ Router.map(function () {
 			queryNow.ongoing = now;
 
 			var filterParams = this.filter.toParams();
-
 			return {
 				today: Events.findFilter(queryToday, 20),
 				future: Events.findFilter(queryFuture, 10),
-				now: Events.findFilter(queryNow),
+				ongoing: Events.findFilter(queryNow),
 				filter: filterParams
 			};
 		},
