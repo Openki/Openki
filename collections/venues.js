@@ -1,4 +1,3 @@
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 

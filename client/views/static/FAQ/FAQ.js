@@ -19,7 +19,7 @@ Template.FAQ.onCreated(function() {
 			targetTitle.nextUntil(this.headerTag, this.contentTags).show();
 			$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 		}
-	}
+	};
 });
 
 Template.FAQ.onRendered(function() {
