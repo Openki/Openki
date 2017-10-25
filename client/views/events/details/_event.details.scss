@@ -75,6 +75,10 @@ $course-header-bg: darken($blue-lighter, 5%);
 	margin-bottom: 15px;
 }
 
+.event-details-price-policy {
+	padding: 0 15px;
+}
+
 .event-delete-confirmation {
 	$background-color: lighten($brand-danger, 20%);
 
