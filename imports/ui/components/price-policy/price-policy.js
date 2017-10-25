@@ -19,10 +19,6 @@ Template.pricePolicy.helpers({
 });
 
 Template.pricePolicyContent.helpers({
-	dismissableClass() {
-		if (this.dismissable) return 'is-dismissable';
-	},
-
 	pricePolicyLink() {
 		let link = '/FAQ';
 		let locale = Session.get('locale');

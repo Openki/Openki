@@ -10,21 +10,21 @@
 
 <template name="pricePolicyContent">
 	<div class="price-policy {{wrap}}">
-		<div class="price-policy-content {{dismissableClass}}">
+		<div class="price-policy-content">
 			<i class="fa fa-dollar fa-fw" aria-hidden="true"></i>
 			{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why we only allow suggested/orientation prices."}}
-		</div>
-		<div class="price-policy-actions">
-			{{#if dismissable}}
-				<button type="button" class="btn-link" id="hidePricePolicy">
-					<i class="fa fa-ban fa-fw" aria-hidden="true"></i>
-					{{mf 'pricePolicy.dontShowAnymore' "Don't show this anymore"}}
-				</button>
-			{{/if}}
-			<a href="{{pricePolicyLink}}">
-				<i class="fa fa-book fa-fw" aria-hidden="true"></i>
-				{{mf 'pricePolicy.readOn' 'Read on'}}
-			</a>
+			<div class="price-policy-actions">
+				{{#if dismissable}}
+					<button type="button" class="btn-link" id="hidePricePolicy">
+						<i class="fa fa-ban fa-fw" aria-hidden="true"></i>
+						{{mf 'pricePolicy.dontShowAnymore' "Don't show this anymore"}}
+					</button>
+				{{/if}}
+				<a href="{{pricePolicyLink}}">
+					<i class="fa fa-book fa-fw" aria-hidden="true"></i>
+					{{mf 'pricePolicy.readOn' 'Read on'}}
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
