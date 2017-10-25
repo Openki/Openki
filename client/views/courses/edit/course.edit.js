@@ -1,4 +1,6 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import '/imports/StringTools.js';
+
 import '/imports/ui/components/price-policy/price-policy.js';
 
 Template.courseEdit.created = function() {
@@ -109,7 +111,7 @@ Template.courseEdit.helpers({
 		if (!search) return false;
 
 		var filterQuery = filter.toQuery();
-		var results = coursesFind(filterQuery, 1);
+		var results = Courses.findFilter(filterQuery, 1);
 
 		return (results.count() === 0) && search;
 	},
@@ -178,7 +180,7 @@ Template.courseEdit.events({
 		var newDescription = instance.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
-		changes.name = saneText(changes.name);
+		changes.name = StringTools.saneText(changes.name);
 
 		if (changes.name.length === 0) {
 			alert("Please provide a title");

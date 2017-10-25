@@ -1,5 +1,6 @@
 import "/imports/RegionSelection.js";
-import Viewport from '/imports/ui/lib/Viewport.js';
+import { UpdateViewport } from '/imports/ui/lib/update-viewport.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
 
 Template.layout.helpers({
 	testWarning: function() {
@@ -26,7 +27,7 @@ Template.layout.helpers({
 });
 
 Template.layout.rendered = function() {
-	$(window).resize(function(){ Viewport.UpdateViewportWidth(); });
+	$(window).resize(function(){ UpdateViewport(); });
 	Session.set('isRetina', (window.devicePixelRatio == 2));
 };
 
@@ -44,4 +45,4 @@ var stopPropagationForDownloadClicks = {
 Template.layout.events(stopPropagationForDownloadClicks);
 Template.frameLayout.events(stopPropagationForDownloadClicks);
 
-RouterAutoscroll.marginTop = Viewport.ScssVars.navbarHeight;
+RouterAutoscroll.marginTop = ScssVars.navbarHeight;

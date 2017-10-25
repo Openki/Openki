@@ -1,4 +1,6 @@
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
+import '/imports/IdTools.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+
 import '/imports/ui/components/price-policy/price-policy.js';
 
 // routing is in /routing.js
@@ -118,7 +120,7 @@ Template.eventDisplay.events({
 
 Template.eventGroupList.helpers({
 	'isOrganizer': function() {
-		return Template.instance().data.editors.indexOf(_id(this)) >= 0;
+		return Template.instance().data.editors.indexOf(IdTools.extract(this)) >= 0;
 	},
 	'tools': function() {
 		var tools = [];
