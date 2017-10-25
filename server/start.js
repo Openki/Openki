@@ -12,7 +12,7 @@ Meteor.startup(function () {
 	applyUpdates();
 
 	var runningVersion = Version.findOne();
-	if (VERSION && (
+	if (typeof VERSION !== "undefined" && (
 		(!runningVersion || runningVersion.complete !== VERSION.complete)
 			|| (runningVersion.commit !== VERSION.commit))
 	) {
