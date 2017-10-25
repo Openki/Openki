@@ -7,7 +7,7 @@
   * @param  {Object} instance - instance object for scoping
   */
 
-export const FilterPreview = options => {
+export default function FilterPreview(options) {
 	const instance = options.instance || false;
 	const course = instance ? instance.$('.course-compact') : $('.course-compact');
 	const property = options.property;
