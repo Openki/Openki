@@ -1,7 +1,7 @@
 <template name="frameCourselist">
 	<style type="text/css">
-		{{#each cssRules}}
-			{{selector}} { {{name}}: {{value}}; }
+		{{#each cssRules in cssRules}}
+			{{cssRule}}
 		{{/each}}
 	</style>
 
