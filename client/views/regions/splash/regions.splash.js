@@ -1,4 +1,4 @@
-import { ScssVars } from '/imports/ui/lib/Viewport.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
 
 Template.regionsSplash.onRendered(function () {
 	this.$('#regionsSplash').modal('show');
@@ -19,20 +19,7 @@ Template.regionsSplash.events({
 	},
 
 	'click #loginForRegion': function(e, instance) {
+		$('#accountTasks').modal('show');
 		instance.$('#regionsSplash').modal('hide');
-
-		var viewportWidth = Session.get('viewportWidth');
-		var screenSM = ScssVars.screenSM;
-		if (viewportWidth <= screenSM) {
-			$('.collapse').collapse('show');
-		}
-
-		setTimeout(function() {
-			$('.loginButton').dropdown('toggle');
-		}, 0);
-
-		setTimeout(function() {
-			$('#loginName').focus();
-		}, 0);
 	}
 });

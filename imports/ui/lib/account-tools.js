@@ -36,16 +36,10 @@ export const SetupWarnings = (instance, warnings) => {
 };
 
 /** Check a string if it is a valid email adress
-  * Consider string as valid email if it matches this pattern:
-  * (1+ characters)@(1+ characters).(1+ characters)
   *
   * @param {String} the string to be checked
   */
-export const IsEmail = str => str.search(/^[^@\s]+@[^@.\s]+\.\w+$/g) >= 0;
-
-export const PleaseLogin = () => {
-	if (Meteor.userId()) return false;
-	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
-	return true;
+export const IsEmail = str => {
+	check(str, String);
+	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 };

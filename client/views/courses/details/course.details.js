@@ -1,7 +1,8 @@
-import { ScssVars } from '/imports/ui/lib/Viewport.js';
-import { PleaseLogin } from '/imports/ui/account/AccountTools.js';
-import '/imports/ui/components/price-policy/price-policy.js';
+import '/imports/IdTools.js';
+import { ScssVars } from '/imports/ui/lib/scss-vars.js';
+import { PleaseLogin } from '/imports/ui/lib/please-login.js';
 
+import '/imports/ui/components/price-policy/price-policy.js';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
@@ -95,10 +96,9 @@ Template.courseDetailsPage.events({
 	}
 });
 
-
 Template.courseGroupList.helpers({
 	'isOrganizer': function() {
-		return Template.instance().data.groupOrganizers.indexOf(_id(this)) >= 0;
+		return Template.instance().data.groupOrganizers.indexOf(IdTools.extract(this)) >= 0;
 	},
 	'tools': function() {
 		var tools = [];

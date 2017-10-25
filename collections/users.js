@@ -1,6 +1,10 @@
 import '/imports/Profile.js';
 import '/imports/api/ApiError.js';
 
+import '/imports/StringTools.js';
+import '/imports/AsyncTools.js';
+import '/imports/IdTools.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date
@@ -61,7 +65,7 @@ User = function() {};
   * The user must be a member of the group to be allowed to promote things with it.
   */
 User.prototype.mayPromoteWith = function(group) {
-	var groupId = _id(group);
+	var groupId = IdTools.extract(group);
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
@@ -135,7 +139,7 @@ UserLib = {
 
 // Update list of groups and badges
 Users.updateBadges = function(userId) {
-	untilClean(function() {
+	AsyncTools.untilClean(function() {
 		var user = Meteor.users.findOne(userId);
 		if (!user) return true;
 
@@ -181,7 +185,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
-		const saneUsername = saneText(username).trim().substring(0, 200);
+		const saneUsername = StringTools.saneText(username).trim().substring(0, 200);
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {
@@ -231,7 +235,7 @@ Meteor.methods({
 			Meteor.users.update(
 				{_id: user._id},
 				{ '$addToSet': {'privileges': privilege}},
-				checkUpdateOne
+				AsyncTools.checkUpdateOne
 			);
 		}
 	},
@@ -246,7 +250,7 @@ Meteor.methods({
 			Meteor.users.update(
 				{_id: user._id},
 				{ '$pull': {'privileges': privilege}},
-				checkUpdateOne
+				AsyncTools.checkUpdateOne
 			);
 		}
 	},

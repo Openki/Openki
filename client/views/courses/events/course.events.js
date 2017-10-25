@@ -8,21 +8,21 @@ Template.courseEvents.onCreated(function() {
 	instance.showAllEvents = new ReactiveVar(false);
 
 	instance.haveEvents = function() {
-		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > 0;
+		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
 	};
 
 	instance.haveMoreEvents = function() {
-		return eventsFind({ course: courseId, start: minuteTime.get() }).count() > maxEventsShown;
+		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > maxEventsShown;
 	};
 
 	instance.ongoingEvents = function() {
-		return eventsFind({ course: courseId, ongoing: minuteTime.get() });
+		return Events.findFilter({ course: courseId, ongoing: minuteTime.get() });
 	};
 
 	instance.futureEvents = function() {
 		var limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
 
-		return eventsFind({ course: courseId, after: minuteTime.get() }, limit);
+		return Events.findFilter({ course: courseId, after: minuteTime.get() }, limit);
 	};
 });
 
