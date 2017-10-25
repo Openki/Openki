@@ -1,5 +1,5 @@
 import "/imports/RegionSelection.js";
-import { FilterPreview } from '/imports/ui/lib/filter-preview.js';
+import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import '/imports/StringTools.js';
 
 Template.regionSelectionWrap.created = function() {

@@ -1,5 +1,5 @@
 import Metatags from '/imports/Metatags.js';
-import { CssFromQuery } from '/imports/ui/lib/css-from-query.js';
+import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
 Router.map(function () {
 	this.route('frameCalendar', {
