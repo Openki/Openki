@@ -12,18 +12,14 @@ Router.map(function() {
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 
-	const urlQuery = Router.current().params.query;
-	const cssRules = new CssFromQuery();
-	cssRules.read(urlQuery);
-	this.cssRules = cssRules;
-
+	this.query = Router.current().params.query
 	this.increaseBy = 5;
 	this.limit = new ReactiveVar(this.increaseBy);
 
 	this.autorun(() => {
 		const filter =
 			Courses.Filtering()
-				.read(urlQuery)
+				.read(this.query)
 				.done();
 
 		this.subscribe(
@@ -37,7 +33,7 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 });
 
 Template.frameCourselist.helpers({
-	cssRules: () => Template.instance().cssRules,
+	cssRules: () => new CssFromQuery(Template.instance().query).getCssRules(),
 	ready: () => Template.instance().subscriptionsReady(),
 	courses() {
 		return Courses.find({}, {
