@@ -24,7 +24,8 @@ Template.pricePolicyContent.helpers({
 		let locale = Session.get('locale');
 		const localizedTitles =
 			new Map()
-			.set('de', 'dürfen-kurse-etwas-kosten');
+			.set('de', 'dürfen-kurse-etwas-kosten')
+			.set('en', 'why-can-not-i-ask-for-a-fixed-price-as-a-mentor');
 
 		if (!localizedTitles.has(locale)) locale = locale.slice(0, 2);
 
