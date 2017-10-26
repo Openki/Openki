@@ -1,4 +1,4 @@
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 import '/imports/StringTools.js';
 
 Template.courseEdit.created = function() {

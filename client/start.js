@@ -2,7 +2,7 @@ import '/imports/startup/msgfmt.js';
 import "/imports/startup/client/clientError.js";
 import "/imports/startup/client/ical.js";
 import "/imports/RegionSelection.js";
-import { UpdateViewport } from '/imports/ui/lib/update-viewport.js';
+import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 
 ////////////// db-subscriptions:
 

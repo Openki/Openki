@@ -1,5 +1,5 @@
 import Metatags from '/imports/Metatags.js';
-import { CssFromQuery } from '/imports/ui/lib/css-from-query.js';
+import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
 Router.map(function () {
 	this.route('frameCalendar', {
@@ -7,10 +7,8 @@ Router.map(function () {
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data: function() {
-			var cssRules = new CssFromQuery();
-			cssRules.read(this.params.query);
-
-			return { cssRules: cssRules };
+			const cssRules = new CssFromQuery(this.params.query).getCssRules();
+			return { cssRules };
 		},
 		onAfterAction: function() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));

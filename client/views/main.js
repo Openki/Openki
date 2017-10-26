@@ -1,6 +1,6 @@
 import "/imports/RegionSelection.js";
-import { UpdateViewport } from '/imports/ui/lib/update-viewport.js';
-import { ScssVars } from '/imports/ui/lib/scss-vars.js';
+import UpdateViewport from '/imports/ui/lib/update-viewport.js';
+import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 Template.layout.helpers({
 	testWarning: function() {

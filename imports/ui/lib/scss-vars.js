@@ -1,4 +1,4 @@
-export const ScssVars = {
+export default ScssVars = {
 	// == Media Query Breakpoints
 	// $screen-xxs
 	'screenXXS': 380, // defined at client/styles/_variables.scss L84

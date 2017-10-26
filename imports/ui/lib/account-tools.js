@@ -4,7 +4,7 @@
   * @param {Object} warnings - an object containing objects obtaining the different
   *                            warning messages, for each possible error
   */
-export const SetupWarnings = (instance, warnings) => {
+export const SetupWarnings = function(instance, warnings) {
 	instance.hasWarning = new ReactiveVar(false);
 
 	instance.setWarning = key => {
@@ -39,7 +39,7 @@ export const SetupWarnings = (instance, warnings) => {
   *
   * @param {String} the string to be checked
   */
-export const IsEmail = str => {
+export const IsEmail = function(str) {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 };
