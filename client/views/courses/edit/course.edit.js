@@ -1,4 +1,4 @@
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 import '/imports/StringTools.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';

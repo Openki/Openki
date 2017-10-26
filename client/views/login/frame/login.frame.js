@@ -1,4 +1,4 @@
-import AccountTools from '/imports/ui/lib/account-tools.js';
+import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
@@ -50,7 +50,7 @@ Template.loginFrame.onCreated(function() {
 			}
 		];
 
-	AccountTools.SetupWarnings(this, {
+	SetupWarnings(this, {
 		'noUserName': {
 			text: mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
 			selectors: ['#loginName']
@@ -86,7 +86,7 @@ Template.loginFrame.events({
 		event.preventDefault();
 
 		const username = instance.$('#loginName').val();
-		if (AccountTools.IsEmail(username)) {
+		if (IsEmail(username)) {
 			instance.parentInstance().transferMail = username;
 		}
 
@@ -100,7 +100,7 @@ Template.loginFrame.events({
 
 		// Sometimes people register with their email address in the first field
 		// Move entered username over to email field if it contains a @
-		if (AccountTools.IsEmail(username)) {
+		if (IsEmail(username)) {
 			email = username;
 			username = email.substr(0, email.indexOf('@'));
 		}
@@ -171,7 +171,7 @@ Template.loginFrame.helpers({
 
 Template.registerFrame.onCreated(function() {
 	this.busy(false);
-	AccountTools.SetupWarnings(this, {
+	SetupWarnings(this, {
 		'noUserName': {
 			text: mf('register.warning.noUserName', 'Please enter a name for your new user.'),
 			selectors: ['#registerName']
@@ -269,7 +269,7 @@ Template.forgotPwdFrame.helpers({
 Template.forgotPwdFrame.events({
 	'input, change, paste, keyup, mouseup'(event, instance) {
 		const email = instance.$('.js-reset-pw-email').val();
-		instance.emailIsValid.set(AccountTools.IsEmail(email));
+		instance.emailIsValid.set(IsEmail(email));
 	},
 
 	'submit'(event, instance) {

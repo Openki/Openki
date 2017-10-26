@@ -5,7 +5,7 @@
 // wouldn't want the time or even date field to change because of this switch.
 
 import '/imports/LocalTime.js';
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
 
