@@ -1,7 +1,7 @@
 <template name="frameCalendar">
 	<style type="text/css">
-		{{#each cssRules}}
-			{{selector}} { {{name}}: {{value}}; }
+		{{#each cssRule in cssRules}}
+			{{cssRule}}
 		{{/each}}
 	</style>
 

@@ -1,6 +1,6 @@
 import '/imports/IdTools.js';
-import { ScssVars } from '/imports/ui/lib/scss-vars.js';
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import ScssVars from '/imports/ui/lib/scss-vars.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
 
