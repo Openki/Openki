@@ -43,7 +43,12 @@ Template.regionSelection.onCreated(function() {
 	instance.changeRegion = function(regionId) {
 		var changed = !Session.equals('region', regionId);
 
-		localStorage.setItem("region", regionId); // to survive page reload
+		try {
+			localStorage.setItem("region", regionId); // to survive page reload
+		} catch (e) {
+			console.error(e);
+		}
+
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {
 			Meteor.call('user.regionChange', regionId);

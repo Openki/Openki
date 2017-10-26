@@ -31,6 +31,10 @@ Assistant = {
 
 	doneIntro: function() {
 		Session.set('ShowIntro', false);
-		localStorage.setItem('intro', 'done');
+		try {
+			localStorage.setItem('intro', 'done');
+		} catch (e) {
+			console.error(e);
+		}
 	},
 };

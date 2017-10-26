@@ -75,7 +75,12 @@ Template.languageSelection.events({
 		event.preventDefault();
 		var lg = this.lg;
 
-		localStorage.setItem('locale', lg);
+		try {
+			localStorage.setItem('locale', lg);
+		} catch (e) {
+			console.error(e);
+		}
+
 		Session.set('locale', lg);
 		if (Meteor.user()){
 			Meteor.call('updateUserLocale', lg);
