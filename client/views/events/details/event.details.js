@@ -1,5 +1,5 @@
 import '/imports/IdTools.js';
-import { PleaseLogin } from '/imports/ui/lib/please-login.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 // routing is in /routing.js
 

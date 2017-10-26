@@ -1,47 +1,38 @@
-export const CssFromQuery = () => {
-	const self = [];
-	const customizableProperties = [];
+export default class CssFromQuery {
+	constructor(query) {
+		this.query = query;
+		this.customizableProperties = [];
 
-	/** Add a customizable Property
+		// define a default set of customizable properties
+		this.addCustomizableProperties([
+			['bgcolor', 'background-color', 'body'],
+			['color', 'color', 'body'],
+			['itembg', 'background-color', '.frame-list-item'],
+			['itemcolor', 'color', '.frame-list-item'],
+			['linkcolor', 'color', '.frame-list-item a'],
+			['fontsize', 'font-size', '*'],
+			['regionbg', 'background-color', '.frame-list-item-region'],
+			['regioncolor', 'color', '.frame-list-item-region']
+		]);
+	}
+
+	/** Add customizable properties
 	  *
-	  * @param {String} key      - key to use in the URL
-	  * @param {String} name     - name of the css-property to change
-	  * @param {String} selector - html selector of which the css should change
+	  * @param  {Array} properties - the customizable properties to add
+	  * @return {CssFromQuery Object}
 	  */
-	customizableProperties.add = function(key, name, selector) {
-		this.push({ key, name, selector });
+	addCustomizableProperties(properties) {
+		properties.forEach(property => {
+			const [key, name, selector] = property;
+			this.customizableProperties.push({ key, name, selector });
+		});
 		return this;
-	};
+	}
 
-	// define a default set of customizable properties
-	customizableProperties
-		.add('bgcolor', 'background-color', 'body')
-		.add('color', 'color', 'body')
-		.add('itembg', 'background-color', '.frame-list-item')
-		.add('itemcolor', 'color', '.frame-list-item')
-		.add('linkcolor', 'color', '.frame-list-item a')
-		.add('fontsize', 'font-size', '*')
-		.add('regionbg', 'background-color', '.frame-list-item-region')
-		.add('regioncolor', 'color', '.frame-list-item-region');
-
-	/** Invoke the add method on customizableProperties
-	  *
-	  * @param {String} key      - key to use in the URL
-	  * @param {String} name     - name of the css-property to change
-	  * @param {String} selector - html selector of which the css should change
-	  */
-	self.add = (key, name, selector) => {
-		customizableProperties.add(key, name, selector);
-		return self;
-	};
-
-	/** Read, check and add the given properties, then add them to the set of rules
-	  *
-	  * @param {Object} query - Query paramaters of route
-	  */
-	self.read = query => {
-		customizableProperties.forEach(property => {
-			const queryValue = query[property.key];
+	getCssRules() {
+		this.cssRules = [];
+		this.customizableProperties.forEach(property => {
+			const queryValue = this.query[property.key];
 			let cssValue;
 			if (typeof queryValue !== 'undefined') {
 				// hexify color values
@@ -57,15 +48,13 @@ export const CssFromQuery = () => {
 				}
 
 				if (cssValue) {
-					self.push({
-						selector: property.selector,
-						name: property.name,
-						value: cssValue
-					});
+					this.cssRules.push(
+						`${property.selector} { ${property.name}: ${cssValue}; }`
+					);
 				}
 			}
 		});
-	};
 
-	return self;
+		return this.cssRules;
+	}
 };
