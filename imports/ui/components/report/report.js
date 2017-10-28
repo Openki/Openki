@@ -1,22 +1,28 @@
-Template.report.onCreated(function() {
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from 'meteor/meteor';
+
+import './report.html';
+
+Template.report.onCreated(function reportOnCreated() {
 	this.state = new ReactiveVar('');
-	});
+});
 
 Template.report.helpers({
-	reporting: function() { return Template.instance().state.get() == 'reporting'; },
-	sending: function() { return Template.instance().state.get() == 'sending'; }
+	reporting: () => Template.instance().state.get() == 'reporting',
+	sending: () => Template.instance().state.get() == 'sending'
 });
 
 Template.report.events({
-	'click .js-report': function(event, instance) {
+	'click .js-report'(event, instance) {
 		event.preventDefault();
 		instance.state.set('reporting');
 	},
-	'click .js-report-cancel': function(event, instance) {
+	'click .js-report-cancel'(event, instance) {
 		event.preventDefault();
 		instance.state.set('');
 	},
-	'click .js-report-send': function(event, instance) {
+	'click .js-report-send'(event, instance) {
 		event.preventDefault();
 		Meteor.call(
 			'report',

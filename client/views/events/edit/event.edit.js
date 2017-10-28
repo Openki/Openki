@@ -8,6 +8,7 @@ import '/imports/LocalTime.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
+import '/imports/ui/components/region-tag/region-tag.js';
 
 Template.eventEdit.onCreated(function() {
 	var instance = this;

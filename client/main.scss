@@ -28,13 +28,11 @@
 // Right-to-left styles
 @import '{}/imports/ui/stylesheets/rtl';
 
-// Shariff
-@import '{}/imports/ui/stylesheets/shariff';
-
 // Template styles
 @import 'widgets/editable/editable';
 @import 'widgets/map/map';
 @import 'widgets/messages/messages';
-@import 'widgets/regionTag/regionTag';
-@import 'widgets/report/report';
+@import '{}/imports/ui/components/region-tag/region-tag';
+@import '{}/imports/ui/components/report/report';
+@import '{}/imports/ui/components/sharing/sharing';
 @import 'views/views';
