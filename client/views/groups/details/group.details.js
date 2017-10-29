@@ -1,8 +1,10 @@
 "use strict";
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 
 Template.groupDetails.onCreated(function() {
 	var instance = this;
@@ -23,7 +25,7 @@ Template.groupDetails.onCreated(function() {
 
 	var showControls = !this.data.isNew;
 
-	instance.editableName = Editable(
+	instance.editableName = new Editable(
 		true,
 		function(newName) {
 			Meteor.call("saveGroup", groupId, { name: newName }, handleSaving);
@@ -32,7 +34,7 @@ Template.groupDetails.onCreated(function() {
 		showControls
 	);
 
-	instance.editableShort = Editable(
+	instance.editableShort = new Editable(
 		true,
 		function(newShort) {
 			Meteor.call("saveGroup", groupId, { short: newShort }, handleSaving);
@@ -41,7 +43,7 @@ Template.groupDetails.onCreated(function() {
 		showControls
 	);
 
-	instance.editableClaim = Editable(
+	instance.editableClaim = new Editable(
 		true,
 		function(newClaim) {
 			Meteor.call("saveGroup", groupId, { claim: newClaim }, handleSaving);
@@ -50,7 +52,7 @@ Template.groupDetails.onCreated(function() {
 		showControls
 	);
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
 			Meteor.call("saveGroup", groupId, { description: newDescription }, handleSaving);

@@ -1,9 +1,11 @@
 import '/imports/IdTools.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 import '/imports/ui/components/sharing/sharing.js';
@@ -18,7 +20,7 @@ Template.courseDetailsPage.onCreated(function() {
 
 	var course = instance.data.course;
 
-	instance.editableName = Editable(
+	instance.editableName = new Editable(
 		true,
 		function(newName) {
 			Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
@@ -32,7 +34,7 @@ Template.courseDetailsPage.onCreated(function() {
 		mf('course.title.placeholder')
 	);
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
 			Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
