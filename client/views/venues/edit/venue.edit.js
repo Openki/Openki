@@ -2,6 +2,7 @@
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/map/map.js';
 
 Template.venueEdit.onCreated(function() {

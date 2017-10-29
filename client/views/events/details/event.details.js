@@ -2,6 +2,7 @@ import '/imports/IdTools.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 import '/imports/ui/components/sharing/sharing.js';

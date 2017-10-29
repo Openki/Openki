@@ -3,6 +3,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+
 import './report.html';
 
 Template.report.onCreated(function reportOnCreated() {

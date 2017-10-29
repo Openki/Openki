@@ -1,5 +1,7 @@
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 

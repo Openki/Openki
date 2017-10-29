@@ -1,5 +1,7 @@
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+
 // See routing.js for the route
 
 TemplateMixins.Expandible(Template.profile);

@@ -2,6 +2,8 @@
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+
 Template.groupDetails.onCreated(function() {
 	var instance = this;
 

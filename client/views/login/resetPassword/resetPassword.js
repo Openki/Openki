@@ -1,5 +1,7 @@
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+
 Router.map(function() {
 	this.route('resetPassword', {
 		path: "reset-password/:token",
