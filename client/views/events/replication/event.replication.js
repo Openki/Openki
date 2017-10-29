@@ -1,6 +1,7 @@
 import '/imports/LocalTime.js';
-
 import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
 
 const replicaStartDate = originalDate => {
 	const originalMoment = moment(originalDate);

@@ -1,4 +1,5 @@
 "use strict";
+import '/imports/ui/components/buttons/buttons.js';
 
 _.each([Template.editable, Template.editableTextarea], function(template) {
 
