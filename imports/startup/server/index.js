@@ -1,2 +1,3 @@
+import './api.json.js';
 import './fixtures.js';
-import './ical.js';
+import './notifications.js';

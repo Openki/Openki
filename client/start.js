@@ -1,4 +1,4 @@
-import '/imports/startup/msgfmt.js';
+import '/imports/startup/both';
 import '/imports/startup/client';
 import "/imports/RegionSelection.js";
 import Introduction from '/imports/ui/lib/introduction.js';
