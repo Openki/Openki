@@ -2,6 +2,7 @@ import "/imports/RegionSelection.js";
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '/imports/ui/components/introduction/introduction.js';
 import '/imports/ui/components/messages/messages.js';
 
 Template.layout.helpers({

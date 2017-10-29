@@ -1,7 +1,7 @@
 import '/imports/startup/msgfmt.js';
-import "/imports/startup/client/clientError.js";
-import "/imports/startup/client/ical.js";
+import '/imports/startup/client';
 import "/imports/RegionSelection.js";
+import Introduction from '/imports/ui/lib/introduction.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -118,7 +118,7 @@ Meteor.startup(function() {
 });
 
 Meteor.startup(RegionSelection.init);
-Meteor.startup(Assistant.init);
+Meteor.startup(Introduction.init);
 
 Meteor.startup(UpdateViewport);
 

@@ -1,35 +1,36 @@
-Assistant = {
-	init: function() {
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+
+export default Introduction = {
+	init() {
 		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
 		Session.set('OpenedIntro', undefined);
 	},
 
-	showIntro: function() {
+	showIntro() {
 		Session.set('ShowIntro', true);
 	},
 
-	shownIntro: function() {
-		return Session.get('ShowIntro');
-	},
+	shownIntro: () => Session.get('ShowIntro'),
 
-	openedIntro: function() {
-		var opened = Session.get('OpenedIntro');
+	openedIntro() {
+		const opened = Session.get('OpenedIntro');
 		if (opened !== undefined) return opened;
 
-		var route = Router.current().route;
-		var routeName = route && route.getName();
+		const route = Router.current().route;
+		const routeName = route && route.getName();
 		return routeName === "home" || routeName === "find";
 	},
 
-	openIntro: function() {
+	openIntro() {
 		Session.set('OpenedIntro', true);
 	},
 
-	closeIntro: function() {
+	closeIntro() {
 		Session.set('OpenedIntro', false);
 	},
 
-	doneIntro: function() {
+	doneIntro() {
 		Session.set('ShowIntro', false);
 		try {
 			localStorage.setItem('intro', 'done');

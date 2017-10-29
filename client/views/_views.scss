@@ -39,9 +39,6 @@
 @import 'groups/list/group.list';
 @import 'groups/settings/group.settings';
 
-// Introduction
-@import 'introduction/introduction';
-
 // Kiosk
 @import 'kiosk/kiosk';
 @import 'kiosk/event/kiosk.event';
@@ -83,6 +80,3 @@
 @import 'venues/details/venue.details';
 @import 'venues/link/venue.link';
 @import 'venues/edit/venue.edit';
-
-// start to import stylesheets for new components from imports
-@import '{}/imports/ui/components/price-policy/price-policy';

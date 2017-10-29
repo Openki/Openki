@@ -1,15 +1,23 @@
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
+import Introduction from '/imports/ui/lib/introduction.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
 
+import './introduction.html';
+
 Template.introduction.onRendered(function() {
-	if (!Assistant.openedIntro()) {
+	if (!Introduction.openedIntro()) {
 		this.$('.introduction-content').hide();
 	}
 
 	var instance = this;
 	this.autorun(function() {
-		if (Assistant.openedIntro()) {
+		if (Introduction.openedIntro()) {
 			instance.$('.introduction-content').slideDown(400);
 		} else {
 			instance.$('.introduction-content').slideUp(400);
@@ -20,7 +28,7 @@ Template.introduction.onRendered(function() {
 	var viewportWidth = Session.get('viewportWidth');
 	var screenXXS = ScssVars.screenXXS;
 	if (viewportWidth < screenXXS) {
-		Assistant.closeIntro();
+		Introduction.closeIntro();
 		// dont wait for slideUp
 		this.$('.introduction-content').hide();
 	}
@@ -29,13 +37,13 @@ Template.introduction.onRendered(function() {
 
 Template.layout.helpers({
 	shownIntro: function() {
-		return Assistant.shownIntro();
+		return Introduction.shownIntro();
 	}
 });
 
 Template.introduction.helpers({
 	openedIntro: function() {
-		return Assistant.openedIntro();
+		return Introduction.openedIntro();
 	},
 
 	isInCalendar: function() {
@@ -63,19 +71,19 @@ Template.layout.events({
 	'click .js-toggle-introduction': function() {
 		var route = Router.current().route;
 		if (route && route.options.template === "findWrap") {
-			Assistant.showIntro();
+			Introduction.showIntro();
 		}
 	},
 
 	"click .js-introduction-close-btn": function(event, instance) {
-		Assistant.doneIntro();
+		Introduction.doneIntro();
 	},
 
 	"click .js-introduction-toggle-btn": function(event, instance) {
-		if (Assistant.openedIntro()) {
-			Assistant.closeIntro();
+		if (Introduction.openedIntro()) {
+			Introduction.closeIntro();
 		} else {
-			Assistant.openIntro();
+			Introduction.openIntro();
 		}
 	}
 });
