@@ -1,11 +1,13 @@
 import '/imports/IdTools.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 import '/imports/ui/components/sharing/sharing.js';
 import '/imports/ui/components/report/report.js';
+
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {
@@ -22,7 +24,7 @@ Template.courseDetailsPage.onCreated(function() {
 				if (err) {
 					showServerError('Saving the course went wrong', err);
 				} else {
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 			});
 		},
@@ -36,7 +38,7 @@ Template.courseDetailsPage.onCreated(function() {
 				if (err) {
 					showServerError('Saving the course went wrong', err);
 				} else {
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 			});
 		},
@@ -84,7 +86,7 @@ Template.courseDetailsPage.events({
 			if (error) {
 				showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
 		});
 		Router.go('/');
@@ -145,7 +147,7 @@ Template.courseGroupAdd.events({
 			if (error) {
 				showServerError("Failed to add group", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -161,7 +163,7 @@ Template.courseGroupRemove.events({
 			if (error) {
 				showServerError("Failed to remove group", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -177,7 +179,7 @@ Template.courseGroupMakeOrganizer.events({
 			if (error) {
 				showServerError("Failed to give group editing rights", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -193,7 +195,7 @@ Template.courseGroupRemoveOrganizer.events({
 			if (error) {
 				showServerError("Failed to remove organizer status", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});

@@ -3,6 +3,7 @@ import "/imports/startup/client/clientError.js";
 import "/imports/startup/client/ical.js";
 import "/imports/RegionSelection.js";
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 ////////////// db-subscriptions:
 
@@ -134,7 +135,7 @@ Accounts.onEmailVerificationLink(function(token, done) {
 		if (error) {
 			showServerError('Address could not be verified', error);
 		} else {
-			addMessage(mf("email.verified", "Email verified."), 'success');
+			AddMessage(mf("email.verified", "Email verified."), 'success');
 		}
 	});
 });
