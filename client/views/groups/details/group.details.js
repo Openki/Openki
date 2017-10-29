@@ -1,5 +1,6 @@
 "use strict";
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 Template.groupDetails.onCreated(function() {
 	var instance = this;
@@ -14,7 +15,7 @@ Template.groupDetails.onCreated(function() {
 		if (err) {
 			showServerError('Saving the group went wrong', err);
 		} else {
-			addMessage("\u2713 " + mf('_message.saved'), 'success');
+			AddMessage("\u2713 " + mf('_message.saved'), 'success');
 		}
 	};
 
@@ -141,7 +142,7 @@ Template.groupDetails.events({
 				instance.editableClaim.end();
 				instance.editableDescription.end();
 
-				addMessage(mf('group.create.success', 'Created group'), 'success');
+				AddMessage(mf('group.create.success', 'Created group'), 'success');
 				Router.go('groupDetails', { _id: groupId });
 			}
 		});

@@ -1,3 +1,5 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 // See routing.js for the route
 
 TemplateMixins.Expandible(Template.profile);
@@ -95,7 +97,7 @@ Template.profile.events({
 		instance.busy('deleting');
 		Meteor.call('delete_profile', function() {
 			instance.busy(false);
-			addMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
+			AddMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
 		instance.collapse(); // Wait for server to log us out.
 	},
@@ -110,7 +112,7 @@ Template.profile.events({
 				if (err) {
 					showServerError('Saving your profile failed', err);
 				} else {
-					addMessage(mf('profile.updated', 'Updated profile'), 'success');
+					AddMessage(mf('profile.updated', 'Updated profile'), 'success');
 					instance.editing.set(false);
 				}
 			}
@@ -123,19 +125,19 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass !== "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				addMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
+				AddMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
 				if (pass.length < minLength) {
-					addMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'danger');
+					AddMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'danger');
 					return;
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
 						showServerError('Failed to change your password', err);
 					} else {
-						addMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
+						AddMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
 						instance.changingPass.set(false);
 					}
 				});

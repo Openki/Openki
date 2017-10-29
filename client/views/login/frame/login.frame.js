@@ -1,4 +1,5 @@
 import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
@@ -157,7 +158,7 @@ Template.loginFrame.events({
 		}, function (err) {
 			instance.busy(false);
 			if (err) {
-				addMessage(err.reason || 'Unknown error', 'danger');
+				AddMessage(err.reason || 'Unknown error', 'danger');
 			} else {
 				$('#accountTasks').modal('hide');
 			}
@@ -282,7 +283,7 @@ Template.forgotPwdFrame.events({
 			if (err) {
 				showServerError('We were unable to send a mail to this address', err);
 			} else {
-				addMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
+				AddMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
 				instance.parentInstance().accountTask.set('login');
 			}
 		});

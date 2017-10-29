@@ -1,5 +1,6 @@
 "use strict";
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 Template.venueEdit.onCreated(function() {
 	var instance = this;
@@ -186,7 +187,7 @@ Template.venueEdit.events({
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
-				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
+				AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 				if (instance.isNew) {
 					Router.go('venueDetails', { _id: venueId });
 				} else {

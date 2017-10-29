@@ -1,5 +1,6 @@
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import '/imports/StringTools.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
@@ -215,7 +216,7 @@ Template.courseEdit.events({
 				showServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-				addMessage("\u2713 " + mf('_message.saved'), 'success');
+				AddMessage("\u2713 " + mf('_message.saved'), 'success');
 
 				instance.$('.js-check-enroll').each(function() {
 					var method = this.checked ? 'add_role' : 'remove_role';

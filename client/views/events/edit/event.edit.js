@@ -10,6 +10,8 @@ import PleaseLogin from '/imports/ui/lib/please-login.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.busy(false);
@@ -294,13 +296,13 @@ Template.eventEdit.events({
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				} else {
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 
 				if (updateReplicas) {
-					addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+					AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
 				}
 				instance.parent.editing.set(false);
 			}

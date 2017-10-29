@@ -1,3 +1,5 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 Template.courseMembers.onCreated(function() {
 	this.increaseBy = 10;
 	this.membersLimit = new ReactiveVar(this.increaseBy);
@@ -53,7 +55,7 @@ Template.courseMember.onCreated(function() {
 				if (err) {
 					showServerError('Unable to change your message', err);
 				} else {
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 			});
 		},

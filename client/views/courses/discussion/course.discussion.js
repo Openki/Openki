@@ -1,3 +1,5 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 Template.discussion.onCreated(function() {
 	this.count = new ReactiveVar(0);
 
@@ -261,7 +263,7 @@ Template.post.events({
 			if (err) {
 				showServerError('Could not delete comment', err);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
 		});
 	},
