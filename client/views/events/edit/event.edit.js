@@ -6,8 +6,10 @@
 
 import '/imports/LocalTime.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 
@@ -31,7 +33,7 @@ Template.eventEdit.onCreated(function() {
 	var notifyPreset = courseId && instance.data.new;
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),

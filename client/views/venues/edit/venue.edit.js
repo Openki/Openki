@@ -1,8 +1,10 @@
 "use strict";
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/map/map.js';
 
 Template.venueEdit.onCreated(function() {
@@ -62,7 +64,7 @@ Template.venueEdit.onCreated(function() {
 		}
 	});
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),

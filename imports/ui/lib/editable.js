@@ -1,3 +1,5 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+
 // Editable objects keep state of RTE fields
 // This state includes
 //   text: Its text content before editing
@@ -19,32 +21,37 @@
 // Instances of editable templates connect() to this to get their interface.
 // It is assumed that only one instance is using this interface at a time,
 
-Editable = function(simple, store, placeholderText, showControls) {
-	if (typeof showControls == 'undefined') showControls = true;
-
-	var text = ReactiveVar('');
-	var changed = ReactiveVar(!showControls);
-	var editingInstance = false;
-
-	return {
-		setText: function(newText) { text.set(newText); },
-		getEdited: function() {
-			if (editingInstance) {
-				return editingInstance.getEdited();
-			}
-			return false;
-		},
-		end: function() { changed.set(false); },
-		connect: function(instance) {
-			editingInstance = instance;
-			return {
-				text: function() { return text.get(); },
-				changed: changed,
-				simple: simple,
-				placeholderText:  placeholderText || mf('editable.add_text', 'Add text here'),
-				showControls: showControls,
-				store: store
-			};
+export default class Editable {
+	constructor(simple, store, placeholderText, showControls = true) {
+		this.simple = simple;
+		this.store = store;
+		this.placeholderText = placeholderText;
+		this.showControls = showControls;
+		this.text = new ReactiveVar('');
+		this.changed = new ReactiveVar(!showControls);
+		this.editingInstance = false;
+	}
+	setText(newText) {
+		this.text.set(newText);
+	}
+	getEdited() {
+		if (this.editingInstance) {
+			return this.editingInstance.getEdited();
 		}
-	};
+		return false;
+	}
+	end() {
+		this.changed.set(false);
+	}
+	connect(instance) {
+		this.editingInstance = instance;
+		return {
+			text: () => this.text.get(),
+			changed: this.changed,
+			simple: this.simple,
+			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
+			showControls: this.showControls,
+			store: this.store
+		}
+	}
 };

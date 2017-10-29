@@ -1,8 +1,10 @@
-import PleaseLogin from '/imports/ui/lib/please-login.js';
 import '/imports/StringTools.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 
@@ -16,7 +18,7 @@ Template.courseEdit.created = function() {
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),

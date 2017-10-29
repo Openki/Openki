@@ -1,4 +1,7 @@
+import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/editable/editable.js';
 
 Template.courseMembers.onCreated(function() {
 	this.increaseBy = 10;
@@ -48,7 +51,7 @@ Template.courseMember.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
 
-	instance.editableMessage = Editable(
+	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
 			Meteor.call("change_comment", courseId, newMessage, function(err, courseId) {
