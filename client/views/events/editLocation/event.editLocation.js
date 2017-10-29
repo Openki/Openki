@@ -1,6 +1,8 @@
 "use strict";
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/map/map.js';
+
 Template.eventEditVenue.onCreated(function() {
 	var instance = this;
 	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
