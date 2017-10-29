@@ -1,6 +1,4 @@
-import '/imports/startup/msgfmt.js';
-import '/imports/startup/notifications.js';
-import '/imports/startup/api.json.js';
+import '/imports/startup/both';
 import '/imports/startup/server';
 import '/imports/api/clientError/methods.js';
 
