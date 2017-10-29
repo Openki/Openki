@@ -2,6 +2,8 @@
 
 import Metatags from '/imports/Metatags.js';
 
+import '/imports/ui/components/map/map.js';
+
 Router.map(function () {
 	this.route('venueMap',{
 		path: 'venues',

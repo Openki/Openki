@@ -1,3 +1,9 @@
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+// import { L } from 'meteor/bevanhunt:leaflet';
+
+import './map.html';
+
 /* Display markers on an interactive map
  *
  * Expected data
