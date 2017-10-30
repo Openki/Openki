@@ -51,8 +51,21 @@ Template.courseEdit.helpers({
 		return Template.instance().editingCategories.get();
 	},
 
-	available_roles: function() {
-		return _.filter(Roles, function(role) { return !role.preset; });
+	availableRoles() {
+		return Roles.filter(role => {
+			const conditions = [!role.preset];
+
+			if (this.isFrame) {
+				const neededRoles = this.neededRoles;
+				if (neededRoles && neededRoles.length) {
+					conditions.push(neededRoles.indexOf(role.type) >= 0);
+				} else {
+					conditions.push(role.type !== 'host');
+				}
+			}
+
+			return conditions.every(Boolean);
+		});
 	},
 
 	roleDescription: function() {
