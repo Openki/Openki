@@ -5,6 +5,7 @@ import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/categories/categories.js';
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';

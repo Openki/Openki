@@ -6,7 +6,8 @@
 
 <template name="categoryLabelLinked">
 	<div class="tag tag-link category-tag">
-		<a class='js-category-label category-{{this}}'
+		<a
+			class='js-category-label category-{{this}}'
 			data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
 			href="/find?categories={{this}}">
 			{{categoryName}}

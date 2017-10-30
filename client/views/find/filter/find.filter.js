@@ -2,6 +2,8 @@ import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import '/imports/StringTools.js';
 
+import '/imports/ui/components/categories/categories.js';
+
 Template.filter.onCreated(function() {
 	this.stateFilters =
 		[
