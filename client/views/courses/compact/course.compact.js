@@ -1,3 +1,5 @@
+import '/imports/ui/components/categories/categories.js';
+
 Template.courseCompact.helpers({
 	ready: function() {
 		var instance = Template.instance;
