@@ -53,18 +53,19 @@ Template.courseEdit.helpers({
 
 	availableRoles() {
 		return Roles.filter(role => {
-			const conditions = [!role.preset];
+			if (role.preset) return false;
 
 			if (this.isFrame) {
 				const neededRoles = this.neededRoles;
 				if (neededRoles && neededRoles.length) {
-					conditions.push(neededRoles.includes(role.type));
+					if (neededRoles.includes(role.type)) return true;
 				} else {
-					conditions.push(role.type !== 'host');
+					if (role.type !== 'host') return true;
+					return false;
 				}
+			} else {
+				return true;
 			}
-
-			return conditions.every(Boolean);
 		});
 	},
 
