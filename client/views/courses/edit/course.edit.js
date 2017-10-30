@@ -58,7 +58,7 @@ Template.courseEdit.helpers({
 			if (this.isFrame) {
 				const neededRoles = this.neededRoles;
 				if (neededRoles && neededRoles.length) {
-					conditions.push(neededRoles.indexOf(role.type) >= 0);
+					conditions.push(neededRoles.includes(role.type));
 				} else {
 					conditions.push(role.type !== 'host');
 				}
