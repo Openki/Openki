@@ -6,6 +6,8 @@ import { $ } from 'meteor/jquery';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '/imports/ui/components/languages/languages.js';
+
 import './navbar.html';
 
 Template.navbar.onRendered(function() {
