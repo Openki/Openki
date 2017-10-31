@@ -1,5 +1,7 @@
 import Metatags from '/imports/Metatags.js';
 
+import '/imports/ui/components/loading/loading.js';
+
 Router.map(function () {
 	this.route('frameWeek', {
 		path: '/frame/week',

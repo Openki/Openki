@@ -6,6 +6,7 @@ import '/imports/ui/components/footer/footer.js';
 import '/imports/ui/components/introduction/introduction.js';
 import '/imports/ui/components/messages/messages.js';
 import '/imports/ui/components/navbar/navbar.js';
+import '/imports/ui/components/translate-info/translate-info.js';
 
 Template.layout.helpers({
 	testWarning: function() {

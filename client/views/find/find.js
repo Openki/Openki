@@ -2,6 +2,8 @@ import Metatags from '/imports/Metatags.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '/imports/ui/components/loading/loading.js';
+
 function finderRoute(path) {
 	return {
 		path: path,

@@ -1,11 +1,13 @@
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
-Router.map(function () {
-	this.route('FAQ', {
-		path: '/FAQ',
-		template: 'FAQ'
-	});
-});
+import './faq.de.md';
+import './faq.en.md';
+import './faq.html';
 
 Template.FAQ.onCreated(function() {
 	this.headerTag = 'h3';
