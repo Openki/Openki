@@ -6,7 +6,7 @@ import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/loading/loading.js';
 
-import './calendar.html';
+import './calendar-frame.html';
 
 Template.frameCalendar.onCreated(function() {
 	var instance = this;

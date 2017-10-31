@@ -1,10 +1,10 @@
 import './calendar/calendar.js';
 import './faq/faq.js';
-import './frames/calendar/calendar.js';
-import './frames/courselist/courselist.js';
-import './frames/events/events.js';
-import './frames/propose/propose.js';
-import './frames/schedule/schedule.js';
-import './frames/week/week.js';
+import './frames/calendar-frame/calendar-frame.js';
+import './frames/courselist-frame/courselist-frame.js';
+import './frames/events-frame/events-frame.js';
+import './frames/propose-frame/propose-frame.js';
+import './frames/schedule-frame/schedule-frame.js';
+import './frames/week-frame/week-frame.js';
 import './not-found/not-found.js';
 import './timetable/timetable.js';
