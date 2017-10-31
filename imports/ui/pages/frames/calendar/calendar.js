@@ -1,22 +1,12 @@
-import Metatags from '/imports/Metatags.js';
-import CssFromQuery from '/imports/ui/lib/css-from-query.js';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/loading/loading.js';
 
-Router.map(function () {
-	this.route('frameCalendar', {
-		path: '/frame/calendar',
-		template: 'frameCalendar',
-		layoutTemplate: 'frameLayout',
-		data: function() {
-			const cssRules = new CssFromQuery(this.params.query).getCssRules();
-			return { cssRules };
-		},
-		onAfterAction: function() {
-			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
-	});
-});
+import './calendar.html';
 
 Template.frameCalendar.onCreated(function() {
 	var instance = this;

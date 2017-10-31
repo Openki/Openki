@@ -1,11 +1,11 @@
+import '/imports/Predicates.js';
 import '/imports/Profile.js';
 import '/imports/LocalTime.js';
 import Metatags from '/imports/Metatags.js';
+import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
-import '/imports/ui/pages/calendar/calendar.js';
-import '/imports/ui/pages/faq/faq.js';
-import '/imports/ui/pages/not-found/not-found.js';
-import '/imports/ui/pages/timetable/timetable.js';
+import '/imports/ui/layouts';
+import '/imports/ui/pages';
 
 Router.configure({
 	layoutTemplate: 'layout',
@@ -30,6 +30,103 @@ Router.map(function () {
 		}
 	});
 
+});
+
+Router.map(function () {
+	this.route('frameWeek', {
+		path: '/frame/week',
+		template: 'frameWeek',
+		layoutTemplate: 'frameWeek',
+		onAfterAction: function() {
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		}
+	});
+});
+
+Router.map(function () {
+	this.route('frameSchedule', {
+		path: '/frame/schedule',
+		layoutTemplate: 'frameLayout',
+	});
+});
+
+Router.map(function () {
+	this.route('framePropose', {
+		path: '/frame/propose',
+		template: 'framePropose',
+		layoutTemplate: 'frameLayout',
+		waitOn: () => Meteor.subscribe('regions'),
+		data: function() {
+			const predicates =
+				{ region: Predicates.id
+				, group: Predicates.id
+				};
+
+			const params = Filtering(predicates).read(this.params.query).done();
+			const data = params.toParams();
+			data.isFrame = true;
+			return data;
+		},
+		onAfterAction() {
+			Metatags.setCommonTags(
+				mf('course.propose.windowtitle', 'Propose new course')
+			);
+		}
+	});
+});
+
+Router.map(function () {
+	this.route('frameEvents', {
+		path: '/frame/events',
+		template: 'frameEvents',
+		layoutTemplate: 'frameLayout',
+		waitOn: function () {
+			this.filter = Events.Filtering().read(this.params.query).done();
+
+			var filterParams = this.filter.toParams();
+			filterParams.after = minuteTime.get();
+
+			var limit = parseInt(this.params.query.count, 10) || 6;
+
+			return Meteor.subscribe('Events.findFilter', filterParams, limit*2);
+		},
+
+		data: function() {
+			var filterParams = this.filter.toParams();
+			filterParams.after = minuteTime.get();
+
+			var limit = parseInt(this.params.query.count, 10) || 6;
+
+			return Events.findFilter(filterParams, limit);
+		},
+
+		onAfterAction: function() {
+			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
+		}
+	});
+});
+
+Router.map(function() {
+	this.route('frameCourselist', {
+		path: '/frame/courselist',
+		template: 'frameCourselist',
+		layoutTemplate: 'frameLayout'
+	});
+});
+
+Router.map(function () {
+	this.route('frameCalendar', {
+		path: '/frame/calendar',
+		template: 'frameCalendar',
+		layoutTemplate: 'frameLayout',
+		data: function() {
+			const cssRules = new CssFromQuery(this.params.query).getCssRules();
+			return { cssRules };
+		},
+		onAfterAction: function() {
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		}
+	});
 });
 
 Router.map(function () {
