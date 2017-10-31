@@ -2,6 +2,8 @@ import '/imports/Profile.js';
 import '/imports/LocalTime.js';
 import Metatags from '/imports/Metatags.js';
 
+import '/imports/ui/pages/calendar/calendar.js';
+
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
@@ -27,6 +29,16 @@ Router.map(function () {
 
 });
 
+Router.map(function () {
+	this.route('calendar', {
+		path: 'calendar',
+		template: 'calendar',
+		data: function() { return this.params; },
+		onAfterAction: function() {
+			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		}
+	});
+});
 
 Router.map(function() {
 	this.route('userprofile', {

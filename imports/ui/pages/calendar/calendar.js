@@ -1,15 +1,12 @@
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import Metatags from '/imports/Metatags.js';
 
-Router.map(function () {
-	this.route('calendar', {
-		path: 'calendar',
-		template: 'calendar',
-		data: function() { return this.params; },
-		onAfterAction: function() {
-			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
-	});
-});
+import './calendar.html';
 
 Template.calendar.onCreated(function() {
 	var instance = this;
