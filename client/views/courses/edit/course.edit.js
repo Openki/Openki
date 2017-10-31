@@ -59,9 +59,8 @@ Template.courseEdit.helpers({
 				const neededRoles = this.neededRoles;
 				if (neededRoles && neededRoles.length) {
 					if (neededRoles.includes(role.type)) return true;
-				} else {
-					if (role.type !== 'host') return true;
-					return false;
+				} else if (role.type !== 'host') {
+					return true;
 				}
 			} else {
 				return true;
