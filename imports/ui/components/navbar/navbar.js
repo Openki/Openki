@@ -1,4 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
+import { Session} from 'meteor/session';
+import { Template } from 'meteor/tempating';
+import { $ } from 'meteor/jquery';
+
 import ScssVars from '/imports/ui/lib/scss-vars.js';
+
+import './navbar.html';
 
 Template.navbar.onRendered(function() {
 	var instance = this;
