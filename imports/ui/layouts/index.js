@@ -1,1 +1,2 @@
-import './frame.js';
+import './app-body.js';
+import './frame-body.js';

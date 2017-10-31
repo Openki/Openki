@@ -34,13 +34,6 @@ Template.introduction.onRendered(function() {
 	}
 });
 
-
-Template.layout.helpers({
-	shownIntro: function() {
-		return Introduction.shownIntro();
-	}
-});
-
 Template.introduction.helpers({
 	openedIntro: function() {
 		return Introduction.openedIntro();
@@ -62,28 +55,5 @@ Template.introduction.helpers({
 		}
 
 		return (triggerSize == screenSize);
-	}
-});
-
-
-Template.layout.events({
-	// Clicks on the logo toggle the intro blurb, but only when already on home
-	'click .js-toggle-introduction': function() {
-		var route = Router.current().route;
-		if (route && route.options.template === "findWrap") {
-			Introduction.showIntro();
-		}
-	},
-
-	"click .js-introduction-close-btn": function(event, instance) {
-		Introduction.doneIntro();
-	},
-
-	"click .js-introduction-toggle-btn": function(event, instance) {
-		if (Introduction.openedIntro()) {
-			Introduction.closeIntro();
-		} else {
-			Introduction.openIntro();
-		}
 	}
 });
