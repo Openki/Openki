@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 
 import '/imports/LocalTime.js';
 
-import './schedule.html';
+import './schedule-frame.html';
 
 Template.frameSchedule.onCreated(function() {
 	var filter = Events.Filtering();

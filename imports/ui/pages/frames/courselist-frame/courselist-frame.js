@@ -9,7 +9,7 @@ import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
 import '/imports/ui/components/loading/loading.js';
 
-import './courselist.html';
+import './courselist-frame.html';
 
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));

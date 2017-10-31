@@ -6,7 +6,7 @@ import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/loading/loading.js';
 
-import './week.html';
+import './week-frame.html';
 
 Template.frameWeek.onCreated(function() {
 	var instance = this;
