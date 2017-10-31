@@ -1,15 +1,15 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import Metatags from '/imports/Metatags.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
 import '/imports/ui/components/loading/loading.js';
 
-Router.map(function() {
-	this.route('frameCourselist', {
-		path: '/frame/courselist',
-		template: 'frameCourselist',
-		layoutTemplate: 'frameLayout'
-	});
-});
+import './courselist.html';
 
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));

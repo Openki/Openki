@@ -1,17 +1,12 @@
-import Metatags from '/imports/Metatags.js';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/loading/loading.js';
 
-Router.map(function () {
-	this.route('frameWeek', {
-		path: '/frame/week',
-		template: 'frameWeek',
-		layoutTemplate: 'frameWeek',
-		onAfterAction: function() {
-			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
-	});
-});
+import './week.html';
 
 Template.frameWeek.onCreated(function() {
 	var instance = this;

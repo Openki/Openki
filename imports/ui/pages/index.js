@@ -1,0 +1,10 @@
+import './calendar/calendar.js';
+import './faq/faq.js';
+import './frames/calendar/calendar.js';
+import './frames/courselist/courselist.js';
+import './frames/events/events.js';
+import './frames/propose/propose.js';
+import './frames/schedule/schedule.js';
+import './frames/week/week.js';
+import './not-found/not-found.js';
+import './timetable/timetable.js';

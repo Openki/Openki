@@ -1,11 +1,10 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+
 import '/imports/LocalTime.js';
 
-Router.map(function () {
-	this.route('frameSchedule', {
-		path: '/frame/schedule',
-		layoutTemplate: 'frameLayout',
-	});
-});
+import './schedule.html';
 
 Template.frameSchedule.onCreated(function() {
 	var filter = Events.Filtering();

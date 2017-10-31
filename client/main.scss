@@ -46,10 +46,7 @@
 @import '{}/imports/ui/components/sharing/sharing';
 @import '{}/imports/ui/components/translate-info/translate-info';
 
-@import '{}/imports/ui/pages/calendar/calendar';
-@import '{}/imports/ui/pages/faq/faq';
-@import '{}/imports/ui/pages/not-found/not-found';
-@import '{}/imports/ui/pages/timetable/timetable';
+@import '{}/imports/ui/pages/index.scss';
 
 // Stylesheets from old structure outside of imports
 @import 'views/views';
