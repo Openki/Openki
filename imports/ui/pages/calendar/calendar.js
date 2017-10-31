@@ -6,6 +6,8 @@ import { $ } from 'meteor/jquery';
 
 import Metatags from '/imports/Metatags.js';
 
+import '/imports/ui/components/loading/loading.js';
+
 import './calendar.html';
 
 Template.calendar.onCreated(function() {

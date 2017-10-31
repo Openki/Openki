@@ -3,6 +3,8 @@ import '/imports/LocalTime.js';
 import Metatags from '/imports/Metatags.js';
 
 import '/imports/ui/pages/calendar/calendar.js';
+import '/imports/ui/pages/faq/faq.js';
+import '/imports/ui/pages/not-found/not-found.js';
 import '/imports/ui/pages/timetable/timetable.js';
 
 Router.configure({
@@ -28,6 +30,13 @@ Router.map(function () {
 		}
 	});
 
+});
+
+Router.map(function () {
+	this.route('FAQ', {
+		path: '/FAQ',
+		template: 'FAQ'
+	});
 });
 
 Router.map(function () {

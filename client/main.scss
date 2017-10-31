@@ -22,6 +22,9 @@
 // Global styles
 @import '{}/imports/ui/stylesheets/global';
 
+// Noscript
+@import '{}/imports/ui/stylesheets/noscript';
+
 // UI Components
 @import '{}/imports/ui/stylesheets/components';
 
@@ -33,6 +36,7 @@
 @import '{}/imports/ui/components/editable/editable';
 @import '{}/imports/ui/components/footer/footer';
 @import '{}/imports/ui/components/introduction/introduction';
+@import '{}/imports/ui/components/loading/loading';
 @import '{}/imports/ui/components/map/map';
 @import '{}/imports/ui/components/messages/messages';
 @import '{}/imports/ui/components/navbar/navbar';
@@ -40,8 +44,11 @@
 @import '{}/imports/ui/components/region-tag/region-tag';
 @import '{}/imports/ui/components/report/report';
 @import '{}/imports/ui/components/sharing/sharing';
+@import '{}/imports/ui/components/translate-info/translate-info';
 
 @import '{}/imports/ui/pages/calendar/calendar';
+@import '{}/imports/ui/pages/faq/faq';
+@import '{}/imports/ui/pages/not-found/not-found';
 @import '{}/imports/ui/pages/timetable/timetable';
 
 // Stylesheets from old structure outside of imports

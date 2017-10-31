@@ -1,5 +1,7 @@
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '/imports/ui/components/loading/loading.js';
+
 Template.usersCourselist.onCreated(function() {
 	var instance = this;
 	var id = instance.data.profileData.user._id;

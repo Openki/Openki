@@ -1,3 +1,5 @@
+import '/imports/ui/components/loading/loading.js';
+
 Template.courseEvents.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
