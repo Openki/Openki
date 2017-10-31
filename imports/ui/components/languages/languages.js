@@ -1,6 +1,13 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar} from 'meteor/reactive-var';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import '/imports/StringTools.js';
 
+import './languages.html';
 
 Template.languageSelectionWrap.created = function() {
 	 var instance = this;
