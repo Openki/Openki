@@ -1,3 +1,8 @@
+import { Session } from 'meteor/session';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import "/imports/RegionSelection.js";
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
@@ -7,6 +12,8 @@ import '/imports/ui/components/introduction/introduction.js';
 import '/imports/ui/components/messages/messages.js';
 import '/imports/ui/components/navbar/navbar.js';
 import '/imports/ui/components/translate-info/translate-info.js';
+
+import './app-body.html';
 
 Template.layout.helpers({
 	testWarning: function() {
@@ -29,6 +36,32 @@ Template.layout.helpers({
 			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
 			&& Session.get('showRegionSplash')
 		);
+	},
+
+	shownIntro: function() {
+		return Introduction.shownIntro();
+	}
+});
+
+Template.layout.events({
+	// Clicks on the logo toggle the intro blurb, but only when already on home
+	'click .js-toggle-introduction': function() {
+		var route = Router.current().route;
+		if (route && route.options.template === "findWrap") {
+			Introduction.showIntro();
+		}
+	},
+
+	"click .js-introduction-close-btn": function(event, instance) {
+		Introduction.doneIntro();
+	},
+
+	"click .js-introduction-toggle-btn": function(event, instance) {
+		if (Introduction.openedIntro()) {
+			Introduction.closeIntro();
+		} else {
+			Introduction.openIntro();
+		}
 	}
 });
 
@@ -37,18 +70,14 @@ Template.layout.rendered = function() {
 	Session.set('isRetina', (window.devicePixelRatio == 2));
 };
 
-
 /* Workaround to prevent iron-router from messing with server-side downloads
  *
  * Class 'js-download' must be added to those links.
  */
-var stopPropagationForDownloadClicks = {
-	'click .js-download': function(event, instance) {
+Template.layout.events({
+	'click .js-download'(event) {
 		event.stopPropagation();
 	}
-};
-
-Template.layout.events(stopPropagationForDownloadClicks);
-Template.frameLayout.events(stopPropagationForDownloadClicks);
+});
 
 RouterAutoscroll.marginTop = ScssVars.navbarHeight;
