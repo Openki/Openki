@@ -6,6 +6,7 @@ import { $ } from 'meteor/jquery';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '../region-selection/region-selection.js';
 import '/imports/ui/components/languages/languages.js';
 
 import './navbar.html';
