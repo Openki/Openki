@@ -1,3 +1,9 @@
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import Metatags from '/imports/Metatags.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
@@ -5,36 +11,10 @@ import CourseTemplate from '/imports/ui/lib/course-template.js';
 
 import '/imports/ui/components/courses/course-list/course-list.js';
 import '/imports/ui/components/courses/course-edit/course-edit.js';
+import '/imports/ui/components/filter/filter.js';
 import '/imports/ui/components/loading/loading.js';
 
-function finderRoute(path) {
-	return {
-		path: path,
-		template: 'findWrap',
-		data: function() {
-			var query = this.params.query;
-
-			// Add filter options for the homepage
-			return _.extend(query, {
-				internal: false,
-				region: Session.get('region')
-			});
-		},
-		onAfterAction: function() {
-			var search = this.params.query.search;
-			if (search) {
-				Metatags.setCommonTags(mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"'));
-			} else {
-				Metatags.setCommonTags(mf('find.WhatLearn?'));
-			}
-		}
-	};
-}
-
-Router.map(function () {
-	this.route('find', finderRoute('/find'));
-	this.route('home', finderRoute('/'));
-});
+import './find.html';
 
 var hiddenFilters = ['needsRole', 'categories'];
 var filters = hiddenFilters.concat(['state']);

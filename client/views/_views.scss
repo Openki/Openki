@@ -8,10 +8,6 @@
 @import 'events/editLocation/event.editLocation';
 @import 'events/replication/event.replication';
 
-// Find
-@import 'find/find';
-@import 'find/filter/find.filter';
-
 // Groups
 @import 'groups/details/group.details';
 @import 'groups/list/group.list';
@@ -29,10 +25,6 @@
 // Login
 @import 'login/frame/login.frame';
 @import 'login/resetPassword/resetPassword';
-
-// Regions
-@import 'regions/regions';
-@import 'regions/splash/regions.splash';
 
 // Users
 @import 'users/courselist/users.courselist';

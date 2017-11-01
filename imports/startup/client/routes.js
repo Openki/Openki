@@ -33,6 +33,35 @@ Router.map(function () {
 
 });
 
+function finderRoute(path) {
+	return {
+		path: path,
+		template: 'findWrap',
+		data: function() {
+			var query = this.params.query;
+
+			// Add filter options for the homepage
+			return _.extend(query, {
+				internal: false,
+				region: Session.get('region')
+			});
+		},
+		onAfterAction: function() {
+			var search = this.params.query.search;
+			if (search) {
+				Metatags.setCommonTags(mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"'));
+			} else {
+				Metatags.setCommonTags(mf('find.WhatLearn?'));
+			}
+		}
+	};
+}
+
+Router.map(function () {
+	this.route('find', finderRoute('/find'));
+	this.route('home', finderRoute('/'));
+});
+
 Router.map(function () {
 	this.route('proposeCourse', {
 		path: 'courses/propose',

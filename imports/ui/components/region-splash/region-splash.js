@@ -1,3 +1,11 @@
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
+import '../region-selection/region-selection.js';
+
+import './region-splash.html';
+
 Template.regionsSplash.onRendered(function () {
 	this.$('#regionsSplash').modal('show');
 });

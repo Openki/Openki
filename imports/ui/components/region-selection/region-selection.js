@@ -1,6 +1,15 @@
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+import { _ } from 'meteor/underscore';
+
 import "/imports/RegionSelection.js";
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import '/imports/StringTools.js';
+
+import './region-selection.html';
 
 Template.regionSelectionWrap.created = function() {
 	var instance = this;

@@ -4,8 +4,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import Metatags from '/imports/Metatags.js';
-
 import '/imports/ui/components/loading/loading.js';
 
 import './calendar.html';

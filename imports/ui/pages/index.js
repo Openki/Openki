@@ -2,6 +2,7 @@ import './calendar/calendar.js';
 import './course-create/course-create.js';
 import './course-details/course-details.js';
 import './faq/faq.js';
+import './find/find.js';
 import './frames/calendar-frame/calendar-frame.js';
 import './frames/courselist-frame/courselist-frame.js';
 import './frames/events-frame/events-frame.js';
