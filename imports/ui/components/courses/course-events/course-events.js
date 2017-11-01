@@ -1,4 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import '/imports/ui/components/loading/loading.js';
+
+import './course-events.html';
 
 Template.courseEvents.onCreated(function() {
 	var instance = this;

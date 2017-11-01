@@ -1,7 +1,10 @@
 import Metatags from '/imports/Metatags.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
+import CourseTemplate from '/imports/ui/lib/course-template.js';
 
+import '/imports/ui/components/courses/course-list/course-list.js';
+import '/imports/ui/components/courses/course-edit/course-edit.js';
 import '/imports/ui/components/loading/loading.js';
 
 function finderRoute(path) {
@@ -226,7 +229,7 @@ Template.find.helpers({
 
 	'newCourse': function() {
 		var instance = Template.instance();
-		var course = courseTemplate();
+		var course = CourseTemplate();
 		course.name = instance.filter.get('search');
 		var groupId = instance.filter.get('group');
 		if (groupId) {

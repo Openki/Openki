@@ -1,3 +1,9 @@
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
 import '/imports/StringTools.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
@@ -8,6 +14,8 @@ import '/imports/ui/components/categories/categories.js';
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
+
+import './course-edit.html';
 
 Template.courseEdit.created = function() {
 	var instance = this;

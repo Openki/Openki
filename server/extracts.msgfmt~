@@ -1,1 +1,1 @@
-[{"course.list.windowtitle":{"key":"course.list.windowtitle","text":"Courses","file":"imports/ui/pages/frames/courselist/courselist.js","line":9,"mtime":1509468571883,"template":"unknown","ctime":1509468571883}},{"extractedAt":1509468580711,"updatedAt":1509468571883}]
+[{"roles.message.placeholder":{"key":"roles.message.placeholder","text":"My interests...","file":"imports/ui/components/courses/course-members/course-members.js","line":71,"mtime":1509497472670,"template":"unknown","ctime":1509497472670}},{"extractedAt":1509497483197,"updatedAt":1509497472670}]

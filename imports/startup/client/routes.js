@@ -2,6 +2,7 @@ import '/imports/Predicates.js';
 import '/imports/Profile.js';
 import '/imports/LocalTime.js';
 import Metatags from '/imports/Metatags.js';
+import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 
 import '/imports/ui/layouts';
@@ -31,6 +32,18 @@ Router.map(function () {
 	});
 
 });
+
+Router.map(function () {
+	this.route('proposeCourse', {
+		path: 'courses/propose',
+		template: 'proposeCourse',
+		onAfterAction: function() {
+			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
+		},
+		data: CourseTemplate
+	});
+});
+
 
 Router.map(function () {
 	this.route('frameWeek', {

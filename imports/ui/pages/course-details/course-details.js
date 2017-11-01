@@ -1,3 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+
 import '/imports/IdTools.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
@@ -6,12 +11,19 @@ import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/categories/categories.js';
+import '/imports/ui/components/courses/course-discussion/course-discussion.js';
+import '/imports/ui/components/courses/course-edit/course-edit.js';
+import '/imports/ui/components/courses/course-events/course-events.js';
+import '/imports/ui/components/courses/course-history/course-history.js';
+import '/imports/ui/components/courses/course-members/course-members.js';
+import '/imports/ui/components/courses/course-roles/course-roles.js';
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/region-tag/region-tag.js';
 import '/imports/ui/components/sharing/sharing.js';
 import '/imports/ui/components/report/report.js';
 
+import './course-details.html';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function() {

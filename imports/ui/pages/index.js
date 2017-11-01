@@ -1,4 +1,6 @@
 import './calendar/calendar.js';
+import './course-create/course-create.js';
+import './course-details/course-details.js';
 import './faq/faq.js';
 import './frames/calendar-frame/calendar-frame.js';
 import './frames/courselist-frame/courselist-frame.js';
