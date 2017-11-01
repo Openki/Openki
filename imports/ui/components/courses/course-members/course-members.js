@@ -1,7 +1,13 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Template } from 'meteor/templating';
+
 import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/editable/editable.js';
+
+import './course-members.html';
 
 Template.courseMembers.onCreated(function() {
 	this.increaseBy = 10;

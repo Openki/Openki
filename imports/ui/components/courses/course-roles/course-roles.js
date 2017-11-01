@@ -1,6 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Template } from 'meteor/templating';
+
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 
 import '/imports/ui/components/buttons/buttons.js';
+
+import './course-roles.html';
 
 Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);

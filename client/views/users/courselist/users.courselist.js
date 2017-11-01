@@ -1,5 +1,6 @@
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
+import '/imports/ui/components/courses/course-list/course-list.js';
 import '/imports/ui/components/loading/loading.js';
 
 Template.usersCourselist.onCreated(function() {
