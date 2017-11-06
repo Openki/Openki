@@ -569,6 +569,7 @@ Meteor.methods({
 				});
 			}
 			set.groups = tested_groups;
+			set.groupOrganizers = tested_groups;
 
 			/* region cannot be changed */
 			var region = Regions.findOne({_id: changes.region});

@@ -63,8 +63,23 @@ Template.courseEdit.helpers({
 		return Template.instance().editingCategories.get();
 	},
 
-	available_roles: function() {
-		return _.filter(Roles, function(role) { return !role.preset; });
+	availableRoles() {
+		return Roles.filter(role => {
+			// Roles that are always on are not selectable here
+			if (role.preset) return false;
+
+			// In the normal view, all roles are selectable
+			if (!this.isFrame) return true;
+
+			const neededRoles = this.neededRoles;
+			if (neededRoles && neededRoles.length) {
+				if (!neededRoles.includes(role.type)) return false;
+			} else {
+				if (role.type == 'host') return false;
+			}
+
+			return true;
+		});
 	},
 
 	roleDescription: function() {
