@@ -1,38 +1,4 @@
-// Main stylesheet imports
-// --------------------------------------------------
-
-// Fonts
-@import '{}/imports/ui/stylesheets/fonts';
-
-// Base colors
-@import '{}/imports/ui/stylesheets/base-colors';
-
-// Bootstrap framework
-@import '{}/imports/ui/stylesheets/bootstrap';
-
-// Variables
-@import '{}/imports/ui/stylesheets/variables';
-
-// Mixins
-@import '{}/imports/ui/stylesheets/mixins';
-
-// Main layout
-@import '{}/imports/ui/stylesheets/layout';
-
-// Global styles
-@import '{}/imports/ui/stylesheets/global';
-
-// UI Components
-@import '{}/imports/ui/stylesheets/components';
-
-// Right-to-left styles
-@import '{}/imports/ui/stylesheets/rtl';
-
-// Template styles
-@import 'widgets/editable/editable';
-@import 'widgets/map/map';
-@import 'widgets/messages/messages';
-@import '{}/imports/ui/components/region-tag/region-tag';
-@import '{}/imports/ui/components/report/report';
-@import '{}/imports/ui/components/sharing/sharing';
+@import '{}/imports/ui/stylesheets/index';
+@import '{}/imports/ui/components/index';
+@import '{}/imports/ui/pages/index';
 @import 'views/views';

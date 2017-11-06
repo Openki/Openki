@@ -1,0 +1,1 @@
+import './course-create.html';
