@@ -1,3 +1,7 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
+
 Router.map(function() {
 	this.route('resetPassword', {
 		path: "reset-password/:token",
@@ -81,7 +85,7 @@ Template.resetPassword.events({
 			if (err) {
 				showServerError('Unable to reset password', err);
 			} else {
-				addMessage(mf('resetPassword.successMessage', 'Reset your password'), 'success');
+				AddMessage(mf('resetPassword.successMessage', 'Reset your password'), 'success');
 				Router.go('profile');
 			}
 		});

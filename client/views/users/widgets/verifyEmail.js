@@ -1,3 +1,5 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 Template.verifyEmail.onCreated(function() {
 	this.sending = new ReactiveVar(false);
 });
@@ -16,7 +18,7 @@ Template.verifyEmail.events({
 				instance.sending.set(false);
 				showServerError('Failed to send verification mail', err);
 			} else {
-				addMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
+				AddMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
 			}
 		});
 	}

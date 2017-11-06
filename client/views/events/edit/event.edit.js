@@ -6,8 +6,14 @@
 
 import '/imports/LocalTime.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/price-policy/price-policy.js';
+import '/imports/ui/components/region-tag/region-tag.js';
+
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 Template.eventEdit.onCreated(function() {
 	var instance = this;
@@ -27,7 +33,7 @@ Template.eventEdit.onCreated(function() {
 	var notifyPreset = courseId && instance.data.new;
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
@@ -293,13 +299,13 @@ Template.eventEdit.events({
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				} else {
-					addMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
 
 				if (updateReplicas) {
-					addMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+					AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
 				}
 				instance.parent.editing.set(false);
 			}

@@ -1,5 +1,11 @@
 "use strict";
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import Editable from '/imports/ui/lib/editable.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/editable/editable.js';
+import '/imports/ui/components/map/map.js';
 
 Template.venueEdit.onCreated(function() {
 	var instance = this;
@@ -58,7 +64,7 @@ Template.venueEdit.onCreated(function() {
 		}
 	});
 
-	instance.editableDescription = Editable(
+	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),
@@ -186,7 +192,7 @@ Template.venueEdit.events({
 			if (err) {
 				showServerError('Saving the venue went wrong', err);
 			} else {
-				addMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
+				AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 				if (instance.isNew) {
 					Router.go('venueDetails', { _id: venueId });
 				} else {

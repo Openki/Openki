@@ -1,5 +1,7 @@
 import Metatags from '/imports/Metatags.js';
 
+import '/imports/ui/components/languages/languages.js';
+
 Router.map(function () {
 	this.route('kioskEvents', {
 		path: '/kiosk/events',

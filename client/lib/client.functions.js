@@ -1,5 +1,7 @@
 import '/imports/StringTools.js';
 
+import { AddMessage } from '/imports/api/messages/methods.js';
+
 getMember = function(members, user) {
 	if (!members) return false;
 	var member = false;
@@ -97,7 +99,7 @@ goBase = function() {
 };
 
 showServerError = function(message, err) {
-	addMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
+	AddMessage(mf('_serverError', { ERROR: err, MESSAGE: message}, 'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'), 'danger');
 };
 
 var subbedGroup = function(group) {
