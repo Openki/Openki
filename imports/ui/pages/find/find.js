@@ -4,7 +4,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import Metatags from '/imports/Metatags.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';

@@ -40,7 +40,7 @@ Template.pricePolicyContent.events({
 		localStorage.setItem('hidePricePolicy', true);
 
 		// if logged in, hide the policy always for this user
-		const user = Meteor.user()
+		const user = Meteor.user();
 		if (user) Meteor.call('user.hidePricePolicy', user);
 	}
 });
