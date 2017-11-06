@@ -65,18 +65,20 @@ Template.courseEdit.helpers({
 
 	availableRoles() {
 		return Roles.filter(role => {
+			// Roles that are always on are not selectable here
 			if (role.preset) return false;
 
-			if (this.isFrame) {
-				const neededRoles = this.neededRoles;
-				if (neededRoles && neededRoles.length) {
-					if (neededRoles.includes(role.type)) return true;
-				} else if (role.type !== 'host') {
-					return true;
-				}
+			// In the normal view, all roles are selectable
+			if (!this.isFrame) return true;
+
+			const neededRoles = this.neededRoles;
+			if (neededRoles && neededRoles.length) {
+				if (!neededRoles.includes(role.type)) return false;
 			} else {
-				return true;
+				if (role.type == 'host') return false;
 			}
+
+			return true;
 		});
 	},
 
