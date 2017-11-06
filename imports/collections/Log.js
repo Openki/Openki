@@ -65,6 +65,10 @@ Log.record = function(track, rel, body) {
 		};
 
 	Log.insert(entry);
+
+	if (Meteor.isDevelopment) {
+		console.log(entry);
+	}
 };
 
 
