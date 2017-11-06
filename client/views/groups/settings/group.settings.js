@@ -1,3 +1,7 @@
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
+
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 
@@ -59,7 +63,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not add member', err);
 			} else {
-				addMessage("\u2713 " + mf('_message.saved'), 'success');
+				AddMessage("\u2713 " + mf('_message.saved'), 'success');
 			}
 		});
 	},
@@ -71,7 +75,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not remove member', err);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
 		});
 	},
@@ -90,7 +94,7 @@ Template.groupSettings.events({
 			if (err) {
 				showServerError('Could not save settings', err);
 			} else {
-				addMessage("\u2713 " + mf('_message.saved'), 'success');
+				AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				parentInstance.editingSettings.set(false);
 			}
 		});

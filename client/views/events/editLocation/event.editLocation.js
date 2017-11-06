@@ -1,4 +1,7 @@
 "use strict";
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/map/map.js';
 
 Template.eventEditVenue.onCreated(function() {
 	var instance = this;
@@ -185,14 +188,14 @@ Template.eventEditVenue.events({
 			params:  nominatimQuery
 		}, function(error, result) {
 			if (error) {
-				addMessage(error);
+				AddMessage(error);
 				return;
 			}
 
 			var found = JSON.parse(result.content);
 
 			markers.remove({ proposed: true });
-			if (found.length === 0) addMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
+			if (found.length === 0) AddMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
 			_.each(found, function(foundLocation) {
 				var marker = {
 					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},
