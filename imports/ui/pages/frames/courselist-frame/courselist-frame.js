@@ -14,7 +14,7 @@ import './courselist-frame.html';
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 
-	this.query = Router.current().params.query
+	this.query = Router.current().params.query;
 	this.increaseBy = 5;
 	this.limit = new ReactiveVar(this.increaseBy);
 

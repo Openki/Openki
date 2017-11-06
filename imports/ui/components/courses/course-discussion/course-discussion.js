@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 
 import { AddMessage } from '/imports/api/messages/methods.js';
 
