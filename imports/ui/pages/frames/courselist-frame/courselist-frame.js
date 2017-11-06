@@ -15,14 +15,14 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 
 	this.query = Router.current().params.query;
-	this.increaseBy = 5;
-	this.limit = new ReactiveVar(this.increaseBy);
+	this.limit = new ReactiveVar(parseInt(this.query.count, 10) || 5);
 
 	this.autorun(() => {
 		const filter =
-			Courses.Filtering()
-				.read(this.query)
-				.done();
+			Courses
+			.Filtering()
+			.read(this.query)
+			.done();
 
 		this.subscribe(
 			'Courses.findFilter',
@@ -37,18 +37,19 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 Template.frameCourselist.helpers({
 	cssRules: () => new CssFromQuery(Template.instance().query).getCssRules(),
 	ready: () => Template.instance().subscriptionsReady(),
-	courses() {
-		return Courses.find({}, {
-			sort: { 'time_lastedit': -1 },
-			limit: Template.instance().limit.get()
-		});
-	},
+	courses: () => (
+		Courses.find({},
+			{ sort: { 'time_lastedit': -1 }
+			, limit: Template.instance().limit.get()
+			}
+		)
+	),
 	moreCourses() {
 		const limit = Template.instance().limit.get();
 		const courseCount =
 			Courses
-				.find({}, { limit: limit + 1 })
-				.count();
+			.find({}, { limit: limit + 1 })
+			.count();
 
 		return courseCount > limit;
 	}
@@ -57,7 +58,7 @@ Template.frameCourselist.helpers({
 Template.frameCourselist.events({
 	'click #showMoreCourses'(event, instance) {
 		const limit = instance.limit;
-		limit.set(limit.get() + instance.increaseBy);
+		limit.set(limit.get() + 5);
 	}
 });
 

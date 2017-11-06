@@ -102,10 +102,11 @@ Router.map(function () {
 			const predicates =
 				{ region: Predicates.id
 				, group: Predicates.id
+				, neededRoles: Predicates.ids
 				};
 
 			const params = Filtering(predicates).read(this.params.query).done();
-			const data = params.toParams();
+			const data = params.toQuery();
 			data.isFrame = true;
 			return data;
 		},
