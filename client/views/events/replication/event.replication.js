@@ -1,4 +1,7 @@
 import '/imports/LocalTime.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
 
 const replicaStartDate = originalDate => {
 	const originalMoment = moment(originalDate);
@@ -231,7 +234,7 @@ Template.eventReplication.events({
 							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}'
 						);
 
-						addMessage(message, 'success');
+						AddMessage(message, 'success');
 					}
 				}
 			});

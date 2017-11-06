@@ -1,1 +1,5243 @@
-[{"pricePolicy.disclaimer":{"key":"pricePolicy.disclaimer","text":"Education should be open to everyone, that's why Openki only allows suggested/orientation prices.","file":"imports/ui/components/price-policy/price-policy.html","line":15,"mtime":1509029467176,"template":"pricePolicy"},"pricePolicy.dontShowAnymore":{"key":"pricePolicy.dontShowAnymore","text":"Don't show this anymore","file":"imports/ui/components/price-policy/price-policy.html","line":20,"mtime":1509029467176,"template":"pricePolicy"},"pricePolicy.readOn":{"key":"pricePolicy.readOn","text":"Read on","file":"imports/ui/components/price-policy/price-policy.html","line":25,"mtime":1509029467176,"template":"pricePolicy"}},{"extractedAt":1509029477632,"updatedAt":1509029467176}]
+{
+  "extracts": {
+    "test.js": {
+      "entries": [],
+      "mtime": 1509977957139
+    },
+    "server/email.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "server/mfAll.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/publications.js": {
+      "entries": [],
+      "mtime": 1509985897691
+    },
+    "server/server.functions.js": {
+      "entries": [],
+      "mtime": 1505908498030
+    },
+    "server/start.js": {
+      "entries": [],
+      "mtime": 1509985897691
+    },
+    "server/users.js": {
+      "entries": [],
+      "mtime": 1508779227969
+    },
+    "server/version.js": {
+      "entries": [],
+      "mtime": 1509998884956
+    },
+    "server/updates/2015.06.17 renameEventFields.js": {
+      "entries": [],
+      "mtime": 1498425615000
+    },
+    "server/updates/2015.10.10 ensureGroupsField.js": {
+      "entries": [],
+      "mtime": 1498425615000
+    },
+    "server/updates/2015.10.22 renameLocation.js": {
+      "entries": [],
+      "mtime": 1498425615000
+    },
+    "server/updates/2016.01.06 renameCourseDiscussionFields.js": {
+      "entries": [],
+      "mtime": 1498425615000
+    },
+    "server/updates/2016.03.29 ensureInternalField.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.04.26 ensureGroupOrganizersField.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.05.17 renameEventCourseId.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.05.18 ensureEventGroupOrganizersField.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.08.23 removeRoles.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.08.23 renameVenues.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.08.31 eventCreatedBy.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2016.11.22 notificationsForAll.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.03.20 localFutureDates.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.05.08 ensurePostTimeUpdatedField.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.05.08 providedEmail.js": {
+      "entries": [],
+      "mtime": 1506108474248
+    },
+    "server/updates/2017.06.05 renameNotificationEventResult.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.08.01 fixLocalDates.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.08.15 initAcceptsMessages.js": {
+      "entries": [],
+      "mtime": 1505846836197
+    },
+    "server/updates/2017.10.02 ensureAcceptsMessages.js": {
+      "entries": [],
+      "mtime": 1507561227126
+    },
+    "server/lib/ssr.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "server/lib/updates.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "server/lib/util.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "private/messages/report.html": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "private/mails/notificationCommentMail.html": {
+      "entries": [
+        {
+          "key": "notification.comment.mail.intro",
+          "text": "There was a comment by \"{USERNAME}\" on course \"{COURSE}\":",
+          "line": 40,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.comment.mail.intro.anon",
+          "text": "There was an anonymous comment on \"{COURSE}\":",
+          "line": 42,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.comment.mail.linktext",
+          "text": "➜ View and answer comment",
+          "line": 63,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.comment.mail.recpnote",
+          "text": "You receive this message because you're on the team of this course.",
+          "line": 71,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.unsubLink",
+          "text": "Unsubscribe from all further notifications",
+          "line": 77,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.profileLink",
+          "text": "Visit your profile",
+          "line": 81,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1507561075952
+    },
+    "private/mails/notificationEventMail.html": {
+      "entries": [
+        {
+          "key": "notification.event.mail.greeting",
+          "text": "Hi {USERNAME}",
+          "line": 36,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.new",
+          "text": "A new event was just published for course \"{COURSE}\":",
+          "line": 40,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.changed",
+          "text": "The following event for course \"{COURSE}\" changed:",
+          "line": 42,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.linkCalendar",
+          "text": "Add this event to my calendar",
+          "line": 84,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.personalMessage",
+          "text": "The Organizer left a message for you:",
+          "line": 96,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.notice",
+          "text": "You receive this mail because you are involved in the course \"{COURSE}\".",
+          "line": 118,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.unsubLink",
+          "text": "Unsubscribe from all further notifications",
+          "line": 124,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.profileLink",
+          "text": "Visit your profile",
+          "line": 128,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1505908498030
+    },
+    "private/mails/notificationJoinMail.html": {
+      "entries": [
+        {
+          "key": "notification.join.mail.intro",
+          "text": "\"{USERNAME}\" just joined course \"{COURSE}\" as: {ROLE}.",
+          "line": 39,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.join.mail.linktext",
+          "text": "➜ View course",
+          "line": 50,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.comment.mail.recpnote",
+          "text": "You receive this message because you're on the team of this course.",
+          "line": 58,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.unsubLink",
+          "text": "Unsubscribe from all further notifications",
+          "line": 64,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.profileLink",
+          "text": "Visit your profile",
+          "line": 68,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1505846836189
+    },
+    "private/mails/notificationPrivateMessageMail.html": {
+      "entries": [
+        {
+          "key": "notification.privateMessage.mail.linktext",
+          "text": "➜ See profile of \"{SENDER}\"",
+          "line": 72,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.unsubLink",
+          "text": "Unsubscribe from all further notifications",
+          "line": 81,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.profileLink",
+          "text": "Visit your profile",
+          "line": 85,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1505846836189
+    },
+    "packages/router-autoscroll/package.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "packages/router-autoscroll/client/router-autoscroll.js": {
+      "entries": [],
+      "mtime": 1505846836189
+    },
+    "imports/Api.app-test.js": {
+      "entries": [],
+      "mtime": 1506109212167
+    },
+    "imports/Api.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/AsyncTools.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/ClientUtils.app-test.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/Filtering.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/HtmlTools.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/IdTools.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/IpLocation.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/LocalTime.js": {
+      "entries": [],
+      "mtime": 1505846836185
+    },
+    "imports/Metatags.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/Predicates.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/Profile.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/RegionSelection.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/StringTools.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/ui/pages/index.js": {
+      "entries": [],
+      "mtime": 1509985897691
+    },
+    "imports/ui/pages/timetable/timetable.html": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/timetable/timetable.js": {
+      "entries": [],
+      "mtime": 1509985897691
+    },
+    "imports/ui/pages/not-found/not-found.html": {
+      "entries": [
+        {
+          "key": "notFound.title",
+          "text": "Page not found",
+          "line": 6,
+          "template": "notFound"
+        },
+        {
+          "key": "notFound.explanation",
+          "text": "This page is not available. Maybe it never existed.",
+          "line": 9,
+          "template": "notFound"
+        },
+        {
+          "key": "notFound.goBack",
+          "text": "Go back",
+          "line": 16,
+          "template": "notFound"
+        },
+        {
+          "key": "notFound.visitStartPage",
+          "text": "Go to the start page",
+          "line": 22,
+          "template": "notFound"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/not-found/not-found.js": {
+      "entries": [],
+      "mtime": 1509985897691
+    },
+    "imports/ui/pages/frames/week-frame/week-frame.html": {
+      "entries": [
+        {
+          "key": "frameCalendar.nothingOnThisDay",
+          "text": "Relax, nothing happening today.",
+          "line": 13,
+          "template": "frameWeek"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/week-frame/week-frame.js": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/schedule-frame/schedule-frame.html": {
+      "entries": [
+        {
+          "key": "schedule.startDateLabel",
+          "text": "start:",
+          "line": 32,
+          "template": "frameSchedule"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/schedule-frame/schedule-frame.js": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/propose-frame/propose-frame.html": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/propose-frame/propose-frame.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/pages/frames/events-frame/events-frame.html": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/events-frame/events-frame.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/pages/frames/courselist-frame/courselist-frame.html": {
+      "entries": [
+        {
+          "key": "frame.courselist.showMore",
+          "text": "Show more courses",
+          "line": 20,
+          "template": "frameCourselist"
+        },
+        {
+          "key": "frame.eventsList.showMore",
+          "text": "show more",
+          "line": 48,
+          "template": "frameCourselist"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/courselist-frame/courselist-frame.js": {
+      "entries": [
+        {
+          "key": "course.list.windowtitle",
+          "text": "Courses",
+          "line": 15,
+          "func": "function frameCourselistOnCreated()"
+        },
+        {
+          "key": "course.list.windowtitle",
+          "text": "Courses",
+          "line": 15,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509998884924
+    },
+    "imports/ui/pages/frames/calendar-frame/calendar-frame.html": {
+      "entries": [
+        {
+          "key": "frame.eventsList.when",
+          "text": "When:",
+          "line": 35,
+          "template": "frameCalendar"
+        },
+        {
+          "key": "frame.eventsList.where",
+          "text": "Where:",
+          "line": 44,
+          "template": "frameCalendar"
+        },
+        {
+          "key": "frame.eventsList.description",
+          "text": "Description:",
+          "line": 62,
+          "template": "frameCalendar"
+        },
+        {
+          "key": "frame.eventsList.showMore",
+          "text": "show more",
+          "line": 71,
+          "template": "frameCalendar"
+        },
+        {
+          "key": "frame.eventsList.download_cal",
+          "text": "download event to my calendar",
+          "line": 77,
+          "template": "frameCalendar"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/frames/calendar-frame/calendar-frame.js": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/find/find.html": {
+      "entries": [
+        {
+          "key": "find.WhatLearn?",
+          "text": "What do I want to learn?",
+          "line": 11,
+          "template": "findWrap"
+        },
+        {
+          "key": "find.search_placeholder",
+          "text": "Everything",
+          "line": 21,
+          "template": "findWrap"
+        },
+        {
+          "key": "find.search_go",
+          "text": "Go!",
+          "line": 24,
+          "template": "findWrap"
+        },
+        {
+          "key": "find.showMoreCourses",
+          "text": "Show more courses",
+          "line": 46,
+          "template": "findWrap"
+        },
+        {
+          "key": "find.no-courses-found",
+          "text": "No Courses found.",
+          "line": 55,
+          "template": "findWrap"
+        },
+        {
+          "key": "find.searchAllRegions",
+          "text": "Search in all regions",
+          "line": 62,
+          "template": "findWrap"
+        }
+      ],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/find/find.js": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/faq/faq.html": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/pages/faq/faq.js": {
+      "entries": [],
+      "mtime": 1509985897731
+    },
+    "imports/ui/pages/course-details/course-details.html": {
+      "entries": [
+        {
+          "key": "course.details.is-proposalTag",
+          "text": "Proposal",
+          "line": 17,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.reallydelete",
+          "text": "Please confirm that you would like to delete this course. This cannot be undone.",
+          "line": 84,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.delete.confirm.button",
+          "text": "Delete this course and its events.",
+          "line": 88,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.delete.confirm.button.busy",
+          "text": "Deleting course...",
+          "line": 89,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.subnav.descr",
+          "text": "Description",
+          "line": 103,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.subnav.history",
+          "text": "History",
+          "line": 109,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "grouplist.editgroup.header",
+          "text": "Edit group",
+          "line": 155,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.addText",
+          "text": "link a group",
+          "line": 180,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "grouplist.addgroups.header",
+          "text": "Add group",
+          "line": 185,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confirmRemoveText",
+          "text": "Stop listing group \"{NAME}\" as promoters?",
+          "line": 215,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confirmRemoveButton",
+          "text": "Delist",
+          "line": 218,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.remove",
+          "text": "Remove",
+          "line": 224,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confirmOrgText",
+          "text": "Add group \"{NAME}\" as editors?",
+          "line": 234,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confirmOrgNotes",
+          "text": "All members of the group will be able to edit the course and can create new events for it.",
+          "line": 236,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confimOrgButton",
+          "text": "Give editing rights",
+          "line": 238,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.addOrgText",
+          "text": "Give editing rights",
+          "line": 244,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confirmRemoveOrgText",
+          "text": "Take away all editing rights from group \"{NAME}\"?",
+          "line": 253,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.confimRemoveOrgButton",
+          "text": "Take away editing rights",
+          "line": 256,
+          "template": "courseDetailsPage"
+        },
+        {
+          "key": "course.group.removeOrgText",
+          "text": "Remove editing rights",
+          "line": 262,
+          "template": "courseDetailsPage"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/pages/course-details/course-details.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/pages/course-create/course-create.html": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/pages/course-create/course-create.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/pages/calendar/calendar.html": {
+      "entries": [
+        {
+          "key": "calendar.noCoursesThisDay",
+          "text": "There are no events on this day",
+          "line": 39,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.weekNumber",
+          "text": "Week ",
+          "line": 57,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.week.short",
+          "text": "previous week",
+          "line": 97,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.month.short",
+          "text": "previous month",
+          "line": 98,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.year.short",
+          "text": "previous year",
+          "line": 99,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.week.short",
+          "text": "next week",
+          "line": 100,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.month.short",
+          "text": "next month",
+          "line": 101,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.year.short",
+          "text": "next year",
+          "line": 102,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.week.long",
+          "text": "Go to previous week",
+          "line": 103,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.month.long",
+          "text": "Go to previous month",
+          "line": 104,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.previous.year.long",
+          "text": "Go to previous year",
+          "line": 105,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.week.long",
+          "text": "Go to next week",
+          "line": 106,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.month.long",
+          "text": "Go to next month",
+          "line": 107,
+          "template": "calendar"
+        },
+        {
+          "key": "calendar.next.year.long",
+          "text": "Go to next year",
+          "line": 108,
+          "template": "calendar"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/pages/calendar/calendar.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/lib/account-tools.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/lib/account-tools.test.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/lib/course-template.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/lib/css-from-query.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/lib/editable.js": {
+      "entries": [
+        {
+          "key": "editable.add_text",
+          "text": "Add text here",
+          "line": 52,
+          "func": "unknown"
+        },
+        {
+          "key": "editable.add_text",
+          "text": "Add text here",
+          "line": 52,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/lib/filter-preview.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/lib/introduction.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/lib/please-login.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/lib/scss-vars.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/lib/shariff.js": {
+      "entries": [],
+      "mtime": 1506109220923
+    },
+    "imports/ui/lib/update-viewport.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/layouts/app-body.html": {
+      "entries": [
+        {
+          "key": "main.translate.pleaseLogin",
+          "text": "Please log-in to edit translations",
+          "line": 21,
+          "template": "layout"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/layouts/app-body.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/layouts/frame-body.html": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/layouts/frame-body.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/layouts/index.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/translate-info/translate-info.html": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/translate-info/translate-info.js": {
+      "entries": [
+        {
+          "key": "translate.windowtitle",
+          "text": "Translate",
+          "line": 9,
+          "func": "function()"
+        },
+        {
+          "key": "translate.windowtitle",
+          "text": "Translate",
+          "line": 9,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/sharing/sharing.html": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/sharing/sharing.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/report/report.html": {
+      "entries": [
+        {
+          "key": "report.sending",
+          "text": "Report is being sent…",
+          "line": 3,
+          "template": "report"
+        },
+        {
+          "key": "report.text",
+          "text": "Please tell us what is wrong.",
+          "line": 9,
+          "template": "report"
+        },
+        {
+          "key": "report.placeholder",
+          "text": "My hovercraft is full of eels.",
+          "line": 11,
+          "template": "report"
+        },
+        {
+          "key": "report.report",
+          "text": "Send report",
+          "line": 16,
+          "template": "report"
+        },
+        {
+          "key": "report.open",
+          "text": "Report problem",
+          "line": 25,
+          "template": "report"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/report/report.js": {
+      "entries": [
+        {
+          "key": "report.confirm",
+          "text": "Your report was sent. A human will try to find an appropriate solution.",
+          "line": 42,
+          "func": "function(error, result)"
+        },
+        {
+          "key": "report.confirm",
+          "text": "Your report was sent. A human will try to find an appropriate solution.",
+          "line": 42,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/region-tag/region-tag.html": {
+      "entries": [
+        {
+          "key": "regionTag.inRegion",
+          "text": "in {REGION}",
+          "line": 4,
+          "template": "regionTag"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/region-tag/region-tag.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/region-splash/region-splash.html": {
+      "entries": [
+        {
+          "key": "regionsSplash.plsChooseRegion",
+          "text": "Please choose a region",
+          "line": 21,
+          "template": "regionsSplash"
+        },
+        {
+          "key": "regionsSplash.orLogin",
+          "text": "or login to use your last selected region",
+          "line": 25,
+          "template": "regionsSplash"
+        },
+        {
+          "key": "regionsSpash.login",
+          "text": "Login",
+          "line": 31,
+          "template": "regionsSplash"
+        },
+        {
+          "key": "regionsSplash.welcome",
+          "text": "Welcome to {SITE}!",
+          "line": 13,
+          "template": "regionsSplash"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/region-splash/region-splash.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/region-selection/region-selection.html": {
+      "entries": [
+        {
+          "key": "menue.All regions",
+          "text": "All regions",
+          "line": 19,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "regions.allCourses.title",
+          "text": "{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}",
+          "line": 34,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "regions.allUpcomingEvents.title",
+          "text": "{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}",
+          "line": 39,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "menue.All regions",
+          "text": "All regions",
+          "line": 43,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "regions.courses.title",
+          "text": "{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}",
+          "line": 55,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "regions.eventCount.title",
+          "text": "{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}",
+          "line": 60,
+          "template": "regionSelectionWrap"
+        },
+        {
+          "key": "menue.All regions",
+          "text": "All regions",
+          "line": 82,
+          "template": "regionSelectionWrap"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/region-selection/region-selection.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/price-policy/price-policy.html": {
+      "entries": [
+        {
+          "key": "pricePolicy.disclaimer",
+          "text": "Education should be open to everyone, that's why Openki only allows suggested/orientation prices.",
+          "line": 15,
+          "template": "pricePolicy"
+        },
+        {
+          "key": "pricePolicy.dontShowAnymore",
+          "text": "Don't show this anymore",
+          "line": 20,
+          "template": "pricePolicy"
+        },
+        {
+          "key": "pricePolicy.readOn",
+          "text": "Read on",
+          "line": 25,
+          "template": "pricePolicy"
+        }
+      ],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/price-policy/price-policy.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/navbar/navbar.html": {
+      "entries": [
+        {
+          "key": "status.connecting",
+          "text": "Connecting to server",
+          "line": 22,
+          "template": "navbar"
+        },
+        {
+          "key": "status.notConnected",
+          "text": "No connection to server",
+          "line": 28,
+          "template": "navbar"
+        },
+        {
+          "key": "menue.Courses",
+          "text": "Find",
+          "line": 47,
+          "template": "navbar"
+        },
+        {
+          "key": "menue.Create",
+          "text": "Create",
+          "line": 55,
+          "template": "navbar"
+        },
+        {
+          "key": "menue.Calendar",
+          "text": "Calendar",
+          "line": 63,
+          "template": "navbar"
+        },
+        {
+          "key": "menue.Testpage",
+          "text": "This is only a Testpage. ",
+          "line": 92,
+          "template": "navbar"
+        },
+        {
+          "key": "menue.Testpage2",
+          "text": "All data will be erased regularly. ",
+          "line": 94,
+          "template": "navbar"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/navbar/navbar.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/messages/messages.html": {
+      "entries": [
+        {
+          "key": "message.close",
+          "text": "Close message",
+          "line": 15,
+          "template": "messages"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/messages/messages.js": {
+      "entries": [],
+      "mtime": 1509985897687
+    },
+    "imports/ui/components/map/map.html": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/map/map.js": {
+      "entries": [
+        {
+          "key": "map.zoomInTitle",
+          "text": "zoom in",
+          "line": 103,
+          "func": "function()"
+        },
+        {
+          "key": "map.zoomOutTitle",
+          "text": "zoom out",
+          "line": 104,
+          "func": "function()"
+        },
+        {
+          "key": "map.fullscreen",
+          "text": "big map",
+          "line": 113,
+          "func": "function()"
+        },
+        {
+          "key": "map.fullscreenClose",
+          "text": "close",
+          "line": 118,
+          "func": "function()"
+        },
+        {
+          "key": "map.addMarker",
+          "text": "set marker",
+          "line": 123,
+          "func": "function()"
+        },
+        {
+          "key": "map.removeMarker",
+          "text": "remove the marker",
+          "line": 128,
+          "func": "function()"
+        },
+        {
+          "key": "map.zoomInTitle",
+          "text": "zoom in",
+          "line": 103,
+          "template": "FaIcon"
+        },
+        {
+          "key": "map.zoomOutTitle",
+          "text": "zoom out",
+          "line": 104,
+          "template": "FaIcon"
+        },
+        {
+          "key": "map.fullscreen",
+          "text": "big map",
+          "line": 113,
+          "template": "FaIcon"
+        },
+        {
+          "key": "map.fullscreenClose",
+          "text": "close",
+          "line": 118,
+          "template": "FaIcon"
+        },
+        {
+          "key": "map.addMarker",
+          "text": "set marker",
+          "line": 123,
+          "template": "FaIcon"
+        },
+        {
+          "key": "map.removeMarker",
+          "text": "remove the marker",
+          "line": 128,
+          "template": "FaIcon"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/loading/loading.html": {
+      "entries": [
+        {
+          "key": "loading.loading",
+          "text": "Loading...",
+          "line": 7,
+          "template": "loadingPage"
+        }
+      ],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/loading/loading.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/languages/languages.html": {
+      "entries": [
+        {
+          "key": "languageSelection.noLanguagesFound",
+          "text": "No languages found.",
+          "line": 33,
+          "template": "languageSelectionWrap"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/languages/languages.js": {
+      "entries": [],
+      "mtime": 1509985897735
+    },
+    "imports/ui/components/introduction/introduction.html": {
+      "entries": [
+        {
+          "key": "introduction.toggle.hide",
+          "text": "Hide",
+          "line": 10,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.toggle.show",
+          "text": "Show",
+          "line": 14,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.close.title",
+          "text": "Close introduction",
+          "line": 19,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.1_teachOrLearn",
+          "text": "You want to learn something, or teach others.",
+          "line": 27,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.2_searchNPropose",
+          "text": "You search if the course already exists. If not, you just propose it.",
+          "line": 31,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.3_enrole",
+          "text": "Everybody can join your course as participant, mentor or host.",
+          "line": 38,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.4_schedule",
+          "text": "When everybody needed is in, a date gets fixed.",
+          "line": 45,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.5_takePlace",
+          "text": "The course takes place!",
+          "line": 52,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.more",
+          "text": "More infos:",
+          "line": 56,
+          "template": "introduction"
+        },
+        {
+          "key": "main.about_link",
+          "text": "About",
+          "line": 57,
+          "template": "introduction"
+        },
+        {
+          "key": "main.faq_link",
+          "text": "FAQ",
+          "line": 58,
+          "template": "introduction"
+        },
+        {
+          "key": "introduction.Title",
+          "text": "What does {SITENAME} do for you?",
+          "line": 5,
+          "template": "introduction"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/introduction/introduction.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/footer/footer.html": {
+      "entries": [
+        {
+          "key": "navigation.footer.about.title",
+          "text": "More informations about our project",
+          "line": 6,
+          "template": "footer"
+        },
+        {
+          "key": "footer.aboutOpenki",
+          "text": "About Openki",
+          "line": 7,
+          "template": "footer"
+        },
+        {
+          "key": "navigation.footer.faq.title",
+          "text": "Frequently asked questions",
+          "line": 12,
+          "template": "footer"
+        },
+        {
+          "key": "main.faq_link",
+          "text": "FAQ",
+          "line": 13,
+          "template": "footer"
+        },
+        {
+          "key": "navigation.footer.code.title",
+          "text": "Show code on github",
+          "line": 18,
+          "template": "footer"
+        },
+        {
+          "key": "footer.github",
+          "text": "GitHub",
+          "line": 19,
+          "template": "footer"
+        },
+        {
+          "key": "footer.deployedAt",
+          "text": "deployed:",
+          "line": 24,
+          "template": "footer"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/footer/footer.js": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/filter/filter.html": {
+      "entries": [
+        {
+          "key": "find.search_filter.title",
+          "text": "Filter search",
+          "line": 6,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.isActive",
+          "text": "active",
+          "line": 8,
+          "template": "filter"
+        },
+        {
+          "key": "find.hideFilters",
+          "text": "Remove all filters",
+          "line": 17,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.courseStates",
+          "text": "Course states",
+          "line": 26,
+          "template": "filter"
+        },
+        {
+          "key": "filter.showAllFilters",
+          "text": "Show all filters",
+          "line": 57,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.courseRoles",
+          "text": "Course roles",
+          "line": 71,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.categories",
+          "text": "Categories",
+          "line": 90,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.removeCategory",
+          "text": "Remove category {CATEGORYNAME} from filter",
+          "line": 99,
+          "template": "filter"
+        },
+        {
+          "key": "find.searchCategories.placeholder",
+          "text": "Choose categories",
+          "line": 109,
+          "template": "filter"
+        },
+        {
+          "key": "find.showSubcategories.title",
+          "text": "Show/Hide subcategories",
+          "line": 130,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter-no-categories-found",
+          "text": "No categories found.",
+          "line": 147,
+          "template": "filter"
+        },
+        {
+          "key": "find.filter.removeCategory",
+          "text": "Remove category {CATEGORYNAME} from filter",
+          "line": 160,
+          "template": "filter"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/filter/filter.js": {
+      "entries": [
+        {
+          "key": "filterCaptions.is-proposal",
+          "text": "Proposal",
+          "line": 17,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.showProposal",
+          "text": "Show all proposed courses",
+          "line": 18,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.upcoming.label",
+          "text": "Upcoming",
+          "line": 23,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.upcoming.title",
+          "text": "Show all courses with upcoming events",
+          "line": 24,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.resting.label",
+          "text": "Resting",
+          "line": 29,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.resting.title",
+          "text": "Courses with passed but without upcoming events",
+          "line": 30,
+          "func": "function()"
+        },
+        {
+          "key": "find.needsOrganizer",
+          "text": "Looking for an organizer",
+          "line": 127,
+          "func": "function()"
+        },
+        {
+          "key": "find.needsMentor",
+          "text": "Looking for a mentor",
+          "line": 131,
+          "func": "function()"
+        },
+        {
+          "key": "find.needsHost",
+          "text": "Looking for a host",
+          "line": 135,
+          "func": "function()"
+        },
+        {
+          "key": "filterCaptions.is-proposal",
+          "text": "Proposal",
+          "line": 17,
+          "template": "unknown"
+        },
+        {
+          "key": "filterCaptions.showProposal",
+          "text": "Show all proposed courses",
+          "line": 18,
+          "template": "unknown"
+        },
+        {
+          "key": "filterCaptions.upcoming.label",
+          "text": "Upcoming",
+          "line": 23,
+          "template": "unknown"
+        },
+        {
+          "key": "filterCaptions.upcoming.title",
+          "text": "Show all courses with upcoming events",
+          "line": 24,
+          "template": "unknown"
+        },
+        {
+          "key": "filterCaptions.resting.label",
+          "text": "Resting",
+          "line": 29,
+          "template": "unknown"
+        },
+        {
+          "key": "filterCaptions.resting.title",
+          "text": "Courses with passed but without upcoming events",
+          "line": 30,
+          "template": "unknown"
+        },
+        {
+          "key": "find.needsOrganizer",
+          "text": "Looking for an organizer",
+          "line": 127,
+          "template": "unknown"
+        },
+        {
+          "key": "find.needsMentor",
+          "text": "Looking for a mentor",
+          "line": 131,
+          "template": "unknown"
+        },
+        {
+          "key": "find.needsHost",
+          "text": "Looking for a host",
+          "line": 135,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/editable/editable.html": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/editable/editable.js": {
+      "entries": [
+        {
+          "key": "editable.link.placeholder",
+          "text": "Paste link here...",
+          "line": 65,
+          "func": "function ()"
+        },
+        {
+          "key": "editable.link.placeholder",
+          "text": "Paste link here...",
+          "line": 65,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/courses/course-roles/course-roles.html": {
+      "entries": [
+        {
+          "key": "course.roles.retract",
+          "text": "Retract",
+          "line": 15,
+          "template": "courseRoles"
+        },
+        {
+          "key": "course.roles.leave_message",
+          "text": "Leave a message/wish/interest here:",
+          "line": 29,
+          "template": "courseRoles"
+        },
+        {
+          "key": "course.roles.enroll",
+          "text": "Enroll",
+          "line": 37,
+          "template": "courseRoles"
+        }
+      ],
+      "mtime": 1509989268363
+    },
+    "imports/ui/components/courses/course-roles/course-roles.js": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-members/course-members.html": {
+      "entries": [
+        {
+          "key": "course.roles.maketeam",
+          "text": "Add to team",
+          "line": 56,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.roles.removeTeam",
+          "text": "Remove from team",
+          "line": 82,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.details.removeTeam.self.header",
+          "text": "Remove yourself from team",
+          "line": 89,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.details.removeTeam.others.header",
+          "text": "Remove member from team",
+          "line": 91,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.detail.remove.yourself.team",
+          "text": "Remove yourself from the team? Only another member can add you back.",
+          "line": 98,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.detail.remove.other.team",
+          "text": "Do you really want to remove this member from the team?",
+          "line": 100,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.group.remove",
+          "text": "Remove",
+          "line": 106,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.dtails.paticipants.title",
+          "text": "{NUM, plural,\n\t\t\t\t\t=0 {No participants yet}\n\t\t\t\t\tone {1 Participant}\n\t\t\t\t\tother {# Participants}\n\t\t\t\t}",
+          "line": 5,
+          "template": "courseMembers"
+        },
+        {
+          "key": "course.members.showNextMembers",
+          "text": "Show next {NUM} participants",
+          "line": 24,
+          "template": "courseMembers"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-members/course-members.js": {
+      "entries": [
+        {
+          "key": "roles.message.placeholder",
+          "text": "My interests...",
+          "line": 71,
+          "func": "function(err, courseId)"
+        },
+        {
+          "key": "roles.message.placeholder",
+          "text": "My interests...",
+          "line": 71,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-list/course-list.app-test.js": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-list/course-list.html": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-list/course-list.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/courses/course-history/course-history.html": {
+      "entries": [
+        {
+          "key": "course.history.created_by",
+          "text": "Course created by:",
+          "line": 40,
+          "template": "coursehistory"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-history/course-history.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/courses/course-events/course-events.html": {
+      "entries": [
+        {
+          "key": "course.events.pastList",
+          "text": "Previous events",
+          "line": 19,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.futureListLink",
+          "text": "future events",
+          "line": 24,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.ongoinglist",
+          "text": "Ongoing events",
+          "line": 36,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.pastListLink",
+          "text": "past events",
+          "line": 41,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.upcominglist",
+          "text": "Upcoming events",
+          "line": 53,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.pastListLink",
+          "text": "past events",
+          "line": 58,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.events.showAllEvents",
+          "text": "Show all events",
+          "line": 69,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.details.noEvents",
+          "text": "This course has no events",
+          "line": 84,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.details.eventsLoadingHeader",
+          "text": "Events",
+          "line": 99,
+          "template": "courseEvents"
+        },
+        {
+          "key": "course.download_cal",
+          "text": "Download events to my calendar",
+          "line": 113,
+          "template": "courseEvents"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-events/course-events.js": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-edit/course-edit.html": {
+      "entries": [
+        {
+          "key": "find.propose_new_course?",
+          "text": "Why not propose a new course for \"{TERM}\"?",
+          "line": 5,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.edit_course",
+          "text": "Edit course",
+          "line": 8,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.propose",
+          "text": "Propose new course",
+          "line": 17,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.propose.CourseInfo",
+          "text": "An Openki-course could range from a draft idea to an organized series of events or just one event.",
+          "line": 21,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.title",
+          "text": "Title",
+          "line": 30,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.title.placeholder",
+          "text": "What are you interested in?",
+          "line": 33,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.description",
+          "text": "Description",
+          "line": 39,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.edit_categories",
+          "text": "Edit Categories",
+          "line": 51,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.categories",
+          "text": "Categories",
+          "line": 78,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.no.categories",
+          "text": "No categories",
+          "line": 83,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.needs.role",
+          "text": "This course might need...",
+          "line": 92,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.region",
+          "text": "Region",
+          "line": 99,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.intern",
+          "text": "Hide on front page",
+          "line": 121,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.internDescription",
+          "text": "Only show when looking at a group's courses",
+          "line": 127,
+          "template": "courseEdit"
+        },
+        {
+          "key": "course.edit.proposeInGroup",
+          "text": "Propose new course in group {GROUP}",
+          "line": 13,
+          "template": "courseEdit"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-edit/course-edit.js": {
+      "entries": [
+        {
+          "key": "course.description.placeholder",
+          "text": "Describe your idea, so that more people will find it and that they`ll know what to expect.",
+          "line": 32,
+          "func": "function()"
+        },
+        {
+          "key": "course.description.placeholder",
+          "text": "Describe your idea, so that more people will find it and that they`ll know what to expect.",
+          "line": 32,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509989806731
+    },
+    "imports/ui/components/courses/course-discussion/course-discussion.html": {
+      "entries": [
+        {
+          "key": "course.title.Discussion",
+          "text": "Discussion",
+          "line": 6,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.comment_answer",
+          "text": "Answer",
+          "line": 65,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.write_comment",
+          "text": "Write a comment",
+          "line": 71,
+          "template": "discussion"
+        },
+        {
+          "key": "discussion.anonymous",
+          "text": "Anonymous",
+          "line": 124,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.title_placeholder",
+          "text": "Title",
+          "line": 141,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.text_placeholder_answer",
+          "text": "Your answer",
+          "line": 146,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.text_placeholder",
+          "text": "Your comment",
+          "line": 146,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.anon",
+          "text": "Anonymous comment",
+          "line": 156,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.comment_btn.answer",
+          "text": "Answer!",
+          "line": 165,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.comment_btn.write",
+          "text": "Write!",
+          "line": 167,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.comment_btn.update",
+          "text": "Update my comment!",
+          "line": 170,
+          "template": "discussion"
+        },
+        {
+          "key": "comment.delete.header",
+          "text": "Delete comment",
+          "line": 219,
+          "template": "discussion"
+        },
+        {
+          "key": "comment.delete.confirm",
+          "text": "Do you really want to delete this comment?",
+          "line": 224,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussion.deleteCommentButton",
+          "text": "Delete",
+          "line": 229,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussions.showAllComments",
+          "text": "Show all {NUM} comments",
+          "line": 20,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussions.hideAnswers",
+          "text": "Hide answers",
+          "line": 40,
+          "template": "discussion"
+        },
+        {
+          "key": "course.discussions.showAllAnswers",
+          "text": "Show all {NUM} answers",
+          "line": 45,
+          "template": "discussion"
+        }
+      ],
+      "mtime": 1509989268363
+    },
+    "imports/ui/components/courses/course-discussion/course-discussion.js": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-compact/course-compact.html": {
+      "entries": [],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/courses/course-compact/course-compact.js": {
+      "entries": [
+        {
+          "key": "course.compact.youAreInterested",
+          "text": "You are interested",
+          "line": 82,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.compact.interestedCount",
+          "text": "{NUM, plural, =0 {Nobody is} one {One person is} other {# persons are}} interested",
+          "line": 87,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.compact.interestedCountOwn",
+          "text": "and you are one of them",
+          "line": 95,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.needs_organizer",
+          "text": "Needs an organizer",
+          "line": 123,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.has_team",
+          "text": "Has a organizer-team",
+          "line": 124,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.u_are_organizer",
+          "text": "You are organizer",
+          "line": 125,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.needs_mentor",
+          "text": "Needs a mentor",
+          "line": 128,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.has_mentor",
+          "text": "Has a mentor",
+          "line": 129,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.u_are_mentor",
+          "text": "You are mentor",
+          "line": 130,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.needs_host",
+          "text": "Needs a host",
+          "line": 133,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.has_host",
+          "text": "Has a host",
+          "line": 134,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.u_are_host",
+          "text": "You are host",
+          "line": 135,
+          "func": "function(role)"
+        },
+        {
+          "key": "course.list.status_titles.needs_organizer",
+          "text": "Needs an organizer",
+          "line": 123,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.has_team",
+          "text": "Has a organizer-team",
+          "line": 124,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.u_are_organizer",
+          "text": "You are organizer",
+          "line": 125,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.needs_mentor",
+          "text": "Needs a mentor",
+          "line": 128,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.has_mentor",
+          "text": "Has a mentor",
+          "line": 129,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.u_are_mentor",
+          "text": "You are mentor",
+          "line": 130,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.needs_host",
+          "text": "Needs a host",
+          "line": 133,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.has_host",
+          "text": "Has a host",
+          "line": 134,
+          "template": "unknown"
+        },
+        {
+          "key": "course.list.status_titles.u_are_host",
+          "text": "You are host",
+          "line": 135,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897739
+    },
+    "imports/ui/components/categories/categories.html": {
+      "entries": [
+        {
+          "key": "categories.show_courses",
+          "text": "Show all courses in",
+          "line": 11,
+          "template": "categoryLabel"
+        }
+      ],
+      "mtime": 1509985897743
+    },
+    "imports/ui/components/categories/categories.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/ui/components/buttons/buttons.html": {
+      "entries": [
+        {
+          "key": "_button.saving",
+          "text": "Saving...",
+          "line": 5,
+          "template": "buttonSave"
+        }
+      ],
+      "mtime": 1509985897743
+    },
+    "imports/ui/components/buttons/buttons.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/server/api.json.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/startup/server/fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/server/index.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/server/notifications.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/startup/client/clientError.js": {
+      "entries": [],
+      "mtime": 1506108474248
+    },
+    "imports/startup/client/index.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/client/routes.js": {
+      "entries": [
+        {
+          "key": "find.windowtitle",
+          "text": "Find \"{SEARCH}\"",
+          "line": 52,
+          "func": "function()"
+        },
+        {
+          "key": "course.propose.windowtitle",
+          "text": "Propose new course",
+          "line": 70,
+          "func": "function()"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 83,
+          "func": "function()"
+        },
+        {
+          "key": "course.propose.windowtitle",
+          "text": "Propose new course",
+          "line": 115,
+          "func": "function()"
+        },
+        {
+          "key": "event.list.windowtitle",
+          "text": "Events",
+          "line": 147,
+          "func": "function()"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 170,
+          "func": "function()"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 188,
+          "func": "function()"
+        },
+        {
+          "key": "profile.windowtitle",
+          "text": "{USER}\\",
+          "line": 339,
+          "func": "function()"
+        },
+        {
+          "key": "course.windowtitle",
+          "text": "Course: {COURSE}",
+          "line": 435,
+          "func": "function()"
+        },
+        {
+          "key": "profile.settings.windowtitle",
+          "text": "My Profile Settings - {USER}",
+          "line": 495,
+          "func": "function()"
+        },
+        {
+          "key": "venue.edit.siteTitle.create",
+          "text": "Create Venue",
+          "line": 579,
+          "func": "function()"
+        },
+        {
+          "key": "find.windowtitle",
+          "text": "Find \"{SEARCH}\"",
+          "line": 52,
+          "template": "unknown"
+        },
+        {
+          "key": "course.propose.windowtitle",
+          "text": "Propose new course",
+          "line": 70,
+          "template": "unknown"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 83,
+          "template": "unknown"
+        },
+        {
+          "key": "course.propose.windowtitle",
+          "text": "Propose new course",
+          "line": 115,
+          "template": "unknown"
+        },
+        {
+          "key": "event.list.windowtitle",
+          "text": "Events",
+          "line": 147,
+          "template": "unknown"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 170,
+          "template": "unknown"
+        },
+        {
+          "key": "calendar.windowtitle",
+          "text": "Calendar",
+          "line": 188,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.windowtitle",
+          "text": "{USER}\\",
+          "line": 339,
+          "template": "makeFilterQuery"
+        },
+        {
+          "key": "course.windowtitle",
+          "text": "Course: {COURSE}",
+          "line": 435,
+          "template": "makeFilterQuery"
+        },
+        {
+          "key": "profile.settings.windowtitle",
+          "text": "My Profile Settings - {USER}",
+          "line": 495,
+          "template": "makeFilterQuery"
+        },
+        {
+          "key": "venue.edit.siteTitle.create",
+          "text": "Create Venue",
+          "line": 579,
+          "template": "makeFilterQuery"
+        }
+      ],
+      "mtime": 1509985897743
+    },
+    "imports/startup/both/ical.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/both/index.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/startup/both/msgfmt.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/notification/Notification.Comment.js": {
+      "entries": [
+        {
+          "key": "notification.comment.mail.subject",
+          "text": "Comment on {COURSE} by {COMMENTER}: {TITLE}",
+          "line": 62,
+          "func": "function(userLocale)"
+        },
+        {
+          "key": "notification.comment.mail.subject.anon",
+          "text": "Anonymous comment on {COURSE}: {TITLE}",
+          "line": 64,
+          "func": "function(userLocale)"
+        },
+        {
+          "key": "notification.comment.mail.subject",
+          "text": "Comment on {COURSE} by {COMMENTER}: {TITLE}",
+          "line": 62,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.comment.mail.subject.anon",
+          "text": "Anonymous comment on {COURSE}: {TITLE}",
+          "line": 64,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897683
+    },
+    "imports/notification/Notification.Event.js": {
+      "entries": [
+        {
+          "key": "notification.event.mail.subject.new",
+          "text": "On {DATE}: {TITLE}",
+          "line": 76,
+          "func": "function(userLocale)"
+        },
+        {
+          "key": "notification.event.mail.subject.changed",
+          "text": "Fixed {DATE}: {TITLE}",
+          "line": 78,
+          "func": "function(userLocale)"
+        },
+        {
+          "key": "notification.event.mail.subject.new",
+          "text": "On {DATE}: {TITLE}",
+          "line": 76,
+          "template": "unknown"
+        },
+        {
+          "key": "notification.event.mail.subject.changed",
+          "text": "Fixed {DATE}: {TITLE}",
+          "line": 78,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1506108474248
+    },
+    "imports/notification/Notification.Join.js": {
+      "entries": [
+        {
+          "key": "notification.join.mail.subject",
+          "text": "{USER} joined {COURSE}: {ROLE}",
+          "line": 55,
+          "func": "function(userLocale)"
+        },
+        {
+          "key": "notification.join.mail.subject",
+          "text": "{USER} joined {COURSE}: {ROLE}",
+          "line": 55,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897683
+    },
+    "imports/notification/Notification.PrivateMessage.js": {
+      "entries": [
+        {
+          "key": "notification.privateMessage.mail.subject",
+          "text": "Private message from {SENDER}",
+          "line": 59,
+          "func": "function(userLocale, actualRecipient)"
+        },
+        {
+          "key": "notification.privateMessage.mail.subject",
+          "text": "Private message from {SENDER}",
+          "line": 59,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1506108474248
+    },
+    "imports/notification/Notification.js": {
+      "entries": [],
+      "mtime": 1506108474248
+    },
+    "imports/collections/Log.js": {
+      "entries": [],
+      "mtime": 1509985897683
+    },
+    "imports/api/ApiError.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "imports/api/messages/messages.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/api/messages/methods.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "imports/api/ical/routes.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/Prng.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/ensureFixture.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/methods.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/data/course.fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/data/event.fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/data/group.fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/data/region.fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/fixtures/data/venue.fixtures.js": {
+      "entries": [],
+      "mtime": 1509985897743
+    },
+    "imports/api/clientError/methods.js": {
+      "entries": [],
+      "mtime": 1506108474248
+    },
+    "collections/categories.js": {
+      "entries": [],
+      "mtime": 1505846836169
+    },
+    "collections/courses.js": {
+      "entries": [
+        {
+          "key": "courses.creator.defaultMessage",
+          "text": "(has proposed this course)",
+          "line": 583,
+          "func": "function(groupId)"
+        },
+        {
+          "key": "courses.creator.defaultMessage",
+          "text": "(has proposed this course)",
+          "line": 583,
+          "template": "matchRole"
+        }
+      ],
+      "mtime": 1509998884968
+    },
+    "collections/courses.test.js": {
+      "entries": [],
+      "mtime": 1505846836181
+    },
+    "collections/discussions.js": {
+      "entries": [],
+      "mtime": 1509985897675
+    },
+    "collections/events.app-test.js": {
+      "entries": [],
+      "mtime": 1508779227969
+    },
+    "collections/events.js": {
+      "entries": [],
+      "mtime": 1509985897675
+    },
+    "collections/groups.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "collections/languages.js": {
+      "entries": [],
+      "mtime": 1505846836181
+    },
+    "collections/regions.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "collections/roles.js": {
+      "entries": [],
+      "mtime": 1505908498026
+    },
+    "collections/users.app-test.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "collections/users.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "collections/venues.app-test.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "collections/venues.js": {
+      "entries": [],
+      "mtime": 1509985897679
+    },
+    "collections/version.js": {
+      "entries": [],
+      "mtime": 1505846836181
+    },
+    "client/head.html": {
+      "entries": [],
+      "mtime": 1509985897671
+    },
+    "client/start.js": {
+      "entries": [
+        {
+          "key": "email.verified",
+          "text": "Email verified.",
+          "line": 138,
+          "func": "function(error)"
+        },
+        {
+          "key": "email.verified",
+          "text": "Email verified.",
+          "line": 138,
+          "template": "useLocale"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/venues/map/venue.map.html": {
+      "entries": [
+        {
+          "key": "venues.list.titleForRegion",
+          "text": "Venues in region {REGION}",
+          "line": 8,
+          "template": "venueMap"
+        },
+        {
+          "key": "venues.list.title",
+          "text": "Venues",
+          "line": 10,
+          "template": "venueMap"
+        },
+        {
+          "key": "venues.list.noneFound",
+          "text": "No venues found",
+          "line": 25,
+          "template": "venueMap"
+        }
+      ],
+      "mtime": 1505846836169
+    },
+    "client/views/venues/map/venue.map.js": {
+      "entries": [
+        {
+          "key": "venue.map.windowtitle",
+          "text": "Venues map",
+          "line": 15,
+          "func": "function()"
+        },
+        {
+          "key": "venue.map.windowtitle",
+          "text": "Venues map",
+          "line": 15,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/venues/link/venue.link.html": {
+      "entries": [
+        {
+          "key": "location.link.tooltip",
+          "text": "Show details of {VENUE}",
+          "line": 6,
+          "template": "venueLink"
+        }
+      ],
+      "mtime": 1505846836169
+    },
+    "client/views/venues/edit/venue.edit.html": {
+      "entries": [
+        {
+          "key": "venue.edit.title",
+          "text": "Edit venue",
+          "line": 4,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.titleCreate",
+          "text": "Create new venue",
+          "line": 6,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.name",
+          "text": "Name:",
+          "line": 10,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.namePlaceholder",
+          "text": "Full name of venue",
+          "line": 13,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.description",
+          "text": "Description:",
+          "line": 18,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.region",
+          "text": "Region:",
+          "line": 30,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.pls_select",
+          "text": "Please select",
+          "line": 36,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.map",
+          "text": "Map:",
+          "line": 46,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.details.address",
+          "text": "Address:",
+          "line": 54,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.address.placeholder",
+          "text": "Street, City, State",
+          "line": 61,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.route.placeholder",
+          "text": "near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. ",
+          "line": 75,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.additionalInfo",
+          "text": "Additional Info: (optional, but you will help others find the venue)",
+          "line": 79,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.hideAdditionalInfo",
+          "text": "Hide additional information",
+          "line": 82,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.provideAdditionalInfo",
+          "text": "Fill out additional information",
+          "line": 86,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.shortName",
+          "text": "Abbreviation:",
+          "line": 104,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.short.placeholder",
+          "text": "short name",
+          "line": 110,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.max_ppl",
+          "text": "Max. People",
+          "line": 117,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.max_workplace",
+          "text": "Max. Workplaces",
+          "line": 123,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.infra",
+          "text": "Infrastructure:",
+          "line": 130,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.projector",
+          "text": "Projector",
+          "line": 134,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.screen",
+          "text": "Screen",
+          "line": 140,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.audioSystem",
+          "text": "Audio System",
+          "line": 146,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.blackboard",
+          "text": "Blackboard",
+          "line": 152,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.whiteboard",
+          "text": "Whiteboard",
+          "line": 158,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.flipchart",
+          "text": "Flipchart",
+          "line": 164,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.wifi",
+          "text": "Wifi",
+          "line": 170,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.kitchen",
+          "text": "Kitchen",
+          "line": 176,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.suitableForWheelchairs",
+          "text": "Suitable for wheelchairs",
+          "line": 182,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.additionalEquipment",
+          "text": "Additional equipment:",
+          "line": 187,
+          "template": "venueEdit"
+        },
+        {
+          "key": "venue.edit.website",
+          "text": "Website:",
+          "line": 192,
+          "template": "venueEdit"
+        }
+      ],
+      "mtime": 1505846836169
+    },
+    "client/views/venues/edit/venue.edit.js": {
+      "entries": [
+        {
+          "key": "venue.edit.description.placeholder",
+          "text": "Some words about this venue",
+          "line": 70,
+          "func": "function(mark)"
+        },
+        {
+          "key": "venue.create.plsGiveVenueName",
+          "text": "Please give your venue a name",
+          "line": 152,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "venue.create.plsProvideDescription",
+          "text": "Please provide a description for your venue",
+          "line": 160,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "venue.create.plsSelectRegion",
+          "text": "Please select a region",
+          "line": 173,
+          "func": "function(f)"
+        },
+        {
+          "key": "venue.create.plsSelectPointOnMap",
+          "text": "Please select a point on the map",
+          "line": 182,
+          "func": "function(f)"
+        },
+        {
+          "key": "venue.saving.success",
+          "text": "Saved changes to venue \"{NAME}\".",
+          "line": 195,
+          "func": "function(err, venueId)"
+        },
+        {
+          "key": "venue.edit.description.placeholder",
+          "text": "Some words about this venue",
+          "line": 70,
+          "template": "unknown"
+        },
+        {
+          "key": "venue.create.plsGiveVenueName",
+          "text": "Please give your venue a name",
+          "line": 152,
+          "template": "unknown"
+        },
+        {
+          "key": "venue.create.plsProvideDescription",
+          "text": "Please provide a description for your venue",
+          "line": 160,
+          "template": "unknown"
+        },
+        {
+          "key": "venue.create.plsSelectRegion",
+          "text": "Please select a region",
+          "line": 173,
+          "template": "unknown"
+        },
+        {
+          "key": "venue.create.plsSelectPointOnMap",
+          "text": "Please select a point on the map",
+          "line": 182,
+          "template": "unknown"
+        },
+        {
+          "key": "venue.saving.success",
+          "text": "Saved changes to venue \"{NAME}\".",
+          "line": 195,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/venues/details/venue.details.html": {
+      "entries": [
+        {
+          "key": "location.details.hosts",
+          "text": "Hosts:",
+          "line": 33,
+          "template": "venueDetails"
+        },
+        {
+          "key": "location.details.online",
+          "text": "Website:",
+          "line": 44,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.address",
+          "text": "Address:",
+          "line": 52,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.route",
+          "text": "How to go there:",
+          "line": 60,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.max_ppl",
+          "text": "Maximum People:",
+          "line": 69,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.max_workplaces",
+          "text": "Maximum Workplaces:",
+          "line": 77,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.availableInfrastructure",
+          "text": "Available infrastructure:",
+          "line": 85,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.additionalEquipment",
+          "text": "Additional equipment:",
+          "line": 97,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.upcomingEvents",
+          "text": "Upcoming events at this venue: ",
+          "line": 121,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.reallydelete",
+          "text": "Please confirm that you would like to delete this venue. This cannot be undone.",
+          "line": 158,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.detail.remove",
+          "text": "Remove this venue",
+          "line": 162,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.detail.remove.busy",
+          "text": "Deleting venue...",
+          "line": 163,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.showMoreEvents",
+          "text": "Show {NUM, plural,\n\t\t\t\t\t\t\t\tone {one more event}\n\t\t\t\t\t\t\t\tother {# more events}\n\t\t\t\t\t\t\t}",
+          "line": 126,
+          "template": "venueDetails"
+        },
+        {
+          "key": "venue.details.showMorePastEvents",
+          "text": "Show {NUM, plural,\n\t\t\t\t\t\t\t\tone {one more event}\n\t\t\t\t\t\t\t\tother {# more events}\n\t\t\t\t\t\t\t}",
+          "line": 143,
+          "template": "venueDetails"
+        }
+      ],
+      "mtime": 1505908498026
+    },
+    "client/views/venues/details/venue.details.js": {
+      "entries": [
+        {
+          "key": "venueDetails.coordinates",
+          "text": "Coordinates: {LAT} {LON}",
+          "line": 135,
+          "func": "function(coord)"
+        },
+        {
+          "key": "venue.removed",
+          "text": "Removed venue \"{NAME}\".",
+          "line": 197,
+          "func": "function(err, result)"
+        },
+        {
+          "key": "venueDetails.coordinates",
+          "text": "Coordinates: {LAT} {LON}",
+          "line": 135,
+          "template": "fmt"
+        },
+        {
+          "key": "venue.removed",
+          "text": "Removed venue \"{NAME}\".",
+          "line": 197,
+          "template": "fmt"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/users/widgets/verifyEmail.html": {
+      "entries": [
+        {
+          "key": "profile.sendingVerificationMail",
+          "text": "We're sending a verification mail to your address, it should arrive shortly. Please click the link in that message.",
+          "line": 3,
+          "template": "verifyEmail"
+        },
+        {
+          "key": "profile.verifymail",
+          "text": "Verify my E-Mail",
+          "line": 7,
+          "template": "verifyEmail"
+        }
+      ],
+      "mtime": 1505846836165
+    },
+    "client/views/users/widgets/verifyEmail.js": {
+      "entries": [
+        {
+          "key": "profile.sentVerificationMail",
+          "text": "A verification mail is on its way to your address.",
+          "line": 21,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.sentVerificationMail",
+          "text": "A verification mail is on its way to your address.",
+          "line": 21,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/users/userprofile/userprofile.html": {
+      "entries": [
+        {
+          "key": "profile.users_profile_page",
+          "text": "{NAME}'s Profile",
+          "line": 11,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.its_you",
+          "text": "It's you!",
+          "line": 15,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.preferenceslink",
+          "text": "Click here to change your preferences",
+          "line": 19,
+          "template": "profilelink"
+        },
+        {
+          "key": "privileges.title",
+          "text": "Edit Privileges",
+          "line": 32,
+          "template": "profilelink"
+        },
+        {
+          "key": "privilege.has.admin",
+          "text": "Administrator privileges granted",
+          "line": 37,
+          "template": "profilelink"
+        },
+        {
+          "key": "privilege.remove",
+          "text": "Remove privilege",
+          "line": 40,
+          "template": "profilelink"
+        },
+        {
+          "key": "privilege.add.admin",
+          "text": "Grant administrator privileges",
+          "line": 49,
+          "template": "profilelink"
+        },
+        {
+          "key": "userprofile.groups.header",
+          "text": "Edit groups",
+          "line": 61,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.group.member",
+          "text": "Member of group ",
+          "line": 67,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.group.expel",
+          "text": "Expel from group {GROUPNAME}",
+          "line": 70,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.group.draft",
+          "text": "Draft into group ",
+          "line": 76,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.mail.content",
+          "text": "Your message:",
+          "line": 95,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.mail.placeholder",
+          "text": "Hi {USER}! …",
+          "line": 98,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.mail.copy",
+          "text": "Send me a copy of this message",
+          "line": 109,
+          "template": "profilelink"
+        },
+        {
+          "key": "profile.mail.attachmail",
+          "text": "Attach my e-mail address",
+          "line": 116,
+          "template": "profilelink"
+        },
+        {
+          "key": "userprofile.sendmail-btn.busy",
+          "text": "Sending E-Mail...",
+          "line": 138,
+          "template": "profilelink"
+        },
+        {
+          "key": "userprofile.sendmail-btn",
+          "text": "Send E-Mail",
+          "line": 141,
+          "template": "profilelink"
+        },
+        {
+          "key": "userprofile.infoForUnverifiedMail",
+          "text": "In order to receive a copy to your E-Mail address or\n                            attach it to the message, you need to verify your address.",
+          "line": 125,
+          "template": "profilelink"
+        }
+      ],
+      "mtime": 1506108474244
+    },
+    "client/views/users/userprofile/userprofile.js": {
+      "entries": [
+        {
+          "key": "privilege.addedAdmin",
+          "text": "Granted admin privilege",
+          "line": 59,
+          "func": "function(err)"
+        },
+        {
+          "key": "privilege.removed",
+          "text": "Removed privilege",
+          "line": 70,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.group.drafted",
+          "text": "Added to group {NAME}",
+          "line": 83,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.group.expelled",
+          "text": "Expelled from group {NAME}",
+          "line": 97,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.mail.longertext",
+          "text": "longer text please",
+          "line": 164,
+          "func": "function (event, template)"
+        },
+        {
+          "key": "profile.mail.sent",
+          "text": "Your message was sent",
+          "line": 180,
+          "func": "function(error, result)"
+        },
+        {
+          "key": "privilege.addedAdmin",
+          "text": "Granted admin privilege",
+          "line": 59,
+          "template": "unknown"
+        },
+        {
+          "key": "privilege.removed",
+          "text": "Removed privilege",
+          "line": 70,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.group.drafted",
+          "text": "Added to group {NAME}",
+          "line": 83,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.group.expelled",
+          "text": "Expelled from group {NAME}",
+          "line": 97,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.mail.longertext",
+          "text": "longer text please",
+          "line": 164,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.mail.sent",
+          "text": "Your message was sent",
+          "line": 180,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/users/ownprofile/ownprofile.html": {
+      "entries": [
+        {
+          "key": "notifications.unsubscribeSuccess",
+          "text": "You have successfully unsubscribed from notifications.",
+          "line": 15,
+          "template": "profile"
+        },
+        {
+          "key": "notifications.unsubscribeError",
+          "text": "There has been an error with your unsubscription from notifications. Please Try again.",
+          "line": 24,
+          "template": "profile"
+        },
+        {
+          "key": "profile.not_logged_in",
+          "text": "You are not logged in",
+          "line": 28,
+          "template": "profile"
+        },
+        {
+          "key": "login.frame.profile",
+          "text": "Visit my profile",
+          "line": 32,
+          "template": "profile"
+        },
+        {
+          "key": "profile.input.username",
+          "text": "Username",
+          "line": 40,
+          "template": "profile"
+        },
+        {
+          "key": "profile.email",
+          "text": "E-Mail",
+          "line": 51,
+          "template": "profile"
+        },
+        {
+          "key": "profile.toggle.notifications",
+          "text": "Receive notifications",
+          "line": 66,
+          "template": "profile"
+        },
+        {
+          "key": "profile.username",
+          "text": "Username",
+          "line": 82,
+          "template": "profile"
+        },
+        {
+          "key": "profile.email",
+          "text": "E-Mail",
+          "line": 91,
+          "template": "profile"
+        },
+        {
+          "key": "profile.emailVerified",
+          "text": "verified",
+          "line": 98,
+          "template": "profile"
+        },
+        {
+          "key": "profile.notification.subscribe",
+          "text": "Get notifications",
+          "line": 115,
+          "template": "profile"
+        },
+        {
+          "key": "profile.input.oldPassword",
+          "text": "Your current password",
+          "line": 132,
+          "template": "profile"
+        },
+        {
+          "key": "profile.input.newPassword",
+          "text": "New password",
+          "line": 140,
+          "template": "profile"
+        },
+        {
+          "key": "profile.input.repeatPassword",
+          "text": "Repeat new password",
+          "line": 148,
+          "template": "profile"
+        },
+        {
+          "key": "profile.changePass",
+          "text": "Change my password",
+          "line": 165,
+          "template": "profile"
+        },
+        {
+          "key": "profile.reallydelete",
+          "text": "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
+          "line": 176,
+          "template": "profile"
+        },
+        {
+          "key": "profile.delete.confirm.button",
+          "text": "Delete my user and all its profile",
+          "line": 180,
+          "template": "profile"
+        },
+        {
+          "key": "profile.delete.confirm.button.busy",
+          "text": "Deleting profile...",
+          "line": 181,
+          "template": "profile"
+        },
+        {
+          "key": "Profile.translate_this_page",
+          "text": "Help us to translate this Page",
+          "line": 191,
+          "template": "profile"
+        },
+        {
+          "key": "profile.groups",
+          "text": "My groups",
+          "line": 195,
+          "template": "profile"
+        },
+        {
+          "key": "profile.createNewGroup.button",
+          "text": "Create a new group",
+          "line": 216,
+          "template": "profile"
+        },
+        {
+          "key": "profile.venues",
+          "text": "My venues:",
+          "line": 220,
+          "template": "profile"
+        },
+        {
+          "key": "userprofile.noOwnVenues",
+          "text": "You're not editor of any venue.",
+          "line": 228,
+          "template": "profile"
+        },
+        {
+          "key": "profile.createNewVenue.button",
+          "text": "Create a new venue",
+          "line": 232,
+          "template": "profile"
+        },
+        {
+          "key": "profile.groupMembership",
+          "text": "You are {NUM_GROUPS, plural,\n\t\t\t\t\t=0 {not member of any group}\n\t\t\t\t\t=1 {member of the group:}\n\t\t\t\t\tother {member of # groups:}}",
+          "line": 197,
+          "template": "profile"
+        }
+      ],
+      "mtime": 1505908498026
+    },
+    "client/views/users/ownprofile/ownprofile.js": {
+      "entries": [
+        {
+          "key": "profile.deleted",
+          "text": "Your account has been deleted",
+          "line": 102,
+          "func": "function()"
+        },
+        {
+          "key": "profile.updated",
+          "text": "Updated profile",
+          "line": 117,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.passwordMismatch",
+          "text": "Sorry, Your new passwords don't match",
+          "line": 130,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "profile.passwordShort",
+          "text": "Are you serious? Your desired password is too short, sorry.",
+          "line": 135,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "profile.passwordChangedSuccess",
+          "text": "You have changed your password successfully.",
+          "line": 142,
+          "func": "function(err)"
+        },
+        {
+          "key": "profile.deleted",
+          "text": "Your account has been deleted",
+          "line": 102,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.updated",
+          "text": "Updated profile",
+          "line": 117,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.passwordMismatch",
+          "text": "Sorry, Your new passwords don't match",
+          "line": 130,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.passwordShort",
+          "text": "Are you serious? Your desired password is too short, sorry.",
+          "line": 135,
+          "template": "unknown"
+        },
+        {
+          "key": "profile.passwordChangedSuccess",
+          "text": "You have changed your password successfully.",
+          "line": 142,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/users/courselist/users.courselist.html": {
+      "entries": [
+        {
+          "key": "users.courselist.myCourses",
+          "text": "I am involved in the following courses",
+          "line": 6,
+          "template": "usersCourselist"
+        },
+        {
+          "key": "users.courselist.userCourses",
+          "text": "{NAME} is involved in the following courses",
+          "line": 8,
+          "template": "usersCourselist"
+        },
+        {
+          "text": "",
+          "line": 34,
+          "template": "usersCourselist"
+        }
+      ],
+      "mtime": 1505846836165
+    },
+    "client/views/users/courselist/users.courselist.js": {
+      "entries": [],
+      "mtime": 1509985897675
+    },
+    "client/views/login/login.app-test.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "client/views/login/resetPassword/resetPassword.html": {
+      "entries": [
+        {
+          "key": "resetPassword.title",
+          "text": "Reset your password",
+          "line": 3,
+          "template": "resetPassword"
+        },
+        {
+          "key": "resetPassword.confirmPasswordByTyping",
+          "text": "Confirm by typing it again",
+          "line": 9,
+          "template": "resetPassword"
+        },
+        {
+          "key": "resetPassword.confirmPasswordVisually",
+          "text": "Show what I typed",
+          "line": 13,
+          "template": "resetPassword"
+        },
+        {
+          "key": "passwordReset.label.confirm",
+          "text": "Confirm",
+          "line": 26,
+          "template": "resetPassword"
+        },
+        {
+          "key": "resetPassword.message.passwordsSame",
+          "text": "Passwords match",
+          "line": 32,
+          "template": "resetPassword"
+        },
+        {
+          "key": "resetPassword.message.passwordsNotSame",
+          "text": "Passwords don't match",
+          "line": 35,
+          "template": "resetPassword"
+        },
+        {
+          "key": "resetPassword.confirm",
+          "text": "Set my password",
+          "line": 42,
+          "template": "resetPassword"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/login/resetPassword/resetPassword.js": {
+      "entries": [
+        {
+          "key": "resetPassword.siteTitle",
+          "text": "Reset password",
+          "line": 12,
+          "func": "function()"
+        },
+        {
+          "key": "resetPassword.successMessage",
+          "text": "Reset your password",
+          "line": 88,
+          "func": "function(err)"
+        },
+        {
+          "key": "resetPassword.siteTitle",
+          "text": "Reset password",
+          "line": 12,
+          "template": "unknown"
+        },
+        {
+          "key": "resetPassword.successMessage",
+          "text": "Reset your password",
+          "line": 88,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/login/menu/login.menu.html": {
+      "entries": [
+        {
+          "key": "login.navig.unlogged",
+          "text": "Login/Register",
+          "line": 20,
+          "template": "loginButton"
+        }
+      ],
+      "mtime": 1507561227122
+    },
+    "client/views/login/menu/login.menu.js": {
+      "entries": [],
+      "mtime": 1507581598586
+    },
+    "client/views/login/frame/login.frame.html": {
+      "entries": [
+        {
+          "key": "Please.login",
+          "text": "Please login or register",
+          "line": 16,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.login.title",
+          "text": "Login",
+          "line": 19,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.recoverPwd.title",
+          "text": "Recover Password",
+          "line": 28,
+          "template": "userFrame"
+        },
+        {
+          "key": "frame.login.usernameOrEmail",
+          "text": "Username or Email",
+          "line": 59,
+          "template": "userFrame"
+        },
+        {
+          "key": "forgot",
+          "text": "I forgot my password",
+          "line": 79,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.login.submit.busy",
+          "text": "Logging in...",
+          "line": 86,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.login.submit",
+          "text": "Login",
+          "line": 89,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.OAuth.busy",
+          "text": "Logging in with ",
+          "line": 103,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.OAuth.loginWith",
+          "text": "Login with ",
+          "line": 106,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.register.submit",
+          "text": "Create account",
+          "line": 118,
+          "template": "userFrame"
+        },
+        {
+          "key": "frame.login.username",
+          "text": "Username",
+          "line": 135,
+          "template": "userFrame"
+        },
+        {
+          "key": "frame.login.email",
+          "text": "E-Mail",
+          "line": 158,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.register.submit.busy",
+          "text": "Registering...",
+          "line": 174,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.register.backToLogin",
+          "text": "Go back to login",
+          "line": 188,
+          "template": "userFrame"
+        },
+        {
+          "key": "frame.login.email",
+          "text": "E-Mail",
+          "line": 208,
+          "template": "userFrame"
+        },
+        {
+          "key": "forgot.notValid",
+          "text": "Please enter the address you signed up with.",
+          "line": 214,
+          "template": "userFrame"
+        },
+        {
+          "key": "forgot.send.busy",
+          "text": "Resetting password...",
+          "line": 226,
+          "template": "userFrame"
+        },
+        {
+          "key": "forgot.send",
+          "text": "Reset my password",
+          "line": 229,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.frame.welcome",
+          "text": "Welcome {NAME}!",
+          "line": 246,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.frame.profile",
+          "text": "Visit my profile",
+          "line": 251,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.frame.settings",
+          "text": "Account settings",
+          "line": 257,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.logout",
+          "text": "Logout",
+          "line": 263,
+          "template": "userFrame"
+        },
+        {
+          "key": "login.frame.register.mailDisclaimer",
+          "text": "Providing an e-mail address allows other users to contact you\n\t\t\t\t\tand is needed to recover your password in case you forget it.",
+          "line": 164,
+          "template": "userFrame"
+        }
+      ],
+      "mtime": 1507561227122
+    },
+    "client/views/login/frame/login.frame.js": {
+      "entries": [
+        {
+          "key": "login.warning.noUserName",
+          "text": "Please enter your username or email to log in.",
+          "line": 56,
+          "func": "function()"
+        },
+        {
+          "key": "login.login.warning",
+          "text": "Please enter your username or email and password to log in.",
+          "line": 60,
+          "func": "function()"
+        },
+        {
+          "key": "login.password.password_incorrect",
+          "text": "Incorrect password",
+          "line": 64,
+          "func": "function()"
+        },
+        {
+          "key": "login.username.usr_doesnt_exist",
+          "text": "This user does not exist.",
+          "line": 68,
+          "func": "function()"
+        },
+        {
+          "key": "register.warning.noUserName",
+          "text": "Please enter a name for your new user.",
+          "line": 177,
+          "func": "function()"
+        },
+        {
+          "key": "register.warning.noPasswordProvided",
+          "text": "Please enter a password to register.",
+          "line": 181,
+          "func": "function()"
+        },
+        {
+          "key": "register.warning.noCredentials",
+          "text": "Please enter a username and a password to register.",
+          "line": 185,
+          "func": "function()"
+        },
+        {
+          "key": "register.warning.userExists",
+          "text": "This username already exists. Please choose another one.",
+          "line": 189,
+          "func": "function()"
+        },
+        {
+          "key": "forgot.sent",
+          "text": "we sent a mail with instructions",
+          "line": 286,
+          "func": "function(err)"
+        },
+        {
+          "key": "login.warning.noUserName",
+          "text": "Please enter your username or email to log in.",
+          "line": 56,
+          "template": "unknown"
+        },
+        {
+          "key": "login.login.warning",
+          "text": "Please enter your username or email and password to log in.",
+          "line": 60,
+          "template": "unknown"
+        },
+        {
+          "key": "login.password.password_incorrect",
+          "text": "Incorrect password",
+          "line": 64,
+          "template": "unknown"
+        },
+        {
+          "key": "login.username.usr_doesnt_exist",
+          "text": "This user does not exist.",
+          "line": 68,
+          "template": "unknown"
+        },
+        {
+          "key": "register.warning.noUserName",
+          "text": "Please enter a name for your new user.",
+          "line": 177,
+          "template": "unknown"
+        },
+        {
+          "key": "register.warning.noPasswordProvided",
+          "text": "Please enter a password to register.",
+          "line": 181,
+          "template": "unknown"
+        },
+        {
+          "key": "register.warning.noCredentials",
+          "text": "Please enter a username and a password to register.",
+          "line": 185,
+          "template": "unknown"
+        },
+        {
+          "key": "register.warning.userExists",
+          "text": "This username already exists. Please choose another one.",
+          "line": 189,
+          "template": "unknown"
+        },
+        {
+          "key": "forgot.sent",
+          "text": "we sent a mail with instructions",
+          "line": 286,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/log/showLog.html": {
+      "entries": [],
+      "mtime": 1505908498026
+    },
+    "client/views/log/showLog.js": {
+      "entries": [
+        {
+          "key": "log.list.windowtitle",
+          "text": "Log",
+          "line": 12,
+          "func": "function()"
+        },
+        {
+          "key": "log.list.windowtitle",
+          "text": "Log",
+          "line": 12,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897675
+    },
+    "client/views/log/showLogEntry.html": {
+      "entries": [],
+      "mtime": 1505908498026
+    },
+    "client/views/log/showLogEntry.js": {
+      "entries": [],
+      "mtime": 1505908498026
+    },
+    "client/views/kiosk/kiosk.html": {
+      "entries": [
+        {
+          "key": "kiosk.ongoing",
+          "text": "{NUM, plural, one {One ongoing event:} other {# ongoing events:} }",
+          "line": 37,
+          "template": "kioskLayout"
+        },
+        {
+          "key": "kiosk.today",
+          "text": "{NUM, plural, one {One event} other {# events} } later today:",
+          "line": 44,
+          "template": "kioskLayout"
+        },
+        {
+          "key": "kiosk.future",
+          "text": "Future events:",
+          "line": 51,
+          "template": "kioskLayout"
+        },
+        {
+          "key": "kiosk.noFutureEvents",
+          "text": "There are no future events",
+          "line": 55,
+          "template": "kioskLayout"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/kiosk/kiosk.js": {
+      "entries": [
+        {
+          "key": "event.list.windowtitle",
+          "text": "Events",
+          "line": 55,
+          "func": "function()"
+        },
+        {
+          "key": "event.list.windowtitle",
+          "text": "Events",
+          "line": 55,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/kiosk/list/kiosk.list.html": {
+      "entries": [],
+      "mtime": 1505846836161
+    },
+    "client/views/kiosk/link/kiosk.link.html": {
+      "entries": [
+        {
+          "key": "backToKiosk",
+          "text": "Return to overview",
+          "line": 8,
+          "template": "kioskLink"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/kiosk/link/kiosk.link.js": {
+      "entries": [],
+      "mtime": 1505846836161
+    },
+    "client/views/kiosk/event/kiosk.event.html": {
+      "entries": [
+        {
+          "key": "kiosk.started",
+          "text": "Started",
+          "line": 9,
+          "template": "kioskEvent"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/kiosk/event/kiosk.event.js": {
+      "entries": [],
+      "mtime": 1506108474244
+    },
+    "client/views/groups/settings/group.settings.html": {
+      "entries": [
+        {
+          "key": "group.settings.title",
+          "text": "Settings",
+          "line": 8,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.logo",
+          "text": "Logo",
+          "line": 11,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.logo.placeholder",
+          "text": "Link to your Icon (png or jpg)",
+          "line": 18,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.backgroundImg",
+          "text": "Background Image",
+          "line": 24,
+          "template": "groupSettings"
+        },
+        {
+          "key": "_notYetWorking",
+          "text": "not working yet",
+          "line": 25,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.backgroundImg.placeholder",
+          "text": "Link to background image (png or jpg)",
+          "line": 33,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.title.Members",
+          "text": "Members",
+          "line": 46,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.removeFromGroup",
+          "text": "remove member",
+          "line": 59,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.addMembers",
+          "text": "Add a new member to your group",
+          "line": 67,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.field.addMember.placeholder",
+          "text": "Type name of buddy",
+          "line": 74,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.settings.addMember",
+          "text": "add as member",
+          "line": 90,
+          "template": "groupSettings"
+        },
+        {
+          "key": "group.linksCollection.title",
+          "text": "{NAME}-views",
+          "line": 102,
+          "template": "groupSettings"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/groups/settings/group.settings.js": {
+      "entries": [],
+      "mtime": 1509985897671
+    },
+    "client/views/groups/list/group.list.html": {
+      "entries": [
+        {
+          "key": "groupList.show_courses",
+          "text": "{NAME}, show all their courses",
+          "line": 5,
+          "template": "groupName"
+        },
+        {
+          "key": "groupListFull.show_courses",
+          "text": "Show all courses of this group",
+          "line": 17,
+          "template": "groupName"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/groups/list/group.list.js": {
+      "entries": [],
+      "mtime": 1505846836161
+    },
+    "client/views/groups/details/group.details.html": {
+      "entries": [
+        {
+          "key": "group.details.titleNew",
+          "text": "Create new group",
+          "line": 4,
+          "template": "groupDetails"
+        }
+      ],
+      "mtime": 1505846836161
+    },
+    "client/views/groups/details/group.details.js": {
+      "entries": [
+        {
+          "key": "group.name.placeholder",
+          "text": "Name of your group, institution, community or program",
+          "line": 33,
+          "func": "function(newName)"
+        },
+        {
+          "key": "group.short.placeholder",
+          "text": "Abbreviation",
+          "line": 42,
+          "func": "function(newShort)"
+        },
+        {
+          "key": "group.claim.placeholder",
+          "text": "The core idea",
+          "line": 51,
+          "func": "function(newClaim)"
+        },
+        {
+          "key": "group.description.placeholder",
+          "text": "Describe the audience, the interests and activities of your group.",
+          "line": 60,
+          "func": "function(newDescription)"
+        },
+        {
+          "key": "group.create.success",
+          "text": "Created group",
+          "line": 149,
+          "func": "function(err, groupId)"
+        },
+        {
+          "key": "group.name.placeholder",
+          "text": "Name of your group, institution, community or program",
+          "line": 33,
+          "template": "handleSaving"
+        },
+        {
+          "key": "group.short.placeholder",
+          "text": "Abbreviation",
+          "line": 42,
+          "template": "handleSaving"
+        },
+        {
+          "key": "group.claim.placeholder",
+          "text": "The core idea",
+          "line": 51,
+          "template": "handleSaving"
+        },
+        {
+          "key": "group.description.placeholder",
+          "text": "Describe the audience, the interests and activities of your group.",
+          "line": 60,
+          "template": "handleSaving"
+        },
+        {
+          "key": "group.create.success",
+          "text": "Created group",
+          "line": 149,
+          "template": "handleSaving"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/replication/event.replication.html": {
+      "entries": [
+        {
+          "key": "event.replication.changeToPicker",
+          "text": "Pick dates",
+          "line": 10,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.changeToPattern",
+          "text": "Select frequency",
+          "line": 16,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.interval.start",
+          "text": "Interval Start",
+          "line": 27,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.interval.end",
+          "text": "Interval End",
+          "line": 41,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.repeat",
+          "text": "Repeat",
+          "line": 55,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.freq.once",
+          "text": "once",
+          "line": 63,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.freq.daily",
+          "text": "every day",
+          "line": 72,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.noDates",
+          "text": "No date(s) selected",
+          "line": 126,
+          "template": "eventReplication"
+        },
+        {
+          "key": "event.replication.createText",
+          "text": "Create {COUNT, plural,\n\t\t\t\t\t\t\t\tone {a copy on this date}\n\t\t\t\t\t\t\t\tother {# copies on this dates}\n\t\t\t\t\t\t\t}",
+          "line": 100,
+          "template": "eventReplication"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/replication/event.replication.js": {
+      "entries": [],
+      "mtime": 1509985897671
+    },
+    "client/views/events/list/event.list.html": {
+      "entries": [],
+      "mtime": 1505869987233
+    },
+    "client/views/events/editLocation/event.editLocation.html": {
+      "entries": [
+        {
+          "key": "course.event.edit.location",
+          "text": "Venue",
+          "line": 4,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.location.info",
+          "text": "You can search the venues, choose from the recently used, click on the map, or create a new venue.",
+          "line": 8,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locationChange",
+          "text": "Change venue",
+          "line": 22,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locationNamePlaceholder",
+          "text": "Where?",
+          "line": 27,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.addressSearch",
+          "text": "Search",
+          "line": 32,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locationAddressPlaceholder",
+          "text": "Address",
+          "line": 38,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locations.proposed",
+          "text": "Matching locations:",
+          "line": 44,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locations.previouslyUsed",
+          "text": "Recently used locations:",
+          "line": 46,
+          "template": "eventEditVenue"
+        },
+        {
+          "key": "event.edit.locations.foundnone",
+          "text": "No locations found.",
+          "line": 57,
+          "template": "eventEditVenue"
+        }
+      ],
+      "mtime": 1505846836157
+    },
+    "client/views/events/editLocation/event.editLocation.js": {
+      "entries": [
+        {
+          "key": "event.edit.noResultsforAddress",
+          "text": "Found no results for address \"{ADDRESS}\"",
+          "line": 198,
+          "func": "function(error, result)"
+        },
+        {
+          "key": "event.edit.noResultsforAddress",
+          "text": "Found no results for address \"{ADDRESS}\"",
+          "line": 198,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/edit/event.edit.html": {
+      "entries": [
+        {
+          "key": "course.event.edit.edit",
+          "text": "Edit event",
+          "line": 6,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.add",
+          "text": "Add event",
+          "line": 8,
+          "template": "eventEdit"
+        },
+        {
+          "key": "menue.ProposeCourse",
+          "text": "Propose a course",
+          "line": 13,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.title",
+          "text": "Event title",
+          "line": 22,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.title.placeholder",
+          "text": "Put a catchy title here",
+          "line": 27,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.date_start",
+          "text": "Date",
+          "line": 33,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.time_start",
+          "text": "Time start",
+          "line": 45,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.duration",
+          "text": "Duration (in minutes)",
+          "line": 60,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.switch_time_end",
+          "text": "Switch to end time",
+          "line": 63,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.time_end",
+          "text": "Time end",
+          "line": 79,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.swich_duration",
+          "text": "Switch to duration",
+          "line": 82,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.desc",
+          "text": "Description",
+          "line": 102,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.edit.region",
+          "text": "Region",
+          "line": 114,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.room",
+          "text": "Room",
+          "line": 142,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.internal",
+          "text": "Hide on front page",
+          "line": 163,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.event.edit.addMessage",
+          "text": "Add message",
+          "line": 217,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.additionalMessage",
+          "text": "If you feel good, describe what the members of the course should know.",
+          "line": 227,
+          "template": "eventEdit"
+        },
+        {
+          "key": "course.createEventInfo",
+          "text": "Use this form if you want to publish a singular, one-off, allready organised event.\n\t\t\t\t\tOtherwise create or propose a course here:",
+          "line": 9,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.internal.description",
+          "text": "Show this event only on group and venue pages",
+          "line": 165,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.updateReplicas",
+          "text": "Update {COUNT, plural,\n\t\t\t\t\t\t\t\t\tone {later copy}\n\t\t\t\t\t\t\t\t\tother {# later copies as well}\n\t\t\t\t\t\t\t\t}",
+          "line": 175,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.updateReplicas.times",
+          "text": "Time-changes will not be updated in {COUNT, plural,\n\t\t\t\t\t\t\t\t\t\tone {copy}\n\t\t\t\t\t\t\t\t\t\tother {copies}\n\t\t\t\t\t\t\t\t\t}.",
+          "line": 183,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.notifyNewEvent",
+          "text": "Notify all members of the course \"{COURSE}\" about this event.",
+          "line": 199,
+          "template": "eventEdit"
+        },
+        {
+          "key": "event.edit.notifyEditEvent",
+          "text": "Notify all members of the course \"{COURSE}\" about the changes you made.",
+          "line": 205,
+          "template": "eventEdit"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/edit/event.edit.js": {
+      "entries": [
+        {
+          "key": "event.description.placeholder",
+          "text": "Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)",
+          "line": 39,
+          "func": "function()"
+        },
+        {
+          "key": "event.edit.dateFormatWarning",
+          "text": "Date format must be of the form {EXAMPLEDATE}",
+          "line": 236,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "event.edit.plzProvideTitle",
+          "text": "Please provide a title",
+          "line": 254,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "event.edit.plzProvideDescr",
+          "text": "Please provide a description",
+          "line": 259,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "event.edit.plzSelectRegion",
+          "text": "Please select the region for this event",
+          "line": 275,
+          "func": "function(event, instance)"
+        },
+        {
+          "key": "event.edit.replicates.success",
+          "text": "Replicas of \"{TITLE}\" also updated.",
+          "line": 308,
+          "func": "function(error, eventId)"
+        },
+        {
+          "key": "event.description.placeholder",
+          "text": "Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)",
+          "line": 39,
+          "template": "unknown"
+        },
+        {
+          "key": "event.edit.dateFormatWarning",
+          "text": "Date format must be of the form {EXAMPLEDATE}",
+          "line": 236,
+          "template": "readDateTime"
+        },
+        {
+          "key": "event.edit.plzProvideTitle",
+          "text": "Please provide a title",
+          "line": 254,
+          "template": "readDateTime"
+        },
+        {
+          "key": "event.edit.plzProvideDescr",
+          "text": "Please provide a description",
+          "line": 259,
+          "template": "readDateTime"
+        },
+        {
+          "key": "event.edit.plzSelectRegion",
+          "text": "Please select the region for this event",
+          "line": 275,
+          "template": "readDateTime"
+        },
+        {
+          "key": "event.edit.replicates.success",
+          "text": "Replicas of \"{TITLE}\" also updated.",
+          "line": 308,
+          "template": "readDateTime"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/details/event.details.html": {
+      "entries": [
+        {
+          "key": "event.no_event",
+          "text": "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place.",
+          "line": 8,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.details.viewCourse",
+          "text": "view course",
+          "line": 18,
+          "template": "eventPage"
+        },
+        {
+          "key": "course.details.repl_menu_btn",
+          "text": "Repeat",
+          "line": 90,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.detail.download_cal",
+          "text": "Download event to my calendar",
+          "line": 95,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.details.download",
+          "text": "Download",
+          "line": 97,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.reallydelete",
+          "text": "Please confirm that you would like to delete this event. This cannot be undone.",
+          "line": 118,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.delete.confirm.button",
+          "text": "Delete this event",
+          "line": 122,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.delete.confirm.button.busy",
+          "text": "Deleting event...",
+          "line": 123,
+          "template": "eventPage"
+        },
+        {
+          "key": "course.group.addText",
+          "text": "link a group",
+          "line": 173,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.group.confirmRemoveText",
+          "text": "Remove group {NAME} from this event?",
+          "line": 209,
+          "template": "eventPage"
+        },
+        {
+          "key": "course.group.remove",
+          "text": "Remove",
+          "line": 218,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.group.confirmOrgText",
+          "text": "Add group {NAME} as organizers?",
+          "line": 228,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.group.confirmOrgNotes",
+          "text": "All members of this group will be able to edit this event.",
+          "line": 230,
+          "template": "eventPage"
+        },
+        {
+          "key": "course.group.confimOrgButton",
+          "text": "Give editing rights",
+          "line": 232,
+          "template": "eventPage"
+        },
+        {
+          "key": "event.group.confirmRemoveOrgText",
+          "text": "Take away organizer status from group {NAME}",
+          "line": 247,
+          "template": "eventPage"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/details/event.details.js": {
+      "entries": [
+        {
+          "key": "event.windowtitle",
+          "text": "{DATE} {EVENT}",
+          "line": 19,
+          "func": "function eventPageOnCreated()"
+        },
+        {
+          "key": "event.windowtitle.create",
+          "text": "Create event",
+          "line": 31,
+          "func": "function eventPageOnCreated()"
+        },
+        {
+          "key": "event.windowtitle.create",
+          "text": "Create event",
+          "line": 31,
+          "template": "unknown"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/views/events/compact/event.compact.html": {
+      "entries": [],
+      "mtime": 1505846836153
+    },
+    "client/views/events/compact/event.compact.js": {
+      "entries": [],
+      "mtime": 1505846836157
+    },
+    "client/lib/LocationTracker.js": {
+      "entries": [],
+      "mtime": 1505846836149
+    },
+    "client/lib/UrlTools.js": {
+      "entries": [],
+      "mtime": 1505846836149
+    },
+    "client/lib/client.functions.js": {
+      "entries": [
+        {
+          "key": "noUser_placeholder",
+          "text": "someone",
+          "line": 41,
+          "func": "function(userId)"
+        },
+        {
+          "key": "_serverError",
+          "text": "There was an error on the server: \"{MESSAGE} ({ERROR}).\" Sorry about this.",
+          "line": 102,
+          "func": "function(message, err)"
+        },
+        {
+          "key": "group.missing",
+          "text": "Group does not exist",
+          "line": 122,
+          "func": "function()"
+        },
+        {
+          "key": "noUser_placeholder",
+          "text": "someone",
+          "line": 41,
+          "template": "unknown"
+        },
+        {
+          "key": "_serverError",
+          "text": "There was an error on the server: \"{MESSAGE} ({ERROR}).\" Sorry about this.",
+          "line": 102,
+          "template": "unknown"
+        },
+        {
+          "key": "group.missing",
+          "text": "Group does not exist",
+          "line": 122,
+          "template": "subbedGroup"
+        }
+      ],
+      "mtime": 1509985897671
+    },
+    "client/lib/mfFixedTranslations.html": {
+      "entries": [
+        {
+          "key": "roles.team.short",
+          "text": "team",
+          "line": 8,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.team.subscribe",
+          "text": "I help organize",
+          "line": 9,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.team.subscribed",
+          "text": "You are on the team",
+          "line": 10,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.team.myList",
+          "text": "I am organizing",
+          "line": 11,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.team.userList",
+          "text": "{NAME} is organizing",
+          "line": 12,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.interested.short",
+          "text": "interested",
+          "line": 14,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.interested.subscribe",
+          "text": "I am interested",
+          "line": 15,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.interested.subscribed",
+          "text": "You are interested",
+          "line": 16,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.interested.myList",
+          "text": "I am interested in",
+          "line": 17,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.interested.userList",
+          "text": "{NAME} is interested in",
+          "line": 18,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.short",
+          "text": "mentor",
+          "line": 20,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.short.plural",
+          "text": "mentors",
+          "line": 21,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.subscribe",
+          "text": "I can be a mentor",
+          "line": 22,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.subscribed",
+          "text": "You are listed as mentor",
+          "line": 23,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.description",
+          "text": "a mentor",
+          "line": 24,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.myList",
+          "text": "I teach",
+          "line": 25,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.mentor.userList",
+          "text": "{NAME} teaches",
+          "line": 26,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.short",
+          "text": "host",
+          "line": 28,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.short.plural",
+          "text": "hosts",
+          "line": 29,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.subscribe",
+          "text": "I have a room to host this",
+          "line": 30,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.subscribed",
+          "text": "You are listed as host",
+          "line": 31,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.description",
+          "text": "a host that provides a room",
+          "line": 32,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.myList",
+          "text": "I provide a room for",
+          "line": 33,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "roles.host.userList",
+          "text": "{NAME} provides a room for",
+          "line": 34,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.sports",
+          "text": "Sports / Movement",
+          "line": 39,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.martialarts",
+          "text": "Martial arts",
+          "line": 40,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.teamsport",
+          "text": "Team sport",
+          "line": 41,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.artistry",
+          "text": "Artistry",
+          "line": 42,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.handicraft",
+          "text": "Handicraft",
+          "line": 44,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.metalwood",
+          "text": "Woodwork / Metalwork",
+          "line": 45,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.electronics",
+          "text": "Electronics / Electricity",
+          "line": 46,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.fabric",
+          "text": "Synthetic material / Fabric",
+          "line": 47,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.gardening",
+          "text": "Gardening / Agriculture",
+          "line": 48,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.construction",
+          "text": "Construction",
+          "line": 49,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.sciences",
+          "text": "Natural Science",
+          "line": 51,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.geography",
+          "text": "Geography",
+          "line": 52,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.physics",
+          "text": "Physics",
+          "line": 53,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.medicine",
+          "text": "Medicine",
+          "line": 54,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.mathematics",
+          "text": "Mathematics",
+          "line": 55,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.chemistry",
+          "text": "Chemistry",
+          "line": 56,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.biology",
+          "text": "Biology",
+          "line": 57,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.humanities",
+          "text": "Arts & Humanities",
+          "line": 59,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.languages",
+          "text": "Languages",
+          "line": 60,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.history",
+          "text": "History",
+          "line": 61,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.sociology",
+          "text": "Sociology",
+          "line": 62,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.politics",
+          "text": "Politics",
+          "line": 63,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.philosophy",
+          "text": "Philosophy",
+          "line": 64,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.lawbusiness",
+          "text": "Business Studies Economics and Law",
+          "line": 65,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.culture",
+          "text": "Culture",
+          "line": 67,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.literature",
+          "text": "Literature",
+          "line": 68,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.theatre",
+          "text": "Theater",
+          "line": 69,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.music",
+          "text": "Music",
+          "line": 70,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.dance",
+          "text": "Dance",
+          "line": 71,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.fineart",
+          "text": "Fine Art",
+          "line": 72,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.design",
+          "text": "Design",
+          "line": 73,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.photography",
+          "text": "Photography",
+          "line": 74,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.film",
+          "text": "Film",
+          "line": 75,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.cooking",
+          "text": "Cooking",
+          "line": 76,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.subculture",
+          "text": "Subculture",
+          "line": 77,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.computer",
+          "text": "Computer",
+          "line": 79,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.internet",
+          "text": "Internet",
+          "line": 80,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.programming",
+          "text": "Programming",
+          "line": 81,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.operating",
+          "text": "Software Operating",
+          "line": 82,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.misc",
+          "text": "Misc",
+          "line": 84,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.♥undefined♥",
+          "text": "♥Undefined♥",
+          "line": 85,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.experimental",
+          "text": "Experimental",
+          "line": 86,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "category.spiritual",
+          "text": "Spirituality",
+          "line": 87,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_inputField.optional",
+          "text": "(optional)",
+          "line": 92,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_button.cancel",
+          "text": "Cancel",
+          "line": 93,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_button.save",
+          "text": "Save",
+          "line": 94,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_button.delete",
+          "text": "Delete",
+          "line": 95,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_button.edit",
+          "text": "Edit",
+          "line": 96,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_selection.pleaseSelect",
+          "text": "Please select",
+          "line": 97,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_inputField.password",
+          "text": "Password",
+          "line": 98,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_message.saved",
+          "text": "saved",
+          "line": 99,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_message.removed",
+          "text": "removed",
+          "line": 100,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_message.added",
+          "text": "added",
+          "line": 101,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_option.on",
+          "text": "On",
+          "line": 102,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "_option.off",
+          "text": "Off",
+          "line": 103,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "region.greece.athens",
+          "text": "Athens",
+          "line": 107,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "language.german",
+          "text": "German",
+          "line": 111,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.home",
+          "text": "start page",
+          "line": 115,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.calendar",
+          "text": "calendar",
+          "line": 116,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.showCourse",
+          "text": "course",
+          "line": 117,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.showEvent",
+          "text": "event",
+          "line": 118,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.venueDetails",
+          "text": "venue",
+          "line": 119,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.frameEvents",
+          "text": "events",
+          "line": 120,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.frameCalendar",
+          "text": "calendar",
+          "line": 121,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.userprofile",
+          "text": "profile",
+          "line": 122,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.profile",
+          "text": "profile settings",
+          "line": 123,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.kioskEvents",
+          "text": "kiosk view",
+          "line": 124,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.timetable",
+          "text": "timetable",
+          "line": 125,
+          "template": "mfFixedTranslations"
+        },
+        {
+          "key": "route.frameSchedule",
+          "text": "schedule",
+          "line": 126,
+          "template": "mfFixedTranslations"
+        }
+      ],
+      "mtime": 1507561227122
+    }
+  },
+  "update": 1509998888801
+}

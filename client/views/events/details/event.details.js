@@ -1,7 +1,13 @@
 import '/imports/IdTools.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
+import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/categories/categories.js';
 import '/imports/ui/components/price-policy/price-policy.js';
+import '/imports/ui/components/region-tag/region-tag.js';
+import '/imports/ui/components/sharing/sharing.js';
+import '/imports/ui/components/report/report.js';
 
 // routing is in /routing.js
 
@@ -92,7 +98,7 @@ Template.event.events({
 			if (error) {
 				showServerError('Could not remove event ' + "'" + title + "'", error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				if (course) {
 					Router.go('showCourse', { _id: course });
 				} else {
@@ -169,7 +175,7 @@ Template.eventGroupAdd.events({
 			if (error) {
 				showServerError('Failed to add group', error);
 			} else {
-				addMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -185,7 +191,7 @@ Template.eventGroupRemove.events({
 			if (error) {
 				showServerError('Failed to remove group', error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -201,7 +207,7 @@ Template.eventGroupMakeOrganizer.events({
 			if (error) {
 				showServerError('Failed to give group editing rights', error);
 			} else {
-				addMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
 			}
 		});
@@ -217,7 +223,7 @@ Template.eventGroupRemoveOrganizer.events({
 			if (error) {
 				showServerError('Failed to remove organizer status', error);
 			} else {
-				addMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
 			}
 		});
