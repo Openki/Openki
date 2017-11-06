@@ -1,4 +1,5 @@
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
 
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
@@ -55,7 +56,7 @@ Template.userprofile.events({
 			if (err) {
 				showServerError('Unable to add privilege', err);
 			} else {
-				addMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
+				AddMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
 			}
 		});
 	},
@@ -66,7 +67,7 @@ Template.userprofile.events({
 			if (err) {
 				showServerError('Unable to remove privilege', err);
 			} else {
-				addMessage(mf('privilege.removed', 'Removed privilege'), 'success');
+				AddMessage(mf('privilege.removed', 'Removed privilege'), 'success');
 			}
 		});
 	},
@@ -79,7 +80,7 @@ Template.userprofile.events({
 			if (err) {
 				showServerError('Unable to draft user into group', err);
 			} else {
-				addMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
+				AddMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
 			}
 		});
 	},
@@ -93,7 +94,7 @@ Template.userprofile.events({
 			if (err) {
 				showServerError('Unable to expel user from group', err);
 			} else {
-				addMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
+				AddMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
 			}
 		});
 	},
@@ -130,7 +131,7 @@ Template.emailBox.events({
 				instance.verificationMailSent.set(false);
 				showServerError('Failed to send verification mail', err);
 			} else {
-				addMessage(mf('profile.sentVerificationMail'), 'success');
+				AddMessage(mf('profile.sentVerificationMail'), 'success');
 			}
 		});
 	},
@@ -174,9 +175,9 @@ Template.emailBox.events({
 			function(error, result) {
 				template.busy(false);
 				if (error) {
-					addMessage(error, 'danger');
+					AddMessage(error, 'danger');
 				} else {
-					addMessage(mf('profile.mail.sent', 'Your message was sent'), 'success');
+					AddMessage(mf('profile.mail.sent', 'Your message was sent'), 'success');
 					template.$('#emailmessage').val('');
 				}
 			}

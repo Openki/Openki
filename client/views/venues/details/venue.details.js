@@ -1,4 +1,8 @@
 "use strict";
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/map/map.js';
 
 /////////////////////////////////////////////////// map
 
@@ -190,7 +194,7 @@ Template.venueDetails.events({
 			if (err) {
 				showServerError('Deleting the venue went wrong', err);
 			} else {
-				addMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
+				AddMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
 				Router.go('profile');
 			}
 		});

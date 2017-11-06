@@ -1,6 +1,9 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
+import { AddMessage } from '/imports/api/messages/methods.js';
+
+import '/imports/ui/components/buttons/buttons.js';
 
 import './report.html';
 
@@ -18,10 +21,12 @@ Template.report.events({
 		event.preventDefault();
 		instance.state.set('reporting');
 	},
+
 	'click .js-report-cancel'(event, instance) {
 		event.preventDefault();
 		instance.state.set('');
 	},
+
 	'click .js-report-send'(event, instance) {
 		event.preventDefault();
 		Meteor.call(
@@ -34,7 +39,7 @@ Template.report.events({
 				if (error) {
 					showServerError('Your report could not be sent', error);
 				} else {
-					addMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
+					AddMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
 				}
 				instance.state.set('');
 			}
