@@ -6,7 +6,8 @@
 
 Openki is an open education platform. Courses can be proposed, discussed, developed, organized and published. The focus is on the promotion of self-organization, the bringing together of people, groupings and initiatives, and ensure a barrier-free exchange of experiences and knowledge. The courses are accessible to all, regardless of their financial situation. The organization behind it is non-profit and Open Source.
 
-[Here](http://about.openki.net/) you will find more about Openki and its philosophy and [here](http://about.openki.net/?page_id=1216) on the basic concepts behind the platform.
+Find out more about [Openki and its philosophy](http://about.openki.net/) or read about [the basic concepts behind the Openki platform](http://about.openki.net/?page_id=1216).
+
 
 ### What does the name "Openki" actually means?
 
@@ -31,9 +32,9 @@ Yes and no. We provide a tool for self-organization. Social contacts naturally b
 Nice! To make Openki even better, we need your feedback. We have also dozens of ideas that we find important, and we want to work on. But we are currently limiting ourselves to the most necessary functions because of our limited capacity to keep Openki as easy to understand as possible.
 Nevertheless, we are aware that there are several additional features that could simplify the self-organization promoted by Openki, and thus we are always very glad to receive feedback.
 
-Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see [here](https://github.com/Openki/Openki/issues), which are the next planned technical steps and may participate actively in the discussion there. Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
+Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see and participate in the discussion on our next technical steps in our [issue tracker](https://github.com/Openki/Openki/issues). Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
 
-If you want to help with the translation of Openki, you will find the necessary information here: [openki.net/translate](https://openki.net/translate)
+You can also help translate Openki using the [online translator](https://openki.net/translate).
 
 
 ### Who administers the Openki.net website?
@@ -97,7 +98,7 @@ There is currently no possibility to collect course materials and document the c
 Normally, courses are held in the language in which they are published. Multilingual courses are offered in several languages.
 
 ### Why do I find numerous courses in the course overview which have already passed?
-The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses ("Events") can be found in [Calendar] (https://openki.net/calendar).
+The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses ("Events") can be found in the [Calendar] (https://openki.net/calendar).
 
 ### I really need this tool for the organization of my course!
 Many tools are already available on the web freely and humans can link them to Openki simply by link in the course description. Some examples:
