@@ -7,6 +7,7 @@ import { $ } from 'meteor/jquery';
 import '/imports/StringTools.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -225,7 +226,7 @@ Template.courseEdit.events({
 		Meteor.call("save_course", courseId, changes, function(err, courseId) {
 			instance.busy(false);
 			if (err) {
-				showServerError('Saving the course went wrong', err);
+				ShowServerError('Saving the course went wrong', err);
 			} else {
 				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
 				AddMessage("\u2713 " + mf('_message.saved'), 'success');

@@ -1,5 +1,6 @@
 "use strict";
 import { AddMessage } from '/imports/api/messages/methods.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/events/list/event-list.js';
@@ -195,7 +196,7 @@ Template.venueDetails.events({
 		Meteor.call('venue.remove', venue._id, function(err, result) {
 			instance.busy(false);
 			if (err) {
-				showServerError('Deleting the venue went wrong', err);
+				ShowServerError('Deleting the venue went wrong', err);
 			} else {
 				AddMessage(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'), 'success');
 				Router.go('profile');

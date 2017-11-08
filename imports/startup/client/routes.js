@@ -4,6 +4,7 @@ import '/imports/LocalTime.js';
 import Metatags from '/imports/Metatags.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
+import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 
 import '/imports/ui/layouts';
 import '/imports/ui/pages';
@@ -38,7 +39,7 @@ Router.map(function () {
 		path: 'venues',
 		template: 'venueMap',
 		waitOn: function () {
-			return Meteor.subscribe('venues', cleanedRegion(Session.get('region')));
+			return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
 		},
 		onAfterAction: function() {
 			Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
@@ -512,6 +513,18 @@ Router.map(function () {
 
 			if (!course) return false;
 
+			function getMember(members, user) {
+				if (!members) return false;
+				var member = false;
+				members.forEach(function(member_candidate) {
+					if (member_candidate.user == user) {
+						member = member_candidate;
+						return true; // break
+					}
+				});
+				return member;
+			};
+
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
 			var data = {
@@ -650,7 +663,7 @@ Router.map(function() {
 			if (id === 'create') {
 				var userId = Meteor.userId();
 				venue = new Venue();
-				venue.region = cleanedRegion(Session.get('region'));
+				venue.region = CleanedRegion(Session.get('region'));
 				venue.editor = userId;
 			} else {
 				venue = Venues.findOne({_id: this.params._id});

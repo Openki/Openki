@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -122,7 +124,7 @@ Template.profile.events({
 			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
-					showServerError('Saving your profile failed', err);
+					ShowServerError('Saving your profile failed', err);
 				} else {
 					AddMessage(mf('profile.updated', 'Updated profile'), 'success');
 					instance.editing.set(false);
@@ -147,7 +149,7 @@ Template.profile.events({
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
-						showServerError('Failed to change your password', err);
+						ShowServerError('Failed to change your password', err);
 					} else {
 						AddMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
 						instance.changingPass.set(false);

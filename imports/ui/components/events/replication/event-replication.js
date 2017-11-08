@@ -1,5 +1,6 @@
 import '/imports/LocalTime.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -214,7 +215,7 @@ Template.eventReplication.events({
 			Meteor.call('saveEvent', eventId, replicaEvent, error => {
 				instance.busy(false);
 				if (error) {
-					showServerError('Replicating the event went wrong', error);
+					ShowServerError('Replicating the event went wrong', error);
 				} else {
 					const parentInstance = instance.parentInstance();
 					parentInstance.replicating.set(false);

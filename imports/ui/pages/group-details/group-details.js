@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -25,7 +26,7 @@ Template.groupDetails.onCreated(function() {
 
 	var handleSaving = function(err, groupId) {
 		if (err) {
-			showServerError('Saving the group went wrong', err);
+			ShowServerError('Saving the group went wrong', err);
 		} else {
 			AddMessage("\u2713 " + mf('_message.saved'), 'success');
 		}
@@ -147,7 +148,7 @@ Template.groupDetails.events({
 		Meteor.call("saveGroup", "create", group, function(err, groupId) {
 			instance.busy(false);
 			if (err) {
-				showServerError('Saving the group went wrong', err);
+				ShowServerError('Saving the group went wrong', err);
 			} else {
 				instance.editableName.end();
 				instance.editableShort.end();

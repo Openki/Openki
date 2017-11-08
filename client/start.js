@@ -5,6 +5,7 @@ import Introduction from '/imports/ui/lib/introduction.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import UrlTools from '/imports/utils/url-tools.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 ////////////// db-subscriptions:
 
@@ -134,7 +135,7 @@ Accounts.onEmailVerificationLink(function(token, done) {
 	Router.go('profile');
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			showServerError('Address could not be verified', error);
+			ShowServerError('Address could not be verified', error);
 		} else {
 			AddMessage(mf("email.verified", "Email verified."), 'success');
 		}

@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -252,7 +253,7 @@ Template.post.events({
 
 		Meteor.call(method, comment, function(err, commentId) {
 			if (err) {
-				showServerError('Posting your comment went wrong', err);
+				ShowServerError('Posting your comment went wrong', err);
 			} else {
 				instance.editing.set(false);
 			}
@@ -270,7 +271,7 @@ Template.post.events({
 		event.stopImmediatePropagation();
 		Meteor.call('deleteComment', this._id, function(err) {
 			if (err) {
-				showServerError('Could not delete comment', err);
+				ShowServerError('Could not delete comment', err);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}

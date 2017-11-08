@@ -5,9 +5,11 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -32,7 +34,7 @@ Template.venueEdit.onCreated(function() {
 	if (instance.isNew) {
 		instance.autorun(function() {
 			// If the session sets the region, we use it
-			var sessionRegion = cleanedRegion(Session.get('region'));
+			var sessionRegion = CleanedRegion(Session.get('region'));
 
 			instance.selectedRegion.set(sessionRegion);
 
@@ -199,7 +201,7 @@ Template.venueEdit.events({
 		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
 			instance.busy(false);
 			if (err) {
-				showServerError('Saving the venue went wrong', err);
+				ShowServerError('Saving the venue went wrong', err);
 			} else {
 				AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 				if (instance.isNew) {
