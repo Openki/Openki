@@ -81,6 +81,62 @@
 	</nav>
 </template>
 
+<template name='loginButton'>
+	{{#if loginServicesConfigured}}
+		{{#if currentUser}}
+			<a
+				class="loginButton dropdown-toggle navbar-link"
+				aria-expanded="false"
+				data-toggle="dropdown"
+				role="button">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				{{currentUser.username}}
+				<div class="nav-marker-caret"></div>
+				<div class="nav-marker-bar"></div>
+			</a>
+		{{else}}
+			<a
+				class="loginButton navbar-link"
+				id="openLogin"
+				role="button">
+				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+				{{mf 'login.navig.unlogged' 'Login/Register'}}
+			</a>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name='userFrame'>
+	<div class="user-frame">
+		{{> ownUserFrame}}
+	</div>
+</template>
+
+<template name="ownUserFrame">
+	<div class="ownuser-frame">
+		<div class="form-group ownuser-frame-welcome">
+			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.profile' 'Visit my profile'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings' 'Account settings'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-default js-logout form-control">
+				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
+				{{mf 'login.logout' 'Logout'}}
+			</button>
+		</div>
+	</div>
+</template>
 
 <template name="testWarningTicker">
 	<marquee

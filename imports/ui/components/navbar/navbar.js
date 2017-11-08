@@ -6,8 +6,8 @@ import { $ } from 'meteor/jquery';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
-import '../region-selection/region-selection.js';
-import '/imports/ui/components/languages/languages.js';
+import '/imports/ui/components/regions/selection/region-selection.js';
+import '/imports/ui/components/language-selection/language-selection.js';
 
 import './navbar.html';
 
@@ -94,4 +94,28 @@ Template.navbar.events({
 			}
 		}
 	},
+});
+
+Template.loginButton.helpers({
+	'loginServicesConfigured': function() {
+		return Accounts.loginServicesConfigured();
+	}
+});
+
+Template.loginButton.events({
+	'click #openLogin'() {
+		$('#accountTasks').modal('show');
+	}
+});
+
+Template.ownUserFrame.events({
+	'click .js-logout'(event){
+		event.preventDefault();
+		Meteor.logout();
+
+		const routeName = Router.current().route.getName();
+		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+	},
+
+	'click .btn'() { $('.collapse').collapse('hide'); }
 });

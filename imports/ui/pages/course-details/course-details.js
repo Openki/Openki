@@ -10,16 +10,17 @@ import Editable from '/imports/ui/lib/editable.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
-import '/imports/ui/components/categories/categories.js';
-import '/imports/ui/components/courses/course-discussion/course-discussion.js';
-import '/imports/ui/components/courses/course-edit/course-edit.js';
-import '/imports/ui/components/courses/course-events/course-events.js';
-import '/imports/ui/components/courses/course-history/course-history.js';
-import '/imports/ui/components/courses/course-members/course-members.js';
-import '/imports/ui/components/courses/course-roles/course-roles.js';
+import '/imports/ui/components/courses/categories/course-categories.js';
+import '/imports/ui/components/courses/discussion/course-discussion.js';
+import '/imports/ui/components/courses/edit/course-edit.js';
+import '/imports/ui/components/courses/events/course-events.js';
+import '/imports/ui/components/courses/history/course-history.js';
+import '/imports/ui/components/courses/members/course-members.js';
+import '/imports/ui/components/courses/roles/course-roles.js';
 import '/imports/ui/components/editable/editable.js';
+import '/imports/ui/components/groups/list/group-list.js';
 import '/imports/ui/components/price-policy/price-policy.js';
-import '/imports/ui/components/region-tag/region-tag.js';
+import '/imports/ui/components/regions/tag/region-tag.js';
 import '/imports/ui/components/sharing/sharing.js';
 import '/imports/ui/components/report/report.js';
 

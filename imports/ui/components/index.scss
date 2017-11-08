@@ -1,24 +1,51 @@
-@import 'categories/categories';
-@import 'courses/course-compact/course-compact';
-@import 'courses/course-discussion/course-discussion';
-@import 'courses/course-edit/course-edit';
-@import 'courses/course-events/course-events';
-@import 'courses/course-history/course-history';
-@import 'courses/course-list/course-list';
-@import 'courses/course-members/course-members';
-@import 'courses/course-roles/course-roles';
+@import 'account-tasks/account-tasks';
+
+@import 'courses/categories/course-categories';
+@import 'courses/compact/course-compact';
+@import 'courses/discussion/course-discussion';
+@import 'courses/edit/course-edit';
+@import 'courses/events/course-events';
+@import 'courses/filter/course-filter';
+@import 'courses/history/course-history';
+@import 'courses/list/course-list';
+@import 'courses/members/course-members';
+@import 'courses/roles/course-roles';
+
 @import 'editable/editable';
-@import 'filter/filter';
+
+@import 'events/compact/event-compact';
+@import 'events/edit/event-edit';
+@import 'events/edit-location/event-edit-location';
+@import 'events/replication/event-replication';
+
 @import 'footer/footer';
+
+@import 'groups/list/group-list';
+@import 'groups/settings/group-settings';
+
 @import 'introduction/introduction';
+
 @import 'loading/loading';
+
 @import 'map/map';
+
 @import 'messages/messages';
+
 @import 'navbar/navbar';
+
 @import 'price-policy/price-policy';
-@import 'region-selection/region-selection';
-@import 'region-splash/region-splash';
-@import 'region-tag/region-tag';
+
+@import 'profiles/course-list/profile-course-list';
+
+@import 'regions/selection/region-selection';
+@import 'regions/splash/region-splash';
+@import 'regions/tag/region-tag';
+
 @import 'report/report';
+
 @import 'sharing/sharing';
+
 @import 'translate-info/translate-info';
+
+@import 'venues/link/venue-link';
+@import 'venues/edit/venue-edit';
