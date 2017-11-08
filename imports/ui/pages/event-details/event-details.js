@@ -70,6 +70,11 @@ Template.event.helpers({
 
 
 Template.eventDisplay.helpers({
+	weekday(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('dddd');
+	},
+	
 	mayEdit: function() {
 		return this.editableBy(Meteor.user());
 	},
