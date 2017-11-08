@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import UrlTools from '/imports/utils/url-tools.js';
+
 import '/imports/ui/components/events/list/event-list.js';
 import '/imports/ui/components/loading/loading.js';
 

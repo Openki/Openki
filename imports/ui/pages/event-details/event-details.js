@@ -1,5 +1,6 @@
 import '/imports/IdTools.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
+import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';

@@ -2,6 +2,8 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
+import UrlTools from '/imports/utils/url-tools.js';
+
 import './kiosk-link.html';
 
 Template.kioskLink.helpers({
