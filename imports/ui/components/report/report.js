@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -37,7 +38,7 @@ Template.report.events({
 			instance.$('#reportMessage').val(),
 			function(error, result) {
 				if (error) {
-					showServerError('Your report could not be sent', error);
+					ShowServerError('Your report could not be sent', error);
 				} else {
 					AddMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
 				}

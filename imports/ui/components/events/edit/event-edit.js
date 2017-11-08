@@ -7,6 +7,7 @@
 import '/imports/LocalTime.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
@@ -298,7 +299,7 @@ Template.eventEdit.events({
 			instance.busy(false);
 
 			if (error) {
-				showServerError('Saving the event went wrong', error);
+				ShowServerError('Saving the event went wrong', error);
 			} else {
 				if (isNew) {
 					Router.go('showEvent', { _id: eventId });

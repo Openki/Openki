@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import Editable from '/imports/ui/lib/editable.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/editable/editable.js';
@@ -63,7 +64,7 @@ Template.courseMember.onCreated(function() {
 		function(newMessage) {
 			Meteor.call("change_comment", courseId, newMessage, function(err, courseId) {
 				if (err) {
-					showServerError('Unable to change your message', err);
+					ShowServerError('Unable to change your message', err);
 				} else {
 					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}

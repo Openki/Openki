@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -68,7 +69,7 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
 			if (err) {
-				showServerError('Could not add member', err);
+				ShowServerError('Could not add member', err);
 			} else {
 				AddMessage("\u2713 " + mf('_message.saved'), 'success');
 			}
@@ -80,7 +81,7 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
 			if (err) {
-				showServerError('Could not remove member', err);
+				ShowServerError('Could not remove member', err);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
@@ -99,7 +100,7 @@ Template.groupSettings.events({
 		}, function(err) {
 			instance.busy(false);
 			if (err) {
-				showServerError('Could not save settings', err);
+				ShowServerError('Could not save settings', err);
 			} else {
 				AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				parentInstance.editingSettings.set(false);

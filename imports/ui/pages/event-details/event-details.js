@@ -1,6 +1,9 @@
 import '/imports/IdTools.js';
+import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -74,7 +77,7 @@ Template.eventDisplay.helpers({
 		Session.get('timeLocale'); // it depends
 		if (date) return moment(date).format('dddd');
 	},
-	
+
 	mayEdit: function() {
 		return this.editableBy(Meteor.user());
 	},
@@ -106,7 +109,7 @@ Template.event.events({
 		Meteor.call('removeEvent', event._id, function (error) {
 			instance.busy(false);
 			if (error) {
-				showServerError('Could not remove event ' + "'" + title + "'", error);
+				ShowServerError('Could not remove event ' + "'" + title + "'", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				if (course) {
@@ -170,7 +173,7 @@ Template.eventGroupList.helpers({
 
 
 TemplateMixins.Expandible(Template.eventGroupAdd);
-Template.eventGroupAdd.helpers(groupNameHelpers);
+Template.eventGroupAdd.helpers(GroupNameHelpers);
 Template.eventGroupAdd.helpers({
 	'groupsToAdd': function() {
 		var user = Meteor.user();
@@ -183,7 +186,7 @@ Template.eventGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
 		Meteor.call('event.promote', instance.data._id, event.currentTarget.value, true, function(error) {
 			if (error) {
-				showServerError('Failed to add group', error);
+				ShowServerError('Failed to add group', error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
@@ -194,12 +197,12 @@ Template.eventGroupAdd.events({
 
 
 TemplateMixins.Expandible(Template.eventGroupRemove);
-Template.eventGroupRemove.helpers(groupNameHelpers);
+Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('event.promote', instance.data.event._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				showServerError('Failed to remove group', error);
+				ShowServerError('Failed to remove group', error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
@@ -210,12 +213,12 @@ Template.eventGroupRemove.events({
 
 
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
-Template.eventGroupMakeOrganizer.helpers(groupNameHelpers);
+Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, true, function(error) {
 			if (error) {
-				showServerError('Failed to give group editing rights', error);
+				ShowServerError('Failed to give group editing rights', error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
@@ -226,12 +229,12 @@ Template.eventGroupMakeOrganizer.events({
 
 
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
-Template.eventGroupRemoveOrganizer.helpers(groupNameHelpers);
+Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
 		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				showServerError('Failed to remove organizer status', error);
+				ShowServerError('Failed to remove organizer status', error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();

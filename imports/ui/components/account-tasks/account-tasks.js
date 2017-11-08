@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
+import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -243,7 +245,7 @@ Template.registerFrame.events({
 				}
 			} else {
 				$('#accountTasks').modal('hide');
-				const regionId = cleanedRegion(Session.get('region'));
+				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
 				}
@@ -289,7 +291,7 @@ Template.forgotPwdFrame.events({
 		}, function(err) {
 			instance.busy(false);
 			if (err) {
-				showServerError('We were unable to send a mail to this address', err);
+				ShowServerError('We were unable to send a mail to this address', err);
 			} else {
 				AddMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
 				instance.parentInstance().accountTask.set('login');

@@ -13,14 +13,13 @@ const helpers = {
 		return mf('category.'+this);
 	},
 
-
 	log(context) {
 		if (window.console) console.log(arguments.length > 0 ? context : this);
 	},
 
 	/* Get a username from ID
 	 */
-	username() {
+	username(userId) {
 		// We cache the username lookups
 		// To prevent unlimited cache-growth, after a enough lookups we
 		// build a new cache from the old
@@ -40,59 +39,57 @@ const helpers = {
 			}
 		});
 
-		return function(userId) {
-			if (!userId) return mf('noUser_placeholder', 'someone');
+		if (!userId) return mf('noUser_placeholder', 'someone');
 
-			// Consult cache
-			var user = cache[userId];
-			if (user === undefined) {
-				// Consult old cache
-				user = previousCache[userId];
+		// Consult cache
+		var user = cache[userId];
+		if (user === undefined) {
+			// Consult old cache
+			user = previousCache[userId];
 
-				// Carry to new cache if it was present in the old
-				if (user !== undefined) {
-					cache[userId] = user;
-				}
+			// Carry to new cache if it was present in the old
+			if (user !== undefined) {
+				cache[userId] = user;
 			}
+		}
 
-			if (user === undefined) {
-				// Substitute until the name (or its absence) is loaded
-				user = '?!';
+		if (user === undefined) {
+			// Substitute until the name (or its absence) is loaded
+			user = '?!';
 
-				if (pending[userId]) {
-					pending[userId].depend();
-				} else {
-					// Cache miss, now we'll have to round-trip to the server
-					lookups += 1;
-					pending[userId] = new Tracker.Dependency();
-					pending[userId].depend();
-
-					// Cycle the cache if it's full
-					if (cacheLimit < lookups) {
-						previousCache = cache;
-						cache = {};
-						lookups = 0;
-					}
-
-					Meteor.call('user.name', userId, function(err, user) {
-						if (err) {
-							console.warn(err);
-						}
-						if (user) {
-							cache[userId] = user;
-							pending[userId].changed();
-							delete pending[userId];
-						}
-					});
-				}
-			}
-
-			if (user) {
-				return user;
+			if (pending[userId]) {
+				pending[userId].depend();
 			} else {
-				return "userId: " + userId;
+				// Cache miss, now we'll have to round-trip to the server
+				lookups += 1;
+				pending[userId] = new Tracker.Dependency();
+				pending[userId].depend();
+
+				// Cycle the cache if it's full
+				if (cacheLimit < lookups) {
+					previousCache = cache;
+					cache = {};
+					lookups = 0;
+				}
+
+				Meteor.call('user.name', userId, function(err, user) {
+					if (err) {
+						console.warn(err);
+					}
+					if (user) {
+						cache[userId] = user;
+						pending[userId].changed();
+						delete pending[userId];
+					}
+				});
 			}
-		};
+		}
+
+		if (user) {
+			return user;
+		} else {
+			return "userId: " + userId;
+		}
 	},
 
 	dateformat(date) {
@@ -148,7 +145,6 @@ const helpers = {
 		return business.get() == activity;
 	},
 
-
 	/** Disable buttons while there is business to do.
 	  *
 	  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
@@ -159,7 +155,6 @@ const helpers = {
 		var business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
 	},
-
 
 	groupLogo(groupId) {
 		var instance = Template.instance();

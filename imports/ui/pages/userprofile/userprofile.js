@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -63,7 +64,7 @@ Template.userprofile.events({
 	'click button.giveAdmin': function() {
 		Meteor.call('addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
-				showServerError('Unable to add privilege', err);
+				ShowServerError('Unable to add privilege', err);
 			} else {
 				AddMessage(mf('privilege.addedAdmin', 'Granted admin privilege'), 'success');
 			}
@@ -74,7 +75,7 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				showServerError('Unable to remove privilege', err);
+				ShowServerError('Unable to remove privilege', err);
 			} else {
 				AddMessage(mf('privilege.removed', 'Removed privilege'), 'success');
 			}
@@ -87,7 +88,7 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, true, function(err) {
 			if (err) {
-				showServerError('Unable to draft user into group', err);
+				ShowServerError('Unable to draft user into group', err);
 			} else {
 				AddMessage(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'), 'success');
 			}
@@ -101,7 +102,7 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('updateGroupMembership', userId, groupId, false, function(err) {
 			if (err) {
-				showServerError('Unable to expel user from group', err);
+				ShowServerError('Unable to expel user from group', err);
 			} else {
 				AddMessage(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'), 'success');
 			}
@@ -138,7 +139,7 @@ Template.emailBox.events({
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
 				instance.verificationMailSent.set(false);
-				showServerError('Failed to send verification mail', err);
+				ShowServerError('Failed to send verification mail', err);
 			} else {
 				AddMessage(mf('profile.sentVerificationMail'), 'success');
 			}

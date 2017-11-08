@@ -4,9 +4,12 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import '/imports/IdTools.js';
+import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -39,7 +42,7 @@ Template.courseDetailsPage.onCreated(function() {
 		function(newName) {
 			Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
 				if (err) {
-					showServerError('Saving the course went wrong', err);
+					ShowServerError('Saving the course went wrong', err);
 				} else {
 					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
@@ -53,7 +56,7 @@ Template.courseDetailsPage.onCreated(function() {
 		function(newDescription) {
 			Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
 				if (err) {
-					showServerError('Saving the course went wrong', err);
+					ShowServerError('Saving the course went wrong', err);
 				} else {
 					AddMessage("\u2713 " + mf('_message.saved'), 'success');
 				}
@@ -101,7 +104,7 @@ Template.courseDetailsPage.events({
 		Meteor.call('remove_course', course._id, function(error) {
 			instance.busy(false);
 			if (error) {
-				showServerError("Removing the proposal '"+ course.name + "' went wrong", error);
+				ShowServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 			}
@@ -149,7 +152,7 @@ Template.courseGroupList.helpers({
 
 
 TemplateMixins.Expandible(Template.courseGroupAdd);
-Template.courseGroupAdd.helpers(groupNameHelpers);
+Template.courseGroupAdd.helpers(GroupNameHelpers);
 Template.courseGroupAdd.helpers({
 	'groupsToAdd': function() {
 		var user = Meteor.user();
@@ -162,7 +165,7 @@ Template.courseGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
 		Meteor.call('course.promote', instance.data._id, event.currentTarget.value, true, function(error) {
 			if (error) {
-				showServerError("Failed to add group", error);
+				ShowServerError("Failed to add group", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
@@ -173,12 +176,12 @@ Template.courseGroupAdd.events({
 
 
 TemplateMixins.Expandible(Template.courseGroupRemove);
-Template.courseGroupRemove.helpers(groupNameHelpers);
+Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
 		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				showServerError("Failed to remove group", error);
+				ShowServerError("Failed to remove group", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
@@ -189,12 +192,12 @@ Template.courseGroupRemove.events({
 
 
 TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
-Template.courseGroupMakeOrganizer.helpers(groupNameHelpers);
+Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
 		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, true, function(error) {
 			if (error) {
-				showServerError("Failed to give group editing rights", error);
+				ShowServerError("Failed to give group editing rights", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.added'), 'success');
 				instance.collapse();
@@ -205,12 +208,12 @@ Template.courseGroupMakeOrganizer.events({
 
 
 TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
-Template.courseGroupRemoveOrganizer.helpers(groupNameHelpers);
+Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
 		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, false, function(error) {
 			if (error) {
-				showServerError("Failed to remove organizer status", error);
+				ShowServerError("Failed to remove organizer status", error);
 			} else {
 				AddMessage("\u2713 " + mf('_message.removed'), 'success');
 				instance.collapse();
