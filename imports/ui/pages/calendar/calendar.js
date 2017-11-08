@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import '/imports/ui/components/events/list/event-list.js';
 import '/imports/ui/components/loading/loading.js';
 
 import './calendar.html';

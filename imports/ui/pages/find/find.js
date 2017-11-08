@@ -9,9 +9,9 @@ import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 
-import '/imports/ui/components/courses/course-list/course-list.js';
-import '/imports/ui/components/courses/course-edit/course-edit.js';
-import '/imports/ui/components/filter/filter.js';
+import '/imports/ui/components/courses/list/course-list.js';
+import '/imports/ui/components/courses/edit/course-edit.js';
+import '/imports/ui/components/courses/filter/course-filter.js';
 import '/imports/ui/components/loading/loading.js';
 
 import './find.html';
