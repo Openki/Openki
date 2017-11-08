@@ -7,6 +7,14 @@ import '/imports/ui/components/language-selection/language-selection.js';
 import './kiosk.html';
 
 Template.kioskEvents.helpers({
+	groupShort(groupId) {
+		var instance = Template.instance();
+		instance.subscribe('group', groupId);
+
+		var group = Groups.findOne({ _id: groupId });
+		if (group) return group.short;
+		return "";
+	},
 	showTime: function() {
 		Session.get('seconds');
 		return moment().format('LTS');
@@ -20,6 +28,12 @@ Template.kioskEvents.helpers({
 Template.kioskEvent.helpers({
 	timePeriod: function() {
 		return Template.instance().parentInstance().data.timePeriod;
+	},
+
+	timeFromNow(date) {
+		Session.get('fineTime');
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).fromNow();
 	},
 
 	isOngoing: function() {

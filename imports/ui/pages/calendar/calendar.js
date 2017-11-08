@@ -107,6 +107,14 @@ Template.calendarDay.helpers({
 
 
 Template.calendarNav.helpers({
+	weekNr(date) {
+		if (date) {
+			Session.get('timeLocale');
+			date = moment(moment(date).toDate());
+			return moment(date).week();
+		}
+	},
+
 	endDateTo: function(date) {
 		return moment(date).add(6, 'days');
 	}

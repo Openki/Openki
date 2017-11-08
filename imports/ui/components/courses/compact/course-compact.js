@@ -51,6 +51,9 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
+	dateFormat(date) {
+		if (date) return moment(date).format('D.M.');
+	},
 	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
 });
 

@@ -47,6 +47,13 @@ Template.navbar.helpers({
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
 	},
 
+	siteStage() {
+		if (Meteor.settings.public && Meteor.settings.public.siteStage) {
+			return Meteor.settings.public.siteStage;
+		}
+		return "";
+	},
+
 	activeClass: function(linkRoute, id) {
 		var router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
