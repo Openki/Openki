@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import UrlTools from '/imports/utils/url-tools.js';
+
 import '/imports/collections/Log.js';
 
 import './log.html';

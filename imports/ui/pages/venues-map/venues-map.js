@@ -1,5 +1,7 @@
 "use strict";
 
+import LocationTracker from '/imports/ui/lib/location-tracker.js';
+
 import '/imports/ui/components/map/map.js';
 
 import './venues-map.html';

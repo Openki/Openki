@@ -5,6 +5,8 @@ import { _ } from 'meteor/underscore';
 
 import { AddMessage } from '/imports/api/messages/methods.js';
 
+import LocationTracker from '/imports/ui/lib/location-tracker.js';
+
 import '/imports/ui/components/map/map.js';
 import '/imports/ui/components/venues/link/venue-link.js';
 

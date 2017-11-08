@@ -1,5 +1,7 @@
-LocationTracker = function() {
-	var markers = new Meteor.Collection(null);
+import { Mongo } from 'meteor/mongo';
+
+export default LocationTracker = function() {
+	var markers = new Mongo.Collection(null);
 
 	return {
 		markers: markers,
