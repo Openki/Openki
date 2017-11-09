@@ -52,6 +52,6 @@ export default class Editable {
 			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
 			store: this.store
-		}
+		};
 	}
-};
+}

@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
 import '/imports/ui/components/courses/categories/course-categories.js';

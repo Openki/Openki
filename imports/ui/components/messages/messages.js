@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 
 import ClientMessages from '/imports/api/messages/messages.js';
 import { RemoveMessage } from '/imports/api/messages/methods.js';
