@@ -1,6 +1,5 @@
 "use strict";
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/buttons/buttons.js';
 

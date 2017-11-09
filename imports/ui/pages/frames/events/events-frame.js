@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 
 import '/imports/ui/components/events/list/event-list.js';
 

@@ -3,4 +3,4 @@ export default function CourseTemplate() {
 		roles: ['host', 'mentor'],
 		region: Session.get('region')
 	};
-};
+}

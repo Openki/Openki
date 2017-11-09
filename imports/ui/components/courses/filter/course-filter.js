@@ -1,6 +1,5 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
