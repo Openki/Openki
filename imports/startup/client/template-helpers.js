@@ -17,81 +17,6 @@ const helpers = {
 		if (window.console) console.log(arguments.length > 0 ? context : this);
 	},
 
-	/* Get a username from ID
-	 */
-	username(userId) {
-		// We cache the username lookups
-		// To prevent unlimited cache-growth, after a enough lookups we
-		// build a new cache from the old
-		var cacheLimit = 1000;
-		var cache = {};
-		var previousCache = {};
-		var lookups = 0;
-		var pending = {};
-
-		// Update the cache if users are pushed to the collection
-		Meteor.users.find().observe({
-			'added': function(user) {
-				cache[user._id] = user.username;
-			},
-			'changed': function(user) {
-				cache[user._id] = user.username;
-			}
-		});
-
-		if (!userId) return mf('noUser_placeholder', 'someone');
-
-		// Consult cache
-		var user = cache[userId];
-		if (user === undefined) {
-			// Consult old cache
-			user = previousCache[userId];
-
-			// Carry to new cache if it was present in the old
-			if (user !== undefined) {
-				cache[userId] = user;
-			}
-		}
-
-		if (user === undefined) {
-			// Substitute until the name (or its absence) is loaded
-			user = '?!';
-
-			if (pending[userId]) {
-				pending[userId].depend();
-			} else {
-				// Cache miss, now we'll have to round-trip to the server
-				lookups += 1;
-				pending[userId] = new Tracker.Dependency();
-				pending[userId].depend();
-
-				// Cycle the cache if it's full
-				if (cacheLimit < lookups) {
-					previousCache = cache;
-					cache = {};
-					lookups = 0;
-				}
-
-				Meteor.call('user.name', userId, function(err, user) {
-					if (err) {
-						console.warn(err);
-					}
-					if (user) {
-						cache[userId] = user;
-						pending[userId].changed();
-						delete pending[userId];
-					}
-				});
-			}
-		}
-
-		if (user) {
-			return user;
-		} else {
-			return "userId: " + userId;
-		}
-	},
-
 	dateformat(date) {
 		Session.get('timeLocale');
 		if (date) return moment(date).format('L');
@@ -181,3 +106,82 @@ const helpers = {
 for (const name in helpers) {
 	Template.registerHelper(name, helpers[name]);
 }
+
+/* Get a username from ID
+ */
+const usernameFromId = function() {
+	// We cache the username lookups
+	// To prevent unlimited cache-growth, after a enough lookups we
+	// build a new cache from the old
+	var cacheLimit = 1000;
+	var cache = {};
+	var previousCache = {};
+	var lookups = 0;
+	var pending = {};
+
+	// Update the cache if users are pushed to the collection
+	Meteor.users.find().observe({
+		'added': function(user) {
+			cache[user._id] = user.username;
+		},
+		'changed': function(user) {
+			cache[user._id] = user.username;
+		}
+	});
+
+	return function(userId) {
+		if (!userId) return mf('noUser_placeholder', 'someone');
+
+		// Consult cache
+		var user = cache[userId];
+		if (user === undefined) {
+			// Consult old cache
+			user = previousCache[userId];
+
+			// Carry to new cache if it was present in the old
+			if (user !== undefined) {
+				cache[userId] = user;
+			}
+		}
+
+		if (user === undefined) {
+			// Substitute until the name (or its absence) is loaded
+			user = '?!';
+
+			if (pending[userId]) {
+				pending[userId].depend();
+			} else {
+				// Cache miss, now we'll have to round-trip to the server
+				lookups += 1;
+				pending[userId] = new Tracker.Dependency();
+				pending[userId].depend();
+
+				// Cycle the cache if it's full
+				if (cacheLimit < lookups) {
+					previousCache = cache;
+					cache = {};
+					lookups = 0;
+				}
+
+				Meteor.call('user.name', userId, function(err, user) {
+					if (err) {
+						console.warn(err);
+					}
+					if (user) {
+						cache[userId] = user;
+						pending[userId].changed();
+						delete pending[userId];
+					}
+				});
+			}
+		}
+
+		if (user) {
+			return user;
+		} else {
+			return "userId: " + userId;
+		}
+	}
+}();
+
+Template.registerHelper('username', usernameFromId);
