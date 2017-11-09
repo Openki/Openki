@@ -97,7 +97,7 @@ There is currently no possibility to collect course materials and document the c
 Normally, courses are held in the language in which they are published. Multilingual courses are offered in several languages.
 
 ### Why do I find numerous courses in the course overview which have already passed?
-The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses ("Events") can be found in [Calendar] (https://openki.net/calendar).
+The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses ("Events") can be found in [Calendar](https://openki.net/calendar).
 
 ### I really need this tool for the organization of my course!
 Many tools are already available on the web freely and humans can link them to Openki simply by link in the course description. Some examples:
@@ -128,6 +128,48 @@ If you are unsure, contact the person in advance. Handle according to a healthy 
 We believe that education (and thus the events on Openki) should be accessible to all - regardless of one's bank account and income.
 
 
-## This page is not yet fully translated. More answers can be found in the German version (please switch to German in the language menu)
+## Groups
+
+### What are groups?
+Groups are already existing organizations, communities, etc. that use Openki to organize their courses.
+
+### How can we register as a group with Openki?
+Each user can create a new group under their account settings. [https://openki.net/group/create](https://openki.net/group/create)
+<! - TODO:
+### How can I take a course in my group?
+
+### How can I give all group members editing rights to a course?
+
+### Where is my group visible on Openki?
+For the time being only as a label of promoted courses
+by promoting a course by different groups, groups are linked together
+->
+
+### Can we as a group show openki courses on our own website?
+Yes! You can find the different views for embedding for your group in the group settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://github.com/Openki/Openki/wiki/Frames)
+
+## Safety
+
+### How is abusive behaviour through Openki prevented? for example discrimination, racism etc.
+Identifying and addressing discriminating content is the responsibility of all users; moderation will be carried out by the administration, which will ensure full transparency regarding censored content (never happened until today).
+
+### How do I know if I'm in danger when attending a course?
+If you are unsure, contact the person in advance and handle according to common sense. But note that the platform does not take any responsibility regarding neither the accuracy of the information shared nor the quality of the courses or venues. If in doubt, avoid to participate in events that take place in unknown locations and/or organized by unknown people.
+
+### How does Openki protect the privacy of its users?
+Openki is keen to meet a wide variety of privacy requirements. These include modern encryption techniques as well as personalized privacy settings.
+
+Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests. For example, we use the share buttons of [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+
+### How safe is the Openki webpage?
+Openki.net is SSL encrypted by default. This is the same technology that your online banking uses. But your course participation, for example, is visible to other users. So you can choose not to use your real name in Openki if you want to avoid that.
+
+
+
+## Technical
+
+### Where can I find answers to technical questions?
+Detailed technical documentation can be found in [GithubWiki](https://github.com/Openki/Openki/wiki/).
+
 
 {{/template}}
