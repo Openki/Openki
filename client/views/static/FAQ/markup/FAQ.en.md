@@ -98,7 +98,7 @@ There is currently no possibility to collect course materials and document the c
 Normally, courses are held in the language in which they are published. Multilingual courses are offered in several languages.
 
 ### Why do I find numerous courses in the course overview which have already passed?
-The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses ("Events") can be found in [Calendar](https://openki.net/calendar).
+The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses with upcoming "Events" can be found in [Calendar](https://openki.net/calendar).
 
 
 ### I really need this tool for the organization of my course!
