@@ -19,14 +19,14 @@ Template.courseRole.helpers({
 		let role = this.type;
 		if (role == 'participant') role = 'interested';
 
-		return 'roles.' + this.type + '.subscribe';
+		return 'roles.' + role + '.subscribe';
 	},
 
 	roleSubscribed: function() {
 		let role = this.type;
 		if (role == 'participant') role = 'interested';
 
-		return 'roles.' + this.type + '.subscribed';
+		return 'roles.' + role + '.subscribed';
 	},
 
 	maySubscribe: function(role) {
