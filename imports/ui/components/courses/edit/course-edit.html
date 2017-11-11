@@ -26,6 +26,22 @@
 				{{#if _id}}
 					{{> regionTag}}
 				{{/if}}
+				{{#if showSavedMessage}}
+					<div id="courseSavedMessage" class="alert alert-success alert-dismissable fade in">
+						<button class="close" type="button" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4>
+							<i class="fa fa-check" aria-hidden="true"></i>
+							{{mf 'course.edit.savedMessage' 'Your proposal has been saved!'}}
+						</h4>
+						<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
+							{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName}}
+								Click here to see your new course "{NAME}" on openki.net
+							{{/mf}}
+						</a>
+					</div>
+				{{/if}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.title' 'Title'}}</label>
 					<input class="form-control input-lg"

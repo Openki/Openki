@@ -41,6 +41,33 @@ Template.courseEdit.created = function() {
 	if (instance.data.group) {
 		instance.subscribe('group', instance.data.group);
 	}
+
+	if (this.data.isFrame) {
+		this.savedCourse = new ReactiveVar(false);
+		this.savedCourseId = new ReactiveVar(false);
+		this.showSavedMessage = new ReactiveVar(false);
+
+		this.autorun(() => {
+			const courseId = this.savedCourseId.get();
+			if (courseId) {
+				this.subscribe('courseDetails', courseId, () => {
+					this.savedCourse.set(Courses.findOne(courseId));
+				});
+			};
+		});
+
+		this.resetFields = () => {
+			this.$('#editform_name').val('');
+			this.$('.editable-textarea').html('');
+			this.selectedCategories.set([]);
+			this.$('.js-check-role').each(function() {
+				if (this.checked = true) {
+					this.checked = false;
+					$(this).trigger('change');
+				}
+			});
+		}
+	}
 };
 
 Template.courseEdit.helpers({
@@ -173,6 +200,18 @@ Template.courseEdit.helpers({
 		}
 	},
 
+	showSavedMessage: () => Template.instance().showSavedMessage.get(),
+
+	savedCourseLink() {
+		const course = Template.instance().savedCourse.get();
+		if (course) return Router.url('showCourse', course);
+	},
+
+	savedCourseName() {
+		const course = Template.instance().savedCourse.get();
+		if (course) return course.name;
+	},
+
 	editBodyClasses() {
 		const classes = [];
 
@@ -184,6 +223,10 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+	'click .close'(event, instance) {
+		instance.showSavedMessage.set(false);
+	},
+
 	'submit form, click .js-course-edit-save': function (ev, instance) {
 		ev.preventDefault();
 
@@ -242,8 +285,14 @@ Template.courseEdit.events({
 			if (err) {
 				ShowServerError('Saving the course went wrong', err);
 			} else {
-				Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
-				AddMessage("\u2713 " + mf('_message.saved'), 'success');
+				if (instance.data.isFrame) {
+					instance.savedCourseId.set(courseId);
+					instance.showSavedMessage.set(true);
+					instance.resetFields();
+				} else {
+					AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
+				}
 
 				instance.$('.js-check-enroll').each(function() {
 					var method = this.checked ? 'add_role' : 'remove_role';
