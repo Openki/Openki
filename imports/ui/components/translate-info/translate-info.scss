@@ -1,6 +1,6 @@
 .translate-info {
-	@include container-sm;
 	background-color: $gray-lightest;
+	padding: 15px;
 }
 .translate-info h2{
 	border-bottom: 1px solid $gray-lighter;
