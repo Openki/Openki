@@ -29,7 +29,7 @@
 .course-compact {
 	height: 150px;
 	position: relative;
-	transition-duration: .15s;
+	transition-duration: .1s;
 	transition-property: #{'box-shadow opacity'};
 
 	&:hover {
@@ -56,7 +56,7 @@
 
 	&.filter-no-match,
 	&.filter-no-match-delayed {
-		transition-duration: .5s;
+		transition-duration: .25s;
 		transition-property: opacity;
 	}
 

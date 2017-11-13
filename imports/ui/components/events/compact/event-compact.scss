@@ -53,7 +53,7 @@
 	background: $event-body-bg;
 	height: $event-compact-height;
 	position: relative;
-	transition: box-shadow $default-transition-time;
+	transition: box-shadow .15s;
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
