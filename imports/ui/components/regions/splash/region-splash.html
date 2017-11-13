@@ -1,6 +1,6 @@
 <template name="regionsSplash">
 	<div class="modal fade regions-splash" tabindex="-1" role="dialog" id="regionsSplash">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button class="close"
@@ -20,12 +20,20 @@
 						<i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>
 						{{mf 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
 					</h4>
-					{{> regionSelection}}
+					<div class="regions-splash-selection">
+						{{> regionSelection isSplash=true}}
+						<button
+							class="btn btn-primary"
+							type="button"
+							id="confirmRegion">
+							{{mf 'regionSplash.ok' 'Go!'}}
+						</button>
+					</div>
 					<div class="regions-splash-login">
 						<p>{{mf 'regionsSplash.orLogin' 'or login to use your last selected region'}}</p>
 						<button
 							id="loginForRegion"
-							class="btn btn-primary btn-lg"
+							class="btn btn-primary"
 							type="button">
 							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
 							{{mf 'regionsSpash.login' 'Login'}}

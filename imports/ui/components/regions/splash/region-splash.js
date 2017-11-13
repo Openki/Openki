@@ -6,25 +6,24 @@ import '/imports/ui/components/regions/selection/region-selection.js';
 
 import './region-splash.html';
 
-Template.regionsSplash.onRendered(function () {
+Template.regionsSplash.onRendered(function regionsSplashOnRendered() {
 	this.$('#regionsSplash').modal('show');
 });
 
 Template.regionsSplash.events({
-	'click .js-region-search': function(e, instance) {
-		$(e.currentTarget).select();
+	'hidden.bs.modal #regionsSplash'() {
+		Session.set('showRegionSplash', false);
 	},
 
-	'click .js-region-link, submit .js-region-search-form': function(e, instance) {
-		var regionsSplash = instance.$('#regionsSplash');
-
-		regionsSplash.modal('hide');
-		regionsSplash.on('hidden.bs.modal', function() {
-			Session.set('showRegionSplash', false);
-		});
+	'click .js-region-search'(event, instance) {
+		instance.$(event.currentTarget).select();
 	},
 
-	'click #loginForRegion': function(e, instance) {
+	'click #confirmRegion'(event, instance) {
+		instance.$('#regionsSplash').modal('hide');
+	},
+
+	'click #loginForRegion'(event, instance) {
 		$('#accountTasks').modal('show');
 		instance.$('#regionsSplash').modal('hide');
 	}

@@ -159,11 +159,9 @@ Template.regionSelection.events({
 });
 
 Template.regionSelection.onRendered(function() {
-	var instance = this;
+	if (!this.data.isSplash) this.$('.js-region-search').select();
 
-	instance.$('.js-region-search').select();
-
-	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
-		instance.close();
+	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
+		this.close();
 	});
 });
