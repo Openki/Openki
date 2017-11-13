@@ -203,13 +203,17 @@ Template.courseEdit.helpers({
 	showSavedMessage: () => Template.instance().showSavedMessage.get(),
 
 	savedCourseLink() {
-		const course = Template.instance().savedCourse.get();
-		if (course) return Router.url('showCourse', course);
+		if (this.isFrame) {
+			const course = Template.instance().savedCourse.get();
+			if (course) return Router.url('showCourse', course);
+		}
 	},
 
 	savedCourseName() {
-		const course = Template.instance().savedCourse.get();
-		if (course) return course.name;
+		if (this.isFrame) {
+			const course = Template.instance().savedCourse.get();
+			if (course) return course.name;
+		}
 	},
 
 	editBodyClasses() {
@@ -291,7 +295,7 @@ Template.courseEdit.events({
 					instance.resetFields();
 				} else {
 					AddMessage("\u2713 " + mf('_message.saved'), 'success');
-					Router.go('/course/'+courseId); // Router.go('showCourse', courseId) fails for an unknown reason
+					Router.go('showCourse', { _id: courseId });
 				}
 
 				instance.$('.js-check-enroll').each(function() {
