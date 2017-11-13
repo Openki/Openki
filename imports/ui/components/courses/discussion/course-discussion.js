@@ -29,6 +29,7 @@ Template.discussion.onCreated(function() {
 		}
 	});
 
+	this.notifyAll = new ReactiveVar(false);
 });
 
 Template.discussion.helpers({
@@ -59,7 +60,7 @@ Template.discussion.helpers({
 			courseId: this.courseId,
 			userId: Meteor.userId(),
 			text: '',
-			notifyAll: false
+			notifyAll: Template.instance().notifyAll.get()
 		};
 	},
 
@@ -222,7 +223,7 @@ Template.postEdit.helpers({
 	},
 
 	notifyAllChecked: function() {
-		if (!this.isNew) return {};
+		if (!this.new) return {};
 		if (this.notifyAll) {
 			return { checked: 1};
 		}
@@ -241,6 +242,13 @@ Template.postEdit.helpers({
 });
 
 Template.post.events({
+	'notifyAll .js-discussion-edit'(event, instance) {
+		instance.$('.js-discussion-edit').click();
+		instance.parentInstance().notifyAll.set(true);
+		location.hash = '#discussion';
+		RouterAutoscroll.scheduleScroll();
+	},
+
 	'click .js-discussion-edit': function(event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
@@ -298,9 +306,9 @@ Template.post.events({
 	},
 });
 
-Template.postEdit.rendered = function(){
-	 Template.instance().$('.discussion-comment').slideDown();
-};
+Template.postEdit.onRendered(function postEditOnRendered(){
+	this.$('.discussion-edit-title').select();
+});
 
 Template.postEdit.events({
 	'keyup .js-post-text, change .js-post-text': function(event, instance) {
