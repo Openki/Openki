@@ -44,6 +44,7 @@ Meteor.methods({
 			title: String,
 			text: String,
 			anon: Boolean,
+			notifyAll: Match.Optional(Boolean),
 		});
 
 		var saneComment = sanitizeComment(comment);
@@ -52,20 +53,22 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Invalid comment");
 		}
 
-		var user = Meteor.user();
-		if (user && !comment.anon) {
-			saneComment.userId = user._id;
-		}
-
-		var now = new Date();
-		saneComment.time_created = now;
-		saneComment.time_updated = now;
-
 		var course = Courses.findOne(comment.courseId);
 		if (!course) {
 			throw new Meteor.Error(404, "course not found");
 		}
 		saneComment.courseId = course._id;
+
+		var userId = Meteor.userId();
+		if (userId && !comment.anon) {
+			saneComment.userId = userId;
+			saneComment.notifyAll = comment.notifyAll
+			                     && hasRoleUser(course.members, 'team', userId);
+		}
+
+		var now = new Date();
+		saneComment.time_created = now;
+		saneComment.time_updated = now;
 
 		if (comment.parentId) {
 			var parentComment = CourseDiscussions.findOne(comment.parentId);

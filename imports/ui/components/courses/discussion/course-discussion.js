@@ -58,7 +58,8 @@ Template.discussion.helpers({
 			'new': true,
 			courseId: this.courseId,
 			userId: Meteor.userId(),
-			text: ''
+			text: '',
+			notifyAll: false
 		};
 	},
 
@@ -218,6 +219,24 @@ Template.postEdit.helpers({
 
 	hasBeenEdited: function() {
 		 return moment(this.time_updated).isAfter(this.time_created);
+	},
+
+	notifyAllChecked: function() {
+		if (!this.isNew) return {};
+		if (this.notifyAll) {
+			return { checked: 1};
+		}
+		return {};
+	},
+
+	canNotifyAll: function() {
+		if (Template.instance().anon.get()) return false;
+
+		const course = Courses.findOne(this.courseId);
+		if (!course) return false;
+
+		const userId = Meteor.userId();
+		return userId && hasRoleUser(course.members, 'team', userId);
 	}
 });
 
@@ -246,6 +265,7 @@ Template.post.events({
 			}
 
 			comment.anon = !!instance.$('.js-anon').prop('checked');
+			comment.notifyAll = !!instance.$('.js-notify-all').prop('checked');
 		} else {
 			comment._id = instance.data._id;
 		}
