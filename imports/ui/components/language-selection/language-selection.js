@@ -3,6 +3,7 @@ import { ReactiveVar} from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { _ } from 'meteor/underscore';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import '/imports/StringTools.js';
@@ -42,11 +43,12 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
+		const visibleLanguages = _.filter(Languages, lg => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
-		for (const key in Languages) {
-			const language = Languages[key];
+		for (const key in visibleLanguages) {
+			const language = visibleLanguages[key];
 			let pushed = false;
 			[language.name, language.english].forEach(property => {
 				if (pushed) return;
