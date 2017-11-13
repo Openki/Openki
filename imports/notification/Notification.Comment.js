@@ -17,11 +17,16 @@ notificationComment.record = function(commentId) {
 
 	var body = {};
 	body.commentId = comment._id;
-	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
 
-	// Don't send to author
-	if (comment.userId) {
-		body.recipients = body.recipients.filter(r => r !== comment.userId);
+	if (comment.notifyAll) {
+		body.recipients = _.pluck(course.members, 'user');
+	} else {
+		body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+
+		// Don't send to author
+		if (comment.userId) {
+			body.recipients = body.recipients.filter(r => r !== comment.userId);
+		}
 	}
 
 	body.model = 'Comment';

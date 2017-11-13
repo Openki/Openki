@@ -146,6 +146,16 @@
 						placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
 						>{{text}}</textarea>
 				</div>
+				{{#if canNotifyAll}}
+					<div class="checkbox">
+						<label class="">
+							<input class='js-notify-all'
+								type='checkbox'
+								{{notifyAllChecked}}>
+							{{mf 'course.discussion.notifyAll' 'Notify all participants'}}
+						</label>
+					</div>
+				{{/if}}
 				{{#if new}}
 					<div class="checkbox">
 						<label class="discussion-toggle-anonymous">
