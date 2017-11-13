@@ -53,7 +53,7 @@ Template.courseEdit.created = function() {
 				this.subscribe('courseDetails', courseId, () => {
 					this.savedCourse.set(Courses.findOne(courseId));
 				});
-			};
+			}
 		});
 
 		this.resetFields = () => {
@@ -61,12 +61,10 @@ Template.courseEdit.created = function() {
 			this.$('.editable-textarea').html('');
 			this.selectedCategories.set([]);
 			this.$('.js-check-role').each(function() {
-				if (this.checked = true) {
-					this.checked = false;
-					$(this).trigger('change');
-				}
+				this.checked = false;
+				$(this).trigger('change');
 			});
-		}
+		};
 	}
 };
 
