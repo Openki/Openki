@@ -14,11 +14,26 @@
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 						{{> venueLink venue=location openInNewTab=true}}
 						{{#if location.address}}
-							<br>
-							{{location.address}}
+							<div class="event-edit-location-address">
+								{{location.address}}
+							</div>
+						{{/if}}
+						{{#if location.editor}}
+							<div class="event-edit-location-contact">
+								{{#mf KEY='event.editVenue.pleaseContactHost'}}
+									Please contact the host of this venue to check for availability and other details:
+								{{/mf}}
+								<button
+									class="btn btn-link"
+									id="contactHost"
+									type="button">
+									<i class="fa fa-send" aria-hidden="true"></i>
+									{{mf 'event.editVenue.contactHost' 'Contact host'}}
+								</button>
+							</div>
 						{{/if}}
 					</div>
-					<button type="button" class="btn btn-edit btn-inline js-location-change">
+					<button type="button" class="btn btn-edit js-location-change">
 						{{mf 'event.edit.locationChange' "Change venue"}}
 					</button>
 				{{else}}
