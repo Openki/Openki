@@ -200,7 +200,11 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	showSavedMessage: () => Template.instance().showSavedMessage.get(),
+	showSavedMessage() {
+		if (this.isFrame) {
+			return Template.instance().showSavedMessage.get();
+		}
+	},
 
 	savedCourseLink() {
 		if (this.isFrame) {
