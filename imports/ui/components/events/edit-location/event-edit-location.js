@@ -112,6 +112,16 @@ Template.eventEditVenue.onCreated(function() {
 			}
 		});
 	});
+
+	this.venueEditor = new ReactiveVar(false);
+	this.autorun(() => {
+		const venueEditor = this.location.get().editor;
+		if (venueEditor) {
+			this.subscribe('user', venueEditor, () => {
+				this.venueEditor.set(Meteor.users.findOne(venueEditor));
+			});
+		}
+	});
 });
 
 
@@ -131,6 +141,10 @@ Template.eventEditVenue.helpers({
 
 	locationIsPreset: function() {
 		return Template.instance().locationIs('preset');
+	},
+
+	hostProfileLink: function() {
+		return Router.url('userprofile', Template.instance().venueEditor.get());
 	},
 
 	eventMarkers: function() {
@@ -216,15 +230,6 @@ Template.eventEditVenue.events({
 				instance.locationTracker.markers.insert(marker);
 			});
 		});
-	},
-
-	'click #contactHost'(event, instance) {
-		const venueEditor = instance.location.get().editor;
-		if (venueEditor !== null) {
-			instance.subscribe('user', venueEditor, () => {
-				Router.go('userprofile', Meteor.users.findOne(venueEditor));
-			});
-		}
 	},
 
 	'click .js-location-change': function(event, instance) {
