@@ -9,7 +9,8 @@ import './editable.html';
 	template.onCreated(function() {
 		// This reeks
 		this.autorun(() => {
-			if (this.data) this.state = this.data.connect(this);
+			const data = Template.currentData();
+			if (data) this.state = data.connect(this);
 		});
 	});
 
