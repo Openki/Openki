@@ -20,7 +20,7 @@ Languages = {
 		, name:    'Dansk'
 		, short:   'da'
 		, english: 'Danish'
-		, visible: false
+		, visible: true
 		}
 	,
 	'de':
@@ -36,7 +36,7 @@ Languages = {
 		, name:    'Ελληνικά'
 		, short:   'Ελ'
 		, english: 'Greek'
-		, visible: false
+		, visible: true
 		}
 	,
 	'en':
@@ -52,7 +52,7 @@ Languages = {
 		, name:    'Castellano'
 		, short:   'es'
 		, english: 'Spanish'
-		, visible: false
+		, visible: true
 		}
 	,
 	'fr':
@@ -60,7 +60,15 @@ Languages = {
 		, name:    'Français'
 		, short:   'fr'
 		, english: 'French'
-		, visible: false
+		, visible: true
+		}
+	,
+	'pt':
+		{ lg:      'pt'
+		, name:    'Português'
+		, short:   'pt'
+		, english: 'Portuguese'
+		, visible: true
 		}
 	,
 	'tr':
@@ -92,6 +100,6 @@ Languages = {
 		, name:    'Züritüütsch'
 		, short:   'zri-tü'
 		, english: 'Zurich German'
-		, visible: false
+		, visible: true
 		}
 };
