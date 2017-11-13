@@ -3,6 +3,14 @@
 	font-size: medium;
 }
 
+#contactMembers {
+	float: right;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 .course-member {
 	background: $course-page-component-bg;
 	padding: 10px ($grid-gutter-width / 2);

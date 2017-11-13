@@ -48,6 +48,10 @@ Template.courseMembers.helpers({
 });
 
 Template.courseMembers.events({
+	'click #contactMembers'() {
+		$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
+	},
+
 	'click .js-show-all-members': function(e, instance) {
 		var membersLimit = instance.membersLimit;
 
