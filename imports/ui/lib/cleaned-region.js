@@ -3,4 +3,4 @@
   */
 export default function CleanedRegion(region) {
 	return region === 'all' ? null : region;
-};
+}

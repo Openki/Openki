@@ -181,7 +181,7 @@ const usernameFromId = function() {
 		} else {
 			return "userId: " + userId;
 		}
-	}
+	};
 }();
 
 Template.registerHelper('username', usernameFromId);
