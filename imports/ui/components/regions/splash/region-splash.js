@@ -12,6 +12,13 @@ Template.regionsSplash.onRendered(function regionsSplashOnRendered() {
 
 Template.regionsSplash.events({
 	'hidden.bs.modal #regionsSplash'() {
+		const regionId = Session.get('region') || 'all';
+		try {
+			localStorage.setItem("region", regionId); // to survive page reload
+		} catch (e) {
+			console.error(e);
+		}
+
 		Session.set('showRegionSplash', false);
 	},
 
