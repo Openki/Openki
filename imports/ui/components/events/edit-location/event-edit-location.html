@@ -23,13 +23,10 @@
 								{{#mf KEY='event.editVenue.pleaseContactHost'}}
 									Please contact the host of this venue to check for availability and other details:
 								{{/mf}}
-								<button
-									class="btn btn-link"
-									id="contactHost"
-									type="button">
+								<a href="{{hostProfileLink}}" target="_blank">
 									<i class="fa fa-send" aria-hidden="true"></i>
 									{{mf 'event.editVenue.contactHost' 'Contact host'}}
-								</button>
+								</a>
 							</div>
 						{{/if}}
 					</div>
