@@ -16,12 +16,7 @@
 			</div>
 			<div class="form-group">
 				<label>{{mf 'venue.edit.description' 'Description:'}}</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						<span class="fa fa-info fa-fw" aria-hidden="true"></span>
-					</span>
-					{{> editableTextarea editableDescription}}
-				</div>
+				{{> editableTextarea editableDescription}}
 			</div>
 		{{#if showMapSelection}}
 			<div class="form-group">
