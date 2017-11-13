@@ -21,6 +21,11 @@ Template.courseMembers.helpers({
 		return this.members.length;
 	},
 
+	canNotifyAll() {
+		const userId = Meteor.userId();
+		return userId && hasRoleUser(this.members, 'team', userId);
+	},
+
 	sortedMembers: function() {
     	var sortedMembers = this.members.sort(function(a, b) {
 	        var aRoles = _.without(a.roles, 'participant');

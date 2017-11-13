@@ -9,7 +9,9 @@
 					other {# Participants}
 				}
 			{{/mf}}
-			<i class="fa fa-envelope" id="contactMembers"></i>
+			{{#if canNotifyAll}}
+				<i class="fa fa-envelope" id="contactMembers"></i>
+			{{/if}}
 		</h4>
 	</div>
 	{{#if members}}
