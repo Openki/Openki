@@ -14,12 +14,14 @@
 
 			<div id="maincontent">
 			{{#if translate}}
-				{{> translateInfo}}
-				{{#if mayTranslate}}
-					{{> yield}}
-				{{else}}
-					<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
-				{{/if}}
+				<div class="container">
+					{{> translateInfo}}
+					{{#if mayTranslate}}
+						{{> yield}}
+					{{else}}
+						<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
+					{{/if}}
+				</div>
 			{{else}}
 				{{> yield}}
 				{{> messages}}
