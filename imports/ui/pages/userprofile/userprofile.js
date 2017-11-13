@@ -115,6 +115,10 @@ Template.emailBox.onCreated(function() {
 	this.busy(false);
 });
 
+Template.emailBox.onRendered(function emailBoxOnRendered() {
+	this.$('#emailmessage').select();
+});
+
 Template.emailBox.helpers({
 	hasEmail: function() {
 		var user = Meteor.user();

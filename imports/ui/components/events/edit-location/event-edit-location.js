@@ -58,6 +58,7 @@ Template.eventEditVenue.onCreated(function() {
 				if (mark.presetAddress) updLocation.address = mark.presetAddress;
 				if (mark.preset) {
 					updLocation._id = mark._id;
+					updLocation.editor = mark.editor;
 					updLocation.name = mark.presetName;
 					updLocation.address = mark.presetAddress;
 				}
@@ -215,6 +216,15 @@ Template.eventEditVenue.events({
 				instance.locationTracker.markers.insert(marker);
 			});
 		});
+	},
+
+	'click #contactHost'(event, instance) {
+		const venueEditor = instance.location.get().editor;
+		if (venueEditor !== null) {
+			instance.subscribe('user', venueEditor, () => {
+				Router.go('userprofile', Meteor.users.findOne(venueEditor));
+			});
+		}
 	},
 
 	'click .js-location-change': function(event, instance) {
