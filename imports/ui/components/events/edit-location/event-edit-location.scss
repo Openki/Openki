@@ -19,12 +19,34 @@
 }
 
 .event-edit-location-selected {
-	display: inline-block;
-	padding-bottom: 5px;
+	background-color: $white;
+	border: 1px solid darken($gray-lighter, 0%);
+	border-radius: 4px;
+	display: block;
+	padding: 10px;
 }
 
 .event-edit-location-selected > .fa {
 	color: $green-darker;
+}
+
+.event-edit-location-address {
+	margin-top: 5px;
+}
+
+.event-edit-location-contact {
+	background-color: lighten($yellow, 20%);
+	margin-top: 10px;
+	padding: 5px 10px;
+}
+
+.event-edit-location-contact i {
+	@include td-padding(right, 3px);
+}
+
+.js-location-change {
+	margin-top: 10px;
+	width: 100%;
 }
 
 .event-edit-location-searchbar {
