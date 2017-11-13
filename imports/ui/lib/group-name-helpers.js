@@ -1,8 +1,10 @@
 function subbedGroup(group) {
-	const groupId = '' + group; // it's not a string?! LOL I DUNNO
+	// Strings can't be context objects to Blaze templates so they get turned
+	// into a String-like. Here we coerce it back if it isn't a string.
+	const groupId = '' + group;
 	miniSubs.subscribe('group', groupId);
 	return Groups.findOne(groupId);
-};
+}
 
 export default GroupNameHelpers = {
 	short() {

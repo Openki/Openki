@@ -13,7 +13,7 @@ Template.notFound.helpers({
 			'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
 		);
 	}
-})
+});
 
 Template.notFound.events({
 	"click .js-go-back": function(event, template){

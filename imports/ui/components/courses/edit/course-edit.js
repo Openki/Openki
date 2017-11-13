@@ -53,7 +53,7 @@ Template.courseEdit.created = function() {
 				this.subscribe('courseDetails', courseId, () => {
 					this.savedCourse.set(Courses.findOne(courseId));
 				});
-			};
+			}
 		});
 
 		this.resetFields = () => {
@@ -66,7 +66,7 @@ Template.courseEdit.created = function() {
 					$(this).trigger('change');
 				}
 			});
-		}
+		};
 	}
 };
 

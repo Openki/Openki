@@ -524,7 +524,7 @@ Router.map(function () {
 					}
 				});
 				return member;
-			};
+			}
 
 			var userId = Meteor.userId();
 			var member = getMember(course.members, userId);
