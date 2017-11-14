@@ -4,7 +4,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
 import '/imports/StringTools.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
@@ -233,38 +232,32 @@ Template.courseEdit.events({
 		instance.showSavedMessage.set(false);
 	},
 
-	'submit form, click .js-course-edit-save': function (ev, instance) {
-		ev.preventDefault();
+	'submit form, click .js-course-edit-save'(event, instance) {
+		event.preventDefault();
 
-
-		if (PleaseLogin()) return;
-
-		var course = instance.data;
-		var courseId = course._id ? course._id : '';
-		var isNew = courseId === '';
-
-		var roles = {};
+		const roles = {};
 		instance.$('.js-check-role').each(function() {
 			roles[this.name] = this.checked;
 		});
 
-		var changes = {
+		const changes = {
+			roles,
+			name: StringTools.saneText(instance.$('#editform_name').val()),
 			categories: instance.selectedCategories.get(),
-			name: instance.$('#editform_name').val(),
-			roles: roles,
 			internal: instance.$('.js-check-internal').is(':checked'),
 		};
-
-		var newDescription = instance.editableDescription.getEdited();
-		if (newDescription) changes.description = newDescription;
-
-		changes.name = StringTools.saneText(changes.name);
 
 		if (changes.name.length === 0) {
 			alert("Please provide a title");
 			return;
 		}
 
+		const newDescription = instance.editableDescription.getEdited();
+		if (newDescription) changes.description = newDescription;
+
+		const course = instance.data;
+		const courseId = course._id ? course._id : '';
+		const isNew = courseId === '';
 		if (isNew) {
 			const data = instance.data;
 			if (data.isFrame && data.region) {
@@ -278,7 +271,7 @@ Template.courseEdit.events({
 				return;
 			}
 
-			var groups = [];
+			const groups = [];
 			if (data.group) {
 				groups.push(data.group);
 			}
@@ -286,29 +279,34 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		Meteor.call("save_course", courseId, changes, function(err, courseId) {
-			instance.busy(false);
-			if (err) {
-				ShowServerError('Saving the course went wrong', err);
-			} else {
-				if (instance.data.isFrame) {
-					instance.savedCourseId.set(courseId);
-					instance.showSavedMessage.set(true);
-					instance.resetFields();
-				} else {
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
-					Router.go('showCourse', { _id: courseId });
-				}
+		instance.autorun((computation) => {
+			if (Meteor.user()) {
+				computation.stop();
+				Meteor.call("save_course", courseId, changes, function(err, courseId) {
+					instance.busy(false);
+					if (err) {
+						ShowServerError('Saving the course went wrong', err);
+					} else {
+						if (instance.data.isFrame) {
+							instance.savedCourseId.set(courseId);
+							instance.showSavedMessage.set(true);
+							instance.resetFields();
+						} else {
+							AddMessage("\u2713 " + mf('_message.saved'), 'success');
+							Router.go('showCourse', { _id: courseId });
+						}
 
-				instance.$('.js-check-enroll').each(function() {
-					var method = this.checked ? 'add_role' : 'remove_role';
-
-					Meteor.call(method, courseId, Meteor.userId(), this.name);
+						instance.$('.js-check-enroll').each(function() {
+							const method = this.checked ? 'add_role' : 'remove_role';
+							Meteor.call(method, courseId, Meteor.userId(), this.name);
+						});
+					}
 				});
+			} else {
+				Session.set('pleaseLogin', true);
+				$('#accountTasks').modal('show');
 			}
 		});
-
-		return false;
 	},
 
 	'click .js-course-edit-cancel': function(event, instance) {
