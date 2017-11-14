@@ -134,32 +134,36 @@ Template.groupDetails.events({
 	},
 
 	'click .js-group-save': function(event, instance) {
-
-		if (PleaseLogin()) return;
-
-		var group = {};
-
-		group.name = instance.editableName.getEdited();
-		group.short = instance.editableShort.getEdited();
-		group.claim = instance.editableClaim.getEdited();
-		group.description = instance.editableDescription.getEdited();
+		const group = {
+			name: instance.editableName.getEdited(),
+			short: instance.editableShort.getEdited(),
+			claim: instance.editableClaim.getEdited(),
+			description: instance.editableDescription.getEdited()
+		};
 
 		instance.busy('saving');
-		Meteor.call("saveGroup", "create", group, function(err, groupId) {
-			instance.busy(false);
-			if (err) {
-				ShowServerError('Saving the group went wrong', err);
-			} else {
-				instance.editableName.end();
-				instance.editableShort.end();
-				instance.editableClaim.end();
-				instance.editableDescription.end();
+		instance.autorun((computation) => {
+			if (Meteor.user()) {
+				computation.stop();
+				Meteor.call('saveGroup', "create", group, (err, groupId) => {
+					instance.busy(false);
+					if (err) {
+						ShowServerError('Saving the group went wrong', err);
+					} else {
+						instance.editableName.end();
+						instance.editableShort.end();
+						instance.editableClaim.end();
+						instance.editableDescription.end();
 
-				AddMessage(mf('group.create.success', 'Created group'), 'success');
-				Router.go('groupDetails', { _id: groupId });
+						AddMessage(mf('group.create.success', 'Created group'), 'success');
+						Router.go('groupDetails', { _id: groupId });
+					}
+				});
+			} else {
+				Session.set('pleaseLogin', true);
+				$('#accountTasks').modal('show');
 			}
 		});
-
 	},
 
 	'click .js-group-cancel': function(event, instance) {
