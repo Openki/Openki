@@ -32,9 +32,14 @@
 							>{{../../member.comment}}</textarea>
 					</div>
 					<div class="form-actions">
-						<button type="button" class="btn btn-save js-role-subscribe-btn">
-							<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
-							{{mf 'course.roles.enroll' 'Enroll'}}
+						<button type="button" class="btn btn-save js-role-subscribe-btn" {{disabledIfBusy}}>
+							{{#if busy 'enrolling'}}
+								<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+								{{mf 'course.roles.enroll.busy' 'Enrolling...'}}
+							{{else}}
+								<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
+								{{mf 'course.roles.enroll' 'Enroll'}}
+							{{/if}}
 						</button>
 						{{> buttonCancel event="js-role-enroll-cancel"}}
 					</div>
