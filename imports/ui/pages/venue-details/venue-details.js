@@ -48,10 +48,14 @@ Template.venueDetails.onCreated(function() {
 	};
 
 	this.autorun(function() {
-		subs.subscribe('Events.findFilter', { venue: instance.data.venue._id });
+		if (!isNew) {
+			subs.subscribe('Events.findFilter', { venue: instance.data.venue._id });
+		}
 	});
 
 	this.getEvents = function(past) {
+		if (isNew) return;
+
 		var limit, count;
 		var predicate = { venue: this.data.venue._id };
 		var now = minuteTime.get();
