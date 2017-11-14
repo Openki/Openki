@@ -3,10 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
@@ -144,10 +142,7 @@ Template.venueEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-
-		if (PleaseLogin()) return;
-
-		var changes =
+		const changes =
 			{ name:            instance.$('.js-name').val()
 			, address:         instance.$('.js-address').val()
 			, route:           instance.$('.js-route').val()
@@ -164,7 +159,7 @@ Template.venueEdit.events({
 			return;
 		}
 
-		var newDescription = instance.data.editableDescription.getEdited();
+		const newDescription = instance.data.editableDescription.getEdited();
 		if (newDescription) changes.description = newDescription;
 
 		if (changes.description.trim().length === 0) {
@@ -172,9 +167,9 @@ Template.venueEdit.events({
 			return;
 		}
 
-		_.each(Venues.facilityOptions, function(f) {
-			if (instance.$('.js-'+f).prop('checked')) {
-				changes.facilities.push(f);
+		Venues.facilityOptions.forEach(facility => {
+			if (instance.$(`.js-${facility}`).prop('checked')) {
+				changes.facilities.push(facility);
 			}
 		});
 
@@ -186,7 +181,7 @@ Template.venueEdit.events({
 			}
 		}
 
-		var marker = instance.locationTracker.markers.findOne({ main: true });
+		const marker = instance.locationTracker.markers.findOne({ main: true });
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
@@ -194,21 +189,27 @@ Template.venueEdit.events({
 			return;
 		}
 
-		var venueId = this._id ? this._id : '';
-		var parentInstance = instance.parentInstance();
-
+		const venueId = this._id ? this._id : '';
 		instance.busy('saving');
-		Meteor.call("venue.save", venueId, changes, function(err, venueId) {
-			instance.busy(false);
-			if (err) {
-				ShowServerError('Saving the venue went wrong', err);
+		instance.autorun((computation) => {
+			if (Meteor.user()) {
+				computation.stop();
+				Meteor.call('venue.save', venueId, changes, (err, venueId) => {
+					instance.busy(false);
+					if (err) {
+						ShowServerError('Saving the venue went wrong', err);
+					} else {
+						AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
+						if (instance.isNew) {
+							Router.go('venueDetails', { _id: venueId });
+						} else {
+							instance.parentInstance().editing.set(false);
+						}
+					}
+				});
 			} else {
-				AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
-				if (instance.isNew) {
-					Router.go('venueDetails', { _id: venueId });
-				} else {
-					parentInstance.editing.set(false);
-				}
+				Session.set('pleaseLogin', true);
+				$('#accountTasks').modal('show');
 			}
 		});
 	},
