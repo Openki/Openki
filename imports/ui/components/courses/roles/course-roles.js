@@ -43,10 +43,8 @@ Template.courseRole.helpers({
 
 Template.courseRole.events({
 	'click .js-role-enroll-btn'(event, instance) {
-		// if (PleaseLogin()) return;
 		event.preventDefault();
 		instance.enrolling.set(true);
-		// return false;
 	},
 
 	'click .js-role-subscribe-btn'(event, instance) {
@@ -59,12 +57,17 @@ Template.courseRole.events({
 			if (userId) {
 				computation.stop();
 				Meteor.call('add_role', this.course._id, userId, this.roletype.type, err => {
-					instance.busy(false);
 					if (err) {
 						console.error(err);
 					} else {
-						Meteor.call('change_comment', this.course._id, comment);
-						instance.enrolling.set(false);
+						Meteor.call('change_comment', this.course._id, comment, err => {
+							instance.busy(false);
+							if (err) {
+								console.error(err);
+							} else {
+								instance.enrolling.set(false);
+							}
+						});
 					}
 				});
 			} else {
