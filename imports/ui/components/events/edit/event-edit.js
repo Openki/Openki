@@ -6,6 +6,7 @@
 
 import '/imports/LocalTime.js';
 import Editable from '/imports/ui/lib/editable.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -286,35 +287,37 @@ Template.eventEdit.events({
 		}
 
 		const updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
-		const sendNotification = instance.$(".js-check-notify").is(':checked');
+		const sendNotificationa = instance.$(".js-check-notify").is(':checked');
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
-		instance.autorun((computation) => {
-			if (Meteor.user()) {
-				computation.stop();
-				Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
-					instance.busy(false);
+		SaveAfterLogin(instance, {
+			name: 'saveEvent',
+			args: {
+				eventId,
+				updateReplicas,
+				sendNotificationa,
+				changes: editevent,
+				comment: addNotificationMessage
+			},
+			callback(error, eventId) {
+				instance.busy(false);
 
-					if (error) {
-						ShowServerError('Saving the event went wrong', error);
+				if (error) {
+					ShowServerError('Saving the event went wrong', error);
+				} else {
+					if (isNew) {
+						Router.go('showEvent', { _id: eventId });
+						AddMessage("\u2713 " + mf('_message.saved'), 'success');
 					} else {
-						if (isNew) {
-							Router.go('showEvent', { _id: eventId });
-							AddMessage("\u2713 " + mf('_message.saved'), 'success');
-						} else {
-							AddMessage("\u2713 " + mf('_message.saved'), 'success');
-						}
-
-						if (updateReplicas) {
-							AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
-						}
-						instance.parent.editing.set(false);
+						AddMessage("\u2713 " + mf('_message.saved'), 'success');
 					}
-				});
-			} else {
-				Session.set('pleaseLogin', true);
-				$('#accountTasks').modal('show');
+
+					if (updateReplicas) {
+						AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+					}
+					instance.parent.editing.set(false);
+				}
 			}
 		});
 	},

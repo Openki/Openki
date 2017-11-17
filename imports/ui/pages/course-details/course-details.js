@@ -40,7 +40,11 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.editableName = new Editable(
 		true,
 		function(newName) {
-			Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+			const args = {
+				courseId: course._id,
+				changes: { name: newName }
+			};
+			Meteor.call("save_course", args, function(err, courseId) {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {
@@ -54,7 +58,11 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
-			Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
+			const args = {
+				courseId: course._id,
+				changes: { description: newDescription }
+			};
+			Meteor.call("save_course", args, function(err, courseId) {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {

@@ -1,5 +1,4 @@
 "use strict";
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -7,6 +6,7 @@ import { Template } from 'meteor/templating';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Editable from '/imports/ui/lib/editable.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -191,25 +191,21 @@ Template.venueEdit.events({
 
 		const venueId = this._id ? this._id : '';
 		instance.busy('saving');
-		instance.autorun((computation) => {
-			if (Meteor.user()) {
-				computation.stop();
-				Meteor.call('venue.save', venueId, changes, (err, venueId) => {
-					instance.busy(false);
-					if (err) {
-						ShowServerError('Saving the venue went wrong', err);
+		SaveAfterLogin(instance, {
+			name: 'venue.save',
+			args: { venueId, changes },
+			callback(err, venueId) {
+				instance.busy(false);
+				if (err) {
+					ShowServerError('Saving the venue went wrong', err);
+				} else {
+					AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
+					if (instance.isNew) {
+						Router.go('venueDetails', { _id: venueId });
 					} else {
-						AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
-						if (instance.isNew) {
-							Router.go('venueDetails', { _id: venueId });
-						} else {
-							instance.parentInstance().editing.set(false);
-						}
+						instance.parentInstance().editing.set(false);
 					}
-				});
-			} else {
-				Session.set('pleaseLogin', true);
-				$('#accountTasks').modal('show');
+				}
 			}
 		});
 	},

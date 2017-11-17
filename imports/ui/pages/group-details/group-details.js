@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -37,7 +38,8 @@ Template.groupDetails.onCreated(function() {
 	instance.editableName = new Editable(
 		true,
 		function(newName) {
-			Meteor.call("saveGroup", groupId, { name: newName }, handleSaving);
+			const args = { groupId, changes: { name: newName } };
+			Meteor.call("saveGroup", args, handleSaving);
 		},
 		mf('group.name.placeholder',  'Name of your group, institution, community or program'),
 		showControls
@@ -46,7 +48,8 @@ Template.groupDetails.onCreated(function() {
 	instance.editableShort = new Editable(
 		true,
 		function(newShort) {
-			Meteor.call("saveGroup", groupId, { short: newShort }, handleSaving);
+			const args = { groupId, changes: { short: newShort } };
+			Meteor.call("saveGroup", args, handleSaving);
 		},
 		mf('group.short.placeholder', 'Abbreviation'),
 		showControls
@@ -55,7 +58,8 @@ Template.groupDetails.onCreated(function() {
 	instance.editableClaim = new Editable(
 		true,
 		function(newClaim) {
-			Meteor.call("saveGroup", groupId, { claim: newClaim }, handleSaving);
+			const args = { groupId, changes: { claim: newClaim } };
+			Meteor.call("saveGroup", args, handleSaving);
 		},
 		mf('group.claim.placeholder', 'The core idea'),
 		showControls
@@ -64,7 +68,8 @@ Template.groupDetails.onCreated(function() {
 	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
-			Meteor.call("saveGroup", groupId, { description: newDescription }, handleSaving);
+			const args = { groupId, changes: { description: newDescription } };
+			Meteor.call("saveGroup", args, handleSaving);
 		},
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
 		showControls
@@ -142,26 +147,25 @@ Template.groupDetails.events({
 		};
 
 		instance.busy('saving');
-		instance.autorun((computation) => {
-			if (Meteor.user()) {
-				computation.stop();
-				Meteor.call('saveGroup', "create", group, (err, groupId) => {
-					instance.busy(false);
-					if (err) {
-						ShowServerError('Saving the group went wrong', err);
-					} else {
-						instance.editableName.end();
-						instance.editableShort.end();
-						instance.editableClaim.end();
-						instance.editableDescription.end();
+		SaveAfterLogin(instance, {
+			name: 'saveGroup',
+			args: {
+				groupId: 'create',
+				changes: group
+			},
+			callback(err, groupId) {
+				instance.busy(false);
+				if (err) {
+					ShowServerError('Saving the group went wrong', err);
+				} else {
+					instance.editableName.end();
+					instance.editableShort.end();
+					instance.editableClaim.end();
+					instance.editableDescription.end();
 
-						AddMessage(mf('group.create.success', 'Created group'), 'success');
-						Router.go('groupDetails', { _id: groupId });
-					}
-				});
-			} else {
-				Session.set('pleaseLogin', true);
-				$('#accountTasks').modal('show');
+					AddMessage(mf('group.create.success', 'Created group'), 'success');
+					Router.go('groupDetails', { _id: groupId });
+				}
 			}
 		});
 	},
