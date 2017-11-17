@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 
 import '/imports/StringTools.js';
 import Editable from '/imports/ui/lib/editable.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -20,6 +21,7 @@ Template.courseEdit.created = function() {
 	var instance = this;
 
 	instance.busy(false);
+	// instance.openedLogin = new ReactiveVar(false);
 
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
@@ -279,32 +281,35 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		instance.autorun((computation) => {
-			if (Meteor.user()) {
-				computation.stop();
-				Meteor.call("save_course", courseId, changes, function(err, courseId) {
-					instance.busy(false);
-					if (err) {
-						ShowServerError('Saving the course went wrong', err);
+		SaveAfterLogin(instance, {
+			name: 'save_course',
+			args: { courseId, changes },
+			callback(err, courseId) {
+				instance.busy(false);
+				if (err) {
+					ShowServerError('Saving the course went wrong', err);
+				} else {
+					if (instance.data.isFrame) {
+						instance.savedCourseId.set(courseId);
+						instance.showSavedMessage.set(true);
+						instance.resetFields();
 					} else {
-						if (instance.data.isFrame) {
-							instance.savedCourseId.set(courseId);
-							instance.showSavedMessage.set(true);
-							instance.resetFields();
-						} else {
-							AddMessage("\u2713 " + mf('_message.saved'), 'success');
-							Router.go('showCourse', { _id: courseId });
-						}
-
-						instance.$('.js-check-enroll').each(function() {
-							const method = this.checked ? 'add_role' : 'remove_role';
-							Meteor.call(method, courseId, Meteor.userId(), this.name);
-						});
+						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						Router.go('showCourse', { _id: courseId });
 					}
-				});
-			} else {
-				Session.set('pleaseLogin', true);
-				$('#accountTasks').modal('show');
+
+					instance.$('.js-check-enroll').each(function() {
+						const method = {
+							name: this.checked ? 'add_role' : 'remove_role',
+							args: {
+								courseId,
+								userId: Meteor.userId(),
+								role: this.name
+							}
+						};
+						Meteor.call(method.name, method.args);
+					});
+				}
 			}
 		});
 	},

@@ -37,7 +37,7 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 			}).then((event) => {
-				return promiseMeteorCall('saveEvent', '', event).then(
+				return promiseMeteorCall('saveEvent', { eventId: '', changes: event }).then(
 					(eventId) => ({ event, eventId })
 				);
 			}).then(({ event, eventId }) => {
@@ -46,7 +46,7 @@ if (Meteor.isClient) {
 			}).then(({ event, eventId }) => {
 				delete event.region;
 				event.title = event.title + " No really";
-				return promiseMeteorCall('saveEvent', eventId, event);
+				return promiseMeteorCall('saveEvent', { eventId, changes: event });
 			}).then(() => done(), done);
 		});
 	});

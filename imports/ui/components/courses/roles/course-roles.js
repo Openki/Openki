@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
+
 import '/imports/ui/components/buttons/buttons.js';
 
 import './course-roles.html';
@@ -52,27 +54,28 @@ Template.courseRole.events({
 
 		const comment = instance.$('.js-comment').val();
 		instance.busy('enrolling');
-		instance.autorun((computation) => {
-			const userId = Meteor.userId();
-			if (userId) {
-				computation.stop();
-				Meteor.call('add_role', this.course._id, userId, this.roletype.type, err => {
-					if (err) {
-						console.error(err);
-					} else {
-						Meteor.call('change_comment', this.course._id, comment, err => {
-							instance.busy(false);
-							if (err) {
-								console.error(err);
-							} else {
-								instance.enrolling.set(false);
-							}
-						});
-					}
-				});
-			} else {
-				Session.set('pleaseLogin', true);
-				$('#accountTasks').modal('show');
+		SaveAfterLogin(instance, {
+			name: 'add_role',
+			args: {
+				courseId: this.course._id,
+				role: this.roletype.type
+			},
+			requiresUserId: true,
+			callback: err => {
+				if (err) {
+					console.error(err);
+				} else {
+					instance.busy(false);
+					instance.enrolling.set(false);
+					Meteor.call('change_comment', this.course._id, comment, err => {
+						instance.busy(false);
+						if (err) {
+							console.error(err);
+						} else {
+							instance.enrolling.set(false);
+						}
+					});
+				}
 			}
 		});
 	},
@@ -83,7 +86,12 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-unsubscribe-btn': function () {
-		Meteor.call('remove_role', this.course._id, Meteor.userId(), this.roletype.type);
+		const args = {
+			courseId: this.course._id,
+			userId: Meteor.userId(),
+			role: this.roletype.type
+		};
+		Meteor.call('remove_role', args);
 		return false;
 	}
 });

@@ -212,7 +212,8 @@ Template.eventReplication.events({
 			// To create a new event, pass an empty Id
 			const eventId = '';
 			instance.busy('saving');
-			Meteor.call('saveEvent', eventId, replicaEvent, error => {
+			const args = { eventId, changes: replicaEvent };
+			Meteor.call('saveEvent', args, error => {
 				instance.busy(false);
 				if (error) {
 					ShowServerError('Replicating the event went wrong', error);

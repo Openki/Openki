@@ -91,7 +91,7 @@ Venues.findFilter = function(filter, limit) {
 
 if (Meteor.isServer) {
 Meteor.methods({
-	'venue.save': function(venueId, changes) {
+	'venue.save': function({ venueId, changes }) {
 		check(venueId, String);
 		check(changes,
 			{ name:            Match.Optional(String)
