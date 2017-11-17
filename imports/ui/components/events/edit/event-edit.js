@@ -287,7 +287,7 @@ Template.eventEdit.events({
 		}
 
 		const updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
-		const sendNotificationa = instance.$(".js-check-notify").is(':checked');
+		const sendNotification = instance.$(".js-check-notify").is(':checked');
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
@@ -296,7 +296,7 @@ Template.eventEdit.events({
 			args: {
 				eventId,
 				updateReplicas,
-				sendNotificationa,
+				sendNotification,
 				changes: editevent,
 				comment: addNotificationMessage
 			},

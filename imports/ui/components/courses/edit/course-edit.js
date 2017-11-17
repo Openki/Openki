@@ -21,7 +21,6 @@ Template.courseEdit.created = function() {
 	var instance = this;
 
 	instance.busy(false);
-	// instance.openedLogin = new ReactiveVar(false);
 
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
