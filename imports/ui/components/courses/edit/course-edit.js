@@ -21,7 +21,6 @@ Template.courseEdit.created = function() {
 	var instance = this;
 
 	instance.busy(false);
-	// instance.openedLogin = new ReactiveVar(false);
 
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
@@ -281,10 +280,8 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, {
-			name: 'save_course',
-			args: { courseId, changes },
-			callback(err, courseId) {
+		SaveAfterLogin(instance, () => {
+			Meteor.call('save_course', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
@@ -299,18 +296,11 @@ Template.courseEdit.events({
 					}
 
 					instance.$('.js-check-enroll').each(function() {
-						const method = {
-							name: this.checked ? 'add_role' : 'remove_role',
-							args: {
-								courseId,
-								userId: Meteor.userId(),
-								role: this.name
-							}
-						};
-						Meteor.call(method.name, method.args);
+						const method = this.checked ? 'add_role' : 'remove_role';
+						Meteor.call(method, courseId, Meteor.userId(), this.name);
 					});
 				}
-			}
+			});
 		});
 	},
 

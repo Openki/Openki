@@ -319,7 +319,7 @@ Courses.findFilter = function(filter, limit) {
 
 if (Meteor.isServer) {
 	Meteor.methods({
-		add_role: function({ courseId, userId, role }) {
+		add_role: function(courseId, userId, role) {
 			check(courseId, String);
 			check(userId, String);
 			check(role, String);
@@ -352,7 +352,7 @@ if (Meteor.isServer) {
 			Notification.Join.record(course._id, user._id, role);
 		},
 
-		remove_role: function({ courseId, userId, role }) {
+		remove_role: function(courseId, userId, role) {
 			check(role, String);
 			check(userId, String);
 			check(courseId, String);
@@ -469,7 +469,7 @@ Meteor.methods({
 		);
 	},
 
-	save_course: function({ courseId, changes }) {
+	save_course: function(courseId, changes) {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),

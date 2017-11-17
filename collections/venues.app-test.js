@@ -11,14 +11,14 @@ if (Meteor.isClient) {
 					region: '9JyFCoKWkxnf8LWPh', // Testistan
 				};
 
-				Meteor.call('venue.save', { venueId: '', changes: venue }, (err, createdId) => {
+				Meteor.call('venue.save', '', venue, (err, createdId) => {
 					if (err) return done(err);
 					const venueId = createdId;
 					assert.isString(venueId, "got an event ID");
 
 					// Try saving it again with a change
 					venue.name = venue.name + "!";
-					Meteor.call('venue.save', { venueId, changes: venue }, (err) => {
+					Meteor.call('venue.save', venueId, venue, (err) => {
 						done(err);
 					});
 				});

@@ -287,24 +287,23 @@ Template.eventEdit.events({
 		}
 
 		const updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
-		const sendNotificationa = instance.$(".js-check-notify").is(':checked');
+		const sendNotifications = instance.$(".js-check-notify").is(':checked');
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, {
-			name: 'saveEvent',
-			args: {
+		SaveAfterLogin(instance, () => {
+			Meteor.call('saveEvent',
+			{
 				eventId,
 				updateReplicas,
-				sendNotificationa,
+				sendNotifications,
 				changes: editevent,
 				comment: addNotificationMessage
 			},
-			callback(error, eventId) {
+			(err, eventId) => {
 				instance.busy(false);
-
-				if (error) {
-					ShowServerError('Saving the event went wrong', error);
+				if (err) {
+					ShowServerError('Saving the event went wrong', err);
 				} else {
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
@@ -318,7 +317,7 @@ Template.eventEdit.events({
 					}
 					instance.parent.editing.set(false);
 				}
-			}
+			});
 		});
 	},
 

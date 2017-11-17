@@ -94,14 +94,11 @@ Template.groupSettings.events({
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
 		instance.busy('saving');
-		const args = {
-			groupId: instance.data.group._id,
-			changes: {
-				logoUrl: instance.$('.js-logo-url').val(),
-				backgroundUrl: instance.$('.js-background-url').val()
-			}
+		const changes = {
+			logoUrl: instance.$('.js-logo-url').val(),
+			backgroundUrl: instance.$('.js-background-url').val()
 		};
-		Meteor.call("saveGroup", args, function(err) {
+		Meteor.call("saveGroup", instance.data.group._id, changes, function(err) {
 			instance.busy(false);
 			if (err) {
 				ShowServerError('Could not save settings', err);

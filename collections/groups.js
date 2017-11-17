@@ -65,7 +65,7 @@ GroupLib.isMember = function(userId, groupId) {
 
 
 Meteor.methods({
-	saveGroup: function({ groupId, changes }) {
+	saveGroup: function(groupId, changes) {
 		check(groupId, String);
 		check(changes, {
 			short:         Match.Optional(String),
