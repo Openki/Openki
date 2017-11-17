@@ -38,8 +38,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableName = new Editable(
 		true,
 		function(newName) {
-			const args = { groupId, changes: { name: newName } };
-			Meteor.call("saveGroup", args, handleSaving);
+			Meteor.call("saveGroup", groupId, { name: newName }, handleSaving);
 		},
 		mf('group.name.placeholder',  'Name of your group, institution, community or program'),
 		showControls
@@ -48,8 +47,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableShort = new Editable(
 		true,
 		function(newShort) {
-			const args = { groupId, changes: { short: newShort } };
-			Meteor.call("saveGroup", args, handleSaving);
+			Meteor.call("saveGroup", groupId, { short: newShort }, handleSaving);
 		},
 		mf('group.short.placeholder', 'Abbreviation'),
 		showControls
@@ -58,8 +56,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableClaim = new Editable(
 		true,
 		function(newClaim) {
-			const args = { groupId, changes: { claim: newClaim } };
-			Meteor.call("saveGroup", args, handleSaving);
+			Meteor.call("saveGroup", groupId, { claim: newClaim }, handleSaving);
 		},
 		mf('group.claim.placeholder', 'The core idea'),
 		showControls
@@ -68,8 +65,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
-			const args = { groupId, changes: { description: newDescription } };
-			Meteor.call("saveGroup", args, handleSaving);
+			Meteor.call("saveGroup", groupId, { description: newDescription }, handleSaving);
 		},
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
 		showControls
@@ -147,13 +143,8 @@ Template.groupDetails.events({
 		};
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, {
-			name: 'saveGroup',
-			args: {
-				groupId: 'create',
-				changes: group
-			},
-			callback(err, groupId) {
+		SaveAfterLogin(instance, () => {
+			Meteor.call('saveGroup', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the group went wrong', err);
@@ -166,7 +157,7 @@ Template.groupDetails.events({
 					AddMessage(mf('group.create.success', 'Created group'), 'success');
 					Router.go('groupDetails', { _id: groupId });
 				}
-			}
+			});
 		});
 	},
 

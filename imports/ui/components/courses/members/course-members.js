@@ -126,21 +126,11 @@ Template.removeFromTeamDropdown.helpers({
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(e, template) {
-		const args = {
-			courseId: this.course._id,
-			userId: this.member.user,
-			role: 'team'
-		};
-		Meteor.call("add_role", args, false);
+		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
 	'click .js-remove-team': function(e, template) {
-		const args = {
-			courseId: this.course._id,
-			userId: this.member.user,
-			role: 'team'
-		};
-		Meteor.call("remove_role", args);
+		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });

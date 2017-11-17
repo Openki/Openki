@@ -4,23 +4,17 @@ import { $ } from 'meteor/jquery';
 
 /** Handle saving and logging in
   *
-  * @param  {Object} instance - the template instance
-  * @param  {Object} method   - the save method
+  * @param  {Object} instance   - the template instance
+  * @param  {Object} afterLogin - the save method
   */
-export default function SaveAfterLogin(instance, method) {
+export default function SaveAfterLogin(instance, afterLogin) {
 	let openedLogin = false;
 
 	instance.autorun(computation => {
 		// if the user is loggged in stop the computation and call the save function
 		if (Meteor.user()) {
 			computation.stop();
-
-			// if the method arguments contain the user, add this to the args
-			// object now
-			if (method.requiresUserId) {
-				method.args.userId = Meteor.userId();
-			}
-			Meteor.call(method.name, method.args, method.callback);
+			afterLogin();
 
 		// also stop the computation but don't save if the user closes the login
 		// window without logging in
