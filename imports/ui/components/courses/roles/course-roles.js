@@ -10,9 +10,21 @@ import './course-roles.html';
 
 Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);
+	this.showFirstSteps = new ReactiveVar(false);
+
+	this.firstSteps = () => {
+		// make sure that first steps are only shown once per course
+		const parentInstance = this.parentInstance();
+		if (parentInstance.firstStepsShown) return;
+
+		this.showFirstSteps.set(true);
+		parentInstance.firstStepsShown = true;
+	};
 };
 
 Template.courseRole.helpers({
+	showFirstSteps: () => Template.instance().showFirstSteps.get(),
+
 	enrolling: function() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe: function() {
@@ -50,7 +62,13 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-subscribe-btn': function (e, template) {
-		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type);
+		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type, err => {
+			if (err) {
+				console.error(err);
+			} else {
+				template.firstSteps();
+			}
+		});
 
 		// Store the comment
 		var comment = template.$('.js-comment').val();
@@ -67,5 +85,15 @@ Template.courseRole.events({
 	'click .js-role-unsubscribe-btn': function () {
 		Meteor.call('remove_role', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;
+	},
+
+	'click .js-show-first-steps'(event, instance) {
+		instance.firstSteps();
+	},
+
+	'click #firstStepsComment'() {
+		$('.course-page-btn.js-discussion-edit').click();
+		location.hash = '#discussion';
+		RouterAutoscroll.scheduleScroll();
 	}
 });
