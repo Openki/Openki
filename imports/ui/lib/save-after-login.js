@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { $ } from 'meteor/jquery';
 
 /** Handle saving and logging in
   *
@@ -25,7 +24,6 @@ export default function SaveAfterLogin(instance, afterLogin) {
 		// if the user is not logged in open up the login window
 		} else {
 			Session.set('pleaseLogin', true);
-			$('#accountTasks').modal('show');
 			openedLogin = true;
 		}
 	});
