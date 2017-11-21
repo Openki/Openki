@@ -12,6 +12,11 @@ import './account-tasks.html';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
+	this.autorun(() => {
+		if (Session.equals('pleaseLogin', true)) {
+			this.$('#accountTasks').modal('show');
+		}
+	});
 });
 
 Template.accountTasks.helpers({
