@@ -19,6 +19,13 @@ Template.pricePolicy.helpers({
 });
 
 Template.pricePolicyContent.helpers({
+	cssClasses() {
+		const classes = [];
+		if (this.dismissable) classes.push('is-dismissable');
+		if (this.wrap) classes.push(this.wrap);
+		return classes.join(' ');
+	},
+
 	pricePolicyLink() {
 		let link = '/FAQ';
 		let locale = Session.get('locale');
