@@ -47,6 +47,14 @@ Template.accountTasks.events({
 
 Template.loginFrame.onCreated(function() {
 	this.busy(false);
+	this.loginActions = {
+		'Save course': mf('loginAction.saveCourse', 'Login and save course'),
+		'Save event': mf('loginAction.saveEvent', 'Login and save event'),
+		'Save group': mf('loginAction.saveGroup', 'Login and save group'),
+		'Save venue': mf('loginAction.saveVenue', 'Login and save venue'),
+		'Enroll': mf('loginAction.enroll', 'Login and enroll')
+	};
+
 	this.OAuthServices =
 		[
 			{ key: 'google'
@@ -181,6 +189,13 @@ Template.loginFrame.events({
 });
 
 Template.loginFrame.helpers({
+	pleaseLogin: () => Session.get('pleaseLogin'),
+
+	loginAction() {
+		const loginAction = Session.get('loginAction');
+		return Template.instance().loginActions[loginAction];
+	},
+
 	OAuthServices: () => Template.instance().OAuthServices
 });
 

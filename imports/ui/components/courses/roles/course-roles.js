@@ -54,7 +54,7 @@ Template.courseRole.events({
 
 		const comment = instance.$('.js-comment').val();
 		instance.busy('enrolling');
-		SaveAfterLogin(instance, () => {
+		SaveAfterLogin(instance, 'Enroll', () => {
 			Meteor.call('add_role', this.course._id, Meteor.userId(), this.roletype.type, (err) => {
 				if (err) {
 					console.error(err);

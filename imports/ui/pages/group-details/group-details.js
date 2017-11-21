@@ -143,7 +143,7 @@ Template.groupDetails.events({
 		};
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, () => {
+		SaveAfterLogin(instance, 'Save group', () => {
 			Meteor.call('saveGroup', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
