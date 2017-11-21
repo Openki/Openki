@@ -23,7 +23,6 @@ export default function SaveAfterLogin(instance, loginAction, afterLogin) {
 
 		// if the user is not logged in open up the login window
 		} else {
-			console.log(loginAction);
 			Session.set('loginAction', loginAction);
 			Session.set('pleaseLogin', true);
 			openedLogin = true;
