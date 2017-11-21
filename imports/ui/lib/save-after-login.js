@@ -6,7 +6,7 @@ import { Session } from 'meteor/session';
   * @param  {Object} instance   - the template instance
   * @param  {Object} afterLogin - the save method
   */
-export default function SaveAfterLogin(instance, afterLogin) {
+export default function SaveAfterLogin(instance, loginAction, afterLogin) {
 	let openedLogin = false;
 
 	instance.autorun(computation => {
@@ -23,6 +23,8 @@ export default function SaveAfterLogin(instance, afterLogin) {
 
 		// if the user is not logged in open up the login window
 		} else {
+			console.log(loginAction);
+			Session.set('loginAction', loginAction);
 			Session.set('pleaseLogin', true);
 			openedLogin = true;
 		}

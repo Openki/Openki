@@ -80,7 +80,11 @@
 						{{mf 'login.login.submit.busy' 'Logging in...'}}
 					{{else}}
 						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
-						{{mf 'login.login.submit' 'Login'}}
+						{{#if pleaseLogin}}
+							{{loginAction}}
+						{{else}}
+							{{mf 'login.login.submit' 'Login'}}
+						{{/if}}
 					{{/if}}
 				</button>
 			</div>
