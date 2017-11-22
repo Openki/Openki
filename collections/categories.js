@@ -54,5 +54,6 @@ Categories = {
 		[ '♥undefined♥'
 		, 'experimental'
 		, 'spiritual'
+		, 'education'
 		]
 };
