@@ -34,6 +34,13 @@ Router.map(function () {
 
 });
 
+Router.map(function() {
+	this.route('admin', {
+		path: 'admin',
+		template: 'admin'
+	});
+});
+
 Router.map(function () {
 	this.route('venueMap',{
 		path: 'venues',
