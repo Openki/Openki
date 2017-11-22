@@ -1,3 +1,4 @@
+import Regions from '/imports/api/regions/regions.js';
 import UrlTools from '/imports/utils/url-tools.js';
 export default RegionSelection = {};
 import '/imports/IpLocation.js';

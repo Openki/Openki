@@ -1,4 +1,5 @@
 import '/imports/collections/Log.js';
+import Regions from '/imports/api/regions/regions.js';
 
 Meteor.publish('version', function() {
 	return Version.find();

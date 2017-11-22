@@ -1,5 +1,6 @@
 export default notificationEvent = {};
 import '/imports/collections/Log.js';
+import Regions from '/imports/api/regions/regions.js';
 
 /** Record the intent to send event notifications
   *

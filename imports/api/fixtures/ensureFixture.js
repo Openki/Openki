@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import './Prng.js';
+import Regions from '/imports/api/regions/regions.js';
 
 export default ensure = {
 	'fixedId': function(strings) {

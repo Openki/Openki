@@ -1,6 +1,7 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
+import Regions from '/imports/api/regions/regions.js';
 import '/imports/AsyncTools.js';
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';

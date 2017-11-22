@@ -4,6 +4,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import Regions from '/imports/api/regions/regions.js';
+
 import '/imports/ui/components/loading/loading.js';
 
 import './calendar-frame.html';

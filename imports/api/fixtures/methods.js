@@ -1,5 +1,6 @@
 import ensure from "./ensureFixture.js";
 import "./Prng.js";
+import Regions from '/imports/api/regions/regions.js';
 
 import '/imports/StringTools.js';
 

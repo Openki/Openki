@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Regions from './regions.js';
 
 Meteor.methods({
 	'regions.updateCounters'(selector) {
