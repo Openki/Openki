@@ -8,6 +8,7 @@ import '/imports/LocalTime.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
+import Regions from '/imports/api/regions/regions.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';

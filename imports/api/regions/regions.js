@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+
 // ======== DB-Model: ========
 // _id              -> ID
 // name             -> String
@@ -7,5 +10,5 @@
 // futureEventCount -> Number of future events in that region, calculated field
 // ===========================
 
-Regions = new Meteor.Collection("Regions");
-if (Meteor.isServer) Regions._ensureIndex({loc : "2dsphere"});
+export default Regions = new Mongo.Collection('Regions');
+if (Meteor.isServer) Regions._ensureIndex({ loc : '2dsphere' });

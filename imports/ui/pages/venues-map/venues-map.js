@@ -1,5 +1,7 @@
 "use strict";
 
+import Regions from '/imports/api/regions/regions.js';
+
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 
 import '/imports/ui/components/map/map.js';

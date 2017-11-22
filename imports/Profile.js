@@ -1,5 +1,6 @@
 export default Profile = {};
 import '/imports/collections/Log.js';
+import Regions from '/imports/api/regions/regions.js';
 
 
 Profile.updateAcceptsMessages = function(userSelector) {

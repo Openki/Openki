@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import Regions from '/imports/api/regions/regions.js';
 import "/imports/RegionSelection.js";
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import '/imports/StringTools.js';

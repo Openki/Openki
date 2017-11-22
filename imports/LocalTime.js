@@ -1,3 +1,5 @@
+import Regions from '/imports/api/regions/regions.js';
+
 /** Serialize local time for mongo
   *
   * References to future local time are stored as ISO 8601 date strings

@@ -5,6 +5,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import Regions from '/imports/api/regions/regions.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';

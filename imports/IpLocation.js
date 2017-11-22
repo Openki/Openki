@@ -1,3 +1,4 @@
+import Regions from '/imports/api/regions/regions.js';
 
 export default IpLocation = {};
 

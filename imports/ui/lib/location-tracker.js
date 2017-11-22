@@ -1,3 +1,4 @@
+import Regions from '/imports/api/regions/regions.js';
 import { Mongo } from 'meteor/mongo';
 
 export default LocationTracker = function() {

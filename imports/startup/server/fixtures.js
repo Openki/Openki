@@ -1,3 +1,4 @@
+import Regions from '/imports/api/regions/regions.js';
 import '/imports/api/fixtures/methods.js';
 
 if (Meteor.settings.testdata) {

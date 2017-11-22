@@ -1,4 +1,5 @@
 "use strict";
+import Regions from '/imports/api/regions/regions.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
