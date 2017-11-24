@@ -280,7 +280,7 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, 'Save course', () => {
+		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
 			Meteor.call('save_course', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {

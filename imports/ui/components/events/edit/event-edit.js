@@ -291,7 +291,7 @@ Template.eventEdit.events({
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, 'Save event', () => {
+		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
 			Meteor.call('saveEvent',
 			{
 				eventId,
