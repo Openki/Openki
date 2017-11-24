@@ -33,7 +33,12 @@
 	</div>
 	<div class="page-component">
 		{{#if hasResults}}
-			{{> courseList results}}
+			<div class="course-list">
+				{{#each result in results}}
+					{{> courseCompact result}}
+				{{/each}}
+			</div>
+
 
 			{{#unless ready}}
 				{{> loadingPage}}

@@ -25,3 +25,9 @@
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	}
 }
+
+.profile-courselist .course-compact-wrap {
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(6, 7.5px);
+	}
+}

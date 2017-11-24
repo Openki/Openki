@@ -60,23 +60,23 @@
 	}
 }
 
-@mixin td-make-xs-column($columns) {
-	@include make-xs-column($columns);
+@mixin td-make-xs-column($columns, $gutter-width: $grid-gutter-width) {
+	@include make-xs-column($columns, $gutter-width);
 	@include td-float(left);
 }
 
-@mixin td-make-sm-column($columns) {
-	@include make-sm-column($columns);
+@mixin td-make-sm-column($columns, $gutter-width: $grid-gutter-width) {
+	@include make-sm-column($columns, $gutter-width);
 	@include td-float(left);
 }
 
-@mixin td-make-md-column($columns) {
-	@include make-md-column($columns);
+@mixin td-make-md-column($columns, $gutter-width: $grid-gutter-width) {
+	@include make-md-column($columns, $gutter-width);
 	@include td-float(left);
 }
 
-@mixin td-make-lg-column($columns) {
-	@include make-lg-column($columns);
+@mixin td-make-lg-column($columns, $gutter-width: $grid-gutter-width) {
+	@include make-lg-column($columns, $gutter-width);
 	@include td-float(left);
 }
 

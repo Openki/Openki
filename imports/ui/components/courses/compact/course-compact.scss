@@ -4,23 +4,13 @@
 // ** Wrap
 //========================================================================================
 .course-compact-wrap {
-	@include td-make-xs-column(12);
-	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
-}
+	@include td-make-xs-column(12, 15px);
+	padding-bottom: 7.5px;
 
-.container .course-compact-wrap {
 	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(6);
-		@include td-make-md-column(4);
-		@include td-make-lg-column(3);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-	}
-}
-
-.container-sm .course-compact-wrap {
-	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+		@include td-make-xs-column(6, 7.5px);
+		@include td-make-md-column(4, 7.5px);
+		@include td-make-lg-column(3, 7.5px);
 	}
 }
 
