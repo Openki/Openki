@@ -191,7 +191,7 @@ Template.venueEdit.events({
 
 		const venueId = this._id ? this._id : '';
 		instance.busy('saving');
-		SaveAfterLogin(instance, 'Save venue', () => {
+		SaveAfterLogin(instance, mf('loginAction.saveVenue', 'Login and save venue'), () => {
 			Meteor.call('venue.save', venueId, changes, (err) => {
 				instance.busy(false);
 				if (err) {
