@@ -44,7 +44,7 @@ Template.courseMembers.helpers({
 
 	limited: function() {
 		var membersLimit = Template.instance().membersLimit.get();
-		return membersLimit && this.members.length >= membersLimit;
+		return membersLimit && this.members.length > membersLimit;
 	},
 
 	increaseBy: function() {
