@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import PleaseLogin from '/imports/ui/lib/please-login.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -10,6 +10,7 @@ import './course-roles.html';
 
 Template.courseRole.created = function() {
 	this.enrolling = new ReactiveVar(false);
+	this.busy(false);
 };
 
 Template.courseRole.helpers({
@@ -43,20 +44,34 @@ Template.courseRole.helpers({
 });
 
 Template.courseRole.events({
-	'click .js-role-enroll-btn': function(e, template) {
-		if (PleaseLogin()) return;
-		template.enrolling.set(true);
-		return false;
+	'click .js-role-enroll-btn'(event, instance) {
+		event.preventDefault();
+		instance.enrolling.set(true);
 	},
 
-	'click .js-role-subscribe-btn': function (e, template) {
-		Meteor.call("add_role", this.course._id, Meteor.userId(), this.roletype.type);
+	'click .js-role-subscribe-btn'(event, instance) {
+		event.preventDefault();
 
-		// Store the comment
-		var comment = template.$('.js-comment').val();
-		Meteor.call("change_comment", this.course._id, comment);
-		template.enrolling.set(false);
-		return false;
+		const comment = instance.$('.js-comment').val();
+		instance.busy('enrolling');
+		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
+			Meteor.call('add_role', this.course._id, Meteor.userId(), this.roletype.type, (err) => {
+				if (err) {
+					console.error(err);
+				} else {
+					instance.busy(false);
+					instance.enrolling.set(false);
+					Meteor.call('change_comment', this.course._id, comment, err => {
+						instance.busy(false);
+						if (err) {
+							console.error(err);
+						} else {
+							instance.enrolling.set(false);
+						}
+					});
+				}
+			});
+		});
 	},
 
 	'click .js-role-enroll-cancel': function (e, template) {

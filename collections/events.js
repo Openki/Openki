@@ -207,7 +207,15 @@ Events.updateGroups = function(eventId) {
 
 
 Meteor.methods({
-	saveEvent: function(eventId, changes, updateReplicas, sendNotifications, comment) {
+	saveEvent: function(args) {
+		let
+			{ eventId
+			, changes
+			, updateReplicas
+			, sendNotifications
+			, comment
+			} = args;
+
 		check(eventId, String);
 
 		var expectedFields = {
