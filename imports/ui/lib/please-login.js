@@ -3,4 +3,4 @@ export default function PleaseLogin() {
 	Session.set('pleaseLogin', true);
 	$('#accountTasks').modal('show');
 	return true;
-};
+}
