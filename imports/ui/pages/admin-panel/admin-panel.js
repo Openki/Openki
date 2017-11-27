@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+
+import Regions from '/imports/api/regions/regions.js';
 
 import './admin-panel.html';
 
@@ -15,7 +19,7 @@ Template.adminPanel.onCreated(function adminOnCreated() {
 	,
 		{ name: mf('adminDashboard.tasks.featuredGroup', 'Feature group')
 		, icon: 'fa-users'
-		, templateName: 'setFeaturedGroup'
+		, templateName: 'featureGroup'
 		}
 	];
 });
@@ -45,22 +49,45 @@ Template.adminDashboard.events({
 	}
 });
 
-Template.setFeaturedGroup.onCreated(function setFeaturedGroupOnCreated() {
-	this.autorun(() => { this.subscribe('groupsFind', {}); });
+Template.featureGroup.onCreated(function featureGroupOnCreated() {
+	this.subscribe('groupsFind', {});
+	this.busy(false);
 });
 
-Template.setFeaturedGroup.helpers({
-	groups: () => Groups.find(),
-	regionName: () => Regions.findOne(Session.get('region')).name
+Template.featureGroup.helpers({
+	groups: () => Groups.find({}, { sort: { name: 1 } }),
+	regionName: () => Regions.findOne(Session.get('region')).name,
+	featuredGroup() {
+		const groupId = Regions.findOne(Session.get('region')).featuredGroup;
+		return Groups.findOne(groupId);
+	}
 });
 
-Template.setFeaturedGroup.events({
-	'submit #setFeaturedGroup'(event, instance) {
+Template.featureGroup.events({
+	'submit #featureGroup'(event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');
 		const groupId = instance.$('#groupToBeFeatured').val();
 
-		Meteor.call('region.setFeaturedGroup', regionId, groupId);
+		instance.busy('saving');
+		Meteor.call('region.featureGroup', regionId, groupId, (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				instance.busy(false);
+			}
+		});
+	},
+
+	'click #unsetFeaturedGroup'(event, instance) {
+		instance.busy('deleting');
+		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				instance.busy(false);
+			}
+		});
 	}
 });

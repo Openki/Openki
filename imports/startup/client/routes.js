@@ -35,9 +35,9 @@ Router.map(function () {
 });
 
 Router.map(function() {
-	this.route('admin', {
+	this.route('adminPanel', {
 		path: 'admin',
-		template: 'admin'
+		template: 'adminPanel'
 	});
 });
 

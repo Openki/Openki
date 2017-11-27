@@ -16,7 +16,11 @@ Meteor.methods({
 		});
 	},
 
-	'region.setFeaturedGroup'(regionId, groupId) {
+	'region.featureGroup'(regionId, groupId) {
 		Regions.update(regionId, { $set: { featuredGroup: groupId } });
+	},
+
+	'region.unsetFeaturedGroup'(regionId) {
+		Regions.update(regionId, { $set: { featuredGroup: false } });
 	}
 });
