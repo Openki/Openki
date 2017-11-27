@@ -1,3 +1,4 @@
+import Courses from '/imports/api/courses/courses.js';
 import ensure from "./ensureFixture.js";
 import "./Prng.js";
 

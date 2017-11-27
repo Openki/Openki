@@ -7,6 +7,7 @@ import { _ } from 'meteor/underscore';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/groups/list/group-list.js';
@@ -65,7 +66,7 @@ Template.profile.helpers({
 		var coursesForRole = [];
 
 		involvedIn.forEach(function(course) {
-			if(!!hasRoleUser(course.members, role, userID)) {
+			if(!!HasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
 		});

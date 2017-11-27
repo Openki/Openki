@@ -3,11 +3,14 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Courses from '/imports/api/courses/courses.js';
 import '/imports/StringTools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
@@ -133,7 +136,7 @@ Template.courseEdit.helpers({
 
 	hasRole: function() {
 		var instance = Template.instance();
-		return instance.data && instance.data.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
 	showRegionSelection: function() {
@@ -368,7 +371,7 @@ Template.courseEditRole.helpers({
 	},
 
 	hasRole: function() {
-		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+		return this.members && HasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
 	},
 });
 

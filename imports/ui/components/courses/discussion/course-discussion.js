@@ -2,8 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Courses from '/imports/api/courses/courses.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -237,7 +240,7 @@ Template.postEdit.helpers({
 		if (!course) return false;
 
 		const userId = Meteor.userId();
-		return userId && hasRoleUser(course.members, 'team', userId);
+		return userId && HasRoleUser(course.members, 'team', userId);
 	}
 });
 

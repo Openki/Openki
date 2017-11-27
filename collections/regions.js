@@ -1,4 +1,5 @@
 import '/imports/AsyncTools.js';
+import Courses from '/imports/api/courses/courses.js';
 
 // ======== DB-Model: ========
 // _id              -> ID
