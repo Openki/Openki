@@ -1,0 +1,49 @@
+<template name='adminPanel'>
+	<div class="container-sm">
+		{{#if isAdmin}}
+			<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
+			{{#if activeTask}}
+				<button type="button" class="btn btn-link" id="backToDashboard">
+					<i class="fa fa-chevron-left"></i>
+					{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+				</button>
+				{{> Template.dynamic template=activeTask}}
+			{{else}}
+				{{> adminDashboard}}
+			{{/if}}
+		{{else}}
+			please login
+		{{/if}}
+	</div>
+</template>
+
+<template name="adminDashboard">
+	<div class="admin-dashboard">
+		{{#each tasks}}
+			<div class="admin-task-wrap">
+				<div class="admin-task js-admin-task">
+					<i class="fa fa-2x {{icon}}" aria-hidden="true"></i>
+					<h3>{{name}}</h3>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+</template>
+
+<template name="setFeaturedGroup">
+	<h3>{{mf 'setFeaturedGroup.featureGroup' 'Feature group'}}</h3>
+	<form id="setFeaturedGroup">
+		<div class="form-group">
+			<select id="groupToBeFeatured" class="form-control">
+				{{#each group in groups}}
+					<option value="{{group._id}}">{{group.name}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-default">
+				Feature this group in the region {{regionName}}
+			</button>
+		</div>
+	</form>
+</template>

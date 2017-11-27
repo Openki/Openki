@@ -1,4 +1,4 @@
-import './admin/admin.js';
+import './admin-panel/admin-panel.js';
 import './calendar/calendar.js';
 import './course-create/course-create.js';
 import './course-details/course-details.js';
