@@ -1,3 +1,4 @@
+import Courses from '/imports/api/courses/courses.js';
 import '/imports/IdTools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
