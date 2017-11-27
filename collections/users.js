@@ -49,7 +49,10 @@ import '/imports/IdTools.js';
 // "lastLogin"    -> Date
 // groups         -> List of groups the user is a member of, calculated by updateBadges()
 // badges         -> union of user's id and group ids for permission checking, calculated by updateBadges()
-// ===========================
+// notificactions: True if the user wants notification mails sent to them
+
+// Calculated fields
+// acceptsMessages: true if user has email address and the notifications flag is true. This is visible to other users.
 
 // Alias users collection to the expected name
 Users = Meteor.users;
