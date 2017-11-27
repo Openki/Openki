@@ -1,6 +1,9 @@
 import '/imports/notification/Notification.js';
 import '/imports/StringTools.js';
 
+import Courses from '/imports/api/courses/courses.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "title"        -> String
@@ -17,7 +20,7 @@ CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 
 mayDeletePost = function(user, course,post){
 	if (!user) return false;
-	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
+	return user && (privileged(user, 'admin') || HasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
 };
 
 mayEditPost = function(user, post){
@@ -63,7 +66,7 @@ Meteor.methods({
 		if (userId && !comment.anon) {
 			saneComment.userId = userId;
 			saneComment.notifyAll = comment.notifyAll
-			                     && hasRoleUser(course.members, 'team', userId);
+			                     && HasRoleUser(course.members, 'team', userId);
 		}
 
 		var now = new Date();

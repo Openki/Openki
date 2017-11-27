@@ -1,5 +1,6 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
+import Courses from '/imports/api/courses/courses.js';
 
 import '/imports/HtmlTools.js';
 

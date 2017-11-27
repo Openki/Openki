@@ -1,3 +1,5 @@
+import Courses from '/imports/api/courses/courses.js';
+
 export default Api =
 	{ groups:
 		(filter) => {

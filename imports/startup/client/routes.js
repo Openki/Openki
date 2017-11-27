@@ -5,6 +5,8 @@ import Metatags from '/imports/Metatags.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
+import Courses from '/imports/api/courses/courses.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/layouts';
 import '/imports/ui/pages';
@@ -488,7 +490,7 @@ function loadroles(course) {
 	var userId = Meteor.userId();
 	return _.reduce(Roles, function(goodroles, roletype) {
 		var role = roletype.type;
-		var sub = hasRoleUser(course.members, role, userId);
+		var sub = HasRoleUser(course.members, role, userId);
 		if (course.roles && course.roles.indexOf(role) !== -1) {
 			goodroles.push({
 				roletype: roletype,

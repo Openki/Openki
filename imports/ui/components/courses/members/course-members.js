@@ -5,6 +5,11 @@ import { Template } from 'meteor/templating';
 import Editable from '/imports/ui/lib/editable.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import {
+	HasRoleUser,
+	MaySubscribe,
+	MayUnsubscribe
+} from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
@@ -23,7 +28,7 @@ Template.courseMembers.helpers({
 
 	canNotifyAll() {
 		const userId = Meteor.userId();
-		return userId && hasRoleUser(this.members, 'team', userId);
+		return userId && HasRoleUser(this.members, 'team', userId);
 	},
 
 	sortedMembers: function() {
@@ -97,7 +102,7 @@ Template.courseMember.helpers({
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
-		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+		return MaySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
 	},
 
 	rolelistIcon: function(roletype) {
@@ -113,7 +118,7 @@ Template.courseMember.helpers({
 
 	mayUnsubscribeFromTeam: function(label) {
 		return label == 'team'
-			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+			&& MayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
 	}
 });
 
