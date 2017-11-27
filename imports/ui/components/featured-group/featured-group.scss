@@ -1,0 +1,34 @@
+$featured-group-bg: lighten($green, 10%);
+
+.featured-group {
+	background-color: $featured-group-bg;
+	border: 1px solid darken($featured-group-bg, 5%);
+	margin-top: 15px;
+}
+
+.featured-group-header,
+.featured-group-body {
+	padding: 15px;
+}
+
+.featured-group-header {
+	background-color: darken($featured-group-bg, 5%);
+	border-bottom: 1px solid darken($featured-group-bg, 10%);
+}
+
+.featured-group-logo {
+	width: 65px;
+}
+
+.featured-group-body-logo,
+.featured-group-body-content {
+	display: inline-block;
+}
+
+.featured-group-body-logo + .featured-group-body-content {
+	margin-left: 10px;
+}
+
+.featured-group-name {
+	font-weight: bold;
+}

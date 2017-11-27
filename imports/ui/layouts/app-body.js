@@ -8,7 +8,7 @@ import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import '/imports/ui/components/account-tasks/account-tasks.js';
-import '/imports/ui/components/featured/featured.js';
+import '/imports/ui/components/featured-group/featured-group.js';
 import '/imports/ui/components/footer/footer.js';
 import '/imports/ui/components/introduction/introduction.js';
 import '/imports/ui/components/kiosk-link/kiosk-link.js';
@@ -23,8 +23,6 @@ Template.layout.helpers({
 	testWarning: function() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
 	},
-
-	featuredGroup: () => true,
 
 	translate: function() {
 		var route = Router.current().route;

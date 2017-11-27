@@ -7,7 +7,9 @@
 					<i class="fa fa-chevron-left"></i>
 					{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
 				</button>
-				{{> Template.dynamic template=activeTask}}
+				<div class="admin-active-task">
+					{{> Template.dynamic template=activeTask}}
+				</div>
 			{{else}}
 				{{> adminDashboard}}
 			{{/if}}
@@ -30,9 +32,29 @@
 	</div>
 </template>
 
-<template name="setFeaturedGroup">
-	<h3>{{mf 'setFeaturedGroup.featureGroup' 'Feature group'}}</h3>
-	<form id="setFeaturedGroup">
+<template name="featureGroup">
+	{{#if featuredGroup}}
+		<div class="admin-featured-group">
+			<div class="admin-featured-group-body">
+				{{#mf KEY='featureGroup.groupIsFeatured' GROUP=featuredGroup.name REGION=regionName}}
+					The group "{GROUP}" is featured for the region "{REGION}".
+				{{/mf}}
+			</div>
+			<button type="button" id="unsetFeaturedGroup" class="btn btn-delete" {{disabledIfBusy}}>
+				{{#if busy 'deleting'}}
+					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					{{mf '_button.deleting'}}
+				{{else}}
+					<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+					{{#mf KEY='featureGroup.deleteButton' NAME=regionName}}
+						Remove the featured group for "{NAME}"
+					{{/mf}}
+				{{/if}}
+			</button>
+		</div>
+	{{/if}}
+	<h3>{{mf 'featureGroup.featureGroup' 'Feature group'}}</h3>
+	<form id="featureGroup">
 		<div class="form-group">
 			<select id="groupToBeFeatured" class="form-control">
 				{{#each group in groups}}
@@ -41,8 +63,16 @@
 			</select>
 		</div>
 		<div class="form-actions">
-			<button type="submit" class="btn btn-default">
-				Feature this group in the region {{regionName}}
+			<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
+				{{#if busy 'saving'}}
+					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					{{mf '_button.saving'}}
+				{{else}}
+					<i class="fa fa-fw fa-flag" aria-hidden="true"></i>
+					{{#mf KEY='featureGroup.saveButton' NAME=regionName}}
+						Feature this group in the region "{NAME}"
+					{{/mf}}
+				{{/if}}
 			</button>
 		</div>
 	</form>
