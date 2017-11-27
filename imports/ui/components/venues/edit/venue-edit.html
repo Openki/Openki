@@ -1,0 +1,196 @@
+<template name="venueEdit">
+	<div class="edit-page venue-edit">
+		{{#if _id}}
+			<h2>{{mf 'venue.edit.title' 'Edit venue'}}</h2>
+		{{else}}
+			<h2>{{mf 'venue.edit.titleCreate' 'Create new venue'}}</h2>
+		{{/if}}
+		<form>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.name' 'Name:'}}</label>
+				<input type="text"
+					class="form-control js-name"
+					placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
+					size="60"
+					value="{{name}}">
+			</div>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.description' 'Description:'}}</label>
+				{{> editableTextarea editableDescription}}
+			</div>
+		{{#if showMapSelection}}
+			<div class="form-group">
+				{{#if regionSelectable}}
+					<div class="form-group-element">
+						<label>{{mf 'venue.edit.region' 'Region:'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+							</span>
+							<select name='region' class="form-control js-region">
+								<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}</option>
+							{{#each regions}}
+								<option value='{{_id}}'>{{name}}</option>
+							{{/each}}
+							</select>
+						</div>
+					</div>
+				{{/if}}
+				{{#if regionSelected}}
+					<div class="form-group-element">
+						<label>{{mf 'venue.edit.map' 'Map:'}}</label>
+						{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
+					</div>
+				{{/if}}
+			</div>
+		{{/if}}
+
+			<div class="form-group">
+				<label>{{mf 'venue.details.address' 'Address:'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+					</span>
+					<input
+						class="form-control js-address"
+						placeholder= "{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}" value={{address}}>
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>{{mf 'venue.details.route'}}</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-map-signs"></span>
+					</span>
+					<textarea
+						class="form-control js-route"
+						id="editform-address"
+						placeholder= "{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}" value={{route}}></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>{{mf 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
+				{{#if showAdditionalInfo}}
+					<button type="button" class="btn btn-cancel btn-block js-toggle-additional-info-btn">
+						{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
+					</button>
+				{{else}}
+					<button type="button" class="btn btn-default btn-block js-toggle-additional-info-btn">
+						{{mf 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
+					</button>
+				{{/if}}
+				<div {{displayAdditionalInfo}}>
+					{{> venueEditAdditionalInfo}}
+				</div>
+			</div>
+			<div class="form-actions">
+				{{> buttonSave saving=saving}}
+				{{> buttonCancel event="js-edit-cancel"}}
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="venueEditAdditionalInfo">
+	<div class="venue-edit-additional-info">
+		<div class="form-group">
+			<label>{{mf 'venue.edit.shortName' 'Abbreviation:'}}</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control js-short"
+					placeholder= "{{mf 'venue.edit.short.placeholder' 'short name'}} {{mf '_inputField.optional'}}"
+					value="{{short}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label>
+					{{mf 'venue.edit.max_ppl' 'Max. People'}}
+				</label>
+				<input type="number" class="form-control js-maxPeople" size="4" value="{{maxPeople}}">
+			</div>
+			<div class="form-group-element">
+				<label>
+					{{mf 'venue.edit.max_workplace' 'Max. Workplaces'}}
+				</label>
+				<input type="number" class="form-control js-maxWorkplaces" size="4" value="{{maxWorkplaces}}">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-group-element">
+				<label>{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'projector'}}>
+						<span>{{mf 'venue.edit.projector' 'Projector'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'screen'}}>
+						<span>{{mf 'venue.edit.screen' 'Screen'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'audio'}}>
+						<span>{{mf 'venue.edit.audioSystem' 'Audio System'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'blackboard'}}>
+						<span>{{mf 'venue.edit.blackboard' 'Blackboard'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'whiteboard'}}>
+						<span>{{mf 'venue.edit.whiteboard' 'Whiteboard'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'flipchart'}}>
+						<span>{{mf 'venue.edit.flipchart' 'Flipchart'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'wifi'}}>
+						<span>{{mf 'venue.edit.wifi' 'Wifi'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'kitchen'}}>
+						<span>{{mf 'venue.edit.kitchen' 'Kitchen'}}</span>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" {{facilitiesCheck 'wheelchairs'}}>
+						<span>{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group-element">
+				<label>{{mf 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
+				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>{{mf 'venue.edit.website' 'Website:'}}'</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
+				</span>
+				<input type="text" class="form-control js-website" value="{{website}}">
+			</div>
+		</div>
+	</div>
+</template>
