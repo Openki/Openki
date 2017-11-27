@@ -8,6 +8,13 @@
 	{{#if subscribed}}
 		<div class="course-role-enrolled">
 			<div class="course-role-title">
+				{{#unless showFirstSteps}}
+					<button
+						class="close js-show-first-steps"
+						type="button">
+						<i class="fa fa-info-circle" aria-hidden="true"></i>
+					</button>
+				{{/unless}}
 				<span class="{{roletype.icon}}"></span>&nbsp;
 				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
@@ -16,6 +23,28 @@
 				</button>
 			</div>
 		</div>
+		{{#if showFirstSteps}}
+			<div class="course-role-first-steps">
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course!'}}</b>
+				<br>
+				{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
+					You will get an e-mail notification as soon as a date has been fixed.
+				{{/mf}}
+				<br><br>
+				{{#mf KEY='course.roles.firstSteps.ifQuestions'}}
+					If you have any questions concerning the course please write a comment.
+				{{/mf}}
+				<br>
+				{{#mf KEY='course.roles.firstSteps.allMembersInformed'}}
+					All members of the organization-team will be informed.
+				{{/mf}}
+				<br>
+				<button class="btn btn-default" type="button" id="firstStepsComment">
+					<i class="fa fa-fw fa-pencil" aria-hidden="true"></i>
+					{{mf 'course.discussion.write_comment'}}
+				</button>
+			</div>
+		{{/if}}
 	{{else}}
 		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
 			{{#if enrolling}}
