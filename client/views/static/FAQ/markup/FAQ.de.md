@@ -94,9 +94,9 @@ Damit der Kurs aber im Kalender erscheint, muss jemand aus dem O-Team eine Veran
 
 <!-- TODO BILD -->
 
-
+<!--
 ### Ist es möglich, fertige Veranstaltungen auszuschreiben, ohne den Kurs zuerst vorzuschlagen?
-Ja. Ein Mentor\*in, der/die genau weiss wo und wann er/sie was lehren/vermitteln will, kann einen Kurs ohne vorangehende Diskussion ausschreiben. Er/Sie ist dann z.B. als Organisator\*in, Host und Mentor\*in des Kurses eingetragen. Ist es eine einmalige Veranstaltung tust du das über das Formular [Event erstellen](https://openki.net/event/create).
+Ja. Ein Mentor\*in, der/die genau weiss wo und wann er/sie was lehren/vermitteln will, kann einen Kurs ohne vorangehende Diskussion ausschreiben. Er/Sie ist dann z.B. als Organisator\*in, Host und Mentor\*in des Kurses eingetragen. Ist es eine einmalige Veranstaltung tust du das über das Formular [Event erstellen](https://openki.net/event/create).-->
 
 ### Wie verbindlich ist die Anmeldung für einen Kurs?
 Die Verbindlichkeit einer Kurs-Anmeldung hängt vom Kurs ab und wird im Kursbeschrieb kommuniziert.

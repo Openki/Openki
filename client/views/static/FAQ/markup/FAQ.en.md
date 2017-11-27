@@ -82,14 +82,15 @@ As soon as someone proposes a course, this is published as a "suggestion" and ap
 
 However, in order for the course to appear in the calendar, someone from the O-Team must create an event. This is done after all the details (mentor, place, date, etc.) have been defined.
 
+<!--
 ### Is it possible to submit completed events without proposing the course first?
-No. In the past this was possible, but it was creating confusion and thus it was decided that every event should be linked to a course. There could be always someone that would like to continue organizing events under the same topic, and if this is not desirable the course can always be deleted.
+No. In the past this was possible, but it was creating confusion and thus it was decided that every event should be linked to a course. There could be always someone that would like to continue organizing events under the same topic, and if this is not desirable the course can always be deleted.-->
 
 ### How can I register for a course?
 The exact registration process for a course depends on the course and the O-team and is communicated in the course description.
 
 ### Where can I find courses?
-Everywhere where people come. The participants themselves are responsible for finding a suitable venue and a ["host"] (# was-ist-ein-host) for their course. All can advertise their rooms - from factory to living room to garden - so that they can be found as a venue. How you get in touch with those responsible for the room varies from room to room. We are working on a list of all possible venues in your region.
+Everywhere where people come. The participants themselves are responsible for finding a suitable venue and a ["host"](# what-is-a-host) for their course. All can advertise their rooms - from factory to living room to garden - so that they can be found as a venue. How you get in touch with those responsible for the room varies from room to room. We are working on a list of all possible venues in your region.
 
 ### Can I archive course materials, documentation, or experience reports and use them at a later date?
 There is currently no possibility to collect course materials and document the course. The goal is that the content of a course for further courses is prepared. Currently, however, the discussion, as well as shared links can be viewed in the course description. Therefore, past courses are still to be found in the course overview.
@@ -156,7 +157,8 @@ Yes! You can find the different views for embedding for your group in the group 
 Identifying and addressing discriminating content is the responsibility of all users; moderation will be carried out by the administration, which will ensure full transparency regarding censored content (never happened until today).
 
 ### How do I know if I'm in danger when attending a course?
-If you are unsure, contact the person in advance and handle according to common sense. But note that the platform does not take any responsibility regarding neither the accuracy of the information shared nor the quality of the courses or venues. If in doubt, avoid to participate in events that take place in unknown locations and/or organized by unknown people.
+If you are unsure, contact the person in advance and handle according to common sense.
+<!-- New text, to add in the german translation first/re: But note that the platform does not take any responsibility regarding neither the accuracy of the information shared nor the quality of the courses or venues. If in doubt, avoid to participate in events that take place in unknown locations and/or organized by unknown people.-->
 
 ### How does Openki protect the privacy of its users?
 Openki is keen to meet a wide variety of privacy requirements. These include modern encryption techniques as well as personalized privacy settings.
