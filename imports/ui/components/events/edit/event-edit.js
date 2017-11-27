@@ -5,8 +5,8 @@
 // wouldn't want the time or even date field to change because of this switch.
 
 import '/imports/LocalTime.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import Regions from '/imports/api/regions/regions.js';
 
@@ -233,17 +233,15 @@ Template.eventEdit.events({
 	'submit': function(event, instance) {
 		event.preventDefault();
 
-		if (PleaseLogin()) return;
-
-		var start = getEventStartMoment(instance);
+		const start = getEventStartMoment(instance);
 		if(!start.isValid()) {
-			var exampleDate = moment().format('L');
+			const exampleDate = moment().format('L');
 			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, "Date format must be of the form {EXAMPLEDATE}"));
 			return;
 		}
-		var end = getEventEndMoment(instance);
+		const end = getEventEndMoment(instance);
 
-		var editevent = {
+		const editevent = {
 			title: instance.$('#eventEditTitle').val(),
 			venue: instance.selectedLocation.get(),
 			room: instance.$('#eventEditRoom').val(),
@@ -252,26 +250,24 @@ Template.eventEdit.events({
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
-		var newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) editevent.description = newDescription;
-
 		if (editevent.title.length === 0) {
 			alert(mf('event.edit.plzProvideTitle', "Please provide a title"));
 			return;
 		}
+
+		const newDescription = instance.data.editableDescription.getEdited();
+		if (newDescription) editevent.description = newDescription;
 
 		if (!editevent.description) {
 			alert(mf('event.edit.plzProvideDescr', "Please provide a description"));
 			return;
 		}
 
-		var eventId = this._id;
-		var isNew = !this._id;
+		const eventId = this._id ? this._id : '';
+		const isNew = eventId === '';
 		if (isNew) {
-			eventId = '';
-
 			if (this.courseId) {
-				var course = Courses.findOne(this.courseId);
+				const course = Courses.findOne(this.courseId);
 				editevent.region = course.region;
 				editevent.courseId = this.courseId;
 			} else {
@@ -283,7 +279,7 @@ Template.eventEdit.events({
 
 				// We have this 'secret' feature where you can set a group ID
 				// in the URL to assign a group to the event on creation
-				var groups = [];
+				const groups = [];
 				if (Router.current().params.query.group) {
 					groups.push(Router.current().params.query.group);
 				}
@@ -291,29 +287,38 @@ Template.eventEdit.events({
 			}
 		}
 
-		var updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
-		var sendNotification = instance.$(".js-check-notify").is(':checked');
-		var addNotificationMessage = instance.$(".js-event-edit-add-message").val();
+		const updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
+		const sendNotifications = instance.$(".js-check-notify").is(':checked');
+		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
 		instance.busy('saving');
-		Meteor.call('saveEvent', eventId, editevent, updateReplicas, sendNotification, addNotificationMessage, function(error, eventId) {
-			instance.busy(false);
-
-			if (error) {
-				ShowServerError('Saving the event went wrong', error);
-			} else {
-				if (isNew) {
-					Router.go('showEvent', { _id: eventId });
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
+		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
+			Meteor.call('saveEvent',
+			{
+				eventId,
+				updateReplicas,
+				sendNotifications,
+				changes: editevent,
+				comment: addNotificationMessage
+			},
+			(err, eventId) => {
+				instance.busy(false);
+				if (err) {
+					ShowServerError('Saving the event went wrong', err);
 				} else {
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
-				}
+					if (isNew) {
+						Router.go('showEvent', { _id: eventId });
+						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					} else {
+						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					}
 
-				if (updateReplicas) {
-					AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+					if (updateReplicas) {
+						AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+					}
+					instance.parent.editing.set(false);
 				}
-				instance.parent.editing.set(false);
-			}
+			});
 		});
 	},
 

@@ -12,6 +12,11 @@ import './account-tasks.html';
 
 Template.accountTasks.onCreated(function() {
 	this.accountTask = new ReactiveVar('login');
+	this.autorun(() => {
+		if (Session.equals('pleaseLogin', true)) {
+			this.$('#accountTasks').modal('show');
+		}
+	});
 });
 
 Template.accountTasks.helpers({
@@ -42,6 +47,7 @@ Template.accountTasks.events({
 
 Template.loginFrame.onCreated(function() {
 	this.busy(false);
+
 	this.OAuthServices =
 		[
 			{ key: 'google'
@@ -176,6 +182,10 @@ Template.loginFrame.events({
 });
 
 Template.loginFrame.helpers({
+	pleaseLogin: () => Session.get('pleaseLogin'),
+
+	loginAction: () => Session.get('loginAction'),
+
 	OAuthServices: () => Template.instance().OAuthServices
 });
 

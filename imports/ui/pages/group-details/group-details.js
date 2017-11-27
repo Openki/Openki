@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -134,32 +135,30 @@ Template.groupDetails.events({
 	},
 
 	'click .js-group-save': function(event, instance) {
-
-		if (PleaseLogin()) return;
-
-		var group = {};
-
-		group.name = instance.editableName.getEdited();
-		group.short = instance.editableShort.getEdited();
-		group.claim = instance.editableClaim.getEdited();
-		group.description = instance.editableDescription.getEdited();
+		const group = {
+			name: instance.editableName.getEdited(),
+			short: instance.editableShort.getEdited(),
+			claim: instance.editableClaim.getEdited(),
+			description: instance.editableDescription.getEdited()
+		};
 
 		instance.busy('saving');
-		Meteor.call("saveGroup", "create", group, function(err, groupId) {
-			instance.busy(false);
-			if (err) {
-				ShowServerError('Saving the group went wrong', err);
-			} else {
-				instance.editableName.end();
-				instance.editableShort.end();
-				instance.editableClaim.end();
-				instance.editableDescription.end();
+		SaveAfterLogin(instance, mf('loginAction.saveGroup', 'Login and save group'), () => {
+			Meteor.call('saveGroup', 'create', group, (err, groupId) => {
+				instance.busy(false);
+				if (err) {
+					ShowServerError('Saving the group went wrong', err);
+				} else {
+					instance.editableName.end();
+					instance.editableShort.end();
+					instance.editableClaim.end();
+					instance.editableDescription.end();
 
-				AddMessage(mf('group.create.success', 'Created group'), 'success');
-				Router.go('groupDetails', { _id: groupId });
-			}
+					AddMessage(mf('group.create.success', 'Created group'), 'success');
+					Router.go('groupDetails', { _id: groupId });
+				}
+			});
 		});
-
 	},
 
 	'click .js-group-cancel': function(event, instance) {
