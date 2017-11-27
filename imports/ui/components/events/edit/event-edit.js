@@ -9,6 +9,7 @@ import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
+import Courses from '/imports/api/courses/courses.js';
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/events/edit-location/event-edit-location.js';

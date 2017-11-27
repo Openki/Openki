@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
+import { MaySubscribe } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -35,11 +36,11 @@ Template.courseRole.helpers({
 
 		// Show the participation buttons even when not logged-in.
 		// fun HACK: if we pass an arbitrary string instead of falsy
-		// the maySubscribe() will return true if the user could subscribe
-		// if they were logged-in. Plain abuse of maySubscribe().
+		// the MaySubscribe() will return true if the user could subscribe
+		// if they were logged-in. Plain abuse of MaySubscribe().
 		if (!operator) operator = 'unlogged';
 
-		return maySubscribe(operator, this.course, operator, role);
+		return MaySubscribe(operator, this.course, operator, role);
 	}
 });
 

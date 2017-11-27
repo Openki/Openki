@@ -2,6 +2,7 @@ export default notificationComment = {};
 import '/imports/collections/Log.js';
 import '/imports/StringTools.js';
 import "/imports/HtmlTools.js";
+import Courses from '/imports/api/courses/courses.js';
 
 /** Record the intent to send event notifications
   *
