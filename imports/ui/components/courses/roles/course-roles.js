@@ -74,7 +74,7 @@ Template.courseRole.events({
 				if (err) {
 					console.error(err);
 				} else {
-					template.firstSteps();
+					instance.firstSteps();
 					instance.busy(false);
 					instance.enrolling.set(false);
 					Meteor.call('change_comment', this.course._id, comment, err => {
