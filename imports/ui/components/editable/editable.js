@@ -7,10 +7,14 @@ import './editable.html';
 
 [Template.editable, Template.editableTextarea].forEach(template => {
 	template.onCreated(function() {
+		this.ready = new ReactiveVar(false);
 		// This reeks
 		this.autorun(() => {
 			const data = Template.currentData();
-			if (data) this.state = data.connect(this);
+			if (data) {
+				this.state = data.connect(this);
+				this.ready.set(true);
+			}
 		});
 	});
 
@@ -26,6 +30,9 @@ import './editable.html';
 		};
 
 		instance.reset = function() {
+			// Don't try resetting until it's loaded
+			if (!instance.ready.get()) return;
+
 			var text = instance.state.text();
 
 			if (instance.state.simple) {
@@ -84,6 +91,10 @@ import './editable.html';
 	});
 
 	template.helpers({
+		ready: function() {
+			return Template.instance().ready.get();
+		},
+
 		showControls: function() {
 			var instance = Template.instance();
 			return instance.state.showControls && instance.state.changed.get();
