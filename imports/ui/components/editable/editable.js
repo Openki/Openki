@@ -25,7 +25,7 @@ import './editable.html';
 		var changedByUser = false;
 
 		instance.getEdited = function() {
-			if (!instance.state.changed.get()) return false;
+			if (!instance.state || !instance.state.changed.get()) return false;
 			return instance.state.simple ? editable.text() : editable.html();
 		};
 
