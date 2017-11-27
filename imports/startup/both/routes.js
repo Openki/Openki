@@ -8,21 +8,6 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Courses from '/imports/api/courses/courses.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
-import '/imports/ui/layouts';
-import '/imports/ui/pages';
-
-Router.configure({
-	layoutTemplate: 'layout',
-	notFoundTemplate: 'notFound',
-	loadingTemplate: 'loadingPage',
-});
-Router.onBeforeAction('dataNotFound');
-
-Router.onBeforeAction(function() {
-	Metatags.removeAll();
-	this.next();
-});
-
 Router.map(function () {
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
