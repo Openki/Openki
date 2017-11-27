@@ -1,5 +1,4 @@
 import '/imports/collections/Log.js';
-import Regions from '/imports/api/regions/regions.js';
 
 Meteor.publish('version', function() {
 	return Version.find();
@@ -18,11 +17,6 @@ Meteor.publish ('courseDetails', function(id) {
 });
 
 Meteor.publish('Courses.findFilter', Courses.findFilter);
-
-Meteor.publish ('regions', function(){
-	return Regions.find();
-});
-
 
 Meteor.publish ('venues', function(region) {
 	check(region, Match.Maybe(String));
