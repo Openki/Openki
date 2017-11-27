@@ -22,7 +22,7 @@
 								{{/with}}
 							</div>
 							<div class="course-details-title">
-								{{#if editableName}}
+								{{#if mayEdit}}
 									{{> editable editableName}}
 								{{else}}
 									<h2>{{course.name}}</h2>
@@ -37,19 +37,19 @@
 								{{> courseGroupList}}
 							{{/with}}
 						</div>
-						{{> courseDetailsSubmenu}}
+						{{> courseDetailsSubmenu editableDescription=editableDescription course=course}}
 					</div>
 					{{> sharing}}
-					{{#with course}}
-						{{#if currentUserMayEdit}}
+					{{#if mayEdit}}
+						{{#with course}}
 							<div class="actions">
 								{{> buttonEdit event="js-course-edit"}}
 								{{#unless expanded}}
 									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
 							</div>
-						{{/if}}
-					{{/with}}
+						{{/with}}
+					{{/if}}
 					{{#if expanded}}
 						{{> confirmDialog}}
 					{{/if}}
@@ -113,7 +113,7 @@
 	</nav>
 	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
-			{{> courseDetailsDescription}}
+			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
 		</div>
 		<div class="tab-pane" id="history">
 			{{> coursehistory}}
@@ -124,7 +124,7 @@
 
 <template name="courseDetailsDescription">
 	<p class="course-details-description">
-		{{#if editableDescription}}
+		{{#if mayEdit}}
 			{{>editable editableDescription}}
 		{{else}}
 			{{{course.description}}}

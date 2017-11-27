@@ -1,5 +1,4 @@
 <template name='editable'>
-	{{#if ready}}
 		<div class="editable-wrap {{wrapAttrs}}">
 			<div class="editable js-editable {{editableAttrs}}">
 			</div>
@@ -8,14 +7,11 @@
 		{{#if showControls}}
 			{{> editableControls}}
 		{{/if}}
-	{{/if}}
 </template>
 
 <template name="editableTextarea">
-	{{#if ready}}
 	<div class="js-editable {{editableAttrs}} form-control editable-textarea">
 	</div>
-	{{/if}}
 </template>
 
 <template name='editableControls'>
