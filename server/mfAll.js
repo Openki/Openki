@@ -19171,7 +19171,7 @@ mfPkg.syncAll({
       "_id": "DW7pxF8ApqyqQsXkd",
       "key": "course.members.showNextMembers",
       "lang": "en",
-      "text": "Show next {NUM} participants",
+      "text": "Show more participants",
       "ctime": null,
       "mtime": 1505846836153,
       "revisionId": "6yiFmwJFETtDG39DC",
