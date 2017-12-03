@@ -7,7 +7,10 @@
 			<div class="group-details-titlebar">
 				{{mf 'group.details.group' 'Group'}}
 				{{#if isFeatured}}
-					<i class="fa fa-fw fa-star" aria-hidden="true"></i>
+					<i
+						alt={{mf 'group.details.isFeatured' 'This group is featured'}}
+						aria-hidden="true"
+						class="fa fa-fw fa-star"></i>
 				{{/if}}
 				<span
 					class="titlebar-btn js-group-remove-filter"
