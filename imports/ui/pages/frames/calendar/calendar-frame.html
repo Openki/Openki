@@ -1,0 +1,84 @@
+<template name="frameCalendar">
+	<style type="text/css">
+		{{#each cssRule in cssRules}}
+			{{cssRule}}
+		{{/each}}
+	</style>
+
+	{{#if ready}}
+		{{#each day in days}}
+			<h4 class="frame-list-title">{{day}}</h4>
+			{{#each event in (eventsOn day)}}
+				{{> frameCalendarEvent event}}
+			{{/each}}
+		{{/each}}
+	{{else}}
+		{{> loadingRow}}
+	{{/if}}
+</template>
+
+<template name="frameCalendarEvent">
+	<div class="frame-list-item">
+		<h4 class="frame-list-item-header js-toggle-event-details">
+			<span class="frame-list-item-time">
+				{{timeformat start}}
+			</span>
+			{{title}}
+			{{#if allRegions}}
+				<span class="badge frame-list-item-region">{{regionName}}</span>
+			{{/if}}
+		</h4>
+		{{#if expanded}}
+			<div class="frame-list-item-body">
+				<div class="frame-list-item-property">
+					<div class="frame-list-item-label">
+						{{mf 'frame.eventsList.when' 'When:'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{timeformat start}}
+						 - {{timeformat end}}
+					</div>
+				</div>
+				<div class="frame-list-item-property">
+					<div class="frame-list-item-label">
+						{{mf 'frame.eventsList.where' 'Where:'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{#if venue._id}}
+							<a href="{{pathFor 'venueDetails' _id=venue._id}}"
+							   target="_blank">
+								{{venue.name}}
+							</a>
+						{{else}}
+							{{venue.name}}
+						{{/if}}
+						{{#if room}}
+							 - {{room}}
+						{{/if}}
+					</div>
+				</div>
+				<div class="frame-list-item-property frame-list-item-description">
+					<div class="frame-list-item-label">
+						{{mf 'frame.eventsList.description' 'Description:'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{{description}}}
+					</div>
+				</div>
+				<div class="frame-list-item-links">
+					<a href="{{pathFor 'showEvent'}}" target="_blank">
+						<i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
+						{{mf 'frame.eventsList.showMore' 'show more'}}
+					</a>
+					<a href="{{pathFor 'calEvent' this}}" class="js-download">
+						<i
+							aria-hidden="true"
+							class="fa fa-download fa-fw"
+							title="{{mf 'frame.eventsList.download_cal' 'download event to my calendar'}}">
+						</i>
+					</a>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</template>

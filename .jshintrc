@@ -73,18 +73,13 @@
 // server/publications
 
 		"Version":true,
-		"Course":true,
-		"Courses":true,
-		"coursesFind":true,
 		"Roles":true,
 		"Regions":true,
-		"cleanedRegion": true,
+		"CleanedRegion": true,
 		"Venue": true,
 		"Venues": true,
-		"venuesFind": true,
 		"CourseDiscussions":true,
 		"Events":true,
-		"eventsFind":true,
 		"affectedReplicaSelectors":true,
 		"privileged":true,
 		"groupsFind":true,
@@ -94,16 +89,6 @@
 // lib/functions.js
 
 		"mfPkg":true,
-		"VERSION":true,
-		"getSlug":true,
-		"search_user":true,
-		"escapeRegex":true,
-		"checkInsert":true,
-		"checkUpdateOne":true,
-		"saneHtml":true,
-		"sanitizeHtml":true,
-		"textPlain":true,
-		"saneText":true,
 
 // client/editable/...
 
@@ -118,10 +103,8 @@
 // client/lib/client.functions.js
 
 		"getMember":true,
-		"userName":true,
-		"goBase":true,
 		"pleaseLogin":true,
-		"showServerError": true,
+		"ShowServerError": true,
 		"TemplateMixins": true,
 
 // client/map/map.js
@@ -152,12 +135,6 @@
 		"minuteTime":true,
 
 
-// collection/courses.js
-
-		"hasRole":true,
-		"hasRoleUser":true,
-		"maySubscribe":true,
-
 // collection/discussion.js
 
 		"mayDeletePost":true,
@@ -174,21 +151,11 @@
 		"GroupLib": true,
 
 
-// lib/Filtering.js
-
-		"CoursePredicates":true,
-		"EventPredicates":true,
-		"VenuePredicates":true,
-		"Filtering":true,
-
-
 // server/lib/...
 
 		"UpdatesAvailable":true,
 		"UpdatesApplied":true,
-		"applyUpdates":true,
-		"logAsyncErrors":true,
-		"untilClean":true
+		"applyUpdates":true
 
 	}
 }

@@ -2,6 +2,7 @@ export default notificationComment = {};
 import '/imports/collections/Log.js';
 import '/imports/StringTools.js';
 import "/imports/HtmlTools.js";
+import Courses from '/imports/api/courses/courses.js';
 
 /** Record the intent to send event notifications
   *
@@ -17,8 +18,17 @@ notificationComment.record = function(commentId) {
 
 	var body = {};
 	body.commentId = comment._id;
-	body.recipients = [];
-	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+
+	if (comment.notifyAll) {
+		body.recipients = _.pluck(course.members, 'user');
+	} else {
+		body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+
+		// Don't send to author
+		if (comment.userId) {
+			body.recipients = body.recipients.filter(r => r !== comment.userId);
+		}
+	}
 
 	body.model = 'Comment';
 
