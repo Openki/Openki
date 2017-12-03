@@ -1,3 +1,6 @@
+import '/imports/Filtering.js';
+import '/imports/Predicates.js';
+
 /** The Application Log records user and system decisions. It is intended to
   * become the single source of truth within the application.
   *
@@ -31,6 +34,13 @@
   */
 export default Log = new Meteor.Collection('Log');
 
+Log.Filtering = () => Filtering(
+	{ start: Predicates.date
+	, rel:   Predicates.ids
+	, tr:    Predicates.ids
+	}
+);
+
 if (Meteor.isServer) {
 	Log._ensureIndex({ tr: 1});
 	Log._ensureIndex({ ts: 1});
@@ -55,6 +65,10 @@ Log.record = function(track, rel, body) {
 		};
 
 	Log.insert(entry);
+
+	if (Meteor.isDevelopment) {
+		console.log(entry);
+	}
 };
 
 

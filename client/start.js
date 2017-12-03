@@ -1,5 +1,11 @@
-import "/imports/startup/client/clientError.js";
+import '/imports/startup/both';
+import '/imports/startup/client';
 import "/imports/RegionSelection.js";
+import Introduction from '/imports/ui/lib/introduction.js';
+import UpdateViewport from '/imports/ui/lib/update-viewport.js';
+import UrlTools from '/imports/utils/url-tools.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 ////////////// db-subscriptions:
 
@@ -114,9 +120,9 @@ Meteor.startup(function() {
 });
 
 Meteor.startup(RegionSelection.init);
-Meteor.startup(Assistant.init);
+Meteor.startup(Introduction.init);
 
-Meteor.startup(getViewportWidth);
+Meteor.startup(UpdateViewport);
 
 Accounts.onLogin(function() {
 	var user = Meteor.user();
@@ -129,9 +135,9 @@ Accounts.onEmailVerificationLink(function(token, done) {
 	Router.go('profile');
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			showServerError('Address could not be verified', error);
+			ShowServerError('Address could not be verified', error);
 		} else {
-			addMessage(mf("email.verified", "Email verified."), 'success');
+			AddMessage(mf("email.verified", "Email verified."), 'success');
 		}
 	});
 });

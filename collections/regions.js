@@ -1,3 +1,6 @@
+import '/imports/AsyncTools.js';
+import Courses from '/imports/api/courses/courses.js';
+
 // ======== DB-Model: ========
 // _id              -> ID
 // name             -> String
@@ -10,7 +13,7 @@
 Regions = new Meteor.Collection("Regions");
 if (Meteor.isServer) Regions._ensureIndex({loc : "2dsphere"});
 
-// We don't use untilClean() here because consistency doesn't matter
+// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 updateRegionCounters = function(regionId) {
 	var courseCount = Courses.find({ region: regionId }).count();
 	var futureEventCount = Events.find({ region: regionId, start: { $gte: new Date() } }).count();

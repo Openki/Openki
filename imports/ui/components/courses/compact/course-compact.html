@@ -1,0 +1,80 @@
+<template name="courseCompact">
+	{{#if ready}}
+		<div class="course-compact-wrap">
+			<a href="{{pathFor 'showCourse'}}">
+				<div class="course-compact {{courseState}} {{filterPreviewClasses}}">
+					<div class="course-compact-content">
+						<div class="course-compact-title">{{name}}</div>
+						{{> courseCategories}}
+					</div>
+					{{#if nextEvent}}
+						{{> courseCompactEvent}}
+					{{else}}
+						{{> courseCompactRoles}}
+					{{/if}}
+					<div class="tag-group course-groups">
+						{{#each groups}}
+							{{> groupName}}
+						{{/each}}
+					</div>
+				</div>
+			</a>
+		</div>
+	{{/if}}
+</template>
+
+<template name="courseCompactEvent">
+	<div class="course-compact-next-event">
+		<div class="course-compact-next-event-component">
+			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+			{{dateFormat nextEvent.startLocal}}
+		</div>
+		<div class="course-compact-next-event-component">
+			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+			{{timeformat nextEvent.startLocal}}
+		</div>
+		{{#if nextEvent.venue.name}}
+			<div class="course-compact-next-event-component">
+				<i class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></i>
+				{{nextEvent.venue.name}}
+			</div>
+		{{/if}}
+		<div class="course-compact-next-event-component">
+			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
+			{{members.length}}
+		</div>
+	</div>
+</template>
+
+<template name="courseCompactRoles">
+	<div class="course-compact-roles">
+		<div
+			class="course-compact-role {{participantClass}}"
+			data-tooltip="{{participantTooltip}}">
+			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
+			{{members.length}}
+		</div>
+		<div
+			class="course-compact-role {{roleStateClass 'team'}}"
+			data-tooltip="{{roleStateTooltip 'team'}}"
+			href="#">
+			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>
+		</div>
+		{{#if requiresRole 'mentor'}}
+			<div
+				class="course-compact-role {{roleStateClass 'mentor'}}"
+				data-tooltip="{{roleStateTooltip 'mentor'}}"
+				href="#">
+				<i class="{{roleIcon 'mentor'}}" aria-hidden="true"></i>
+			</div>
+		{{/if}}
+		{{#if requiresRole 'host'}}
+			<div
+				class="course-compact-role {{roleStateClass 'host'}}"
+				data-tooltip="{{roleStateTooltip 'host'}}"
+				href="#">
+				<i class="{{roleIcon 'host'}}" aria-hidden="true"></i>
+			</div>
+		{{/if}}
+	</div>
+</template>

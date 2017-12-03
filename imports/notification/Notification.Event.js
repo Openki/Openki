@@ -1,5 +1,6 @@
 export default notificationEvent = {};
 import '/imports/collections/Log.js';
+import Courses from '/imports/api/courses/courses.js';
 
 /** Record the intent to send event notifications
   *
