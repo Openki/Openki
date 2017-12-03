@@ -64,10 +64,10 @@
 						<button type="button" class="btn btn-save js-role-subscribe-btn" {{disabledIfBusy}}>
 							{{#if busy 'enrolling'}}
 								<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
-								{{mf 'course.roles.join.busy' 'Joining...'}}
+								{{mf 'course.roles.join.busy' 'Joining course...'}}
 							{{else}}
-								<span class="glyphicon glyphicon-fire fa-fw" aria-hidden="true"></span>
-								{{mf 'course.roles.join' 'Join'}}
+								<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+								{{mf 'course.roles.join' 'Join course'}}
 							{{/if}}
 						</button>
 						{{> buttonCancel event="js-role-enroll-cancel"}}
