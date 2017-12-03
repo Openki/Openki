@@ -122,7 +122,7 @@ Courses.findFilter = function(filter, limit) {
 	if (filter.state === 'resting') {
 		find.lastEvent = { $ne: null };
 		find.futureEvents = { $eq: 0 };
-		sort = { "lastEvent.start": 1, time_lastedit: -1 };
+		sort = { time_lastedit: -1, "lastEvent.start": 1 };
 	}
 
 	if (filter.state === 'upcomingEvent') {
