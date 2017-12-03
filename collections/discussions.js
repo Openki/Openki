@@ -1,4 +1,8 @@
 import '/imports/notification/Notification.js';
+import '/imports/StringTools.js';
+
+import Courses from '/imports/api/courses/courses.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 // ======== DB-Model: ========
 // "_id"          -> ID
@@ -16,7 +20,7 @@ CourseDiscussions = new Meteor.Collection("CourseDiscussions");
 
 mayDeletePost = function(user, course,post){
 	if (!user) return false;
-	return user && (privileged(user, 'admin') || hasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
+	return user && (privileged(user, 'admin') || HasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
 };
 
 mayEditPost = function(user, post){
@@ -26,8 +30,8 @@ mayEditPost = function(user, post){
 
 var sanitizeComment = function(comment) {
 	return {
-		title: saneText(comment.title).substr(0, 200).trim(),
-		text: saneText(comment.text).substr(0, 640*1024).trim(),
+		title: StringTools.saneText(comment.title).substr(0, 200).trim(),
+		text: StringTools.saneText(comment.text).substr(0, 640*1024).trim(),
 	};
 };
 
@@ -43,6 +47,7 @@ Meteor.methods({
 			title: String,
 			text: String,
 			anon: Boolean,
+			notifyAll: Match.Optional(Boolean),
 		});
 
 		var saneComment = sanitizeComment(comment);
@@ -51,20 +56,22 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Invalid comment");
 		}
 
-		var user = Meteor.user();
-		if (user && !comment.anon) {
-			saneComment.userId = user._id;
-		}
-
-		var now = new Date();
-		saneComment.time_created = now;
-		saneComment.time_updated = now;
-
 		var course = Courses.findOne(comment.courseId);
 		if (!course) {
 			throw new Meteor.Error(404, "course not found");
 		}
 		saneComment.courseId = course._id;
+
+		var userId = Meteor.userId();
+		if (userId && !comment.anon) {
+			saneComment.userId = userId;
+			saneComment.notifyAll = comment.notifyAll
+			                     && HasRoleUser(course.members, 'team', userId);
+		}
+
+		var now = new Date();
+		saneComment.time_created = now;
+		saneComment.time_updated = now;
 
 		if (comment.parentId) {
 			var parentComment = CourseDiscussions.findOne(comment.parentId);

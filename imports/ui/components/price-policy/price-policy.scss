@@ -1,0 +1,29 @@
+.is-dismissable > .price-policy-content {
+	background-color: lighten($brand-success, 15%);
+	border: 1px solid $brand-success;
+	padding: 10px;
+}
+
+.price-policy-content > i {
+	color: $brand-primary;
+}
+
+.price-policy-actions {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.is-dismissable .price-policy-actions {
+	display: block;
+	margin-left: 0;
+	margin-top: 10px;
+	text-align: right;
+}
+
+.price-policy-actions > * + * {
+	margin-left: 5px;
+}
+
+.price-policy-actions > .btn-link {
+	border: 0;
+}

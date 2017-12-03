@@ -1,0 +1,43 @@
+import { Template } from 'meteor/templating';
+
+import '/imports/ui/components/groups/list/group-list.js';
+import '/imports/ui/components/venues/link/venue-link.js';
+
+import './event-compact.html';
+
+Template.eventCompact.onCreated(function() {
+	this.withDate = this.parentInstance().data.withDate;
+});
+
+Template.eventCompact.helpers({
+	eventCompactClasses: function() {
+		var eventCompactClasses = [];
+		if (Template.instance().withDate) {
+			eventCompactClasses.push('has-date');
+		}
+		if (moment().isAfter(this.end)) {
+			eventCompactClasses.push('is-past');
+		}
+
+		return eventCompactClasses.join(' ');
+	},
+
+	withDate: function() {
+		return Template.instance().withDate;
+	},
+
+	weekdayShort(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('ddd');
+	}
+});
+
+Template.eventCompact.events({
+	'mouseover .js-venue-link, mouseout .js-venue-link': function(e, instance){
+		instance.$('.event-compact').toggleClass('elevate_child');
+	}
+});
+
+Template.eventCompact.rendered = function() {
+	this.$('.event-compact').dotdotdot();
+};

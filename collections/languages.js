@@ -12,6 +12,7 @@ Languages = {
 		, name:    'العربية'
 		, short:   'العربية'
 		, english: 'Arabic'
+		, visible: false
 		}
 	,
 	'da':
@@ -19,6 +20,7 @@ Languages = {
 		, name:    'Dansk'
 		, short:   'da'
 		, english: 'Danish'
+		, visible: true
 		}
 	,
 	'de':
@@ -26,6 +28,7 @@ Languages = {
 		, name:    'Deutsch'
 		, short:   'de'
 		, english: 'German'
+		, visible: true
 		}
 	,
 	'el':
@@ -33,6 +36,7 @@ Languages = {
 		, name:    'Ελληνικά'
 		, short:   'Ελ'
 		, english: 'Greek'
+		, visible: true
 		}
 	,
 	'en':
@@ -40,6 +44,7 @@ Languages = {
 		, name:    'English'
 		, short:   'en'
 		, english: 'English'
+		, visible: true
 		}
 	,
 	'es':
@@ -47,6 +52,7 @@ Languages = {
 		, name:    'Castellano'
 		, short:   'es'
 		, english: 'Spanish'
+		, visible: true
 		}
 	,
 	'fr':
@@ -54,6 +60,15 @@ Languages = {
 		, name:    'Français'
 		, short:   'fr'
 		, english: 'French'
+		, visible: true
+		}
+	,
+	'pt':
+		{ lg:      'pt'
+		, name:    'Português'
+		, short:   'pt'
+		, english: 'Portuguese'
+		, visible: true
 		}
 	,
 	'tr':
@@ -61,6 +76,7 @@ Languages = {
 		, name:    'Türkçe'
 		, short:   'tr'
 		, english: 'Turkish'
+		, visible: false
 		}
 	,
 	'zh_CN':
@@ -68,6 +84,7 @@ Languages = {
 		, name:    '中文'
 		, short:   '中文'
 		, english: 'Simplified Chinese'
+		, visible: false
 		}
 	,
 	'zh_TW':
@@ -75,6 +92,7 @@ Languages = {
 		, name:    '國語'
 		, short:   '國語'
 		, english: 'Guóyǔ, Taiwanese'
+		, visible: false
 		}
 	,
 	'de_ZH':
@@ -82,5 +100,6 @@ Languages = {
 		, name:    'Züritüütsch'
 		, short:   'zri-tü'
 		, english: 'Zurich German'
+		, visible: true
 		}
 };
