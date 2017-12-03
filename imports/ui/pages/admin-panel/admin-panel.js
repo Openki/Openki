@@ -80,7 +80,7 @@ Template.featureGroup.events({
 		});
 	},
 
-	'click #unsetFeaturedGroup'(event, instance) {
+	'click .js-unset-featured-group'(event, instance) {
 		instance.busy('deleting');
 		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
 			if (err) {
