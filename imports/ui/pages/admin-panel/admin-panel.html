@@ -40,7 +40,7 @@
 					The group "{GROUP}" is featured for the region "{REGION}".
 				{{/mf}}
 			</div>
-			<button type="button" id="unsetFeaturedGroup" class="btn btn-delete" {{disabledIfBusy}}>
+			<button type="button" class="btn btn-delete js-unset-featured-group" {{disabledIfBusy}}>
 				{{#if busy 'deleting'}}
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
 					{{mf '_button.deleting'}}
