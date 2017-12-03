@@ -46,8 +46,8 @@
 					{{mf '_button.deleting'}}
 				{{else}}
 					<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
-					{{#mf KEY='featureGroup.deleteButton' NAME=regionName}}
-						Remove the featured group for "{NAME}"
+					{{#mf KEY='featureGroup.deleteButton' REGION=regionName}}
+						Remove the featured group for "{REGION}"
 					{{/mf}}
 				{{/if}}
 			</button>
@@ -69,8 +69,8 @@
 					{{mf '_button.saving'}}
 				{{else}}
 					<i class="fa fa-fw fa-flag" aria-hidden="true"></i>
-					{{#mf KEY='featureGroup.saveButton' NAME=regionName}}
-						Feature this group in the region "{NAME}"
+					{{#mf KEY='featureGroup.saveButton' REGION=regionName}}
+						Feature this group in the region "{REGION}"
 					{{/mf}}
 				{{/if}}
 			</button>

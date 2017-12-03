@@ -4,8 +4,8 @@
 			<div class="featured-group">
 				<div class="featured-group-header">
 					<i class="fa fa-fw fa-star" aria-hidden="true"></i>
-					{{#mf KEY='featuredGroup.heading' NAME=regionName}}
-						Featured group in {NAME}
+					{{#mf KEY='featuredGroup.heading' REGION=regionName}}
+						Featured group in {REGION}
 					{{/mf}}
 				</div>
 				<div class="featured-group-body">
@@ -21,8 +21,8 @@
 						</div>
 						<div class="featured-group-links">
 							<a href="{{pathFor 'groupDetails' _id=featuredGroup._id}}">
-								{{#mf KEY='featuredGroup.coursesOnOpenki' NAME=featuredGroup.name}}
-									Check out the courses of {NAME} on Openki!
+								{{#mf KEY='featuredGroup.coursesOnOpenki' GROUP=featuredGroup.name}}
+									Check out the courses of {GROUP} on Openki!
 								{{/mf}}
 							</a>
 						</div>
