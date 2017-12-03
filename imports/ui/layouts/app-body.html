@@ -1,0 +1,36 @@
+<template name="layout">
+	{{#if showRegionSplash}}
+		{{> regionsSplash}}
+	{{/if}}
+	{{> accountTasks}}
+	<div id="wrap">
+		<div id="topBar">
+			{{> navbar}}
+		</div>
+		<div id="outer" class="{{#if testWarning}}test-warning{{/if}}">
+			{{#if shownIntro}}
+				{{> introduction}}
+			{{/if}}
+
+			<div id="maincontent">
+			{{#if translate}}
+				<div class="container">
+					{{> translateInfo}}
+					{{#if mayTranslate}}
+						{{> yield}}
+					{{else}}
+						<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
+					{{/if}}
+				</div>
+			{{else}}
+				{{> yield}}
+				{{> messages}}
+			{{/if}}
+			</div>
+		</div>
+		<div class="push"></div>
+	</div>
+	{{> kioskLink}}
+	{{> tooltips}}
+	{{> footer}}
+</template>

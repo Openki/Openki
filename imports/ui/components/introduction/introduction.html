@@ -1,0 +1,66 @@
+<template name="introduction">
+	<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
+		<div class="introduction">
+			<h3>
+				{{#mf KEY='introduction.Title' SITENAME=siteName}}
+				What does {SITENAME} do for you?
+				{{/mf}}
+				{{#if openedIntro}}
+					<button type="button" class="btn btn-default js-introduction-toggle-btn introduction-hide-btn">
+						{{mf 'introduction.toggle.hide' 'Hide'}}
+					</button>
+				{{else}}
+					<button type="button" class="btn btn-default js-introduction-toggle-btn introduction-show-btn">
+						{{mf 'introduction.toggle.show' 'Show'}}
+					</button>
+				{{/if}}
+				<a class="js-introduction-close-btn"
+					href="#"
+					title="{{mf 'introduction.close.title' 'Close introduction'}}">
+					<span class="remove-btn glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</a>
+			</h3>
+			<div class="introduction-content">
+				<ul class="introduction-steps">
+					<li>
+						<h2><span class="fa fa-lightbulb-o" aria-hidden="true"></span></h2>
+						{{mf 'introduction.1_teachOrLearn' 'You want to learn something, or teach others.'}}
+					</li>
+					<li>
+						<h2><span class="fa fa-search" aria-hidden="true"></span></h2>
+						{{mf 'introduction.2_searchNPropose' 'You search if the course already exists. If not, you just propose it.'}}
+					</li>
+					{{#if clearfixFor "screenXS"}}
+						<div class="clearfix"></div>
+					{{/if}}
+					<li>
+						<h2><span class="fa fa-graduation-cap" aria-hidden="true"></span></h2>
+						{{mf 'introduction.3_enrole' 'Everybody can join your course as participant, mentor or host.'}}
+					</li>
+					{{#if clearfixFor "screenSM"}}
+						<div class="clearfix"></div>
+					{{/if}}
+					<li>
+						<h2><span class="fa fa-calendar-check-o" aria-hidden="true"></span></h2>
+						{{mf 'introduction.4_schedule' 'When everybody needed is in, a date gets fixed.'}}
+					</li>
+					{{#if clearfixFor "screenXS"}}
+						<div class="clearfix"></div>
+					{{/if}}
+					<li>
+						<h2><span class="fa fa-rocket" aria-hidden="true"></span></h2>
+						{{mf 'introduction.5_takePlace' 'The course takes place!'}}
+					</li>
+					<li>
+						<h2><span class="fa fa-info-circle" aria-hidden="true"></span></h2>
+						{{mf 'introduction.more' 'More infos:'}}<br>
+						<a href="http://about.openki.net" >{{mf 'main.about_link' 'About'}}</a><br>
+						<a href="/FAQ">{{mf 'main.faq_link' 'FAQ'}}</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+				{{> pricePolicy}}
+			</div>
+		</div>
+	</div>
+</template>

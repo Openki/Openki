@@ -1,0 +1,14 @@
+.modal-header {
+	background: $brand-primary;
+	color: $white;
+}
+
+.modal-header .close {
+	color: $white;
+	font-size: x-large;
+	opacity: .7;
+
+	&:hover {
+		opacity: 1;
+	}
+}
