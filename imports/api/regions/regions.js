@@ -8,6 +8,7 @@ import { Mongo } from 'meteor/mongo';
 // timeZone         -> String,  ex: "UTC+01:00"
 // courseCount      -> Number of courses in that region, calculated field
 // futureEventCount -> Number of future events in that region, calculated field
+// featuredGroup    -> ID of featured group
 // ===========================
 
 export default Regions = new Mongo.Collection('Regions');
