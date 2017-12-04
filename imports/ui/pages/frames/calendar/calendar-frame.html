@@ -12,6 +12,15 @@
 				{{> frameCalendarEvent event}}
 			{{/each}}
 		{{/each}}
+		{{#if moreEvents}}
+			<div class="show-more">
+				<button
+					class="btn btn-default js-show-more-events"
+					type="button">
+					{{mf 'frame.calendar.showMoreEvents' 'Show more events'}}
+				</button>
+			</div>
+		{{/if}}
 	{{else}}
 		{{> loadingRow}}
 	{{/if}}
