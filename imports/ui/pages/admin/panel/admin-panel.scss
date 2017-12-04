@@ -2,7 +2,7 @@
 	@include td-margin(right, 5px);
 }
 
-.admin-dashboard {
+.admin-panel {
 	@include make-row;
 }
 
@@ -29,16 +29,4 @@
 
 .admin-active-task {
 	margin-top: 15px;
-}
-
-.admin-featured-group {
-	$bg-color: lighten($green, 10%);
-
-	background-color: $bg-color;
-	border: 1px solid darken($bg-color, 5%);
-	padding: 15px;
-}
-
-.admin-featured-group-body {
-	margin-bottom: 10px;
 }

@@ -41,6 +41,13 @@ Router.map(function() {
 	});
 });
 
+Router.map(function() {
+	this.route('featureGroup', {
+		path: 'admin/feature-group',
+		template: 'featureGroup'
+	});
+});
+
 Router.map(function () {
 	this.route('venueMap',{
 		path: 'venues',
