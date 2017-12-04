@@ -101,7 +101,6 @@
 					</div>
 					<div class="form-group-element">
 						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
-						{{log this}}
 						{{#each availableRoles}}
 							{{> courseEditRole selected=../roles role=this members=../members}}
 						{{/each}}
