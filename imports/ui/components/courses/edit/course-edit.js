@@ -185,7 +185,7 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 
-	newCourseGroupName: function () {
+	newCourseGroupName: function() {
 		if (this.group) {
 			var groupId = this.group;
 			var group = Groups.findOne(groupId);
