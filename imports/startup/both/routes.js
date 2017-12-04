@@ -182,17 +182,21 @@ Router.map(function () {
 		template: 'framePropose',
 		layoutTemplate: 'frameLayout',
 		waitOn: () => Meteor.subscribe('regions'),
-		data: function() {
+		data() {
 			const predicates =
 				{ region: Predicates.id
 				, group: Predicates.id
 				, neededRoles: Predicates.ids
 				};
-
 			const params = Filtering(predicates).read(this.params.query).done();
-			const data = params.toQuery();
-			data.isFrame = true;
-			return data;
+
+			// add mentor role to be checked and the isFrame flag
+			return Object.assign(
+				params.toQuery(),
+				{ roles: ['mentor']
+				, isFrame: true
+				}
+			);
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(
