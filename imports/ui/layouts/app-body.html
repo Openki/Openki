@@ -15,19 +15,30 @@
 			{{/if}}
 
 			<div id="maincontent">
-			{{#if translate}}
-				<div class="container">
-					{{> translateInfo}}
-					{{#if mayTranslate}}
+				{{#if translate}}
+					<div class="container">
+						{{> translateInfo}}
+						{{#if mayTranslate}}
+							{{> yield}}
+						{{else}}
+							<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
+						{{/if}}
+					</div>
+				{{else if isAdminPage}}
+					<div class="container-sm">
+						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
+						{{#if isNotAdminPanel}}
+							<a href="{{pathFor 'adminPanel'}}">
+								<i class="fa fa-chevron-left"></i>
+								{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+							</a>
+						{{/if}}
 						{{> yield}}
-					{{else}}
-						<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
-					{{/if}}
-				</div>
-			{{else}}
-				{{> yield}}
+					</div>
+				{{else}}
+					{{> yield}}
+				{{/if}}
 				{{> messages}}
-			{{/if}}
 			</div>
 		</div>
 		<div class="push"></div>

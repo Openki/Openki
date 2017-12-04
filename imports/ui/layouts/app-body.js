@@ -45,6 +45,13 @@ Template.layout.helpers({
 
 	shownIntro: function() {
 		return Introduction.shownIntro();
+	},
+
+	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
+
+	isNotAdminPanel() {
+		const route = Router.current().route;
+		return route && route.getName() !== 'adminPanel';
 	}
 });
 

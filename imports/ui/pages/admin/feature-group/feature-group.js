@@ -1,53 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import Regions from '/imports/api/regions/regions.js';
 
-import './admin-panel.html';
-
-Template.adminPanel.onCreated(function adminOnCreated() {
-	this.activeTask = new ReactiveVar(false);
-
-	this.tasks = [
-		{ name: mf('adminDashboard.tasks.log', 'Show log')
-		, icon: 'fa-list-alt'
-		, routeName: 'log'
-		}
-	,
-		{ name: mf('adminDashboard.tasks.featuredGroup', 'Feature group')
-		, icon: 'fa-users'
-		, templateName: 'featureGroup'
-		}
-	];
-});
-
-Template.adminPanel.helpers({
-	isAdmin: () => privilegedTo('admin'),
-	activeTask: () => Template.instance().activeTask.get()
-});
-
-Template.adminPanel.events({
-	'click #backToDashboard'(event, instance) {
-		instance.activeTask.set(false);
-	}
-});
-
-Template.adminDashboard.helpers({
-	tasks: () => Template.instance().parentInstance().tasks
-});
-
-Template.adminDashboard.events({
-	'click .js-admin-task'(event, instance) {
-		if (this.templateName) {
-			instance.parentInstance().activeTask.set(this.templateName);
-		} else {
-			Router.go(this.routeName);
-		}
-	}
-});
+import './feature-group.html';
 
 Template.featureGroup.onCreated(function featureGroupOnCreated() {
 	this.subscribe('groupsFind', {});
