@@ -49,6 +49,8 @@ Template.layout.helpers({
 
 	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
 
+	isAdmin: () => privilegedTo('admin'),
+
 	isNotAdminPanel() {
 		const route = Router.current().route;
 		return route && route.getName() !== 'adminPanel';

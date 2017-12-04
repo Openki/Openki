@@ -27,13 +27,17 @@
 				{{else if isAdminPage}}
 					<div class="container-sm">
 						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
-						{{#if isNotAdminPanel}}
-							<a href="{{pathFor 'adminPanel'}}">
-								<i class="fa fa-chevron-left"></i>
-								{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
-							</a>
+						{{#if isAdmin}}
+							{{#if isNotAdminPanel}}
+								<a href="{{pathFor 'adminPanel'}}">
+									<i class="fa fa-chevron-left"></i>
+									{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+								</a>
+							{{/if}}
+							{{> yield}}
+						{{else}}
+							{{mf 'adminPanel.pleaseLogin' 'Only for administrators'}}
 						{{/if}}
-						{{> yield}}
 					</div>
 				{{else}}
 					{{> yield}}
