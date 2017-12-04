@@ -5,8 +5,8 @@ import { assert } from 'meteor/practicalmeteor:chai';
 import { subscriptionsReady, elementsReady } from '/imports/ClientUtils.app-test.js';
 
 if (Meteor.isClient) {
-	describe('Frontpage', function (done) {
-		it('should list 8 courses for unauthenticated user (Testistan)', function () {
+	describe.only('Frontpage', function() {
+		it('should list 8 courses for unauthenticated user (Testistan)', function(done) {
 			Router.go('/');
 			subscriptionsReady().then(() => {
 				return elementsReady(() => {
