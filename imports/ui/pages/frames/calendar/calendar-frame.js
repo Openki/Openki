@@ -3,60 +3,45 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { _ } from 'meteor/underscore';
 
 import '/imports/ui/components/loading/loading.js';
 
 import './calendar-frame.html';
 
-Template.frameCalendar.onCreated(function() {
-	var instance = this;
-
-	instance.groupedEvents = new ReactiveVar([]);
-	instance.days = new ReactiveVar([]);
+Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
+	this.groupedEvents = new ReactiveVar([]);
+	this.days = new ReactiveVar([]);
 
 	const query = Router.current().params.query;
 	this.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
 
-	instance.autorun(function() {
-		var filter = Events.Filtering()
-		             .read(Router.current().params.query)
-		             .done();
-
-		var filterParams = filter.toParams();
+	this.autorun(() => {
+		const filter = Events.Filtering().read(query).done();
+		const filterParams = filter.toParams();
 		filterParams.after = new Date();
+		const limit = this.limit.get();
 
-		const limit = instance.limit.get();
-		instance.subscribe('Events.findFilter', filterParams, limit + 1);
+		this.subscribe('Events.findFilter', filterParams, limit + 1);
 
-		var events =
-			Events
-			.find({}, { sort: { start: 1}, limit })
-			.fetch();
-
-		var groupedEvents = _.groupBy(events, function(event) {
+		const events = Events.find({}, { sort: { start: 1}, limit }).fetch();
+		const groupedEvents = _.groupBy(events, (event) => {
 			return moment(event.start).format('LL');
 		});
 
-		instance.groupedEvents.set(groupedEvents);
-		instance.days.set(Object.keys(groupedEvents));
+		this.groupedEvents.set(groupedEvents);
+		this.days.set(Object.keys(groupedEvents));
 	});
 
-	instance.allRegions = Session.get('region') == 'all';
+	this.allRegions = Session.equals('region', 'all');
 });
 
 Template.frameCalendar.helpers({
-	'ready': function() {
-		return Template.instance().subscriptionsReady();
-	},
+	ready: () => Template.instance().subscriptionsReady(),
 
-	'days': function() {
-		return Template.instance().days.get();
-	},
+	days: () => Template.instance().days.get(),
 
-	'eventsOn': function(day) {
-		var groupedEvents = Template.instance().groupedEvents.get();
-		return groupedEvents[day];
-	},
+	eventsOn: day => Template.instance().groupedEvents.get()[day],
 
 	moreEvents() {
 		const limit = Template.instance().limit.get();
@@ -76,29 +61,23 @@ Template.frameCalendar.events({
 	}
 });
 
-
-Template.frameCalendarEvent.onCreated(function() {
+Template.frameCalendarEvent.onCreated(function frameCalendarEventOnCreated() {
 	this.expanded = new ReactiveVar(false);
 });
 
-
 Template.frameCalendarEvent.helpers({
-	'allRegions': function() {
-		return Template.instance().parentInstance().allRegions;
-	},
+	allRegions: () => Template.instance().parentInstance().allRegions,
 
-	'regionName': function() {
+	regionName() {
 		return Regions.findOne(this.region).name;
 	},
 
-	'expanded': function() {
-		return Template.instance().expanded.get();
-	}
+	expanded: () => Template.instance().expanded.get()
 });
 
 Template.frameCalendarEvent.events({
-	'click .js-toggle-event-details': function(e, instance) {
-		$(e.currentTarget).toggleClass('active');
+	'click .js-toggle-event-details'(event, instance) {
+		$(event.currentTarget).toggleClass('active');
 		instance.$('.frame-list-item-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
 	}
