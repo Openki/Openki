@@ -1,7 +1,3 @@
-#backToDashboard > i {
-	@include td-margin(right, 5px);
-}
-
 .admin-panel {
 	@include make-row;
 }
@@ -25,8 +21,4 @@
 		transition-duration: .15s;
 		transition-property: #{'background-color border-color'};
 	}
-}
-
-.admin-active-task {
-	margin-top: 15px;
 }

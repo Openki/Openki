@@ -29,12 +29,14 @@
 						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
 						{{#if isAdmin}}
 							{{#if isNotAdminPanel}}
-								<a href="{{pathFor 'adminPanel'}}">
+								<a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
 									<i class="fa fa-chevron-left"></i>
 									{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
 								</a>
 							{{/if}}
-							{{> yield}}
+							<div class="admin-active-task">
+								{{> yield}}
+							</div>
 						{{else}}
 							{{mf 'adminPanel.pleaseLogin' 'Only for administrators'}}
 						{{/if}}

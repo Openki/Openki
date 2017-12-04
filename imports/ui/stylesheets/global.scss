@@ -1,3 +1,11 @@
+.admin-active-task {
+	margin-top: 15px;
+}
+
+.admin-back-to-dashboard > i {
+	@include td-margin(right, 5px);
+}
+
 .checkmark {
 	color: $green-dark;
 	@include td-padding(left, 5px);
