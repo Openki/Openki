@@ -64,6 +64,8 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - Run `meteor npm run dev`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
+- There are other actions you can use with `meteor npm run`: `app-test` and `js-lint`.
+
 ### Documentation
 - The technical documentation is here on Github in the :book: [Wiki](https://github.com/Openki/Openki/wiki)
 - More documentation can be found on our [blog](http://about.openki.net/?page_id=1043)
