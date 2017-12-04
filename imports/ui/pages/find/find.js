@@ -213,7 +213,9 @@ Template.find.helpers({
 		var course = CourseTemplate();
 		course.name = instance.filter.get('search');
 		var groupId = instance.filter.get('group');
-		if (groupId) course.group = groupId;
+		if (groupId) {
+			course.group = groupId;
+		}
 		return course;
 	},
 
