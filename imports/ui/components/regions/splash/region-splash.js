@@ -22,6 +22,10 @@ Template.regionsSplash.events({
 		Session.set('showRegionSplash', false);
 	},
 
+	'click .js-region-link'(event, instance) {
+		instance.$('#regionsSplash').modal('hide');
+	},
+
 	'click .js-region-search'(event, instance) {
 		instance.$(event.currentTarget).select();
 	},
