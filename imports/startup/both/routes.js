@@ -181,28 +181,23 @@ Router.map(function () {
 				subs.subscribe('group', this.params._id),
 			];
 		},
-		data: function () {
-			var group;
-			var isNew = this.params._id === 'create';
+		data() {
+			let group;
+			const isNew = this.params._id === 'create';
 			if (isNew) {
-				group = {
-					_id: 'create'
-				};
+				group = { _id: 'create'	};
 			} else {
-				group = Groups.findOne({_id: this.params._id});
+				group = Groups.findOne(this.params._id);
 			}
 
 			if (!group) return false;
 
-			var data = {
-				group: group,
-				courseQuery: _.extend(this.params.query, {group: group._id}),
-				isNew: isNew,
-				showCourses: !isNew,
-			};
+			const courseQuery = Object.assign(this.params.query, {
+				group: group._id,
+				region: Session.get('region')
+			});
 
-
-			return data;
+			return { courseQuery, group, isNew, showCourses: !isNew };
 		},
 		onAfterAction: function() {
 			var group = Groups.findOne({_id: this.params._id});
