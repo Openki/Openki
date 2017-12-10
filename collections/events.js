@@ -368,7 +368,7 @@ Meteor.methods({
 
 			Meteor.call('updateEventVenue', eventId, AsyncTools.logErrors);
 			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
-			Meteor.call('regions.updateCounters', event.region, AsyncTools.logErrors);
+			Meteor.call('reigon.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
 			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, AsyncTools.logErrors);
@@ -390,7 +390,7 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
-		Meteor.call('regions.updateCounters', event.region, AsyncTools.logErrors);
+		Meteor.call('reigon.updateCounters', event.region, AsyncTools.logErrors);
 	},
 
 
