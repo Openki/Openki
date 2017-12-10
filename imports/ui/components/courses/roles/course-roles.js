@@ -10,21 +10,9 @@ import '/imports/ui/components/buttons/buttons.js';
 import './course-roles.html';
 
 Template.courseRole.created = function() {
-	this.enrolling = new ReactiveVar(false);
-
 	this.busy(false);
-
+	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
-
-	this.firstSteps = () => {
-		// make sure that first steps are only shown once per course
-		const parentInstance = this.parentInstance();
-		if (parentInstance.firstStepsShown) return;
-
-		this.showFirstSteps.set(true);
-		parentInstance.firstStepsShown = true;
-	};	this.showFirstSteps = new ReactiveVar(false);
-
 };
 
 Template.courseRole.helpers({
@@ -74,7 +62,7 @@ Template.courseRole.events({
 				if (err) {
 					console.error(err);
 				} else {
-					instance.firstSteps();
+					this.showFirstSteps.set(true);
 					instance.busy(false);
 					instance.enrolling.set(false);
 					Meteor.call('change_comment', this.course._id, comment, err => {
@@ -101,7 +89,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-show-first-steps'(event, instance) {
-		instance.firstSteps();
+		instance.showFirstSteps.set(true);
 	},
 
 	'click #firstStepsComment'() {
