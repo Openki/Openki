@@ -192,14 +192,14 @@ Template.venueEdit.events({
 		const venueId = this._id ? this._id : '';
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveVenue', 'Login and save venue'), () => {
-			Meteor.call('venue.save', venueId, changes, (err) => {
+			Meteor.call('venue.save', venueId, changes, (err, res) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the venue went wrong', err);
 				} else {
 					AddMessage(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'), 'success');
 					if (instance.isNew) {
-						Router.go('venueDetails', { _id: venueId });
+						Router.go('venueDetails', { _id: res });
 					} else {
 						instance.parentInstance().editing.set(false);
 					}
