@@ -36,7 +36,7 @@ Template.courseMembers.helpers({
 	        var aRoles = _.without(a.roles, 'participant');
 	        var bRoles = _.without(b.roles, 'participant');
 
-	        return aRoles.length < bRoles.length;
+	        return bRoles.length - aRoles.length;
         });
 
 		var membersLimit = Template.instance().membersLimit.get();
