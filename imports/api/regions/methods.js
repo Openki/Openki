@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import Regions from './regions.js';
 
 Meteor.methods({
-	'reigon.updateCounters'(selector) {
+	'region.updateCounters'(selector) {
 		Regions.find(selector).forEach((region) => {
 			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 			const regionId = region._id;
