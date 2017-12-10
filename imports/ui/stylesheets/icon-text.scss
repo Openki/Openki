@@ -1,0 +1,17 @@
+.icon-text {
+	display: table;
+}
+
+.icon-text-icon,
+.icon-text-text {
+	display: table-cell;
+	text-align: left;
+}
+
+.icon-text-icon {
+	padding-right: 3px;
+}
+
+.icon-text-icon > i {
+	color: $brand-primary;
+}
