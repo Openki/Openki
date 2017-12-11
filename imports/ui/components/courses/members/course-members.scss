@@ -84,6 +84,7 @@
 }
 
 .course-member-comment {
+	@include clearfix;
 	padding-top: 10px;
 	position: relative;
 }
@@ -104,7 +105,9 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 	background-color: lighten($blue-lighter, 6%);
 	border: 1px solid $course-member-comment-border-color;
 	border-radius: 3px;
+	float: left;
 	font-size: $font-size-base;
+	max-width: 100%;
 	overflow: hidden;
 	padding: 5px 10px;
 	word-wrap: break-word;
