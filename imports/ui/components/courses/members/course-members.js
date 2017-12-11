@@ -146,26 +146,5 @@ Template.courseMember.events({
 	'click .js-remove-team': function(e, template) {
 		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
-	},
-
-	'click .js-show-full-comment'(event, instance) {
-		instance.dotdotdot.destroy();
 	}
-});
-
-Template.courseMember.onRendered(function courseMemberOnCreated() {
-	this.autorun(() => {
-		// don't truncate if logged in and course member
-		if (Template.currentData().member.user === Meteor.userId()) return false;
-
-		this.dotdotdot =
-			this.$('.course-member-comment-body')
-			.dotdotdot({
-				callback(isTruncated) {
-					this.isTruncated = isTruncated;
-				}
-			})
-			.data('dotdotdot');
-	});
-
 });
