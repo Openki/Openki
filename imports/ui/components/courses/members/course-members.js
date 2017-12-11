@@ -112,7 +112,7 @@ Template.courseMember.helpers({
 
 	rolelistIcon: function(roletype) {
 		if (roletype != "participant") {
-			return _.findWhere(Roles, { type: roletype }).icon;
+			return Roles.find((role) => role.type === roletype).icon;
 		}
 	},
 
