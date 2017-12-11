@@ -31,20 +31,26 @@ Template.courseMembers.helpers({
 		return userId && HasRoleUser(this.members, 'team', userId);
 	},
 
+	ownUserMember() {
+		return this.members.find((member) => member.user === Meteor.userId());
+	},
+
 	sortedMembers: function() {
-    	var sortedMembers = this.members.sort(function(a, b) {
-	        var aRoles = _.without(a.roles, 'participant');
-	        var bRoles = _.without(b.roles, 'participant');
+		return (
+			this.members
+			// remove own user if logged in and course member (it then already
+			// appears on top)
+			.filter((member) => member.user !== Meteor.userId())
+			// sort by amount of roles, not counting 'participant' role
+			.sort((a, b) => {
+				const aRoles = a.roles.filter((role) => role !== 'participant');
+				const bRoles = b.roles.filter((role) => role !== 'participant');
 
-	        return bRoles.length - aRoles.length;
-        });
-
-		var membersLimit = Template.instance().membersLimit.get();
-		if (membersLimit) {
-			sortedMembers = sortedMembers.slice(0, membersLimit);
-		}
-
-		return sortedMembers;
+				return bRoles.length - aRoles.length;
+			})
+			// apply limit
+			.slice(0, Template.instance().membersLimit.get())
+		);
 	},
 
 	limited: function() {
@@ -90,9 +96,12 @@ Template.courseMember.onCreated(function() {
 });
 
 Template.courseMember.helpers({
-	showMemberRoles: function() {
-		var memberRoles = this.member.roles;
-		return memberRoles.length != 1 || memberRoles[0] != "participant";
+	ownUserMemberClass() {
+		if (this.isOwnUserMember) return 'is-own-user';
+    },
+
+	memberRoles() {
+		return this.member.roles.filter(role => role !== 'participant');
 	},
 
 	roleShort: function() { return 'roles.'+this+'.short'; },
@@ -115,6 +124,10 @@ Template.courseMember.helpers({
 	mayUnsubscribeFromTeam: function(label) {
 		return label == 'team'
 			&& MayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+	},
+
+	showMemberComment() {
+		return this.member.comment || this.editableMessage;
 	}
 });
 
@@ -133,5 +146,26 @@ Template.courseMember.events({
 	'click .js-remove-team': function(e, template) {
 		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
 		return false;
+	},
+
+	'click .js-show-full-comment'(event, instance) {
+		instance.dotdotdot.destroy();
 	}
+});
+
+Template.courseMember.onRendered(function courseMemberOnCreated() {
+	this.autorun(() => {
+		// don't truncate if logged in and course member
+		if (Template.currentData().member.user === Meteor.userId()) return false;
+
+		this.dotdotdot =
+			this.$('.course-member-comment-body')
+			.dotdotdot({
+				callback(isTruncated) {
+					this.isTruncated = isTruncated;
+				}
+			})
+			.data('dotdotdot');
+	});
+
 });
