@@ -1,69 +1,10 @@
-import '/imports/Filtering.js';
-import '/imports/Predicates.js';
-import Courses from '/imports/api/courses/courses.js';
-
+import { Meteor } from 'meteor/meteor';
 import '/imports/HtmlTools.js';
 
-// ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "short"         -> String
-// "claim"         -> String
-// "description"   -> String
-// "members"       -> List of userIds
-// ===========================
+import Courses from '../courses/courses.js';
+import Groups from './groups.js';
 
-Groups = new Meteor.Collection("Groups");
-
-Groups.Filtering = () => Filtering(
-	{ tags: Predicates.ids
-	}
-);
-
-
-
-/* Find groups for given filters
- *
- * filter: dictionary with filter options
- *   own: Limit to groups where logged-in user is a member
- *   user: Limit to groups where given user ID is a member (client only)
- *   tags: Group must have all of the given tags
- *
- */
-Groups.findFilter = function(filter) {
-	var find = {};
-
-	if (filter.own) {
-		var me = Meteor.userId();
-		if (!me) return []; // I don't exist? How could I be in a group?!
-
-		find.members = me;
-	}
-
-	// If the property is set but falsy, we don't return anything
-	if (filter.hasOwnProperty('user')) {
-		if (!filter.user) return [];
-		find.members = filter.user;
-	}
-
-	if (filter.tags && filter.tags.length > 0) {
-    	find.tags = { $all: filter.tags };
-	}
-
-	return Groups.find(find);
-};
-
-GroupLib = {};
-
-GroupLib.isMember = function(userId, groupId) {
-	check(userId, String);
-	check(groupId, String);
-	return Groups.find({
-		_id: groupId,
-		members: userId
-	}).count() > 0;
-};
-
+import IsGroupMember from '/imports/utils/is-group-member.js';
 
 Meteor.methods({
 	saveGroup: function(groupId, changes) {
@@ -95,7 +36,7 @@ Meteor.methods({
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !GroupLib.isMember(Meteor.userId(), group._id)) {
+		if (!isNew && !IsGroupMember(Meteor.userId(), group._id)) {
 			throw new Meteor.Error(401, "Denied");
 		}
 
@@ -187,7 +128,7 @@ Meteor.methods({
 		if (!senderId) return;
 
 		// Only current members of the group may list courses into groups
-		if (!GroupLib.isMember(senderId, groupId)) {
+		if (!IsGroupMember(senderId, groupId)) {
 			throw new Meteor.Error(401, "Denied");
 		}
 

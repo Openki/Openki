@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 
 import Categories from '/imports/api/categories/categories.js';
 import Courses from '/imports/api/courses/courses.js';
+import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 

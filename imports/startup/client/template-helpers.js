@@ -1,4 +1,6 @@
 import { Template } from 'meteor/templating';
+import Groups from '/imports/api/groups/groups.js';
+
 
 const helpers = {
 	siteName() {

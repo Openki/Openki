@@ -5,6 +5,8 @@ import '/imports/StringTools.js';
 import '/imports/AsyncTools.js';
 import '/imports/IdTools.js';
 
+import Groups from '/imports/api/groups/groups.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date

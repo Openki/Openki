@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Groups from '/imports/api/groups/groups.js';
 
 // The code to update the groups and groupOrganizers field must do the same
 // thing for Courses and Events. So we parameterize the methods
