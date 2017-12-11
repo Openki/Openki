@@ -66,17 +66,22 @@
 				<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 			</button>
 		{{/if}}
-		{{#if showMemberComment}}
+		{{#if editableMessage}}
 			<div class="course-member-comment">
 				<div class="course-member-comment-arrow"></div>
 				<div class="course-member-comment-body">
-					{{#if editableMessage}}
 						{{> editable editableMessage}}
-					{{else}}
-						{{member.comment}}
-					{{/if}}
 				</div>
 			</div>
+		{{else}}
+			{{#if showMemberComment}}
+			<div class="course-member-comment">
+				<div class="course-member-comment-arrow"></div>
+				<div class="course-member-comment-body">
+						{{member.comment}}
+				</div>
+			</div>
+			{{/if}}
 		{{/if}}
 	</div>
 </template>
