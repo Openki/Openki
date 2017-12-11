@@ -5,15 +5,23 @@
 		{{/each}}
 	</style>
 
-	{{#if ready}}
-		{{#each day in days}}
-			<h4 class="frame-list-title">{{day}}</h4>
-			{{#each event in (eventsOn day)}}
-				{{> frameCalendarEvent event}}
-			{{/each}}
+	{{#each day in days}}
+		<h4 class="frame-list-title">{{day}}</h4>
+		{{#each event in (eventsOn day)}}
+			{{> frameCalendarEvent event}}
 		{{/each}}
-	{{else}}
+	{{/each}}
+	{{#unless ready}}
 		{{> loadingRow}}
+	{{/unless}}
+	{{#if moreEvents}}
+		<div class="show-more">
+			<button
+				class="btn btn-default js-show-more-events"
+				type="button">
+				{{mf 'frame.calendar.showMoreEvents' 'Show more events'}}
+			</button>
+		</div>
 	{{/if}}
 </template>
 

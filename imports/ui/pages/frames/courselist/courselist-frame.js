@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
 import Regions from '/imports/api/regions/regions.js';
-
+import Courses from '/imports/api/courses/courses.js';
 import Metatags from '/imports/Metatags.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 

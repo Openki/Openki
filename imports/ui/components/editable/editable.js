@@ -8,10 +8,9 @@ import './editable.html';
 [Template.editable, Template.editableTextarea].forEach(template => {
 	template.onCreated(function() {
 		// This reeks
-		this.autorun(() => {
-			const data = Template.currentData();
-			if (data) this.state = data.connect(this);
-		});
+		const data = Template.currentData();
+		if (!data) throw new Error("Editable got empty data");
+		this.state = data.connect(this);
 	});
 
 	template.onRendered(function() {
@@ -21,7 +20,7 @@ import './editable.html';
 		var changedByUser = false;
 
 		instance.getEdited = function() {
-			if (!instance.state.changed.get()) return false;
+			if (!instance.state || !instance.state.changed.get()) return false;
 			return instance.state.simple ? editable.text() : editable.html();
 		};
 

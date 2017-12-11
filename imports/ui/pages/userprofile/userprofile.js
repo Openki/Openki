@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list.js';
 import '/imports/ui/components/profiles/verify-email/verify-email.js';
@@ -45,7 +46,7 @@ Template.userprofile.helpers({
 		var coursesForRole = [];
 
 		involvedIn.forEach(function(course) {
-			if(!!hasRoleUser(course.members, role, userID)) {
+			if(!!HasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
 		});

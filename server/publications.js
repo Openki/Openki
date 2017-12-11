@@ -4,20 +4,6 @@ Meteor.publish('version', function() {
 	return Version.find();
 });
 
-Meteor.publish ('courses', function(region){
-	if(!region) {
-		return Courses.find();
-	} else {
-		return Courses.find({region: region});
-	}
-});
-
-Meteor.publish ('courseDetails', function(id) {
-	return Courses.find({ _id: id });
-});
-
-Meteor.publish('Courses.findFilter', Courses.findFilter);
-
 Meteor.publish ('venues', function(region) {
 	check(region, Match.Maybe(String));
 	var find = {};

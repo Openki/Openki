@@ -68,10 +68,6 @@ Template.courseDetailsPage.onCreated(function() {
 	this.autorun(function() {
 		var data = Template.currentData();
 		var course = data.course;
-		var editingPermitted = course.editableBy(Meteor.user());
-
-		data.editableName = editingPermitted && instance.editableName;
-		data.editableDescription = editingPermitted && instance.editableDescription;
 
 		instance.editableName.setText(course.name);
 		instance.editableDescription.setText(course.description);
@@ -79,8 +75,8 @@ Template.courseDetailsPage.onCreated(function() {
 });
 
 Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
-	currentUserMayEdit: function() {
-		return this.editableBy(Meteor.user());
+	mayEdit: function() {
+		return this.course && this.course.editableBy(Meteor.user());
 	},
 	coursestate: function() {
 		if (this.nextEvent) return 'has-upcoming-events';
@@ -92,6 +88,18 @@ Template.courseDetailsPage.helpers({    // more helpers in course.roles.js
 	},
 	isProposal: function() {
 		return !this.course.nextEvent && !this.course.lastEvent;
+	},
+	editableName() {
+		return Template.instance().editableName;
+	},
+	editableDescription() {
+		return Template.instance().editableDescription;
+	}
+});
+
+Template.courseDetailsDescription.helpers({
+	mayEdit: function() {
+		return this.course && this.course.editableBy(Meteor.user());
 	},
 });
 

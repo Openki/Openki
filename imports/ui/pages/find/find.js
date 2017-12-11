@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import Courses from '/imports/api/courses/courses.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
@@ -212,9 +213,7 @@ Template.find.helpers({
 		var course = CourseTemplate();
 		course.name = instance.filter.get('search');
 		var groupId = instance.filter.get('group');
-		if (groupId) {
-			course.groups = [ groupId ];
-		}
+		if (groupId) course.group = groupId;
 		return course;
 	},
 
