@@ -1,46 +1,19 @@
+import { Meteor } from 'meteor/meteor';
+
+import Courses from '/imports/api/courses/courses.js';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+
+import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import '/imports/notification/Notification.js';
 import '/imports/StringTools.js';
 
-import Courses from '/imports/api/courses/courses.js';
-import { HasRoleUser } from '/imports/utils/course-role-utils.js';
-
-// ======== DB-Model: ========
-// "_id"          -> ID
-// "title"        -> String
-// "text"         -> String
-// "userId"       -> ID_users undefined if anon comment
-// "courseId"     -> ID_Courses
-// "time_created" -> Date
-// "time_updated" -> Date
-// "parentId"     -> ID_CourseDiscussions  (optional)
-// ===========================
-
-CourseDiscussions = new Meteor.Collection("CourseDiscussions");
-
-
-mayDeletePost = function(user, course,post){
-	if (!user) return false;
-	return user && (privileged(user, 'admin') || HasRoleUser(course.members, 'team', user._id) || ( post.userId == user._id ));
-};
-
-mayEditPost = function(user, post){
-	if (!user) return false;
-	return user && post.userId == user._id;
-};
-
-var sanitizeComment = function(comment) {
-	return {
-		title: StringTools.saneText(comment.title).substr(0, 200).trim(),
-		text: StringTools.saneText(comment.text).substr(0, 640*1024).trim(),
-	};
-};
-
-CourseDiscussions.validComment = function(text) {
-	return text.trim().length > 0;
-};
+const sanitizeComment = (comment) => ({
+	title: StringTools.saneText(comment.title).substr(0, 200).trim(),
+	text: StringTools.saneText(comment.text).substr(0, 640*1024).trim()
+});
 
 Meteor.methods({
-	postComment: function(comment) {
+	'courseDiscussion.postComment': function(comment) {
 		check(comment, {
 			courseId: String,
 			parentId: Match.Optional(String),
@@ -103,7 +76,7 @@ Meteor.methods({
 	},
 
 
-	editComment: function(comment) {
+	'courseDiscussion.editComment': function(comment) {
 		check(comment, {
 			_id: String,
 			title: String,
@@ -116,7 +89,9 @@ Meteor.methods({
 		if (!originalComment) throw new Meteor.error(404, "no such comment");
 
 		var user = Meteor.user();
-		if (!mayEditPost(user, originalComment)) throw new Meteor.error(401, "you cant");
+		if (!CourseDiscussionUtils.mayEditPost(user, originalComment)) {
+			throw new Meteor.error(401, "you cant");
+		}
 
 		update.time_updated = new Date();
 
@@ -124,7 +99,7 @@ Meteor.methods({
 	},
 
 
-	deleteComment: function(commentId) {
+	'courseDiscussion.deleteComment': function(commentId) {
 		check(commentId, String);
 
 		var user = Meteor.user();
@@ -143,7 +118,7 @@ Meteor.methods({
 			throw new Meteor.Error(401, "delete not permitted");
 		}
 
-		if( !mayDeletePost(user, course, comment) ) {
+		if( !CourseDiscussionUtils.mayDeletePost(user, course, comment) ) {
 			throw new Meteor.Error(401, "delete not permitted");
 		}
 
