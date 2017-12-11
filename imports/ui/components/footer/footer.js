@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+import Version from '/imports/api/version/version.js';
+
 import './footer.html';
 
 Template.footer.helpers({

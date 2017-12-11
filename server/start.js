@@ -4,6 +4,8 @@ import '/imports/api/clientError/methods.js';
 
 import '/imports/AsyncTools.js';
 
+import Version from '/imports/api/version/version.js';
+
 Meteor.startup(function () {
 
 	applyUpdates();

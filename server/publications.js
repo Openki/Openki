@@ -1,9 +1,5 @@
 import '/imports/collections/Log.js';
 
-Meteor.publish('version', function() {
-	return Version.find();
-});
-
 Meteor.publish ('venues', function(region) {
 	check(region, Match.Maybe(String));
 	var find = {};
