@@ -8,6 +8,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Courses from '/imports/api/courses/courses.js';
 import Groups from '/imports/api/groups/groups.js';
 import Roles from '/imports/api/roles/roles.js';
+import Venues from '/imports/api/venues/venues.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 function finderRoute(path) {
