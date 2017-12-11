@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Roles from '/imports/api/roles/roles.js';
+
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import { AddMessage } from '/imports/api/messages/methods.js';

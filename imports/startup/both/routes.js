@@ -6,6 +6,7 @@ import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Courses from '/imports/api/courses/courses.js';
+import Roles from '/imports/api/roles/roles.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 function finderRoute(path) {

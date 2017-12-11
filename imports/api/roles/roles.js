@@ -6,8 +6,7 @@
 // "show_subscribers" -> Boolean
 // ===========================
 
-
-Roles =
+export default Roles =
 	[
 		{ 'type':        'participant'
 		, 'icon':        'fa fa-user'

@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import Roles from '/imports/api/roles/roles.js';
+
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
