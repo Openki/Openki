@@ -72,7 +72,6 @@
 
 // server/publications
 
-		"Version":true,
 		"Roles":true,
 		"Regions":true,
 		"CleanedRegion": true,

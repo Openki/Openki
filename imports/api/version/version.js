@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo'
+
 // ======== DB-Model: ========
 // "basic"         -> String    "v0.4.2-alpha"
 // "complete"      -> String    "v0.4.2-alpha-49-g1a8f329"
@@ -9,7 +11,4 @@
 // "restart"       -> Date      ISODate("2016-01-14T00:24:46.610Z")
 // ===========================
 
-
-
-
-Version = new Meteor.Collection("Version");
+export default Version = new Mongo.Collection('Version');
