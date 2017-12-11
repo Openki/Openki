@@ -4,11 +4,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Groups from '/imports/api/groups/groups.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import IsGroupMember from '/imports/utils/is-group-member.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
@@ -76,7 +78,7 @@ Template.groupDetails.onCreated(function() {
 		var data = Template.currentData();
 		var group = Groups.findOne(groupId) || {};
 		var userId = Meteor.userId();
-		var mayEdit = data.isNew || userId && GroupLib.isMember(userId, groupId);
+		var mayEdit = data.isNew || userId && IsGroupMember(userId, groupId);
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(group.name);

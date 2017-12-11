@@ -2,6 +2,7 @@ import Courses from '/imports/api/courses/courses.js';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
 import ensure from "./ensureFixture.js";
 import "./Prng.js";
+import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 
 import '/imports/StringTools.js';

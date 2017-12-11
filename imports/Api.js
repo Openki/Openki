@@ -1,4 +1,5 @@
 import Courses from '/imports/api/courses/courses.js';
+import Groups from '/imports/api/groups/groups.js';
 
 export default Api =
 	{ groups:

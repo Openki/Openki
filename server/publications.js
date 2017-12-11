@@ -68,19 +68,6 @@ Meteor.publish('userSearch', function(search) {
 	return UserLib.searchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });
 
-Meteor.publish('groupsFind', function(filter) {
-	// Filter function on the server doesn't have access to current user ID
-	if (filter.own) {
-		delete filter.own;
-		filter.user = this.userId;
-	}
-	return Groups.findFilter(filter);
-});
-
-Meteor.publish('group', function(groupId) {
-	return Groups.find(groupId);
-});
-
 
 Meteor.publish('log', function(filter, limit) {
 	// Non-admins get an empty list
