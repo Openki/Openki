@@ -69,8 +69,18 @@
 						<label>
 							{{mf 'course.roles.leave_message' 'You can leave a message to appear in the participants list:'}}
 						</label>
-						<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfo' 'an (optional) message like a greeting, wish, or interest'}}
+						{{#if checkRoleIsParticipant roletype.type}}
+							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}
 							>{{../../member.comment}}</textarea>
+						{{/if}}
+						{{#if checkRoleIsHost roletype.type}}
+							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}
+							>{{../../member.comment}}</textarea>
+						{{/if}}
+						{{#if checkRoleIsMentor roletype.type}}
+							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}
+							>{{../../member.comment}}</textarea>
+						{{/if}}
 					</div>
 					<div class="form-actions">
 						<button type="button" class="btn btn-save js-role-subscribe-btn" {{disabledIfBusy}}>
