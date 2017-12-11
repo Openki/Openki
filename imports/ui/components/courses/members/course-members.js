@@ -127,7 +127,8 @@ Template.courseMember.helpers({
 	},
 
 	showMemberComment() {
-		return this.member.comment || this.editableMessage;
+		var mayChangeComment = this.member.user === Meteor.userId();
+		return this.member.comment || mayChangeComment;
 	}
 });
 
