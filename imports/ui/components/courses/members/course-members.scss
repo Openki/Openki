@@ -105,15 +105,9 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 	border: 1px solid $course-member-comment-border-color;
 	border-radius: 3px;
 	font-size: $font-size-base;
-	max-height: 50px;
 	overflow: hidden;
 	padding: 5px 10px;
 	word-wrap: break-word;
-}
-
-.is-own-user .course-member-comment-body {
-	max-height: none;
-	overflow: visible;
 }
 
 .course-member-comment .editable {
