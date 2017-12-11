@@ -15,12 +15,6 @@ Meteor.publish('Venues.findFilter', function(find, limit) {
 	return Venues.findFilter(find, limit);
 });
 
-
-Meteor.publish('discussion', function(courseId) {
-	return CourseDiscussions.find({ courseId: courseId });
-});
-
-
 Meteor.publish('events', function(region) {
 	if(!region) {
 		return Events.find();

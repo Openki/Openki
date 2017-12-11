@@ -3,8 +3,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import Courses from '/imports/api/courses/courses.js';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 
@@ -176,12 +178,12 @@ Template.postShow.helpers({
 	},
 
 	mayEdit: function() {
-		return mayEditPost(Meteor.user(), this);
+		return CourseDiscussionUtils.mayEditPost(Meteor.user(), this);
 	},
 
 	mayDelete: function() {
 		var course = Courses.findOne(this.courseId);
-		return mayDeletePost(Meteor.user(), course, this);
+		return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, this);
 	},
 
 	hasBeenEdited: function() {
@@ -265,9 +267,9 @@ Template.post.events({
 			text: instance.$(".js-post-text").val()
 		};
 
-		var method = 'editComment';
+		var method = 'courseDiscussion.editComment';
 		if (instance.data.new) {
-			method = 'postComment';
+			method = 'courseDiscussion.postComment';
 
 			comment.courseId = instance.data.courseId;
 
@@ -299,7 +301,7 @@ Template.post.events({
 	'click button.js-delete-comment': function (event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
-		Meteor.call('deleteComment', this._id, function(err) {
+		Meteor.call('courseDiscussion.deleteComment', this._id, function(err) {
 			if (err) {
 				ShowServerError('Could not delete comment', err);
 			} else {
