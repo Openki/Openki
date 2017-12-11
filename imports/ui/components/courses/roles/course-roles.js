@@ -34,6 +34,22 @@ Template.courseRole.helpers({
 		return 'roles.' + role + '.subscribed';
 	},
 
+	getRoleType: function(){
+		return this.roletype.type;
+	},
+
+	roleIsParticipant: function(){
+		return this.roletype.type == "participant";
+	},
+
+	roleIsMentor: function(){
+		return this.roletype.type == "mentor";
+	},
+
+	roleIsHost: function(){
+		return this.roletype.type == "host";
+	},
+
 	maySubscribe: function(role) {
 		var operator = Meteor.userId();
 

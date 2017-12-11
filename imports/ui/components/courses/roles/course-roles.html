@@ -25,11 +25,23 @@
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course!'}}</b>
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=getRoleType}}</b>
 				<br>
-				{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
-					You will get an e-mail notification as soon as a date has been fixed.
-				{{/mf}}
+				{{#if roleIsParticipant}}
+					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
+						You will get an e-mail notification as soon as a date has been fixed.
+					{{/mf}}
+				{{/if}}
+				{{#if roleIsHost}}
+					{{#mf KEY='course.roles.firstSteps.informAboutVenue'}}
+						If not done already, please mention in your personal message information about the venue that you have access to.
+					{{/mf}}
+				{{/if}}
+				{{#if roleIsMentor}}
+					{{#mf KEY='course.roles.firstSteps.informAboutVenue'}}
+						If not done already, please mention in your personal message information about your experience on the topic
+					{{/mf}}
+				{{/if}}
 				<br><br>
 				{{#mf KEY='course.roles.firstSteps.ifQuestions'}}
 					If you have any questions concerning the course please write a comment.
