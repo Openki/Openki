@@ -16,6 +16,11 @@
 	</div>
 	{{#if members}}
 		<div class="course-members">
+			{{#if ownUserMember}}
+				{{#with ownUserMember}}
+                	{{> courseMember member=this course=.. isOwnUserMember=true}}
+				{{/with}}
+            {{/if}}
 			{{#each sortedMembers}}
 				{{> courseMember member=this course=..}}
 			{{/each}}
@@ -34,12 +39,11 @@
 </template>
 
 <template name="courseMember">
-	<div class="course-member">
-		<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+	<div class="course-member {{ownUserMemberClass}}">
 		{{> profilelink member.user}}
-		{{#if showMemberRoles}}
+		{{#if memberRoles.length}}
 			<ul class='course-member-roles'>
-				{{#each member.roles}}
+				{{#each memberRoles}}
 					<li class='{{this}} course-member-role'>
 						<span class="course-member-role-text">
 							<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
@@ -62,16 +66,19 @@
 				<span class="glyphicon glyphicon-bullhorn fa-fw" aria-hidden="true"></span>
 			</button>
 		{{/if}}
-		{{#if editableMessage}}
+		{{#if showMemberComment}}
 			<div class="course-member-comment">
-				{{> editable editableMessage}}
-			</div>
-		{{else}}
-			{{#if member.comment}}
-				<div class="course-member-comment">
-					{{member.comment}}
+				<div class="course-member-comment-arrow"></div>
+				<div class="course-member-comment-body">
+					{{#if editableMessage}}
+						{{> editable editableMessage}}
+					{{else}}
+						{{#if member.comment}}
+							{{member.comment}}
+						{{/if}}
+					{{/if}}
 				</div>
-			{{/if}}
+			</div>
 		{{/if}}
 	</div>
 </template>
