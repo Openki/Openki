@@ -6,7 +6,7 @@ import '/imports/IpLocation.js';
 /** List of routes that show different results when the region changes.
   */
 RegionSelection.regionDependentRoutes =
-	['home', 'find', 'calendar', 'venueMap'];
+	['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
 
 /** Subscribe to list of regions and configure the regions
   * This checks client storage for a region setting. When there is no previously

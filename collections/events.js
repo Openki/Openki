@@ -1,6 +1,8 @@
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 import Regions from '/imports/api/regions/regions.js';
+import Courses from '/imports/api/courses/courses.js';
+import UpdateMethods from '/imports/utils/update-methods.js';
 
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';

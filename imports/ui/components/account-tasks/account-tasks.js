@@ -7,6 +7,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import './account-tasks.html';
 
@@ -153,6 +154,9 @@ Template.loginFrame.events({
 					instance.setWarning('userNotFound');
 				}
 			} else {
+				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+					$('#bs-navbar-collapse-1').collapse('hide');
+				}
 				$('#accountTasks').modal('hide');
 			}
 		});
@@ -175,6 +179,9 @@ Template.loginFrame.events({
 			if (err) {
 				AddMessage(err.reason || 'Unknown error', 'danger');
 			} else {
+				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+					$('#bs-navbar-collapse-1').collapse('hide');
+				}
 				$('#accountTasks').modal('hide');
 			}
 		});
@@ -253,6 +260,9 @@ Template.registerFrame.events({
 					instance.setWarning('userExists');
 				}
 			} else {
+				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+					$('#bs-navbar-collapse-1').collapse('hide');
+				}
 				$('#accountTasks').modal('hide');
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {

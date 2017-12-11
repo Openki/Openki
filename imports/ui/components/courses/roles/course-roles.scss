@@ -6,6 +6,11 @@
 	width: 100%;
 }
 
+.course-role-title .close {
+	font-size: medium;
+	line-height: 1.5em;
+}
+
 .course-role-title {
 	background: $user-bg;
 }
@@ -29,4 +34,13 @@
 	@include clearfix;
 	background: $course-page-component-bg;
 	padding: 15px 15px 0;
+}
+
+.course-role-first-steps {
+	background-color: lighten($user-bg, 10%);
+	padding: 15px;
+}
+
+.course-role-first-steps .btn {
+	margin-top: 15px;
 }

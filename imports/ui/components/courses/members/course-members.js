@@ -5,6 +5,11 @@ import { Template } from 'meteor/templating';
 import Editable from '/imports/ui/lib/editable.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import {
+	HasRoleUser,
+	MaySubscribe,
+	MayUnsubscribe
+} from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
@@ -23,32 +28,34 @@ Template.courseMembers.helpers({
 
 	canNotifyAll() {
 		const userId = Meteor.userId();
-		return userId && hasRoleUser(this.members, 'team', userId);
+		return userId && HasRoleUser(this.members, 'team', userId);
+	},
+
+	ownUserMember() {
+		return this.members.find((member) => member.user === Meteor.userId());
 	},
 
 	sortedMembers: function() {
-    	var sortedMembers = this.members.sort(function(a, b) {
-	        var aRoles = _.without(a.roles, 'participant');
-	        var bRoles = _.without(b.roles, 'participant');
+		return (
+			this.members
+			// remove own user if logged in and course member (it then already
+			// appears on top)
+			.filter((member) => member.user !== Meteor.userId())
+			// sort by amount of roles, not counting 'participant' role
+			.sort((a, b) => {
+				const aRoles = a.roles.filter((role) => role !== 'participant');
+				const bRoles = b.roles.filter((role) => role !== 'participant');
 
-	        return aRoles.length < bRoles.length;
-        });
-
-		var membersLimit = Template.instance().membersLimit.get();
-		if (membersLimit) {
-			sortedMembers = sortedMembers.slice(0, membersLimit);
-		}
-
-		return sortedMembers;
+				return bRoles.length - aRoles.length;
+			})
+			// apply limit
+			.slice(0, Template.instance().membersLimit.get())
+		);
 	},
 
 	limited: function() {
 		var membersLimit = Template.instance().membersLimit.get();
-		return membersLimit && this.members.length >= membersLimit;
-	},
-
-	increaseBy: function() {
-		return Template.instance().increaseBy;
+		return membersLimit && this.members.length > membersLimit;
 	}
 });
 
@@ -89,15 +96,18 @@ Template.courseMember.onCreated(function() {
 });
 
 Template.courseMember.helpers({
-	showMemberRoles: function() {
-		var memberRoles = this.member.roles;
-		return memberRoles.length != 1 || memberRoles[0] != "participant";
+	ownUserMemberClass() {
+		if (this.isOwnUserMember) return 'is-own-user';
+    },
+
+	memberRoles() {
+		return this.member.roles.filter(role => role !== 'participant');
 	},
 
 	roleShort: function() { return 'roles.'+this+'.short'; },
 
 	maySubscribe: function() {
-		return maySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+		return MaySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
 	},
 
 	rolelistIcon: function(roletype) {
@@ -113,7 +123,11 @@ Template.courseMember.helpers({
 
 	mayUnsubscribeFromTeam: function(label) {
 		return label == 'team'
-			&& mayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+			&& MayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+	},
+
+	showMemberComment() {
+		return this.member.comment || this.editableMessage;
 	}
 });
 

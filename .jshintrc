@@ -73,8 +73,6 @@
 // server/publications
 
 		"Version":true,
-		"Course":true,
-		"Courses":true,
 		"Roles":true,
 		"Regions":true,
 		"CleanedRegion": true,
@@ -136,12 +134,6 @@
 		"miniSubs":true,
 		"minuteTime":true,
 
-
-// collection/courses.js
-
-		"hasRole":true,
-		"hasRoleUser":true,
-		"maySubscribe":true,
 
 // collection/discussion.js
 

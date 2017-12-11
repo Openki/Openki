@@ -14,6 +14,10 @@
 .course-member {
 	background: $course-page-component-bg;
 	padding: 10px ($grid-gutter-width / 2);
+
+	&.is-own-user {
+		background: $user-bg;
+    }
 }
 
 .course-member + .course-member {
@@ -80,8 +84,33 @@
 }
 
 .course-member-comment {
-	display: block;
+	@include clearfix;
 	padding-top: 10px;
+	position: relative;
+}
+
+$course-member-comment-border-color: darken($blue-lighter, 20%);
+
+.course-member-comment-arrow {
+	border: 5px solid;
+	border-color: transparent transparent $course-member-comment-border-color;
+	height: 0;
+	left: 8.5px;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+
+.course-member-comment-body {
+	background-color: lighten($blue-lighter, 6%);
+	border: 1px solid $course-member-comment-border-color;
+	border-radius: 3px;
+	float: left;
+	font-size: $font-size-base;
+	max-width: 100%;
+	overflow: hidden;
+	padding: 5px 10px;
+	word-wrap: break-word;
 }
 
 .course-member-comment .editable {

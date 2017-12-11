@@ -4,26 +4,29 @@
 	padding: 10px;
 }
 
-.price-policy-content > i {
-	color: $brand-primary;
+.is-dismissable .price-policy-actions {
+	margin-top: 10px;
 }
+
+$price-policy-actions-grid-width: 15px;
 
 .price-policy-actions {
-	display: inline-block;
-	margin-left: 5px;
+	@media (max-width: $screen-xs-max) {
+		@include make-row($price-policy-actions-grid-width);
+	}
 }
 
-.is-dismissable .price-policy-actions {
-	display: block;
-	margin-left: 0;
-	margin-top: 10px;
-	text-align: right;
-}
+.price-policy-action {
+	@media (max-width: $screen-xs-max) {
+		@include make-xs-column(6, $price-policy-actions-grid-width);
+	}
 
-.price-policy-actions > * + * {
-	margin-left: 5px;
-}
+	@media (min-width: $screen-sm-min) {
+		display: inline-block;
+		vertical-align: middle;
 
-.price-policy-actions > .btn-link {
-	border: 0;
+		& + .price-policy-action {
+			margin-left: 5px;
+		}
+	}
 }
