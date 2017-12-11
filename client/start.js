@@ -7,6 +7,8 @@ import UrlTools from '/imports/utils/url-tools.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
+import Languages from '/imports/api/languages/languages.js';
+
 ////////////// db-subscriptions:
 
 Meteor.subscribe('version');

@@ -1,4 +1,4 @@
-Categories = {
+export default Categories = {
 	sports:
 		[ 'martialarts'
 		, 'teamsport'

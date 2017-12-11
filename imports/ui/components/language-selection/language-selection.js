@@ -5,6 +5,8 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
+import Languages from '/imports/api/languages/languages.js';
+
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import '/imports/StringTools.js';
 

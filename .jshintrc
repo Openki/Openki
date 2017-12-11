@@ -66,13 +66,10 @@
 		"alert":true,
 		"confirm":true,
 		"lgs":true,
-		"categories":true,
 		"ServiceConfiguration":true,
-		"Categories":true,   //shouldnt be here
 
 // server/publications
 
-		"Roles":true,
 		"Regions":true,
 		"CleanedRegion": true,
 		"Venue": true,

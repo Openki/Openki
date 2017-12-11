@@ -5,8 +5,7 @@
 // "english"         -> String     English full name
 // ===========================
 
-
-Languages = {
+export default Languages = {
 	'ar':
 		{ lg:      'ar'
 		, name:    'العربية'

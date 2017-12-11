@@ -1,6 +1,8 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
+import Roles from '/imports/api/roles/roles.js';
+
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import '/imports/StringTools.js';

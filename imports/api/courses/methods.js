@@ -3,6 +3,7 @@ import { _ } from 'meteor/underscore';
 
 import Courses from './courses.js';
 import Regions from '/imports/api/regions/regions.js';
+import Roles from '/imports/api/roles/roles.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 import {
 	HasRoleUser,

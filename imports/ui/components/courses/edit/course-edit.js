@@ -3,8 +3,11 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Regions from '/imports/api/regions/regions.js';
+import Categories from '/imports/api/categories/categories.js';
 import Courses from '/imports/api/courses/courses.js';
+import Regions from '/imports/api/regions/regions.js';
+import Roles from '/imports/api/roles/roles.js';
+
 import '/imports/StringTools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
