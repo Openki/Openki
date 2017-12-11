@@ -1,3 +1,5 @@
+import Venues from '/imports/api/venues/venues.js';
+
 UpdatesAvailable["2016.08.23 renameVenues"] = function() {
 	var Locations = new Meteor.Collection("Locations");
 	var copied = 0;

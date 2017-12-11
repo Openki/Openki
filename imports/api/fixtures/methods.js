@@ -4,6 +4,7 @@ import ensure from "./ensureFixture.js";
 import "./Prng.js";
 import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
+import Venues from '/imports/api/venues/venues.js';
 
 import '/imports/StringTools.js';
 

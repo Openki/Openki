@@ -3,6 +3,7 @@ import '/imports/Predicates.js';
 import Regions from '/imports/api/regions/regions.js';
 import Courses from '/imports/api/courses/courses.js';
 import Groups from '/imports/api/groups/groups.js';
+import Venues from '/imports/api/venues/venues.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 
 import '/imports/notification/Notification.js';

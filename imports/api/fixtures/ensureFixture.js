@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import './Prng.js';
 import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
+import Venues from '/imports/api/venues/venues.js';
 
 export default ensure = {
 	'fixedId': function(strings) {

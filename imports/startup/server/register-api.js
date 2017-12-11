@@ -6,4 +6,6 @@ import '/imports/api/groups/methods.js';
 import '/imports/api/groups/server/publications.js';
 import '/imports/api/regions/methods.js';
 import '/imports/api/regions/server/publications.js';
+import '/imports/api/venues/methods.js';
+import '/imports/api/venues/server/publications.js';
 import '/imports/api/version/server/publications.js';
