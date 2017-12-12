@@ -3,6 +3,8 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
+import Events from '/imports/api/events/events.js';
+
 import '/imports/ui/components/events/list/event-list.js';
 import '/imports/ui/components/loading/loading.js';
 

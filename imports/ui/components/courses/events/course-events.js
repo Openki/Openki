@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Events from '/imports/api/events/events.js';
+
 import '/imports/ui/components/events/list/event-list.js';
 import '/imports/ui/components/loading/loading.js';
 

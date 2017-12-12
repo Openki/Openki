@@ -1,3 +1,5 @@
+import Events from '/imports/api/events/events.js';
+
 import '/imports/StringTools.js';
 import '/imports/HtmlTools.js';
 

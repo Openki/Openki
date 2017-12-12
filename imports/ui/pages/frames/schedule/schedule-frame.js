@@ -2,6 +2,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Events from '/imports/api/events/events.js';
+
 import '/imports/LocalTime.js';
 
 import './schedule-frame.html';

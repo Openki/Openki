@@ -6,6 +6,7 @@ import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
 import Groups from '/imports/api/groups/groups.js';
 import Roles from '/imports/api/roles/roles.js';
 import Venues from '/imports/api/venues/venues.js';
