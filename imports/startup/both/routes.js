@@ -10,6 +10,7 @@ import Groups from '/imports/api/groups/groups.js';
 import Roles from '/imports/api/roles/roles.js';
 import Venues from '/imports/api/venues/venues.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 function finderRoute(path) {
 	return {
@@ -564,11 +565,11 @@ Router.map(function () {
 
 			// What privileges the user has
 			var privileges = _.reduce(['admin'], function(ps, p) {
-				ps[p] = privileged(user, p);
+				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
 
-			var alterPrivileges = privilegedTo('admin');
+			var alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
 			return {
