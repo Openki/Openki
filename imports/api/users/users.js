@@ -51,6 +51,8 @@ import '/imports/IdTools.js';
 // groups: List of groups the user is a member of, calculated by updateBadges()
 // acceptsMessages: true if user has email address and the notifications flag is true. This is visible to other users.
 
+export default Users = Meteor.users;
+
 User = function() {};
 
 /** Check whether the user may promote things with the given group
