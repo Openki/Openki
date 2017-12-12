@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
@@ -46,7 +47,7 @@ Course.prototype.editableBy = function(user) {
 	var isNew = !this._id;
 
 	return isNew // Anybody may create a new course
-		|| privileged(user, 'admin') // Admins can edit all courses
+		|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
 		|| _.intersection(user.badges, this.editors).length > 0;
 };
 

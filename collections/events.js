@@ -5,6 +5,7 @@ import Courses from '/imports/api/courses/courses.js';
 import Groups from '/imports/api/groups/groups.js';
 import Venues from '/imports/api/venues/venues.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/notification/Notification.js';
 import '/imports/LocalTime.js';
@@ -60,7 +61,7 @@ OEvent = function() {
 
 OEvent.prototype.editableBy = function(user) {
 	if (!user) return false;
-	if (privileged(user, 'admin')) return true;
+	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 

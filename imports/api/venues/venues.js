@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 import '/imports/StringTools.js';
@@ -38,7 +39,7 @@ Venue.prototype.editableBy = function(user) {
 	var isNew = !this._id;
 	return isNew // Anybody may create a new location
 		|| user._id === this.editor
-		|| privileged(user, 'admin'); // Admins can edit all venues
+		|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
 };
 
 export default Venues = new Mongo.Collection("Venues", {

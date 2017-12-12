@@ -12,6 +12,7 @@ import {
 	MaySubscribe,
 	MayUnsubscribe
 } from '/imports/utils/course-role-utils.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
@@ -136,7 +137,7 @@ Template.courseMember.helpers({
 
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf: function() {
-		var notPriviledgedUser = !privileged(Meteor.userId(), 'admin');
+		var notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
 		return (this.member.user === Meteor.userId() && notPriviledgedUser);
 	}
 });

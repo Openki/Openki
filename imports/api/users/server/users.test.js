@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'meteor/practicalmeteor:chai';
+import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 
 if (Meteor.isClient) {
 	describe('Profile', function () {
@@ -46,7 +47,7 @@ if (Meteor.isClient) {
 			const someUser = 'gregen';
 			const sub = Meteor.subscribe('userSearch', someUser, () => {
 				sub.stop();
-				const cursor = UserLib.searchPrefix(someUser, {});
+				const cursor = UserSearchPrefix(someUser, {});
 				assert(cursor.count() > 0);
 				done();
 			});
@@ -55,7 +56,7 @@ if (Meteor.isClient) {
 		it('finds Chnöde when searching for "Chn"', (done) => {
 			const sub = Meteor.subscribe('userSearch', "Chn", () => {
 				sub.stop();
-				const cursor = UserLib.searchPrefix("Chnöde", {});
+				const cursor = UserSearchPrefix("Chnöde", {});
 				assert(cursor.count() > 0);
 				done();
 			});

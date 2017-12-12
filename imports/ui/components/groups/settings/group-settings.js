@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import Groups from '/imports/api/groups/groups.js';
 
+import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -34,7 +35,7 @@ Template.groupSettings.helpers({
 		if (search === '') return false;
 
 		var group = Groups.findOne(Router.current().params._id);
-		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
+		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
 	kioskEventURL: function() {
