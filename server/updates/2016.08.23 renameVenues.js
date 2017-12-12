@@ -1,3 +1,4 @@
+import Events from '/imports/api/events/events.js';
 import Venues from '/imports/api/venues/venues.js';
 
 UpdatesAvailable["2016.08.23 renameVenues"] = function() {

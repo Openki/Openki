@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Events from '/imports/api/events/events.js';
 import Regions from './regions.js';
 
 Meteor.methods({

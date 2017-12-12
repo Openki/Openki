@@ -1,5 +1,6 @@
 import Courses from '/imports/api/courses/courses.js';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+import Events from '/imports/api/events/events.js';
 import ensure from "./ensureFixture.js";
 import "./Prng.js";
 import Groups from '/imports/api/groups/groups.js';

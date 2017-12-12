@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/HtmlTools.js';
 
 import Courses from '../courses/courses.js';
+import Events from '/imports/api/events/events.js';
 import Groups from './groups.js';
 
 import IsGroupMember from '/imports/utils/is-group-member.js';

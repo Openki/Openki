@@ -1,5 +1,6 @@
 import '/imports/LocalTime.js';
 import '/imports/collections/Log.js';
+import Events from '/imports/api/events/events.js';
 import Regions from '/imports/api/regions/regions.js';
 
 var updateName = '2017.03.20 localFutureDates';

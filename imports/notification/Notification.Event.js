@@ -2,6 +2,7 @@ export default notificationEvent = {};
 import '/imports/collections/Log.js';
 import Regions from '/imports/api/regions/regions.js';
 import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
 
 /** Record the intent to send event notifications
   *

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import Courses from './courses.js';
+import Events from '/imports/api/events/events.js';
 import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
