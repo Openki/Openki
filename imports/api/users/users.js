@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
+import '/imports/IdTools.js';
+
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date
