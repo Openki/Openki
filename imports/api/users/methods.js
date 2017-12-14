@@ -15,7 +15,7 @@ Meteor.methods({
 		Profile.Region.change(Meteor.userId(), newRegion, "client call");
 	},
 
-	update_userdata: function(username, email, notifications) {
+	'user.updateData': function(username, email, notifications) {
 		check(username, String);
 		check(email, String);
 		check(notifications, Boolean);
@@ -65,12 +65,12 @@ Meteor.methods({
 		}
 	},
 
-	delete_profile: function() {
+	'user.remove': function() {
 		var user = Meteor.user();
 		if (user) Meteor.users.remove({ _id: user._id });
 	},
 
-	addPrivilege: function(userId, privilege) {
+	'user.addPrivilege': function(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			var user = Meteor.users.findOne({_id: userId});
@@ -83,7 +83,7 @@ Meteor.methods({
 		}
 	},
 
-	removePrivilege: function(userId, privilege) {
+	'user.removePrivilege': function(userId, privilege) {
 		var user = Meteor.users.findOne({_id: userId});
 		if (!user) throw new Meteor.Error(404, "User not found");
 

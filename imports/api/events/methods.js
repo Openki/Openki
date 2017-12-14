@@ -16,7 +16,7 @@ import PleaseLogin from '/imports/ui/lib/please-login.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 
 Meteor.methods({
-	saveEvent: function(args) {
+	'event.save': function(args) {
 		let
 			{ eventId
 			, changes
@@ -175,19 +175,19 @@ Meteor.methods({
 
 		if (Meteor.isServer) {
 
-			Meteor.call('updateEventVenue', eventId, AsyncTools.logErrors);
+			Meteor.call('event.updateVenue', eventId, AsyncTools.logErrors);
 			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
-			if (event.courseId) Meteor.call('updateNextEvent', event.courseId, AsyncTools.logErrors);
+			if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
 		}
 
 		return eventId;
 	},
 
 
-	removeEvent: function(eventId) {
+	'event.remove': function(eventId) {
 		check(eventId, String);
 
 		var user = Meteor.user();
@@ -198,13 +198,13 @@ Meteor.methods({
 
 		Events.remove(eventId);
 
-		if (event.courseId) Meteor.call('updateNextEvent', event.courseId);
+		if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId);
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 	},
 
 
 	// Update the venue field for all events matching the selector
-	updateEventVenue: function(selector) {
+	'event.updateVenue': function(selector) {
 		var idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach(function(event) {
 			const eventId = event._id;

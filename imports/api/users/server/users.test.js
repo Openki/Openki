@@ -10,7 +10,7 @@ if (Meteor.isClient) {
 			});
 		});
 		it('does not allow setting duplicate email', function (done) {
-			Meteor.call('update_userdata',
+			Meteor.call('user.updateData',
 				"Seee",
 				"greg@openki.example",
 				false,

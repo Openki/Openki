@@ -81,7 +81,7 @@ Template.courseMember.onCreated(function() {
 	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
-			Meteor.call("change_comment", courseId, newMessage, function(err, courseId) {
+			Meteor.call("course.changeComment", courseId, newMessage, function(err, courseId) {
 				if (err) {
 					ShowServerError('Unable to change your message', err);
 				} else {
@@ -144,11 +144,11 @@ Template.removeFromTeamDropdown.helpers({
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(e, template) {
-		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		Meteor.call("course.addRole", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
 	'click .js-remove-team': function(e, template) {
-		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
+		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });

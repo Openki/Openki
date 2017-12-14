@@ -65,7 +65,7 @@ Template.userprofile.helpers({
 
 Template.userprofile.events({
 	'click button.giveAdmin': function() {
-		Meteor.call('addPrivilege', this.user._id, 'admin', function(err) {
+		Meteor.call('user.addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
 				ShowServerError('Unable to add privilege', err);
 			} else {
@@ -76,7 +76,7 @@ Template.userprofile.events({
 
 	'click .js-remove-privilege-btn': function(event, template) {
 		var priv = template.$(event.target).data('priv');
-		Meteor.call('removePrivilege', this.user._id, priv, function(err) {
+		Meteor.call('user.removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
 				ShowServerError('Unable to remove privilege', err);
 			} else {
@@ -89,7 +89,7 @@ Template.userprofile.events({
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
-		Meteor.call('updateGroupMembership', userId, groupId, true, function(err) {
+		Meteor.call('group.updateMembership', userId, groupId, true, function(err) {
 			if (err) {
 				ShowServerError('Unable to draft user into group', err);
 			} else {
@@ -103,7 +103,7 @@ Template.userprofile.events({
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
-		Meteor.call('updateGroupMembership', userId, groupId, false, function(err) {
+		Meteor.call('group.updateMembership', userId, groupId, false, function(err) {
 			if (err) {
 				ShowServerError('Unable to expel user from group', err);
 			} else {

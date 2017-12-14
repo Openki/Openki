@@ -109,7 +109,7 @@ Template.event.events({
 		var title = event.title;
 		var course = event.courseId;
 		instance.busy('deleting');
-		Meteor.call('removeEvent', event._id, function (error) {
+		Meteor.call('event.remove', event._id, function (error) {
 			instance.busy(false);
 			if (error) {
 				ShowServerError('Could not remove event ' + "'" + title + "'", error);
@@ -191,7 +191,7 @@ Template.eventGroupAdd.events({
 			if (error) {
 				ShowServerError('Failed to add group', error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -223,7 +223,7 @@ Template.eventGroupMakeOrganizer.events({
 			if (error) {
 				ShowServerError('Failed to give group editing rights', error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
 				instance.collapse();
 			}
 		});

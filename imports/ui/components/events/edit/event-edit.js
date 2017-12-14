@@ -296,7 +296,7 @@ Template.eventEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
-			Meteor.call('saveEvent',
+			Meteor.call('event.save',
 			{
 				eventId,
 				updateReplicas,

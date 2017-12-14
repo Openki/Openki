@@ -37,16 +37,16 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 			}).then((event) => {
-				return promiseMeteorCall('saveEvent', { eventId: '', changes: event }).then(
+				return promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
 					(eventId) => ({ event, eventId })
 				);
 			}).then(({ event, eventId }) => {
-				assert.isString(eventId, "saveEvent returns an eventId string");
+				assert.isString(eventId, "event.save returns an eventId string");
 				return { event, eventId };
 			}).then(({ event, eventId }) => {
 				delete event.region;
 				event.title = event.title + " No really";
-				return promiseMeteorCall('saveEvent', { eventId, changes: event });
+				return promiseMeteorCall('event.save', { eventId, changes: event });
 			}).then(() => done(), done);
 		});
 	});

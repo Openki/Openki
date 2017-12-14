@@ -8,7 +8,7 @@ import Groups from './groups.js';
 import IsGroupMember from '/imports/utils/is-group-member.js';
 
 Meteor.methods({
-	saveGroup: function(groupId, changes) {
+	'group.save': function(groupId, changes) {
 		check(groupId, String);
 		check(changes, {
 			short:         Match.Optional(String),
@@ -82,7 +82,7 @@ Meteor.methods({
 		return groupId;
 	},
 
-	updateGroupMembership: function(userId, groupId, join) {
+	'group.updateMembership': function(userId, groupId, join) {
 		check(userId, String);
 		check(groupId, String);
 
