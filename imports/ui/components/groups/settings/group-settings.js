@@ -69,7 +69,7 @@ Template.groupSettings.events({
 	'click .js-member-add-btn': function(event, instance) {
 		var memberId = this._id;
 		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
+		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
 			if (err) {
 				ShowServerError('Could not add member', err);
 			} else {
@@ -81,7 +81,7 @@ Template.groupSettings.events({
 	'click .js-member-remove-btn': function(event, instance) {
 		var memberId = ''+this;
 		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
+		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
 			if (err) {
 				ShowServerError('Could not remove member', err);
 			} else {
@@ -100,7 +100,7 @@ Template.groupSettings.events({
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val()
 		};
-		Meteor.call("saveGroup", instance.data.group._id, changes, function(err) {
+		Meteor.call("group.save", instance.data.group._id, changes, function(err) {
 			instance.busy(false);
 			if (err) {
 				ShowServerError('Could not save settings', err);

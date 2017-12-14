@@ -289,7 +289,7 @@ Template.courseEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
-			Meteor.call('save_course', courseId, changes, (err, courseId) => {
+			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
@@ -304,7 +304,7 @@ Template.courseEdit.events({
 					}
 
 					instance.$('.js-check-enroll').each(function() {
-						const method = this.checked ? 'add_role' : 'remove_role';
+						const method = this.checked ? 'course.addRole' : 'course.removeRole';
 						Meteor.call(method, courseId, Meteor.userId(), this.name);
 					});
 				}

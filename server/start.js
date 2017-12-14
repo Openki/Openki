@@ -77,7 +77,7 @@ Meteor.startup(function () {
 	/* Initialize cache-fields on startup */
 
 	// Resync location cache in events
-	Meteor.call('updateEventVenue', {}, AsyncTools.logErrors);
+	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
 
 	// Update list of organizers per course
 	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
@@ -89,11 +89,11 @@ Meteor.startup(function () {
 
 	// Keep the nextEvent entry updated
 	// On startup do a full scan to catch stragglers
-	Meteor.call('updateNextEvent', {}, AsyncTools.logErrors);
+	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		function() {
 			// Update nextEvent for courses where it expired
-			Meteor.call('updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
+			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() }});
 
 			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 		},

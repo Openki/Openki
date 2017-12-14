@@ -58,14 +58,14 @@ Template.courseRole.events({
 		const comment = instance.$('.js-comment').val();
 		instance.busy('enrolling');
 		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
-			Meteor.call('add_role', this.course._id, Meteor.userId(), this.roletype.type, (err) => {
+			Meteor.call('course.addRole', this.course._id, Meteor.userId(), this.roletype.type, (err) => {
 				if (err) {
 					console.error(err);
 				} else {
 					instance.showFirstSteps.set(true);
 					instance.busy(false);
 					instance.enrolling.set(false);
-					Meteor.call('change_comment', this.course._id, comment, err => {
+					Meteor.call('course.changeComment', this.course._id, comment, err => {
 						instance.busy(false);
 						if (err) {
 							console.error(err);
@@ -84,7 +84,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-unsubscribe-btn': function () {
-		Meteor.call('remove_role', this.course._id, Meteor.userId(), this.roletype.type);
+		Meteor.call('course.removeRole', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;
 	},
 

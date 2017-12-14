@@ -54,7 +54,7 @@ UpdatesAvailable[updateName] = function() {
 	});
 
 	// Update calculated fields so they include the startLocal field.
-	Meteor.call('updateNextEvent', {});
+	Meteor.call('course.updateNextEvent', {});
 
 	return count;
 };
