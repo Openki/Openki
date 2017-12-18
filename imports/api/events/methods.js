@@ -143,11 +143,12 @@ Meteor.methods({
 
 
 		if (Meteor.isServer) {
-			changes.description = HtmlTools.saneHtml(changes.description);
+			const sanitizedDescription = StringTools.saneText(changes.description);
+			changes.description = HtmlTools.saneHtml(sanitizedDescription);
 		}
 
 		if (changes.title) {
-			changes.title = StringTools.saneText(changes.title).substring(0, 1000);
+			changes.title = StringTools.saneTitle(changes.title).substring(0, 1000);
 			changes.slug = StringTools.slug(changes.title);
 		}
 

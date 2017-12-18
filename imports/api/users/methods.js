@@ -28,7 +28,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
-		const saneUsername = StringTools.saneText(username).trim().substring(0, 200);
+		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {
