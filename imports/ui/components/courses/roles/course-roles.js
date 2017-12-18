@@ -88,7 +88,7 @@ Template.courseRole.events({
 		return false;
 	},
 
-	'click .js-show-first-steps'(event, instance) {
+	'click .js-toggle-first-steps'(event, instance) {
 		if (instance.showFirstSteps.get())
 			instance.showFirstSteps.set(false);
 		else
