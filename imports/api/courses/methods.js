@@ -202,7 +202,7 @@ Meteor.methods({
 
 		if (changes.categories) set.categories = changes.categories.slice(0, 20);
 		if (changes.name) {
-			set.name = StringTools.saneText(changes.name).substring(0, 1000);
+			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
 			set.slug = StringTools.slug(set.name);
 		}
 		if (changes.internal !== undefined) {
