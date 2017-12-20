@@ -1,6 +1,6 @@
 import Events from '/imports/api/events/events.js';
 
-import '/imports/LocalTime.js';
+import LocalTime from '/imports/utils/local-time.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';

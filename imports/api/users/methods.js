@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import Groups from '/imports/api/groups/groups.js';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
-import '/imports/Profile.js';
+import Profile from '/imports/utils/profile.js';
 import '/imports/api/ApiError.js';
 import StringTools from '/imports/utils/string-tools.js';
 import AsyncTools from '/imports/utils/async-tools.js';

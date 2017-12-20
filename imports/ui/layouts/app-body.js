@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import "/imports/RegionSelection.js";
+import RegionSelection from '/imports/utils/region-selection.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';

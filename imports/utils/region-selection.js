@@ -1,7 +1,8 @@
 import Regions from '/imports/api/regions/regions.js';
 import UrlTools from '/imports/utils/url-tools.js';
+import IpLocation from '/imports/utils/ip-location.js';
+
 export default RegionSelection = {};
-import '/imports/IpLocation.js';
 
 /** List of routes that show different results when the region changes.
   */

@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
 import Regions from '/imports/api/regions/regions.js';
-import "/imports/RegionSelection.js";
+import RegionSelection from '/imports/utils/region-selection.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import StringTools from '/imports/utils/string-tools.js';
 
