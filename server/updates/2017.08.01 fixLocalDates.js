@@ -1,4 +1,4 @@
-import '/imports/LocalTime.js';
+import LocalTime from '/imports/utils/local-time.js';
 import Log from '/imports/api/log/log.js';
 import Events from '/imports/api/events/events.js';
 

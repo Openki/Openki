@@ -8,7 +8,7 @@ import Venues from '/imports/api/venues/venues.js';
 
 import AsyncTools from '/imports/utils/async-tools.js';
 import HtmlTools from '/imports/utils/html-tools.js';
-import '/imports/LocalTime.js';
+import LocalTime from '/imports/utils/local-time.js';
 import '/imports/notification/Notification.js';
 import StringTools from '/imports/utils/string-tools.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';

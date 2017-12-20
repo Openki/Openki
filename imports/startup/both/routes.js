@@ -1,6 +1,6 @@
 import Predicates from '/imports/utils/predicates.js';
-import '/imports/Profile.js';
-import '/imports/LocalTime.js';
+import Profile from '/imports/utils/profile.js';
+import LocalTime from '/imports/utils/local-time.js';
 import Metatags from '/imports/utils/metatags.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';

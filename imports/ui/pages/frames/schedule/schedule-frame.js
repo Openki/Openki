@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 
 import Events from '/imports/api/events/events.js';
 
-import '/imports/LocalTime.js';
+import LocalTime from '/imports/utils/local-time.js';
 
 import './schedule-frame.html';
 

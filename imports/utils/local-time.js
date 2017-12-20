@@ -1,4 +1,5 @@
 import Regions from '/imports/api/regions/regions.js';
+import moment from 'moment-timezone';
 
 /** Serialize local time for mongo
   *
@@ -25,10 +26,7 @@ import Regions from '/imports/api/regions/regions.js';
   * users). This is infeasible. Thus future dates must be stored as local time.
   */
 
-import moment from 'moment-timezone';
-
-LocalTime = {};
-
+export default LocalTime = {};
 
 LocalTime.zone = function(regionId) {
 	var region = Regions.findOne(regionId);
