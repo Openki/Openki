@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
-import '/imports/Predicates.js';
+import Predicates from '/imports/utils/predicates.js';
 
 // ======== DB-Model: ========
 // "_id"           -> ID

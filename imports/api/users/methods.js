@@ -5,8 +5,8 @@ import Groups from '/imports/api/groups/groups.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import '/imports/Profile.js';
 import '/imports/api/ApiError.js';
-import '/imports/StringTools.js';
-import '/imports/AsyncTools.js';
+import StringTools from '/imports/utils/string-tools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
 
 Meteor.methods({
 	/** Set user region

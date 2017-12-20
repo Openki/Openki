@@ -1,7 +1,7 @@
 export default notificationComment = {};
 import Log from '/imports/api/log/log.js';
-import '/imports/StringTools.js';
-import "/imports/HtmlTools.js";
+import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 import Courses from '/imports/api/courses/courses.js';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
 

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
-import '/imports/Predicates.js';
+import Predicates from '/imports/utils/predicates.js';
 
 /** The Application Log records user and system decisions. It is intended to
   * become the single source of truth within the application.

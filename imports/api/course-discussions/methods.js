@@ -5,7 +5,7 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import '/imports/notification/Notification.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 const sanitizeComment = (comment) => ({
 	title: StringTools.saneText(comment.title).substr(0, 200).trim(),

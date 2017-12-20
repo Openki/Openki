@@ -8,7 +8,7 @@ import { _ } from 'meteor/underscore';
 import Languages from '/imports/api/languages/languages.js';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 import './language-selection.html';
 

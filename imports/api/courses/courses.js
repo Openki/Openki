@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import Filtering from '/imports/utils/filtering.js';
-import '/imports/Predicates.js';
+import Predicates from '/imports/utils/predicates.js';
 
 // ======== DB-Model: ========
 // "_id"           -> ID

@@ -3,8 +3,8 @@ import { Mongo } from 'meteor/mongo';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import Filtering from '/imports/utils/filtering.js';
-import '/imports/Predicates.js';
-import '/imports/StringTools.js';
+import Predicates from '/imports/utils/predicates.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 // _id          ID
 // editor       user ID

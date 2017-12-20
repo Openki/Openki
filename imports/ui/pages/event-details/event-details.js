@@ -1,7 +1,7 @@
 import Regions from '/imports/api/regions/regions.js';
 import Courses from '/imports/api/courses/courses.js';
 import Events from '/imports/api/events/events.js';
-import '/imports/IdTools.js';
+import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';

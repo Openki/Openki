@@ -1,7 +1,7 @@
 import Events from '/imports/api/events/events.js';
 
-import '/imports/StringTools.js';
-import '/imports/HtmlTools.js';
+import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 import ical from 'ical-generator';
 

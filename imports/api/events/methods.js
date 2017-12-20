@@ -6,11 +6,11 @@ import Groups from '../groups/groups.js';
 import Regions from '../regions/regions.js';
 import Venues from '/imports/api/venues/venues.js';
 
-import '/imports/AsyncTools.js';
-import '/imports/HtmlTools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 import '/imports/LocalTime.js';
 import '/imports/notification/Notification.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import UpdateMethods from '/imports/utils/update-methods.js';

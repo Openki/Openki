@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import Regions from '../regions/regions.js';
 import Venues from './venues.js';
 
-import '/imports/AsyncTools.js';
-import '/imports/HtmlTools.js';
-import '/imports/StringTools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 Meteor.methods({
 	'venue.save': function(venueId, changes) {

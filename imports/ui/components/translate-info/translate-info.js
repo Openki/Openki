@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import Metatags from '/imports/Metatags.js';
+import Metatags from '/imports/utils/metatags.js';
 
 import './translate-info.html';
 

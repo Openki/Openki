@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import '/imports/HtmlTools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 import Courses from '../courses/courses.js';
 import Events from '/imports/api/events/events.js';

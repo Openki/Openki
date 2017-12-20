@@ -1,7 +1,7 @@
-import '/imports/Predicates.js';
+import Predicates from '/imports/utils/predicates.js';
 import '/imports/Profile.js';
 import '/imports/LocalTime.js';
-import Metatags from '/imports/Metatags.js';
+import Metatags from '/imports/utils/metatags.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';

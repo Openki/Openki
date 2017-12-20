@@ -5,7 +5,7 @@ import Roles from '/imports/api/roles/roles.js';
 
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 import '/imports/ui/components/courses/categories/course-categories.js';
 
