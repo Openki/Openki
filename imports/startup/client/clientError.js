@@ -9,7 +9,7 @@ const reportToServer = function(error) {
 		, clientId: clientId
 		, userAgent: window.navigator.userAgent
 		};
-	Meteor.call('clientError', report, function(err, result) {
+	Meteor.call('log.clientError', report, function(err, result) {
 		if (err) console.log(err);
 	});
 };

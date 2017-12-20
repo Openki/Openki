@@ -1,7 +1,8 @@
-import Log from '/imports/api/log/log.js';
+import { Meteor } from 'meteor/meteor';
+import Log from './log.js';
 
 Meteor.methods({
-	clientError: function(report) {
+	'log.clientError': function(report) {
 		check(report,
 			{ name: String
 			, message: String
