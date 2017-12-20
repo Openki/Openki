@@ -1,4 +1,4 @@
-import "/imports/notification/Notification.js";
+import Notification from '/imports/notification/notification.js';
 import HtmlTools from '/imports/utils/html-tools.js';
 
 import Version from '/imports/api/version/version.js';
