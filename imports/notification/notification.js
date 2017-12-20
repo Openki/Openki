@@ -2,10 +2,10 @@
 export default Notification = {};
 import Log from '/imports/api/log/log.js';
 
-import notificationEvent   from '/imports/notification/Notification.Event.js';
-import notificationComment from '/imports/notification/Notification.Comment.js';
-import notificationJoin    from '/imports/notification/Notification.Join.js';
-import notificationPrivateMessage from '/imports/notification/Notification.PrivateMessage.js';
+import notificationEvent   from '/imports/notification/notification.event.js';
+import notificationComment from '/imports/notification/notification.comment.js';
+import notificationJoin    from '/imports/notification/notification.join.js';
+import notificationPrivateMessage from '/imports/notification/notification.private-message.js';
 
 Notification.Event   = notificationEvent;
 Notification.Comment = notificationComment;
