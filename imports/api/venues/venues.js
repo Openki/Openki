@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
-import '/imports/Filtering.js';
+import Filtering from '/imports/utils/filtering.js';
 import '/imports/Predicates.js';
 import '/imports/StringTools.js';
 

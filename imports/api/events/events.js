@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import '/imports/Filtering.js';
+import Filtering from '/imports/utils/filtering.js';
 import '/imports/Predicates.js';
 import Courses from '/imports/api/courses/courses.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
