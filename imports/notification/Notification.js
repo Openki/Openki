@@ -1,6 +1,6 @@
 /* global Notification: true */
 export default Notification = {};
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 
 import notificationEvent   from '/imports/notification/Notification.Event.js';
 import notificationComment from '/imports/notification/Notification.Comment.js';

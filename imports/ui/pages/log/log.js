@@ -8,7 +8,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import UrlTools from '/imports/utils/url-tools.js';
 
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 
 import './log.html';
 

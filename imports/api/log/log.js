@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+
 import '/imports/Filtering.js';
 import '/imports/Predicates.js';
 
@@ -32,7 +35,7 @@ import '/imports/Predicates.js';
   *       Contents of the log entry. These are not indexed and depend on the
   *       track.
   */
-export default Log = new Meteor.Collection('Log');
+export default Log = new Mongo.Collection('Log');
 
 Log.Filtering = () => Filtering(
 	{ start: Predicates.date
@@ -70,7 +73,6 @@ Log.record = function(track, rel, body) {
 		console.log(entry);
 	}
 };
-
 
 Log.findFilter = function(filter, limit) {
 	check(filter,
