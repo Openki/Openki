@@ -144,5 +144,11 @@ Meteor.methods({
 		if (!user) return false;
 		var username = user.username;
 		return username;
+	},
+
+	'user.updateLocale'(locale) {
+		Meteor.users.update(Meteor.userId(), {
+			$set: { 'profile.locale': locale }
+		});
 	}
 });
