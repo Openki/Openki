@@ -1,7 +1,7 @@
 export default notificationPrivateMessage = {};
 import Users from '/imports/api/users/users.js';
 
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 import '/imports/StringTools.js';
 import "/imports/HtmlTools.js";
 

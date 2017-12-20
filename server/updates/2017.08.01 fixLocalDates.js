@@ -1,5 +1,5 @@
 import '/imports/LocalTime.js';
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 import Events from '/imports/api/events/events.js';
 
 var updateName = '2017.08.01 fixLocalDates';

@@ -1,4 +1,4 @@
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 
 Meteor.methods({
 	clientError: function(report) {

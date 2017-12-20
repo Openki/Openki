@@ -1,4 +1,4 @@
-import '/imports/collections/Log.js';
+import Log from '../log.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 Meteor.publish('log', function(filter, limit) {

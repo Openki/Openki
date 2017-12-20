@@ -1,5 +1,5 @@
 export default notificationComment = {};
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 import '/imports/StringTools.js';
 import "/imports/HtmlTools.js";
 import Courses from '/imports/api/courses/courses.js';
