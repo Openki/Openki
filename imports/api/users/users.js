@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import '/imports/IdTools.js';
+import IdTools from '/imports/utils/id-tools.js';
 
 // ======== DB-Model: ========
 // "_id"          -> ID

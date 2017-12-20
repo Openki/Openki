@@ -1,5 +1,3 @@
-import '/imports/AsyncTools.js';
-
 export default AsyncTools = {};
 
 AsyncTools.checkUpdateOne = function(err, aff) {

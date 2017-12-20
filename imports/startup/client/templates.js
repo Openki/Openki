@@ -1,4 +1,4 @@
-import Metatags from '/imports/Metatags.js';
+import Metatags from '/imports/utils/metatags.js';
 
 import '/imports/ui/layouts';
 import '/imports/ui/pages';

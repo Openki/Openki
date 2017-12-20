@@ -1,7 +1,7 @@
 import '/imports/startup/both';
 import '/imports/startup/server';
 
-import '/imports/AsyncTools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
 
 import Version from '/imports/api/version/version.js';
 

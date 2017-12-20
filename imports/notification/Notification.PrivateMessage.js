@@ -2,8 +2,8 @@ export default notificationPrivateMessage = {};
 import Users from '/imports/api/users/users.js';
 
 import Log from '/imports/api/log/log.js';
-import '/imports/StringTools.js';
-import "/imports/HtmlTools.js";
+import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 /** Record the intent to send a private message
   *

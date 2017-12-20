@@ -2,12 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
-import '/imports/Predicates.js';
+import Predicates from '/imports/utils/predicates.js';
 import Courses from '/imports/api/courses/courses.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
-import '/imports/StringTools.js';
-import '/imports/AsyncTools.js';
+import StringTools from '/imports/utils/string-tools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
 
 // ======== DB-Model: ========
 // _id             -> ID

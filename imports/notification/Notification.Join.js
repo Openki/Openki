@@ -1,6 +1,6 @@
 export default notificationJoin = {};
 import Log from '/imports/api/log/log.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 import Courses from '/imports/api/courses/courses.js';
 
 /** Record the intent to send join notifications

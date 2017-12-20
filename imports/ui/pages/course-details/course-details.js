@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import '/imports/IdTools.js';
+import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';

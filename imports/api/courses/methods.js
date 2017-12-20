@@ -13,9 +13,9 @@ import {
 	MayUnsubscribe
 } from '/imports/utils/course-role-utils.js';
 
-import '/imports/AsyncTools.js';
-import '/imports/StringTools.js';
-import '/imports/HtmlTools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
+import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 

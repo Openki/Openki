@@ -7,7 +7,7 @@ import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Venues from '/imports/api/venues/venues.js';
 
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 
 import seedrandom from 'seedrandom';

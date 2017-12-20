@@ -9,7 +9,7 @@ import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
