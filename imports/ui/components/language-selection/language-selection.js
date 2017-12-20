@@ -94,7 +94,7 @@ Template.languageSelection.events({
 
 		Session.set('locale', lg);
 		if (Meteor.user()){
-			Meteor.call('updateUserLocale', lg);
+			Meteor.call('user.updateLocale', lg);
 		}
 
 		instance.parentInstance().searchingLanguages.set(false);
