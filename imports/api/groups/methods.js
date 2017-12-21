@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import HtmlTools from '/imports/utils/html-tools.js';
 
-import Courses from '../courses/courses.js';
-import Events from '/imports/api/events/events.js';
 import Groups from './groups.js';
 
 import IsGroupMember from '/imports/utils/is-group-member.js';
@@ -118,33 +116,5 @@ Meteor.methods({
 		Groups.update(sel, update);
 
 		if (Meteor.isServer) Meteor.call('user.updateBadges', user._id);
-	},
-
-	/* Update listing of a course or an event in a group. */
-	updateGroupListing: function(thingId, groupId, join) {
-		check(thingId, String);
-		check(groupId, String);
-
-		var senderId = Meteor.userId();
-		if (!senderId) return;
-
-		// Only current members of the group may list courses into groups
-		if (!IsGroupMember(senderId, groupId)) {
-			throw new Meteor.Error(401, "Denied");
-		}
-
-		var update;
-		if (join) {
-			update = { $addToSet: { 'groups': groupId } };
-		} else {
-			update = { $pull: { 'groups': groupId } };
-		}
-
-		// Welcome to my world of platypus-typing
-		// Because thing may either be a group or an event, we just try both!
-		var changed = Courses.update(thingId, update)
-		            + Events.update(thingId, update);
-
-		if (changed !== 1) throw new Meteor.Error(500, "Query affected "+changed+" documents, expected 1");
 	}
 });
