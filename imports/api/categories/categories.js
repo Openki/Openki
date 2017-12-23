@@ -54,5 +54,6 @@ export default Categories = {
 		[ '♥undefined♥'
 		, 'experimental'
 		, 'spiritual'
+		, 'education'
 		]
 };

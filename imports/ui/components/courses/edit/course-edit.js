@@ -251,7 +251,7 @@ Template.courseEdit.events({
 
 		const changes = {
 			roles,
-			name: StringTools.saneText(instance.$('#editform_name').val()),
+			name: StringTools.saneTitle(instance.$('#editform_name').val()),
 			categories: instance.selectedCategories.get(),
 			internal: instance.$('.js-check-internal').is(':checked'),
 		};
