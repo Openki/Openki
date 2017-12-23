@@ -1,4 +1,4 @@
-import { Mongo } from 'meteor/mongo'
+import { Mongo } from 'meteor/mongo';
 
 // ======== DB-Model: ========
 // "basic"         -> String    "v0.4.2-alpha"

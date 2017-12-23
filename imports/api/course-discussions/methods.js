@@ -8,7 +8,7 @@ import Notification from '/imports/notification/notification.js';
 import StringTools from '/imports/utils/string-tools.js';
 
 const sanitizeComment = (comment) => ({
-	title: StringTools.saneText(comment.title).substr(0, 200).trim(),
+	title: StringTools.saneTitle(comment.title).substr(0, 200).trim(),
 	text: StringTools.saneText(comment.text).substr(0, 640*1024).trim()
 });
 

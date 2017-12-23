@@ -88,7 +88,7 @@ notificationEvent.Model = function(entry) {
 			}
 
 			return (
-			    { event: event
+				{ event: event
 				, course: course
 				, eventDate: startMoment.format('LL')
 				, eventStart: startMoment.format('LT')
@@ -97,6 +97,7 @@ notificationEvent.Model = function(entry) {
 				, regionName: region.name
 				, timeZone: endMoment.format('z') // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 				, eventLink: Router.url('showEvent', event)
+				, courseLink: Router.url('showCourse', course)
 				, calLink: Router.url('calEvent', event)
 				, new: entry.body.new
 				, subject: subject
