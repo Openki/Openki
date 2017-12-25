@@ -43,6 +43,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: meteor npm run deploy dev
+  script: bin/deploy dev
   on:
     branch: automated-deployment
