@@ -28,7 +28,7 @@ tdl)
 	service=openki-congress
 	;;
 dev)
-	host=dev.openki.xyz
+	host=85.195.241.169
 	service=openki-dev
 	opts="--debug"
 	;;
