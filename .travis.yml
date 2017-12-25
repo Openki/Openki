@@ -21,7 +21,7 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
 
 install:
-  - meteor npm install
+  - meteor npm install --production
 
 script:
   # Test for JS errors
