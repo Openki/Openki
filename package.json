@@ -30,7 +30,8 @@
     "test": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
     "test-app": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --full-app --once --driver-package meteortesting:mocha",
     "test-live": "TEST_WATCH=1 meteor test --settings settings.ci.json --full-app --driver-package meteortesting:mocha",
-    "js-lint": "jshint"
+    "js-lint": "jshint",
+    "deploy": "deploy dev"
   },
   "repository": {
     "type": "git",

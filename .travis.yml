@@ -3,6 +3,9 @@ dist: trusty
 node_js:
   - 5.2.0
 
+addons:
+  ssh_known_hosts: dev.openki.xyz
+
 cache:
   directories:
     - "$HOME/.meteor"
@@ -30,3 +33,16 @@ script:
   - meteor npm run test
   # Run end-to-end tests
   - meteor npm run test-app
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_b653f608ad1c_key -iv $encrypted_b653f608ad1c_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+
+deploy:
+  - provider: script
+  skip_cleanup: true
+  script: meteor npm run deploy
+  on:
+    branch: automated-deployment

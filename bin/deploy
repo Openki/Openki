@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# Meteor deploy for Baschtelfritzen
+
+set -e
+set -x
+
+opts=""
+case $1 in
+live)
+	host=openki.net
+	service=openki-beta
+	;;
+staging)
+	host=staging.openki.xyz
+	service=openki-staging
+	;;
+sandbox)
+	host=sandbox.openki.xyz
+	service=openki-sandbox
+	;;
+congress)
+	host=congress.openki.xyz
+	service=openki-congress
+	;;
+tdl)
+	host=tdl.openki.xyz
+	service=openki-congress
+	;;
+dev)
+	host=dev.openki.xyz
+	service=openki-dev
+	opts="--debug"
+	;;
+future)
+        host=future.openki.xyz
+        service=openki-dev
+        ;;
+*)
+	echo "tell me where to deploy to plz"
+	exit
+esac
+
+(
+cd $TRAVIS_BUILD_DIR
+bin/update-version
+
+build_version=$(git describe)
+build_dir=$(mktemp -dt openki.$build_version.XXXXXXXX)
+build_tag=$(basename "$build_dir")
+ssh_conn=root@$host
+service_dir=/opt/$service
+upload_dir=$service_dir/$build_tag
+#
+#
+#
+meteor build $opts --directory "$build_dir" --architecture os.linux.x86_64
+
+size=$(du -sh "$bundle_dir")
+echo "Uploading bundle: $size"
+
+rsync -raz --delete-after --copy-dest="$service_dir/app/" "$bundle_dir" "$ssh_conn:$upload_dir/"
+
+ssh -A $ssh_conn sh <<-EOF
+	set -e
+	set -x
+	cd "$service_dir"
+	test -d "$upload_dir"
+	test -d "$build_tag" # now is a good moment to test my assumptions
+
+	# NPM? Do the needful.
+	# Is it a good idea to do this on the deployment host? LOLDUNNO
+	(
+	cd "$upload_dir/programs/server"
+	npm install --production
+
+	# wtf^2 copied straight from mup
+	rm -rf npm/node_modules/meteor/npm-bcrypt/node_modules/bcrypt
+    npm install --update-binary -f bcrypt
+    cp -r node_modules/bcrypt npm/node_modules/meteor/npm-bcrypt/node_modules/bcrypt
+	)
+
+	if test -d "app";
+	then if test ! -L "app";
+		 then mv app app.old # legacy installations have the bundle here direct
+		 fi
+	fi
+
+	service $service stop || true
+	ln -s "$build_tag" "$build_tag.ln"
+	mv --no-target-directory "$build_tag.ln" app
+	service $service start
+EOF
+)
