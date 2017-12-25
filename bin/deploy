@@ -56,6 +56,7 @@ upload_dir=$service_dir/$build_tag
 #
 meteor build $opts --directory "$build_dir" --architecture os.linux.x86_64
 
+bundle_dir="$build_dir/bundle/"
 size=$(du -sh "$bundle_dir")
 echo "Uploading bundle: $size"
 
