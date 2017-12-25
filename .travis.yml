@@ -43,6 +43,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bin/deploy dev
+  script: bin/deploy staging
   on:
     branch: automated-deployment
