@@ -55,6 +55,7 @@ Template.courseRole.events({
 
 	'click .js-role-subscribe-btn'(event, instance) {
 		event.preventDefault();
+		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val();
 		instance.busy('enrolling');
 		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
@@ -62,6 +63,7 @@ Template.courseRole.events({
 				if (err) {
 					console.error(err);
 				} else {
+					RouterAutoscroll.cancelNext();
 					instance.showFirstSteps.set(true);
 					instance.busy(false);
 					instance.enrolling.set(false);
@@ -84,6 +86,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-role-unsubscribe-btn': function () {
+		RouterAutoscroll.cancelNext();
 		Meteor.call('course.removeRole', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;
 	},
