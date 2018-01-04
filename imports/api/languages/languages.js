@@ -11,7 +11,7 @@ export default Languages = {
 		, name:    'العربية'
 		, short:   'العربية'
 		, english: 'Arabic'
-		, visible: false
+		, visible: true
 		}
 	,
 	'da':
