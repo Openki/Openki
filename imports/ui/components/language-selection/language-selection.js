@@ -15,6 +15,7 @@ import './language-selection.html';
 Template.languageSelectionWrap.created = function() {
 	 var instance = this;
 	 instance.searchingLanguages = new ReactiveVar(false);
+	 this.subscribe('mfStats');
 };
 
 Template.languageSelectionWrap.helpers({
@@ -68,6 +69,15 @@ Template.languageSelection.helpers({
 		var search = Template.instance().languageSearch.get();
 		var name = this.name;
 		return StringTools.markedName(search, name);
+	},
+
+	translated() {
+		if (this.lg === 'en') return '100';
+
+		const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
+		if (mfStats) {
+			return mfStats.langs.find(stats => stats.lang === this.lg).transPercent;
+		}
 	},
 
 	currentLanguage: function() {
