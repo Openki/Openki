@@ -207,3 +207,24 @@
 .navbar .js-region-search-form {
 	display: inline;
 }
+
+.language-name {
+	display: inline-block;
+}
+
+.language-translated {
+	@include td-float(right);
+	color: $gray-light;
+
+	&::after {
+		content: '%';
+	}
+
+	&.well-translated {
+		color: $green-darker;
+	}
+}
+
+.js-language-link:hover .language-translated {
+	color: $white;
+}

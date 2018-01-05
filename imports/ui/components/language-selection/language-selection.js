@@ -72,12 +72,18 @@ Template.languageSelection.helpers({
 	},
 
 	translated() {
-		if (this.lg === 'en') return '100';
+		const getTransPercent = () => {
+			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
+			if (mfStats) {
+				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
+				return langStats.transPercent;
+			}
+		};
 
-		const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
-		if (mfStats) {
-			return mfStats.langs.find(stats => stats.lang === this.lg).transPercent;
-		}
+		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
+		const rating = percent >= 75 && 'well-translated';
+
+		return { percent, rating };
 	},
 
 	currentLanguage: function() {
