@@ -6,8 +6,8 @@ node_js:
   - 5.2.0
 
 env:
-  - secure: "dG18oZYO14eMwOL9UR7QJ38QUq/7f+tGb/4GW39oHA73CTLzbRG+FT7yod1lefTYdzVOO+fxWDQ5ciTvlX2pZyjhg3PilrWiKKz4zP0+Wm8ZY47bkmPW4AOAi9IqPMlRseQD9dhlxXZw8Z0vm9GwdP1ef2UAG27IWCxXp2oZ0XE="
-  - secure: "k1Odn5mnXvqijmLuwW3zQZeshXOoqd8rcB2xQJoVI8fetHtL2wjwuLGNzuTyiDhUIf5ZyaQrmdiD8L0WM9nwN4aoa3azFw5SruzEY+0pw1SaliEXyzfg8FljbKA53ueIq0kXXgWbaj93pMOz6rz+U926DlkarHPGVZnYlgtQ6zs="
+  secure: "dG18oZYO14eMwOL9UR7QJ38QUq/7f+tGb/4GW39oHA73CTLzbRG+FT7yod1lefTYdzVOO+fxWDQ5ciTvlX2pZyjhg3PilrWiKKz4zP0+Wm8ZY47bkmPW4AOAi9IqPMlRseQD9dhlxXZw8Z0vm9GwdP1ef2UAG27IWCxXp2oZ0XE="
+  secure: "k1Odn5mnXvqijmLuwW3zQZeshXOoqd8rcB2xQJoVI8fetHtL2wjwuLGNzuTyiDhUIf5ZyaQrmdiD8L0WM9nwN4aoa3azFw5SruzEY+0pw1SaliEXyzfg8FljbKA53ueIq0kXXgWbaj93pMOz6rz+U926DlkarHPGVZnYlgtQ6zs="
 
 addons:
   ssh_known_hosts: dev.openki.xyz
