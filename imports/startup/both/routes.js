@@ -334,9 +334,11 @@ Router.map(function () {
 			return data;
 		},
 		onAfterAction: function() {
-			var user = Meteor.users.findOne();
-			if (!user) return;
-			Metatags.setCommonTags(mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}'));
+			const user = Meteor.user();
+			if (user) {
+				const title = mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}');
+				Metatags.setCommonTags(title);
+			}
 		}
 	});
 
