@@ -60,7 +60,7 @@ bundle_dir="$build_dir/bundle/"
 size=$(du -sh "$bundle_dir")
 echo "Uploading bundle: $size"
 
-rsync -raz --delete-after --copy-dest="$service_dir/app/" "$bundle_dir" "root@$host:$upload_dir/"
+rsync -raz --delete-after --copy-dest="$service_dir/app/" "$bundle_dir" "'root@[$host]':$upload_dir/"
 
 ssh -A root@$host sh <<-EOF
 	set -e
