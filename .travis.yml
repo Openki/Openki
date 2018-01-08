@@ -26,6 +26,7 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
 
 install:
+  - git fetch --unshallow
   - meteor npm install --production
 
 script:
