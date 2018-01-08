@@ -25159,7 +25159,7 @@ mfPkg.syncAll({
       "_id": "gMeaQhpyt3TX7vt7T",
       "key": "profile.windowtitle",
       "lang": "en",
-      "text": "{USER}\\",
+      "text": "{USER}",
       "ctime": 1511816079236,
       "mtime": 1511816079236,
       "revisionId": "in2uGLzvDdMhR8Eg9",
