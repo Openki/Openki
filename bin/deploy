@@ -45,8 +45,6 @@ esac
 cd $TRAVIS_BUILD_DIR
 bin/update-version
 
-ping -c 4 dev.openki.xyz
-
 build_version=$(git describe)
 build_dir=$(mktemp -dt openki.$build_version.XXXXXXXX)
 build_tag=$(basename "$build_dir")
