@@ -584,7 +584,8 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // wtf
-			const title = mf('profile.windowtitle', {USER: user.username}, '{USER}\'s Profile');
+
+			const title = mf('profile.windowtitle', {USER: user.username}, "Profile of {USER}");
 			Metatags.setCommonTags(title);
 		}
 	});
