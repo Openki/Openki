@@ -5027,7 +5027,7 @@ mfPkg.syncAll({
       "_id": "bfY9468J7TF9S5vpv",
       "key": "sendEmail.footer",
       "lang": "da",
-      "text": "Slut på besked.\\nHvis disse beskeder generer dig, vil vi gerne have det at vide {ADMINS}",
+      "text": "Slut på besked.\nHvis disse beskeder generer dig, vil vi gerne have det at vide {ADMINS}",
       "ctime": 1441285545178,
       "mtime": 1441285587514,
       "revisionId": "fYyuHAzpQSCAoPjCC",
@@ -9278,7 +9278,7 @@ mfPkg.syncAll({
       "_id": "5zqY7kceThQS3yvr6",
       "key": "notification.event.mail.new",
       "lang": "de",
-      "text": "Ein neuer Event wurde veröffentlicht für den Kurs \"{COURSE}:",
+      "text": "Ein neuer Event wurde veröffentlicht für den Kurs \"{COURSE}\":",
       "ctime": 1510001918551,
       "mtime": 1510001918551,
       "revisionId": "SrCixDGob7mbxiy6T"
@@ -9863,7 +9863,7 @@ mfPkg.syncAll({
     "profile.users_profile_page": {
       "key": "profile.users_profile_page",
       "lang": "de",
-      "text": "{NAME}'s Profilseite",
+      "text": "Profilseite von {NAME}",
       "ctime": 1425222207286,
       "mtime": 1513000882861,
       "revisionId": "deTYkjsKRJmBHhbvE",
