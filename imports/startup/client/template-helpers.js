@@ -148,7 +148,7 @@ const usernameFromId = function() {
 
 		if (user === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			user = '?!';
+			user = '◌';
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -169,11 +169,9 @@ const usernameFromId = function() {
 					if (err) {
 						console.warn(err);
 					}
-					if (user) {
-						cache[userId] = user;
-						pending[userId].changed();
-						delete pending[userId];
-					}
+					cache[userId] = user ? user : '?!';
+					pending[userId].changed();
+					delete pending[userId];
 				});
 			}
 		}
