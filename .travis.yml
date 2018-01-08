@@ -6,9 +6,9 @@ node_js:
   - 5.2.0
 
 env:
-  secure:
-      "dG18oZYO14eMwOL9UR7QJ38QUq/7f+tGb/4GW39oHA73CTLzbRG+FT7yod1lefTYdzVOO+fxWDQ5ciTvlX2pZyjhg3PilrWiKKz4zP0+Wm8ZY47bkmPW4AOAi9IqPMlRseQD9dhlxXZw8Z0vm9GwdP1ef2UAG27IWCxXp2oZ0XE="
-      "k1Odn5mnXvqijmLuwW3zQZeshXOoqd8rcB2xQJoVI8fetHtL2wjwuLGNzuTyiDhUIf5ZyaQrmdiD8L0WM9nwN4aoa3azFw5SruzEY+0pw1SaliEXyzfg8FljbKA53ueIq0kXXgWbaj93pMOz6rz+U926DlkarHPGVZnYlgtQ6zs="
+  global:
+  - secure: igsF7+q2ldrZaCLx3k2TGjSNZ5IRERZRmehltNyS9TKBMdfqddNoZyboGyj9Cg+Tub0oKbaVFZkfjcKX3RpKidL9+9N3e8dEZJjwDou+yvWPUYconKwYLWq8pOnjD8203FhSi3qRgfWjv3Ws2fVdpr5ozv6KLrFuDimIK5BCOOE=
+  - secure: hH2bCKn7nfc3khVAWRTGFSebO5pLxm8ekbJOI3zaabzUJ2Dva9Ly8bgCLG/JJZ5jcLJu8+tlmfpwqLRYGUOaQhUt/ojFjzQNjoSh8+6fLc8tU/Suw+38vLSOPwoDxR7lT0CV7KM2O5ycnmdit2tCyKf72gi7wZcXMcHKN1ftgc4=
 
 addons:
   ssh_known_hosts: dev.openki.xyz
