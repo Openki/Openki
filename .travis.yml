@@ -5,11 +5,6 @@ sudo: required
 node_js:
   - 5.2.0
 
-env:
-  global:
-  - secure: igsF7+q2ldrZaCLx3k2TGjSNZ5IRERZRmehltNyS9TKBMdfqddNoZyboGyj9Cg+Tub0oKbaVFZkfjcKX3RpKidL9+9N3e8dEZJjwDou+yvWPUYconKwYLWq8pOnjD8203FhSi3qRgfWjv3Ws2fVdpr5ozv6KLrFuDimIK5BCOOE=
-  - secure: hH2bCKn7nfc3khVAWRTGFSebO5pLxm8ekbJOI3zaabzUJ2Dva9Ly8bgCLG/JJZ5jcLJu8+tlmfpwqLRYGUOaQhUt/ojFjzQNjoSh8+6fLc8tU/Suw+38vLSOPwoDxR7lT0CV7KM2O5ycnmdit2tCyKf72gi7wZcXMcHKN1ftgc4=
-
 addons:
   ssh_known_hosts: dev.openki.xyz
 
@@ -35,15 +30,11 @@ install:
   - meteor npm install --production
 
 script:
+  # Add an IPv6 config - see the corresponding Travis issue
+  # https://github.com/travis-ci/travis-ci/issues/8361
   - sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
   - sudo apt-get install miredo
   - sleep 20
-  - ifconfig
-  - echo travis:$sshpassword | sudo chpasswd
-  - sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config
-  - sudo service ssh restart
-  - sudo apt-get install sshpass
-  - sshpass -p $sshpassword ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no travisci@$bouncehostip
   # Test for JS errors
   - meteor npm run js-lint -- .
   # Run unit-tests
@@ -56,8 +47,6 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
-  # Add an IPv6 config - see the corresponding Travis issue
-  # https://github.com/travis-ci/travis-ci/issues/8361
 
 deploy:
   provider: script
