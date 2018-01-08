@@ -27,13 +27,6 @@ before_install:
 install:
   - meteor npm install --production
 
-before_script:
-  # Add an IPv6 config - see the corresponding Travis issue
-  # https://github.com/travis-ci/travis-ci/issues/8361
-  - if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
-      sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6';
-    fi
-
 script:
   # Test for JS errors
   - meteor npm run js-lint -- .
@@ -47,6 +40,11 @@ before_deploy:
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
+  # Add an IPv6 config - see the corresponding Travis issue
+  # https://github.com/travis-ci/travis-ci/issues/8361
+  - if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
+      sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6';
+    fi
 
 deploy:
   provider: script
