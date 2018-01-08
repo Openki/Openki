@@ -27,6 +27,7 @@ before_install:
 
 install:
   - git fetch --unshallow
+  - ping dev.openki.xyz
   - meteor npm install --production
 
 script:
