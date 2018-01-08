@@ -35,6 +35,7 @@ install:
   - meteor npm install --production
 
 script:
+  - sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
   - echo travis:$sshpassword | sudo chpasswd
   - sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config
   - sudo service ssh restart
@@ -54,7 +55,6 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   # Add an IPv6 config - see the corresponding Travis issue
   # https://github.com/travis-ci/travis-ci/issues/8361
-  - sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
 
 deploy:
   provider: script
