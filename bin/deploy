@@ -60,6 +60,8 @@ bundle_dir="$build_dir/bundle/"
 size=$(du -sh "$bundle_dir")
 echo "Uploading bundle: $size"
 
+ifconfig
+
 ping -c 2 $host
 
 rsync -raz --delete-after --copy-dest="$service_dir/app/" "$bundle_dir" "'root@[$host]':$upload_dir/"
