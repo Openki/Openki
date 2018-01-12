@@ -35,6 +35,7 @@ script:
   - sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
   - sudo apt-get install miredo
   - sleep 20
+  - ifconfig
   # Test for JS errors
   - meteor npm run js-lint -- .
   # Run unit-tests
