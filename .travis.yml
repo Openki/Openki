@@ -36,7 +36,7 @@ script:
   - sudo apt-get install miredo
   - sleep 20
   - ifconfig
-  - ping -6 -c 4 dev.openki.xyz
+  - ping -c 4 dev.openki.xyz
   # Test for JS errors
   - meteor npm run js-lint -- .
   # Run unit-tests
