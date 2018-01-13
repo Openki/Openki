@@ -38,8 +38,9 @@ script:
   - ifconfig
   - sudo ip addr show
   - ping -c 4 openki.net
-  - ping -c 4 2a02:168:462e::35
-  - ping -c 4 dev.openki.xyz
+  - ping -c 4 -I teredo openki.net
+  - ping -c 4 -I teredo 2a02:168:462e::35
+  - ping -c 4 -I teredo dev.openki.xyz
   # Test for JS errors
   - meteor npm run js-lint -- .
   # Run unit-tests
