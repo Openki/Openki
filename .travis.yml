@@ -37,6 +37,8 @@ script:
   - sleep 20
   - ifconfig
   - sudo ip addr show
+  - ping -c 4 openki.net
+  - ping -c 4 2a02:168:462e::35
   - ping -c 4 dev.openki.xyz
   # Test for JS errors
   - meteor npm run js-lint -- .
