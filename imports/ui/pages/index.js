@@ -15,6 +15,7 @@ import './frames/week/week-frame.js';
 import './group-details/group-details.js';
 import './kiosk/kiosk.js';
 import './log/log.js';
+import './messenger/messenger.js';
 import './not-found/not-found.js';
 import './ownprofile/ownprofile.js';
 import './reset-password/reset-password.js';

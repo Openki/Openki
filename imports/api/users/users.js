@@ -45,6 +45,7 @@ import IdTools from '/imports/utils/id-tools.js';
 // "privileges"   -> [admin]
 // "lastLogin"    -> Date
 // notificactions: True if the user wants notification mails sent to them
+// "inbox"        -> {unseen: Integer, unread: Integer}
 
 // Calculated fields
 // badges: union of user's id and group ids for permission checking, calculated by updateBadges()

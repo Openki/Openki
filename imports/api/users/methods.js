@@ -150,5 +150,23 @@ Meteor.methods({
 		Meteor.users.update(Meteor.userId(), {
 			$set: { 'profile.locale': locale }
 		});
+	},
+
+	'user.updateInbox'(userIds) {
+		check(userIds, [String]);
+
+		Meteor.users.update(
+			{ _id: { $in: userIds } },
+			{ $inc: { 'inbox.unseen': 1, 'inbox.unread': 1 } },
+			{ multi: true }
+		);
+	},
+
+	'user.resetInbox'(resetUnread = false) {
+		const modifier = { $set: { 'inbox.unseen': 0 } };
+
+		if (resetUnread) modifier.$set['inbox.unread'] = 0;
+
+		Meteor.users.update({ _id: Meteor.userId() }, modifier);
 	}
 });

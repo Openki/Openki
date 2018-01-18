@@ -207,3 +207,21 @@
 .navbar .js-region-search-form {
 	display: inline;
 }
+
+.user-frame i {
+	color: $gray-light;
+	margin-right: 5px;
+}
+
+.user-frame a:hover > i,
+.user-frame button:hover > i {
+	color: $white;
+}
+
+.user-frame .divider {
+	display: none;
+
+	@media (min-width: $grid-float-breakpoint) {
+		display: list-item;
+	}
+}

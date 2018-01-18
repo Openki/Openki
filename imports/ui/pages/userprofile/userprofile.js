@@ -64,6 +64,17 @@ Template.userprofile.helpers({
 
 
 Template.userprofile.events({
+	'submit #sendMessage'(event, instance) {
+		event.preventDefault();
+		Meteor.call('userMessage.add', this.user._id, instance.$('.js-message-content').val(), (err) => {
+			if (err) {
+				console.error(err);
+			} else {
+				AddMessage('messsage sent', 'success');
+			}
+		});
+	},
+
 	'click button.giveAdmin': function() {
 		Meteor.call('user.addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {

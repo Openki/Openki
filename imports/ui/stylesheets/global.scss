@@ -1,3 +1,12 @@
+.badge-unseen {
+	background-color: $green-dark;
+	@include td-margin(left, 3px);
+
+	&.is-muted {
+		background-color: $gray-lighter;
+	}
+}
+
 .admin-active-task {
 	margin-top: 15px;
 }

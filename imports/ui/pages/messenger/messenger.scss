@@ -1,0 +1,146 @@
+$messenger-grid-width: 5px;
+
+.messenger {
+	@include make-row($messenger-grid-width);
+}
+
+.messenger-sidebar {
+	@include make-xs-column(12, $messenger-grid-width);
+	@include make-sm-column(3, $messenger-grid-width);
+}
+
+.messenger-sidebar-element {
+	& + & {
+		margin-top: 2px;
+	}
+}
+
+.conversation-small {
+	background-color: lighten($blue-lighter, 5%);
+
+	&:hover {
+		background-color: lighten($blue-lighter, 3%);
+		cursor: pointer;
+	}
+
+	&.active {
+		background-color: lighten($blue-light, 25%);
+	}
+}
+
+.conversation-small-title {
+	@include ellipsis;
+	font-weight: bold;
+	padding: 10px 10px 0;
+}
+
+.conversation-small-teaser {
+	padding: 0 10px 5px;
+	width: 100%;
+}
+
+.teaser-message {
+	@include ellipsis;
+}
+
+.teaser-message-time {
+	@include td-padding(left, 5px);
+	color: $gray-light;
+	text-align: right;
+
+}
+
+.teaser-message-sender {
+	color: $brand-primary;
+}
+
+.messenger-panel {
+	@include make-xs-column(12, $messenger-grid-width);
+	@include make-sm-column(9, $messenger-grid-width);
+	display: none;
+
+	@media(min-width: $screen-sm-min) {
+		display: block;
+	}
+}
+
+.full-conversation-header {
+	background-color: lighten($blue-light, 25%);
+	display: table;
+	padding: 10px 17.5px;
+	width: 100%;
+}
+
+.full-conversation-return {
+	display: table-cell;
+
+	@media (min-width: $screen-sm-min) {
+		display: none;
+	}
+}
+
+.full-conversation-header-title {
+	display: table-cell;
+	font-weight: bold;
+}
+
+.full-conversation-header-options {
+	display: table-cell;
+	text-align: right;
+
+	& .dropdown-menu {
+		text-align: left;
+	}
+}
+
+.full-conversation-body {
+	border-color: lighten($blue-light, 25%);
+	border-style: solid;
+	border-width: 2px 2px 0;
+	height: 500px;
+	overflow-y: auto;
+	padding: 10px;
+	width: 100%;
+}
+
+.full-conversation-message {
+	&.is-own-message {
+		text-align: right;
+	}
+
+	& + & {
+		margin-top: 5px;
+	}
+}
+
+.full-conversation-message-body {
+	border: 2px solid lighten($blue-lighter, 5%);
+	border-radius: 2px;
+	display: inline-block;
+	min-width: 200px;
+	max-width: 500px;
+	padding: 5px 7.5px;
+	text-align: left;
+}
+
+.is-unseen > .full-conversation-message-body {
+	border-color: $green;
+}
+
+.is-own-message > .full-conversation-message-body {
+	background-color: lighten($blue-lighter, 5%);
+}
+
+.full-conversation-message-sender {
+	font-weight: bold;
+}
+
+.full-conversation-message-time {
+	color: $gray-light;
+	text-align: right;
+}
+
+.full-conversation-write input,
+.full-conversation-write button {
+	border-radius: 0;
+}

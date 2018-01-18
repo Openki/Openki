@@ -291,6 +291,11 @@ Router.map(function () {
 		}
 	});
 
+	this.route('messenger', {
+		path: '/messenger',
+		template: 'messenger'
+	});
+
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
 		action: function() {

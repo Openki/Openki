@@ -1,32 +1,3 @@
-.navbar .navbar-nav > .open > .login-dropdown,
-.navbar .navbar-nav > .dropdown > .login-dropdown {
-	@media (min-width: $screen-sm) {
-		min-width: 300px;
-	}
-}
-
-.user-frame {
-	@media (max-width: $grid-float-breakpoint) {
-		@include clearfix;
-		background-color: $dropdown-bg;
-		padding-top: 15px;
-	}
-}
-
-.ownuser-frame {
-	padding: 0 ($grid-gutter-width / 2);
-}
-
-.ownuser-frame-welcome {
-	font-size: $font-size-h3;
-	margin-top: 10px;
-	text-align: center;
-}
-
-.login {
-	padding-top: 10px;
-}
-
 .account-tasks .help-block {
 	margin-bottom: 0;
 }

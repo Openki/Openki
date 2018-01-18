@@ -112,6 +112,10 @@ Template.loginButton.helpers({
 Template.loginButton.events({
 	'click #openLogin'() {
 		$('#accountTasks').modal('show');
+	},
+
+	'click .js-show-user-frame'() {
+		Meteor.call('user.resetInbox');
 	}
 });
 
