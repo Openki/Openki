@@ -157,6 +157,7 @@ Router.map(function () {
 				{ region: Predicates.id
 				, group: Predicates.id
 				, neededRoles: Predicates.ids
+				, internal: Predicates.flag
 				};
 			const params = Filtering(predicates).read(this.params.query).done();
 

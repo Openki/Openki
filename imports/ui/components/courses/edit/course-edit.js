@@ -197,13 +197,15 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	userIsInGroup: function() {
-		var user = Meteor.user();
+	showInternalCheckbox: function() {
+		const user = Meteor.user();
+
+		if (this.isFrame) return false;
 		if (user && user.groups) {
 			return user.groups.length > 0;
-		} else {
-			return false;
 		}
+
+		return false;
 	},
 
 	showSavedMessage() {
@@ -249,11 +251,18 @@ Template.courseEdit.events({
 			roles[this.name] = this.checked;
 		});
 
+		// for frame: if a group id is given, check for the internal flag in the
+		// url query
+		const internal =
+			instance.data.group
+			? instance.data.internal
+			: instance.$('.js-check-internal').is(':checked')
+
 		const changes = {
 			roles,
+			internal,
 			name: StringTools.saneTitle(instance.$('#editform_name').val()),
 			categories: instance.selectedCategories.get(),
-			internal: instance.$('.js-check-internal').is(':checked'),
 		};
 
 		if (changes.name.length === 0) {
