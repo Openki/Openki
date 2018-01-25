@@ -15,7 +15,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "meteor-node-stubs": "^0.2.11",
     "moment-timezone": "^0.5.11",
-    "sanitize-html": "^1.14.1",
+    "sanitize-html": "1.14.1",
     "seedrandom": "^2.4.3",
     "shariff": "^1.26.2",
     "url": "^0.11.0"
