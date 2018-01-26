@@ -256,7 +256,7 @@ Template.courseEdit.events({
 		const internal =
 			instance.data.group
 			? instance.data.internal
-			: instance.$('.js-check-internal').is(':checked')
+			: instance.$('.js-check-internal').is(':checked');
 
 		const changes = {
 			roles,
