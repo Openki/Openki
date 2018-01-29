@@ -53,7 +53,7 @@ function getScrollToPosition () {
     return undefined;
   }
 
-  element = document.getElementById(id);
+  element = id && document.getElementById(id);
   if (element) {
     return element.getBoundingClientRect().top + scrollTop();
   }
