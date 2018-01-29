@@ -21,12 +21,12 @@
 				{{#each languages}}
 					<li>
 						<a href="#" class="js-language-link js-nav-dropdown-close" title="{{english}}">
-							<div class="language-name">
-								{{languageNameMarked}}
-							</div>
 							<span class="language-translated {{translated.rating}}">
 								{{translated.percent}}
 							</span>
+							<div class="language-name">
+								{{languageNameMarked}}
+							</div>
 							{{#if currentLanguage}}
 								<span class="checkmark glyphicon glyphicon-ok"></span>
 							{{/if}}
