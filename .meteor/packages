@@ -29,9 +29,9 @@ rzymek:moment-locale-el
 rzymek:moment-locale-tr
 rzymek:moment-locale-hu
 fortawesome:fontawesome
-msgfmt:core
-msgfmt:extract
-msgfmt:ui
+sbalmer:msgfmt-core
+sbalmer:msgfmt-extract
+sbalmer:msgfmt-ui
 accounts-google@1.2.0
 msavin:mongol
 bevanhunt:leaflet

@@ -93,9 +93,6 @@ mongo@1.2.2
 mongo-dev-server@1.0.1
 mongo-id@1.0.6
 msavin:mongol@2.0.1
-msgfmt:core@2.0.0-preview.24
-msgfmt:extract@2.0.2
-msgfmt:ui@2.2.0
 nicolaslopezj:router-layer@0.1.0
 npm-bcrypt@0.9.3
 npm-mongo@2.2.30
@@ -132,6 +129,9 @@ rzymek:moment-locale-ja@2.14.1
 rzymek:moment-locale-tr@2.14.1
 rzymek:moment-locale-zh-cn@2.14.1
 rzymek:moment-locale-zh-tw@2.14.1
+sbalmer:msgfmt-core@2.1.0-rc1
+sbalmer:msgfmt-extract@2.1.0-rc4
+sbalmer:msgfmt-ui@2.2.1
 seba:minifiers-autoprefixer@1.0.1
 service-configuration@1.0.11
 session@1.1.7
