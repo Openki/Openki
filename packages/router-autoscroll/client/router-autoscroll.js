@@ -59,10 +59,7 @@ RouterAutoscroll.scheduleScroll = function () {
 function ironWhenReady(callFn) {
   return function () {
     var self = this;
-    if (self.ready()) {
-      var position = getScrollToPosition();
-      scrollToPos(position);
-    }
+    if (self.ready()) callFn();
   };
 }
 
