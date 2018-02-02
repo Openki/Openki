@@ -2,7 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import Courses from './courses.js';
+import Events from '/imports/api/events/events.js';
+import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
+import Roles from '/imports/api/roles/roles.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 import {
 	HasRoleUser,
@@ -10,9 +13,9 @@ import {
 	MayUnsubscribe
 } from '/imports/utils/course-role-utils.js';
 
-import '/imports/AsyncTools.js';
-import '/imports/StringTools.js';
-import '/imports/HtmlTools.js';
+import AsyncTools from '/imports/utils/async-tools.js';
+import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 
@@ -48,7 +51,7 @@ function removeRole(course, role, user) {
 }
 
 Meteor.methods({
-	add_role: function(courseId, userId, role) {
+	'course.addRole': function(courseId, userId, role) {
 		check(courseId, String);
 		check(userId, String);
 		check(role, String);
@@ -81,7 +84,7 @@ Meteor.methods({
 		Notification.Join.record(course._id, user._id, role);
 	},
 
-	remove_role: function(courseId, userId, role) {
+	'course.removeRole': function(courseId, userId, role) {
 		check(role, String);
 		check(userId, String);
 		check(courseId, String);
@@ -106,7 +109,7 @@ Meteor.methods({
 		removeRole(course, role, user._id);
 	},
 
-	change_comment: function(courseId, comment) {
+	'course.changeComment': function(courseId, comment) {
 		check(courseId, String);
 		check(comment, String);
 		var course = Courses.findOne({_id: courseId});
@@ -118,7 +121,7 @@ Meteor.methods({
 		);
 	},
 
-	save_course: function(courseId, changes) {
+	'course.save': function(courseId, changes) {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
@@ -199,7 +202,7 @@ Meteor.methods({
 
 		if (changes.categories) set.categories = changes.categories.slice(0, 20);
 		if (changes.name) {
-			set.name = StringTools.saneText(changes.name).substring(0, 1000);
+			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
 			set.slug = StringTools.slug(set.name);
 		}
 		if (changes.internal !== undefined) {
@@ -236,7 +239,7 @@ Meteor.methods({
 			set.time_created = new Date();
 			courseId = Courses.insert(set);
 
-			Meteor.call('updateNextEvent', courseId);
+			Meteor.call('course.updateNextEvent', courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
 		}
@@ -244,7 +247,7 @@ Meteor.methods({
 		return courseId;
 	},
 
-	remove_course: function(courseId) {
+	'course.remove': function(courseId) {
 		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "no such course");
 		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, "edit not permitted");
@@ -253,7 +256,7 @@ Meteor.methods({
 	},
 
 	// Update the nextEvent field for the courses matching the selector
-	updateNextEvent: function(selector) {
+	'course.updateNextEvent': function(selector) {
 		Courses.find(selector).forEach(function(course) {
 			var futureEvents = Events.find(
 				{courseId: course._id, start: {$gt: new Date()}}

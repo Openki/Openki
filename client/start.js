@@ -1,11 +1,13 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
-import "/imports/RegionSelection.js";
+import RegionSelection from '/imports/utils/region-selection.js';
 import Introduction from '/imports/ui/lib/introduction.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import UrlTools from '/imports/utils/url-tools.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
+
+import Languages from '/imports/api/languages/languages.js';
 
 ////////////// db-subscriptions:
 

@@ -15,7 +15,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "meteor-node-stubs": "^0.2.11",
     "moment-timezone": "^0.5.11",
-    "sanitize-html": "^1.14.1",
+    "sanitize-html": "1.14.1",
     "seedrandom": "^2.4.3",
     "shariff": "^1.26.2",
     "url": "^0.11.0"
@@ -29,6 +29,7 @@
     "dev": "meteor --settings settings.dev.json",
     "test": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
     "test-app": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --full-app --once --driver-package meteortesting:mocha",
+    "test-live": "TEST_WATCH=1 meteor test --settings settings.ci.json --full-app --driver-package meteortesting:mocha",
     "js-lint": "jshint"
   },
   "repository": {

@@ -3,9 +3,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Regions from '/imports/api/regions/regions.js';
+import Categories from '/imports/api/categories/categories.js';
 import Courses from '/imports/api/courses/courses.js';
-import '/imports/StringTools.js';
+import Groups from '/imports/api/groups/groups.js';
+import Regions from '/imports/api/regions/regions.js';
+import Roles from '/imports/api/roles/roles.js';
+
+import StringTools from '/imports/utils/string-tools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
@@ -185,7 +189,7 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 
-	newCourseGroupName: function () {
+	newCourseGroupName: function() {
 		if (this.group) {
 			var groupId = this.group;
 			var group = Groups.findOne(groupId);
@@ -193,13 +197,15 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	userIsInGroup: function() {
-		var user = Meteor.user();
+	showInternalCheckbox: function() {
+		const user = Meteor.user();
+
+		if (this.isFrame) return false;
 		if (user && user.groups) {
 			return user.groups.length > 0;
-		} else {
-			return false;
 		}
+
+		return false;
 	},
 
 	showSavedMessage() {
@@ -245,11 +251,18 @@ Template.courseEdit.events({
 			roles[this.name] = this.checked;
 		});
 
+		// for frame: if a group id is given, check for the internal flag in the
+		// url query
+		const internal =
+			instance.data.group
+			? instance.data.internal
+			: instance.$('.js-check-internal').is(':checked');
+
 		const changes = {
 			roles,
-			name: StringTools.saneText(instance.$('#editform_name').val()),
+			internal,
+			name: StringTools.saneTitle(instance.$('#editform_name').val()),
 			categories: instance.selectedCategories.get(),
-			internal: instance.$('.js-check-internal').is(':checked'),
 		};
 
 		if (changes.name.length === 0) {
@@ -285,7 +298,7 @@ Template.courseEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
-			Meteor.call('save_course', courseId, changes, (err, courseId) => {
+			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
@@ -300,7 +313,7 @@ Template.courseEdit.events({
 					}
 
 					instance.$('.js-check-enroll').each(function() {
-						const method = this.checked ? 'add_role' : 'remove_role';
+						const method = this.checked ? 'course.addRole' : 'course.removeRole';
 						Meteor.call(method, courseId, Meteor.userId(), this.name);
 					});
 				}

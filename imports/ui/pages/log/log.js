@@ -4,10 +4,11 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import UrlTools from '/imports/utils/url-tools.js';
 
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 
 import './log.html';
 
@@ -64,7 +65,7 @@ Template.showLog.onCreated(function() {
 
 Template.showLog.helpers({
 	'privileged': function() {
-		return privileged(Meteor.user(), 'admin');
+		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
 	},
 
 	'date': function() {

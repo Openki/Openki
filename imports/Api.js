@@ -1,4 +1,7 @@
 import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
+import Groups from '/imports/api/groups/groups.js';
+import Venues from '/imports/api/venues/venues.js';
 
 export default Api =
 	{ groups:

@@ -7,10 +7,6 @@
 	color: $white;
 }
 
-.regions-splash .modal-body {
-	// text-align: center;
-}
-
 .regions-splash .close {
 	color: $white;
 	opacity: .7;
@@ -38,7 +34,6 @@
 
 .regions-splash-login {
 	margin-top: 15px;
-	// text-align: center;
 }
 
 .regions-splash .dropdown-menu {
@@ -52,14 +47,11 @@
 
 .regions-splash-selection > * {
 	display: table-cell;
+	vertical-align: top;
 }
 
 .regions-splash-selection .js-region-search-form {
 	@include td-padding(right, 5px);
 	position: relative;
 	width: 100%;
-}
-
-.regions-splash-selection #confirmRegion {
-	margin-top: -5px;
 }

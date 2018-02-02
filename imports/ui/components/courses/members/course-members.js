@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Roles from '/imports/api/roles/roles.js';
+
 import Editable from '/imports/ui/lib/editable.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
@@ -10,6 +12,7 @@ import {
 	MaySubscribe,
 	MayUnsubscribe
 } from '/imports/utils/course-role-utils.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
@@ -78,7 +81,7 @@ Template.courseMember.onCreated(function() {
 	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
-			Meteor.call("change_comment", courseId, newMessage, function(err, courseId) {
+			Meteor.call("course.changeComment", courseId, newMessage, function(err, courseId) {
 				if (err) {
 					ShowServerError('Unable to change your message', err);
 				} else {
@@ -134,18 +137,18 @@ Template.courseMember.helpers({
 
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf: function() {
-		var notPriviledgedUser = !privileged(Meteor.userId(), 'admin');
+		var notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
 		return (this.member.user === Meteor.userId() && notPriviledgedUser);
 	}
 });
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(e, template) {
-		Meteor.call("add_role", this.course._id, this.member.user, 'team', false);
+		Meteor.call("course.addRole", this.course._id, this.member.user, 'team', false);
 		return false;
 	},
 	'click .js-remove-team': function(e, template) {
-		Meteor.call("remove_role", this.course._id, this.member.user, 'team');
+		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
 		return false;
 	}
 });

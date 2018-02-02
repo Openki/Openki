@@ -5,14 +5,17 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
+import Languages from '/imports/api/languages/languages.js';
+
 import ScssVars from '/imports/ui/lib/scss-vars.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 import './language-selection.html';
 
 Template.languageSelectionWrap.created = function() {
 	 var instance = this;
 	 instance.searchingLanguages = new ReactiveVar(false);
+	 this.subscribe('mfStats');
 };
 
 Template.languageSelectionWrap.helpers({
@@ -68,6 +71,21 @@ Template.languageSelection.helpers({
 		return StringTools.markedName(search, name);
 	},
 
+	translated() {
+		const getTransPercent = () => {
+			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
+			if (mfStats) {
+				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
+				return langStats.transPercent;
+			}
+		};
+
+		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
+		const rating = percent >= 75 && 'well-translated';
+
+		return { percent, rating };
+	},
+
 	currentLanguage: function() {
 		return this == Languages[Session.get('locale')];
 	}
@@ -92,7 +110,7 @@ Template.languageSelection.events({
 
 		Session.set('locale', lg);
 		if (Meteor.user()){
-			Meteor.call('updateUserLocale', lg);
+			Meteor.call('user.updateLocale', lg);
 		}
 
 		instance.parentInstance().searchingLanguages.set(false);

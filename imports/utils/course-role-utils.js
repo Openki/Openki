@@ -1,3 +1,5 @@
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
+
 /** @summary Determine whether there is a member with the given role
   * @param members list of members
   * @param role role key
@@ -32,7 +34,7 @@ export function MaySubscribe(operatorId, course, userId, role) {
 	if (HasRoleUser(course.members, role, userId)) return false;
 
 	// Admins may do anything
-	if (privileged(operatorId, 'admin')) {
+	if (UserPrivilegeUtils.privileged(operatorId, 'admin')) {
 		return true;
 	}
 
@@ -69,7 +71,7 @@ export function MayUnsubscribe(operatorId, course, userId, role) {
 	if (!HasRoleUser(course.members, role, userId)) return false;
 
 	// Admins may do anything
-	if (privileged(operatorId, 'admin')) {
+	if (UserPrivilegeUtils.privileged(operatorId, 'admin')) {
 		return true;
 	}
 

@@ -1,6 +1,7 @@
 "use strict";
 
 import Regions from '/imports/api/regions/regions.js';
+import Venues from '/imports/api/venues/venues.js';
 
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 

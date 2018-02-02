@@ -41,6 +41,11 @@
 						{{else}}
 							{{mf 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name LOCALE=locale}}
 						{{/if}}
+						<br/>
+						<a href="{{courseLink}}">
+							<i class="fa fa-external-link"></i>
+							{{mf 'event.details.viewCourse' 'view course' LOCALE=locale}}
+						</a>
 					</p>
 			</td>
 		</tr>
@@ -49,6 +54,12 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
 						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
+							<div style="float: right">
+								<a href="{{eventLink}}">
+									<i class="fa fa-calendar"></i>
+									{{mf 'notification.event.viewEvent' 'view event' LOCALE=locale}}
+								</a>
+							</div>
 							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
 								{{eventDate}}
 								<br />

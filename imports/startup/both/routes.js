@@ -1,12 +1,17 @@
-import '/imports/Predicates.js';
-import '/imports/Profile.js';
-import '/imports/LocalTime.js';
-import Metatags from '/imports/Metatags.js';
+import Predicates from '/imports/utils/predicates.js';
+import Profile from '/imports/utils/profile.js';
+import LocalTime from '/imports/utils/local-time.js';
+import Metatags from '/imports/utils/metatags.js';
 import CourseTemplate from '/imports/ui/lib/course-template.js';
 import CssFromQuery from '/imports/ui/lib/css-from-query.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
+import Groups from '/imports/api/groups/groups.js';
+import Roles from '/imports/api/roles/roles.js';
+import Venues from '/imports/api/venues/venues.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 function finderRoute(path) {
 	return {
@@ -152,6 +157,7 @@ Router.map(function () {
 				{ region: Predicates.id
 				, group: Predicates.id
 				, neededRoles: Predicates.ids
+				, internal: Predicates.flag
 				};
 			const params = Filtering(predicates).read(this.params.query).done();
 
@@ -329,9 +335,11 @@ Router.map(function () {
 			return data;
 		},
 		onAfterAction: function() {
-			var user = Meteor.users.findOne();
-			if (!user) return;
-			Metatags.setCommonTags(mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}'));
+			const user = Meteor.user();
+			if (user) {
+				const title = mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}');
+				Metatags.setCommonTags(title);
+			}
 		}
 	});
 
@@ -561,11 +569,11 @@ Router.map(function () {
 
 			// What privileges the user has
 			var privileges = _.reduce(['admin'], function(ps, p) {
-				ps[p] = privileged(user, p);
+				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
 
-			var alterPrivileges = privilegedTo('admin');
+			var alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
 			return {
@@ -579,7 +587,8 @@ Router.map(function () {
 		onAfterAction: function() {
 			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // wtf
-			const title = mf('profile.windowtitle', {USER: user.username}, '{USER}\'s Profile');
+
+			const title = mf('profile.windowtitle', {USER: user.username}, "Profile of {USER}");
 			Metatags.setCommonTags(title);
 		}
 	});

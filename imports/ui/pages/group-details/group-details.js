@@ -4,11 +4,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Groups from '/imports/api/groups/groups.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
+import IsGroupMember from '/imports/utils/is-group-member.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
@@ -38,7 +40,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableName = new Editable(
 		true,
 		function(newName) {
-			Meteor.call("saveGroup", groupId, { name: newName }, handleSaving);
+			Meteor.call("group.save", groupId, { name: newName }, handleSaving);
 		},
 		mf('group.name.placeholder',  'Name of your group, institution, community or program'),
 		showControls
@@ -47,7 +49,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableShort = new Editable(
 		true,
 		function(newShort) {
-			Meteor.call("saveGroup", groupId, { short: newShort }, handleSaving);
+			Meteor.call("group.save", groupId, { short: newShort }, handleSaving);
 		},
 		mf('group.short.placeholder', 'Abbreviation'),
 		showControls
@@ -56,7 +58,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableClaim = new Editable(
 		true,
 		function(newClaim) {
-			Meteor.call("saveGroup", groupId, { claim: newClaim }, handleSaving);
+			Meteor.call("group.save", groupId, { claim: newClaim }, handleSaving);
 		},
 		mf('group.claim.placeholder', 'The core idea'),
 		showControls
@@ -65,7 +67,7 @@ Template.groupDetails.onCreated(function() {
 	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
-			Meteor.call("saveGroup", groupId, { description: newDescription }, handleSaving);
+			Meteor.call("group.save", groupId, { description: newDescription }, handleSaving);
 		},
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
 		showControls
@@ -76,7 +78,7 @@ Template.groupDetails.onCreated(function() {
 		var data = Template.currentData();
 		var group = Groups.findOne(groupId) || {};
 		var userId = Meteor.userId();
-		var mayEdit = data.isNew || userId && GroupLib.isMember(userId, groupId);
+		var mayEdit = data.isNew || userId && IsGroupMember(userId, groupId);
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(group.name);
@@ -149,7 +151,7 @@ Template.groupDetails.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveGroup', 'Login and save group'), () => {
-			Meteor.call('saveGroup', 'create', group, (err, groupId) => {
+			Meteor.call('group.save', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
 					ShowServerError('Saving the group went wrong', err);

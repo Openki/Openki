@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import Courses from '/imports/api/courses/courses.js';
+import Roles from '/imports/api/roles/roles.js';
 
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
