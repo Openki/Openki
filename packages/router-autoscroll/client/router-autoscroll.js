@@ -1,3 +1,18 @@
+// Do not scroll the next time you normally would
+var cancelNext = false;
+
+// use _jQuery if available, otherwise support IE9+
+var scrollTop = function () {
+  // uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
+  return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
+};
+
+var scrollToPos = function (position) {
+  if (position === undefined) return;
+
+  window.scroll(0, position - RouterAutoscroll.marginTop);
+};
+
 RouterAutoscroll = {
   marginTop: 0,
   cancelNext: function() {
@@ -9,7 +24,6 @@ var backToPosition;
 // Saved positions will survive a hot code push
 var scrollPositions = new ReactiveDict("okgrow-router-autoscroll");
 
-var cancelNext = false;
 
 function saveScrollPosition () {
   scrollPositions.set(window.location.href, scrollTop());
@@ -39,7 +53,7 @@ function getScrollToPosition () {
     return undefined;
   }
 
-  element = document.getElementById(id);
+  element = id && document.getElementById(id);
   if (element) {
     return element.getBoundingClientRect().top + scrollTop();
   }
@@ -59,24 +73,9 @@ RouterAutoscroll.scheduleScroll = function () {
 function ironWhenReady(callFn) {
   return function () {
     var self = this;
-    if (self.ready()) {
-      var position = getScrollToPosition();
-      scrollToPos(position);
-    }
+    if (self.ready()) callFn();
   };
 }
-
-// use _jQuery if available, otherwise support IE9+
-var scrollTop = function () {
-  // uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
-  return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
-};
-
-var scrollToPos = function (position) {
-  if (position === undefined) return;
-
-  window.scroll(0, position - RouterAutoscroll.marginTop);
-};
 
 if (Package['iron:router']) {
   Package['iron:router'].Router.onAfterAction(ironWhenReady(RouterAutoscroll.scheduleScroll));

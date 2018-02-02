@@ -1,9 +1,13 @@
 import Courses from '/imports/api/courses/courses.js';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+import Events from '/imports/api/events/events.js';
 import ensure from "./ensureFixture.js";
 import "./Prng.js";
+import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
+import Venues from '/imports/api/venues/venues.js';
 
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 
 import seedrandom from 'seedrandom';
@@ -39,20 +43,11 @@ const sometimesAfter = function(date) {
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
-
-Meteor.methods({
-	'fixtures.clean': function() {
-		Regions.remove({});
-		Groups.remove({});
-		Events.remove({});
-		Venues.remove({});
-		Courses.remove({});
-	},
-
-	'fixtures.regions.create': function() {
+	const regionsCreate = function() {
 		var regions = require("./data/region.fixtures.js").default;
 
-		for (var region of regions) {
+		for (var r of regions) {
+			const region = Object.assign({}, r); // clone
 			if (region.loc) {
 				var coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { 'type': 'Point', 'coordinates': coordinates };
@@ -61,12 +56,13 @@ Meteor.methods({
 		}
 
 		return "Inserted " + regions.length + " region fixtures.";
-	},
+	};
 
-	'fixtures.groups.create': function() {
+	const groupsCreate = function() {
 		var groups = require("./data/group.fixtures.js").default;
 
-		for (var group of groups) {
+		for (var g of groups) {
+			const group = Object.assign({}, g);
 			group.createdby = 'ServerScript_loadingTestgroups';
 
 			// Always use same id for same group to avoid broken urls while testing
@@ -78,9 +74,9 @@ Meteor.methods({
 		}
 
 		return "Inserted " + groups.length + " group fixtures.";
-	},
+	};
 
-	'fixtures.events.create': function() {
+	eventsCreate = function() {
 		var events = require("./data/event.fixtures.js").default;
 
 		// These events are most useful if they show up in the calendar for the
@@ -88,7 +84,8 @@ Meteor.methods({
 		// week but keep the weekday.
 		var dateOffset = 0;
 
-		for (var event of events) {
+		for (var e of events) {
+			const event = Object.assign({}, e);
 			if (Events.findOne({ _id: event._id })) continue; // Don't create events that exist already
 			event.createdBy = ensure.user(event.createdby)._id;
 			event.groups = _.map(event.groups, ensure.group);
@@ -126,9 +123,9 @@ Meteor.methods({
 		}
 
 		return "Inserted " + events.length + " event fixtures.";
-	},
+	};
 
-	'fixtures.venues.create': function() {
+	const venuesCreate = function() {
 		var venues = require("./data/venue.fixtures.js").default;
 
 		var prng = Prng("loadLocations");
@@ -138,7 +135,8 @@ Meteor.methods({
 			Regions.findOne('EZqQLGL4PtFCxCNrp')
 		];
 
-		for (var venueData of venues) {
+		for (var v of venues) {
+			const venueData = Object.assign({}, v);
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
 			var venue = ensure.venue(venueData.name, venueData.region._id);
@@ -151,15 +149,15 @@ Meteor.methods({
 		}
 
 		return "Inserted " + venues.length + " venue fixtures.";
-	},
+	};
 
-
-	'fixtures.courses.create': function() {
+	const coursesCreate = function() {
 		var courses = require("./data/course.fixtures.js").default;
 
 		var prng = Prng("createCourses");
 
-		for (var course of courses) {
+		for (var c of courses) {
+			const course = Object.assign({}, c);
 			for (var member of course.members) {
 				member.user = ensure.user(member.user)._id;
 			}
@@ -192,7 +190,7 @@ Meteor.methods({
 		}
 
 		return "Inserted " + courses.length + " course fixtures.";
-	},
+	};
 
 
 	/** Generate events for each course
@@ -200,7 +198,7 @@ Meteor.methods({
 	  * For each course, zero or more events are generated. Some will be in
 	  * the past, some in the future.
 	  */
-	'fixtures.events.generate': function() {
+	const eventsGenerate = function() {
 		var prng = Prng("eventsGenerate");
 		var count = 0;
 
@@ -292,9 +290,9 @@ Meteor.methods({
 		});
 
 		return "Generated " + count + " course events.";
-	},
+	};
 
-	'fixtures.comments.generate': function() {
+	const commentsGenerate = function() {
 		var prng = Prng("createComments");
 		var count = 0;
 
@@ -332,7 +330,30 @@ Meteor.methods({
 		});
 
 		return "Generated " + count + " course comments.";
-	}
-});
+	};
 
+	Meteor.methods({
+		'fixtures.clean': function() {
+			Groups.remove({});
+			Events.remove({});
+			Venues.remove({});
+			Courses.remove({});
+		},
+
+		'fixtures.create': function() {
+			if (Regions.find().count() === 0) regionsCreate();
+			groupsCreate();
+			venuesCreate();
+			coursesCreate();
+			eventsGenerate();
+		},
+
+		'fixtures.regions.create': regionsCreate,
+		'fixtures.groups.create': groupsCreate,
+		'fixtures.events.create': eventsCreate,
+		'fixtures.venues.create': venuesCreate,
+		'fixtures.courses.create': coursesCreate,
+		'fixtures.events.generate': eventsGenerate,
+		'fixtures.comments.generate': commentsGenerate
+	});
 }

@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import '/imports/IdTools.js';
+import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
@@ -40,7 +40,7 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.editableName = new Editable(
 		true,
 		function(newName) {
-			Meteor.call("save_course", course._id, { name: newName }, function(err, courseId) {
+			Meteor.call("course.save", course._id, { name: newName }, function(err, courseId) {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {
@@ -54,7 +54,7 @@ Template.courseDetailsPage.onCreated(function() {
 	instance.editableDescription = new Editable(
 		false,
 		function(newDescription) {
-			Meteor.call("save_course", course._id, { description: newDescription }, function(err, courseId) {
+			Meteor.call("course.save", course._id, { description: newDescription }, function(err, courseId) {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {
@@ -109,7 +109,7 @@ Template.courseDetailsPage.events({
 
 		var course = instance.data.course;
 		instance.busy('deleting');
-		Meteor.call('remove_course', course._id, function(error) {
+		Meteor.call('course.remove', course._id, function(error) {
 			instance.busy(false);
 			if (error) {
 				ShowServerError("Removing the proposal '"+ course.name + "' went wrong", error);
@@ -175,7 +175,7 @@ Template.courseGroupAdd.events({
 			if (error) {
 				ShowServerError("Failed to add group", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
 				instance.collapse();
 			}
 		});
@@ -207,7 +207,7 @@ Template.courseGroupMakeOrganizer.events({
 			if (error) {
 				ShowServerError("Failed to give group editing rights", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.added'), 'success');
+				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
 				instance.collapse();
 			}
 		});

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import Roles from '/imports/api/roles/roles.js';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
 

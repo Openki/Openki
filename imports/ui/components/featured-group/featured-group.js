@@ -1,5 +1,6 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 
 import './featured-group.html';

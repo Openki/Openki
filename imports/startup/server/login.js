@@ -1,4 +1,4 @@
-import '/imports/collections/Log.js';
+import Log from '/imports/api/log/log.js';
 
 // Record a login attempt in the log
 const registerAttempt = (track) => {

@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
 import Regions from '/imports/api/regions/regions.js';
+import Venues from '/imports/api/venues/venues.js';
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Editable from '/imports/ui/lib/editable.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';

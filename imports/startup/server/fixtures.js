@@ -1,6 +1,9 @@
 import Regions from '/imports/api/regions/regions.js';
 import '/imports/api/fixtures/methods.js';
 import Courses from '/imports/api/courses/courses.js';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+import Groups from '/imports/api/groups/groups.js';
+import Venues from '/imports/api/venues/venues.js';
 
 if (Meteor.settings.testdata) {
 	const logResult = function(error, result) {

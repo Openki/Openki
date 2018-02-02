@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import Groups from '/imports/api/groups/groups.js';
 
+import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
@@ -33,7 +35,7 @@ Template.groupSettings.helpers({
 		if (search === '') return false;
 
 		var group = Groups.findOne(Router.current().params._id);
-		return UserLib.searchPrefix(search, { exclude: group.members, limit: 30 });
+		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
 	kioskEventURL: function() {
@@ -55,7 +57,7 @@ Template.groupSettings.helpers({
 		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
 	},
 	frameListURL: function() {
-		return Router.routes.frameList.url({}, { query: {group: this._id} });
+		return Router.routes.frameCourselist.url({}, { query: {group: this._id} });
 	},
 });
 
@@ -67,7 +69,7 @@ Template.groupSettings.events({
 	'click .js-member-add-btn': function(event, instance) {
 		var memberId = this._id;
 		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, true, function(err) {
+		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
 			if (err) {
 				ShowServerError('Could not add member', err);
 			} else {
@@ -79,7 +81,7 @@ Template.groupSettings.events({
 	'click .js-member-remove-btn': function(event, instance) {
 		var memberId = ''+this;
 		var groupId = Router.current().params._id;
-		Meteor.call("updateGroupMembership", memberId, groupId, false, function(err) {
+		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
 			if (err) {
 				ShowServerError('Could not remove member', err);
 			} else {
@@ -98,7 +100,7 @@ Template.groupSettings.events({
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val()
 		};
-		Meteor.call("saveGroup", instance.data.group._id, changes, function(err) {
+		Meteor.call("group.save", instance.data.group._id, changes, function(err) {
 			instance.busy(false);
 			if (err) {
 				ShowServerError('Could not save settings', err);

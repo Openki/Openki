@@ -1,3 +1,5 @@
+import Events from '/imports/api/events/events.js';
+
 UpdatesAvailable.renameEventCourseId = function() {
 	var updated = 0;
 

@@ -4,19 +4,21 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import '/imports/LocalTime.js';
+import LocalTime from '/imports/utils/local-time.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import Regions from '/imports/api/regions/regions.js';
 
 import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/events/edit-location/event-edit-location.js';
 import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/regions/tag/region-tag.js';
 
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import './event-edit.html';
@@ -181,7 +183,7 @@ Template.eventEdit.helpers({
 
 	affectedReplicaCount: function() {
 		Template.instance().subscribe('affectedReplica', this._id);
-		return Events.find(affectedReplicaSelectors(this)).count();
+		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
 	regions: function(){
@@ -294,7 +296,7 @@ Template.eventEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
-			Meteor.call('saveEvent',
+			Meteor.call('event.save',
 			{
 				eventId,
 				updateReplicas,

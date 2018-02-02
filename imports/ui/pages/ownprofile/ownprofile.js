@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import Roles from '/imports/api/roles/roles.js';
+
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
@@ -110,7 +112,7 @@ Template.profile.events({
 
 	'click .js-profile-delete-confirm-btn': function(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('delete_profile', function() {
+		Meteor.call('user.remove', function() {
 			instance.busy(false);
 			AddMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
 		});
@@ -119,7 +121,7 @@ Template.profile.events({
 
 	'submit .profile-info-edit': function(event, instance) {
 		event.preventDefault();
-		Meteor.call('update_userdata',
+		Meteor.call('user.updateData',
 			document.getElementById('editform_username').value,
 			document.getElementById('editform_email').value,
 			instance.$('.js-notifications').prop("checked"),

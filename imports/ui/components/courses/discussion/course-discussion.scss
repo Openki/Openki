@@ -54,7 +54,6 @@ $discussion-post-bg: $blue-lighter;
 .discussion-post {
 	background: $discussion-post-bg;
 	display: table;
-	padding: 0 0 7px;
 	width: 100%;
 }
 
@@ -126,6 +125,12 @@ button.js-delete-comment {
 
 .discussion-comment + .discussion-reply {
 	@include td-padding(left, $discussion-thumb-width * 2 * 1px);
+}
+
+.discussion-post + .toggle-all-responses,
+.discussion-post + .discussion-reply,
+.discussion-comment + .discussion-reply {
+	margin-top: 10px;
 }
 
 $discussion-edit-bg: lighten($gray-lighter, 10%);

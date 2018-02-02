@@ -1,3 +1,5 @@
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+
 UpdatesAvailable["2017.05.08 ensurePostTimeUpdatedField"] = function() {
 	var count = 0;
 

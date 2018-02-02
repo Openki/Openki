@@ -1,3 +1,5 @@
+import Groups from '/imports/api/groups/groups.js';
+
 function subbedGroup(group) {
 	// Strings can't be context objects to Blaze templates so they get turned
 	// into a String-like. Here we coerce it back if it isn't a string.

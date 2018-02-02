@@ -1,4 +1,5 @@
 <template name="courseEdit">
+	{{#if Template.subscriptionsReady}}
 	<div class="edit-page">
 		<form>
 			{{#if proposeFromQuery}}
@@ -133,7 +134,7 @@
 					{{/if}}
 				</div>
 
-				{{#if userIsInGroup}}
+				{{#if showInternalCheckbox}}
 					<div class="form-group">
 						<label>{{mf 'course.edit.intern' 'Hide on front page'}}</label>
 						<div class="checkbox">
@@ -156,6 +157,7 @@
 			</div>
 		</form>
 	</div>
+	{{/if}}
 </template>
 
 <template name="courseEditRole">

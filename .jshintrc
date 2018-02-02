@@ -66,22 +66,15 @@
 		"alert":true,
 		"confirm":true,
 		"lgs":true,
-		"categories":true,
 		"ServiceConfiguration":true,
-		"Categories":true,   //shouldnt be here
 
 // server/publications
 
-		"Version":true,
-		"Roles":true,
 		"Regions":true,
 		"CleanedRegion": true,
 		"Venue": true,
 		"Venues": true,
 		"CourseDiscussions":true,
-		"Events":true,
-		"affectedReplicaSelectors":true,
-		"privileged":true,
 		"groupsFind":true,
 		"Groups":true,
 		"Log": true,
@@ -134,22 +127,9 @@
 		"miniSubs":true,
 		"minuteTime":true,
 
-
-// collection/discussion.js
-
-		"mayDeletePost":true,
-		"mayEditPost":true,
-
 // collection/events.js
 
 		"updateEventLocation":true,
-
-// collection/...
-
-		"privilegedTo":true,
-		"UserLib": true,
-		"GroupLib": true,
-
 
 // server/lib/...
 

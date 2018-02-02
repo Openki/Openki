@@ -1,6 +1,9 @@
-import '/imports/LocalTime.js';
+import Events from '/imports/api/events/events.js';
+
+import LocalTime from '/imports/utils/local-time.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import ShowServerError from '/imports/ui/lib/show-server-error.js';
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -101,7 +104,7 @@ Template.eventReplication.helpers({
 
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);
-		return Events.find(affectedReplicaSelectors(this)).count();
+		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
 	replicaDateCount: () => Template.instance().activeDays().length,
@@ -213,7 +216,7 @@ Template.eventReplication.events({
 			const eventId = '';
 			instance.busy('saving');
 			const args = { eventId, changes: replicaEvent };
-			Meteor.call('saveEvent', args, error => {
+			Meteor.call('event.save', args, error => {
 				instance.busy(false);
 				if (error) {
 					ShowServerError('Replicating the event went wrong', error);

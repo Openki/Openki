@@ -5,9 +5,9 @@ import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
 import Regions from '/imports/api/regions/regions.js';
-import "/imports/RegionSelection.js";
+import RegionSelection from '/imports/utils/region-selection.js';
 import FilterPreview from '/imports/ui/lib/filter-preview.js';
-import '/imports/StringTools.js';
+import StringTools from '/imports/utils/string-tools.js';
 
 import './region-selection.html';
 
@@ -160,7 +160,7 @@ Template.regionSelection.events({
 });
 
 Template.regionSelection.onRendered(function() {
-	if (!this.data.isSplash) this.$('.js-region-search').select();
+	if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
 
 	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
 		this.close();

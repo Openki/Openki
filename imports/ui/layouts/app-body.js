@@ -3,9 +3,10 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import "/imports/RegionSelection.js";
+import RegionSelection from '/imports/utils/region-selection.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/account-tasks/account-tasks.js';
 import '/imports/ui/components/featured-group/featured-group.js';
@@ -49,7 +50,7 @@ Template.layout.helpers({
 
 	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
 
-	isAdmin: () => privilegedTo('admin'),
+	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
 
 	isNotAdminPanel() {
 		const route = Router.current().route;
