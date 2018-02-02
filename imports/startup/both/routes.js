@@ -193,7 +193,7 @@ Router.map(function () {
 		path: 'group/:_id/:short?',
 		waitOn: function () {
 			return [
-				subs.subscribe('group', this.params._id),
+				Meteor.subscribe('group', this.params._id),
 			];
 		},
 		data() {
@@ -240,8 +240,8 @@ Router.map(function () {
 			queryOngoing.ongoing = now;
 
 			return [
-				subs.subscribe('Events.findFilter', queryFuture, 20),
-				subs.subscribe('Events.findFilter', queryOngoing),
+				Meteor.subscribe('Events.findFilter', queryFuture, 20),
+				Meteor.subscribe('Events.findFilter', queryOngoing),
 			];
 		},
 
@@ -365,7 +365,7 @@ Router.map(function () {
 		path: 'course/:_id/:slug?',
 		template: 'courseDetailsPage',
 		waitOn: function () {
-			return subs.subscribe('courseDetails', this.params._id);
+			return Meteor.subscribe('courseDetails', this.params._id);
 		},
 		data: function() {
 			var course = Courses.findOne({_id: this.params._id});
@@ -465,7 +465,7 @@ Router.map(function () {
 		path: '/kiosk/timetable',
 		layoutTemplate: 'timetableLayout',
 		waitOn: function () {
-			return subs.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
+			return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
 		},
 		data: function() {
 			var query = makeFilterQuery(this.params.query);

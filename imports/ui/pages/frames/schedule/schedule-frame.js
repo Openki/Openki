@@ -70,7 +70,7 @@ Template.frameSchedule.onCreated(function() {
 
 
 	this.autorun(function() {
-		subs.subscribe('Events.findFilter', filter.toQuery(), 500);
+		instance.subscribe('Events.findFilter', filter.toQuery(), 500);
 	});
 
 

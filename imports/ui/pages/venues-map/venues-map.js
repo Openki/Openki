@@ -29,7 +29,7 @@ Template.venueMap.onCreated(function() {
 
 	instance.autorun(function() {
 		var query = instance.filter.toQuery();
-		subs.subscribe('Venues.findFilter', query);
+		instance.subscribe('Venues.findFilter', query);
 
 		// Here we assume venues are not changed or removed.
 		instance.locationTracker.markers.remove({});
