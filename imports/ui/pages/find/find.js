@@ -111,7 +111,7 @@ Template.find.onCreated(function() {
 		// Add one to the limit so we know there is more to show
 		var limit = instance.courseLimit.get() + 1;
 
-		subs.subscribe('Courses.findFilter', filterQuery, limit, function() {
+		instance.subscribe('Courses.findFilter', filterQuery, limit, function() {
 			instance.coursesReady.set(true);
 		});
 	});
