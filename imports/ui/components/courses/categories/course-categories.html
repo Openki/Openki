@@ -16,9 +16,11 @@
 </template>
 
 <template name="courseCategories">
-	<div class="tag-group multiline course-categories">
-		{{#each categories}}
-			{{> categoryLabelLinked}}
-		{{/each}}
-	</div>
+	{{#if categories.length}}
+		<div class="tag-group multiline course-categories">
+			{{#each categories}}
+				{{> categoryLabelLinked}}
+			{{/each}}
+		</div>
+	{{/if}}
 </template>
