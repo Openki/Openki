@@ -95,7 +95,7 @@ Template.post.onCreated(function() {
 	this.count = new ReactiveVar(0);
 	this.editing = new ReactiveVar(false);
 
-	this.initialLimit = 1;
+	this.initialLimit = 2;
 	this.limit = new ReactiveVar(this.initialLimit);
 });
 
