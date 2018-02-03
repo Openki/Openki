@@ -14,8 +14,8 @@ Template.FAQ.onCreated(function() {
 	this.contentTags = 'p, ul';
 
 	this.scrollTo = id => {
-		if (id.indexOf('#') < 0) id = '#' + id;
-
+		if (id.indexOf('#') < 0) id = '#' + decodeURIComponent(id);
+console.log(id)
 		const targetTitle = this.$(this.headerTag + id);
 		if (targetTitle.length) {
 			targetTitle.nextUntil(this.headerTag, this.contentTags).show();

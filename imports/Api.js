@@ -38,6 +38,14 @@ export default Api =
 					, room: ev.room
 					};
 
+				const creator = Meteor.users.findOne(ev.createdBy);
+				if (creator) {
+					evr.createdBy =
+						{ id: creator._id
+						, name: creator.username
+						}
+				}					
+
 				if (ev.venue) {
 					evr.venue =
 						{ id: ev.venue._id
