@@ -43,8 +43,8 @@ export default Api =
 					evr.createdBy =
 						{ id: creator._id
 						, name: creator.username
-						}
-				}					
+						};
+				}
 
 				if (ev.venue) {
 					evr.venue =
