@@ -54,29 +54,28 @@ const genComp = function(a, b) {
 	return 0;
 };
 
-// Read a sorting specification of the form "name,-age" and return a function
-// that sorts a list according to that spec.
-const SortByFields = function(sortSpec) {
-	// Return id function if there are no sort directives
-	if (!sortSpec) return list => list;
+// Turn a sort specification of the form "name,-age" into a mongo
+// sort-specifier of the form [['name', 'asc'], ['age', 'desc']].
+const readSortSpec = function(spec) {
+	if (!spec) return [];
+	return spec.split(',').filter(Boolean).map((field) => {
+		if (field.indexOf('-') === 0) {
+			return [ field.slice(1), 'desc' ];
+		}
+		return [ field, 'asc' ];
+	});
+}
 
+
+const SortBySpec = function(sortSpec) {
 	// Build chain of compare functions that refer to the next field
 	// if the current field values are equal.
 	const equal = (a, b) => 0;
-	const fieldsCmp = sortSpec.split(',').reduceRight((lowerSort, fieldStr) => {
-		const cmpChain = (a, b) => {
-			return genComp(a, b) || lowerSort(a, b);
+	const fieldsCmp = sortSpec.reduceRight((lowerSort, [ field, order ]) => {
+		return (a, b) => {
+			return order === 'asc' ? genComp(a, b) : genComp(b, a)
+			    || lowerSort(a, b);
 		};
-
-		// Descending case
-		if (fieldStr.indexOf('-') === 0) {
-			let field = fieldStr.slice(1);
-			// Revert the arguments for descending sort order
-			return (a, b) => cmpChain(b[field], a[field]);
-		}
-
-		// Ascending case
-		return (a, b) => cmpChain(a[fieldStr], b[fieldStr]);
 	}, equal);
 
 	return list => list.sort(fieldsCmp);
@@ -92,12 +91,18 @@ Router.route('api.0.json', {
 				throw new NoActionError("Invalid action");
 			}
 			const query = this.params.query;
-			const sortSpec = query.sort;
-			const order = SortByFields(sortSpec);
+			const sort = readSortSpec(query.sort);
 			const filter = Object.assign({}, query);
 			delete filter.sort;
+			delete filter.limit;
+			delete filter.skip;
 
-			return order(Api[handler](filter));
+			const limit = Math.min(100, query.limit || 10);
+			const skip = Number.parseInt(query.skip) || 0;
+			const results = Api[handler](filter, limit, skip, sort);
+
+			// Sort the results again so computed fields are sorted too
+			return SortBySpec(sort)(results);
 		});
 	}
 });

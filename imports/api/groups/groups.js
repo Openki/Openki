@@ -28,8 +28,14 @@ Groups.Filtering = () => Filtering(
  *   tags: Group must have all of the given tags
  *
  */
-Groups.findFilter = function(filter) {
+Groups.findFilter = function(filter, limit, skip, sort) {
 	var find = {};
+
+	const options = { skip, sort };
+
+	if (limit > 0) {
+		options.limit = limit;
+	}
 
 	if (filter.own) {
 		var me = Meteor.userId();
@@ -48,5 +54,5 @@ Groups.findFilter = function(filter) {
     	find.tags = { $all: filter.tags };
 	}
 
-	return Groups.find(find);
+	return Groups.find(find, options);
 };

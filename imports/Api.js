@@ -5,25 +5,25 @@ import Venues from '/imports/api/venues/venues.js';
 
 export default Api =
 	{ groups:
-		(filter) => {
+		(filter, limit, skip, sort) => {
 			var groupQuery = Groups.Filtering().readAndValidate(filter).done().toQuery();
-			return Groups.findFilter(groupQuery).map(group => {
+			return Groups.findFilter(groupQuery, limit, skip, sort).map(group => {
 				group.link = Router.url('groupDetails', group);
 				return group;
 			});
 		}
 	, venues:
-		(filter) => {
+		(filter, limit, skip, sort) => {
 			var venueQuery = Venues.Filtering().readAndValidate(filter).done().toQuery();
-			return Venues.find(venueQuery).map(venue => {
+			return Venues.findFilter(venueQuery, limit, skip, sort).map(venue => {
 				venue.link = Router.url('venueDetails', venue);
 				return venue;
 			});
 		}
 	, events:
-		(filter) => {
-			var eventQuery = Events.Filtering().readAndValidate(filter).done().toQuery();
-			return Events.findFilter(eventQuery).map(ev => {
+		(filter, limit, skip, sort) => {
+			const eventQuery = Events.Filtering().readAndValidate(filter).done().toQuery();
+			return Events.findFilter(eventQuery, limit, skip, sort).map(ev => {
 				var evr =
 					{ id: ev._id
 					, title: ev.title
