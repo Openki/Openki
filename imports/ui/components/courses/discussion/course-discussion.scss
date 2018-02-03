@@ -133,6 +133,16 @@ button.js-delete-comment {
 	margin-top: 10px;
 }
 
+.discussion-post,
+.discussion-comment {
+	transition: opacity .15s;
+
+	&.is-saving {
+		opacity: .6;
+		transition: opacity .15s;
+	}
+}
+
 $discussion-edit-bg: lighten($gray-lighter, 10%);
 
 .discussion-edit-content {

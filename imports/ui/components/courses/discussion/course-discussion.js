@@ -91,6 +91,8 @@ Template.discussion.events({
 Template.post.onCreated(function() {
 	var post = this.data;
 
+	this.busy(false);
+
 	this.isParent = !post.new && !post.parentId;
 	this.editing = new ReactiveVar(false);
 
@@ -165,8 +167,13 @@ Template.post.events({
 
 
 Template.postShow.helpers({
-	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'discussion-post';
+	postClasses() {
+		const classes = [];
+
+		classes.push(this.parentId ? 'discussion-comment' : 'discussion-post');
+		if (this.saving) classes.push('is-saving');
+
+		return { class: classes.join(' ')};
 	},
 
 	mayEdit: function() {
@@ -254,7 +261,6 @@ Template.post.events({
 
 	'submit': function (event, instance) {
 		event.stopImmediatePropagation();
-		instance.parentInstance().limit.set(0);
 
 		var comment = {
 			title: instance.$(".js-post-title").val(),
@@ -277,11 +283,12 @@ Template.post.events({
 			comment._id = instance.data._id;
 		}
 
+		instance.editing.set(false);
+		instance.busy('saving');
 		Meteor.call(method, comment, function(err, commentId) {
+			instance.busy(false);
 			if (err) {
 				ShowServerError('Posting your comment went wrong', err);
-			} else {
-				instance.editing.set(false);
 			}
 		});
 

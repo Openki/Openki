@@ -68,6 +68,10 @@ Meteor.methods({
 			saneComment.parentId = parentComment._id;
 		}
 
+		if (this.isSimulation) {
+			saneComment.saving = true;
+		}
+
 		var commentId = CourseDiscussions.insert(saneComment);
 
 		Notification.Comment.record(commentId);
