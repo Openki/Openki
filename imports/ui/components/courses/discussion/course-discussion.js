@@ -92,11 +92,9 @@ Template.post.onCreated(function() {
 	var post = this.data;
 
 	this.isParent = !post.new && !post.parentId;
-	this.count = new ReactiveVar(0);
 	this.editing = new ReactiveVar(false);
 
-	this.initialLimit = 2;
-	this.limit = new ReactiveVar(this.initialLimit);
+	this.limit = new ReactiveVar(2);
 });
 
 
@@ -108,38 +106,35 @@ Template.post.helpers({
 	responses: function() {
 		// Note that the 'discussion' subscription from the 'discussion' template
 		// covers responses as well
-		var instance = Template.instance();
-		var responses = false;
+		const instance = Template.instance();
+		if (!instance.isParent) return;
 
-		if (instance.isParent) {
-			var limit = instance.limit.get();
-
-			// if only one response is shown, show newest
-			var sort = limit ? -1 : 1;
-
-			responses = CourseDiscussions.find(
+		const replies =
+			CourseDiscussions
+			.find(
 				{ parentId: this._id },
-				{ sort: { time_updated: sort } })
-				.fetch();
+				{ sort: { time_created: 1 }	}
+			)
+			.fetch();
 
-			var count = responses.length;
-			instance.count.set(count);
-
-			if (limit) responses = responses.slice(0, limit);
-		}
-
-		return responses;
+		const limit = instance.limit.get();
+		return limit ? replies.slice(-(limit)) : replies;
 	},
 
-	responsesLimited: function() {
-		var instance = Template.instance();
-		var limit = instance.limit.get();
+	notAllResponsesShown: function() {
+		const instance = Template.instance();
+		if (!instance.isParent) return;
 
-		return instance.count.get() > limit;
-	},
+		const limit = instance.limit.get();
+		const count =
+			CourseDiscussions
+			.find(
+				{ parentId: this._id },
+				{ limit: limit + 1 }
+			)
+			.count();
 
-	allResponsesShown: function() {
-		return !Template.instance().limit.get();
+		return limit && count > limit;
 	},
 
 	count: function() {
@@ -163,11 +158,8 @@ Template.post.helpers({
 });
 
 Template.post.events({
-	'click .js-toggle-all-responses': function(e, instance) {
-		var limit = instance.limit;
-		var newLimit = (limit.get() === 0) ? instance.initialLimit : 0;
-
-		limit.set(newLimit);
+	'click .js-show-previous-replies'(e, instance) {
+		instance.limit.set(0);
 	}
 });
 
@@ -262,6 +254,8 @@ Template.post.events({
 
 	'submit': function (event, instance) {
 		event.stopImmediatePropagation();
+		instance.parentInstance().limit.set(0);
+
 		var comment = {
 			title: instance.$(".js-post-title").val(),
 			text: instance.$(".js-post-text").val()

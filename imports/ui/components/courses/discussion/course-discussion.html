@@ -31,21 +31,12 @@
 	{{else}}
 		{{> postShow}}
 	{{/if}}
-	{{#if responsesLimited}}
+	{{#if notAllResponsesShown}}
 		<button
-			class="btn-link toggle-all-responses js-toggle-all-responses"
+			class="btn-link toggle-all-responses js-show-previous-replies"
 			type="button">
-			{{#if allResponsesShown}}
-				<i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
-				{{#mf KEY='course.discussions.hideAnswers'}}
-					Hide answers
-				{{/mf}}
-			{{else}}
-				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
-				{{#mf KEY='course.discussions.showAllAnswers' NUM=count}}
-					Show all {NUM} answers
-				{{/mf}}
-			{{/if}}
+			<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+			{{mf 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
 	{{/if}}
 	{{#each responses}}
