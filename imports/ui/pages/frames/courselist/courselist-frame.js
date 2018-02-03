@@ -71,7 +71,10 @@ Template.frameCourselistCourse.onCreated(function frameCourselistCourseOnCreated
 Template.frameCourselistCourse.helpers({
 	allRegions: () => Session.get('region') == 'all',
 	regionOf: course => Regions.findOne(course.region).name,
-	expanded: () => Template.instance().expanded.get()
+	expanded: () => Template.instance().expanded.get(),
+	toggleIndicatorIcon() {
+		return Template.instance().expanded.get() ? 'minus' : 'plus';
+	}
 });
 
 Template.frameCourselistCourse.events({
