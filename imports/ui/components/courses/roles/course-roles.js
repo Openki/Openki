@@ -34,32 +34,8 @@ Template.courseRole.helpers({
 		return 'roles.' + role + '.subscribed';
 	},
 
-	getRoleType: function(){
-		return this.roletype.type;
-	},
-
-	roleIsParticipant: function(){
-		return this.roletype.type == "participant";
-	},
-
-	roleIsMentor: function(){
-		return this.roletype.type == "mentor";
-	},
-
-	roleIsHost: function(){
-		return this.roletype.type == "host";
-	},
-
-	checkRoleIsParticipant: function(role) {
-		return role == "participant";
-	},
-
-	checkRoleIsMentor: function(role) {
-		return role == "mentor";
-	},
-
-	checkRoleIsHost: function(role) {
-		return role == "host";
+	roleIs(type) {
+		return this.roletype.type === type;
 	},
 
 	maySubscribe: function(role) {
