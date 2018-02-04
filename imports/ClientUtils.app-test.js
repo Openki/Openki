@@ -1,7 +1,7 @@
 import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
 import { Promise } from 'meteor/promise';
-import { chai } from 'meteor/practicalmeteor:chai';
+import { chai } from 'chai';
 /**
  * Returns a promise which resolves when all subscriptions are ready.
  */

@@ -1,7 +1,7 @@
 /* jshint -W024 */
 /* jshint expr:true */
 
-import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 // This should not be here
