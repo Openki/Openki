@@ -1,6 +1,6 @@
 .shariff {
 	padding: 15px;
-	text-align: right;
+	@include td-text-align(right);
 }
 
 .shariff .share_text {

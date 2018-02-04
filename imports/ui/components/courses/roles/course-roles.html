@@ -23,21 +23,26 @@
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=getRoleType}}</b>
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=roletype.type}}</b>
 				<br>
-				{{#if roleIsParticipant}}
+				{{#if roleIs 'participant'}}
 					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
 						You will get an e-mail notification as soon as a date has been fixed.
 					{{/mf}}
 				{{/if}}
-				{{#if roleIsHost}}
+				{{#if roleIs 'host'}}
 					{{#mf KEY='course.roles.firstSteps.informAboutVenue'}}
 						If not done already, please mention in your personal message information about the venue that you have access to.
 					{{/mf}}
 				{{/if}}
-				{{#if roleIsMentor}}
-					{{#mf KEY='course.roles.firstSteps.informAboutVenue'}}
+				{{#if roleIs 'mentor'}}
+					{{#mf KEY='course.roles.firstSteps.mentionExperience'}}
 						If not done already, please mention in your personal message information about your experience on the topic
+					{{/mf}}
+				{{/if}}
+				{{#if roleIs 'team'}}
+					{{#mf KEY='course.roles.firstSteps.team'}}
+						If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.
 					{{/mf}}
 				{{/if}}
 				<br><br>
@@ -67,16 +72,20 @@
 						<label>
 							{{mf 'course.roles.leave_message' 'You can leave a message to appear in the participants list:'}}
 						</label>
-						{{#if checkRoleIsParticipant roletype.type}}
+						{{#if roleIs 'participant'}}
 							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}
 							>{{../../member.comment}}</textarea>
 						{{/if}}
-						{{#if checkRoleIsHost roletype.type}}
+						{{#if roleIs 'host'}}
 							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}
 							>{{../../member.comment}}</textarea>
 						{{/if}}
-						{{#if checkRoleIsMentor roletype.type}}
+						{{#if roleIs 'mentor'}}
 							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}
+							>{{../../member.comment}}</textarea>
+						{{/if}}
+						{{#if roleIs 'team'}}
+							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoMentor'}}
 							>{{../../member.comment}}</textarea>
 						{{/if}}
 					</div>
