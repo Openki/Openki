@@ -156,7 +156,7 @@
 					<label>
 						<input type="checkbox" class="js-check-event-internal" {{isInternal}}>
 						{{mf 'event.edit.internal' 'Hide on front page'}}
-						<span class="help-block">
+						<span class="help-block internal-disclaimer">
 							{{#mf KEY='event.edit.internal.description'}}
 								Show this event only on group and venue pages
 							{{/mf}}
@@ -227,13 +227,11 @@
 						<label>
 							{{#if new}}
 								<input type="checkbox" class="js-check-notify" checked>
-								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about this event.
 								{{/mf}}
 							{{else}}
 								<input type="checkbox" class="js-check-notify">
-								<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about the changes you made.
 								{{/mf}}
@@ -241,10 +239,7 @@
 						</label>
 					</div>
 				{{/if}}
-			</div>
-
-			{{#if notifyChecked}}
-				<div class="form-group">
+				{{#if notifyChecked}}
 					<label>
 						{{mf 'course.event.edit.AddMessage' 'Add message'}}
 						<small> {{mf '_inputField.optional'}}</small>
@@ -258,8 +253,8 @@
 						       maxlength="2000"
 						       placeholder="{{mf 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
 					</div>
-				</div>
-			{{/if}}
+				{{/if}}
+			</div>
 
 			<div class="form-actions">
 				{{> buttonSave saving=saving}}

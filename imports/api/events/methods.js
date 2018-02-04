@@ -152,6 +152,7 @@ Meteor.methods({
 			changes.slug = StringTools.slug(changes.title);
 		}
 
+		let affectedReplicaCount = 0;
 		if (isNew) {
 			changes.createdBy = user._id;
 			changes.groupOrganizers = [];
@@ -191,12 +192,29 @@ Meteor.methods({
 					);
 
 					Events.update({ _id: replica._id }, { $set: replicaChanges });
+
+					affectedReplicaCount++;
 				});
 			}
 		}
 
 		if (sendNotifications) {
-			if(comment != null) comment = comment.trim().substr(0, 2000);
+			if (affectedReplicaCount) {
+				const affectedReplicaMessage = mf(
+					'notification.event.affectedReplicaMessage',
+					{ NUM: affectedReplicaCount },
+					'These changes have also been applied to {NUM, plural, one {the later copy} other {# later copies}}'
+				);
+
+				if (comment == null) {
+					comment = affectedReplicaMessage
+				} else {
+					comment = `${affectedReplicaMessage}\n\n${comment}`;
+				};
+			}
+
+			if (comment != null) {comment = comment.trim().substr(0, 2000)};
+
 			Notification.Event.record(eventId, isNew, comment);
 		}
 
