@@ -30,7 +30,11 @@ Template.eventEdit.onCreated(function() {
 	instance.busy(false);
 
 	this.state = new ReactiveDict();
-	this.state.setDefault({ updateReplicas: false });
+	this.state.setDefault(
+		{ updateReplicas: false
+		, updateChangedReplicas: false
+		}
+	);
 
 	var courseId = this.data.courseId;
 	if (courseId) {
@@ -192,7 +196,7 @@ Template.eventEdit.helpers({
 		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
-	timeChangedReplicas() {
+	changedReplicas() {
 		return (
 			Events
 			.find(AffectedReplicaSelectors(this))
@@ -203,6 +207,10 @@ Template.eventEdit.helpers({
 
 	emphasizeClass() {
 		return Template.instance().state.get('updateReplicas') && 'is-emphasized';
+	},
+
+	updateChangedReplicas() {
+		return Template.instance().state.get('updateChangedReplicas');
 	},
 
 	regions: function(){
@@ -310,6 +318,7 @@ Template.eventEdit.events({
 		}
 
 		const updateReplicas = instance.state.get('updateReplicas');
+		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
 		const sendNotifications = instance.$(".js-check-notify").is(':checked');
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
@@ -319,6 +328,7 @@ Template.eventEdit.events({
 			{
 				eventId,
 				updateReplicas,
+				updateChangedReplicas,
 				sendNotifications,
 				changes: editevent,
 				comment: addNotificationMessage
@@ -372,5 +382,9 @@ Template.eventEdit.events({
 
 	'change .js-update-replicas'(event, instance) {
 		instance.state.set('updateReplicas', event.target.checked);
+	},
+
+	'change .js-update-changed-replicas'(event, instance) {
+		instance.state.set('updateChangedReplicas', event.target.checked);
 	}
 });

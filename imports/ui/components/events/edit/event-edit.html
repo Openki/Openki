@@ -175,11 +175,11 @@
 							{{/mf}}
 						</label>
 					</div>
-					{{#if timeChangedReplicas.length}}
-						<div class="panel panel-warning time-changed-replicas {{emphasizeClass}}">
+					{{#if changedReplicas.length}}
+						<div class="panel panel-warning changed-replicas {{emphasizeClass}}">
 							<div class="panel-heading">
 								<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-								{{#mf KEY='event.edit.timeChangedReplicas.heading' NUM=timeChangedReplicas.length}}
+								{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
 									Found {NUM, plural,
 										one {one copy which varies}
 										other {# copies which vary}
@@ -187,37 +187,49 @@
 								{{/mf}}
 							</div>
 							<div class="panel-body">
-								{{#mf KEY='event.edit.timeChangedReplicas.body' NUM=timeChangedReplicas.length}}
-									{NUM, plural,
-										one {This copy}
-										other {These copies}
-									} won't be updated as
-									{NUM, plural,
-										one {it has}
-										other {they have}
-									} another time set than the original event
-									{NUM, plural,
-										one {}
-										other {and it's copies}
-									}:
-								{{/mf}}
+								{{#unless updateChangedReplicas}}
+									<span class="update-changed-replicas-help">
+										{{#mf KEY='event.edit.changedReplicas.body' NUM=changedReplicas.length}}
+											By default {NUM, plural,
+												one {this copy}
+												other {these copies}
+											} won't be updated as
+											{NUM, plural,
+												one {it has}
+												other {they have}
+											} another time set than the original event:
+										{{/mf}}
+									</span>
+								{{/unless}}
 								<ul>
-									{{#each replica in timeChangedReplicas}}
+									{{#each replica in changedReplicas}}
 										<li>
 											<a href="{{pathFor 'showEvent' replica}}" target="_blank">
 												{{dateformat replica.start}}
 												-
 												{{replica.title}}
 
-												<b>
 												({{timeformat replica.start}}
 												-
 												{{timeformat replica.end}})
-												</b>
 											</a>
 										</li>
 									{{/each}}
 								</ul>
+								<div class="checkbox">
+									<label>
+										<input class="js-update-changed-replicas" type="checkbox">
+										{{#mf KEY='event.edit.updateChangedReplicas' NUM=changedReplicas.length}}
+											Update {NUM, plural,
+												one {this event}
+												other {these events}
+											} (including {NUM, plural,
+												one {it's time}
+												other {their time}
+											}) too
+										{{/mf}}
+									</label>
+									</div>
 							</div>
 						</div>
 					{{/if}}

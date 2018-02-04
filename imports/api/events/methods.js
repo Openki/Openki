@@ -21,6 +21,7 @@ Meteor.methods({
 			{ eventId
 			, changes
 			, updateReplicas
+			, updateChangedReplicas
 			, sendNotifications
 			, comment
 			} = args;
@@ -174,7 +175,7 @@ Meteor.methods({
 				const endTime = timeObj(endMoment);
 
 				Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
-					if (replica.differentTimeAs(event)) return;
+					if (updateChangedReplicas || replica.differentTimeAs(event)) return;
 
 					const replicaChanges = changes;
 
