@@ -166,7 +166,7 @@
 				{{#if affectedReplicaCount}}
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="updateReplicas">
+							<input class="js-update-replicas" type="checkbox" name="updateReplicas">
 							{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
 								Update {COUNT, plural,
 									one {later copy}
@@ -175,6 +175,52 @@
 							{{/mf}}
 						</label>
 					</div>
+					{{#if timeChangedReplicas.length}}
+						<div class="panel panel-warning time-changed-replicas {{emphasizeClass}}">
+							<div class="panel-heading">
+								<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
+								{{#mf KEY='event.edit.timeChangedReplicas.heading' NUM=timeChangedReplicas.length}}
+									Found {NUM, plural,
+										one {one copy which varies}
+										other {# copies which vary}
+									} in time
+								{{/mf}}
+							</div>
+							<div class="panel-body">
+								{{#mf KEY='event.edit.timeChangedReplicas.body' NUM=timeChangedReplicas.length}}
+									{NUM, plural,
+										one {This copy}
+										other {These copies}
+									} won't be updated as
+									{NUM, plural,
+										one {it has}
+										other {they have}
+									} another time set than the original event
+									{NUM, plural,
+										one {}
+										other {and it's copies}
+									}:
+								{{/mf}}
+								<ul>
+									{{#each replica in timeChangedReplicas}}
+										<li>
+											<a href="{{pathFor 'showEvent' replica}}" target="_blank">
+												{{dateformat replica.start}}
+												-
+												{{replica.title}}
+
+												<b>
+												({{timeformat replica.start}}
+												-
+												{{timeformat replica.end}})
+												</b>
+											</a>
+										</li>
+									{{/each}}
+								</ul>
+							</div>
+						</div>
+					{{/if}}
 				{{/if}}
 				{{#if courseId}}
 					<div class="checkbox">

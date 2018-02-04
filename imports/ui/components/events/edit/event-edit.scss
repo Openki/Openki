@@ -31,3 +31,18 @@
 .js-event-add-file ~ .table {
 	margin: $form-group-margin-bottom 0 0;
 }
+
+.time-changed-replicas {
+	opacity: .4;
+	transition: opacity .15s;
+
+	&.is-emphasized {
+		opacity: 1;
+	}
+}
+
+.time-changed-replicas ul {
+	list-style-position: inside;
+	padding: 0;
+	margin: 10px 0 0;
+}

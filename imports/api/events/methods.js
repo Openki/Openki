@@ -173,6 +173,8 @@ Meteor.methods({
 				const endTime = timeObj(endMoment);
 
 				Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+					if (replica.differentTimeAs(event)) return;
+
 					const replicaChanges = changes;
 
 					Object.assign(replicaChanges,
