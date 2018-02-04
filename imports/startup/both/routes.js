@@ -73,7 +73,7 @@ function loadroles(course) {
 	}, []);
 }
 
-if (Meteor.isClient()) {
+if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
