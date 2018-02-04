@@ -207,13 +207,13 @@ Meteor.methods({
 				);
 
 				if (comment == null) {
-					comment = affectedReplicaMessage
+					comment = affectedReplicaMessage;
 				} else {
 					comment = `${affectedReplicaMessage}\n\n${comment}`;
-				};
+				}
 			}
 
-			if (comment != null) {comment = comment.trim().substr(0, 2000)};
+			if (comment != null) comment = comment.trim().substr(0, 2000);
 
 			Notification.Event.record(eventId, isNew, comment);
 		}
