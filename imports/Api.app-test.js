@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 import fetch from 'isomorphic-unfetch';
 
 // In theory this test could actually be run on the server as well. Regrettably

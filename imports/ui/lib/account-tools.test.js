@@ -1,7 +1,7 @@
 /* jshint -W024 */
 /* jshint expr:true */
 
-import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 import { IsEmail } from './account-tools.js';
 
 // This should not be here
