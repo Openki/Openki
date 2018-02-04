@@ -16,8 +16,7 @@ import Predicates from '/imports/utils/predicates.js';
 export default Groups = new Mongo.Collection("Groups");
 
 Groups.Filtering = () => Filtering(
-	{ tags: Predicates.ids
-	}
+	{}
 );
 
 /* Find groups for given filters
