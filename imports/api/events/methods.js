@@ -160,12 +160,36 @@ Meteor.methods({
 			Events.update(eventId, { $set: changes });
 
 			if (updateReplicas) {
-				delete changes.start;
-				delete changes.startLocal;
-				delete changes.end;
-				delete changes.endLocal;
+				const startMoment = moment(changes.start);
+				const endMoment = moment(changes.end);
 
-				Events.update(AffectedReplicaSelectors(event), { $set: changes }, { multi: true });
+				const timeObj = (moment) => (
+					{ hour: moment.hour()
+					, minute: moment.minute()
+					}
+				);
+
+				const startTime = timeObj(startMoment);
+				const endTime = timeObj(endMoment);
+
+				Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+					const replicaChanges = changes;
+
+					Object.assign(replicaChanges,
+						{ start: moment(replica.start).set(startTime).toDate()
+						, end: moment(replica.end).set(endTime).toDate()
+						}
+					);
+
+					const regionZone = LocalTime.zone(replica.region);
+					Object.assign(replicaChanges,
+						{ startLocal: regionZone.toString(replicaChanges.start)
+						, endLocal: regionZone.toString(replicaChanges.end )
+						}
+					);
+
+					Events.update({ _id: replica._id }, { $set: replicaChanges });
+				});
 			}
 		}
 
