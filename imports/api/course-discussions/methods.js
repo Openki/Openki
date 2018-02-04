@@ -6,6 +6,7 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import Notification from '/imports/notification/notification.js';
 import StringTools from '/imports/utils/string-tools.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 const sanitizeComment = (comment) => ({
 	title: StringTools.saneTitle(comment.title).substr(0, 200).trim(),
