@@ -60,6 +60,13 @@ OEvent.prototype.editableBy = function(user) {
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
+OEvent.prototype.differentTimeAs = function(event) {
+	return (
+		this.start.toTimeString() !== event.start.toTimeString()
+		|| this.end.toTimeString() !== event.end.toTimeString()
+	);
+};
+
 export default Events = new Mongo.Collection("Events", {
 	transform: function(event) {
 		return _.extend(new OEvent(), event);
