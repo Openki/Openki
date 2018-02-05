@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
-import Predicates from '/imports/utils/predicates.js';
 
 // ======== DB-Model: ========
 // "_id"           -> ID
@@ -16,8 +15,7 @@ import Predicates from '/imports/utils/predicates.js';
 export default Groups = new Mongo.Collection("Groups");
 
 Groups.Filtering = () => Filtering(
-	{ tags: Predicates.ids
-	}
+	{}
 );
 
 /* Find groups for given filters
@@ -25,7 +23,6 @@ Groups.Filtering = () => Filtering(
  * filter: dictionary with filter options
  *   own: Limit to groups where logged-in user is a member
  *   user: Limit to groups where given user ID is a member (client only)
- *   tags: Group must have all of the given tags
  *
  */
 Groups.findFilter = function(filter, limit, skip, sort) {

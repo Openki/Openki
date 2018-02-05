@@ -91,12 +91,12 @@ Template.discussion.events({
 Template.post.onCreated(function() {
 	var post = this.data;
 
+	this.busy(false);
+
 	this.isParent = !post.new && !post.parentId;
-	this.count = new ReactiveVar(0);
 	this.editing = new ReactiveVar(false);
 
-	this.initialLimit = 1;
-	this.limit = new ReactiveVar(this.initialLimit);
+	this.limit = new ReactiveVar(2);
 });
 
 
@@ -108,38 +108,35 @@ Template.post.helpers({
 	responses: function() {
 		// Note that the 'discussion' subscription from the 'discussion' template
 		// covers responses as well
-		var instance = Template.instance();
-		var responses = false;
+		const instance = Template.instance();
+		if (!instance.isParent) return;
 
-		if (instance.isParent) {
-			var limit = instance.limit.get();
-
-			// if only one response is shown, show newest
-			var sort = limit ? -1 : 1;
-
-			responses = CourseDiscussions.find(
+		const replies =
+			CourseDiscussions
+			.find(
 				{ parentId: this._id },
-				{ sort: { time_updated: sort } })
-				.fetch();
+				{ sort: { time_created: 1 }	}
+			)
+			.fetch();
 
-			var count = responses.length;
-			instance.count.set(count);
-
-			if (limit) responses = responses.slice(0, limit);
-		}
-
-		return responses;
+		const limit = instance.limit.get();
+		return limit ? replies.slice(-(limit)) : replies;
 	},
 
-	responsesLimited: function() {
-		var instance = Template.instance();
-		var limit = instance.limit.get();
+	notAllResponsesShown: function() {
+		const instance = Template.instance();
+		if (!instance.isParent) return;
 
-		return instance.count.get() > limit;
-	},
+		const limit = instance.limit.get();
+		const count =
+			CourseDiscussions
+			.find(
+				{ parentId: this._id },
+				{ limit: limit + 1 }
+			)
+			.count();
 
-	allResponsesShown: function() {
-		return !Template.instance().limit.get();
+		return limit && count > limit;
 	},
 
 	count: function() {
@@ -163,18 +160,20 @@ Template.post.helpers({
 });
 
 Template.post.events({
-	'click .js-toggle-all-responses': function(e, instance) {
-		var limit = instance.limit;
-		var newLimit = (limit.get() === 0) ? instance.initialLimit : 0;
-
-		limit.set(newLimit);
+	'click .js-show-previous-replies'(e, instance) {
+		instance.limit.set(0);
 	}
 });
 
 
 Template.postShow.helpers({
-	postClass: function() {
-		return this.parentId ? 'discussion-comment' : 'discussion-post';
+	postClasses() {
+		const classes = [];
+
+		classes.push(this.parentId ? 'discussion-comment' : 'discussion-post');
+		if (this.saving) classes.push('is-saving');
+
+		return { class: classes.join(' ')};
 	},
 
 	mayEdit: function() {
@@ -262,6 +261,7 @@ Template.post.events({
 
 	'submit': function (event, instance) {
 		event.stopImmediatePropagation();
+
 		var comment = {
 			title: instance.$(".js-post-title").val(),
 			text: instance.$(".js-post-text").val()
@@ -283,11 +283,12 @@ Template.post.events({
 			comment._id = instance.data._id;
 		}
 
+		instance.editing.set(false);
+		instance.busy('saving');
 		Meteor.call(method, comment, function(err, commentId) {
+			instance.busy(false);
 			if (err) {
 				ShowServerError('Posting your comment went wrong', err);
-			} else {
-				instance.editing.set(false);
 			}
 		});
 
