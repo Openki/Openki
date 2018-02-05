@@ -9,7 +9,7 @@ $dropdown-transition-time: .3s;
 .dropdown-menu > li > .btn-link {
 	color: $dropdown-link-color;
 	padding: 3px 20px;
-	text-align: left;
+	@include td-text-align(left);
 	white-space: nowrap;
 	width: 100%;
 

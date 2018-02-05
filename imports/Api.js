@@ -45,7 +45,7 @@ export default Api =
 						{ id: creator._id
 						, name: creator.username
 						};
-				}					
+				}
 
 				if (ev.venue) {
 					evr.venue =

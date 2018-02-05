@@ -13,11 +13,11 @@
 		<div class="event-course-header">
 			<h2>
 				{{course.name}}
-				<a href="{{pathFor 'showCourse' _id=courseId}}">
-					<i class="fa fa-external-link"></i>
-					{{mf 'event.details.viewCourse' 'view course'}}
-				</a>
 			</h2>
+			<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
+				<i class="fa fa-external-link"></i>
+				{{mf 'event.details.viewCourse' 'view course'}}
+			</a>
 			{{> courseCategories course}}
 			{{> regionTag}}
 		</div>

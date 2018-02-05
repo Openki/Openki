@@ -2,7 +2,11 @@
 	"public": {
 		"siteName": "Openki-clone",
 		"testWarning": 1,
-		"siteStage": "beta"
+		"siteStage": "beta",
+		"matomo": {
+			"url": "https://analytics.mydomain.com/",
+			"site": 1
+		}
 	},
 	"service": {
 		"facebook": {

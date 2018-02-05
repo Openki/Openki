@@ -9,8 +9,8 @@
 $find-search-column-md: 7.5;
 
 .find-header-search {
-	@include make-sm-column(6);
-	@include make-md-column($find-search-column-md);
+	@include td-make-sm-column(6);
+	@include td-make-md-column($find-search-column-md);
 }
 
 .filter-expanded > .find-header-search {
@@ -18,8 +18,8 @@ $find-search-column-md: 7.5;
 }
 
 .find-header-filter {
-	@include make-sm-column(6);
-	@include make-md-column(12 - $find-search-column-md);
+	@include td-make-sm-column(6);
+	@include td-make-md-column(12 - $find-search-column-md);
 }
 
 .filter-expanded > .find-header-filter {
