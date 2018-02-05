@@ -1,8 +1,9 @@
 <template name="courseEvents">
 	{{#if mayAdd}}
 		{{#if haveEvents}}
-			<div class="page-component">
+			<div class="page-component course-event-tasks">
 				{{> courseEventAdd}}
+				{{> deleteCourseEvents}}
 			</div>
 		{{/if}}
 	{{/if}}
@@ -86,7 +87,7 @@
 				</div>
 			</div>
 			{{#if mayAdd}}
-				<div class="page-component">
+				<div class="page-component course-event-tasks">
 					{{> courseEventAdd}}
 				</div>
 			{{/if}}
@@ -119,20 +120,132 @@
 </template>
 
 <template name="courseEventAdd">
-	<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
-		<div class="event-caption placeholder event-caption-add">
-			<div class="event-caption-header-wrap">
-				<div class="event-caption-header">
-					<span class="fa fa-map-pin"></span>
-					<div class="event-caption-pseudoborder"></div>
+	<a class="btn btn-default" href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
+		<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+		{{mf 'course.event.edit.add'}}
+	</a>
+</template>
+
+<template name="deleteCourseEvents">
+	<button class="btn btn-default js-show-events-delete-modal">
+		<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+		{{mf 'course.event.edit.deleteEvents' 'Delete events'}}
+	</button>
+	{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+</template>
+
+<template name="deleteEventsModal">
+	<div class="modal" tabindex="-1" role="dialog" id="deleteEventsModal">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+						{{mf 'deleteEventsModal.title' 'Delete course events'}}
+						<span class="close" data-dismiss="modal">&times;</span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					{{#if getState 'showDeleteConfirm'}}
+						<div class="panel panel-danger">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									{{mf 'deleteEventsModal.confirm' 'Confirm deleting events'}}
+								</h4>
+							</div>
+							<div class="panel-body">
+								{{#mf KEY='deleteEventsModal.reallyDelete' NUM=numSelectedEvents}}
+									Do you really want to delete
+									{NUM, plural,
+										one {this event}
+										other {these # events}
+									}?
+								{{/mf}}
+								<ul class="list-group selected-events">
+									{{#each event in selectedEvents}}
+										<li class="list-group-item list-group-item-danger">
+											{{> deleteEventsEvent event}}
+										</li>
+									{{/each}}
+								</ul>
+								<div class="delete-events-actions">
+									<button type="button" class="btn btn-danger js-delete-events" {{disabledIfBusy}}>
+										{{#if busy 'deleting'}}
+											<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+											{{#mf KEY='deleteEventsModal.deletingEvents' NUM=numSelectedEvents}}
+												Deleting {NUM, plural,
+													one {event}
+													other {events}
+												}...
+											{{/mf}}
+										{{else}}
+											{{#mf KEY='deleteEventsModal.confirmDeleteEvents' NUM=numSelectedEvents}}
+												Delete {NUM, plural,
+													one {event}
+													other {events}
+												}
+											{{/mf}}
+										{{/if}}
+									</button>
+									<button type="button" class="btn btn-default js-cancel" {{disabledIfBusy}}>
+										{{mf '_button.cancel'}}
+									</button>
+								</div>
+							</div>
+						</div>
+					{{else}}
+						{{#each upcomingEvents}}
+							<div class="checkbox">
+								<label>
+									<input
+										type="checkbox"
+										checked="{{isSelected}}"
+										{{disabledIfBusy}}/>
+									{{> deleteEventsEvent this}}
+								</label>
+							</div>
+						{{/each}}
+						<div class="delete-events-actions">
+							<button class="btn btn-default js-toggle-all">
+								{{#if getState 'allEventsSelected'}}
+									{{mf 'deleteEventsModal.clearSelection' 'Clear selection'}}
+								{{else}}
+									{{mf 'deleteEventsModal.selectAll' 'Select all'}}
+								{{/if}}
+							</button>
+							<button class="btn btn-danger js-show-delete-confirm" {{disabledIfNoEventsSelected}}>
+								{{#mf KEY='deleteEventsModal.deleteEvents' NUM=numSelectedEvents}}
+									Delete {NUM, plural,
+										=0 {event}
+										one {event}
+										other {# events}
+									}
+								{{/mf}}
+							</button>
+						</div>
+					{{/if}}
 				</div>
 			</div>
-			<div class="event-caption-body-wrap">
-				<div class="event-caption-body"></div>
-			</div>
 		</div>
-		<span class="event-caption-add-text">
-			{{mf 'course.event.edit.add'}}
+	</div>
+</template>
+
+<template name="deleteEventsEvent">
+	<span class="delete-events-events-title">
+		{{title}}
+	</span>
+	<div class="delete-events-details">
+		<span class="delete-events-details-component">
+			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+			{{weekdayShort start}}
+			{{dateformat start}}
 		</span>
-	</a>
+		<span class="delete-events-details-component">
+			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+			{{timeformat start}}
+			-
+			{{timeformat end}}
+		</span>
+	</div>
+
 </template>
