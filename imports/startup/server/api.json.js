@@ -97,7 +97,8 @@ Router.route('api.0.json', {
 			delete filter.limit;
 			delete filter.skip;
 
-			const limit = Math.min(100, query.limit || 10);
+			const selectedLimit = Number.parseInt(query.limit) || 100;
+			const limit = Math.max(0, Math.min(100, selectedLimit));
 			const skip = Number.parseInt(query.skip) || 0;
 			const results = Api[handler](filter, limit, skip, sort);
 
