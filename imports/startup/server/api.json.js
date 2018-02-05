@@ -64,7 +64,7 @@ const readSortSpec = function(spec) {
 		}
 		return [ field, 'asc' ];
 	});
-}
+};
 
 
 const SortBySpec = function(sortSpec) {
