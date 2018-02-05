@@ -3,27 +3,28 @@ import Events from '/imports/api/events/events.js';
 import Groups from '/imports/api/groups/groups.js';
 import Venues from '/imports/api/venues/venues.js';
 
+const apiResponse = function(collection, formatter) {
+	return (filter, limit, skip, sort) => {
+		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
+		return collection.findFilter(query, limit, skip, sort).map(formatter);
+	}
+}
+
 export default Api =
 	{ groups:
-		(filter, limit, skip, sort) => {
-			var groupQuery = Groups.Filtering().readAndValidate(filter).done().toQuery();
-			return Groups.findFilter(groupQuery, limit, skip, sort).map(group => {
+		apiResponse(Groups, group => {
 				group.link = Router.url('groupDetails', group);
 				return group;
-			});
-		}
+			}
+		)
 	, venues:
-		(filter, limit, skip, sort) => {
-			var venueQuery = Venues.Filtering().readAndValidate(filter).done().toQuery();
-			return Venues.findFilter(venueQuery, limit, skip, sort).map(venue => {
+		apiResponse(Venues, venue => {
 				venue.link = Router.url('venueDetails', venue);
 				return venue;
-			});
-		}
+			}
+		)
 	, events:
-		(filter, limit, skip, sort) => {
-			const eventQuery = Events.Filtering().readAndValidate(filter).done().toQuery();
-			return Events.findFilter(eventQuery, limit, skip, sort).map(ev => {
+		apiResponse(Events, ev => {
 				var evr =
 					{ id: ev._id
 					, title: ev.title
@@ -82,6 +83,6 @@ export default Api =
 				}
 
 				return evr;
-			});
-		}
+			}
+		)
 	};
