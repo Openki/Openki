@@ -52,6 +52,11 @@ const helpers = {
 		if (date) return moment(date).fromNow();
 	},
 
+	weekdayShort(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('ddd');
+	},
+
 	// Strip HTML markup
 	plain(html) {
 		var div = document.createElement('div');
