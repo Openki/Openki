@@ -7,8 +7,8 @@ const apiResponse = function(collection, formatter) {
 	return (filter, limit, skip, sort) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
 		return collection.findFilter(query, limit, skip, sort).map(formatter);
-	}
-}
+	};
+};
 
 export default Api =
 	{ groups:
@@ -44,7 +44,7 @@ export default Api =
 					evr.createdBy =
 						{ id: creator._id
 						, name: creator.username
-						}
+						};
 				}					
 
 				if (ev.venue) {
