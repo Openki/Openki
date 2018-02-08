@@ -47,9 +47,5 @@ Groups.findFilter = function(filter, limit, skip, sort) {
 		find.members = filter.user;
 	}
 
-	if (filter.tags && filter.tags.length > 0) {
-    	find.tags = { $all: filter.tags };
-	}
-
 	return Groups.find(find, options);
 };
