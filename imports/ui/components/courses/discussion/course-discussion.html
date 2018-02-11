@@ -6,7 +6,11 @@
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
-		{{> post newPost}}
+		{{#if ready}}
+			{{> post newPost}}
+		{{else}}
+			{{> loadingRow}}
+		{{/if}}
 		{{#each posts}}
 			<div class="discussion-conversation">
 				{{> post}}
