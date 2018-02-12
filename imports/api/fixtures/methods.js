@@ -8,7 +8,7 @@ import Regions from '/imports/api/regions/regions.js';
 import Venues from '/imports/api/venues/venues.js';
 
 import StringTools from '/imports/utils/string-tools.js';
-
+import HtmlTools from '/imports/utils/html-tools.js';
 
 import seedrandom from 'seedrandom';
 const Prng = function(staticseed) {
@@ -250,7 +250,7 @@ if (Meteor.settings.testdata) {
 				event.courseId = course._id;
 				event._id = ensure.fixedId([ course._id, ""+n ]);
 				event.title = course.name + ' ' + _.sample(words);
-				event.description =  words.slice(0, 10 + Math.floor(prng() * 30)).join(' ');
+				event.description =  HtmlTools.saneHtml(words.slice(0, 10 + Math.floor(prng() * 30)).join(' '));
 				event.groups = course.groups;
 
 				var relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
@@ -308,7 +308,7 @@ if (Meteor.settings.testdata) {
 				var comment = {};
 				comment.courseId = course._id;
 				comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
-				comment.text =  _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(' ');
+				comment.text =  HtmlTools.saneHtml(_.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(' '));
 
 				comment.time_created = sometimesAfter(course.time_created);
 				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
