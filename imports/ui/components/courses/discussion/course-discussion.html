@@ -106,7 +106,7 @@
 							{{this.title}}
 						</h4>
 					{{/if}}
-					<p>{{text}}</p>
+					<p>{{{text}}}</p>
 				</div>
 			</div>
 		</div>
@@ -142,10 +142,8 @@
 						placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
 						value="{{title}}"/>
 				</div>
-				<div class="form-group">
-					<textarea class="js-post-text discussion-edit-text form-control"
-						placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
-						>{{text}}</textarea>
+				<div class="form-group js-post-text">
+						{{> editableTextarea editableText}}
 				</div>
 				{{#if canNotifyAll}}
 					<div class="checkbox">

@@ -8,7 +8,7 @@ import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { AddMessage } from '/imports/api/messages/methods.js';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
-
+import Editable from '/imports/ui/lib/editable.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -194,10 +194,29 @@ Template.postShow.helpers({
 Template.postEdit.onCreated(function() {
 	this.anon = new ReactiveVar(!this.data.userId);
 	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));
+
+	const placeholder = this.data.parentId
+		? mf('course.discussion.text_placeholder_answer', 'Your answer')
+		: mf('course.discussion.text_placeholder', 'Your comment');
+
+	this.editableText = new Editable(false, false, placeholder, false);
+
+	// UGLY: The event handler to save the comment is defined on the parent instance.
+	// (Because that's where the editing-state flag is.) To make the text available
+	// to the handler, we assign the editable on the parent. Improvements welcome.
+	this.parentInstance().editableText = this.editableText;
+
+	this.autorun(() => {
+		this.editableText.setText(Template.currentData().text);
+	});
 });
 
 
 Template.postEdit.helpers({
+	editableText: () => {
+		return Template.instance().editableText;
+	},
+
 	postClass: function() {
 		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
@@ -262,10 +281,12 @@ Template.post.events({
 	'submit': function (event, instance) {
 		event.stopImmediatePropagation();
 
-		var comment = {
-			title: instance.$(".js-post-title").val(),
-			text: instance.$(".js-post-text").val()
-		};
+		var comment = { title: instance.$(".js-post-title").val() };
+
+		const editedText = instance.editableText.getEdited();
+		if (editedText) {
+			comment.text = editedText;
+		}
 
 		var method = 'courseDiscussion.editComment';
 		if (instance.data.new) {
@@ -318,8 +339,8 @@ Template.postEdit.onRendered(function postEditOnRendered(){
 
 Template.postEdit.events({
 	'keyup .js-post-text, change .js-post-text': function(event, instance) {
-		var text = instance.$(".js-post-text").val();
-		instance.validComment.set(CourseDiscussions.validComment(text));
+		const edited = instance.editableText.getEdited();
+		instance.validComment.set(edited && CourseDiscussions.validComment(edited));
 	},
 
 	'change': function(event, instance) {
