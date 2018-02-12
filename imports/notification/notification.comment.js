@@ -1,7 +1,6 @@
 export default notificationComment = {};
 import Log from '/imports/api/log/log.js';
 import StringTools from '/imports/utils/string-tools.js';
-import HtmlTools from '/imports/utils/html-tools.js';
 import Courses from '/imports/api/courses/courses.js';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
 
@@ -76,7 +75,6 @@ notificationComment.Model = function(entry) {
 				, courseLink: Router.url('showCourse', course, { query: 'select='+comment._id })
 				, subject: subject
 				, comment: comment
-				, commentTextHtml: HtmlTools.plainToHtml(comment.text)
 				, commenter: commenter
 				, commenterName: commenterName
 				}
