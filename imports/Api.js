@@ -6,7 +6,7 @@ import Venues from '/imports/api/venues/venues.js';
 const apiResponse = function(collection, formatter) {
 	return (filter, limit, skip, sort) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
-		return collection.findFilter(query, limit, skip, sort).map(formatter);
+		return collection.findFilter(query, limit, skip, sort).forEach(formatter);
 	};
 };
 
