@@ -1,6 +1,14 @@
 import { Meteor } from 'meteor/meteor';
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import fetch from 'isomorphic-unfetch';
+
+const AssertAscending = function(base) {
+	let current = base;
+	return function(next) {
+		assert.isAtLeast(next, current);
+		current = next;
+	};
+};
 
 // In theory this test could actually be run on the server as well. Regrettably
 // the test runner starts the server tests before the database is fully
@@ -33,7 +41,7 @@ if (Meteor.isClient) {
 				});
 			});
 			describe('Get events from the future', function(){
-				it('should return JSON response', function (done) {
+				it('returns JSON response', function (done) {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now');
 					fetch(events).then((result) => {
 						expect(result.status).to.equal(200);
@@ -44,14 +52,32 @@ if (Meteor.isClient) {
 						});
 					});
 				});
+				it('sorts by start-date', function() {
+					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=start');
+					return fetch(events).then((result) => {
+						return result.json();
+					}).then((json) => {
+						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
+						starts.forEach(AssertAscending(new Date()));
+					});
+				});
+				it('sorts by title, descending', function (done) {
+					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=-title');
+					return fetch(events).then((result) => {
+						return result.json();
+					}).then((json) => {
+						const titles = _.pluck(json.data, 'title');
+						titles.forEach(AssertAscending(""));
+					});
+				});
 			});
 			describe('Get events from the past', function(){
 				it('should return JSON response', function (done) {
 					const events = Meteor.absoluteUrl('/api/0/json/events?before=now');
-					fetch(events).then((result) => {
+					return fetch(events).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
-						result.json().then((json)=>{
+						return result.json().then((json) => {
 							expect(json.data.length).to.be.above(0);
 							done();
 						});
@@ -64,7 +90,7 @@ if (Meteor.isClient) {
 			describe('Get all venues', function () {
 				it('should return JSON response', function (done) {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues');
-					fetch(venues).then((result) => {
+					return fetch(venues).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
 						done();
@@ -74,10 +100,10 @@ if (Meteor.isClient) {
 			describe('region filtering', function () {
 				it('should only return a certain region', function (done) {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues?region=J6GDhEEvdmdSMzPPF');
-					fetch(venues).then((result) => {
+					return fetch(venues).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
-						result.json().then((json)=>{
+						return result.json().then((json) => {
 							expect(json.data.length).to.be.above(0);
 							json.data.forEach(element => {
 								expect(element.region).to.be.equal("J6GDhEEvdmdSMzPPF");
@@ -90,7 +116,7 @@ if (Meteor.isClient) {
 			describe('percent in query parameter', function () {
 				it('should return JSON response', function (done) {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues?%');
-					fetch(venues).then((result) => {
+					return fetch(venues).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
 						done();
@@ -100,7 +126,7 @@ if (Meteor.isClient) {
 			describe('unicode query parameter', function () {
 				it('should return JSON response', function (done) {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues?region=💩');
-					fetch(venues).then((result) => {
+					return fetch(venues).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
 						done();
