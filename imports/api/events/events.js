@@ -152,7 +152,6 @@ Events.updateGroups = function(eventId) {
  *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
  * skip: skip this many before returning results
- * sort: list of fields to sort by
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
@@ -160,11 +159,7 @@ Events.updateGroups = function(eventId) {
 Events.findFilter = function(filter, limit, skip, sort) {
 	var find = {};
 	var and = [];
-	
-	const options = {};
-	options.sort = Array.isArray(sort) ? sort : [];
-	
-	
+	var options = { sort }
 	
 	let startSortOrder = 'asc';
 
