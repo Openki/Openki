@@ -151,23 +151,20 @@ Events.updateGroups = function(eventId) {
  *   course: only events for this course (ID)
  *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
- * skip: skip this many before returning results
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-Events.findFilter = function(filter, limit, skip, sort) {
+Events.findFilter = function(filter, limit) {
 	var find = {};
 	var and = [];
-	var options = { sort }
-	
-	let startSortOrder = 'asc';
+	var options = {
+		sort: { start: 1 }
+	};
 
 	if (limit > 0) {
 		options.limit = limit;
 	}
-
-	options.skip = skip;
 
 	if (filter.period) {
 		find.start = { $lt: filter.period[1] }; // Start date before end of period
@@ -193,7 +190,7 @@ Events.findFilter = function(filter, limit, skip, sort) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) startSortOrder = 'desc';
+		if (!filter.after) options.sort = { start: -1 };
 	}
 
 	if (filter.venue) {
@@ -250,8 +247,6 @@ Events.findFilter = function(filter, limit, skip, sort) {
 	if (and.length > 0) {
 		find.$and = and;
 	}
-
-	options.sort.push([ 'start', startSortOrder ]);
 
 	return Events.find(find, options);
 };

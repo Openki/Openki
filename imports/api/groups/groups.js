@@ -25,14 +25,8 @@ Groups.Filtering = () => Filtering(
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-Groups.findFilter = function(filter, limit, skip, sort) {
+Groups.findFilter = function(filter) {
 	var find = {};
-
-	const options = { skip, sort };
-
-	if (limit > 0) {
-		options.limit = limit;
-	}
 
 	if (filter.own) {
 		var me = Meteor.userId();
@@ -47,5 +41,5 @@ Groups.findFilter = function(filter, limit, skip, sort) {
 		find.members = filter.user;
 	}
 
-	return Groups.find(find, options);
+	return Groups.find(find);
 };
