@@ -6,6 +6,7 @@
 .icon-text-text {
 	display: table-cell;
 	@include td-text-align(left);
+	vertical-align: top;
 }
 
 .icon-text-icon {

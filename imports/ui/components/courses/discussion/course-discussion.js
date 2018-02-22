@@ -22,7 +22,7 @@ Template.discussion.onCreated(function() {
 	var limit = select ? 0 : 3;
 	this.limit = new ReactiveVar(limit);
 
-	subs.subscribe('discussion', this.data.courseId, function() {
+	this.sub = subs.subscribe('discussion', this.data.courseId, function() {
 		if (select) {
 			// Wait for the templates to render before trying to jump there.
 			Tracker.afterFlush(function() {
@@ -38,6 +38,10 @@ Template.discussion.onCreated(function() {
 });
 
 Template.discussion.helpers({
+	ready() {
+		return Template.instance().sub.ready();
+	},
+
 	posts: function() {
 		var instance = Template.instance();
 		var posts = CourseDiscussions.find(
