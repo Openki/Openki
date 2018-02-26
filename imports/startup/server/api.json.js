@@ -1,4 +1,6 @@
 import '/imports/Api.js';
+import '/imports/utils/field-ordering.js';
+import '/imports/utils/sort-spec.js';
 
 WebApp.rawConnectHandlers.use("/api", function(req, res, next) {
 	res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,46 +43,6 @@ const jSendResponder = function(res, process) {
 	}
 };
 
-// A general comparison function that uses localeCompare() when comparing
-// strings.
-const genComp = function(a, b) {
-	if (typeof a === 'string' && typeof b === 'string') {
-		// At the moment we don't provide a way to choose the locale :-(
-		// So it will be sorted under whatever locale the server is running.
-		return a.localeCompare(b);
-	}
-	if (a < b) return -1;
-	if (a > b) return 1;
-	return 0;
-};
-
-// Turn a sort specification of the form "name,-age" into a mongo
-// sort-specifier of the form [['name', 'asc'], ['age', 'desc']].
-const readSortSpec = function(spec) {
-	if (!spec) return [];
-	return spec.split(',').filter(Boolean).map((field) => {
-		if (field.indexOf('-') === 0) {
-			return [ field.slice(1), 'desc' ];
-		}
-		return [ field, 'asc' ];
-	});
-};
-
-
-const SortBySpec = function(sortSpec) {
-	// Build chain of compare functions that refer to the next field
-	// if the current field values are equal.
-	const equal = (a, b) => 0;
-	const fieldsCmp = sortSpec.reduceRight((lowerSort, [ field, order ]) => {
-		return (a, b) => {
-			return order === 'asc' ? genComp(a, b) : genComp(b, a)
-			    || lowerSort(a, b);
-		};
-	}, equal);
-
-	return list => list.sort(fieldsCmp);
-};
-
 Router.route('api.0.json', {
 	path: '/api/0/json/:handler',
 	where: 'server',
@@ -90,8 +52,12 @@ Router.route('api.0.json', {
 			if (!Api.hasOwnProperty(handler)) {
 				throw new NoActionError("Invalid action");
 			}
+
 			const query = this.params.query;
-			const sort = readSortSpec(query.sort);
+
+			const sortStr = query.sort;
+			const sorting = sortStr ? SortSpec.fromString(sortStr) : SortSpec.unordered();
+
 			const filter = Object.assign({}, query);
 			delete filter.sort;
 			delete filter.limit;
@@ -100,10 +66,12 @@ Router.route('api.0.json', {
 			const selectedLimit = Number.parseInt(query.limit) || 100;
 			const limit = Math.max(0, Math.min(100, selectedLimit));
 			const skip = Number.parseInt(query.skip) || 0;
-			const results = Api[handler](filter, limit, skip, sort);
+			const results = Api[handler](filter, limit, skip, sorting.spec());
 
 			// Sort the results again so computed fields are sorted too
-			return SortBySpec(sort)(results);
+			// WARNING: In many cases this will be too late, because the limit
+			// has already excluded results.
+			return FieldOrdering(sorting).sorted(results);
 		});
 	}
 });
