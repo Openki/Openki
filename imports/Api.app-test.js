@@ -105,7 +105,8 @@ if (Meteor.isClient) {
 
 			describe('region filtering', function() {
 				it('should only return a certain region', function() {
-					const venues = Meteor.absoluteUrl('/api/0/json/venues?region=J6GDhEEvdmdSMzPPF');
+					const testistan = '9JyFCoKWkxnf8LWPh';
+					const venues = Meteor.absoluteUrl('/api/0/json/venues?region=' + testistan);
 					return fetch(venues).then((result) => {
 						expect(result.status).to.equal(200);
 						expect(result.headers.get('Content-Type')).to.equal('application/json; charset=utf-8');
@@ -113,7 +114,7 @@ if (Meteor.isClient) {
 					}).then((json) => {
 						expect(json.data.length).to.be.above(0);
 						json.data.forEach(element => {
-							expect(element.region).to.be.equal("J6GDhEEvdmdSMzPPF");
+							expect(element.region).to.be.equal(testistan);
 						});
 					});
 				});
