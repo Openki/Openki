@@ -7,7 +7,7 @@
 //     - a negative number if a comes before b ("a is less")
 //     - a positive number if a comes after b ("a is more")
 //
-// sort(list) returns a new list with the items sorted according to spec
+// sorted(list) returns a new list with the items sorted according to spec
 //
 // When object fields are undefined, the behaviour is undefined.
 //
@@ -41,16 +41,21 @@ const equal = (a, b) => 0;
 const swap = (f) => (a, b) => f(b, a);
 
 export default FieldOrdering = function(sortSpec) {
+    const ordering = () => {
+        // Build chain of compare functions that refer to the next field
+        // if the current field values are equal.
+        return sortSpec.spec().reduceRight((chain, [ field, order ]) => {
+            const fieldComp = FieldComp(field);
+            const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
+            return (a, b) => directedComp(a, b) || chain(a, b);
+        }, equal);
+    };
+
+    const copy = (list) => Array.prototype.slice.call(list);
+
     return (
-        { ordering: () => {
-                // Build chain of compare functions that refer to the next field
-                // if the current field values are equal.
-                return sortSpec.spec().reduceRight((chain, [ field, order ]) => {
-                    const fieldComp = FieldComp(field);
-                    const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
-                    return (a, b) => directedComp(a, b) || chain(a, b);
-                }, equal);
-            }
+        { ordering: ordering
+        , sorted: (list) => copy(list).sort(ordering())
         }
     );
 };

@@ -69,4 +69,12 @@ describe('Ordering by object fields ', function() {
 		byNah({ nah: undefined }, {});
 	});
 
+	it("sorts list", function() {
+		const orderA = FieldOrdering(SortSpec([[ 'a', 'asc' ]]));
+		const expected = [{ a: 1 }, { a: 2 }, { a: 3} ];
+		const input = expected.slice();
+		input[0] = expected[2];
+		input[2] = expected[0];
+		assert.deepEqual(orderA.sorted(input), expected);
+	});
 });
