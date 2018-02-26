@@ -41,13 +41,12 @@ if(Meteor.isClient) {
 				jQuery(".js-course-edit-save").click();
 
 				// We should be redirected to the created course
-				return waitFor(() => {
-					assert(
-						jQuery(".course-details").length > 0,
-						"Details of the new course are shown"
-					);
-				})();
-			}).then(() => {
+			}).then(waitFor(() => {
+				assert(
+					jQuery(".course-details").length > 0,
+					"Details of the new course are shown"
+				);
+			})).then(() => {
 				assert.match(
 					jQuery('.js-group-label').text(), /SKG/,
 					"The course is in the group it was created in"
