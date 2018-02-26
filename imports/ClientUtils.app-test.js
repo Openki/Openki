@@ -1,7 +1,8 @@
 import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
 import { Promise } from 'meteor/promise';
-import { chai } from 'chai';
+import AssertionError from 'assertion-error';
+
 /**
  * Returns a promise which resolves when all subscriptions are ready.
  */
@@ -69,7 +70,7 @@ export const waitFor = (assertion, timeout=1000) => () => new Promise((resolve, 
 			resolve(result);
 			return true;
 		} catch (e) {
-			if (e instanceof chai.AssertionError) {
+			if (e instanceof AssertionError) {
 				if (new Date().getTime() - start < timeout) {
 					return false;
 				}
