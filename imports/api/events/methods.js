@@ -15,6 +15,49 @@ import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 
+const ReplicaSync = function(event, updateChangedReplicas) {
+	let affected = 0;
+
+	const apply = function(changes) {
+		const startMoment = moment(changes.start);
+		const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
+		const timeDelta = moment(changes.end).diff(startMoment);
+
+		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+			const replicaChanges = Object.assign({}, changes); // Shallow clone
+
+			const updateTime = changes.start
+							&& (updateChangedReplicas || replica.sameTime(event));
+
+			if (updateTime) {
+				const newStartMoment = moment(replica.start).set(startTime);
+				Object.assign(replicaChanges,
+					{ start: newStartMoment.toDate()
+					, end: newStartMoment.add(timeDelta).toDate()
+					}
+				);
+
+				const regionZone = LocalTime.zone(replica.region);
+				Object.assign(replicaChanges,
+					{ startLocal: regionZone.toString(replicaChanges.start)
+					, endLocal: regionZone.toString(replicaChanges.end )
+					}
+				);
+			}
+
+			Events.update({ _id: replica._id }, { $set: replicaChanges });
+
+			affected++;
+		});
+	};
+
+	return (
+		{ affected() { return affected; }
+		, apply
+		}
+	);
+};
+
 Meteor.methods({
 	'event.save': function(args) {
 		let
@@ -162,40 +205,9 @@ Meteor.methods({
 			Events.update(eventId, { $set: changes });
 
 			if (updateReplicas) {
-				const startMoment = moment(changes.start);
-				const endMoment = moment(changes.end);
-
-				const timeObj = (moment) => (
-					{ hour: moment.hour()
-					, minute: moment.minute()
-					}
-				);
-
-				const startTime = timeObj(startMoment);
-				const endTime = timeObj(endMoment);
-
-				Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
-					if (updateChangedReplicas || replica.differentTimeAs(event)) return;
-
-					const replicaChanges = changes;
-
-					Object.assign(replicaChanges,
-						{ start: moment(replica.start).set(startTime).toDate()
-						, end: moment(replica.end).set(endTime).toDate()
-						}
-					);
-
-					const regionZone = LocalTime.zone(replica.region);
-					Object.assign(replicaChanges,
-						{ startLocal: regionZone.toString(replicaChanges.start)
-						, endLocal: regionZone.toString(replicaChanges.end )
-						}
-					);
-
-					Events.update({ _id: replica._id }, { $set: replicaChanges });
-
-					affectedReplicaCount++;
-				});
+				const replicaSync = ReplicaSync(event, updateChangedReplicas);
+				replicaSync.apply(changes);
+				affectedReplicaCount = replicaSync.affected();
 			}
 		}
 

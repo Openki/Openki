@@ -205,13 +205,13 @@
 									{{#each replica in changedReplicas}}
 										<li>
 											<a href="{{pathFor 'showEvent' replica}}" target="_blank">
-												{{dateformat replica.start}}
+												{{dateformat replica.startLocal}}
 												-
 												{{replica.title}}
 
-												({{timeformat replica.start}}
+												({{timeformat replica.startLocal}}
 												-
-												{{timeformat replica.end}})
+												{{timeformat replica.endLocal}})
 											</a>
 										</li>
 									{{/each}}
