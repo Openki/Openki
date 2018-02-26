@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
+import LocalTime from '/imports/utils/local-time.js';
 import Predicates from '/imports/utils/predicates.js';
 import Courses from '/imports/api/courses/courses.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
@@ -60,11 +61,13 @@ OEvent.prototype.editableBy = function(user) {
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
-OEvent.prototype.differentTimeAs = function(event) {
-	return (
-		this.start.toTimeString() !== event.start.toTimeString()
-		|| this.end.toTimeString() !== event.end.toTimeString()
-	);
+OEvent.prototype.sameTime = function(event) {
+	return ['startLocal', 'endLocal'].every((time) => {
+		const timeA = LocalTime.fromString(this[time]);
+		const timeB = LocalTime.fromString(event[time]);
+
+		return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
+	});
 };
 
 export default Events = new Mongo.Collection("Events", {

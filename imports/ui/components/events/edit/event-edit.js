@@ -201,7 +201,7 @@ Template.eventEdit.helpers({
 			Events
 			.find(AffectedReplicaSelectors(this))
 			.fetch()
-			.filter((replica) => replica.differentTimeAs(this))
+			.filter((replica) => !replica.sameTime(this))
 		);
 	},
 
