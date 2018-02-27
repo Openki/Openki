@@ -8,7 +8,7 @@ import '/imports/api/fixtures/methods.js';
 const assertGoodHeaders = function(result) {
 	assert.equal(result.status, 200);
 	assert.equal(result.headers.get('Content-Type'), 'application/json; charset=utf-8');
-}
+};
 
 // Construct a function that fails if it's ever called with a lesser value than the one before 
 const AssertAscending = function(base, message) {
@@ -158,7 +158,7 @@ if (Meteor.isClient) {
 						const data = json.data;
 						assert.isNotEmpty(data);
 						data.forEach(element => {
-							assert.equal(element.region, testistan, "region must be testistan")
+							assert.equal(element.region, testistan, "region must be testistan");
 						});
 					});
 				});
