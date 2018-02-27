@@ -73,3 +73,7 @@ a:hover,
 	position: relative;
 	white-space: normal;
 }
+
+.disabled label {
+	color: $gray-light;
+}
