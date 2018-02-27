@@ -33,6 +33,7 @@ Template.eventEdit.onCreated(function() {
 	this.state.setDefault(
 		{ updateReplicas: false
 		, updateChangedReplicas: false
+		, startDayChanged: false
 		}
 	);
 
@@ -194,6 +195,14 @@ Template.eventEdit.helpers({
 
 	affectedReplicaCount: function() {
 		return Events.find(AffectedReplicaSelectors(this)).count();
+	},
+
+	disabledIfDayChanged() {
+		if (Template.instance().state.get('startDayChanged')) return 'disabled';
+	},
+
+	startDayChanged() {
+		return Template.instance().state.get('startDayChanged');
 	},
 
 	changedReplicas() {
@@ -368,7 +377,14 @@ Template.eventEdit.events({
 		instance.notifyChecked.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
-	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
+	'change .js-event-start-date'(event, instance) {
+		const newDate = instance.$(event.target).val();
+		instance.state.set({
+			startDayChanged: ! moment(newDate, 'L').isSame(this.startLocal, 'day')
+		});
+	},
+
+	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime': function(event, template) {
 		updateTimes(template, true);
 	},
 
