@@ -34,7 +34,7 @@ const jSendResponder = function(res, process) {
 				body.data.error = e.message;
 			}
 		} else {
-			console.log(e);
+			console.log(e, e.stack);
 			res.statusCode = 500;
 			body.status = "error";
 			body.message = "Server error";
