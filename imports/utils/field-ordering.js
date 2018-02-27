@@ -14,6 +14,8 @@
 // Constructors:
 // FieldOrdering(spec) creates an ordering from a SortSpec
 
+import { check } from 'meteor/check';
+
 // A general comparison function that uses localeCompare() when comparing
 // strings. In an ideal world we would ask the objects for comparable values
 // from the fields we want to compare. And we would know their type so we needn't
@@ -30,7 +32,11 @@ const genComp = function(a, b) {
 };
 
 const FieldComp = (field) => {
-    return (a, b) => genComp(a[field], b[field]);
+    return (a, b) => {
+        check(a, Object);
+        check(b, Object);
+        return genComp(a[field], b[field]);
+    };
 };
 
 // This is the base case when we run out of fields to compare
