@@ -4,6 +4,8 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { ReactiveDict } from 'meteor/reactive-dict';
+
 import LocalTime from '/imports/utils/local-time.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
@@ -27,10 +29,20 @@ Template.eventEdit.onCreated(function() {
 	var instance = this;
 	instance.busy(false);
 
+	this.state = new ReactiveDict();
+	this.state.setDefault(
+		{ updateReplicas: false
+		, updateChangedReplicas: false
+		, startDayChanged: false
+		}
+	);
+
 	var courseId = this.data.courseId;
 	if (courseId) {
 		instance.subscribe('courseDetails', courseId);
 	}
+
+	this.subscribe('affectedReplica', Template.currentData()._id);
 
 	instance.parent = instance.parentInstance();
 	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
@@ -182,8 +194,32 @@ Template.eventEdit.helpers({
 	},
 
 	affectedReplicaCount: function() {
-		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(AffectedReplicaSelectors(this)).count();
+	},
+
+	disabledIfDayChanged() {
+		if (Template.instance().state.get('startDayChanged')) return 'disabled';
+	},
+
+	startDayChanged() {
+		return Template.instance().state.get('startDayChanged');
+	},
+
+	changedReplicas() {
+		return (
+			Events
+			.find(AffectedReplicaSelectors(this))
+			.fetch()
+			.filter((replica) => !replica.sameTime(this))
+		);
+	},
+
+	emphasizeClass() {
+		return Template.instance().state.get('updateReplicas') && 'is-emphasized';
+	},
+
+	updateChangedReplicas() {
+		return Template.instance().state.get('updateChangedReplicas');
 	},
 
 	regions: function(){
@@ -290,7 +326,8 @@ Template.eventEdit.events({
 			}
 		}
 
-		const updateReplicas = instance.$("input[name='updateReplicas']").is(':checked');
+		const updateReplicas = instance.state.get('updateReplicas');
+		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
 		const sendNotifications = instance.$(".js-check-notify").is(':checked');
 		const addNotificationMessage = instance.$(".js-event-edit-add-message").val();
 
@@ -300,6 +337,7 @@ Template.eventEdit.events({
 			{
 				eventId,
 				updateReplicas,
+				updateChangedReplicas,
 				sendNotifications,
 				changes: editevent,
 				comment: addNotificationMessage
@@ -339,7 +377,14 @@ Template.eventEdit.events({
 		instance.notifyChecked.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
-	'change #editEventDuration, change #edit_event_startdate, change #editEventStartTime': function(event, template) {
+	'change .js-event-start-date'(event, instance) {
+		const newDate = instance.$(event.target).val();
+		instance.state.set({
+			startDayChanged: ! moment(newDate, 'L').isSame(this.startLocal, 'day')
+		});
+	},
+
+	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime': function(event, template) {
 		updateTimes(template, true);
 	},
 
@@ -350,4 +395,12 @@ Template.eventEdit.events({
 	'change .js-select-region': function(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
+
+	'change .js-update-replicas'(event, instance) {
+		instance.state.set('updateReplicas', event.target.checked);
+	},
+
+	'change .js-update-changed-replicas'(event, instance) {
+		instance.state.set('updateChangedReplicas', event.target.checked);
+	}
 });
