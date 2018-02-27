@@ -24,7 +24,7 @@ const genComp = function(a, b) {
 	if (typeof a === 'string' && typeof b === 'string') {
 		// At the moment we don't provide a way to choose the locale :-(
 		// So it will be sorted under whatever locale the server is running.
-		return a.localeCompare(b, null, { sensitivity: "accent"});
+		return a.localeCompare(b, { sensitivity: "accent" });
     }
 	if (a < b) return -1;
 	if (a > b) return 1;
