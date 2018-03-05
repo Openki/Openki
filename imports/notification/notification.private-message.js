@@ -10,7 +10,8 @@ import HtmlTools from '/imports/utils/html-tools.js';
   * @param      {ID} senderId - id of the user that sends the message
   * @param      {ID} recipientId - id of the intended recipient
   * @param  {String} message - the message to transmit
-  * @param    {Bool} revealSenderAddress
+  * @param    {Bool} revealSenderAddress - include email-address of sender in message
+  * @param    {Bool} sendCopyToSender - send a copy of the message to the author
   */
 notificationPrivateMessage.record = function(senderId, recipientId, message, revealSenderAddress, sendCopyToSender) {
 	check(senderId, String);
