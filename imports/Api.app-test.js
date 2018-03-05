@@ -69,7 +69,7 @@ if (Meteor.isClient) {
 			describe('Get events from the future', function(){
 				it('returns nonempty JSON response', function() {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now');
-					fetch(events).then((result) => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
 					}).then((json) => {
