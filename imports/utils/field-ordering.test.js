@@ -59,9 +59,18 @@ describe('Ordering by object fields ', function() {
 		assert.isAbove(byAThenB(biggerB, smallerB), 0);
 	});
 
+	it("orders mixed-case consistently", function() {
+		// We don't really care about the specifics of the sort.
+		// It should just be consistent.
+		const lowerBeforeUpper = byA({ a: "a" }, { a: "A" });
+		assert.equal(byA({ a: "A" }, { a: "a" }), lowerBeforeUpper * -1);
+		assert.equal(byA({ a: "ab" }, { a: "aB" }), lowerBeforeUpper);
+		assert.equal(byA({ a: "aB" }, { a: "ab" }), lowerBeforeUpper * -1);
+	});
+
 	it("doesn't fail on undefined fields", function() {
 		// This test ensures that we survive when trying to sort objects
-		// where fields e sort by are undefined.
+		// where fields we sort by are undefined.
 		const byNah = FieldOrdering(SortSpec([[ 'nah', 'asc' ]])).ordering();
 		byNah({}, {});
 		byNah({ nah: 1 }, {});
