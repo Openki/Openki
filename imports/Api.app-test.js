@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import fetch from 'isomorphic-unfetch';
+import AssertionError from 'assertion-error';
 
 import '/imports/api/fixtures/methods.js';
 
@@ -28,11 +29,14 @@ const AssertDescending = function(base, message) {
 };
 
 const AssertAscendingString = function(base, message) {
-	let current = base;
+	let current = base.toLowerCase();
 	return function(next) {
-		const nextDir = next.localeCompare(current, { sensitivity: "accent"});
-		assert.isAtLeast(nextDir, 0, message);
-		current = next;
+		const lowerNext = next.toLowerCase();
+		const side = current.localeCompare(lowerNext);
+		if (side > 0) {
+			throw new AssertionError(message + ". But the string '" + current + "' orders after '" + lowerNext + "'");
+		}
+		current = lowerNext;
 	};
 };
 
