@@ -146,7 +146,7 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					{{#if getState 'showDeleteConfirm'}}
+					{{#if state 'showDeleteConfirm'}}
 						<div class="panel panel-danger">
 							<div class="panel-heading">
 								<h4 class="panel-title">
@@ -207,7 +207,7 @@
 						{{/each}}
 						<div class="delete-events-actions">
 							<button class="btn btn-default js-toggle-all">
-								{{#if getState 'allEventsSelected'}}
+								{{#if state 'allEventsSelected'}}
 									{{mf 'deleteEventsModal.clearSelection' 'Clear selection'}}
 								{{else}}
 									{{mf 'deleteEventsModal.selectAll' 'Select all'}}

@@ -166,10 +166,6 @@ Template.deleteEventsModal.helpers({
 		return Template.instance().state.get('selectedEvents').find(e => e._id === this._id);
 	},
 
-	getState(state) {
-		return Template.instance().state.get(state);
-	},
-
 	numSelectedEvents() {
 		return Template.instance().state.get('selectedEvents').length;
 	},
