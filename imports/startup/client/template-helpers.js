@@ -88,6 +88,10 @@ const helpers = {
 		return business.get() ? 'disabled' : '';
 	},
 
+	state(state) {
+		return Template.instance().state.get(state);
+	},
+
 	groupLogo(groupId) {
 		var instance = Template.instance();
 		instance.subscribe('group', groupId);
