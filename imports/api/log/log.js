@@ -69,7 +69,7 @@ Log.record = function(track, rel, body) {
 
 	Log.insert(entry);
 
-	if (Meteor.isDevelopment) {
+	if (Meteor.settings.printLog) {
 		console.log(entry);
 	}
 };

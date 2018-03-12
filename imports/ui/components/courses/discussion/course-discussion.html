@@ -6,7 +6,11 @@
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
-		{{> post newPost}}
+		{{#if ready}}
+			{{> post newPost}}
+		{{else}}
+			{{> loadingRow}}
+		{{/if}}
 		{{#each posts}}
 			<div class="discussion-conversation">
 				{{> post}}
@@ -31,21 +35,12 @@
 	{{else}}
 		{{> postShow}}
 	{{/if}}
-	{{#if responsesLimited}}
+	{{#if notAllResponsesShown}}
 		<button
-			class="btn-link toggle-all-responses js-toggle-all-responses"
+			class="btn-link toggle-all-responses js-show-previous-replies"
 			type="button">
-			{{#if allResponsesShown}}
-				<i class="fa fa-chevron-up fa-fw" aria-hidden="true"></i>
-				{{#mf KEY='course.discussions.hideAnswers'}}
-					Hide answers
-				{{/mf}}
-			{{else}}
-				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
-				{{#mf KEY='course.discussions.showAllAnswers' NUM=count}}
-					Show all {NUM} answers
-				{{/mf}}
-			{{/if}}
+			<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+			{{mf 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
 	{{/if}}
 	{{#each responses}}
@@ -60,19 +55,29 @@
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn">
-					<span class="fa fa-reply fa-fw" aria-hidden="true"></span>
-					{{mf 'course.discussion.comment_answer' 'Answer'}}
+				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn" {{disabledIfBusy}}>
+					{{#if busy 'saving'}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						{{mf '_button.saving'}}
+					{{else}}
+						<span class="fa fa-reply fa-fw" aria-hidden="true"></span>
+						{{mf 'course.discussion.comment_answer' 'Answer'}}
+					{{/if}}
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-add course-page-btn js-discussion-edit">
-				<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
-				{{mf 'course.discussion.write_comment' 'Write a comment'}}
+			<button type="button" class="btn btn-add course-page-btn js-discussion-edit" {{disabledIfBusy}}>
+				{{#if busy 'saving'}}
+					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{mf '_button.saving' 'Saving...'}}
+				{{else}}
+					<span class="glyphicon glyphicon-pencil fa-fw" aria-hidden="true"></span>
+					{{mf 'course.discussion.write_comment' 'Write a comment'}}
+				{{/if}}
 			</button>
 		{{/if}}
 	{{else}}
-		<div class="{{postClass}}" id="comment{{_id}}">
+		<div {{postClasses}} id="comment{{_id}}">
 			{{> profileIcon userId}}
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
@@ -105,7 +110,7 @@
 							{{this.title}}
 						</h4>
 					{{/if}}
-					<p>{{text}}</p>
+					<p>{{{text}}}</p>
 				</div>
 			</div>
 		</div>
@@ -141,10 +146,8 @@
 						placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
 						value="{{title}}"/>
 				</div>
-				<div class="form-group">
-					<textarea class="js-post-text discussion-edit-text form-control"
-						placeholder="{{#if parentId}}{{mf 'course.discussion.text_placeholder_answer' 'Your answer'}}{{else}}{{mf 'course.discussion.text_placeholder' 'Your comment'}}{{/if}}"
-						>{{text}}</textarea>
+				<div class="form-group js-post-text">
+						{{> editableTextarea editableText}}
 				</div>
 				{{#if canNotifyAll}}
 					<div class="checkbox">
@@ -170,7 +173,7 @@
 					</div>
 				{{/if}}
 				<div class="form-actions">
-					<button type="submit" class="btn btn-save discussion-save-btn" {{enableWhenValid}}>
+					<button type="submit" class="btn btn-save discussion-save-btn" {{disabledIfBusy}} {{enableWhenValid}}>
 						<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 						{{#if new}}
 							{{#if parentId}}

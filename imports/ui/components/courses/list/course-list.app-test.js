@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test.js';
 

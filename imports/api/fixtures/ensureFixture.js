@@ -67,14 +67,16 @@ export default ensure = {
 			var group = Groups.findOne({ short: short });
 			if (group) return group._id;
 
-			var id = Groups.insert({
+			const id = ensure.fixedId([ short ]);
+			Groups.insert({
+				_id: id,
 				name: short,
 				short: short,
-				members: [ ensure.user('EdDillinger') ],
+				members: [ ensure.user('EdDillinger')._id ],
 				description: 'Fixture group'
 			});
 
-			console.log("Added group from TestCouses: "+short+" id: "+id);
+			console.log("Added fixture group '"+short+"' id: "+id);
 		}
 	},
 

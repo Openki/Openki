@@ -28,6 +28,9 @@
 <template name="frameCalendarEvent">
 	<div class="frame-list-item">
 		<h4 class="frame-list-item-header js-toggle-event-details">
+			<span class="frame-list-item-toggle-indicator">
+				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
+			</span>
 			<span class="frame-list-item-time">
 				{{timeformat start}}
 			</span>
@@ -74,16 +77,12 @@
 					</div>
 				</div>
 				<div class="frame-list-item-links">
-					<a href="{{pathFor 'showEvent'}}" target="_blank">
-						<i class="fa fa-ellipsis-h fa-fw" aria-hidden="true"></i>
-						{{mf 'frame.eventsList.showMore' 'show more'}}
+					<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
+						{{mf 'frame.calendar.moreAboutThisEvent' 'More about this event on openki.net'}}
 					</a>
-					<a href="{{pathFor 'calEvent' this}}" class="js-download">
-						<i
-							aria-hidden="true"
-							class="fa fa-download fa-fw"
-							title="{{mf 'frame.eventsList.download_cal' 'download event to my calendar'}}">
-						</i>
+					<a href="{{pathFor 'calEvent' this}}" class="btn js-download">
+						<i class="fa fa-download fa-fw" aria-hidden="true"></i>
+						{{mf 'frame.calendar.download' 'Download'}}
 					</a>
 				</div>
 			</div>

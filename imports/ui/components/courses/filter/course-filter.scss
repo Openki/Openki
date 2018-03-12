@@ -35,7 +35,7 @@
 
 .filter-captions-header-buttons {
 	display: block;
-	float: right;
+	@include td-float(right);
 }
 
 .filter-remove-btn-text {
@@ -82,7 +82,7 @@
 $filter-course-states-sm-column: 6;
 
 .filter-expanded .filter-course-states {
-	@include make-md-column($filter-course-states-sm-column);
+	@include td-make-md-column($filter-course-states-sm-column);
 }
 
 $filter-course-state-captions-gutter: 10px;
@@ -92,7 +92,7 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-captions-column {
-	@include make-xs-column(4, $filter-course-state-captions-gutter);
+	@include td-make-xs-column(4, $filter-course-state-captions-gutter);
 
 	@media (max-width: $screen-xxs) {
 		@include make-xs-column(12, $filter-course-state-captions-gutter);
@@ -160,8 +160,8 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-course-roles {
-	@include make-sm-column(6);
-	@include make-md-column((12 - $filter-course-states-sm-column) / 2);
+	@include td-make-sm-column(6);
+	@include td-make-md-column((12 - $filter-course-states-sm-column) / 2);
 }
 
 .filter-course-role {
@@ -170,7 +170,7 @@ $filter-course-state-captions-gutter: 10px;
 	display: block;
 	margin: 0;
 	padding: 0;
-	text-align: left;
+	@include td-text-align(left);
 
 	&:hover {
 		color: $brand-primary;
@@ -206,8 +206,8 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-course-categories {
-	@include make-sm-column(6);
-	@include make-md-column((12 - $filter-course-states-sm-column) / 2);
+	@include td-make-sm-column(6);
+	@include td-make-md-column((12 - $filter-course-states-sm-column) / 2);
 }
 
 .filter-categories-select {
@@ -308,5 +308,5 @@ $filter-course-state-captions-gutter: 10px;
 
 .filter-actions {
 	margin-top: 5px;
-	text-align: right;
+	@include td-text-align(right);
 }

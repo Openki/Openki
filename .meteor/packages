@@ -47,7 +47,6 @@ seba:minifiers-autoprefixer
 gadicohen:robots-txt
 shell-server@0.3.1
 ecmascript@0.10.0
-practicalmeteor:mocha
 dferber:prerender
 wanglian:bootstrap3-datepicker
 meteortesting:mocha
