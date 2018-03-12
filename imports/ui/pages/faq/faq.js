@@ -17,8 +17,10 @@ Template.FAQ.onCreated(function() {
 		const idSelector = "#" + decodeURIComponent(id);
 		const targetTitle = this.$(idSelector);
 		if (targetTitle.length) {
-			targetTitle.nextUntil(this.headerTag, this.contentTags).show();
-			$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
+			Meteor.defer(() => {
+				targetTitle.nextUntil(this.headerTag).show();
+				$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
+			});
 		}
 	};
 });
