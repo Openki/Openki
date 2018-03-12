@@ -123,7 +123,15 @@ Template.courseEventAdd.onRendered(function() {
 	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });
 
+Template.deleteCourseEvents.onCreated(function() {
+	this.showModal = new ReactiveVar(false);
+});
+
 Template.deleteCourseEvents.helpers({
+	showModal() {
+		return Template.instance().showModal.get();
+	},
+
 	upcomingEvents() {
 		return Events.findFilter(
 			{ course: this.course._id
@@ -135,7 +143,7 @@ Template.deleteCourseEvents.helpers({
 
 Template.deleteCourseEvents.events({
 	'click .js-show-events-delete-modal'(event, instance) {
-		instance.$('#deleteEventsModal').modal('show');
+		instance.showModal.set(true);
 	}
 });
 
@@ -155,6 +163,10 @@ Template.deleteEventsModal.onCreated(function() {
 		const allEventsSelected = cursor.count() === this.state.get('selectedEvents').length;
 		this.state.set({ allEventsSelected });
 	});
+});
+
+Template.deleteEventsModal.onRendered(function() {
+	this.$('#deleteEventsModal').modal('show');
 });
 
 Template.deleteEventsModal.helpers({
@@ -178,6 +190,10 @@ Template.deleteEventsModal.helpers({
 });
 
 Template.deleteEventsModal.events({
+	'hidden.bs.modal'(event, instance) {
+		instance.parentInstance().showModal.set(false);
+	},
+
 	'click .js-toggle-all'(event, instance) {
 		let selectedEvents;
 		if (instance.state.get('allEventsSelected')) {
@@ -238,7 +254,7 @@ Template.deleteEventsModal.events({
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);
-						instance.$('#deleteEventsModal').modal('hide');
+						instance.parentInstance().showModal.set(false);
 					}
 				}
 			});
