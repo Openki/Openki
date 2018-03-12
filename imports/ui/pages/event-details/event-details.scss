@@ -17,9 +17,8 @@ $course-header-bg: darken($blue-lighter, 5%);
 	padding-bottom: 5px;
 }
 
-.event-course-header > h2 > a {
-	font-size: $font-size-base;
-	margin-left: 5px;
+.event-course-header-link + .course-categories {
+	margin-top: 5px;
 }
 
 .event-course-header + .event {

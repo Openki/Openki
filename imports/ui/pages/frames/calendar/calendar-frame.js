@@ -75,7 +75,11 @@ Template.frameCalendarEvent.helpers({
 		return Regions.findOne(this.region).name;
 	},
 
-	expanded: () => Template.instance().expanded.get()
+	expanded: () => Template.instance().expanded.get(),
+
+	toggleIndicatorIcon() {
+		return Template.instance().expanded.get() ? 'minus' : 'plus';
+	}
 });
 
 Template.frameCalendarEvent.events({

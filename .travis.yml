@@ -29,4 +29,4 @@ script:
   # Run unit-tests
   - meteor npm run test
   # Run end-to-end tests
-  - meteor npm run test-app
+  - meteor npm run app-test

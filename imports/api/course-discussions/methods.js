@@ -6,11 +6,19 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import Notification from '/imports/notification/notification.js';
 import StringTools from '/imports/utils/string-tools.js';
+import HtmlTools from '/imports/utils/html-tools.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
-const sanitizeComment = (comment) => ({
-	title: StringTools.saneTitle(comment.title).substr(0, 200).trim(),
-	text: StringTools.saneText(comment.text).substr(0, 640*1024).trim()
-});
+const sanitizeComment = (comment) => {
+	const saneTitle = StringTools.saneTitle(comment.title).substr(0, 200).trim();
+
+	// String-truncating HTML may leave a broken tag at the end
+	// The sanitizer will have to clean the mess.
+	const unsaneHtml = comment.text.substr(0, 640*1024).trim();
+	const saneHtml = HtmlTools.saneHtml(unsaneHtml);
+
+	return { title: saneTitle, text: saneHtml };
+};
 
 Meteor.methods({
 	'courseDiscussion.postComment': function(comment) {
@@ -66,6 +74,10 @@ Meteor.methods({
 			}
 
 			saneComment.parentId = parentComment._id;
+		}
+
+		if (this.isSimulation) {
+			saneComment.saving = true;
 		}
 
 		var commentId = CourseDiscussions.insert(saneComment);

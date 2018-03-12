@@ -34,6 +34,10 @@ Template.courseRole.helpers({
 		return 'roles.' + role + '.subscribed';
 	},
 
+	roleIs(type) {
+		return this.roletype.type === type;
+	},
+
 	maySubscribe: function(role) {
 		var operator = Meteor.userId();
 

@@ -1,3 +1,4 @@
+import Analytics from '/imports/ui/lib/analytics.js';
 import Predicates from '/imports/utils/predicates.js';
 import Profile from '/imports/utils/profile.js';
 import LocalTime from '/imports/utils/local-time.js';
@@ -70,6 +71,10 @@ function loadroles(course) {
 		}
 		return goodroles;
 	}, []);
+}
+
+if (Meteor.isClient) {
+	Analytics.installRouterActions(Router);
 }
 
 Router.map(function () {
@@ -157,6 +162,7 @@ Router.map(function () {
 				{ region: Predicates.id
 				, group: Predicates.id
 				, neededRoles: Predicates.ids
+				, internal: Predicates.flag
 				};
 			const params = Filtering(predicates).read(this.params.query).done();
 

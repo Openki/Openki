@@ -18,12 +18,11 @@ $price-policy-actions-grid-width: 15px;
 
 .price-policy-action {
 	@media (max-width: $screen-xs-max) {
-		@include make-xs-column(6, $price-policy-actions-grid-width);
+		@include td-make-xs-column(6, $price-policy-actions-grid-width);
 	}
 
 	@media (min-width: $screen-sm-min) {
 		display: inline-block;
-		vertical-align: middle;
 
 		& + .price-policy-action {
 			margin-left: 5px;

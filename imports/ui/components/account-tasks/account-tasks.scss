@@ -39,7 +39,7 @@
 	$color: $blue;
 
 	color: $color;
-	text-align: left;
+	@include td-text-align(left);
 	white-space: normal;
 	width: 100%;
 
@@ -48,7 +48,7 @@
 	}
 
 	@media (min-width: $screen-xs-min) {
-		text-align: right;
+		@include td-text-align(right);
 	}
 }
 

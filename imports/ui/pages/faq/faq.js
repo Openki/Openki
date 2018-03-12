@@ -14,12 +14,13 @@ Template.FAQ.onCreated(function() {
 	this.contentTags = 'p, ul';
 
 	this.scrollTo = id => {
-		if (id.indexOf('#') < 0) id = '#' + id;
-
-		const targetTitle = this.$(this.headerTag + id);
+		const idSelector = "#" + decodeURIComponent(id);
+		const targetTitle = this.$(idSelector);
 		if (targetTitle.length) {
-			targetTitle.nextUntil(this.headerTag, this.contentTags).show();
-			$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
+			Meteor.defer(() => {
+				targetTitle.nextUntil(this.headerTag).show();
+				$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
+			});
 		}
 	};
 });
@@ -40,7 +41,7 @@ Template.FAQ.onRendered(function() {
 		title.attr('id', id);
 	});
 
-	this.$('a').attr('target', '_blank');
+	this.$('a').not('[href^="#"]').attr('target', '_blank');
 
 	const hash = Router.current().params.hash;
 	if (hash) this.scrollTo(hash);
@@ -72,7 +73,8 @@ Template.FAQ.events({
 
 	'click a[href^="#"]'(event, instance) {
 		event.preventDefault();
-		const id = $(event.currentTarget).attr('href');
+		const href = $(event.currentTarget).attr('href');
+		const id = href.substring(1); // Drop the hash-char
 		instance.scrollTo(id);
 	}
 });

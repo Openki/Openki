@@ -69,9 +69,9 @@ Venues.facilityOptions =
  * limit: how many to find
  *
  */
-Venues.findFilter = function(filter, limit) {
+Venues.findFilter = function(filter, limit, skip, sort) {
 	var find = {};
-	var options = {};
+	const options = { skip, sort };
 
 	if (limit > 0) {
 		options.limit = limit;

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
+import LocalTime from '/imports/utils/local-time.js';
 import Predicates from '/imports/utils/predicates.js';
 import Courses from '/imports/api/courses/courses.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
@@ -58,6 +59,15 @@ OEvent.prototype.editableBy = function(user) {
 	if (!user) return false;
 	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
 	return _.intersection(user.badges, this.editors).length > 0;
+};
+
+OEvent.prototype.sameTime = function(event) {
+	return ['startLocal', 'endLocal'].every((time) => {
+		const timeA = LocalTime.fromString(this[time]);
+		const timeB = LocalTime.fromString(event[time]);
+
+		return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
+	});
 };
 
 export default Events = new Mongo.Collection("Events", {
@@ -151,20 +161,28 @@ Events.updateGroups = function(eventId) {
  *   course: only events for this course (ID)
  *   internal: only events that are internal (if true) or public (if false)
  * limit: how many to find
+ * skip: skip this many before returning results
+ * sort: list of fields to sort by
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-Events.findFilter = function(filter, limit) {
+Events.findFilter = function(filter, limit, skip, sort) {
 	var find = {};
 	var and = [];
-	var options = {
-		sort: { start: 1 }
-	};
+	
+	const options = {};
+	options.sort = Array.isArray(sort) ? sort : [];
+	
+	
+	
+	let startSortOrder = 'asc';
 
 	if (limit > 0) {
 		options.limit = limit;
 	}
+
+	options.skip = skip;
 
 	if (filter.period) {
 		find.start = { $lt: filter.period[1] }; // Start date before end of period
@@ -190,7 +208,7 @@ Events.findFilter = function(filter, limit) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) options.sort = { start: -1 };
+		if (!filter.after) startSortOrder = 'desc';
 	}
 
 	if (filter.venue) {
@@ -247,6 +265,8 @@ Events.findFilter = function(filter, limit) {
 	if (and.length > 0) {
 		find.$and = and;
 	}
+
+	options.sort.push([ 'start', startSortOrder ]);
 
 	return Events.find(find, options);
 };
