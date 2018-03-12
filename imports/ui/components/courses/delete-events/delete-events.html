@@ -38,6 +38,9 @@
 								<ul class="list-group selected-events">
 									{{#each event in selectedEvents}}
 										<li class="list-group-item list-group-item-danger">
+											<span class="close js-deselect-event" data-event-id="{{event._id}}">
+												&times;
+											</span>
 											{{> deleteEventsEvent event}}
 										</li>
 									{{/each}}
@@ -68,17 +71,20 @@
 							</div>
 						</div>
 					{{else}}
-						{{#each upcomingEvents}}
-							<div class="checkbox">
-								<label>
-									<input
-										type="checkbox"
-										checked="{{isSelected}}"
-										{{disabledIfBusy}}/>
-									{{> deleteEventsEvent this}}
-								</label>
-							</div>
-						{{/each}}
+						<div class="delete-events-list">
+							{{#each upcomingEvents}}
+								<div class="checkbox">
+									<label>
+										<input
+											type="checkbox"
+											checked="{{isSelected}}"
+											{{disabledIfBusy}}
+										/>
+										{{> deleteEventsEvent this}}
+									</label>
+								</div>
+							{{/each}}
+						</div>
 						<div class="delete-events-actions">
 							<button class="btn btn-default js-toggle-all">
 								{{#if state 'allEventsSelected'}}

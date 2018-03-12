@@ -42,10 +42,20 @@ Template.deleteEventsModal.onCreated(function() {
 		}
 	);
 
+	// set allEventsSelected to true if all events are selected
 	this.autorun(() => {
 		const cursor = Template.currentData().upcomingEvents;
 		const allEventsSelected = cursor.count() === this.state.get('selectedEvents').length;
 		this.state.set({ allEventsSelected });
+	});
+
+	// close confirmation dialog if no events are selected
+	this.autorun(() => {
+		if (this.state.get('showDeleteConfirm')) {
+			if (!this.state.get('selectedEvents').length) {
+				this.state.set('showDeleteConfirm', false);
+			}
+		}
 	});
 });
 
@@ -102,6 +112,12 @@ Template.deleteEventsModal.events({
 
 	'click .js-show-delete-confirm'(event, instance) {
 		instance.state.set('showDeleteConfirm', true);
+	},
+
+	'click .js-deselect-event'(e, instance) {
+		const eventId = instance.$(e.target).data('event-id');
+		const selectedEvents = instance.state.get('selectedEvents');
+		instance.state.set('selectedEvents', selectedEvents.filter((event) => event._id !== eventId));
 	},
 
 	'click .js-delete-events'(e, instance) {
