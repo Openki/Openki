@@ -206,26 +206,40 @@ Template.deleteEventsModal.events({
 
 	'click .js-delete-events'(e, instance) {
 		instance.busy('deleting');
-		instance.state.get('selectedEvents').forEach((event, index, list) => {
+
+		const events = instance.state.get('selectedEvents');
+		let removed = 0;
+		let responses = 0;
+		events.forEach((event, index) => {
 			Meteor.call('event.remove', event._id, (err) => {
-				if (index === list.length - 1) {
-					if (err) {
-						AddMessage(err.reason || 'Unknown error', 'danger');
-					} else {
+				responses++;
+				if (err) {
+					AddMessage(mf(
+						'deleteEventsModal.errWithReason',
+						{ REASON: err.reason || 'Unknown error'
+						, TITLE: event.title
+						, START: moment(event.startLocal).format('llll')
+						},
+						'Deleting the event "{TITLE} ({START})" failed: "{REASON}"'
+					), 'danger');
+				} else {
+					removed++;
+				}
+
+				if (responses === events.length) {
+					instance.busy(false);
+					instance.state.set('showDeleteConfirm', false);
+					if (removed) {
 						AddMessage(mf(
 							'deleteEventsModal.sucess',
-							{ NUM: list.length },
+							{ NUM: removed },
 							'{NUM, plural, one {Event was} other {# events were}} successfully deleted.'
 						), 'success');
 					}
-
-					instance.busy(false);
-					instance.state.set(
-						{ selectedEvents: []
-						, showDeleteConfirm: false
-						}
-					);
-					instance.$('#deleteEventsModal').modal('hide');
+					if (removed === responses) {
+						instance.state.set('selectedEvents', []);
+						instance.$('#deleteEventsModal').modal('hide');
+					}
 				}
 			});
 		});
