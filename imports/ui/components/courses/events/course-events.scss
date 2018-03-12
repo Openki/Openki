@@ -55,31 +55,3 @@
 	bottom: 0;
 	height: 40px;
 }
-
-.delete-events-details {
-	color: $gray;
-
-	&:hover {
-		color: $gray;
-	}
-}
-
-.course-event-tasks > .btn:first-child {
-	width: auto;
-}
-
-.modal-body > .checkbox:first-child {
-	margin-top: 0;
-}
-
-.modal-body .panel {
-	margin: 0;
-}
-
-.selected-events {
-	margin-top: 15px;
-}
-
-.delete-events-events-title {
-	margin-bottom: 5px;
-}
