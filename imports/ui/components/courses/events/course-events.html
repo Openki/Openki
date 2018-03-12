@@ -131,7 +131,9 @@
 		<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
 		{{mf 'course.event.edit.deleteEvents' 'Delete events'}}
 	</button>
-	{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+	{{#if showModal}}
+		{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+	{{/if}}
 </template>
 
 <template name="deleteEventsModal">
