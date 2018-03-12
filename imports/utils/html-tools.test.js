@@ -4,7 +4,7 @@
 import { assert } from 'chai';
 import HtmlTools from '/imports/utils/html-tools.js';
 
-describe.only('Converting Text to HTML', function() {
+describe('Converting Text to HTML', function() {
 	it("turns linebreak into break-tag", function() {
 		assert.include(HtmlTools.plainToHtml("a\nb"), "<br");
 	});
