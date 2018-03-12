@@ -41,7 +41,7 @@ Template.FAQ.onRendered(function() {
 		title.attr('id', id);
 	});
 
-	this.$('a').attr('target', '_blank');
+	this.$('a').not('[href^="#"]').attr('target', '_blank');
 
 	const hash = Router.current().params.hash;
 	if (hash) this.scrollTo(hash);
