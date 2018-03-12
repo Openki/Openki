@@ -138,7 +138,7 @@ Template.deleteEventsModal.events({
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);
-						instance.parentInstance().showModal.set(false);
+						instance.$('#deleteEventsModal').modal('hide');
 					}
 				}
 			});
