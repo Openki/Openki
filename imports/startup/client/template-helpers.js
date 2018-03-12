@@ -52,6 +52,11 @@ const helpers = {
 		if (date) return moment(date).fromNow();
 	},
 
+	weekdayShort(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('ddd');
+	},
+
 	// Strip HTML markup
 	plain(html) {
 		var div = document.createElement('div');
@@ -81,6 +86,10 @@ const helpers = {
 	disabledIfBusy() {
 		var business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
+	},
+
+	state(state) {
+		return Template.instance().state.get(state);
 	},
 
 	groupLogo(groupId) {
