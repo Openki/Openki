@@ -22,12 +22,31 @@ notificationComment.record = function(commentId) {
 	if (comment.notifyAll) {
 		body.recipients = _.pluck(course.members, 'user');
 	} else {
-		body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+		let recipients = [];
+		
+		recipients = _.pluck(course.membersWithRole('team'), 'user');
 
-		// Don't send to author
-		if (comment.userId) {
-			body.recipients = body.recipients.filter(r => r !== comment.userId);
+		// All participants in the thread are notified.
+		const threadId = comment.parentId;
+		if (threadId) {
+			const threadSelector =
+				{ $or:
+					[ { _id: threadId }
+					, { parentId: threadId }
+					]
+				};
+
+			CourseDiscussions.find(threadSelector).forEach(threadComment => {
+				recipients.push(threadComment.userId);
+			});
 		}
+
+		// Don't send to author of comment
+		if (comment.userId) {
+			recipients = recipients.filter(r => r !== comment.userId);
+		}
+
+		body.recipients = _.uniq(recipients);
 	}
 
 	body.model = 'Comment';
