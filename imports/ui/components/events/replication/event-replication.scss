@@ -47,7 +47,7 @@
 
 .replica-event-captions.highlighted .event-caption-header,
 .replica-event-captions.highlighted .event-caption-body {
-	border-color: $event-caption-border-highlighted;
+	border-color: darken($green, 25%);
 }
 
 .replicate-actions {

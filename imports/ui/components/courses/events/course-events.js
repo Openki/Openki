@@ -108,15 +108,8 @@ Template.courseEventAdd.helpers({
 	}
 });
 
-Template.courseEventAdd.onRendered(function() {
-	var instance = this;
-	var eventCaption = instance.$('.event-caption-add');
-
-	function toggleCaptionClass(e) {
-		var removeClass = e.type == 'mouseout';
-		eventCaption.toggleClass('placeholder', removeClass);
+Template.courseEventAdd.events({
+	'mouseover/mouseout .event-caption-action'(event, instance) {
+		instance.$(event.currentTarget).toggleClass('placeholder', event.type === 'mouseout');
 	}
-
-	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
-	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });

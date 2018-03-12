@@ -120,8 +120,22 @@
 </template>
 
 <template name="courseEventAdd">
-	<a class="btn btn-default" href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
-		<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-		{{mf 'course.event.edit.add'}}
-	</a>
+	<div class="event-caption-wrap">
+		<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}" title="{{mf 'course.event.edit.add'}}">
+			<div class="event-caption placeholder event-caption-action event-caption-add">
+				<div class="event-caption-header-wrap">
+					<div class="event-caption-header">
+						<span class="fa fa-map-pin"></span>
+						<div class="event-caption-pseudoborder"></div>
+					</div>
+				</div>
+				<div class="event-caption-body-wrap">
+					<div class="event-caption-body"></div>
+				</div>
+				<span class="event-caption-icon">
+					<i class="fa fa-plus fa-2x"></i>
+				</span>
+			</div>
+		</a>
+	</div>
 </template>
