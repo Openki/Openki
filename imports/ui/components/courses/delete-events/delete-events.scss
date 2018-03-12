@@ -10,6 +10,10 @@
 	width: auto;
 }
 
+.course-event-tasks > .btn + .btn {
+	@include td-margin(left, 5px);
+}
+
 .modal-body .panel {
 	margin: 0;
 }
@@ -22,8 +26,8 @@
 .delete-events-list {
 	border: 1px solid $blue-lighter;
 	max-height: 350px;
-	margin-bottom: 20px;
-	padding: 0 10px 10px;
+	margin-bottom: 15px;
+	padding: 0 10px;
 }
 
 .selected-events {

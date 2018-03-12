@@ -86,13 +86,6 @@
 							{{/each}}
 						</div>
 						<div class="delete-events-actions">
-							<button class="btn btn-default js-toggle-all">
-								{{#if state 'allEventsSelected'}}
-									{{mf 'deleteEventsModal.clearSelection' 'Clear selection'}}
-								{{else}}
-									{{mf 'deleteEventsModal.selectAll' 'Select all'}}
-								{{/if}}
-							</button>
 							<button class="btn btn-danger js-show-delete-confirm" {{disabledIfNoEventsSelected}}>
 								{{#mf KEY='deleteEventsModal.deleteEvents' NUM=numSelectedEvents}}
 									Delete {NUM, plural,
@@ -101,6 +94,13 @@
 										other {# events}
 									}
 								{{/mf}}
+							</button>
+							<button class="btn btn-default js-toggle-all">
+								{{#if state 'allEventsSelected'}}
+									{{mf 'deleteEventsModal.clearSelection' 'Clear selection'}}
+								{{else}}
+									{{mf 'deleteEventsModal.selectAll' 'Select all'}}
+								{{/if}}
 							</button>
 						</div>
 					{{/if}}
