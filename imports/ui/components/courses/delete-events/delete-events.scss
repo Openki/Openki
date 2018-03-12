@@ -10,16 +10,26 @@
 	width: auto;
 }
 
-.modal-body > .checkbox:first-child {
-	margin-top: 0;
-}
-
 .modal-body .panel {
 	margin: 0;
 }
 
+.delete-events-list,
 .selected-events {
-	margin-top: 15px;
+	overflow: auto;
+}
+
+.delete-events-list {
+	border: 1px solid $blue-lighter;
+	max-height: 350px;
+	margin-bottom: 20px;
+	padding: 0 10px 10px;
+}
+
+.selected-events {
+	max-height: 300px;
+	margin: 15px 0;
+	overflow: auto;
 }
 
 .delete-events-events-title {
