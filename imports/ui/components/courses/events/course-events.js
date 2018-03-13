@@ -18,6 +18,7 @@ Template.courseEvents.onCreated(function() {
 
 	var maxEventsShown = 4;
 	instance.showAllEvents = new ReactiveVar(false);
+	this.showModal = new ReactiveVar(false);
 
 	instance.haveEvents = function() {
 		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
@@ -70,6 +71,18 @@ Template.courseEvents.helpers({
 
 	ready: function() {
 		return Template.instance().eventSub.ready();
+	},
+
+	showModal() {
+		return Template.instance().showModal.get();
+	},
+
+	upcomingEvents() {
+		return Events.findFilter(
+			{ course: this.course._id
+			, after: minuteTime.get()
+			}
+		);
 	}
 });
 
