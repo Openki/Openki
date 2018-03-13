@@ -1,17 +1,16 @@
+.course-event-tasks {
+	position: relative;
+}
+.course-event-tasks * {
+	vertical-align: top;
+}
+
 .delete-events-details {
 	color: $gray;
 
 	&:hover {
 		color: $gray;
 	}
-}
-
-.course-event-tasks > .btn:first-child {
-	width: auto;
-}
-
-.course-event-tasks > .btn + .btn {
-	@include td-margin(left, 5px);
 }
 
 .modal-body .panel {
