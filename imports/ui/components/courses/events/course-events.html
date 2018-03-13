@@ -1,13 +1,4 @@
 <template name="courseEvents">
-	{{#if mayAdd}}
-		{{#if haveEvents}}
-			<div class="page-component course-event-tasks">
-				{{> courseEventAdd}}
-				{{> deleteCourseEvents}}
-			</div>
-		{{/if}}
-	{{/if}}
-
 	{{#if ready}}
 		{{#if haveEvents}}
 			<div class="page-component">
@@ -86,11 +77,6 @@
 					</h4>
 				</div>
 			</div>
-			{{#if mayAdd}}
-				<div class="page-component course-event-tasks">
-					{{> courseEventAdd}}
-				</div>
-			{{/if}}
 		{{/if}}
 	{{else}}
 		<div class="page-component">
@@ -101,6 +87,19 @@
 				</h4>
 			</div>
 			{{> loadingRow}}
+		</div>
+	{{/if}}
+
+
+	{{#if mayAdd}}
+		<div class="page-component course-event-tasks">
+			{{> courseEventAdd}}
+			{{#if haveEvents}}
+				{{> deleteCourseEvents}}
+			{{/if}}
+			{{#if showModal}}
+				{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+			{{/if}}
 		</div>
 	{{/if}}
 

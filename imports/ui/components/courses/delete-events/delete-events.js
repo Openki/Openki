@@ -1,29 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { AddMessage } from '/imports/api/messages/methods.js';
 
 import './delete-events.html';
-
-Template.deleteCourseEvents.onCreated(function() {
-	this.showModal = new ReactiveVar(false);
-});
-
-Template.deleteCourseEvents.helpers({
-	showModal() {
-		return Template.instance().showModal.get();
-	},
-
-	upcomingEvents() {
-		return Events.findFilter(
-			{ course: this.course._id
-			, after: minuteTime.get()
-			}
-		);
-	}
-});
 
 Template.deleteCourseEvents.events({
 	'mouseover/mouseout .js-show-events-delete-modal'(event, instance) {
@@ -33,7 +14,7 @@ Template.deleteCourseEvents.events({
 	},
 
 	'click .js-show-events-delete-modal'(event, instance) {
-		instance.showModal.set(true);
+		instance.parentInstance().showModal.set(true);
 	}
 });
 
