@@ -90,12 +90,12 @@ Template.deleteEventsModal.helpers({
 });
 
 Template.deleteEventsModal.events({
-	'hidden.bs.modal'(event, instance) {
+	'hidden.bs.modal #deleteEventsModal'(event, instance) {
 		instance.parentInstance().showModal.set(false);
 	},
 
 	'click .js-toggle-all'(event, instance) {
-		let selectedEvents;
+	let selectedEvents;
 		if (instance.state.get('allEventsSelected')) {
 			selectedEvents = [];
 		} else {
