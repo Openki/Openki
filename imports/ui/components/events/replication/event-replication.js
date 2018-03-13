@@ -191,11 +191,15 @@ Template.eventReplication.events({
 	},
 
 	'click .js-replicate-btn'(event, instance) {
+		instance.busy('saving');
+
 		const startLocal = LocalTime.fromString(instance.data.startLocal);
 		const endLocal   = LocalTime.fromString(instance.data.endLocal);
 
 		const replicaDays = instance.activeDays();
-		replicaDays.forEach((days, i) => {
+		let removed = 0;
+		let responses = 0;
+		replicaDays.forEach((days) => {
 			/*create a new event for each time interval */
 			const replicaEvent = {
 				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
@@ -214,34 +218,37 @@ Template.eventReplication.events({
 
 			// To create a new event, pass an empty Id
 			const eventId = '';
-			instance.busy('saving');
 			const args = { eventId, changes: replicaEvent };
-			Meteor.call('event.save', args, error => {
-				instance.busy(false);
+			Meteor.call('event.save', args, (error) => {
+				responses++;
 				if (error) {
-					ShowServerError('Replicating the event went wrong', error);
+					AddMessage(mf(
+						'eventReplication.errWithReason',
+						{ REASON: err.reason || 'Unknown error'
+						, START: moment(replicaEvent.startLocal).format('llll')
+						},
+						'Creating the copy on "{START}" failed: {REASON}'
+					), 'danger');
 				} else {
-					const parentInstance = instance.parentInstance();
-					parentInstance.replicating.set(false);
-					parentInstance.collapse();
+					removed++;
+				}
 
-					// print success message only if it's the last replica and
-					// condense it if multiple replicas have been created
-					if (i == replicaDays.length - 1) {
-						const fmtDate =
-							LocalTime
-							.fromString(replicaEvent.startLocal)
-							.format('LL');
-
-						const message = mf(
+				if (responses === replicaDays.length) {
+					instance.busy(false);
+					if (removed) {
+						AddMessage(mf(
 							'event.replicate.successCondensed',
-							{ TITLE: replicaEvent.title
-							, NUM: replicaDays.length
-							, DATE: fmtDate },
+							{ TITLE: instance.data.title
+							, NUM: removed
+							, DATE: moment(replicaEvent.startLocal).format('llll')
+							},
 							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}'
-						);
-
-						AddMessage(message, 'success');
+						), 'success');
+					}
+					if (removed === responses) {
+						const parentInstance = instance.parentInstance();
+						parentInstance.replicating.set(false);
+						parentInstance.collapse();
 					}
 				}
 			});
