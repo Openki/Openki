@@ -1,12 +1,4 @@
 <template name="courseEvents">
-	{{#if mayAdd}}
-		{{#if haveEvents}}
-			<div class="page-component">
-				{{> courseEventAdd}}
-			</div>
-		{{/if}}
-	{{/if}}
-
 	{{#if ready}}
 		{{#if haveEvents}}
 			<div class="page-component">
@@ -85,11 +77,6 @@
 					</h4>
 				</div>
 			</div>
-			{{#if mayAdd}}
-				<div class="page-component">
-					{{> courseEventAdd}}
-				</div>
-			{{/if}}
 		{{/if}}
 	{{else}}
 		<div class="page-component">
@@ -100,6 +87,19 @@
 				</h4>
 			</div>
 			{{> loadingRow}}
+		</div>
+	{{/if}}
+
+
+	{{#if mayAdd}}
+		<div class="page-component course-event-tasks">
+			{{> courseEventAdd}}
+			{{#if haveEvents}}
+				{{> deleteCourseEvents}}
+			{{/if}}
+			{{#if showModal}}
+				{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+			{{/if}}
 		</div>
 	{{/if}}
 
@@ -119,20 +119,22 @@
 </template>
 
 <template name="courseEventAdd">
-	<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}">
-		<div class="event-caption placeholder event-caption-add">
-			<div class="event-caption-header-wrap">
-				<div class="event-caption-header">
-					<span class="fa fa-map-pin"></span>
-					<div class="event-caption-pseudoborder"></div>
+	<div class="event-caption-wrap">
+		<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}" title="{{mf 'course.event.edit.add'}}">
+			<div class="event-caption placeholder event-caption-action event-caption-add">
+				<div class="event-caption-header-wrap">
+					<div class="event-caption-header">
+						<span class="fa fa-map-pin"></span>
+						<div class="event-caption-pseudoborder"></div>
+					</div>
 				</div>
+				<div class="event-caption-body-wrap">
+					<div class="event-caption-body"></div>
+				</div>
+				<span class="event-caption-icon">
+					<i class="fa fa-plus fa-2x"></i>
+				</span>
 			</div>
-			<div class="event-caption-body-wrap">
-				<div class="event-caption-body"></div>
-			</div>
-		</div>
-		<span class="event-caption-add-text">
-			{{mf 'course.event.edit.add'}}
-		</span>
-	</a>
+		</a>
+	</div>
 </template>
