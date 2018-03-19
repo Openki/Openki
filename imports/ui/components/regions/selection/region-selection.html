@@ -1,6 +1,6 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
-		{{#if searchingRegions}}
+		{{#if state 'searchingRegions'}}
 			<li class="navbar-form navbar-form-selection dropdown">
 				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 				{{> regionSelection}}
@@ -9,6 +9,19 @@
 			{{> regionDisplay}}
 		{{/if}}
 	{{/if}}
+</template>
+
+<template name="regionDisplay">
+	<li>
+		<a class="navbar-link js-region-display">
+			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			{{#if currentRegion}}
+				{{currentRegion.name}}
+			{{else}}
+				{{mf 'menue.All regions' 'All regions'}}
+			{{/if}}
+		</a>
+	</li>
 </template>
 
 <template name="regionSelection">
@@ -41,7 +54,7 @@
 						</span>
 					</div>
 					{{mf 'menue.All regions' 'All regions'}}
-					{{#if currentRegion}}
+					{{#if isCurrentRegion}}
 						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
@@ -84,21 +97,8 @@
 				</span>
 			</div>
 			{{regionNameMarked}}
-			{{#if currentRegion}}
+			{{#if isCurrentRegion}}
 				<span class="checkmark glyphicon glyphicon-ok"></span>
-			{{/if}}
-		</a>
-	</li>
-</template>
-
-<template name="regionDisplay">
-	<li>
-		<a class="navbar-link js-region-display">
-			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{#if region}}
-				{{region.name}}
-			{{else}}
-				{{mf 'menue.All regions' 'All regions'}}
 			{{/if}}
 		</a>
 	</li>

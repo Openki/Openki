@@ -1,9 +1,7 @@
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import Regions from '/imports/api/regions/regions.js';
 import RegionSelection from '/imports/utils/region-selection.js';
@@ -12,58 +10,50 @@ import StringTools from '/imports/utils/string-tools.js';
 
 import './region-selection.html';
 
-Template.regionSelectionWrap.created = function() {
-	var instance = this;
-	instance.subscribe("Regions");
-	instance.searchingRegions = new ReactiveVar(false);
-};
-
-Template.regionSelectionWrap.helpers({
-	searchingRegions: function() {
-		return Template.instance().searchingRegions.get();
-	}
+Template.regionSelectionWrap.onCreated(function() {
+	this.subscribe('Regions');
+	this.state = new ReactiveDict();
+	this.state.setDefault('searchingRegions', false);
 });
 
 Template.regionDisplay.helpers({
-	region: function() {
+	currentRegion() {
 		return Regions.findOne(Session.get('region'));
 	}
 });
 
 Template.regionDisplay.events({
-	'click .js-region-display': function(event, instance) {
-		instance.parentInstance().searchingRegions.set(true);
+	'click .js-region-display'(event, instance) {
+		instance.parentInstance().state.set('searchingRegions', true);
 	}
 });
 
 Template.regionSelection.onCreated(function() {
-	var instance = this;
-
 	this.state = new ReactiveDict();
 	this.state.setDefault(
-		{ showAllRegions: false }
+		{ showAllRegions: false
+		, search: ''
+		}
 	);
 
-	instance.regionSearch = new ReactiveVar('');
-
 	this.autorun(() => {
-		const search = this.regionSearch.get();
+		const search = this.state.get('search');
 		this.state.set('showAllRegions', search !== '');
 	});
 
 	this.regions = (active = true) => {
 		const query =  { futureEventCount: active ? { $gt: 0 } : { $eq: 0 } };
-		const search = this.regionSearch.get();
+		const search = this.state.get('search');
 		if (search !== '') query.name = new RegExp(search, 'i');
 
 		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
 	};
 
-	instance.changeRegion = function(regionId) {
-		var changed = !Session.equals('region', regionId);
+	this.changeRegion = (regionId) => {
+		const changed = !Session.equals('region', regionId);
 
 		try {
-			localStorage.setItem("region", regionId); // to survive page reload
+			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
 			console.error(e);
 		}
@@ -77,33 +67,35 @@ Template.regionSelection.onCreated(function() {
 		// Many pages do not change when the region changed, so we go to
 		// the homepage for those
 		if (changed) {
-			var routeName = Router.current().route.getName();
+			const routeName = Router.current().route.getName();
 			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) Router.go('/');
 		}
-		instance.close();
+		this.close();
 	};
 
 	// create a function to toggle displaying the regionSelection
 	// only if it is placed inside a wrap
-	instance.close = function() {
-		var searchingRegions = instance.parentInstance().searchingRegions;
-		if (searchingRegions) {	searchingRegions.set(false); }
+	this.close = () => {
+		const parentState = this.parentInstance().state;
+		if (parentState.get('searchingRegions')) {
+			parentState.set('searchingRegions', false);
+		}
 	};
 });
 
 Template.regionSelection.helpers({
-	regions: function() {
+	regions() {
 		return Template.instance().regions();
 	},
 
-	allCourses: function() {
-		return _.reduce(Regions.find().fetch(), function(acc, region) {
+	allCourses() {
+		return Regions.find().fetch().reduce((acc, region) => {
 			return acc + region.courseCount;
 		}, 0);
 	},
 
-	allUpcomingEvents: function() {
-		return _.reduce(Regions.find().fetch(), function(acc, region) {
+	allUpcomingEvents() {
+		return Regions.find().fetch().reduce((acc, region) => {
 			return acc + region.futureEventCount;
 		}, 0);
 	},
@@ -114,14 +106,14 @@ Template.regionSelection.helpers({
 });
 
 Template.regionSelection.events({
-	'click .js-region-link': function(event, instance) {
+	'click .js-region-link'(event, instance) {
 		event.preventDefault();
-		var regionId = this._id ? this._id : 'all';
+		const regionId = this._id ? this._id : 'all';
 		instance.changeRegion(regionId);
 	},
 
-	'mouseover, mouseout, focusin, focusout .js-region-link': function(e) {
-		var id = this._id;
+	'mouseover/mouseout/focusin/focusout .js-region-link'(e) {
+		const id = this._id;
 		if (id && Session.equals('region', 'all')) {
 			FilterPreview({
 				property: 'region',
@@ -131,20 +123,18 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search': function(e, instance) {
-		var search = instance.$('.js-region-search').val();
-		search = String(search).trim();
-
-		instance.regionSearch.set(search);
+	'keyup .js-region-search'(e, instance) {
+		const search = String(instance.$('.js-region-search').val()).trim();
+		instance.state.set({ search });
 	},
 
-	'submit .js-region-search-form': function(event, instance) {
+	'submit .js-region-search-form'(event, instance) {
 		event.preventDefault();
 		instance.$('.dropdown-toggle').dropdown('toggle');
-		if (instance.regionSearch.get() === '') {
+		if (instance.state.get('search') === '') {
 			instance.close();
 		} else {
-			var selectedRegion = instance.regions().fetch()[0];
+			const selectedRegion = instance.regions().fetch()[0];
 			if (selectedRegion) {
 				instance.changeRegion(selectedRegion._id);
 			} else {
@@ -153,7 +143,7 @@ Template.regionSelection.events({
 		}
 	},
 
-	'focus .js-region-search': function(event, instance) {
+	'focus .js-region-search'(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
@@ -171,15 +161,12 @@ Template.regionSelection.onRendered(function() {
 });
 
 Template.regionSelectionItem.helpers({
-	regionNameMarked: function() {
-		var search = Template.instance().parentInstance().regionSearch.get();
-		var name = this.name;
-
-		return StringTools.markedName(search, name);
+	regionNameMarked() {
+		const search = Template.instance().parentInstance().state.get('search');
+		return StringTools.markedName(search, this.name);
 	},
 
-	currentRegion: function() {
-		var region = this._id || "all";
-		return Session.equals('region', region);
+	isCurrentRegion() {
+		return Session.equals('region', this._id || 'all');
 	}
 });
