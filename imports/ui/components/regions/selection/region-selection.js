@@ -1,4 +1,5 @@
 import { Session } from 'meteor/session';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -38,15 +39,24 @@ Template.regionDisplay.events({
 Template.regionSelection.onCreated(function() {
 	var instance = this;
 
+	this.state = new ReactiveDict();
+	this.state.setDefault(
+		{ showAllRegions: false }
+	);
+
 	instance.regionSearch = new ReactiveVar('');
 
-	instance.regions = function() {
-		var search = instance.regionSearch.get();
-		var query = {};
-		if (search !== '') query = { name: new RegExp(search, 'i') };
-		var options = { sort: {futureEventCount: -1} };
+	this.autorun(() => {
+		const search = this.regionSearch.get();
+		this.state.set('showAllRegions', search !== '');
+	});
 
-		return Regions.find(query, options);
+	this.regions = (active = true) => {
+		const query =  { futureEventCount: active ? { $gt: 0 } : { $eq: 0 } };
+		const search = this.regionSearch.get();
+		if (search !== '') query.name = new RegExp(search, 'i');
+
+		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
 	};
 
 	instance.changeRegion = function(regionId) {
@@ -86,16 +96,6 @@ Template.regionSelection.helpers({
 		return Template.instance().regions();
 	},
 
-	regionNameMarked: function() {
-		var search = Template.instance().regionSearch.get();
-		var name = this.name;
-		return StringTools.markedName(search, name);
-	},
-
-	region: function() {
-		return Regions.findOne(Session.get('region'));
-	},
-
 	allCourses: function() {
 		return _.reduce(Regions.find().fetch(), function(acc, region) {
 			return acc + region.courseCount;
@@ -108,9 +108,8 @@ Template.regionSelection.helpers({
 		}, 0);
 	},
 
-	currentRegion: function() {
-		var region = this._id || "all";
-		return Session.equals('region', region);
+	inactiveRegions() {
+		return Template.instance().regions(false);
 	}
 });
 
@@ -157,6 +156,10 @@ Template.regionSelection.events({
 	'focus .js-region-search': function(event, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
+
+	'click .js-show-all-regions'(event, instance) {
+		instance.state.set('showAllRegions', true);
+	}
 });
 
 Template.regionSelection.onRendered(function() {
@@ -165,4 +168,18 @@ Template.regionSelection.onRendered(function() {
 	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
 		this.close();
 	});
+});
+
+Template.regionSelectionItem.helpers({
+	regionNameMarked: function() {
+		var search = Template.instance().parentInstance().regionSearch.get();
+		var name = this.name;
+
+		return StringTools.markedName(search, name);
+	},
+
+	currentRegion: function() {
+		var region = this._id || "all";
+		return Session.equals('region', region);
+	}
 });

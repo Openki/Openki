@@ -46,30 +46,49 @@
 					{{/if}}
 				</a>
 			</li>
-			{{#each regions}}
-				<li>
-					<a href="#" class="js-region-link js-nav-dropdown-close">
-						<div class="region-badges">
-							<span
-								class="badge badge-courses"
-								title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
-								{{courseCount}}
-							</span>
-							<span
-								class="badge badge-events"
-								title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
-								{{futureEventCount}}
-							</span>
-						</div>
-						{{regionNameMarked}}
-						{{#if currentRegion}}
-							<span class="checkmark glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</a>
-				</li>
+			{{#each region in regions}}
+				{{> regionSelectionItem region}}
 			{{/each}}
+			{{#if inactiveRegions.count}}
+				{{#if state 'showAllRegions'}}
+					{{#each region in inactiveRegions}}
+						{{> regionSelectionItem region}}
+					{{/each}}
+				{{else}}
+					<li class="divider" role="separator"></li>
+					<li>
+						<button class="btn-link js-show-all-regions" type="button">
+							<i class="fa fa-fw fa-list" aria-hidden="true"></i>
+							{{mf 'regionSelection.showAll' 'Show all regions'}}
+						</button>
+					</li>
+				{{/if}}
+			{{/if}}
 		</ul>
 	</form>
+</template>
+
+<template name="regionSelectionItem">
+	<li>
+		<a href="#" class="js-region-link js-nav-dropdown-close">
+			<div class="region-badges">
+				<span
+					class="badge badge-courses"
+					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+					{{courseCount}}
+				</span>
+				<span
+					class="badge badge-events"
+					title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+					{{futureEventCount}}
+				</span>
+			</div>
+			{{regionNameMarked}}
+			{{#if currentRegion}}
+				<span class="checkmark glyphicon glyphicon-ok"></span>
+			{{/if}}
+		</a>
+	</li>
 </template>
 
 <template name="regionDisplay">
