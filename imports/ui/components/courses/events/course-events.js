@@ -6,6 +6,7 @@ import Events from '/imports/api/events/events.js';
 
 import '/imports/ui/components/events/list/event-list.js';
 import '/imports/ui/components/loading/loading.js';
+import '../delete-events/delete-events.js';
 
 import './course-events.html';
 
@@ -17,6 +18,7 @@ Template.courseEvents.onCreated(function() {
 
 	var maxEventsShown = 4;
 	instance.showAllEvents = new ReactiveVar(false);
+	this.showModal = new ReactiveVar(false);
 
 	instance.haveEvents = function() {
 		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
@@ -69,6 +71,18 @@ Template.courseEvents.helpers({
 
 	ready: function() {
 		return Template.instance().eventSub.ready();
+	},
+
+	showModal() {
+		return Template.instance().showModal.get();
+	},
+
+	upcomingEvents() {
+		return Events.findFilter(
+			{ course: this.course._id
+			, after: minuteTime.get()
+			}
+		);
 	}
 });
 
@@ -107,15 +121,8 @@ Template.courseEventAdd.helpers({
 	}
 });
 
-Template.courseEventAdd.onRendered(function() {
-	var instance = this;
-	var eventCaption = instance.$('.event-caption-add');
-
-	function toggleCaptionClass(e) {
-		var removeClass = e.type == 'mouseout';
-		eventCaption.toggleClass('placeholder', removeClass);
+Template.courseEventAdd.events({
+	'mouseover/mouseout .event-caption-action'(event, instance) {
+		instance.$(event.currentTarget).toggleClass('placeholder', event.type === 'mouseout');
 	}
-
-	eventCaption.on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
-	instance.$('.event-caption-add-text').on('mouseover mouseout', function(e) { toggleCaptionClass(e); });
 });
