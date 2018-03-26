@@ -14,7 +14,7 @@ Template.courseEvents.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
 
-	instance.eventSub = subs.subscribe('eventsForCourse', courseId);
+	instance.eventSub = instance.subscribe('eventsForCourse', courseId);
 
 	var maxEventsShown = 4;
 	instance.showAllEvents = new ReactiveVar(false);

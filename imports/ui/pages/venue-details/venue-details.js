@@ -51,7 +51,7 @@ Template.venueDetails.onCreated(function() {
 
 	this.autorun(function() {
 		if (!isNew) {
-			subs.subscribe('Events.findFilter', { venue: instance.data.venue._id });
+			instance.subscribe('Events.findFilter', { venue: instance.data.venue._id });
 		}
 	});
 
