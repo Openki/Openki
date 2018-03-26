@@ -39,9 +39,24 @@
 			role="button">
 		</span>
 		<ul class="dropdown-menu" role="menu">
+			<li class="dropdown-header dropdown-legend">
+				<div class="dropdown-addon-right">
+					<span
+						class="badge badge-courses"
+						title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
+						# <i class="fa fa-circle"></i>
+					</span>
+					<span
+						class="badge badge-events"
+						title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
+						# <i class="fa fa-calendar"></i>
+					</span>
+				</div>
+				{{mf 'regionSelection.legend.region' 'Region'}}
+			</li>
 			<li>
 				<a class="js-region-link js-nav-dropdown-close" href="#">
-					<div class="region-badges">
+					<div class="dropdown-addon-right">
 						<span
 							class="badge badge-courses"
 							title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
@@ -84,7 +99,7 @@
 <template name="regionSelectionItem">
 	<li>
 		<a href="#" class="js-region-link js-nav-dropdown-close">
-			<div class="region-badges">
+			<div class="dropdown-addon-right">
 				<span
 					class="badge badge-courses"
 					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
