@@ -29,12 +29,6 @@ Router.onBeforeAction(function() {
 	this.next();
 });
 
-// We keep two subscription caches around. One is for the regular subscriptions like list of courses,
-// the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsCache({ cacheLimit: 5, expireAfter: 1 });
-miniSubs = new SubsCache({ cacheLimit: 50, expireAfter: 1 });
-
-
 // Try to guess a sensible language
 Meteor.startup(function() {
 	var useLocale = function(lang) {

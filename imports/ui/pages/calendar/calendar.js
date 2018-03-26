@@ -42,7 +42,7 @@ Template.calendar.onCreated(function() {
 		var limit = filter.get('start').add(1, 'week').toDate();
 
 		filterQuery.period = [start, limit];
-		instance.eventSub = subs.subscribe('Events.findFilter', filterQuery);
+		instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
 
 	});
 });

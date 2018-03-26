@@ -56,7 +56,7 @@ Template.showLog.onCreated(function() {
 		// Have some extra log entries ready so that they are shown immediately
 		// when more are demanded
 		const overLimit = instance.limit.get() + batchLoad + 1;
-		subs.subscribe('log', filterQuery, overLimit, function() {
+		instance.subscribe('log', filterQuery, overLimit, function() {
 			instance.ready.set(true);
 		});
 	});

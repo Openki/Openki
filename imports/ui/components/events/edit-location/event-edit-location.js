@@ -102,7 +102,7 @@ Template.eventEditVenue.onCreated(function() {
 		}
 		var localQuery = _.extend(query, { recent: false } ); // We dont have recent events loaded on the client
 
-		subs.subscribe('Venues.findFilter', query, 10);
+		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			'added': function(location) {
 				location.proposed = true;
