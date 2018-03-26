@@ -1,9 +1,3 @@
-.region-badges {
-	display: inline-block;
-	@include td-float(right);
-	@include td-padding(left, 10px);
-}
-
 .badge-courses {
 	background-color: $brand-primary;
 }
@@ -13,4 +7,12 @@
 
 	background-color: $background-color;
 	color: desaturate(darken($background-color, 40%), 50%)
+}
+
+.dropdown-legend .badge-courses {
+	border: 1px solid $brand-primary;
+}
+
+.dropdown-legend .badge-events {
+	border: 1px solid $brand-success;
 }
