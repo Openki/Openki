@@ -144,11 +144,16 @@ Template.regionSelection.events({
 	},
 
 	'focus .js-region-search'(event, instance) {
+		const focusTriggered = instance.focusTriggered;
+		if (focusTriggered) return;
+
 		instance.$('.dropdown-toggle').dropdown('toggle');
+		instance.focusTriggered = true;
 	},
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
+		instance.$('.js-region-search').select();
 	}
 });
 

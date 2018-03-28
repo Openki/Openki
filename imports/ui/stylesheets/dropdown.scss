@@ -66,8 +66,3 @@ $dropdown-legend-color: $brand-primary;
 	color: $dropdown-legend-color;
 	@include td-text-align(left);
 }
-
-.dropdown-legend .badge {
-	background-color: transparent;
-	color: $dropdown-legend-color;
-}
