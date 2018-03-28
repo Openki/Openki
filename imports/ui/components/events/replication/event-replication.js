@@ -164,16 +164,6 @@ const getEventFrequency = instance => {
 
 
 Template.eventReplication.events({
-	'changeDate .js-replicate-date'(event, instance) {
-		const targetID = event.target.id;
-		const date = event.date;
-		if (targetID === 'replicateStart') {
-			instance.replicateStartDate.set(date);
-		} else if (targetID === 'replicateEnd') {
-			instance.replicateEndDate.set(date);
-		}
-	},
-
 	'changeDate .js-replicate-datepick'(event, instance) {
 		pickDays = event.dates;
 
