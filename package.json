@@ -1,28 +1,40 @@
 {
   "name": "openki",
-  "version": "0.5.1",
+  "version": "0.7.0",
   "description": "CourseOragnisationPlatform",
   "main": "server/start.js",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.39",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^0.8.7",
     "bson": "^0.5.6",
-    "moment-timezone": "^0.5.11"
+    "core-js": "^2.5.3",
+    "events": "^1.1.1",
+    "ical-generator": "^0.2.10",
+    "isomorphic-unfetch": "^2.0.0",
+    "meteor-node-stubs": "^0.2.11",
+    "moment-timezone": "^0.5.14",
+    "sanitize-html": "1.14.1",
+    "seedrandom": "^2.4.3",
+    "shariff": "^1.26.2",
+    "url": "^0.11.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "jshint": "^2.9.5",
+    "nightmare": "^3.0.0",
     "phantomjs-prebuilt": "^2.1.15",
     "sass-lint": "^1.11.1",
     "selenium-webdriver": "3.0.0-beta-2"
   },
   "scripts": {
-    "dev": "meteor --settings settings.dev.json --extra-packages fixture",
-    "test": "bin/test",
-    "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --once --driver-package meteortesting:mocha",
-    "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --settings settings.ci.json --extra-packages fixtures --full-app --once --driver-package meteortesting:mocha",
+    "dev": "meteor --settings settings/dev.json",
+    "test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
+    "app-test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
+    "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
     "js-lint": "jshint",
     "sass-lint": "sass-lint --verbose"
   },

@@ -1,0 +1,90 @@
+<template name="groupDetails">
+	<div class="container">
+		{{#if isNew}}
+			<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
+		{{/if}}
+		<div class="page-component group-details">
+			<div class="group-details-titlebar">
+				{{mf 'group.details.group' 'Group'}}
+				{{#if isFeatured}}
+					<i
+						alt={{mf 'group.details.isFeatured' 'This group is featured'}}
+						aria-hidden="true"
+						class="fa fa-fw fa-star"></i>
+				{{/if}}
+				<span
+					class="titlebar-btn js-group-remove-filter"
+					data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
+					<i class="fa fa-remove" aria-hidden="true"></i>
+				</span>
+				{{#if mayEdit}}
+					<span
+						class="titlebar-btn js-group-settings"
+						data-tooltip="{{mf 'group.settings.title'}}">
+						<i class="fa fa-cog" aria-hidden="true"></i>
+					</span>
+				{{/if}}
+			</div>
+			<div
+				class="details-header group-details-header {{headerClasses}}">
+				{{#if groupLogo group._id}}
+					<div class="group-details-logo">
+						<img src="{{groupLogo group._id}}">
+					</div>
+				{{/if}}
+				<div class="group-details-name">
+					{{#if editableName}}
+						{{>editable editableName}}
+					{{else}}
+						{{group.name}}
+					{{/if}}
+				</div>
+				<div class="group-details-short">
+					{{#if editableShort}}
+						{{> editable editableShort}}
+					{{else}}
+						({{group.short}})
+					{{/if}}
+				</div>
+			</div>
+			{{#if hasContent}}
+				<div class="details-body group-details-body">
+					<div class="details-content group-details-content">
+						{{#if editableClaim}}
+							<div class="group-details-claim">
+								{{> editable editableClaim}}
+							</div>
+						{{else}}
+							{{#if group.claim}}
+								<div class="group-details-claim">
+									{{group.claim}}
+								</div>
+							{{/if}}
+						{{/if}}
+						{{#if editableDescription}}
+							<div class="group-details-description is-editable">
+								{{> editable editableDescription}}
+							</div>
+						{{else}}
+							<div class="group-details-description">
+								{{{group.description}}}
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			{{/if}}
+			{{#if isNew}}
+				<div class="actions">
+					{{> buttonSave event="js-group-save" saving=saving}}
+					{{> buttonCancel event="js-group-cancel"}}
+				</div>
+			{{/if}}
+			{{#if editingSettings}}
+				{{> groupSettings}}
+			{{/if}}
+		</div>
+		{{#if showCourses}}
+			{{> find courseQuery}}
+		{{/if}}
+	</div>
+</template>

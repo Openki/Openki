@@ -1,0 +1,72 @@
+.find-header {
+	@include make-row;
+}
+
+.find-header-heading {
+	@include make-xs-column(12);
+}
+
+$find-search-column-md: 7.5;
+
+.find-header-search {
+	@include td-make-sm-column(6);
+	@include td-make-md-column($find-search-column-md);
+}
+
+.filter-expanded > .find-header-search {
+	@include make-xs-column(12);
+}
+
+.find-header-filter {
+	@include td-make-sm-column(6);
+	@include td-make-md-column(12 - $find-search-column-md);
+}
+
+.filter-expanded > .find-header-filter {
+	@include make-xs-column(12);
+	margin-bottom: 15px;
+}
+
+.find-heading {
+	color: $blue;
+	margin-top: 0;
+
+	@media (max-width: $screen-xs-max) {
+		font-size: x-large;
+		margin: 0 0 10px;
+	}
+}
+
+.js-search-field {
+	width: 100%;
+
+	@media (min-width: $screen-md-min) {
+		max-width: 500px;
+	}
+}
+
+.js-search-input {
+	font-size: large;
+}
+
+.no-results {
+	font-size: large;
+	max-width: 400px;
+}
+
+.no-results-body > .fa-exclamation-circle {
+	color: $brand-warning;
+}
+
+.no-results > .btn-group {
+	margin-top: 10px;
+}
+
+.filter-no-match,
+.filter-no-match-delayed {
+	opacity: .33;
+}
+
+.show-more-courses {
+	text-align: center;
+}

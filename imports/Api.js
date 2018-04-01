@@ -1,24 +1,30 @@
+import Courses from '/imports/api/courses/courses.js';
+import Events from '/imports/api/events/events.js';
+import Groups from '/imports/api/groups/groups.js';
+import Venues from '/imports/api/venues/venues.js';
+
+const apiResponse = function(collection, formatter) {
+	return (filter, limit, skip, sort) => {
+		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
+		return collection.findFilter(query, limit, skip, sort).map(formatter);
+	};
+};
+
 export default Api =
 	{ groups:
-		(filter) => {
-			var groupQuery = Filtering(GroupPredicates).readAndValidate(filter).done().toQuery();
-			return GroupLib.find(groupQuery).map(group => {
+		apiResponse(Groups, group => {
 				group.link = Router.url('groupDetails', group);
 				return group;
-			});
-		}
+			}
+		)
 	, venues:
-		(filter) => {
-			var venueQuery = Filtering(VenuePredicates).readAndValidate(filter).done().toQuery();
-			return Venues.find(venueQuery).map(venue => {
+		apiResponse(Venues, venue => {
 				venue.link = Router.url('venueDetails', venue);
 				return venue;
-			});
-		}
+			}
+		)
 	, events:
-		(filter) => {
-			var eventQuery = Filtering(EventPredicates).readAndValidate(filter).done().toQuery();
-			return eventsFind(eventQuery).map(ev => {
+		apiResponse(Events, ev => {
 				var evr =
 					{ id: ev._id
 					, title: ev.title
@@ -32,6 +38,14 @@ export default Api =
 					, internal: ev.internal
 					, room: ev.room
 					};
+
+				const creator = Meteor.users.findOne(ev.createdBy);
+				if (creator) {
+					evr.createdBy =
+						{ id: creator._id
+						, name: creator.username
+						};
+				}
 
 				if (ev.venue) {
 					evr.venue =
@@ -69,6 +83,6 @@ export default Api =
 				}
 
 				return evr;
-			});
-		}
+			}
+		)
 	};

@@ -1,0 +1,57 @@
+<template name="frameCourselist">
+	<style type="text/css">
+		{{#each cssRule in cssRules}}
+			{{cssRule}}
+		{{/each}}
+	</style>
+
+	{{#each course in courses}}
+		{{> frameCourselistCourse course}}
+	{{/each}}
+	{{#unless ready}}
+		{{> loadingRow}}
+	{{/unless}}
+	{{#if moreCourses}}
+		<div class="show-more">
+			<button
+				id="showMoreCourses"
+				class="btn btn-default"
+				type="button">
+				{{mf 'frame.courselist.showMore' 'Show more courses'}}
+			</button>
+		</div>
+	{{/if}}
+</template>
+
+<template name="frameCourselistCourse">
+	<div class="frame-list-item">
+		<h4 class="frame-list-item-header js-toggle-course-details">
+			<span class="frame-list-item-toggle-indicator">
+				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
+			</span>
+			{{name}}
+			{{#if allRegions}}
+				<span class="badge frame-list-item-region">
+					{{regionOf this}}
+				</span>
+			{{/if}}
+		</h4>
+		{{#if expanded}}
+			<div class="frame-list-item-body">
+				<div class="frame-list-item-property frame-list-item-description">
+					<div class="frame-list-item-label">
+						{{mf 'frame.eventsList.description'}}
+					</div>
+					<div class="frame-list-item-content">
+						{{{description}}}
+					</div>
+				</div>
+				<div class="frame-list-item-links">
+					<a class="btn" href="{{pathFor 'showCourse'}}" target="_blank">
+						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on openki.net'}}
+					</a>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</template>

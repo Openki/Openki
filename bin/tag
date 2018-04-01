@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+version=$(python3 -c "import sys, json; print(json.load(sys.stdin)['version'])" < package.json)
+tag="v$version"
+git tag -a "$tag"
+git push origin "$tag"

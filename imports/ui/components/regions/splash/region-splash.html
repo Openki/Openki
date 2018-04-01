@@ -1,0 +1,42 @@
+<template name="regionSplash">
+	<div class="modal regions-splash" tabindex="-1" role="dialog" id="regionSplash">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close"
+					        type="button"
+					        data-dismiss="modal"
+					        aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">
+						{{#mf KEY='regionsSplash.welcome' SITE=siteName}}
+							Welcome to {SITE}!
+						{{/mf}}
+					</h4>
+				</div>
+				<div class="modal-body">
+					<h4 class="regions-splash-header">
+						<i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>
+						{{mf 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
+					</h4>
+					<div class="regions-splash-selection">
+						{{> regionSelection isSplash=true}}
+						<button
+							class="btn btn-primary"
+							type="button"
+							id="confirmRegion">
+							{{mf 'regionSplash.ok' 'Go!'}}
+						</button>
+					</div>
+					<div class="regions-splash-login">
+						<button id="loginForRegion" class="btn-link" type="button">
+							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
+							{{mf 'regionsSplash.login' 'Log in to use your last selected region'}}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

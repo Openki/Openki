@@ -1,0 +1,8 @@
+.course-list {
+	@include make-row(15px);
+	padding-bottom: 10px;
+
+	@media (min-width: $screen-xsm) {
+		@include make-row(7.5px);
+	}
+}

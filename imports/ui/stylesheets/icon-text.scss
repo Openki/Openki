@@ -1,0 +1,18 @@
+.icon-text {
+	display: table;
+}
+
+.icon-text-icon,
+.icon-text-text {
+	display: table-cell;
+	@include td-text-align(left);
+	vertical-align: top;
+}
+
+.icon-text-icon {
+	padding-right: 3px;
+}
+
+.icon-text-icon > i {
+	color: $brand-primary;
+}

@@ -1,0 +1,21 @@
+%actions {
+	@include td-text-align(right);
+}
+
+%actions .btn + .btn {
+	@include td-margin(left, 5px);
+}
+
+.actions {
+	@extend %actions;
+	background-color: $gray-lightest;
+	border-color: darken($gray-lightest, 3%);
+	border-style: solid;
+	border-width: 1px;
+	padding: 10px;
+}
+
+.form-actions {
+	@extend %actions;
+	margin-bottom: $form-group-margin-bottom;
+}

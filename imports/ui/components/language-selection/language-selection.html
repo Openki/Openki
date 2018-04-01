@@ -1,0 +1,65 @@
+<template name="languageSelectionWrap">
+	{{#if searchingLanguages}}
+		{{> languageSelection}}
+	{{else}}
+		{{> languageDisplay}}
+	{{/if}}
+</template>
+
+<template name="languageSelection">
+	<li class="navbar-form navbar-form-selection dropdown">
+		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
+		<input type="text" class="form-control js-language-search"
+			value="{{setLanguage.name}}">
+		<span class="dropdown-toggle"
+			data-toggle="dropdown"
+			role="button"
+			aria-expanded="false">
+		</span>
+		<ul class="dropdown-menu" role="menu">
+			{{#if languages}}
+				<li class="dropdown-header dropdown-legend">
+					<span class="dropdown-addon-right">
+						{{mf 'languageSelection.legend.percTranslated' '% translated'}}
+					</span>
+					{{mf 'languageSelection.legend.language' 'Language'}}
+				</li>
+				{{#each languages}}
+					<li>
+						<a href="#" class="js-language-link js-nav-dropdown-close" title="{{english}}">
+							<span class="language-translated {{translated.rating}}">
+								{{translated.percent}}
+							</span>
+							<div class="language-name">
+								{{languageNameMarked}}
+							</div>
+							{{#if currentLanguage}}
+								<span class="checkmark glyphicon glyphicon-ok"></span>
+							{{/if}}
+						</a>
+					</li>
+				{{/each}}
+			{{else}}
+				<li>
+					<a>{{mf 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
+				</li>
+			{{/if}}
+			<li role="seperator" class="divider"></li>
+			<li>
+				<a href="{{pathFor 'mfTrans'}}">
+					<i class="fa fa-fw fa-language" aria-hidden="true"></i>
+					{{mf 'Profile.translate_this_page'}}
+				</a>
+			</li>
+		</ul>
+	</li>
+</template>
+
+<template name="languageDisplay">
+	<li>
+		<a class="navbar-link js-language-display">
+			<span class="fa fa-language fa-fw" aria-hidden="true"></span>
+			{{setLanguage.short}}
+		</a>
+	</li>
+</template>

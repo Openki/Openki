@@ -1,5 +1,7 @@
-import '/imports/LocalTime.js';
-import '/imports/collections/Log.js';
+import LocalTime from '/imports/utils/local-time.js';
+import Log from '/imports/api/log/log.js';
+import Events from '/imports/api/events/events.js';
+import Regions from '/imports/api/regions/regions.js';
 
 var updateName = '2017.03.20 localFutureDates';
 
@@ -52,7 +54,7 @@ UpdatesAvailable[updateName] = function() {
 	});
 
 	// Update calculated fields so they include the startLocal field.
-	Meteor.call('updateNextEvent', {});
+	Meteor.call('course.updateNextEvent', {});
 
 	return count;
 };

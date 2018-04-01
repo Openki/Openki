@@ -1,0 +1,96 @@
+.navbar .navbar-nav > .open > .login-dropdown,
+.navbar .navbar-nav > .dropdown > .login-dropdown {
+	@media (min-width: $screen-sm) {
+		min-width: 300px;
+	}
+}
+
+.user-frame {
+	@media (max-width: $grid-float-breakpoint) {
+		@include clearfix;
+		background-color: $dropdown-bg;
+		padding-top: 15px;
+	}
+}
+
+.ownuser-frame {
+	padding: 0 ($grid-gutter-width / 2);
+}
+
+.ownuser-frame-welcome {
+	font-size: $font-size-h3;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.login {
+	padding-top: 10px;
+}
+
+.account-tasks .help-block {
+	margin-bottom: 0;
+}
+
+.forgot-pwd-btn-container {
+	@include td-text-align(right);
+}
+
+.forgot-pwd-btn-container > .btn-link {
+	$color: $blue;
+
+	color: $color;
+	@include td-text-align(left);
+	white-space: normal;
+	width: 100%;
+
+	&:hover {
+		color: darken($color, 20%)
+	}
+
+	@media (min-width: $screen-xs-min) {
+		@include td-text-align(right);
+	}
+}
+
+.login hr {
+	border-top: 1px solid lighten($gray-lighter, 10%);
+	margin: 15px 0;
+}
+
+.js-oauth-btn {
+	font-weight: bold;
+}
+
+.js-oauth-btn + .js-oauth-btn {
+	margin-top: 10px;
+}
+
+$external-servies: (
+  google: #4285f4,
+  facebook: #3b5998,
+  github: #333
+);
+
+@each $service, $color in $external-servies {
+	.btn-#{$service} {
+		@include button-variant($white, $color, darken($color, 5%));
+
+		&[disabled] {
+			background-color: $color;
+		}
+	}
+}
+
+.register-mail-disclaimer {
+	background-color: rgba($brand-warning, .25);
+	border: 1px solid $brand-warning;
+	border-radius: 4px;
+	margin-top: 7.5px;
+	padding: 10px;
+}
+
+
+.forgot-pwd-mail-info {
+	display: inline-block;
+	margin-top: -10px;
+}

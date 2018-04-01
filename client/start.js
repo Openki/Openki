@@ -1,5 +1,13 @@
-import "/imports/startup/client/clientError.js"
-import "/imports/RegionSelection.js";
+import '/imports/startup/both';
+import '/imports/startup/client';
+import RegionSelection from '/imports/utils/region-selection.js';
+import Introduction from '/imports/ui/lib/introduction.js';
+import UpdateViewport from '/imports/ui/lib/update-viewport.js';
+import UrlTools from '/imports/utils/url-tools.js';
+import { AddMessage } from '/imports/api/messages/methods.js';
+import ShowServerError from '/imports/ui/lib/show-server-error.js';
+
+import Languages from '/imports/api/languages/languages.js';
 
 ////////////// db-subscriptions:
 
@@ -20,18 +28,6 @@ Router.onBeforeAction(function() {
 
 	this.next();
 });
-
-// Store routeName to be able to refer to previous route
-Router.onStop(function() {
-	var route = Router.current().route;
-	if (route) Session.set('previousRouteName', route.getName());
-});
-
-// We keep two subscription caches around. One is for the regular subscriptions like list of courses,
-// the other (miniSubs) is for the name lookups we do all over the place.
-subs = new SubsCache({ cacheLimit: 5, expireAfter: 1 });
-miniSubs = new SubsCache({ cacheLimit: 50, expireAfter: 1 });
-
 
 // Try to guess a sensible language
 Meteor.startup(function() {
@@ -120,9 +116,9 @@ Meteor.startup(function() {
 });
 
 Meteor.startup(RegionSelection.init);
-Meteor.startup(Assistant.init);
+Meteor.startup(Introduction.init);
 
-Meteor.startup(getViewportWidth);
+Meteor.startup(UpdateViewport);
 
 Accounts.onLogin(function() {
 	var user = Meteor.user();
@@ -135,9 +131,9 @@ Accounts.onEmailVerificationLink(function(token, done) {
 	Router.go('profile');
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			showServerError('Address could not be verified', error);
+			ShowServerError('Address could not be verified', error);
 		} else {
-			addMessage(mf("email.verified", "Email verified."), 'success');
+			AddMessage(mf("email.verified", "Email verified."), 'success');
 		}
 	});
 });
