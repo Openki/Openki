@@ -1,0 +1,1 @@
+import './kiosk-body.html';

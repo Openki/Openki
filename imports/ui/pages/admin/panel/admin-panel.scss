@@ -1,0 +1,24 @@
+.admin-panel {
+	@include make-row;
+}
+
+.admin-task-wrap {
+	@include td-make-xs-column(6);
+	@include td-make-sm-column(4);
+}
+
+.admin-task {
+	border: 1px solid lighten($blue-light, 5%);
+	border-radius: 4px;
+	padding: 30px 15px;
+	text-align: center;
+	transition-duration: .15s;
+	transition-property: #{'background-color border-color'};
+
+	&:hover {
+		background-color: lighten($gray-lightest, 3%);
+		cursor: pointer;
+		transition-duration: .15s;
+		transition-property: #{'background-color border-color'};
+	}
+}

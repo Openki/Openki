@@ -1,3 +1,5 @@
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+
 // Standardize field names in CourseDiscussions documents
 UpdatesAvailable.renameDiscussionFields = function() {
 	var AllPosts = CourseDiscussions.find({});

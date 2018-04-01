@@ -1,3 +1,5 @@
+import Events from '/imports/api/events/events.js';
+
 // Rename event fields startdate and enddate to start and end
 // Also fix the end date so the date is not on some random future day
 // Somehow the enddate got corrupted and for the current data we can fix it by just resetting the day

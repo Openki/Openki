@@ -1,0 +1,140 @@
+<template name="courseEvents">
+	{{#if ready}}
+		{{#if haveEvents}}
+			<div class="page-component">
+				<div class="fade-wrap">
+					<div class="course-events js-scrollable-container">
+						{{#if havePastEvents}}
+							<div class="course-page-component-header">
+								<h4>
+									<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+									{{mf 'course.events.pastList' 'Previous events'}}
+								</h4>
+								{{#if haveFutureEvents}}
+									<a href="#future_events" class="link">
+										<span class="glyphicon glyphicon-arrow-down"></span>
+										{{mf 'course.events.futureListLink' 'future events'}}
+									</a>
+								{{/if}}
+							</div>
+							<div class="course-event-list">
+								{{> eventList dataEvents=pastEvents withDate=true}}
+							</div>
+						{{/if}}
+						{{#if haveOngoingEvents}}
+							<div class="course-page-component-header">
+								<h4>
+									<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+									{{mf 'course.events.ongoinglist' 'Ongoing events'}}
+								</h4>
+								{{#if havePastEvents}}
+									<a href="#past_events" class="past-events-link">
+										<span class="glyphicon glyphicon-arrow-up"></span>
+										{{mf 'course.events.pastListLink' 'past events'}}
+									</a>
+								{{/if}}
+							</div>
+							<div class="course-event-list">
+								{{> eventList dataEvents=ongoingEvents withDate=false}}
+							</div>
+						{{/if}}
+						{{#if haveFutureEvents}}
+							<div class="course-page-component-header">
+								<h4>
+									<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+									{{mf 'course.events.upcominglist' 'Upcoming events'}}
+								</h4>
+								{{#if havePastEvents}}
+									<a href="#past_events" class="past-events-link">
+										<span class="glyphicon glyphicon-arrow-up"></span>
+										{{mf 'course.events.pastListLink' 'past events'}}
+									</a>
+								{{/if}}
+							</div>
+							<div class="course-event-list">
+								{{> eventList dataEvents=futureEvents withDate=true}}
+							</div>
+							<div class="show-more-courses">
+								{{#if haveMoreEvents}}
+									<button type="button" class="btn btn-add js-show-all-events">
+										<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+										{{mf 'course.events.showAllEvents' 'Show all events'}}
+									</button>
+								{{/if}}
+							</div>
+						{{/if}}
+					</div>
+					<div class="fade-top"></div>
+					<div class="fade-bottom"></div>
+				</div>
+			</div>
+		{{else}}
+			<div class="page-component">
+				<div class="course-page-component-header">
+					<h4>
+						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+						{{mf 'course.details.noEvents' 'This course has no events'}}
+					</h4>
+				</div>
+			</div>
+		{{/if}}
+	{{else}}
+		<div class="page-component">
+			<div class="course-page-component-header">
+				<h4>
+					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+					{{mf 'course.details.eventsLoadingHeader' 'Events'}}
+				</h4>
+			</div>
+			{{> loadingRow}}
+		</div>
+	{{/if}}
+
+
+	{{#if mayAdd}}
+		<div class="page-component course-event-tasks">
+			{{> courseEventAdd}}
+			{{#if haveEvents}}
+				{{> deleteCourseEvents}}
+			{{/if}}
+			{{#if showModal}}
+				{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+			{{/if}}
+		</div>
+	{{/if}}
+
+	{{#if ready}}
+		{{#if haveEvents}}
+			<div class="page-component">
+			{{#with course}}
+				<a href="{{pathFor 'calCourse'}}"
+					target="_blank">
+					<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
+					{{mf 'course.download_cal' 'Download events to my calendar'}}
+				</a>
+			{{/with}}
+			</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="courseEventAdd">
+	<div class="event-caption-wrap">
+		<a href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}" title="{{mf 'course.event.edit.add'}}">
+			<div class="event-caption placeholder event-caption-action event-caption-add">
+				<div class="event-caption-header-wrap">
+					<div class="event-caption-header">
+						<span class="fa fa-map-pin"></span>
+						<div class="event-caption-pseudoborder"></div>
+					</div>
+				</div>
+				<div class="event-caption-body-wrap">
+					<div class="event-caption-body"></div>
+				</div>
+				<span class="event-caption-icon">
+					<i class="fa fa-plus fa-2x"></i>
+				</span>
+			</div>
+		</a>
+	</div>
+</template>

@@ -1,0 +1,153 @@
+<template name="navbar">
+	<nav class="navbar navbar-default navbar-fixed-top"
+		id="topnavbar"
+		role="navigation">
+		{{#if showTestWarning}}
+			{{> testWarningTicker}}
+		{{/if}}
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-container container-fluid">
+			<div class="navbar-header">
+				<button	type="button"	class="navbar-toggle collapsed"
+					data-toggle="collapse"
+					data-target="#bs-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand js-toggle-introduction" href="/">
+					{{#if connecting}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
+						      title="{{mf 'status.connecting' "Connecting to server"}}">
+						</span>
+						<span class="sr-only">{{mf 'status.connecting'}}</span>
+					{{/if}}
+					{{#if notConnected}}
+						<span class="fa fa-circle-o-notch fa-fw no-connection"
+						      title="{{mf 'status.notConnected' "No connection to server"}}">
+						</span>
+						<span class="sr-only">{{mf 'status.notConnected'}}</span>
+					{{/if}}
+					{{#if connected}}
+						<img src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"
+						     alt="Openki logo">
+					{{/if}}
+					<span class="site-name">{{siteName}}</span>
+					<span class="site-stage">{{siteStage}}</span>
+				</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}}">
+					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
+						<a href="{{pathFor 'home'}}"
+							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
+							 id="nav_courses">
+							 <span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
+							 {{mf 'menue.Courses' 'Find'}}
+							 <div class="nav-marker-caret"></div>
+						</a>
+					</li>
+					<li class="{{activeClass 'proposeCourse'}}">
+						<a href="{{pathFor 'proposeCourse'}}"
+							 class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
+							 <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+							 {{mf 'menue.Create' 'Create'}}
+							 <div class="nav-marker-caret"></div>
+						</a>
+					</li>
+					<li class="{{activeClass 'calendar'}}">
+						<a href="{{pathFor 'calendar'}}"
+							 class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
+							 <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							 {{mf 'menue.Calendar' 'Calendar'}}
+							 <div class="nav-marker-caret"></div>
+							 <div class="nav-marker-bar"></div>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav {{toggleNavbarRight}}">
+					{{> regionSelectionWrap}}
+					{{> languageSelectionWrap}}
+					<li class="dropdown login-link">
+						{{> loginButton}}
+						<div class="dropdown-menu login-dropdown">
+							{{> userFrame}}
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</template>
+
+<template name='loginButton'>
+	{{#if loginServicesConfigured}}
+		{{#if currentUser}}
+			<a
+				class="loginButton dropdown-toggle navbar-link"
+				aria-expanded="false"
+				data-toggle="dropdown"
+				role="button">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				{{currentUser.username}}
+				<div class="nav-marker-caret"></div>
+				<div class="nav-marker-bar"></div>
+			</a>
+		{{else}}
+			<a
+				class="loginButton navbar-link"
+				id="openLogin"
+				role="button">
+				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+				{{mf 'login.navig.unlogged' 'Login/Register'}}
+			</a>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name='userFrame'>
+	<div class="user-frame">
+		{{> ownUserFrame}}
+	</div>
+</template>
+
+<template name="ownUserFrame">
+	<div class="ownuser-frame">
+		<div class="form-group ownuser-frame-welcome">
+			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.profile' 'Visit my profile'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings' 'Account settings'}}
+			</a>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-default js-logout form-control">
+				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
+				{{mf 'login.logout' 'Logout'}}
+			</button>
+		</div>
+	</div>
+</template>
+
+<template name="testWarningTicker">
+	<marquee
+		bgcolor="#000"
+		direction="left"
+		scrollamount="5"
+		scrolldelay="1"
+		style="color:white;">
+			⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
+			<span style = "padding-left:10em"> </span>
+			☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
+			<span style = "padding-left:10em"> </span>
+	</marquee>
+</template>

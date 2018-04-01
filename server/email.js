@@ -1,5 +1,7 @@
-import "/imports/notification/Notification.js";
-import "/imports/HtmlTools.js";
+import Notification from '/imports/notification/notification.js';
+import HtmlTools from '/imports/utils/html-tools.js';
+
+import Version from '/imports/api/version/version.js';
 
 if (Meteor.settings.siteEmail) {
 	Accounts.emailTemplates.from = Meteor.settings.siteEmail;

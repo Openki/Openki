@@ -1,0 +1,125 @@
+<template name="kioskEvents">
+	<div class="kiosk container-fluid">
+		<div class="page-component">
+			<div class="kiosk-heading">
+				{{#if filter.group}}
+					<a href="/find?group={{filter.group}}">
+						{{#if groupLogo filter.group}}
+							<img src="{{groupLogo filter.group}}" class="kiosk-logo kiosk-logo-group">
+						{{/if}}
+						{{groupShort filter.group}}
+					</a>
+				{{else}}
+					{{#if filter.location}}
+						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
+					{{else}}
+						<a href="{{pathFor 'home'}}">
+							<img src="/logo/openki.png" class="kiosk-logo kiosk-logo-openki">
+							Openki
+						</a>
+					{{/if}}
+				{{/if}}
+			</div>
+			<div class="kiosk-language-selection">
+				{{> languageSelectionWrap}}
+			</div>
+			<div class="kiosk-moment">
+				<span class="kiosk-moment-time">{{showTime}}</span>
+				<span class="kiosk-moment-date">{{showDate}}</span>
+			</div>
+		</div>
+		{{#if ongoing.count}}
+			<div class="page-component">
+				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}</h3>
+				{{> kioskEventList dataEvents=ongoing timePeriod="ongoing"}}
+			</div>
+		{{/if}}
+
+		{{#if today.count}}
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h3>
+				{{> kioskEventList dataEvents=today timePeriod="today"}}
+			</div>
+		{{/if}}
+
+		{{#if future.count}}
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
+				{{> kioskEventList dataEvents=future timePeriod="upcoming"}}
+			</div>
+		{{else}}
+			<h3>{{mf 'kiosk.noFutureEvents' 'There are no future events'}}</h3>
+		{{/if}}
+	</div>
+</template>
+
+<template name="kioskEventList">
+	<div class="kiosk-event-list">
+		{{#each dataEvents}}
+			{{> kioskEvent}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="kioskEvent">
+	<div class="kiosk-event-wrap-{{timePeriod}}">
+		<a href="{{pathFor 'showEvent'}}">
+			<div class="kiosk-event kiosk-event-{{timePeriod}}">
+				{{#unless isUpcoming}}
+					<div class="kiosk-event-timecount">
+						<span class="fa fa-play-circle fa-fw" aria-hidden="true"></span>
+						{{#if isOngoing}}
+							{{mf 'kiosk.started' 'Started'}}
+						{{/if}}
+						{{timeFromNow start}}
+					</div>
+				{{/unless}}
+				<div class="kiosk-event-header">
+					{{#unless isOngoing}}
+						{{> kioskEventLocation}}
+					{{/unless}}
+					<div class="kiosk-event-moment">
+						{{#if isUpcoming}}
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{dateformat start}} <br>
+						{{/if}}
+						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+						{{timeformat start}}
+						{{#unless isUpcoming}}
+							- {{timeformat end}}
+						{{/unless}}
+					</div>
+					{{#if isOngoing}}
+						{{> kioskEventLocation}}
+					{{/if}}
+				</div>
+				<div class="kiosk-event-body">
+					<h3 class="kiosk-event-title">
+						{{plain this.title}}
+					</h3>
+					{{#unless isOngoing}}
+						<p class="kiosk-event-description">
+							{{plain description}}
+						</p>
+					{{/unless}}
+				</div>
+			</div>
+		</a>
+	</div>
+</template>
+
+<template name="kioskEventLocation">
+	<div class="kiosk-event-location">
+		{{#if showLocation}}
+			<span class="glyphicon glyphicon-home fa-fw" aria-hidden="true"></span>
+			{{location.name}}
+			{{#if room}} - {{/if}}
+		{{/if}}
+		{{#if room}}
+			{{#unless showLocation}}
+				<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+			{{/unless}}
+			{{room}}
+		{{/if}}
+	</div>
+</template>

@@ -1,0 +1,27 @@
+<template name="footer">
+	<footer class="footer">
+		<a
+			class="footer-link"
+			href="http://about.openki.net/"
+			title="{{mf 'navigation.footer.about.title' 'More informations about our project'}}">
+			{{mf 'footer.aboutOpenki' 'About Openki'}}
+		</a>
+		<a
+			class="footer-link"
+			href="{{pathFor 'FAQ'}}"
+			title="{{mf 'navigation.footer.faq.title' 'Frequently asked questions'}}">
+			{{mf 'main.faq_link' 'FAQ'}}
+		</a>
+		<a
+			class="footer-link"
+			href="https://github.com/Openki/Openki/"
+			title="{{mf 'navigation.footer.code.title' 'Show code on github'}}">
+			{{mf 'footer.github' 'GitHub'}}
+		</a>
+		<span title="{{fullInfo}}" class="footer-deployed-version">
+			{{version}} {{commit}}
+			<br>
+			{{mf "footer.deployedAt" "deployed:"}} {{dateformat deployed}}
+		</span>
+	</footer>
+</template>

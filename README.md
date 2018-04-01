@@ -1,4 +1,4 @@
-Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
+Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](http://meteor.com)
@@ -36,7 +36,7 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :date: Calendar and iCal exports ([Wiki](https://github.com/Openki/Openki/wiki/calendar-export))
 - :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for crowdsourced, live translation (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
+- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced, live translation](https://openki.net/translate) (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
 - :envelope: Email notifications
 
 #### Intended features
@@ -63,6 +63,8 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - `meteor npm install`
 - Run `meteor npm run dev`
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
+
+- There are other actions you can use with `meteor npm run`: `app-test` and `js-lint`.
 
 ### Documentation
 - The technical documentation is here on Github in the :book: [Wiki](https://github.com/Openki/Openki/wiki)

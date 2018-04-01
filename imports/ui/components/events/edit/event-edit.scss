@@ -1,0 +1,52 @@
+.event .event-edit-header {
+	margin-top: 0;
+}
+
+.event-edit-header {
+	@media (min-width: $screen-xs) {
+		border-color: $event-header-bg;
+		border-style: solid;
+	}
+}
+
+.event-edit-header > .form-group:last-of-type {
+	margin-bottom: 0;
+}
+
+.event-edit-body {
+	@media (min-width: $screen-xs) {
+		border-color: $event-body-bg;
+		border-style: solid;
+	}
+}
+
+.time-end > .input-group + label {
+	margin-top: 0;
+}
+
+.internal-disclaimer {
+	margin-bottom: 0;
+}
+
+.changed-replicas {
+	opacity: .4;
+	transition: opacity .15s;
+
+	&.is-emphasized {
+		opacity: 1;
+	}
+}
+
+.changed-replicas ul {
+	list-style-position: inside;
+	padding: 0;
+	margin: 0;
+}
+
+.update-changed-replicas-help + ul {
+	margin-top: 10px;
+}
+
+.changed-replicas .checkbox {
+	margin: 15px 0 0;
+}

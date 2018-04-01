@@ -1,0 +1,14 @@
+<template name="adminPanel">
+	<div class="admin-panel">
+		{{#each tasks}}
+			<div class="admin-task-wrap">
+				<a href="{{pathFor route}}">
+					<div class="admin-task js-admin-task">
+						<i class="fa fa-2x {{icon}}" aria-hidden="true"></i>
+						<h3>{{name}}</h3>
+					</div>
+				</a>
+			</div>
+		{{/each}}
+	</div>
+</template>

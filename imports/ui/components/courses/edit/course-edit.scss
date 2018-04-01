@@ -1,0 +1,10 @@
+.course-edit-body {
+	&.is-frame {
+		margin-top: 0;
+	}
+
+	@media (min-width: $screen-xs) {
+		border-color: $course-border-color;
+		border-style: $proposal-border-style;
+	}
+}

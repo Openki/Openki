@@ -1,0 +1,55 @@
+<template name="layout">
+	{{#if showRegionSplash}}
+		{{> regionSplash}}
+	{{/if}}
+	{{> accountTasks}}
+	<div id="wrap">
+		<div id="topBar">
+			{{> navbar}}
+		</div>
+		<div id="outer" class="{{#if testWarning}}test-warning{{/if}}">
+			{{> featuredGroup}}
+
+			{{#if shownIntro}}
+				{{> introduction}}
+			{{/if}}
+
+			<div id="maincontent">
+				{{#if translate}}
+					<div class="container">
+						{{> translateInfo}}
+						{{#if mayTranslate}}
+							{{> yield}}
+						{{else}}
+							<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}</h3>
+						{{/if}}
+					</div>
+				{{else if isAdminPage}}
+					<div class="container-sm">
+						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
+						{{#if isAdmin}}
+							{{#if isNotAdminPanel}}
+								<a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
+									<i class="fa fa-chevron-left"></i>
+									{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+								</a>
+							{{/if}}
+							<div class="admin-active-task">
+								{{> yield}}
+							</div>
+						{{else}}
+							{{mf 'adminPanel.pleaseLogin' 'Only for administrators'}}
+						{{/if}}
+					</div>
+				{{else}}
+					{{> yield}}
+				{{/if}}
+				{{> messages}}
+			</div>
+		</div>
+		<div class="push"></div>
+	</div>
+	{{> kioskLink}}
+	{{> tooltips}}
+	{{> footer}}
+</template>

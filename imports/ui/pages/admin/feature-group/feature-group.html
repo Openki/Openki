@@ -1,0 +1,48 @@
+<template name="featureGroup">
+	{{#if featuredGroup}}
+		<div class="admin-featured-group">
+			<div class="admin-featured-group-body">
+				{{#mf KEY='featureGroup.groupIsFeatured' GROUP=featuredGroup.name REGION=regionName}}
+					The group "{GROUP}" is featured for the region "{REGION}".
+				{{/mf}}
+			</div>
+			<button type="button" class="btn btn-delete js-unset-featured-group" {{disabledIfBusy}}>
+				{{#if busy 'deleting'}}
+					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					{{mf '_button.deleting'}}
+				{{else}}
+					<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+					{{#mf KEY='featureGroup.deleteButton' REGION=regionName}}
+						Remove the featured group for "{REGION}"
+					{{/mf}}
+				{{/if}}
+			</button>
+		</div>
+	{{/if}}
+	<h3>{{mf 'featureGroup.featureGroup' 'Feature group'}}</h3>
+	<form id="featureGroup">
+		<div class="form-group">
+			<select id="groupToBeFeatured" class="form-control">
+				<option value='' disabled selected class="select_placeholder">
+					{{mf '_selection.pleaseSelect'}}
+				</option>
+				{{#each group in groups}}
+					<option value="{{group._id}}">{{group.name}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
+				{{#if busy 'saving'}}
+					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					{{mf '_button.saving'}}
+				{{else}}
+					<i class="fa fa-fw fa-flag" aria-hidden="true"></i>
+					{{#mf KEY='featureGroup.saveButton' REGION=regionName}}
+						Feature this group in the region "{REGION}"
+					{{/mf}}
+				{{/if}}
+			</button>
+		</div>
+	</form>
+</template>
