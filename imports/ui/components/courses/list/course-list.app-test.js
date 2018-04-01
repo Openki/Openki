@@ -16,6 +16,7 @@ if (Meteor.isClient) {
 		});
 		it('should list 8 courses for unauthenticated user (Testistan)', function() {
 			Router.go('/');
+			Session.set('region', "9JyFCoKWkxnf8LWPh"); // Testistan
 
 			return subscriptionsReady()
 			.then(waitFor(() => {
