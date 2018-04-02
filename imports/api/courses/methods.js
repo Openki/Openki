@@ -274,8 +274,8 @@ Meteor.methods({
 
 			Courses.update(course._id, { $set: {
 				futureEvents: futureEvents,
-				nextEvent: nextEvent,
-				lastEvent: lastEvent,
+				nextEvent: nextEvent || null,
+				lastEvent: lastEvent || null,
 			} });
 		});
 	},
