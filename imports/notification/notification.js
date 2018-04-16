@@ -31,6 +31,7 @@ Notification.send = function(entry) {
 	var model = Notification[entry.body.model].Model(entry);
 
 	_.each(entry.body.recipients, (recipientId) => {
+		check(recipientId, String);
 		if (!concluded[recipientId]) {
 			var mail = null;
 			var unsubToken = null;
