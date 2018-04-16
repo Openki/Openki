@@ -37,7 +37,8 @@ notificationComment.record = function(commentId) {
 				};
 
 			CourseDiscussions.find(threadSelector).forEach(threadComment => {
-				recipients.push(threadComment.userId);
+				const partId = threadComment.userId;
+				if (partId) recipients.push(partId);
 			});
 		}
 
