@@ -31,15 +31,16 @@ Notification.send = function(entry) {
 	var model = Notification[entry.body.model].Model(entry);
 
 	_.each(entry.body.recipients, (recipientId) => {
-		check(recipientId, String);
 		if (!concluded[recipientId]) {
 			var mail = null;
 			var unsubToken = null;
-			var userId = null;
 
 			try {
-				var user = Meteor.users.findOne(recipientId);
-				userId = user._id;
+				const user = Meteor.users.findOne(recipientId);
+
+				if (!user) {
+					throw "User not found for ID '" + recipientId + "'";
+				}
 
 				if (user.notifications === false) {
 					throw "User wishes to not receive notifications";
