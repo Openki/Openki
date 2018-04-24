@@ -1,9 +1,3 @@
-.region-badges {
-	display: inline-block;
-	@include td-float(right);
-	@include td-padding(left, 10px);
-}
-
 .badge-courses {
 	background-color: $brand-primary;
 }

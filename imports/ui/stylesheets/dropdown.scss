@@ -51,3 +51,18 @@ $dropdown-transition-time: .3s;
 .dropdown-header > .close {
 	font-size: 20px;
 }
+
+.dropdown-addon-right {
+	@include clearfix;
+	display: inline-block;
+	@include td-float(right);
+	@include td-padding(left, 30px);
+}
+
+$dropdown-legend-color: $brand-primary;
+
+.dropdown-legend {
+	@include clearfix;
+	color: $dropdown-legend-color;
+	@include td-text-align(left);
+}
