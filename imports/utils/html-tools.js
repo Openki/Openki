@@ -15,7 +15,8 @@ HtmlTools.plainToHtml = function(text) {
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&#039;")
-		.replace(/(?:\r\n|\r|\n)/g, '<br />');
+		.replace(/(?:\r\n|\r|\n)/g, '<br />')
+		.replace(/(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|;])/ig, "<a href='$1'>$1</a>");
 };
 
 

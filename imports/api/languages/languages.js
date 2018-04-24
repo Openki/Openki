@@ -70,6 +70,13 @@ export default Languages = {
 		, visible: true
 		}
 	,
+	'sv':
+		{ lg:      'sv'
+		, name:    'Svenska'
+		, short:   'sv'
+		, english: 'Swedish'
+		, visible: true
+	},
 	'tr':
 		{ lg:      'tr'
 		, name:    'Türkçe'
