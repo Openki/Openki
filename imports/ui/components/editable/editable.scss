@@ -69,6 +69,7 @@
 }
 
 .editable-textarea {
+	resize: vertical;
 	height: 100px;
 	overflow: auto;
 }
