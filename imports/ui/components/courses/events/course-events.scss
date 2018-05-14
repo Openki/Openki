@@ -37,8 +37,8 @@
 
 .fade-top,
 .fade-bottom {
-	background: none;
 	@include td-pos(left, 0);
+	background: none;
 	position: absolute;
 	width: 100%;
 }

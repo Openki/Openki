@@ -25,11 +25,11 @@
 }
 
 .replica-date-weekday {
-	color: $gray-light;
 	@include td-padding(right, $padding-base-horizontal);
+	@include td-pos(right, 0);
+	color: $gray-light;
 	padding-top: $padding-base-vertical;
 	position: absolute;
-	@include td-pos(right, 0);
 	top: 0;
 	z-index: 3;
 }

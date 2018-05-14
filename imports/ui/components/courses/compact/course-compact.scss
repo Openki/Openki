@@ -28,8 +28,8 @@
 
 	&.is-proposal,
 	&.has-past-events {
-		border-width: $course-border-width;
 		border-color: $course-border-color;
+		border-width: $course-border-width;
 	}
 
 	&.is-proposal {
@@ -59,15 +59,15 @@
 //========================================================================================
 .course-compact-content {
 	@include td-make-xs-column(9);
-	background: $body-bg;
 	@include td-padding-all(0, 0, 0, 15px);
+	background: $body-bg;
 
 }
 
 .has-upcoming-events > .course-compact-content {
 	@include td-make-xs-column(7.5);
-	background: $has-upcoming-events-bg;
 	@include td-padding-all(0, 5px, 0, 15px);
+	background: $has-upcoming-events-bg;
 }
 
 // ** Title
@@ -108,9 +108,9 @@
 //========================================================================================
 .course-compact-roles {
 	@include td-make-xs-column(3);
+	@include td-pos(right, -7px);
 	padding: 0;
 	position: relative;
-	@include td-pos(right, -7px);
 	top: -7px;
 }
 
@@ -147,11 +147,11 @@
 
 .course-compact.is-proposal > .course-groups,
 .course-compact.has-past-events > .course-groups {
-	bottom: $course-border-width;
 	@include td-pos(right, $course-border-width);
+	bottom: $course-border-width;
 }
 
 .course-compact.has-upcoming-events > .course-groups {
-	bottom: $course-border-width * 2;
 	@include td-pos(right, $course-border-width * 2);
+	bottom: $course-border-width * 2;
 }

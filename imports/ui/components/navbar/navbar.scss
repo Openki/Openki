@@ -3,7 +3,7 @@
 	transition: box-shadow $default-transition-time;
 }
 
-#bs-navbar-collapse-1 {
+.navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
 		box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
 	}
@@ -27,27 +27,27 @@
 }
 
 .navbar-brand > img {
-  bottom: 15px;
-  display: inline-block;
-  height: 49px;
-  position: relative;
+	bottom: 15px;
+	display: inline-block;
+	height: 49px;
+	position: relative;
 }
 
 .site-name {
 	font-size: x-large;
-	vertical-align: top;
 	transition: text-shadow $default-transition-time;
+	vertical-align: top;
 }
 
 .site-stage {
+	@include td-pos(right, 1em);
 	bottom: 2px;
 	color: $gray-dark;
 	font-size: small;
 	font-weight: bold;
-	@include td-pos(right, 1em);
 	position: absolute;
-	transition: text-shadow $default-transition-time;
 	transform: rotate(345deg);
+	transition: text-shadow $default-transition-time;
 }
 
 .navbar-brand:hover {

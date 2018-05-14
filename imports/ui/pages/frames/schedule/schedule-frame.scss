@@ -14,9 +14,9 @@
 
 .schedule-header-day {
 	background-color: $black;
-	border-width: 0 2px 2px;
-	border-style: solid;
 	border-color: $body-bg;
+	border-style: solid;
+	border-width: 0 2px 2px;
 	color: $white;
 	font-weight: bold;
 	padding: 5px;
@@ -28,8 +28,8 @@
 }
 
 .schedule-time-interval {
-	background: black;
-	color: white;
+	background: $black;
+	color: $white;
 	font-weight: bold;
 	margin-top: 2px;
 	padding: 5px 10px;
@@ -48,18 +48,18 @@
 }
 
 .schedule-event {
+	color: $black;
 	margin: 2px;
 	padding: 5px;
-	transition-property: #{'box-shadow transform'};
 	transition-duration: .1s;
+	transition-property: #{'box-shadow transform'};
 
-	color: black;
 
 	&:hover {
 		box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 		transform: scale(1.2, 1.2);
-		transition-property: #{'box-shadow transform'};
 		transition-duration: .3s;
+		transition-property: #{'box-shadow transform'};
 	}
 }
 
@@ -89,9 +89,9 @@ $schedule-event-types: (
 }
 
 .schedule-event-time {
-	background: black;
-	color: white;
-	font-weight: bold;
+	background: $black;
+	color: $white;
 	font-size: small;
+	font-weight: bold;
 	padding: 0 3px;
 }

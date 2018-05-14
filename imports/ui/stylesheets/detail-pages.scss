@@ -85,9 +85,9 @@
 }
 
 .details-map .coordinates {
-	font-weight: bold;
 	@include td-margin-all(5px, 5px, 5px, 0);
 	@include td-text-align(right);
+	font-weight: bold;
 }
 
 .details-form {
@@ -137,7 +137,7 @@
 	background-color: $gray-lightest;
 	border-color: darken($gray-lightest, 3%);
 	border-style: solid;
-	border-width: 1px 1px;
+	border-width: 1px;
 	padding: $form-group-margin-bottom;
 }
 
@@ -160,8 +160,8 @@
 	font-weight: bold;
 
 	@media (min-width: $screen-sm) {
-		padding-top: 7px;
 		@include td-text-align(right);
+		padding-top: 7px;
 	}
 }
 

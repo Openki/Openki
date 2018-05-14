@@ -12,7 +12,7 @@
 
 .btn-group > .btn {
 	@media (max-width: $screen-xs) {
-		border-radius: 4px !important;
+		border-radius: 4px;
 		width: 100%;
 	}
 }
@@ -42,8 +42,8 @@ $btn-background-colors: (
 
 @each $variant, $bg-color in $btn-background-colors {
 	.btn-#{$variant} {
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 		@include gradient-vertical($bg-color, darken($bg-color, $btn-level-end));
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
 
 		&:hover {
 			@include gradient-vertical(darken($bg-color, $btn-hover-level-start), darken($bg-color, $btn-hover-level-end));
@@ -95,11 +95,11 @@ $btn-background-colors: (
 }
 
 .btn-icon {
+	@include td-margin(left, 5px);
 	background: none;
 	border: 0;
 	cursor: pointer;
 	font-size: $font-size-small;
-	@include td-margin(left, 5px);
 	padding: 0;
 }
 

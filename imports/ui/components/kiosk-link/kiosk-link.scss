@@ -1,12 +1,12 @@
 .back-to-kiosk {
+	@include td-pos(right, 50px);
 	background-color: $blue-lighter;
 	border-radius: 50%;
-	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	bottom: 30px;
+	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	height: 100px;
 	padding: 30px 20px 0;
 	position: fixed;
-	@include td-pos(right, 50px);
 	text-align: center;
 	width: 100px;
 	z-index: 1;
@@ -22,13 +22,13 @@
 
 .js-remove-back-to-kiosk {
 	@include opacity(.4);
+	@include td-pos(right, 0);
 	background: none;
 	border: 0;
 	font-size: large;
 	position: absolute;
-	@include td-pos(right, 0);
 	text-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-	top: 0px;
+	top: 0;
 
 	&:hover {
 		@include opacity(1);
