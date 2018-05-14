@@ -18,6 +18,9 @@ function finderRoute(path) {
 	return {
 		path: path,
 		template: 'findWrap',
+		yieldRegions: {
+			'featuredGroup': { to: 'aboveContent' }
+		},
 		data: function() {
 			var query = this.params.query;
 
