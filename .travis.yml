@@ -1,7 +1,7 @@
 language: node_js
 dist: trusty
 node_js:
-  - 5.2.0
+  - 8.9.4
 
 cache:
   directories:
@@ -15,17 +15,26 @@ cache:
     - ".meteor/local/plugin-cache"
     - "node_modules"
 
+addons:
+  apt:
+    packages:
+      - xvfb
+
 before_install:
   # Download Meteor
   - PATH=$PATH:$HOME/.meteor
   - if [ ! -e $HOME/.meteor/meteor ]; then curl -k https://install.meteor.com | sh; fi
 
 install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - meteor npm install
 
 script:
   # Test for JS errors
   - meteor npm run js-lint -- .
+  # Test for SASS errors
+  - meteor npm run sass-lint
   # Run unit-tests
   - meteor npm run test
   # Run end-to-end tests

@@ -34,7 +34,10 @@ $discussion-thumb-width: 60;
 	padding: 0;
 }
 
+$discussion-post-bg: $blue-lighter;
+
 .discussion-post-content  {
+	border-color: darken($discussion-post-bg, 10%);
 	word-break: break-all;
 }
 
@@ -49,7 +52,6 @@ $discussion-thumb-width: 60;
 }
 
 
-$discussion-post-bg: $blue-lighter;
 
 .discussion-post {
 	background: $discussion-post-bg;
@@ -63,8 +65,8 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post-header .profilelink,
 .discussion-post-header .username {
-	font-weight: bold;
 	@include td-padding(right, 5px);
+	font-weight: bold;
 }
 
 .discussion-buttons {
@@ -79,9 +81,9 @@ $discussion-post-bg: $blue-lighter;
 	@include td-margin(right, -10px);
 }
 
-button.js-delete-comment {
-	padding: 6px 24px;
+.js-delete-comment {
 	margin-top: 5px;
+	padding: 6px 24px;
 }
 
 .discussion-edit-btn,
@@ -100,10 +102,6 @@ button.js-delete-comment {
 	cursor: default;
 }
 
-.discussion-post-content {
-	border-color: darken($discussion-post-bg, 10%);
-}
-
 .discussion-post-title {
 	margin-top: 0;
 }
@@ -117,8 +115,8 @@ button.js-delete-comment {
 }
 
 .discussion-comment {
-	display: table;
 	@include td-padding-all(7px, 0, 0, ($discussion-thumb-width * 1px));
+	display: table;
 	position: relative;
 	width: 100%;
 }

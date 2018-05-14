@@ -66,10 +66,10 @@
 .event-edit-location-candidate {
 	$background-color: darken($blue-lighter, 5%);
 
+	@include td-padding(left, 5px);
 	background-color: $background-color;
 	list-style: none;
 	margin-bottom: 4px;
-	@include td-padding(left, 5px);
 
 	&:hover {
 		cursor: pointer;

@@ -2,6 +2,9 @@
 export default Notification = {};
 import Log from '/imports/api/log/log.js';
 
+import { Email } from 'meteor/email';
+import { Random } from 'meteor/random';
+
 import notificationEvent   from '/imports/notification/notification.event.js';
 import notificationComment from '/imports/notification/notification.comment.js';
 import notificationJoin    from '/imports/notification/notification.join.js';
@@ -11,6 +14,21 @@ Notification.Event   = notificationEvent;
 Notification.Comment = notificationComment;
 Notification.Join    = notificationJoin;
 Notification.PrivateMessage = notificationPrivateMessage;
+
+/** Logo that can be attached to mails
+  *
+  * path: a file path relative to private/
+  */
+const logo = function(path) {
+	const cid = Random.id();
+	this.url = "cid:" + cid;
+	this.attachement =
+		{ cid
+		, path: Assets.absoluteFilePath(path)
+		, filename: false
+		};
+	return this;
+};
 
 /** Handle event notification
   *
@@ -34,11 +52,13 @@ Notification.send = function(entry) {
 		if (!concluded[recipientId]) {
 			var mail = null;
 			var unsubToken = null;
-			var userId = null;
 
 			try {
-				var user = Meteor.users.findOne(recipientId);
-				userId = user._id;
+				const user = Meteor.users.findOne(recipientId);
+
+				if (!user) {
+					throw "User not found for ID '" + recipientId + "'";
+				}
 
 				if (user.notifications === false) {
 					throw "User wishes to not receive notifications";
@@ -68,6 +88,7 @@ Notification.send = function(entry) {
 				vars.siteName = siteName;
 				vars.locale = userLocale;
 				vars.username = username;
+				vars.logo = logo('mails/logo.png');
 
 				var message = SSR.render(model.template, vars);
 
@@ -81,6 +102,7 @@ Notification.send = function(entry) {
 					, to: address
 					, subject: subjectPrefix + vars.subject
 					, html: message
+					, attachments: [ vars.logo.attachement ]
 					};
 
 				Email.send(mail);

@@ -2,6 +2,8 @@ options:
   formatter: stylish
 files:
   include: '**/*.s+(a|c)ss'
+  ignore:
+    - 'node_modules/**'
 rules:
   # Extends
   extends-before-mixins: 1
@@ -13,12 +15,12 @@ rules:
 
   # Line Spacing
   one-declaration-per-line: 1
-  empty-line-between-blocks: 0
+  empty-line-between-blocks: 1
   single-line-per-selector: 1
 
   # Disallows
   no-color-keywords: 1
-  no-color-literals: 1
+  no-color-literals: 0
   no-css-comments: 1
   no-debug: 1
   no-duplicate-properties: 1

@@ -3,31 +3,24 @@
 }
 
 .tag-link > a {
-	transition: all $default-transition-time;
+	transition: color $default-transition-time;
 }
 
 .tag-group {
+	// Set the font-size of the parent element to 0, in order to remove whitespace
+	// made visible because of 'display: inline-block' property
+	// https://stackoverflow.com/questions/19038799#19038859
 	font-size: 0;
 	margin-left: -5px;
 }
 
 .tag-group > .tag {
+	font-size: $font-size-base;
 	margin-left: 5px;
 }
 
 .tag-group.multiline > .tag {
 	margin-bottom: 5px;
-}
-
-// Set the font-size of the parent element to 0, in order to remove whitespace
-// made visible because of 'display: inline-block' property
-// https://stackoverflow.com/questions/19038799#19038859
-.tag-group {
-	font-size: 0;
-}
-
-.tag-group > .tag {
-	font-size: $font-size-base;
 }
 
 .tag.addon {
@@ -41,7 +34,7 @@
 }
 
 .tag-btn > button {
-	border: none;
+	border: 0;
 	font-size: $font-size-base;
 	padding: 1px 4px;
 }
@@ -59,7 +52,8 @@
 
 .tag-link,
 .tag-btn > button {
-	transition: all $default-transition-time;
+	transition-duration: $default-transition-time;
+	transition-property: #{'color background-color border-color box-shadow'};
 
 	&:hover,
 	&:focus,

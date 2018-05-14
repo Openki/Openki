@@ -24,17 +24,12 @@ Template.eventCompact.helpers({
 
 	withDate: function() {
 		return Template.instance().withDate;
-	},
-
-	weekdayShort(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('ddd');
 	}
 });
 
 Template.eventCompact.events({
 	'mouseover .js-venue-link, mouseout .js-venue-link': function(e, instance){
-		instance.$('.event-compact').toggleClass('elevate_child');
+		instance.$('.event-compact').toggleClass('elevate-child');
 	}
 });
 

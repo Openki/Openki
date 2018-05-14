@@ -7,8 +7,8 @@
 //== Logo
 //----------------------------------------
 .kiosk-logo {
-	line-height: $line-height-base;
 	@include td-margin(right, 15px);
+	line-height: $line-height-base;
 	vertical-align: text-bottom;
 }
 
@@ -23,18 +23,18 @@
 //== Heading
 //----------------------------------------
 .kiosk-heading {
-	line-height: $line-height-base;
+	@include td-margin-all(0, 15px, 0, 0);
 	display: inline-block;
 	font-size: $font-size-h1;
-	@include td-margin-all(0, 15px, 0, 0);
+	line-height: $line-height-base;
 	padding-bottom: 15px;
 }
 
 //== Region selection
 //----------------------------------------
 .kiosk-language-selection {
-	line-height: $line-height-base;
 	display: inline-block;
+	line-height: $line-height-base;
 }
 
 .kiosk-language-selection > li {
@@ -62,8 +62,8 @@
 }
 
 .kiosk-moment-date {
-	font-size: $font-size-h4;
 	@include td-margin(left, 5px);
+	font-size: $font-size-h4;
 }
 
 .kiosk-event-list {

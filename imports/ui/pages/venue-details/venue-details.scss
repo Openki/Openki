@@ -18,8 +18,8 @@
 
 .location-details-header > img {
 	@include td-float(right);
-	height: 90px;
 	@include td-padding(left, ($grid-gutter-width / 2));
+	height: 90px;
 }
 
 .location-details-body {

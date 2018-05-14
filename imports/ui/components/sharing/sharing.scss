@@ -1,11 +1,13 @@
 .shariff {
-	padding: 15px;
 	@include td-text-align(right);
+	padding: 15px;
 }
 
+// sass-lint:disable class-name-format
 .shariff .share_text {
 	display: none;
 }
+// sass-lint:enable class-name-format
 
 $shariff-link-padding: 5px;
 $shariff-button-margin-bottom: ($shariff-link-padding * 2) + 5px;

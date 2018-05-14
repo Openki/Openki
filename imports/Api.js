@@ -10,6 +10,11 @@ const apiResponse = function(collection, formatter) {
 	};
 };
 
+const maybeUrl = function(route, context) {
+	if (!context || !context._id) return undefined;
+	return Router.url(route, context);
+};
+
 export default Api =
 	{ groups:
 		apiResponse(Groups, group => {
@@ -52,7 +57,7 @@ export default Api =
 						{ id: ev.venue._id
 						, name: ev.venue.name
 						, loc: ev.venue.loc
-						, link: Router.url('venueDetails', ev.venue)
+						, link: maybeUrl('venueDetails', ev.venue)
 						};
 				}
 

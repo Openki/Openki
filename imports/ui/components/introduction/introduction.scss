@@ -22,14 +22,16 @@
 	margin-top: 60px;
 }
 
+// sass-lint:disable no-ids
 .calendar-introduction + #maincontent > .container {
 	padding-top: 0;
 }
+// sass-lint:enable no-ids
 
 .js-introduction-close-btn {
+	@include td-pos(right, 13px);
 	font-size: large;
 	position: absolute;
-	@include td-pos(right, 13px);
 	top: 13px;
 }
 
@@ -90,19 +92,18 @@
 
 	&::after {
 		@include opacity(.5);
+		@include td-pos(right, 0);
 		color: lighten($gray-light, 15%);
 		content: '';
 		font-family: FontAwesome;
 		font-size: 16px;
 		position: absolute;
-		@include td-pos(right, 0);
 		top: 6px;
 
 		@media (max-width: $screen-xxs) {
+			@include td-pos(right, 47%);
 			bottom: -15px;
 			content: '';
-			// right: 47%;
-			@include td-pos(right, 47%);
 		}
 	}
 }
@@ -119,6 +120,7 @@
 		content: '';
 	}
 }
+
 .introduction-steps > li:last-of-type > h2::after {
 	content: '';
 }

@@ -5,9 +5,9 @@
 
 	.loading {
 		position: fixed;
-		width: 15em;
 		right: 0;
 		top: 50px;
+		width: 15em;
 	}
 
 	.id {
@@ -17,8 +17,9 @@
 	.clickable {
 		padding: 2px;
 	}
+
 	.clickable:hover {
+		border: 1px $black solid;
 		padding: 1px;
-		border: 1px black solid;
 	}
 }

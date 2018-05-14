@@ -115,6 +115,14 @@ Meteor.methods({
 				if (!course.editableBy(user)) throw new Meteor.Error(401, "not permitted");
 			}
 
+			if (changes.replicaOf) {
+				const parent = Events.findOne(changes.replicaOf);
+				if (!parent) throw new Meteor.Error(404, "replica parent not found");
+				if (parent.courseId !== changes.courseId) {
+					throw new Meteor.Error(400, "replica must be in same course");
+				}
+			}
+
 			if (!changes.startLocal) {
 				throw new Meteor.Error(400, "Event date not provided");
 			}

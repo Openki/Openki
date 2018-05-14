@@ -7,9 +7,10 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test.js';
 
 if(Meteor.isClient) {
 	describe('Create course in group', function() {
+		this.timeout(10000);
 		const random_title = "TEST" + (1000 + Math.floor(Math.random() * 9000));
 		it('saves course for group', function() {
-			Router.go('/group/f101a788db');
+			Router.go('/group/fd3a8d98d4');
 			const haveEditfield = () => {
 				assert(
 					jQuery("#editform_name").length > 0,
@@ -46,12 +47,12 @@ if(Meteor.isClient) {
 					jQuery(".course-details").length > 0,
 					"Details of the new course are shown"
 				);
-			})).then(() => {
+			})).then(waitFor(() => {
 				assert.match(
 					jQuery('.js-group-label').text(), /SKG/,
 					"The course is in the group it was created in"
 				);
-			});
+			}));
 		});
 	});
 }
