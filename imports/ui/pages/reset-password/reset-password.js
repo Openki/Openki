@@ -11,6 +11,7 @@ import './reset-password.html';
 
 Template.resetPassword.onCreated(function () {
 	var instance = this;
+	instance.busy(false);
 	instance.password = new ReactiveVar("");
 	instance.passwordValid = new ReactiveVar(false);
 	instance.passwordSame = new ReactiveVar(false);
@@ -71,11 +72,13 @@ Template.resetPassword.events({
 	},
 
 	'submit': function(event, instance) {
+		instance.busy("saving");
 		event.preventDefault();
 
         var password = instance.$('.js-pwd-reset').val();
 		var token = Template.instance().data;
 		Accounts.resetPassword(token, password, function(err) {
+			instance.busy(false);
 			if (err) {
 				ShowServerError('Unable to reset password', err);
 			} else {

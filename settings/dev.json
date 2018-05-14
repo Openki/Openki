@@ -7,5 +7,6 @@
 		"siteStage": "DEV"
 	},
 	"siteEmail": "HMMM@legit.example"
+, "printLog": true
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
 }

@@ -38,13 +38,13 @@
 .forgot-pwd-btn-container > .btn-link {
 	$color: $blue;
 
-	color: $color;
 	@include td-text-align(left);
+	color: $color;
 	white-space: normal;
 	width: 100%;
 
 	&:hover {
-		color: darken($color, 20%)
+		color: darken($color, 20%);
 	}
 
 	@media (min-width: $screen-xs-min) {

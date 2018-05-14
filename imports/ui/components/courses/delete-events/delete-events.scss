@@ -1,0 +1,41 @@
+.course-event-tasks {
+	position: relative;
+}
+
+.course-event-tasks * {
+	vertical-align: top;
+}
+
+.delete-events-details {
+	color: $gray;
+
+	&:hover {
+		color: $gray;
+	}
+}
+
+.modal-body .panel {
+	margin: 0;
+}
+
+.delete-events-list,
+.selected-events {
+	overflow: auto;
+}
+
+.delete-events-list {
+	border: 1px solid $blue-lighter;
+	margin-bottom: 15px;
+	max-height: 350px;
+	padding: 0 10px;
+}
+
+.selected-events {
+	margin: 15px 0;
+	max-height: 300px;
+	overflow: auto;
+}
+
+.delete-events-events-title {
+	margin-bottom: 5px;
+}

@@ -8,14 +8,14 @@ if (Meteor.isClient) {
 	describe('Frontpage', function() {
 		this.timeout(10000);
 		beforeEach(function(done) {
-			Meteor.call('fixtures.clean',
-					() => Meteor.call('fixtures.create'));
-			// HACK: done() fails with a strange error when called from Meteor.call()
-			// So we just wait a bit... poor man's synch
-			setTimeout(done, 2000);
+			Meteor.call('fixtures.clean', done);
+		});
+		beforeEach(function(done) {
+			Meteor.call('fixtures.create', done);
 		});
 		it('should list 8 courses for unauthenticated user (Testistan)', function() {
 			Router.go('/');
+			Session.set('region', "9JyFCoKWkxnf8LWPh"); // Testistan
 
 			return subscriptionsReady()
 			.then(waitFor(() => {

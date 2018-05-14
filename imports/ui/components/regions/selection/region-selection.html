@@ -1,6 +1,6 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
-		{{#if searchingRegions}}
+		{{#if state 'searchingRegions'}}
 			<li class="navbar-form navbar-form-selection dropdown">
 				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 				{{> regionSelection}}
@@ -9,6 +9,19 @@
 			{{> regionDisplay}}
 		{{/if}}
 	{{/if}}
+</template>
+
+<template name="regionDisplay">
+	<li>
+		<a class="navbar-link js-region-display">
+			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			{{#if currentRegion}}
+				{{currentRegion.name}}
+			{{else}}
+				{{mf 'menue.All regions' 'All regions'}}
+			{{/if}}
+		</a>
+	</li>
 </template>
 
 <template name="regionSelection">
@@ -26,9 +39,24 @@
 			role="button">
 		</span>
 		<ul class="dropdown-menu" role="menu">
+			<li class="dropdown-header dropdown-legend">
+				<div class="dropdown-addon-right">
+					<span
+						class="badge badge-courses"
+						title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
+						# <i class="fa fa-circle"></i>
+					</span>
+					<span
+						class="badge badge-events"
+						title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
+						# <i class="fa fa-calendar"></i>
+					</span>
+				</div>
+				{{mf 'regionSelection.legend.region' 'Region'}}
+			</li>
 			<li>
 				<a class="js-region-link js-nav-dropdown-close" href="#">
-					<div class="region-badges">
+					<div class="dropdown-addon-right">
 						<span
 							class="badge badge-courses"
 							title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
@@ -41,45 +69,51 @@
 						</span>
 					</div>
 					{{mf 'menue.All regions' 'All regions'}}
-					{{#if currentRegion}}
+					{{#if isCurrentRegion}}
 						<span class="checkmark glyphicon glyphicon-ok"></span>
 					{{/if}}
 				</a>
 			</li>
-			{{#each regions}}
-				<li>
-					<a href="#" class="js-region-link js-nav-dropdown-close">
-						<div class="region-badges">
-							<span
-								class="badge badge-courses"
-								title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
-								{{courseCount}}
-							</span>
-							<span
-								class="badge badge-events"
-								title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
-								{{futureEventCount}}
-							</span>
-						</div>
-						{{regionNameMarked}}
-						{{#if currentRegion}}
-							<span class="checkmark glyphicon glyphicon-ok"></span>
-						{{/if}}
-					</a>
-				</li>
+			{{#each region in regions}}
+				{{> regionSelectionItem region}}
 			{{/each}}
+			{{#if inactiveRegions.count}}
+				{{#if state 'showAllRegions'}}
+					{{#each region in inactiveRegions}}
+						{{> regionSelectionItem region}}
+					{{/each}}
+				{{else}}
+					<li class="divider" role="separator"></li>
+					<li>
+						<button class="btn-link js-show-all-regions" type="button">
+							<i class="fa fa-fw fa-list" aria-hidden="true"></i>
+							{{mf 'regionSelection.showAll' 'Show all regions'}}
+						</button>
+					</li>
+				{{/if}}
+			{{/if}}
 		</ul>
 	</form>
 </template>
 
-<template name="regionDisplay">
+<template name="regionSelectionItem">
 	<li>
-		<a class="navbar-link js-region-display">
-			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{#if region}}
-				{{region.name}}
-			{{else}}
-				{{mf 'menue.All regions' 'All regions'}}
+		<a href="#" class="js-region-link js-nav-dropdown-close">
+			<div class="dropdown-addon-right">
+				<span
+					class="badge badge-courses"
+					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+					{{courseCount}}
+				</span>
+				<span
+					class="badge badge-events"
+					title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+					{{futureEventCount}}
+				</span>
+			</div>
+			{{regionNameMarked}}
+			{{#if isCurrentRegion}}
+				<span class="checkmark glyphicon glyphicon-ok"></span>
 			{{/if}}
 		</a>
 	</li>

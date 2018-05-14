@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Check whether there was an NPM package change
-if [ "$1" ] && [ "$2" ] && git diff "$1" "$2" --name-only | grep -q package.json
+if [ "$1" ] && [ "$2" ] && git diff "$1" "$2" --name-only | grep -q package-lock.json
 then
 	echo "Running npm install because package.json changed"
 	meteor npm install
