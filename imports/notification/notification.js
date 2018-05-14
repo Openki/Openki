@@ -19,7 +19,7 @@ Notification.PrivateMessage = notificationPrivateMessage;
   *
   * path: a file path relative to private/
   */
-Logo = function(path) {
+const logo = function(path) {
 	const cid = Random.id();
 	this.url = "cid:" + cid;
 	this.attachement =
@@ -86,7 +86,7 @@ Notification.send = function(entry) {
 				vars.siteName = siteName;
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = Logo('mails/logo.png');
+				vars.logo = logo('mails/logo.png');
 
 				var message = SSR.render(model.template, vars);
 
