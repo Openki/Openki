@@ -1,6 +1,6 @@
 @mixin tag($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
-	color: $color;
 	background-color: $bg;
+	color: $color;
 	padding: 1px 4px;
 
 	& > a {
@@ -21,7 +21,7 @@
 @mixin tag-btn($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
 	& > button {
 		background-color: $bg;
-		border: none;
+		border: 0;
 		color: $color;
 		font-size: $font-size-base;
 

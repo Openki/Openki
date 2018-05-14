@@ -5,7 +5,7 @@
 //========================================================================================
 .calendar-nav-container {
 	@include td-make-xs-column(12);
-	background-color: rgba($calendar-nav-bg, 0.97);
+	background-color: rgba($calendar-nav-bg, .97);
 	display: none;
 	margin-bottom: 10px;
 	padding: 0 10px;
@@ -80,13 +80,13 @@
 // ** Date
 //========================================================================================
 .calendar-date {
+	@include td-padding-all(5px, 7px, 5px, 9px);
 	background: $blue-lighter;
 	border-color: $blue;
 	border-style: solid;
 	border-width: 10px 0 0;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 	font-size: large;
-	@include td-padding-all(5px, 7px, 5px, 9px);
 	text-align: center;
 
 	@media (min-width: $screen-xxs) {

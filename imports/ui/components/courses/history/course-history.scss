@@ -1,4 +1,4 @@
-#history {
+.course-history {
 	@include clearfix;
 	padding-bottom: 10px;
 }
@@ -45,9 +45,9 @@
 
 .timeline-eventdate {
 	@include td-make-xs-column(9);
+	@include td-text-align(right);
 	color: rgb(109, 112, 112);
 	padding: 0;
-	@include td-text-align(right);
 
 	&.active {
 		color: $gray-dark;
@@ -69,7 +69,7 @@
 
 .timeline-eventpoint {
 	background: $brand-primary;
-	border-radius: 50% !important;
+	border-radius: 50%;
 	bottom: 13px;
 	height: 7px;
 	margin: auto;

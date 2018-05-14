@@ -7,7 +7,7 @@
 
 @mixin btn-lg {
 	@include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
-	border-radius: 0px !important;
+	border-radius: 0;
 }
 
 @mixin btn-sm {

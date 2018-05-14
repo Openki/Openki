@@ -16,13 +16,15 @@
 }
 
 .profile-courselist .role-label {
-	transition: all $default-transition-time;
 	cursor: pointer;
+	transition-duration: $default-transition-time;
+	transition-property: #{'color background box-shadow'};
+
 	&:hover,
 	&:focus {
-		color: desaturate(darken($user-bg, 50%), 80%);
 		background: darken($user-bg, 5%);
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+		color: desaturate(darken($user-bg, 50%), 80%);
 	}
 }
 

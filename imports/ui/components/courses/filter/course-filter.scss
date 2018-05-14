@@ -25,17 +25,17 @@
 }
 
 .filter.active .filter-active-tag {
+	@include td-margin(left, 5px);
 	background-color: darken($green, 35%);
 	color: $white;
 	display: inline;
 	font-size: smaller;
-	@include td-margin(left, 5px);
 	padding: 3px 5px;
 }
 
 .filter-captions-header-buttons {
-	display: block;
 	@include td-float(right);
+	display: block;
 }
 
 .filter-remove-btn-text {
@@ -116,7 +116,7 @@ $filter-course-state-captions-gutter: 10px;
 	opacity: .75;
 	text-align: center;
 	transition-duration: .15s;
-	transition-property: #{"box-shadow opacity"};
+	transition-property: #{'box-shadow opacity'};
 	width: 100%;
 
 	&.is-proposal,
@@ -146,7 +146,7 @@ $filter-course-state-captions-gutter: 10px;
 		box-shadow: 0 0 4px rgba(67, 223, 37, 1);
 		opacity: 1;
 		transition-duration: .15s;
-		transition-property: #{"box-shadow opacity"};
+		transition-property: #{'box-shadow opacity'};
 	}
 
 	@media (min-width: $screen-xs-min) {
@@ -165,12 +165,12 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-course-role {
+	@include td-text-align(left);
 	background-color: transparent;
 	border: 0;
 	display: block;
 	margin: 0;
 	padding: 0;
-	@include td-text-align(left);
 
 	&:hover {
 		color: $brand-primary;
@@ -190,10 +190,10 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-course-role-icon {
+	@include td-margin(right, 5px);
 	background-color: $role-needed-bg;
 	color: $role-needed-color;
 	display: inline-block;
-	@include td-margin(right, 5px);
 	padding: 3px 5px;
 }
 
@@ -216,13 +216,13 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-categories-select > .dropdown-toggle {
+	@include td-pos(right, 3px);
 	background: transparent;
 	border: 0;
 	display: block;
 	line-height: $line-height-base;
 	padding: $padding-base-vertical $padding-base-horizontal;
 	position: absolute;
-	@include td-pos(right, 3px);
 	top: 0;
 }
 
@@ -269,9 +269,9 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .dropdown-menu > .js-sub-category {
+	@include td-margin(left, 20px);
 	border-left: 1px solid $blue-light;
 	display: none;
-	@include td-margin(left, 20px);
 }
 
 .js-sub-category > a {
@@ -292,8 +292,8 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-selected-categories > li {
-	margin-bottom: 3px;
 	@include td-padding-all(0, 3px, 3px, 0);
+	margin-bottom: 3px;
 
 	@media (max-width: $screen-xs) {
 		display: inline-block;
@@ -307,6 +307,6 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-actions {
-	margin-top: 5px;
 	@include td-text-align(right);
+	margin-top: 5px;
 }
