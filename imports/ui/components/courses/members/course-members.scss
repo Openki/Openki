@@ -1,9 +1,9 @@
 .course-members {
-	margin-top: $course-details-seperator-height;
 	font-size: medium;
+	margin-top: $course-details-seperator-height;
 }
 
-#contactMembers {
+.contact-members {
 	@include td-float(right);
 
 	&:hover {
@@ -25,11 +25,11 @@
 }
 
 .course-member-roles {
+	@include td-margin(left, 10px);
+	@include td-padding(left, 0);
 	display: inline-block;
 	list-style: none;
 	margin-bottom: 0;
-	@include td-margin(left, 10px);
-	@include td-padding(left, 0);
 
 	&:hover {
 		cursor: default;
@@ -45,17 +45,19 @@
 }
 
 .course-member-role {
-	vertical-align: middle;
-	padding: 3px 6px 5px 6px;
 	background: $blue;
+	padding: 3px 6px 5px;
+	vertical-align: middle;
 }
-.course-member-role-text{
+
+.course-member-role-text {
 	color: $white;
 	font-size: small;
 	font-weight: bold;
 }
+
 .team .course-member-role {
-	padding-right: 0px;
+	padding-right: 0;
 }
 
 .role-short {
@@ -68,18 +70,18 @@
 }
 
 .remove-team-btn {
-	padding: 2px;
-	margin: -2px;
-	vertical-align: baseline;
-	color: $white;
 	background: $blue;
-	border: none;
+	border: 0;
+	color: $white;
+	margin: -2px;
+	padding: 2px;
+	vertical-align: baseline;
 
 	&:hover,
 	&:focus {
 		background: darken($blue, 10%);
+		border: 0;
 		color: $white;
-		border: none;
 	}
 }
 
@@ -102,10 +104,10 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 }
 
 .course-member-comment-body {
+	@include td-float(left);
 	background-color: lighten($blue-lighter, 6%);
 	border: 1px solid $course-member-comment-border-color;
 	border-radius: 3px;
-	@include td-float(left);
 	font-size: $font-size-base;
 	max-width: 100%;
 	overflow: hidden;
@@ -114,5 +116,5 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 }
 
 .course-member-comment .editable {
-	@include td-padding(left, 0 !important);
+	@include td-padding(left, 0);
 }

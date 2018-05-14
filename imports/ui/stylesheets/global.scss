@@ -7,13 +7,13 @@
 }
 
 .checkmark {
-	color: $green-dark;
 	@include td-padding(left, 5px);
+	color: $green-dark;
 }
 
 .profilelink {
-	color: $gray-dark;
 	@include td-padding(right, 5px);
+	color: $gray-dark;
 
 	&:hover {
 		color: $brand-primary;
@@ -22,10 +22,10 @@
 }
 
 .datepicker {
-	z-index: $zindex-navbar-fixed + 1 !important;
+	z-index: $zindex-navbar-fixed + 1;
 }
 
-.datepicker-dropdown.datepicker-orient-top:after {
+.datepicker-dropdown.datepicker-orient-top::after {
 	border-top-color: $dropdown-bg;
 }
 
@@ -37,7 +37,7 @@ select:hover {
 	cursor: pointer;
 }
 
-.select_placeholder:hover {
+.select-placeholder:hover {
 	cursor: not-allowed;
 }
 
@@ -54,8 +54,9 @@ a:hover,
 	text-decoration: none;
 }
 
-.elevate_child {
-	box-shadow: none !important;
+.course-compact.elevate-child,
+.course-compact.elevate-child:hover {
+	box-shadow: none;
 	transition: box-shadow $default-transition-time;
 }
 

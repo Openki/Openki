@@ -4,8 +4,8 @@
 
 .icon-text-icon,
 .icon-text-text {
-	display: table-cell;
 	@include td-text-align(left);
+	display: table-cell;
 	vertical-align: top;
 }
 

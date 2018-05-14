@@ -2,6 +2,7 @@
 	$opposite-dir: if($dir == left, right, left);
 
 	padding-#{$dir}: $x;
+
 	.rtl & {
 		padding-#{$dir}: 0;
 		padding-#{$opposite-dir}: $x;
@@ -10,6 +11,7 @@
 
 @mixin td-padding-all($top, $right, $bottom, $left) {
 	padding: $top $right $bottom $left;
+
 	.rtl & {
 		padding: $top $left $bottom $right;
 	}
@@ -19,6 +21,7 @@
 	$opposite-dir: if($dir == left, right, left);
 
 	margin-#{$dir}: $x;
+
 	.rtl & {
 		margin-#{$dir}: 0;
 		margin-#{$opposite-dir}: $x;
@@ -27,6 +30,7 @@
 
 @mixin td-margin-all($top, $right, $bottom, $left) {
 	margin: $top $right $bottom $left;
+
 	.rtl & {
 		margin: $top $left $bottom $right;
 	}
@@ -36,6 +40,7 @@
 	$opposite-dir: if($dir == left, right, left);
 
 	#{$dir}: $x;
+
 	.rtl & {
 		#{$dir}: auto;
 		#{$opposite-dir}: $x;
@@ -46,6 +51,7 @@
 	$opposite-dir: if($dir == left, right, left);
 
 	text-align: $dir;
+
 	.rtl & {
 		text-align: $opposite-dir;
 	}
@@ -55,6 +61,7 @@
 	$opposite-dir: if($dir == left, right, left);
 
 	float: $dir;
+
 	.rtl & {
 		float: $opposite-dir;
 	}

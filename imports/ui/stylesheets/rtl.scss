@@ -24,8 +24,8 @@
 
 	.dropdown-menu {
 		left: auto;
-		text-align: right;
 		right: 0;
+		text-align: right;
 	}
 
 	.input-group .form-control:first-child,
@@ -40,8 +40,8 @@
 	}
 
 	.input-group-addon:first-child {
-		border-right: 1px solid $input-group-addon-border-color;
 		border-left: 0;
+		border-right: 1px solid $input-group-addon-border-color;
 	}
 
 	.input-group .form-control:last-child,
@@ -66,10 +66,10 @@
 		padding-right: 20px;
 	}
 
-	.radio input[type="radio"],
-	.radio-inline input[type="radio"],
-	.checkbox input[type="checkbox"],
-	.checkbox-inline input[type="checkbox"] {
+	.radio input[type='radio'],
+	.radio-inline input[type='radio'],
+	.checkbox input[type='checkbox'],
+	.checkbox-inline input[type='checkbox'] {
 		margin-left: 0;
 		margin-right: -20px;
 	}
@@ -79,8 +79,8 @@
 	}
 
 	.nav-tabs > li > a {
-		margin-right: 0;
 		margin-left: 2px;
+		margin-right: 0;
 	}
 
 	.close {

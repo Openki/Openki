@@ -17,8 +17,8 @@ $event-caption-border: $yellow;
 	border-color: $event-caption-border;
 	border-style: solid;
 	border-width: 1.5px 1.5px 0;
-	font-size: small;
 	display: table-cell;
+	font-size: small;
 	padding: 3px;
 	position: relative;
 	transition: border-color $default-transition-time;
@@ -26,9 +26,9 @@ $event-caption-border: $yellow;
 }
 
 .event-caption-header > .fa-map-pin {
+	@include td-pos(left, 50%);
 	color: $text-color;
 	font-size: 8px;
-	@include td-pos(left, 50%);
 	position: absolute;
 	top: -5px;
 	transform: rotate(10deg);
@@ -37,8 +37,8 @@ $event-caption-border: $yellow;
 .event-caption-pseudoborder {
 	background-color: $white;
 	bottom: 0;
-	left: 0;
 	height: 1px;
+	left: 0;
 	position: absolute;
 	width: 100%;
 }
@@ -63,14 +63,14 @@ $event-caption-body-bg: $event-body-bg;
 }
 
 .event-caption.placeholder .event-caption-header {
-	background-color: rgba(desaturate($event-caption-header-bg, 55%), 0.5);
+	background-color: rgba(desaturate($event-caption-header-bg, 55%), .5);
 }
 
 
 .event-caption.placeholder .event-caption-body {
-	background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
+	background-color: rgba(desaturate($event-caption-body-bg, 50%), .5);
 	color: transparent;
-	text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 0 1.5px rgba(0, 0, 0, .5);
 }
 
 .event-caption.placeholder .event-caption-header,
@@ -111,8 +111,8 @@ $event-caption-body-bg: $event-body-bg;
 
 .event-caption-icon {
 	@include td-pos(right, -5%);
-	position: absolute;
 	bottom: 0;
+	position: absolute;
 }
 
 .event-caption-add .event-caption-icon {

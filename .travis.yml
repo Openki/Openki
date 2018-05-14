@@ -33,6 +33,8 @@ install:
 script:
   # Test for JS errors
   - meteor npm run js-lint -- .
+  # Test for SASS errors
+  - meteor npm run sass-lint
   # Run unit-tests
   - meteor npm run test
   # Run end-to-end tests

@@ -23,7 +23,7 @@
 
 	&:hover,
 	&.active {
-		background-color: rgba(0, 0, 0, 0.03);
+		background-color: rgba(0, 0, 0, .03);
 	}
 }
 
@@ -34,8 +34,8 @@
 }
 
 .frame-list-item-time {
-	font-weight: normal;
 	@include td-margin(right, 10px);
+	font-weight: normal;
 }
 
 .frame-list-item-region {
