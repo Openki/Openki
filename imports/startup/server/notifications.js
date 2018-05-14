@@ -11,7 +11,7 @@ Meteor.startup(function() {
 	// last hours. This way, if the server should have failed for a longer time,
 	// no notifications will go out.
 	var gracePeriod = new Date();
-	gracePeriod.setHours(gracePeriod.getHours() - 12);
+	gracePeriod.setHours(gracePeriod.getHours() - 72);
 
 	// The Log is append-only so we only watch for additions
 	Log.find({ tr: 'Notification.Send', ts: { $gte: gracePeriod } }).observe({
