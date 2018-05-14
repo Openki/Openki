@@ -42,6 +42,7 @@
 	font-weight: bold;
 	margin: 0;
 }
+
 // ** Course buttons
 //========================================================================================
 .course-delete-confirmation {
@@ -84,8 +85,8 @@
 // ** Tags
 //========================================================================================
 .details-header-tags {
-	position: absolute;
 	@include td-pos(right, 0);
+	position: absolute;
 	top: 0;
 }
 
@@ -101,7 +102,7 @@
 }
 
 .proposal-tag {
-	$background-color: rgba($blue-lighter, 0.75);
+	$background-color: rgba($blue-lighter, .75);
 
 	background-color: $background-color;
 	color: darken($background-color, 65%);
@@ -171,8 +172,8 @@
 // ** Content
 //========================================================================================
 .course-details-content {
-	border-color: darken($tab-content-bg, 5%);
 	border-bottom-width: 0;
+	border-color: darken($tab-content-bg, 5%);
 	position: relative;
 
 	&::before,

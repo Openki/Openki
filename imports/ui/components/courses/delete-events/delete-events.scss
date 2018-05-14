@@ -1,6 +1,7 @@
 .course-event-tasks {
 	position: relative;
 }
+
 .course-event-tasks * {
 	vertical-align: top;
 }
@@ -24,14 +25,14 @@
 
 .delete-events-list {
 	border: 1px solid $blue-lighter;
-	max-height: 350px;
 	margin-bottom: 15px;
+	max-height: 350px;
 	padding: 0 10px;
 }
 
 .selected-events {
-	max-height: 300px;
 	margin: 15px 0;
+	max-height: 300px;
 	overflow: auto;
 }
 

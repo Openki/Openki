@@ -46,8 +46,8 @@
 }
 
 .editable-wrap-rich .editable-icon {
-	position: absolute;
 	@include td-pos(right, 0);
+	position: absolute;
 	top: 0;
 }
 
@@ -64,8 +64,8 @@
 }
 
 .editable-controls button {
-	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 	@include td-margin(right, 5px);
+	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
 }
 
 .editable-textarea {

@@ -6,5 +6,5 @@
 	$background-color: $green;
 
 	background-color: $background-color;
-	color: desaturate(darken($background-color, 40%), 50%)
+	color: desaturate(darken($background-color, 40%), 50%);
 }

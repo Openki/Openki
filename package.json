@@ -26,14 +26,16 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "jshint": "^2.9.5",
-    "nightmare": "^3.0.1"
+    "nightmare": "^3.0.1",
+    "sass-lint": "^1.11.1"
   },
   "scripts": {
     "dev": "meteor --settings settings/dev.json",
     "test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
     "app-test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
     "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
-    "js-lint": "jshint"
+    "js-lint": "jshint",
+    "sass-lint": "sass-lint --verbose"
   },
   "repository": {
     "type": "git",

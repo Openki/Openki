@@ -1,3 +1,5 @@
+// sass-lint:disable no-qualifying-elements
+
 $dropdown-transition-time: .3s;
 
 .dropdown-menu {
@@ -7,9 +9,9 @@ $dropdown-transition-time: .3s;
 }
 
 .dropdown-menu > li > .btn-link {
+	@include td-text-align(left);
 	color: $dropdown-link-color;
 	padding: 3px 20px;
-	@include td-text-align(left);
 	white-space: nowrap;
 	width: 100%;
 
@@ -54,15 +56,15 @@ $dropdown-transition-time: .3s;
 
 .dropdown-addon-right {
 	@include clearfix;
-	display: inline-block;
 	@include td-float(right);
 	@include td-padding(left, 30px);
+	display: inline-block;
 }
 
 $dropdown-legend-color: $brand-primary;
 
 .dropdown-legend {
 	@include clearfix;
-	color: $dropdown-legend-color;
 	@include td-text-align(left);
+	color: $dropdown-legend-color;
 }
