@@ -32,28 +32,15 @@
 		</div>
 	</div>
 	<div class="page-component">
-		{{#if hasResults}}
+		<!-- {{#if hasResults}} -->
 			<div class="course-list">
 				{{#each result in results}}
 					{{> courseCompact result}}
 				{{/each}}
 			</div>
-
-
-			{{#unless ready}}
-				{{> loadingPage}}
-			{{/unless}}
-
-			{{#if hasMore}}
-				<div class="show-more-courses">
-					<button type="button" class="btn btn-success js-more-courses">
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-						{{mf 'find.showMoreCourses' 'Show more courses'}}
-					</button>
-				</div>
-			{{/if}}
-		{{else}}
-			{{#if ready}}
+		<!-- {{else}} -->
+		{{#unless hasResults}}
+			<!-- {{#if ready}} -->
 				<div class="no-results">
 					<div class="no-results-body">
 						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
@@ -76,10 +63,14 @@
 						</div>
 					{{/if}}
 				</div>
-			{{else}}
+			<!-- {{else}}
 				{{> loadingPage}}
-			{{/if}}
-		{{/if}}
+			{{/if}} -->
+		<!-- {{/if}} -->
+		{{/unless}}
+		{{#unless ready}}
+			{{> loadingPage}}
+		{{/unless}}
 	</div>
 	<div class="page-component">
 		<div class="container-sm">

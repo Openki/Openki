@@ -1,4 +1,5 @@
 import { Session } from 'meteor/session';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -79,8 +80,13 @@ Template.find.onCreated(function() {
 	instance.showingFilters = new ReactiveVar(false);
 	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(Categories);
-	instance.courseLimit = new ReactiveVar(36);
-	instance.coursesReady = new ReactiveVar(false); // Latch
+
+	this.state = new ReactiveDict();
+	this.state.setDefault(
+		{ limit: 5
+		, hasMore: false
+		}
+	);
 
 	var filter = Courses.Filtering();
 	instance.filter = filter;
@@ -103,18 +109,32 @@ Template.find.onCreated(function() {
 		}
 	});
 
+	this.dynamicallyLoadCourses = () => {
+		if (!this.state.get('hasMore')) return;
+
+		const courselist = this.$('.course-list');
+		const offsetBottom = courselist.offset().top + courselist.height();
+
+		if ($(window).scrollTop() >= offsetBottom - $(window).height()) {
+			this.state.set('limit', this.state.get('limit') + 5);
+		}
+	};
+
 	// Update whenever filter changes
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
-		instance.coursesReady.set(false);
+	this.autorun(() => {
+		const filterQuery = filter.toQuery();
+		const limit = this.state.get('limit');
 
-		// Add one to the limit so we know there is more to show
-		var limit = instance.courseLimit.get() + 1;
-
-		instance.subscribe('Courses.findFilter', filterQuery, limit, function() {
-			instance.coursesReady.set(true);
+		this.subscribe('Courses.findFilter', filterQuery, limit + 1, () => {
+			const results = Courses.findFilter(filterQuery, limit + 1);
+			this.state.set('hasMore', results.count() > limit);
+			this.dynamicallyLoadCourses();
 		});
 	});
+});
+
+Template.find.onRendered(function() {
+	$(window).scroll(() => { this.dynamicallyLoadCourses(); });
 });
 
 Template.find.events({
@@ -192,11 +212,6 @@ Template.find.events({
 
 	"click .js-all-regions-btn": function(event, instance){
 		Session.set('region', 'all');
-	},
-
-	"click .js-more-courses": function(event, instance) {
-		var courseLimit = instance.courseLimit;
-		courseLimit.set(courseLimit.get() + 36);
 	}
 });
 
@@ -227,26 +242,15 @@ Template.find.helpers({
 		return results.count() > 0;
 	},
 
-	'hasMore': function() {
-		var instance = Template.instance();
-		if (!instance.coursesReady.get()) return false;
-
-		var filterQuery = instance.filter.toQuery();
-		var limit = instance.courseLimit.get();
-		var results = Courses.findFilter(filterQuery, limit+1);
-
-		return results.count() > limit;
-	},
-
 	'results': function() {
 		var instance = Template.instance();
 		var filterQuery = instance.filter.toQuery();
 
-		return Courses.findFilter(filterQuery, instance.courseLimit.get());
+		return Courses.findFilter(filterQuery, instance.state.get('limit'));
 	},
 
 	'ready': function() {
-		return Template.instance().coursesReady.get();
+		return Template.instance().subscriptionsReady();
 	},
 
 	'filteredRegion': function() {
