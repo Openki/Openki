@@ -171,11 +171,19 @@ Template.courseGroupAdd.helpers({
 
 Template.courseGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
+		const courseId = instance.data._id;
+		const groupId = event.currentTarget.value;
 		Meteor.call('course.promote', instance.data._id, event.currentTarget.value, true, function(error) {
 			if (error) {
 				ShowServerError("Failed to add group", error);
 			} else {
-				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				const courseName = Courses.findOne(courseId).name;
+				AddMessage(mf(
+					'courseGroupAdd.groupAdded',
+					{ GROUP: groupName, COURSE: courseName },
+					'The group "{GROUP}" has been added to promote the course "{COURSE}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -187,11 +195,19 @@ TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
 	'click .js-remove': function(event, instance) {
-		Meteor.call('course.promote', instance.data.course._id, instance.data.groupId, false, function(error) {
+		const course = instance.data.course;
+		const groupId = instance.data.groupId;
+		Meteor.call('course.promote', course._id, groupId, false, function(error) {
 			if (error) {
 				ShowServerError("Failed to remove group", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				const courseName = course.name;
+				AddMessage(mf(
+					'courseGroupAdd.groupRemoved',
+					{ GROUP: groupName, COURSE: courseName },
+					'The group "{GROUP}" has been removed from the course "{COURSE}".'
+				), 'info');
 				instance.collapse();
 			}
 		});
