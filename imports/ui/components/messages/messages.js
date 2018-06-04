@@ -33,8 +33,9 @@ Template.message.onRendered(function() {
 	this.parentInstance().updateSpacerHeight();
 	this.$('.message').toggleClass('is-faded-in');
 
-	const messageId = Template.currentData()._id;
-	this.timedRemove = setTimeout(() => this.remove(messageId), 4000);
+	const message = Template.currentData();
+	const timeout = message.type === 'error' ? 60000 : 4000;
+	this.timedRemove = setTimeout(() => this.remove(message._id), timeout);
 });
 
 Template.message.events({
