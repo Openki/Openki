@@ -20,12 +20,12 @@ Meteor.methods({
 	},
 
 
-	sendEmail: function (userId, message, revealAddress, sendCopy, courseId) {
-		check(userId       , String);
-		check(message      , String);
-		check(revealAddress, Boolean);
-		check(sendCopy     , Boolean);
-		check(courseId     , Match.Optional(String));
+	sendEmail: function (userId, message, options) {
+		check(userId               , String);
+		check(message              , String);
+		check(options.revealAddress, Boolean);
+		check(options.sendCopy     , Boolean);
+		check(options.courseId     , Match.Optional(String));
 
 		var recipient = Meteor.users.findOne(userId);
 		if (!recipient) {
@@ -36,16 +36,16 @@ Meteor.methods({
 		}
 
 		const context = {};
-		if (courseId) {
-			context.course = courseId;
+		if (options.courseId) {
+			context.course = options.courseId;
 		}
 
 		Notification.PrivateMessage.record
 			( Meteor.userId()
 			, recipient._id
 			, message
-			, revealAddress
-			, sendCopy
+			, options.revealAddress
+			, options.sendCopy
 			, context
 			);
 	},
