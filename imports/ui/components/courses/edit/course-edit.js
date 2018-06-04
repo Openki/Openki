@@ -308,7 +308,20 @@ Template.courseEdit.events({
 						instance.showSavedMessage.set(true);
 						instance.resetFields();
 					} else {
-						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						if (isNew) {
+							AddMessage(mf(
+								'message.courseCreated',
+								{ NAME: changes.name },
+								'The course "{NAME}" has been created!'
+							), 'success');
+						} else {
+							AddMessage(mf(
+								'message.courseChangesSaved',
+								{ NAME: changes.name },
+								'Your changes to the course "{NAME}" have been saved.'
+							), 'info');
+						}
+
 						Router.go('showCourse', { _id: courseId });
 					}
 
