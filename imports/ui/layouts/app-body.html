@@ -10,6 +10,8 @@
 		<div id="outer" class="{{#if testWarning}}test-warning{{/if}}">
 			{{> yield region='aboveContent'}}
 
+			{{> messages}}
+
 			{{#if shownIntro}}
 				{{> introduction}}
 			{{/if}}
@@ -44,7 +46,6 @@
 				{{else}}
 					{{> yield}}
 				{{/if}}
-				{{> messages}}
 			</div>
 		</div>
 		<div class="push"></div>
