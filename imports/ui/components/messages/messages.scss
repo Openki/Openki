@@ -1,7 +1,27 @@
 .messages {
-	@include td-float(right);
-	@include td-pos(right, 15px);
-	bottom: 0;
 	position: fixed;
-	z-index: 9999;
+	left: 0;
+	top: $navbar-height;
+	width: 100%;
+	z-index: $zindex-navbar-fixed - 1;
+}
+
+$message-fade-duration: .1s;
+
+.message {
+	border-radius: 0;
+	border-top: 0;
+	opacity: 0;
+	margin: 0;
+	transition: opacity $message-fade-duration;
+
+	&.is-faded-in {
+		transition: opacity $message-fade-duration;
+		opacity: 1;
+	}
+}
+
+.messages-spacer {
+	height: 0;
+	transition: height $message-fade-duration;
 }

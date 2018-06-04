@@ -1,19 +1,19 @@
 <template name="messages">
-	{{#if hasMessages}}
-		<div class="messages">
-			{{#each messages}}
-				{{> message}}
-			{{/each}}
-		</div>
-	{{/if}}
+	<div class="messages">
+		{{#each messages}}
+			{{> message}}
+		{{/each}}
+	</div>
+	<div class="messages-spacer"></div>
 </template>
 
 <template name="message">
-	<div class="alert alert-{{type}} alert-dismissible" role="alert">
+	<div class="alert alert-{{type}} alert-dismissible message" role="alert">
 		{{message}}
-		<button type="button" class="close"
+		<button
 			aria-label="{{mf 'message.close' 'Close message'}}"
-			data-dismiss="alert">
+			class="close js-remove-message"
+			type="button">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
