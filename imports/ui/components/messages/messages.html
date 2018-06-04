@@ -9,7 +9,7 @@
 
 <template name="message">
 	<div class="alert alert-{{type}} alert-dismissible message" role="alert">
-		{{message}}
+		{{highlightedMessage}}
 		<button
 			aria-label="{{mf 'message.close' 'Close message'}}"
 			class="close js-remove-message"
