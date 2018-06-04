@@ -33,14 +33,23 @@ Template.message.onRendered(function() {
 	this.parentInstance().updateSpacerHeight();
 	this.$('.message').toggleClass('is-faded-in');
 
-	const message = Template.currentData();
-	if (message.type === 'success') {
-		this.timedRemove = setTimeout(() => this.remove(message._id), 5000);
-	}
+	const messageId = Template.currentData()._id;
+	this.timedRemove = setTimeout(() => this.remove(messageId), 4000);
 });
 
 Template.message.events({
 	'click .js-remove-message'(event, instance) {
+		if (instance.timedRemove) clearTimeout(instance.timedRemove);
 		instance.remove(this._id);
+	}
+});
+
+Template.message.helpers({
+	highlightedMessage() {
+		return Spacebars.SafeString(
+			this.message
+			.replace(/"\b/g, '<strong>"')
+			.replace(/"\B/g, '"</strong>')
+		);
 	}
 });
