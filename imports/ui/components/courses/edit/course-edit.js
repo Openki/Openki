@@ -253,7 +253,6 @@ Template.courseEdit.events({
 
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
-		console.log(instance.data.internal);
 		const internal =
 			instance.data.group
 			? instance.data.internal || false
