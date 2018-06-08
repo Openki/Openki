@@ -10,9 +10,9 @@
 
 $tab-content-bg: lighten($blue-lighter, 5%);
 
-.nav-tabs > .active > a,
-.nav-tabs > .active > a:hover,
-.nav-tabs > .active > a:focus {
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
 	background-color: $tab-content-bg;
 	border-top: 3px solid $blue-light;
 }
