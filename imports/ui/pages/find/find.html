@@ -5,7 +5,7 @@
 </template>
 
 <template name="find">
-	<div class="page-component find-header {{#if showingFilters}}filter-expanded{{/if}}">
+	<div class="page-component find-header {{#if state 'showingFilters'}}filter-expanded{{/if}}">
 		<div class="find-header-heading">
 			<h1 class="find-heading">
 				{{mf 'find.WhatLearn?' 'What do I want to learn?'}}
@@ -32,43 +32,36 @@
 		</div>
 	</div>
 	<div class="page-component">
-		<!-- {{#if hasResults}} -->
-			<div class="course-list">
-				{{#each result in results}}
-					{{> courseCompact result}}
-				{{/each}}
-			</div>
-		<!-- {{else}} -->
+		<div class="course-list">
+			{{#each result in results}}
+				{{> courseCompact result}}
+			{{/each}}
+		</div>
 		{{#unless hasResults}}
-			<!-- {{#if ready}} -->
-				<div class="no-results">
-					<div class="no-results-body">
-						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
-						{{mf 'find.no-courses-found' 'No Courses found.'}}
-					</div>
-					{{#if searchIsLimited}}
-						<div class="btn-group">
-							{{#if filteredRegion}}
-								<button type="button" class="btn btn-default js-all-regions-btn">
-									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-									{{mf 'find.searchAllRegions' 'Search in all regions'}}
-								</button>
-							{{/if}}
-							{{#if activeFilters}}
-								<button type="button" class="btn btn-cancel js-toggle-filter">
-									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-									{{mf 'find.hideFilters'}}
-								</button>
-							{{/if}}
-						</div>
-					{{/if}}
+			<div class="no-results">
+				<div class="no-results-body">
+					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
+					{{mf 'find.no-courses-found' 'No Courses found.'}}
 				</div>
-			<!-- {{else}}
-				{{> loadingPage}}
-			{{/if}} -->
-		<!-- {{/if}} -->
+				{{#if searchIsLimited}}
+					<div class="btn-group">
+						{{#if filteredRegion}}
+							<button type="button" class="btn btn-default js-all-regions-btn">
+								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+								{{mf 'find.searchAllRegions' 'Search in all regions'}}
+							</button>
+						{{/if}}
+						{{#if activeFilters}}
+							<button type="button" class="btn btn-cancel js-toggle-filter">
+								<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+								{{mf 'find.hideFilters'}}
+							</button>
+						{{/if}}
+					</div>
+				{{/if}}
+			</div>
 		{{/unless}}
-		{{#unless ready}}
+		{{#unless Template.subscriptionsReady}}
 			{{> loadingPage}}
 		{{/unless}}
 	</div>
