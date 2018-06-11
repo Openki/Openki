@@ -1,6 +1,6 @@
 // ======== DB-Model: ========
 // "type"             -> String     (name of role)
-// "icon"             -> String     ex: "glyphicon glyphicon-bullhorn"
+// "icon"             -> String     ex: "fa fa-bullhorn"
 // "preset"           -> Boolean    For always-on roles
 // "show_subscribers" -> Boolean
 // ===========================
@@ -19,12 +19,12 @@ export default Roles =
 		}
 	,
 		{ 'type':        'host'
-		, 'icon':        'glyphicon glyphicon-home'
+		, 'icon':        'fa fa-home'
 		, 'show_subscribers': true
 		}
 	,
 		{ 'type':        'team'
-		, 'icon':        'glyphicon glyphicon-bullhorn'
+		, 'icon':        'fa fa-bullhorn'
 		, 'preset':      true
 		, 'show_subscribers': true
 		}
