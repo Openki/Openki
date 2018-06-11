@@ -114,7 +114,11 @@ Template.event.events({
 			if (error) {
 				ShowServerError('Could not remove event ' + "'" + title + "'", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage(mf(
+					'eventDetails.eventRemoved',
+					{ TITLE: title },
+					'The event "{TITLE}" has been deleted.'
+				), 'success');
 				if (course) {
 					Router.go('showCourse', { _id: course });
 				} else {
@@ -186,12 +190,19 @@ Template.eventGroupAdd.helpers({
 
 
 Template.eventGroupAdd.events({
-	'click .js-add-group': function(event, instance) {
-		Meteor.call('event.promote', instance.data._id, event.currentTarget.value, true, function(error) {
+	'click .js-add-group': function(e, instance) {
+		const event = instance.data;
+		const groupId = e.currentTarget.value;
+		Meteor.call('event.promote', event._id, groupId, true, function(error) {
 			if (error) {
 				ShowServerError('Failed to add group', error);
 			} else {
-				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'eventGroupAdd.groupAdded',
+					{ GROUP: groupName, EVENT: event.title },
+					'The group "{GROUP}" has been added to promote the event "{EVENT}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -202,12 +213,19 @@ Template.eventGroupAdd.events({
 TemplateMixins.Expandible(Template.eventGroupRemove);
 Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
-	'click .js-remove': function(event, instance) {
-		Meteor.call('event.promote', instance.data.event._id, instance.data.groupId, false, function(error) {
+	'click .js-remove': function(e, instance) {
+		const event = instance.data.event;
+		const groupId = instance.data.groupId;
+		Meteor.call('event.promote', event._id, groupId, false, function(error) {
 			if (error) {
 				ShowServerError('Failed to remove group', error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'eventGroupAdd.groupRemoved',
+					{ GROUP: groupName, EVENT: event.title },
+					'The group "{GROUP}" has been removed from the event "{EVENT}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -218,12 +236,19 @@ Template.eventGroupRemove.events({
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
-	'click .js-makeOrganizer': function(event, instance) {
-		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, true, function(error) {
+	'click .js-makeOrganizer': function(e, instance) {
+		const event = instance.data.event;
+		const groupId = instance.data.groupId;
+		Meteor.call('event.editing', event._id, groupId, true, function(error) {
 			if (error) {
 				ShowServerError('Failed to give group editing rights', error);
 			} else {
-				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'eventGroupAdd.membersCanEditEvent',
+					{ GROUP: groupName, EVENT: event.title },
+					'Members of the group "{GROUP}" can now edit the event "{EVENT}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -234,12 +259,19 @@ Template.eventGroupMakeOrganizer.events({
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
-	'click .js-removeOrganizer': function(event, instance) {
-		Meteor.call('event.editing', instance.data.event._id, instance.data.groupId, false, function(error) {
+	'click .js-removeOrganizer': function(e, instance) {
+		const event = instance.data.event;
+		const groupId = instance.data.groupId;
+		Meteor.call('event.editing', event._id, groupId, false, function(error) {
 			if (error) {
 				ShowServerError('Failed to remove organizer status', error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'eventGroupAdd.membersCanNoLongerEditEvent',
+					{ GROUP: groupName, EVENT: event.title },
+					'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".'
+				), 'success');
 				instance.collapse();
 			}
 		});

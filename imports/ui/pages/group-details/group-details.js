@@ -23,7 +23,8 @@ Template.groupDetails.onCreated(function() {
 
 	instance.busy(false);
 
-	var groupId = instance.data.group._id;
+	const group = instance.data.group;
+	var groupId = group._id;
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
 
@@ -31,7 +32,11 @@ Template.groupDetails.onCreated(function() {
 		if (err) {
 			ShowServerError('Saving the group went wrong', err);
 		} else {
-			AddMessage("\u2713 " + mf('_message.saved'), 'success');
+			AddMessage(mf(
+				'groupDetails.changesSaved',
+				{ GROUP: group.name },
+				'Your changes to the group "{GROUP}" have been saved.'
+			), 'success');
 		}
 	};
 
@@ -161,7 +166,11 @@ Template.groupDetails.events({
 					instance.editableClaim.end();
 					instance.editableDescription.end();
 
-					AddMessage(mf('group.create.success', 'Created group'), 'success');
+					AddMessage(mf(
+						'groupDetails.groupCreated',
+						{ GROUP: group.name },
+						'The Group {GROUP} has been created!'
+					), 'success');
 					Router.go('groupDetails', { _id: groupId });
 				}
 			});

@@ -133,7 +133,10 @@ Accounts.onEmailVerificationLink(function(token, done) {
 		if (error) {
 			ShowServerError('Address could not be verified', error);
 		} else {
-			AddMessage(mf("email.verified", "Email verified."), 'success');
+			AddMessage(mf(
+				'emailVerification.emailVerified',
+				'Your e-mail has been verified.'
+			), 'success');
 		}
 	});
 });

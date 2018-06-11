@@ -82,7 +82,7 @@ Template.resetPassword.events({
 			if (err) {
 				ShowServerError('Unable to reset password', err);
 			} else {
-				AddMessage(mf('resetPassword.successMessage', 'Reset your password'), 'success');
+				AddMessage(mf('resetPassword.passwordReset.', 'Your password has been reset.'), 'success');
 				Router.go('profile');
 			}
 		});

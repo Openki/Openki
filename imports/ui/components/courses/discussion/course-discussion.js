@@ -331,7 +331,7 @@ Template.post.events({
 			if (err) {
 				ShowServerError('Could not delete comment', err);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage(mf('discussionPost.deleted', 'Comment has been deleted.'), 'success');
 			}
 		});
 	},

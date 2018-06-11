@@ -359,11 +359,15 @@ Template.eventEdit.events({
 							'message.eventChangesSaved',
 							{ TITLE: editevent.title },
 							'Your changes to the event "{TITLE}" have been saved.'
-						), 'info');
+						), 'success');
 					}
 
 					if (updateReplicas) {
-						AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+						AddMessage(mf(
+							'eventEdit.replicatesUpdated',
+							{ TITLE: editevent.title },
+							'The replicas of "{TITLE}" have also been updated.'
+						), 'success');
 					}
 					instance.parent.editing.set(false);
 				}

@@ -73,7 +73,13 @@ Template.groupSettings.events({
 			if (err) {
 				ShowServerError('Could not add member', err);
 			} else {
-				AddMessage("\u2713 " + mf('_message.saved'), 'success');
+				const memberName = Meteor.users.findOne(memberId).username;
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'groupSettings.memberAdded',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been added as a member to the group "{GROUP}"'
+				), 'success');
 			}
 		});
 	},
@@ -85,7 +91,13 @@ Template.groupSettings.events({
 			if (err) {
 				ShowServerError('Could not remove member', err);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const memberName = Meteor.users.findOne(memberId).username;
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'groupSettings.memberRemoved',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been removed from to the group "{GROUP}"'
+				), 'success');
 			}
 		});
 	},
@@ -100,12 +112,19 @@ Template.groupSettings.events({
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val()
 		};
-		Meteor.call("group.save", instance.data.group._id, changes, function(err) {
+
+		const groupId = instance.data.group._id;
+		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
 				ShowServerError('Could not save settings', err);
 			} else {
-				AddMessage("\u2713 " + mf('_message.saved'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'groupSettings.groupChangesSaved',
+					{ GROUP: groupName },
+					'Your changes to the settings of the group "{GROUP}" have been saved.'
+				), 'success');
 				parentInstance.editingSettings.set(false);
 			}
 		});

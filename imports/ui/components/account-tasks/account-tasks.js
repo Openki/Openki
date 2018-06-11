@@ -312,7 +312,10 @@ Template.forgotPwdFrame.events({
 			if (err) {
 				ShowServerError('We were unable to send a mail to this address', err);
 			} else {
-				AddMessage(mf('forgot.sent', "we sent a mail with instructions"), 'success');
+				AddMessage(mf(
+					'forgotPassword.emailSent',
+					'An e-mail with further instructions on how to reset your password has been sent to you.'
+				), 'success');
 				instance.parentInstance().accountTask.set('login');
 			}
 		});

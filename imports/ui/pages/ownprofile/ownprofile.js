@@ -142,12 +142,12 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass !== "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				AddMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
+				AddMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'warning');
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
 				if (pass.length < minLength) {
-					AddMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'danger');
+					AddMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'warning');
 					return;
 				}
 				Accounts.changePassword(old, pass, function(err) {

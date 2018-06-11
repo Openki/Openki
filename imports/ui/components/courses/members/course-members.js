@@ -85,7 +85,7 @@ Template.courseMember.onCreated(function() {
 				if (err) {
 					ShowServerError('Unable to change your message', err);
 				} else {
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'), 'success');
 				}
 			});
 		},

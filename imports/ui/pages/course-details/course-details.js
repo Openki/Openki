@@ -44,7 +44,11 @@ Template.courseDetailsPage.onCreated(function() {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage(mf(
+						'courseDetails.message.nameChanged',
+						{ NAME: newName },
+						'The name of this course has been changed to "{NAME}".'
+					), 'success');
 				}
 			});
 		},
@@ -58,7 +62,11 @@ Template.courseDetailsPage.onCreated(function() {
 				if (err) {
 					ShowServerError('Saving the course went wrong', err);
 				} else {
-					AddMessage("\u2713 " + mf('_message.saved'), 'success');
+					AddMessage(mf(
+						'courseDetails.message.descriptionChanged',
+						{ NAME: course.name },
+						'The description of "{NAME}" has been changed.'
+					), 'success');
 				}
 			});
 		},
@@ -114,7 +122,11 @@ Template.courseDetailsPage.events({
 			if (error) {
 				ShowServerError("Removing the proposal '"+ course.name + "' went wrong", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				AddMessage(mf(
+					'courseDetailsPage.message.courseHasBeenDeleted',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been deleted.'
+				), 'success');
 			}
 		});
 		Router.go('/');
@@ -171,17 +183,16 @@ Template.courseGroupAdd.helpers({
 
 Template.courseGroupAdd.events({
 	'click .js-add-group': function(event, instance) {
-		const courseId = instance.data._id;
+		const course = instance.data;
 		const groupId = event.currentTarget.value;
-		Meteor.call('course.promote', instance.data._id, event.currentTarget.value, true, function(error) {
+		Meteor.call('course.promote', course._id, groupId, true, function(error) {
 			if (error) {
 				ShowServerError("Failed to add group", error);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				const courseName = Courses.findOne(courseId).name;
 				AddMessage(mf(
 					'courseGroupAdd.groupAdded',
-					{ GROUP: groupName, COURSE: courseName },
+					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been added to promote the course "{COURSE}".'
 				), 'success');
 				instance.collapse();
@@ -202,12 +213,11 @@ Template.courseGroupRemove.events({
 				ShowServerError("Failed to remove group", error);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				const courseName = course.name;
 				AddMessage(mf(
 					'courseGroupAdd.groupRemoved',
-					{ GROUP: groupName, COURSE: courseName },
+					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been removed from the course "{COURSE}".'
-				), 'info');
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -219,11 +229,18 @@ TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer': function(event, instance) {
-		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, true, function(error) {
+		const course = instance.data.course;
+		const groupId = instance.data.groupId;
+		Meteor.call('course.editing', course._id, groupId, true, function(error) {
 			if (error) {
 				ShowServerError("Failed to give group editing rights", error);
 			} else {
-				AddMessage("\u2713 " + mf('_AddMessageed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'courseGroupAdd.membersCanEditCourse',
+					{ GROUP: groupName, COURSE: course.name },
+					'Members of the group "{GROUP}" can now edit the course "{COURSE}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
@@ -235,11 +252,18 @@ TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer': function(event, instance) {
-		Meteor.call('course.editing', instance.data.course._id, instance.data.groupId, false, function(error) {
+		const course = instance.data.course;
+		const groupId = instance.data.groupId;
+		Meteor.call('course.editing', course._id, groupId, false, function(error) {
 			if (error) {
 				ShowServerError("Failed to remove organizer status", error);
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				AddMessage(mf(
+					'courseGroupAdd.membersCanNoLongerEditCourse',
+					{ GROUP: groupName, COURSE: course.name },
+					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".'
+				), 'success');
 				instance.collapse();
 			}
 		});
