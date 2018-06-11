@@ -24,7 +24,7 @@ Jein. Wir bieten ein Werkzeug zur Selbstorganisation. Da gehören soziale Kontak
 Nice! Damit Openki noch besser wird, brauchen wir dein Feedback. Wir haben selbst noch dutzende Ideen, die wir wichtig finden, umsetzen möchten und an denen wir arbeiten. Wir beschränken uns zur Zeit auf die notwendigsten Funktionen. Einerseits wegen unserer begrenzten Kapazität, anderseits um Openki so einfach verständlich wie möglich zu halten.
 Uns ist bewusst, dass es verschiedene zusätzliche Features gibt, welche die Selbstorganisation weiter vereinfachen, und sind sehr froh um Rückmeldungen.
 
-Nicht nur die Software von Openki ist Open-Source, sondern auch deren Entwicklung und Organisation wird offengelegt. Das heisst zum Beispiel, du siehst [hier](https://github.com/Openki/Openki/issues), welches die nächsten geplanten technischen Schritte sind und darfst dort gerne aktiv an der Diskussion teilnehmen.
+Nicht nur die Software von Openki ist Open-Source, sondern auch deren Entwicklung und Organisation wird offengelegt. Das heisst zum Beispiel, du siehst [hier](https://gitlab.com/Openki/Openki/issues), welches die nächsten geplanten technischen Schritte sind und darfst dort gerne aktiv an der Diskussion teilnehmen.
 Alternativ kannst du einfach auch eine Email mit deinen Vorschlägen an: openki-core[ät]lists.xiala.net senden.
 
 Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die benötigten Informationen: [openki.net/translate](https://openki.net/translate)
@@ -159,7 +159,7 @@ indem ein Kurs von verschiedenen Gruppen promoted wird, verknüpfen sich Gruppen
 -->
 
 ### Können wir als Gruppe Openki-Kurse auf unserer eigenen Webseite anzeigen?
-Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genauere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://github.com/Openki/Openki/wiki/Frames)
+Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genauere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://gitlab.com/Openki/Openki/wikis/Frames)
 
 
 
@@ -187,6 +187,6 @@ Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technolo
 ## Technisches
 
 ### Wo gibts Antworten auf technische Fragen?
-Die technische Dokumentation ist im [GithubWiki](https://github.com/Openki/Openki/wiki/) zu finden.
+Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.
 
 {{/template}}
