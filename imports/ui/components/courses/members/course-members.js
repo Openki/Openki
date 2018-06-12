@@ -5,8 +5,7 @@ import { Template } from 'meteor/templating';
 import Roles from '/imports/api/roles/roles.js';
 
 import Editable from '/imports/ui/lib/editable.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 import {
 	HasRoleUser,
 	MaySubscribe,
@@ -83,9 +82,9 @@ Template.courseMember.onCreated(function() {
 		function(newMessage) {
 			Meteor.call("course.changeComment", courseId, newMessage, function(err, courseId) {
 				if (err) {
-					ShowServerError('Unable to change your message', err);
+					AlertMessages.add('error', err, 'Unable to change your message');
 				} else {
-					AddMessage(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'), 'success');
+					AlertMessages.add('success', mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 				}
 			});
 		},

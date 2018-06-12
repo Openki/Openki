@@ -4,9 +4,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import './account-tasks.html';
@@ -177,7 +176,7 @@ Template.loginFrame.events({
 		}, function (err) {
 			instance.busy(false);
 			if (err) {
-				AddMessage(err.reason || 'Unknown error', 'danger');
+				AlertMessages.add('error', err, '');
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
@@ -310,12 +309,12 @@ Template.forgotPwdFrame.events({
 		}, function(err) {
 			instance.busy(false);
 			if (err) {
-				ShowServerError('We were unable to send a mail to this address', err);
+				AlertMessages.add('error', err, 'We were unable to send a mail to this address');
 			} else {
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'forgotPassword.emailSent',
 					'An e-mail with further instructions on how to reset your password has been sent to you.'
-				), 'success');
+				));
 				instance.parentInstance().accountTask.set('login');
 			}
 		});

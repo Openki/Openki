@@ -9,7 +9,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import LocalTime from '/imports/utils/local-time.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import Regions from '/imports/api/regions/regions.js';
 
 import Courses from '/imports/api/courses/courses.js';
@@ -21,7 +20,7 @@ import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/regions/tag/region-tag.js';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 
 import './event-edit.html';
 
@@ -335,7 +334,8 @@ Template.eventEdit.events({
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
 			Meteor.call('event.save',
 			{
-				eventId,
+				eventId: 'xyz',
+				// eventId,
 				updateReplicas,
 				updateChangedReplicas,
 				sendNotifications,
@@ -345,29 +345,29 @@ Template.eventEdit.events({
 			(err, eventId) => {
 				instance.busy(false);
 				if (err) {
-					ShowServerError('Saving the event went wrong', err);
+					AlertMessages.add('error', err, 'Saving the event went wrong');
 				} else {
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
-						AddMessage(mf(
+						AlertMessages.add('success', mf(
 							'message.eventCreated',
 							{ TITLE: editevent.title },
 							'The event "{TITLE}" has been created!'
-						), 'success');
+						));
 					} else {
-						AddMessage(mf(
+						AlertMessages.add('success', mf(
 							'message.eventChangesSaved',
 							{ TITLE: editevent.title },
 							'Your changes to the event "{TITLE}" have been saved.'
-						), 'success');
+						));
 					}
 
 					if (updateReplicas) {
-						AddMessage(mf(
+						AlertMessages.add('success', mf(
 							'eventEdit.replicatesUpdated',
 							{ TITLE: editevent.title },
 							'The replicas of "{TITLE}" have also been updated.'
-						), 'success');
+						));
 					}
 					instance.parent.editing.set(false);
 				}

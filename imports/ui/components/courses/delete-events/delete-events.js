@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 
 import './delete-events.html';
 
@@ -117,14 +117,11 @@ Template.deleteEventsModal.events({
 			Meteor.call('event.remove', event._id, (err) => {
 				responses++;
 				if (err) {
-					AddMessage(mf(
+					AlertMessages.add('error', err, mf(
 						'deleteEventsModal.errWithReason',
-						{ REASON: err.reason || 'Unknown error'
-						, TITLE: event.title
-						, START: moment(event.startLocal).format('llll')
-						},
-						'Deleting the event "{TITLE} ({START})" failed: "{REASON}"'
-					), 'danger');
+						{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
+						'Deleting the event "{TITLE} ({START})" failed.'
+					));
 				} else {
 					removed++;
 				}
@@ -133,11 +130,11 @@ Template.deleteEventsModal.events({
 					instance.busy(false);
 					instance.state.set('showDeleteConfirm', false);
 					if (removed) {
-						AddMessage(mf(
+						AlertMessages.add('success', mf(
 							'deleteEventsModal.sucess',
 							{ NUM: removed },
 							'{NUM, plural, one {Event was} other {# events were}} successfully deleted.'
-						), 'success');
+						));
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);

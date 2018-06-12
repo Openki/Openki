@@ -6,8 +6,7 @@ import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
@@ -112,13 +111,13 @@ Template.event.events({
 		Meteor.call('event.remove', event._id, function (error) {
 			instance.busy(false);
 			if (error) {
-				ShowServerError('Could not remove event ' + "'" + title + "'", error);
+				AlertMessages.add('error', error, 'Could not remove event ' + "'" + title + "'");
 			} else {
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'eventDetails.eventRemoved',
 					{ TITLE: title },
 					'The event "{TITLE}" has been deleted.'
-				), 'success');
+				));
 				if (course) {
 					Router.go('showCourse', { _id: course });
 				} else {
@@ -195,14 +194,14 @@ Template.eventGroupAdd.events({
 		const groupId = e.currentTarget.value;
 		Meteor.call('event.promote', event._id, groupId, true, function(error) {
 			if (error) {
-				ShowServerError('Failed to add group', error);
+				AlertMessages.add('error', error, 'Failed to add group');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'eventGroupAdd.groupAdded',
 					{ GROUP: groupName, EVENT: event.title },
 					'The group "{GROUP}" has been added to promote the event "{EVENT}".'
-				), 'success');
+				));
 				instance.collapse();
 			}
 		});
@@ -218,14 +217,14 @@ Template.eventGroupRemove.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('event.promote', event._id, groupId, false, function(error) {
 			if (error) {
-				ShowServerError('Failed to remove group', error);
+				AlertMessages.add('error', error, 'Failed to remove group');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'eventGroupAdd.groupRemoved',
 					{ GROUP: groupName, EVENT: event.title },
 					'The group "{GROUP}" has been removed from the event "{EVENT}".'
-				), 'success');
+				));
 				instance.collapse();
 			}
 		});
@@ -241,14 +240,14 @@ Template.eventGroupMakeOrganizer.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('event.editing', event._id, groupId, true, function(error) {
 			if (error) {
-				ShowServerError('Failed to give group editing rights', error);
+				AlertMessages.add('error', error, 'Failed to give group editing rights');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'eventGroupAdd.membersCanEditEvent',
 					{ GROUP: groupName, EVENT: event.title },
 					'Members of the group "{GROUP}" can now edit the event "{EVENT}".'
-				), 'success');
+				));
 				instance.collapse();
 			}
 		});
@@ -264,14 +263,14 @@ Template.eventGroupRemoveOrganizer.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('event.editing', event._id, groupId, false, function(error) {
 			if (error) {
-				ShowServerError('Failed to remove organizer status', error);
+				AlertMessages.add('error', error, 'Failed to remove organizer status');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AddMessage(mf(
+				AlertMessages.add('success', mf(
 					'eventGroupAdd.membersCanNoLongerEditEvent',
 					{ GROUP: groupName, EVENT: event.title },
 					'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".'
-				), 'success');
+				));
 				instance.collapse();
 			}
 		});

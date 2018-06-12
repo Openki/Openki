@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import ClientMessages from '/imports/api/messages/messages.js';
-import { RemoveMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 
 import './messages.html';
 
@@ -13,7 +12,7 @@ Template.messages.onCreated(function() {
 
 Template.messages.helpers({
 	messages() {
-		return ClientMessages.find();
+		return AlertMessages.find();
 	}
 });
 
@@ -24,18 +23,17 @@ Template.message.onCreated(function() {
 		const duration = parseFloat($message.css('transition-duration')) * 1000;
 		$message.fadeOut(duration, () => {
 			this.parentInstance().updateSpacerHeight();
-			RemoveMessage(messageId);
+			AlertMessages.remove({ _id: messageId });
 		});
 	};
 });
 
 Template.message.onRendered(function() {
 	this.parentInstance().updateSpacerHeight();
+	const message = Template.currentData();
 	this.$('.message').toggleClass('is-faded-in');
 
-	const message = Template.currentData();
-	const timeout = message.type === 'error' ? 60000 : 4000;
-	this.timedRemove = setTimeout(() => this.remove(message._id), timeout);
+	this.timedRemove = setTimeout(() => this.remove(message._id), message.timeout);
 });
 
 Template.message.events({
@@ -46,6 +44,10 @@ Template.message.events({
 });
 
 Template.message.helpers({
+	contextualClass() {
+		return this.type === 'error' ? 'danger' : this.type;
+	},
+
 	highlightedMessage() {
 		return Spacebars.SafeString(
 			this.message

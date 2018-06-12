@@ -1,7 +1,7 @@
 import Events from '/imports/api/events/events.js';
 
 import LocalTime from '/imports/utils/local-time.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -211,13 +211,11 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses++;
 				if (error) {
-					AddMessage(mf(
+					AlertMessages.add('error', error, mf(
 						'eventReplication.errWithReason',
-						{ REASON: err.reason || 'Unknown error'
-						, START: moment(replicaEvent.startLocal).format('llll')
-						},
-						'Creating the copy on "{START}" failed: {REASON}'
-					), 'danger');
+						{ START: moment(replicaEvent.startLocal).format('llll')	},
+						'Creating the copy on "{START}" failed.'
+					));
 				} else {
 					removed++;
 				}
@@ -225,14 +223,14 @@ Template.eventReplication.events({
 				if (responses === replicaDays.length) {
 					instance.busy(false);
 					if (removed) {
-						AddMessage(mf(
+						AlertMessages.add('success', mf(
 							'event.replicate.successCondensed',
 							{ TITLE: instance.data.title
 							, NUM: removed
 							, DATE: moment(replicaEvent.startLocal).format('llll')
 							},
 							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}'
-						), 'success');
+						));
 					}
 					if (removed === responses) {
 						const parentInstance = instance.parentInstance();

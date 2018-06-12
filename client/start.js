@@ -1,13 +1,14 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
-import RegionSelection from '/imports/utils/region-selection.js';
+
+import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Languages from '/imports/api/languages/languages.js';
+
 import Introduction from '/imports/ui/lib/introduction.js';
 import UpdateViewport from '/imports/ui/lib/update-viewport.js';
-import UrlTools from '/imports/utils/url-tools.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
-import Languages from '/imports/api/languages/languages.js';
+import RegionSelection from '/imports/utils/region-selection.js';
+import UrlTools from '/imports/utils/url-tools.js';
 
 ////////////// db-subscriptions:
 
@@ -131,12 +132,12 @@ Accounts.onEmailVerificationLink(function(token, done) {
 	Router.go('profile');
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			ShowServerError('Address could not be verified', error);
+			AddMessage.error('Address could not be verified', error);
 		} else {
-			AddMessage(mf(
+			AddMessage.success(mf(
 				'emailVerification.emailVerified',
 				'Your e-mail has been verified.'
-			), 'success');
+			));
 		}
 	});
 });
