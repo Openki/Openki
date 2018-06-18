@@ -25,10 +25,11 @@ import '/imports/ui/components/regions/tag/region-tag.js';
 
 import './course-edit.html';
 
-Template.courseEdit.created = function() {
+Template.courseEdit.onCreated(function() {
 	var instance = this;
 
 	instance.busy(false);
+
 
 	// Show category selection right away for new courses
 	var editingCategories = !this.data || !this.data._id;
@@ -44,6 +45,15 @@ Template.courseEdit.created = function() {
 
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
+	});
+
+        instance.proposedSearch = new ReactiveVar("");
+        instance.titleFocused = new ReactiveVar(false);
+        instance.autorun(function() {
+            const search = instance.proposedSearch.get();
+            if (instance.titleFocused.get() && search.length > 3) {
+		Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
+            }
 	});
 
 	if (instance.data.group) {
@@ -74,12 +84,24 @@ Template.courseEdit.created = function() {
 			});
 		};
 	}
-};
+});
+Template.courseEdit.onRendered(function() {
+});
 
 Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
 	},
+
+        proposedCourses() {
+            const instance = Template.instance();
+            const search = instance.proposedSearch.get();
+            if (instance.titleFocused.get() && search.length > 4) {
+                console.log(Courses.findFilter({search: search}).fetch());
+                return Courses.findFilter({search: search});
+            }
+            return [];
+        },
 
 	availableCategories: function() {
 		return Object.keys(Categories);
@@ -239,6 +261,22 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+        'keyup .js-title': _.debounce(function(event, instance) {
+            console.log(event.target.value);
+            instance.proposedSearch.set(event.target.value);
+	}, 200),
+
+	'change .js-title': function(event, instance) {
+            instance.proposedSearch.set(event.target.value);
+	},
+        'focus .js-title': function(event, instance) {
+            console.log("focus");
+            instance.titleFocused.set(true);
+        },
+        'blur .js-title': function(event, instance) {
+            console.log("blur");
+            instance.titleFocused.set(false);
+        },
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
@@ -394,4 +432,7 @@ Template.courseEditRole.events({
 	"change .js-check-role": function(event, instance) {
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
+});
+Template.proposedCoursesDropdown.onRendered(function() {
+   this.$(".js-proposed-courses").show();
 });

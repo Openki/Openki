@@ -18,3 +18,4 @@ server/version.js
 node_modules/
 
 extracts.msgfmt*
+nbproject/
