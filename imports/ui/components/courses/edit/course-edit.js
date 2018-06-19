@@ -48,13 +48,13 @@ Template.courseEdit.onCreated(function() {
 		instance.editableDescription.setText(Template.currentData().description);
 	});
 
-		instance.proposedSearch = new ReactiveVar("");
-		instance.titleFocused = new ReactiveVar(false);
-		instance.autorun(function() {
-			const search = instance.proposedSearch.get();
-			if (instance.showProposed()) {
-				Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
-			}
+	instance.proposedSearch = new ReactiveVar("");
+	instance.titleFocused = new ReactiveVar(false);
+	instance.autorun(function() {
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
+		}
 	});
 
 	if (instance.data.group) {
@@ -96,7 +96,7 @@ Template.courseEdit.helpers({
 		const instance = Template.instance();
 		const search = instance.proposedSearch.get();
 		if (instance.showProposed()) {
-			return Courses.findFilter({search: search});
+			return Courses.findFilter({ search });
 		}
 		return [];
 	},
@@ -260,15 +260,15 @@ Template.courseEdit.helpers({
 
 Template.courseEdit.events({
 	'keyup .js-title': _.debounce(function(event, instance) {
-			instance.proposedSearch.set(event.target.value);
+		instance.proposedSearch.set(event.target.value);
 	}, 200),
 
 	'change .js-title'(event, instance) {
-			instance.proposedSearch.set(event.target.value);
+		instance.proposedSearch.set(event.target.value);
 	},
 
-	'focus .js-title'(event, instance) {
-		instance.titleFocused.set(true);
+	'focus/blur .js-title'(event, instance) {
+		instance.titleFocused.set(event.type === 'focusin');
 	},
 
 	'blur .js-title'(event, instance) {
