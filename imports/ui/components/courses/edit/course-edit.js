@@ -25,8 +25,10 @@ import '/imports/ui/components/regions/tag/region-tag.js';
 
 import './course-edit.html';
 
-Template.courseEdit.created = function() {
+Template.courseEdit.onCreated(function() {
 	var instance = this;
+
+	this.showProposed = () => this.titleFocused.get() && instance.proposedSearch.get().length > 3;
 
 	instance.busy(false);
 
@@ -44,6 +46,15 @@ Template.courseEdit.created = function() {
 
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
+	});
+
+	instance.proposedSearch = new ReactiveVar("");
+	instance.titleFocused = new ReactiveVar(false);
+	instance.autorun(function() {
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
+		}
 	});
 
 	if (instance.data.group) {
@@ -74,11 +85,20 @@ Template.courseEdit.created = function() {
 			});
 		};
 	}
-};
+});
 
 Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
+	},
+
+	proposedCourses() {
+		const instance = Template.instance();
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			return Courses.findFilter({ search });
+		}
+		return [];
 	},
 
 	availableCategories: function() {
@@ -239,6 +259,22 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+	'keyup .js-title': _.debounce(function(event, instance) {
+		instance.proposedSearch.set(event.target.value);
+	}, 200),
+
+	'change .js-title'(event, instance) {
+		instance.proposedSearch.set(event.target.value);
+	},
+
+	'focus/blur .js-title'(event, instance) {
+		instance.titleFocused.set(event.type === 'focusin');
+	},
+
+	'blur .js-title'(event, instance) {
+		instance.titleFocused.set(false);
+	},
+
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
@@ -253,7 +289,6 @@ Template.courseEdit.events({
 
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
-		console.log(instance.data.internal);
 		const internal =
 			instance.data.group
 			? instance.data.internal || false
@@ -394,4 +429,7 @@ Template.courseEditRole.events({
 	"change .js-check-role": function(event, instance) {
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
+});
+Template.proposedCoursesDropdown.onRendered(function() {
+   this.$(".js-proposed-courses").show();
 });
