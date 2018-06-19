@@ -58,7 +58,7 @@
 						type="text"
 						value="{{name}}"/>
                                         {{#if proposedCourses.count}}
-                                        {{>proposedCoursesDropdown proposedCourses}}
+                                        	{{>proposedCoursesDropdown courses=proposedCourses}}
                                         {{/if}}
 				</div>
 				<div class="form-group">
@@ -194,7 +194,7 @@
             {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
         </li>
         <li role="separator" class="divider"></li>
-        {{#each this}}
+        {{#each courses}}
             <li><a href="#">{{name}}</a></li>
         {{/each}}
     </ul>
