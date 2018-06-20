@@ -1,4 +1,4 @@
-.messages {
+.alert-messages {
 	position: fixed;
 	left: 0;
 	top: $navbar-height;
@@ -8,7 +8,7 @@
 
 $message-fade-duration: .1s;
 
-.message {
+.alert-message {
 	border-radius: 0;
 	border-top: 0;
 	opacity: 0;
@@ -21,7 +21,7 @@ $message-fade-duration: .1s;
 	}
 }
 
-.messages-spacer {
+.alert-messages-spacer {
 	height: 0;
 	transition: height $message-fade-duration;
 }
