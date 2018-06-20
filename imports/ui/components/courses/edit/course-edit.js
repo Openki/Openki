@@ -12,7 +12,7 @@ import Roles from '/imports/api/roles/roles.js';
 import StringTools from '/imports/utils/string-tools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 
@@ -300,7 +300,7 @@ Template.courseEdit.events({
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the course went wrong');
+					Alert.error(err, 'Saving the course went wrong');
 				} else {
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
@@ -308,13 +308,13 @@ Template.courseEdit.events({
 						instance.resetFields();
 					} else {
 						if (isNew) {
-							AlertMessages.add('success', mf(
+							Alert.success(mf(
 								'message.courseCreated',
 								{ NAME: changes.name },
 								'The course "{NAME}" has been created!'
 							));
 						} else {
-							AlertMessages.add('success', mf(
+							Alert.success(mf(
 								'message.courseChangesSaved',
 								{ NAME: changes.name },
 								'Your changes to the course "{NAME}" have been saved.'

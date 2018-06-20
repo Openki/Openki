@@ -9,7 +9,7 @@ import ScssVars from '/imports/ui/lib/scss-vars.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
@@ -41,9 +41,9 @@ Template.courseDetailsPage.onCreated(function() {
 		function(newName) {
 			Meteor.call("course.save", course._id, { name: newName }, function(err, courseId) {
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the course went wrong');
+					Alert.error(err, 'Saving the course went wrong');
 				} else {
-					AlertMessages.add('success', mf(
+					Alert.success(mf(
 						'courseDetails.message.nameChanged',
 						{ NAME: newName },
 						'The name of this course has been changed to "{NAME}".'
@@ -59,9 +59,9 @@ Template.courseDetailsPage.onCreated(function() {
 		function(newDescription) {
 			Meteor.call("course.save", course._id, { description: newDescription }, function(err, courseId) {
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the course went wrong');
+					Alert.error(err, 'Saving the course went wrong');
 				} else {
-					AlertMessages.add('success', mf(
+					Alert.success(mf(
 						'courseDetails.message.descriptionChanged',
 						{ NAME: course.name },
 						'The description of "{NAME}" has been changed.'
@@ -116,13 +116,12 @@ Template.courseDetailsPage.events({
 
 		var course = instance.data.course;
 		instance.busy('deleting');
-		Meteor.call('course.remove', 'xyz', function(error) {
-		// Meteor.call('course.remove', course._id, function(error) {
+		Meteor.call('course.remove', course._id, function(error) {
 			instance.busy(false);
 			if (error) {
-				AlertMessages.add('error', error, "Removing the proposal '"+ course.name + "' went wrong");
+				Alert.error(error, "Removing the proposal '"+ course.name + "' went wrong");
 			} else {
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'courseDetailsPage.message.courseHasBeenDeleted',
 					{ COURSE: course.name },
 					'The course "{COURSE}" has been deleted.'
@@ -187,10 +186,10 @@ Template.courseGroupAdd.events({
 		const groupId = event.currentTarget.value;
 		Meteor.call('course.promote', course._id, groupId, true, function(error) {
 			if (error) {
-				AlertMessages.add('error', error, "Failed to add group");
+				Alert.error(error, "Failed to add group");
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'courseGroupAdd.groupAdded',
 					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been added to promote the course "{COURSE}".'
@@ -210,10 +209,10 @@ Template.courseGroupRemove.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('course.promote', course._id, groupId, false, function(error) {
 			if (error) {
-				AlertMessages.add('error', error, "Failed to remove group");
+				Alert.error(error, "Failed to remove group");
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'courseGroupAdd.groupRemoved',
 					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been removed from the course "{COURSE}".'
@@ -233,10 +232,10 @@ Template.courseGroupMakeOrganizer.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('course.editing', course._id, groupId, true, function(error) {
 			if (error) {
-				AlertMessages.add('error', error, "Failed to give group editing rights");
+				Alert.error(error, "Failed to give group editing rights");
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'courseGroupAdd.membersCanEditCourse',
 					{ GROUP: groupName, COURSE: course.name },
 					'Members of the group "{GROUP}" can now edit the course "{COURSE}".'
@@ -256,10 +255,10 @@ Template.courseGroupRemoveOrganizer.events({
 		const groupId = instance.data.groupId;
 		Meteor.call('course.editing', course._id, groupId, false, function(error) {
 			if (error) {
-				AlertMessages.add('error', error, "Failed to remove organizer status");
+				Alert.error(error, "Failed to remove organizer status");
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'courseGroupAdd.membersCanNoLongerEditCourse',
 					{ GROUP: groupName, COURSE: course.name },
 					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".'

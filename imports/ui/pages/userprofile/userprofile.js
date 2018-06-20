@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import Roles from '/imports/api/roles/roles.js';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list.js';
@@ -66,9 +66,9 @@ Template.userprofile.events({
 	'click button.giveAdmin': function() {
 		Meteor.call('user.addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Unable to add privilege');
+				Alert.error(err, 'Unable to add privilege');
 			} else {
-				AlertMessages.add('success', mf('privilege.addedAdmin', 'Granted admin privilege'));
+				Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
 			}
 		});
 	},
@@ -77,9 +77,9 @@ Template.userprofile.events({
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('user.removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Unable to remove privilege');
+				Alert.error(err, 'Unable to remove privilege');
 			} else {
-				AlertMessages.add('success', mf('privilege.removed', 'Removed privilege'));
+				Alert.success(mf('privilege.removed', 'Removed privilege'));
 			}
 		});
 	},
@@ -90,9 +90,9 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('group.updateMembership', userId, groupId, true, function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Unable to draft user into group');
+				Alert.error(err, 'Unable to draft user into group');
 			} else {
-				AlertMessages.add('success', mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
+				Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
 			}
 		});
 	},
@@ -104,9 +104,9 @@ Template.userprofile.events({
 		var userId = Template.parentData().user._id;
 		Meteor.call('group.updateMembership', userId, groupId, false, function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Unable to expel user from group');
+				Alert.error(err, 'Unable to expel user from group');
 			} else {
-				AlertMessages.add('success', mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
+				Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
 			}
 		});
 	},
@@ -145,9 +145,9 @@ Template.emailBox.events({
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
 				instance.verificationMailSent.set(false);
-				AlertMessages.add('error', err, 'Failed to send verification mail');
+				Alert.error(err, 'Failed to send verification mail');
 			} else {
-				AlertMessages.add('success', mf('profile.sentVerificationMail'));
+				Alert.success(mf('profile.sentVerificationMail'));
 			}
 		});
 	},
@@ -191,9 +191,9 @@ Template.emailBox.events({
 			function(error, result) {
 				template.busy(false);
 				if (error) {
-					AlertMessages.add('error', error, '');
+					Alert.error(error, '');
 				} else {
-					AlertMessages.add('success', mf('profile.mail.sent', 'Your message was sent'));
+					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					template.$('#emailmessage').val('');
 				}
 			}

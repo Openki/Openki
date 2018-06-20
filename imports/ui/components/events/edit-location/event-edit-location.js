@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import Venues from '/imports/api/venues/venues.js';
@@ -213,7 +213,7 @@ Template.eventEditVenue.events({
 			params:  nominatimQuery
 		}, function(error, result) {
 			if (error) {
-				AlertMessages.add('error', error, '');
+				Alert.error(error, '');
 				return;
 			}
 
@@ -221,7 +221,7 @@ Template.eventEditVenue.events({
 
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
-				AlertMessages.add('warning', mf(
+				Alert.warning(mf(
 					'event.edit.noResultsforAddress',
 					{ ADDRESS: search },
 					'Found no results for address "{ADDRESS}"'

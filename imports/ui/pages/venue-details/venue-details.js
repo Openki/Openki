@@ -1,7 +1,7 @@
 "use strict";
 import Events from '/imports/api/events/events.js';
 import Regions from '/imports/api/regions/regions.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/events/list/event-list.js';
@@ -201,9 +201,9 @@ Template.venueDetails.events({
 		Meteor.call('venue.remove', venue._id, function(err, result) {
 			instance.busy(false);
 			if (err) {
-				AlertMessages.add('error', err, 'Deleting the venue went wrong');
+				Alert.error(err, 'Deleting the venue went wrong');
 			} else {
-				AlertMessages.add('success', mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
+				Alert.success(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
 				Router.go('profile');
 			}
 		});

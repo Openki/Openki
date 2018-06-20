@@ -20,7 +20,7 @@ import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/regions/tag/region-tag.js';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import './event-edit.html';
 
@@ -345,17 +345,17 @@ Template.eventEdit.events({
 			(err, eventId) => {
 				instance.busy(false);
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the event went wrong');
+					Alert.error(err, 'Saving the event went wrong');
 				} else {
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
-						AlertMessages.add('success', mf(
+						Alert.success(mf(
 							'message.eventCreated',
 							{ TITLE: editevent.title },
 							'The event "{TITLE}" has been created!'
 						));
 					} else {
-						AlertMessages.add('success', mf(
+						Alert.success(mf(
 							'message.eventChangesSaved',
 							{ TITLE: editevent.title },
 							'Your changes to the event "{TITLE}" have been saved.'
@@ -363,7 +363,7 @@ Template.eventEdit.events({
 					}
 
 					if (updateReplicas) {
-						AlertMessages.add('success', mf(
+						Alert.success(mf(
 							'eventEdit.replicatesUpdated',
 							{ TITLE: editevent.title },
 							'The replicas of "{TITLE}" have also been updated.'

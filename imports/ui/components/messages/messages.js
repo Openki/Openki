@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alerts from '/imports/api/alerts/alerts.js';
 
 import './messages.html';
 
@@ -12,7 +12,7 @@ Template.messages.onCreated(function() {
 
 Template.messages.helpers({
 	messages() {
-		return AlertMessages.find();
+		return Alerts.find();
 	}
 });
 
@@ -23,7 +23,7 @@ Template.message.onCreated(function() {
 		const duration = parseFloat($message.css('transition-duration')) * 1000;
 		$message.fadeOut(duration, () => {
 			this.parentInstance().updateSpacerHeight();
-			AlertMessages.remove({ _id: messageId });
+			Alerts.remove({ _id: messageId });
 		});
 	};
 });
@@ -46,13 +46,5 @@ Template.message.events({
 Template.message.helpers({
 	contextualClass() {
 		return this.type === 'error' ? 'danger' : this.type;
-	},
-
-	highlightedMessage() {
-		return Spacebars.SafeString(
-			this.message
-			.replace(/"\b/g, '<strong>"')
-			.replace(/"\B/g, '"</strong>')
-		);
 	}
 });

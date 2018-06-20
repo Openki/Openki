@@ -9,7 +9,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import Editable from '/imports/ui/lib/editable.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/editable/editable.js';
@@ -196,9 +196,9 @@ Template.venueEdit.events({
 			Meteor.call('venue.save', venueId, changes, (err, res) => {
 				instance.busy(false);
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the venue went wrong');
+					Alert.error(err, 'Saving the venue went wrong');
 				} else {
-					AlertMessages.add('success', mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
+					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
 					if (instance.isNew) {
 						Router.go('venueDetails', { _id: res });
 					} else {

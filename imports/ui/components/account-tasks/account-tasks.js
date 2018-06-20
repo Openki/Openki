@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
 import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import './account-tasks.html';
@@ -176,7 +176,7 @@ Template.loginFrame.events({
 		}, function (err) {
 			instance.busy(false);
 			if (err) {
-				AlertMessages.add('error', err, '');
+				Alert.error(err, '');
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
@@ -309,9 +309,9 @@ Template.forgotPwdFrame.events({
 		}, function(err) {
 			instance.busy(false);
 			if (err) {
-				AlertMessages.add('error', err, 'We were unable to send a mail to this address');
+				Alert.error(err, 'We were unable to send a mail to this address');
 			} else {
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'forgotPassword.emailSent',
 					'An e-mail with further instructions on how to reset your password has been sent to you.'
 				));

@@ -1,7 +1,7 @@
 import Events from '/imports/api/events/events.js';
 
 import LocalTime from '/imports/utils/local-time.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -211,7 +211,7 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses++;
 				if (error) {
-					AlertMessages.add('error', error, mf(
+					Alert.error(error, mf(
 						'eventReplication.errWithReason',
 						{ START: moment(replicaEvent.startLocal).format('llll')	},
 						'Creating the copy on "{START}" failed.'
@@ -223,7 +223,7 @@ Template.eventReplication.events({
 				if (responses === replicaDays.length) {
 					instance.busy(false);
 					if (removed) {
-						AlertMessages.add('success', mf(
+						Alert.success(mf(
 							'event.replicate.successCondensed',
 							{ TITLE: instance.data.title
 							, NUM: removed

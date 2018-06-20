@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import Roles from '/imports/api/roles/roles.js';
 
 import Editable from '/imports/ui/lib/editable.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import {
 	HasRoleUser,
 	MaySubscribe,
@@ -82,9 +82,9 @@ Template.courseMember.onCreated(function() {
 		function(newMessage) {
 			Meteor.call("course.changeComment", courseId, newMessage, function(err, courseId) {
 				if (err) {
-					AlertMessages.add('error', err, 'Unable to change your message');
+					Alert.error(err, 'Unable to change your message');
 				} else {
-					AlertMessages.add('success', mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
+					Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 				}
 			});
 		},

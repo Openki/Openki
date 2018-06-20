@@ -97,7 +97,6 @@
 
 		"getMember":true,
 		"pleaseLogin":true,
-		"ShowServerError": true,
 		"TemplateMixins": true,
 
 // client/map/map.js

@@ -8,7 +8,7 @@ import Groups from '/imports/api/groups/groups.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import IsGroupMember from '/imports/utils/is-group-member.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -29,9 +29,9 @@ Template.groupDetails.onCreated(function() {
 
 	var handleSaving = function(err, groupId) {
 		if (err) {
-			AlertMessages.add('error', err, 'Saving the group went wrong');
+			Alert.error(err, 'Saving the group went wrong');
 		} else {
-			AlertMessages.add('success', mf(
+			Alert.success(mf(
 				'groupDetails.changesSaved',
 				{ GROUP: group.name },
 				'Your changes to the group "{GROUP}" have been saved.'
@@ -158,14 +158,14 @@ Template.groupDetails.events({
 			Meteor.call('group.save', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
-					AlertMessages.add('error', err, 'Saving the group went wrong');
+					Alert.error(err, 'Saving the group went wrong');
 				} else {
 					instance.editableName.end();
 					instance.editableShort.end();
 					instance.editableClaim.end();
 					instance.editableDescription.end();
 
-					AlertMessages.add('success', mf(
+					Alert.success(mf(
 						'groupDetails.groupCreated',
 						{ GROUP: group.name },
 						'The Group {GROUP} has been created!'

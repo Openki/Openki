@@ -2,7 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -79,9 +79,9 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, function(err) {
 			instance.busy(false);
 			if (err) {
-				AlertMessages.add('error', err, 'Unable to reset password');
+				Alert.error(err, 'Unable to reset password');
 			} else {
-				AlertMessages.add('success', mf('resetPassword.passwordReset.', 'Your password has been reset.'));
+				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');
 			}
 		});

@@ -1,7 +1,7 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 import Languages from '/imports/api/languages/languages.js';
 
 import Introduction from '/imports/ui/lib/introduction.js';
@@ -132,10 +132,10 @@ Accounts.onEmailVerificationLink(function(token, done) {
 	Router.go('profile');
 	Accounts.verifyEmail(token, function(error) {
 		if (error) {
-			AddMessage.error('Address could not be verified', error);
+			Alert.error(error, 'Address could not be verified');
 		} else {
-			AddMessage.success(mf(
-				'emailVerification.emailVerified',
+			Alert.success(mf(
+				'email.verified',
 				'Your e-mail has been verified.'
 			));
 		}

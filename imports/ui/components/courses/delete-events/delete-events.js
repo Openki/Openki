@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import './delete-events.html';
 
@@ -117,7 +117,7 @@ Template.deleteEventsModal.events({
 			Meteor.call('event.remove', event._id, (err) => {
 				responses++;
 				if (err) {
-					AlertMessages.add('error', err, mf(
+					Alert.error(err, mf(
 						'deleteEventsModal.errWithReason',
 						{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
 						'Deleting the event "{TITLE} ({START})" failed.'
@@ -130,7 +130,7 @@ Template.deleteEventsModal.events({
 					instance.busy(false);
 					instance.state.set('showDeleteConfirm', false);
 					if (removed) {
-						AlertMessages.add('success', mf(
+						Alert.success(mf(
 							'deleteEventsModal.sucess',
 							{ NUM: removed },
 							'{NUM, plural, one {Event was} other {# events were}} successfully deleted.'

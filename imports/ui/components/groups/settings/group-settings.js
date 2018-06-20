@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import Groups from '/imports/api/groups/groups.js';
 
 import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -70,11 +70,11 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Could not add member');
+				Alert.error(err, 'Could not add member');
 			} else {
 				const memberName = Meteor.users.findOne(memberId).username;
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'groupSettings.memberAdded',
 					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been added as a member to the group "{GROUP}"'
@@ -88,11 +88,11 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
 			if (err) {
-				AlertMessages.add('error', err, 'Could not remove member');
+				Alert.error(err, 'Could not remove member');
 			} else {
 				const memberName = Meteor.users.findOne(memberId).username;
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'groupSettings.memberRemoved',
 					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been removed from to the group "{GROUP}"'
@@ -116,10 +116,10 @@ Template.groupSettings.events({
 		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
-				AlertMessages.add('error', err, 'Could not save settings');
+				Alert.error(err, 'Could not save settings');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				AlertMessages.add('success', mf(
+				Alert.success(mf(
 					'groupSettings.groupChangesSaved',
 					{ GROUP: groupName },
 					'Your changes to the settings of the group "{GROUP}" have been saved.'

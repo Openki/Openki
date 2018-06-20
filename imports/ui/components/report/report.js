@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
 
-import AlertMessages from '/imports/api/alert-messages/alert-messages.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -38,9 +38,9 @@ Template.report.events({
 			instance.$('#reportMessage').val(),
 			function(error, result) {
 				if (error) {
-					AlertMessages.add('error', error, 'Your report could not be sent');
+					Alert.error(error, 'Your report could not be sent');
 				} else {
-					AlertMessages.add('success', mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."));
+					Alert.success(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."));
 				}
 				instance.state.set('');
 			}
