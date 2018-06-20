@@ -5,8 +5,7 @@ import { Template } from 'meteor/templating';
 import Groups from '/imports/api/groups/groups.js';
 
 import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -71,9 +70,15 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
 			if (err) {
-				ShowServerError('Could not add member', err);
+				Alert.error(err, 'Could not add member');
 			} else {
-				AddMessage("\u2713 " + mf('_message.saved'), 'success');
+				const memberName = Meteor.users.findOne(memberId).username;
+				const groupName = Groups.findOne(groupId).name;
+				Alert.success(mf(
+					'groupSettings.memberAdded',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been added as a member to the group "{GROUP}"'
+				));
 			}
 		});
 	},
@@ -83,9 +88,15 @@ Template.groupSettings.events({
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
 			if (err) {
-				ShowServerError('Could not remove member', err);
+				Alert.error(err, 'Could not remove member');
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				const memberName = Meteor.users.findOne(memberId).username;
+				const groupName = Groups.findOne(groupId).name;
+				Alert.success(mf(
+					'groupSettings.memberRemoved',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been removed from to the group "{GROUP}"'
+				));
 			}
 		});
 	},
@@ -100,12 +111,19 @@ Template.groupSettings.events({
 			logoUrl: instance.$('.js-logo-url').val(),
 			backgroundUrl: instance.$('.js-background-url').val()
 		};
-		Meteor.call("group.save", instance.data.group._id, changes, function(err) {
+
+		const groupId = instance.data.group._id;
+		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
-				ShowServerError('Could not save settings', err);
+				Alert.error(err, 'Could not save settings');
 			} else {
-				AddMessage("\u2713 " + mf('_message.saved'), 'success');
+				const groupName = Groups.findOne(groupId).name;
+				Alert.success(mf(
+					'groupSettings.groupChangesSaved',
+					{ GROUP: groupName },
+					'Your changes to the settings of the group "{GROUP}" have been saved.'
+				));
 				parentInstance.editingSettings.set(false);
 			}
 		});

@@ -1,4 +1,4 @@
-import '/imports/ui/components/messages/messages.js';
+import '/imports/ui/components/alerts/alerts.js';
 
 import './frame-body.html';
 
