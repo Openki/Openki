@@ -109,7 +109,7 @@ Template.regionSelection.events({
 	'click .js-region-link'(event, instance) {
 		event.preventDefault();
 		const regionId = this._id ? this._id : 'all';
-		instance.changeRegion(regionId);
+		instance.changeRegion(regionId.toString());
 	},
 
 	'mouseover/mouseout/focusin/focusout .js-region-link'(e) {
