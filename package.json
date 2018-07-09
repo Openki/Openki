@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Openki/Openki.git"
+    "url": "git+https://gitlab.com/Openki/Openki.git"
   },
   "keywords": [
     "education",
@@ -50,7 +50,7 @@
   "author": "Openki-devs",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/Openki/Openki/issues"
+    "url": "https://gitlab.com/Openki/Openki/issues"
   },
   "homepage": "http://about.openki.net"
 }

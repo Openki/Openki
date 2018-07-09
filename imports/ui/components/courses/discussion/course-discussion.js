@@ -4,8 +4,7 @@ import { Template } from 'meteor/templating';
 
 import Courses from '/imports/api/courses/courses.js';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 import Editable from '/imports/ui/lib/editable.js';
@@ -313,7 +312,7 @@ Template.post.events({
 		Meteor.call(method, comment, function(err, commentId) {
 			instance.busy(false);
 			if (err) {
-				ShowServerError('Posting your comment went wrong', err);
+				Alert.error(err, 'Posting your comment went wrong');
 			}
 		});
 
@@ -329,9 +328,9 @@ Template.post.events({
 		event.stopImmediatePropagation();
 		Meteor.call('courseDiscussion.deleteComment', this._id, function(err) {
 			if (err) {
-				ShowServerError('Could not delete comment', err);
+				Alert.error(err, 'Could not delete comment');
 			} else {
-				AddMessage("\u2713 " + mf('_message.removed'), 'success');
+				Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
 			}
 		});
 	},

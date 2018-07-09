@@ -1,8 +1,8 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+
+import Alert from '/imports/api/alerts/alert.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -11,8 +11,8 @@ import './report.html';
 Template.report.onCreated(function reportOnCreated() {
 	this.state = new ReactiveVar('');
 });
-
 Template.report.helpers({
+
 	reporting: () => Template.instance().state.get() == 'reporting',
 	sending: () => Template.instance().state.get() == 'sending'
 });
@@ -38,9 +38,9 @@ Template.report.events({
 			instance.$('#reportMessage').val(),
 			function(error, result) {
 				if (error) {
-					ShowServerError('Your report could not be sent', error);
+					Alert.error(error, 'Your report could not be sent');
 				} else {
-					AddMessage(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."), 'success');
+					Alert.success(mf('report.confirm', "Your report was sent. A human will try to find an appropriate solution."));
 				}
 				instance.state.set('');
 			}

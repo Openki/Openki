@@ -1,7 +1,7 @@
 <template name="courseEdit">
 	{{#if Template.subscriptionsReady}}
 	<div class="edit-page">
-		<form>
+		<form autocomplete="off">
 			{{#if proposeFromQuery}}
 				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
 			{{else}}
@@ -49,14 +49,17 @@
 						</a>
 					</div>
 				{{/if}}
-				<div class="form-group">
+				<div class="form-group dropdown">
 					<label>{{mf 'course.edit.title' 'Title'}}</label>
-					<input class="form-control input-lg"
+					<input class="form-control input-lg js-title"
 						id="editform_name"
 						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
 						size="40"
 						type="text"
 						value="{{name}}"/>
+                                        {{#if proposedCourses.count}}
+                                        	{{>proposedCoursesDropdown courses=proposedCourses}}
+                                        {{/if}}
 				</div>
 				<div class="form-group">
 					<label>{{mf 'course.edit.description' 'Description'}}</label>
@@ -182,4 +185,17 @@
 			</label>
 		</div>
 	{{/if}}
+</template>
+
+<template name="proposedCoursesDropdown">
+    <ul class="dropdown-menu proposed-courses js-proposed-courses">
+        <li class="dropdown-header">
+            <i class="fa fa-info" aria-hidden="true"></i>
+            {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+        </li>
+        <li role="separator" class="divider"></li>
+        {{#each courses}}
+            <li><a href="#">{{name}}</a></li>
+        {{/each}}
+    </ul>
 </template>

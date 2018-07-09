@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import Venues from '/imports/api/venues/venues.js';
@@ -213,14 +213,20 @@ Template.eventEditVenue.events({
 			params:  nominatimQuery
 		}, function(error, result) {
 			if (error) {
-				AddMessage(error);
+				Alert.error(error, '');
 				return;
 			}
 
 			var found = JSON.parse(result.content);
 
 			markers.remove({ proposed: true });
-			if (found.length === 0) AddMessage(mf('event.edit.noResultsforAddress', { ADDRESS: search }, 'Found no results for address "{ADDRESS}"'));
+			if (found.length === 0) {
+				Alert.warning(mf(
+					'event.edit.noResultsforAddress',
+					{ ADDRESS: search },
+					'Found no results for address "{ADDRESS}"'
+				));
+			}
 			_.each(found, function(foundLocation) {
 				var marker = {
 					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},

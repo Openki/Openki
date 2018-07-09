@@ -7,8 +7,7 @@ import { _ } from 'meteor/underscore';
 import Roles from '/imports/api/roles/roles.js';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 import '/imports/ui/components/buttons/buttons.js';
@@ -114,7 +113,7 @@ Template.profile.events({
 		instance.busy('deleting');
 		Meteor.call('user.remove', function() {
 			instance.busy(false);
-			AddMessage(mf('profile.deleted', 'Your account has been deleted'), 'success');
+			Alert.success(mf('profile.deleted', 'Your account has been deleted'));
 		});
 		instance.collapse(); // Wait for server to log us out.
 	},
@@ -127,9 +126,9 @@ Template.profile.events({
 			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
-					ShowServerError('Saving your profile failed', err);
+					Alert.error(err, 'Saving your profile failed');
 				} else {
-					AddMessage(mf('profile.updated', 'Updated profile'), 'success');
+					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
 				}
 			}
@@ -142,19 +141,19 @@ Template.profile.events({
 		var pass = document.getElementById('newpassword').value;
 		if (pass !== "") {
 			if (pass !== document.getElementById('newpassword_confirm').value) {
-				AddMessage(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"), 'danger');
+				Alert.warning(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
 				return;
 			} else {
 				var minLength = 5; // We've got _some_ standards
 				if (pass.length < minLength) {
-					AddMessage(mf('profile.passwordShort', 'Are you serious? Your desired password is too short, sorry.'), 'danger');
+					Alert.warning(mf('profile.passwordShort', 'Your desired password is too short, sorry.'));
 					return;
 				}
 				Accounts.changePassword(old, pass, function(err) {
 					if (err) {
-						ShowServerError('Failed to change your password', err);
+						Alert.error(err, 'Failed to change your password');
 					} else {
-						AddMessage(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'), 'success');
+						Alert.success(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'));
 						instance.changingPass.set(false);
 					}
 				});

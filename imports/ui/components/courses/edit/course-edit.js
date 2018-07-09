@@ -12,8 +12,7 @@ import Roles from '/imports/api/roles/roles.js';
 import StringTools from '/imports/utils/string-tools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 
@@ -25,8 +24,10 @@ import '/imports/ui/components/regions/tag/region-tag.js';
 
 import './course-edit.html';
 
-Template.courseEdit.created = function() {
+Template.courseEdit.onCreated(function() {
 	var instance = this;
+
+	this.showProposed = () => this.titleFocused.get() && instance.proposedSearch.get().length > 3;
 
 	instance.busy(false);
 
@@ -44,6 +45,15 @@ Template.courseEdit.created = function() {
 
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
+	});
+
+	instance.proposedSearch = new ReactiveVar("");
+	instance.titleFocused = new ReactiveVar(false);
+	instance.autorun(function() {
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
+		}
 	});
 
 	if (instance.data.group) {
@@ -74,11 +84,20 @@ Template.courseEdit.created = function() {
 			});
 		};
 	}
-};
+});
 
 Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
+	},
+
+	proposedCourses() {
+		const instance = Template.instance();
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			return Courses.findFilter({ search });
+		}
+		return [];
 	},
 
 	availableCategories: function() {
@@ -239,6 +258,22 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+	'keyup .js-title': _.debounce(function(event, instance) {
+		instance.proposedSearch.set(event.target.value);
+	}, 200),
+
+	'change .js-title'(event, instance) {
+		instance.proposedSearch.set(event.target.value);
+	},
+
+	'focus/blur .js-title'(event, instance) {
+		instance.titleFocused.set(event.type === 'focusin');
+	},
+
+	'blur .js-title'(event, instance) {
+		instance.titleFocused.set(false);
+	},
+
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
@@ -253,7 +288,6 @@ Template.courseEdit.events({
 
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
-		console.log(instance.data.internal);
 		const internal =
 			instance.data.group
 			? instance.data.internal || false
@@ -302,14 +336,27 @@ Template.courseEdit.events({
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
-					ShowServerError('Saving the course went wrong', err);
+					Alert.error(err, 'Saving the course went wrong');
 				} else {
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
 						instance.showSavedMessage.set(true);
 						instance.resetFields();
 					} else {
-						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						if (isNew) {
+							Alert.success(mf(
+								'message.courseCreated',
+								{ NAME: changes.name },
+								'The course "{NAME}" has been created!'
+							));
+						} else {
+							Alert.success(mf(
+								'message.courseChangesSaved',
+								{ NAME: changes.name },
+								'Your changes to the course "{NAME}" have been saved.'
+							));
+						}
+
 						Router.go('showCourse', { _id: courseId });
 					}
 
@@ -394,4 +441,7 @@ Template.courseEditRole.events({
 	"change .js-check-role": function(event, instance) {
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
+});
+Template.proposedCoursesDropdown.onRendered(function() {
+   this.$(".js-proposed-courses").show();
 });
