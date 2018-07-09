@@ -123,9 +123,9 @@
 									<option value='' disabled selected class="select-placeholder">
 										{{mf '_selection.pleaseSelect'}}
 									</option>
-									{{#each regions}}
-										<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
-											{{name}}
+									{{#each region in regions}}
+										<option value='{{region._id}}' selected="{{#if currentRegion region}}selected{{/if}}">
+											{{region.name}}
 										</option>
 									{{/each}}
 								</select>
