@@ -63,7 +63,7 @@ In the interest of having a open and welcoming environment for everyone, we agre
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
-- [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `git clone git@gitlab.com:Openki/Openki.git` Openki into /some/path.
+- [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `https://gitlab.com/Openki/Openki.git` Openki into `/some/path`.
 - `cd /some/path/Openki`
 - `meteor npm install`
 - Run `meteor npm run dev`
