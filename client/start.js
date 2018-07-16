@@ -10,6 +10,8 @@ import UpdateViewport from '/imports/ui/lib/update-viewport.js';
 import RegionSelection from '/imports/utils/region-selection.js';
 import UrlTools from '/imports/utils/url-tools.js';
 
+import 'bootstrap-sass';
+
 ////////////// db-subscriptions:
 
 Meteor.subscribe('version');
