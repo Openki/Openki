@@ -399,13 +399,6 @@ Template.courseEditRole.events({
 Template.courseTitle.onCreated(function() {
 	this.showProposed = () => this.showProposals.get() && this.proposedSearch.get().length > 3;
 
-	this.checkFocus = () => {
-		if (this.$(":focus").closest(".js-proposed-search").length === 0
-			&& this.$(".js-proposed-search").hasClass("open")) {
-			this.$(".js-proposed-courses").dropdown("toggle");
-		}
-	}
-
 	this.proposedSearch = new ReactiveVar("");
 	this.showProposals = new ReactiveVar(false);
 	this.autorun(() => {
