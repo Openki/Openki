@@ -443,16 +443,12 @@ Template.courseTitle.events({
 		}
 	},
 
-	'change .js-title'(event, instance) {
+	'input .js-title'(event, instance) {
 		instance.proposedSearch.set(event.target.value);
 	},
 
 	'focus .js-title'(event, instance) {
 		instance.showProposals.set(true);
-	},
-
-	'show.bs.dropdown'(event, instance) {
-		if (!instance.showProposed()) return event.preventDefault();
 	},
 
 	'keydown .js-dropdown-entry'(event, instance) {
