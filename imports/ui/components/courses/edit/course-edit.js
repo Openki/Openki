@@ -28,8 +28,6 @@ import './course-edit.html';
 Template.courseEdit.onCreated(function() {
 	var instance = this;
 
-	this.showProposed = () => this.titleFocused.get() && instance.proposedSearch.get().length > 3;
-
 	instance.busy(false);
 
 	// Show category selection right away for new courses
@@ -46,15 +44,6 @@ Template.courseEdit.onCreated(function() {
 
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
-	});
-
-	instance.proposedSearch = new ReactiveVar("");
-	instance.titleFocused = new ReactiveVar(false);
-	instance.autorun(function() {
-		const search = instance.proposedSearch.get();
-		if (instance.showProposed()) {
-			Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
-		}
 	});
 
 	if (instance.data.group) {
@@ -90,15 +79,6 @@ Template.courseEdit.onCreated(function() {
 Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
-	},
-
-	proposedCourses() {
-		const instance = Template.instance();
-		const search = instance.proposedSearch.get();
-		if (instance.showProposed()) {
-			return Courses.findFilter({ search });
-		}
-		return [];
 	},
 
 	availableCategories: function() {
@@ -259,21 +239,6 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
-	'keyup .js-title': _.debounce(function(event, instance) {
-		instance.proposedSearch.set(event.target.value);
-	}, 200),
-
-	'change .js-title'(event, instance) {
-		instance.proposedSearch.set(event.target.value);
-	},
-
-	'focus/blur .js-title'(event, instance) {
-		instance.titleFocused.set(event.type === 'focusin');
-	},
-
-	'blur .js-title'(event, instance) {
-		instance.titleFocused.set(false);
-	},
 
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
@@ -430,6 +395,74 @@ Template.courseEditRole.events({
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
 });
-Template.proposedCoursesDropdown.onRendered(function() {
-   this.$(".js-proposed-courses").show();
+
+Template.courseTitle.onCreated(function() {
+	this.showProposed = () => this.showProposals.get() && this.proposedSearch.get().length > 3;
+
+	this.checkFocus = () => {
+		if (this.$(":focus").closest(".js-proposed-search").length === 0
+			&& this.$(".js-proposed-search").hasClass("open")) {
+			this.$(".js-proposed-courses").dropdown("toggle");
+		}
+	}
+
+	this.proposedSearch = new ReactiveVar("");
+	this.showProposals = new ReactiveVar(false);
+	this.autorun(() => {
+		const search = this.proposedSearch.get();
+		if (this.showProposed()) {
+			Meteor.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
+		}
+	});
+});
+
+Template.courseTitle.helpers({
+	proposedCourses() {
+		const instance = Template.instance();
+		const search = instance.proposedSearch.get();
+		if (instance.showProposed()) {
+			return Courses.findFilter({ search }, 20, {name: 1});
+		}
+		return [];
+	},
+});
+
+Template.courseTitle.events({
+	'keydown .js-title'(event, instance) {
+		if(event.keyCode === 9 && instance.$('.dropdown').hasClass('open')) {
+			instance.$(".dropdown-toggle").dropdown("toggle");
+			instance.showProposals.set(false);
+		}
+	},
+
+	'keyup .js-title'(event, instance) {
+		//arrow down does not work in bootstrap dropdown widget
+		if(event.keyCode === 40) {
+			instance.$(".js-proposed-courses").find("a:first").focus();
+		} else {
+			if (instance.searchDebounce) clearTimeout(instance.searchDebounce);
+			instance.searchDebounce = setTimeout( function() {
+				instance.proposedSearch.set(event.target.value);
+				if(instance.showProposed() && !instance.$('.dropdown').hasClass('open')) {
+					instance.$('.dropdown-toggle').dropdown('toggle');
+				}
+			}, 220);
+		}
+	},
+
+	'change .js-title'(event, instance) {
+		instance.proposedSearch.set(event.target.value);
+	},
+
+	'focus .js-title'(event, instance) {
+		instance.showProposals.set(true);
+	},
+
+	'show.bs.dropdown'(event, instance) {
+		if (!instance.showProposed()) return event.preventDefault();
+	},
+
+	'keydown .js-dropdown-entry'(event, instance) {
+		if(event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
+	}
 });

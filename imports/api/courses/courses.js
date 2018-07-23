@@ -109,9 +109,8 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-Courses.findFilter = function(filter, limit) {
+Courses.findFilter = function(filter, limit, sort = {time_lastedit: -1, time_created: -1}) {
 	var find = {};
-	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.state === 'proposal') {
