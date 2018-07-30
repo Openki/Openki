@@ -397,15 +397,21 @@ Template.courseEditRole.events({
 });
 
 Template.courseTitle.onCreated(function() {
-	this.showProposed = () => this.showProposals.get() && this.proposedSearch.get().length > 3;
 
 	this.proposedSearch = new ReactiveVar("");
-	this.showProposals = new ReactiveVar(false);
+	this.focused = new ReactiveVar(false);
+
+	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
+
 	this.autorun(() => {
 		const search = this.proposedSearch.get();
-		if (this.showProposed()) {
+		if (this.dropdownVisible()) {
 			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
+			if (!this.$('.dropdown').hasClass('open')) {
+				this.$('.dropdown-toggle').dropdown('toggle');
+			}
 		}
+
 	});
 });
 
@@ -413,7 +419,7 @@ Template.courseTitle.helpers({
 	proposedCourses() {
 		const instance = Template.instance();
 		const search = instance.proposedSearch.get();
-		if (instance.showProposed()) {
+		if (instance.dropdownVisible()) {
 			return Courses.findFilter({ search }, 20, [['name', 1]]);
 		}
 		return [];
@@ -424,7 +430,7 @@ Template.courseTitle.events({
 	'keydown .js-title'(event, instance) {
 		if (event.keyCode === 9) {
 			instance.$(".dropdown-toggle").dropdown("toggle");
-			instance.showProposals.set(false);
+			instance.focused.set(false);
 		}
 	},
 
@@ -432,22 +438,22 @@ Template.courseTitle.events({
 		//arrow down does not work in bootstrap dropdown widget
 		if (event.keyCode === 40) {
 			instance.$(".js-proposed-courses").find("a:first").focus();
-		} else {
-			if (instance.searchDebounce) clearTimeout(instance.searchDebounce);
-			instance.searchDebounce = setTimeout( function() {
-				if (instance.showProposed() && !instance.$('.dropdown').hasClass('open')) {
-					instance.$('.dropdown-toggle').dropdown('toggle');
-				}
-			}, 220);
 		}
 	},
 
-	'input .js-title'(event, instance) {
+	'input .js-title': _.debounce( (event, instance) => {
 		instance.proposedSearch.set(event.target.value);
-	},
+	}, 220),
+
 
 	'focus .js-title'(event, instance) {
-		instance.showProposals.set(true);
+		instance.focused.set(true);
+	},
+
+	'focusout .js-proposed-search'(event, instance) {
+		console.log(event.target,"blur js-prop", event.relatedTarget);
+		if(instance.$(event.relatedTarget).closest(".js-proposed-search").length === 0)
+			instance.focused.set(false);
 	},
 
 	'keydown .js-dropdown-entry'(event, instance) {
