@@ -404,7 +404,7 @@ Template.courseTitle.onCreated(function() {
 	this.autorun(() => {
 		const search = this.proposedSearch.get();
 		if (this.showProposed()) {
-			Meteor.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
+			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
 		}
 	});
 });
@@ -422,7 +422,7 @@ Template.courseTitle.helpers({
 
 Template.courseTitle.events({
 	'keydown .js-title'(event, instance) {
-		if(event.keyCode === 9 && instance.$('.dropdown').hasClass('open')) {
+		if (event.keyCode === 9) {
 			instance.$(".dropdown-toggle").dropdown("toggle");
 			instance.showProposals.set(false);
 		}
