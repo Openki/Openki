@@ -414,7 +414,7 @@ Template.courseTitle.helpers({
 		const instance = Template.instance();
 		const search = instance.proposedSearch.get();
 		if (instance.showProposed()) {
-			return Courses.findFilter({ search }, 20, {name: 1});
+			return Courses.findFilter({ search }, 20, [['name', 1]]);
 		}
 		return [];
 	},
@@ -430,13 +430,12 @@ Template.courseTitle.events({
 
 	'keyup .js-title'(event, instance) {
 		//arrow down does not work in bootstrap dropdown widget
-		if(event.keyCode === 40) {
+		if (event.keyCode === 40) {
 			instance.$(".js-proposed-courses").find("a:first").focus();
 		} else {
 			if (instance.searchDebounce) clearTimeout(instance.searchDebounce);
 			instance.searchDebounce = setTimeout( function() {
-				instance.proposedSearch.set(event.target.value);
-				if(instance.showProposed() && !instance.$('.dropdown').hasClass('open')) {
+				if (instance.showProposed() && !instance.$('.dropdown').hasClass('open')) {
 					instance.$('.dropdown-toggle').dropdown('toggle');
 				}
 			}, 220);
