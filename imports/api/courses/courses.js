@@ -109,27 +109,37 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-Courses.findFilter = function(filter, limit) {
+// Courses.findFilter = function(filter, limit, sort = {time_lastedit: -1, time_created: -1}) {
+Courses.findFilter = function(filter, limit, sort_params) {
+
+	check(sort_params, Match.Optional([[Match.Any]]))
+
+	const order = sort_params || [];
+
 	var find = {};
-	var sort = {time_lastedit: -1, time_created: -1};
 	if (filter.region && filter.region != 'all') find.region = filter.region;
 
 	if (filter.state === 'proposal') {
 		find.lastEvent = { $eq: null };
 		find.futureEvents = { $eq: 0 };
-		sort = { time_lastedit: -1 };
+		order.push(['time_lastedit', -1 ]);
 	}
 
 	if (filter.state === 'resting') {
 		find.lastEvent = { $ne: null };
 		find.futureEvents = { $eq: 0 };
-		sort = { time_lastedit: -1, "lastEvent.start": 1 };
+		order.push(['time_lastedit', -1 ]);
+		order.push(['nextEvent.start', 1 ]);
 	}
 
 	if (filter.state === 'upcomingEvent') {
 		find.futureEvents = { $gt: 0 };
-		sort = { "nextEvent.start": 1, time_lastedit: -1 };
+		order.push(['nextEvent.start', 1 ]);
+		order.push(['time_lastedit', -1 ]);
 	}
+	
+	order.push(['time_lastedit', -1 ]);
+	order.push(['time_created', -1 ]);
 
 	var mustHaveRoles = [];
 	var missingRoles = [];
@@ -187,6 +197,6 @@ Courses.findFilter = function(filter, limit) {
 
 		find.$and = searchQueries;
 	}
-	var options = { limit: limit, sort: sort };
+	var options = { limit: limit, sort: order };
 	return Courses.find(find, options);
 };

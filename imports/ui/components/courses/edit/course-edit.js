@@ -27,8 +27,6 @@ import './course-edit.html';
 Template.courseEdit.onCreated(function() {
 	var instance = this;
 
-	this.showProposed = () => this.titleFocused.get() && instance.proposedSearch.get().length > 3;
-
 	instance.busy(false);
 
 	// Show category selection right away for new courses
@@ -45,15 +43,6 @@ Template.courseEdit.onCreated(function() {
 
 	instance.autorun(function() {
 		instance.editableDescription.setText(Template.currentData().description);
-	});
-
-	instance.proposedSearch = new ReactiveVar("");
-	instance.titleFocused = new ReactiveVar(false);
-	instance.autorun(function() {
-		const search = instance.proposedSearch.get();
-		if (instance.showProposed()) {
-			Meteor.subscribe('Courses.findFilter', {search: instance.proposedSearch.get()});
-		}
 	});
 
 	if (instance.data.group) {
@@ -89,15 +78,6 @@ Template.courseEdit.onCreated(function() {
 Template.courseEdit.helpers({
 	query: function() {
 		return Session.get('search');
-	},
-
-	proposedCourses() {
-		const instance = Template.instance();
-		const search = instance.proposedSearch.get();
-		if (instance.showProposed()) {
-			return Courses.findFilter({ search });
-		}
-		return [];
 	},
 
 	availableCategories: function() {
@@ -258,21 +238,6 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
-	'keyup .js-title': _.debounce(function(event, instance) {
-		instance.proposedSearch.set(event.target.value);
-	}, 200),
-
-	'change .js-title'(event, instance) {
-		instance.proposedSearch.set(event.target.value);
-	},
-
-	'focus/blur .js-title'(event, instance) {
-		instance.titleFocused.set(event.type === 'focusin');
-	},
-
-	'blur .js-title'(event, instance) {
-		instance.titleFocused.set(false);
-	},
 
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
@@ -442,6 +407,68 @@ Template.courseEditRole.events({
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
 });
-Template.proposedCoursesDropdown.onRendered(function() {
-   this.$(".js-proposed-courses").show();
+
+Template.courseTitle.onCreated(function() {
+
+	this.proposedSearch = new ReactiveVar("");
+	this.focused = new ReactiveVar(false);
+
+	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
+
+	this.autorun(() => {
+		const search = this.proposedSearch.get();
+		if (this.dropdownVisible()) {
+			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
+			if (!this.$('.dropdown').hasClass('open')) {
+				this.$('.dropdown-toggle').dropdown('toggle');
+			}
+		}
+
+	});
+});
+
+Template.courseTitle.helpers({
+	proposedCourses() {
+		const instance = Template.instance();
+		const search = instance.proposedSearch.get();
+		if (instance.dropdownVisible()) {
+			return Courses.findFilter({ search }, 20, [['name', 1]]);
+		}
+		return [];
+	},
+});
+
+Template.courseTitle.events({
+	'keydown .js-title'(event, instance) {
+		if (event.keyCode === 9) {
+			instance.$(".dropdown-toggle").dropdown("toggle");
+			instance.focused.set(false);
+		}
+	},
+
+	'keyup .js-title'(event, instance) {
+		//arrow down does not work in bootstrap dropdown widget
+		if (event.keyCode === 40) {
+			instance.$(".js-proposed-courses").find("a:first").focus();
+		}
+	},
+
+	'input .js-title': _.debounce( (event, instance) => {
+		instance.proposedSearch.set(event.target.value);
+	}, 220),
+
+
+	'focus .js-title'(event, instance) {
+		instance.focused.set(true);
+	},
+
+	'focusout .js-proposed-search'(event, instance) {
+		console.log(event.target,"blur js-prop", event.relatedTarget);
+		if(instance.$(event.relatedTarget).closest(".js-proposed-search").length === 0)
+			instance.focused.set(false);
+	},
+
+	'keydown .js-dropdown-entry'(event, instance) {
+		if(event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
+	}
 });

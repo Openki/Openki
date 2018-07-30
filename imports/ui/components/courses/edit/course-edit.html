@@ -49,18 +49,7 @@
 						</a>
 					</div>
 				{{/if}}
-				<div class="form-group dropdown">
-					<label>{{mf 'course.edit.title' 'Title'}}</label>
-					<input class="form-control input-lg js-title"
-						id="editform_name"
-						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
-						size="40"
-						type="text"
-						value="{{name}}"/>
-                                        {{#if proposedCourses.count}}
-                                        	{{>proposedCoursesDropdown courses=proposedCourses}}
-                                        {{/if}}
-				</div>
+				{{>courseTitle}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.description' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
@@ -187,15 +176,29 @@
 	{{/if}}
 </template>
 
-<template name="proposedCoursesDropdown">
-    <ul class="dropdown-menu proposed-courses js-proposed-courses">
-        <li class="dropdown-header">
-            <i class="fa fa-info" aria-hidden="true"></i>
-            {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
-        </li>
-        <li role="separator" class="divider"></li>
-        {{#each courses}}
-            <li><a href="#">{{name}}</a></li>
-        {{/each}}
-    </ul>
+<template name="courseTitle">
+    <div class="form-group js-proposed-search">
+		<label>{{mf 'course.edit.title' 'Title'}}</label>
+		<div class="dropdown">
+			<input class="form-control input-lg js-title dropdown-toggle"
+				id="editform_name"
+				placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+				size="40"
+				type="text"
+				data-toggle="dropdown"
+				value="{{name}}" />
+	    {{#if proposedCourses.count}}
+	    	<ul class="dropdown-menu proposed-courses js-proposed-courses" role="menu"  aria-labelledby="editform_name">
+		        <li class="dropdown-header">
+		            <i class="fa fa-info" aria-hidden="true"></i>
+		            {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+		        </li>
+		        <li role="separator" class="divider"></li>
+	        {{#each proposedCourses}}
+	            <li class="dropdown-entry js-dropdown-entry" role="presentation"><a href="{{pathFor 'showCourse'}}" role="menuitem" tabindex="-1">{{name}}</a></li>
+	        {{/each}}
+	    	</ul>
+    	{{/if}}
+		</div>
+	</div>
 </template>
