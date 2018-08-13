@@ -451,7 +451,6 @@ Template.courseTitle.events({
 	},
 
 	'focusout .js-proposed-search'(event, instance) {
-		console.log(event.target,"blur js-prop", event.relatedTarget);
 		if(instance.$(event.relatedTarget).closest(".js-proposed-search").length === 0)
 			instance.focused.set(false);
 	},
