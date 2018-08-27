@@ -109,7 +109,6 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-// Courses.findFilter = function(filter, limit, sort = {time_lastedit: -1, time_created: -1}) {
 Courses.findFilter = function(filter, limit, sort_params) {
 
 	check(sort_params, Match.Optional([[Match.Any]]))
