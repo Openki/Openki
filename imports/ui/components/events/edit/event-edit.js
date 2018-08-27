@@ -334,8 +334,7 @@ Template.eventEdit.events({
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
 			Meteor.call('event.save',
 			{
-				eventId: 'xyz',
-				// eventId,
+				eventId,
 				updateReplicas,
 				updateChangedReplicas,
 				sendNotifications,

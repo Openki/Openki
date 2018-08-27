@@ -109,7 +109,6 @@ Courses.updateGroups = function(courseId) {
 	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
-// Courses.findFilter = function(filter, limit, sort = {time_lastedit: -1, time_created: -1}) {
 Courses.findFilter = function(filter, limit, sort_params) {
 
 	check(sort_params, Match.Optional([[Match.Any]]))
@@ -122,24 +121,24 @@ Courses.findFilter = function(filter, limit, sort_params) {
 	if (filter.state === 'proposal') {
 		find.lastEvent = { $eq: null };
 		find.futureEvents = { $eq: 0 };
-		order.push(['time_lastedit', -1 ]);
+		order.push(['time_lastedit', 'desc' ]);
 	}
 
 	if (filter.state === 'resting') {
 		find.lastEvent = { $ne: null };
 		find.futureEvents = { $eq: 0 };
-		order.push(['time_lastedit', -1 ]);
-		order.push(['nextEvent.start', 1 ]);
+		order.push(['time_lastedit', 'desc' ]);
+		order.push(['nextEvent.start', 'asc' ]);
 	}
 
 	if (filter.state === 'upcomingEvent') {
 		find.futureEvents = { $gt: 0 };
-		order.push(['nextEvent.start', 1 ]);
-		order.push(['time_lastedit', -1 ]);
+		order.push(['nextEvent.start', 'asc' ]);
+		order.push(['time_lastedit', 'desc' ]);
 	}
 	
-	order.push(['time_lastedit', -1 ]);
-	order.push(['time_created', -1 ]);
+	order.push(['time_lastedit', 'desc' ]);
+	order.push(['time_created', 'desc' ]);
 
 	var mustHaveRoles = [];
 	var missingRoles = [];
