@@ -20,7 +20,7 @@ Un openki se nourrit de plantes vivantes et de matériaux organiques morts. Au n
 
 ### Qui possède Openki ?
 
-Openki belongs to me, to you and to all who participate in it. The application is open source, is available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html) and is therefore freely available for non-commercial use. Behind Openki is the collectively organized non-profit association "KOPF", which has been developing Openki during the last years.
+Openki belongs to me, to you and to all who participate in it. The application is open source, is freely available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html). Behind Openki is the collectively organized non-profit association "KOPF", which has been developing Openki during the last years.
 
 ### Openki est-il un réseau social ?
 Oui et non. Nous mettons à disposition un outil pour l'auto-organisation. Les contacts sociaux normaux y participent évidemment. Toutefois, par comparaison avec d'autres fournisseurs de réseau social, nous souhaitons vous garder un minimum de temps sur notre site web afin que vous investissiez autant de temps que possible à organiser des processus d'apprentissage collectif dans le monde réel, avec des gens sympathiques comme vous.
