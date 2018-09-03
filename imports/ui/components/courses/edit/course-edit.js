@@ -406,7 +406,7 @@ Template.courseTitle.onCreated(function() {
 	this.autorun(() => {
 		const search = this.proposedSearch.get();
 		if (this.dropdownVisible()) {
-			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get()});
+			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get(), region: Session.get('region')});
 			if (!this.$('.dropdown').hasClass('open')) {
 				this.$('.dropdown-toggle').dropdown('toggle');
 			}
@@ -419,8 +419,9 @@ Template.courseTitle.helpers({
 	proposedCourses() {
 		const instance = Template.instance();
 		const search = instance.proposedSearch.get();
+		const region = Session.get('region');
 		if (instance.dropdownVisible()) {
-			return Courses.findFilter({ search }, 20, [['name', 1]]);
+			return Courses.findFilter({ search, region }, 20, [['name', 1]]);
 		}
 		return [];
 	},
