@@ -2,10 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
 
 import '../profiles/verify-email/verify-email.js';
 
@@ -46,9 +45,9 @@ Template.sendMessage.events({
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
 				instance.state.set('verificationMailSent', false);
-				ShowServerError('Failed to send verification mail', err);
+				Alert.error(err, 'Failed to send verification mail');
 			} else {
-				AddMessage(mf('profile.sentVerificationMail'), 'success');
+				Alert.success(mf('profile.sentVerificationMail'));
 			}
 		});
 	},
@@ -89,9 +88,9 @@ Template.sendMessage.events({
 		Meteor.call('sendEmail', data.recipientId, message,	options, (err) => {
 				instance.busy(false);
 				if (err) {
-					AddMessage(err, 'danger');
+					Alert.error(err, 'danger');
 				} else {
-					AddMessage(mf('profile.mail.sent', 'Your message was sent'), 'success');
+					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					instance.state.set('message', '');
 
 					const parentState = instance.parentInstance().state;
