@@ -2,8 +2,7 @@
 		<form class="js-send-message">
 			<div class="form-group">
 				<textarea
-					class="form-control js-email-message"
-					rows="4"
+					class="form-control send-message-textarea js-email-message"
 					placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! I wanted to tell you...' USER=(username recipientId)}}"
 					value="{{state 'message'}}"
 					></textarea>
@@ -28,7 +27,7 @@
 							<i class="fa fa-check-circle-o" aria-hidden="true"></i>
 							{{mf 'sendMessage.plsVerifyEmail' 'Please verify your E-Mail'}}
 						</div>
-						<div class="panel-body send-message-body">
+						<div class="panel-body send-message-alert-body">
 							<p>
 								{{#mf KEY='userprofile.infoForUnverifiedMail'}}
 									In order to receive a copy to your E-Mail address or
