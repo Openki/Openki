@@ -12,8 +12,7 @@ import Roles from '/imports/api/roles/roles.js';
 import StringTools from '/imports/utils/string-tools.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
 
@@ -25,7 +24,7 @@ import '/imports/ui/components/regions/tag/region-tag.js';
 
 import './course-edit.html';
 
-Template.courseEdit.created = function() {
+Template.courseEdit.onCreated(function() {
 	var instance = this;
 
 	instance.busy(false);
@@ -74,7 +73,7 @@ Template.courseEdit.created = function() {
 			});
 		};
 	}
-};
+});
 
 Template.courseEdit.helpers({
 	query: function() {
@@ -239,6 +238,7 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
@@ -253,7 +253,6 @@ Template.courseEdit.events({
 
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
-		console.log(instance.data.internal);
 		const internal =
 			instance.data.group
 			? instance.data.internal || false
@@ -302,14 +301,27 @@ Template.courseEdit.events({
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
-					ShowServerError('Saving the course went wrong', err);
+					Alert.error(err, 'Saving the course went wrong');
 				} else {
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
 						instance.showSavedMessage.set(true);
 						instance.resetFields();
 					} else {
-						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						if (isNew) {
+							Alert.success(mf(
+								'message.courseCreated',
+								{ NAME: changes.name },
+								'The course "{NAME}" has been created!'
+							));
+						} else {
+							Alert.success(mf(
+								'message.courseChangesSaved',
+								{ NAME: changes.name },
+								'Your changes to the course "{NAME}" have been saved.'
+							));
+						}
+
 						Router.go('showCourse', { _id: courseId });
 					}
 
@@ -393,5 +405,70 @@ Template.courseEditRole.helpers({
 Template.courseEditRole.events({
 	"change .js-check-role": function(event, instance) {
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
+	}
+});
+
+Template.courseTitle.onCreated(function() {
+
+	this.proposedSearch = new ReactiveVar("");
+	this.focused = new ReactiveVar(false);
+
+	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
+
+	this.autorun(() => {
+		const search = this.proposedSearch.get();
+		if (this.dropdownVisible()) {
+			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get(), region: Session.get('region')});
+			if (!this.$('.dropdown').hasClass('open')) {
+				this.$('.dropdown-toggle').dropdown('toggle');
+			}
+		}
+
+	});
+});
+
+Template.courseTitle.helpers({
+	proposedCourses() {
+		const instance = Template.instance();
+		const search = instance.proposedSearch.get();
+		const region = Session.get('region');
+		if (instance.dropdownVisible()) {
+			return Courses.findFilter({ search, region }, 20, [['name', 1]]);
+		}
+		return [];
+	},
+});
+
+Template.courseTitle.events({
+	'keydown .js-title'(event, instance) {
+		if (event.keyCode === 9) {
+			instance.$(".dropdown-toggle").dropdown("toggle");
+			instance.focused.set(false);
+		}
+	},
+
+	'keyup .js-title'(event, instance) {
+		//arrow down does not work in bootstrap dropdown widget
+		if (event.keyCode === 40) {
+			instance.$(".js-proposed-courses").find("a:first").focus();
+		}
+	},
+
+	'input .js-title': _.debounce( (event, instance) => {
+		instance.proposedSearch.set(event.target.value);
+	}, 220),
+
+
+	'focus .js-title'(event, instance) {
+		instance.focused.set(true);
+	},
+
+	'focusout .js-proposed-search'(event, instance) {
+		if(instance.$(event.relatedTarget).closest(".js-proposed-search").length === 0)
+			instance.focused.set(false);
+	},
+
+	'keydown .js-dropdown-entry'(event, instance) {
+		if(event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
 	}
 });

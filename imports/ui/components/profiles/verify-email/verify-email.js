@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import './verify-email.html';
 
@@ -22,9 +21,9 @@ Template.verifyEmail.events({
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
 				instance.sending.set(false);
-				ShowServerError('Failed to send verification mail', err);
+				Alert.error(err, 'Failed to send verification mail');
 			} else {
-				AddMessage(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'), 'success');
+				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
 			}
 		});
 	}

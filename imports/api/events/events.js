@@ -50,7 +50,7 @@ import AsyncTools from '/imports/utils/async-tools.js';
 
 // ===========================
 
-// Unreasonable HACK: Because Event is a browser API class we can't use that name
+// Event is a built-in, so we use a different name for this class
 OEvent = function() {
 	this.editors = [];
 };

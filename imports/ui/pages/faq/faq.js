@@ -7,6 +7,7 @@ import ScssVars from '/imports/ui/lib/scss-vars.js';
 
 import './faq.de.md';
 import './faq.en.md';
+import './faq.fr.md';
 import './faq.html';
 
 Template.FAQ.onCreated(function() {

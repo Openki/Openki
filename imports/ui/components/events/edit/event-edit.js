@@ -9,7 +9,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import LocalTime from '/imports/utils/local-time.js';
 import Editable from '/imports/ui/lib/editable.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import ShowServerError from '/imports/ui/lib/show-server-error.js';
 import Regions from '/imports/api/regions/regions.js';
 
 import Courses from '/imports/api/courses/courses.js';
@@ -21,7 +20,7 @@ import '/imports/ui/components/price-policy/price-policy.js';
 import '/imports/ui/components/regions/tag/region-tag.js';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
-import { AddMessage } from '/imports/api/messages/methods.js';
+import Alert from '/imports/api/alerts/alert.js';
 
 import './event-edit.html';
 
@@ -345,17 +344,29 @@ Template.eventEdit.events({
 			(err, eventId) => {
 				instance.busy(false);
 				if (err) {
-					ShowServerError('Saving the event went wrong', err);
+					Alert.error(err, 'Saving the event went wrong');
 				} else {
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
-						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						Alert.success(mf(
+							'message.eventCreated',
+							{ TITLE: editevent.title },
+							'The event "{TITLE}" has been created!'
+						));
 					} else {
-						AddMessage("\u2713 " + mf('_message.saved'), 'success');
+						Alert.success(mf(
+							'message.eventChangesSaved',
+							{ TITLE: editevent.title },
+							'Your changes to the event "{TITLE}" have been saved.'
+						));
 					}
 
 					if (updateReplicas) {
-						AddMessage(mf('event.edit.replicates.success', { TITLE: editevent.title }, 'Replicas of "{TITLE}" also updated.'), 'success');
+						Alert.success(mf(
+							'eventEdit.replicatesUpdated',
+							{ TITLE: editevent.title },
+							'The replicas of "{TITLE}" have also been updated.'
+						));
 					}
 					instance.parent.editing.set(false);
 				}

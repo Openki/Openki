@@ -15,7 +15,7 @@ Viele Pflanzen sind durch solche Myzel-Fäden miteinander verbunden. Sie benöti
 Ein Openki ernährt sich sowohl von lebenden Sträuchern und Bäumen, wie später von ihrem toten organischen Material. Auf philosophischer Ebene sind die Netzwerke des Openki-Myzels eine Metapher für ein alternatives Modell des Wissens und des Wissensaustausches. Es kompostiert die hierarchischen Ast- und Wurzelstruktur des altgriechischen Wissensbaumes (in welchem Fachbereiche voneinander abgetrennt und untergeortnet sind) und verbindet diese zu einem horizontalen Netzwerk des Wissens.
 
 ### Wem gehört Openki?
-Openki gehört mir, dir und allen, die sich daran beteiligen. Die Applikation ist Open Source, steht unter der [GNU AGPL-Lizenz](https://www.gnu.org/licenses/agpl-3.0.de.html) und ist daher für die unkommerzielle Nutzung frei verfügbar. Hinter Openki steht der kollektiv organisierte Verein "KOPF", welcher während der letzten Jahren Openki entwickelt hat. <!-- TODO FIXME: nur unkommerzielle Nutzung ist nicht korrekt... -->
+Openki gehört mir, dir und allen, die sich daran beteiligen. Die Applikation ist Open Source und ist frei verfügbar unter der [GNU AGPL-Lizenz](https://www.gnu.org/licenses/agpl-3.0.de.html). Hinter Openki steht der kollektiv organisierte Verein "KOPF", welcher während der letzten Jahren Openki entwickelt hat. <!-- TODO FIXME: nur unkommerzielle Nutzung ist nicht korrekt... -->
 
 ### Ist Openki ein soziales Netzwerk?
 Jein. Wir bieten ein Werkzeug zur Selbstorganisation. Da gehören soziale Kontakte natürlich dazu. Im Vergleich zu anderen Anbietern wollen wir aber, dass du nur für wenig Zeit auf unserer Seite bleibst, um gemeinsame Zeit in der realen Welt zu organisieren und dann so viel Zeit wie möglich übrig hast um sie mit netten Leuten zu verbringen.
@@ -24,7 +24,7 @@ Jein. Wir bieten ein Werkzeug zur Selbstorganisation. Da gehören soziale Kontak
 Nice! Damit Openki noch besser wird, brauchen wir dein Feedback. Wir haben selbst noch dutzende Ideen, die wir wichtig finden, umsetzen möchten und an denen wir arbeiten. Wir beschränken uns zur Zeit auf die notwendigsten Funktionen. Einerseits wegen unserer begrenzten Kapazität, anderseits um Openki so einfach verständlich wie möglich zu halten.
 Uns ist bewusst, dass es verschiedene zusätzliche Features gibt, welche die Selbstorganisation weiter vereinfachen, und sind sehr froh um Rückmeldungen.
 
-Nicht nur die Software von Openki ist Open-Source, sondern auch deren Entwicklung und Organisation wird offengelegt. Das heisst zum Beispiel, du siehst [hier](https://github.com/Openki/Openki/issues), welches die nächsten geplanten technischen Schritte sind und darfst dort gerne aktiv an der Diskussion teilnehmen.
+Nicht nur die Software von Openki ist Open-Source, sondern auch deren Entwicklung und Organisation wird offengelegt. Das heisst zum Beispiel, du siehst [hier](https://gitlab.com/Openki/Openki/issues), welches die nächsten geplanten technischen Schritte sind und darfst dort gerne aktiv an der Diskussion teilnehmen.
 Alternativ kannst du einfach auch eine Email mit deinen Vorschlägen an: openki-core[ät]lists.xiala.net senden.
 
 Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die benötigten Informationen: [openki.net/translate](https://openki.net/translate)
@@ -159,7 +159,7 @@ indem ein Kurs von verschiedenen Gruppen promoted wird, verknüpfen sich Gruppen
 -->
 
 ### Können wir als Gruppe Openki-Kurse auf unserer eigenen Webseite anzeigen?
-Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genauere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://github.com/Openki/Openki/wiki/Frames)
+Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter den Gruppen-Einstellungen. Genauere Infos zu diesen Ansichten (auch _Frames_ genannt) findest du [hier](https://gitlab.com/Openki/Openki/wikis/Frames)
 
 
 
@@ -187,6 +187,6 @@ Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technolo
 ## Technisches
 
 ### Wo gibts Antworten auf technische Fragen?
-Die technische Dokumentation ist im [GithubWiki](https://github.com/Openki/Openki/wiki/) zu finden.
+Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.
 
 {{/template}}

@@ -1,7 +1,7 @@
 <template name="courseEdit">
 	{{#if Template.subscriptionsReady}}
 	<div class="edit-page">
-		<form>
+		<form autocomplete="off">
 			{{#if proposeFromQuery}}
 				<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}</h2>
 			{{else}}
@@ -49,15 +49,7 @@
 						</a>
 					</div>
 				{{/if}}
-				<div class="form-group">
-					<label>{{mf 'course.edit.title' 'Title'}}</label>
-					<input class="form-control input-lg"
-						id="editform_name"
-						placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
-						size="40"
-						type="text"
-						value="{{name}}"/>
-				</div>
+				{{>courseTitle}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.description' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
@@ -123,9 +115,9 @@
 									<option value='' disabled selected class="select-placeholder">
 										{{mf '_selection.pleaseSelect'}}
 									</option>
-									{{#each regions}}
-										<option value='{{_id}}' selected="{{#if currentRegion this}}selected{{/if}}">
-											{{name}}
+									{{#each region in regions}}
+										<option value='{{region._id}}' selected="{{#if currentRegion region}}selected{{/if}}">
+											{{region.name}}
 										</option>
 									{{/each}}
 								</select>
@@ -182,4 +174,31 @@
 			</label>
 		</div>
 	{{/if}}
+</template>
+
+<template name="courseTitle">
+    <div class="form-group js-proposed-search">
+		<label>{{mf 'course.edit.title' 'Title'}}</label>
+		<div class="dropdown">
+			<input class="form-control input-lg js-title dropdown-toggle"
+				id="editform_name"
+				placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+				size="40"
+				type="text"
+				data-toggle="dropdown"
+				value="{{name}}" />
+	    {{#if proposedCourses.count}}
+	    	<ul class="dropdown-menu proposed-courses js-proposed-courses" role="menu"  aria-labelledby="editform_name">
+		        <li class="dropdown-header">
+		            <i class="fa fa-info" aria-hidden="true"></i>
+		            {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+		        </li>
+		        <li role="separator" class="divider"></li>
+	        {{#each proposedCourses}}
+	            <li class="dropdown-entry js-dropdown-entry" role="presentation"><a href="{{pathFor 'showCourse'}}" role="menuitem" tabindex="-1">{{name}}</a></li>
+	        {{/each}}
+	    	</ul>
+    	{{/if}}
+		</div>
+	</div>
 </template>

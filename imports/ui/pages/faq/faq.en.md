@@ -21,7 +21,7 @@ An openki is fed on both living shrubs and trees, as later on from their dead or
 
 ### Who owns Openki?
 
-Openki belongs to me, to you and to all who participate in it. The application is open source, is available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html) and is therefore freely available for non-commercial use. Behind Openki is the collectively organized non-profit association "KOPF", which has been developing Openki during the last years.
+Openki belongs to me, to you and to all who participate in it. The application is open source and is freely available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html). Behind Openki is the collectively organized non-profit association "KOPF", which has been developing Openki during the last years.
 
 ### Is Openki a social network?
 
@@ -32,7 +32,7 @@ Yes and no. We provide a tool for self-organization. Social contacts naturally b
 Nice! To make Openki even better, we need your feedback. We have also dozens of ideas that we find important, and we want to work on. But we are currently limiting ourselves to the most necessary functions because of our limited capacity to keep Openki as easy to understand as possible.
 Nevertheless, we are aware that there are several additional features that could simplify the self-organization promoted by Openki, and thus we are always very glad to receive feedback.
 
-Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see and participate in the discussion on our next technical steps in our [issue tracker](https://github.com/Openki/Openki/issues). Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
+Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see and participate in the discussion on our next technical steps in our [issue tracker](https://gitlab.com/Openki/Openki/issues). Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
 
 You can also help translate Openki using the [online translator](https://openki.net/translate).
 
@@ -136,7 +136,7 @@ Groups are already existing organizations, communities, etc. that use Openki to 
 Each user can create a new group under their account settings. [https://openki.net/group/create](https://openki.net/group/create)
 
 ### Can we as a group show openki courses on our own website?
-Yes! You can find the different views for embedding for your group in the group settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://github.com/Openki/Openki/wiki/Frames)
+Yes! You can find the different views for embedding for your group in the group settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames)
 
 ## Safety
 
@@ -159,7 +159,7 @@ Openki.net is SSL encrypted by default. This is the same technology that your on
 ## Technical
 
 ### Where can I find answers to technical questions?
-Detailed technical documentation can be found in [GithubWiki](https://github.com/Openki/Openki/wiki/).
+Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).
 
 
 {{/template}}

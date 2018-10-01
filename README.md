@@ -1,3 +1,8 @@
+## :dash: This repository has been moved to GitLab.
+Please check out the current version at: https://gitlab.com/Openki/Openki
+
+----
+
 Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
 ====
 
@@ -27,13 +32,13 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :pencil: Easily propose courses and events
 - :mag: Fulltext-search them
 - :speech_balloon: Simple discussion-board
-- :computer: Infoscreen: Live-views with upcoming events for big and small screens ([Wiki](https://github.com/Openki/Openki/wiki/InfoScreens))
-- :pager: Frame-URLs to dynamically embed views into other pages ([Wiki](https://github.com/Openki/Openki/wiki/Frames))
+- :computer: Infoscreen: Live-views with upcoming events for big and small screens ([Wiki](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
+- :pager: Frame-URLs to dynamically embed views into other pages ([Wiki](https://gitlab.com/Openki/Openki/wikis/Frames))
 - :cat: Categories with sub-categories
 - :door: Regions- and room-system
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
-- :date: Calendar and iCal exports ([Wiki](https://github.com/Openki/Openki/wiki/calendar-export))
+- :date: Calendar and iCal exports ([Wiki](https://gitlab.com/Openki/Openki/wikis/calendar-export))
 - :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
 - :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced, live translation](https://openki.net/translate) (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
@@ -53,12 +58,12 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 ----
 
 ## Contribution
-All submissions are welcome. To submit a change, [fork this repo](https://github.com/Openki/Openki/fork), commit your changes, and send us a [pull request](https://github.com/Openki/Openki/compare).<br />
-In the interest of having a open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://github.com/Openki/Openki/wiki/Code-of-Conduct). By participating in this project you agree to abide by its terms.
+All submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
+In the interest of having a open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct). By participating in this project you agree to abide by its terms.
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
-- [Download](https://github.com/Openki/Openki/archive/master.zip) and unzip or `git clone https://github.com/Openki/Openki.git` Openki into /some/path.
+- [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `https://gitlab.com/Openki/Openki.git` Openki into `/some/path`.
 - `cd /some/path/Openki`
 - `meteor npm install`
 - Run `meteor npm run dev`
@@ -67,7 +72,7 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - There are other actions you can use with `meteor npm run`: `app-test` and `js-lint`.
 
 ### Documentation
-- The technical documentation is here on Github in the :book: [Wiki](https://github.com/Openki/Openki/wiki)
+- The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)
 - More documentation can be found on our [blog](http://about.openki.net/?page_id=1043)
 
 ### License
