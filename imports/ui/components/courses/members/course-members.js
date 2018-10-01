@@ -167,6 +167,10 @@ Template.courseMember.events({
 
 	'click .js-show-contact-modal'(event, instance) {
 		instance.state.set('showContactModal', true);
+	},
+
+	'hidden.bs.modal .js-contact-participant'(event, instance) {
+		instance.state.set('showContactModal', false);
 	}
 });
 
@@ -177,16 +181,10 @@ Template.contactParticipantModal.onCreated(function() {
 	);
 
 	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('#contactParticipant').modal('hide');
+		if (this.state.get('messageSent')) this.$('.js-contact-participant').modal('hide');
 	});
 });
 
 Template.contactParticipantModal.onRendered(function() {
-	this.$('#contactParticipant').modal('show');
-});
-
-Template.contactParticipantModal.events({
-	'hidden.bs.modal #contactParticipant'(event, instance) {
-		instance.parentInstance().state.set('showContactModal', false);
-	}
+	this.$('.js-contact-participant').modal('show');
 });
