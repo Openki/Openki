@@ -1,6 +1,8 @@
 // sass-lint:disable no-ids
 
 // This formats the mocha test-result output
+// It's not used on the live-site, but I didn't
+// work out how to only include it in the dev-builds.
 #mocha {
   background: $white;
   border-right: 2px solid $black;
