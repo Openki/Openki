@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -15,6 +16,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
+import '/imports/ui/components/send-message/send-message.js';
 
 import './course-members.html';
 
@@ -77,6 +79,11 @@ Template.courseMember.onCreated(function() {
 	var instance = this;
 	var courseId = this.data.course._id;
 
+	this.state = new ReactiveDict();
+	this.state.setDefault(
+		{ showContactModal: false }
+	);
+
 	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
@@ -131,6 +138,13 @@ Template.courseMember.helpers({
 	showMemberComment() {
 		var mayChangeComment = this.member.user === Meteor.userId();
 		return this.member.comment || mayChangeComment;
+	},
+
+	showContactParticipant() {
+		const userId = Meteor.userId();
+		if (!userId) return false;
+
+		return userId !== this.member.user;
 	}
 });
 
@@ -149,5 +163,28 @@ Template.courseMember.events({
 	'click .js-remove-team': function(e, template) {
 		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
 		return false;
+	},
+
+	'click .js-show-contact-modal'(event, instance) {
+		instance.state.set('showContactModal', true);
+	},
+
+	'hidden.bs.modal .js-contact-participant'(event, instance) {
+		instance.state.set('showContactModal', false);
 	}
+});
+
+Template.contactParticipantModal.onCreated(function() {
+	this.state = new ReactiveDict();
+	this.state.setDefault(
+		{ messageSent: false }
+	);
+
+	this.autorun(() => {
+		if (this.state.get('messageSent')) this.$('.js-contact-participant').modal('hide');
+	});
+});
+
+Template.contactParticipantModal.onRendered(function() {
+	this.$('.js-contact-participant').modal('show');
 });

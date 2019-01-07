@@ -14,7 +14,7 @@
 				</a>
 			{{else}}
 				{{#if acceptsMessages}}
-				{{>emailBox}}
+					{{> sendMessage recipientId=user._id}}
 				{{/if}}
 			{{/if}}
 			{{#if showSettings}}
