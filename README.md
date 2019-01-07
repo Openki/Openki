@@ -19,7 +19,7 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - Live: [openki.net](https://openki.net)
 - Demo/Playground: [sandbox.openki.net](http://sandbox.openki.net/?region=Englistan "running here")
 - Concept: [about.openki.net](http://about.openki.net "our blog")
-- Contact: [openki-core[at]lists.xiala.net](mailto:openki-core[_at_]lists.xiala.net "write us")
+- Contact: [dev-core[at]lists.openki.net](mailto:dev-core[_at_]lists.openki.net "write us")
 
 ----
 
