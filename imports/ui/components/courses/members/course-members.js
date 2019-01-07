@@ -4,15 +4,14 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import Roles from '/imports/api/roles/roles.js';
+import { Subscribe, Unsubscribe } from '/imports/api/courses/subscription.js';
 
 import Editable from '/imports/ui/lib/editable.js';
 import Alert from '/imports/api/alerts/alert.js';
-import {
-	HasRoleUser,
-	MaySubscribe,
-	MayUnsubscribe
-} from '/imports/utils/course-role-utils.js';
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
+
+import { Message, processChange } from '/imports/api/courses/subscription.js';
 
 import '/imports/ui/components/editable/editable.js';
 import '/imports/ui/components/profile-link/profile-link.js';
@@ -77,7 +76,7 @@ Template.courseMembers.events({
 
 Template.courseMember.onCreated(function() {
 	const instance = this;
-	const courseId = this.data.course._id;
+	instance.subscribe('user', this.data.member.user);
 
 	this.state = new ReactiveDict();
 	this.state.setDefault(
@@ -89,12 +88,9 @@ Template.courseMember.onCreated(function() {
 	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
-			Meteor.call("course.changeComment", courseId, newMessage, function(err, courseId) {
-				if (err) {
-					Alert.error(err, 'Unable to change your message');
-				} else {
-					Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
-				}
+			const change = new Message(instance.data.course, Meteor.user(), newMessage);
+			processChange(change, () => {
+				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 			});
 		},
 		mf('roles.message.placeholder', 'My interests...')
@@ -104,6 +100,20 @@ Template.courseMember.onCreated(function() {
 		const data = Template.currentData();
 		instance.editableMessage.setText(data.member.comment);
 	});
+
+	instance.subscribeToTeam = function() {
+		const user = Users.findOne(this.data.member.user);
+		if (!user) return false; // Probably not loaded yet
+
+		return new Subscribe(this.data.course, user, 'team');
+	};
+
+	instance.removeFromTeam = function() {
+		const user = Users.findOne(this.data.member.user);
+		if (!user) return false; // Probably not loaded yet
+
+		return new Unsubscribe(this.data.course, user, 'team');
+	};
 });
 
 Template.courseMember.helpers({
@@ -126,8 +136,9 @@ Template.courseMember.helpers({
 
 	roleShort() { return 'roles.'+this+'.short'; },
 
-	maySubscribe() {
-		return MaySubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+	maySubscribeToTeam: function() {
+		const change = Template.instance().subscribeToTeam();
+		return change && change.validFor(Meteor.user());
 	},
 
 	rolelistIcon(roletype) {
@@ -142,8 +153,9 @@ Template.courseMember.helpers({
 	},
 
 	mayUnsubscribeFromTeam(label) {
-		return label == 'team'
-			&& MayUnsubscribe(Meteor.userId(), this.course, this.member.user, 'team');
+		if (label != 'team') return false;
+		const change = Template.instance().removeFromTeam();
+		return change && change.validFor(Meteor.user());
 	},
 
 	showMemberComment() {
@@ -167,13 +179,13 @@ Template.removeFromTeamDropdown.helpers({
 });
 
 Template.courseMember.events({
-	'click .js-add-to-team-btn'(event, instance) {
-		Meteor.call("course.addRole", this.course._id, this.member.user, 'team', false);
-		return false;
+	'click .js-add-to-team-btn': function(event, instance) {
+		event.preventDefault();
+		processChange(instance.subscribeToTeam(), () => {});
 	},
-	'click .js-remove-team'(event, instance) {
-		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
-		return false;
+	'click .js-remove-team': function(event, instance) {
+		event.preventDefault();
+		processChange(instance.removeFromTeam(), () => {});
 	},
 
 	'click .js-show-contact-modal'(event, instance) {

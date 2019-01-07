@@ -50,6 +50,34 @@ if (Meteor.isServer) {
 	Log._ensureIndex({ rel: 1});
 }
 
+class ResultLogger {
+	constructor(id, printToLog) {
+		this.id = id;
+		this.printToLog = printToLog;
+	}
+
+	success() {
+		this.record(true);
+	}
+
+	error(error) {
+		const message = JSON.parse(JSON.stringify(error));
+		this.record(false, message);
+	}
+
+	record(success, message) {
+		const resolution = { ts: new Date(), success };
+		if (message) resolution.message = message;
+
+		if (this.printToLog) {
+			console.log({ id: this.id, resolution });
+		}
+
+		Log.update(this.id, { $push: { res: resolution } });
+	}
+}
+
+
 /** Record a new entry to the log
   *
   * @param  {String} track   - type of log entry
@@ -64,14 +92,18 @@ Log.record = function(track, rel, body) {
 		{ tr: track
 		, ts: new Date()
 		, rel: rel
-		, body: body
+	, body: body
+	, res: []
 		};
 
-	Log.insert(entry);
+	const id = Log.insert(entry);
 
-	if (Meteor.settings.printLog) {
+	const printToLog = Meteor.settings.printLog;
+	if (printToLog) {
 		console.log(entry);
 	}
+
+	return new ResultLogger(id, printToLog);
 };
 
 Log.findFilter = function(filter, limit) {

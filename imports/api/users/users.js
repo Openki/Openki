@@ -53,7 +53,22 @@ import IdTools from '/imports/utils/id-tools.js';
 
 export default Users = Meteor.users;
 
-User = function() {};
+/** Get the current user
+  * 
+  * If the user is not logged-in, a placeholder "anon" object is
+  * returned. 
+  */
+Users.currentUser = function() {
+	const logged = Meteor.user();
+	if (logged) return logged;
+
+	const anon = new User();
+	anon._id = "anon";
+	anon.anon = true;
+	return anon;
+}
+
+export const User = function() {};
 
 /** Check whether the user may promote things with the given group
   *
@@ -91,6 +106,11 @@ User.prototype.verifiedEmailAddress = function() {
 		&& emailRecord.address
 		|| false;
 };
+
+User.prototype.privileged = function(role) {
+	return this.privileges
+	    && this.privileges.indexOf(role) > -1;
+}
 
 Meteor.users._transform = function(user) {
 	return _.extend(new User(), user);

@@ -7,11 +7,8 @@ import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
-import {
-	HasRoleUser,
-	MaySubscribe,
-	MayUnsubscribe
-} from '/imports/utils/course-role-utils.js';
+
+import {Subscribe, Unsubscribe, Message} from './subscription.js';
 
 import AsyncTools from '/imports/utils/async-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
@@ -19,108 +16,43 @@ import HtmlTools from '/imports/utils/html-tools.js';
 
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 
-function addRole(course, role, user) {
-	// Add the user as member if she's not listed yet
-	Courses.update(
-		{ _id: course._id, 'members.user': { $ne: user } },
-		{ $addToSet: { 'members': { user: user, roles: [ role ]} }}
-	);
 
-	Courses.update(
-		{ _id: course._id, 'members.user': user },
-		{ '$addToSet': { 'members.$.roles': role }}
-	);
+const registerMethod = function(method) {
+	const apply = function(params) {
+		const change = method.read(params);
+		try {
+			change.validate();
+		} catch(message) {
+			throw new Meteor.Error(method.name + ".invalid", "change invalid", message);
+		}
 
-	Courses.updateGroups(course._id);
-}
+		const operator = Meteor.user();
+		
+		if (!change.permitted(operator)) {
+			throw new Meteor.Error(method.name + ".not.permitted", "Not permitted", operator);
+		}
 
+		const rel = [ operator._id ];
+		const body = { operatorId: operator._id };
+		change.provide(rel, body);
+		const result = Log.record(method.name, rel, body);
+		try {
+			change.apply();
+		} catch(message) {
+			result.error(message);
+			throw new Meteor.Error(method.name + ".error.applying", "Error applying change");
+		}
+		result.success();
+	};
 
-function removeRole(course, role, user) {
-	Courses.update(
-		{ _id: course._id, 'members.user': user },
-		{ '$pull': { 'members.$.roles': role }}
-	);
+	Meteor.methods({["Course." + method.name]: apply});
+};
 
-	// Housekeeping: Remove members that have no role left
-	Courses.update(
-		{ _id: course._id },
-		{ $pull: { members: { roles: { $size: 0 } }}}
-	);
-
-	Courses.updateGroups(course._id);
-}
+registerMethod(Subscribe);
+registerMethod(Unsubscribe);
+registerMethod(Message);
 
 Meteor.methods({
-	'course.addRole'(courseId, userId, role) {
-		check(courseId, String);
-		check(userId, String);
-		check(role, String);
-
-		var user = Meteor.users.findOne(userId);
-		if (!user) throw new Meteor.Error(404, "User not found");
-
-		var operator = Meteor.user();
-		if (!operator) throw new Meteor.Error(401, "please log in");
-
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		if (course.roles.indexOf(role) == -1) throw new Meteor.Error(404, "No role "+role);
-
-		// do nothing if user is already subscribed with this role
-		if (HasRoleUser(course.members, role, userId)) return true;
-
-		// Check permissions
-		if (!MaySubscribe(operator._id, course, user._id, role)) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-
-		addRole(course, role, user._id);
-
-		// Update the modification date
-		Courses.update(courseId, { $set: {time_lastedit: new Date()} });
-
-		// Send notifications
-		Notification.Join.record(course._id, user._id, role);
-	},
-
-	'course.removeRole'(courseId, userId, role) {
-		check(role, String);
-		check(userId, String);
-		check(courseId, String);
-
-		var user = Meteor.users.findOne(userId);
-		if (!user) throw new Meteor.Error(404, "User not found");
-
-		var operator = Meteor.user();
-		if (!operator) throw new Meteor.Error(401, "please log in");
-
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		// do nothing if user is not subscribed with this role
-		if (!HasRoleUser(course.members, role, userId)) return true;
-
-		// Check permissions
-		 if (!MayUnsubscribe(operator._id, course, user._id, role)) {
-			throw new Meteor.Error(401, "not permitted");
-		}
-
-		removeRole(course, role, user._id);
-	},
-
-	'course.changeComment'(courseId, comment) {
-		check(courseId, String);
-		check(comment, String);
-		var course = Courses.findOne({_id: courseId});
-		if (!course) throw new Meteor.Error(404, "Course not found");
-
-		Courses.update(
-			{ _id: course._id, 'members.user': Meteor.userId() },
-			{ $set: { 'members.$.comment': comment } }
-		);
-	},
-
 	'course.save'(courseId, changes) {
 		check(courseId, String);
 		check(changes, {

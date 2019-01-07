@@ -209,5 +209,9 @@ Template.showLogEntry.helpers(
 	, jsonBody() {
 			return JSON.stringify(this.body, null, '   ');
 		}
+	, jsonFull:
+		function() {
+			return JSON.stringify(this, null, '   ');
+		}
 	}
 );

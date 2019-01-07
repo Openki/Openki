@@ -2,18 +2,20 @@ export default notificationJoin = {};
 import Log from '/imports/api/log/log.js';
 import StringTools from '/imports/utils/string-tools.js';
 import Courses from '/imports/api/courses/courses.js';
+import HtmlTools from '/imports/utils/html-tools.js';
 
 /** Record the intent to send join notifications
   *
   * @param      {ID} courseID         - ID for the CourseDiscussions collection
   * @param      {ID} participantId - ID of the user that joined
   * @param      {String} newRole      - new role of the participant
-  * @param      {String} message      - ID of the new role
+  * @param      {String} message      - Optional message of the new participant
   */
-notificationJoin.record = function(courseId, participantId, newRole) {
+notificationJoin.record = function(courseId, participantId, newRole, message) {
 	check(courseId, String);
 	check(participantId, String);
 	check(newRole, String);
+	check(message, Match.Optional(String));
 
 	var course = Courses.findOne(courseId);
 	if (!course) throw new Meteor.Error("No course entry for " + commentId);
@@ -30,6 +32,8 @@ notificationJoin.record = function(courseId, participantId, newRole) {
 	body.recipients = body.recipients.filter(r => r !== participantId);
 
 	body.newRole = newRole;
+
+	body.message = message;
 
 	body.model = 'Join';
 
@@ -73,6 +77,7 @@ notificationJoin.Model = function(entry) {
 				, subject: subject
 				, memberCount: course.members.length
 				, roleTitle: roleTitle
+				, message: HtmlTools.plainToHtml(body.message)
 				, figures: figures
 				}
 			);

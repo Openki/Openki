@@ -3,17 +3,26 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import { MaySubscribe } from '/imports/utils/course-role-utils.js';
+
+import {Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
 import './course-roles.html';
 
-Template.courseRole.created = function() {
+
+
+Template.courseRole.onCreated(function() {
 	this.busy(false);
 	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
-};
+
+	// Build a subscribe change
+	this.subscribe = function(comment) {
+		const user = Users.currentUser();
+		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
+	};
+});
 
 Template.courseRole.helpers({
 	showFirstSteps: () => Template.instance().showFirstSteps.get(),
@@ -38,16 +47,9 @@ Template.courseRole.helpers({
 		return this.roletype.type === type;
 	},
 
-	maySubscribe(role) {
-		var operator = Meteor.userId();
-
-		// Show the participation buttons even when not logged-in.
-		// fun HACK: if we pass an arbitrary string instead of falsy
-		// the MaySubscribe() will return true if the user could subscribe
-		// if they were logged-in. Plain abuse of MaySubscribe().
-		if (!operator) operator = 'unlogged';
-
-		return MaySubscribe(operator, this.course, operator, role);
+	maySubscribe: function() {
+		const operator = Users.currentUser();
+		return Template.instance().subscribe().validFor(operator);
 	}
 });
 
@@ -63,23 +65,11 @@ Template.courseRole.events({
 		const comment = instance.$('.js-comment').val();
 		instance.busy('enrolling');
 		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
-			Meteor.call('course.addRole', this.course._id, Meteor.userId(), this.roletype.type, (err) => {
-				if (err) {
-					console.error(err);
-				} else {
-					RouterAutoscroll.cancelNext();
-					instance.showFirstSteps.set(true);
-					instance.busy(false);
-					instance.enrolling.set(false);
-					Meteor.call('course.changeComment', this.course._id, comment, err => {
-						instance.busy(false);
-						if (err) {
-							console.error(err);
-						} else {
-							instance.enrolling.set(false);
-						}
-					});
-				}
+			processChange(instance.subscribe(comment), () => {
+				RouterAutoscroll.cancelNext();
+				instance.showFirstSteps.set(true);
+				instance.busy(false);
+				instance.enrolling.set(false);
 			});
 		});
 	},
@@ -91,7 +81,8 @@ Template.courseRole.events({
 
 	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
-		Meteor.call('course.removeRole', this.course._id, Meteor.userId(), this.roletype.type);
+		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
+		processChange(change, () => {});
 		return false;
 	},
 

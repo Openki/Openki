@@ -1,17 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 
 export default UserPrivilegeUtils = {
-	privileged(user, privilege) {
+	privileged(user, role) {
 		// Load user object if ID was passed
 		if (typeof user === 'string' || user instanceof String) {
 			user = Meteor.users.findOne({ _id: user });
 		}
 
-		return (
-			user
-			&& user.privileges
-			&& user.privileges.indexOf(privilege) > -1
-		);
+		return user && user.privileged(role); 
 	},
 
 	privilegedTo(privilege) {
