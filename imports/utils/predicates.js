@@ -65,9 +65,9 @@ export default Predicates = {
 		var date;
 
 		if (param === 'now') {
-			date = moment.utc();
+			date = moment();
 		} else {
-			date = moment.utc(param, ["YYYY-MM-DD", moment.ISO_8601]); // Param is ISO date or moment() object
+			date = moment(param, ["YYYY-MM-DD", moment.ISO_8601]); // Param is ISO date or moment() object
 			if (!date.isValid()) throw new FilteringReadError(param, "Invalid date");
 		}
 
