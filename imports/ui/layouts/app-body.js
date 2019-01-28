@@ -10,6 +10,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/account-tasks/account-tasks.js';
 import '/imports/ui/components/alerts/alerts.js';
+import '/imports/ui/components/email-request/email-request.js';
 import '/imports/ui/components/featured-group/featured-group.js';
 import '/imports/ui/components/footer/footer.js';
 import '/imports/ui/components/introduction/introduction.js';
@@ -44,10 +45,6 @@ Template.layout.helpers({
 		);
 	},
 
-	shownIntro: function() {
-		return Introduction.shownIntro();
-	},
-
 	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
 
 	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
@@ -55,7 +52,7 @@ Template.layout.helpers({
 	isNotAdminPanel() {
 		const route = Router.current().route;
 		return route && route.getName() !== 'adminPanel';
-	}
+	},
 });
 
 Template.layout.events({

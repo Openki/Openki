@@ -12,9 +12,11 @@
 
 			{{> alerts}}
 
-			{{#if shownIntro}}
-				{{> introduction}}
-			{{/if}}
+			{{> introduction}}
+
+			{{> emailRequest}}
+
+			{{> emailValidation}}
 
 			<div id="maincontent">
 				{{#if translate}}

@@ -34,6 +34,9 @@ Template.introduction.onRendered(function() {
 });
 
 Template.introduction.helpers({
+	shownIntro: function() {
+		return Introduction.shownIntro();
+	},
 	openedIntro: function() {
 		return Introduction.openedIntro();
 	},

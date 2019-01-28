@@ -36,33 +36,25 @@ Meteor.methods({
 			}
 		}
 
-		const trimmedEmail = email.trim();
-		const newEmail = trimmedEmail || false;
-		const previousEmail = user.emailAddress();
-
-		if (newEmail !== previousEmail) {
-			// Working under the assumption that there is only one address
-			// if there was more than one address oops I accidentally your addresses
-			if (email) {
-				// Very lenient address validation routine
-				if (email.length < 3) {
-					return ApiError('emailInvalid', 'Email address invalid');
-				}
-
-				// Don't allow using an address somebody else uses
-				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
-					return ApiError('emailExists', 'Email address already in use');
-				}
-				Profile.Email.change(user._id, email, "profile change");
-			} else {
-				// Remove email-address
-				Profile.Email.change(user._id, false, "profile change");
-			}
-		}
+		user.updateEmail(email);
 
 		if (user.notifications !== notifications) {
 			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
 		}
+	},
+
+	'user.updateEmail': function(email) {
+		check(email, String);
+
+		// The error handling in this function is flawed in that we drop
+		// out on the first error instead of collecting them. So fields
+		// that are validated later will not be saved if an earlier field
+		// causes us to fail.
+
+		var user = Meteor.user();
+		if (!user) return ApiError("plzLogin", "Not logged-in");
+
+		user.updateEmail(email);
 	},
 
 	'user.remove': function() {

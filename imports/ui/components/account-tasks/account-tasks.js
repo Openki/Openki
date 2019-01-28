@@ -4,7 +4,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import { SetupWarnings, IsEmail } from '/imports/ui/lib/account-tools.js';
+import { SetupWarnings } from '/imports/ui/lib/account-tools.js';
+import { IsEmail } from '/imports/utils/email-tools.js';
 import Alert from '/imports/api/alerts/alert.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
 
@@ -206,13 +207,25 @@ Template.registerFrame.onCreated(function() {
 			text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.'),
 			selectors: ['#registerPassword']
 		},
+		'noEmail': {
+			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
+			selectors: ['#registerEmail']
+		},
 		'noCredentials': {
-			text: mf('register.warning.noCredentials', 'Please enter a username and a password to register.'),
-			selectors: ['#registerName', '#registerPassword']
+			text: mf('register.warning.noCredentials', 'Please enter a username, password and a email to register.'),
+			selectors: ['#registerName', '#registerPassword', '#registerEmail']
 		},
 		'userExists': {
 			text: mf('register.warning.userExists', 'This username already exists. Please choose another one.'),
 			selectors: ['#registerName']
+		},
+		'emailNotValid': {
+			text: mf('register.warning.emailNotValid', 'your email seems to have an error.'),
+			selectors: ['#registerEmail']
+		},
+		'emailExists': {
+			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
+			selectors: ['#registerEmail']
 		}
 	});
 });
@@ -257,6 +270,18 @@ Template.registerFrame.events({
 
 				if (reason == 'Username already exists.') {
 					instance.setWarning('userExists');
+				}
+
+				if (reason == 'user must provide a email') {
+					instance.setWarning('noEmail');
+				}
+
+				if (reason == 'user must provide a valid email') {
+					instance.setWarning('emailNotValid');
+				}
+
+				if (reason == 'Email already exists.') {
+					instance.setWarning('emailExists');
 				}
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
