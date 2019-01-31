@@ -2,8 +2,6 @@ import { Meteor } from 'meteor/meteor';
 
 import IdTools from '/imports/utils/id-tools.js';
 
-import { IsEmail } from '/imports/utils/email-tools.js';
-
 // ======== DB-Model: ========
 // "_id"          -> ID
 // "createdAt"    -> Date
@@ -80,31 +78,6 @@ User.prototype.emailAddress = function() {
 		&& this.emails[0].address
 		|| false;
 };
-
-User.prototype.updateEmail = function(email) {
-	const user = Meteor.user();
-	const trimmedEmail = email.trim();
-	const newEmail = trimmedEmail || false;
-	const previousEmail = user.emailAddress();
-
-	if (newEmail !== previousEmail) {
-		// Working under the assumption that there is only one address
-		// if there was more than one address oops I accidentally your addresses
-		if (newEmail) {
-			if (!IsEmail(newEmail)) {
-				return ApiError('emailInvalid', 'Email address invalid');
-			}
-
-			// Don't allow using an address somebody else uses
-			if (Accounts.findUserByEmail(newEmail)) {
-				return ApiError('emailExists', 'Email address already in use');
-			}
-			Profile.Email.change(user._id, newEmail, "profile change");
-		} else {
-			return ApiError('noEmail', 'Please enter a email.')
-		}
-	}
-}
 
 /** Get verified email address of user
   *

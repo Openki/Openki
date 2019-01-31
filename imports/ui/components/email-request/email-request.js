@@ -24,7 +24,7 @@ Template.emailRequestModal.onCreated(function() {
 			selectors: ['#registerEmail']
 		},
 		'emailExists': {
-			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
+			text: mf('register.warning.emailExists', 'This email already exists.'),
 			selectors: ['#registerEmail']
 		}
 	});
@@ -35,31 +35,35 @@ Template.emailRequestModal.onRendered(function() {
 });
 
 Template.emailRequestModal.events({
-	'click .js-safe-email'(event, instance) {
+	'click .js-save-email'(event, instance) {
 		instance.busy('saving');
 		event.preventDefault();
-		const email = document.getElementById('registerEmail').value.trim();
-		if(email.length === 0) {
-			instance.setWarning('noEmail');
-		} else if(!IsEmail(email)) {
-			instance.setWarning('emailNotValid');
-		} else {
-			Meteor.call('user.updateEmail',
-				email,
-				function(err) {
-					instance.busy(false);
-					if (err) {
-						const reason = err.reason;
-						if (reason == 'Email address already in use') {
+		Meteor.call('user.updateEmail',
+			document.getElementById('registerEmail').value.trim(),
+			function(err) {
+				instance.busy(false);
+				if (err) {
+					const reason = err.reason;
+					switch(reason) {
+						case 'Please enter a email.':
+							instance.setWarning('noEmail');
+							break;
+						case 'Email address invalid':
+							instance.setWarning('emailNotValid');
+							break;
+						case 'Email already exists.':
 							instance.setWarning('emailExists');
-						}
-					} else {
-						Alert.success(mf('profile.updated', 'Updated profile'));
-						instance.$(".js-email-request-modal").modal('hide');
+							break;
+						default:
+							instance.setWarning("Unexpected error: $reason");
+							break;
 					}
+				} else {
+					Alert.success(mf('profile.updated', 'Updated profile'));
+					instance.$(".js-email-request-modal").modal('hide');
 				}
-			);
-		}
+			}
+		);
 	}
 });
 

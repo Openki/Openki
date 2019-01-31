@@ -5,8 +5,34 @@ import Groups from '/imports/api/groups/groups.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import Profile from '/imports/utils/profile.js';
 import '/imports/api/ApiError.js';
+import { IsEmail } from '/imports/utils/email-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
 import AsyncTools from '/imports/utils/async-tools.js';
+
+updateEmail = function(email) {
+	const user = Meteor.user();
+	const trimmedEmail = email.trim();
+	const newEmail = trimmedEmail || false;
+	const previousEmail = user.emailAddress();
+
+	if (newEmail !== previousEmail) {
+		// Working under the assumption that there is only one address
+		// if there was more than one address oops I accidentally your addresses
+		if (newEmail) {
+			if (!IsEmail(newEmail)) {
+				return ApiError('emailInvalid', 'Email address invalid');
+			}
+
+			// Don't allow using an address somebody else uses
+			if (Accounts.findUserByEmail(newEmail)) {
+				return ApiError('emailExists', 'Email already exists.');
+			}
+			Profile.Email.change(user._id, newEmail, "profile change");
+		} else {
+			return ApiError('noEmail', 'Please enter a email.')
+		}
+	}
+}
 
 Meteor.methods({
 	/** Set user region
@@ -29,6 +55,7 @@ Meteor.methods({
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
+		if (saneUsername.length == 0) return ApiError("nameError", "username cannot be empty");
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {
@@ -36,7 +63,7 @@ Meteor.methods({
 			}
 		}
 
-		user.updateEmail(email);
+		updateEmail(email);
 
 		if (user.notifications !== notifications) {
 			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
@@ -45,16 +72,9 @@ Meteor.methods({
 
 	'user.updateEmail': function(email) {
 		check(email, String);
-
-		// The error handling in this function is flawed in that we drop
-		// out on the first error instead of collecting them. So fields
-		// that are validated later will not be saved if an earlier field
-		// causes us to fail.
-
 		var user = Meteor.user();
 		if (!user) return ApiError("plzLogin", "Not logged-in");
-
-		user.updateEmail(email);
+		updateEmail(email);
 	},
 
 	'user.remove': function() {

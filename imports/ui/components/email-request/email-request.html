@@ -3,6 +3,7 @@
 		{{> emailRequestModal}}
 	{{/if}}
 </template>
+
 <template name="emailRequestModal">
 	<div class="js-email-request-modal modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-sm" role="document">
@@ -38,15 +39,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="js-safe-email btn btn-add form-control" {{disabledIfBusy}}>
-								{{#if busy 'saving'}}
-									<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-									{{mf 'saving.busy' 'Saving...'}}
-								{{else}}
-									<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-									{{mf '_button.save'}}
-								{{/if}}
-							</button>
+							{{> buttonSave event="js-save-email"}}
 						</div>
 					</form>
 				</div>
@@ -54,11 +47,13 @@
 		</div>
 	</div>
 </template>
+
 <template name="emailValidation">
 	{{#if showEmailValidation}}
 		{{> emailValidationModal}}
 	{{/if}}
 </template>
+
 <template name="emailValidationModal">
 	<div class="js-email-validation-modal modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-sm" role="document">
@@ -83,10 +78,11 @@
 						</p>
 					</span>
 					<div class="form-group">
+						<!-- {{> buttonSave event="js-send-validation-email"}} -->
 						<button class="js-send-validation-email btn btn-add form-control" {{disabledIfBusy}}>
 							{{#if busy 'sending'}}
 								<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-								{{mf 'login.register.submit.busy' 'Sending...'}}
+								{{mf 'send.validation.submit.busy' 'Sending...'}}
 							{{else}}
 								<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 								{{mf 'send.validation.email' 'Send validation email'}}

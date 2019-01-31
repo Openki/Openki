@@ -7,6 +7,7 @@ import { _ } from 'meteor/underscore';
 import Roles from '/imports/api/roles/roles.js';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
+import { SetupWarnings } from '/imports/ui/lib/account-tools.js';
 import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
@@ -24,6 +25,28 @@ Template.profile.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
+	SetupWarnings(this, {
+		'noUserName': {
+			text: mf('ownprofile.warning.noUserName', 'Please enter a name for your user.'),
+			selectors: ['#editform_username']
+		},
+		'userExists': {
+			text: mf('ownprofile.warning.userExists', 'This username already exists. Please choose another one.'),
+			selectors: ['#editform_username']
+		},
+		'noEmail': {
+			text: mf('ownprofile.warning.noEmailProvided', 'Please enter a email.'),
+			selectors: ['#editform_email']
+		},
+		'emailNotValid': {
+			text: mf('ownprofile.warning.emailNotValid', 'Your email seems to have an error.'),
+			selectors: ['#editform_email']
+		},
+		'emailExists': {
+			text: mf('ownprofile.warning.emailExists', 'This email is already taken.'),
+			selectors: ['#editform_email']
+		}
+	});
 });
 
 Template.profile.helpers({
@@ -126,7 +149,27 @@ Template.profile.events({
 			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
-					Alert.error(err, 'Saving your profile failed');
+					const reason = err.reason;
+
+					if (reason == 'username cannot be empty') {
+						instance.setWarning('noUserName');
+					}
+
+					if (reason == 'Username already exists.') {
+						instance.setWarning('userExists');
+					}
+
+					if (reason == 'Please enter a email.') {
+						instance.setWarning('noEmail');
+					}
+
+					if (reason == 'Email address invalid') {
+						instance.setWarning('emailNotValid');
+					}
+
+					if (reason == 'Email already exists.') {
+						instance.setWarning('emailExists');
+					}
 				} else {
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
