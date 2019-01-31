@@ -15,11 +15,11 @@ updateEmail = function(email) {
 	const newEmail = trimmedEmail || false;
 	const previousEmail = user.emailAddress();
 
-	if (newEmail !== previousEmail) {
+	if (! newEmail || newEmail !== previousEmail) {
 		// Working under the assumption that there is only one address
 		// if there was more than one address oops I accidentally your addresses
 		if (newEmail) {
-			if (!IsEmail(newEmail)) {
+			if (! IsEmail(newEmail)) {
 				return ApiError('emailInvalid', 'Email address invalid');
 			}
 
