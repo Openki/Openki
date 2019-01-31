@@ -3,13 +3,13 @@ export default EmailRequest = {
 	showEmailRequest: () => {
 		const user = Meteor.user();
 
-		return user != undefined && ! user.emailAddress();
+		return user && ! user.emailAddress();
 	},
 
 	showEmailValidation: () => {
 		const user = Meteor.user();
 
-		return user != undefined
+		return user
 			&& user.emailAddress()
 			&& ! user.verifiedEmailAddress()
 			&& moment().subtract(7, 'days').isAfter(user.createdAt);
