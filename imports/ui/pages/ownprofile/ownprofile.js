@@ -26,7 +26,7 @@ Template.profile.onCreated(function() {
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
 	FormfieldErrors(this, {
-		'noUserName': {
+		'noUsername': {
 			text: mf('ownprofile.warning.noUserName', 'Please enter a name for your user.'),
 			selectors: ['#editform_username']
 		},
@@ -45,7 +45,11 @@ Template.profile.onCreated(function() {
 		'emailExists': {
 			text: mf('ownprofile.warning.emailExists', 'This email is already taken.'),
 			selectors: ['#editform_email']
-		}
+		},
+		'nameError': {
+			text: mf('update.username.failed', 'Failed to update username.'),
+			selectors: ['#editform_username']
+		},
 	});
 });
 
@@ -114,7 +118,7 @@ Template.profile.events({
 		instance.collapse();
 	},
 
-	'click .js-profile-info-cancel': function(event, instance) {
+	'click .js-profile-edit-cancel': function(event, instance) {
 		instance.editing.set(false);
 		return false;
 	},
