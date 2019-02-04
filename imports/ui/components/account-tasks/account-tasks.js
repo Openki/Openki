@@ -4,7 +4,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import { SetupWarnings } from '/imports/ui/lib/account-tools.js';
+import { FormfieldErrors } from '/imports/ui/lib/formfield-errors.js';
 import { IsEmail } from '/imports/utils/email-tools.js';
 import Alert from '/imports/api/alerts/alert.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
@@ -67,7 +67,7 @@ Template.loginFrame.onCreated(function() {
 			}
 		];
 
-	SetupWarnings(this, {
+	FormfieldErrors(this, {
 		'noUserName': {
 			text: mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
 			selectors: ['#loginName']
@@ -141,17 +141,17 @@ Template.loginFrame.events({
 			if (err) {
 				const reason = err.reason;
 				if (reason == 'Match failed') {
-					instance.setWarning(!instance.$('#loginPassword').val()
+					instance.setError(!instance.$('#loginPassword').val()
 						? 'noCredentials'
 						: 'noUserName');
 				}
 
 				if (reason == 'Incorrect password') {
-					instance.setWarning('noPassword');
+					instance.setError('noPassword');
 				}
 
 				if (reason == 'User not found') {
-					instance.setWarning('userNotFound');
+					instance.setError('userNotFound');
 				}
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
@@ -198,7 +198,7 @@ Template.loginFrame.helpers({
 
 Template.registerFrame.onCreated(function() {
 	this.busy(false);
-	SetupWarnings(this, {
+	FormfieldErrors(this, {
 		'noUserName': {
 			text: mf('register.warning.noUserName', 'Please enter a name for your new user.'),
 			selectors: ['#registerName']
@@ -259,29 +259,29 @@ Template.registerFrame.events({
 			if (err) {
 				const reason = err.reason;
 				if (reason == 'Need to set a username or email') {
-					instance.setWarning('noUserName');
+					instance.setError('noUserName');
 				}
 
 				if (reason == 'Password may not be empty') {
-					instance.setWarning(!instance.$('#registerName').val()
+					instance.setError(!instance.$('#registerName').val()
 						? 'noCredentials'
 						: 'noPassword');
 				}
 
 				if (reason == 'Username already exists.') {
-					instance.setWarning('userExists');
+					instance.setError('userExists');
 				}
 
 				if (reason == 'user must provide a email') {
-					instance.setWarning('noEmail');
+					instance.setError('noEmail');
 				}
 
 				if (reason == 'user must provide a valid email') {
-					instance.setWarning('emailNotValid');
+					instance.setError('emailNotValid');
 				}
 
 				if (reason == 'Email already exists.') {
-					instance.setWarning('emailExists');
+					instance.setError('emailExists');
 				}
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {

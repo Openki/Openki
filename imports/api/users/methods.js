@@ -20,7 +20,7 @@ updateEmail = function(email) {
 		// if there was more than one address oops I accidentally your addresses
 		if (newEmail) {
 			if (! IsEmail(newEmail)) {
-				return ApiError('emailInvalid', 'Email address invalid');
+				return ApiError('emailNotValid', 'Email address invalid');
 			}
 
 			// Don't allow using an address somebody else uses
@@ -55,7 +55,7 @@ Meteor.methods({
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
-		if (saneUsername.length == 0) return ApiError("nameError", "username cannot be empty");
+		if (saneUsername.length == 0) return ApiError("noUsername", "username cannot be empty");
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {

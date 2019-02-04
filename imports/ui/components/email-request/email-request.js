@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 
 import EmailRequest from '/imports/ui/lib/email-request.js';
-import { SetupWarnings } from '/imports/ui/lib/account-tools.js';
+import { FormfieldErrors } from '/imports/ui/lib/formfield-errors.js';
 import { IsEmail } from '/imports/utils/email-tools.js';
 
 import './email-request.html';
@@ -14,17 +14,17 @@ Template.emailRequest.helpers({
 
 Template.emailRequestModal.onCreated(function() {
 	this.busy(false);
-	SetupWarnings(this, {
+	FormfieldErrors(this, {
 		'noEmail': {
 			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
 			selectors: ['#registerEmail']
 		},
 		'emailNotValid': {
-			text: mf('register.warning.emailNotValid', 'your email seems to have an error.'),
+			text: mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
 			selectors: ['#registerEmail']
 		},
 		'emailExists': {
-			text: mf('register.warning.emailExists', 'This email already exists.'),
+			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
 			selectors: ['#registerEmail']
 		}
 	});
@@ -43,21 +43,7 @@ Template.emailRequestModal.events({
 			function(err) {
 				instance.busy(false);
 				if (err) {
-					const reason = err.reason;
-					switch(reason) {
-						case 'Please enter a email.':
-							instance.setWarning('noEmail');
-							break;
-						case 'Email address invalid':
-							instance.setWarning('emailNotValid');
-							break;
-						case 'Email already exists.':
-							instance.setWarning('emailExists');
-							break;
-						default:
-							instance.setWarning("Unexpected error: $reason");
-							break;
-					}
+					instance.setError(err.error);
 				} else {
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.$(".js-email-request-modal").modal('hide');

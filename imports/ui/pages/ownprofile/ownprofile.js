@@ -7,7 +7,7 @@ import { _ } from 'meteor/underscore';
 import Roles from '/imports/api/roles/roles.js';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import { SetupWarnings } from '/imports/ui/lib/account-tools.js';
+import { FormfieldErrors } from '/imports/ui/lib/formfield-errors.js';
 import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 
@@ -25,7 +25,7 @@ Template.profile.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
-	SetupWarnings(this, {
+	FormfieldErrors(this, {
 		'noUserName': {
 			text: mf('ownprofile.warning.noUserName', 'Please enter a name for your user.'),
 			selectors: ['#editform_username']
@@ -149,27 +149,7 @@ Template.profile.events({
 			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
-					const reason = err.reason;
-
-					if (reason == 'username cannot be empty') {
-						instance.setWarning('noUserName');
-					}
-
-					if (reason == 'Username already exists.') {
-						instance.setWarning('userExists');
-					}
-
-					if (reason == 'Please enter a email.') {
-						instance.setWarning('noEmail');
-					}
-
-					if (reason == 'Email address invalid') {
-						instance.setWarning('emailNotValid');
-					}
-
-					if (reason == 'Email already exists.') {
-						instance.setWarning('emailExists');
-					}
+					instance.setError(err.error);
 				} else {
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
