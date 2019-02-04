@@ -9,8 +9,8 @@ import { IsEmail } from '/imports/utils/email-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
 import AsyncTools from '/imports/utils/async-tools.js';
 
-updateEmail = function(email) {
-	const user = Meteor.user();
+updateEmail = function(email, user) {
+
 	const trimmedEmail = email.trim();
 	const newEmail = trimmedEmail || false;
 	const previousEmail = user.emailAddress();
@@ -55,8 +55,10 @@ Meteor.methods({
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
+
 		if (saneUsername.length == 0) return ApiError("noUsername", "username cannot be empty");
 		if (Accounts.findUserByUsername(saneUsername)) return ApiError("userExists", "username is already taken");
+
 		if (saneUsername && user.username !== saneUsername) {
 			let result = Profile.Username.change(user._id, saneUsername, "profile change");
 			if (!result) {
@@ -64,7 +66,7 @@ Meteor.methods({
 			}
 		}
 
-		updateEmail(email);
+		updateEmail(email, user);
 
 		if (user.notifications !== notifications) {
 			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
@@ -75,7 +77,7 @@ Meteor.methods({
 		check(email, String);
 		var user = Meteor.user();
 		if (!user) return ApiError("plzLogin", "Not logged-in");
-		updateEmail(email);
+		updateEmail(email, user);
 	},
 
 	'user.remove': function() {
