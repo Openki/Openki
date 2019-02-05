@@ -159,7 +159,9 @@ Template.regionSelection.events({
 });
 
 Template.regionSelection.onRendered(function() {
-	if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
+	Meteor.defer(function() {
+		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
+	});
 
 	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
 		this.close();
