@@ -61,6 +61,20 @@ var updateUrl = function(event, instance) {
 	event.preventDefault();
 };
 
+Template.calendar.onRendered(function() {
+	let dow = moment().day()-1;
+	if (dow < 0) dow = 6; //handle sundays
+	if (dow > 0) {
+		//dont scroll on mondays to show introduction
+		var elem = this.$('.calendar-date').eq(dow);
+		Meteor.defer(function() {
+			//calendar nav and topnav are together 103 px fixed height, we add 7px margin
+			window.scrollTo(0, elem.offset().top - 110);
+		});
+	}
+	
+});
+
 Template.calendar.helpers({
 	days: function() {
 		var start = Template.instance().filter.get('start');
