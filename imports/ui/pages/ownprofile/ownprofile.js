@@ -25,32 +25,7 @@ Template.profile.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
-	FormfieldErrors(this, {
-		'noUserName': {
-			text: mf('ownprofile.warning.noUserName', 'Please enter a name for your user.'),
-			selectors: ['#editform_username']
-		},
-		'userExists': {
-			text: mf('ownprofile.warning.userExists', 'This username already exists. Please choose another one.'),
-			selectors: ['#editform_username']
-		},
-		'noEmail': {
-			text: mf('ownprofile.warning.noEmailProvided', 'Please enter a email.'),
-			selectors: ['#editform_email']
-		},
-		'emailNotValid': {
-			text: mf('ownprofile.warning.emailNotValid', 'Your email seems to have an error.'),
-			selectors: ['#editform_email']
-		},
-		'emailExists': {
-			text: mf('ownprofile.warning.emailExists', 'This email is already taken.'),
-			selectors: ['#editform_email']
-		},
-		'nameError': {
-			text: mf('update.username.failed', 'Failed to update username.'),
-			selectors: ['#editform_username']
-		},
-	});
+	FormfieldErrors(this, ['noUserName', 'userExists', 'noEmail', 'emailNotValid', 'emailExists', 'nameError']);
 });
 
 Template.profile.helpers({
