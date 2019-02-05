@@ -26,7 +26,7 @@ Template.profile.onCreated(function() {
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
 	FormfieldErrors(this, {
-		'noUsername': {
+		'noUserName': {
 			text: mf('ownprofile.warning.noUserName', 'Please enter a name for your user.'),
 			selectors: ['#editform_username']
 		},

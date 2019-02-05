@@ -56,14 +56,12 @@ Meteor.methods({
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
 
-		if (saneUsername.length == 0) return ApiError("noUsername", "username cannot be empty");
-		if (Accounts.findUserByUsername(saneUsername)) return ApiError("userExists", "username is already taken");
+		if (saneUsername.length === 0) return ApiError("noUserName", "username cannot be empty");
+		if (saneUsername !== user.username && Accounts.findUserByUsername(saneUsername)) return ApiError("userExists", "username is already taken");
 
-		if (saneUsername && user.username !== saneUsername) {
-			let result = Profile.Username.change(user._id, saneUsername, "profile change");
-			if (!result) {
-				return ApiError("nameError", "Failed to update username");
-			}
+		let result = Profile.Username.change(user._id, saneUsername, "profile change");
+		if (!result) {
+			return ApiError("nameError", "Failed to update username");
 		}
 
 		updateEmail(email, user);

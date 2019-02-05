@@ -67,24 +67,12 @@ Template.loginFrame.onCreated(function() {
 			}
 		];
 
-	FormfieldErrors(this, {
-		'noUserName': {
-			text: mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
-			selectors: ['#loginName']
-		},
-		'noCredentials': {
-			text: mf('login.login.warning', 'Please enter your username or email and password to log in.'),
-			selectors: ['#loginName', '#loginPassword']
-		},
-		'noPassword': {
-			text: mf('login.password.password_incorrect', 'Incorrect password'),
-			selectors: ['#loginPassword']
-		},
-		'userNotFound': {
-			text: mf('login.username.usr_doesnt_exist', 'This user does not exist.'),
-			selectors: ['#loginName']
-		}
-	});
+	FormfieldErrors(this, [
+		'noUserName',
+		'noCredentials',
+		'noPassword',
+		'userNotFound'
+	]);
 });
 
 Template.loginFrame.onRendered(function() {
@@ -198,36 +186,16 @@ Template.loginFrame.helpers({
 
 Template.registerFrame.onCreated(function() {
 	this.busy(false);
-	FormfieldErrors(this, {
-		'noUserName': {
-			text: mf('register.warning.noUserName', 'Please enter a name for your new user.'),
-			selectors: ['#registerName']
-		},
-		'noPassword': {
-			text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.'),
-			selectors: ['#registerPassword']
-		},
-		'noEmail': {
-			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
-			selectors: ['#registerEmail']
-		},
-		'noCredentials': {
-			text: mf('register.warning.noCredentials', 'Please enter a username, password and a email to register.'),
-			selectors: ['#registerName', '#registerPassword', '#registerEmail']
-		},
-		'userExists': {
-			text: mf('register.warning.userExists', 'This username already exists. Please choose another one.'),
-			selectors: ['#registerName']
-		},
-		'emailNotValid': {
-			text: mf('register.warning.emailNotValid', 'your email seems to have an error.'),
-			selectors: ['#registerEmail']
-		},
-		'emailExists': {
-			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
-			selectors: ['#registerEmail']
-		}
-	});
+	FormfieldErrors(this, [
+			'noUserName',
+			'noPassword',
+			'noEmail',
+			'noCredentials',
+			'userExists',
+			'emailNotValid',
+			'emailExists'
+		]
+	);
 });
 
 Template.registerFrame.onRendered(function() {
@@ -261,26 +229,21 @@ Template.registerFrame.events({
 				if (reason == 'Need to set a username or email') {
 					instance.setError('noUserName');
 				}
-
-				if (reason == 'Password may not be empty') {
+				else if (reason == 'Password may not be empty') {
 					instance.setError(!instance.$('#registerName').val()
 						? 'noCredentials'
 						: 'noPassword');
 				}
-
-				if (reason == 'Username already exists.') {
+				else if (reason == 'Username already exists.') {
 					instance.setError('userExists');
 				}
-
-				if (reason == 'user must provide a email') {
+				else if (reason == 'user must provide a email') {
 					instance.setError('noEmail');
 				}
-
-				if (reason == 'user must provide a valid email') {
+				else if (reason == 'user must provide a valid email') {
 					instance.setError('emailNotValid');
 				}
-
-				if (reason == 'Email already exists.') {
+				else if (reason == 'Email already exists.') {
 					instance.setError('emailExists');
 				}
 			} else {

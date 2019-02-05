@@ -14,20 +14,7 @@ Template.emailRequest.helpers({
 
 Template.emailRequestModal.onCreated(function() {
 	this.busy(false);
-	FormfieldErrors(this, {
-		'noEmail': {
-			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
-			selectors: ['#registerEmail']
-		},
-		'emailNotValid': {
-			text: mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
-			selectors: ['#registerEmail']
-		},
-		'emailExists': {
-			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
-			selectors: ['#registerEmail']
-		}
-	});
+	FormfieldErrors(this, ['noEmail', 'emailNotValid', 'emailExists']);
 });
 
 Template.emailRequestModal.onRendered(function() {

@@ -4,7 +4,7 @@ export const FormfieldErrors = function(instance, errors) {
 	instance.setError = key => {
 		if (instance.hasError.get()) instance.resetErrors();
 
-		const error = errors[key];
+		const error = getMapping(key, instance.view.name);
 		const selectors = error.selectors;
 
 		selectors.forEach((selector, index) => {
@@ -27,4 +27,106 @@ export const FormfieldErrors = function(instance, errors) {
 		instance.$('.form-group').removeClass('has-error');
 		instance.$('.warning-block').remove();
 	};
+};
+
+getMapping = function(key, viewName) {
+	if (Mappings[viewName] === undefined || Mappings[viewName][key] === undefined)  {
+		return Mappings.default[key];
+	}
+	return  Mappings[viewName][key];
+};
+
+const Mappings = {
+
+	'Template.loginFrame' : {
+		'noUserName': {
+			text: mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
+			selectors: ['#loginName']
+		},
+		'noCredentials': {
+			text: mf('login.login.warning', 'Please enter your username or email and password to log in.'),
+			selectors: ['#loginName', '#loginPassword']
+		},
+		'noPassword': {
+			text: mf('login.password.password_incorrect', 'Incorrect password'),
+			selectors: ['#loginPassword']
+		},
+		'userNotFound': {
+			text: mf('login.username.usr_doesnt_exist', 'This user does not exist.'),
+			selectors: ['#loginName']
+		}
+	},
+
+	'Template.registerFrame': {
+		'noUserName': {
+			text: mf('register.warning.noUserName', 'Please enter a name for your new user.'),
+			selectors: ['#registerName']
+		},
+		'noPassword': {
+			text: mf('register.warning.noPasswordProvided', 'Please enter a password to register.'),
+			selectors: ['#registerPassword']
+		},
+		'noEmail': {
+			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
+			selectors: ['#registerEmail']
+		},
+		'noCredentials': {
+			text: mf('register.warning.noCredentials', 'Please enter a username, password and a email to register.'),
+			selectors: ['#registerName', '#registerPassword', '#registerEmail']
+		},
+		'userExists': {
+			text: mf('register.warning.userExists', 'This username already exists. Please choose another one.'),
+			selectors: ['#registerName']
+		},
+		'emailNotValid': {
+			text: mf('register.warning.emailNotValid', 'your email seems to have an error.'),
+			selectors: ['#registerEmail']
+		},
+		'emailExists': {
+			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
+			selectors: ['#registerEmail']
+		}
+	},
+
+	'Template.emailRequestModal': {
+		'noEmail': {
+			text: mf('register.warning.noEmailProvided', 'Please enter a email to register.'),
+			selectors: ['#registerEmail']
+		},
+		'emailNotValid': {
+			text: mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
+			selectors: ['#registerEmail']
+		},
+		'emailExists': {
+			text: mf('register.warning.emailExists', 'This email already exists. Have you tried resetting your password?'),
+			selectors: ['#registerEmail']
+		}
+	},
+
+	'default': {
+		'noUserName': {
+			text: mf('warning.noUserName', 'Please enter a name for your user.'),
+			selectors: ['.ffe-username']
+		},
+		'userExists': {
+			text: mf('warning.userExists', 'This username already exists. Please choose another one.'),
+			selectors: ['.ffe-username']
+		},
+		'noEmail': {
+			text: mf('warning.noEmailProvided', 'Please enter a email.'),
+			selectors: ['.ffe-email']
+		},
+		'emailNotValid': {
+			text: mf('warning.emailNotValid', 'Your email seems to have an error.'),
+			selectors: ['.ffe-email']
+		},
+		'emailExists': {
+			text: mf('warning.emailExists', 'This email is already taken.'),
+			selectors: ['.ffe-email']
+		},
+		'nameError': {
+			text: mf('update.username.failed', 'Failed to update username.'),
+			selectors: ['.ffe-username']
+		}
+	}
 };
