@@ -153,6 +153,7 @@ Template.regionSelection.events({
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
+		instance.$('.js-region-search').select();
 		return false; //prevent dropdown default behavior
 	}
 });
