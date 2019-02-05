@@ -37,12 +37,6 @@
 	vertical-align: middle;
 }
 
-.calendar-nav-control > .btn-group > .dropdown-toggle {
-	@media (max-width: $screen-xs) {
-		margin-top: 5px;
-	}
-}
-
 .calendar-nav > .calendar-nav-control:last-child .dropdown-menu {
 	@include td-pos(left, auto);
 	@include td-pos(right, 0);

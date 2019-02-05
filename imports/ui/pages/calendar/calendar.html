@@ -57,7 +57,8 @@
 					{{mf "calendar.weekNumber" "Week "}} {{weekNr date}}
 				</div>
 				<div class="calendar-nav-date">
-					{{dateLong date}} - {{dateLong (endDateTo date)}}
+					<span class="hidden-xs">{{dateLong date}} - {{dateLong (endDateTo date)}}</span>
+					<span class="visible-xs">{{dateShort date}} - {{dateShort (endDateTo date)}}</span>
 				</div>
 			</div>
 			{{> calendarNavControl direction='next'}}
@@ -70,8 +71,7 @@
 		<div class="btn-group">
 			<button type="button"
 					class="btn btn-default js-change-date">
-				{{arrow}}
-				{{mfString direction currentUnit 'short'}}
+				{{arrow}} <span class="hidden-xs">{{mfString direction currentUnit 'short'}}</span>
 			</button>
 			<button type="button"
 					class="btn btn-default dropdown-toggle"
