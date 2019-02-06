@@ -106,27 +106,27 @@ const Mappings = {
 	'default': {
 		'noUserName': {
 			text: mf('warning.noUserName', 'Please enter a name for your user.'),
-			selectors: ['.ffe-username']
+			selectors: ['.formfield-error-username']
 		},
 		'userExists': {
 			text: mf('warning.userExists', 'This username already exists. Please choose another one.'),
-			selectors: ['.ffe-username']
+			selectors: ['.formfield-error-username']
 		},
 		'noEmail': {
 			text: mf('warning.noEmailProvided', 'Please enter a email.'),
-			selectors: ['.ffe-email']
+			selectors: ['.formfield-error-email']
 		},
 		'emailNotValid': {
 			text: mf('warning.emailNotValid', 'Your email seems to have an error.'),
-			selectors: ['.ffe-email']
+			selectors: ['.formfield-error-email']
 		},
 		'emailExists': {
 			text: mf('warning.emailExists', 'This email is already taken.'),
-			selectors: ['.ffe-email']
+			selectors: ['.formfield-error-email']
 		},
 		'nameError': {
 			text: mf('update.username.failed', 'Failed to update username.'),
-			selectors: ['.ffe-username']
+			selectors: ['.formfield-error-username']
 		}
 	}
 };
