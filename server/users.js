@@ -43,16 +43,15 @@ Accounts.onCreateUser(function(options, user) {
 
 	if (providedEmail) {
 		user.emails = [{ 'address': providedEmail, 'verified': verified }];
+		user.notifications = true;
+		user.acceptsMessages = true;
+	} else {
+		user.notifications = false;
+		user.acceptsMessages = false;
 	}
 
 	user.groups = [];
 	user.badges = [user._id];
-
-	user.notifications = true;
-
-	Meteor.defer(() => {
-		Profile.updateAcceptsMessages(user._id);
-	});
 
 	return user;
 });
