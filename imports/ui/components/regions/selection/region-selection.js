@@ -2,6 +2,7 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import Regions from '/imports/api/regions/regions.js';
 import RegionSelection from '/imports/utils/region-selection.js';
@@ -83,6 +84,16 @@ Template.regionSelection.onCreated(function() {
 	};
 });
 
+Template.regionSelection.onRendered(function() {
+	Meteor.defer(function() {
+		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
+	});
+
+	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
+		this.close();
+	});
+});
+
 Template.regionSelection.helpers({
 	regions() {
 		return Template.instance().regions();
@@ -144,28 +155,33 @@ Template.regionSelection.events({
 	},
 
 	'focus .js-region-search'(event, instance) {
-		const focusTriggered = instance.focusTriggered;
-		if (focusTriggered) return;
-
+		if (instance.focusFromShowAllRegions) {
+			instance.focusFromShowAllRegions = false;
+			return;
+		}
 		instance.$('.dropdown-toggle').dropdown('toggle');
-		instance.focusTriggered = true;
 	},
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
+		instance.focusFromShowAllRegions = true;
 		instance.$('.js-region-search').select();
-		return false; //prevent dropdown default behavior
+		return false; //prevent dropdown default behavior for this specific <li>
+	},
+
+	'click .control-arrow.fa-angle-down'(event, instance) {
+		instance.$('.dropdown-toggle').dropdown('toggle');
+		event.stopPropagation();
+	},
+
+	'show.bs.dropdown'(event, instance) {
+		instance.$('.dropdown > .control-arrow').removeClass('fa-angle-down').addClass('fa-angle-up');
+	},
+
+	'hide.bs.dropdown'(event, instance) {
+		instance.$('.dropdown > .control-arrow').removeClass('fa-angle-up').addClass('fa-angle-down');
 	}
-});
 
-Template.regionSelection.onRendered(function() {
-	Meteor.defer(function() {
-		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
-	});
-
-	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
-		this.close();
-	});
 });
 
 Template.regionSelectionItem.helpers({
