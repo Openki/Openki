@@ -1,6 +1,7 @@
 .editable-wrap {
-	margin: -8px;
+	margin-left: -8px;
 	position: relative;
+	overflow: hidden;
 }
 
 .editable {
@@ -11,8 +12,6 @@
 	&:focus,
 	&.editable-changed {
 		background: $body-bg;
-		border: 1px solid $brand-primary;
-		box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
 		padding: 7px;
 	}
 }
