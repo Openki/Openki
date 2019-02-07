@@ -53,7 +53,15 @@ Template.courseCompact.helpers({
 
 Template.courseCompactEvent.helpers({
 	dateFormat(date) {
-		if (date) return moment(date).format('D.M.');
+		if (date) {
+			var customFormat = moment.localeData().longDateFormat('l');
+			if(moment(date).isBefore(moment().subtract(8, 'months')) || moment(date).isAfter(moment().add(8, 'months'))) {
+				customFormat = customFormat.replace(/YYYY/g,'YY'); //date is outside of range +/- 8 months from now
+			} else {
+				customFormat = customFormat.replace(/YYYY/g,'');
+			}
+			return moment(date).format(customFormat);
+		}
 	},
 	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
 });
