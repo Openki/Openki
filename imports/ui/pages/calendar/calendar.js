@@ -62,11 +62,10 @@ var updateUrl = function(event, instance) {
 };
 
 Template.calendar.onRendered(function() {
-	let dow = moment().day()-1;
-	if (dow < 0) dow = 6; //handle last day of week
-	if (dow > 0) {
+	let weekday = moment().weekday();
+	if (weekday > 0) {
 		//dont scroll on first day of week to show introduction
-		var elem = this.$('.calendar-date').eq(dow);
+		var elem = this.$('.calendar-date').eq(weekday);
 		Meteor.defer(function() {
 			//calendar nav and topnav are together 103 px fixed height, we add 7px margin
 			window.scrollTo(0, elem.offset().top - 110);
