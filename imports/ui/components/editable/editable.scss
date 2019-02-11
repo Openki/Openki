@@ -12,6 +12,7 @@
 	&:focus,
 	&.editable-changed {
 		background: $body-bg;
+		border:1px solid #ebf4f8;
 		padding: 7px;
 	}
 }
