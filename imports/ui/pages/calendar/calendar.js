@@ -69,7 +69,6 @@ Template.calendar.onRendered(function() {
 		if (moment().format('w') == Template.instance().filter.get('start').format('w')) {
 			RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
 			Meteor.defer(function() {
-				//dont scroll on first day of week to show introduction
 				const elem = this.$('.js-calendar-date').eq(weekday);
 				//calendar nav and topnav are together 103 px fixed height, we add 7px margin
 				window.scrollTo(0, elem.offset().top - 110);
