@@ -4,19 +4,15 @@ import Users from '/imports/api/users/users.js';
 
 export default Profile = {};
 
-Profile.updateAcceptsMessages = function(userSelector) {
-	let changed = 0;
+Profile.updateAcceptsMessages = function(user) {
 
-	Meteor.users.find(userSelector).forEach(user => {
-		var newValue = user.emailAddress()
-					&& user.notifications;
+	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
 
-		changed += Users.update(user._id, {
-			$set: { acceptsMessages: !!newValue }
+	if(user.acceptsMessages != acceptsMessages) {
+		Users.update(user._id, {
+			$set: { acceptsMessages }
 		});
-	});
-
-	return changed;
+	}
 };
 
 
@@ -71,7 +67,6 @@ Profile.Email.change = function(userId, email, reason) {
 	Meteor.users.update(userId, {
 		$set: { emails: newValue }
 	});
-	Profile.updateAcceptsMessages(userId);
 };
 
 Profile.Notifications = {};
@@ -101,7 +96,6 @@ Profile.Notifications.change = function(userId, enable, relId, reason) {
 	Meteor.users.update(userId, {
 		$set: { 'notifications': enable }
 	});
-	Profile.updateAcceptsMessages(userId);
 };
 
 /** Handle unsubscribe token
