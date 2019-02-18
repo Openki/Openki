@@ -32,6 +32,14 @@ const helpers = {
 		}
 	},
 
+	dateShort(date) {
+		if (date) {
+			Session.get('timeLocale');
+			date = moment(moment(date).toDate());
+			return moment(date).format('l');
+		}
+	},
+
 	dateformat_mini_fullmonth(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) {
