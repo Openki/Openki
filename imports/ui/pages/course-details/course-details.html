@@ -123,13 +123,13 @@
 </template>
 
 <template name="courseDetailsDescription">
-	<p class="course-details-description">
+	<div class="course-details-description">
 		{{#if mayEdit}}
 			{{>editable editableDescription}}
 		{{else}}
 			{{{course.description}}}
 		{{/if}}
-	</p>
+	</div>
 </template>
 
 

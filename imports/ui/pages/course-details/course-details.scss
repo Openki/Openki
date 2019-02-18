@@ -113,6 +113,7 @@
 // ** Title
 //========================================================================================
 .course-details-title {
+	@include editable-popout;
 	font-size: 30px;
 	margin-bottom: 10px;
 }
@@ -227,12 +228,11 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 //========================================================================================
 .course-details-description {
 	font-size: medium;
-	margin-bottom: 0;
 }
 
 .course-details-description .editable {
 	max-height: 300px;
-	overflow: auto;
+	overflow-y: auto;
 }
 
 // ** Price Policy
