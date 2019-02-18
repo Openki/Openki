@@ -55,6 +55,9 @@ Template.courseCompactEvent.helpers({
 	dateFormat(date) {
 		if (date) return moment(date).format('l');
 	},
+	dateToRelativeString(date) {
+		if (date) return moment().to(date);
+	},
 	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
 });
 
