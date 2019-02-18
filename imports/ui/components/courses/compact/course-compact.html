@@ -26,12 +26,9 @@
 <template name="courseCompactEvent">
 	<div class="course-compact-next-event">
 		<div class="course-compact-next-event-component">
-			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
-			{{dateFormat nextEvent.startLocal}}
-		</div>
-		<div class="course-compact-next-event-component">
-			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-			{{timeformat nextEvent.startLocal}}
+			<span title="{{dateFormat nextEvent.startLocal}} {{timeformat nextEvent.startLocal}}">
+				{{dateToRelativeString nextEvent.startLocal}}
+			</span>
 		</div>
 		{{#if nextEvent.venue.name}}
 			<div class="course-compact-next-event-component">
