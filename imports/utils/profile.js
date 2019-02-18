@@ -8,7 +8,7 @@ Profile.updateAcceptsMessages = function(user) {
 
 	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
 
-	if(user.acceptsMessages != acceptsMessages) {
+	if (user.acceptsMessages != acceptsMessages) {
 		Users.update(user._id, {
 			$set: { acceptsMessages }
 		});
