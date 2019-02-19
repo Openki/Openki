@@ -73,9 +73,9 @@ Template.calendar.onRendered(function() {
 			const instance = Template.instance();
 			if(instance.eventSub.ready()
 				&& instance.scrollNeeded
-				&& (!Session.get('ShowIntro') || Session.get('introAnimationDone')))
+				&& (!Session.get('ShowIntro') || Session.get('introAnimationDone'))
+				)
 			{
-				RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
 				Meteor.defer(function() {
 					instance.scrollNeeded = false;
 					const elem = this.$('.js-calendar-date').eq(moment().weekday());
@@ -83,8 +83,6 @@ Template.calendar.onRendered(function() {
 					window.scrollTo(0, elem.offset().top - 110);
 				});
 			}
-		} else {
-			window.scrollTo(0,0);
 		}
 	});
 });
