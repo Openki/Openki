@@ -41,6 +41,10 @@ Template.calendar.onCreated(function() {
 		var start = filter.get('start').toDate();
 		var limit = filter.get('start').add(1, 'week').toDate();
 
+		if(moment().format('w') == moment(start).format('w')) {
+			instance.scrollNeeded = true;
+		}
+
 		filterQuery.period = [start, limit];
 		instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
 
@@ -64,15 +68,23 @@ var updateUrl = function(event, instance) {
 Template.calendar.onRendered(function() {
 	//change of week does not trigger onRendered again
 	this.autorun(() => {
-		const weekday = moment().weekday();
 		//only do this in the current week
 		if (moment().format('w') == Template.instance().filter.get('start').format('w')) {
-			RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
-			Meteor.defer(function() {
-				const elem = this.$('.js-calendar-date').eq(weekday);
-				//calendar nav and topnav are together 103 px fixed height, we add 7px margin
-				window.scrollTo(0, elem.offset().top - 110);
-			});
+			const instance = Template.instance();
+			if(instance.eventSub.ready()
+				&& instance.scrollNeeded
+				&& (!Session.get('ShowIntro') || Session.get('introAnimationDone')))
+			{
+				RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
+				Meteor.defer(function() {
+					instance.scrollNeeded = false;
+					const elem = this.$('.js-calendar-date').eq(moment().weekday());
+					//calendar nav and topnav are together 103 px fixed height, we add 7px margin
+					window.scrollTo(0, elem.offset().top - 110);
+				});
+			}
+		} else {
+			window.scrollTo(0,0);
 		}
 	});
 });
