@@ -92,6 +92,14 @@ User.prototype.verifiedEmailAddress = function() {
 		|| false;
 };
 
+/** get OAuth-Service of user
+  *
+  * @returns String with oauth service type or Boolean false
+  */
+User.prototype.getOAuth = function() {
+	return this.service && (this.service.facebook || this.service.google);
+};
+
 Meteor.users._transform = function(user) {
 	return _.extend(new User(), user);
 };
