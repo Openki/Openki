@@ -64,15 +64,16 @@ var updateUrl = function(event, instance) {
 Template.calendar.onRendered(function() {
 	//change of week does not trigger onRendered again
 	this.autorun(() => {
-		const weekday = moment().weekday();
 		//only do this in the current week
 		if (moment().format('w') == Template.instance().filter.get('start').format('w')) {
-			RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
-			Meteor.defer(function() {
-				const elem = this.$('.js-calendar-date').eq(weekday);
-				//calendar nav and topnav are together 103 px fixed height, we add 7px margin
-				window.scrollTo(0, elem.offset().top - 110);
-			});
+			if(Template.instance().eventSub.ready() && (!Session.get('ShowIntro') || Session.get('introAnimationDone'))) {
+				RouterAutoscroll.cancelNext(); //dont let the router scroll because we want to scroll
+				Meteor.defer(function() {
+					const elem = this.$('.js-calendar-date').eq(moment().weekday());
+					//calendar nav and topnav are together 103 px fixed height, we add 7px margin
+					window.scrollTo(0, elem.offset().top - 110);
+				});
+			}
 		}
 	});
 });

@@ -16,10 +16,15 @@ Template.introduction.onRendered(function() {
 
 	var instance = this;
 	this.autorun(function() {
+		Session.set('introAnimationDone', false);
 		if (Introduction.openedIntro()) {
-			instance.$('.introduction-content').slideDown(400);
+			instance.$('.introduction-content').slideDown(400, function() {
+				Session.set('introAnimationDone', true);
+			});
 		} else {
-			instance.$('.introduction-content').slideUp(400);
+			instance.$('.introduction-content').slideUp(400, function() {
+				Session.set('introAnimationDone', true);
+			});
 		}
 	});
 
