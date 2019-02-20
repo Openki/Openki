@@ -76,13 +76,24 @@ Template.courseMembers.events({
 });
 
 Template.courseMember.onCreated(function() {
-	var instance = this;
+	const instance = this;
 	var courseId = this.data.course._id;
 
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{ showContactModal: false }
 	);
+
+	this.acceptsMessages = new ReactiveVar(false);
+
+	//temp, should use member array instead
+	const member = this.data.member.user;
+	Meteor.call('user.acceptsMessages', member, function(err, acceptsMessages) {
+		if (err) {
+			console.warn(err);
+		}
+		instance.acceptsMessages.set(acceptsMessages);
+	});
 
 	instance.editableMessage = new Editable(
 		true,
@@ -111,6 +122,10 @@ Template.courseMember.helpers({
 
 	memberRoles() {
 		return this.member.roles.filter(role => role !== 'participant');
+	},
+
+	memberAcceptsMessages() {
+		return Template.instance().acceptsMessages.get();
 	},
 
 	roleShort: function() { return 'roles.'+this+'.short'; },
