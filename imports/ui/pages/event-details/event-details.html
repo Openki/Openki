@@ -44,7 +44,13 @@
 				</div>
 			</div>
 			<div class="page-component">
-				<b>Gib Bescheid dass du an diesem Event teilnimmst:</b>
+				<b>
+					{{#unless userRegisteredForEvent}}
+						Gib Bescheid dass du an diesem Event teilnimmst:
+					{{else}}
+						Klicke hier um dich abzumelden:
+					{{/unless}}
+				</b>
 			</div>
 			<div class="page-component">
 				{{#unless userRegisteredForEvent}}

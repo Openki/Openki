@@ -54,6 +54,8 @@ Template.event.onCreated(function() {
 	this.busy(false);
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
+
+	this.userRegisteredForEvent = new ReactiveVar(false);
 });
 
 Template.event.helpers({
@@ -67,7 +69,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return true;
+		return Template.instance().userRegisteredForEvent.get();
 	}
 });
 
@@ -128,6 +130,14 @@ Template.event.events({
 		if (PleaseLogin()) return;
 		instance.editing.set(true);
 	},
+
+	'click .js-register-event'(event, instance) {
+		instance.userRegisteredForEvent.set(true);
+	},
+
+	'click .js-unregister-event'(event, instance) {
+		instance.userRegisteredForEvent.set(false);
+	}
 });
 
 TemplateMixins.Expandible(Template.eventDisplay);
