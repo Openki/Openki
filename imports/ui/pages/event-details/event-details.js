@@ -43,6 +43,12 @@ Template.eventPage.onCreated(function eventPageOnCreated() {
 	Metatags.setCommonTags(title, description);
 });
 
+Template.eventPage.helpers({
+	eventNoRegRequired() {
+		return false;
+	}
+});
+
 Template.event.onCreated(function() {
 	const event = this.data;
 	this.busy(false);
@@ -50,29 +56,20 @@ Template.event.onCreated(function() {
 	this.subscribe('courseDetails', event.courseId);
 });
 
-
-TemplateMixins.Expandible(Template.eventDisplay);
-Template.eventDisplay.onCreated(function() {
-	this.locationTracker = LocationTracker();
-	this.replicating = new ReactiveVar(false);
-});
-
-
-Template.eventDisplay.onRendered(function() {
-	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.venue);
-});
-
 Template.event.helpers({
 	course() {
+		console.log(this.courseId);
 		if (this.courseId) return Courses.findOne(this.courseId);
 	},
 
 	editing() {
 		return this.new || Template.instance().editing.get();
 	},
-});
 
+	userRegisteredForEvent() {
+		return true;
+	}
+});
 
 Template.eventDisplay.helpers({
 	weekday(date) {
@@ -104,7 +101,6 @@ Template.event.events({
 
 	'click .js-event-delete-confirm'(e, instance) {
 		var event = instance.data;
-
 		var title = event.title;
 		var course = event.courseId;
 		instance.busy('deleting');
@@ -131,6 +127,39 @@ Template.event.events({
 	'click .js-event-edit'(event, instance) {
 		if (PleaseLogin()) return;
 		instance.editing.set(true);
+	},
+});
+
+TemplateMixins.Expandible(Template.eventDisplay);
+Template.eventDisplay.onCreated(function() {
+	this.locationTracker = LocationTracker();
+	this.replicating = new ReactiveVar(false);
+});
+
+
+Template.eventDisplay.onRendered(function() {
+	this.locationTracker.setRegion(this.data.region);
+	this.locationTracker.setLocation(this.data.venue);
+});
+
+Template.eventDisplay.helpers({
+	weekday(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('dddd');
+	},
+
+	mayEdit() {
+		return this.editableBy(Meteor.user());
+	},
+	eventMarkers() {
+		return Template.instance().locationTracker.markers;
+	},
+	hasVenue() {
+		return this.venue && this.venue.loc;
+	},
+
+	replicating() {
+		return Template.instance().replicating.get();
 	},
 });
 
@@ -231,7 +260,6 @@ Template.eventGroupRemove.events({
 	}
 });
 
-
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
@@ -253,7 +281,6 @@ Template.eventGroupMakeOrganizer.events({
 		});
 	}
 });
-
 
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);

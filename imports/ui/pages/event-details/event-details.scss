@@ -1,5 +1,25 @@
 $course-header-bg: darken($blue-lighter, 5%);
 
+.event-course-wrapper-main {
+	@include td-make-xs-column(12);
+	@include td-make-md-column(8);
+	padding: 0;
+
+	@media (min-width: $screen-md) {
+		@include td-padding-all(0, ($grid-gutter-width / 4), 0, 0);
+	}
+}
+
+.event-course-wrapper-aside {
+	@include td-make-xs-column(12);
+	@include td-make-md-column(4);
+	padding: 15px 0 0;
+
+	@media (min-width: $screen-md) {
+		@include td-padding-all(0, 0, 0, ($grid-gutter-width / 4));
+	}
+}
+
 .event-course-header {
 	background-color: $course-header-bg;
 	cursor: pointer;

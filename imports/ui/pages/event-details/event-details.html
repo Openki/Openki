@@ -1,5 +1,5 @@
 <template name="eventPage">
-	<div class="container-sm">
+	<div class="container{{#if eventNoRegRequired}}-sm{{/if}}">
 		{{> event}}
 	</div>
 </template>
@@ -9,29 +9,61 @@
 </template>
 
 <template name="event">
-	{{#if course}}
-		<div class="event-course-header">
-			<h2>
-				{{course.name}}
-			</h2>
-			<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
-				<i class="fa fa-external-link"></i>
-				{{mf 'event.details.viewCourse' 'view course'}}
-			</a>
-			{{> courseCategories course}}
-			{{> regionTag}}
-		</div>
-	{{/if}}
-	<div class="event">
-		{{#if editing}}
-			{{> eventEdit}}
-		{{else}}
-			{{> eventDisplay}}
+	<div class="event-course-wrapper-main">
+		{{#if course}}
+			<div class="event-course-header">
+				<h2>
+					{{course.name}}
+				</h2>
+				<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
+					<i class="fa fa-external-link"></i>
+					{{mf 'event.details.viewCourse' 'view course'}}
+				</a>
+				{{> courseCategories course}}
+				{{> regionTag}}
+			</div>
 		{{/if}}
+		<div class="event">
+			{{#if editing}}
+				{{> eventEdit}}
+			{{else}}
+				{{> eventDisplay}}
+			{{/if}}
+		</div>
+		<div class="page-component">
+			{{> report}}
+		</div>
 	</div>
-	<div class="page-component">
-		{{> report}}
-	</div>
+	{{#unless eventNoRegRequired}}
+		<div class="event-course-wrapper-aside">
+			<div class="page-component">
+				<div class="course-page-component-header">
+					<h4>
+						Anmeldung
+					</h4>
+				</div>
+			</div>
+			<div class="page-component">
+				<b>Gib Bescheid dass du an diesem Event teilnimmst:</b>
+			</div>
+			<div class="page-component">
+				{{#unless userRegisteredForEvent}}
+					<button type="button" class="btn btn-add js-register-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+						Ich nehme teil
+					</button>
+				{{else}}
+					<button type="button" class="btn btn-add js-unregister-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+						Ich melde mich ab
+					</button>
+				{{/unless}}
+			</div>
+			<div class="page-component">
+				{{> courseMembers course}}
+			</div>
+		</div>
+	{{/unless}}
 </template>
 
 <template name="eventDisplay">
