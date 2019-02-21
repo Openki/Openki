@@ -173,6 +173,39 @@ Template.eventDisplay.helpers({
 	},
 });
 
+TemplateMixins.Expandible(Template.eventDisplay);
+Template.eventDisplay.onCreated(function() {
+	this.locationTracker = LocationTracker();
+	this.replicating = new ReactiveVar(false);
+});
+
+
+Template.eventDisplay.onRendered(function() {
+	this.locationTracker.setRegion(this.data.region);
+	this.locationTracker.setLocation(this.data.venue);
+});
+
+Template.eventDisplay.helpers({
+	weekday(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('dddd');
+	},
+
+	mayEdit() {
+		return this.editableBy(Meteor.user());
+	},
+	eventMarkers() {
+		return Template.instance().locationTracker.markers;
+	},
+	hasVenue() {
+		return this.venue && this.venue.loc;
+	},
+
+	replicating() {
+		return Template.instance().replicating.get();
+	},
+});
+
 Template.eventDisplay.events({
 	'click .js-show-replication'(event, instance) {
 		instance.replicating.set(true);
