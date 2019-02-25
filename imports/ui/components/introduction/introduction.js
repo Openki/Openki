@@ -10,45 +10,29 @@ import '/imports/ui/components/price-policy/price-policy.js';
 import './introduction.html';
 
 Template.introduction.onRendered(function() {
-	if (!Introduction.openedIntro()) {
-		this.$('.introduction-content').hide();
-	}
-
-	var instance = this;
-	this.autorun(function() {
-		Session.set('introAnimationDone', false);
-		if (Introduction.openedIntro()) {
-			instance.$('.introduction-content').slideDown(400, function() {
-				Session.set('introAnimationDone', true);
-			});
-		} else {
-			instance.$('.introduction-content').slideUp(400, function() {
-				Session.set('introAnimationDone', true);
-			});
-		}
-	});
-
 	// use $screen-xxs (from scss) to compare with the width of window
-	var viewportWidth = Session.get('viewportWidth');
-	var screenXXS = ScssVars.screenXXS;
+	const viewportWidth = Session.get('viewportWidth');
+	const screenXXS = ScssVars.screenXXS;
 	if (viewportWidth < screenXXS) {
 		Introduction.closeIntro();
-		// dont wait for slideUp
-		this.$('.introduction-content').hide();
 	}
 });
 
 Template.introduction.helpers({
-	openedIntro: function() {
+	shownIntro() {
+		return Introduction.shownIntro();
+	},
+
+	openedIntro() {
 		return Introduction.openedIntro();
 	},
 
-	isInCalendar: function() {
+	isInCalendar() {
 		var currentRoute = Router.current().route;
 		if (!!currentRoute) return currentRoute.getName() == "calendar";
 	},
 
-	clearfixFor: function(triggerSize) {
+	clearfixFor(triggerSize) {
 		var viewportWidth = Session.get('viewportWidth');
 		var screenSize = '';
 
@@ -59,5 +43,19 @@ Template.introduction.helpers({
 		}
 
 		return (triggerSize == screenSize);
+	}
+});
+
+Template.introduction.events({
+	'click .js-introduction-close-btn'(event, instance) {
+		Introduction.doneIntro();
+	},
+
+	'click .js-introduction-toggle-btn'(event, instance) {
+		if (Introduction.openedIntro()) {
+			Introduction.closeIntro();
+		} else {
+			Introduction.openIntro();
+		}
 	}
 });
