@@ -71,13 +71,8 @@ Template.calendar.onRendered(function() {
 		//only do this in the current week
 		if (moment().format('w') == Template.instance().filter.get('start').format('w')) {
 			const instance = Template.instance();
-			if(instance.eventSub.ready()
-				&& instance.scrollNeeded
-				&& (!Session.get('ShowIntro') || Session.get('introAnimationDone'))
-				)
-			{
+			if(instance.eventSub.ready()) {
 				Meteor.defer(function() {
-					instance.scrollNeeded = false;
 					const elem = this.$('.js-calendar-date').eq(moment().weekday());
 					//calendar nav and topnav are together 103 px fixed height, we add 7px margin
 					window.scrollTo(0, elem.offset().top - 110);
