@@ -25,29 +25,31 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 
 ### Features
 - :pencil: Easily propose courses and events
-- :mag: Fulltext-search them
-- :speech_balloon: Simple discussion-board
-- :computer: Infoscreen: Live-views with upcoming events for big and small screens ([Wiki](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
-- :pager: Frame-URLs to dynamically embed views into other pages ([Wiki](https://gitlab.com/Openki/Openki/wikis/Frames))
+- :mag: Fulltext-search
+- :speech_balloon: Simple discussion-board per course
+- :computer: Infoscreen views with upcoming events for big and small screens ([Docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
+- :pager: Frame-URLs to dynamically embed views into other pages ([Docs](https://gitlab.com/Openki/Openki/wikis/Frames))
 - :cat: Categories with sub-categories
-- :door: Regions- and room-system
+- :round_pushpin: Regions- and room-system
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
-- :date: Calendar and iCal exports ([Wiki](https://gitlab.com/Openki/Openki/wikis/calendar-export))
-- :key: Single-Sign-on (OpenID/OAuth: Github, Facebook, g+)
+- :date: Calendar and iCal exports ([Docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
+- :key: Single-Sign-on (OAuth: Github, Facebook, g+)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
 - :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced, live translation](https://openki.net/translate) (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
 - :envelope: Email notifications
+- :electric_plug: read-only JSON API
 
 #### Intended features
 - :white_large_square: White-labeling for groups, locations and regions
-- :open_file_folder: File upload for course-documentation
-- :closed_lock_with_key: Privacy settings and security
+- :door: internal usage
+- :bar_chart: statistics
+- :closed_lock_with_key: more privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :mailbox: Privat messaging
-- :name_badge: OpenBadges
+- :name_badge: OpenBadges and feedback options
 - :ghost: Customizability
-- :8ball: Connection to SocialNetworks APIs
+- :open_file_folder: File upload for course-documentation
 - :iphone: Smartphone App
 
 ----

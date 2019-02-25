@@ -25,20 +25,18 @@
 
 <template name="courseCompactEvent">
 	<div class="course-compact-next-event">
-		<div class="course-compact-next-event-component">
-			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
-			{{dateFormat nextEvent.startLocal}}
-		</div>
-		<div class="course-compact-next-event-component">
-			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-			{{timeformat nextEvent.startLocal}}
-		</div>
 		{{#if nextEvent.venue.name}}
 			<div class="course-compact-next-event-component">
 				<i class="fa fa-home fa-fw" aria-hidden="true"></i>
 				{{nextEvent.venue.name}}
 			</div>
 		{{/if}}
+		<div class="course-compact-next-event-component">
+			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+			<span title="{{dateFormat nextEvent.startLocal}} {{timeformat nextEvent.startLocal}}">
+				{{dateToRelativeString nextEvent.startLocal}}
+			</span>
+		</div>
 		<div class="course-compact-next-event-component">
 			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
 			{{members.length}}

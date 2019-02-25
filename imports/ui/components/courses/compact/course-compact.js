@@ -53,7 +53,13 @@ Template.courseCompact.helpers({
 
 Template.courseCompactEvent.helpers({
 	dateFormat(date) {
-		if (date) return moment(date).format('D.M.');
+		if (date) return moment(date).format('l');
+	},
+	dateToRelativeString(date) {
+		if (date) {
+		    const relative = moment().to(date);
+		    return relative.charAt(0).toUpperCase() + relative.slice(1);
+		}
 	},
 	roleIcon: (type) => _.findWhere(Roles, { type: type }).icon
 });

@@ -18,6 +18,7 @@ $find-search-column-md: 7.5;
 }
 
 .find-header-filter {
+	@include make-xs-column(12);
 	@include td-make-sm-column(6);
 	@include td-make-md-column(12 - $find-search-column-md);
 }

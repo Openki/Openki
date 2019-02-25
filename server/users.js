@@ -50,10 +50,6 @@ Accounts.onCreateUser(function(options, user) {
 
 	user.notifications = true;
 
-	Meteor.defer(() => {
-		Profile.updateAcceptsMessages(user._id);
-	});
-
 	return user;
 });
 
