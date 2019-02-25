@@ -1,6 +1,6 @@
 <template name="introduction">
-	<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
-		{{#if shownIntro}}
+	{{#if shownIntro}}
+		<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
 			<div class="introduction">
 				<h3>
 					{{#mf KEY='introduction.Title' SITENAME=siteName}}
@@ -65,6 +65,6 @@
 					</div>
 				{{/if}}
 			</div>
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 </template>
