@@ -20,7 +20,6 @@ Template.introduction.onRendered(function() {
 
 Template.introduction.helpers({
 	shownIntro() {
-		console.log(Introduction.shownIntro());
 		return Introduction.shownIntro();
 	},
 
@@ -44,5 +43,19 @@ Template.introduction.helpers({
 		}
 
 		return (triggerSize == screenSize);
+	}
+});
+
+Template.introduction.events({
+	'click .js-introduction-close-btn'(event, instance) {
+		Introduction.doneIntro();
+	},
+
+	'click .js-introduction-toggle-btn'(event, instance) {
+		if (Introduction.openedIntro()) {
+			Introduction.closeIntro();
+		} else {
+			Introduction.openIntro();
+		}
 	}
 });
