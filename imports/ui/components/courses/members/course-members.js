@@ -84,7 +84,7 @@ Template.courseMember.onCreated(function() {
 		{ showContactModal: false }
 	);
 
-	instance.userSub = Meteor.subscribe('user', member);
+	instance.userSub = Meteor.subscribe('user', this.data.member.user);
 
 	instance.editableMessage = new Editable(
 		true,
