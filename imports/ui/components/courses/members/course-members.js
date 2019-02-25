@@ -84,11 +84,6 @@ Template.courseMember.onCreated(function() {
 		{ showContactModal: false }
 	);
 
-	this.acceptsMessages = new ReactiveVar(false);
-
-	//temp, should use member array instead
-	const member = this.data.member.user;
-	console.log(member);
 	instance.userSub = Meteor.subscribe('user', member);
 
 	instance.editableMessage = new Editable(
