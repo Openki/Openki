@@ -44,10 +44,6 @@ Template.layout.helpers({
 		);
 	},
 
-	shownIntro: function() {
-		return Introduction.shownIntro();
-	},
-
 	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
 
 	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
