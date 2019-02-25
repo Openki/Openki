@@ -145,12 +145,6 @@ Meteor.methods({
 		return user.username;
 	},
 
-	'user.acceptsMessages'(userId) {
-		const user = Meteor.users.findOne(userId, { fields: { acceptsMessages: 1 } });
-		if (!user) return false;
-		return user.acceptsMessages;
-	},
-
 	'user.updateLocale'(locale) {
 		Meteor.users.update(Meteor.userId(), {
 			$set: { 'profile.locale': locale }

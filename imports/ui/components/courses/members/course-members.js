@@ -88,12 +88,8 @@ Template.courseMember.onCreated(function() {
 
 	//temp, should use member array instead
 	const member = this.data.member.user;
-	Meteor.call('user.acceptsMessages', member, function(err, acceptsMessages) {
-		if (err) {
-			console.warn(err);
-		}
-		instance.acceptsMessages.set(acceptsMessages);
-	});
+	console.log(member);
+	instance.userSub = Meteor.subscribe('user', member);
 
 	instance.editableMessage = new Editable(
 		true,
@@ -125,7 +121,12 @@ Template.courseMember.helpers({
 	},
 
 	memberAcceptsMessages() {
-		return Template.instance().acceptsMessages.get();
+		const user = Meteor.users.findOne(this.member.user);
+		return user && user.acceptsMessages;
+	},
+
+	userSubReady() {
+		return Template.instance().userSub.ready();
 	},
 
 	roleShort() { return 'roles.'+this+'.short'; },

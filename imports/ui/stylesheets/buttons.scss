@@ -100,7 +100,7 @@ $btn-background-colors: (
 	padding: 0;
 }
 
-.btn-link.btn-link-disabled {
+.btn-link.disabled {
 	color: $link-color;
 	cursor:default;
 	opacity:0.3;
