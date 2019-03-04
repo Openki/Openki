@@ -221,18 +221,22 @@ Template.registerFrame.events({
 		const password = instance.$('#registerPassword').val();
 		const email = instance.$('#registerEmail').val();
 
+		if (!username) {
+			instance.setError('noCredentials');
+			return;
+		}
+
 		instance.busy('registering');
 		Accounts.createUser({ username,	password, email	}, (err) => {
 			instance.busy(false);
 			if (err) {
+				instance.setError(err.reason);
 				const reason = err.reason;
 				if (reason == 'Need to set a username or email') {
 					instance.setError('noUserName');
 				}
 				else if (reason == 'Password may not be empty') {
-					instance.setError(!instance.$('#registerName').val()
-						? 'noCredentials'
-						: 'noPassword');
+					instance.setError('noPassword');
 				}
 				else if (reason == 'Username already exists.') {
 					instance.setError('userExists');
