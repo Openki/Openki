@@ -20,7 +20,7 @@ updateEmail = function(email, user) {
 		// if there was more than one address oops I accidentally your addresses
 		if (newEmail) {
 			if (! IsEmail(newEmail)) {
-				return ApiError('emailNotValid', 'Email address invalid');
+				return ApiError('emailNotValid', 'email invalid');
 			}
 
 			// Don't allow using an address somebody else uses
@@ -29,10 +29,10 @@ updateEmail = function(email, user) {
 			}
 			Profile.Email.change(user._id, newEmail, "profile change");
 		} else {
-			return ApiError('noEmail', 'Please enter a email.')
+			return ApiError('noEmail', 'Please enter a email.');
 		}
 	}
-}
+};
 
 Meteor.methods({
 	/** Set user region

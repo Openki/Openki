@@ -80,4 +80,89 @@ export default TemplateMixins = {
 			},
 		});
 	},
+
+	/** Manage errors for a form template
+	 *
+	 * This mixin keeps a list of errors. It requires you to pass in
+	 * a mapping of error-key to error message text and affected field. Example:
+	 *
+	 *   const mapping = {
+	 *     'wrongPassword': {
+	 * 		  text: () => "Your password is bad and you should feel bad.",
+	 * 		  field: "password" },
+	 *     'badUsername': {
+	 *        text: () => "We don't like your username around here.",
+	 *        field: "username" }
+	 *   };
+	 *   TemplateMixins.FormfieldErrors(Template.malcontentLogin, mapping);
+	 *
+	 * Note how `text` is a function so that you can pass in an mf() call
+	 * that will only be evaluated once needed. (Not for performance but
+	 * because the visitor could change language.)
+	 *
+	 * You can then add errors to be displayed with errors.add(key) and reset
+	 * the list of errors with errors.reset(). For example:
+	 *
+	 * 	   instance.errors.reset();
+	 *     if (password != "hunter2") {
+	 *         instance.errors.add("wrongPassword")
+	 * 	   }
+	 *
+	 * Use the template helpers {{errorClass}} and {{errorMessage}} to show the
+	 * collected errors. You have to provide the helpers with the field name
+	 * you-re interested in. Like so:
+	 *
+	 *    <label class="{{errorClass 'password'}}">
+	 *       <input type='password'>
+	 *       {{errorMessage 'password'}}
+	 *    </label>
+	 *
+	 * {{errorClass}} just outputs the string "has-error" if that field has an
+	 * error whereas {{errorMessage}} will output a <span> with the error message.
+	 *
+	 * @param {*} template The template to extend
+	 * @param {*} mapping The mapping of error-keys to message objects
+	 */
+	FormfieldErrors: function(template, mapping) {
+		template.helpers({
+			errorClass(field) {
+				if (Template.instance().errors.messages.findOne({ field })) {
+					return 'has-error';
+				}
+			},
+			errorMessage(field) {
+				const message = Template.instance().errors.messages.findOne({ field });
+				if (!message) return;
+
+				const text = mapping[message.key].text();
+				return Spacebars.SafeString(
+					'<span class="help-block warning-block">'
+					+ Blaze._escape(text)
+					+ '</span>'
+				);
+			}
+		});
+
+		template.onCreated(function() {
+			const messages = new Mongo.Collection(null);
+			this.errors = {
+				messages,
+				present() {
+					return Boolean(messages.findOne({}));
+				},
+				add(key) {
+					const message = mapping[key];
+					if (!message) {
+						console.log("Unmapped error ", key);
+						return;
+					}
+
+					this.messages.insert({ key, field: message.field });
+				},
+				reset() {
+					this.messages.remove({});
+				}
+			};
+		});
+	}
 };

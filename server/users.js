@@ -61,15 +61,12 @@ Accounts.onCreateUser(function(options, user) {
 
 Accounts.validateNewUser((user) => {
 
-	if (user.emails === undefined) {
-		throw new Meteor.Error(403, 'user must provide a email');
-	}
+	if (user.emails) {
+		const email = user.emails[0].address;
 
-	const email = user.emails[0].address;
-
-
-	if (!IsEmail(email)) {
-		throw new Meteor.Error(403, 'user must provide a valid email');
+		if (!IsEmail(email)) {
+			throw new Meteor.Error(403, 'email invalid');
+		}
 	}
 
 	return true;

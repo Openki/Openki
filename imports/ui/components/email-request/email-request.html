@@ -26,17 +26,17 @@
 						<p>
 							{{mf 'emailrequest.text.para2' 'Providing an email-address ensures that you stay informed when you join a course and it allows the mentor / other participants to send you a direct message. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded!'}}
 						</p>
-						<div class="form-group">
+						<div class="form-group {{errorClass 'email'}}">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 								</span>
-								<input class="form-control"
-								       id="registerEmail"
+								<input class="form-control js-email"
 								       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 								       type="email"
 								/>
 							</div>
+							{{errorMessage 'email'}}
 						</div>
 						<div class="form-group">
 							{{> buttonSave event="js-save-email form-control"}}

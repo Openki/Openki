@@ -43,29 +43,29 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group">
+			<div class="form-group {{errorClass 'username'}}" >
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
-					<input class="form-control"
-					       id="loginName"
+					<input class="form-control js-username"
 					       placeholder={{mf 'frame.login.usernameOrEmail' 'Username or Email'}}
 					       type="text"
 					/>
 				</div>
+				{{errorMessage 'username'}}
 			</div>
-			<div class="form-group">
+			<div class="form-group {{errorClass 'password'}}">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 					</span>
-					<input class="form-control"
-					       id="loginPassword"
+					<input class="form-control js-password"
 					       placeholder="{{mf '_inputField.password'}}"
 					       type="password"
 					/>
 				</div>
+				{{errorMessage 'password'}}
 			</div>
 			<div class="form-group forgot-pwd-btn-container">
 				<button type="button" class="btn btn-link js-forgot-pwd-btn">
@@ -122,41 +122,41 @@
 
 <template name="registerFrame">
 	<form>
-		<div class="form-group">
+		<div class="form-group {{errorClass 'username'}}">
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control"
-				       id="registerName"
+				<input class="form-control js-username"
 				       type="text"
 				       placeholder={{mf 'frame.login.username' 'Username'}}
 				/>
 			</div>
+			{{errorMessage 'username'}}
 		</div>
-		<div class="form-group">
+		<div class="form-group {{errorClass 'password'}}">
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control"
-				       id="registerPassword"
+				<input class="form-control js-password"
 				       placeholder="{{mf '_inputField.password'}}"
 				       type="password"
 				/>
 			</div>
+			{{errorMessage 'password'}}
 		</div>
-		<div class="form-group">
+		<div class="form-group {{errorClass 'email'}}">
 			<div class="input-group">
 				<span class="input-group-addon">
 					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control"
-				       id="registerEmail"
+				<input class="form-control js-email"
 				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
 				       type="email"
 				/>
 			</div>
+			{{errorMessage 'email'}}
 		</div>
 		<div class="form-group">
 			<span class="help-block register-mail-disclaimer">

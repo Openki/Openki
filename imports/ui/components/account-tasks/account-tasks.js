@@ -4,7 +4,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import { FormfieldErrors } from '/imports/ui/lib/formfield-errors.js';
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import { IsEmail } from '/imports/utils/email-tools.js';
 import Alert from '/imports/api/alerts/alert.js';
 import ScssVars from '/imports/ui/lib/scss-vars.js';
@@ -66,18 +66,11 @@ Template.loginFrame.onCreated(function() {
 			, serviceName: 'Github'
 			}
 		];
-
-	FormfieldErrors(this, [
-		'noUserName',
-		'noCredentials',
-		'noPassword',
-		'userNotFound'
-	]);
 });
 
 Template.loginFrame.onRendered(function() {
 	const transferMail = this.parentInstance().transferMail;
-	if (transferMail) this.$('#loginName').val(transferMail);
+	if (transferMail) this.$('.js-username').val(transferMail);
 
 	this.$('input').first().select();
 });
@@ -86,11 +79,35 @@ Template.loginFrame.onDestroyed(function() {
 	Session.set('pleaseLogin', false);
 });
 
+TemplateMixins.FormfieldErrors(Template.loginFrame, {
+	'noUsername': {
+		text: () => mf(
+			'login.warning.noUserName',
+			'Please enter your username or email to log in.'
+		),
+		field: "username"
+	},
+	'Incorrect password': {
+		text: () => mf(
+			'login.password.password_incorrect',
+			'Incorrect password'
+		),
+		field: "password"
+	},
+	'User not found': {
+		text: () => mf(
+			'login.username.usr_doesnt_exist',
+			'This user does not exist.'
+		),
+		field: "username"
+	}
+});
+
 Template.loginFrame.events({
 	'click .js-forgot-pwd-btn'(event, instance) {
 		event.preventDefault();
 
-		const username = instance.$('#loginName').val();
+		const username = instance.$('.js-username').val();
 		if (IsEmail(username)) {
 			instance.parentInstance().transferMail = username;
 		}
@@ -99,8 +116,8 @@ Template.loginFrame.events({
 	},
 
 	'click .js-register-open'(event, instance) {
-		let username = instance.$('#loginName').val();
-		const password = instance.$('#loginPassword').val();
+		let username = instance.$('.js-username').val();
+		const password = instance.$('.js-password').val();
 		let email;
 
 		// Sometimes people register with their email address in the first field
@@ -120,27 +137,22 @@ Template.loginFrame.events({
 
 	'submit form, click .js-login'(event, instance){
 		event.preventDefault();
-		const user = instance.$('#loginName').val();
-		const password = instance.$('#loginPassword').val();
+		instance.errors.reset();
+
+		const user = instance.$('.js-username').val();
+		if (!user) {
+			instance.errors.add("noUsername");
+		}
+
+		if (instance.errors.present()) return;
+
+		const password = instance.$('.js-password').val();
 
 		instance.busy('logging-in');
 		Meteor.loginWithPassword(user, password, function(err) {
 			instance.busy(false);
 			if (err) {
-				const reason = err.reason;
-				if (reason == 'Match failed') {
-					instance.setError(!instance.$('#loginPassword').val()
-						? 'noCredentials'
-						: 'noUserName');
-				}
-
-				if (reason == 'Incorrect password') {
-					instance.setError('noPassword');
-				}
-
-				if (reason == 'User not found') {
-					instance.setError('userNotFound');
-				}
+				instance.errors.add(err.reason);
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
@@ -186,70 +198,96 @@ Template.loginFrame.helpers({
 
 Template.registerFrame.onCreated(function() {
 	this.busy(false);
-	FormfieldErrors(this, [
-			'noUserName',
-			'noPassword',
-			'noEmail',
-			'noCredentials',
-			'userExists',
-			'emailNotValid',
-			'emailExists'
-		]
-	);
 });
 
 Template.registerFrame.onRendered(function() {
 	const parentInstance = this.parentInstance();
 
 	const transferUsername = parentInstance.transferUsername;
-	if (transferUsername) this.$('#registerName').val(transferUsername);
+	if (transferUsername) this.$('.js-username').val(transferUsername);
 
 	const transferPassword = parentInstance.transferPassword;
-	if (transferPassword) this.$('#registerPassword').val(transferPassword);
+	if (transferPassword) this.$('.js-password').val(transferPassword);
 
 	const transferMail = parentInstance.transferMail;
-	if (transferMail) this.$('#registerEmail').val(transferMail);
+	if (transferMail) this.$('.js-email').val(transferMail);
 
 	this.$('input').first().select();
+});
+
+TemplateMixins.FormfieldErrors(Template.registerFrame, {
+	'noUsername': {
+		text: () => mf(
+			'register.warning.noUserName', 
+			'Please enter a name for your new user.'
+		),
+		field: 'username'
+	},
+	'Username already exists.': {
+		text: () => mf(
+			'register.warning.userExists',
+			'This username already exists. Please choose another one.'
+		),
+		field: 'username'
+	},
+	'noPassword': {
+		text: () => mf(
+			'register.warning.noPasswordProvided',
+			'Please enter a password to register.'
+		),
+		field: 'password'
+	},
+	'noEmail': {
+		text: () => mf(
+			'register.warning.noEmailProvided',
+			'Please enter an email-address to register.'
+		),
+		field: 'email'
+	},
+	'email invalid': {
+		text: () => mf(
+			'register.warning.emailNotValid',
+			'your email seems to have an error.'
+		),
+		field: 'email'
+	},
+	'Email already exists.': {
+		text: () => mf(
+			'register.warning.emailExists', 
+			'This email already exists. Have you tried resetting your password?'
+		),
+		field: 'email'
+	}
 });
 
 Template.registerFrame.events({
 	'click .js-register'(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
 
-		const username = instance.$('#registerName').val();
-		const password = instance.$('#registerPassword').val();
-		const email = instance.$('#registerEmail').val();
-
+		const username = instance.$('.js-username').val();
 		if (!username) {
-			instance.setError('noCredentials');
-			return;
+			instance.errors.add('noUsername');
 		}
+
+		const password = instance.$('.js-password').val();
+		if (!password) {
+			instance.errors.add('noPassword');
+		}
+
+		const email = instance.$('.js-email').val();
+		if (!email) {
+			instance.errors.add('noEmail');
+		}
+
+		if (instance.errors.present()) return;
+
 
 		instance.busy('registering');
 		Accounts.createUser({ username,	password, email	}, (err) => {
 			instance.busy(false);
 			if (err) {
-				instance.setError(err.reason);
-				const reason = err.reason;
-				if (reason == 'Need to set a username or email') {
-					instance.setError('noUserName');
-				}
-				else if (reason == 'Password may not be empty') {
-					instance.setError('noPassword');
-				}
-				else if (reason == 'Username already exists.') {
-					instance.setError('userExists');
-				}
-				else if (reason == 'user must provide a email') {
-					instance.setError('noEmail');
-				}
-				else if (reason == 'user must provide a valid email') {
-					instance.setError('emailNotValid');
-				}
-				else if (reason == 'Email already exists.') {
-					instance.setError('emailExists');
-				}
+				instance.errors.add(err.reason);
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
