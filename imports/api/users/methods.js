@@ -15,7 +15,9 @@ updateEmail = function(email, user) {
 	const newEmail = trimmedEmail || false;
 	const previousEmail = user.emailAddress();
 
-	if (! newEmail || newEmail !== previousEmail) {
+	//for users with email not yet set, we dont want to force them
+	//to enter a email when they change other profile settings.
+	if (newEmail || newEmail !== previousEmail) {
 		// Working under the assumption that there is only one address
 		// if there was more than one address oops I accidentally your addresses
 		if (newEmail) {
@@ -55,9 +57,6 @@ Meteor.methods({
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
-
-		if (saneUsername.length === 0) return ApiError("noUserName", "username cannot be empty");
-		if (saneUsername !== user.username && Accounts.findUserByUsername(saneUsername)) return ApiError("userExists", "username is already taken");
 
 		let result = Profile.Username.change(user._id, saneUsername, "profile change");
 		if (!result) {
