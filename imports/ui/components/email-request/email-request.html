@@ -73,19 +73,15 @@
 						<p>
 							{{mf 'validate.email.text.para1' 'We’ve noticed that you did not validate your e-mail address yet.'}}
 						</p>
-						<p>
-							{{mf 'validate.email.text' 'Send me a validation email.'}}
-						</p>
 					</span>
 					<div class="form-group">
-						<!-- {{> buttonSave event="js-send-validation-email"}} -->
 						<button class="js-send-validation-email btn btn-add form-control" {{disabledIfBusy}}>
 							{{#if busy 'sending'}}
 								<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 								{{mf 'send.validation.submit.busy' 'Sending...'}}
 							{{else}}
 								<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
-								{{mf 'send.validation.email' 'Send validation email'}}
+								{{mf 'send.validation.email' 'Send me a validation email.'}}
 							{{/if}}
 						</button>
 					</div>
