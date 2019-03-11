@@ -12,7 +12,7 @@ import './venues-map.html';
 Template.venueMap.onCreated(function() {
 	var instance = this;
 
-	instance.filter = new Venues.Filtering();
+	instance.filter = Venues.Filtering();
 	instance.autorun(function() {
 		instance.filter.clear();
 		instance.filter.add('region', Session.get('region'));

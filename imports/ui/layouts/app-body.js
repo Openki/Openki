@@ -57,24 +57,12 @@ Template.layout.helpers({
 
 Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
-	'click .js-toggle-introduction': function() {
+	'click .js-toggle-introduction'() {
 		var route = Router.current().route;
 		if (route && route.options.template === "findWrap") {
 			Introduction.showIntro();
 		}
 	},
-
-	"click .js-introduction-close-btn": function(event, instance) {
-		Introduction.doneIntro();
-	},
-
-	"click .js-introduction-toggle-btn": function(event, instance) {
-		if (Introduction.openedIntro()) {
-			Introduction.closeIntro();
-		} else {
-			Introduction.openIntro();
-		}
-	}
 });
 
 Template.layout.rendered = function() {
