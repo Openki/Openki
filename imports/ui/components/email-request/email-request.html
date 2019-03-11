@@ -1,0 +1,96 @@
+<template name="emailRequest">
+	{{#if showEmailRequest}}
+		{{> emailRequestModal}}
+	{{/if}}
+</template>
+
+<template name="emailRequestModal">
+	<div class="js-email-request-modal modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
+						{{mf 'emailrequest.title' 'Add email'}}
+						<span class="close" data-dismiss="modal">&times;</span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<p>
+							{{mf 'emailrequest.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
+						</p>
+						<p>
+							{{mf 'emailrequest.text.para1' 'We’ve noticed that you did not save your e-mail address. We suggest you to add one, you will benefit from it promised! :)'}}
+						</p>
+						<p>
+							{{mf 'emailrequest.text.para2' 'Providing an email-address ensures that you stay informed when you join a course and it allows the mentor / other participants to send you a direct message. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded!'}}
+						</p>
+						<div class="form-group {{errorClass 'email'}}">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+								</span>
+								<input class="form-control js-email"
+								       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
+								       type="email"
+								/>
+							</div>
+							{{errorMessage 'email'}}
+						</div>
+						<div class="form-group">
+							{{> buttonSave event="js-save-email form-control"}}
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="emailValidation">
+	{{#if showEmailValidation}}
+		{{> emailValidationModal}}
+	{{/if}}
+</template>
+
+<template name="emailValidationModal">
+	<div class="js-email-validation-modal modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
+						{{mf 'validate.email.title' 'Validate email'}}
+						<span class="close" data-dismiss="modal">&times;</span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<span>
+						<p>
+							{{mf 'validate.email.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
+						</p>
+						<p>
+							{{mf 'validate.email.text.para1' 'We’ve noticed that you did not validate your e-mail address yet.'}}
+						</p>
+						<p>
+							{{mf 'validate.email.text' 'Please validate your email-address.'}}
+						</p>
+					</span>
+					<div class="form-group">
+						<!-- {{> buttonSave event="js-send-validation-email"}} -->
+						<button class="js-send-validation-email btn btn-add form-control" {{disabledIfBusy}}>
+							{{#if busy 'sending'}}
+								<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+								{{mf 'send.validation.submit.busy' 'Sending...'}}
+							{{else}}
+								<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+								{{mf 'send.validation.email' 'Send validation email'}}
+							{{/if}}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

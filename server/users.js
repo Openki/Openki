@@ -1,3 +1,5 @@
+import { IsEmail } from '/imports/utils/email-tools.js';
+
 Accounts.onCreateUser(function(options, user) {
 	if (options.profile) {
 		user.profile = options.profile;
@@ -52,6 +54,20 @@ Accounts.onCreateUser(function(options, user) {
 
 	return user;
 });
+
+Accounts.validateNewUser((user) => {
+
+	if (user.emails) {
+		const email = user.emails[0].address;
+
+		if (!IsEmail(email)) {
+			throw new Meteor.Error(403, 'email invalid');
+		}
+	}
+
+	return true;
+});
+
 
 
 Accounts.config({

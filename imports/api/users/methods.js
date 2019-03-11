@@ -5,8 +5,36 @@ import Groups from '/imports/api/groups/groups.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import Profile from '/imports/utils/profile.js';
 import '/imports/api/ApiError.js';
+import { IsEmail } from '/imports/utils/email-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
 import AsyncTools from '/imports/utils/async-tools.js';
+
+updateEmail = function(email, user) {
+
+	const trimmedEmail = email.trim();
+	const newEmail = trimmedEmail || false;
+	const previousEmail = user.emailAddress();
+
+	//for users with email not yet set, we dont want to force them
+	//to enter a email when they change other profile settings.
+	if (newEmail || newEmail !== previousEmail) {
+		// Working under the assumption that there is only one address
+		// if there was more than one address oops I accidentally your addresses
+		if (newEmail) {
+			if (! IsEmail(newEmail)) {
+				return ApiError('emailNotValid', 'email invalid');
+			}
+
+			// Don't allow using an address somebody else uses
+			if (Accounts.findUserByEmail(newEmail)) {
+				return ApiError('emailExists', 'Email already exists.');
+			}
+			Profile.Email.change(user._id, newEmail, "profile change");
+		} else {
+			return ApiError('noEmail', 'Please enter a email.');
+		}
+	}
+};
 
 Meteor.methods({
 	/** Set user region
@@ -29,40 +57,24 @@ Meteor.methods({
 		if (!user) return ApiError("plzLogin", "Not logged-in");
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
-		if (saneUsername && user.username !== saneUsername) {
-			let result = Profile.Username.change(user._id, saneUsername, "profile change");
-			if (!result) {
-				return ApiError("nameError", "Failed to update username");
-			}
+
+		let result = Profile.Username.change(user._id, saneUsername, "profile change");
+		if (!result) {
+			return ApiError("nameError", "Failed to update username");
 		}
 
-		const trimmedEmail = email.trim();
-		const newEmail = trimmedEmail || false;
-		const previousEmail = user.emailAddress();
-
-		if (newEmail !== previousEmail) {
-			// Working under the assumption that there is only one address
-			// if there was more than one address oops I accidentally your addresses
-			if (email) {
-				// Very lenient address validation routine
-				if (email.length < 3) {
-					return ApiError('emailInvalid', 'Email address invalid');
-				}
-
-				// Don't allow using an address somebody else uses
-				if (Meteor.users.findOne({ _id: { $ne: user._id }, 'emails.address': email })) {
-					return ApiError('emailExists', 'Email address already in use');
-				}
-				Profile.Email.change(user._id, email, "profile change");
-			} else {
-				// Remove email-address
-				Profile.Email.change(user._id, false, "profile change");
-			}
-		}
+		updateEmail(email, user);
 
 		if (user.notifications !== notifications) {
 			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
 		}
+	},
+
+	'user.updateEmail': function(email) {
+		check(email, String);
+		var user = Meteor.user();
+		if (!user) return ApiError("plzLogin", "Not logged-in");
+		updateEmail(email, user);
 	},
 
 	'user.remove': function() {

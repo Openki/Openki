@@ -35,27 +35,29 @@
 				{{#if editing}}
 					<div class="details-form">
 						<form class="form-horizontal profile-info-edit">
-							<div class="form-group">
+							<div class="form-group {{errorClass 'username'}}">
 								<label for="editform_username" class="control-label">
 									{{mf 'profile.input.username' 'Username'}}
 								</label>
 								<div class="control-input">
-									<input class="form-control"
+									<input class="form-control js-username"
 										id="editform_username"
 										type="text"
 										value="{{user.name}}"/>
-									</div>
+								</div>
+								{{errorMessage 'username'}}
 							</div>
-							<div class="form-group">
+							<div class="form-group {{errorClass 'email'}}">
 								<label for="editform_email" class="control-label">
-									{{mf 'profile.email' 'E-Mail'}} {{mf '_inputField.optional'}}
+									{{mf 'profile.email' 'E-Mail'}}
 								</label>
 								<div class="control-input">
-									<input class="form-control"
+									<input class="form-control js-email"
 										id="editform_email"
 										type="text"
 										value="{{user.email}}"/>
 								</div>
+								{{errorMessage 'email'}}
 							</div>
 							<div class="form-group">
 								<div class="control-btn">
@@ -70,7 +72,7 @@
 							</div>
 							<div class="form-actions">
 								{{> buttonSave}}
-								{{> buttonCancel event="js-profile-info-cancel"}}
+								{{> buttonCancel event="js-profile-edit-cancel"}}
 							</div>
 						</form>
 					</div>
@@ -88,7 +90,7 @@
 							{{#if user.have_email}}
 								<div class="details-info-group">
 									<div class="details-info-label">
-										{{mf 'profile.email' 'E-Mail'}} {{mf '_inputField.optional'}}
+										{{mf 'profile.email' 'E-Mail'}}
 									</div>
 									<div class="details-info-data">
 										{{user.email}}

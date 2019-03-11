@@ -13,7 +13,7 @@ export default Alert = {
 
         const errorMessage = mf(
 			'_serverError',
-			{ ERROR: error, MESSAGE: errorMessage },
+			{ ERROR: error, MESSAGE: message },
 			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'
 		);
 
