@@ -127,45 +127,38 @@
 						</div>
 					</div>
 					{{#if changingPass}}
-						<div class="details-form">
-						{{#if isOAuth}}
-							<div>{{mf 'profile.password.cantchange' 'logins via google or facebook cannot change password here'}}</div>
+					<div class="details-form">
+						<form class="form-horizontal" id="changePwd">
+							<div class="form-group">
+								<label for="oldpassword" class="control-label">
+									{{mf 'profile.input.oldPassword' 'Your current password'}}
+								</label>
+								<div class="control-input">
+									<input type="password" class="form-control" id="oldpassword" value=""/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="newpassword" class="control-label">
+									{{mf 'profile.input.newPassword' 'New password'}}
+								</label>
+								<div class="control-input">
+									<input type="password" class="form-control" id="newpassword" value=""/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="newpassword_confirm" class="control-label">
+									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+								</label>
+								<div class="control-input">
+									<input type="password" class="form-control" id="newpassword_confirm" value=""/>
+								</div>
+							</div>
 							<div class="form-actions">
+								{{> buttonSave}}
 								{{> buttonCancel event="js-change-pwd-cancel"}}
 							</div>
-						{{else}}
-							<form class="form-horizontal" id="changePwd">
-								<div class="form-group">
-									<label for="oldpassword" class="control-label">
-										{{mf 'profile.input.oldPassword' 'Your current password'}}
-									</label>
-									<div class="control-input">
-										<input type="password" class="form-control" id="oldpassword" value=""/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="newpassword" class="control-label">
-										{{mf 'profile.input.newPassword' 'New password'}}
-									</label>
-									<div class="control-input">
-										<input type="password" class="form-control" id="newpassword" value=""/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="newpassword_confirm" class="control-label">
-										{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-									</label>
-									<div class="control-input">
-										<input type="password" class="form-control" id="newpassword_confirm" value=""/>
-									</div>
-								</div>
-								<div class="form-actions">
-									{{> buttonSave}}
-									{{> buttonCancel event="js-change-pwd-cancel"}}
-								</div>
-							</form>
-						{{/if}}
-						</div>
+						</form>
+					</div>
 					{{/if}}
 					<div class="actions">
 						{{#unless changingPass}}
