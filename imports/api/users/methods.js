@@ -150,12 +150,11 @@ Meteor.methods({
 		);
 	},
 
-	'user.name': function(userId) {
+	'user.name'(userId) {
 		this.unblock();
-		var user = Meteor.users.findOne(userId);
+		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
 		if (!user) return false;
-		var username = user.username;
-		return username;
+		return user.username;
 	},
 
 	'user.updateLocale'(locale) {

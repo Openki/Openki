@@ -68,9 +68,17 @@
 		{{/if}}
 		{{#if showContactParticipant}}
 			<div class="course-participant-contact">
-				<button class="btn-link js-show-contact-modal" type="button">
-					<i class="fa fa-envelope"></i>
-				</button>
+				{{#if userSubReady}}
+					{{#if memberAcceptsMessages}}
+						<button class="btn-link js-show-contact-modal" type="button">
+								<i class="fa fa-envelope"></i>
+						</button>
+					{{else}}
+						<button class="btn-link disabled" type="button">
+								<i class="fa fa-envelope" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
+						</button>
+					{{/if}}
+				{{/if}}
 			</div>
 			{{#if state 'showContactModal'}}
 				{{> contactParticipantModal}}
