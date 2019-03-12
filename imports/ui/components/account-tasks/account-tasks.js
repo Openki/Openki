@@ -100,6 +100,13 @@ TemplateMixins.FormfieldErrors(Template.loginFrame, {
 			'This user does not exist.'
 		),
 		field: "username"
+	},
+	'User has no password set': {
+		text: () => mf(
+			'login.username.no_password_set',
+			'Please login below with Google/Facebook.'
+		),
+		field: "username"
 	}
 });
 
