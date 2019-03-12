@@ -9,6 +9,10 @@
 	color: desaturate(darken($background-color, 40%), 50%);
 }
 
+li.navbar-form-selection > form > div.dropdown {
+	display: inline-block;
+}
+
 .js-region-search-form > .dropdown {
 	position: relative;
 }
