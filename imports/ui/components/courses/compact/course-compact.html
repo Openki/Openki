@@ -4,7 +4,7 @@
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course-compact {{courseState}} {{filterPreviewClasses}}">
 					<div class="course-compact-content">
-						<div class="course-compact-title">{{name}}</div>
+						<div class="course-compact-title" title="{{name}}">{{name}}</div>
 						{{> courseCategories}}
 					</div>
 					{{#if nextEvent}}
