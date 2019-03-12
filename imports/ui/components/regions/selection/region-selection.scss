@@ -8,3 +8,25 @@
 	background-color: $background-color;
 	color: desaturate(darken($background-color, 40%), 50%);
 }
+
+.js-region-search-form > .dropdown {
+	position: relative;
+}
+
+.js-region-search-form > .dropdown > span.control-arrow {
+	color:#aaa;
+	position:absolute;
+	right:3px;
+}
+
+.js-region-search-form > .dropdown > span.control-arrow:hover {
+	cursor:pointer;
+}
+
+.js-region-search-form > .dropdown > .control-arrow.fa-angle-down {
+	top:10px;
+}
+
+.js-region-search-form > .dropdown > .control-arrow.fa-angle-up {
+	top:9px;
+}
