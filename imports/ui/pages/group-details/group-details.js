@@ -98,21 +98,21 @@ Template.groupDetails.helpers({
 		return region && region.featuredGroup === this.group._id;
 	},
 
-	headerClasses: function() {
+	headerClasses() {
 		var classes = [];
 		if (this.group.logo) classes.push('has-logo');
 		if (Template.instance().mayEdit.get()) classes.push('is-editable');
 		return classes.join(' ');
 	},
-	editableName: function() {
+	editableName() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableName;
 	},
-	editableShort: function() {
+	editableShort() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableShort;
 	},
-	hasContent: function() {
+	hasContent() {
 		var group = this.group;
 		var isNew = this.isNew;
 		if (isNew) {
@@ -121,31 +121,31 @@ Template.groupDetails.helpers({
 			return group.claim || group.description;
 		}
 	},
-	editableClaim: function() {
+	editableClaim() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableClaim;
 	},
-	editableDescription: function() {
+	editableDescription() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableDescription;
 	},
-	mayEdit: function() {
+	mayEdit() {
 		var instance = Template.instance();
 		return instance.mayEdit.get();
 	},
-	editingSettings: function() {
+	editingSettings() {
 		var instance = Template.instance();
 		return instance.mayEdit.get() && Template.instance().editingSettings.get();
 	},
 });
 
 Template.groupDetails.events({
-	'click .js-group-settings' : function(event, instance) {
+	'click .js-group-settings'(event, instance) {
 		if (PleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
-	'click .js-group-save': function(event, instance) {
+	'click .js-group-save'(event, instance) {
 		const group = {
 			name: instance.editableName.getEdited(),
 			short: instance.editableShort.getEdited(),
@@ -176,11 +176,11 @@ Template.groupDetails.events({
 		});
 	},
 
-	'click .js-group-cancel': function(event, instance) {
+	'click .js-group-cancel'(event, instance) {
 		Router.go('/'); // Got a better idea?
 	},
 
-	'click .js-group-remove-filter': function(event, instance) {
+	'click .js-group-remove-filter'(event, instance) {
 		Router.go('/'); // Got a better idea?
 	}
 });
