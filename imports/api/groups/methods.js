@@ -61,9 +61,11 @@ Meteor.methods({
 		}
 
 		if (changes.hasOwnProperty('logoUrl')) {
+			//validate 
 			updates.logoUrl = changes.logoUrl.substring(0, 1000);
 		}
 		if (changes.hasOwnProperty('backgroundUrl')) {
+			//validate
 			updates.backgroundUrl = changes.backgroundUrl.substring(0, 1000);
 		}
 

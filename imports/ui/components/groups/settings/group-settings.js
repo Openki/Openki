@@ -6,6 +6,7 @@ import Groups from '/imports/api/groups/groups.js';
 
 import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 import Alert from '/imports/api/alerts/alert.js';
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -24,6 +25,37 @@ Template.groupSettings.onCreated(function() {
 			Meteor.subscribe('userSearch', search);
 		}
 	});
+});
+
+TemplateMixins.FormfieldErrors(Template.groupSettings, {
+	'logoUrl-invalidUrl': {
+		text: () => mf(
+			'url.invalid',
+			'this url is not valid.'
+		),
+		field: "logo-url"
+	},
+	'logoUrl-unsupportedImageFormat': {
+		text: () => mf(
+			'imageformat.unsupported',
+			'only jp(e)g and png are supported.'
+		),
+		field: "logo-url"
+	},
+	'backgroundUrl-invalidUrl': {
+		text: () => mf(
+			'url.invalid',
+			'this url is not valid.'
+		),
+		field: "background-url"
+	},
+	'BackgroundUrl-unsupportedImageFormat': {
+		text: () => mf(
+			'imageformat.unsupported',
+			'only jp(e)g and png are supported.'
+		),
+		field: "background-url"
+	},
 });
 
 Template.groupSettings.helpers({
