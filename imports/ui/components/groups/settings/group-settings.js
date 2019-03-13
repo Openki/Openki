@@ -28,33 +28,33 @@ Template.groupSettings.onCreated(function() {
 });
 
 TemplateMixins.FormfieldErrors(Template.groupSettings, {
-	'logoUrl-invalidUrl': {
+	'logo url is not valid': {
 		text: () => mf(
 			'url.invalid',
 			'this url is not valid.'
 		),
-		field: "logo-url"
+		field: "logoUrl"
 	},
-	'logoUrl-unsupportedImageFormat': {
+	'logo filetype is not allowed': {
 		text: () => mf(
 			'imageformat.unsupported',
 			'only jp(e)g and png are supported.'
 		),
-		field: "logo-url"
+		field: "logoUrl"
 	},
-	'backgroundUrl-invalidUrl': {
+	'bg url is not valid': {
 		text: () => mf(
 			'url.invalid',
 			'this url is not valid.'
 		),
-		field: "background-url"
+		field: "backgroundUrl"
 	},
-	'BackgroundUrl-unsupportedImageFormat': {
+	'bg filetype is not allowed': {
 		text: () => mf(
 			'imageformat.unsupported',
 			'only jp(e)g and png are supported.'
 		),
-		field: "background-url"
+		field: "backgroundUrl"
 	},
 });
 
@@ -135,6 +135,7 @@ Template.groupSettings.events({
 
 	'click .js-group-edit-save': function(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
 
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
@@ -148,7 +149,7 @@ Template.groupSettings.events({
 		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Could not save settings');
+				instance.errors.add(err.reason);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(

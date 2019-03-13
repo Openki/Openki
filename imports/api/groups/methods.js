@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import HtmlTools from '/imports/utils/html-tools.js';
 
+import { IsUrl, IsFiletype } from '/imports/utils/validators.js';
+
 import Groups from './groups.js';
 
 import IsGroupMember from '/imports/utils/is-group-member.js';
@@ -61,12 +63,52 @@ Meteor.methods({
 		}
 
 		if (changes.hasOwnProperty('logoUrl')) {
+			var url = changes.logoUrl.substring(0, 1000);
+			if ( url.startsWith('https://') ) {
+				url = url.replace('https://', '');
+			}
+			if ( url.startsWith('http://') ) {
+				url = url.replace('http://', '');
+			}
 			//validate 
-			updates.logoUrl = changes.logoUrl.substring(0, 1000);
+			if ( ! IsUrl('https://' + url) ) {
+				return ApiError('invalidUrl', 'logo url is not valid');
+			}
+			//cut possible params
+			if ( url.includes('?') ) {
+				url = url.substring(0, url.indexOf('?'));
+			}
+			//get filename
+			const filename = url.substring(url.lastIndexOf('/')+1);
+			//validate
+			if ( ! IsFiletype(filename, ['jpg', 'jpeg', 'png']) ) {
+				return ApiError('filetypeNotAllowed', 'logo filetype is not allowed');
+			}
+			updates.logoUrl = url;
 		}
 		if (changes.hasOwnProperty('backgroundUrl')) {
+			var url = changes.backgroundUrl.substring(0, 1000);
+			if ( url.startsWith('https://') ) {
+				url = url.replace('https://', '');
+			}
+			if ( url.startsWith('http://') ) {
+				url = url.replace('http://', '');
+			}
 			//validate
-			updates.backgroundUrl = changes.backgroundUrl.substring(0, 1000);
+			if ( ! IsUrl('https://' + url) ) {
+				return ApiError('invalidUrl', 'bg url is not valid');
+			}
+			//cut possible params
+			if ( url.includes('?') ) {
+				url = url.substring(0, url.indexOf('?'));
+			}
+			//get filename
+			const filename = url.substring(url.lastIndexOf('/')+1);
+			//validate
+			if ( ! IsFiletype(filename, ['jpg', 'jpeg', 'png']) ) {
+				return ApiError('filetypeNotAllowed', 'bg filetype is not allowed');
+			}
+			updates.backgroundUrl = url;
 		}
 
 		// Don't update nothing

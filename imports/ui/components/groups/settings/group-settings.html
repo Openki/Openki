@@ -7,7 +7,7 @@
 						<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 						{{mf 'group.settings.title' 'Settings'}}
 					</h3>
-					<div class="form-group {{errorClass 'logo-url'}}">
+					<div class="form-group {{errorClass 'logoUrl'}}">
 						<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
 						<div class="input-group">
 							<span class="input-group-addon">
@@ -19,8 +19,9 @@
 								placeholder= "{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
 								value="{{logoUrl}}"/>
 						</div>
+						{{errorMessage 'logoUrl'}}
 					</div>
-					<div class="form-group {{errorClass 'background-url'}}">
+					<div class="form-group {{errorClass 'backgroundUrl'}}">
 						<label>
 							{{mf 'group.settings.field.backgroundImg' 'Background Image'}}
 							<small>&#40;{{mf '_notYetWorking' 'not working yet'}}&#41;</small>
@@ -35,6 +36,7 @@
 								placeholder= "{{mf 'group.settings.field.backgroundImg.placeholder' 'Link to background image (png or jpg)'}}"
 								value="{{backgroundUrl}}"/>
 						</div>
+						{{errorMessage 'backgroundUrl'}}
 					</div>
 					<div class="form-actions">
 						{{> buttonSave event="js-group-edit-save" saving=saving}}
