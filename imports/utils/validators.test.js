@@ -60,6 +60,7 @@ describe('Filetype validation', function() {
 		isFiletype("cat.png");
 		isFiletype("kakadu.png");
 		isFiletype('invoice.pdf');
+		isFiletype('invoice.pdf.png');
 	});
 
 	it("rejects filetypes", function() {
@@ -67,6 +68,7 @@ describe('Filetype validation', function() {
 		isNotFiletype("image.jpeg");
 		isNotFiletype("image.gif");
 		isNotFiletype("audio.mp3");
+		isNotFiletype("file");
 
 	});
 

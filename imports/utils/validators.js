@@ -4,6 +4,9 @@ export const IsUrl = function(url) {
 };
 
 export const IsFiletype = function(filename, allowedExtensions) {
+
+	if ( ! filename.includes('.') ) return false;
+
 	for (let allowedExtension of allowedExtensions) {
 		if ( filename.endsWith('.' + allowedExtension) ) return true;
 	}
