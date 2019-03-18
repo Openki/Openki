@@ -1,5 +1,5 @@
 <template name="eventPage">
-	<div class="container{{#if eventNoRegRequired}}-sm{{/if}}">
+	<div class="container">
 		{{> event}}
 	</div>
 </template>
@@ -34,42 +34,40 @@
 			{{> report}}
 		</div>
 	</div>
-	{{#unless eventNoRegRequired}}
-		<div class="event-course-wrapper-aside">
-			<div class="page-component">
-				<div class="course-page-component-header">
-					<h4>
-						Anmeldung
-					</h4>
-				</div>
-			</div>
-			<div class="page-component">
-				<b>
-					{{#unless userRegisteredForEvent}}
-						Gib Bescheid dass du an diesem Event teilnimmst:
-					{{else}}
-						Klicke hier um dich abzumelden:
-					{{/unless}}
-				</b>
-			</div>
-			<div class="page-component">
-				{{#unless userRegisteredForEvent}}
-					<button type="button" class="btn btn-add js-register-event" style="text-align:left; font-size: 18px; font-weight: bold;">
-						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-						Ich nehme teil
-					</button>
-				{{else}}
-					<button type="button" class="btn btn-add js-unregister-event" style="text-align:left; font-size: 18px; font-weight: bold;">
-						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-						Ich melde mich ab
-					</button>
-				{{/unless}}
-			</div>
-			<div class="page-component">
-				{{> courseMembers course}}
+	<div class="event-course-wrapper-aside">
+		<div class="page-component">
+			<div class="course-page-component-header">
+				<h4>
+					Anmeldung
+				</h4>
 			</div>
 		</div>
-	{{/unless}}
+		<div class="page-component">
+			<b>
+				{{#unless userRegisteredForEvent}}
+					Gib Bescheid dass du an diesem Event teilnimmst:
+				{{else}}
+					Klicke hier um dich abzumelden:
+				{{/unless}}
+			</b>
+		</div>
+		<div class="page-component">
+			{{#unless userRegisteredForEvent}}
+				<button type="button" class="btn btn-add js-register-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+					Ich nehme teil
+				</button>
+			{{else}}
+				<button type="button" class="btn btn-add js-unregister-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+					Ich melde mich ab
+				</button>
+			{{/unless}}
+		</div>
+		<div class="page-component">
+			{{> eventMembers}}
+		</div>
+	</div>
 </template>
 
 <template name="eventDisplay">

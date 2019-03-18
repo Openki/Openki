@@ -1,0 +1,19 @@
+.event-members {
+	margin-top: $course-details-seperator-height;
+}
+.event-member {
+	background: $course-page-component-bg;
+	padding: 10px ($grid-gutter-width / 2);
+
+	&.is-own-user {
+		background: $user-bg;
+    }
+}
+
+.event-member + .event-member {
+	margin-top: $course-details-seperator-height;
+}
+
+.event-member > .profilelink {
+	font-size: medium;
+}

@@ -11,6 +11,7 @@ import Alert from '/imports/api/alerts/alert.js';
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
 import '/imports/ui/components/events/edit/event-edit.js';
+import '/imports/ui/components/events/members/event-members.js';
 import '/imports/ui/components/events/replication/event-replication.js';
 import '/imports/ui/components/groups/list/group-list.js';
 import '/imports/ui/components/price-policy/price-policy.js';
@@ -43,24 +44,19 @@ Template.eventPage.onCreated(function eventPageOnCreated() {
 	Metatags.setCommonTags(title, description);
 });
 
-Template.eventPage.helpers({
-	eventNoRegRequired() {
-		return false;
-	}
-});
-
 Template.event.onCreated(function() {
 	const event = this.data;
 	this.busy(false);
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
 
-	this.userRegisteredForEvent = new ReactiveVar(false);
+	this.userRegisteredForEvent = new ReactiveVar(
+		event.members && event.members.includes(Meteor.userId())
+	);
 });
 
 Template.event.helpers({
 	course() {
-		console.log(this.courseId);
 		if (this.courseId) return Courses.findOne(this.courseId);
 	},
 
@@ -95,18 +91,18 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
-	'mouseover .event-course-header, mouseout .event-course-header'(e, instance) {
-		instance.$(e.currentTarget).toggleClass('highlight', e.type == 'mouseover');
+	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
+		instance.$(event.currentTarget).toggleClass('highlight', event.type == 'mouseover');
 	},
 
 	'click .event-course-header'() { Router.go('showCourse', { _id: this.courseId }); },
 
-	'click .js-event-delete-confirm'(e, instance) {
-		var event = instance.data;
-		var title = event.title;
-		var course = event.courseId;
+	'click .js-event-delete-confirm': function (event, instance) {
+		var oEvent = instance.data;
+		var title = oEvent.title;
+		var course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', event._id, function (error) {
+		Meteor.call('event.remove', oEvent._id, function (error) {
 			instance.busy(false);
 			if (error) {
 				Alert.error(error, 'Could not remove event ' + "'" + title + "'");
@@ -132,12 +128,14 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
+		Meteor.call('event.addParticipant', instance.data._id, Meteor.userId());
 		instance.userRegisteredForEvent.set(true);
 	},
 
 	'click .js-unregister-event'(event, instance) {
+		Meteor.call('event.removeParticipant', instance.data._id, Meteor.userId());
 		instance.userRegisteredForEvent.set(false);
-	}
+	},
 });
 
 TemplateMixins.Expandible(Template.eventDisplay);
