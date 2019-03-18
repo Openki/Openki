@@ -84,6 +84,53 @@ Template.profile.helpers({
 	}
 });
 
+
+TemplateMixins.FormfieldErrors(Template.profile, {
+	'noUserName': {
+		text: () => mf(
+			'warning.noUserName',
+			'Please enter a name for your user.'
+		),
+		field: 'username'
+	},
+	'userExists': {
+		text: () => mf(
+			'warning.userExists',
+			'This username already exists. Please choose another one.'
+		),
+		field: 'username'
+	},
+	'nameError': {
+		text: () => mf(
+			'update.username.failed',
+			'Failed to update username.'
+		),
+		field: 'username'
+	},
+	'noEmail': {
+		text: () => mf(
+			'warning.noEmailProvided',
+			'Please enter a email.'
+		),
+		field: 'email'
+	},
+	'emailNotValid': {
+		text: () => mf(
+			'warning.emailNotValid',
+			'Your email seems to have an error.'
+		),
+		field: 'email'
+	},
+	'emailExists': {
+		text: () => mf(
+			'warning.emailExists',
+			'This email is already taken.'
+		),
+		field: 'email'
+	},
+});
+
+
 Template.profile.events({
 	'click .js-profile-info-edit': function(event, instance) {
 		Tooltips.hide();
@@ -91,7 +138,7 @@ Template.profile.events({
 		instance.collapse();
 	},
 
-	'click .js-profile-info-cancel': function(event, instance) {
+	'click .js-profile-edit-cancel': function(event, instance) {
 		instance.editing.set(false);
 		return false;
 	},
@@ -120,13 +167,14 @@ Template.profile.events({
 
 	'submit .profile-info-edit': function(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
 		Meteor.call('user.updateData',
-			document.getElementById('editform_username').value,
-			document.getElementById('editform_email').value,
+			instance.$('.js-username').val(),
+			instance.$('.js-email').val(),
 			instance.$('.js-notifications').prop("checked"),
 			function(err) {
 				if (err) {
-					Alert.error(err, 'Saving your profile failed');
+					instance.errors.add(err.error);
 				} else {
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
