@@ -15,6 +15,18 @@ import './group-settings.html';
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 
+	console.log(instance.data.group);
+
+	//strip https:// from logoUrl and bgUrl because its already labeled as prefix
+	const logoUrl = instance.data.group.logoUrl;
+	if ( logoUrl.startsWith('https://') ) {
+		instance.data.group.logoUrl = logoUrl.replace('https://', '');
+	}
+	const backgroundUrl = instance.data.group.backgroundUrl;
+	if ( backgroundUrl.startsWith('https://') ) {
+		instance.data.group.backgroundUrl = backgroundUrl.replace('https://', '');
+	}
+
 	instance.busy(false);
 
 	instance.userSearch = new ReactiveVar('');
@@ -30,36 +42,23 @@ Template.groupSettings.onCreated(function() {
 TemplateMixins.FormfieldErrors(Template.groupSettings, {
 	'logo url is not valid': {
 		text: () => mf(
-			'url.invalid',
+			'group.settings.error.url.invalid',
 			'this url is not valid.'
 		),
 		field: "logoUrl"
 	},
-	'logo filetype is not allowed': {
-		text: () => mf(
-			'imageformat.unsupported',
-			'only jp(e)g and png are supported.'
-		),
-		field: "logoUrl"
-	},
+
 	'bg url is not valid': {
 		text: () => mf(
-			'url.invalid',
+			'group.settings.error.url.invalid',
 			'this url is not valid.'
-		),
-		field: "backgroundUrl"
-	},
-	'bg filetype is not allowed': {
-		text: () => mf(
-			'imageformat.unsupported',
-			'only jp(e)g and png are supported.'
 		),
 		field: "backgroundUrl"
 	},
 });
 
 Template.groupSettings.helpers({
-	foundUsers: function() {
+	foundUsers() {
 		var instance = Template.instance();
 
 		var search = instance.userSearch.get();
@@ -69,35 +68,35 @@ Template.groupSettings.helpers({
 		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
-	kioskEventURL: function() {
+	kioskEventURL() {
 		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
 	},
-	timetableURL: function() {
+	timetableURL() {
 		return Router.routes.timetable.url({}, { query: {group: this._id} });
 	},
-	scheduleURL: function() {
+	scheduleURL() {
 	return Router.routes.frameSchedule.url({}, { query: {group: this._id} });
 	},
-	frameEventsURL: function() {
+	frameEventsURL() {
 		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
 	},
-	frameWeekURL: function() {
+	frameWeekURL() {
 		return Router.routes.frameWeek.url({}, { query: {group: this._id} });
 	},
-	frameCalendarURL: function() {
+	frameCalendarURL() {
 		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
 	},
-	frameListURL: function() {
+	frameListURL() {
 		return Router.routes.frameCourselist.url({}, { query: {group: this._id} });
 	},
 });
 
 Template.groupSettings.events({
-	'keyup .js-search-users': function(event, instance) {
+	'keyup .js-search-users'(event, instance) {
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
-	'click .js-member-add-btn': function(event, instance) {
+	'click .js-member-add-btn'(event, instance) {
 		var memberId = this._id;
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
@@ -115,7 +114,7 @@ Template.groupSettings.events({
 		});
 	},
 
-	'click .js-member-remove-btn': function(event, instance) {
+	'click .js-member-remove-btn'(event, instance) {
 		var memberId = ''+this;
 		var groupId = Router.current().params._id;
 		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
@@ -133,7 +132,7 @@ Template.groupSettings.events({
 		});
 	},
 
-	'click .js-group-edit-save': function(event, instance) {
+	'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -162,7 +161,7 @@ Template.groupSettings.events({
 		});
 	},
 
-	'click .js-group-edit-cancel': function(event, instance) {
+	'click .js-group-edit-cancel'(event, instance) {
 		instance.parentInstance().editingSettings.set(false);
 	}
 });

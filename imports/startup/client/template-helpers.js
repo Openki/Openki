@@ -107,7 +107,7 @@ const helpers = {
 		var group = Groups.findOne({ _id: groupId });
 		if (group) {
 			if (group.logoUrl) {
-				return 'https://' + group.logoUrl;
+				return group.logoUrl;
 			} return "";
 		}
 		return "";
