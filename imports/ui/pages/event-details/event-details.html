@@ -38,29 +38,29 @@
 		<div class="page-component">
 			<div class="course-page-component-header">
 				<h4>
-					Anmeldung
+					{{mf 'event.details.registration' 'Registration'}}
 				</h4>
 			</div>
 		</div>
 		<div class="page-component">
 			<b>
 				{{#unless userRegisteredForEvent}}
-					Gib Bescheid dass du an diesem Event teilnimmst:
+					{{mf 'event.details.i-participate' 'Let us know that you are participating in this event'}}
 				{{else}}
-					Klicke hier um dich abzumelden:
+					{{mf 'event.details.i-unregister' 'Click here to unregister'}}
 				{{/unless}}
 			</b>
 		</div>
 		<div class="page-component">
 			{{#unless userRegisteredForEvent}}
-				<button type="button" class="btn btn-add js-register-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+				<button type="button" class="btn btn-add btn-event js-register-event">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					Ich nehme teil
+					{{mf 'event.details.i-take-part' 'I take part'}}
 				</button>
 			{{else}}
-				<button type="button" class="btn btn-add js-unregister-event" style="text-align:left; font-size: 18px; font-weight: bold;">
+				<button type="button" class="btn btn-add btn-event js-unregister-event">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					Ich melde mich ab
+					{{mf 'event.details.i-dont-take-part' 'I dont take part'}}
 				</button>
 			{{/unless}}
 		</div>
