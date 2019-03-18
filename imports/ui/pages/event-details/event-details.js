@@ -50,9 +50,13 @@ Template.event.onCreated(function() {
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
 
-	this.userRegisteredForEvent = new ReactiveVar(
-		event.members && event.members.includes(Meteor.userId())
-	);
+	this.userRegisteredForEvent = new ReactiveVar(false);
+
+	this.autorun(()=> {
+		this.userRegisteredForEvent.set(
+			event.members && event.members.includes(Meteor.userId())
+		);
+	});
 });
 
 Template.event.helpers({
@@ -128,13 +132,23 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
-		Meteor.call('event.addParticipant', instance.data._id, Meteor.userId());
-		instance.userRegisteredForEvent.set(true);
+		Meteor.call('event.addParticipant', instance.data._id, Meteor.userId(), (err) => {
+			if ( err ) {
+				Alert.error( err, '');
+			} else {
+				instance.userRegisteredForEvent.set(true);
+			}
+		});
 	},
 
 	'click .js-unregister-event'(event, instance) {
-		Meteor.call('event.removeParticipant', instance.data._id, Meteor.userId());
-		instance.userRegisteredForEvent.set(false);
+		Meteor.call('event.removeParticipant', instance.data._id, Meteor.userId(), (err) => {
+			if ( err ) {
+				Alert.error( err, '');
+			} else {
+				instance.userRegisteredForEvent.set(false);
+			}
+		});
 	},
 });
 
