@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import HtmlTools from '/imports/utils/html-tools.js';
 
-import { IsUrl, IsFiletype } from '/imports/utils/validators.js';
-
 import Groups from './groups.js';
 
 import IsGroupMember from '/imports/utils/is-group-member.js';
@@ -64,21 +62,7 @@ Meteor.methods({
 
 		if (changes.hasOwnProperty('logoUrl')) {
 			var url = 'https://' + changes.logoUrl.substring(0, 992);
-
-			//validate 
-			if ( ! IsUrl(url) ) {
-				return ApiError('invalidUrl', 'logo url is not valid');
-			}
 			updates.logoUrl = url;
-		}
-		if (changes.hasOwnProperty('backgroundUrl')) {
-			var url = 'https://' + changes.backgroundUrl.substring(0, 992);
-
-			//validate
-			if ( ! IsUrl(url) ) {
-				return ApiError('invalidUrl', 'bg url is not valid');
-			}
-			updates.backgroundUrl = url;
 		}
 
 		// Don't update nothing

@@ -15,16 +15,10 @@ import './group-settings.html';
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 
-	console.log(instance.data.group);
-
 	//strip https:// from logoUrl and bgUrl because its already labeled as prefix
 	const logoUrl = instance.data.group.logoUrl;
 	if ( logoUrl.startsWith('https://') ) {
 		instance.data.group.logoUrl = logoUrl.replace('https://', '');
-	}
-	const backgroundUrl = instance.data.group.backgroundUrl;
-	if ( backgroundUrl.startsWith('https://') ) {
-		instance.data.group.backgroundUrl = backgroundUrl.replace('https://', '');
 	}
 
 	instance.busy(false);
@@ -37,24 +31,6 @@ Template.groupSettings.onCreated(function() {
 			Meteor.subscribe('userSearch', search);
 		}
 	});
-});
-
-TemplateMixins.FormfieldErrors(Template.groupSettings, {
-	'logo url is not valid': {
-		text: () => mf(
-			'group.settings.error.url.invalid',
-			'this url is not valid.'
-		),
-		field: "logoUrl"
-	},
-
-	'bg url is not valid': {
-		text: () => mf(
-			'group.settings.error.url.invalid',
-			'this url is not valid.'
-		),
-		field: "backgroundUrl"
-	},
 });
 
 Template.groupSettings.helpers({
@@ -140,8 +116,7 @@ Template.groupSettings.events({
 
 		instance.busy('saving');
 		const changes = {
-			logoUrl: instance.$('.js-logo-url').val(),
-			backgroundUrl: instance.$('.js-background-url').val()
+			logoUrl: instance.$('.js-logo-url').val()
 		};
 
 		const groupId = instance.data.group._id;
