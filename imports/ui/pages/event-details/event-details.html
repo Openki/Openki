@@ -44,28 +44,24 @@
 		</div>
 		<div class="page-component">
 			<b>
-				{{#unless userRegisteredForEvent}}
-					{{mf 'event.details.i-participate' 'Let us know that you are participating in this event'}}
-				{{else}}
-					{{mf 'event.details.i-unregister' 'Click here to unregister'}}
-				{{/unless}}
+				{{mf 'event.details.i-participate' 'Let us know that you are participating in this event. Your registration is binding.'}}
 			</b>
 		</div>
 		<div class="page-component">
 			{{#unless userRegisteredForEvent}}
 				<button type="button" class="btn btn-add btn-event js-register-event">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					{{mf 'event.details.i-take-part' 'I take part'}}
+					{{mf 'event.details.register' 'Register'}}
 				</button>
 			{{else}}
 				<button type="button" class="btn btn-add btn-event js-unregister-event">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					{{mf 'event.details.i-dont-take-part' 'I dont take part'}}
+					{{mf 'event.details.unregister' 'Withdraw my registration'}}
 				</button>
 			{{/unless}}
 		</div>
 		<div class="page-component">
-			{{> eventMembers}}
+			{{> participants}}
 		</div>
 	</div>
 </template>

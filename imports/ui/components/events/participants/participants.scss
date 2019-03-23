@@ -1,0 +1,56 @@
+.participants {
+	margin-top: $course-details-seperator-height;
+}
+.participant {
+	background: $course-page-component-bg;
+	padding: 10px ($grid-gutter-width / 2);
+
+	&.is-own-user {
+		background: $user-bg;
+	}
+}
+
+.participant + .participant {
+	margin-top: $course-details-seperator-height;
+}
+
+.participant > .profilelink {
+	font-size: medium;
+}
+
+.participant-roles {
+	@include td-margin(left, 10px);
+	@include td-padding(left, 0);
+	display: inline-block;
+	list-style: none;
+	margin-bottom: 0;
+
+	&:hover {
+		cursor: default;
+	}
+}
+
+.participant-roles > li {
+	display: inline-block;
+
+	&.participant {
+		display: none;
+	}
+}
+
+.participant-role {
+	background: $blue;
+	padding: 3px 6px 5px;
+	vertical-align: middle;
+}
+
+.participant-role-text {
+	color: $white;
+	font-size: small;
+	font-weight: bold;
+}
+
+.participant-contact {
+	@include td-float(right);
+	font-size: medium;
+}

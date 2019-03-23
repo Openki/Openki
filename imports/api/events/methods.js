@@ -352,12 +352,12 @@ Meteor.methods({
 		if ( !Meteor.user() ) {
 			throw new Meteor.Error(401, "please log in");
 		}
-		Events.update({_id: eventId}, { $push: { members: userId } });
+		Events.update({_id: eventId}, { $addToSet: { participants: {user: userId} } });
 	},
 	'event.removeParticipant'(eventId, userId) {
 		if ( !Meteor.user() ) {
 			throw new Meteor.Error(401, "please log in");
 		}
-		Events.update({_id: eventId}, { $pull: { members: userId } });
+		Events.update({_id: eventId}, { $pull: { participants: {user: userId} } });
 	}
 });
