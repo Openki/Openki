@@ -1,0 +1,24 @@
+.event-participants {
+	margin-top: $event-details-seperator-height;
+}
+.event-participant {
+	background: $event-page-component-bg;
+	padding: 10px ($grid-gutter-width / 2);
+
+	&.is-own-user {
+		background: $user-bg;
+	}
+}
+
+.event-participant + .event-participant {
+	margin-top: $event-details-seperator-height;
+}
+
+.event-participant > .profilelink {
+	font-size: medium;
+}
+
+.event-participant-contact {
+	@include td-float(right);
+	font-size: medium;
+}

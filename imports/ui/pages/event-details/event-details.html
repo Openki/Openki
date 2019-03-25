@@ -54,14 +54,14 @@
 					{{mf 'event.details.register' 'Register'}}
 				</button>
 			{{else}}
-				<button type="button" class="btn btn-add btn-event js-unregister-event">
+				<button type="button" class="btn btn-cancel btn-event js-unregister-event">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					{{mf 'event.details.unregister' 'Withdraw my registration'}}
 				</button>
 			{{/unless}}
 		</div>
 		<div class="page-component">
-			{{> participants}}
+			{{> eventParticipants}}
 		</div>
 	</div>
 </template>

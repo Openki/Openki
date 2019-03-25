@@ -11,7 +11,7 @@ import Alert from '/imports/api/alerts/alert.js';
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
 import '/imports/ui/components/events/edit/event-edit.js';
-import '/imports/ui/components/events/participants/participants.js';
+import '/imports/ui/components/events/participants/event-participants.js';
 import '/imports/ui/components/events/replication/event-replication.js';
 import '/imports/ui/components/groups/list/group-list.js';
 import '/imports/ui/components/price-policy/price-policy.js';
@@ -54,9 +54,7 @@ Template.event.onCreated(function() {
 
 	this.autorun(()=> {
 		this.userRegisteredForEvent.set(
-			event.participants && event.participants.some(
-				participant => participant['user'] === Meteor.userId()
-			)
+			event.participants && event.participants.includes(Meteor.userId())
 		);
 	});
 });

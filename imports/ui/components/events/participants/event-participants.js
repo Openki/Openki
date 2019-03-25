@@ -8,14 +8,14 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/profile-link/profile-link.js';
 
-import './participants.html';
+import './event-participants.html';
 
-Template.participants.onCreated(function() {
+Template.eventParticipants.onCreated(function() {
 	this.increaseBy = 10;
 	this.participantsShowLimit = new ReactiveVar(this.increaseBy);
 });
 
-Template.participants.helpers({
+Template.eventParticipants.helpers({
 	howManyEnrolled() {
 		return (this.participants && this.participants.length) || 0;
 	},
@@ -25,33 +25,30 @@ Template.participants.helpers({
 			this.participants
 			// remove own user if logged in and participant (it then already
 			// appears on top)
-			.filter((participant) => participant.user !== Meteor.userId())
+			.filter((participant) => participant !== Meteor.userId())
 		);
 	},
 
 	ownUserParticipant() {
-		return this.participants.find((participant) => participant.user === Meteor.userId());
+		return this.participants.find((participant) => participant === Meteor.userId());
 	},
 
 });
 
-Template.participants.events({
-});
-
-Template.participant.onCreated(function() {
+Template.eventParticipant.onCreated(function() {
 	const instance = this;
 	const eventId = this.data.event._id;
 
-	instance.userSub = Meteor.subscribe('user', this.data.participant.user);
+	instance.userSub = Meteor.subscribe('user', this.data.participant);
 
 	this.state = new ReactiveDict();
 	this.state.setDefault(
-		{ showContactModal: false }
+		{ showContactEventParticipantModal: false }
 	);
 
 });
 
-Template.participant.helpers({
+Template.eventParticipant.helpers({
 	ownUserParticipantClass() {
 		if (this.isOwnUserParticipant) return 'is-own-user';
 	},
@@ -60,7 +57,7 @@ Template.participant.helpers({
 		const userId = Meteor.userId();
 		if (!userId) return false;
 
-		return userId !== this.participant.user;
+		return userId !== this.participant;
 	},
 
 	userSubReady() {
@@ -68,35 +65,35 @@ Template.participant.helpers({
 	},
 
 	userAcceptsMessages() {
-		const user = Meteor.users.findOne(this.participant.user);
+		const user = Meteor.users.findOne(this.participant);
 		return user && user.acceptsMessages;
 	},
 
 });
 
 
-Template.participant.events({
+Template.eventParticipant.events({
 	'click .js-show-contact-modal'(event, instance) {
-		instance.state.set('showContactModal', true);
+		instance.state.set('showContactEventParticipantModal', true);
 	},
 
-	'hidden.bs.modal .js-contact-participant'(event, instance) {
-		instance.state.set('showContactModal', false);
+	'hidden.bs.modal .js-contact-participant-modal'(event, instance) {
+		instance.state.set('showContactEventParticipantModal', false);
 	}
 });
 
-Template.participantContactModal.onCreated(function() {
+Template.contactEventParticipantModal.onCreated(function() {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{ messageSent: false }
 	);
 
 	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('.js-contact-participant').modal('hide');
+		if (this.state.get('messageSent')) this.$('.js-contact-event-participant-modal').modal('hide');
 	});
 });
 
-Template.participantContactModal.onRendered(function() {
-	this.$('.js-contact-participant').modal('show');
+Template.contactEventParticipantModal.onRendered(function() {
+	this.$('.js-contact-event-participant-modal').modal('show');
 });
 

@@ -180,22 +180,22 @@ Template.courseMember.events({
 		instance.state.set('showContactModal', true);
 	},
 
-	'hidden.bs.modal .js-contact-participant'(event, instance) {
+	'hidden.bs.modal .js-contact-member'(event, instance) {
 		instance.state.set('showContactModal', false);
 	}
 });
 
-Template.contactParticipantModal.onCreated(function() {
+Template.contactMemberModal.onCreated(function() {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{ messageSent: false }
 	);
 
 	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('.js-contact-participant').modal('hide');
+		if (this.state.get('messageSent')) this.$('.js-contact-member').modal('hide');
 	});
 });
 
-Template.contactParticipantModal.onRendered(function() {
-	this.$('.js-contact-participant').modal('show');
+Template.contactMemberModal.onRendered(function() {
+	this.$('.js-contact-member').modal('show');
 });
