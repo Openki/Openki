@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import url from 'url';
+
 import Groups from '/imports/api/groups/groups.js';
 
 import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
@@ -15,7 +17,7 @@ import './group-settings.html';
 Template.groupSettings.onCreated(function() {
 	var instance = this;
 
-	//strip https:// from logoUrl and bgUrl because its already labeled as prefix
+	//strip https:// from logoUrl because its already labeled as prefix
 	const logoUrl = instance.data.group.logoUrl;
 	if ( logoUrl.startsWith('https://') ) {
 		instance.data.group.logoUrl = logoUrl.replace('https://', '');
@@ -31,6 +33,16 @@ Template.groupSettings.onCreated(function() {
 			Meteor.subscribe('userSearch', search);
 		}
 	});
+});
+
+TemplateMixins.FormfieldErrors(Template.groupSettings, {
+	'invalidUrl': {
+		text: () => mf(
+			'url.invalid',
+			'this url is not valid.'
+		),
+		field: "logo-url"
+	},
 });
 
 Template.groupSettings.helpers({
@@ -108,22 +120,41 @@ Template.groupSettings.events({
 		});
 	},
 
+	'keyup, change .js-logo-url'(event, instance) {
+		if (instance.$('.js-logo-url').val().includes('://')) {
+			const elem = instance.$('.js-logo-url');
+			elem.val(elem.val().split('://')[1]);
+		}
+	},
+
 	'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
+		let urlString = instance.$('.js-logo-url').val();
+
+		//strip protocol if needed
+		if ( urlString.includes('://') ) urlString = urlString.split('://')[1];
+
+		urlString = 'https://' + urlString;
+
+		const urlObject = url.parse(urlString);
+
+		//url.parse does not throw an error ...
+		if ( (urlString.split('://')-1) == 1 ) instance.errors.add('invalidUrl'); 
+
 		instance.busy('saving');
 		const changes = {
-			logoUrl: instance.$('.js-logo-url').val()
+			logoUrl: urlString
 		};
 
 		const groupId = instance.data.group._id;
 		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
-				instance.errors.add(err.reason);
+				console.log(err);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(

@@ -61,8 +61,8 @@ Meteor.methods({
 		}
 
 		if (changes.hasOwnProperty('logoUrl')) {
-			var url = 'https://' + changes.logoUrl.substring(0, 992);
-			updates.logoUrl = url;
+			changes.logoUrl = changes.logoUrl.substring(0, 1000);
+			updates.logoUrl = changes.logoUrl;
 		}
 
 		// Don't update nothing
