@@ -105,7 +105,7 @@ Many tools are already available on the web freely and humans can link them to O
 * Compose texts: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
 * Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Papillon](http://papilio.niadomo.net/create/) or [Framadate](http://framadate.org)
 * More complex choices in a group: [https://loomio.org](https://loomio.org)
-* Upload files: [https://wetransfer.com/](https://wetransfer.com/)
+* Upload files: [https://wetransfer.com/](https://wetransfer.com/) or self-host a [NextCloud](http://nextcloud.com) instance.
 
 
 ## Mentoring
@@ -154,6 +154,27 @@ Openki does not sell user data to companies, it does not track your behavior and
 ### How safe is the Openki webpage?
 Openki.net is SSL encrypted by default. This is the same technology that your online banking uses. But your course participation, for example, is visible to other users. So you can choose not to use your real name in Openki if you want to avoid that.
 
+
+
+## Regions
+
+### What is an Openki Region?
+
+Every Openki course and group belongs to a certain (geographic) region, typically a city or a village. Visiting the Openki.net page one can choose to explore the courses of a selected region or of all regions at the same time.
+
+### How can I create a new Openki Region?
+
+It is part of our long-term vision to make Openki an open platform that allows people in different areas to use it through the “region” feature or even by self-hosting the Openki software on their own servers.
+
+Today we only create new regions at the Openki.net platform upon requests from individuals that show a certain level of commitment to activate an Openki community in their region and make sure it is functioning properly (not extensive spam or abuses take place) and according to Openki's core values.
+
+For this, we have recently established an e-mail list, [region-admins@lists.openki.net](http://lists.lists.openki.net/mailman/listinfo/region-admins), with all “region admins” to exchange ideas and ways to resolve common issues.
+
+We are also working to implement a special region admin functionality in the platform, which will allow region administrators to delete or edit region courses, block misbehaving users, give administrator rights to other people from the same region, etc. 
+
+### How can I contact the administrator of my region?
+
+For now, region admins cannot be contacted directly. Please send an e-mail request to region-admin-owner@lists.openki.net and we will direct you accordingly.
 
 
 ## Technical
