@@ -81,7 +81,7 @@ Accounts.emailTemplates.verifyEmail.subject = function(user) {
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.name
 		},
-		"Welcome to the {SITE} community, {NAME}"
+		"[{SITE}] Welcome to the {SITE} community, {NAME}"
 	);
 };
 
