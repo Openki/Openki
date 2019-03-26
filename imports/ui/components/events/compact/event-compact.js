@@ -10,7 +10,7 @@ Template.eventCompact.onCreated(function() {
 });
 
 Template.eventCompact.helpers({
-	eventCompactClasses: function() {
+	eventCompactClasses() {
 		var eventCompactClasses = [];
 		if (Template.instance().withDate) {
 			eventCompactClasses.push('has-date');
@@ -22,13 +22,13 @@ Template.eventCompact.helpers({
 		return eventCompactClasses.join(' ');
 	},
 
-	withDate: function() {
+	withDate() {
 		return Template.instance().withDate;
 	}
 });
 
 Template.eventCompact.events({
-	'mouseover .js-venue-link, mouseout .js-venue-link': function(e, instance){
+	'mouseover .js-venue-link, mouseout .js-venue-link'(e, instance){
 		instance.$('.event-compact').toggleClass('elevate-child');
 	}
 });

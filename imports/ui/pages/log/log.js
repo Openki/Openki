@@ -64,30 +64,30 @@ Template.showLog.onCreated(function() {
 
 
 Template.showLog.helpers({
-	'privileged': function() {
+	'privileged'() {
 		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
 	},
 
-	'date': function() {
+	'date'() {
 		const start = Template.instance().filter.get('start');
 		return start && start.toISOString() || "";
 	},
 
-	'relFilter': function() {
+	'relFilter'() {
 		const rel = Template.instance().filter.toParams().rel;
 		return rel || "";
 	},
 
-	'trFilter': function() {
+	'trFilter'() {
 		const tr = Template.instance().filter.toParams().tr;
 		return tr || "";
 	},
 
-	isodate: function(date) {
+	isodate(date) {
 		return moment(date).toISOString();
 	},
 
-	'hasMore': function() {
+	'hasMore'() {
 		var instance = Template.instance();
 
 		var filterQuery = instance.filter.toQuery();
@@ -97,7 +97,7 @@ Template.showLog.helpers({
 		return results.count() > limit;
 	},
 
-	'results': function() {
+	'results'() {
 		var instance = Template.instance();
 		var filterQuery = instance.filter.toQuery();
 		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
@@ -118,7 +118,7 @@ Template.showLog.helpers({
 	},
 
 
-	'loading': function() {
+	'loading'() {
 		return !Template.instance().ready.get();
 	},
 });
@@ -126,7 +126,7 @@ Template.showLog.helpers({
 
 Template.showLog.events({
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-update-url': function(event, instance) {
+	'change .js-update-url'(event, instance) {
 		instance.updateUrl();
 	},
 
@@ -160,7 +160,7 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'click .js-tr': function(event, instance) {
+	'click .js-tr'(event, instance) {
 		instance.filter.add('tr', ""+this);
 		if (!event.shiftKey) {
 			instance.filter.done();
@@ -169,7 +169,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-date': function(event, instance) {
+	'click .js-date'(event, instance) {
 		var start = moment(this).toISOString();
 		instance.filter.add('start', start);
 		if (!event.shiftKey) {
@@ -179,7 +179,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-rel-id': function(event, instance) {
+	'click .js-rel-id'(event, instance) {
 		instance.filter.add('rel', ""+this);
 		if (!event.shiftKey) {
 			instance.filter.done();
@@ -188,7 +188,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-more': function(event, instance) {
+	'click .js-more'(event, instance) {
 		var limit = instance.limit;
 		limit.set(limit.get() + 100);
 	}
@@ -196,21 +196,17 @@ Template.showLog.events({
 
 TemplateMixins.MultiExpandible(Template.showLogEntry);
 Template.showLogEntry.helpers(
-	{ date:
-		function() {
+	{ date() {
 			const date = Template.instance().filter.toParams().date;
 			return date && date.toISOString() || "";
 		}
-	, shortId:
-		function(id) {
+	, shortId(id) {
 			return id.substr(0, 8);
 		}
-	, isodate:
-		function(date) {
+	, isodate(date) {
 			return moment(date).toISOString();
 		}
-	, jsonBody:
-		function() {
+	, jsonBody() {
 			return JSON.stringify(this.body, null, '   ');
 		}
 	}

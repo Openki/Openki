@@ -50,7 +50,7 @@ Template.eventEditVenue.onCreated(function() {
 	instance.autorun(function() {
 		// Set proposed location as new location when it is selected
 		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
-			added: function(mark) {
+			added(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
 				// store it as new location for the event
 				var updLocation = instance.location.get();
@@ -72,7 +72,7 @@ Template.eventEditVenue.onCreated(function() {
 
 		// Update position if marker was dragged
 		instance.locationTracker.markers.find({ main: true }).observe({
-			changed: function(mark) {
+			changed(mark) {
 				var updLocation = instance.location.get();
 				if (mark.remove) {
 					delete updLocation.loc;
@@ -104,7 +104,7 @@ Template.eventEditVenue.onCreated(function() {
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			'added': function(location) {
+			'added'(location) {
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
@@ -128,31 +128,31 @@ Template.eventEditVenue.onCreated(function() {
 
 Template.eventEditVenue.helpers({
 
-	location: function() {
+	location() {
 		return Template.instance().location.get();
 	},
 
-	haveLocationCandidates: function() {
+	haveLocationCandidates() {
 		return Template.instance().locationTracker.markers.find({ proposed: true }).count() > 0;
 	},
 
-	locationCandidates: function() {
+	locationCandidates() {
 		return Template.instance().locationTracker.markers.find({ proposed: true });
 	},
 
-	locationIsPreset: function() {
+	locationIsPreset() {
 		return Template.instance().locationIs('preset');
 	},
 
-	hostProfileLink: function() {
+	hostProfileLink() {
 		return Router.url('userprofile', Template.instance().venueEditor.get());
 	},
 
-	eventMarkers: function() {
+	eventMarkers() {
 		return Template.instance().locationTracker.markers;
 	},
 
-	allowPlacing: function() {
+	allowPlacing() {
 		var location = Template.instance().location;
 
 		// We return a function so the reactive dependency on locationState is
@@ -163,7 +163,7 @@ Template.eventEditVenue.helpers({
 		};
 	},
 
-	allowRemoving: function() {
+	allowRemoving() {
 		var locationIs = Template.instance().locationIs;
 		var location = Template.instance().location;
 
@@ -172,11 +172,11 @@ Template.eventEditVenue.helpers({
 		};
 	},
 
-	hoverClass: function() {
+	hoverClass() {
 		return this.hover ? 'hover' : '';
 	},
 
-	searching: function() {
+	searching() {
 		return !!Template.instance().location.get().name;
 	}
 
@@ -184,7 +184,7 @@ Template.eventEditVenue.helpers({
 
 
 Template.eventEditVenue.events({
-	'click .js-location-search-btn': function(event, instance) {
+	'click .js-location-search-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
@@ -239,17 +239,17 @@ Template.eventEditVenue.events({
 		});
 	},
 
-	'click .js-location-change': function(event, instance) {
+	'click .js-location-change'(event, instance) {
 		instance.addressSearch.set(false);
 		instance.location.set({});
 		instance.search.set('');
 	},
 
-	'click .js-location-candidate': function(event, instance) {
+	'click .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
-	'keyup .js-location-search-input': function(event, instance) {
+	'keyup .js-location-search-input'(event, instance) {
 		instance.addressSearch.set(false);
 		instance.search.set(event.target.value);
 
@@ -258,18 +258,18 @@ Template.eventEditVenue.events({
 		instance.location.set(updLocation);
 	},
 
-	'keyup .js-location-address-search': function(event, instance) {
+	'keyup .js-location-address-search'(event, instance) {
 		var updLocation = instance.location.get();
 		updLocation.address = event.target.value;
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .js-location-candidate': function(event, instance) {
+	'mouseenter .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 		instance.locationTracker.markers.update(this._id, {$set:{hover: true}});
 	},
 
-	'mouseleave .js-location-candidate': function(event, instance) {
+	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 	}
 

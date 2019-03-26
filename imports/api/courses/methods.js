@@ -51,7 +51,7 @@ function removeRole(course, role, user) {
 }
 
 Meteor.methods({
-	'course.addRole': function(courseId, userId, role) {
+	'course.addRole'(courseId, userId, role) {
 		check(courseId, String);
 		check(userId, String);
 		check(role, String);
@@ -84,7 +84,7 @@ Meteor.methods({
 		Notification.Join.record(course._id, user._id, role);
 	},
 
-	'course.removeRole': function(courseId, userId, role) {
+	'course.removeRole'(courseId, userId, role) {
 		check(role, String);
 		check(userId, String);
 		check(courseId, String);
@@ -109,7 +109,7 @@ Meteor.methods({
 		removeRole(course, role, user._id);
 	},
 
-	'course.changeComment': function(courseId, comment) {
+	'course.changeComment'(courseId, comment) {
 		check(courseId, String);
 		check(comment, String);
 		var course = Courses.findOne({_id: courseId});
@@ -121,7 +121,7 @@ Meteor.methods({
 		);
 	},
 
-	'course.save': function(courseId, changes) {
+	'course.save'(courseId, changes) {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
@@ -247,7 +247,7 @@ Meteor.methods({
 		return courseId;
 	},
 
-	'course.remove': function(courseId) {
+	'course.remove'(courseId) {
 		var course = Courses.findOne({_id: courseId});
 		if (!course) throw new Meteor.Error(404, "no such course");
 		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, "edit not permitted");
@@ -256,7 +256,7 @@ Meteor.methods({
 	},
 
 	// Update the nextEvent field for the courses matching the selector
-	'course.updateNextEvent': function(selector) {
+	'course.updateNextEvent'(selector) {
 		Courses.find(selector).forEach(function(course) {
 			var futureEvents = Events.find(
 				{courseId: course._id, start: {$gt: new Date()}}
@@ -301,7 +301,7 @@ Meteor.methods({
 
 
 	// Recalculate the editors field
-	'course.updateGroups': function(selector) {
+	'course.updateGroups'(selector) {
 		Courses.find(selector).forEach(function(course) {
 			Courses.updateGroups(course._id);
 		});

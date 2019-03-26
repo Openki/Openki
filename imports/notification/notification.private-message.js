@@ -68,7 +68,7 @@ notificationPrivateMessage.Model = function(entry) {
 	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
 
 	return {
-		vars: function(userLocale, actualRecipient) {
+		vars(userLocale, actualRecipient) {
 			if (!sender) throw "Sender does not exist (0.o)";
 			if (!targetRecipient) throw "targetRecipient does not exist (0.o)";
 

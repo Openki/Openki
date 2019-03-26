@@ -37,19 +37,19 @@ Template.navbar.onRendered(function() {
 });
 
 Template.navbar.helpers({
-	showTestWarning: function() {
+	showTestWarning() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
 	},
 
-	connected: function() {
+	connected() {
 		return Meteor.status().status === 'connected';
 	},
 
-	connecting: function() {
+	connecting() {
 		return Meteor.status().status === 'connecting';
 	},
 
-	notConnected: function() {
+	notConnected() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
 	},
 
@@ -60,7 +60,7 @@ Template.navbar.helpers({
 		return "";
 	},
 
-	activeClass: function(linkRoute, id) {
+	activeClass(linkRoute, id) {
 		var router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
 			if (typeof id == 'string' && router.params._id !== id) return '';
@@ -70,7 +70,7 @@ Template.navbar.helpers({
 		}
 	},
 
-	toggleNavbarRight: function(LTRPos) {
+	toggleNavbarRight(LTRPos) {
 		var isRTL = Session.get('textDirectionality') == 'rtl';
 
 		if (LTRPos === 'left') {
@@ -82,11 +82,11 @@ Template.navbar.helpers({
 });
 
 Template.navbar.events({
-	'click .js-nav-dropdown-close': function(event, instance) {
+	'click .js-nav-dropdown-close'(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},
 
-	'show.bs.dropdown, hide.bs.dropdown .dropdown': function(e, instance) {
+	'show.bs.dropdown, hide.bs.dropdown .dropdown'(e, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var gridFloatBreakpoint = ScssVars.gridFloatBreakpoint;
 
@@ -110,7 +110,7 @@ Template.navbar.events({
 });
 
 Template.loginButton.helpers({
-	'loginServicesConfigured': function() {
+	'loginServicesConfigured'() {
 		return Accounts.loginServicesConfigured();
 	}
 });

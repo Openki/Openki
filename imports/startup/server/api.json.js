@@ -46,7 +46,7 @@ const jSendResponder = function(res, process) {
 Router.route('api.0.json', {
 	path: '/api/0/json/:handler',
 	where: 'server',
-	action: function() {
+	action() {
 		jSendResponder(this.response, () => {
 			let handler = this.params.handler;
 			if (!Api.hasOwnProperty(handler)) {

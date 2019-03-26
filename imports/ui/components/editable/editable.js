@@ -83,35 +83,35 @@ import './editable.html';
 	});
 
 	template.helpers({
-		showControls: function() {
+		showControls() {
 			var instance = Template.instance();
 			return instance.state.showControls && instance.state.changed.get();
 		},
 
-		wrapAttrs: function() {
+		wrapAttrs() {
 			var instance = Template.instance();
 			return instance.state.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
 		},
 
-		editableAttrs: function() {
+		editableAttrs() {
 			var instance = Template.instance();
 			return instance.state.changed.get() ? 'editable-changed' : '';
 		}
 	});
 
 	template.events({
-		'click .js-editable-save': function(event, instance) {
+		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
 			instance.store();
 		},
 
-		'click .js-editable-cancel': function(event, instance) {
+		'click .js-editable-cancel'(event, instance) {
 			event.preventDefault();
 			instance.reset();
 			instance.state.changed.set(false);
 		},
 
-		'click .js-editable-edit': function(event, instance) {
+		'click .js-editable-edit'(event, instance) {
 			instance.$('.js-editable').focus();
 
 			// Moving the cursor to the end of the editable element?

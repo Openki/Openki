@@ -64,7 +64,7 @@ Course.prototype.membersWithRole = function(role) {
 };
 
 export default Courses = new Mongo.Collection("Courses", {
-	transform: function(course) {
+	transform(course) {
 		return _.extend(new Course(), course);
 	}
 });

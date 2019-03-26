@@ -26,7 +26,7 @@ Template.courseMembers.onCreated(function() {
 });
 
 Template.courseMembers.helpers({
-	howManyEnrolled: function() {
+	howManyEnrolled() {
 		return this.members.length;
 	},
 
@@ -68,7 +68,7 @@ Template.courseMembers.events({
 		$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
 	},
 
-	'click .js-show-all-members': function(e, instance) {
+	'click .js-show-all-members'(e, instance) {
 		var membersLimit = instance.membersLimit;
 
 		membersLimit.set(membersLimit.get() + instance.increaseBy);

@@ -7,7 +7,7 @@ import UrlTools from '/imports/utils/url-tools.js';
 import './kiosk-link.html';
 
 Template.kioskLink.helpers({
-	link: function() {
+	link() {
 		var filterParams = Session.get('kioskFilter');
 		if (!filterParams) return;
 
@@ -24,7 +24,7 @@ Template.kioskLink.helpers({
 });
 
 Template.kioskLink.events({
-	'click .js-remove-back-to-kiosk': function() {
+	'click .js-remove-back-to-kiosk'() {
 		return Session.set('kioskFilter', false);
 	}
 });

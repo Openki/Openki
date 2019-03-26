@@ -21,7 +21,7 @@ export default TemplateMixins = {
 	*   </div>
 	* </template>
 	*/
-	Expandible: function(template) {
+	Expandible(template) {
 		template.onCreated(function() {
 			var expander = Random.id(); // Token to keep track of which Expandible is open
 			this.expander = expander; // Read by event handlers
@@ -32,23 +32,23 @@ export default TemplateMixins = {
 			};
 		});
 		template.helpers({
-			'expanded': function() {
+			'expanded'() {
 				return Session.equals('verify', Template.instance().expander);
 			}
 		});
 		template.events({
-			'click .js-expand': function(event, instance) {
+			'click .js-expand'(event, instance) {
 				Session.set('verify', instance.expander);
 				event.stopPropagation();
 			},
-			'click .js-collapse': function(event, instance) {
+			'click .js-collapse'(event, instance) {
 				Session.set('verify', false);
 			},
 		});
 	},
 
 	/** Like Expandible but multiple expandibles can be open at the same time. */
-	MultiExpandible: function(template) {
+	MultiExpandible(template) {
 		var dx = -1000;
 		var dy = -1000;
 		var nomove = function(e) {
@@ -59,21 +59,21 @@ export default TemplateMixins = {
 			this.expanded = new ReactiveVar(false);
 		});
 		template.helpers({
-			'expanded': function() {
+			'expanded'() {
 				return Template.instance().expanded.get();
 			}
 		});
 		template.events({
-			'mousedown': function(event) {
+			'mousedown'(event) {
 				dx = event.screenX;
 				dy = event.screenY;
 			},
-			'mouseup .js-expand': function(event, instance) {
+			'mouseup .js-expand'(event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(true);
 				}
 			},
-			'mouseup .js-collapse': function(event, instance) {
+			'mouseup .js-collapse'(event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(false);
 				}
@@ -123,7 +123,7 @@ export default TemplateMixins = {
 	 * @param {*} template The template to extend
 	 * @param {*} mapping The mapping of error-keys to message objects
 	 */
-	FormfieldErrors: function(template, mapping) {
+	FormfieldErrors(template, mapping) {
 		template.helpers({
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {

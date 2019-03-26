@@ -53,7 +53,7 @@ Template.venueEdit.onCreated(function() {
 	});
 
 	instance.locationTracker.markers.find().observe({
-		added: function(mark) {
+		added(mark) {
 			if (mark.proposed) {
 				// The map widget does not reactively update markers when their
 				// flags change. So we remove the propsed marker it added and
@@ -67,7 +67,7 @@ Template.venueEdit.onCreated(function() {
 			}
 		},
 
-		changed: function(mark) {
+		changed(mark) {
 			if (mark.remove) {
 				instance.locationTracker.markers.remove(mark._id);
 			}
@@ -89,37 +89,37 @@ Template.venueEdit.onCreated(function() {
 });
 
 Template.venueEdit.helpers({
-	displayAdditionalInfo: function() {
+	displayAdditionalInfo() {
 		return {
 			style: 'display: '+(Template.instance().showAdditionalInfo.get() ? 'block' : 'none')
 		};
 	},
 
-	showAdditionalInfo: function() {
+	showAdditionalInfo() {
 		return Template.instance().showAdditionalInfo.get();
 	},
 
-	regions: function(){
+	regions(){
 		return Regions.find();
 	},
 
-	showMapSelection: function() {
+	showMapSelection() {
 		return Template.instance().regionSelectable.get() || !!Template.instance().selectedRegion.get();
 	},
 
-	regionSelectable: function() {
+	regionSelectable() {
 		return Template.instance().regionSelectable.get();
 	},
 
-	regionSelected: function() {
+	regionSelected() {
 		return !!Template.instance().selectedRegion.get();
 	},
 
-	venueMarkers: function() {
+	venueMarkers() {
 		return Template.instance().locationTracker.markers;
 	},
 
-	allowPlacing: function() {
+	allowPlacing() {
 		var locationTracker = Template.instance().locationTracker;
 
 		// We return a function so the reactive dependency on locationState is
@@ -130,7 +130,7 @@ Template.venueEdit.helpers({
 		};
 	},
 
-	allowRemoving: function() {
+	allowRemoving() {
 		var locationTracker = Template.instance().locationTracker;
 
 		return function() {
@@ -140,7 +140,7 @@ Template.venueEdit.helpers({
 });
 
 Template.venueEdit.events({
-	'submit': function(event, instance) {
+	'submit'(event, instance) {
 		event.preventDefault();
 
 		const changes =
@@ -210,12 +210,12 @@ Template.venueEdit.events({
 	},
 
 
-	'click .js-toggle-additional-info-btn': function(event, instance) {
+	'click .js-toggle-additional-info-btn'(event, instance) {
 		instance.showAdditionalInfo.set(!instance.showAdditionalInfo.get());
 	},
 
 
-	'click .js-edit-cancel': function(event, instance) {
+	'click .js-edit-cancel'(event, instance) {
 		if (instance.isNew) {
 			Router.go('/');
 		} else {
@@ -223,13 +223,13 @@ Template.venueEdit.events({
 		}
 	},
 
-	'change .js-region': function(event, instance) {
+	'change .js-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-region').val());
 	},
 });
 
 Template.venueEditAdditionalInfo.helpers({
-	facilitiesCheck: function(name) {
+	facilitiesCheck(name) {
 		var attrs = { class: 'js-' + name };
 		if (this.facilities[name]) {
 			attrs.checked = 'checked';

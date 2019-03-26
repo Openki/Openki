@@ -41,7 +41,7 @@ Template.discussion.helpers({
 		return Template.instance().sub.ready();
 	},
 
-	posts: function() {
+	posts() {
 		var instance = Template.instance();
 		var posts = CourseDiscussions.find(
 			{
@@ -62,7 +62,7 @@ Template.discussion.helpers({
 		return posts;
 	},
 
-	newPost: function() {
+	newPost() {
 		return {
 			'new': true,
 			courseId: this.courseId,
@@ -72,20 +72,20 @@ Template.discussion.helpers({
 		};
 	},
 
-	limited: function() {
+	limited() {
 		var instance = Template.instance();
 		var limit = instance.limit.get();
 
 		if (limit) return instance.count.get() > limit;
 	},
 
-	count: function() {
+	count() {
 		return Template.instance().count.get();
 	}
 });
 
 Template.discussion.events({
-	'click .js-show-all-posts': function(e, instance) {
+	'click .js-show-all-posts'(e, instance) {
 		 instance.limit.set(0);
 	}
 });
@@ -104,11 +104,11 @@ Template.post.onCreated(function() {
 
 
 Template.post.helpers({
-	editing: function() {
+	editing() {
 		return Template.instance().editing.get();
 	},
 
-	responses: function() {
+	responses() {
 		// Note that the 'discussion' subscription from the 'discussion' template
 		// covers responses as well
 		const instance = Template.instance();
@@ -126,7 +126,7 @@ Template.post.helpers({
 		return limit ? replies.slice(-(limit)) : replies;
 	},
 
-	notAllResponsesShown: function() {
+	notAllResponsesShown() {
 		const instance = Template.instance();
 		if (!instance.isParent) return;
 
@@ -142,15 +142,15 @@ Template.post.helpers({
 		return limit && count > limit;
 	},
 
-	count: function() {
+	count() {
 		return Template.instance().count.get();
 	},
 
-	allowResponse: function() {
+	allowResponse() {
 		return Template.instance().isParent;
 	},
 
-	newResponse: function() {
+	newResponse() {
 		if (this.parentId) return false;
 		return {
 			new: true,
@@ -179,16 +179,16 @@ Template.postShow.helpers({
 		return { class: classes.join(' ')};
 	},
 
-	mayEdit: function() {
+	mayEdit() {
 		return CourseDiscussionUtils.mayEditPost(Meteor.user(), this);
 	},
 
-	mayDelete: function() {
+	mayDelete() {
 		var course = Courses.findOne(this.courseId);
 		return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, this);
 	},
 
-	hasBeenEdited: function() {
+	hasBeenEdited() {
 		 return moment(this.time_updated).isAfter(this.time_created);
 	}
 });
@@ -220,35 +220,35 @@ Template.postEdit.helpers({
 		return Template.instance().editableText;
 	},
 
-	postClass: function() {
+	postClass() {
 		return this.parentId ? 'discussion-comment' : 'discussion-post';
 	},
 
-	showUserId: function() {
+	showUserId() {
 		return !this.new || !Template.instance().anon.get();
 	},
 
-	anonChecked: function() {
+	anonChecked() {
 		if (Template.instance().anon.get()) {
 			return { checked: 1};
 		}
 		return {};
 	},
 
-	anonDisabled: function() {
+	anonDisabled() {
 		if (Meteor.user()) return {};
 		return { disabled: 1 };
 	},
 
-	enableWhenValid: function() {
+	enableWhenValid() {
 		return Template.instance().validComment.get() ? '' : 'disabled';
 	},
 
-	hasBeenEdited: function() {
+	hasBeenEdited() {
 		 return moment(this.time_updated).isAfter(this.time_created);
 	},
 
-	notifyAllChecked: function() {
+	notifyAllChecked() {
 		if (!this.new) return {};
 		if (this.notifyAll) {
 			return { checked: 1};
@@ -256,7 +256,7 @@ Template.postEdit.helpers({
 		return {};
 	},
 
-	canNotifyAll: function() {
+	canNotifyAll() {
 		if (Template.instance().anon.get()) return false;
 
 		const course = Courses.findOne(this.courseId);
@@ -275,13 +275,13 @@ Template.post.events({
 		RouterAutoscroll.scheduleScroll();
 	},
 
-	'click .js-discussion-edit': function(event, instance) {
+	'click .js-discussion-edit'(event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		instance.editing.set(true);
 	},
 
-	'submit': function (event, instance) {
+	'submit'(event, instance) {
 		event.stopImmediatePropagation();
 
 		var comment = { title: instance.$(".js-post-title").val() };
@@ -319,11 +319,11 @@ Template.post.events({
 		return false;
 	},
 
-	'click .js-discussion-cancel': function() {
+	'click .js-discussion-cancel'() {
 		Template.instance().editing.set(false);
 	},
 
-	'click button.js-delete-comment': function (event, instance) {
+	'click button.js-delete-comment'(event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		Meteor.call('courseDiscussion.deleteComment', this._id, function(err) {
@@ -341,12 +341,12 @@ Template.postEdit.onRendered(function postEditOnRendered(){
 });
 
 Template.postEdit.events({
-	'keyup .js-post-text, change .js-post-text': function(event, instance) {
+	'keyup .js-post-text, change .js-post-text'(event, instance) {
 		const edited = instance.editableText.getEdited();
 		instance.validComment.set(edited && CourseDiscussions.validComment(edited));
 	},
 
-	'change': function(event, instance) {
+	'change'(event, instance) {
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	}
 });

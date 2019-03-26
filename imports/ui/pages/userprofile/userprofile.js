@@ -14,32 +14,32 @@ import './userprofile.html';
 
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
-	ownuser: function () {
+	ownuser() {
 		return this.user && this.user._id === Meteor.userId();
 	},
 
-	acceptsMessages: function() {
+	acceptsMessages() {
 		return this.user
 			&& this.user.acceptsMessages;
 	},
 
-	groupMember: function(group, user) {
+	groupMember(group, user) {
 		return user && group && group.members && group.members.indexOf(user._id) >= 0;
 	},
 
-	showInviteGroups: function() {
+	showInviteGroups() {
 		return this.inviteGroups.count && this.inviteGroups.count() > 0;
 	},
 
-	showSettings: function() {
+	showSettings() {
 		var showPrivileges = Template.instance().data.showPrivileges;
 		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
-	roles: function() {
+	roles() {
 		return _.clone(Roles).reverse();
 	},
-	coursesByRole: function(role) {
+	coursesByRole(role) {
 		var templateData = Template.instance().data;
 		var involvedIn = templateData.involvedIn;
 		var userID = templateData.user._id;
@@ -52,17 +52,17 @@ Template.userprofile.helpers({
 		});
 		return coursesForRole;
 	},
-	roleUserList: function() {
+	roleUserList() {
 		return 'roles.'+this.type+'.userList';
 	},
-	getName: function() {
+	getName() {
 		return Template.instance().data.user.username;
 	}
 });
 
 
 Template.userprofile.events({
-	'click button.giveAdmin': function() {
+	'click button.giveAdmin'() {
 		Meteor.call('user.addPrivilege', this.user._id, 'admin', function(err) {
 			if (err) {
 				Alert.error(err, 'Unable to add privilege');
@@ -72,7 +72,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click .js-remove-privilege-btn': function(event, template) {
+	'click .js-remove-privilege-btn'(event, template) {
 		var priv = template.$(event.target).data('priv');
 		Meteor.call('user.removePrivilege', this.user._id, priv, function(err) {
 			if (err) {
@@ -83,7 +83,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.draftIntoGroup': function(event, template) {
+	'click button.draftIntoGroup'(event, template) {
 		var groupId = this._id;
 		var name = this.name;
 		var userId = Template.parentData().user._id;
@@ -96,7 +96,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click .js-group-expel-btn': function(event, template) {
+	'click .js-group-expel-btn'(event, template) {
 		Tooltips.hide();
 		var groupId = this._id;
 		var name = this.name;
@@ -121,7 +121,7 @@ Template.emailBox.onRendered(function emailBoxOnRendered() {
 });
 
 Template.emailBox.helpers({
-	hasEmail: function() {
+	hasEmail() {
 		var user = Meteor.user();
 		if (!user) return false;
 
@@ -129,17 +129,17 @@ Template.emailBox.helpers({
 		return emails && emails[0];
 	},
 
-	hasVerifiedEmail: function() {
+	hasVerifiedEmail() {
 		return Meteor.user().emails[0].verified;
 	},
 
-	verificationMailSent: function() {
+	verificationMailSent() {
 		return Template.instance().verificationMailSent.get();
 	}
 });
 
 Template.emailBox.events({
-	'click .js-verify-mail': function(e, instance) {
+	'click .js-verify-mail'(e, instance) {
 		instance.verificationMailSent.set(true);
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {
@@ -151,15 +151,15 @@ Template.emailBox.events({
 		});
 	},
 
-	'change .js-send-own-adress': function (event, instance) {
+	'change .js-send-own-adress'(event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
 	},
 
-	'change .js-receive-copy': function (event, instance) {
+	'change .js-receive-copy'(event, instance) {
 		instance.$('.js-receive-copy + .checkmark').toggle();
 	},
 
-	'submit form.sendMail': function (event, template) {
+	'submit form.sendMail'(event, template) {
 		event.preventDefault();
 		if (PleaseLogin()) return;
 

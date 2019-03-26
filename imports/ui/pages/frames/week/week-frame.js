@@ -60,16 +60,16 @@ Template.frameWeek.onCreated(function() {
 });
 
 Template.frameWeek.helpers({
-	calendarDay: function(day) {
+	calendarDay(day) {
 		Session.get('timeLocale');
 		return moment(day.toDate()).format('dddd, Do MMMM');
 	},
 
-	hasDayEvents: function() {
+	hasDayEvents() {
 		return this.dayEvents.count() > 0;
 	},
 
-	weekdays: function() {
+	weekdays() {
 		return Template.instance().weekdays.get();
 	}
 });

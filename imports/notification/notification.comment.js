@@ -73,7 +73,7 @@ notificationComment.Model = function(entry) {
 	}
 
 	return {
-		vars: function(userLocale) {
+		vars(userLocale) {
 			if (!comment) throw "Comment does not exist (0.o)";
 			if (!course) throw "Course does not exist (0.o)";
 

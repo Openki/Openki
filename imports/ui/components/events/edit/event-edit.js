@@ -164,10 +164,10 @@ Template.eventEdit.onRendered(function() {
 			autoclose: true,
 			startDate: new Date(),
 			format: {
-				toDisplay: function(date) {
+				toDisplay(date) {
 					return moment.utc(date).format('L');
 				},
-				toValue: function(date) {
+				toValue(date) {
 					return moment.utc(date, 'L').toDate();
 				}
 			}
@@ -178,7 +178,7 @@ Template.eventEdit.onRendered(function() {
 
 Template.eventEdit.helpers({
 
-	hasParentCourse: function() {
+	hasParentCourse() {
 		return !! this.courseId;
 	},
 
@@ -188,11 +188,11 @@ Template.eventEdit.helpers({
 		return true;
 	},
 
-	localDate: function(date) {
+	localDate(date) {
 		return moment.utc(date).format("L");
 	},
 
-	affectedReplicaCount: function() {
+	affectedReplicaCount() {
 		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
@@ -221,11 +221,11 @@ Template.eventEdit.helpers({
 		return Template.instance().state.get('updateChangedReplicas');
 	},
 
-	regions: function(){
+	regions(){
 		return Regions.find();
 	},
 
-	showRegionSelection: function() {
+	showRegionSelection() {
 		// You can select the region for events that are new and not associated
 		// with a course
 		if (this._id) return false;
@@ -233,42 +233,42 @@ Template.eventEdit.helpers({
 		return true;
 	},
 
-	currentRegion: function(region) {
+	currentRegion(region) {
 		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
 	},
 
-	showVenueSelection: function(region) {
+	showVenueSelection(region) {
 		var selectedRegion = Template.instance().selectedRegion.get();
 		return selectedRegion && selectedRegion !== 'all';
 	},
 
-	disableForPast: function() {
+	disableForPast() {
 		return this.startUTC && this.startUTC < new Date() ? 'disabled' : '';
 	},
 
-	isInternal: function() {
+	isInternal() {
 		return this.internal ? "checked" : null;
 	},
 
-	uploaded: function() {
+	uploaded() {
 		return Template.instance().uploaded.get();
 	},
 
-	course: function() {
+	course() {
 		var courseId = this.courseId;
 		if (courseId) {
 			return Courses.findOne({_id: courseId});
 		}
 	},
-	notifyChecked: function() {
+	notifyChecked() {
 		return Template.instance().notifyChecked.get();
 	}
 });
 
 
 Template.eventEdit.events({
-	'submit': function(event, instance) {
+	'submit'(event, instance) {
 		event.preventDefault();
 
 		const start = getEventStartMoment(instance);
@@ -374,17 +374,17 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click .js-event-edit-cancel': function (event, instance) {
+	'click .js-event-edit-cancel'(event, instance) {
 		if (instance.data.new) history.back();
 		instance.parent.editing.set(false);
 	},
 
-	'click .js-toggle-duration': function(event, instance){
+	'click .js-toggle-duration'(event, instance){
 		Tooltips.hide();
 		$('.time-end > *').toggle();
 	},
 
-	'click .js-check-notify': function(event, instance){
+	'click .js-check-notify'(event, instance){
 		instance.notifyChecked.set(instance.$(".js-check-notify").is(':checked'));
 	},
 
@@ -395,15 +395,15 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime': function(event, template) {
+	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime'(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #editEventEndTime': function(event, template) {
+	'change #editEventEndTime'(event, template) {
 		updateTimes(template, false);
 	},
 
-	'change .js-select-region': function(event, instance) {
+	'change .js-select-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 

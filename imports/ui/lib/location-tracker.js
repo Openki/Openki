@@ -6,7 +6,7 @@ export default LocationTracker = function() {
 
 	return {
 		markers: markers,
-		setLocation: function(location, draggable, soft) {
+		setLocation(location, draggable, soft) {
 			if (soft) {
 				var marker = markers.findOne({ main: true});
 				if (marker && location && location.loc) {
@@ -23,7 +23,7 @@ export default LocationTracker = function() {
 				});
 			}
 		},
-		setRegion: function(regionId) {
+		setRegion(regionId) {
 			var region = Regions.findOne(regionId);
 
 			markers.remove({ center: true });

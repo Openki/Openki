@@ -1,31 +1,31 @@
 export default Predicates = {
-	string: function(param) {
+	string(param) {
 		return {
-			merge: function(other) { return other; },
-			without: function(predicate) { return false; },
-			get: function() { return param; },
-			param: function() { return param; },
-			query: function() { return param; },
-			equals: function(other) { return param === other.get(); }
+			merge(other) { return other; },
+			without(predicate) { return false; },
+			get() { return param; },
+			param() { return param; },
+			query() { return param; },
+			equals(other) { return param === other.get(); }
 		};
 	},
-	id: function(param) {
+	id(param) {
 		if (param == 'all') return false;
 		return Predicates.string(param);
 	},
-	ids: function(param) {
+	ids(param) {
 		var make = function(ids) {
 			return {
-				merge: function(other) { return make(_.union(ids, other.get())); },
-				without: function(predicate) {
+				merge(other) { return make(_.union(ids, other.get())); },
+				without(predicate) {
 					ids = _.difference(ids, predicate.get());
 					if (ids.length === 0) return false;
 					return make(ids);
 				},
-				get: function() { return ids; },
-				param: function() { return ids.join(','); },
-				query: function() { return ids; },
-				equals: function(other) {
+				get() { return ids; },
+				param() { return ids.join(','); },
+				query() { return ids; },
+				equals(other) {
 					var otherIds = other.get();
 					return (
 						ids.length === otherIds.length
@@ -36,31 +36,31 @@ export default Predicates = {
 		};
 		return make(_.uniq(param.split(',')));
 	},
-	require: function(param) {
+	require(param) {
 		if (!param) return false;
 		return {
-			merge: function(other) { return other; },
-			without: function(predicate) { return false; },
-			get: function() { return true; },
-			param: function() { return '1'; },
-			query: function() { return true; },
-			equals: function(other) { return true; }
+			merge(other) { return other; },
+			without(predicate) { return false; },
+			get() { return true; },
+			param() { return '1'; },
+			query() { return true; },
+			equals(other) { return true; }
 		};
 	},
-	flag: function(param) {
+	flag(param) {
 		if (param === undefined) return false;
 		var state = !!parseInt(param, 2); // boolean
 
 		return {
-			merge: function(other) { return other; },
-			without: function(predicate) { return false; },
-			get: function() { return state; },
-			param: function() { return state ? 1 : 0; },
-			query: function() { return state; },
-			equals: function(other) { return other.get() === state; }
+			merge(other) { return other; },
+			without(predicate) { return false; },
+			get() { return state; },
+			param() { return state ? 1 : 0; },
+			query() { return state; },
+			equals(other) { return other.get() === state; }
 		};
 	},
-	date: function(param) {
+	date(param) {
 		if (!param) throw new FilteringReadError(param, "Empty date");
 		var date;
 
@@ -72,12 +72,12 @@ export default Predicates = {
 		}
 
 		return {
-			merge: function(other) { return other; },
-			without: function(predicate) { return false; },
-			get: function() { return moment(date); },
-			param: function() { return date.toISOString(); },
-			query: function() { return date.toDate(); },
-			equals: function(other) { return date.isSame(other.get()); }
+			merge(other) { return other; },
+			without(predicate) { return false; },
+			get() { return moment(date); },
+			param() { return date.toISOString(); },
+			query() { return date.toDate(); },
+			equals(other) { return date.isSame(other.get()); }
 		};
 	},
 };

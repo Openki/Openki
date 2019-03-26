@@ -43,11 +43,11 @@ var OpenkiControl = L.Control.extend({
 		position: 'topright'
 	},
 
-	initialize: function(options) {
+	initialize(options) {
 		L.Util.setOptions(this, options);
 	},
 
-	onAdd: function(map) {
+	onAdd(map) {
 		var elm = this.options.icon();
 		L.DomUtil.addClass(elm, this.options.action);
 		elm.setAttribute('title', this.options.title);
@@ -75,13 +75,13 @@ Template.map.onRendered(function() {
 	var tiles = null;
 	var tileLayers = {
 		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
-		'fr': function() {
+		'fr'() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			});
 		},
-		'default': function() {
+		'default'() {
 			return  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -214,7 +214,7 @@ Template.map.onRendered(function() {
 				centers[mark._id] = L.geoJson(mark.loc).getBounds();
 			} else {
 				var marker = L.geoJson(mark.loc, {
-					pointToLayer: function(feature, latlng) {
+					pointToLayer(feature, latlng) {
 						var marker;
 						if (mark.proposed) {
 							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -267,16 +267,16 @@ Template.map.onRendered(function() {
 		};
 
 		markers.find().observe({
-			added: function(mark) {
+			added(mark) {
 				addMarker(mark);
 				fitBounds();
 			},
 
-			changed: function(mark, oldMark)  {
+			changed(mark, oldMark)  {
 				updateMarker(mark);
 			},
 
-			removed: function(mark) {
+			removed(mark) {
 				removeMarker(mark);
 				fitBounds();
 			}
@@ -309,7 +309,7 @@ Template.map.onRendered(function() {
 });
 
 Template.map.helpers({
-	mapContainerClass: function() {
+	mapContainerClass() {
 		if (Template.instance().fullscreen.get()) {
 			return "map-fullscreen";
 		} else {
@@ -317,7 +317,7 @@ Template.map.helpers({
 		}
 	},
 
-	mapStyleInner: function() {
+	mapStyleInner() {
 		var style = [];
 		if (Template.instance().fullscreen.get()) {
 			style.push("z-index: 9999");
@@ -325,11 +325,11 @@ Template.map.helpers({
 		return style.join(';');
 	},
 
-	fullscreen: function () {
+	fullscreen() {
 		return Template.instance().fullscreen.get();
 	},
 
-	fullscreenControl: function () {
+	fullscreenControl() {
 		var instance = Template.instance();
 		return !instance.data.mini && !Template.instance().fullscreen.get();
 	},
@@ -337,27 +337,27 @@ Template.map.helpers({
 
 
 Template.map.events({
-	'click': function(event, instance) {
+	'click'(event, instance) {
 		if (instance.data.mini) instance.fullscreen.set(true);
 	},
 
-	'mousedown .js-add-marker': function(event, instance) {
+	'mousedown .js-add-marker'(event, instance) {
 		instance.proposeMarker();
 	},
 
-	'click .js-remove-marker': function(event, instance) {
+	'click .js-remove-marker'(event, instance) {
 		instance.removeMarker();
 	},
 
-	'click .js-make-fullscreen': function(event, instance) {
+	'click .js-make-fullscreen'(event, instance) {
 		instance.fullscreen.set(true);
 	},
 
-	'click .js-close-fullscreen': function(event, instance) {
+	'click .js-close-fullscreen'(event, instance) {
 		instance.fullscreen.set(false);
 	},
 
-	'keyup': function(event, instance) {
+	'keyup'(event, instance) {
 		// Press escape to close fullscreen
 		if (event.keyCode == 27) instance.fullscreen.set(false);
 	}

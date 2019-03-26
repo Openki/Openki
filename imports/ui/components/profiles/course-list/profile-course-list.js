@@ -24,46 +24,46 @@ Template.usersCourselist.onCreated(function() {
 });
 
 Template.usersCourselist.helpers({
-	roles: function() {
+	roles() {
 		return _.clone(Roles).reverse();
 	},
 
-	coursesByRoleCount: function(role) {
+	coursesByRoleCount(role) {
 		return Template.instance().coursesByRole(role).count();
 	},
 
-	coursesByRole: function(role) {
+	coursesByRole(role) {
 		return Template.instance().coursesByRole(role);
 	},
 
-	roleUserList: function() {
+	roleUserList() {
 		return 'roles.' + this.type + '.userList';
 	},
 
-	roleMyList: function() {
+	roleMyList() {
 		return 'roles.' + this.type + '.myList';
 	},
 
-	getName: function() {
+	getName() {
 		var username = Template.instance()
 		               .data.profileData
 		               .user.username;
 		if (username) return username;
 	},
-	roleShort: function() {
+	roleShort() {
 		return 'roles.' + this.type + '.short';
 	},
-	ready: function() {
+	ready() {
 		return Template.instance().courseSub.ready();
 	},
-	isInvolved: function() {
+	isInvolved() {
 		var userId = Template.instance().data.profileData.user._id;
 		return Courses.findFilter({ userInvolved: userId }).count() > 0;
 	}
 });
 
 Template.usersCourselist.events({
-	"click .js-scroll": function(event, instance){
+	"click .js-scroll"(event, instance){
 		var roleLabel = event.currentTarget;
 		var rolePosition = $(roleLabel.getAttribute('href')).offset().top;
 		// subtract the amount of pixels of the height of the navbar

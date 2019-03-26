@@ -116,19 +116,19 @@ Template.venueDetails.onRendered(function() {
 
 
 Template.venueDetails.helpers({
-	editing: function () {
+	editing() {
 		return Template.instance().editing.get();
 	},
 
-	mayEdit: function () {
+	mayEdit() {
 		return this.editableBy(Meteor.user());
 	},
 
-	markers: function() {
+	markers() {
 		return Template.instance().markers;
 	},
 
-	coords: function() {
+	coords() {
 		if (this.loc && this.loc.coordinates) {
 			var fmt = function(coord) {
 				var sign = '';
@@ -145,57 +145,57 @@ Template.venueDetails.helpers({
 		}
 	},
 
-	facilityNames: function() {
+	facilityNames() {
 		return Object.keys(this.facilities);
 	},
 
-	verifyDelete: function() {
+	verifyDelete() {
 		return Template.instance().verifyDeleteVenue.get();
 	},
 
-	events: function() {
+	events() {
 		return Template.instance().getEvents();
 	},
 
-	eventsLimited: function() {
+	eventsLimited() {
 		var instance = Template.instance();
 		return instance.eventsCount.get() > instance.maxEvents.get();
 	},
 
-	unloadedEvents: function() {
+	unloadedEvents() {
 		return Template.instance().unloadedEvents();
 	},
 
-	pastEvents: function() {
+	pastEvents() {
 		return Template.instance().getEvents(true);
 	},
 
-	pastEventsLimited: function() {
+	pastEventsLimited() {
 		var instance = Template.instance();
 		return instance.pastEventsCount.get() > instance.maxPastEvents.get();
 	},
 
-	unloadedPastEvents: function() {
+	unloadedPastEvents() {
 		return Template.instance().unloadedEvents(true);
 	}
 });
 
 
 Template.venueDetails.events({
-	'click .js-venue-edit': function(event, instance) {
+	'click .js-venue-edit'(event, instance) {
 		instance.editing.set(true);
 		instance.verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete': function () {
+	'click .js-venue-delete'() {
 		Template.instance().verifyDeleteVenue.set(true);
 	},
 
-	'click .js-venue-delete-cancel': function () {
+	'click .js-venue-delete-cancel'() {
 		Template.instance().verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete-confirm': function(event, instance) {
+	'click .js-venue-delete-confirm'(event, instance) {
 		var venue = instance.data.venue;
 		instance.busy('deleting');
 		Meteor.call('venue.remove', venue._id, function(err, result) {
@@ -209,12 +209,12 @@ Template.venueDetails.events({
 		});
 	},
 
-	'click .js-show-more-events': function(e, instance) {
+	'click .js-show-more-events'(e, instance) {
 		var limit = instance.maxEvents;
 		limit.set(limit.get() + instance.increaseBy);
 	},
 
-	'click .js-show-more-past-events': function(e, instance) {
+	'click .js-show-more-past-events'(e, instance) {
 		var limit = instance.maxPastEvents;
 		limit.set(limit.get() + instance.increaseBy);
 	}

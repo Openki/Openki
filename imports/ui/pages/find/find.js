@@ -125,19 +125,19 @@ Template.find.events({
 
 
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-search-field': function(event, instance) {
+	'change .js-search-field'(event, instance) {
 		instance.updateUrl();
 	},
 
 
-	'click .js-find-btn': function(event, instance) {
+	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label': function(e, instance) {
+	'mouseover .js-category-label'(e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -147,7 +147,7 @@ Template.find.events({
 		});
 	},
 
-	'mouseout .js-category-label': function(e, instance) {
+	'mouseout .js-category-label'(e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -157,7 +157,7 @@ Template.find.events({
 		});
 	},
 
-	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
 		FilterPreview({
 			property: 'group',
 			id: this,
@@ -167,7 +167,7 @@ Template.find.events({
 		});
 	},
 
-	'click .js-category-label': function(event, instance) {
+	'click .js-category-label'(event, instance) {
 		instance.filter.add('categories', ""+this).done();
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
@@ -175,11 +175,11 @@ Template.find.events({
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-group-label': function(event, instance) {
+	'click .js-group-label'(event, instance) {
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-toggle-filter': function(event, instance) {
+	'click .js-toggle-filter'(event, instance) {
 		var showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
@@ -190,26 +190,26 @@ Template.find.events({
 		}
 	},
 
-	"click .js-all-regions-btn": function(event, instance){
+	"click .js-all-regions-btn"(event, instance){
 		Session.set('region', 'all');
 	},
 
-	"click .js-more-courses": function(event, instance) {
+	"click .js-more-courses"(event, instance) {
 		var courseLimit = instance.courseLimit;
 		courseLimit.set(courseLimit.get() + 36);
 	}
 });
 
 Template.find.helpers({
-	'search': function() {
+	'search'() {
 		return Template.instance().filter.get('search');
 	},
 
-	'showingFilters': function() {
+	'showingFilters'() {
 		return Template.instance().showingFilters.get();
 	},
 
-	'newCourse': function() {
+	'newCourse'() {
 		var instance = Template.instance();
 		var course = CourseTemplate();
 		course.name = instance.filter.get('search');
@@ -220,14 +220,14 @@ Template.find.helpers({
 		return course;
 	},
 
-	'hasResults': function() {
+	'hasResults'() {
 		var filterQuery = Template.instance().filter.toQuery();
 		var results = Courses.findFilter(filterQuery, 1);
 
 		return results.count() > 0;
 	},
 
-	'hasMore': function() {
+	'hasMore'() {
 		var instance = Template.instance();
 		if (!instance.coursesReady.get()) return false;
 
@@ -238,29 +238,29 @@ Template.find.helpers({
 		return results.count() > limit;
 	},
 
-	'results': function() {
+	'results'() {
 		var instance = Template.instance();
 		var filterQuery = instance.filter.toQuery();
 
 		return Courses.findFilter(filterQuery, instance.courseLimit.get());
 	},
 
-	'ready': function() {
+	'ready'() {
 		return Template.instance().coursesReady.get();
 	},
 
-	'filteredRegion': function() {
+	'filteredRegion'() {
 		return !!Template.instance().filter.get('region');
 	},
 
-	'activeFilters': function() {
+	'activeFilters'() {
 		var activeFilters = Template.instance().filter;
 		return _.any(hiddenFilters, function(filter) {
 			return !!activeFilters.get(filter);
 		});
 	},
 
-	'searchIsLimited': function() {
+	'searchIsLimited'() {
 		var activeFilters = Template.instance().filter;
 		var relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
@@ -269,7 +269,7 @@ Template.find.helpers({
 		});
 	},
 
-	'isMobile': function() {
+	'isMobile'() {
 		return Session.get('viewportWidth') <= ScssVars.screenXS;
 	}
 });
