@@ -3,11 +3,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Groups from '/imports/api/groups/groups.js';
-
-import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 import Alert from '/imports/api/alerts/alert.js';
+import Groups from '/imports/api/groups/groups.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
+import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -139,7 +138,7 @@ Template.groupSettings.events({
 		Meteor.call("group.save", groupId, changes, function(err) {
 			instance.busy(false);
 			if (err) {
-				console.log(err);
+				Alert.error(err, 'Could not save settings');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
