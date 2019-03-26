@@ -96,4 +96,3 @@ Template.contactEventParticipantModal.onCreated(function() {
 Template.contactEventParticipantModal.onRendered(function() {
 	this.$('.js-contact-event-participant-modal').modal('show');
 });
-

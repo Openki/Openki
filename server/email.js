@@ -26,6 +26,7 @@ Meteor.methods({
 		check(options.revealAddress, Boolean);
 		check(options.sendCopy     , Boolean);
 		check(options.courseId     , Match.Optional(String));
+		check(options.eventId      , Match.Optional(String));
 
 		var recipient = Meteor.users.findOne(userId);
 		if (!recipient) {
@@ -38,6 +39,9 @@ Meteor.methods({
 		const context = {};
 		if (options.courseId) {
 			context.course = options.courseId;
+		}
+		if (options.eventId) {
+			context.event = options.eventId;
 		}
 
 		Notification.PrivateMessage.record

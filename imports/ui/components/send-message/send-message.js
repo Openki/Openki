@@ -85,6 +85,8 @@ Template.sendMessage.events({
 		const data = Template.currentData();
 		if (data.courseId) options.courseId = data.courseId;
 
+		if (data.eventId) options.eventId = data.eventId;
+
 		Meteor.call('sendEmail', data.recipientId, message,	options, (err) => {
 				instance.busy(false);
 				if (err) {
