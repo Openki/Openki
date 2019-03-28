@@ -14,10 +14,7 @@ Template.sharing.onRendered(function() {
 				'twitter',
 				'facebook',
 				'whatsapp',
-				'googleplus',
-				'diaspora',
 				'mail',
-				'info',
 			]
 		});
 

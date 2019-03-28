@@ -243,7 +243,7 @@ $course-details-content-padding-horizontal: ($details-header-padding-horizontal 
 
 // ** Sharing
 //========================================================================================
-.course-page-column-left .shariff {
+.course-page-column-left .shariff-wrapper {
 	background-color: $tab-content-bg;
 	border-color: darken($tab-content-bg, 5%);
 	border-style: solid;

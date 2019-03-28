@@ -1,6 +1,10 @@
-.shariff {
+.shariff-wrapper {
 	@include td-text-align(right);
 	padding: 15px;
+}
+
+.shariff-wrapper > p {
+	font-size: 1.2em;
 }
 
 // sass-lint:disable class-name-format
