@@ -63,13 +63,13 @@
 					<div class="dropdown-addon-right">
 						<span
 							class="badge badge-courses"
-							title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
-							{{allCourses}}
+							title="{{mf 'regions.externalCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=externalCourses SITENAME=siteName}}">
+							{{externalCourses}}
 						</span>
 						<span
 							class="badge badge-events"
-							title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
-							{{allUpcomingEvents}}
+							title="{{mf 'regions.externalUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=externalUpcomingEvents SITENAME=siteName}}">
+							{{externalUpcomingEvents}}
 						</span>
 					</div>
 					{{mf 'menue.All regions' 'All regions'}}
@@ -106,13 +106,13 @@
 			<div class="dropdown-addon-right">
 				<span
 					class="badge badge-courses"
-					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
-					{{courseCount}}
+					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCountExternal REGION=this.name}}">
+					{{courseCountExternal}}
 				</span>
 				<span
 					class="badge badge-events"
-					title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
-					{{futureEventCount}}
+					title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCountExternal REGION=this.name}}">
+					{{futureEventCountExternal}}
 				</span>
 			</div>
 			{{regionNameMarked}}

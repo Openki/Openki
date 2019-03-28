@@ -13,7 +13,13 @@ Meteor.methods({
 				.find({ region: regionId, start: { $gte: new Date() } })
 				.count();
 
-			Regions.update(regionId, { $set: { courseCount, futureEventCount } });
+			const courseCountExternal = Courses.find({ region: regionId, internal: false }).count();
+			const futureEventCountExternal =
+				Events
+				.find({ region: regionId, internal: false, start: { $gte: new Date() } })
+				.count();
+
+			Regions.update(regionId, { $set: { courseCount, futureEventCount, courseCountExternal, futureEventCountExternal } });
 		});
 	},
 
