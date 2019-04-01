@@ -29,7 +29,7 @@ Template.eventPage.onCreated(function eventPageOnCreated() {
 		title = mf(
 			'event.windowtitle',
 			{ EVENT:event.title, DATE: moment(event.start).calendar() },
-			'{DATE} {EVENT}'
+			'{DATE} - {EVENT}'
 		);
 		description = mf(
 			'event.metatag.description',
