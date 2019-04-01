@@ -28,7 +28,6 @@ ddp-common@1.4.0
 ddp-rate-limiter@1.0.7
 ddp-server@2.2.0
 deps@1.0.12
-dferber:prerender@2.2.2_3
 diff-sequence@1.1.1
 djedi:sanitize-html@1.11.3
 djedi:sanitize-html-client@1.11.3
@@ -47,6 +46,7 @@ fetch@0.1.0
 fortawesome:fontawesome@4.7.0
 fourseven:scss@4.10.0
 gadicohen:robots-txt@0.0.10
+gadicohen:sitemaps@0.0.26
 geojson-utils@1.0.10
 github-config-ui@1.0.1
 github-oauth@1.2.2
