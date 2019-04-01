@@ -120,7 +120,7 @@ Template.groupSettings.events({
 
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
-		let url = instance.$('.js-logo-url').val();
+		let url = instance.$('.js-logo-url').val().trim();
 
 		//strip protocol if needed
 		if ( url.includes('://') ) {
