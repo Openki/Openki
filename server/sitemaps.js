@@ -6,13 +6,13 @@ sitemaps.config('gzip', true);
 sitemaps.add('/sitemap.xml', function(req) {
 
 	let out = [];
-	const courses = Courses.find({}, { sort: {time_lastedit: -1}, limit: 2000}).fetch();
+	const courses = Courses.find({}, { sort: {time_lastedit: -1}, limit: 2000});
 
-	for (let course of courses) {
+	courses.forEach((course) => {
 		out.push({
 			page: 'course/' + course._id + '/' + course.slug,
-			lastmod: moment(course.time_lastedit).format('YYYY-MM-DD')
+			lastmod: course.time_lastedit
 		});
-	}
+	});
 	return out;
 });
