@@ -34,43 +34,43 @@ Template.resetPassword.onCreated(function () {
 
 
 Template.resetPassword.helpers({
-	'showPassword': function(action) {
+	'showPassword'(action) {
 		return Template.instance().showPassword.get();
 	},
 
-	'passwordSame': function(action) {
+	'passwordSame'(action) {
 		return Template.instance().passwordSame.get();
 	},
 
-	'passwordNotSame': function(action) {
+	'passwordNotSame'(action) {
 		return Template.instance().passwordNotSame.get();
 	},
 
-	'passwordFieldType': function(action) {
+	'passwordFieldType'(action) {
 		return Template.instance().showPassword.get() ? "text" : "password";
 	},
 
-	'submitDisabled': function() {
+	'submitDisabled'() {
 		return Template.instance().passwordValid.get() ? '' : 'disabled';
 	}
 });
 
 Template.resetPassword.events({
-	'click .js-show-pwd': function(event, instance) {
+	'click .js-show-pwd'(event, instance) {
 		instance.showPassword.set(true);
 		instance.updatePassword();
 	},
 
-	'click .js-hide-pwd': function(event, instance) {
+	'click .js-hide-pwd'(event, instance) {
 		instance.showPassword.set(false);
 		instance.updatePassword();
 	},
 
-	'input, keyup, blur': function(event, instance) {
+	'input, keyup, blur'(event, instance) {
 		instance.updatePassword();
 	},
 
-	'submit': function(event, instance) {
+	'submit'(event, instance) {
 		instance.busy("saving");
 		event.preventDefault();
 
@@ -87,7 +87,7 @@ Template.resetPassword.events({
 		});
     },
 
-	'click .js-cancel-reset-pwd': function() {
+	'click .js-cancel-reset-pwd'() {
 		Router.go('/');
 	}
 });

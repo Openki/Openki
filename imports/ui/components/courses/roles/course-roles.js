@@ -18,16 +18,16 @@ Template.courseRole.created = function() {
 Template.courseRole.helpers({
 	showFirstSteps: () => Template.instance().showFirstSteps.get(),
 
-	enrolling: function() { return Template.instance().enrolling.get(); },
+	enrolling() { return Template.instance().enrolling.get(); },
 
-	roleSubscribe: function() {
+	roleSubscribe() {
 		let role = this.type;
 		if (role == 'participant') role = 'interested';
 
 		return 'roles.' + role + '.subscribe';
 	},
 
-	roleSubscribed: function() {
+	roleSubscribed() {
 		let role = this.type;
 		if (role == 'participant') role = 'interested';
 
@@ -38,7 +38,7 @@ Template.courseRole.helpers({
 		return this.roletype.type === type;
 	},
 
-	maySubscribe: function(role) {
+	maySubscribe(role) {
 		var operator = Meteor.userId();
 
 		// Show the participation buttons even when not logged-in.
@@ -84,12 +84,12 @@ Template.courseRole.events({
 		});
 	},
 
-	'click .js-role-enroll-cancel': function (e, template) {
+	'click .js-role-enroll-cancel'(e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click .js-role-unsubscribe-btn': function () {
+	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
 		Meteor.call('course.removeRole', this.course._id, Meteor.userId(), this.roletype.type);
 		return false;

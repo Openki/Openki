@@ -140,10 +140,10 @@ const usernameFromId = function() {
 
 	// Update the cache if users are pushed to the collection
 	Meteor.users.find().observe({
-		'added': function(user) {
+		'added'(user) {
 			cache[user._id] = user.username;
 		},
-		'changed': function(user) {
+		'changed'(user) {
 			cache[user._id] = user.username;
 		}
 	});

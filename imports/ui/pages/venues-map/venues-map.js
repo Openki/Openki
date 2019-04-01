@@ -34,7 +34,7 @@ Template.venueMap.onCreated(function() {
 		// Here we assume venues are not changed or removed.
 		instance.locationTracker.markers.remove({});
 		Venues.findFilter(query).observe({
-			'added': function(location) {
+			'added'(location) {
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
@@ -48,23 +48,23 @@ Template.venueMap.onCreated(function() {
 
 Template.venueMap.helpers({
 
-	venues: function() {
+	venues() {
 		return Template.instance().locationTracker.markers.find();
 	},
 
-	haveVenues: function() {
+	haveVenues() {
 		return Template.instance().locationTracker.markers.find().count() > 0;
 	},
 
-	venueMarkers: function() {
+	venueMarkers() {
 		return Template.instance().locationTracker.markers;
 	},
 
-	hoverClass: function() {
+	hoverClass() {
 		return this.hover ? 'hover' : '';
 	},
 
-	regionName: function() {
+	regionName() {
 		var regionId = Template.instance().filter.get('region');
 		var regionObj = Regions.findOne(regionId);
 		if (regionObj) return regionObj.name;
@@ -75,16 +75,16 @@ Template.venueMap.helpers({
 
 Template.venueMap.events({
 
-	'click .js-location-candidate': function(event, instance) {
+	'click .js-location-candidate'(event, instance) {
 		Router.go("venueDetails", this);
 	},
 
-	'mouseenter .js-location-candidate': function(event, instance) {
+	'mouseenter .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 		instance.locationTracker.markers.update(this._id, {$set:{hover: true}});
 	},
 
-	'mouseleave .js-location-candidate': function(event, instance) {
+	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
 	}
 

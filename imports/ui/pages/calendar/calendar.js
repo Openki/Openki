@@ -83,7 +83,7 @@ Template.calendar.onRendered(function() {
 });
 
 Template.calendar.helpers({
-	days: function() {
+	days() {
 		var start = Template.instance().filter.get('start');
 		var i = 0;
 		var days = [];
@@ -95,33 +95,33 @@ Template.calendar.helpers({
 		}
 		return days;
 	},
-	filter: function() {
+	filter() {
 		return Template.instance().filter;
 	},
-	startDate: function() {
+	startDate() {
 		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
 	}
 });
 
 Template.calendarDay.helpers({
-	hasEvents: function() {
+	hasEvents() {
 		var filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
 		return Events.findFilter(filterQuery).count() > 0;
 	},
-	events: function() {
+	events() {
 		var filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
 		return Events.findFilter(filterQuery);
 	},
-	calendarDay: function(day) {
+	calendarDay(day) {
 		Session.get('timeLocale');
 		return moment(day.toDate()).format('dddd, Do MMMM');
 	},
-	eventsReady: function() {
+	eventsReady() {
 		var instance = Template.instance();
 		return instance.parentInstance().eventSub.ready();
 	}
@@ -137,7 +137,7 @@ Template.calendarNav.helpers({
 		}
 	},
 
-	endDateTo: function(date) {
+	endDateTo(date) {
 		return moment(date).add(6, 'days');
 	}
 });
@@ -179,12 +179,12 @@ var mvDateHandler = function(unit, instance) {
 };
 
 Template.calendarNavControl.events({
-	'click .js-change-date': function(event, instance) {
+	'click .js-change-date'(event, instance) {
 		var unit = instance.parentInstance().currentUnit.get();
 		mvDateHandler(unit, instance);
 	},
 
-	'click .js-change-unit': function(event, instance) {
+	'click .js-change-unit'(event, instance) {
 		var unit = this;
 		instance.parentInstance().currentUnit.set(unit);
 		mvDateHandler(unit, instance);
@@ -192,7 +192,7 @@ Template.calendarNavControl.events({
 });
 
 Template.calendarNavControl.helpers({
-	arrow: function() {
+	arrow() {
 		var isRTL = Session.get('textDirectionality') == 'rtl';
 
 		if (this.direction == 'previous') {
@@ -205,16 +205,16 @@ Template.calendarNavControl.helpers({
 		);
 	},
 
-	mfString: function(direction, unit, length) {
+	mfString(direction, unit, length) {
 		return mf('calendar.' + direction + '.' + unit + '.' + length);
 	},
 
-	currentUnit: function() {
+	currentUnit() {
 		var parentInstance = Template.instance().parentInstance();
 		return parentInstance.currentUnit.get();
 	},
 
-	navUnits: function() {
+	navUnits() {
 		var navUnits = ['week', 'month', 'year'];
 		return navUnits;
 	}

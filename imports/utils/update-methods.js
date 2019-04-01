@@ -10,7 +10,7 @@ export default UpdateMethods = {
 	  * @param {Object} collection - the collection the changes will be applied to when the method is called
 	  * @return {function} A function that can be used as meteor method
 	  */
-	Promote: function(collection) {
+	Promote(collection) {
 		return function(docId, groupId, enable) {
 			check(docId, String);
 			check(groupId, String);
@@ -50,7 +50,7 @@ export default UpdateMethods = {
 	  * @param {Object} collection - the collection the changes will be applied to when the method is called
 	  * @return {function} A function that can be used as meteor method
 	  */
-    Editing: function(collection) {
+    Editing(collection) {
 		return function(docId, groupId, enable) {
 			check(docId, String);
 			check(groupId, String);

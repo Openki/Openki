@@ -9,12 +9,12 @@ import '/imports/ui/components/courses/categories/course-categories.js';
 import './course-compact.html';
 
 Template.courseCompact.helpers({
-	ready: function() {
+	ready() {
 		var instance = Template.instance;
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
-	courseState: function() {
+	courseState() {
 		if (this.nextEvent) {
 			return 'has-upcoming-events';
 		} else if (this.lastEvent) {
@@ -24,7 +24,7 @@ Template.courseCompact.helpers({
 		}
 	},
 
-	filterPreviewClasses: function() {
+	filterPreviewClasses() {
 		var filterPreviewClasses = [];
 		var course = this;
 
@@ -65,7 +65,7 @@ Template.courseCompactEvent.helpers({
 });
 
 Template.courseCompactRoles.helpers({
-	requiresRole: function(role) {
+	requiresRole(role) {
 		return this.roles.indexOf(role) >= 0;
 	},
 
@@ -113,7 +113,7 @@ Template.courseCompactRoles.helpers({
 		return tooltip;
 	},
 
-	roleStateClass: function(role) {
+	roleStateClass(role) {
 		var roleStateClass = 'course-compact-role-';
 		if (!HasRole(this.members, role)) {
 			roleStateClass += 'needed';
@@ -126,7 +126,7 @@ Template.courseCompactRoles.helpers({
 		return roleStateClass;
 	},
 
-	roleStateTooltip: function(role) {
+	roleStateTooltip(role) {
 		var roleStateTooltip;
 
 		var tooltips = {
@@ -162,11 +162,11 @@ Template.courseCompactRoles.helpers({
 });
 
 Template.courseCompact.events({
-	'mouseover .js-group-label, mouseout .js-group-label': function(e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate-child');
 	},
 
-	'mouseover .js-category-label, mouseout .js-category-label': function(e, instance) {
+	'mouseover .js-category-label, mouseout .js-category-label'(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate-child');
 	}
 });

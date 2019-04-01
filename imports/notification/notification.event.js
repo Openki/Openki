@@ -55,7 +55,7 @@ notificationEvent.Model = function(entry) {
 	}
 
 	return {
-		vars: function(userLocale) {
+		vars(userLocale) {
 			if (!event) throw "Event does not exist (0.o)";
 			if (!course) throw "Course does not exist (0.o)";
 			if (!region) throw "Region does not exist (0.o)";

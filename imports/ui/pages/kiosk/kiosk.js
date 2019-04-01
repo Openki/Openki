@@ -16,18 +16,18 @@ Template.kioskEvents.helpers({
 		if (group) return group.short;
 		return "";
 	},
-	showTime: function() {
+	showTime() {
 		Session.get('seconds');
 		return moment().format('LTS');
 	},
-	showDate: function() {
+	showDate() {
 		Session.get('seconds');
 		return moment().format('LL');
 	}
 });
 
 Template.kioskEvent.helpers({
-	timePeriod: function() {
+	timePeriod() {
 		return Template.instance().parentInstance().data.timePeriod;
 	},
 
@@ -37,11 +37,11 @@ Template.kioskEvent.helpers({
 		if (date) return moment(date).fromNow();
 	},
 
-	isOngoing: function() {
+	isOngoing() {
 		return Template.instance().parentInstance().data.timePeriod == "ongoing";
 	},
 
-	isUpcoming: function() {
+	isUpcoming() {
 		return Template.instance().parentInstance().data.timePeriod == "upcoming";
 	}
 });
@@ -51,7 +51,7 @@ Template.kioskEvent.rendered = function() {
 };
 
 Template.kioskEventLocation.helpers({
-	showLocation: function() {
+	showLocation() {
 		// The location is shown when we have a location name and the location is not used as a filter
 		return this.location
 		    && this.location.name

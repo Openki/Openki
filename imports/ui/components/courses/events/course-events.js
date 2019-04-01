@@ -40,36 +40,36 @@ Template.courseEvents.onCreated(function() {
 });
 
 Template.courseEvents.helpers({
-	mayAdd: function() {
+	mayAdd() {
 		return this.course.editableBy(Meteor.user());
 	},
 
-	haveEvents: function() {
+	haveEvents() {
 		return Template.instance().haveEvents();
 	},
 
-	ongoingEvents: function() {
+	ongoingEvents() {
 		return Template.instance().ongoingEvents();
 	},
 
-	haveOngoingEvents: function() {
+	haveOngoingEvents() {
 		return Template.instance().ongoingEvents().count() > 0;
 	},
 
-	futureEvents: function() {
+	futureEvents() {
 		return Template.instance().futureEvents();
 	},
 
-	haveFutureEvents: function() {
+	haveFutureEvents() {
 		return Template.instance().futureEvents().count() > 0;
 	},
 
-	haveMoreEvents: function() {
+	haveMoreEvents() {
 		var instance = Template.instance();
 		return instance.haveMoreEvents() && (!instance.showAllEvents.get());
 	},
 
-	ready: function() {
+	ready() {
 		return Template.instance().eventSub.ready();
 	},
 
@@ -87,11 +87,11 @@ Template.courseEvents.helpers({
 });
 
 Template.courseEvents.events({
-	'click .js-show-all-events': function () {
+	'click .js-show-all-events'() {
 		Template.instance().showAllEvents.set(true);
 	},
 
-	'scroll .js-scrollable-container': function(event, instance) {
+	'scroll .js-scrollable-container'(event, instance) {
 		var scrollableContainer = instance.$('.js-scrollable-container');
 
 		// Use dom element to get true height of clipped div
@@ -116,7 +116,7 @@ Template.courseEvents.events({
 });
 
 Template.courseEventAdd.helpers({
-	addEventQuery: function() {
+	addEventQuery() {
 		return 'courseId=' + this.course._id;
 	}
 });

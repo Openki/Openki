@@ -22,20 +22,20 @@ import '/imports/ui/components/translate-info/translate-info.js';
 import './app-body.html';
 
 Template.layout.helpers({
-	testWarning: function() {
+	testWarning() {
 		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
 	},
 
-	translate: function() {
+	translate() {
 		var route = Router.current().route;
 		return route && route.getName() === "mfTrans";
 	},
 
-	mayTranslate: function() {
+	mayTranslate() {
 		return !!Meteor.user();
 	},
 
-	showRegionSplash: function() {
+	showRegionSplash() {
 		var route = Router.current().route;
 		if (!route) return false;
 

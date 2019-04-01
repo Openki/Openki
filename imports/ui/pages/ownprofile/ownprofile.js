@@ -27,40 +27,40 @@ Template.profile.onCreated(function() {
 });
 
 Template.profile.helpers({
-	editing: function() {
+	editing() {
 		return Template.instance().editing.get();
 	},
-	changingPass: function() {
+	changingPass() {
 		return Template.instance().changingPass.get();
 	},
 
-	sending: function() {
+	sending() {
 		return Template.instance().sending.get();
 	},
 
-	verifyDelete: function() {
+	verifyDelete() {
 		return Template.instance().verifyDelete.get();
 	},
 
-	groupCount: function() {
+	groupCount() {
 		return this.user.groups.count();
 	},
 
-	notificationsChecked: function() {
+	notificationsChecked() {
 		if (this.user.notifications) return 'checked';
 	},
 
-	privacyChecked: function() {
+	privacyChecked() {
 		if (this.user.privacy) return 'checked';
 	},
 
-	isVenueEditor: function() {
+	isVenueEditor() {
 		return this.user.venues.count() > 0;
 	},
-	roles: function() {
+	roles() {
 		return _.clone(Roles).reverse();
 	},
-	coursesByRole: function(role) {
+	coursesByRole(role) {
 		var templateData = Template.instance().data;
 		var involvedIn = templateData.involvedIn;
 		var userID = templateData.user._id;
@@ -73,13 +73,13 @@ Template.profile.helpers({
 		});
 		return coursesForRole;
 	},
-	roleMyList: function() {
+	roleMyList() {
 		return 'roles.'+this.type+'.myList';
 	},
-	unsubscribeSuccess: function() {
+	unsubscribeSuccess() {
 		return Router.current().params.query.unsubscribed === '';
 	},
-	unsubscribeError: function() {
+	unsubscribeError() {
 		return Router.current().params.query['unsubscribe-error'] === '';
 	}
 });
@@ -132,31 +132,31 @@ TemplateMixins.FormfieldErrors(Template.profile, {
 
 
 Template.profile.events({
-	'click .js-profile-info-edit': function(event, instance) {
+	'click .js-profile-info-edit'(event, instance) {
 		Tooltips.hide();
 		instance.editing.set(true);
 		instance.collapse();
 	},
 
-	'click .js-profile-edit-cancel': function(event, instance) {
+	'click .js-profile-edit-cancel'(event, instance) {
 		instance.editing.set(false);
 		return false;
 	},
 
-	'click .js-change-pwd-btn': function(event, instance) {
+	'click .js-change-pwd-btn'(event, instance) {
 		instance.changingPass.set(true);
 		instance.collapse();
 	},
 
-	'click .js-change-pwd-cancel': function(event, instance) {
+	'click .js-change-pwd-cancel'(event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-expand': function(event, instance) {
+	'click .js-expand'(event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-profile-delete-confirm-btn': function(event, instance) {
+	'click .js-profile-delete-confirm-btn'(event, instance) {
 		instance.busy('deleting');
 		Meteor.call('user.remove', function() {
 			instance.busy(false);
@@ -165,7 +165,7 @@ Template.profile.events({
 		instance.collapse(); // Wait for server to log us out.
 	},
 
-	'submit .profile-info-edit': function(event, instance) {
+	'submit .profile-info-edit'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 		Meteor.call('user.updateData',
@@ -183,7 +183,7 @@ Template.profile.events({
 		);
 	},
 
-	'submit #changePwd': function(event, instance) {
+	'submit #changePwd'(event, instance) {
 		event.preventDefault();
 		var old = document.getElementById('oldpassword').value;
 		var pass = document.getElementById('newpassword').value;

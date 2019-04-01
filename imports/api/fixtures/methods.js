@@ -333,14 +333,14 @@ if (Meteor.settings.testdata) {
 	};
 
 	Meteor.methods({
-		'fixtures.clean': function() {
+		'fixtures.clean'() {
 			Groups.remove({});
 			Events.remove({});
 			Venues.remove({});
 			Courses.remove({});
 		},
 
-		'fixtures.create': function() {
+		'fixtures.create'() {
 			if (Regions.find().count() === 0) regionsCreate();
 			groupsCreate();
 			venuesCreate();

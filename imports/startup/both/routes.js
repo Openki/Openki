@@ -21,7 +21,7 @@ function finderRoute(path) {
 		yieldRegions: {
 			'featuredGroup': { to: 'aboveContent' }
 		},
-		data: function() {
+		data() {
 			var query = this.params.query;
 
 			// Add filter options for the homepage
@@ -30,7 +30,7 @@ function finderRoute(path) {
 				region: Session.get('region')
 			});
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			var search = this.params.query.search;
 			if (search) {
 				Metatags.setCommonTags(mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"'));
@@ -89,8 +89,8 @@ Router.map(function () {
 	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
-		data: function() { return this.params; },
-		onAfterAction: function() {
+		data() { return this.params; },
+		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
@@ -111,11 +111,11 @@ Router.map(function () {
 		path: '/frame/calendar',
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
-		data: function() {
+		data() {
 			const cssRules = new CssFromQuery(this.params.query).getCssRules();
 			return { cssRules };
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
@@ -130,7 +130,7 @@ Router.map(function () {
 		path: '/frame/events',
 		template: 'frameEvents',
 		layoutTemplate: 'frameLayout',
-		waitOn: function () {
+		waitOn() {
 			this.filter = Events.Filtering().read(this.params.query).done();
 
 			var filterParams = this.filter.toParams();
@@ -141,7 +141,7 @@ Router.map(function () {
 			return Meteor.subscribe('Events.findFilter', filterParams, limit*2);
 		},
 
-		data: function() {
+		data() {
 			var filterParams = this.filter.toParams();
 			filterParams.after = minuteTime.get();
 
@@ -150,7 +150,7 @@ Router.map(function () {
 			return Events.findFilter(filterParams, limit);
 		},
 
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		}
 	});
@@ -193,14 +193,14 @@ Router.map(function () {
 		path: '/frame/week',
 		template: 'frameWeek',
 		layoutTemplate: 'frameWeek',
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		}
 	});
 
 	this.route('groupDetails', {
 		path: 'group/:_id/:short?',
-		waitOn: function () {
+		waitOn() {
 			return [
 				Meteor.subscribe('group', this.params._id),
 			];
@@ -223,7 +223,7 @@ Router.map(function () {
 
 			return { courseQuery, group, isNew, showCourses: !isNew };
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			var group = Groups.findOne({_id: this.params._id});
 			if (group) {
 				Metatags.setCommonTags(group.name);
@@ -236,7 +236,7 @@ Router.map(function () {
 	this.route('kioskEvents', {
 		path: '/kiosk/events',
 		layoutTemplate: 'kioskLayout',
-		waitOn: function () {
+		waitOn() {
 			var now = minuteTime.get(); // Time dependency so this will be reactively updated
 
 			this.filter = Events.Filtering().read(this.params.query).done();
@@ -254,7 +254,7 @@ Router.map(function () {
 			];
 		},
 
-		data: function() {
+		data() {
 			var now = minuteTime.get();
 			var tomorrow = new Date(now);
 			tomorrow.setHours(tomorrow.getHours() + 24);
@@ -278,13 +278,13 @@ Router.map(function () {
 				filter: filterParams
 			};
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			this.timer = Meteor.setInterval(function() {
 				Session.set('seconds', new Date());
 			}, 1000);
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		},
-		unload: function() {
+		unload() {
 			Meteor.clearInterval(this.timer);
 		}
 	});
@@ -292,33 +292,33 @@ Router.map(function () {
 	this.route('log',  {
 		path: '/log',
 		template: 'showLog',
-		data: function() {
+		data() {
 			return this.params.query;
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('log.list.windowtitle', 'Log'));
 		}
 	});
 
 	this.route('pages', {									///////// static /////////
 		path: 'page/:page_name',
-		action: function() {
+		action() {
 			this.render(this.params.page_name);
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(this.params.page_name);
 		}
 	});
 
 	this.route('profile', {
 		path: 'profile',
-		waitOn: function () {
+		waitOn() {
 			return [
 				Meteor.subscribe('groupsFind', { own: true }),
 				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() })
 			];
 		},
-		data: function () {
+		data() {
 			var data = {};
 			var user = Meteor.user();
 			data.loggedIn = !!user;
@@ -342,7 +342,7 @@ Router.map(function () {
 			}
 			return data;
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			const user = Meteor.user();
 			if (user) {
 				const title = mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}');
@@ -354,7 +354,7 @@ Router.map(function () {
 	this.route('proposeCourse', {
 		path: 'courses/propose',
 		template: 'proposeCourse',
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
 		data: CourseTemplate
@@ -362,10 +362,10 @@ Router.map(function () {
 
 	this.route('resetPassword', {
 		path: "reset-password/:token",
-		data: function () {
+		data() {
 			return this.params.token;
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			document.title = mf('resetPassword.siteTitle', "Reset password");
 		}
 	});
@@ -373,10 +373,10 @@ Router.map(function () {
 	this.route('showCourse', {
 		path: 'course/:_id/:slug?',
 		template: 'courseDetailsPage',
-		waitOn: function () {
+		waitOn() {
 			return Meteor.subscribe('courseDetails', this.params._id);
 		},
-		data: function() {
+		data() {
 			var course = Courses.findOne({_id: this.params._id});
 
 			if (!course) return false;
@@ -404,7 +404,7 @@ Router.map(function () {
 			};
 			return data;
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			var data = this.data();
 			if (data) {
 				var course = data.course;
@@ -416,12 +416,12 @@ Router.map(function () {
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
 		//template: 'coursehistory',
-		waitOn: function () {
+		waitOn() {
 			return [
 				Meteor.subscribe('courseDetails', this.params._id)
 			];
 		},
-		data: function () {
+		data() {
 			var course = Courses.findOne({_id: this.params._id});
 			return {
 				course: course
@@ -433,7 +433,7 @@ Router.map(function () {
 		path: 'event/:_id/:slug?',
 		template: 'eventPage',
 		notFoundTemplate: 'eventNotFound',
-		waitOn: function () {
+		waitOn() {
 			var subs = [
 				Meteor.subscribe('event', this.params._id)
 			];
@@ -443,7 +443,7 @@ Router.map(function () {
 			}
 			return subs;
 		},
-		data: function () {
+		data() {
 			var event;
 			var create = 'create' == this.params._id;
 			if (create) {
@@ -473,10 +473,10 @@ Router.map(function () {
 	this.route('timetable', {
 		path: '/kiosk/timetable',
 		layoutTemplate: 'timetableLayout',
-		waitOn: function () {
+		waitOn() {
 			return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
 		},
-		data: function() {
+		data() {
 			var query = makeFilterQuery(this.params.query);
 
 			var start;
@@ -565,13 +565,13 @@ Router.map(function () {
 
 	this.route('userprofile', {
 		path: 'user/:_id/:username?',
-		waitOn: function () {
+		waitOn() {
 			return [
 				Meteor.subscribe('user', this.params._id),
 				Meteor.subscribe('groupsFind', { own: true }),
 			];
 		},
-		data: function () {
+		data() {
 			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // not loaded?
 
@@ -592,7 +592,7 @@ Router.map(function () {
 				'showPrivileges': showPrivileges
 			};
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			var user = Meteor.users.findOne({_id: this.params._id});
 			if (!user) return; // wtf
 
@@ -603,13 +603,13 @@ Router.map(function () {
 
 	this.route('venueDetails', {
 		path: 'venue/:_id/:name?',
-		waitOn: function () {
+		waitOn() {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),
 			];
 		},
 
-		data: function() {
+		data() {
 			var id = this.params._id;
 
 			var venue;
@@ -629,7 +629,7 @@ Router.map(function () {
 			return data;
 		},
 
-		onAfterAction: function() {
+		onAfterAction() {
 			var data = this.data();
 			if (!data) return;
 
@@ -647,10 +647,10 @@ Router.map(function () {
 	this.route('venueMap',{
 		path: 'venues',
 		template: 'venueMap',
-		waitOn: function () {
+		waitOn() {
 			return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
 		},
-		onAfterAction: function() {
+		onAfterAction() {
 			Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
 		}
 	});

@@ -10,13 +10,13 @@ Template.verifyEmail.onCreated(function() {
 });
 
 Template.verifyEmail.helpers({
-	sending: function() {
+	sending() {
 		return Template.instance().sending.get();
 	},
 });
 
 Template.verifyEmail.events({
-	'click .js-verify-mail-btn': function(event, instance) {
+	'click .js-verify-mail-btn'(event, instance) {
 		instance.sending.set(true);
 		Meteor.call('sendVerificationEmail', function(err) {
 			if (err) {

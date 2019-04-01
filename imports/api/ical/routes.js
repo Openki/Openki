@@ -59,7 +59,7 @@ Router.map(function () {
 	this.route('cal', {
 		path: 'cal/',
 		where: 'server',
-		action: function () {
+		action() {
 			var filter = Events.Filtering();
 			var query = this.params.query || {};
 
@@ -74,14 +74,14 @@ Router.map(function () {
 	this.route('calEvent', {
 		path: 'cal/event/:_id.ics',
 		where: 'server',
-		action: function () {
+		action() {
 			sendIcal(Events.find({ _id: this.params._id }), this.response);
 		}
 	});
 	this.route('calCourse', {
 		path: 'cal/course/:slug,:_id.ics',
 		where: 'server',
-		action: function () {
+		action() {
 			sendIcal(Events.find({ courseId: this.params._id }), this.response);
 		}
 	});

@@ -59,7 +59,7 @@ const ReplicaSync = function(event, updateChangedReplicas) {
 };
 
 Meteor.methods({
-	'event.save': function(args) {
+	'event.save'(args) {
 		let
 			{ eventId
 			, changes
@@ -253,7 +253,7 @@ Meteor.methods({
 	},
 
 
-	'event.remove': function(eventId) {
+	'event.remove'(eventId) {
 		check(eventId, String);
 
 		var user = Meteor.user();
@@ -270,7 +270,7 @@ Meteor.methods({
 
 
 	// Update the venue field for all events matching the selector
-	'event.updateVenue': function(selector) {
+	'event.updateVenue'(selector) {
 		var idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach(function(event) {
 			const eventId = event._id;
@@ -321,7 +321,7 @@ Meteor.methods({
 	},
 
 	// Update the group-related fields of events matching the selector
-	'event.updateGroups': function(selector) {
+	'event.updateGroups'(selector) {
 		var idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach(function(event) {
 			Events.updateGroups(event._id);

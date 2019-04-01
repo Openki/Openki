@@ -71,7 +71,7 @@ OEvent.prototype.sameTime = function(event) {
 };
 
 export default Events = new Mongo.Collection("Events", {
-	transform: function(event) {
+	transform(event) {
 		return _.extend(new OEvent(), event);
 	}
 });

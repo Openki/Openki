@@ -76,15 +76,15 @@ Template.courseEdit.onCreated(function() {
 });
 
 Template.courseEdit.helpers({
-	query: function() {
+	query() {
 		return Session.get('search');
 	},
 
-	availableCategories: function() {
+	availableCategories() {
 		return Object.keys(Categories);
 	},
 
-	availableSubcategories: function(category) {
+	availableSubcategories(category) {
 		// Hide if parent categories not selected
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.indexOf(category) < 0) return [];
@@ -92,7 +92,7 @@ Template.courseEdit.helpers({
 		return Categories[category];
 	},
 
-	editingCategories: function() {
+	editingCategories() {
 		return Template.instance().editingCategories.get();
 	},
 
@@ -115,15 +115,15 @@ Template.courseEdit.helpers({
 		});
 	},
 
-	roleDescription: function() {
+	roleDescription() {
 		return 'roles.'+this.type+'.description';
 	},
 
-	roleSubscription: function() {
+	roleSubscription() {
 		return 'roles.'+this.type+'.subscribe';
 	},
 
-	isChecked: function() {
+	isChecked() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
 			return 'checkbox-checked';
@@ -131,39 +131,39 @@ Template.courseEdit.helpers({
 		return '';
 	},
 
-	checkCategory: function() {
+	checkCategory() {
 		var selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length) {
 			return selectedCategories.indexOf(''+this) >= 0 ? 'checked' : '';
 		}
 	},
 
-	hasRole: function() {
+	hasRole() {
 		var instance = Template.instance();
 		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
-	showRegionSelection: function() {
+	showRegionSelection() {
 		// Region can be set for new courses only.
 		// For the proposal frame we hide the region selection when a region
 		// is set.
 		return !this._id && !(this.region && this.isFrame);
 	},
 
-	regions: function() {
+	regions() {
 		return Regions.find();
 	},
 
-	currentRegion: function(region) {
+	currentRegion(region) {
 		var currentRegion = Session.get('region');
 		return currentRegion && region._id == currentRegion;
 	},
 
-	isInternal: function() {
+	isInternal() {
 		return this.internal ? "checked" : null;
 	},
 
-	proposeFromQuery: function() {
+	proposeFromQuery() {
 		var parentInstance = Template.instance().parentInstance();
 		var filter = parentInstance.filter;
 		if (!filter) return false;
@@ -177,18 +177,18 @@ Template.courseEdit.helpers({
 		return (results.count() === 0) && search;
 	},
 
-	courseSearch: function() {
+	courseSearch() {
 		var parentInstance = Template.instance().parentInstance();
 		var filterParams = parentInstance.filter.toParams();
 
 		return filterParams.search;
 	},
 
-	editableDescription: function() {
+	editableDescription() {
 		return Template.instance().editableDescription;
 	},
 
-	newCourseGroupName: function() {
+	newCourseGroupName() {
 		if (this.group) {
 			var groupId = this.group;
 			var group = Groups.findOne(groupId);
@@ -196,7 +196,7 @@ Template.courseEdit.helpers({
 		}
 	},
 
-	showInternalCheckbox: function() {
+	showInternalCheckbox() {
 		const user = Meteor.user();
 
 		if (this.isFrame) return false;
@@ -334,7 +334,7 @@ Template.courseEdit.events({
 		});
 	},
 
-	'click .js-course-edit-cancel': function(event, instance) {
+	'click .js-course-edit-cancel'(event, instance) {
 		var course = instance.data;
 
 		if (course._id) {
@@ -344,11 +344,11 @@ Template.courseEdit.events({
 		}
 	},
 
-	'click .js-edit-categories': function (event, template) {
+	'click .js-edit-categories'(event, template) {
 		Template.instance().editingCategories.set(true);
 	},
 
-	'change .js-category-checkbox': function(event, instance) {
+	'change .js-category-checkbox'(event, instance) {
 		var catKey = ''+this;
 		var selectedCategories = instance.selectedCategories.get();
 		var checked = instance.$('input.cat_'+catKey).prop('checked');
@@ -384,26 +384,26 @@ Template.courseEditRole.onRendered(function() {
 });
 
 Template.courseEditRole.helpers({
-	roleDescription: function() {
+	roleDescription() {
 		return 'roles.'+this.role.type+'.description';
 	},
 
-	roleSubscription: function() {
+	roleSubscription() {
 		return 'roles.'+this.role.type+'.subscribe';
 	},
 
-	checkRole: function() {
+	checkRole() {
 		var instance = Template.instance();
 		return instance.checked.get() ? "checked" : null;
 	},
 
-	hasRole: function() {
+	hasRole() {
 		return this.members && HasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
 	},
 });
 
 Template.courseEditRole.events({
-	"change .js-check-role": function(event, instance) {
+	"change .js-check-role"(event, instance) {
 		instance.checked.set(instance.$(".js-check-role").prop("checked"));
 	}
 });

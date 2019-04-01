@@ -5,7 +5,7 @@ import Metatags from '/imports/utils/metatags.js';
 import './translate-info.html';
 
 Template.translateInfo.helpers({
-	setPageTitle: function() {
+	setPageTitle() {
 		Metatags.setCommonTags(mf('translate.windowtitle', 'Translate'));
 	}
 });

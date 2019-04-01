@@ -5,13 +5,13 @@ import Regions from '/imports/api/regions/regions.js';
 import Venues from '/imports/api/venues/venues.js';
 
 export default ensure = {
-	'fixedId': function(strings) {
+	'fixedId'(strings) {
 		var md5 = crypto.createHash('md5');
 		for (var str of strings) md5.update(str);
 		return md5.digest('hex').substring(0, 10);
 	},
 
-	'user': function(name) {
+	'user'(name) {
 		var prng = Prng('ensureUser');
 
 		if (!name) {
@@ -48,7 +48,7 @@ export default ensure = {
 		}
 	},
 
-	'region': function(name) {
+	'region'(name) {
 		while (true) {
 			var region = Regions.findOne({ name: name });
 			if (region) return region._id;
@@ -62,7 +62,7 @@ export default ensure = {
 		}
 	},
 
-    'group': function(short) {
+    'group'(short) {
 		while (true) {
 			var group = Groups.findOne({ short: short });
 			if (group) return group._id;
@@ -80,7 +80,7 @@ export default ensure = {
 		}
 	},
 
-	'venue': function(name, regionId) {
+	'venue'(name, regionId) {
 		var prng = Prng("ensureVenue");
 
 		while (true) {

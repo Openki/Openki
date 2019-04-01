@@ -8,7 +8,7 @@ import HtmlTools from '/imports/utils/html-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
 
 Meteor.methods({
-	'venue.save': function(venueId, changes) {
+	'venue.save'(venueId, changes) {
 		check(venueId, String);
 		check(changes,
 			{ name:            Match.Optional(String)
@@ -94,7 +94,7 @@ Meteor.methods({
 		return venueId;
 	},
 
-	'venue.remove': function(venueId) {
+	'venue.remove'(venueId) {
 		check(venueId, String);
 		var venue = Venues.findOne(venueId);
 		if (!venue) {

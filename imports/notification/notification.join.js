@@ -43,7 +43,7 @@ notificationJoin.Model = function(entry) {
 	var newParticipant = Meteor.users.findOne(body.participantId);
 
 	return {
-		vars: function(userLocale) {
+		vars(userLocale) {
 			if (!newParticipant) throw "New participant does not exist (0.o)";
 			if (!course) throw "Course does not exist (0.o)";
 

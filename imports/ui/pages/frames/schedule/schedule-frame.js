@@ -218,12 +218,12 @@ Template.frameSchedule.onCreated(function() {
 });
 
 Template.frameSchedule.helpers({
-	month: function() {
+	month() {
 		var instance = Template.instance();
 		return moment(instance.scheduleStart.get()).format('MMMM');
 	},
 
-	days: function() {
+	days() {
 		var instance = Template.instance();
 		var scheduleStart = instance.scheduleStart.get();
 		return _.map(instance.days.get(), function(day) {
@@ -231,7 +231,7 @@ Template.frameSchedule.helpers({
 		});
 	},
 
-	intervals: function() {
+	intervals() {
 		var instance = Template.instance();
 		var slots = instance.slots.get();
 
@@ -247,11 +247,11 @@ Template.frameSchedule.helpers({
 		});
 	},
 
-	type: function() {
+	type() {
 		return Template.instance().kindMap(this.title) || 'other';
 	},
 
-	customStartTime: function(intervalStart) {
+	customStartTime(intervalStart) {
 		var event = this;
 		var startTime = moment(LocalTime.fromString(event.startLocal));
 		startTime.locale(intervalStart.locale());
@@ -260,11 +260,11 @@ Template.frameSchedule.helpers({
 		return isSame ? false : startTime.format("LT");
 	},
 
-	single: function() {
+	single() {
 		return this.repCount < 2;
 	},
 
-	showDate: function() {
+	showDate() {
 		// The date is shown if an event has no repetitions...
 		if (this.repCount < 2) return true;
 

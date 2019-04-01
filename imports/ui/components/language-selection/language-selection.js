@@ -19,19 +19,19 @@ Template.languageSelectionWrap.created = function() {
 };
 
 Template.languageSelectionWrap.helpers({
-	searchingLanguages: function() {
+	searchingLanguages() {
 		return Template.instance().searchingLanguages.get();
 	}
 });
 
 Template.languageDisplay.helpers({
-	setLanguage: function() {
+	setLanguage() {
 		return Languages[Session.get('locale')];
 	}
 });
 
 Template.languageDisplay.events({
-	'click .js-language-display': function(event, instance) {
+	'click .js-language-display'(event, instance) {
 		instance.parentInstance().searchingLanguages.set(true);
 	}
 });
@@ -41,7 +41,7 @@ Template.languageSelection.onCreated(function() {
 });
 
 Template.languageSelection.helpers({
-	setLanguage: function() {
+	setLanguage() {
 		return Languages[Session.get('locale')];
 	},
 
@@ -65,7 +65,7 @@ Template.languageSelection.helpers({
 		return results;
 	},
 
-	languageNameMarked: function() {
+	languageNameMarked() {
 		var search = Template.instance().languageSearch.get();
 		var name = this.name;
 		return StringTools.markedName(search, name);
@@ -86,7 +86,7 @@ Template.languageSelection.helpers({
 		return { percent, rating };
 	},
 
-	currentLanguage: function() {
+	currentLanguage() {
 		return this == Languages[Session.get('locale')];
 	}
 });
@@ -98,7 +98,7 @@ var updateLanguageSearch = _.debounce(function(instance) {
 }, 100);
 
 Template.languageSelection.events({
-	'click .js-language-link': function(event, instance) {
+	'click .js-language-link'(event, instance) {
 		event.preventDefault();
 		var lg = this.lg;
 
@@ -116,7 +116,7 @@ Template.languageSelection.events({
 		instance.parentInstance().searchingLanguages.set(false);
 	},
 
-	'keyup .js-language-search': function(event, instance) {
+	'keyup .js-language-search'(event, instance) {
 			if (event.which === 13) {
 				instance.$('.js-language-link').first().click();
 			} else {
@@ -124,7 +124,7 @@ Template.languageSelection.events({
 			}
 	},
 
-	'focus .js-language-search': function(event, instance) {
+	'focus .js-language-search'(event, instance) {
 		var viewportWidth = Session.get('viewportWidth');
 		var isRetina = Session.get('isRetina');
 		var screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;

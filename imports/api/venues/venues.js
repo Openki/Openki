@@ -43,7 +43,7 @@ Venue.prototype.editableBy = function(user) {
 };
 
 export default Venues = new Mongo.Collection("Venues", {
-	transform: function(venue) {
+	transform(venue) {
 		return _.extend(new Venue(), venue);
 	}
 });

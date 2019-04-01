@@ -37,9 +37,9 @@ LocalTime.zone = function(regionId) {
 	var tz = region.tz;
 
 	return {
-		fromString: function(date) { return moment.tz(date, tz); },
-		toString: function(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
-		at: function(date) { return moment.tz(date, tz); }
+		fromString(date) { return moment.tz(date, tz); },
+		toString(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
+		at(date) { return moment.tz(date, tz); }
 	};
 };
 
