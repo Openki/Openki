@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups.js';
 
-import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 import Alert from '/imports/api/alerts/alert.js';
+import Groups from '/imports/api/groups/groups.js';
+import TemplateMixins from '/imports/ui/lib/template-mixins.js';
+import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
 
 import '/imports/ui/components/buttons/buttons.js';
 
@@ -13,6 +14,12 @@ import './group-settings.html';
 
 Template.groupSettings.onCreated(function() {
 	var instance = this;
+
+	//strip https:// from logoUrl because its already labeled as prefix
+	const logoUrl = instance.data.group.logoUrl;
+	if ( logoUrl.startsWith('https://') ) {
+		instance.data.group.logoUrl = logoUrl.replace('https://', '');
+	}
 
 	instance.busy(false);
 
@@ -101,15 +108,30 @@ Template.groupSettings.events({
 		});
 	},
 
+	'keyup, change .js-logo-url'(event, instance) {
+		if (instance.$('.js-logo-url').val().includes('://')) {
+			const elem = instance.$('.js-logo-url');
+			elem.val(elem.val().split('://')[1]);
+		}
+	},
+
 	'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 
 		var parentInstance = instance.parentInstance(); // Not available in callback
 
+		let url = instance.$('.js-logo-url').val().trim();
+
+		//strip protocol if needed
+		if ( url.includes('://') ) {
+			url = url.split('://')[1];
+		}
+
+		url = 'https://' + url;
+
 		instance.busy('saving');
 		const changes = {
-			logoUrl: instance.$('.js-logo-url').val(),
-			backgroundUrl: instance.$('.js-background-url').val()
+			logoUrl: url
 		};
 
 		const groupId = instance.data.group._id;

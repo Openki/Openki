@@ -14,7 +14,6 @@ Meteor.methods({
 			claim:         Match.Optional(String),
 			description:   Match.Optional(String),
 			logoUrl:       Match.Optional(String),
-			backgroundUrl: Match.Optional(String),
 		});
 
 		var userId = Meteor.userId();
@@ -61,10 +60,11 @@ Meteor.methods({
 		}
 
 		if (changes.hasOwnProperty('logoUrl')) {
-			updates.logoUrl = changes.logoUrl.substring(0, 1000);
-		}
-		if (changes.hasOwnProperty('backgroundUrl')) {
-			updates.backgroundUrl = changes.backgroundUrl.substring(0, 1000);
+			if ( ! changes.logoUrl.startsWith('https://') ) {
+				throw new Meteor.Error("not https");
+			}
+			changes.logoUrl = changes.logoUrl.substring(0, 1000);
+			updates.logoUrl = changes.logoUrl;
 		}
 
 		// Don't update nothing

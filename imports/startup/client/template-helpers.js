@@ -106,8 +106,8 @@ const helpers = {
 
 		var group = Groups.findOne({ _id: groupId });
 		if (group) {
-			if (group.logo){
-				return group.logo;
+			if (group.logoUrl) {
+				return group.logoUrl;
 			} return "";
 		}
 		return "";
