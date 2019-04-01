@@ -108,10 +108,10 @@ Template.groupSettings.events({
 		});
 	},
 
-	'keyup, change .js-logo-url'(event, instance) {
-		if (instance.$('.js-logo-url').val().includes('://')) {
-			const elem = instance.$('.js-logo-url');
-			elem.val(elem.val().split('://')[1]);
+	'input .js-logo-url'(event, instance) {
+		const elem = instance.$('.js-logo-url');
+		if (elem.val().includes('://')) {
+			elem.val(elem.val().split('://')[1], 1);
 		}
 	},
 
