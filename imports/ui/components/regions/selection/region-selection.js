@@ -99,15 +99,15 @@ Template.regionSelection.helpers({
 		return Template.instance().regions();
 	},
 
-	externalCourses() {
+	allCourses() {
 		return Regions.find().fetch().reduce((acc, region) => {
-			return acc + region.courseCountExternal;
+			return acc + region.courseCount;
 		}, 0);
 	},
 
-	externalUpcomingEvents() {
+	allUpcomingEvents() {
 		return Regions.find().fetch().reduce((acc, region) => {
-			return acc + region.futureEventCountExternal;
+			return acc + region.futureEventCount;
 		}, 0);
 	},
 

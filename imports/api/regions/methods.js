@@ -7,19 +7,14 @@ Meteor.methods({
 		Regions.find(selector).forEach((region) => {
 			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 			const regionId = region._id;
-			const courseCount = Courses.find({ region: regionId }).count();
-			const futureEventCount =
-				Events
-				.find({ region: regionId, start: { $gte: new Date() } })
-				.count();
 
-			const courseCountExternal = Courses.find({ region: regionId, internal: false }).count();
-			const futureEventCountExternal =
+			const courseCount = Courses.find({ region: regionId, internal: false }).count();
+			const futureEventCount =
 				Events
 				.find({ region: regionId, internal: false, start: { $gte: new Date() } })
 				.count();
 
-			Regions.update(regionId, { $set: { courseCount, futureEventCount, courseCountExternal, futureEventCountExternal } });
+			Regions.update(regionId, { $set: { courseCount, futureEventCount } });
 		});
 	},
 
