@@ -1,6 +1,6 @@
-$course-header-bg: darken($blue-lighter, 5%);
+$event-header-bg: darken($blue-lighter, 5%);
 
-.event-course-wrapper-main {
+.event-wrapper-main {
 	@include td-make-xs-column(12);
 	@include td-make-md-column(8);
 	padding: 0;
@@ -10,7 +10,7 @@ $course-header-bg: darken($blue-lighter, 5%);
 	}
 }
 
-.event-course-wrapper-aside {
+.event-wrapper-aside {
 	@include td-make-xs-column(12);
 	@include td-make-md-column(4);
 	padding: 15px 0 0;
@@ -21,14 +21,14 @@ $course-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header {
-	background-color: $course-header-bg;
+	background-color: $event-header-bg;
 	cursor: pointer;
 	padding: 15px;
 	position: relative;
 	transition: background-color .15s;
 
 	&.highlight {
-		background-color: darken($course-header-bg, 2%);
+		background-color: darken($event-header-bg, 2%);
 	}
 }
 
@@ -55,7 +55,7 @@ $course-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header + .event {
-	border-color: $course-header-bg;
+	border-color: $event-header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
 
@@ -115,4 +115,11 @@ $course-header-bg: darken($blue-lighter, 5%);
 	font-size: 18px;
 	font-weight: bold;
 	text-align:left;
+}
+
+.event-page-btn {
+	@include btn-lg;
+	@include td-text-align(left);
+	margin-top: $event-details-seperator-height;
+	width: 100%;
 }
