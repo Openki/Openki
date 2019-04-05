@@ -19,7 +19,6 @@ Meteor.methods({
 		Accounts.sendVerificationEmail(this.userId);
 	},
 
-
 	sendEmail: function (userId, message, options) {
 		check(userId               , String);
 		check(message              , String);

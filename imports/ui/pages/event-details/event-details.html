@@ -44,7 +44,11 @@
 		</div>
 		<div class="page-component">
 			<b>
-				{{mf 'event.details.i-participate' 'Let us know that you are participating in this event. Your registration is binding.'}}
+				{{#unless userRegisteredForEvent}}
+					{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+				{{else}}
+					{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+				{{/unless}}
 			</b>
 		</div>
 		<div class="page-component">

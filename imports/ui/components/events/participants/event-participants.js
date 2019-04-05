@@ -71,13 +71,12 @@ Template.eventParticipant.helpers({
 
 });
 
-
 Template.eventParticipant.events({
 	'click .js-show-contact-modal'(event, instance) {
 		instance.state.set('showContactEventParticipantModal', true);
 	},
 
-	'hidden.bs.modal .js-contact-participant-modal'(event, instance) {
+	'hidden.bs.modal .js-contact-event-participant-modal'(event, instance) {
 		instance.state.set('showContactEventParticipantModal', false);
 	}
 });

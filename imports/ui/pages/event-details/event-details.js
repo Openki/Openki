@@ -132,6 +132,8 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
+		if (PleaseLogin()) return;
+
 		Meteor.call('event.addParticipant', instance.data._id, Meteor.userId(), (err) => {
 			if ( err ) {
 				Alert.error( err, '');
