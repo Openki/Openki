@@ -314,15 +314,17 @@ if (Meteor.settings.testdata) {
 				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
 
 				var commenter = undefined;
-				if (!course.members.length || prng() < 0.2) {
+				if (!courseMembers || prng() < 0.2) {
 					// Leave some anonymous comments
 					if (prng() < 0.7) {
 						commenter = Meteor.users.findOne({}, {skip: Math.floor(prng()*userCount)})._id;
+						comment.userId = commenter.user;
 					}
 				} else {
 					commenter = course.members[Math.floor(prng()*courseMembers)];
+					comment.userId = commenter.user;
 				}
-				comment.userId = commenter.user;
+
 				CourseDiscussions.insert(comment);
 			}
 
