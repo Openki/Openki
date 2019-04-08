@@ -58,15 +58,7 @@
 				{{/each}}
 			</ul>
 		{{/if}}
-		{{#if maySubscribe}}
-			<button type="button" class="btn btn-add js-add-to-team-btn"
-				data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
-				data-tooltip-direction="e">
-				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
-				<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
-			</button>
-		{{/if}}
-		{{#if showContactParticipant}}
+		{{#if showContactMember}}
 			<div class="course-participant-contact">
 				{{#if userSubReady}}
 					{{#if memberAcceptsMessages}}
@@ -83,6 +75,14 @@
 			{{#if state 'showContactModal'}}
 				{{> contactParticipantModal}}
 			{{/if}}
+		{{/if}}
+		{{#if maySubscribe}}
+			<button type="button" class="btn btn-add js-add-to-team-btn"
+				data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
+				data-tooltip-direction="e">
+				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
+				<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+			</button>
 		{{/if}}
 		{{#if showMemberComment}}
 			<div class="course-member-comment">

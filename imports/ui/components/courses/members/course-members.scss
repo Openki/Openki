@@ -28,8 +28,7 @@
 }
 
 .course-member-roles {
-	@include td-margin(left, 10px);
-	@include td-padding(left, 0);
+	@include td-float(right);
 	display: inline-block;
 	list-style: none;
 	margin-bottom: 0;
@@ -123,6 +122,8 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 }
 
 .course-participant-contact {
-	@include td-float(right);
+	@include td-margin(left, 10px);
+	@include td-padding(left, 0);
+	display: inline-block;
 	font-size: medium;
 }
