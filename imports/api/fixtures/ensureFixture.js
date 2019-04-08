@@ -17,8 +17,7 @@ export default ensure = {
 		if (!name) {
 			name = 'Ed Dillinger';
 		}
-
-		var email = (name.replace(' ', '') + "@openki.example").toLowerCase();
+		var email = (name.split(' ').join('') + "@openki.example").toLowerCase();
 
 		while (true) {
 			var user = Meteor.users.findOne({ "emails.address": email });
