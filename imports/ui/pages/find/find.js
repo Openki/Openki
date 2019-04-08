@@ -29,10 +29,15 @@ Template.find.onCreated(function() {
 	// change. For example, when the search-field receives keydowns, the filter
 	// is updated but the change is not reflected in the URI.
 	instance.updateUrl = function() {
-		var filterParams = instance.filter.toParams();
-		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		delete filterParams.internal;
-		var queryString = UrlTools.paramsToQueryString(filterParams);
+		var urlParams = instance.filter.toParams();
+		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
+		delete urlParams.internal;
+
+		//used to keep scrollpos when navigating back
+		if (instance.courseLimit.get() > instance.courseBlockSize) {
+			urlParams.coursesAmount = instance.courseLimit.get();
+		}
+		var queryString = UrlTools.paramsToQueryString(urlParams);
 
 		var options = {};
 
@@ -79,7 +84,8 @@ Template.find.onCreated(function() {
 	instance.showingFilters = new ReactiveVar(false);
 	instance.categorySearch = new ReactiveVar('');
 	instance.categorySearchResults = new ReactiveVar(Categories);
-	instance.courseLimit = new ReactiveVar(36);
+	instance.courseBlockSize = 36;
+	instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	var filter = Courses.Filtering();
@@ -87,11 +93,21 @@ Template.find.onCreated(function() {
 
 	// Read URL state
 	instance.autorun(function() {
-		var query = Template.currentData();
+		const query = Template.currentData();
+
 		filter
 			.clear()
 			.read(query)
 			.done();
+
+		if (query.coursesAmount) {
+			const coursesAmount = parseInt(query.coursesAmount);
+			if (coursesAmount > instance.courseBlockSize) {
+				instance.courseLimit.set(coursesAmount);
+			}
+		} else {
+			instance.courseLimit.set(instance.courseBlockSize);
+		}
 	});
 
 	// When there are filters set, show the filtering pane
@@ -196,7 +212,8 @@ Template.find.events({
 
 	"click .js-more-courses"(event, instance) {
 		var courseLimit = instance.courseLimit;
-		courseLimit.set(courseLimit.get() + 36);
+		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
+		instance.updateUrl();
 	}
 });
 
