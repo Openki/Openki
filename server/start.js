@@ -31,7 +31,6 @@ Meteor.startup(function () {
 		robots.addLine('Disallow:');
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
-		robots.addLine('Sitemap: ' + Meteor.absoluteUrl('/', {secure: true}) + 'sitemap.xml')
 	}
 
 	var serviceConf = Meteor.settings.service;
