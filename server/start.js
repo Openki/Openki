@@ -25,6 +25,12 @@ Meteor.startup(function () {
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
 	} else {
+		robots.addLine('User-agent: Googlebot');
+		robots.addLine('Disallow:');
+		robots.addLine('User-agent: Duckduckbot');
+		robots.addLine('Disallow:');
+		robots.addLine('User-agent: *');
+		robots.addLine('Disallow: /');
 		robots.addLine('Sitemap: ' + Meteor.absoluteUrl('/', {secure: true}) + 'sitemap.xml')
 	}
 
