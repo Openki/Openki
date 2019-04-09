@@ -25,10 +25,13 @@ Meteor.startup(function () {
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
 	} else {
-		robots.addLine('User-agent: Googlebot');
-		robots.addLine('Disallow:');
-		robots.addLine('User-agent: Duckduckbot');
-		robots.addLine('Disallow:');
+		const allowedBots = ['Googlebot', 'Duckduckbot'];
+
+		allowedBots.forEach(function(allowedBot) {
+			robots.addLine('User-agent: ' + allowedBot);
+			robots.addLine('Disallow:');
+		});
+
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
 	}
