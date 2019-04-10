@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
+import Analytics from '/imports/ui/lib/analytics.js';
+
 import './price-policy.html';
 
 Template.pricePolicy.helpers({
@@ -42,12 +44,16 @@ Template.pricePolicyContent.helpers({
 });
 
 Template.pricePolicyContent.events({
-	'click #hidePricePolicy'() {
+	'click .js-hide-price-policy'() {
 		Session.set('hidePricePolicy', true);
 		localStorage.setItem('hidePricePolicy', true);
 
-		// if logged in, hide the policy always for this user
+		// if logged in, hide the policy permanently for this user
 		const user = Meteor.user();
 		if (user) Meteor.call('user.hidePricePolicy', user);
+
+		Analytics.trytrack((tracker) => {
+			tracker.trackEvent('price', 'hide policy');
+		});
 	}
 });
