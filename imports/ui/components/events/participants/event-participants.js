@@ -21,16 +21,20 @@ Template.eventParticipants.helpers({
 	},
 
 	sortedParticipants() {
-		return (
-			this.participants
-			// remove own user if logged in and participant (it then already
-			// appears on top)
-			.filter((participant) => participant !== Meteor.userId())
-		);
-	},
-
-	ownUserParticipant() {
-		return this.participants.find((participant) => participant === Meteor.userId());
+		//check if logged-in user is in participants and if so put him on top (if not already)
+		const userId = Meteor.userId();
+		if (userId && this.participants.includes(userId)) {
+			if (this.participants[0] === userId) {
+				//is already on top
+				return this.participants;
+			} else {
+				const userArrayPosition = this.participants.indexOf(userId);
+				//remove current user form array and readd him at index 0
+				this.participants.splice(userArrayPosition, 1); //remove
+				this.participants.splice(0, 0, userId); //readd
+			}
+		}
+		return this.participants;
 	},
 
 });
@@ -38,8 +42,10 @@ Template.eventParticipants.helpers({
 Template.eventParticipant.onCreated(function() {
 	const instance = this;
 	const eventId = this.data.event._id;
+	const participant = this.data.participant;
 
-	instance.userSub = Meteor.subscribe('user', this.data.participant);
+	instance.userSub = Meteor.subscribe('user', participant);
+	instance.isOwnUserParticipant = participant === Meteor.userId();
 
 	this.state = new ReactiveDict();
 	this.state.setDefault(
@@ -50,7 +56,7 @@ Template.eventParticipant.onCreated(function() {
 
 Template.eventParticipant.helpers({
 	ownUserParticipantClass() {
-		if (this.isOwnUserParticipant) return 'is-own-user';
+		if (Template.instance().isOwnUserParticipant) return 'is-own-user';
 	},
 
 	showContactParticipant() {

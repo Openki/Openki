@@ -13,11 +13,6 @@
 	</div>
 	{{#if participants}}
 		<div class="event-participants">
-			{{#if ownUserParticipant}}
-				{{#with ownUserParticipant}}
-					{{> eventParticipant participant=this event=.. isOwnUserParticipant=true}}
-				{{/with}}
-			{{/if}}
 			{{#each sortedParticipants}}
 				{{> eventParticipant participant=this event=..}}
 			{{/each}}
