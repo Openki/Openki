@@ -22,7 +22,7 @@ import './course-members.html';
 
 Template.courseMembers.onCreated(function() {
 	this.increaseBy = 10;
-	this.membersLimit = new ReactiveVar(this.increaseBy);
+	this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
 });
 
 Template.courseMembers.helpers({
@@ -40,38 +40,42 @@ Template.courseMembers.helpers({
 	},
 
 	sortedMembers() {
+		let members = this.members;
+		members.sort((a, b) => {
+			const aRoles = a.roles.filter((role) => role !== 'participant');
+			const bRoles = b.roles.filter((role) => role !== 'participant');
+			return bRoles.length - aRoles.length;
+		});
+		//check if logged-in user is in participants and if so put him on top (if not already)
+		const userId = Meteor.userId();
+		if (userId && members.some(member => member.user === userId)) {
+			if (members[0].userId !== userId) {
+				const userArrayPosition = members.findIndex((member) => member.user === userId);
+				const currentMember = members[userArrayPosition];
+				//remove current user form array and readd him at index 0
+				members.splice(userArrayPosition, 1); //remove
+				members.splice(0, 0, currentMember); //readd
+			}
+		}
 		return (
-			this.members
-			// remove own user if logged in and course member (it then already
-			// appears on top)
-			.filter((member) => member.user !== Meteor.userId())
-			// sort by amount of roles, not counting 'participant' role
-			.sort((a, b) => {
-				const aRoles = a.roles.filter((role) => role !== 'participant');
-				const bRoles = b.roles.filter((role) => role !== 'participant');
-
-				return bRoles.length - aRoles.length;
-			})
-			// apply limit
-			.slice(0, Template.instance().membersLimit.get())
+			members.slice(0, Template.instance().membersDisplayLimit.get())
 		);
 	},
 
 	limited() {
-		const membersLimit = Template.instance().membersLimit.get();
-		return membersLimit && this.members.length > membersLimit;
+		const membersDisplayLimit = Template.instance().membersDisplayLimit.get();
+		return membersDisplayLimit && this.members.length > membersDisplayLimit;
 	}
 });
 
 Template.courseMembers.events({
-	'click #contactMembers'() {
+	'click .js-contact-members'() {
 		$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
 	},
 
-	'click .js-show-all-members'(e, instance) {
-		var membersLimit = instance.membersLimit;
-
-		membersLimit.set(membersLimit.get() + instance.increaseBy);
+	'click .js-show-more-members': function(e, instance) {
+		const membersDisplayLimit = instance.membersDisplayLimit;
+		membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
 	}
 });
 
@@ -106,9 +110,10 @@ Template.courseMember.onCreated(function() {
 	});
 });
 
+
 Template.courseMember.helpers({
 	ownUserMemberClass() {
-		if (this.isOwnUserMember) return 'is-own-user';
+		if (Template.instance().data.member.user == Meteor.userId()) return 'is-own-user';
     },
 
 	memberRoles() {

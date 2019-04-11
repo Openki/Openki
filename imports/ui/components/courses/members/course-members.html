@@ -10,23 +10,18 @@
 				}
 			{{/mf}}
 			{{#if canNotifyAll}}
-				<i class="fa fa-envelope contact-members" id="contactMembers"></i>
+				<i class="fa fa-envelope contact-members js-contact-members"></i>
 			{{/if}}
 		</h4>
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#if ownUserMember}}
-				{{#with ownUserMember}}
-                	{{> courseMember member=this course=.. isOwnUserMember=true}}
-				{{/with}}
-            {{/if}}
 			{{#each sortedMembers}}
 				{{> courseMember member=this course=..}}
 			{{/each}}
 			{{#if limited}}
 				<button
-					class="btn btn-add course-page-btn js-show-all-members"
+					class="btn btn-add course-page-btn js-show-more-members"
 					type="button">
 					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 					{{#mf KEY='course.members.showMoreParticipants'}}

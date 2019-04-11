@@ -12,7 +12,7 @@ import './event-participants.html';
 
 Template.eventParticipants.onCreated(function() {
 	this.increaseBy = 10;
-	this.participantsShowLimit = new ReactiveVar(this.increaseBy);
+	this.participantsDisplayLimit = new ReactiveVar(this.increaseBy);
 });
 
 Template.eventParticipants.helpers({
@@ -21,31 +21,39 @@ Template.eventParticipants.helpers({
 	},
 
 	sortedParticipants() {
+		const participants = this.participants;
 		//check if logged-in user is in participants and if so put him on top (if not already)
 		const userId = Meteor.userId();
-		if (userId && this.participants.includes(userId)) {
-			if (this.participants[0] === userId) {
-				//is already on top
-				return this.participants;
-			} else {
-				const userArrayPosition = this.participants.indexOf(userId);
+		if (userId && participants.includes(userId)) {
+			if (participants[0] !== userId) {
+				const userArrayPosition = participants.indexOf(userId);
 				//remove current user form array and readd him at index 0
-				this.participants.splice(userArrayPosition, 1); //remove
-				this.participants.splice(0, 0, userId); //readd
+				participants.splice(userArrayPosition, 1); //remove
+				participants.splice(0, 0, userId); //readd
 			}
 		}
-		return this.participants;
+		return participants.slice(0, Template.instance().participantsDisplayLimit.get());
 	},
 
+	limited() {
+		const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
+		return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
+	}
+
+});
+
+Template.eventParticipants.events({
+	'click .js-show-more-participants': function(event, instance) {
+		const participantsDisplayLimit = instance.participantsDisplayLimit;
+		participantsDisplayLimit.set(participantsDisplayLimit.get() + instance.increaseBy);
+	}
 });
 
 Template.eventParticipant.onCreated(function() {
 	const instance = this;
 	const eventId = this.data.event._id;
-	const participant = this.data.participant;
 
-	instance.userSub = Meteor.subscribe('user', participant);
-	instance.isOwnUserParticipant = participant === Meteor.userId();
+	instance.userSub = Meteor.subscribe('user', this.data.participant);
 
 	this.state = new ReactiveDict();
 	this.state.setDefault(
@@ -56,7 +64,7 @@ Template.eventParticipant.onCreated(function() {
 
 Template.eventParticipant.helpers({
 	ownUserParticipantClass() {
-		if (Template.instance().isOwnUserParticipant) return 'is-own-user';
+		if (Template.instance().data.participant == Meteor.userId()) return 'is-own-user';
 	},
 
 	showContactParticipant() {
