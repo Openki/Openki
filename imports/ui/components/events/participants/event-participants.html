@@ -30,47 +30,10 @@
 	{{/if}}
 </template>
 
+
 <template name="eventParticipant">
 	<div class="event-participant {{ownUserParticipantClass}}">
 		{{> profileLink participant}}
-		{{#if showContactParticipant}}
-			<div class="event-participant-contact">
-				{{#if userSubReady}}
-					{{#if userAcceptsMessages}}
-						<button class="btn-link js-show-contact-modal" type="button">
-								<i class="fa fa-envelope"></i>
-						</button>
-					{{else}}
-						<button class="btn-link disabled" type="button">
-								<i class="fa fa-envelope" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
-						</button>
-					{{/if}}
-				{{/if}}
-			</div>
-			{{#if state 'showContactEventParticipantModal'}}
-				{{> contactEventParticipantModal}}
-			{{/if}}
-		{{/if}}
-	</div>
-</template>
-
-<template name="contactEventParticipantModal">
-	<div class="modal contact-event-participant-modal js-contact-event-participant-modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
-						{{#mf KEY='contactEventParticipantModal.writeMessageTo' USER=(username participant)}}
-							Write a message to {USER}
-						{{/mf}}
-						<span class="close" data-dismiss="modal">&times;</span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> sendMessage recipientId=participant eventId=event._id}}
-				</div>
-			</div>
-		</div>
+		{{> participantContact participant=participant}}
 	</div>
 </template>

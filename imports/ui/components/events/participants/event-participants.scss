@@ -1,5 +1,5 @@
 .event-participants {
-	margin-top: $event-details-seperator-height;
+	margin-top: 3px;
 }
 .event-participant {
 	background: $event-page-component-bg;
@@ -11,14 +11,9 @@
 }
 
 .event-participant + .event-participant {
-	margin-top: $event-details-seperator-height;
+	margin-top: 3px
 }
 
 .event-participant > .profilelink {
-	font-size: medium;
-}
-
-.event-participant-contact {
-	@include td-float(right);
 	font-size: medium;
 }

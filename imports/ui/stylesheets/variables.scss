@@ -58,7 +58,6 @@ $event-compact-seperator-height:                 3px;
 $event-compact-with-date-height:                 220px;
 
 $event-page-component-bg:                        $blue-lighter;
-$event-details-seperator-height:				 3px;
 
 // ** Courses
 //========================================================================================
@@ -73,6 +72,8 @@ $course-compact-next-event-color:                $gray-dark;
 
 $course-page-component-bg:                       $blue-lighter;
 $course-details-seperator-height:                3px;
+
+$course-member-comment-border-color:             darken($blue-lighter, 20%);
 
 // ** Buttons
 //========================================================================================

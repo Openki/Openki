@@ -96,8 +96,6 @@
 	position: relative;
 }
 
-$course-member-comment-border-color: darken($blue-lighter, 20%);
-
 .course-member-comment-arrow {
 	border: 5px solid;
 	border-color: transparent transparent $course-member-comment-border-color;

@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert.js';
 import Roles from '/imports/api/roles/roles.js';
 
 import Editable from '/imports/ui/lib/editable.js';
-import Alert from '/imports/api/alerts/alert.js';
+
 import {
 	HasRoleUser,
 	MaySubscribe,
@@ -15,6 +15,7 @@ import {
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
+import '/imports/ui/components/participant/contact/participant-contact.js';
 import '/imports/ui/components/profile-link/profile-link.js';
 import '/imports/ui/components/send-message/send-message.js';
 
@@ -83,13 +84,6 @@ Template.courseMember.onCreated(function() {
 	const instance = this;
 	const courseId = this.data.course._id;
 
-	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{ showContactModal: false }
-	);
-
-	instance.userSub = Meteor.subscribe('user', this.data.member.user);
-
 	instance.editableMessage = new Editable(
 		true,
 		function(newMessage) {
@@ -120,15 +114,6 @@ Template.courseMember.helpers({
 		return this.member.roles.filter(role => role !== 'participant');
 	},
 
-	memberAcceptsMessages() {
-		const user = Meteor.users.findOne(this.member.user);
-		return user && user.acceptsMessages;
-	},
-
-	userSubReady() {
-		return Template.instance().userSub.ready();
-	},
-
 	roleShort() { return 'roles.'+this+'.short'; },
 
 	maySubscribe() {
@@ -155,13 +140,6 @@ Template.courseMember.helpers({
 		const mayChangeComment = this.member.user === Meteor.userId();
 		return this.member.comment || mayChangeComment;
 	},
-
-	showContactMember() {
-		const userId = Meteor.userId();
-		if (!userId) return false;
-
-		return userId !== this.member.user;
-	}
 });
 
 Template.removeFromTeamDropdown.helpers({
@@ -180,27 +158,5 @@ Template.courseMember.events({
 		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
 		return false;
 	},
-
-	'click .js-show-contact-modal'(event, instance) {
-		instance.state.set('showContactModal', true);
-	},
-
-	'hidden.bs.modal .js-contact-member'(event, instance) {
-		instance.state.set('showContactModal', false);
-	}
 });
 
-Template.contactMemberModal.onCreated(function() {
-	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{ messageSent: false }
-	);
-
-	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('.js-contact-member').modal('hide');
-	});
-});
-
-Template.contactMemberModal.onRendered(function() {
-	this.$('.js-contact-member').modal('show');
-});

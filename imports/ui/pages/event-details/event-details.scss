@@ -120,6 +120,6 @@ $event-header-bg: darken($blue-lighter, 5%);
 .event-page-btn {
 	@include btn-lg;
 	@include td-text-align(left);
-	margin-top: $event-details-seperator-height;
+	margin-top: 3px;
 	width: 100%;
 }

@@ -33,27 +33,10 @@
 	{{/if}}
 </template>
 
+
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
 		{{> profilelink member.user}}
-		{{#if showContactMember}}
-			<div class="course-participant-contact">
-				{{#if userSubReady}}
-					{{#if memberAcceptsMessages}}
-						<button class="btn-link js-show-contact-modal" type="button">
-								<i class="fa fa-envelope participant-contact-icon"></i>
-						</button>
-					{{else}}
-						<button class="btn-link disabled" type="button">
-								<i class="fa fa-envelope participant-contact-icon" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
-						</button>
-					{{/if}}
-				{{/if}}
-			</div>
-			{{#if state 'showContactModal'}}
-				{{> contactParticipantModal}}
-			{{/if}}
-		{{/if}}
 		<div class="course-member-roles-wrapper">
 			{{#if memberRoles.length}}
 				<ul class='course-member-roles'>
@@ -82,6 +65,8 @@
 				{{/if}}
 			{{/if}}
 		</div>
+		{{> participantContact participant=member.user}}
+
 		{{#if showMemberComment}}
 			<div class="course-member-comment">
 				<div class="course-member-comment-arrow"></div>
@@ -96,6 +81,7 @@
 		{{/if}}
 	</div>
 </template>
+
 
 <template name="removeFromTeamDropdown">
 	<span class="dropdown">
@@ -132,25 +118,4 @@
 			</li>
 		</ul>
 	</span>
-</template>
-
-<template name="contactMemberModal">
-	<div class="modal js-contact-member" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
-						{{#mf KEY='courseParticipantModal.writeMessageTo' USER=(username member.user)}}
-							Write a message to {USER}
-						{{/mf}}
-						<span class="close" data-dismiss="modal">&times;</span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> sendMessage recipientId=member.user courseId=course._id}}
-				</div>
-			</div>
-		</div>
-	</div>
 </template>
