@@ -11,13 +11,12 @@ import AsyncTools from '/imports/utils/async-tools.js';
 
 updateEmail = function(email, user) {
 
-	const trimmedEmail = email.trim();
-	const newEmail = trimmedEmail || false;
-	const previousEmail = user.emailAddress();
+	const newEmail = email.trim() || false;
+	const oldEmail = user.emailAddress();
 
 	//for users with email not yet set, we dont want to force them
 	//to enter a email when they change other profile settings.
-	if (newEmail || newEmail !== previousEmail) {
+	if (newEmail || newEmail !== oldEmail) {
 		// Working under the assumption that there is only one address
 		// if there was more than one address oops I accidentally your addresses
 		if (newEmail) {
@@ -26,7 +25,7 @@ updateEmail = function(email, user) {
 			}
 
 			// Don't allow using an address somebody else uses
-			if (Accounts.findUserByEmail(newEmail)) {
+			if (Accounts.findUserByEmail(newEmail) && newEmail !== oldEmail) {
 				return ApiError('emailExists', 'Email already exists.');
 			}
 			Profile.Email.change(user._id, newEmail, "profile change");
