@@ -25,7 +25,8 @@ updateEmail = function(email, user) {
 			}
 
 			// Don't allow using an address somebody else uses
-			if (Accounts.findUserByEmail(newEmail) && newEmail !== oldEmail) {
+			const userHasEmail = Accounts.findUserByEmail(newEmail);
+			if (userHasEmail && userHasEmail._id !== user._id) {
 				return ApiError('emailExists', 'Email already exists.');
 			}
 			Profile.Email.change(user._id, newEmail, "profile change");
