@@ -25,15 +25,8 @@ Meteor.startup(function () {
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
 	} else {
-		const allowedBots = ['Googlebot', 'Duckduckbot'];
-
-		allowedBots.forEach(function(allowedBot) {
-			robots.addLine('User-agent: ' + allowedBot);
-			robots.addLine('Disallow:');
-		});
-
 		robots.addLine('User-agent: *');
-		robots.addLine('Disallow: /');
+		robots.addLine('Disallow: ');
 	}
 
 	var serviceConf = Meteor.settings.service;
