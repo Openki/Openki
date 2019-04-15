@@ -25,7 +25,8 @@ Meteor.startup(function () {
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');
 	} else {
-		robots.addLine('Sitemap: ' + Meteor.absoluteUrl('/', {secure: true}) + 'sitemap.xml')
+		robots.addLine('User-agent: *');
+		robots.addLine('Disallow: ');
 	}
 
 	var serviceConf = Meteor.settings.service;
