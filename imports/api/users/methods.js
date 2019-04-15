@@ -16,24 +16,17 @@ updateEmail = function(email, user) {
 
 	//for users with email not yet set, we dont want to force them
 	//to enter a email when they change other profile settings.
-	if (newEmail || newEmail !== oldEmail) {
-		// Working under the assumption that there is only one address
-		// if there was more than one address oops I accidentally your addresses
-		if (newEmail) {
-			if (! IsEmail(newEmail)) {
-				return ApiError('emailNotValid', 'email invalid');
-			}
+	if (newEmail === oldEmail) return;
 
-			// Don't allow using an address somebody else uses
-			const userHasEmail = Accounts.findUserByEmail(newEmail);
-			if (userHasEmail && userHasEmail._id !== user._id) {
-				return ApiError('emailExists', 'Email already exists.');
-			}
-			Profile.Email.change(user._id, newEmail, "profile change");
-		} else {
-			return ApiError('noEmail', 'Please enter a email.');
-		}
-	}
+	if (!newEmail) return ApiError('noEmail', 'Please enter a email.');
+
+	if (!IsEmail(newEmail)) return ApiError('emailNotValid', 'email invalid');
+
+	// Don't allow using an address somebody else uses
+	const existingUser = Accounts.findUserByEmail(newEmail);
+	if (existingUser) return ApiError('emailExists', 'Email already exists.');
+
+	Profile.Email.change(user._id, newEmail, "profile change");
 };
 
 Meteor.methods({
