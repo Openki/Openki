@@ -22,15 +22,12 @@ Template.eventParticipants.helpers({
 
 	sortedParticipants() {
 		const participants = this.participants;
-		//check if logged-in user is in participants and if so put him on top (if not already)
 		const userId = Meteor.userId();
 		if (userId && participants.includes(userId)) {
-			if (participants[0] !== userId) {
-				const userArrayPosition = participants.indexOf(userId);
-				//remove current user form array and readd him at index 0
-				participants.splice(userArrayPosition, 1); //remove
-				participants.splice(0, 0, userId); //readd
-			}
+			const userArrayPosition = participants.indexOf(userId);
+			//remove current user form array and readd him at index 0
+			participants.splice(userArrayPosition, 1); //remove
+			participants.splice(0, 0, userId); //readd
 		}
 		return participants.slice(0, Template.instance().participantsDisplayLimit.get());
 	},

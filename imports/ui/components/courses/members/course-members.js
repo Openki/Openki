@@ -47,16 +47,14 @@ Template.courseMembers.helpers({
 			const bRoles = b.roles.filter((role) => role !== 'participant');
 			return bRoles.length - aRoles.length;
 		});
-		//check if logged-in user is in participants and if so put him on top (if not already)
+		//check if logged-in user is in members and if so put him on top
 		const userId = Meteor.userId();
 		if (userId && members.some(member => member.user === userId)) {
-			if (members[0].userId !== userId) {
-				const userArrayPosition = members.findIndex((member) => member.user === userId);
-				const currentMember = members[userArrayPosition];
-				//remove current user form array and readd him at index 0
-				members.splice(userArrayPosition, 1); //remove
-				members.splice(0, 0, currentMember); //readd
-			}
+			const userArrayPosition = members.findIndex((member) => member.user === userId);
+			const currentMember = members[userArrayPosition];
+			//remove current user form array and readd him at index 0
+			members.splice(userArrayPosition, 1); //remove
+			members.splice(0, 0, currentMember); //readd
 		}
 		return (
 			members.slice(0, Template.instance().membersDisplayLimit.get())
