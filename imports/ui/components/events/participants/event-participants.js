@@ -53,6 +53,6 @@ Template.eventParticipant.onCreated(function() {
 
 Template.eventParticipant.helpers({
 	ownUserParticipantClass() {
-		if (Template.instance().data.participant == Meteor.userId()) return 'is-own-user';
+		if (this.participant === Meteor.userId()) return 'is-own-user';
 	},
 });
