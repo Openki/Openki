@@ -105,7 +105,7 @@ Template.courseMember.onCreated(function() {
 
 Template.courseMember.helpers({
 	ownUserMemberClass() {
-		if (Template.instance().data.member.user == Meteor.userId()) return 'is-own-user';
+		if (this.member.user == Meteor.userId()) return 'is-own-user';
     },
 
 	memberRoles() {
