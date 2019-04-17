@@ -41,33 +41,16 @@
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
 		{{> profilelink member.user}}
-		{{#if memberRoles.length}}
-			<ul class='course-member-roles'>
-				{{#each memberRoles}}
-					<li class='{{this}} course-member-role'>
-						<span class="course-member-role-text">
-							<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-							<span class="role-short">{{mf roleShort}}</span>
-						</span>
-						{{#with ..}}
-							{{#if mayUnsubscribeFromTeam ..}}
-								{{> removeFromTeamDropdown}}
-							{{/if}}
-						{{/with}}
-					</li>
-				{{/each}}
-			</ul>
-		{{/if}}
 		{{#if showContactMember}}
 			<div class="course-participant-contact">
 				{{#if userSubReady}}
 					{{#if memberAcceptsMessages}}
 						<button class="btn-link js-show-contact-modal" type="button">
-								<i class="fa fa-envelope"></i>
+								<i class="fa fa-envelope participant-contact-icon"></i>
 						</button>
 					{{else}}
 						<button class="btn-link disabled" type="button">
-								<i class="fa fa-envelope" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
+								<i class="fa fa-envelope participant-contact-icon" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
 						</button>
 					{{/if}}
 				{{/if}}
@@ -76,14 +59,34 @@
 				{{> contactParticipantModal}}
 			{{/if}}
 		{{/if}}
-		{{#if maySubscribe}}
-			<button type="button" class="btn btn-add js-add-to-team-btn"
-				data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
-				data-tooltip-direction="e">
-				<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
-				<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
-			</button>
-		{{/if}}
+		<div class="course-member-roles-wrapper">
+			{{#if memberRoles.length}}
+				<ul class='course-member-roles'>
+					{{#each memberRoles}}
+						<li class='{{this}} course-member-role'>
+							<span class="course-member-role-text">
+								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
+								<span class="role-short">{{mf roleShort}}</span>
+							</span>
+							{{#with ..}}
+								{{#if mayUnsubscribeFromTeam ..}}
+									{{> removeFromTeamDropdown}}
+								{{/if}}
+							{{/with}}
+						</li>
+					{{/each}}
+				</ul>
+			{{else}}
+				{{#if maySubscribe}}
+					<button type="button" class="btn btn-add js-add-to-team-btn"
+						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
+						data-tooltip-direction="e">
+						<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
+						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+					</button>
+				{{/if}}
+			{{/if}}
+		</div>
 		{{#if showMemberComment}}
 			<div class="course-member-comment">
 				<div class="course-member-comment-arrow"></div>

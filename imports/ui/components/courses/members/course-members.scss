@@ -27,9 +27,12 @@
 	font-size: medium;
 }
 
-.course-member-roles {
+.course-member-roles-wrapper {
 	@include td-float(right);
 	display: inline-block;
+}
+
+.course-member-roles {
 	list-style: none;
 	margin-bottom: 0;
 
@@ -126,4 +129,8 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 	@include td-padding(left, 0);
 	display: inline-block;
 	font-size: medium;
+}
+
+.participant-contact-icon {
+	font-size: 0.9em;
 }
