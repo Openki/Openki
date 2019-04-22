@@ -1,14 +1,19 @@
+import { Accounts } from 'meteor/accounts-base'
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
 
+createDummy = function() {
+	return "test" + Date.now() + Math.random(1000);
+}
+
 if (Meteor.isClient) {
 	describe('Profile', function() {
 		this.timeout(2000);
+		const dummy = createDummy()
 		describe('User creation', function() {
 			it('updates the acceptsMessage flag', function() {
 				return new Promise((resolve, reject) => {
-					const dummy = "test" + Date.now() + Math.random(1000);
 					Accounts.createUser({
 						username: dummy,
 						email: dummy + "@openki.example",
@@ -25,6 +30,65 @@ if (Meteor.isClient) {
 					});
 				});
 			});
+		});
+		describe('User modification', function() {
+			this.timeout(1000)
+			const changedDummy = createDummy()
+			it('changes the username', function() {
+				return new Promise((resolve, reject) => {
+					const user = Accounts.findUserByUsername(dummy);
+					Meteor.call('user.updateData',
+						createDummy(),
+						user.emails[0].address,
+						user.notifications,
+						function(err) {
+							if (err) {
+								assert.isNotOk(error, "not expecting username-change errors");
+							} else {
+								assert.isOk('username-change passed');
+							}
+						}
+					);
+				});
+			});
+
+			it('changes the email-address', function() {
+				return new Promise((resolve, reject) => {
+					const user = Accounts.findUserByUsername(changedDummy);
+					Meteor.call('user.updateData',
+						user.username,
+						user.username + '@openki.example',
+						user.notifications,
+						function(err) {
+							if (err) {
+								assert.isNotOk(error, "not expecting email-change errors");
+							} else {
+								assert.isOk('email-change passed');
+							}
+						}
+					);
+				});
+			});
+
+			it('changes the notifiction-settings', function() {
+				return new Promise((resolve, reject) => {
+					const user = Accounts.findUserByUsername(changedDummy);
+					Meteor.call('user.updateData',
+						user.username,
+						user.emails[0].address,
+						!user.notifications,
+						function(err) {
+							if (err) {
+								assert.isNotOk(error, "not expecting notification-change errors");
+							} else {
+								assert.isOk('notification-change passed');
+							}
+						}
+					);
+				});
+			});
+			//delete the user
+
 		});
 	});
 }
