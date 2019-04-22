@@ -43,9 +43,9 @@ if (Meteor.isClient) {
 						user.notifications,
 						function(err) {
 							if (err) {
-								assert.isNotOk(error, "not expecting username-change errors");
+								assert.isNotOk(err, "not expecting username-change errors");
 							} else {
-								assert.isOk('username-change passed');
+								assert.isOk(true, 'username-change passed');
 							}
 						}
 					);
@@ -61,9 +61,9 @@ if (Meteor.isClient) {
 						user.notifications,
 						function(err) {
 							if (err) {
-								assert.isNotOk(error, "not expecting email-change errors");
+								assert.isNotOk(err, "not expecting email-change errors");
 							} else {
-								assert.isOk('email-change passed');
+								assert.isOk(true, 'email-change passed');
 							}
 						}
 					);
@@ -79,16 +79,14 @@ if (Meteor.isClient) {
 						!user.notifications,
 						function(err) {
 							if (err) {
-								assert.isNotOk(error, "not expecting notification-change errors");
+								assert.isNotOk(err, "not expecting notification-change errors");
 							} else {
-								assert.isOk('notification-change passed');
+								assert.isOk(true, 'notification-change passed');
 							}
 						}
 					);
 				});
 			});
-			//delete the user
-
 		});
 	});
 }
