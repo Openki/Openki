@@ -131,6 +131,11 @@ $course-member-comment-border-color: darken($blue-lighter, 20%);
 	font-size: medium;
 }
 
+.course-participant-contact .disabled .participant-contact-icon {
+	color: #C0C0C0;
+}
+
 .participant-contact-icon {
-	font-size: 0.9em;
+	color: #8dc3d6;
+	font-size: 0.8em;
 }
