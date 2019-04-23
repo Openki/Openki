@@ -1,14 +1,13 @@
-import { Accounts } from 'meteor/accounts-base'
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
 
-createDummy = function() {
+const createDummy = function() {
 	return "test" + Date.now() + Math.random(1000);
 }
 
 if (Meteor.isClient) {
-	describe('Profile', function() {
+	describe.only('Profile', function() {
 		this.timeout(2000);
 		const dummy = createDummy()
 		describe('User creation', function() {
@@ -33,10 +32,21 @@ if (Meteor.isClient) {
 		});
 		describe('User modification', function() {
 			this.timeout(1000)
-			const changedDummy = createDummy()
+			const changedDummy = createDummy();
 			it('changes the username', function() {
 				return new Promise((resolve, reject) => {
-					const user = Accounts.findUserByUsername(dummy);
+
+				}, (err) => {
+
+				}).then(() => new Promise((done, reject) => {
+					Meteor.loginWithPassword(dummy, "hunter2", (err, response) => {
+						if (err) reject(err);
+						else done();
+					});
+				}).then(
+					console.log('loggd in user -> ' + Meteor.userId());
+				).then(
+					const user = Meteor.user();
 					Meteor.call('user.updateData',
 						createDummy(),
 						user.emails[0].address,
@@ -44,48 +54,14 @@ if (Meteor.isClient) {
 						function(err) {
 							if (err) {
 								assert.isNotOk(err, "not expecting username-change errors");
-							} else {
-								assert.isOk(true, 'username-change passed');
 							}
 						}
 					);
-				});
-			});
-
-			it('changes the email-address', function() {
-				return new Promise((resolve, reject) => {
-					const user = Accounts.findUserByUsername(changedDummy);
-					Meteor.call('user.updateData',
-						user.username,
-						user.username + '@openki.example',
-						user.notifications,
-						function(err) {
-							if (err) {
-								assert.isNotOk(err, "not expecting email-change errors");
-							} else {
-								assert.isOk(true, 'email-change passed');
-							}
-						}
-					);
-				});
-			});
-
-			it('changes the notifiction-settings', function() {
-				return new Promise((resolve, reject) => {
-					const user = Accounts.findUserByUsername(changedDummy);
-					Meteor.call('user.updateData',
-						user.username,
-						user.emails[0].address,
-						!user.notifications,
-						function(err) {
-							if (err) {
-								assert.isNotOk(err, "not expecting notification-change errors");
-							} else {
-								assert.isOk(true, 'notification-change passed');
-							}
-						}
-					);
-				});
+				).then(
+					//check if username has changed to the correct string
+					const user = Meteor.user();
+					assert.strictMatch(user.username, changedDummy, "username was changed successfully");
+				);
 			});
 		});
 	});
