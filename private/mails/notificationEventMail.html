@@ -101,21 +101,21 @@
 					</tr>
 					<tr>
 						<td width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-							<span style="font-size: 14px; font-weight: bold;">
+							<div style="font-size: 14px; font-weight: bold;">
 								{{event.title}}
-							</span>
-							<br />
-							<div style="overflow: auto;">
+							</div>
+							<div style="padding-top: 2em;">
 								{{mf "notification.event.mail.informRegisterEvent" "Please inform if you participate in this event:" LOCALE=locale}}
 							</div>
-							<div style="text-align: center; margin: 2em 0;">
+							<div style="text-align: center; padding: 2em 0;">
 								<a href="{{eventLink}}?action=register" bgcolor="#3f819e" style="padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
 									{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
 								</a>
 							</div>
 							<br />
-							{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
-							<br />
+							<div style="font-weight: bold;">
+								{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
+							</div>
 							{{{event.description}}}
 						</td>
 					</tr>
