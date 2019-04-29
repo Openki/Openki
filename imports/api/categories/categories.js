@@ -55,5 +55,6 @@ export default Categories = {
 		, 'experimental'
 		, 'spiritual'
 		, 'education'
+		, 'ecology'
 		]
 };
