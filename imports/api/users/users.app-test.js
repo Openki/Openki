@@ -3,16 +3,16 @@ import { assert } from 'chai';
 
 
 const createDummy = function() {
-	return "test" + Date.now() + Math.random(1000);
+	return "test" + Date.now() + Math.random(1000000);
 }
 
 if (Meteor.isClient) {
-	describe.only('Profile', function() {
+	describe('Profile', function() {
 		this.timeout(2000);
-		const dummy = createDummy()
 		describe('User creation', function() {
 			it('updates the acceptsMessage flag', function() {
 				return new Promise((resolve, reject) => {
+					const dummy = createDummy();
 					Accounts.createUser({
 						username: dummy,
 						email: dummy + "@openki.example",
@@ -30,37 +30,59 @@ if (Meteor.isClient) {
 				});
 			});
 		});
+
 		describe('User modification', function() {
 			this.timeout(1000)
-			const changedDummy = createDummy();
+			const oldDummy = createDummy();
+			const newDummy = createDummy();
 			it('changes the username', function() {
 				return new Promise((resolve, reject) => {
+					Accounts.createUser({
+						username: oldDummy,
+						email: oldDummy + "@openki.example",
+						profile: { name : oldDummy },
+						password: "hunter2"
+					}, (err) => {
+						assert.isNotOk(error, "not expecting creation errors");
 
-				}, (err) => {
-
-				}).then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword(dummy, "hunter2", (err, response) => {
-						if (err) reject(err);
-						else done();
 					});
-				}).then(
-					console.log('loggd in user -> ' + Meteor.userId());
-				).then(
+					done();
+				}, (err) => {
+					assert.isNotOk(error, "not expecting creation errors");
+				}).then((value) => {
+					// Meteor.loginWithPassword(dummy, "hunter2", (err, response) => {
+					// 	if (err) reject(err);
+					// 	else done();
+					// });
+					console.log('########logged in user -> ' + Meteor.userId());
+				}).then((value) => {
+						console.log('logged in user -> ' + Meteor.userId());
+				}).then((value) => {
 					const user = Meteor.user();
 					Meteor.call('user.updateData',
-						createDummy(),
+						newDummy,
 						user.emails[0].address,
 						user.notifications,
 						function(err) {
 							if (err) {
 								assert.isNotOk(err, "not expecting username-change errors");
 							}
+
+							Meteor.users.find({ username: newDummy}).observe({
+								added: resolve
+							});
 						}
 					);
-				).then(
-					//check if username has changed to the correct string
-					const user = Meteor.user();
-					assert.strictMatch(user.username, changedDummy, "username was changed successfully");
+				}, (reason) => {
+					console.log(reason);
+				}).then((value) => {
+						//check if username has changed to the correct string
+						const user = Meteor.user();
+						assert.strictEqual(newDummy, user.username, "username was changed successfully");
+						done();
+					}, (reason) => {
+						console.log(reason);
+					}
 				);
 			});
 		});
