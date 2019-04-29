@@ -6,8 +6,8 @@
 
 ## Author's checklist
 - [ ] Follow the [Style Guide](https://gitlab.com/Openki/Openki/wikis/Naming%20and%20Syntax%20Convention).
-- [ ] Issue that will be resolved exists and is mentioned in the branche's Name
-- [ ] I thought about writing a test ;)
+- [ ] Issue being solved is linked
+- [ ] A test that checks the issue is resolved (If you don't know how to do that, create the MR as WIP)
 
 ## Review checklist
 All reviewers can help ensure accuracy, clarity, completeness, and adherence to the [Style Guide](https://gitlab.com/Openki/Openki/wikis/Naming%20and%20Syntax%20Convention).
