@@ -94,9 +94,7 @@ Template.sendMessage.events({
 				} else {
 					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					instance.state.set('message', '');
-
-					const parentState = instance.parentInstance().state;
-					if (parentState) parentState.set('messageSent', true);
+					if (data.onDone) data.onDone();
 				}
 			}
 		);

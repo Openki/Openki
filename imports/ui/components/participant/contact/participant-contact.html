@@ -34,7 +34,7 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					{{> sendMessage recipientId=participant courseId=course._id eventId=event._id}}
+					{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
 				</div>
 			</div>
 		</div>

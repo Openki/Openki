@@ -38,15 +38,18 @@ Template.participantContact.events({
 	}
 });
 
-Template.participantContactModal.onCreated(function() {
-	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{ messageSent: false }
-	);
 
-	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('.js-participant-contact-modal').modal('hide');
-	});
+
+Template.participantContactModal.onCreated(function() {
+	this.hideModal = () => {
+		this.$('.js-participant-contact-modal').modal('hide');
+	};
+});
+
+Template.participantContactModal.helpers( {
+	hideModal() {
+		return Template.instance().hideModal;
+	}
 });
 
 Template.participantContactModal.onRendered(function() {
