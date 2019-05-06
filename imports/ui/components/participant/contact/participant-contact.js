@@ -39,7 +39,6 @@ Template.participantContact.events({
 });
 
 Template.participantContactModal.onCreated(function() {
-	console.log(this);
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{ messageSent: false }
