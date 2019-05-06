@@ -13,30 +13,25 @@
 				{{/if}}
 			{{/if}}
 		</div>
-		{{#if state 'showParticipantContactModal'}}
-			{{> participantContactModal}}
-		{{/if}}
-	{{/if}}
-</template>
-
-
-<template name="participantContactModal">
-	<div class="modal js-participant-contact-modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
-						{{#mf KEY='participantContactModal.writeMessageTo' USER=(username participant)}}
-							Write a message to {USER}
-						{{/mf}}
-						<span class="close" data-dismiss="modal">&times;</span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
+		{{#if state 'showModal'}}
+			<div class="modal js-participant-contact-modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
+								{{#mf KEY='participantContactModal.writeMessageTo' USER=(username participant)}}
+									Write a message to {USER}
+								{{/mf}}
+								<span class="close" data-dismiss="modal">&times;</span>
+							</h4>
+						</div>
+						<div class="modal-body">
+							{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		{{/if}}
+	{{/if}}
 </template>
