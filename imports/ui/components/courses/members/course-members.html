@@ -37,6 +37,7 @@
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
 		{{> profilelink member.user}}
+		{{> participantContact participant=member.user course=course}}
 		<div class="course-member-roles-wrapper">
 			{{#if memberRoles.length}}
 				<ul class='course-member-roles'>
@@ -65,7 +66,6 @@
 				{{/if}}
 			{{/if}}
 		</div>
-		{{> participantContact participant=member.user course=course}}
 
 		{{#if showMemberComment}}
 			<div class="course-member-comment">
