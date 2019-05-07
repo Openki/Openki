@@ -52,11 +52,30 @@ Template.event.onCreated(function() {
 
 	this.userRegisteredForEvent = new ReactiveVar(false);
 
-	this.autorun(()=> {
+	this.autorun(() => {
 		this.userRegisteredForEvent.set(
 			event.participants && event.participants.includes(Meteor.userId())
 		);
 	});
+
+	this.addParticipant = () => {
+		if (PleaseLogin()) return;
+
+		Meteor.call('event.addParticipant', event._id, (err) => {
+			if ( err ) {
+				Alert.error( err, '');
+			} else {
+				this.userRegisteredForEvent.set(true);
+			}
+		});
+	};
+
+	//register from email
+	if (Router.current().params.query.action == 'register') {
+		if (this.userRegisteredForEvent.get()) return;
+
+		this.addParticipant();
+	}
 });
 
 Template.event.helpers({
@@ -132,15 +151,7 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
-		if (PleaseLogin()) return;
-
-		Meteor.call('event.addParticipant', instance.data._id, (err) => {
-			if ( err ) {
-				Alert.error( err, '');
-			} else {
-				instance.userRegisteredForEvent.set(true);
-			}
-		});
+		instance.addParticipant();
 	},
 
 	'click .js-unregister-event'(event, instance) {
