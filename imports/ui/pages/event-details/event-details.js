@@ -49,6 +49,31 @@ Template.event.onCreated(function() {
 	this.busy(false);
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
+
+	this.userRegisteredForEvent = new ReactiveVar(false);
+
+	this.autorun(() => {
+		this.userRegisteredForEvent.set(
+			event.participants && event.participants.includes(Meteor.userId())
+		);
+	});
+
+	this.addParticipant = () => {
+		if (PleaseLogin()) return;
+
+		instance.busy('registering');
+		Meteor.call('event.addParticipant', event._id, (err) => {
+			instance.busy(false);
+			if (err) {
+				Alert.error( err, '');
+			}
+		});
+	};
+
+	//register from email
+	if (Router.current().params.query.action == 'register') {
+		this.addParticipant();
+	}
 });
 
 Template.event.helpers({
@@ -124,15 +149,7 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
-		if (PleaseLogin()) return;
-
-		instance.busy('registering');
-		Meteor.call('event.addParticipant', instance.data._id, (err) => {
-			instance.busy(false);
-			if ( err ) {
-				Alert.error( err, '');
-			}
-		});
+		instance.addParticipant();
 	},
 
 	'click .js-unregister-event'(event, instance) {
