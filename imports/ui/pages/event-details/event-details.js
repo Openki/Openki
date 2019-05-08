@@ -3,7 +3,7 @@ import Courses from '/imports/api/courses/courses.js';
 import Events from '/imports/api/events/events.js';
 import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import Alert from '/imports/api/alerts/alert.js';
@@ -59,14 +59,14 @@ Template.event.onCreated(function() {
 	});
 
 	this.addParticipant = () => {
-		if (PleaseLogin()) return;
-
-		instance.busy('registering');
-		Meteor.call('event.addParticipant', event._id, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.error( err, '');
-			}
+		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
+			instance.busy('registering');
+			Meteor.call('event.addParticipant', event._id, (err) => {
+				instance.busy(false);
+				if (err) {
+					Alert.error( err, '');
+				}
+			});
 		});
 	};
 
