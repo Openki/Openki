@@ -126,22 +126,22 @@ Template.event.events({
 	'click .js-register-event'(event, instance) {
 		if (PleaseLogin()) return;
 
+		instance.busy('registering');
 		Meteor.call('event.addParticipant', instance.data._id, (err) => {
-			instance.busy('registering');
+			instance.busy(false);
 			if ( err ) {
 				Alert.error( err, '');
 			}
-			instance.busy(false);
 		});
 	},
 
 	'click .js-unregister-event'(event, instance) {
+		instance.busy('unregistering');
 		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
-			instance.busy('unregistering');
+			instance.busy(false);
 			if ( err ) {
 				Alert.error( err, '');
 			}
-			instance.busy(false);
 		});
 	},
 });
