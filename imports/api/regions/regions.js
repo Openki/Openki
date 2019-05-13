@@ -6,8 +6,8 @@ import { Mongo } from 'meteor/mongo';
 // name             -> String
 // loc              -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // timeZone         -> String,  ex: "UTC+01:00"
-// courseCount      -> Number of external courses in that region, calculated field
-// futureEventCount -> Number of future external events in that region, calculated field
+// courseCount      -> Number of courses in that region, calculated field (does not count internal courses)
+// futureEventCount -> Number of future events in that region, calculated field (does not count internal courses)
 // featuredGroup    -> ID of featured group
 // ===========================
 

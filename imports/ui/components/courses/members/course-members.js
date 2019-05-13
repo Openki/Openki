@@ -151,7 +151,7 @@ Template.courseMember.helpers({
 		return this.member.comment || mayChangeComment;
 	},
 
-	showContactParticipant() {
+	showContactMember() {
 		const userId = Meteor.userId();
 		if (!userId) return false;
 
