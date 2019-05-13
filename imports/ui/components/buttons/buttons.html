@@ -42,27 +42,3 @@
 		{{/if}}
 	</button>
 </template>
-
-<template name="buttonRegister">
-	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
-		{{#if busy 'registering'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.registering' 'Registering...'}}
-		{{else}}
-			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-			{{mf 'event.details.register' 'Register'}}
-		{{/if}}
-	</button>
-</template>
-
-<template name="buttonUnregister">
-	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
-		{{#if busy 'unregistering'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.unregistering' 'Unregistering...'}}
-		{{else}}
-			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-			{{mf 'event.details.unregister' 'Withdraw my registration'}}
-		{{/if}}
-	</button>
-</template>
