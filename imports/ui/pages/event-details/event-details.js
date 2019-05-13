@@ -11,6 +11,7 @@ import Alert from '/imports/api/alerts/alert.js';
 import '/imports/ui/components/buttons/buttons.js';
 import '/imports/ui/components/courses/categories/course-categories.js';
 import '/imports/ui/components/events/edit/event-edit.js';
+import '/imports/ui/components/events/participants/event-participants.js';
 import '/imports/ui/components/events/replication/event-replication.js';
 import '/imports/ui/components/groups/list/group-list.js';
 import '/imports/ui/components/price-policy/price-policy.js';
@@ -50,19 +51,6 @@ Template.event.onCreated(function() {
 	this.subscribe('courseDetails', event.courseId);
 });
 
-
-TemplateMixins.Expandible(Template.eventDisplay);
-Template.eventDisplay.onCreated(function() {
-	this.locationTracker = LocationTracker();
-	this.replicating = new ReactiveVar(false);
-});
-
-
-Template.eventDisplay.onRendered(function() {
-	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.venue);
-});
-
 Template.event.helpers({
 	course() {
 		if (this.courseId) return Courses.findOne(this.courseId);
@@ -71,8 +59,11 @@ Template.event.helpers({
 	editing() {
 		return this.new || Template.instance().editing.get();
 	},
-});
 
+	userRegisteredForEvent() {
+		return this.participants && this.participants.includes(Meteor.userId())
+	}
+});
 
 Template.eventDisplay.helpers({
 	weekday(date) {
@@ -96,19 +87,18 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
-	'mouseover .event-course-header, mouseout .event-course-header'(e, instance) {
-		instance.$(e.currentTarget).toggleClass('highlight', e.type == 'mouseover');
+	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
+		instance.$(event.currentTarget).toggleClass('highlight', event.type == 'mouseover');
 	},
 
 	'click .event-course-header'() { Router.go('showCourse', { _id: this.courseId }); },
 
-	'click .js-event-delete-confirm'(e, instance) {
-		var event = instance.data;
-
-		var title = event.title;
-		var course = event.courseId;
+	'click .js-event-delete-confirm': function (event, instance) {
+		var oEvent = instance.data;
+		var title = oEvent.title;
+		var course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', event._id, function (error) {
+		Meteor.call('event.remove', oEvent._id, function (error) {
 			instance.busy(false);
 			if (error) {
 				Alert.error(error, 'Could not remove event ' + "'" + title + "'");
@@ -132,6 +122,62 @@ Template.event.events({
 		if (PleaseLogin()) return;
 		instance.editing.set(true);
 	},
+
+	'click .js-register-event'(event, instance) {
+		if (PleaseLogin()) return;
+
+		instance.busy('registering');
+		Meteor.call('event.addParticipant', instance.data._id, (err) => {
+			instance.busy(false);
+			if ( err ) {
+				Alert.error( err, '');
+			}
+		});
+	},
+
+	'click .js-unregister-event'(event, instance) {
+		instance.busy('unregistering');
+		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
+			instance.busy(false);
+			if ( err ) {
+				Alert.error( err, '');
+			}
+		});
+	},
+});
+
+
+TemplateMixins.Expandible(Template.eventDisplay);
+Template.eventDisplay.onCreated(function() {
+	this.locationTracker = LocationTracker();
+	this.replicating = new ReactiveVar(false);
+});
+
+
+Template.eventDisplay.onRendered(function() {
+	this.locationTracker.setRegion(this.data.region);
+	this.locationTracker.setLocation(this.data.venue);
+});
+
+Template.eventDisplay.helpers({
+	weekday(date) {
+		Session.get('timeLocale'); // it depends
+		if (date) return moment(date).format('dddd');
+	},
+
+	mayEdit() {
+		return this.editableBy(Meteor.user());
+	},
+	eventMarkers() {
+		return Template.instance().locationTracker.markers;
+	},
+	hasVenue() {
+		return this.venue && this.venue.loc;
+	},
+
+	replicating() {
+		return Template.instance().replicating.get();
+	},
 });
 
 Template.eventDisplay.events({
@@ -140,7 +186,6 @@ Template.eventDisplay.events({
 		instance.collapse();
 	}
 });
-
 
 
 Template.eventGroupList.helpers({
@@ -231,7 +276,6 @@ Template.eventGroupRemove.events({
 	}
 });
 
-
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
@@ -253,7 +297,6 @@ Template.eventGroupMakeOrganizer.events({
 		});
 	}
 });
-
 
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);

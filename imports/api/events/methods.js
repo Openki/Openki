@@ -347,4 +347,17 @@ Meteor.methods({
 	  *
 	  */
 	'event.editing': UpdateMethods.Editing(Events),
+
+	'event.addParticipant'(eventId) {
+		if ( !Meteor.user() ) {
+			throw new Meteor.Error(401, "please log in");
+		}
+		Events.update({_id: eventId}, { $addToSet: { participants: Meteor.userId() } });
+	},
+	'event.removeParticipant'(eventId) {
+		if ( !Meteor.user() ) {
+			throw new Meteor.Error(401, "please log in");
+		}
+		Events.update({_id: eventId}, { $pull: { participants: Meteor.userId() } });
+	}
 });

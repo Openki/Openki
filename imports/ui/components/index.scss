@@ -19,6 +19,7 @@
 @import 'events/compact/event-compact';
 @import 'events/edit/event-edit';
 @import 'events/edit-location/event-edit-location';
+@import 'events/participants/event-participants';
 @import 'events/replication/event-replication';
 
 @import 'featured-group/featured-group';
@@ -35,6 +36,8 @@
 @import 'map/map';
 
 @import 'navbar/navbar';
+
+@import 'participant/contact/participant-contact';
 
 @import 'price-policy/price-policy';
 

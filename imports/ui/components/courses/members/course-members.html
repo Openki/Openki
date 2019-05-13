@@ -10,23 +10,18 @@
 				}
 			{{/mf}}
 			{{#if canNotifyAll}}
-				<i class="fa fa-envelope contact-members" id="contactMembers"></i>
+				<i class="fa fa-envelope contact-members js-contact-members"></i>
 			{{/if}}
 		</h4>
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#if ownUserMember}}
-				{{#with ownUserMember}}
-                	{{> courseMember member=this course=.. isOwnUserMember=true}}
-				{{/with}}
-            {{/if}}
 			{{#each sortedMembers}}
 				{{> courseMember member=this course=..}}
 			{{/each}}
 			{{#if limited}}
 				<button
-					class="btn btn-add course-page-btn js-show-all-members"
+					class="btn btn-add course-page-btn js-show-more-members"
 					type="button">
 					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 					{{#mf KEY='course.members.showMoreParticipants'}}
@@ -38,27 +33,11 @@
 	{{/if}}
 </template>
 
+
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
 		{{> profilelink member.user}}
-		{{#if showContactMember}}
-			<div class="course-participant-contact">
-				{{#if userSubReady}}
-					{{#if memberAcceptsMessages}}
-						<button class="btn-link js-show-contact-modal" type="button">
-								<i class="fa fa-envelope participant-contact-icon"></i>
-						</button>
-					{{else}}
-						<button class="btn-link disabled" type="button">
-								<i class="fa fa-envelope participant-contact-icon" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
-						</button>
-					{{/if}}
-				{{/if}}
-			</div>
-			{{#if state 'showContactModal'}}
-				{{> contactParticipantModal}}
-			{{/if}}
-		{{/if}}
+		{{> participantContact participant=member.user course=course}}
 		<div class="course-member-roles-wrapper">
 			{{#if memberRoles.length}}
 				<ul class='course-member-roles'>
@@ -87,6 +66,7 @@
 				{{/if}}
 			{{/if}}
 		</div>
+
 		{{#if showMemberComment}}
 			<div class="course-member-comment">
 				<div class="course-member-comment-arrow"></div>
@@ -101,6 +81,7 @@
 		{{/if}}
 	</div>
 </template>
+
 
 <template name="removeFromTeamDropdown">
 	<span class="dropdown">
@@ -137,25 +118,4 @@
 			</li>
 		</ul>
 	</span>
-</template>
-
-<template name="contactParticipantModal">
-	<div class="modal contact-participant js-contact-participant" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
-						{{#mf KEY='courseParticipantModal.writeMessageTo' USER=(username member.user)}}
-							Write a message to {USER}
-						{{/mf}}
-						<span class="close" data-dismiss="modal">&times;</span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					{{> sendMessage recipientId=member.user courseId=course._id}}
-				</div>
-			</div>
-		</div>
-	</div>
 </template>
