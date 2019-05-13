@@ -96,11 +96,13 @@ export class Course {
 
 
 
-export default Courses = new Mongo.Collection("Courses", {
+export const Courses = new Mongo.Collection("Courses", {
 	transform(course) {
 		return _.extend(new Course(), course);
 	}
 });
+
+export default Courses;
 
 Courses.Filtering = () => Filtering(
 	{ region:     Predicates.id

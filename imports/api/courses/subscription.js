@@ -1,4 +1,4 @@
-import { Course } from './courses.js';
+import { Course, Courses } from './courses.js';
 import { User } from '/imports/api/users/users.js';
 import { check } from 'meteor/check';
 
@@ -7,7 +7,7 @@ import Notification from '/imports/notification/notification.js';
 
 export const processChange = function(change, done) {
 	Meteor.call("Course." + change.constructor.name, change.dict(), (err) => {
-		if (err) Alert.error(err);
+		if (err) Alert.error(err, "");
 		if (done) done();
 	});
 };
