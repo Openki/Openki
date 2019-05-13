@@ -17,7 +17,7 @@
 				</h2>
 				<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
 					<i class="fa fa-external-link"></i>
-					{{mf 'event.details.viewCourse' 'view course'}}
+					{{mf 'course.details.viewCourse' 'view course'}}
 				</a>
 				{{> courseCategories course}}
 				{{> regionTag}}
@@ -244,13 +244,13 @@
 				{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-remove js-remove">
-				{{mf 'event.group.confirmRemoveButton'}}
+				{{mf 'course.group.confirmRemoveButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'event.group.remove' 'Remove'}}
+			{{mf 'course.group.remove'}}
 		</a>
 	{{/if}}
 </template>
@@ -260,17 +260,17 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
 			{{#with groupId}}
-				{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}
+				{{mf 'course.group.confirmOrgText' NAME=name}}
 			{{/with}}
 			{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
-				{{mf 'event.group.confimOrgButton' "Give editing rights"}}
+				{{mf 'course.group.confimOrgButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-add">
 			<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
-			{{mf 'event.group.addOrgText'}}
+			{{mf 'course.group.addOrgText'}}
 		</a>
 	{{/if}}
 </template>
@@ -280,16 +280,16 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}
+				{{mf 'course.group.confirmRemoveOrgText' NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-remove js-removeOrganizer">
-				{{mf 'event.group.confimRemoveOrgButton'}}
+				{{mf 'course.group.confimRemoveOrgButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'event.group.removeOrgText' NAME=name}}
+			{{mf 'course.group.removeOrgText' NAME=name}}
 		</a>
 	{{/if}}
 </template>
