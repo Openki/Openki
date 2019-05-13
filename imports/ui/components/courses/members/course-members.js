@@ -7,7 +7,6 @@ import Roles from '/imports/api/roles/roles.js';
 import { Subscribe, Unsubscribe } from '/imports/api/courses/subscription.js';
 
 import Editable from '/imports/ui/lib/editable.js';
-import Alert from '/imports/api/alerts/alert.js';
 import { HasRoleUser } from '/imports/utils/course-role-utils.js';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
