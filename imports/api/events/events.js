@@ -96,9 +96,9 @@ Events.Filtering = () => Filtering(
   * @param {eventId} the event to update
   */
 Events.updateGroups = function(eventId) {
-	AsyncTools.untilClean(function() {
+	AsyncTools.untilClean(function(resolve, reject) {
 		var event = Events.findOne(eventId);
-		if (!event) return true; // Nothing was successfully updated, we're done.
+		if (!event) return resolve(true); // Nothing was successfully updated, we're done.
 
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
@@ -129,18 +129,16 @@ Events.updateGroups = function(eventId) {
 			update.allGroups = _.union(event.groups, courseGroups);
 		}
 
-		return new Promise((resolve, reject) => {
-			Events.rawCollection().update
-				( { _id: event._id }
-				, { $set: update }
-				, (err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}}
-				);
-		});
+		Events.rawCollection().update
+			( { _id: event._id }
+			, { $set: update }
+			, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}}
+			);
 	});
 };
 
