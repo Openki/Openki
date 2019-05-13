@@ -50,19 +50,11 @@ Template.event.onCreated(function() {
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
 
-	this.userRegisteredForEvent = new ReactiveVar(false);
-
-	this.autorun(() => {
-		this.userRegisteredForEvent.set(
-			event.participants && event.participants.includes(Meteor.userId())
-		);
-	});
-
 	this.addParticipant = () => {
 		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
-			instance.busy('registering');
+			this.busy('registering');
 			Meteor.call('event.addParticipant', event._id, (err) => {
-				instance.busy(false);
+				this.busy(false);
 				if (err) {
 					Alert.error( err, '');
 				}
