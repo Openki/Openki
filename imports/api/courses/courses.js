@@ -5,6 +5,8 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 import Filtering from '/imports/utils/filtering.js';
 import Predicates from '/imports/utils/predicates.js';
 
+import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+
 // ======== DB-Model: ========
 // "_id"           -> ID
 // "name"          -> String
@@ -30,38 +32,69 @@ import Predicates from '/imports/utils/predicates.js';
   * nextEvent: next upcoming event object, only includes the _id and start field
   * lastEvent: most recent event object, only includes the _id and start field
   */
-
-Course = function() {
-	this.members = [];
-	this.roles = [];
-	this.groupOrganizers = [];
-};
-
-/** Check whether a user may edit the course.
+// ======== DB-Model: ========
+// "_id"           -> ID
+// "name"          -> String
+// "categories"    -> [ID_categories]
+// "tags"          -> List of Strings  (not used)
+// "groups"        -> List ID_groups
+// groupOrganizers List of group ID that are allowed to edit the course
+// "description"   -> String
+// "slug"          -> String
+// "region"        -> ID_region
+// "date"          -> Date             (what for?)
+// "createdby"     -> ID_user
+// "time_created"  -> Date
+// "time_lastedit" -> Date
+// "roles"         -> [role-keys]
+// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
+// "internal"      -> Boolean
+/** Calculated fields
   *
-  * @param {Object} user
-  * @return {Boolean}
+  * editors: List of user and group id allowed to edit the course, calculated from members and groupOrganizers
+  * futureEvents: count of events still in the future for this course
+  * nextEvent: next upcoming event object, only includes the _id and start field
+  * lastEvent: most recent event object, only includes the _id and start field
   */
-Course.prototype.editableBy = function(user) {
-	if (!user) return false;
-	var isNew = !this._id;
+export class Course {
+	constructor() {
+		this.members = [];
+		this.roles = [];
+		this.groupOrganizers = [];
+	}
 
-	return isNew // Anybody may create a new course
-		|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
-		|| _.intersection(user.badges, this.editors).length > 0;
-};
+    /** Check whether a user may edit the course.
+      *
+      * @param {Object} user
+      * @return {Boolean}
+      */
+	editableBy(user) {
+		if (!user)
+			return false;
+		var isNew = !this._id;
+		return isNew // Anybody may create a new course
+			|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
+			|| _.intersection(user.badges, this.editors).length > 0;
+	}
 
-/** Get list of members with specified role
-  *
-  * @param {String} role like 'team'
-  * @return {List} of members
-  */
-Course.prototype.membersWithRole = function(role) {
-	check(role, String);
-	return this.members.filter(function(member) {
-		return member.roles.indexOf(role) >= 0;
-	});
-};
+    /** Get list of members with specified role
+      *
+      * @param {String} role like 'team'
+      * @return {List} of members
+      */
+	membersWithRole(role) {
+		check(role, String);
+		return this.members.filter(function (member) {
+			return member.roles.indexOf(role) >= 0;
+		});
+	}
+
+	userHasRole(user, role) {
+		return HasRoleUser(this.members, role, user._id);
+	}
+}
+
+
 
 export default Courses = new Mongo.Collection("Courses", {
 	transform(course) {
