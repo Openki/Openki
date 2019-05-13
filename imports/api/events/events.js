@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import Filtering from '/imports/utils/filtering.js';
@@ -130,14 +129,18 @@ Events.updateGroups = function(eventId) {
 			update.allGroups = _.union(event.groups, courseGroups);
 		}
 
-		var r = Events.rawCollection();
-		var result = Meteor.wrapAsync(r.update, r)(
-			{ _id: event._id },
-			{ $set: update },
-			{ fullResult: true }
-		);
-
-		return result.result.nModified === 0;
+		return new Promise((resolve, reject) => {
+			Events.rawCollection().update
+				( { _id: event._id }
+				, { $set: update }
+				, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.result.nModified === 0);
+					}}
+				);
+		});
 	});
 };
 

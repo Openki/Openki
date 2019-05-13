@@ -24,17 +24,28 @@ AsyncTools.logErrors = function(err, ret) {
   * On the client clean() is not run.
   */
 if (Meteor.isServer) {
-	AsyncTools.untilClean = function(clean) {
-		var tries = 0;
-		for (; tries < 3; tries++) {
-			if (clean()) return;
-		}
+	const maxTries = 3;
+	const tryClean = function(clean, tries) {
+		return new Promise((resolve, reject) => {
+			clean(resolve, reject);
+		}).then(function(cleaned) {
+			if (!cleaned) {
+				if (tries < 1) {
+					// Ooops we ran out of tries.
+					// This either means the updates to the cached fields happen faster than
+					// we can cache them (then the cache updates would have to be throttled) or
+					// that the clean function is broken (much more likely).
+					throw new Error("Giving up after trying to apply cleansing function "+maxTries+" times: " + clean);
+				}
+				return tryClean(clean, tries - 1);
+			}
+		}, (reason) => {
+			console.log("Cleansing function failed: "+reason);
+		});
+	};
 
-		// Ooops we ran out of tries.
-		// This either means the updates to the cached fields happen faster than
-		// we can cache them (then the cache updates would have to be throttled) or
-		// that the clean function is broken (much more likely).
-		throw new Error("Giving up after trying to apply cleansing function "+tries+" times.");
+	AsyncTools.untilClean = function(clean) {
+		return tryClean(clean, maxTries);
 	};
 }
 
