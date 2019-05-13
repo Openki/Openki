@@ -21,7 +21,7 @@ AsyncTools.logErrors = function(err, ret) {
   * winning. I have not worked this out formally (nor could I), so this strategy
   * will likely fail in edge cases.
   *
-  * On the client clean() is not run.
+  * On the client clean() is not run and the returned promise doesn't resolve.
   */
 if (Meteor.isServer) {
 	const maxTries = 3;
@@ -50,5 +50,7 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isClient) {
-	AsyncTools.untilClean = function(clean) { /* ignore */ };
+	AsyncTools.untilClean = function(clean) {
+		return new Promise(() => {}); /* promise that doesn't resolve */
+	};
 }
