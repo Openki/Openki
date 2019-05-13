@@ -6,7 +6,7 @@ import { jQuery } from 'meteor/jquery';
 import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test.js';
 
 if (Meteor.isClient) {
-	describe.only('Subscribe to participant role', function() {
+	describe('Subscribe to participant role', function() {
 		this.timeout(10000);
 		const comment = "Bi now, gay later.";
 		it('keeps comment', function() {
