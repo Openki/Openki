@@ -89,8 +89,8 @@ export class Course {
 		});
 	}
 
-	userHasRole(user, role) {
-		return HasRoleUser(this.members, role, user._id);
+	userHasRole(userId, role) {
+		return HasRoleUser(this.members, role, userId);
 	}
 }
 
