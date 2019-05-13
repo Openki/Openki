@@ -82,7 +82,7 @@ Template.courseRole.events({
 	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
-		processChange(change, () => {});
+		processChange(change);
 		return false;
 	},
 

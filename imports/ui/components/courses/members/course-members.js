@@ -181,11 +181,11 @@ Template.removeFromTeamDropdown.helpers({
 Template.courseMember.events({
 	'click .js-add-to-team-btn': function(event, instance) {
 		event.preventDefault();
-		processChange(instance.subscribeToTeam(), () => {});
+		processChange(instance.subscribeToTeam());
 	},
 	'click .js-remove-team': function(event, instance) {
 		event.preventDefault();
-		processChange(instance.removeFromTeam(), () => {});
+		processChange(instance.removeFromTeam());
 	},
 
 	'click .js-show-contact-modal'(event, instance) {
