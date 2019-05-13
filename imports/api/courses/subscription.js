@@ -199,7 +199,8 @@ export class Unsubscribe extends Change {
 
 	validate() {
 		// Do not allow unsubscribing when not subscribed
-		if (this.course.userHasRole(this.user._id, this.role)) {
+		const hasRole = this.course.userHasRole(this.user._id, this.role);
+		if (!hasRole) {
 			throw "not subscribed with role " + this.role;
 		}
 	}
