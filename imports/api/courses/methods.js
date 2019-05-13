@@ -61,11 +61,13 @@ Meteor.methods({
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object),
+			subs:        Match.Optional([String]),
+			unsubs:      Match.Optional([String]),
 			groups:      Match.Optional([String]),
 			internal:    Match.Optional(Boolean),
 		});
 
-		var user = Meteor.user();
+		const user = Meteor.user();
 		if (!user) {
 			if (Meteor.is_client) {
 				PleaseLogin();
@@ -174,6 +176,21 @@ Meteor.methods({
 			Meteor.call('course.updateNextEvent', courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+		}
+
+		if (changes.subs) {
+			const course = Courses.findOne(courseId);
+			for (let role of changes.subs) {
+				const change = new Subscribe(course, user, role);
+				if (change.validFor(user)) change.apply();
+			}
+		}
+		if (changes.unsubs) {
+			const course = Courses.findOne(courseId);
+			for (let role of changes.unsubs) {
+				const change = new Unsubscribe(course, user, role);
+				if (change.validFor(user)) change.apply();
+			}
 		}
 
 		return courseId;
