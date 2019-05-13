@@ -1,5 +1,5 @@
 <template name="eventPage">
-	<div class="container-sm">
+	<div class="container">
 		{{> event}}
 	</div>
 </template>
@@ -9,28 +9,58 @@
 </template>
 
 <template name="event">
-	{{#if course}}
-		<div class="event-course-header">
-			<h2>
-				{{course.name}}
-			</h2>
-			<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
-				<i class="fa fa-external-link"></i>
-				{{mf 'event.details.viewCourse' 'view course'}}
-			</a>
-			{{> courseCategories course}}
-			{{> regionTag}}
-		</div>
-	{{/if}}
-	<div class="event">
-		{{#if editing}}
-			{{> eventEdit}}
-		{{else}}
-			{{> eventDisplay}}
+	<div class="event-wrapper-main">
+		{{#if course}}
+			<div class="event-course-header">
+				<h2>
+					{{course.name}}
+				</h2>
+				<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
+					<i class="fa fa-external-link"></i>
+					{{mf 'event.details.viewCourse' 'view course'}}
+				</a>
+				{{> courseCategories course}}
+				{{> regionTag}}
+			</div>
 		{{/if}}
+		<div class="event">
+			{{#if editing}}
+				{{> eventEdit}}
+			{{else}}
+				{{> eventDisplay}}
+			{{/if}}
+		</div>
+		<div class="page-component">
+			{{> report}}
+		</div>
 	</div>
-	<div class="page-component">
-		{{> report}}
+	<div class="event-wrapper-aside">
+		<div class="page-component">
+			<div class="event-page-component-header">
+				<h4>
+					{{mf 'event.details.registration' 'Registration'}}
+				</h4>
+			</div>
+		</div>
+		<div class="page-component">
+			<b>
+				{{#unless userRegisteredForEvent}}
+					{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+				{{else}}
+					{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+				{{/unless}}
+			</b>
+		</div>
+		<div class="page-component">
+			{{#unless userRegisteredForEvent}}
+				{{> buttonRegister event="js-register-event"}}
+			{{else}}
+				{{> buttonUnregister event="js-unregister-event"}}
+			{{/unless}}
+		</div>
+		<div class="page-component">
+			{{> eventParticipants}}
+		</div>
 	</div>
 </template>
 
@@ -87,7 +117,7 @@
 						{{> buttonEdit event="js-event-edit"}}
 						<button type="button" class="btn btn-edit js-show-replication">
 							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-							{{mf 'course.details.repl_menu_btn' 'Repeat'}}
+							{{mf 'event.details.repl_menu_btn' 'Repeat'}}
 						</button>
 						<a
 							class="btn btn-edit js-download"
@@ -170,7 +200,7 @@
 				aria-haspopup="true"
 				data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-				<span>{{mf 'course.group.addText' 'link a group'}}</span>
+				<span>{{mf 'event.group.addText' 'link a group'}}</span>
 				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
@@ -202,7 +232,6 @@
 
 
 <template name="eventGroupRemove">
-
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
@@ -215,7 +244,7 @@
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.remove' 'Remove'}}
+			{{mf 'course.group.remove'}}
 		</a>
 	{{/if}}
 </template>
@@ -225,11 +254,11 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
 			{{#with groupId}}
-				{{mf 'event.group.confirmOrgText' "Add group {NAME} as organizers?" NAME=name}}
+				{{mf 'course.group.confirmOrgText' NAME=name}}
 			{{/with}}
 			{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
-				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+				{{mf 'course.group.confimOrgButton'}}
 			</button>
 		</div>
 	{{else}}
@@ -240,11 +269,12 @@
 	{{/if}}
 </template>
 
+
 <template name="eventGroupRemoveOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'event.group.confirmRemoveOrgText' "Take away organizer status from group {NAME}" NAME=name}}
+				{{mf 'course.group.confirmRemoveOrgText' NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-remove js-removeOrganizer">
 				{{mf 'course.group.confimRemoveOrgButton'}}
@@ -256,4 +286,28 @@
 			{{mf 'course.group.removeOrgText' NAME=name}}
 		</a>
 	{{/if}}
+</template>
+
+<template name="buttonRegister">
+	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
+		{{#if busy 'registering'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf '_button.registering' 'Registering...'}}
+		{{else}}
+			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+			{{mf 'event.details.register' 'Register'}}
+		{{/if}}
+	</button>
+</template>
+
+<template name="buttonUnregister">
+	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
+		{{#if busy 'unregistering'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf '_button.unregistering' 'Unregistering...'}}
+		{{else}}
+			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+			{{mf 'event.details.unregister' 'Withdraw my registration'}}
+		{{/if}}
+	</button>
 </template>

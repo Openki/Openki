@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert.js';
 import Roles from '/imports/api/roles/roles.js';
 
 import Editable from '/imports/ui/lib/editable.js';
-import Alert from '/imports/api/alerts/alert.js';
+
 import {
 	HasRoleUser,
 	MaySubscribe,
@@ -15,6 +15,7 @@ import {
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
 
 import '/imports/ui/components/editable/editable.js';
+import '/imports/ui/components/participant/contact/participant-contact.js';
 import '/imports/ui/components/profile-link/profile-link.js';
 import '/imports/ui/components/send-message/send-message.js';
 
@@ -22,7 +23,7 @@ import './course-members.html';
 
 Template.courseMembers.onCreated(function() {
 	this.increaseBy = 10;
-	this.membersLimit = new ReactiveVar(this.increaseBy);
+	this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
 });
 
 Template.courseMembers.helpers({
@@ -40,51 +41,46 @@ Template.courseMembers.helpers({
 	},
 
 	sortedMembers() {
+		let members = this.members;
+		members.sort((a, b) => {
+			const aRoles = a.roles.filter((role) => role !== 'participant');
+			const bRoles = b.roles.filter((role) => role !== 'participant');
+			return bRoles.length - aRoles.length;
+		});
+		//check if logged-in user is in members and if so put him on top
+		const userId = Meteor.userId();
+		if (userId && members.some(member => member.user === userId)) {
+			const userArrayPosition = members.findIndex((member) => member.user === userId);
+			const currentMember = members[userArrayPosition];
+			//remove current user form array and readd him at index 0
+			members.splice(userArrayPosition, 1); //remove
+			members.splice(0, 0, currentMember); //readd
+		}
 		return (
-			this.members
-			// remove own user if logged in and course member (it then already
-			// appears on top)
-			.filter((member) => member.user !== Meteor.userId())
-			// sort by amount of roles, not counting 'participant' role
-			.sort((a, b) => {
-				const aRoles = a.roles.filter((role) => role !== 'participant');
-				const bRoles = b.roles.filter((role) => role !== 'participant');
-
-				return bRoles.length - aRoles.length;
-			})
-			// apply limit
-			.slice(0, Template.instance().membersLimit.get())
+			members.slice(0, Template.instance().membersDisplayLimit.get())
 		);
 	},
 
 	limited() {
-		const membersLimit = Template.instance().membersLimit.get();
-		return membersLimit && this.members.length > membersLimit;
+		const membersDisplayLimit = Template.instance().membersDisplayLimit.get();
+		return membersDisplayLimit && this.members.length > membersDisplayLimit;
 	}
 });
 
 Template.courseMembers.events({
-	'click #contactMembers'() {
+	'click .js-contact-members'() {
 		$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
 	},
 
-	'click .js-show-all-members'(e, instance) {
-		var membersLimit = instance.membersLimit;
-
-		membersLimit.set(membersLimit.get() + instance.increaseBy);
+	'click .js-show-more-members': function(e, instance) {
+		const membersDisplayLimit = instance.membersDisplayLimit;
+		membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
 	}
 });
 
 Template.courseMember.onCreated(function() {
 	const instance = this;
 	const courseId = this.data.course._id;
-
-	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{ showContactModal: false }
-	);
-
-	instance.userSub = Meteor.subscribe('user', this.data.member.user);
 
 	instance.editableMessage = new Editable(
 		true,
@@ -106,22 +102,14 @@ Template.courseMember.onCreated(function() {
 	});
 });
 
+
 Template.courseMember.helpers({
 	ownUserMemberClass() {
-		if (this.isOwnUserMember) return 'is-own-user';
+		if (this.member.user == Meteor.userId()) return 'is-own-user';
     },
 
 	memberRoles() {
 		return this.member.roles.filter(role => role !== 'participant');
-	},
-
-	memberAcceptsMessages() {
-		const user = Meteor.users.findOne(this.member.user);
-		return user && user.acceptsMessages;
-	},
-
-	userSubReady() {
-		return Template.instance().userSub.ready();
 	},
 
 	roleShort() { return 'roles.'+this+'.short'; },
@@ -150,13 +138,6 @@ Template.courseMember.helpers({
 		const mayChangeComment = this.member.user === Meteor.userId();
 		return this.member.comment || mayChangeComment;
 	},
-
-	showContactMember() {
-		const userId = Meteor.userId();
-		if (!userId) return false;
-
-		return userId !== this.member.user;
-	}
 });
 
 Template.removeFromTeamDropdown.helpers({
@@ -175,27 +156,5 @@ Template.courseMember.events({
 		Meteor.call("course.removeRole", this.course._id, this.member.user, 'team');
 		return false;
 	},
-
-	'click .js-show-contact-modal'(event, instance) {
-		instance.state.set('showContactModal', true);
-	},
-
-	'hidden.bs.modal .js-contact-participant'(event, instance) {
-		instance.state.set('showContactModal', false);
-	}
 });
 
-Template.contactParticipantModal.onCreated(function() {
-	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{ messageSent: false }
-	);
-
-	this.autorun(() => {
-		if (this.state.get('messageSent')) this.$('.js-contact-participant').modal('hide');
-	});
-});
-
-Template.contactParticipantModal.onRendered(function() {
-	this.$('.js-contact-participant').modal('show');
-});

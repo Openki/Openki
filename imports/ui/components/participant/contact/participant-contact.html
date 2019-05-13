@@ -1,0 +1,37 @@
+<template name="participantContact">
+	{{#if showParticipantContact}}
+		<div class="participant-contact">
+			{{#if userSubReady}}
+				{{#if userAcceptsMessages}}
+					<button class="btn-link js-show-participant-contact-modal" type="button">
+							<i class="fa fa-envelope"></i>
+					</button>
+				{{else}}
+					<button class="btn-link disabled" type="button" disabled>
+							<i class="fa fa-envelope" title="{{mf 'user.acceptsMessages.false' 'User does not accept messages'}}"></i>
+					</button>
+				{{/if}}
+			{{/if}}
+		</div>
+		{{#if state 'showModal'}}
+			<div class="modal js-participant-contact-modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
+								{{#mf KEY='participantContactModal.writeMessageTo' USER=(username participant)}}
+									Write a message to {USER}
+								{{/mf}}
+								<span class="close" data-dismiss="modal">&times;</span>
+							</h4>
+						</div>
+						<div class="modal-body">
+							{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	{{/if}}
+</template>

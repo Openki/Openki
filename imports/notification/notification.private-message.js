@@ -26,10 +26,10 @@ notificationPrivateMessage.record = function(senderId, recipientId, message, rev
 	check(sendCopyToSender, Boolean);
 
 	const optionalId = Match.Optional(String);
-	check(context,
-		{ course: optionalId
-		}
-	);
+	check(context, {
+		course: optionalId,
+		event: optionalId
+	});
 
 	const recipients = [recipientId];
 	if (sendCopyToSender) {

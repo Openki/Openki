@@ -85,6 +85,8 @@ Template.sendMessage.events({
 		const data = Template.currentData();
 		if (data.courseId) options.courseId = data.courseId;
 
+		if (data.eventId) options.eventId = data.eventId;
+
 		Meteor.call('sendEmail', data.recipientId, message,	options, (err) => {
 				instance.busy(false);
 				if (err) {
@@ -92,9 +94,7 @@ Template.sendMessage.events({
 				} else {
 					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					instance.state.set('message', '');
-
-					const parentState = instance.parentInstance().state;
-					if (parentState) parentState.set('messageSent', true);
+					if (data.onDone) data.onDone();
 				}
 			}
 		);
