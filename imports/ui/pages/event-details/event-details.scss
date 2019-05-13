@@ -1,4 +1,4 @@
-$event-header-bg: darken($blue-lighter, 5%);
+$header-bg: darken($blue-lighter, 5%);
 
 .event-wrapper-main {
 	@include td-make-xs-column(12);
@@ -21,14 +21,14 @@ $event-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header {
-	background-color: $event-header-bg;
+	background-color: $header-bg;
 	cursor: pointer;
 	padding: 15px;
 	position: relative;
 	transition: background-color .15s;
 
 	&.highlight {
-		background-color: darken($event-header-bg, 2%);
+		background-color: darken($header-bg, 2%);
 	}
 }
 
@@ -55,7 +55,7 @@ $event-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header + .event {
-	border-color: $event-header-bg;
+	border-color: $header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
 
@@ -83,7 +83,7 @@ $event-header-bg: darken($blue-lighter, 5%);
 }
 
 .event-details-header {
-	background: $event-header-bg;
+	background: $header-bg;
 }
 
 .event-details-header .date {

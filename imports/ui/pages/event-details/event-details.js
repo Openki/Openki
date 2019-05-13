@@ -49,14 +49,6 @@ Template.event.onCreated(function() {
 	this.busy(false);
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
-
-	this.userRegisteredForEvent = new ReactiveVar(false);
-
-	this.autorun(()=> {
-		this.userRegisteredForEvent.set(
-			event.participants && event.participants.includes(Meteor.userId())
-		);
-	});
 });
 
 Template.event.helpers({
@@ -69,7 +61,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return Template.instance().userRegisteredForEvent.get();
+		return this.participants && this.participants.includes(Meteor.userId())
 	}
 });
 
@@ -137,8 +129,6 @@ Template.event.events({
 		Meteor.call('event.addParticipant', instance.data._id, (err) => {
 			if ( err ) {
 				Alert.error( err, '');
-			} else {
-				instance.userRegisteredForEvent.set(true);
 			}
 		});
 	},
@@ -147,45 +137,11 @@ Template.event.events({
 		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
 			if ( err ) {
 				Alert.error( err, '');
-			} else {
-				instance.userRegisteredForEvent.set(false);
 			}
 		});
 	},
 });
 
-TemplateMixins.Expandible(Template.eventDisplay);
-Template.eventDisplay.onCreated(function() {
-	this.locationTracker = LocationTracker();
-	this.replicating = new ReactiveVar(false);
-});
-
-
-Template.eventDisplay.onRendered(function() {
-	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.venue);
-});
-
-Template.eventDisplay.helpers({
-	weekday(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('dddd');
-	},
-
-	mayEdit() {
-		return this.editableBy(Meteor.user());
-	},
-	eventMarkers() {
-		return Template.instance().locationTracker.markers;
-	},
-	hasVenue() {
-		return this.venue && this.venue.loc;
-	},
-
-	replicating() {
-		return Template.instance().replicating.get();
-	},
-});
 
 TemplateMixins.Expandible(Template.eventDisplay);
 Template.eventDisplay.onCreated(function() {
@@ -226,7 +182,6 @@ Template.eventDisplay.events({
 		instance.collapse();
 	}
 });
-
 
 
 Template.eventGroupList.helpers({
