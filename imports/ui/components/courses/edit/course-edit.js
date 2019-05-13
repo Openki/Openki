@@ -423,7 +423,6 @@ Template.courseTitle.onCreated(function() {
 	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
 
 	this.autorun(() => {
-		const search = this.proposedSearch.get();
 		if (this.dropdownVisible()) {
 			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get(), region: Session.get('region')});
 			if (!this.$('.dropdown').hasClass('open')) {
