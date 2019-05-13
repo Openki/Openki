@@ -53,15 +53,9 @@
 		</div>
 		<div class="page-component">
 			{{#unless userRegisteredForEvent}}
-				<button type="button" class="btn btn-add btn-event js-register-event">
-					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					{{mf 'event.details.register' 'Register'}}
-				</button>
+				{{> buttonRegister event="js-register-event"}}
 			{{else}}
-				<button type="button" class="btn btn-cancel btn-event js-unregister-event">
-					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-					{{mf 'event.details.unregister' 'Withdraw my registration'}}
-				</button>
+				{{> buttonUnregister event="js-unregister-event"}}
 			{{/unless}}
 		</div>
 		<div class="page-component">
