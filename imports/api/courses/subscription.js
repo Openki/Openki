@@ -7,7 +7,10 @@ import Notification from '/imports/notification/notification.js';
 
 export const processChange = function(change, done) {
 	Meteor.call("Course." + change.constructor.name, change.dict(), (err) => {
-		if (err) Alert.error(err, "");
+		if (err) {
+			console.log(err);
+			Alert.error(err, "");
+		}
 		if (done) done();
 	});
 };
