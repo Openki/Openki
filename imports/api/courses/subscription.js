@@ -102,12 +102,12 @@ export class Subscribe extends Change {
 
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw new ValidationError("No role " + role);
+			throw new ValidationError("No role " + this.role);
 		}
 
 		// Do not allow subscribing when already subscribed
 		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw new ValidationError("Already subscribed as " + role);
+			throw new ValidationError("Already subscribed as " + this.role);
 		}
 	}
 
