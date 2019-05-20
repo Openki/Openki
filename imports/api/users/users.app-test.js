@@ -4,7 +4,7 @@ import { assert } from 'chai';
 
 const createDummy = function() {
 	return "test" + Date.now() + Math.random(1000000);
-}
+};
 
 if (Meteor.isClient) {
 	describe('Profile', function() {
