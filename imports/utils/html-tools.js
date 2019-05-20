@@ -9,6 +9,7 @@ export default HtmlTools = {};
   * @return {String} HTMLized version of text
   */
 HtmlTools.plainToHtml = function(text) {
+	check(text, String);
 	return text
 		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")

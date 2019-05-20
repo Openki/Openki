@@ -6,8 +6,11 @@ import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils.js';
 import Notification from '/imports/notification/notification.js';
 
 export const processChange = function(change, done) {
-	Meteor.call("Course." + change.constructor.name, change.dict(), (err) => {
-		if (err) Alert.error(err, "");
+	Meteor.call(change.constructor.method, change.dict(), (err) => {
+		if (err) {
+			console.log(err);
+			Alert.error(err, "");
+		}
 		if (done) done();
 	});
 };
@@ -23,6 +26,16 @@ const checkCourse = function(obj) {
 		throw new Meteor.Error("Match failed", "Expected Course object");
 	}
 };
+
+class ValidationError {
+	constructor(message) {
+		this.message = message;
+	}
+
+	toString() {
+		return this.message;
+	}
+}
 
 /** A change by a user
  *
@@ -44,13 +57,18 @@ class Change {
 		try {
 			this.validate();
 		} catch(e) {
-			return false;
+			if (e instanceof ValidationError) {
+				return false;
+			}
+			throw e;
 		}
 		return this.permitted(operator);
 	}
 }
 
 export class Subscribe extends Change {
+	static get method() { return "Courses.Subscribe"; }
+
 	static read(body) {
 		check(body, Object);
 		return new this
@@ -77,14 +95,19 @@ export class Subscribe extends Change {
 		this.comment = comment;
 	}
 
+	toString() {
+		return this.constructor.method +
+		    "("+this.role+")";
+	}
+
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw "No role " + role;
+			throw new ValidationError("No role " + this.role);
 		}
 
 		// Do not allow subscribing when already subscribed
 		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw "Already subscribed as " + role;
+			throw new ValidationError("Already subscribed as " + this.role);
 		}
 	}
 
@@ -173,6 +196,8 @@ export class Subscribe extends Change {
 }
 
 export class Unsubscribe extends Change {
+	static get method() { return "Courses.Unsubscribe"; }
+
 	static read(body) {
 		return new this
 			( Courses.findOne(body.courseId)
@@ -194,10 +219,16 @@ export class Unsubscribe extends Change {
 		this.role = role;
 	}
 
+	toString() {
+		return this.constructor.method +
+		    "("+this.role+")";
+	}
+
 	validate() {
 		// Do not allow unsubscribing when not subscribed
-		if (this.course.userHasRole(this.user._id, this.role)) {
-			throw "not subscribed with role " + this.role;
+		const hasRole = this.course.userHasRole(this.user._id, this.role);
+		if (!hasRole) {
+			throw new ValidationError("not subscribed with role " + this.role);
 		}
 	}
 
@@ -254,6 +285,8 @@ export class Unsubscribe extends Change {
 
 
 export class Message extends Change {
+	static get method() { return "Courses.Message"; }
+
 	static read(body) {
         return new this
             ( Courses.findOne(body.courseId)
@@ -273,6 +306,10 @@ export class Message extends Change {
 
 		check(message, Match.Optional(String));
 		this.message = message;
+	}
+
+	toString() {
+		return this.constructor.method + "()";
 	}
 
 	validate() {

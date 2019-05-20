@@ -89,8 +89,8 @@ export class Course {
 		});
 	}
 
-	userHasRole(user, role) {
-		return HasRoleUser(this.members, role, user._id);
+	userHasRole(userId, role) {
+		return HasRoleUser(this.members, role, userId);
 	}
 }
 
@@ -117,9 +117,10 @@ Courses.Filtering = () => Filtering(
 
 // Update list of editors
 Courses.updateGroups = function(courseId) {
-	AsyncTools.untilClean(function() {
+	AsyncTools.untilClean(function(resolve, reject) {
 		var course = Courses.findOne(courseId);
-		if (!course) return true; // Yes Mylord the nonexisting course was duly updated please don't throw a tantrum
+		// If the course doesn't exist it doesn't need updating
+		if (!course) return resolve(true);
 
 		var editors = course.groupOrganizers.slice();
 
@@ -129,24 +130,30 @@ Courses.updateGroups = function(courseId) {
 			}
 		});
 
-		// We have to use the Mongo collection API because Meteor does not
-		// expose the modification counter
-		var rawCourses = Courses.rawCollection();
-		var result = Meteor.wrapAsync(rawCourses.update, rawCourses)(
-			{ _id: course._id },
-			{ $set: { editors: editors } },
-			{ fullResult: true }
-		);
-		return result.result.nModified === 0;
+		const update = { $set: { editors: editors } };
+
+		Courses.rawCollection().update
+			( { _id: course._id}
+			, update
+			, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}}
+			);
+	}).then(() => {
+		// At some point we'll have to figure out a proper caching hierarchy
+		Meteor.call('event.updateGroups', { courseId: courseId });
+	}, (reason) => {
+		console.log("Failed updateGroups: "+reason);
 	});
 
-	// At some point we'll have to figure out a proper caching hierarchy
-	Meteor.call('event.updateGroups', { courseId: courseId });
 };
 
 Courses.findFilter = function(filter, limit, sort_params) {
 
-	check(sort_params, Match.Optional([[Match.Any]]))
+	check(sort_params, Match.Optional([[Match.Any]]));
 
 	const order = sort_params || [];
 
