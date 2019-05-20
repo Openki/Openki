@@ -27,6 +27,16 @@ const checkCourse = function(obj) {
 	}
 };
 
+class ValidationError {
+	constructor(message) {
+		this.message = message;
+	}
+
+	toString() {
+		return this.message;
+	}
+}
+
 /** A change by a user
  *
  * A change can validate() itself and knows who is permitted() to apply()
@@ -47,7 +57,10 @@ class Change {
 		try {
 			this.validate();
 		} catch(e) {
-			return false;
+			if (e instanceof ValidationError) {
+				return false;
+			}
+			throw e;
 		}
 		return this.permitted(operator);
 	}
@@ -82,14 +95,19 @@ export class Subscribe extends Change {
 		this.comment = comment;
 	}
 
+	toString() {
+		return this.constructor.method +
+		    "("+this.role+")";
+	}
+
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw "No role " + role;
+			throw new ValidationError("No role " + role);
 		}
 
 		// Do not allow subscribing when already subscribed
 		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw "Already subscribed as " + role;
+			throw new ValidationError("Already subscribed as " + role);
 		}
 	}
 
@@ -201,11 +219,16 @@ export class Unsubscribe extends Change {
 		this.role = role;
 	}
 
+	toString() {
+		return this.constructor.method +
+		    "("+this.role+")";
+	}
+
 	validate() {
 		// Do not allow unsubscribing when not subscribed
 		const hasRole = this.course.userHasRole(this.user._id, this.role);
 		if (!hasRole) {
-			throw "not subscribed with role " + this.role;
+			throw new ValidationError("not subscribed with role " + this.role);
 		}
 	}
 
@@ -283,6 +306,10 @@ export class Message extends Change {
 
 		check(message, Match.Optional(String));
 		this.message = message;
+	}
+
+	toString() {
+		return this.constructor.method + "()";
 	}
 
 	validate() {
