@@ -6,7 +6,7 @@ import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils.js';
 import Notification from '/imports/notification/notification.js';
 
 export const processChange = function(change, done) {
-	Meteor.call("Course." + change.constructor.name, change.dict(), (err) => {
+	Meteor.call(change.constructor.method, change.dict(), (err) => {
 		if (err) {
 			console.log(err);
 			Alert.error(err, "");
@@ -54,6 +54,8 @@ class Change {
 }
 
 export class Subscribe extends Change {
+	static get method() { return "Courses.Subscribe"; }
+
 	static read(body) {
 		check(body, Object);
 		return new this
@@ -176,6 +178,8 @@ export class Subscribe extends Change {
 }
 
 export class Unsubscribe extends Change {
+	static get method() { return "Courses.Unsubscribe"; }
+
 	static read(body) {
 		return new this
 			( Courses.findOne(body.courseId)
@@ -258,6 +262,8 @@ export class Unsubscribe extends Change {
 
 
 export class Message extends Change {
+	static get method() { return "Courses.Message"; }
+
 	static read(body) {
         return new this
             ( Courses.findOne(body.courseId)

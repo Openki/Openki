@@ -23,29 +23,29 @@ const registerMethod = function(method) {
 		try {
 			change.validate();
 		} catch(message) {
-			throw new Meteor.Error(method.name + ".invalid", "change invalid", message);
+			throw new Meteor.Error("invalid", "Invalid change "+change+":"+message, message);
 		}
 
 		const operator = Meteor.user();
 		
 		if (!change.permitted(operator)) {
-			throw new Meteor.Error(method.name + ".not.permitted", "Not permitted", operator);
+			throw new Meteor.Error("not-permitted", "Change not permitted: "+change, operator);
 		}
 
 		const rel = [ operator._id ];
 		const body = { operatorId: operator._id };
 		change.provide(rel, body);
-		const result = Log.record(method.name, rel, body);
+		const result = Log.record(method.method, rel, body);
 		try {
 			change.apply();
 		} catch(message) {
 			result.error(message);
-			throw new Meteor.Error(method.name + ".error.applying", "Error applying change");
+			throw new Meteor.Error("error-applying", "Error applying change "+change+": "+message, message);
 		}
 		result.success();
 	};
 
-	Meteor.methods({["Course." + method.name]: apply});
+	Meteor.methods({[method.method]: apply});
 };
 
 registerMethod(Subscribe);
