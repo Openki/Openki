@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 		});
 
 		describe('User modification', function() {
-			this.timeout(1000)
+			this.timeout(10000);
 			const oldDummy = createDummy();
 			const newDummy = createDummy();
 			it('changes the username', function() {
@@ -43,47 +43,41 @@ if (Meteor.isClient) {
 						profile: { name : oldDummy },
 						password: "hunter2"
 					}, (err) => {
-						assert.isNotOk(error, "not expecting creation errors");
-
+						if (err) reject(err);
+						else resolve();
 					});
-					done();
-				}, (err) => {
-					assert.isNotOk(error, "not expecting creation errors");
-				}).then((value) => {
-					// Meteor.loginWithPassword(dummy, "hunter2", (err, response) => {
-					// 	if (err) reject(err);
-					// 	else done();
-					// });
-					console.log('########logged in user -> ' + Meteor.userId());
-				}).then((value) => {
-						console.log('logged in user -> ' + Meteor.userId());
-				}).then((value) => {
-					const user = Meteor.user();
-					Meteor.call('user.updateData',
-						newDummy,
-						user.emails[0].address,
-						user.notifications,
-						function(err) {
-							if (err) {
-								assert.isNotOk(err, "not expecting username-change errors");
-							}
-
-							Meteor.users.find({ username: newDummy}).observe({
-								added: resolve
-							});
-						}
-					);
-				}, (reason) => {
-					console.log(reason);
-				}).then((value) => {
-						//check if username has changed to the correct string
+				}).then(() => {
+					return new Promise((resolve, reject) => {
+						Meteor.loginWithPassword(oldDummy, "hunter2", (err, response) => {
+							if (err) reject(err);
+							else resolve();
+						});
+					});
+				}).then(() => {
+					return new Promise((resolve, reject) => {
 						const user = Meteor.user();
-						assert.strictEqual(newDummy, user.username, "username was changed successfully");
-						done();
-					}, (reason) => {
-						console.log(reason);
-					}
-				);
+						Meteor.call('user.updateData',
+							newDummy,
+							user.emails[0].address,
+							user.notifications,
+							function(err) {
+								if (err) {
+									assert.isNotOk(err, "not expecting username-change errors");
+								}
+
+								Meteor.users.find({ username: newDummy}).observe({
+									added: (user) => {
+										resolve();
+									}
+								});
+							}
+						);
+					});
+				}).then(() => {
+					//check if username has changed to the correct string
+					const user = Meteor.user();
+					assert.strictEqual(newDummy, user.username, "username was changed successfully");
+				});
 			});
 		});
 	});
