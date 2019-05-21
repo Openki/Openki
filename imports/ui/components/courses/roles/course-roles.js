@@ -22,6 +22,22 @@ Template.courseRole.onCreated(function() {
 		const user = Users.currentUser();
 		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
 	};
+
+	// unsubscribe by email
+	// HACK this is not the right place to act on router actions
+	if (Router.current().params.query.unsubscribe === this.data.roletype.type) {
+		SaveAfterLogin(this, mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'), () => {
+			const user = Meteor.user();
+			const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
+			if (change.validFor(user)) {
+				processChange(change, ()=> {
+					Alert.success(mf("course.roles.unsubscribed", {NAME: this.data.course.name}, "Unsubscribed from course {NAME}"));
+				});
+			} else {
+				console.log(change+" not valid for "+user);
+			}
+		});
+	}
 });
 
 Template.courseRole.helpers({

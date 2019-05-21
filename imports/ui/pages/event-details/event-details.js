@@ -3,7 +3,7 @@ import Courses from '/imports/api/courses/courses.js';
 import Events from '/imports/api/events/events.js';
 import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
 import Alert from '/imports/api/alerts/alert.js';
@@ -49,6 +49,23 @@ Template.event.onCreated(function() {
 	this.busy(false);
 	this.editing = new ReactiveVar(!event._id);
 	this.subscribe('courseDetails', event.courseId);
+
+	this.addParticipant = () => {
+		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
+			this.busy('registering');
+			Meteor.call('event.addParticipant', event._id, (err) => {
+				this.busy(false);
+				if (err) {
+					Alert.error( err, '');
+				}
+			});
+		});
+	};
+
+	// register from email
+	if (Router.current().params.query.action == 'register') {
+		this.addParticipant();
+	}
 });
 
 Template.event.helpers({
@@ -61,7 +78,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return this.participants && this.participants.includes(Meteor.userId())
+		return this.participants && this.participants.includes(Meteor.userId());
 	}
 });
 
@@ -124,15 +141,7 @@ Template.event.events({
 	},
 
 	'click .js-register-event'(event, instance) {
-		if (PleaseLogin()) return;
-
-		instance.busy('registering');
-		Meteor.call('event.addParticipant', instance.data._id, (err) => {
-			instance.busy(false);
-			if ( err ) {
-				Alert.error( err, '');
-			}
-		});
+		instance.addParticipant();
 	},
 
 	'click .js-unregister-event'(event, instance) {

@@ -5,6 +5,9 @@
 	<title>{{subject}}</title>
 	<style type="text/css">
 		table td {border-collapse: collapse;}
+		/*Recommended embedded CSS for Outlook.com*/
+		.ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td {line-height: 100%;}
+		.ExternalClass {width: 100%;}
 	</style>
 </head>
 <body>
@@ -75,7 +78,7 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
 						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-							<div style="float: right">
+							<div style="float: right;">
 								<a href="{{eventLink}}">
 									<i class="fa fa-calendar"></i>
 									{{mf 'notification.event.viewEvent' 'view event' LOCALE=locale}}
@@ -101,13 +104,15 @@
 					</tr>
 					<tr>
 						<td width="400" valign="top" bgcolor="#d9eaf2" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-							<a href="{{eventLink}}" style="color: #333333 !important; text-decoration: none !important;">
-								<span style="font-size: 14px; font-weight: bold;">
-									{{event.title}}
-								</span>
-								<br />
+							<p style="font-size: 14px; font-weight: bold;">
+								{{event.title}}
+							</p>
+							<p style="font-weight: bold;">
+								{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
+							</p>
+							<p>
 								{{{event.description}}}
-							</a>
+							</p>
 						</td>
 					</tr>
 					<tr>
@@ -119,6 +124,22 @@
 						</td>
 					</tr>
 				</table>
+				<p style="padding-top: 2em;">
+					{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
+				</p>
+				<div style="text-align: center; padding: 2em 0;">
+					<a class="button" href="{{eventLink}}?action=register" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
+						{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
+					</a>
+				</div>
+				<p style="padding-top: 2em;">
+					{{mf "notification.event.mail.notinterested" "Not interested anymore?"}}
+				</p>
+				<div style="text-align: center; padding: 2em 0;">
+					<a class="button" href="{{courseLink}}?unsubscribe=participant" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
+						{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
+					</a>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -132,7 +153,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#dddddd !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all further notifications" LOCALE=locale}}
+								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all Openki's notifications." LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile'}}" style="color:#dddddd !important; text-decoration: underline;">
