@@ -36,13 +36,13 @@
 
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
-		{{> profilelink member.user}}
-		{{> participantContact participant=member.user course=course}}
-		<div class="course-member-roles-wrapper">
+		<div class="clearfix">
+			{{> profilelink member.user}}
+			{{> participantContact participant=member.user course=course}}
 			{{#if memberRoles.length}}
-				<ul class='course-member-roles'>
+				<ul class='course-member-roles pull-right clearfix'>
 					{{#each memberRoles}}
-						<li class='{{this}} course-member-role'>
+						<li class='{{this}} course-member-role pull-right'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
 								<span class="role-short">{{mf roleShort}}</span>
