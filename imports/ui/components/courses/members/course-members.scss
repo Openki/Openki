@@ -27,11 +27,6 @@
 	font-size: medium;
 }
 
-.course-member-roles-wrapper {
-	@include td-float(right);
-	display: inline-block;
-}
-
 .course-member-roles {
 	list-style: none;
 	margin-bottom: 0;
