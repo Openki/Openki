@@ -78,7 +78,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return this.participants && this.participants.includes(Meteor.userId())
+		return this.participants && this.participants.includes(Meteor.userId());
 	}
 });
 
