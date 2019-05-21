@@ -8,7 +8,7 @@ import Regions from '/imports/api/regions/regions.js';
 import Roles from '/imports/api/roles/roles.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
 
-import {Subscribe, Unsubscribe, Message} from './subscription.js';
+import {Subscribe, Unsubscribe, Message, processChange} from './subscription.js';
 
 import AsyncTools from '/imports/utils/async-tools.js';
 import StringTools from '/imports/utils/string-tools.js';
@@ -27,7 +27,7 @@ const registerMethod = function(method) {
 		}
 
 		const operator = Meteor.user();
-		
+
 		if (!change.permitted(operator)) {
 			throw new Meteor.Error("not-permitted", "Change not permitted: "+change, operator);
 		}
@@ -182,14 +182,14 @@ Meteor.methods({
 			const course = Courses.findOne(courseId);
 			for (let role of changes.subs) {
 				const change = new Subscribe(course, user, role);
-				if (change.validFor(user)) change.apply();
+				if (change.validFor(user)) processChange(change);
 			}
 		}
 		if (changes.unsubs) {
 			const course = Courses.findOne(courseId);
 			for (let role of changes.unsubs) {
 				const change = new Unsubscribe(course, user, role);
-				if (change.validFor(user)) change.apply();
+				if (change.validFor(user)) processChange(change);
 			}
 		}
 
