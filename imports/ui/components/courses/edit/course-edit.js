@@ -296,6 +296,18 @@ Template.courseEdit.events({
 			changes.groups = groups;
 		}
 
+		changes.subs = [];
+		changes.unsubs = [];
+		instance.$('.js-check-enroll').each(function() {
+			const role = this.name;
+			const subscribe = !!this.checked;
+			if (subscribe) {
+				changes.subs.push(role);
+			} else {
+				changes.unsubs.push(role);
+			} 
+		});
+
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
@@ -324,11 +336,6 @@ Template.courseEdit.events({
 
 						Router.go('showCourse', { _id: courseId });
 					}
-
-					instance.$('.js-check-enroll').each(function() {
-						const method = this.checked ? 'course.addRole' : 'course.removeRole';
-						Meteor.call(method, courseId, Meteor.userId(), this.name);
-					});
 				}
 			});
 		});
@@ -416,7 +423,6 @@ Template.courseTitle.onCreated(function() {
 	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
 
 	this.autorun(() => {
-		const search = this.proposedSearch.get();
 		if (this.dropdownVisible()) {
 			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get(), region: Session.get('region')});
 			if (!this.$('.dropdown').hasClass('open')) {

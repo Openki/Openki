@@ -275,14 +275,14 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach(function(event) {
 			const eventId = event._id;
 
-			AsyncTools.untilClean(function() {
+			AsyncTools.untilClean(function(resolve, reject) {
 				var event = Events.findOne(eventId);
-				if (!event) return true; // Nothing was successfully updated, we're done.
+				if (!event) return resolve(true); // Nothing was successfully updated, we're done.
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
 					Events.update(event._id, { $set:{ venue: {} }});
-					return false;
+					return resolve(false);
 				}
 
 				var venue = false;
@@ -293,7 +293,7 @@ Meteor.methods({
 				var update;
 				if (venue) {
 					// Do not update venue for historical events
-					if (event.start < new Date()) return true;
+					if (event.start < new Date()) return resolve(true);
 
 					// Sync values to the values set in the venue document
 					update = { $set: {
@@ -306,16 +306,18 @@ Meteor.methods({
 					update = { $unset: { 'venue._id': 1 }};
 				}
 
-				// We have to use the Mongo collection API because Meteor does not
-				// expose the modification counter
-				var r = Events.rawCollection();
-				var result = Meteor.wrapAsync(r.update, r)(
-					{ _id: event._id },
-					update,
-					{ fullResult: true }
-				);
-
-				return result.result.nModified === 0;
+				Events.rawCollection().update
+					({ _id: event._id }
+					, update
+					, (err, result) => {
+						if (err) {
+							reject(err);
+						} else {
+							resolve(result.result.nModified === 0);
+						}}
+					);
+			}).catch((reason) => {
+				console.log("Failed event.updateVenue: ", reason);
 			});
 		});
 	},

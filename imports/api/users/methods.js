@@ -109,9 +109,9 @@ Meteor.methods({
 		Meteor.users.find(selector).forEach(function(user) {
 			const userId = user._id;
 
-			AsyncTools.untilClean(function() {
+			AsyncTools.untilClean(function(resolve, reject) {
 				var user = Meteor.users.findOne(userId);
-				if (!user) return true;
+				if (!user) return resolve(true);
 
 				var groups = [];
 				Groups.find({ members: user._id }).forEach(function(group) {
@@ -121,17 +121,23 @@ Meteor.methods({
 				var badges = groups.slice();
 				badges.push(user._id);
 
-				var rawUsers = Meteor.users.rawCollection();
-				var result = Meteor.wrapAsync(rawUsers.update, rawUsers)(
-					{ _id: user._id },
-					{ $set: {
-						groups: groups,
-						badges: badges,
-					} },
-					{ fullResult: true }
-				);
+				const update =
+					{ $set:
+						{ groups: groups
+						, badges: badges
+						}
+					};
 
-				return result.result.nModified === 0;
+				Meteor.users.rawCollection().update
+					( { _id: user._id }
+					, update
+					, function(err, result) {
+						if (err) {
+							reject(err);
+						} else {
+							resolve(result.result.nModified === 0);
+						}}
+					);
 			});
 		});
 	},

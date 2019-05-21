@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import Courses from './courses.js';
+import { Course, Courses } from './courses.js';
 import Events from '/imports/api/events/events.js';
 import Groups from '/imports/api/groups/groups.js';
 import Regions from '/imports/api/regions/regions.js';
@@ -23,29 +23,29 @@ const registerMethod = function(method) {
 		try {
 			change.validate();
 		} catch(message) {
-			throw new Meteor.Error(method.name + ".invalid", "change invalid", message);
+			throw new Meteor.Error("invalid", "Invalid change "+change+":"+message, message);
 		}
 
 		const operator = Meteor.user();
 		
 		if (!change.permitted(operator)) {
-			throw new Meteor.Error(method.name + ".not.permitted", "Not permitted", operator);
+			throw new Meteor.Error("not-permitted", "Change not permitted: "+change, operator);
 		}
 
 		const rel = [ operator._id ];
 		const body = { operatorId: operator._id };
 		change.provide(rel, body);
-		const result = Log.record(method.name, rel, body);
+		const result = Log.record(method.method, rel, body);
 		try {
 			change.apply();
 		} catch(message) {
 			result.error(message);
-			throw new Meteor.Error(method.name + ".error.applying", "Error applying change");
+			throw new Meteor.Error("error-applying", "Error applying change "+change+": "+message, message);
 		}
 		result.success();
 	};
 
-	Meteor.methods({["Course." + method.name]: apply});
+	Meteor.methods({[method.method]: apply});
 };
 
 registerMethod(Subscribe);
@@ -61,11 +61,13 @@ Meteor.methods({
 			name:        Match.Optional(String),
 			region:      Match.Optional(String),
 			roles:       Match.Optional(Object),
+			subs:        Match.Optional([String]),
+			unsubs:      Match.Optional([String]),
 			groups:      Match.Optional([String]),
 			internal:    Match.Optional(Boolean),
 		});
 
-		var user = Meteor.user();
+		const user = Meteor.user();
 		if (!user) {
 			if (Meteor.is_client) {
 				PleaseLogin();
@@ -174,6 +176,21 @@ Meteor.methods({
 			Meteor.call('course.updateNextEvent', courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+		}
+
+		if (changes.subs) {
+			const course = Courses.findOne(courseId);
+			for (let role of changes.subs) {
+				const change = new Subscribe(course, user, role);
+				if (change.validFor(user)) change.apply();
+			}
+		}
+		if (changes.unsubs) {
+			const course = Courses.findOne(courseId);
+			for (let role of changes.unsubs) {
+				const change = new Unsubscribe(course, user, role);
+				if (change.validFor(user)) change.apply();
+			}
 		}
 
 		return courseId;
