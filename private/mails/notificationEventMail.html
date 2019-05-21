@@ -107,20 +107,6 @@
 							<p style="font-size: 14px; font-weight: bold;">
 								{{event.title}}
 							</p>
-							<p style="padding-top: 2em;">
-								{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
-							</p>
-							<div style="text-align: center; padding: 2em 0;">
-								<a class="button" href="{{eventLink}}?action=register" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
-									{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
-								</a>
-							</div>
-							<div style="text-align: center; padding: 2em 0;">
-								{{mf "notification.event.mail.notinterested" "Not interested anymore?"}}
-								<a class="button" href="{{courseLink}}?unsubscribe=participant" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
-									{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
-								</a>
-							</div>
 							<p style="font-weight: bold;">
 								{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
 							</p>
@@ -138,6 +124,22 @@
 						</td>
 					</tr>
 				</table>
+				<p style="padding-top: 2em;">
+					{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
+				</p>
+				<div style="text-align: center; padding: 2em 0;">
+					<a class="button" href="{{eventLink}}?action=register" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
+						{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
+					</a>
+				</div>
+				<p style="padding-top: 2em;">
+					{{mf "notification.event.mail.notinterested" "Not interested anymore?"}}
+				</p>
+				<div style="text-align: center; padding: 2em 0;">
+					<a class="button" href="{{courseLink}}?unsubscribe=participant" bgcolor="#3f819e" style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
+						{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
+					</a>
+				</div>
 			</td>
 		</tr>
 		<tr>
