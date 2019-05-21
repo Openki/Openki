@@ -62,7 +62,7 @@ Template.event.onCreated(function() {
 		});
 	};
 
-	//register from email
+	// register from email
 	if (Router.current().params.query.action == 'register') {
 		this.addParticipant();
 	}
