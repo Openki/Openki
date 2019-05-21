@@ -39,10 +39,10 @@
 		<div class="clearfix">
 			{{> profilelink member.user}}
 			{{> participantContact participant=member.user course=course}}
-			{{#if memberRoles.length}}
-				<ul class='course-member-roles pull-right clearfix'>
+			<div class="course-member-roles">
+				{{#if memberRoles.length}}
 					{{#each memberRoles}}
-						<li class='{{this}} course-member-role pull-right'>
+						<div class='course-member-role pull-right'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
 								<span class="role-short">{{mf roleShort}}</span>
@@ -52,10 +52,9 @@
 									{{> removeFromTeamDropdown}}
 								{{/if}}
 							{{/with}}
-						</li>
+						</div>
 					{{/each}}
-				</ul>
-			{{else}}
+				{{/if}}
 				{{#if maySubscribeToTeam}}
 					<button type="button" class="btn btn-add js-add-to-team-btn pull-right"
 						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
@@ -64,7 +63,8 @@
 						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
 				{{/if}}
-			{{/if}}
+			</div>
+
 		</div>
 
 		{{#if showMemberComment}}
