@@ -2,13 +2,17 @@ import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
 
+const createDummy = function() {
+	return "test" + Date.now() + Math.random(1000000);
+};
+
 if (Meteor.isClient) {
 	describe('Profile', function() {
 		this.timeout(2000);
 		describe('User creation', function() {
 			it('updates the acceptsMessage flag', function() {
 				return new Promise((resolve, reject) => {
-					const dummy = "test" + Date.now() + Math.random(1000);
+					const dummy = createDummy();
 					Accounts.createUser({
 						username: dummy,
 						email: dummy + "@openki.example",
@@ -23,6 +27,56 @@ if (Meteor.isClient) {
 							added: resolve
 						});
 					});
+				});
+			});
+		});
+
+		describe('User modification', function() {
+			this.timeout(10000);
+			const oldDummy = createDummy();
+			const newDummy = createDummy();
+			it('changes the username', function() {
+				return new Promise((resolve, reject) => {
+					Accounts.createUser({
+						username: oldDummy,
+						email: oldDummy + "@openki.example",
+						profile: { name : oldDummy },
+						password: "hunter2"
+					}, (err) => {
+						if (err) reject(err);
+						else resolve();
+					});
+				}).then(() => {
+					return new Promise((resolve, reject) => {
+						Meteor.loginWithPassword(oldDummy, "hunter2", (err, response) => {
+							if (err) reject(err);
+							else resolve();
+						});
+					});
+				}).then(() => {
+					return new Promise((resolve, reject) => {
+						const user = Meteor.user();
+						Meteor.call('user.updateData',
+							newDummy,
+							user.emails[0].address,
+							user.notifications,
+							function(err) {
+								if (err) {
+									assert.isNotOk(err, "not expecting username-change errors");
+								}
+
+								Meteor.users.find({ username: newDummy}).observe({
+									added: (user) => {
+										resolve();
+									}
+								});
+							}
+						);
+					});
+				}).then(() => {
+					//check if username has changed to the correct string
+					const user = Meteor.user();
+					assert.strictEqual(newDummy, user.username, "username was changed successfully");
 				});
 			});
 		});
