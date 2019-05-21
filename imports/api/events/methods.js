@@ -14,6 +14,7 @@ import StringTools from '/imports/utils/string-tools.js';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
 import PleaseLogin from '/imports/ui/lib/please-login.js';
 import UpdateMethods from '/imports/utils/update-methods.js';
+import { Subscribe, processChange } from '/imports/api/courses/subscription.js';
 
 const ReplicaSync = function(event, updateChangedReplicas) {
 	let affected = 0;
@@ -350,11 +351,33 @@ Meteor.methods({
 	  */
 	'event.editing': UpdateMethods.Editing(Events),
 
+	/** Add current user as event-participant
+	  *
+	  * the user is also signed up for the course.
+	  *
+	  * @param {String} eventId - The event to register for
+	  */
 	'event.addParticipant'(eventId) {
-		if ( !Meteor.user() ) {
+		const user = Meteor.user();
+		if ( !user ) {
 			throw new Meteor.Error(401, "please log in");
 		}
-		Events.update({_id: eventId}, { $addToSet: { participants: Meteor.userId() } });
+		Events.update({_id: eventId}, { $addToSet: { participants: user._id } });
+
+
+		const event = Events.findOne(eventId);
+		//ignore broken eventIds
+		if ( ! event) return;
+
+		//if you cant load course its probably because the event doesnt have one
+		const course = Courses.findOne(event.courseId);
+		if ( !course) return;
+
+		const change = new Subscribe(course, user, 'participant');
+
+		if (change.validFor(user)) {
+			processChange(change);
+		}
 	},
 	'event.removeParticipant'(eventId) {
 		if ( !Meteor.user() ) {
