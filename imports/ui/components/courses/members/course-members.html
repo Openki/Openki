@@ -36,13 +36,13 @@
 
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
-		{{> profilelink member.user}}
-		{{> participantContact participant=member.user course=course}}
-		<div class="course-member-roles-wrapper">
-			{{#if memberRoles.length}}
-				<ul class='course-member-roles'>
+		<div class="clearfix">
+			{{> profilelink member.user}}
+			{{> participantContact participant=member.user course=course}}
+			<div class="course-member-roles">
+				{{#if memberRoles.length}}
 					{{#each memberRoles}}
-						<li class='{{this}} course-member-role'>
+						<div class='course-member-role pull-right'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
 								<span class="role-short">{{mf roleShort}}</span>
@@ -52,19 +52,19 @@
 									{{> removeFromTeamDropdown}}
 								{{/if}}
 							{{/with}}
-						</li>
+						</div>
 					{{/each}}
-				</ul>
-			{{else}}
+				{{/if}}
 				{{#if maySubscribeToTeam}}
-					<button type="button" class="btn btn-add js-add-to-team-btn"
+					<button type="button" class="btn btn-add js-add-to-team-btn pull-right"
 						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
 						data-tooltip-direction="e">
 						<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
 						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
 				{{/if}}
-			{{/if}}
+			</div>
+
 		</div>
 
 		{{#if showMemberComment}}
