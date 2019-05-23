@@ -23,7 +23,7 @@
 	outline: none;
 
 	// empty textfield has defined height
-	&:before {
+	&::before {
 		content: '\200b'; // zero-width-space
 	}
 
