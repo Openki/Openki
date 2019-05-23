@@ -47,7 +47,7 @@ Template.deleteEventsModal.onCreated(function() {
 });
 
 Template.deleteEventsModal.onRendered(function() {
-	this.$('#deleteEventsModal').modal('show');
+	this.$('.js-delete-events-modal').modal('show');
 });
 
 Template.deleteEventsModal.helpers({
@@ -71,7 +71,7 @@ Template.deleteEventsModal.helpers({
 });
 
 Template.deleteEventsModal.events({
-	'hidden.bs.modal #deleteEventsModal'(event, instance) {
+	'hidden.bs.modal .js-delete-events-modal'(event, instance) {
 		instance.parentInstance().showModal.set(false);
 	},
 
@@ -138,7 +138,7 @@ Template.deleteEventsModal.events({
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);
-						instance.$('#deleteEventsModal').modal('hide');
+						instance.$('.js-delete-events-modal').modal('hide');
 					}
 				}
 			});
