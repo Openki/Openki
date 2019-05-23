@@ -28,22 +28,18 @@
 }
 
 .course-member-roles {
+	float: right;
 	list-style: none;
-	margin-bottom: 0;
+	margin: 0;
 
 	&:hover {
 		cursor: default;
 	}
 }
 
-.course-member-roles {
-	float: right;
-	margin: 0;
-}
-
 .course-member-role {
-	margin-left: 3px;
 	background: $blue;
+	margin-left: 3px;
 	padding: 3px 6px 5px;
 	vertical-align: middle;
 }
@@ -123,10 +119,10 @@
 }
 
 .course-participant-contact .disabled .participant-contact-icon {
-	color: #C0C0C0;
+	color: #c0c0c0;
 }
 
 .participant-contact-icon {
 	color: #8dc3d6;
-	font-size: 0.8em;
+	font-size: .8em;
 }
