@@ -1,6 +1,7 @@
 .event-participants {
 	margin-top: 3px;
 }
+
 .event-participant {
 	background: $event-page-component-bg;
 	padding: 10px ($grid-gutter-width / 2);
@@ -11,7 +12,7 @@
 }
 
 .event-participant + .event-participant {
-	margin-top: 3px
+	margin-top: 3px;
 }
 
 .event-participant > .profilelink {

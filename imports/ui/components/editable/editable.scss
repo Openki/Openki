@@ -5,6 +5,7 @@
 
 	.editable {
 		padding: 8px;
+
 		&:focus,
 		&.editable-changed {
 			border: 1px solid $brand-primary;
@@ -22,8 +23,8 @@
 	outline: none;
 
 	// empty textfield has defined height
-	&:before {
-		content: "\200b"; // zero-width-space
+	&::before {
+		content: '\200b'; // zero-width-space
 	}
 
 	&:focus,
@@ -86,7 +87,7 @@
 }
 
 .editable-textarea {
-	resize: vertical;
 	height: 100px;
 	overflow: auto;
+	resize: vertical;
 }
