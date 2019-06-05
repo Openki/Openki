@@ -3,6 +3,7 @@ import Courses from '/imports/api/courses/courses.js';
 import Events from '/imports/api/events/events.js';
 import IdTools from '/imports/utils/id-tools.js';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers.js';
+import PleaseLogin from '/imports/ui/lib/please-login.js';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
 import LocationTracker from '/imports/ui/lib/location-tracker.js';
 import TemplateMixins from '/imports/ui/lib/template-mixins.js';
