@@ -69,6 +69,10 @@ Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki 
 
 ## Kurse
 
+### Wie organisiere ich meinen ersten Openki-Kurs?
+
+Details und Tipps findet Ihr in unserem <a href="https://www.google.ch">PDF</a>.
+
 ### Was ist ein Openki-Kurs?
 Siehe oben: ["Was ist ein Openki-Kurs?"](#was-ist-ein-openki-kurs)
 

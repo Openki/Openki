@@ -62,6 +62,10 @@ Groups are already existing organizations, communities, etc., which use Openki t
 
 ## Courses
 
+### How do I organize my first Openki course meeting?
+
+Details and tips can be found in our <a href="https://www.google.ch">PDF</a>.
+
 ### What is an Openki-course?
 
 An Openki course is much more than a typical "classroom" course, and it can include discussions on the participants' content and goals, as well as the engagement of mentors and the organization of events. Like a ship, all participants can control the course and continuously influence and change the goal. The types of possible courses could range from lectures, traditional lessons, workshops, discussion and working groups to alternative education projects and reading groups.
