@@ -62,7 +62,7 @@ Les groupes sont les organisations existantes, communautés, etc, qui utilisent 
 
 ### Comment organiser ma première réunion de cours Openki?
 
-Vous trouverez des détails et des conseils dans notre <a href="https://www.google.ch">PDF</a>.
+Vous trouverez des détails et des conseils dans notre <a href="https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf">PDF</a>.
 
 ### Qu'est-ce qu'un cours Openki ?
 

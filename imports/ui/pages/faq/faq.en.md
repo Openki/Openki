@@ -64,7 +64,7 @@ Groups are already existing organizations, communities, etc., which use Openki t
 
 ### How do I organize my first Openki course meeting?
 
-Details and tips can be found in our <a href="https://www.google.ch">PDF</a>.
+Details and tips can be found in our <a href="https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf">PDF</a>.
 
 ### What is an Openki-course?
 
