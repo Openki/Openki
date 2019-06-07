@@ -39,24 +39,14 @@
 					{{#mf KEY='course.roles.firstSteps.mentionExperience'}}
 						If not done already, please mention in your personal message information about your experience on the topic
 					{{/mf}}
+					{{> courseGuide}}
 				{{/if}}
 				{{#if roleIs 'team'}}
 					{{#mf KEY='course.roles.firstSteps.team'}}
 						If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.
 					{{/mf}}
+					{{> courseGuide}}
 				{{/if}}
-				<br><br>
-				<span>
-					{{#mf KEY='course.roles.firstSteps.guide'}}
-						Further information
-					{{/mf}}
-				&colon;&nbsp;
-					<a href="https://www.google.com" target='_blank'>
-						{{#mf KEY='course.roles.firstSteps.guideLink'}}
-							Openki-Course-Guide
-						{{/mf}}</a>.
-				</span>
-
 				<br><br>
 				{{#mf KEY='course.roles.firstSteps.ifQuestions'}}
 					If you have any questions concerning the course please write a comment in the discussion below.
@@ -124,4 +114,19 @@
 			{{/if}}
 		</div>
 	{{/if}}
+</template>
+
+<template name="courseGuide">
+	<br>
+	<br>
+	<span>
+		{{#mf KEY='course.roles.firstSteps.guide'}}
+			Further information
+		{{/mf}}
+	&colon;&nbsp;
+		<a href="https://www.google.com" target='_blank'>
+			{{#mf KEY='course.roles.firstSteps.guideLink'}}
+				Openki-Course-Guide
+			{{/mf}}</a>.
+	</span>
 </template>
