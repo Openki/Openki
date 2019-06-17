@@ -16,10 +16,11 @@ const helpers = {
 	},
 
 	guideLink() {
-		const lang = 'de';
-		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+		const locale = Session.get('locale');
+		//default fallback language
+		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
 
-		switch(lang) {
+		switch(locale) {
 			case 'de':
 				guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
 				break;
