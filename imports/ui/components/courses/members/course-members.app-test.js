@@ -7,7 +7,7 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test.js';
 
 if (Meteor.isClient) {
 	describe('Subscribe to participant role', function() {
-		this.timeout(10000);
+		this.timeout(30000);
 		const comment = "Bi now, gay later.";
 		it('keeps comment', function() {
 			Router.go("/course/6cac962a5f/game-design-mit-unity");

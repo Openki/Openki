@@ -8,7 +8,7 @@ const createDummy = function() {
 
 if (Meteor.isClient) {
 	describe('Profile', function() {
-		this.timeout(2000);
+		this.timeout(6000);
 		describe('User creation', function() {
 			it('updates the acceptsMessage flag', function() {
 				return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 		});
 
 		describe('User modification', function() {
-			this.timeout(10000);
+			this.timeout(30000);
 			const oldDummy = createDummy();
 			const newDummy = createDummy();
 			it('changes the username', function() {

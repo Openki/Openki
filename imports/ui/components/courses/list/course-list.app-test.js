@@ -6,7 +6,7 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test.js';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function() {
-		this.timeout(10000);
+		this.timeout(30000);
 		beforeEach(function(done) {
 			Meteor.call('fixtures.clean', done);
 		});
@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 				const titles = document.getElementsByClassName('course-compact-title');
 				assert.equal(titles.length, 8, "expect to see test course titles");
 				return titles;
-			}, 2000))
+			}, 6000))
 			.then((titles) => waitFor(() => {
 				assert.equal(titles[0].textContent, 'Sprachaustausch');
 				assert.equal(titles[1].textContent, 'Game Design mit Unity');

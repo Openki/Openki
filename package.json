@@ -26,14 +26,15 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chromedriver": "^75.0.0",
     "jshint": "^2.10.2",
-    "nightmare": "^3.0.2",
-    "sass-lint": "^1.13.1"
+    "sass-lint": "^1.13.1",
+    "selenium-webdriver": "^3.6.0"
   },
   "scripts": {
     "dev": "meteor --settings settings/dev.json",
-    "test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
-    "app-test": "TEST_BROWSER_DRIVER=nightmare meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
+    "test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
+    "app-test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
     "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
     "js-lint": "jshint",
     "sass-lint": "sass-lint --verbose"
