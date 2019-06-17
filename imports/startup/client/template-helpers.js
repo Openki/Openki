@@ -15,6 +15,21 @@ const helpers = {
 		return mf('category.'+this);
 	},
 
+	guideLink() {
+		const lang = 'de';
+		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+
+		switch(lang) {
+			case 'de':
+				guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+				break;
+			case 'en':
+				guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+				break;
+		}
+		return guideLink;
+	},
+
 	log(context) {
 		if (window.console) console.log(arguments.length > 0 ? context : this);
 	},
