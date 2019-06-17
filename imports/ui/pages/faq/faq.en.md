@@ -64,7 +64,7 @@ Groups are already existing organizations, communities, etc., which use Openki t
 
 ### How do I organize my first Openki course meeting?
 
-Details and tips can be found in our <a href="https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf">PDF</a>.
+Details and tips can be found in our <a href="https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf">PDF</a>.
 
 ### What is an Openki-course?
 
@@ -174,7 +174,7 @@ Today we only create new regions at the Openki.net platform upon requests from i
 
 For this, we have recently established an e-mail list, [region-admins@lists.openki.net](http://lists.lists.openki.net/mailman/listinfo/region-admins), with all “region admins” to exchange ideas and ways to resolve common issues.
 
-We are also working to implement a special region admin functionality in the platform, which will allow region administrators to delete or edit region courses, block misbehaving users, give administrator rights to other people from the same region, etc. 
+We are also working to implement a special region admin functionality in the platform, which will allow region administrators to delete or edit region courses, block misbehaving users, give administrator rights to other people from the same region, etc.
 
 ### How can I contact the administrator of my region?
 
