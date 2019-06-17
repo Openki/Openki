@@ -305,7 +305,7 @@ Template.courseEdit.events({
 				changes.subs.push(role);
 			} else {
 				changes.unsubs.push(role);
-			} 
+			}
 		});
 
 		instance.busy('saving');

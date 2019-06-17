@@ -60,6 +60,10 @@ Les groupes sont les organisations existantes, communautés, etc, qui utilisent 
 
 ## Cours
 
+### Comment organiser ma première réunion de cours Openki?
+
+Vous trouverez des détails et des conseils dans notre <a href="https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf">PDF</a>.
+
 ### Qu'est-ce qu'un cours Openki ?
 
 Un cours Openki est bien plus qu'un cours standard. Il peut inclure des discussions sur les connaissances et objectifs des participant·e·s, ainsi que sur l'engagement des mentors ou l'organisation d'événements. Tout comme un navire, tous les participants peuvent contrôler le cours, continuellement influencer et changer son cap. Le type de cours peut prendre la forme de cours magistraux, d'ateliers, de discussions ou encore de groupes de travail en commun, de cours suivants des méthodes éducatives alternatives, de groupes de lectures, etc.
