@@ -51,7 +51,7 @@ notificationJoin.Model = function(entry) {
 			if (!newParticipant) throw "New participant does not exist (0.o)";
 			if (!course) throw "Course does not exist (0.o)";
 
-			var roleTitle = mf('roles.'+body.newRole+'.short', {}, undefined, userLocale);
+			var roleTitle = mf(`roles.${body.newRole}.short`, {}, undefined, userLocale);
 			var subjectvars =
 				{ COURSE: StringTools.truncate(course.name, 10)
 				, USER: StringTools.truncate(newParticipant.username, 50)
@@ -61,9 +61,9 @@ notificationJoin.Model = function(entry) {
 
 			var figures = [];
 			for (var role of ['host', 'mentor', 'participant']) {
-				if (course.roles.indexOf(role) >= 0) {
+				if (course.roles.includes(role)) {
 					figures.push(
-						{ role: StringTools.capitalize(mf('roles.'+role+'.short', {}, undefined, userLocale))
+						{ role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale))
 						, count: course.membersWithRole(role).length
 						}
 					);
@@ -71,7 +71,7 @@ notificationJoin.Model = function(entry) {
 			}
 
 			return (
-			    { course: course
+				{ course: course
 				, newParticipant: newParticipant
 				, courseLink: Router.url('showCourse', course)
 				, subject: subject
