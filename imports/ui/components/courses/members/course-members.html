@@ -4,9 +4,9 @@
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 			{{#mf KEY='course.details.members.title' NUM=howManyEnrolled}}
 				{NUM, plural,
-					=0 {No members yet}
-					one {1 Member}
-					other {# Members}
+					=0 {No co-learners yet}
+					one {1 co-learner}
+					other {# co-learners}
 				}
 			{{/mf}}
 			{{#if canNotifyAll}}
@@ -25,7 +25,7 @@
 					type="button">
 					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 					{{#mf KEY='course.members.showMoreParticipants'}}
-						Show more members
+						Show more co-learners
 					{{/mf}}
 				</button>
 			{{/if}}
