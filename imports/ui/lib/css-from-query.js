@@ -54,7 +54,6 @@ export default class CssFromQuery {
 				}
 			}
 		});
-
 		return this.cssRules;
 	}
 }
