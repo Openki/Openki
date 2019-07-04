@@ -5,10 +5,14 @@
 
 .modal-header .close {
 	color: $white;
-	font-size: x-large;
+	font-size: 36px;
 	opacity: .7;
 
 	&:hover {
 		opacity: 1;
 	}
+}
+
+.modal-title  {
+	line-height: 36px;
 }
