@@ -4,7 +4,9 @@
 			{{cssRule}}
 		{{/each}}
 		.no-events {
-			font-size: 20px;
+			font-size: 45px;
+			margin-top: 20px;
+			text-align: center;
 		}
 	</style>
 	{{#if days}}
@@ -28,7 +30,7 @@
 		{{/if}}
 	{{else}}
 		<div class="no-events">
-			{{mf 'frame.calendar.noEvents' 'no events'}}
+			<p>{{mf 'frame.calendar.noEvents' 'No events planned'}}</p>
 		</div>
 	{{/if}}
 </template>
