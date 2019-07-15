@@ -14,8 +14,7 @@ Template.sendMessage.onCreated(function() {
 	this.busy(false);
 	this.state = new ReactiveDict();
 	this.state.setDefault(
-		{ message: ''
-		, revealAddress: false
+		{ revealAddress: false
 		, sendCopy: false
 		, verificationMailSent: false }
 	);
@@ -52,11 +51,6 @@ Template.sendMessage.events({
 		});
 	},
 
-	'keyup .js-email-message'(event, instance) {
-		const message = instance.$(event.currentTarget).val();
-		instance.state.set({ message });
-	},
-
 	'change input[type="checkbox"]'(event, instance) {
 		const target = instance.$(event.currentTarget);
 		instance.state.set(target.attr('name'), target.prop('checked'));
@@ -69,7 +63,7 @@ Template.sendMessage.events({
 		if (PleaseLogin()) return;
 
 		const state = instance.state;
-		const message = state.get('message');
+		const message = instance.$('.js-email-message').val();
 
 		if (message.length < 2) {
 			alert(mf('profile.mail.longertext', 'longer text please'));
@@ -93,7 +87,7 @@ Template.sendMessage.events({
 					Alert.error(err, 'danger');
 				} else {
 					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-					instance.state.set('message', '');
+					instance.$('.js-email-message').val('');
 					if (data.onDone) data.onDone();
 				}
 			}
