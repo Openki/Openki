@@ -78,7 +78,7 @@ Template.courseRole.events({
 	'click .js-role-subscribe-btn'(event, instance) {
 		event.preventDefault();
 		RouterAutoscroll.cancelNext();
-		const comment = instance.$('.js-comment').val();
+		const comment = instance.$('.js-comment').val().trim();
 		instance.busy('enrolling');
 		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
 			processChange(instance.subscribe(comment), () => {
