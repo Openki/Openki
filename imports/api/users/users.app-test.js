@@ -8,7 +8,7 @@ const createDummy = function() {
 
 if (Meteor.isClient) {
 	describe('Profile', function() {
-		this.timeout(6000);
+		this.timeout(30000);
 		describe('User creation', function() {
 			it('updates the acceptsMessage flag', function() {
 				return new Promise((resolve, reject) => {
