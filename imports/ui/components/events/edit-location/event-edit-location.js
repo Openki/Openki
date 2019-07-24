@@ -1,21 +1,23 @@
-"use strict";
+
+
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert.js';
+import Alert from '/imports/api/alerts/alert';
 
-import LocationTracker from '/imports/ui/lib/location-tracker.js';
-import Venues from '/imports/api/venues/venues.js';
+import LocationTracker from '/imports/ui/lib/location-tracker';
+import Venues from '/imports/api/venues/venues';
 
-import '/imports/ui/components/map/map.js';
-import '/imports/ui/components/venues/link/venue-link.js';
+import '/imports/ui/components/map/map';
+import '/imports/ui/components/venues/link/venue-link';
 
 import './event-edit-location.html';
 
-Template.eventEditVenue.onCreated(function() {
-	var instance = this;
-	instance.parent = instance.parentInstance(); // Something, somewhere, must have gone terribly wrong (for this line to exist)
+Template.eventEditVenue.onCreated(function () {
+	const instance = this;
+	// Something, somewhere, must have gone terribly wrong (for this line to exist)
+	instance.parent = instance.parentInstance();
 
 	instance.locationTracker = LocationTracker();
 	instance.location = instance.parent.selectedLocation;
@@ -25,35 +27,35 @@ Template.eventEditVenue.onCreated(function() {
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
-	instance.locationIs = function(type) {
-		var location = instance.location.get();
-		if (!location) return 'unset' === type;
-		if (location._id) return 'preset' === type;
-		if (location.name || location.loc) return 'own' === type;
-		return 'unset' === type;
+	instance.locationIs = function (type) {
+		const location = instance.location.get();
+		if (!location) return type === 'unset';
+		if (location._id) return type === 'preset';
+		if (location.name || location.loc) return type === 'own';
+		return type === 'unset';
 	};
 
-	instance.autorun(function() {
-		var draggable = !instance.locationIs('preset');
+	instance.autorun(() => {
+		const draggable = !instance.locationIs('preset');
 		instance.locationTracker.setLocation(instance.location.get(), draggable, draggable);
 	});
 
-	instance.autorun(function() {
-		var regionId = instance.parent.selectedRegion.get();
+	instance.autorun(() => {
+		const regionId = instance.parent.selectedRegion.get();
 		instance.locationTracker.setRegion(regionId);
 	});
 
-	instance.reset = function() {
+	instance.reset = function () {
 		instance.locationTracker.markers.remove({ proposed: true });
 	};
 
-	instance.autorun(function() {
+	instance.autorun(() => {
 		// Set proposed location as new location when it is selected
 		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
 			added(mark) {
 				// When a propsed marker is selected, we clear the other location proposals and
 				// store it as new location for the event
-				var updLocation = instance.location.get();
+				const updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
 				if (mark.presetName) updLocation.name = mark.presetName;
 				if (mark.presetAddress) updLocation.address = mark.presetAddress;
@@ -73,7 +75,7 @@ Template.eventEditVenue.onCreated(function() {
 		// Update position if marker was dragged
 		instance.locationTracker.markers.find({ main: true }).observe({
 			changed(mark) {
-				var updLocation = instance.location.get();
+				const updLocation = instance.location.get();
 				if (mark.remove) {
 					delete updLocation.loc;
 				} else {
@@ -81,36 +83,37 @@ Template.eventEditVenue.onCreated(function() {
 					updLocation.loc = mark.loc;
 				}
 				instance.location.set(updLocation);
-			}
+			},
 		});
 	});
 
-	instance.autorun(function() {
+	instance.autorun(() => {
 		// Do not search preset locations when one is already chosen or when
 		// searching address
 		if (instance.locationIs('preset') || instance.addressSearch.get()) return;
 
-		var search = instance.search.get().trim();
+		const search = instance.search.get().trim();
 		instance.locationTracker.markers.remove({ proposed: true });
 
-		var query = { region: instance.parent.selectedRegion.get() };
+		const query = { region: instance.parent.selectedRegion.get() };
 
 		if (search.length > 0) {
 			query.search = search;
 		} else {
 			query.recent = true;
 		}
-		var localQuery = _.extend(query, { recent: false } ); // We dont have recent events loaded on the client
+		// We dont have recent events loaded on the client
+		const localQuery = _.extend(query, { recent: false });
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			'added'(location) {
+			added(location) {
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
-			}
+			},
 		});
 	});
 
@@ -153,21 +156,21 @@ Template.eventEditVenue.helpers({
 	},
 
 	allowPlacing() {
-		var location = Template.instance().location;
+		const { location } = Template.instance();
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
-		return function() {
+		return function () {
 			return !location.get().loc;
 		};
 	},
 
 	allowRemoving() {
-		var locationIs = Template.instance().locationIs;
-		var location = Template.instance().location;
+		const { locationIs } = Template.instance();
+		const { location } = Template.instance();
 
-		return function() {
+		return function () {
 			return locationIs('own') && location.get().loc;
 		};
 	},
@@ -178,99 +181,99 @@ Template.eventEditVenue.helpers({
 
 	searching() {
 		return !!Template.instance().location.get().name;
-	}
+	},
 
 });
 
 
 Template.eventEditVenue.events({
-	'click .js-location-search-btn'(event, instance) {
+	'click .js-location-search-btn': function (event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
-		var search = instance.$('.js-location-search-input').val();
-		var nominatimQuery = {
+		const search = instance.$('.js-location-search-input').val();
+		const nominatimQuery = {
 			format: 'json',
 			q: search,
 			limit: 10,
 		};
 
-		var markers = instance.locationTracker.markers;
+		const { markers } = instance.locationTracker;
 
-		var region = markers.findOne({ center: true });
+		const region = markers.findOne({ center: true });
 		if (region && region.loc) {
 			nominatimQuery.viewbox = [
-				region.loc.coordinates[0]-0.1,
-				region.loc.coordinates[1]+0.1,
-				region.loc.coordinates[0]+0.1,
-				region.loc.coordinates[1]-0.1,
+				region.loc.coordinates[0] - 0.1,
+				region.loc.coordinates[1] + 0.1,
+				region.loc.coordinates[0] + 0.1,
+				region.loc.coordinates[1] - 0.1,
 			].join(',');
 			nominatimQuery.bounded = 1;
 		}
 
 
 		HTTP.get('https://nominatim.openstreetmap.org', {
-			params:  nominatimQuery
-		}, function(error, result) {
+			params: nominatimQuery,
+		}, (error, result) => {
 			if (error) {
 				Alert.error(error, '');
 				return;
 			}
 
-			var found = JSON.parse(result.content);
+			const found = JSON.parse(result.content);
 
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
 				Alert.warning(mf(
 					'event.edit.noResultsforAddress',
 					{ ADDRESS: search },
-					'Found no results for address "{ADDRESS}"'
+					'Found no results for address "{ADDRESS}"',
 				));
 			}
-			_.each(found, function(foundLocation) {
-				var marker = {
-					loc: {"type": "Point", "coordinates":[foundLocation.lon, foundLocation.lat]},
+			_.each(found, (foundLocation) => {
+				const marker = {
+					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
 					proposed: true,
 					presetAddress: foundLocation.display_name,
-					name: foundLocation.display_name
+					name: foundLocation.display_name,
 				};
 				instance.locationTracker.markers.insert(marker);
 			});
 		});
 	},
 
-	'click .js-location-change'(event, instance) {
+	'click .js-location-change': function (event, instance) {
 		instance.addressSearch.set(false);
 		instance.location.set({});
 		instance.search.set('');
 	},
 
-	'click .js-location-candidate'(event, instance) {
+	'click .js-location-candidate': function (event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
-	'keyup .js-location-search-input'(event, instance) {
+	'keyup .js-location-search-input': function (event, instance) {
 		instance.addressSearch.set(false);
 		instance.search.set(event.target.value);
 
-		var updLocation = instance.location.get();
+		const updLocation = instance.location.get();
 		updLocation.name = event.target.value;
 		instance.location.set(updLocation);
 	},
 
-	'keyup .js-location-address-search'(event, instance) {
-		var updLocation = instance.location.get();
+	'keyup .js-location-address-search': function (event, instance) {
+		const updLocation = instance.location.get();
 		updLocation.address = event.target.value;
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .js-location-candidate'(event, instance) {
-		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
-		instance.locationTracker.markers.update(this._id, {$set:{hover: true}});
+	'mouseenter .js-location-candidate': function (event, instance) {
+		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
+		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},
 
-	'mouseleave .js-location-candidate'(event, instance) {
-		instance.locationTracker.markers.update({}, {$set:{hover: false}}, {multi: true});
-	}
+	'mouseleave .js-location-candidate': function (event, instance) {
+		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
+	},
 
 });

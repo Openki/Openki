@@ -1,31 +1,30 @@
-"use strict";
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './editable.html';
 
-[Template.editable, Template.editableTextarea].forEach(template => {
-	template.onCreated(function() {
+[Template.editable, Template.editableTextarea].forEach((template) => {
+	template.onCreated(function () {
 		// This reeks
 		const data = Template.currentData();
-		if (!data) throw new Error("Editable got empty data");
+		if (!data) throw new Error('Editable got empty data');
 		this.state = data.connect(this);
 	});
 
-	template.onRendered(function() {
-		var instance = this;
-		var editable = this.$('.js-editable');
-		var initialized = false;
-		var changedByUser = false;
+	template.onRendered(function () {
+		const instance = this;
+		const editable = this.$('.js-editable');
+		let initialized = false;
+		let changedByUser = false;
 
-		instance.getEdited = function() {
+		instance.getEdited = function () {
 			if (!instance.state || !instance.state.changed.get()) return false;
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};
 
-		instance.reset = function() {
-			var text = instance.state.text();
+		instance.reset = function () {
+			const text = instance.state.text();
 
 			if (instance.state.simple) {
 				editable.text(text);
@@ -42,7 +41,7 @@ import './editable.html';
 		// When the user has already made changes, we don't update the field. This
 		// protects the user's changes but at the same time it allows overwriting
 		// other people's changes.
-		instance.autorun(function() {
+		instance.autorun(() => {
 			if (!changedByUser || !initialized) {
 				instance.reset();
 				initialized = true;
@@ -55,17 +54,17 @@ import './editable.html';
 			changedByUser = false;
 		};
 
-		var options = {
+		const options = {
 			placeholder: {
 				hideOnClick: false,
-				text: instance.state.placeholderText
+				text: instance.state.placeholderText,
 			},
 			anchor: {
 				linkValidation: true,
-				placeholderText: mf('editable.link.placeholder', "Paste link here...")
+				placeholderText: mf('editable.link.placeholder', 'Paste link here...'),
 			},
 			autoLink: true,
-			buttonLabels: 'fontawesome'
+			buttonLabels: 'fontawesome',
 		};
 		if (instance.state.simple) {
 			options.disableReturn = true;
@@ -76,7 +75,7 @@ import './editable.html';
 		instance.editor = new MediumEditor(editable, options);
 
 		// Register when the field is being edited
-		editable.on('input', function() {
+		editable.on('input', () => {
 			changedByUser = true;
 			instance.state.changed.set(true);
 		});
@@ -84,47 +83,47 @@ import './editable.html';
 
 	template.helpers({
 		showControls() {
-			var instance = Template.instance();
+			const instance = Template.instance();
 			return instance.state.showControls && instance.state.changed.get();
 		},
 
 		wrapAttrs() {
-			var instance = Template.instance();
+			const instance = Template.instance();
 			return instance.state.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
 		},
 
 		editableAttrs() {
-			var instance = Template.instance();
+			const instance = Template.instance();
 			return instance.state.changed.get() ? 'editable-changed' : '';
-		}
+		},
 	});
 
 	template.events({
-		'click .js-editable-save'(event, instance) {
+		'click .js-editable-save': function (event, instance) {
 			event.preventDefault();
 			instance.store();
 		},
 
-		'click .js-editable-cancel'(event, instance) {
+		'click .js-editable-cancel': function (event, instance) {
 			event.preventDefault();
 			instance.reset();
 			instance.state.changed.set(false);
 		},
 
-		'click .js-editable-edit'(event, instance) {
+		'click .js-editable-edit': function (event, instance) {
 			instance.$('.js-editable').focus();
 
 			// Moving the cursor to the end of the editable element?
 			// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
-			var selectEnd = function(el) {
-				var range = document.createRange();
+			const selectEnd = function (el) {
+				const range = document.createRange();
 				range.selectNodeContents(el);
 				range.collapse(false);
-				var selection = window.getSelection();
+				const selection = window.getSelection();
 				selection.removeAllRanges();
 				selection.addRange(range);
 			};
 			selectEnd(instance.$('.js-editable')[0]);
-		}
+		},
 	});
 });

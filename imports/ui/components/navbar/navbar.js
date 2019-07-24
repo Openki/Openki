@@ -1,28 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
-import { Session} from 'meteor/session';
+import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import ScssVars from '/imports/ui/lib/scss-vars.js';
+import ScssVars from '/imports/ui/lib/scss-vars';
 
-import '/imports/ui/components/regions/selection/region-selection.js';
-import '/imports/ui/components/language-selection/language-selection.js';
+import '/imports/ui/components/regions/selection/region-selection';
+import '/imports/ui/components/language-selection/language-selection';
 
 import './navbar.html';
 
-Template.navbar.onRendered(function() {
-	var instance = this;
-	var viewportWidth = Session.get('viewportWidth');
-	var gridFloatBreakpoint = ScssVars.gridFloatBreakpoint;
+Template.navbar.onRendered(function () {
+	const instance = this;
+	const viewportWidth = Session.get('viewportWidth');
+	const { gridFloatBreakpoint } = ScssVars;
 
 	// if not collapsed give the navbar and active menu item a
 	// class for when not at top
 	if (viewportWidth > gridFloatBreakpoint) {
-		$(window).scroll(function () {
-			var navbar = instance.$('.navbar');
-			var activeNavLink = instance.$('.navbar-link-active');
-			var notAtTop = $(window).scrollTop() > 5;
+		$(window).scroll(() => {
+			const navbar = instance.$('.navbar');
+			const activeNavLink = instance.$('.navbar-link-active');
+			const notAtTop = $(window).scrollTop() > 5;
 
 			navbar.toggleClass('navbar-covering', notAtTop);
 			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
@@ -57,50 +57,48 @@ Template.navbar.helpers({
 		if (Meteor.settings.public && Meteor.settings.public.siteStage) {
 			return Meteor.settings.public.siteStage;
 		}
-		return "";
+		return '';
 	},
 
 	activeClass(linkRoute, id) {
-		var router = Router.current();
+		const router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
-			if (typeof id == 'string' && router.params._id !== id) return '';
+			if (typeof id === 'string' && router.params._id !== id) return '';
 			return 'navbar-link-active';
-		} else {
-			return '';
 		}
+		return '';
 	},
 
 	toggleNavbarRight(LTRPos) {
-		var isRTL = Session.get('textDirectionality') == 'rtl';
+		const isRTL = Session.get('textDirectionality') === 'rtl';
 
 		if (LTRPos === 'left') {
 			return isRTL ? 'navbar-right' : '';
-		} else {
-			return isRTL ? '' : 'navbar-right';
 		}
-	}
+		return isRTL ? '' : 'navbar-right';
+	},
 });
 
 Template.navbar.events({
-	'click .js-nav-dropdown-close'(event, instance) {
+	'click .js-nav-dropdown-close': function (event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},
 
-	'show.bs.dropdown, hide.bs.dropdown .dropdown'(e, instance) {
-		var viewportWidth = Session.get('viewportWidth');
-		var gridFloatBreakpoint = ScssVars.gridFloatBreakpoint;
+	'show.bs.dropdown, hide.bs.dropdown .dropdown': function (event, instance) {
+		const viewportWidth = Session.get('viewportWidth');
+		const { gridFloatBreakpoint } = ScssVars;
 
 		if (viewportWidth <= gridFloatBreakpoint) {
-			var container = instance.$('#bs-navbar-collapse-1');
+			const container = instance.$('#bs-navbar-collapse-1');
 
 			// make menu item scroll up when opening the dropdown menu
-			if (e.type == 'show') {
-				var scrollTo = $(e.currentTarget);
+			if (event.type === 'show') {
+				const scrollTo = $(event.currentTarget);
 
 				container.animate({
 					scrollTop: scrollTo.offset().top
 						- container.offset().top
-						+ container.scrollTop()
+						+ container.scrollTop(),
 				});
 			} else {
 				container.scrollTop(0);
@@ -110,19 +108,19 @@ Template.navbar.events({
 });
 
 Template.loginButton.helpers({
-	'loginServicesConfigured'() {
+	loginServicesConfigured() {
 		return Accounts.loginServicesConfigured();
-	}
+	},
 });
 
 Template.loginButton.events({
-	'click #openLogin'() {
+	'click #openLogin': function () {
 		$('#accountTasks').modal('show');
-	}
+	},
 });
 
 Template.ownUserFrame.events({
-	'click .js-logout'(event){
+	'click .js-logout': function (event) {
 		event.preventDefault();
 		Meteor.logout();
 
@@ -130,5 +128,5 @@ Template.ownUserFrame.events({
 		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
 	},
 
-	'click .btn'() { $('.collapse').collapse('hide'); }
+	'click .btn': function () { $('.collapse').collapse('hide'); },
 });

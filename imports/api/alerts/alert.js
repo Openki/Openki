@@ -1,49 +1,49 @@
-import Alerts from './alerts.js';
+import Alerts from './alerts';
 
 export default Alert = {
-    /** Add an error alert
+	/** Add an error alert
       *
       * @param  {Error}   error        - error object
       * @param  {String}  message      - the message text
       *
       */
-    error(error, message) {
-        check(error, Error);
-        check(message, String);
+	error(error, message) {
+		check(error, Error);
+		check(message, String);
 
-        const errorMessage = mf(
+		const errorMessage = mf(
 			'_serverError',
 			{ ERROR: error, MESSAGE: message },
-			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.'
+			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
 		);
 
-        this._alert('error', errorMessage, 60000);
-    },
+		this._alert('error', errorMessage, 60000);
+	},
 
-    /** Private method to add an alert message
+	/** Private method to add an alert message
       *
       * @param  {String}  type         - type of alert message
       * @param  {String}  message      - the message text
       * @param  {Integer} timeout      - timeout for the alert to disappear
       *
       */
-    _alert(type, message, timeout = 4000) {
-        check(type, String);
-        check(message, String);
-        check(timeout, Number);
+	_alert(type, message, timeout = 4000) {
+		check(type, String);
+		check(message, String);
+		check(timeout, Number);
 
-        Alerts.insert({ type, message, timeout });
-    },
+		Alerts.insert({ type, message, timeout });
+	},
 };
 
 ['success', 'warning'].forEach((type) => {
-    /** Add an alert of type XY, using the default options
+	/** Add an alert of type XY, using the default options
       *
       * @param  {String} message - the message text
       *
       */
-    Alert[type] = function(message) {
-        check(message, String);
-        this._alert(type, message);
-    }
+	Alert[type] = function (message) {
+		check(message, String);
+		this._alert(type, message);
+	};
 });

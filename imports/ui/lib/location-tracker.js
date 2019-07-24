@@ -1,16 +1,16 @@
-import Regions from '/imports/api/regions/regions.js';
+import Regions from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
 
-export default LocationTracker = function() {
-	var markers = new Mongo.Collection(null);
+const LocationTracker = function () {
+	const markers = new Mongo.Collection(null);
 
 	return {
-		markers: markers,
+		markers,
 		setLocation(location, draggable, soft) {
 			if (soft) {
-				var marker = markers.findOne({ main: true});
+				const marker = markers.findOne({ main: true });
 				if (marker && location && location.loc) {
-					markers.update({ _id: marker._id }, { $set: { 'location.loc': location.loc, draggable: draggable } });
+					markers.update({ _id: marker._id }, { $set: { 'location.loc': location.loc, draggable } });
 					return;
 				}
 			}
@@ -19,20 +19,22 @@ export default LocationTracker = function() {
 				markers.insert({
 					loc: location.loc,
 					main: true,
-					draggable: draggable
+					draggable,
 				});
 			}
 		},
 		setRegion(regionId) {
-			var region = Regions.findOne(regionId);
+			const region = Regions.findOne(regionId);
 
 			markers.remove({ center: true });
 			if (region && region.loc) {
 				markers.insert({
 					loc: region.loc,
-					center: true
+					center: true,
 				});
 			}
-		}
+		},
 	};
 };
+
+export default LocationTracker;

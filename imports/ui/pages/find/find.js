@@ -4,42 +4,42 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import Categories from '/imports/api/categories/categories.js';
-import Courses from '/imports/api/courses/courses.js';
-import CourseTemplate from '/imports/ui/lib/course-template.js';
-import FilterPreview from '/imports/ui/lib/filter-preview.js';
-import ScssVars from '/imports/ui/lib/scss-vars.js';
-import UrlTools from '/imports/utils/url-tools.js';
+import Categories from '/imports/api/categories/categories';
+import Courses from '/imports/api/courses/courses';
+import CourseTemplate from '/imports/ui/lib/course-template';
+import FilterPreview from '/imports/ui/lib/filter-preview';
+import ScssVars from '/imports/ui/lib/scss-vars';
+import UrlTools from '/imports/utils/url-tools';
 
-import '/imports/ui/components/courses/list/course-list.js';
-import '/imports/ui/components/courses/edit/course-edit.js';
-import '/imports/ui/components/courses/filter/course-filter.js';
-import '/imports/ui/components/loading/loading.js';
+import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/courses/edit/course-edit';
+import '/imports/ui/components/courses/filter/course-filter';
+import '/imports/ui/components/loading/loading';
 
 import './find.html';
 
-var hiddenFilters = ['needsRole', 'categories'];
-var filters = hiddenFilters.concat(['state']);
+const hiddenFilters = ['needsRole', 'categories'];
+const filters = hiddenFilters.concat(['state']);
 
-Template.find.onCreated(function() {
-	var instance = this;
+Template.find.onCreated(function () {
+	const instance = this;
 
 	// Reflect filter selection in URI
 	// This creates a browser history entry so it is not done on every filter
 	// change. For example, when the search-field receives keydowns, the filter
 	// is updated but the change is not reflected in the URI.
-	instance.updateUrl = function() {
-		var urlParams = instance.filter.toParams();
+	instance.updateUrl = function () {
+		const urlParams = instance.filter.toParams();
 		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
 		delete urlParams.internal;
 
-		//used to keep scrollpos when navigating back
+		// used to keep scrollpos when navigating back
 		if (instance.courseLimit.get() > instance.courseBlockSize) {
 			urlParams.coursesAmount = instance.courseLimit.get();
 		}
-		var queryString = UrlTools.paramsToQueryString(urlParams);
+		const queryString = UrlTools.paramsToQueryString(urlParams);
 
-		var options = {};
+		const options = {};
 
 		if (queryString.length) {
 			options.query = queryString;
@@ -47,14 +47,14 @@ Template.find.onCreated(function() {
 
 		RouterAutoscroll.cancelNext();
 
-		var router = Router.current();
+		const router = Router.current();
 		Router.go(router.route.getName(), { _id: router.params._id }, options);
 
 		return true;
 	};
 
 
-	instance.updateCategorySearch = function(query) {
+	instance.updateCategorySearch = function (query) {
 		instance.categorySearch.set(query);
 
 		if (!query) {
@@ -62,15 +62,15 @@ Template.find.onCreated(function() {
 			return;
 		}
 
-		var lowQuery = query.toLowerCase();
-		var results = {};
-		for (var mainCategory in Categories) {
-			if (mf('category.'+mainCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+		const lowQuery = query.toLowerCase();
+		const results = {};
+		for (const mainCategory in Categories) {
+			if (mf(`category.${mainCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
 				results[mainCategory] = [];
 			}
-			for (i = 0; i < Categories[mainCategory].length; i++) {
-				var subCategory = Categories[mainCategory][i];
-				if (mf('category.'+subCategory).toLowerCase().indexOf(lowQuery) >= 0) {
+			for (let i = 0; i < Categories[mainCategory].length; i += 1) {
+				const subCategory = Categories[mainCategory][i];
+				if (mf(`category.${subCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
 					if (results[mainCategory]) results[mainCategory].push(subCategory);
 					else results[subCategory] = [];
 				}
@@ -88,11 +88,11 @@ Template.find.onCreated(function() {
 	instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
-	var filter = Courses.Filtering();
+	const filter = Courses.Filtering();
 	instance.filter = filter;
 
 	// Read URL state
-	instance.autorun(function() {
+	instance.autorun(() => {
 		const query = Template.currentData();
 
 		filter
@@ -101,7 +101,7 @@ Template.find.onCreated(function() {
 			.done();
 
 		if (query.coursesAmount) {
-			const coursesAmount = parseInt(query.coursesAmount);
+			const coursesAmount = parseInt(query.coursesAmount, 10);
 			if (coursesAmount > instance.courseBlockSize) {
 				instance.courseLimit.set(coursesAmount);
 			}
@@ -111,8 +111,8 @@ Template.find.onCreated(function() {
 	});
 
 	// When there are filters set, show the filtering pane
-	instance.autorun(function() {
-		for (var name in filter.toParams()) {
+	instance.autorun(() => {
+		for (const name in filter.toParams()) {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
 			}
@@ -120,173 +120,169 @@ Template.find.onCreated(function() {
 	});
 
 	// Update whenever filter changes
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
+	instance.autorun(() => {
+		const filterQuery = filter.toQuery();
 		instance.coursesReady.set(false);
 
 		// Add one to the limit so we know there is more to show
-		var limit = instance.courseLimit.get() + 1;
+		const limit = instance.courseLimit.get() + 1;
 
-		instance.subscribe('Courses.findFilter', filterQuery, limit, function() {
+		instance.subscribe('Courses.findFilter', filterQuery, limit, () => {
 			instance.coursesReady.set(true);
 		});
 	});
 });
 
 Template.find.events({
-	'keyup .js-search-input': _.debounce(function(event, instance) {
+	'keyup .js-search-input': _.debounce((event, instance) => {
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
 
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-search-field'(event, instance) {
+	'change .js-search-field': function (event, instance) {
 		instance.updateUrl();
 	},
 
 
-	'click .js-find-btn'(event, instance) {
+	'click .js-find-btn': function (event, instance) {
 		event.preventDefault();
 
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label'(e, instance) {
+	'mouseover .js-category-label': function (e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
 			activate: true,
 			delayed: true,
-			instance
+			instance,
 		});
 	},
 
-	'mouseout .js-category-label'(e, instance) {
+	'mouseout .js-category-label': function (e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
 			activate: false,
 			delayed: true,
-			instance
+			instance,
 		});
 	},
 
-	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label': function (e, instance) {
 		FilterPreview({
 			property: 'group',
 			id: this,
-			activate: e.type == 'mouseover',
+			activate: e.type === 'mouseover',
 			delayed: true,
-			instance
+			instance,
 		});
 	},
 
-	'click .js-category-label'(event, instance) {
-		instance.filter.add('categories', ""+this).done();
+	'click .js-category-label': function (event, instance) {
+		instance.filter.add('categories', `${this}`).done();
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-group-label'(event, instance) {
+	'click .js-group-label': function () {
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-toggle-filter'(event, instance) {
-		var showingFilters = !instance.showingFilters.get();
+	'click .js-toggle-filter': function (event, instance) {
+		const showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			for (var i in filters) instance.filter.disable(filters[i]);
+			for (const i in filters) instance.filter.disable(filters[i]);
 			instance.filter.done();
 			instance.updateUrl();
 		}
 	},
 
-	"click .js-all-regions-btn"(event, instance){
+	'click .js-all-regions-btn': function () {
 		Session.set('region', 'all');
 	},
 
-	"click .js-more-courses"(event, instance) {
-		var courseLimit = instance.courseLimit;
+	'click .js-more-courses': function (event, instance) {
+		const { courseLimit } = instance;
 		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
 		instance.updateUrl();
-	}
+	},
 });
 
 Template.find.helpers({
-	'search'() {
+	search() {
 		return Template.instance().filter.get('search');
 	},
 
-	'showingFilters'() {
+	showingFilters() {
 		return Template.instance().showingFilters.get();
 	},
 
-	'newCourse'() {
-		var instance = Template.instance();
-		var course = CourseTemplate();
+	newCourse() {
+		const instance = Template.instance();
+		const course = CourseTemplate();
 		course.name = instance.filter.get('search');
-		var groupId = instance.filter.get('group');
+		const groupId = instance.filter.get('group');
 		if (groupId) {
 			course.group = groupId;
 		}
 		return course;
 	},
 
-	'hasResults'() {
-		var filterQuery = Template.instance().filter.toQuery();
-		var results = Courses.findFilter(filterQuery, 1);
+	hasResults() {
+		const filterQuery = Template.instance().filter.toQuery();
+		const results = Courses.findFilter(filterQuery, 1);
 
 		return results.count() > 0;
 	},
 
-	'hasMore'() {
-		var instance = Template.instance();
+	hasMore() {
+		const instance = Template.instance();
 		if (!instance.coursesReady.get()) return false;
 
-		var filterQuery = instance.filter.toQuery();
-		var limit = instance.courseLimit.get();
-		var results = Courses.findFilter(filterQuery, limit+1);
+		const filterQuery = instance.filter.toQuery();
+		const limit = instance.courseLimit.get();
+		const results = Courses.findFilter(filterQuery, limit + 1);
 
 		return results.count() > limit;
 	},
 
-	'results'() {
-		var instance = Template.instance();
-		var filterQuery = instance.filter.toQuery();
+	results() {
+		const instance = Template.instance();
+		const filterQuery = instance.filter.toQuery();
 
 		return Courses.findFilter(filterQuery, instance.courseLimit.get());
 	},
 
-	'ready'() {
+	ready() {
 		return Template.instance().coursesReady.get();
 	},
 
-	'filteredRegion'() {
+	filteredRegion() {
 		return !!Template.instance().filter.get('region');
 	},
 
-	'activeFilters'() {
-		var activeFilters = Template.instance().filter;
-		return _.any(hiddenFilters, function(filter) {
-			return !!activeFilters.get(filter);
-		});
+	activeFilters() {
+		const activeFilters = Template.instance().filter;
+		return _.any(hiddenFilters, filter => !!activeFilters.get(filter));
 	},
 
-	'searchIsLimited'() {
-		var activeFilters = Template.instance().filter;
-		var relevantFilters = hiddenFilters.slice(); // clone
+	searchIsLimited() {
+		const activeFilters = Template.instance().filter;
+		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return _.any(relevantFilters, function(filter) {
-			return !!activeFilters.get(filter);
-		});
+		return _.any(relevantFilters, filter => !!activeFilters.get(filter));
 	},
 
-	'isMobile'() {
+	isMobile() {
 		return Session.get('viewportWidth') <= ScssVars.screenXS;
-	}
+	},
 });

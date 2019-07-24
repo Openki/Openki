@@ -2,17 +2,17 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Introduction from '/imports/ui/lib/introduction.js';
-import ScssVars from '/imports/ui/lib/scss-vars.js';
+import Introduction from '/imports/ui/lib/introduction';
+import ScssVars from '/imports/ui/lib/scss-vars';
 
-import '/imports/ui/components/price-policy/price-policy.js';
+import '/imports/ui/components/price-policy/price-policy';
 
 import './introduction.html';
 
-Template.introduction.onRendered(function() {
+Template.introduction.onRendered(() => {
 	// use $screen-xxs (from scss) to compare with the width of window
 	const viewportWidth = Session.get('viewportWidth');
-	const screenXXS = ScssVars.screenXXS;
+	const { screenXXS } = ScssVars;
 	if (viewportWidth < screenXXS) {
 		Introduction.closeIntro();
 	}
@@ -28,34 +28,34 @@ Template.introduction.helpers({
 	},
 
 	isInCalendar() {
-		var currentRoute = Router.current().route;
-		if (!!currentRoute) return currentRoute.getName() == "calendar";
+		const currentRoute = Router.current().route;
+		if (currentRoute) return currentRoute.getName() === 'calendar';
 	},
 
 	clearfixFor(triggerSize) {
-		var viewportWidth = Session.get('viewportWidth');
-		var screenSize = '';
+		const viewportWidth = Session.get('viewportWidth');
+		let screenSize = '';
 
 		if (viewportWidth < ScssVars.screenMD && viewportWidth > ScssVars.screenSM) {
-			screenSize = "screenSM";
+			screenSize = 'screenSM';
 		} else if (viewportWidth < ScssVars.screenSM && viewportWidth > ScssVars.screenXXS) {
-			screenSize = "screenXS";
+			screenSize = 'screenXS';
 		}
 
-		return (triggerSize == screenSize);
-	}
+		return (triggerSize === screenSize);
+	},
 });
 
 Template.introduction.events({
-	'click .js-introduction-close-btn'(event, instance) {
+	'click .js-introduction-close-btn': function () {
 		Introduction.doneIntro();
 	},
 
-	'click .js-introduction-toggle-btn'(event, instance) {
+	'click .js-introduction-toggle-btn': function () {
 		if (Introduction.openedIntro()) {
 			Introduction.closeIntro();
 		} else {
 			Introduction.openIntro();
 		}
-	}
+	},
 });

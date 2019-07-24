@@ -1,21 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 
-import Groups from '/imports/api/groups/groups.js';
+import Groups from '/imports/api/groups/groups';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
-import Profile from '/imports/utils/profile.js';
-import '/imports/api/ApiError.js';
-import { IsEmail } from '/imports/utils/email-tools.js';
-import StringTools from '/imports/utils/string-tools.js';
-import AsyncTools from '/imports/utils/async-tools.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import Profile from '/imports/utils/profile';
+import '/imports/api/ApiError';
+import IsEmail from '/imports/utils/email-tools';
+import StringTools from '/imports/utils/string-tools';
+import AsyncTools from '/imports/utils/async-tools';
 
-updateEmail = function(email, user) {
-
+const updateEmail = function (email, user) {
 	const newEmail = email.trim() || false;
 	const oldEmail = user.emailAddress();
 
-	//for users with email not yet set, we dont want to force them
-	//to enter a email when they change other profile settings.
+	// for users with email not yet set, we dont want to force them
+	// to enter a email when they change other profile settings.
 	if (newEmail === oldEmail) return;
 
 	if (!newEmail) return ApiError('noEmail', 'Please enter a email.');
@@ -26,17 +25,17 @@ updateEmail = function(email, user) {
 	const existingUser = Accounts.findUserByEmail(newEmail);
 	if (existingUser) return ApiError('emailExists', 'Email already exists.');
 
-	Profile.Email.change(user._id, newEmail, "profile change");
+	Profile.Email.change(user._id, newEmail, 'profile change');
 };
 
 Meteor.methods({
 	/** Set user region
 	  */
-	'user.regionChange'(newRegion) {
-		Profile.Region.change(Meteor.userId(), newRegion, "client call");
+	'user.regionChange': function (newRegion) {
+		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
 
-	'user.updateData'(username, email, notifications) {
+	'user.updateData': function (username, email, notifications) {
 		check(username, String);
 		check(email, String);
 		check(notifications, Boolean);
@@ -46,119 +45,118 @@ Meteor.methods({
 		// that are validated later will not be saved if an earlier field
 		// causes us to fail.
 
-		var user = Meteor.user();
-		if (!user) return ApiError("plzLogin", "Not logged-in");
+		const user = Meteor.user();
+		if (!user) return ApiError('plzLogin', 'Not logged-in');
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
 
-		let result = Profile.Username.change(user._id, saneUsername, "profile change");
+		const result = Profile.Username.change(user._id, saneUsername, 'profile change');
 		if (!result) {
-			return ApiError("nameError", "Failed to update username");
+			return ApiError('nameError', 'Failed to update username');
 		}
 
 		updateEmail(email, user);
 
 		if (user.notifications !== notifications) {
-			Profile.Notifications.change(user._id, notifications, undefined, "profile change");
+			Profile.Notifications.change(user._id, notifications, undefined, 'profile change');
 		}
 	},
 
-	'user.updateEmail'(email) {
+	'user.updateEmail': function (email) {
 		check(email, String);
-		var user = Meteor.user();
-		if (!user) return ApiError("plzLogin", "Not logged-in");
+		const user = Meteor.user();
+		if (!user) return ApiError('plzLogin', 'Not logged-in');
 		updateEmail(email, user);
 	},
 
-	'user.remove'() {
-		var user = Meteor.user();
+	'user.remove': function () {
+		const user = Meteor.user();
 		if (user) Meteor.users.remove({ _id: user._id });
 	},
 
-	'user.addPrivilege'(userId, privilege) {
+	'user.addPrivilege': function (userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
-			var user = Meteor.users.findOne({_id: userId});
-			if (!user) throw new Meteor.Error(404, "User not found");
+			const user = Meteor.users.findOne({ _id: userId });
+			if (!user) throw new Meteor.Error(404, 'User not found');
 			Meteor.users.update(
-				{_id: user._id},
-				{ '$addToSet': {'privileges': privilege}},
-				AsyncTools.checkUpdateOne
+				{ _id: user._id },
+				{ $addToSet: { privileges: privilege } },
+				AsyncTools.checkUpdateOne,
 			);
 		}
 	},
 
-	'user.removePrivilege'(userId, privilege) {
-		var user = Meteor.users.findOne({_id: userId});
-		if (!user) throw new Meteor.Error(404, "User not found");
+	'user.removePrivilege': function (userId, privilege) {
+		const user = Meteor.users.findOne({ _id: userId });
+		if (!user) throw new Meteor.Error(404, 'User not found');
 
-		var operator = Meteor.user();
+		const operator = Meteor.user();
 
-		if (UserPrivilegeUtils.privileged(operator, 'admin') || operator._id == user._id) {
+		if (UserPrivilegeUtils.privileged(operator, 'admin') || operator._id === user._id) {
 			Meteor.users.update(
-				{_id: user._id},
-				{ '$pull': {'privileges': privilege}},
-				AsyncTools.checkUpdateOne
+				{ _id: user._id },
+				{ $pull: { privileges: privilege } },
+				AsyncTools.checkUpdateOne,
 			);
 		}
 	},
 
 
 	// Recalculate the groups and badges field
-	'user.updateBadges'(selector) {
-		Meteor.users.find(selector).forEach(function(user) {
+	'user.updateBadges': function (selector) {
+		Meteor.users.find(selector).forEach((user) => {
 			const userId = user._id;
 
-			AsyncTools.untilClean(function(resolve, reject) {
-				var user = Meteor.users.findOne(userId);
+			AsyncTools.untilClean((resolve, reject) => {
+				const user = Meteor.users.findOne(userId);
 				if (!user) return resolve(true);
 
-				var groups = [];
-				Groups.find({ members: user._id }).forEach(function(group) {
+				const groups = [];
+				Groups.find({ members: user._id }).forEach((group) => {
 					groups.push(group._id);
 				});
 
-				var badges = groups.slice();
+				const badges = groups.slice();
 				badges.push(user._id);
 
-				const update =
-					{ $set:
-						{ groups: groups
-						, badges: badges
-						}
-					};
+				const update = {
+					$set: {
+						groups,
+						badges,
+					},
+				};
 
-				Meteor.users.rawCollection().update
-					( { _id: user._id }
-					, update
-					, function(err, result) {
+				Meteor.users.rawCollection().update({ _id: user._id },
+					update,
+					(err, result) => {
 						if (err) {
 							reject(err);
 						} else {
 							resolve(result.result.nModified === 0);
-						}}
-					);
+						}
+					});
 			});
 		});
 	},
 
-	'user.hidePricePolicy'(user) {
+	'user.hidePricePolicy': function (user) {
 		Meteor.users.update(
 			{ _id: user._id },
-			{ '$set': { 'hidePricePolicy': true } }
+			{ $set: { hidePricePolicy: true } },
 		);
 	},
 
-	'user.name'(userId) {
+	'user.name': function (userId) {
 		this.unblock();
 		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
 		if (!user) return false;
 		return user.username;
 	},
 
-	'user.updateLocale'(locale) {
+	'user.updateLocale': function (locale) {
 		Meteor.users.update(Meteor.userId(), {
-			$set: { 'profile.locale': locale }
+			$set: { 'profile.locale': locale },
 		});
-	}
+	},
 });

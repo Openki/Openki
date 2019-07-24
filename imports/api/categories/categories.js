@@ -1,60 +1,63 @@
-export default Categories = {
+const Categories = {
 	sports:
-		[ 'martialarts'
-		, 'teamsport'
-		, 'artistry'
-		]
-	,
+		[
+			'martialarts',
+			'teamsport',
+			'artistry',
+		],
 	handicraft:
-		[ 'metalwood'
-		, 'electronics'
-		, 'fabric'
-		, 'gardening'
-		, 'construction'
-		]
-	,
+		[
+			'metalwood',
+			'electronics',
+			'fabric',
+			'gardening',
+			'construction',
+		],
 	sciences:
-		[ 'geography'
-		, 'physics'
-		, 'medicine'
-		, 'mathematics'
-		, 'chemistry'
-		, 'biology'
-		]
-	,
+		[
+			'geography',
+			'physics',
+			'medicine',
+			'mathematics',
+			'chemistry',
+			'biology',
+		],
 	humanities:
-		[ 'languages'
-		, 'history'
-		, 'sociology'
-		, 'politics'
-		, 'philosophy'
-		, 'lawbusiness'
-		]
-	,
+		[
+			'languages',
+			'history',
+			'sociology',
+			'politics',
+			'philosophy',
+			'lawbusiness',
+		],
 	culture:
-		[ 'literature'
-		, 'theatre'
-		, 'music'
-		, 'dance'
-		, 'fineart'
-		, 'design'
-		, 'photography'
-		, 'film'
-		, 'cooking'
-		, 'subculture'
-		]
-	,
+		[
+			'literature',
+			'theatre',
+			'music',
+			'dance',
+			'fineart',
+			'design',
+			'photography',
+			'film',
+			'cooking',
+			'subculture',
+		],
 	computer:
-		[ 'internet'
-		, 'programming'
-		, 'operating'
-		]
-	,
+		[
+			'internet',
+			'programming',
+			'operating',
+		],
 	misc:
-		[ '♥undefined♥'
-		, 'experimental'
-		, 'spiritual'
-		, 'education'
-		, 'ecology'
-		]
+		[
+			'♥undefined♥',
+			'experimental',
+			'spiritual',
+			'education',
+			'ecology',
+		],
 };
+
+export default Categories;

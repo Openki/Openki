@@ -1,4 +1,4 @@
-import '/imports/ui/components/alerts/alerts.js';
+import '/imports/ui/components/alerts/alerts';
 
 import './frame-body.html';
 
@@ -7,7 +7,7 @@ import './frame-body.html';
  * Class 'js-download' must be added to those links.
  */
 Template.frameLayout.events({
-	'click .js-download'(event) {
+	'click .js-download': function (event) {
 		event.stopPropagation();
-	}
+	},
 });

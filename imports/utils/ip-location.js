@@ -1,13 +1,13 @@
-import Regions from '/imports/api/regions/regions.js';
+import Regions from '/imports/api/regions/regions';
 
-export default IpLocation = {};
+const IpLocation = {};
 
-IpLocation.detect = function(handler) {
+IpLocation.detect = function (handler) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.
-	var hostname = location && location.hostname;
+	const hostname = document.location && document.location.hostname;
 	if (hostname === 'localhost' || hostname.indexOf('127.') === 0) {
-		var testistan = Regions.findOne('9JyFCoKWkxnf8LWPh');
+		const testistan = Regions.findOne('9JyFCoKWkxnf8LWPh');
 		if (testistan) {
 			handler(testistan, 'Using Testistan for localhost');
 		}
@@ -15,7 +15,7 @@ IpLocation.detect = function(handler) {
 	}
 
 	if (Meteor.settings.testdata) {
-		var spilistan = Regions.findOne('EZqQLGL4PtFCxCNrp');
+		const spilistan = Regions.findOne('EZqQLGL4PtFCxCNrp');
 		if (spilistan) {
 			handler(handler, 'Deployed with testdata, using Spilistan region');
 		}
@@ -23,27 +23,31 @@ IpLocation.detect = function(handler) {
 	}
 
 	// Pull location-data from ipinfo.io
-	jQuery.get('https://ipinfo.io/geo', function(location) {
+	jQuery.get('https://ipinfo.io/geo', (location) => {
 		if (!location.region) {
 			handler(false, 'IP location not accurate enough');
 			return;
 		}
 
-		var maxDistance = 200000; // meters
+		const maxDistance = 200000; // meters
 
-		var latlon = location.loc.split(',');
-		region = Regions.findOne({
-			loc: { $near: {
-				$geometry: { type: "Point", coordinates: [latlon[1], latlon[0]] },
-				$maxDistance: maxDistance
-			}}
+		const latlon = location.loc.split(',');
+		const region = Regions.findOne({
+			loc: {
+				$near: {
+					$geometry: { type: 'Point', coordinates: [latlon[1], latlon[0]] },
+					$maxDistance: maxDistance,
+				},
+			},
 		});
 
 		if (region) {
-			handler(region, 'Found region '+region.name);
+			handler(region, `Found region ${region.name}`);
 			return;
 		}
 
-		handler(region, 'No region found within ' + maxDistance/1000 + ' km.');
+		handler(region, `No region found within ${maxDistance / 1000} km.`);
 	}, 'jsonp');
 };
+
+export default IpLocation;

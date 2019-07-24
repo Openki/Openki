@@ -7,4 +7,6 @@ import { Mongo } from 'meteor/mongo';
 //   "message"   -> String
 //   "timeout"   -> Integer
 // }
-export default Alerts = new Mongo.Collection(null);
+const Alerts = new Mongo.Collection(null);
+
+export default Alerts;

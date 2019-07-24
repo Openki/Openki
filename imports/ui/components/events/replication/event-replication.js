@@ -1,14 +1,14 @@
-import Events from '/imports/api/events/events.js';
+import Events from '/imports/api/events/events';
 
-import LocalTime from '/imports/utils/local-time.js';
-import Alert from '/imports/api/alerts/alert.js';
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors.js';
+import LocalTime from '/imports/utils/local-time';
+import Alert from '/imports/api/alerts/alert';
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './event-replication.html';
 
-const replicaStartDate = originalDate => {
+const replicaStartDate = (originalDate) => {
 	const originalMoment = moment(originalDate);
 	const startMoment = moment.max(originalMoment, moment());
 	startMoment.day(originalMoment.day());
@@ -26,24 +26,22 @@ Template.eventReplication.onCreated(function eventReplicationOnCreated() {
 	instance.pickDays = new ReactiveVar([]); // picked in the calendar
 	instance.usingPicker = new ReactiveVar(true);
 
-	instance.activeDays = () => {
-		return (
-			instance.usingPicker.get()
+	instance.activeDays = () => (
+		instance.usingPicker.get()
 			? instance.pickDays.get()
 			: instance.calcDays.get()
-		);
-	};
+	);
 
-	const data = instance.data;
+	const { data } = instance;
 	instance.replicateStartDate = new ReactiveVar(replicaStartDate(data.start));
 	instance.replicateEndDate = new ReactiveVar(replicaStartDate(moment(data.start).add(1, 'week')));
 });
 
 
-Template.eventReplication.onRendered(function() {
+Template.eventReplication.onRendered(function () {
 	const instance = this;
 
-	let pickDays = [];
+	const pickDays = [];
 
 	instance.autorun(() => {
 		Session.get('locale');
@@ -56,8 +54,8 @@ Template.eventReplication.onRendered(function() {
 			startDate: new Date(),
 			format: {
 				toDisplay: date => moment(date).format('L'),
-				toValue: date => moment(date, 'L').toDate()
-			}
+				toValue: date => moment(date, 'L').toDate(),
+			},
 		});
 
 		instance.$('.js-replicate-datepick').datepicker('destroy');
@@ -65,9 +63,9 @@ Template.eventReplication.onRendered(function() {
 			weekStart: moment.localeData().firstDayOfWeek(),
 			language: moment.locale(),
 			multidate: true,
-			multidateSeperator: ", ",
+			multidateSeperator: ', ',
 			todayHighlight: true,
-			startDate: new Date()
+			startDate: new Date(),
 		});
 
 		instance.$('.js-replicate-datepick').datepicker('setDates', pickDays);
@@ -77,12 +75,12 @@ Template.eventReplication.onRendered(function() {
 Template.eventReplication.helpers({
 	replicaStart() {
 		const startDate = Template.instance().replicateStartDate.get();
-		return replicaStartDate(startDate).format("L");
+		return replicaStartDate(startDate).format('L');
 	},
 
 	replicaEnd() {
 		const endDate = Template.instance().replicateEndDate.get();
-		return replicaStartDate(endDate).format("L");
+		return replicaStartDate(endDate).format('L');
 	},
 
 	replicateStartDay() {
@@ -95,11 +93,11 @@ Template.eventReplication.helpers({
 		return moment(endDate).format('ddd');
 	},
 
-	localDate: date => moment(date).format("l"),
+	localDate: date => moment(date).format('l'),
 
-	fullDate: date => moment(date).format("LLLL"),
+	fullDate: date => moment(date).format('LLLL'),
 
-	weekDay: date => moment(date).format("ddd"),
+	weekDay: date => moment(date).format('ddd'),
 
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);
@@ -110,13 +108,11 @@ Template.eventReplication.helpers({
 
 	replicaDates() {
 		const start = moment(this.start);
-		return Template.instance().activeDays().map(days => {
-			return moment(start).add(days, 'days');
-		});
-	}
+		return Template.instance().activeDays().map(days => moment(start).add(days, 'days'));
+	},
 });
 
-const getEventFrequency = instance => {
+const getEventFrequency = (instance) => {
 	let startDate = moment(instance.$('#replicateStart').val(), 'L');
 	if (!startDate.isValid()) return [];
 	if (startDate.isBefore(moment())) {
@@ -124,21 +120,21 @@ const getEventFrequency = instance => {
 		startDate = replicaStartDate(startDate);
 	}
 
-	const endDate   = moment(instance.$('#replicateEnd').val(), 'L');
+	const endDate = moment(instance.$('#replicateEnd').val(), 'L');
 	if (!endDate.isValid()) return [];
 	const frequency = instance.$('.js-replicate-frequency:checked').val();
 
-	const frequencies =
-		{ once: { unit: 'days',   interval: 1 }
-		, daily: { unit: 'days',   interval: 1 }
-		, weekly: { unit: 'weeks',  interval: 1 }
-		, biWeekly: { unit: 'weeks',  interval: 2 }
-		};
+	const frequencies = {
+		once: { unit: 'days', interval: 1 },
+		daily: { unit: 'days', interval: 1 },
+		weekly: { unit: 'weeks', interval: 1 },
+		biWeekly: { unit: 'weeks', interval: 2 },
+	};
 
 	if (frequencies[frequency] === undefined) return [];
-	const unit = frequencies[frequency].unit;
+	const { unit } = frequencies[frequency];
 
-	const interval = frequencies[frequency].interval;
+	const { interval } = frequencies[frequency];
 
 	const eventStart = moment(instance.data.start);
 	const originDay = moment(eventStart).startOf('day');
@@ -148,11 +144,11 @@ const getEventFrequency = instance => {
 	const days = [];
 	const repLimit = 52;
 
-	while(!repStart.isAfter(endDate)) {
+	while (!repStart.isAfter(endDate)) {
 		const daysFromOriginal = repStart.diff(originDay, 'days');
 		if (daysFromOriginal !== 0 && repStart.isAfter(now)) {
 			days.push(daysFromOriginal);
-			if (frequency == 'once') break;
+			if (frequency === 'once') break;
 			if (days.length >= repLimit) break;
 		}
 
@@ -164,32 +160,30 @@ const getEventFrequency = instance => {
 
 
 Template.eventReplication.events({
-	'changeDate .js-replicate-datepick'(event, instance) {
-		pickDays = event.dates;
+	'changeDate .js-replicate-datepick': function (event, instance) {
+		const pickDays = event.dates;
 
 		const origin = moment(instance.data.start).startOf('day');
-		const days = pickDays.map(date => {
-			return moment(date).diff(origin, 'days');
-		});
+		const days = pickDays.map(date => moment(date).diff(origin, 'days'));
 		instance.pickDays.set(days);
 	},
 
-	'show.bs.tab a[data-toggle="tab"]'(event, instance) {
+	'show.bs.tab a[data-toggle="tab"]': function (event, instance) {
 		const targetHref = $(event.target).attr('href');
-		instance.usingPicker.set(targetHref == '#datepicker');
+		instance.usingPicker.set(targetHref === '#datepicker');
 	},
 
-	'click .js-replicate-btn'(event, instance) {
+	'click .js-replicate-btn': function (event, instance) {
 		instance.busy('saving');
 
 		const startLocal = LocalTime.fromString(instance.data.startLocal);
-		const endLocal   = LocalTime.fromString(instance.data.endLocal);
+		const endLocal = LocalTime.fromString(instance.data.endLocal);
 
 		const replicaDays = instance.activeDays();
 		let removed = 0;
 		let responses = 0;
 		replicaDays.forEach((days) => {
-			/*create a new event for each time interval */
+			/* create a new event for each time interval */
 			const replicaEvent = {
 				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
 				endLocal: LocalTime.toString(moment(endLocal).add(days, 'days')),
@@ -199,26 +193,27 @@ Template.eventReplication.events({
 				room: instance.data.room || '',
 				region: instance.data.region,
 				groups: instance.data.groups,
-				replicaOf: instance.data.replicaOf || instance.data._id, // delegate the same replicaOf ID for this replica if the replicated event is also a replica
+				// delegate the same replicaOf ID for this replica if the replicated event is also a replica
+				replicaOf: instance.data.replicaOf || instance.data._id,
 				internal: instance.data.internal,
 			};
 
-			const courseId = instance.data.courseId;
+			const { courseId } = instance.data;
 			if (courseId) replicaEvent.courseId = courseId;
 
 			// To create a new event, pass an empty Id
 			const eventId = '';
 			const args = { eventId, changes: replicaEvent };
 			Meteor.call('event.save', args, (error) => {
-				responses++;
+				responses += 1;
 				if (error) {
 					Alert.error(error, mf(
 						'eventReplication.errWithReason',
-						{ START: moment(replicaEvent.startLocal).format('llll')	},
-						'Creating the copy on "{START}" failed.'
+						{ START: moment(replicaEvent.startLocal).format('llll') },
+						'Creating the copy on "{START}" failed.',
 					));
 				} else {
-					removed++;
+					removed += 1;
 				}
 
 				if (responses === replicaDays.length) {
@@ -226,11 +221,12 @@ Template.eventReplication.events({
 					if (removed) {
 						Alert.success(mf(
 							'event.replicate.successCondensed',
-							{ TITLE: instance.data.title
-							, NUM: removed
-							, DATE: moment(replicaEvent.startLocal).format('llll')
+							{
+								TITLE: instance.data.title,
+								NUM: removed,
+								DATE: moment(replicaEvent.startLocal).format('llll'),
 							},
-							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}'
+							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
 						));
 					}
 					if (removed === responses) {
@@ -243,21 +239,21 @@ Template.eventReplication.events({
 		});
 	},
 
-	'change .js-update-replicas, keyup .js-update-replicas'(event, instance) {
+	'change .js-update-replicas, keyup .js-update-replicas': function (event, instance) {
 		instance.calcDays.set(getEventFrequency(instance));
 	},
 
-	'mouseover .js-replicate-btn'(event, instance) {
+	'mouseover .js-replicate-btn': function (event, instance) {
 		instance.$('.replica-event-captions').addClass('highlighted');
 	},
 
-	'mouseout .js-replicate-btn'(event, instance) {
+	'mouseout .js-replicate-btn': function (event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
 	},
 
-	'click .js-cancel-replication'(event, instance) {
+	'click .js-cancel-replication': function (event, instance) {
 		const parentInstance = instance.parentInstance();
 		parentInstance.replicating.set(false);
 		parentInstance.collapse();
-	}
+	},
 });

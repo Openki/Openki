@@ -1,16 +1,15 @@
-import Log from '/imports/api/log/log.js';
-import Regions from '/imports/api/regions/regions.js';
-import Users from '/imports/api/users/users.js';
+import Log from '/imports/api/log/log';
+import Regions from '/imports/api/regions/regions';
+import Users from '/imports/api/users/users';
 
 export default Profile = {};
 
-Profile.updateAcceptsMessages = function(user) {
-
+Profile.updateAcceptsMessages = function (user) {
 	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
 
-	if (user.acceptsMessages != acceptsMessages) {
+	if (user.acceptsMessages !== acceptsMessages) {
 		Users.update(user._id, {
-			$set: { acceptsMessages }
+			$set: { acceptsMessages },
 		});
 	}
 };
@@ -18,14 +17,15 @@ Profile.updateAcceptsMessages = function(user) {
 
 Profile.Username = {};
 
-Profile.Username.change = function(userId, newName) {
+Profile.Username.change = function (userId, newName) {
 	check(userId, String);
 	check(newName, String);
 
-	let result, success;
+	let result; let
+		success;
 	try {
 		result = Meteor.users.update(userId, {
-			$set: { username: newName }
+			$set: { username: newName },
 		});
 		success = result > 0;
 	} catch (e) {
@@ -33,13 +33,13 @@ Profile.Username.change = function(userId, newName) {
 		success = false;
 	}
 	Log.record('Profile.Username', [userId],
-		{ userId: userId
-		, name: newName
-		, success
-		, result
-		, cause: "profile change"
-		}
-	);
+		{
+			userId,
+			name: newName,
+			success,
+			result,
+			cause: 'profile change',
+		});
 
 	return success;
 };
@@ -47,25 +47,25 @@ Profile.Username.change = function(userId, newName) {
 
 Profile.Email = {};
 
-Profile.Email.change = function(userId, email, reason) {
+Profile.Email.change = function (userId, email, reason) {
 	check(userId, String);
 	check(email, Match.Optional(String));
 	check(reason, String);
 
 	Log.record('Profile.Email', [userId],
-		{ userId: userId
-		, email: email
-		, reason: reason
-		}
-	);
+		{
+			userId,
+			email,
+			reason,
+		});
 
-	var newValue = [];
+	let newValue = [];
 	if (email) {
 		newValue = [{ address: email, verified: false }];
 	}
 
 	Meteor.users.update(userId, {
-		$set: { emails: newValue }
+		$set: { emails: newValue },
 	});
 };
 
@@ -78,23 +78,23 @@ Profile.Notifications = {};
   * @param   {ID} rel    - related ID for the Log (optional)
   *
   */
-Profile.Notifications.change = function(userId, enable, relId, reason) {
+Profile.Notifications.change = function (userId, enable, relId, reason) {
 	check(userId, String);
 	check(enable, Boolean);
 	check(relId, Match.Optional(String));
 	check(reason, String);
 
-	var rel = [userId];
+	const rel = [userId];
 	if (relId) rel.push(relId);
 	Log.record('Profile.Notifications', rel,
-		{ userId: userId
-		, enable: enable
-		, reason: reason
-		}
-	);
+		{
+			userId,
+			enable,
+			reason,
+		});
 
 	Meteor.users.update(userId, {
-		$set: { 'notifications': enable }
+		$set: { notifications: enable },
 	});
 };
 
@@ -103,20 +103,20 @@ Profile.Notifications.change = function(userId, enable, relId, reason) {
   * @param {String} token - the unsubscribe token passed by the user
   * @return {Bool} whether the token was accepted
   */
-Profile.Notifications.unsubscribe = function(token) {
+Profile.Notifications.unsubscribe = function (token) {
 	check(token, String);
 
-	var accepted = false;
+	let accepted = false;
 
 	// Find the relevant notification result
 	Log.find({
-		rel: token
-	}).forEach(function(entry) {
+		rel: token,
+	}).forEach((entry) => {
 		// See whether it was indeed a secret token.
 		// This check is not redundant because public ID like courseID
 		// are also written into the rel-index and would be found if provided.
 		if (entry.body.unsubToken === token) {
-			Profile.Notifications.change(entry.body.recipient, false, entry._id, "unsubscribe token");
+			Profile.Notifications.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
 			accepted = true;
 		}
 	});
@@ -133,24 +133,24 @@ Profile.Region = {};
   *
   * @return {Bool} whether the change was accepted
   */
-Profile.Region.change = function(userId, regionId, reason) {
+Profile.Region.change = function (userId, regionId, reason) {
 	check(userId, String);
 	check(regionId, String);
 	check(reason, String);
 
-	var region = Regions.findOne(regionId);
-	var accepted = !!region;
+	const region = Regions.findOne(regionId);
+	const accepted = !!region;
 
 	Log.record('Profile.Region', [userId, regionId],
-		{ userId: userId
-		, regionId: regionId
-		, accepted: accepted
-		, reason: reason
-		}
-	);
+		{
+			userId,
+			regionId,
+			accepted,
+			reason,
+		});
 
 	if (accepted) {
-		Meteor.users.update(userId, { $set: { 'profile.regionId':  region._id } });
+		Meteor.users.update(userId, { $set: { 'profile.regionId': region._id } });
 	}
 
 	return accepted;

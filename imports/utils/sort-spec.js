@@ -3,7 +3,7 @@ import { check } from 'meteor/check';
 
 // SortSpec interface
 //
-// spec() returns a  mongo sort-specifier of the form 
+// spec() returns a  mongo sort-specifier of the form
 //   [['name', 'asc'], ['age', 'desc']]
 //
 // Constructors:
@@ -13,19 +13,19 @@ import { check } from 'meteor/check';
 // SortSpec.unordered() builds a SortSpec which imposes no ordering.
 
 export default SortSpec = (spec) => {
-    check(spec, [[String]]);
-    return { spec: () => spec };
+	check(spec, [[String]]);
+	return { spec: () => spec };
 };
 
-SortSpec.fromString = function(spec) {
-    check(spec, String);
+SortSpec.fromString = function (spec) {
+	check(spec, String);
 
-    return SortSpec(spec.split(',').filter(Boolean).map((field) => {
-        if (field.indexOf('-') === 0) {
-            return [ field.slice(1), 'desc' ];
-        }
-        return [ field, 'asc' ];
-    }));
+	return SortSpec(spec.split(',').filter(Boolean).map((field) => {
+		if (field.indexOf('-') === 0) {
+			return [field.slice(1), 'desc'];
+		}
+		return [field, 'asc'];
+	}));
 };
 
 SortSpec.unordered = () => SortSpec([]);

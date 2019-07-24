@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import '/imports/ui/components/regions/selection/region-selection.js';
+import '/imports/ui/components/regions/selection/region-selection';
 
 import './region-splash.html';
 
@@ -11,10 +11,10 @@ Template.regionSplash.onRendered(function regionSplashOnRendered() {
 });
 
 Template.regionSplash.events({
-	'hidden.bs.modal #regionSplash'() {
+	'hidden.bs.modal #regionSplash': function () {
 		const regionId = Session.get('region') || 'all';
 		try {
-			localStorage.setItem("region", regionId); // to survive page reload
+			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
 			console.error(e);
 		}
@@ -22,20 +22,20 @@ Template.regionSplash.events({
 		Session.set('showRegionSplash', false);
 	},
 
-	'click .js-region-link'(event, instance) {
+	'click .js-region-link': function (event, instance) {
 		instance.$('#regionSplash').modal('hide');
 	},
 
-	'click .js-region-search'(event, instance) {
+	'click .js-region-search': function (event, instance) {
 		instance.$(event.currentTarget).select();
 	},
 
-	'click #confirmRegion'(event, instance) {
+	'click #confirmRegion': function (event, instance) {
 		instance.$('#regionSplash').modal('hide');
 	},
 
-	'click #loginForRegion'(event, instance) {
+	'click #loginForRegion': function (event, instance) {
 		$('#accountTasks').modal('show');
 		instance.$('#regionSplash').modal('hide');
-	}
+	},
 });

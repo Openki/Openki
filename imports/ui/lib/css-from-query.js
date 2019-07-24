@@ -12,7 +12,7 @@ export default class CssFromQuery {
 			['linkcolor', 'color', '.frame-list-item a'],
 			['fontsize', 'font-size', '*'],
 			['regionbg', 'background-color', '.frame-list-item-region'],
-			['regioncolor', 'color', '.frame-list-item-region']
+			['regioncolor', 'color', '.frame-list-item-region'],
 		]);
 	}
 
@@ -22,7 +22,7 @@ export default class CssFromQuery {
 	  * @return {CssFromQuery Object}
 	  */
 	addCustomizableProperties(properties) {
-		properties.forEach(property => {
+		properties.forEach((property) => {
 			const [key, name, selector] = property;
 			this.customizableProperties.push({ key, name, selector });
 		});
@@ -31,25 +31,25 @@ export default class CssFromQuery {
 
 	getCssRules() {
 		this.cssRules = [];
-		this.customizableProperties.forEach(property => {
+		this.customizableProperties.forEach((property) => {
 			const queryValue = this.query[property.key];
 			let cssValue;
 			if (typeof queryValue !== 'undefined') {
 				// hexify color values
 				if (property.name.indexOf('color') >= 0) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
-						cssValue = '#' + queryValue.substr(0, 6);
+						cssValue = `#${queryValue.substr(0, 6)}`;
 					}
 				} else {
 					const intVal = parseInt(queryValue, 10);
 					if (!Number.isNaN(intVal)) {
-						cssValue = Math.max(0, Math.min(1000, intVal)) + 'px';
+						cssValue = `${Math.max(0, Math.min(1000, intVal))}px`;
 					}
 				}
 
 				if (cssValue) {
 					this.cssRules.push(
-						`${property.selector} { ${property.name}: ${cssValue}; }`
+						`${property.selector} { ${property.name}: ${cssValue}; }`,
 					);
 				}
 			}

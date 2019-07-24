@@ -3,15 +3,15 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import { IsEmail } from '/imports/utils/email-tools.js';
-import Alert from '/imports/api/alerts/alert.js';
-import ScssVars from '/imports/ui/lib/scss-vars.js';
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+import IsEmail from '/imports/utils/email-tools';
+import Alert from '/imports/api/alerts/alert';
+import ScssVars from '/imports/ui/lib/scss-vars';
 
 import './account-tasks.html';
 
-Template.accountTasks.onCreated(function() {
+Template.accountTasks.onCreated(function () {
 	this.accountTask = new ReactiveVar('login');
 	this.autorun(() => {
 		if (Session.equals('pleaseLogin', true)) {
@@ -21,97 +21,97 @@ Template.accountTasks.onCreated(function() {
 });
 
 Template.accountTasks.helpers({
-	activeAccountTask: (task) => Template.instance().accountTask.get() == task,
-	pleaseLogin: () => Session.get('pleaseLogin')
+	activeAccountTask: task => Template.instance().accountTask.get() === task,
+	pleaseLogin: () => Session.get('pleaseLogin'),
 });
 
 Template.accountTasks.events({
-	'show.bs.modal #accountTasks'(event, instance) {
+	'show.bs.modal #accountTasks': function (event, instance) {
 		instance.transferUsername = false;
 		instance.transferPassword = false;
 		instance.transferMail = false;
 	},
 
-	'shown.bs.modal #accountTasks'(event, instance) {
+	'shown.bs.modal #accountTasks': function (event, instance) {
 		instance.$('input').first().select();
 	},
 
-	'hide.bs.modal #accountTasks'(event, instance) {
+	'hide.bs.modal #accountTasks': function (event, instance) {
 		instance.$('input').val('');
 	},
 
-	'hidden.bs.modal #accountTasks'(event, instance) {
+	'hidden.bs.modal #accountTasks': function (event, instance) {
 		instance.accountTask.set('login');
 		Session.set('pleaseLogin', false);
-	}
+	},
 });
 
-Template.loginFrame.onCreated(function() {
+Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
-	this.OAuthServices =
-		[
-			{ key: 'google'
-			, name: 'Google'
-			, serviceName: 'Google'
-			}
-		,
-			{ key: 'facebook'
-			, name: 'Facebook'
-			, serviceName: 'Facebook'
-			}
-		,
-			{ key: 'github'
-			, name: 'GitHub'
-			, serviceName: 'Github'
-			}
-		];
+	this.OAuthServices = [
+		{
+			key: 'google',
+			name: 'Google',
+			serviceName: 'Google',
+		},
+		{
+			key: 'facebook',
+			name: 'Facebook',
+			serviceName: 'Facebook',
+		},
+		{
+			key: 'github',
+			name: 'GitHub',
+			serviceName: 'Github',
+		},
+	];
 });
 
-Template.loginFrame.onRendered(function() {
-	const transferMail = this.parentInstance().transferMail;
+Template.loginFrame.onRendered(function () {
+	const { transferMail } = this.parentInstance();
 	if (transferMail) this.$('.js-username').val(transferMail);
 
 	this.$('input').first().select();
 });
 
-Template.loginFrame.onDestroyed(function() {
+Template.loginFrame.onDestroyed(() => {
 	Session.set('pleaseLogin', false);
 });
 
 TemplateMixins.FormfieldErrors(Template.loginFrame, {
-	'noUsername': {
+	noUsername: {
 		text: () => mf(
 			'login.warning.noUserName',
-			'Please enter your username or email to log in.'
+			'Please enter your username or email to log in.',
 		),
-		field: "username"
+		field: 'username',
 	},
 	'Incorrect password': {
 		text: () => mf(
 			'login.password.password_incorrect',
-			'Incorrect password'
+			'Incorrect password',
 		),
-		field: "password"
+		field: 'password',
 	},
 	'User not found': {
 		text: () => mf(
 			'login.username.usr_doesnt_exist',
-			'This user does not exist.'
+			'This user does not exist.',
 		),
-		field: "username"
+		field: 'username',
 	},
 	'User has no password set': {
 		text: () => mf(
 			'login.username.no_password_set',
-			'Please login below with Google/Facebook.'
+			'Please login below with Google/Facebook.',
 		),
-		field: "username"
-	}
+		field: 'username',
+	},
 });
 
 Template.loginFrame.events({
-	'click .js-forgot-pwd-btn'(event, instance) {
+	'click .js-forgot-pwd-btn': function (event, instance) {
 		event.preventDefault();
 
 		const username = instance.$('.js-username').val();
@@ -122,7 +122,7 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('recoverPwd');
 	},
 
-	'click .js-register-open'(event, instance) {
+	'click .js-register-open': function (event, instance) {
 		let username = instance.$('.js-username').val();
 		const password = instance.$('.js-password').val();
 		let email;
@@ -142,13 +142,13 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('register');
 	},
 
-	'submit form, click .js-login'(event, instance){
+	'submit form, click .js-login': function (event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
 		const user = instance.$('.js-username').val();
 		if (!user) {
-			instance.errors.add("noUsername");
+			instance.errors.add('noUsername');
 		}
 
 		if (instance.errors.present()) return;
@@ -156,7 +156,7 @@ Template.loginFrame.events({
 		const password = instance.$('.js-password').val();
 
 		instance.busy('logging-in');
-		Meteor.loginWithPassword(user, password, function(err) {
+		Meteor.loginWithPassword(user, password, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -169,19 +169,19 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-oauth-btn'(event, instance) {
+	'click .js-oauth-btn': function (event, instance) {
 		event.preventDefault();
 
-		const service = event.currentTarget.dataset.service;
-		const loginMethod = 'loginWith' + service;
+		const { service } = event.currentTarget.dataset;
+		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
-			console.log("don't have "+loginMethod);
+			console.log(`don't have ${loginMethod}`);
 			return;
 		}
 
 		instance.busy(service);
 		Meteor[loginMethod]({
-		}, function (err) {
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, '');
@@ -192,7 +192,7 @@ Template.loginFrame.events({
 				$('#accountTasks').modal('hide');
 			}
 		});
-	}
+	},
 });
 
 Template.loginFrame.helpers({
@@ -200,75 +200,75 @@ Template.loginFrame.helpers({
 
 	loginAction: () => Session.get('loginAction'),
 
-	OAuthServices: () => Template.instance().OAuthServices
+	OAuthServices: () => Template.instance().OAuthServices,
 });
 
-Template.registerFrame.onCreated(function() {
+Template.registerFrame.onCreated(function () {
 	this.busy(false);
 });
 
-Template.registerFrame.onRendered(function() {
+Template.registerFrame.onRendered(function () {
 	const parentInstance = this.parentInstance();
 
-	const transferUsername = parentInstance.transferUsername;
+	const { transferUsername } = parentInstance;
 	if (transferUsername) this.$('.js-username').val(transferUsername);
 
-	const transferPassword = parentInstance.transferPassword;
+	const { transferPassword } = parentInstance;
 	if (transferPassword) this.$('.js-password').val(transferPassword);
 
-	const transferMail = parentInstance.transferMail;
+	const { transferMail } = parentInstance;
 	if (transferMail) this.$('.js-email').val(transferMail);
 
 	this.$('input').first().select();
 });
 
 TemplateMixins.FormfieldErrors(Template.registerFrame, {
-	'noUsername': {
+	noUsername: {
 		text: () => mf(
-			'register.warning.noUserName', 
-			'Please enter a name for your new user.'
+			'register.warning.noUserName',
+			'Please enter a name for your new user.',
 		),
-		field: 'username'
+		field: 'username',
 	},
 	'Username already exists.': {
 		text: () => mf(
 			'register.warning.userExists',
-			'This username already exists. Please choose another one.'
+			'This username already exists. Please choose another one.',
 		),
-		field: 'username'
+		field: 'username',
 	},
-	'noPassword': {
+	noPassword: {
 		text: () => mf(
 			'register.warning.noPasswordProvided',
-			'Please enter a password to register.'
+			'Please enter a password to register.',
 		),
-		field: 'password'
+		field: 'password',
 	},
-	'noEmail': {
+	noEmail: {
 		text: () => mf(
 			'register.warning.noEmailProvided',
-			'Please enter an email-address to register.'
+			'Please enter an email-address to register.',
 		),
-		field: 'email'
+		field: 'email',
 	},
 	'email invalid': {
 		text: () => mf(
 			'register.warning.emailNotValid',
-			'your email seems to have an error.'
+			'your email seems to have an error.',
 		),
-		field: 'email'
+		field: 'email',
 	},
 	'Email already exists.': {
 		text: () => mf(
-			'register.warning.emailExists', 
-			'This email already exists. Have you tried resetting your password?'
+			'register.warning.emailExists',
+			'This email already exists. Have you tried resetting your password?',
 		),
-		field: 'email'
-	}
+		field: 'email',
+	},
 });
 
 Template.registerFrame.events({
-	'click .js-register'(event, instance) {
+	'click .js-register': function (event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -291,7 +291,7 @@ Template.registerFrame.events({
 
 
 		instance.busy('registering');
-		Accounts.createUser({ username,	password, email	}, (err) => {
+		Accounts.createUser({ username, password, email }, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -308,18 +308,18 @@ Template.registerFrame.events({
 		});
 	},
 
-	'click #backToLogin'(event, instance) {
+	'click #backToLogin': function (event, instance) {
 		instance.parentInstance().accountTask.set('login');
-	}
+	},
 });
 
-Template.forgotPwdFrame.onCreated(function() {
+Template.forgotPwdFrame.onCreated(function () {
 	this.busy(false);
 	this.emailIsValid = new ReactiveVar(false);
 });
 
-Template.forgotPwdFrame.onRendered(function() {
-	const transferMail = this.parentInstance().transferMail;
+Template.forgotPwdFrame.onRendered(function () {
+	const { transferMail } = this.parentInstance();
 	if (transferMail) {
 		this.$('.js-reset-pw-email').val(transferMail);
 		this.emailIsValid.set(true);
@@ -329,35 +329,35 @@ Template.forgotPwdFrame.onRendered(function() {
 });
 
 Template.forgotPwdFrame.helpers({
-	noValidEmail: () => !Template.instance().emailIsValid.get()
+	noValidEmail: () => !Template.instance().emailIsValid.get(),
 });
 
 Template.forgotPwdFrame.events({
-	'input, change, paste, keyup, mouseup'(event, instance) {
+	'input, change, paste, keyup, mouseup': function (event, instance) {
 		const email = instance.$('.js-reset-pw-email').val();
 		instance.emailIsValid.set(IsEmail(email));
 	},
 
-	'submit'(event, instance) {
+	submit(event, instance) {
 		event.preventDefault();
 		instance.busy('requesting-pw-reset');
 		Accounts.forgotPassword({
-			email: instance.$('.js-reset-pw-email').val()
-		}, function(err) {
+			email: instance.$('.js-reset-pw-email').val(),
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, 'We were unable to send a mail to this address');
 			} else {
 				Alert.success(mf(
 					'forgotPassword.emailSent',
-					'An e-mail with further instructions on how to reset your password has been sent to you.'
+					'An e-mail with further instructions on how to reset your password has been sent to you.',
 				));
 				instance.parentInstance().accountTask.set('login');
 			}
 		});
 	},
 
-	'click .js-reset-pwd-close-btn'(event, instance) {
+	'click .js-reset-pwd-close-btn': function (event, instance) {
 		instance.parentInstance().accountTask.set('login');
 	},
 });

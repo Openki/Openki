@@ -3,13 +3,14 @@
   * @param {Number} [levels] How many levels to go up. Default is 1
   * @returns {Blaze.TemplateInstance}
   */
-Blaze.TemplateInstance.prototype.parentInstance = function(levels) {
-	var view = this.view;
-	if (typeof levels === "undefined") {
+Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
+	let { view } = this;
+	if (typeof levels === 'undefined') {
 		levels = 1;
 	}
 	while (view) {
-		if (view.name.substring(0, 9) === "Template." && !(levels--)) {
+		// eslint-disable-next-line no-plusplus
+		if (view.name.substring(0, 9) === 'Template.' && !(levels--)) {
 			return view.templateInstance();
 		}
 		view = view.parentView;
@@ -37,16 +38,16 @@ Blaze.TemplateInstance.prototype.busy = function (activity) {
 
 /** Find business state var in this or parent template instance
   */
-Blaze.TemplateInstance.prototype.findBusiness = function() {
+Blaze.TemplateInstance.prototype.findBusiness = function () {
 	if (this.business) return this.business; // Short-circuit common case
 
-	var businessInstance = this;
+	let businessInstance = this;
 	while (businessInstance && !businessInstance.business) {
 		businessInstance = businessInstance.parentInstance();
 	}
 
 	if (!businessInstance) {
-		throw "Unable to find parent instance with business set";
+		throw new Error('Unable to find parent instance with business set');
 	}
 
 	// Cache on the local instance

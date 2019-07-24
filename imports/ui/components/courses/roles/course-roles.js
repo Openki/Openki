@@ -2,23 +2,22 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import {Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription.js';
+import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './course-roles.html';
 
 
-
-Template.courseRole.onCreated(function() {
+Template.courseRole.onCreated(function () {
 	this.busy(false);
 	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
 
 	// Build a subscribe change
-	this.subscribe = function(comment) {
+	this.subscribe = function (comment) {
 		const user = Users.currentUser();
 		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
 	};
@@ -30,11 +29,11 @@ Template.courseRole.onCreated(function() {
 			const user = Meteor.user();
 			const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
 			if (change.validFor(user)) {
-				processChange(change, ()=> {
-					Alert.success(mf("course.roles.unsubscribed", {NAME: this.data.course.name}, "Unsubscribed from course {NAME}"));
+				processChange(change, () => {
+					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
 				});
 			} else {
-				console.log(change+" not valid for "+user);
+				console.log(`${change} not valid for ${user}`);
 			}
 		});
 	}
@@ -47,35 +46,35 @@ Template.courseRole.helpers({
 
 	roleSubscribe() {
 		let role = this.type;
-		if (role == 'participant') role = 'interested';
+		if (role === 'participant') role = 'interested';
 
-		return 'roles.' + role + '.subscribe';
+		return `roles.${role}.subscribe`;
 	},
 
 	roleSubscribed() {
 		let role = this.type;
-		if (role == 'participant') role = 'interested';
+		if (role === 'participant') role = 'interested';
 
-		return 'roles.' + role + '.subscribed';
+		return `roles.${role}.subscribed`;
 	},
 
 	roleIs(type) {
 		return this.roletype.type === type;
 	},
 
-	maySubscribe: function() {
+	maySubscribe() {
 		const operator = Users.currentUser();
 		return Template.instance().subscribe().validFor(operator);
-	}
+	},
 });
 
 Template.courseRole.events({
-	'click .js-role-enroll-btn'(event, instance) {
+	'click .js-role-enroll-btn': function (event, instance) {
 		event.preventDefault();
 		instance.enrolling.set(true);
 	},
 
-	'click .js-role-subscribe-btn'(event, instance) {
+	'click .js-role-subscribe-btn': function (event, instance) {
 		event.preventDefault();
 		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val().trim();
@@ -90,25 +89,25 @@ Template.courseRole.events({
 		});
 	},
 
-	'click .js-role-enroll-cancel'(e, template) {
+	'click .js-role-enroll-cancel': function (e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click .js-role-unsubscribe-btn'() {
+	'click .js-role-unsubscribe-btn': function () {
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
 		processChange(change);
 		return false;
 	},
 
-	'click .js-toggle-first-steps'(event, instance) {
+	'click .js-toggle-first-steps': function (event, instance) {
 		instance.showFirstSteps.set(!instance.showFirstSteps.get());
 	},
 
-	'click #firstStepsComment'() {
+	'click #firstStepsComment': function () {
 		$('.course-page-btn.js-discussion-edit').click();
-		location.hash = '#discussion';
+		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
-	}
+	},
 });

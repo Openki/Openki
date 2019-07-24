@@ -1,13 +1,13 @@
 import { Mongo } from 'meteor/mongo';
 
-import Filtering from '/imports/utils/filtering.js';
-import LocalTime from '/imports/utils/local-time.js';
-import Predicates from '/imports/utils/predicates.js';
-import Courses from '/imports/api/courses/courses.js';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
+import Filtering from '/imports/utils/filtering';
+import LocalTime from '/imports/utils/local-time';
+import Predicates from '/imports/utils/predicates';
+import Courses from '/imports/api/courses/courses';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import StringTools from '/imports/utils/string-tools.js';
-import AsyncTools from '/imports/utils/async-tools.js';
+import StringTools from '/imports/utils/string-tools';
+import AsyncTools from '/imports/utils/async-tools';
 
 // ======== DB-Model: ========
 // _id             -> ID
@@ -40,7 +40,8 @@ import AsyncTools from '/imports/utils/async-tools.js';
 /** Calculated fields
   *
   * courseGroups: list of group._id inherited from course (if courseId is set)
-  * allGroups: all groups that promote this course, both inherited from course and set on the event itself
+  * allGroups: all groups that promote this course, both inherited from course and set on the event
+  *            itself
   * editors: list of user and group _id that are allowed to edit the event
   * start: date object calculated from startLocal field. Use this for ordering
   *           between events.
@@ -50,17 +51,17 @@ import AsyncTools from '/imports/utils/async-tools.js';
 // ===========================
 
 // Event is a built-in, so we use a different name for this class
-OEvent = function() {
+OEvent = function () {
 	this.editors = [];
 };
 
-OEvent.prototype.editableBy = function(user) {
+OEvent.prototype.editableBy = function (user) {
 	if (!user) return false;
 	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
-OEvent.prototype.sameTime = function(event) {
+OEvent.prototype.sameTime = function (event) {
 	return ['startLocal', 'endLocal'].every((time) => {
 		const timeA = LocalTime.fromString(this[time]);
 		const timeB = LocalTime.fromString(event[time]);
@@ -69,59 +70,60 @@ OEvent.prototype.sameTime = function(event) {
 	});
 };
 
-export default Events = new Mongo.Collection("Events", {
+export default Events = new Mongo.Collection('Events', {
 	transform(event) {
 		return _.extend(new OEvent(), event);
-	}
+	},
 });
 
 Events.Filtering = () => Filtering(
-	{ course:     Predicates.id
-	, region:     Predicates.id
-	, search:     Predicates.string
-	, categories: Predicates.ids
-	, group:      Predicates.id
-	, groups:     Predicates.ids
-	, venue:      Predicates.string
-	, room:       Predicates.string
-	, start:      Predicates.date
-	, before:     Predicates.date
-	, after:      Predicates.date
-	, end:        Predicates.date
-	, internal:   Predicates.flag
-	}
+	{
+		course: Predicates.id,
+		region: Predicates.id,
+		search: Predicates.string,
+		categories: Predicates.ids,
+		group: Predicates.id,
+		groups: Predicates.ids,
+		venue: Predicates.string,
+		room: Predicates.string,
+		start: Predicates.date,
+		before: Predicates.date,
+		after: Predicates.date,
+		end: Predicates.date,
+		internal: Predicates.flag,
+	},
 );
 
 /** @summary recalculate the group-related fields of an event
   * @param {eventId} the event to update
   */
-Events.updateGroups = function(eventId) {
-	AsyncTools.untilClean(function(resolve, reject) {
-		var event = Events.findOne(eventId);
+Events.updateGroups = function (eventId) {
+	AsyncTools.untilClean((resolve, reject) => {
+		const event = Events.findOne(eventId);
 		if (!event) return resolve(true); // Nothing was successfully updated, we're done.
 
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
-		var editors = event.groupOrganizers.slice(); // Clone
+		let editors = event.groupOrganizers.slice(); // Clone
 		if (event.createdBy) editors.push(event.createdBy);
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
-		var courseGroups = [];
+		let courseGroups = [];
 		if (event.courseId) {
 			const course = Courses.findOne(event.courseId);
-			if (!course) throw new Exception("Missing course " + event.courseId + " for event " + event._id);
+			if (!course) throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
 
 			courseGroups = course.groups;
 			editors = _.union(editors, course.editors);
 		}
 
-		var update = {
-			editors: editors
+		const update = {
+			editors,
 		};
 
 		// The course groups are only inherited if the event lies in the future
 		// Past events keep their list of groups even if it changes for the course
-		var historical = event.start < new Date();
+		const historical = event.start < new Date();
 		if (historical) {
 			update.allGroups = _.union(event.groups, event.courseGroups);
 		} else {
@@ -129,16 +131,15 @@ Events.updateGroups = function(eventId) {
 			update.allGroups = _.union(event.groups, courseGroups);
 		}
 
-		Events.rawCollection().update
-			( { _id: event._id }
-			, { $set: update }
-			, (err, result) => {
+		Events.rawCollection().update({ _id: event._id },
+			{ $set: update },
+			(err, result) => {
 				if (err) {
 					reject(err);
 				} else {
 					resolve(result.result.nModified === 0);
-				}}
-			);
+				}
+			});
 	});
 };
 
@@ -168,15 +169,14 @@ Events.updateGroups = function(eventId) {
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-Events.findFilter = function(filter, limit, skip, sort) {
-	var find = {};
-	var and = [];
-	
+Events.findFilter = function (filter, limit, skip, sort) {
+	const find = {};
+	const and = [];
+
 	const options = {};
 	options.sort = Array.isArray(sort) ? sort : [];
-	
-	
-	
+
+
 	let startSortOrder = 'asc';
 
 	if (limit > 0) {
@@ -232,7 +232,7 @@ Events.findFilter = function(filter, limit, skip, sort) {
 		find.categories = { $all: filter.categories };
 	}
 
-	var inGroups = [];
+	let inGroups = [];
 	if (filter.group) {
 		inGroups.push(filter.group);
 	}
@@ -254,12 +254,14 @@ Events.findFilter = function(filter, limit, skip, sort) {
 	}
 
 	if (filter.search) {
-		var searchTerms = filter.search.split(/\s+/);
-		searchTerms.forEach(function(searchTerm) {
-			and.push({ $or: [
-				{ title: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
-				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }
-			] });
+		const searchTerms = filter.search.split(/\s+/);
+		searchTerms.forEach((searchTerm) => {
+			and.push({
+				$or: [
+					{ title: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+					{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
+				],
+			});
 		});
 	}
 
@@ -267,7 +269,7 @@ Events.findFilter = function(filter, limit, skip, sort) {
 		find.$and = and;
 	}
 
-	options.sort.push([ 'start', startSortOrder ]);
+	options.sort.push(['start', startSortOrder]);
 
 	return Events.find(find, options);
 };

@@ -2,7 +2,9 @@
   *
   * @param {String} the string to be checked
   */
-export const IsEmail = function(str) {
+const IsEmail = function (str) {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 };
+
+export default IsEmail;

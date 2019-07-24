@@ -2,32 +2,32 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Courses from '/imports/api/courses/courses.js';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
-import Alert from '/imports/api/alerts/alert.js';
-import CourseDiscussionUtils from '/imports/utils/course-discussion-utils.js';
-import { HasRoleUser } from '/imports/utils/course-role-utils.js';
-import Editable from '/imports/ui/lib/editable.js';
+import Courses from '/imports/api/courses/courses';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import Alert from '/imports/api/alerts/alert';
+import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
+import { HasRoleUser } from '/imports/utils/course-role-utils';
+import Editable from '/imports/ui/lib/editable';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './course-discussion.html';
 
-Template.discussion.onCreated(function() {
+Template.discussion.onCreated(function () {
 	this.count = new ReactiveVar(0);
 
 	// If we want to jump to a comment we don't fold the comments
-	var select = this.data.select;
-	var limit = select ? 0 : 3;
+	const { select } = this.data;
+	const limit = select ? 0 : 3;
 	this.limit = new ReactiveVar(limit);
 
-	this.sub = this.subscribe('discussion', this.data.courseId, function() {
+	this.sub = this.subscribe('discussion', this.data.courseId, () => {
 		if (select) {
 			// Wait for the templates to render before trying to jump there.
-			Tracker.afterFlush(function() {
+			Tracker.afterFlush(() => {
 				// Jump to the selected comment.
 				// This method should work for screenreaders too.
-				location.hash = '#comment' + select;
+				window.location.hash = `#comment${select}`;
 				RouterAutoscroll.scheduleScroll();
 			});
 		}
@@ -42,21 +42,22 @@ Template.discussion.helpers({
 	},
 
 	posts() {
-		var instance = Template.instance();
-		var posts = CourseDiscussions.find(
+		const instance = Template.instance();
+		let posts = CourseDiscussions.find(
 			{
 				courseId: this.courseId,
-				parentId: { $exists: false }
+				parentId: { $exists: false },
 			},
 			{
-				sort: { time_updated: -1 }
-			})
+				sort: { time_updated: -1 },
+			},
+		)
 			.fetch();
 
-		var count = posts.length;
+		const count = posts.length;
 		instance.count.set(count);
 
-		var limit = instance.limit.get();
+		const limit = instance.limit.get();
 		if (limit) posts = posts.slice(0, limit);
 
 		return posts;
@@ -64,35 +65,35 @@ Template.discussion.helpers({
 
 	newPost() {
 		return {
-			'new': true,
+			new: true,
 			courseId: this.courseId,
 			userId: Meteor.userId(),
 			text: '',
-			notifyAll: Template.instance().notifyAll.get()
+			notifyAll: Template.instance().notifyAll.get(),
 		};
 	},
 
 	limited() {
-		var instance = Template.instance();
-		var limit = instance.limit.get();
+		const instance = Template.instance();
+		const limit = instance.limit.get();
 
 		if (limit) return instance.count.get() > limit;
 	},
 
 	count() {
 		return Template.instance().count.get();
-	}
+	},
 });
 
 Template.discussion.events({
-	'click .js-show-all-posts'(e, instance) {
-		 instance.limit.set(0);
-	}
+	'click .js-show-all-posts': function (event, instance) {
+		instance.limit.set(0);
+	},
 });
 
 
-Template.post.onCreated(function() {
-	var post = this.data;
+Template.post.onCreated(function () {
+	const post = this.data;
 
 	this.busy(false);
 
@@ -114,11 +115,10 @@ Template.post.helpers({
 		const instance = Template.instance();
 		if (!instance.isParent) return;
 
-		const replies =
-			CourseDiscussions
+		const replies = CourseDiscussions
 			.find(
 				{ parentId: this._id },
-				{ sort: { time_created: 1 }	}
+				{ sort: { time_created: 1 } },
 			)
 			.fetch();
 
@@ -131,11 +131,10 @@ Template.post.helpers({
 		if (!instance.isParent) return;
 
 		const limit = instance.limit.get();
-		const count =
-			CourseDiscussions
+		const count = CourseDiscussions
 			.find(
 				{ parentId: this._id },
-				{ limit: limit + 1 }
+				{ limit: limit + 1 },
 			)
 			.count();
 
@@ -159,13 +158,13 @@ Template.post.helpers({
 			userId: Meteor.userId(),
 			text: '',
 		};
-	}
+	},
 });
 
 Template.post.events({
-	'click .js-show-previous-replies'(e, instance) {
+	'click .js-show-previous-replies': function (e, instance) {
 		instance.limit.set(0);
-	}
+	},
 });
 
 
@@ -176,7 +175,7 @@ Template.postShow.helpers({
 		classes.push(this.parentId ? 'discussion-comment' : 'discussion-post');
 		if (this.saving) classes.push('is-saving');
 
-		return { class: classes.join(' ')};
+		return { class: classes.join(' ') };
 	},
 
 	mayEdit() {
@@ -184,17 +183,17 @@ Template.postShow.helpers({
 	},
 
 	mayDelete() {
-		var course = Courses.findOne(this.courseId);
+		const course = Courses.findOne(this.courseId);
 		return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, this);
 	},
 
 	hasBeenEdited() {
-		 return moment(this.time_updated).isAfter(this.time_created);
-	}
+		return moment(this.time_updated).isAfter(this.time_created);
+	},
 });
 
 
-Template.postEdit.onCreated(function() {
+Template.postEdit.onCreated(function () {
 	this.anon = new ReactiveVar(!this.data.userId);
 	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));
 
@@ -216,9 +215,7 @@ Template.postEdit.onCreated(function() {
 
 
 Template.postEdit.helpers({
-	editableText: () => {
-		return Template.instance().editableText;
-	},
+	editableText: () => Template.instance().editableText,
 
 	postClass() {
 		return this.parentId ? 'discussion-comment' : 'discussion-post';
@@ -230,7 +227,7 @@ Template.postEdit.helpers({
 
 	anonChecked() {
 		if (Template.instance().anon.get()) {
-			return { checked: 1};
+			return { checked: 1 };
 		}
 		return {};
 	},
@@ -245,13 +242,13 @@ Template.postEdit.helpers({
 	},
 
 	hasBeenEdited() {
-		 return moment(this.time_updated).isAfter(this.time_created);
+		return moment(this.time_updated).isAfter(this.time_created);
 	},
 
 	notifyAllChecked() {
 		if (!this.new) return {};
 		if (this.notifyAll) {
-			return { checked: 1};
+			return { checked: 1 };
 		}
 		return {};
 	},
@@ -264,40 +261,40 @@ Template.postEdit.helpers({
 
 		const userId = Meteor.userId();
 		return userId && HasRoleUser(course.members, 'team', userId);
-	}
+	},
 });
 
 Template.post.events({
-	'notifyAll .js-discussion-edit'(event, instance) {
+	'notifyAll .js-discussion-edit': function (event, instance) {
 		instance.$('.js-discussion-edit').click();
 		instance.parentInstance().notifyAll.set(true);
-		location.hash = '#discussion';
+		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
 	},
 
-	'click .js-discussion-edit'(event, instance) {
+	'click .js-discussion-edit': function (event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		instance.editing.set(true);
 	},
 
-	'submit'(event, instance) {
+	submit(event, instance) {
 		event.stopImmediatePropagation();
 
-		var comment = { title: instance.$(".js-post-title").val() };
+		const comment = { title: instance.$('.js-post-title').val() };
 
 		const editedText = instance.editableText.getEdited();
 		if (editedText) {
 			comment.text = editedText;
 		}
 
-		var method = 'courseDiscussion.editComment';
+		let method = 'courseDiscussion.editComment';
 		if (instance.data.new) {
 			method = 'courseDiscussion.postComment';
 
 			comment.courseId = instance.data.courseId;
 
-			if (instance.data.parentId)	{
+			if (instance.data.parentId) {
 				comment.parentId = instance.data.parentId;
 			}
 
@@ -309,7 +306,7 @@ Template.post.events({
 
 		instance.editing.set(false);
 		instance.busy('saving');
-		Meteor.call(method, comment, function(err, commentId) {
+		Meteor.call(method, comment, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, 'Posting your comment went wrong');
@@ -319,14 +316,14 @@ Template.post.events({
 		return false;
 	},
 
-	'click .js-discussion-cancel'() {
+	'click .js-discussion-cancel': function () {
 		Template.instance().editing.set(false);
 	},
 
-	'click button.js-delete-comment'(event, instance) {
+	'click button.js-delete-comment': function (event) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
-		Meteor.call('courseDiscussion.deleteComment', this._id, function(err) {
+		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
 			if (err) {
 				Alert.error(err, 'Could not delete comment');
 			} else {
@@ -336,17 +333,17 @@ Template.post.events({
 	},
 });
 
-Template.postEdit.onRendered(function postEditOnRendered(){
+Template.postEdit.onRendered(function postEditOnRendered() {
 	this.$('.discussion-edit-title').select();
 });
 
 Template.postEdit.events({
-	'keyup .js-post-text, change .js-post-text'(event, instance) {
+	'keyup .js-post-text, change .js-post-text': function (event, instance) {
 		const edited = instance.editableText.getEdited();
 		instance.validComment.set(edited && CourseDiscussions.validComment(edited));
 	},
 
-	'change'(event, instance) {
+	change(event, instance) {
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
-	}
+	},
 });

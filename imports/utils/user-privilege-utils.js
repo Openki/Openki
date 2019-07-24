@@ -1,17 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 
-export default UserPrivilegeUtils = {
+const UserPrivilegeUtils = {
 	privileged(user, role) {
 		// Load user object if ID was passed
+		let userObject = user;
 		if (typeof user === 'string' || user instanceof String) {
-			user = Meteor.users.findOne({ _id: user });
+			userObject = Meteor.users.findOne({ _id: user });
 		}
 
-		return user && user.privileged(role); 
+		return userObject && userObject.privileged(role);
 	},
 
 	privilegedTo(privilege) {
-		var user = Meteor.user();
+		const user = Meteor.user();
 		return this.privileged(user, privilege);
-	}
+	},
 };
+
+export default UserPrivilegeUtils;

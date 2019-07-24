@@ -3,7 +3,7 @@
 	"browser": true,
 	"node": true,
 	"laxcomma": true,
-	"esversion": 6,
+	"esversion": 8,
 	"latedef": "nofunc",
 	"unused": "vars",
 	"loopfunc": true,

@@ -1,3 +1,3 @@
-import './app-body.js';
-import './frame-body.js';
-import './kiosk-body.js';
+import './app-body';
+import './frame-body';
+import './kiosk-body';

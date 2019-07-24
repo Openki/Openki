@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Groups from '/imports/api/groups/groups.js';
-import Regions from '/imports/api/regions/regions.js';
+import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 
 import './feature-group.html';
 
@@ -18,11 +18,11 @@ Template.featureGroup.helpers({
 	featuredGroup() {
 		const groupId = Regions.findOne(Session.get('region')).featuredGroup;
 		return Groups.findOne(groupId);
-	}
+	},
 });
 
 Template.featureGroup.events({
-	'submit #featureGroup'(event, instance) {
+	'submit #featureGroup': function (event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');
@@ -38,7 +38,7 @@ Template.featureGroup.events({
 		});
 	},
 
-	'click .js-unset-featured-group'(event, instance) {
+	'click .js-unset-featured-group': function (event, instance) {
 		instance.busy('deleting');
 		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
 			if (err) {
@@ -47,5 +47,5 @@ Template.featureGroup.events({
 				instance.busy(false);
 			}
 		});
-	}
+	},
 });

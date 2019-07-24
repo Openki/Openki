@@ -26,7 +26,11 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chromedriver": "^75.0.0",
+    "chromedriver": "^75.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.18.2",
     "jshint": "^2.10.2",
     "sass-lint": "^1.13.1",
     "selenium-webdriver": "^3.6.0"

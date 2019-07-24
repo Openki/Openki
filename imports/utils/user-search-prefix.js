@@ -1,15 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 
 export default function UserSearchPrefix(prefix, options) {
-	var prefixExp = '^' + prefix.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
-	var query = { username: new RegExp(prefixExp, 'i') };
+	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
+	const query = { username: new RegExp(prefixExp, 'i') };
 
-	var exclude = options.exclude;
+	const customizedOptions = options;
+	const { exclude } = options;
 	if (exclude !== undefined) {
 		check(exclude, [String]);
 		query._id = { $nin: exclude };
-		delete options.exclude;
+		delete customizedOptions.exclude;
 	}
 
-	return Meteor.users.find(query, options);
+	return Meteor.users.find(query, customizedOptions);
 }

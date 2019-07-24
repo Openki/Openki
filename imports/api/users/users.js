@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import IdTools from '/imports/utils/id-tools.js';
+import IdTools from '/imports/utils/id-tools';
 
 // ======== DB-Model: ========
 // "_id"          -> ID
@@ -49,26 +49,29 @@ import IdTools from '/imports/utils/id-tools.js';
 // Calculated fields
 // badges: union of user's id and group ids for permission checking, calculated by updateBadges()
 // groups: List of groups the user is a member of, calculated by updateBadges()
-// acceptsMessages: true if user has email address and the notifications flag is true. This is visible to other users.
+// acceptsMessages: true if user has email address and the notifications flag is true.
+// This is visible to other users.
 
-export default Users = Meteor.users;
+export const User = function () {};
+
+const Users = Meteor.users;
 
 /** Get the current user
-  * 
+  *
   * If the user is not logged-in, a placeholder "anon" object is
-  * returned. 
+  * returned.
   */
-Users.currentUser = function() {
+Users.currentUser = function () {
 	const logged = Meteor.user();
 	if (logged) return logged;
 
 	const anon = new User();
-	anon._id = "anon";
+	anon._id = 'anon';
 	anon.anon = true;
 	return anon;
-}
+};
 
-export const User = function() {};
+export default Users;
 
 /** Check whether the user may promote things with the given group
   *
@@ -77,8 +80,8 @@ export const User = function() {};
   *
   * The user must be a member of the group to be allowed to promote things with it.
   */
-User.prototype.mayPromoteWith = function(group) {
-	var groupId = IdTools.extract(group);
+User.prototype.mayPromoteWith = function (group) {
+	const groupId = IdTools.extract(group);
 	if (!groupId) return false;
 	return this.groups.indexOf(groupId) >= 0;
 };
@@ -87,9 +90,9 @@ User.prototype.mayPromoteWith = function(group) {
   *
   * @returns String with email address or Boolean false
   */
-User.prototype.emailAddress = function() {
+User.prototype.emailAddress = function () {
 	return this.emails
-	    && this.emails[0]
+		&& this.emails[0]
 		&& this.emails[0].address
 		|| false;
 };
@@ -98,20 +101,19 @@ User.prototype.emailAddress = function() {
   *
   * @returns String with verified email address or Boolean false
   */
-User.prototype.verifiedEmailAddress = function() {
-	let emailRecord = this.emails
-	               && this.emails[0];
+User.prototype.verifiedEmailAddress = function () {
+	const emailRecord = this.emails && this.emails[0];
 	return emailRecord
-	    && emailRecord.verified
+		&& emailRecord.verified
 		&& emailRecord.address
 		|| false;
 };
 
-User.prototype.privileged = function(role) {
+User.prototype.privileged = function (role) {
 	return this.privileges
-	    && this.privileges.indexOf(role) > -1;
-}
+		&& this.privileges.indexOf(role) > -1;
+};
 
-Meteor.users._transform = function(user) {
+Meteor.users._transform = function (user) {
 	return _.extend(new User(), user);
 };

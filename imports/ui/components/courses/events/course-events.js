@@ -2,38 +2,40 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Events from '/imports/api/events/events.js';
+import Events from '/imports/api/events/events';
 
-import '/imports/ui/components/events/list/event-list.js';
-import '/imports/ui/components/loading/loading.js';
-import '../delete-events/delete-events.js';
+import '/imports/ui/components/events/list/event-list';
+import '/imports/ui/components/loading/loading';
+import '../delete-events/delete-events';
 
 import './course-events.html';
 
-Template.courseEvents.onCreated(function() {
-	var instance = this;
-	var courseId = this.data.course._id;
+Template.courseEvents.onCreated(function () {
+	const instance = this;
+	const courseId = this.data.course._id;
 
 	instance.eventSub = instance.subscribe('eventsForCourse', courseId);
 
-	var maxEventsShown = 4;
+	const maxEventsShown = 4;
 	instance.showAllEvents = new ReactiveVar(false);
 	this.showModal = new ReactiveVar(false);
 
-	instance.haveEvents = function() {
+	instance.haveEvents = function () {
 		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
 	};
 
-	instance.haveMoreEvents = function() {
-		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > maxEventsShown;
+	instance.haveMoreEvents = function () {
+		return Events.findFilter(
+			{ course: courseId, start: minuteTime.get() },
+		).count() > maxEventsShown;
 	};
 
-	instance.ongoingEvents = function() {
+	instance.ongoingEvents = function () {
 		return Events.findFilter({ course: courseId, ongoing: minuteTime.get() });
 	};
 
-	instance.futureEvents = function() {
-		var limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
+	instance.futureEvents = function () {
+		const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
 
 		return Events.findFilter({ course: courseId, after: minuteTime.get() }, limit);
 	};
@@ -65,7 +67,7 @@ Template.courseEvents.helpers({
 	},
 
 	haveMoreEvents() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.haveMoreEvents() && (!instance.showAllEvents.get());
 	},
 
@@ -79,50 +81,51 @@ Template.courseEvents.helpers({
 
 	upcomingEvents() {
 		return Events.findFilter(
-			{ course: this.course._id
-			, after: minuteTime.get()
-			}
+			{
+				course: this.course._id,
+				after: minuteTime.get(),
+			},
 		);
-	}
+	},
 });
 
 Template.courseEvents.events({
-	'click .js-show-all-events'() {
+	'click .js-show-all-events': function () {
 		Template.instance().showAllEvents.set(true);
 	},
 
-	'scroll .js-scrollable-container'(event, instance) {
-		var scrollableContainer = instance.$('.js-scrollable-container');
+	'scroll .js-scrollable-container': function (event, instance) {
+		const scrollableContainer = instance.$('.js-scrollable-container');
 
 		// Use dom element to get true height of clipped div
 		// https://stackoverflow.com/questions/4612992/get-full-height-of-a-clipped-div#5627286
-		var trueHeight = scrollableContainer[0].scrollHeight;
-		var visibleHeight = scrollableContainer.height();
+		const trueHeight = scrollableContainer[0].scrollHeight;
+		const visibleHeight = scrollableContainer.height();
 
 		// Compute height and subtract a possible deviation
-		var computedHeight = trueHeight - visibleHeight - 1;
+		const computedHeight = trueHeight - visibleHeight - 1;
 
-		instance.$(".fade-top ").fadeIn(200);
+		instance.$('.fade-top ').fadeIn(200);
 
 		if (scrollableContainer.scrollTop() === 0) {
-			instance.$(".fade-top").fadeOut(200);
+			instance.$('.fade-top').fadeOut(200);
 		} else if (scrollableContainer.scrollTop() >= computedHeight) {
-			instance.$(".fade-bottom").fadeOut(200);
+			instance.$('.fade-bottom').fadeOut(200);
 		} else {
-			instance.$(".fade-top").fadeIn(200);
-			instance.$(".fade-bottom").fadeIn(200);
+			instance.$('.fade-top').fadeIn(200);
+			instance.$('.fade-bottom').fadeIn(200);
 		}
-	}
+	},
 });
 
 Template.courseEventAdd.helpers({
 	addEventQuery() {
-		return 'courseId=' + this.course._id;
-	}
+		return `courseId=${this.course._id}`;
+	},
 });
 
 Template.courseEventAdd.events({
-	'mouseover/mouseout .event-caption-action'(event, instance) {
+	'mouseover/mouseout .event-caption-action': function (event, instance) {
 		instance.$(event.currentTarget).toggleClass('placeholder', event.type === 'mouseout');
-	}
+	},
 });

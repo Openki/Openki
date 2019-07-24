@@ -1,12 +1,12 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
-import Analytics from '/imports/ui/lib/analytics.js';
-import Shariff from '/imports/ui/lib/shariff.js';
+import Analytics from '/imports/ui/lib/analytics';
+import Shariff from '/imports/ui/lib/shariff';
 
 import './sharing.html';
 
-Template.sharing.onRendered(function() {
+Template.sharing.onRendered(function () {
 	this.autorun(() => {
 		this.shariff = new Shariff(this.find('.shariff'), {
 			lang: Session.get('locale'),
@@ -16,7 +16,7 @@ Template.sharing.onRendered(function() {
 				'facebook',
 				'whatsapp',
 				'mail',
-			]
+			],
 		});
 
 		this.$('.fa').addClass('fa-fw');
@@ -25,13 +25,14 @@ Template.sharing.onRendered(function() {
 
 Template.sharing.events({
 
-	'click .shariff a'(event, instance) {
-		//this reads out which social button it is, e.g. facebook, twitter
-		const source = $(event.currentTarget).parent().attr('class').replace('shariff-button', '').trim();
+	'click .shariff a': function (event) {
+		// this reads out which social button it is, e.g. facebook, twitter
+		const source = $(event.currentTarget).parent().attr('class').replace('shariff-button', '')
+			.trim();
 
 		Analytics.trytrack((tracker) => {
-			tracker.trackEvent('social', source + ' clicked');
+			tracker.trackEvent('social', `${source} clicked`);
 		});
-	}
+	},
 
 });

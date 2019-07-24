@@ -1,4 +1,4 @@
-export default TemplateMixins = {
+const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	*
 	* @param {Object} template instance
@@ -22,26 +22,26 @@ export default TemplateMixins = {
 	* </template>
 	*/
 	Expandible(template) {
-		template.onCreated(function() {
-			var expander = Random.id(); // Token to keep track of which Expandible is open
+		template.onCreated(function () {
+			const expander = Random.id(); // Token to keep track of which Expandible is open
 			this.expander = expander; // Read by event handlers
-			this.collapse = function() {
+			this.collapse = function () {
 				if (Session.equals('verify', expander)) {
 					Session.set('verify', false);
 				}
 			};
 		});
 		template.helpers({
-			'expanded'() {
+			expanded() {
 				return Session.equals('verify', Template.instance().expander);
-			}
+			},
 		});
 		template.events({
-			'click .js-expand'(event, instance) {
+			'click .js-expand': function (event, instance) {
 				Session.set('verify', instance.expander);
 				event.stopPropagation();
 			},
-			'click .js-collapse'(event, instance) {
+			'click .js-collapse': function () {
 				Session.set('verify', false);
 			},
 		});
@@ -49,31 +49,31 @@ export default TemplateMixins = {
 
 	/** Like Expandible but multiple expandibles can be open at the same time. */
 	MultiExpandible(template) {
-		var dx = -1000;
-		var dy = -1000;
-		var nomove = function(e) {
+		let dx = -1000;
+		let dy = -1000;
+		const nomove = function (e) {
 			return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
 		};
 
-		template.onCreated(function() {
+		template.onCreated(function () {
 			this.expanded = new ReactiveVar(false);
 		});
 		template.helpers({
-			'expanded'() {
+			expanded() {
 				return Template.instance().expanded.get();
-			}
+			},
 		});
 		template.events({
-			'mousedown'(event) {
+			mousedown(event) {
 				dx = event.screenX;
 				dy = event.screenY;
 			},
-			'mouseup .js-expand'(event, instance) {
+			'mouseup .js-expand': function (event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(true);
 				}
 			},
-			'mouseup .js-collapse'(event, instance) {
+			'mouseup .js-collapse': function (event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(false);
 				}
@@ -88,8 +88,8 @@ export default TemplateMixins = {
 	 *
 	 *   const mapping = {
 	 *     'wrongPassword': {
-	 * 		  text: () => "Your password is bad and you should feel bad.",
-	 * 		  field: "password" },
+	 *     text: () => "Your password is bad and you should feel bad.",
+	 *     field: "password" },
 	 *     'badUsername': {
 	 *        text: () => "We don't like your username around here.",
 	 *        field: "username" }
@@ -103,10 +103,10 @@ export default TemplateMixins = {
 	 * You can then add errors to be displayed with errors.add(key) and reset
 	 * the list of errors with errors.reset(). For example:
 	 *
-	 * 	   instance.errors.reset();
+	 *    instance.errors.reset();
 	 *     if (password != "hunter2") {
 	 *         instance.errors.add("wrongPassword")
-	 * 	   }
+	 *    }
 	 *
 	 * Use the template helpers {{errorClass}} and {{errorMessage}} to show the
 	 * collected errors. You have to provide the helpers with the field name
@@ -136,14 +136,14 @@ export default TemplateMixins = {
 
 				const text = mapping[message.key].text();
 				return Spacebars.SafeString(
-					'<span class="help-block warning-block">'
-					+ Blaze._escape(text)
-					+ '</span>'
+					`<span class="help-block warning-block">${
+						Blaze._escape(text)
+					}</span>`,
 				);
-			}
+			},
 		});
 
-		template.onCreated(function() {
+		template.onCreated(function () {
 			const messages = new Mongo.Collection(null);
 			this.errors = {
 				messages,
@@ -153,7 +153,7 @@ export default TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
-						console.log("Unmapped error ", key);
+						console.log('Unmapped error ', key);
 						return;
 					}
 
@@ -161,8 +161,10 @@ export default TemplateMixins = {
 				},
 				reset() {
 					this.messages.remove({});
-				}
+				},
 			};
 		});
-	}
+	},
 };
+
+export default TemplateMixins;

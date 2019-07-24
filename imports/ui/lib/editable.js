@@ -31,18 +31,22 @@ export default class Editable {
 		this.changed = new ReactiveVar(!showControls);
 		this.editingInstance = false;
 	}
+
 	setText(newText) {
 		this.text.set(newText);
 	}
+
 	getEdited() {
 		if (this.editingInstance) {
 			return this.editingInstance.getEdited();
 		}
 		return false;
 	}
+
 	end() {
 		this.changed.set(false);
 	}
+
 	connect(instance) {
 		this.editingInstance = instance;
 		return {
@@ -51,7 +55,7 @@ export default class Editable {
 			simple: this.simple,
 			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
-			store: this.store
+			store: this.store,
 		};
 	}
 }

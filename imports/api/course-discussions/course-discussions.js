@@ -13,6 +13,6 @@ import { Mongo } from 'meteor/mongo';
 
 export default CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
-CourseDiscussions.validComment = function(text) {
+CourseDiscussions.validComment = function (text) {
 	return text.trim().length > 0;
 };

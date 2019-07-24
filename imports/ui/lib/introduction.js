@@ -1,7 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
-export default Introduction = {
+const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
 		Session.set('OpenedIntro', undefined);
@@ -17,9 +17,9 @@ export default Introduction = {
 		const opened = Session.get('OpenedIntro');
 		if (opened !== undefined) return opened;
 
-		const route = Router.current().route;
+		const { route } = Router.current();
 		const routeName = route && route.getName();
-		return routeName === "home" || routeName === "find";
+		return routeName === 'home' || routeName === 'find';
 	},
 
 	openIntro() {
@@ -39,3 +39,5 @@ export default Introduction = {
 		}
 	},
 };
+
+export default Introduction;

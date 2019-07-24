@@ -1,12 +1,12 @@
-export default AsyncTools = {};
+const AsyncTools = {};
 
-AsyncTools.checkUpdateOne = function(err, aff) {
+AsyncTools.checkUpdateOne = function (err, aff) {
 	if (err) throw err;
-	if (aff != 1) throw "Query affected "+aff+" docs, expected 1";
+	if (aff !== 1) throw new Error(`Query affected ${aff} docs, expected 1`);
 };
 
 // Simple async callback receiver that logs errors
-AsyncTools.logErrors = function(err, ret) {
+AsyncTools.logErrors = function (err, ret) {
 	if (err) {
 		console.log(err.stack);
 	}
@@ -25,32 +25,34 @@ AsyncTools.logErrors = function(err, ret) {
   */
 if (Meteor.isServer) {
 	const maxTries = 3;
-	const tryClean = function(clean, tries) {
+	const tryClean = function (clean, tries) {
 		return new Promise((resolve, reject) => {
 			clean(resolve, reject);
-		}).then(function(cleaned) {
+		}).then((cleaned) => {
 			if (!cleaned) {
 				if (tries < 1) {
 					// Ooops we ran out of tries.
 					// This either means the updates to the cached fields happen faster than
 					// we can cache them (then the cache updates would have to be throttled) or
 					// that the clean function is broken (much more likely).
-					throw new Error("Giving up after trying to apply cleansing function "+maxTries+" times: " + clean);
+					throw new Error(`Giving up after trying to apply cleansing function ${maxTries} times: ${clean}`);
 				}
 				return tryClean(clean, tries - 1);
 			}
 		}, (reason) => {
-			console.log("Cleansing function failed: "+reason);
+			console.log(`Cleansing function failed: ${reason}`);
 		});
 	};
 
-	AsyncTools.untilClean = function(clean) {
+	AsyncTools.untilClean = function (clean) {
 		return tryClean(clean, maxTries);
 	};
 }
 
 if (Meteor.isClient) {
-	AsyncTools.untilClean = function(clean) {
+	AsyncTools.untilClean = function () {
 		return new Promise(() => {}); /* promise that doesn't resolve */
 	};
 }
+
+export default AsyncTools;

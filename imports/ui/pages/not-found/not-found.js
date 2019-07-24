@@ -1,22 +1,22 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/report/report.js';
+import '/imports/ui/components/report/report';
 
 import './not-found.html';
 
 Template.notFound.helpers({
-	'backArrow'() {
-		var isRTL = Session.get('textDirectionality') == 'rtl';
-		var direction = isRTL ? 'right' : 'left';
+	backArrow() {
+		const isRTL = Session.get('textDirectionality') === 'rtl';
+		const direction = isRTL ? 'right' : 'left';
 		return Spacebars.SafeString(
-			'<span class="fa fa-arrow-' + direction + ' fa-fw" aria-hidden="true"></span>'
+			`<span class="fa fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`,
 		);
-	}
+	},
 });
 
 Template.notFound.events({
-	"click .js-go-back"(event, template){
-		history.back();
-	}
+	'click .js-go-back': function () {
+		window.history.back();
+	},
 });

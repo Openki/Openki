@@ -4,22 +4,22 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
-import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import UrlTools from '/imports/utils/url-tools.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+import UrlTools from '/imports/utils/url-tools';
 
-import Log from '/imports/api/log/log.js';
+import Log from '/imports/api/log/log';
 
 import './log.html';
 
-Template.showLog.onCreated(function() {
+Template.showLog.onCreated(function () {
 	const instance = this;
 	const batchLoad = 100;
 	instance.updateUrl = () => {
-		var filterParams = instance.filter.toParams();
-		var queryString = UrlTools.paramsToQueryString(filterParams);
+		const filterParams = instance.filter.toParams();
+		const queryString = UrlTools.paramsToQueryString(filterParams);
 
-		var options = {};
+		const options = {};
 
 		if (queryString.length) {
 			options.query = queryString;
@@ -27,7 +27,7 @@ Template.showLog.onCreated(function() {
 
 		RouterAutoscroll.cancelNext();
 
-		var router = Router.current();
+		const router = Router.current();
 		Router.go(router.route.getName(), {}, options);
 
 		return true;
@@ -36,12 +36,12 @@ Template.showLog.onCreated(function() {
 	instance.ready = new ReactiveVar(false);
 	instance.limit = new ReactiveVar(batchLoad);
 
-	var filter = Log.Filtering();
+	const filter = Log.Filtering();
 	instance.filter = filter;
 
 	// Read URL state
-	instance.autorun(function() {
-		var query = Template.currentData();
+	instance.autorun(() => {
+		const query = Template.currentData();
 		filter
 			.clear()
 			.read(query)
@@ -49,14 +49,14 @@ Template.showLog.onCreated(function() {
 	});
 
 	// Update whenever filter changes
-	instance.autorun(function() {
-		var filterQuery = filter.toQuery();
+	instance.autorun(() => {
+		const filterQuery = filter.toQuery();
 		instance.ready.set(false);
 
 		// Have some extra log entries ready so that they are shown immediately
 		// when more are demanded
 		const overLimit = instance.limit.get() + batchLoad + 1;
-		instance.subscribe('log', filterQuery, overLimit, function() {
+		instance.subscribe('log', filterQuery, overLimit, () => {
 			instance.ready.set(true);
 		});
 	});
@@ -64,49 +64,49 @@ Template.showLog.onCreated(function() {
 
 
 Template.showLog.helpers({
-	'privileged'() {
+	privileged() {
 		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
 	},
 
-	'date'() {
+	date() {
 		const start = Template.instance().filter.get('start');
-		return start && start.toISOString() || "";
+		return start && start.toISOString() || '';
 	},
 
-	'relFilter'() {
-		const rel = Template.instance().filter.toParams().rel;
-		return rel || "";
+	relFilter() {
+		const { rel } = Template.instance().filter.toParams();
+		return rel || '';
 	},
 
-	'trFilter'() {
-		const tr = Template.instance().filter.toParams().tr;
-		return tr || "";
+	trFilter() {
+		const { tr } = Template.instance().filter.toParams();
+		return tr || '';
 	},
 
 	isodate(date) {
 		return moment(date).toISOString();
 	},
 
-	'hasMore'() {
-		var instance = Template.instance();
+	hasMore() {
+		const instance = Template.instance();
 
-		var filterQuery = instance.filter.toQuery();
-		var limit = instance.limit.get();
-		var results = Log.findFilter(filterQuery, limit + 1);
+		const filterQuery = instance.filter.toQuery();
+		const limit = instance.limit.get();
+		const results = Log.findFilter(filterQuery, limit + 1);
 
 		return results.count() > limit;
 	},
 
-	'results'() {
-		var instance = Template.instance();
-		var filterQuery = instance.filter.toQuery();
+	results() {
+		const instance = Template.instance();
+		const filterQuery = instance.filter.toQuery();
 		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
 		let last = false;
 		const inter = [];
 		_.each(entries, (entry) => {
 			const ts = moment(entry.ts);
 			if (last) {
-				let interval = moment.duration(last.diff(ts));
+				const interval = moment.duration(last.diff(ts));
 				if (interval.asMinutes() > 1) {
 					inter.push({ interval: interval.humanize() });
 				}
@@ -118,7 +118,7 @@ Template.showLog.helpers({
 	},
 
 
-	'loading'() {
+	loading() {
 		return !Template.instance().ready.get();
 	},
 });
@@ -126,12 +126,12 @@ Template.showLog.helpers({
 
 Template.showLog.events({
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-update-url'(event, instance) {
+	'change .js-update-url': function (event, instance) {
 		instance.updateUrl();
 	},
 
-	'keyup .js-tr-input': _.debounce(function(event, instance) {
-		const filter = instance.filter;
+	'keyup .js-tr-input': _.debounce((event, instance) => {
+		const { filter } = instance;
 		filter.disable('tr');
 
 		const trStr = $('.js-tr-input').val().trim();
@@ -140,9 +140,9 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'keyup .js-date-input': _.debounce(function(event, instance) {
-		const filter = instance.filter;
-		var dateStr = $('.js-date-input').val().trim();
+	'keyup .js-date-input': _.debounce((event, instance) => {
+		const { filter } = instance;
+		const dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
 			filter.disable('start').done();
 		} else {
@@ -150,8 +150,8 @@ Template.showLog.events({
 		}
 	}, 200),
 
-	'keyup .js-rel-input': _.debounce(function(event, instance) {
-		const filter = instance.filter;
+	'keyup .js-rel-input': _.debounce((event, instance) => {
+		const { filter } = instance;
 		filter.disable('rel');
 
 		const relStr = $('.js-rel-input').val().trim();
@@ -160,8 +160,8 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'click .js-tr'(event, instance) {
-		instance.filter.add('tr', ""+this);
+	'click .js-tr': function (event, instance) {
+		instance.filter.add('tr', `${this}`);
 		if (!event.shiftKey) {
 			instance.filter.done();
 			instance.updateUrl();
@@ -169,8 +169,8 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-date'(event, instance) {
-		var start = moment(this).toISOString();
+	'click .js-date': function (event, instance) {
+		const start = moment(this).toISOString();
 		instance.filter.add('start', start);
 		if (!event.shiftKey) {
 			instance.filter.done();
@@ -179,8 +179,8 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-rel-id'(event, instance) {
-		instance.filter.add('rel', ""+this);
+	'click .js-rel-id': function (event, instance) {
+		instance.filter.add('rel', `${this}`);
 		if (!event.shiftKey) {
 			instance.filter.done();
 			instance.updateUrl();
@@ -188,30 +188,30 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-more'(event, instance) {
-		var limit = instance.limit;
+	'click .js-more': function (event, instance) {
+		const { limit } = instance;
 		limit.set(limit.get() + 100);
-	}
+	},
 });
 
 TemplateMixins.MultiExpandible(Template.showLogEntry);
 Template.showLogEntry.helpers(
-	{ date() {
-			const date = Template.instance().filter.toParams().date;
-			return date && date.toISOString() || "";
-		}
-	, shortId(id) {
+	{
+		date() {
+			const { date } = Template.instance().filter.toParams();
+			return date && date.toISOString() || '';
+		},
+		shortId(id) {
 			return id.substr(0, 8);
-		}
-	, isodate(date) {
+		},
+		isodate(date) {
 			return moment(date).toISOString();
-		}
-	, jsonBody() {
+		},
+		jsonBody() {
 			return JSON.stringify(this.body, null, '   ');
-		}
-	, jsonFull:
-		function() {
+		},
+		jsonFull() {
 			return JSON.stringify(this, null, '   ');
-		}
-	}
+		},
+	},
 );

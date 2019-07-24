@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups.js';
+import Groups from '/imports/api/groups/groups';
 
 
 const helpers = {
@@ -7,26 +7,29 @@ const helpers = {
 		if (Meteor.settings.public && Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
-		return "Hmmm";
+		return 'Hmmm';
 	},
 
 	categoryName() {
 		Session.get('locale'); // Reactive dependency
-		return mf('category.'+this);
+		return mf(`category.${this}`);
 	},
 
 	guideLink() {
 		const locale = Session.get('locale');
-		//default fallback language
+		// default fallback language
 		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
 
-		switch(locale) {
-			case 'de':
-				guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
-				break;
-			case 'en':
-				guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-				break;
+		switch (locale) {
+		case 'de':
+			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+			break;
+		case 'en':
+			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+			break;
+		default:
+			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+			break;
 		}
 		return guideLink;
 	},
@@ -59,8 +62,8 @@ const helpers = {
 	dateformat_mini_fullmonth(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) {
-			var m = moment(date);
-			var year = m.year() != moment().year() ? " " + m.format('YYYY') : '';
+			const m = moment(date);
+			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
 			return moment(date).format('D. MMMM') + year;
 		}
 	},
@@ -83,7 +86,7 @@ const helpers = {
 
 	// Strip HTML markup
 	plain(html) {
-		var div = document.createElement('div');
+		const div = document.createElement('div');
 		div.innerHTML = html;
 		return div.textContent || div.innerText || '';
 	},
@@ -97,8 +100,8 @@ const helpers = {
 	  * @returns {Bool} Whether business matches activity
 	  */
 	busy(activity) {
-		var business = Template.instance().findBusiness();
-		return business.get() == activity;
+		const business = Template.instance().findBusiness();
+		return business.get() === activity;
 	},
 
 	/** Disable buttons while there is business to do.
@@ -108,7 +111,7 @@ const helpers = {
 	  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
 	  */
 	disabledIfBusy() {
-		var business = Template.instance().findBusiness();
+		const business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
 	},
 
@@ -117,16 +120,16 @@ const helpers = {
 	},
 
 	groupLogo(groupId) {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		instance.subscribe('group', groupId);
 
-		var group = Groups.findOne({ _id: groupId });
+		const group = Groups.findOne({ _id: groupId });
 		if (group) {
 			if (group.logoUrl) {
 				return group.logoUrl;
-			} return "";
+			} return '';
 		}
-		return "";
+		return '';
 	},
 
 	/** Return the instance for use in the template
@@ -135,7 +138,7 @@ const helpers = {
 		*/
 	instance() {
 		return Template.instance();
-	}
+	},
 };
 
 for (const name in helpers) {
@@ -144,31 +147,31 @@ for (const name in helpers) {
 
 /* Get a username from ID
  */
-const usernameFromId = function() {
+const usernameFromId = (function () {
 	// We cache the username lookups
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
-	var cacheLimit = 1000;
-	var cache = {};
-	var previousCache = {};
-	var lookups = 0;
-	var pending = {};
+	const cacheLimit = 1000;
+	let cache = {};
+	let previousCache = {};
+	let lookups = 0;
+	const pending = {};
 
 	// Update the cache if users are pushed to the collection
 	Meteor.users.find().observe({
-		'added'(user) {
+		added(user) {
 			cache[user._id] = user.username;
 		},
-		'changed'(user) {
+		changed(user) {
 			cache[user._id] = user.username;
-		}
+		},
 	});
 
-	return function(userId) {
+	return function (userId) {
 		if (!userId) return mf('noUser_placeholder', 'someone');
 
 		// Consult cache
-		var user = cache[userId];
+		let user = cache[userId];
 		if (user === undefined) {
 			// Consult old cache
 			user = previousCache[userId];
@@ -198,11 +201,11 @@ const usernameFromId = function() {
 					lookups = 0;
 				}
 
-				Meteor.call('user.name', userId, function(err, user) {
+				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
 						console.warn(err);
 					}
-					cache[userId] = user ? user : '?!';
+					cache[userId] = user || '?!';
 					pending[userId].changed();
 					delete pending[userId];
 				});
@@ -211,10 +214,9 @@ const usernameFromId = function() {
 
 		if (user) {
 			return user;
-		} else {
-			return "userId: " + userId;
 		}
+		return `userId: ${userId}`;
 	};
-}();
+}());
 
 Template.registerHelper('username', usernameFromId);
