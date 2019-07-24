@@ -1,9 +1,11 @@
-import Events from '/imports/api/events/events.js';
+import Events from '/imports/api/events/events';
 
-UpdatesAvailable.renameEventCourseId = function() {
-	var updated = 0;
+const UpdatesAvailable = [];
 
-	Events.find({}).fetch().forEach(function(event) {
+UpdatesAvailable.renameEventCourseId = function () {
+	let updated = 0;
+
+	Events.find({}).fetch().forEach((event) => {
 		event.courseId = event.course_id;
 		delete event.course_id;
 		updated += Events.update(event._id, event);

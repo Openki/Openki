@@ -1,9 +1,10 @@
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions.js';
+import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 
+const UpdatesAvailable = [];
 // Standardize field names in CourseDiscussions documents
-UpdatesAvailable.renameDiscussionFields = function() {
-	var AllPosts = CourseDiscussions.find({});
-	AllPosts.fetch().forEach(function(post) {
+UpdatesAvailable.renameDiscussionFields = function () {
+	const AllPosts = CourseDiscussions.find({});
+	AllPosts.fetch().forEach((post) => {
 		post.courseId = post.course_ID;
 		delete post.course_ID;
 

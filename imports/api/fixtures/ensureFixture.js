@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import './Prng';
+import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';

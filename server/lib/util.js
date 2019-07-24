@@ -5,8 +5,8 @@ function extendPrototypeToJSON(o) {
 	// http://stackoverflow.com/a/18391400/2652567
 	if (!('toJSON' in o.prototype)) {
 		Object.defineProperty(o.prototype, 'toJSON', {
-			value: function () {
-				var alt = {};
+			value() {
+				const alt = {};
 
 				Object.getOwnPropertyNames(this).forEach(function (key) {
 					alt[key] = this[key];
@@ -15,7 +15,7 @@ function extendPrototypeToJSON(o) {
 				return alt;
 			},
 			configurable: true,
-			writable: true
+			writable: true,
 		});
 	}
 }

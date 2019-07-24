@@ -1,20 +1,22 @@
-import Events from '/imports/api/events/events.js';
-import Venues from '/imports/api/venues/venues.js';
+import Events from '/imports/api/events/events';
+import Venues from '/imports/api/venues/venues';
 
-UpdatesAvailable["2016.08.23 renameVenues"] = function() {
-	var Locations = new Meteor.Collection("Locations");
-	var copied = 0;
+const UpdatesAvailable = [];
 
-	Locations.find().forEach(function(venue) {
+UpdatesAvailable['2016.08.23 renameVenues'] = function () {
+	const Locations = new Meteor.Collection('Locations');
+	let copied = 0;
+
+	Locations.find().forEach((venue) => {
 		Venues.upsert(venue._id, venue);
 		copied += 1;
 	});
 
 	Locations.rawCollection().drop();
 
-	modified = 0;
+	let modified = 0;
 
-	Events.find({ location: {$exists: true} }).forEach(function(event) {
+	Events.find({ location: { $exists: true } }).forEach((event) => {
 		event.venue = event.location;
 		delete event.location;
 		modified += Events.update(event._id, event);

@@ -1,18 +1,18 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
 
-import Alert from '/imports/api/alerts/alert.js';
-import Languages from '/imports/api/languages/languages.js';
+import Alert from '/imports/api/alerts/alert';
+import Languages from '/imports/api/languages/languages';
 
-import Introduction from '/imports/ui/lib/introduction.js';
-import UpdateViewport from '/imports/ui/lib/update-viewport.js';
+import Introduction from '/imports/ui/lib/introduction';
+import UpdateViewport from '/imports/ui/lib/update-viewport';
 
-import RegionSelection from '/imports/utils/region-selection.js';
-import UrlTools from '/imports/utils/url-tools.js';
+import RegionSelection from '/imports/utils/region-selection';
+import UrlTools from '/imports/utils/url-tools';
 
 import 'bootstrap-sass';
 
-////////////// db-subscriptions:
+// //////////// db-subscriptions:
 
 Meteor.subscribe('version');
 
@@ -24,7 +24,7 @@ mfPkg.loadLangs('en');
 
 
 // close any verification dialogs still open
-Router.onBeforeAction(function() {
+Router.onBeforeAction(function () {
 	Tooltips.hide();
 
 	Session.set('verify', false);
@@ -33,16 +33,16 @@ Router.onBeforeAction(function() {
 });
 
 // Try to guess a sensible language
-Meteor.startup(function() {
-	var useLocale = function(lang) {
+Meteor.startup(() => {
+	const useLocale = function (lang) {
 		if (!lang) return false;
 
-		var locale = false;
+		let locale = false;
 		if (Languages[lang]) {
 			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
-			var short = lang.substring(0, 2);
+			const short = lang.substring(0, 2);
 			if (Languages[short]) {
 				locale = short;
 			}
@@ -61,7 +61,7 @@ Meteor.startup(function() {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	for (var i in navigator.languages || []) {
+	for (const i in navigator.languages || []) {
 		if (useLocale(navigator.languages[i])) return;
 	}
 
@@ -73,36 +73,36 @@ Meteor.startup(function() {
 	useLocale('en');
 });
 
-Meteor.startup(function() {
-	Tracker.autorun(function() {
-		var desiredLocale = Session.get('locale');
+Meteor.startup(() => {
+	Tracker.autorun(() => {
+		const desiredLocale = Session.get('locale');
 
 		mfPkg.setLocale(desiredLocale);
 
 		// Logic taken from mfpkg:core to get text directionality
-		var lang = desiredLocale.substr(0, 2);
-		var textDirectionality = msgfmt.dirFromLang(lang);
+		const lang = desiredLocale.substr(0, 2);
+		const textDirectionality = msgfmt.dirFromLang(lang);
 		Session.set('textDirectionality', textDirectionality);
 
 		// Msgfmt already sets the dir attribute, but we want a class too.
-		var isRTL = textDirectionality == 'rtl';
+		const isRTL = textDirectionality === 'rtl';
 		$('body').toggleClass('rtl', isRTL);
 
 		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it
-		var setLocale = moment.locale(desiredLocale);
+		const setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
-		if (desiredLocale !== setLocale) console.log("Date formatting set to "+setLocale+" because "+desiredLocale+" not available");
+		if (desiredLocale !== setLocale) console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
 
 		// HACK replace the datepicker locale settings
 		// I do not understand why setting language: moment.locale() does not
 		// work for the datepicker. But we want to use the momentjs settings
 		// anyway, so we might as well clobber the 'en' locale.
-		var mf = moment().localeData();
+		const mf = moment().localeData();
 
-		var monthsShort = function() {
+		const monthsShort = function () {
 			if (typeof mf.monthsShort === 'function') {
-				return _.map(_.range(12), function(month) { return mf.monthsShort(moment().month(month), ''); });
+				return _.map(_.range(12), month => mf.monthsShort(moment().month(month), ''));
 			}
 			return mf._monthsShort;
 		};
@@ -113,7 +113,7 @@ Meteor.startup(function() {
 			daysMin: mf._weekdaysMin,
 			months: mf._months || mf._monthsNominativeEl,
 			monthsShort: monthsShort(),
-			weekStart: mf._week.dow
+			weekStart: mf._week.dow,
 		});
 	});
 });
@@ -123,22 +123,22 @@ Meteor.startup(Introduction.init);
 
 Meteor.startup(UpdateViewport);
 
-Accounts.onLogin(function() {
-	var user = Meteor.user();
+Accounts.onLogin(() => {
+	const user = Meteor.user();
 
-	var locale = user.profile.locale;
+	const locale = user.profile.locale;
 	if (locale) Session.set('locale', locale);
 });
 
-Accounts.onEmailVerificationLink(function(token, done) {
+Accounts.onEmailVerificationLink((token) => {
 	Router.go('profile');
-	Accounts.verifyEmail(token, function(error) {
+	Accounts.verifyEmail(token, (error) => {
 		if (error) {
 			Alert.error(error, 'Address could not be verified');
 		} else {
 			Alert.success(mf(
 				'email.verified',
-				'Your e-mail has been verified.'
+				'Your e-mail has been verified.',
 			));
 		}
 	});
@@ -148,11 +148,11 @@ minuteTime = new ReactiveVar();
 
 // Set up reactive date sources that can be used for updates based on time
 function setTimes() {
-	var now = new Date();
+	const now = new Date();
 
 	now.setSeconds(0);
 	now.setMilliseconds(0);
-	var old = minuteTime.get();
+	const old = minuteTime.get();
 	if (!old || old.getTime() !== now.getTime()) {
 		minuteTime.set(now);
 	}
@@ -160,4 +160,4 @@ function setTimes() {
 setTimes();
 
 // Update interval of five seconds is okay
-Meteor.setInterval(setTimes, 1000*5);
+Meteor.setInterval(setTimes, 1000 * 5);

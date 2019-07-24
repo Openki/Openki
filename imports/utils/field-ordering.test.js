@@ -2,8 +2,8 @@
 /* jshint expr:true */
 
 import { assert } from 'chai';
-import '/imports/utils/field-ordering';
-import '/imports/utils/sort-spec';
+import FieldOrdering from '/imports/utils/field-ordering';
+import SortSpec from '/imports/utils/sort-spec';
 
 // This should not be here
 msgfmt.init('en');

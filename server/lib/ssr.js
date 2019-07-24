@@ -1,6 +1,6 @@
 
 /** Define {{mf}} helper on the server */
-Blaze.Template.registerHelper("mf", function(key, message, params) {
+Blaze.Template.registerHelper('mf', (key, message, params) => {
 	// Message parameter is optional
 	if (!params) {
 		params = message;

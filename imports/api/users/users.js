@@ -54,7 +54,7 @@ import IdTools from '/imports/utils/id-tools';
 
 export const User = function () {};
 
-const Users = Meteor.users;
+export default Users = Meteor.users;
 
 /** Get the current user
   *
@@ -70,8 +70,6 @@ Users.currentUser = function () {
 	anon.anon = true;
 	return anon;
 };
-
-export default Users;
 
 /** Check whether the user may promote things with the given group
   *

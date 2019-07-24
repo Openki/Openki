@@ -7,8 +7,9 @@ import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
-import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
+import LocalTime from '/imports/utils/local-time';
+import StringTools from '/imports/utils/string-tools';
 
 import seedrandom from 'seedrandom';
 

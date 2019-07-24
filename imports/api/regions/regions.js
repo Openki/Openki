@@ -13,7 +13,5 @@ import { Mongo } from 'meteor/mongo';
 // featuredGroup    -> ID of featured group
 // ===========================
 
-const Regions = new Mongo.Collection('Regions');
+export default Regions = new Mongo.Collection('Regions');
 if (Meteor.isServer) Regions._ensureIndex({ loc: '2dsphere' });
-
-export default Regions;

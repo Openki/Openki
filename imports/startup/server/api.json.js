@@ -1,6 +1,6 @@
-import '/imports/Api';
-import '/imports/utils/field-ordering';
-import '/imports/utils/sort-spec';
+import Api from '/imports/Api';
+import FieldOrdering from '/imports/utils/field-ordering';
+import SortSpec from '/imports/utils/sort-spec';
 
 WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
