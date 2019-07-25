@@ -1,7 +1,9 @@
-import Log from '/imports/api/log/log';
-import Regions from '/imports/api/regions/regions';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
+import Log from '/imports/api/log/log';
+import Regions from '/imports/api/regions/regions';
+
+import LocalTime from '/imports/utils/local-time';
 
 const notificationEvent = {};
 

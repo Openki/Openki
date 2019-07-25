@@ -1,13 +1,16 @@
-import Regions from '/imports/api/regions/regions';
+import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
-import IdTools from '/imports/utils/id-tools';
+import Regions from '/imports/api/regions/regions';
+
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
+import LocationTracker from '/imports/ui/lib/location-tracker';
 import PleaseLogin from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import LocationTracker from '/imports/ui/lib/location-tracker';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import Alert from '/imports/api/alerts/alert';
+
+import IdTools from '/imports/utils/id-tools';
+import Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';

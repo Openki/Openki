@@ -1,13 +1,13 @@
 import { Mongo } from 'meteor/mongo';
 
+import Courses from '/imports/api/courses/courses';
+
+import AsyncTools from '/imports/utils/async-tools';
 import Filtering from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
-import Courses from '/imports/api/courses/courses';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
 import StringTools from '/imports/utils/string-tools';
-import AsyncTools from '/imports/utils/async-tools';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 // ======== DB-Model: ========
 // _id             -> ID
