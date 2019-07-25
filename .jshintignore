@@ -1,5 +1,0 @@
-node_modules
-.meteor
-packages/router-autoscroll
-packages/extract
-packages/core

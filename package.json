@@ -31,7 +31,6 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.18.2",
-    "jshint": "^2.10.2",
     "sass-lint": "^1.13.1",
     "selenium-webdriver": "^3.6.0"
   },
