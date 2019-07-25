@@ -55,7 +55,7 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 Meteor.methods({
-	'course.save': function (courseId, changes) {
+	'course.save'(courseId, changes) {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
@@ -199,7 +199,7 @@ Meteor.methods({
 		return courseId;
 	},
 
-	'course.remove': function (courseId) {
+	'course.remove'(courseId) {
 		const course = Courses.findOne({ _id: courseId });
 		if (!course) throw new Meteor.Error(404, 'no such course');
 		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, 'edit not permitted');
@@ -208,7 +208,7 @@ Meteor.methods({
 	},
 
 	// Update the nextEvent field for the courses matching the selector
-	'course.updateNextEvent': function (selector) {
+	'course.updateNextEvent'(selector) {
 		Courses.find(selector).forEach((course) => {
 			const futureEvents = Events.find(
 				{ courseId: course._id, start: { $gt: new Date() } },
@@ -265,7 +265,7 @@ Meteor.methods({
 
 
 	// Recalculate the editors field
-	'course.updateGroups': function (selector) {
+	'course.updateGroups'(selector) {
 		Courses.find(selector).forEach((course) => {
 			Courses.updateGroups(course._id);
 		});

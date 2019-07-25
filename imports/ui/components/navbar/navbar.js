@@ -80,11 +80,11 @@ Template.navbar.helpers({
 });
 
 Template.navbar.events({
-	'click .js-nav-dropdown-close': function (event, instance) {
+	'click .js-nav-dropdown-close'(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},
 
-	'show.bs.dropdown, hide.bs.dropdown .dropdown': function (event, instance) {
+	'show.bs.dropdown, hide.bs.dropdown .dropdown'(event, instance) {
 		const viewportWidth = Session.get('viewportWidth');
 		const { gridFloatBreakpoint } = ScssVars;
 
@@ -114,13 +114,13 @@ Template.loginButton.helpers({
 });
 
 Template.loginButton.events({
-	'click #openLogin': function () {
+	'click #openLogin'() {
 		$('#accountTasks').modal('show');
 	},
 });
 
 Template.ownUserFrame.events({
-	'click .js-logout': function (event) {
+	'click .js-logout'(event) {
 		event.preventDefault();
 		Meteor.logout();
 
@@ -128,5 +128,5 @@ Template.ownUserFrame.events({
 		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
 	},
 
-	'click .btn': function () { $('.collapse').collapse('hide'); },
+	'click .btn'() { $('.collapse').collapse('hide'); },
 });

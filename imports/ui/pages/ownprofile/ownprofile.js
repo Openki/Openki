@@ -132,31 +132,31 @@ TemplateMixins.FormfieldErrors(Template.profile, {
 
 
 Template.profile.events({
-	'click .js-profile-info-edit': function (event, instance) {
+	'click .js-profile-info-edit'(event, instance) {
 		Tooltips.hide();
 		instance.editing.set(true);
 		instance.collapse();
 	},
 
-	'click .js-profile-edit-cancel': function (event, instance) {
+	'click .js-profile-edit-cancel'(event, instance) {
 		instance.editing.set(false);
 		return false;
 	},
 
-	'click .js-change-pwd-btn': function (event, instance) {
+	'click .js-change-pwd-btn'(event, instance) {
 		instance.changingPass.set(true);
 		instance.collapse();
 	},
 
-	'click .js-change-pwd-cancel': function (event, instance) {
+	'click .js-change-pwd-cancel'(event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-expand': function (event, instance) {
+	'click .js-expand'(event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-profile-delete-confirm-btn': function (event, instance) {
+	'click .js-profile-delete-confirm-btn'(event, instance) {
 		instance.busy('deleting');
 		Meteor.call('user.remove', () => {
 			instance.busy(false);
@@ -165,7 +165,7 @@ Template.profile.events({
 		instance.collapse(); // Wait for server to log us out.
 	},
 
-	'submit .profile-info-edit': function (event, instance) {
+	'submit .profile-info-edit'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 		Meteor.call('user.updateData',
@@ -182,7 +182,7 @@ Template.profile.events({
 			});
 	},
 
-	'submit #changePwd': function (event, instance) {
+	'submit #changePwd'(event, instance) {
 		event.preventDefault();
 		const old = document.getElementById('oldpassword').value;
 		const pass = document.getElementById('newpassword').value;

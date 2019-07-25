@@ -50,11 +50,11 @@ Template.participantContact.helpers({
 });
 
 Template.participantContact.events({
-	'click .js-show-participant-contact-modal': function (event, instance) {
+	'click .js-show-participant-contact-modal'(event, instance) {
 		instance.state.set('showModal', true);
 	},
 
-	'hidden.bs.modal .js-participant-contact-modal': function (event, instance) {
+	'hidden.bs.modal .js-participant-contact-modal'(event, instance) {
 		instance.state.set('showModal', false);
 	},
 });

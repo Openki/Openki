@@ -25,7 +25,7 @@ Template.sharing.onRendered(function () {
 
 Template.sharing.events({
 
-	'click .shariff a': function (event) {
+	'click .shariff a'(event) {
 		// this reads out which social button it is, e.g. facebook, twitter
 		const source = $(event.currentTarget).parent().attr('class').replace('shariff-button', '')
 			.trim();

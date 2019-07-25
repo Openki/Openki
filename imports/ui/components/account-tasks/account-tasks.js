@@ -26,21 +26,21 @@ Template.accountTasks.helpers({
 });
 
 Template.accountTasks.events({
-	'show.bs.modal #accountTasks': function (event, instance) {
+	'show.bs.modal #accountTasks'(event, instance) {
 		instance.transferUsername = false;
 		instance.transferPassword = false;
 		instance.transferMail = false;
 	},
 
-	'shown.bs.modal #accountTasks': function (event, instance) {
+	'shown.bs.modal #accountTasks'(event, instance) {
 		instance.$('input').first().select();
 	},
 
-	'hide.bs.modal #accountTasks': function (event, instance) {
+	'hide.bs.modal #accountTasks'(event, instance) {
 		instance.$('input').val('');
 	},
 
-	'hidden.bs.modal #accountTasks': function (event, instance) {
+	'hidden.bs.modal #accountTasks'(event, instance) {
 		instance.accountTask.set('login');
 		Session.set('pleaseLogin', false);
 	},
@@ -111,7 +111,7 @@ TemplateMixins.FormfieldErrors(Template.loginFrame, {
 });
 
 Template.loginFrame.events({
-	'click .js-forgot-pwd-btn': function (event, instance) {
+	'click .js-forgot-pwd-btn'(event, instance) {
 		event.preventDefault();
 
 		const username = instance.$('.js-username').val();
@@ -122,7 +122,7 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('recoverPwd');
 	},
 
-	'click .js-register-open': function (event, instance) {
+	'click .js-register-open'(event, instance) {
 		let username = instance.$('.js-username').val();
 		const password = instance.$('.js-password').val();
 		let email;
@@ -142,7 +142,7 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('register');
 	},
 
-	'submit form, click .js-login': function (event, instance) {
+	'submit form, click .js-login'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -169,7 +169,7 @@ Template.loginFrame.events({
 		});
 	},
 
-	'click .js-oauth-btn': function (event, instance) {
+	'click .js-oauth-btn'(event, instance) {
 		event.preventDefault();
 
 		const { service } = event.currentTarget.dataset;
@@ -268,7 +268,7 @@ TemplateMixins.FormfieldErrors(Template.registerFrame, {
 });
 
 Template.registerFrame.events({
-	'click .js-register': function (event, instance) {
+	'click .js-register'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -308,7 +308,7 @@ Template.registerFrame.events({
 		});
 	},
 
-	'click #backToLogin': function (event, instance) {
+	'click #backToLogin'(event, instance) {
 		instance.parentInstance().accountTask.set('login');
 	},
 });
@@ -333,7 +333,7 @@ Template.forgotPwdFrame.helpers({
 });
 
 Template.forgotPwdFrame.events({
-	'input, change, paste, keyup, mouseup': function (event, instance) {
+	'input, change, paste, keyup, mouseup'(event, instance) {
 		const email = instance.$('.js-reset-pw-email').val();
 		instance.emailIsValid.set(IsEmail(email));
 	},
@@ -357,7 +357,7 @@ Template.forgotPwdFrame.events({
 		});
 	},
 
-	'click .js-reset-pwd-close-btn': function (event, instance) {
+	'click .js-reset-pwd-close-btn'(event, instance) {
 		instance.parentInstance().accountTask.set('login');
 	},
 });

@@ -4,7 +4,7 @@ import Events from '/imports/api/events/events';
 import Regions from './regions';
 
 Meteor.methods({
-	'region.updateCounters': function (selector) {
+	'region.updateCounters'(selector) {
 		Regions.find(selector).forEach((region) => {
 			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 			const regionId = region._id;
@@ -18,11 +18,11 @@ Meteor.methods({
 		});
 	},
 
-	'region.featureGroup': function (regionId, groupId) {
+	'region.featureGroup'(regionId, groupId) {
 		Regions.update(regionId, { $set: { featuredGroup: groupId } });
 	},
 
-	'region.unsetFeaturedGroup': function (regionId) {
+	'region.unsetFeaturedGroup'(regionId) {
 		Regions.update(regionId, { $set: { featuredGroup: false } });
 	},
 });

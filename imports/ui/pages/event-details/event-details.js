@@ -107,13 +107,13 @@ Template.eventDisplay.helpers({
 });
 
 Template.event.events({
-	'mouseover .event-course-header, mouseout .event-course-header': function (event, instance) {
+	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
 		instance.$(event.currentTarget).toggleClass('highlight', event.type === 'mouseover');
 	},
 
-	'click .event-course-header': function () { Router.go('showCourse', { _id: this.courseId }); },
+	'click .event-course-header'() { Router.go('showCourse', { _id: this.courseId }); },
 
-	'click .js-event-delete-confirm': function (event, instance) {
+	'click .js-event-delete-confirm'(event, instance) {
 		const oEvent = instance.data;
 		const { title } = oEvent;
 		const course = oEvent.courseId;
@@ -138,16 +138,16 @@ Template.event.events({
 		Template.instance().editing.set(false);
 	},
 
-	'click .js-event-edit': function (event, instance) {
+	'click .js-event-edit'(event, instance) {
 		if (PleaseLogin()) return;
 		instance.editing.set(true);
 	},
 
-	'click .js-register-event': function (event, instance) {
+	'click .js-register-event'(event, instance) {
 		instance.addParticipant();
 	},
 
-	'click .js-unregister-event': function (event, instance) {
+	'click .js-unregister-event'(event, instance) {
 		instance.busy('unregistering');
 		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
 			instance.busy(false);
@@ -193,7 +193,7 @@ Template.eventDisplay.helpers({
 });
 
 Template.eventDisplay.events({
-	'click .js-show-replication': function (event, instance) {
+	'click .js-show-replication'(event, instance) {
 		instance.replicating.set(true);
 		instance.collapse();
 	},
@@ -247,7 +247,7 @@ Template.eventGroupAdd.helpers({
 
 
 Template.eventGroupAdd.events({
-	'click .js-add-group': function (e, instance) {
+	'click .js-add-group'(e, instance) {
 		const event = instance.data;
 		const groupId = e.currentTarget.value;
 		Meteor.call('event.promote', event._id, groupId, true, (error) => {
@@ -270,7 +270,7 @@ Template.eventGroupAdd.events({
 TemplateMixins.Expandible(Template.eventGroupRemove);
 Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
-	'click .js-remove': function (e, instance) {
+	'click .js-remove'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('event.promote', event._id, groupId, false, (error) => {
@@ -292,7 +292,7 @@ Template.eventGroupRemove.events({
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
-	'click .js-makeOrganizer': function (e, instance) {
+	'click .js-makeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('event.editing', event._id, groupId, true, (error) => {
@@ -314,7 +314,7 @@ Template.eventGroupMakeOrganizer.events({
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
-	'click .js-removeOrganizer': function (e, instance) {
+	'click .js-removeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('event.editing', event._id, groupId, false, (error) => {

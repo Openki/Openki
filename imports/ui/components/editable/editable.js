@@ -99,18 +99,18 @@ import './editable.html';
 	});
 
 	template.events({
-		'click .js-editable-save': function (event, instance) {
+		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
 			instance.store();
 		},
 
-		'click .js-editable-cancel': function (event, instance) {
+		'click .js-editable-cancel'(event, instance) {
 			event.preventDefault();
 			instance.reset();
 			instance.state.changed.set(false);
 		},
 
-		'click .js-editable-edit': function (event, instance) {
+		'click .js-editable-edit'(event, instance) {
 			instance.$('.js-editable').focus();
 
 			// Moving the cursor to the end of the editable element?

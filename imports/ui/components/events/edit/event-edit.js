@@ -375,44 +375,44 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click .js-event-edit-cancel': function (event, instance) {
+	'click .js-event-edit-cancel'(event, instance) {
 		if (instance.data.new) window.history.back();
 		instance.parent.editing.set(false);
 	},
 
-	'click .js-toggle-duration': function () {
+	'click .js-toggle-duration'() {
 		Tooltips.hide();
 		$('.time-end > *').toggle();
 	},
 
-	'click .js-check-notify': function (event, instance) {
+	'click .js-check-notify'(event, instance) {
 		instance.notifyChecked.set(instance.$('.js-check-notify').is(':checked'));
 	},
 
-	'change .js-event-start-date': function (event, instance) {
+	'change .js-event-start-date'(event, instance) {
 		const newDate = instance.$(event.target).val();
 		instance.state.set({
 			startDayChanged: !moment(newDate, 'L').isSame(this.startLocal, 'day'),
 		});
 	},
 
-	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime': function (event, template) {
+	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime'(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #editEventEndTime': function (event, template) {
+	'change #editEventEndTime'(event, template) {
 		updateTimes(template, false);
 	},
 
-	'change .js-select-region': function (event, instance) {
+	'change .js-select-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 
-	'change .js-update-replicas': function (event, instance) {
+	'change .js-update-replicas'(event, instance) {
 		instance.state.set('updateReplicas', event.target.checked);
 	},
 
-	'change .js-update-changed-replicas': function (event, instance) {
+	'change .js-update-changed-replicas'(event, instance) {
 		instance.state.set('updateChangedReplicas', event.target.checked);
 	},
 });

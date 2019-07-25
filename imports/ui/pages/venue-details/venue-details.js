@@ -185,20 +185,20 @@ Template.venueDetails.helpers({
 
 
 Template.venueDetails.events({
-	'click .js-venue-edit': function (event, instance) {
+	'click .js-venue-edit'(event, instance) {
 		instance.editing.set(true);
 		instance.verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete': function () {
+	'click .js-venue-delete'() {
 		Template.instance().verifyDeleteVenue.set(true);
 	},
 
-	'click .js-venue-delete-cancel': function () {
+	'click .js-venue-delete-cancel'() {
 		Template.instance().verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete-confirm': function (event, instance) {
+	'click .js-venue-delete-confirm'(event, instance) {
 		const { venue } = instance.data;
 		instance.busy('deleting');
 		Meteor.call('venue.remove', venue._id, (err) => {
@@ -212,12 +212,12 @@ Template.venueDetails.events({
 		});
 	},
 
-	'click .js-show-more-events': function (e, instance) {
+	'click .js-show-more-events'(e, instance) {
 		const limit = instance.maxEvents;
 		limit.set(limit.get() + instance.increaseBy);
 	},
 
-	'click .js-show-more-past-events': function (e, instance) {
+	'click .js-show-more-past-events'(e, instance) {
 		const limit = instance.maxPastEvents;
 		limit.set(limit.get() + instance.increaseBy);
 	},

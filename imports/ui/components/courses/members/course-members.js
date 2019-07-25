@@ -67,11 +67,11 @@ Template.courseMembers.helpers({
 });
 
 Template.courseMembers.events({
-	'click .js-contact-members': function () {
+	'click .js-contact-members'() {
 		$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
 	},
 
-	'click .js-show-more-members': function (e, instance) {
+	'click .js-show-more-members'(e, instance) {
 		const { membersDisplayLimit } = instance;
 		membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
 	},
@@ -160,11 +160,11 @@ Template.removeFromTeamDropdown.helpers({
 });
 
 Template.courseMember.events({
-	'click .js-add-to-team-btn': function (event, instance) {
+	'click .js-add-to-team-btn'(event, instance) {
 		event.preventDefault();
 		processChange(instance.subscribeToTeam());
 	},
-	'click .js-remove-team': function (event, instance) {
+	'click .js-remove-team'(event, instance) {
 		event.preventDefault();
 		processChange(instance.removeFromTeam());
 	},

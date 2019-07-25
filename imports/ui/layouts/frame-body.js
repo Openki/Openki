@@ -7,7 +7,7 @@ import './frame-body.html';
  * Class 'js-download' must be added to those links.
  */
 Template.frameLayout.events({
-	'click .js-download': function (event) {
+	'click .js-download'(event) {
 		event.stopPropagation();
 	},
 });

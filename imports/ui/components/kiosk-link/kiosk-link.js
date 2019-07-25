@@ -24,7 +24,7 @@ Template.kioskLink.helpers({
 });
 
 Template.kioskLink.events({
-	'click .js-remove-back-to-kiosk': function () {
+	'click .js-remove-back-to-kiosk'() {
 		return Session.set('kioskFilter', false);
 	},
 });

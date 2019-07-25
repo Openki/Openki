@@ -31,11 +31,11 @@ const updateEmail = function (email, user) {
 Meteor.methods({
 	/** Set user region
 	  */
-	'user.regionChange': function (newRegion) {
+	'user.regionChange'(newRegion) {
 		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
 
-	'user.updateData': function (username, email, notifications) {
+	'user.updateData'(username, email, notifications) {
 		check(username, String);
 		check(email, String);
 		check(notifications, Boolean);
@@ -62,19 +62,19 @@ Meteor.methods({
 		}
 	},
 
-	'user.updateEmail': function (email) {
+	'user.updateEmail'(email) {
 		check(email, String);
 		const user = Meteor.user();
 		if (!user) return ApiError('plzLogin', 'Not logged-in');
 		updateEmail(email, user);
 	},
 
-	'user.remove': function () {
+	'user.remove'() {
 		const user = Meteor.user();
 		if (user) Meteor.users.remove({ _id: user._id });
 	},
 
-	'user.addPrivilege': function (userId, privilege) {
+	'user.addPrivilege'(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const user = Meteor.users.findOne({ _id: userId });
@@ -87,7 +87,7 @@ Meteor.methods({
 		}
 	},
 
-	'user.removePrivilege': function (userId, privilege) {
+	'user.removePrivilege'(userId, privilege) {
 		const user = Meteor.users.findOne({ _id: userId });
 		if (!user) throw new Meteor.Error(404, 'User not found');
 
@@ -104,7 +104,7 @@ Meteor.methods({
 
 
 	// Recalculate the groups and badges field
-	'user.updateBadges': function (selector) {
+	'user.updateBadges'(selector) {
 		Meteor.users.find(selector).forEach((user) => {
 			const userId = user._id;
 
@@ -140,21 +140,21 @@ Meteor.methods({
 		});
 	},
 
-	'user.hidePricePolicy': function (user) {
+	'user.hidePricePolicy'(user) {
 		Meteor.users.update(
 			{ _id: user._id },
 			{ $set: { hidePricePolicy: true } },
 		);
 	},
 
-	'user.name': function (userId) {
+	'user.name'(userId) {
 		this.unblock();
 		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
 		if (!user) return false;
 		return user.username;
 	},
 
-	'user.updateLocale': function (locale) {
+	'user.updateLocale'(locale) {
 		Meteor.users.update(Meteor.userId(), {
 			$set: { 'profile.locale': locale },
 		});

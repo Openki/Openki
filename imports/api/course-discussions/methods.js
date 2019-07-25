@@ -21,7 +21,7 @@ const sanitizeComment = (comment) => {
 };
 
 Meteor.methods({
-	'courseDiscussion.postComment': function (comment) {
+	'courseDiscussion.postComment'(comment) {
 		check(comment, {
 			courseId: String,
 			parentId: Match.Optional(String),
@@ -86,7 +86,7 @@ Meteor.methods({
 	},
 
 
-	'courseDiscussion.editComment': function (comment) {
+	'courseDiscussion.editComment'(comment) {
 		check(comment, {
 			_id: String,
 			title: String,
@@ -109,7 +109,7 @@ Meteor.methods({
 	},
 
 
-	'courseDiscussion.deleteComment': function (commentId) {
+	'courseDiscussion.deleteComment'(commentId) {
 		check(commentId, String);
 
 		const user = Meteor.user();

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import Log from './log';
 
 Meteor.methods({
-	'log.clientError': function (report) {
+	'log.clientError'(report) {
 		check(report,
 			{
 				name: String,

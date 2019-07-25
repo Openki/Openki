@@ -60,17 +60,17 @@ Template.resetPassword.helpers({
 });
 
 Template.resetPassword.events({
-	'click .js-show-pwd': function (event, instance) {
+	'click .js-show-pwd'(event, instance) {
 		instance.showPassword.set(true);
 		instance.updatePassword();
 	},
 
-	'click .js-hide-pwd': function (event, instance) {
+	'click .js-hide-pwd'(event, instance) {
 		instance.showPassword.set(false);
 		instance.updatePassword();
 	},
 
-	'input, keyup, blur': function (event, instance) {
+	'input, keyup, blur'(event, instance) {
 		instance.updatePassword();
 	},
 
@@ -91,7 +91,7 @@ Template.resetPassword.events({
 		});
 	},
 
-	'click .js-cancel-reset-pwd': function () {
+	'click .js-cancel-reset-pwd'() {
 		Router.go('/');
 	},
 });

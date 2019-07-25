@@ -22,7 +22,7 @@ Template.featureGroup.helpers({
 });
 
 Template.featureGroup.events({
-	'submit #featureGroup': function (event, instance) {
+	'submit #featureGroup'(event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');
@@ -38,7 +38,7 @@ Template.featureGroup.events({
 		});
 	},
 
-	'click .js-unset-featured-group': function (event, instance) {
+	'click .js-unset-featured-group'(event, instance) {
 		instance.busy('deleting');
 		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
 			if (err) {

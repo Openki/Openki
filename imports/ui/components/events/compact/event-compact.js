@@ -28,7 +28,7 @@ Template.eventCompact.helpers({
 });
 
 Template.eventCompact.events({
-	'mouseover .js-venue-link, mouseout .js-venue-link': function (e, instance) {
+	'mouseover .js-venue-link, mouseout .js-venue-link'(e, instance) {
 		instance.$('.event-compact').toggleClass('elevate-child');
 	},
 });

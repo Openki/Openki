@@ -237,11 +237,11 @@ Template.courseEdit.helpers({
 
 Template.courseEdit.events({
 
-	'click .close': function (event, instance) {
+	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
 
-	'submit form, click .js-course-edit-save': function (event, instance) {
+	'submit form, click .js-course-edit-save'(event, instance) {
 		event.preventDefault();
 
 		const roles = {};
@@ -336,7 +336,7 @@ Template.courseEdit.events({
 		});
 	},
 
-	'click .js-course-edit-cancel': function (event, instance) {
+	'click .js-course-edit-cancel'(event, instance) {
 		const course = instance.data;
 
 		if (course._id) {
@@ -346,11 +346,11 @@ Template.courseEdit.events({
 		}
 	},
 
-	'click .js-edit-categories': function () {
+	'click .js-edit-categories'() {
 		Template.instance().editingCategories.set(true);
 	},
 
-	'change .js-category-checkbox': function (event, instance) {
+	'change .js-category-checkbox'(event, instance) {
 		const catKey = `${this}`;
 		let selectedCategories = instance.selectedCategories.get();
 		const checked = instance.$(`input.cat_${catKey}`).prop('checked');
@@ -405,7 +405,7 @@ Template.courseEditRole.helpers({
 });
 
 Template.courseEditRole.events({
-	'change .js-check-role': function (event, instance) {
+	'change .js-check-role'(event, instance) {
 		instance.checked.set(instance.$('.js-check-role').prop('checked'));
 	},
 });
@@ -439,14 +439,14 @@ Template.courseTitle.helpers({
 });
 
 Template.courseTitle.events({
-	'keydown .js-title': function (event, instance) {
+	'keydown .js-title'(event, instance) {
 		if (event.keyCode === 9) {
 			instance.$('.dropdown-toggle').dropdown('toggle');
 			instance.focused.set(false);
 		}
 	},
 
-	'keyup .js-title': function (event, instance) {
+	'keyup .js-title'(event, instance) {
 		// arrow down does not work in bootstrap dropdown widget
 		if (event.keyCode === 40) {
 			instance.$('.js-proposed-courses').find('a:first').focus();
@@ -458,15 +458,15 @@ Template.courseTitle.events({
 	}, 220),
 
 
-	'focus .js-title': function (event, instance) {
+	'focus .js-title'(event, instance) {
 		instance.focused.set(true);
 	},
 
-	'focusout .js-proposed-search': function (event, instance) {
+	'focusout .js-proposed-search'(event, instance) {
 		if (instance.$(event.relatedTarget).closest('.js-proposed-search').length === 0) instance.focused.set(false);
 	},
 
-	'keydown .js-dropdown-entry': function (event, instance) {
+	'keydown .js-dropdown-entry'(event, instance) {
 		if (event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });

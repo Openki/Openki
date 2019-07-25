@@ -47,11 +47,11 @@ Template.introduction.helpers({
 });
 
 Template.introduction.events({
-	'click .js-introduction-close-btn': function () {
+	'click .js-introduction-close-btn'() {
 		Introduction.doneIntro();
 	},
 
-	'click .js-introduction-toggle-btn': function () {
+	'click .js-introduction-toggle-btn'() {
 		if (Introduction.openedIntro()) {
 			Introduction.closeIntro();
 		} else {

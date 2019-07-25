@@ -65,7 +65,7 @@ Template.usersCourselist.helpers({
 });
 
 Template.usersCourselist.events({
-	'click .js-scroll': function (event) {
+	'click .js-scroll'(event) {
 		const roleLabel = event.currentTarget;
 		const rolePosition = $(roleLabel.getAttribute('href')).offset().top;
 		// subtract the amount of pixels of the height of the navbar

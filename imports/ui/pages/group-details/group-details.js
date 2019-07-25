@@ -140,12 +140,12 @@ Template.groupDetails.helpers({
 });
 
 Template.groupDetails.events({
-	'click .js-group-settings': function (event, instance) {
+	'click .js-group-settings'(event, instance) {
 		if (PleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
 	},
 
-	'click .js-group-save': function (event, instance) {
+	'click .js-group-save'(event, instance) {
 		const group = {
 			name: instance.editableName.getEdited(),
 			short: instance.editableShort.getEdited(),
@@ -176,11 +176,11 @@ Template.groupDetails.events({
 		});
 	},
 
-	'click .js-group-cancel': function () {
+	'click .js-group-cancel'() {
 		Router.go('/'); // Got a better idea?
 	},
 
-	'click .js-group-remove-filter': function () {
+	'click .js-group-remove-filter'() {
 		Router.go('/'); // Got a better idea?
 	},
 });

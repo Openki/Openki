@@ -73,16 +73,16 @@ Template.venueMap.helpers({
 
 Template.venueMap.events({
 
-	'click .js-location-candidate': function () {
+	'click .js-location-candidate'() {
 		Router.go('venueDetails', this);
 	},
 
-	'mouseenter .js-location-candidate': function (event, instance) {
+	'mouseenter .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},
 
-	'mouseleave .js-location-candidate': function (event, instance) {
+	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
 

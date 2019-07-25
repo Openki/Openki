@@ -341,19 +341,19 @@ Template.map.events({
 		if (instance.data.mini) instance.fullscreen.set(true);
 	},
 
-	'mousedown .js-add-marker': function (event, instance) {
+	'mousedown .js-add-marker'(event, instance) {
 		instance.proposeMarker();
 	},
 
-	'click .js-remove-marker': function (event, instance) {
+	'click .js-remove-marker'(event, instance) {
 		instance.removeMarker();
 	},
 
-	'click .js-make-fullscreen': function (event, instance) {
+	'click .js-make-fullscreen'(event, instance) {
 		instance.fullscreen.set(true);
 	},
 
-	'click .js-close-fullscreen': function (event, instance) {
+	'click .js-close-fullscreen'(event, instance) {
 		instance.fullscreen.set(false);
 	},
 

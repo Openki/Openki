@@ -37,7 +37,7 @@ Template.alert.onRendered(function () {
 });
 
 Template.alert.events({
-	'click .js-remove-alert': function (event, instance) {
+	'click .js-remove-alert'(event, instance) {
 		if (instance.timedRemove) clearTimeout(instance.timedRemove);
 		instance.remove(this._id);
 	},

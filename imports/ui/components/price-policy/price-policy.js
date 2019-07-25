@@ -43,7 +43,7 @@ Template.pricePolicyContent.helpers({
 });
 
 Template.pricePolicyContent.events({
-	'click .js-hide-price-policy': function () {
+	'click .js-hide-price-policy'() {
 		Session.set('hidePricePolicy', true);
 		localStorage.setItem('hidePricePolicy', true);
 

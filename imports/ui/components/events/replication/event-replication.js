@@ -160,7 +160,7 @@ const getEventFrequency = (instance) => {
 
 
 Template.eventReplication.events({
-	'changeDate .js-replicate-datepick': function (event, instance) {
+	'changeDate .js-replicate-datepick'(event, instance) {
 		const pickDays = event.dates;
 
 		const origin = moment(instance.data.start).startOf('day');
@@ -168,12 +168,12 @@ Template.eventReplication.events({
 		instance.pickDays.set(days);
 	},
 
-	'show.bs.tab a[data-toggle="tab"]': function (event, instance) {
+	'show.bs.tab a[data-toggle="tab"]'(event, instance) {
 		const targetHref = $(event.target).attr('href');
 		instance.usingPicker.set(targetHref === '#datepicker');
 	},
 
-	'click .js-replicate-btn': function (event, instance) {
+	'click .js-replicate-btn'(event, instance) {
 		instance.busy('saving');
 
 		const startLocal = LocalTime.fromString(instance.data.startLocal);
@@ -239,19 +239,19 @@ Template.eventReplication.events({
 		});
 	},
 
-	'change .js-update-replicas, keyup .js-update-replicas': function (event, instance) {
+	'change .js-update-replicas, keyup .js-update-replicas'(event, instance) {
 		instance.calcDays.set(getEventFrequency(instance));
 	},
 
-	'mouseover .js-replicate-btn': function (event, instance) {
+	'mouseover .js-replicate-btn'(event, instance) {
 		instance.$('.replica-event-captions').addClass('highlighted');
 	},
 
-	'mouseout .js-replicate-btn': function (event, instance) {
+	'mouseout .js-replicate-btn'(event, instance) {
 		instance.$('.replica-event-captions').removeClass('highlighted');
 	},
 
-	'click .js-cancel-replication': function (event, instance) {
+	'click .js-cancel-replication'(event, instance) {
 		const parentInstance = instance.parentInstance();
 		parentInstance.replicating.set(false);
 		parentInstance.collapse();

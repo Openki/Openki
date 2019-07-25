@@ -126,7 +126,7 @@ Template.showLog.helpers({
 
 Template.showLog.events({
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-update-url': function (event, instance) {
+	'change .js-update-url'(event, instance) {
 		instance.updateUrl();
 	},
 
@@ -160,7 +160,7 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'click .js-tr': function (event, instance) {
+	'click .js-tr'(event, instance) {
 		instance.filter.add('tr', `${this}`);
 		if (!event.shiftKey) {
 			instance.filter.done();
@@ -169,7 +169,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-date': function (event, instance) {
+	'click .js-date'(event, instance) {
 		const start = moment(this).toISOString();
 		instance.filter.add('start', start);
 		if (!event.shiftKey) {
@@ -179,7 +179,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-rel-id': function (event, instance) {
+	'click .js-rel-id'(event, instance) {
 		instance.filter.add('rel', `${this}`);
 		if (!event.shiftKey) {
 			instance.filter.done();
@@ -188,7 +188,7 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-more': function (event, instance) {
+	'click .js-more'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 100);
 	},

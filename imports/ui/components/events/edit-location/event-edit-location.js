@@ -187,7 +187,7 @@ Template.eventEditVenue.helpers({
 
 
 Template.eventEditVenue.events({
-	'click .js-location-search-btn': function (event, instance) {
+	'click .js-location-search-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
@@ -242,17 +242,17 @@ Template.eventEditVenue.events({
 		});
 	},
 
-	'click .js-location-change': function (event, instance) {
+	'click .js-location-change'(event, instance) {
 		instance.addressSearch.set(false);
 		instance.location.set({});
 		instance.search.set('');
 	},
 
-	'click .js-location-candidate': function (event, instance) {
+	'click .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
-	'keyup .js-location-search-input': function (event, instance) {
+	'keyup .js-location-search-input'(event, instance) {
 		instance.addressSearch.set(false);
 		instance.search.set(event.target.value);
 
@@ -261,18 +261,18 @@ Template.eventEditVenue.events({
 		instance.location.set(updLocation);
 	},
 
-	'keyup .js-location-address-search': function (event, instance) {
+	'keyup .js-location-address-search'(event, instance) {
 		const updLocation = instance.location.get();
 		updLocation.address = event.target.value;
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .js-location-candidate': function (event, instance) {
+	'mouseenter .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},
 
-	'mouseleave .js-location-candidate': function (event, instance) {
+	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
 

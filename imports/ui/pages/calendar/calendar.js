@@ -179,12 +179,12 @@ const mvDateHandler = function (unit, instance) {
 };
 
 Template.calendarNavControl.events({
-	'click .js-change-date': function (event, instance) {
+	'click .js-change-date'(event, instance) {
 		const unit = instance.parentInstance().currentUnit.get();
 		mvDateHandler(unit, instance);
 	},
 
-	'click .js-change-unit': function (event, instance) {
+	'click .js-change-unit'(event, instance) {
 		const unit = this;
 		instance.parentInstance().currentUnit.set(unit);
 		mvDateHandler(unit, instance);

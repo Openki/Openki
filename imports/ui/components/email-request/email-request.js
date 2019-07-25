@@ -45,7 +45,7 @@ TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 });
 
 Template.emailRequestModal.events({
-	'click .js-save-email': function (event, instance) {
+	'click .js-save-email'(event, instance) {
 		event.preventDefault();
 
 		instance.errors.reset();
@@ -85,7 +85,7 @@ Template.emailValidationModal.onRendered(function () {
 });
 
 Template.emailValidationModal.events({
-	'click .js-send-validation-email': function (event, instance) {
+	'click .js-send-validation-email'(event, instance) {
 		instance.busy('sending');
 		event.preventDefault();
 		Meteor.call('sendVerificationEmail', (err) => {

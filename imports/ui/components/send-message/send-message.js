@@ -41,7 +41,7 @@ Template.sendMessage.helpers({
 });
 
 Template.sendMessage.events({
-	'click .js-verify-mail': function (event, instance) {
+	'click .js-verify-mail'(event, instance) {
 		instance.state.set('verificationMailSent', true);
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
@@ -53,12 +53,12 @@ Template.sendMessage.events({
 		});
 	},
 
-	'change input[type="checkbox"]': function (event, instance) {
+	'change input[type="checkbox"]'(event, instance) {
 		const target = instance.$(event.currentTarget);
 		instance.state.set(target.attr('name'), target.prop('checked'));
 	},
 
-	'submit .js-send-message': function (event, instance) {
+	'submit .js-send-message'(event, instance) {
 		event.preventDefault();
 		instance.busy('sending');
 

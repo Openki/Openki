@@ -67,11 +67,11 @@ Template.groupSettings.helpers({
 });
 
 Template.groupSettings.events({
-	'keyup .js-search-users': function (event, instance) {
+	'keyup .js-search-users'(event, instance) {
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
-	'click .js-member-add-btn': function () {
+	'click .js-member-add-btn'() {
 		const memberId = this._id;
 		const groupId = Router.current().params._id;
 		Meteor.call('group.updateMembership', memberId, groupId, true, (err) => {
@@ -89,7 +89,7 @@ Template.groupSettings.events({
 		});
 	},
 
-	'click .js-member-remove-btn': function () {
+	'click .js-member-remove-btn'() {
 		const memberId = `${this}`;
 		const groupId = Router.current().params._id;
 		Meteor.call('group.updateMembership', memberId, groupId, false, (err) => {
@@ -107,14 +107,14 @@ Template.groupSettings.events({
 		});
 	},
 
-	'input .js-logo-url': function (event, instance) {
+	'input .js-logo-url'(event, instance) {
 		const elem = instance.$('.js-logo-url');
 		if (elem.val().includes('://')) {
 			elem.val(elem.val().split('://')[1], 1);
 		}
 	},
 
-	'click .js-group-edit-save': function (event, instance) {
+	'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 
 		const parentInstance = instance.parentInstance(); // Not available in callback
@@ -150,7 +150,7 @@ Template.groupSettings.events({
 		});
 	},
 
-	'click .js-group-edit-cancel': function (event, instance) {
+	'click .js-group-edit-cancel'(event, instance) {
 		instance.parentInstance().editingSettings.set(false);
 	},
 });

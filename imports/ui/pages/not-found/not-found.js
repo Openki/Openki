@@ -16,7 +16,7 @@ Template.notFound.helpers({
 });
 
 Template.notFound.events({
-	'click .js-go-back': function () {
+	'click .js-go-back'() {
 		window.history.back();
 	},
 });

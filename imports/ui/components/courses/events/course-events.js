@@ -90,11 +90,11 @@ Template.courseEvents.helpers({
 });
 
 Template.courseEvents.events({
-	'click .js-show-all-events': function () {
+	'click .js-show-all-events'() {
 		Template.instance().showAllEvents.set(true);
 	},
 
-	'scroll .js-scrollable-container': function (event, instance) {
+	'scroll .js-scrollable-container'(event, instance) {
 		const scrollableContainer = instance.$('.js-scrollable-container');
 
 		// Use dom element to get true height of clipped div
@@ -125,7 +125,7 @@ Template.courseEventAdd.helpers({
 });
 
 Template.courseEventAdd.events({
-	'mouseover/mouseout .event-caption-action': function (event, instance) {
+	'mouseover/mouseout .event-caption-action'(event, instance) {
 		instance.$(event.currentTarget).toggleClass('placeholder', event.type === 'mouseout');
 	},
 });

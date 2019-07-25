@@ -62,7 +62,7 @@ Template.userprofile.helpers({
 
 
 Template.userprofile.events({
-	'click button.giveAdmin': function () {
+	'click button.giveAdmin'() {
 		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
 			if (err) {
 				Alert.error(err, 'Unable to add privilege');
@@ -72,7 +72,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click .js-remove-privilege-btn': function (event, template) {
+	'click .js-remove-privilege-btn'(event, template) {
 		const priv = template.$(event.target).data('priv');
 		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
 			if (err) {
@@ -83,7 +83,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.draftIntoGroup': function () {
+	'click button.draftIntoGroup'() {
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
@@ -96,7 +96,7 @@ Template.userprofile.events({
 		});
 	},
 
-	'click .js-group-expel-btn': function () {
+	'click .js-group-expel-btn'() {
 		Tooltips.hide();
 		const groupId = this._id;
 		const { name } = this;
@@ -139,7 +139,7 @@ Template.emailBox.helpers({
 });
 
 Template.emailBox.events({
-	'click .js-verify-mail': function (e, instance) {
+	'click .js-verify-mail'(e, instance) {
 		instance.verificationMailSent.set(true);
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
@@ -151,15 +151,15 @@ Template.emailBox.events({
 		});
 	},
 
-	'change .js-send-own-adress': function (event, instance) {
+	'change .js-send-own-adress'(event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
 	},
 
-	'change .js-receive-copy': function (event, instance) {
+	'change .js-receive-copy'(event, instance) {
 		instance.$('.js-receive-copy + .checkmark').toggle();
 	},
 
-	'submit form.sendMail': function (event, template) {
+	'submit form.sendMail'(event, template) {
 		event.preventDefault();
 		if (PleaseLogin()) return;
 

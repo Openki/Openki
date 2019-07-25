@@ -79,6 +79,7 @@ module.exports = {
       'no-tabs': ['error', { allowIndentationTabs: true }],
       //'no-underscore-dangle': ['error', { enforceInMethodNames: true, allow: ['_escape', '_id'] }],
       'no-underscore-dangle': [0],
+      'object-shorthand': ['error', 'always'],
       'prefer-destructuring': ['error', {'object': false, 'array': false}],
       'prefer-rest-params': [0],
   },

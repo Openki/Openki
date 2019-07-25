@@ -69,12 +69,12 @@ Template.courseRole.helpers({
 });
 
 Template.courseRole.events({
-	'click .js-role-enroll-btn': function (event, instance) {
+	'click .js-role-enroll-btn'(event, instance) {
 		event.preventDefault();
 		instance.enrolling.set(true);
 	},
 
-	'click .js-role-subscribe-btn': function (event, instance) {
+	'click .js-role-subscribe-btn'(event, instance) {
 		event.preventDefault();
 		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val().trim();
@@ -89,23 +89,23 @@ Template.courseRole.events({
 		});
 	},
 
-	'click .js-role-enroll-cancel': function (e, template) {
+	'click .js-role-enroll-cancel'(e, template) {
 		template.enrolling.set(false);
 		return false;
 	},
 
-	'click .js-role-unsubscribe-btn': function () {
+	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
 		processChange(change);
 		return false;
 	},
 
-	'click .js-toggle-first-steps': function (event, instance) {
+	'click .js-toggle-first-steps'(event, instance) {
 		instance.showFirstSteps.set(!instance.showFirstSteps.get());
 	},
 
-	'click #firstStepsComment': function () {
+	'click #firstStepsComment'() {
 		$('.course-page-btn.js-discussion-edit').click();
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();

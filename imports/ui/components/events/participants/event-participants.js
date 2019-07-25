@@ -37,7 +37,7 @@ Template.eventParticipants.helpers({
 });
 
 Template.eventParticipants.events({
-	'click .js-show-more-participants': function (event, instance) {
+	'click .js-show-more-participants'(event, instance) {
 		const { participantsDisplayLimit } = instance;
 		participantsDisplayLimit.set(participantsDisplayLimit.get() + instance.increaseBy);
 	},

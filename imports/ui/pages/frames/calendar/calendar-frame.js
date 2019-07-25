@@ -55,7 +55,7 @@ Template.frameCalendar.helpers({
 });
 
 Template.frameCalendar.events({
-	'click .js-show-more-events': function (event, instance) {
+	'click .js-show-more-events'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 10);
 	},
@@ -80,7 +80,7 @@ Template.frameCalendarEvent.helpers({
 });
 
 Template.frameCalendarEvent.events({
-	'click .js-toggle-event-details': function (event, instance) {
+	'click .js-toggle-event-details'(event, instance) {
 		$(event.currentTarget).toggleClass('active');
 		instance.$('.frame-list-item-time').toggle();
 		instance.expanded.set(!instance.expanded.get());

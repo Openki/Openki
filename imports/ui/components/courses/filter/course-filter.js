@@ -78,7 +78,7 @@ Template.filter.helpers({
 });
 
 Template.filter.events({
-	'click #toggleFilters': function (e, instance) {
+	'click #toggleFilters'(event, instance) {
 		const parentInstance = instance.parentInstance();
 		const { showingFilters } = parentInstance;
 
@@ -95,7 +95,7 @@ Template.filter.events({
 		}
 	},
 
-	'click .js-filter-caption': function (event, instance) {
+	'click .js-filter-caption'(event, instance) {
 		const parentInstance = instance.parentInstance();
 		const filterName = instance.$(event.currentTarget).data('filter-name');
 
@@ -106,7 +106,7 @@ Template.filter.events({
 		parentInstance.updateUrl();
 	},
 
-	'mouseover .js-filter-caption, mouseout .js-filter-caption': function (event, instance) {
+	'mouseover .js-filter-caption, mouseout .js-filter-caption'(event, instance) {
 		const name = instance.$(event.currentTarget).data('filter-name');
 		const state = _.findWhere(instance.stateFilters, { name });
 
@@ -202,7 +202,7 @@ Template.additionalFilters.helpers({
 });
 
 Template.additionalFilters.events({
-	'click .js-filter-course-role': function (e, instance) {
+	'click .js-filter-course-role'(e, instance) {
 		const { findInstance } = instance;
 		const filterName = instance.$(e.currentTarget).data('filter-name');
 
@@ -213,7 +213,7 @@ Template.additionalFilters.events({
 		findInstance.updateUrl();
 	},
 
-	'mouseover .js-filter-course-role, mouseout .js-filter-course-role': function (event, instance) {
+	'mouseover .js-filter-course-role, mouseout .js-filter-course-role'(event, instance) {
 		FilterPreview({
 			property: 'role',
 			id: instance.$(event.currentTarget).data('filter-name'),
@@ -221,7 +221,7 @@ Template.additionalFilters.events({
 		});
 	},
 
-	'mouseout .js-category-selection-label, mouseover .js-category-selection-label': function (event) {
+	'mouseout .js-category-selection-label, mouseover .js-category-selection-label'(event) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -229,24 +229,24 @@ Template.additionalFilters.events({
 		});
 	},
 
-	'keyup .js-search-categories': function (e, instance) {
+	'keyup .js-search-categories'(e, instance) {
 		const query = instance.$('.js-search-categories').val();
 
 		instance.findInstance.updateCategorySearchDebounced(query);
 	},
 
-	'click .js-search-categories': function (e, instance) {
+	'click .js-search-categories'(e, instance) {
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 
-	'click .js-toggle-subcategories': function (event, instance) {
+	'click .js-toggle-subcategories'(event, instance) {
 		event.stopPropagation();
 		instance.$(`.js-sub-category.${this}`).toggle();
 		instance.$(`.js-toggle-subcategories.${this} span`)
 			.toggleClass('fa-angle-down fa-angle-up');
 	},
 
-	'click .js-category-selection-label': function (e, instance) {
+	'click .js-category-selection-label'(e, instance) {
 		e.preventDefault();
 		const { findInstance } = instance;
 
@@ -262,7 +262,7 @@ Template.additionalFilters.events({
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-remove-category-btn': function (e, instance) {
+	'click .js-remove-category-btn'(e, instance) {
 		const { findInstance } = instance;
 
 		findInstance.filter.remove('categories', `${this}`).done();

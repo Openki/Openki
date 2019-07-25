@@ -37,11 +37,11 @@ const TemplateMixins = {
 			},
 		});
 		template.events({
-			'click .js-expand': function (event, instance) {
+			'click .js-expand'(event, instance) {
 				Session.set('verify', instance.expander);
 				event.stopPropagation();
 			},
-			'click .js-collapse': function () {
+			'click .js-collapse'() {
 				Session.set('verify', false);
 			},
 		});
@@ -68,12 +68,12 @@ const TemplateMixins = {
 				dx = event.screenX;
 				dy = event.screenY;
 			},
-			'mouseup .js-expand': function (event, instance) {
+			'mouseup .js-expand'(event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(true);
 				}
 			},
-			'mouseup .js-collapse': function (event, instance) {
+			'mouseup .js-collapse'(event, instance) {
 				if (nomove(event)) {
 					instance.expanded.set(false);
 				}

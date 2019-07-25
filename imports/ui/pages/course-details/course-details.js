@@ -111,7 +111,7 @@ Template.courseDetailsDescription.helpers({
 });
 
 Template.courseDetailsPage.events({
-	'click .js-delete-course-confirm': function (event, instance) {
+	'click .js-delete-course-confirm'(event, instance) {
 		if (PleaseLogin()) return;
 
 		const { course } = instance.data;
@@ -131,7 +131,7 @@ Template.courseDetailsPage.events({
 		Router.go('/');
 	},
 
-	'click .js-course-edit': function (event, instance) {
+	'click .js-course-edit'(event, instance) {
 		instance.collapse();
 		if (PleaseLogin()) return;
 
@@ -181,7 +181,7 @@ Template.courseGroupAdd.helpers({
 
 
 Template.courseGroupAdd.events({
-	'click .js-add-group': function (event, instance) {
+	'click .js-add-group'(event, instance) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
 		Meteor.call('course.promote', course._id, groupId, true, (error) => {
@@ -204,7 +204,7 @@ Template.courseGroupAdd.events({
 TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
-	'click .js-remove': function (event, instance) {
+	'click .js-remove'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('course.promote', course._id, groupId, false, (error) => {
@@ -227,7 +227,7 @@ Template.courseGroupRemove.events({
 TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
-	'click .js-makeOrganizer': function (event, instance) {
+	'click .js-makeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('course.editing', course._id, groupId, true, (error) => {
@@ -250,7 +250,7 @@ Template.courseGroupMakeOrganizer.events({
 TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
-	'click .js-removeOrganizer': function (event, instance) {
+	'click .js-removeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 		Meteor.call('course.editing', course._id, groupId, false, (error) => {

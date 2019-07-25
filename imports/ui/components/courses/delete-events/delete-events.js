@@ -7,13 +7,13 @@ import Alert from '/imports/api/alerts/alert';
 import './delete-events.html';
 
 Template.deleteCourseEvents.events({
-	'mouseover/mouseout .js-show-events-delete-modal': function (event, instance) {
+	'mouseover/mouseout .js-show-events-delete-modal'(event, instance) {
 		// mouseover/mouseout doesn't get caught on child elements. so we get it
 		const caption = instance.$(event.currentTarget).children('.event-caption-action');
 		caption.toggleClass('placeholder', event.type === 'mouseout');
 	},
 
-	'click .js-show-events-delete-modal': function (event, instance) {
+	'click .js-show-events-delete-modal'(event, instance) {
 		instance.parentInstance().showModal.set(true);
 	},
 });
@@ -72,11 +72,11 @@ Template.deleteEventsModal.helpers({
 });
 
 Template.deleteEventsModal.events({
-	'hidden.bs.modal .js-delete-events-modal': function (event, instance) {
+	'hidden.bs.modal .js-delete-events-modal'(event, instance) {
 		instance.parentInstance().showModal.set(false);
 	},
 
-	'click .js-toggle-all': function (event, instance) {
+	'click .js-toggle-all'(event, instance) {
 		let selectedEvents;
 		if (instance.state.get('allEventsSelected')) {
 			selectedEvents = [];
@@ -87,7 +87,7 @@ Template.deleteEventsModal.events({
 		instance.state.set({ selectedEvents });
 	},
 
-	'change input[type="checkbox"]': function (event, instance) {
+	'change input[type="checkbox"]'(event, instance) {
 		let selectedEvents = instance.state.get('selectedEvents');
 		if (event.target.checked) {
 			selectedEvents.push(this);
@@ -98,17 +98,17 @@ Template.deleteEventsModal.events({
 		instance.state.set({ selectedEvents });
 	},
 
-	'click .js-show-delete-confirm': function (event, instance) {
+	'click .js-show-delete-confirm'(event, instance) {
 		instance.state.set('showDeleteConfirm', true);
 	},
 
-	'click .js-deselect-event': function (e, instance) {
+	'click .js-deselect-event'(e, instance) {
 		const eventId = instance.$(e.target).data('event-id');
 		const selectedEvents = instance.state.get('selectedEvents');
 		instance.state.set('selectedEvents', selectedEvents.filter(event => event._id !== eventId));
 	},
 
-	'click .js-delete-events': function (e, instance) {
+	'click .js-delete-events'(e, instance) {
 		instance.busy('deleting');
 
 		const events = instance.state.get('selectedEvents');
@@ -146,7 +146,7 @@ Template.deleteEventsModal.events({
 		});
 	},
 
-	'click .js-cancel': function (event, instance) {
+	'click .js-cancel'(event, instance) {
 		instance.state.set('showDeleteConfirm', false);
 	},
 });

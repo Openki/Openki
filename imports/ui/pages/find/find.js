@@ -141,19 +141,19 @@ Template.find.events({
 
 
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-search-field': function (event, instance) {
+	'change .js-search-field'(event, instance) {
 		instance.updateUrl();
 	},
 
 
-	'click .js-find-btn': function (event, instance) {
+	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.filter.add('search', $('.js-search-input').val()).done();
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label': function (e, instance) {
+	'mouseover .js-category-label'(e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -163,7 +163,7 @@ Template.find.events({
 		});
 	},
 
-	'mouseout .js-category-label': function (e, instance) {
+	'mouseout .js-category-label'(e, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -173,7 +173,7 @@ Template.find.events({
 		});
 	},
 
-	'mouseover .js-group-label, mouseout .js-group-label': function (e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
 		FilterPreview({
 			property: 'group',
 			id: this,
@@ -183,7 +183,7 @@ Template.find.events({
 		});
 	},
 
-	'click .js-category-label': function (event, instance) {
+	'click .js-category-label'(event, instance) {
 		instance.filter.add('categories', `${this}`).done();
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
@@ -191,11 +191,11 @@ Template.find.events({
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-group-label': function () {
+	'click .js-group-label'() {
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-toggle-filter': function (event, instance) {
+	'click .js-toggle-filter'(event, instance) {
 		const showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
@@ -206,11 +206,11 @@ Template.find.events({
 		}
 	},
 
-	'click .js-all-regions-btn': function () {
+	'click .js-all-regions-btn'() {
 		Session.set('region', 'all');
 	},
 
-	'click .js-more-courses': function (event, instance) {
+	'click .js-more-courses'(event, instance) {
 		const { courseLimit } = instance;
 		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
 		instance.updateUrl();

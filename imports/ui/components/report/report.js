@@ -18,17 +18,17 @@ Template.report.helpers({
 });
 
 Template.report.events({
-	'click .js-report': function (event, instance) {
+	'click .js-report'(event, instance) {
 		event.preventDefault();
 		instance.state.set('reporting');
 	},
 
-	'click .js-report-cancel': function (event, instance) {
+	'click .js-report-cancel'(event, instance) {
 		event.preventDefault();
 		instance.state.set('');
 	},
 
-	'click .js-report-send': function (event, instance) {
+	'click .js-report-send'(event, instance) {
 		event.preventDefault();
 		Meteor.call(
 			'report',

@@ -58,7 +58,7 @@ Template.layout.helpers({
 
 Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
-	'click .js-toggle-introduction': function () {
+	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
 		if (route && route.options.template === 'findWrap') {
 			Introduction.showIntro();
@@ -76,7 +76,7 @@ Template.layout.rendered = function () {
  * Class 'js-download' must be added to those links.
  */
 Template.layout.events({
-	'click .js-download': function (event) {
+	'click .js-download'(event) {
 		event.stopPropagation();
 	},
 });

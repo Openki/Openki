@@ -211,12 +211,12 @@ Template.venueEdit.events({
 	},
 
 
-	'click .js-toggle-additional-info-btn': function (event, instance) {
+	'click .js-toggle-additional-info-btn'(event, instance) {
 		instance.showAdditionalInfo.set(!instance.showAdditionalInfo.get());
 	},
 
 
-	'click .js-edit-cancel': function (event, instance) {
+	'click .js-edit-cancel'(event, instance) {
 		if (instance.isNew) {
 			Router.go('/');
 		} else {
@@ -224,7 +224,7 @@ Template.venueEdit.events({
 		}
 	},
 
-	'change .js-region': function (event, instance) {
+	'change .js-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-region').val());
 	},
 });

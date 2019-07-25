@@ -56,7 +56,7 @@ Template.frameCourselist.helpers({
 });
 
 Template.frameCourselist.events({
-	'click #showMoreCourses': function (event, instance) {
+	'click #showMoreCourses'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 5);
 	},
@@ -76,7 +76,7 @@ Template.frameCourselistCourse.helpers({
 });
 
 Template.frameCourselistCourse.events({
-	'click .js-toggle-course-details': function (event, instance) {
+	'click .js-toggle-course-details'(event, instance) {
 		$(event.currentTarget).toggleClass('active');
 		instance.expanded.set(!instance.expanded.get());
 	},

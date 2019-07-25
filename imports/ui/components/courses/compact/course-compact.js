@@ -164,11 +164,11 @@ Template.courseCompactRoles.helpers({
 });
 
 Template.courseCompact.events({
-	'mouseover .js-group-label, mouseout .js-group-label': function (e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate-child');
 	},
 
-	'mouseover .js-category-label, mouseout .js-category-label': function (e, instance) {
+	'mouseover .js-category-label, mouseout .js-category-label'(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate-child');
 	},
 });

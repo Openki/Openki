@@ -31,7 +31,7 @@ Template.languageDisplay.helpers({
 });
 
 Template.languageDisplay.events({
-	'click .js-language-display': function (event, instance) {
+	'click .js-language-display'(event, instance) {
 		instance.parentInstance().searchingLanguages.set(true);
 	},
 });
@@ -98,7 +98,7 @@ const updateLanguageSearch = _.debounce((instance) => {
 }, 100);
 
 Template.languageSelection.events({
-	'click .js-language-link': function (event, instance) {
+	'click .js-language-link'(event, instance) {
 		event.preventDefault();
 		const { lg } = this;
 
@@ -116,7 +116,7 @@ Template.languageSelection.events({
 		instance.parentInstance().searchingLanguages.set(false);
 	},
 
-	'keyup .js-language-search': function (event, instance) {
+	'keyup .js-language-search'(event, instance) {
 		if (event.which === 13) {
 			instance.$('.js-language-link').first().click();
 		} else {
@@ -124,7 +124,7 @@ Template.languageSelection.events({
 		}
 	},
 
-	'focus .js-language-search': function (event, instance) {
+	'focus .js-language-search'(event, instance) {
 		const viewportWidth = Session.get('viewportWidth');
 		const isRetina = Session.get('isRetina');
 		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;

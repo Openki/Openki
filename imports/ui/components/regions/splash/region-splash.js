@@ -11,7 +11,7 @@ Template.regionSplash.onRendered(function regionSplashOnRendered() {
 });
 
 Template.regionSplash.events({
-	'hidden.bs.modal #regionSplash': function () {
+	'hidden.bs.modal #regionSplash'() {
 		const regionId = Session.get('region') || 'all';
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
@@ -22,19 +22,19 @@ Template.regionSplash.events({
 		Session.set('showRegionSplash', false);
 	},
 
-	'click .js-region-link': function (event, instance) {
+	'click .js-region-link'(event, instance) {
 		instance.$('#regionSplash').modal('hide');
 	},
 
-	'click .js-region-search': function (event, instance) {
+	'click .js-region-search'(event, instance) {
 		instance.$(event.currentTarget).select();
 	},
 
-	'click #confirmRegion': function (event, instance) {
+	'click #confirmRegion'(event, instance) {
 		instance.$('#regionSplash').modal('hide');
 	},
 
-	'click #loginForRegion': function (event, instance) {
+	'click #loginForRegion'(event, instance) {
 		$('#accountTasks').modal('show');
 		instance.$('#regionSplash').modal('hide');
 	},

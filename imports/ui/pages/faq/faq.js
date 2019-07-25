@@ -65,13 +65,13 @@ Template.FAQ.helpers({
 });
 
 Template.FAQ.events({
-	'click h3': function (event, instance) {
+	'click h3'(event, instance) {
 		const title = $(event.currentTarget);
 		title.nextUntil(instance.headerTag, instance.contentTags).toggle();
 		title.toggleClass('active');
 	},
 
-	'click a[href^="#"]': function (event, instance) {
+	'click a[href^="#"]'(event, instance) {
 		event.preventDefault();
 		const href = $(event.currentTarget).attr('href');
 		const id = href.substring(1); // Drop the hash-char

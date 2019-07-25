@@ -86,7 +86,7 @@ Template.discussion.helpers({
 });
 
 Template.discussion.events({
-	'click .js-show-all-posts': function (event, instance) {
+	'click .js-show-all-posts'(event, instance) {
 		instance.limit.set(0);
 	},
 });
@@ -162,7 +162,7 @@ Template.post.helpers({
 });
 
 Template.post.events({
-	'click .js-show-previous-replies': function (e, instance) {
+	'click .js-show-previous-replies'(e, instance) {
 		instance.limit.set(0);
 	},
 });
@@ -265,14 +265,14 @@ Template.postEdit.helpers({
 });
 
 Template.post.events({
-	'notifyAll .js-discussion-edit': function (event, instance) {
+	'notifyAll .js-discussion-edit'(event, instance) {
 		instance.$('.js-discussion-edit').click();
 		instance.parentInstance().notifyAll.set(true);
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
 	},
 
-	'click .js-discussion-edit': function (event, instance) {
+	'click .js-discussion-edit'(event, instance) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		instance.editing.set(true);
@@ -316,11 +316,11 @@ Template.post.events({
 		return false;
 	},
 
-	'click .js-discussion-cancel': function () {
+	'click .js-discussion-cancel'() {
 		Template.instance().editing.set(false);
 	},
 
-	'click button.js-delete-comment': function (event) {
+	'click button.js-delete-comment'(event) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
 		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
@@ -338,7 +338,7 @@ Template.postEdit.onRendered(function postEditOnRendered() {
 });
 
 Template.postEdit.events({
-	'keyup .js-post-text, change .js-post-text': function (event, instance) {
+	'keyup .js-post-text, change .js-post-text'(event, instance) {
 		const edited = instance.editableText.getEdited();
 		instance.validComment.set(edited && CourseDiscussions.validComment(edited));
 	},
