@@ -1,3 +1,5 @@
+import seedrandom from 'seedrandom';
+
 import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Events from '/imports/api/events/events';
@@ -11,7 +13,11 @@ import HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import StringTools from '/imports/utils/string-tools';
 
-import seedrandom from 'seedrandom';
+const courses = require('./data/course.fixtures.js').default;
+const events = require('./data/event.fixtures.js').default;
+const groups = require('./data/group.fixtures.js').default;
+const regions = require('./data/region.fixtures.js').default;
+const venues = require('./data/venue.fixtures.js').default;
 
 const Prng = function (staticseed) {
 	return seedrandom(Meteor.settings.prng === 'static' ? staticseed : undefined);
@@ -48,8 +54,6 @@ const sometimesAfter = function (date) {
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
-		const regions = require('./data/region.fixtures.js').default;
-
 		for (const r of regions) {
 			const region = Object.assign({}, r); // clone
 			if (region.loc) {
@@ -63,8 +67,6 @@ if (Meteor.settings.testdata) {
 	};
 
 	const groupsCreate = function () {
-		const groups = require('./data/group.fixtures.js').default;
-
 		for (const g of groups) {
 			const group = Object.assign({}, g);
 			group.createdby = 'ServerScript_loadingTestgroups';
@@ -79,8 +81,6 @@ if (Meteor.settings.testdata) {
 	};
 
 	const eventsCreate = function () {
-		const events = require('./data/event.fixtures.js').default;
-
 		// These events are most useful if they show up in the calendar for the
 		// current week, so we move them from their original day into this
 		// week but keep the weekday.
@@ -128,8 +128,6 @@ if (Meteor.settings.testdata) {
 	};
 
 	const venuesCreate = function () {
-		const venues = require('./data/venue.fixtures.js').default;
-
 		const prng = Prng('loadLocations');
 
 		const testRegions = [
@@ -154,8 +152,6 @@ if (Meteor.settings.testdata) {
 	};
 
 	const coursesCreate = function () {
-		const courses = require('./data/course.fixtures.js').default;
-
 		const prng = Prng('createCourses');
 
 		for (const c of courses) {
