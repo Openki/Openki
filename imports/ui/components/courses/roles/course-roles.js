@@ -2,9 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-
+import Alert from '/imports/api/alerts/alert';
 import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
+
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import '/imports/ui/components/buttons/buttons';
 

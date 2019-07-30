@@ -1,17 +1,20 @@
-import Analytics from '/imports/ui/lib/analytics';
-import Predicates from '/imports/utils/predicates';
-import Profile from '/imports/utils/profile';
-import LocalTime from '/imports/utils/local-time';
-import Metatags from '/imports/utils/metatags';
-import CourseTemplate from '/imports/ui/lib/course-template';
-import CssFromQuery from '/imports/ui/lib/css-from-query';
-import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
 import Venues from '/imports/api/venues/venues';
+
+import Analytics from '/imports/ui/lib/analytics';
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
+import CourseTemplate from '/imports/ui/lib/course-template';
+import CssFromQuery from '/imports/ui/lib/css-from-query';
+
+import Filtering from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+import LocalTime from '/imports/utils/local-time';
+import Metatags from '/imports/utils/metatags';
+import Predicates from '/imports/utils/predicates';
+import Profile from '/imports/utils/profile';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 function finderRoute(path) {

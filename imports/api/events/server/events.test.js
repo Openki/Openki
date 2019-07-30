@@ -1,7 +1,7 @@
-/* jshint -W100 */ // JSHint doesn't like the BOM in textWithNonPrintables
-
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
+
+import Events from '/imports/api/events/events';
 
 function promiseMeteorCall(...args) {
 	return new Promise((resolve, reject) => {

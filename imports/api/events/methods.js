@@ -1,20 +1,22 @@
 import { Meteor } from 'meteor/meteor';
 
-import Courses from '../courses/courses';
-import Events from './events';
-import Groups from '../groups/groups';
-import Regions from '../regions/regions';
+import Courses from '/imports/api/courses/courses';
+import { Subscribe, processChange } from '/imports/api/courses/subscription';
+import Events, { OEvent } from '/imports/api/events/events';
+import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
+import Notification from '/imports/notification/notification';
+
+import PleaseLogin from '/imports/ui/lib/please-login';
+
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import AsyncTools from '/imports/utils/async-tools';
 import HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import Notification from '/imports/notification/notification';
 import StringTools from '/imports/utils/string-tools';
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
-import PleaseLogin from '/imports/ui/lib/please-login';
 import UpdateMethods from '/imports/utils/update-methods';
-import { Subscribe, processChange } from '/imports/api/courses/subscription';
 
 const ReplicaSync = function (event, updateChangedReplicas) {
 	let affected = 0;

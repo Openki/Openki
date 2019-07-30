@@ -1,4 +1,6 @@
 import { Course, Courses } from './courses';
+
+import Alert from '/imports/api/alerts/alert';
 import { User } from '/imports/api/users/users';
 import { check } from 'meteor/check';
 

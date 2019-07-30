@@ -4,7 +4,7 @@ import Groups from '/imports/api/groups/groups';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
-import '/imports/api/ApiError';
+import ApiError from '/imports/api/ApiError';
 import IsEmail from '/imports/utils/email-tools';
 import StringTools from '/imports/utils/string-tools';
 import AsyncTools from '/imports/utils/async-tools';

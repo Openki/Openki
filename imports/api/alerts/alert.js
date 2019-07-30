@@ -1,6 +1,6 @@
 import Alerts from './alerts';
 
-export default Alert = {
+const Alert = {
 	/** Add an error alert
       *
       * @param  {Error}   error        - error object
@@ -47,3 +47,5 @@ export default Alert = {
 		this._alert(type, message);
 	};
 });
+
+export default Alert;

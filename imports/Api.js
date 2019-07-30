@@ -15,7 +15,7 @@ const maybeUrl = function (route, context) {
 	return Router.url(route, context);
 };
 
-export default Api = {
+const Api = {
 	groups:
 		apiResponse(Groups, (group) => {
 			group.link = Router.url('groupDetails', group);
@@ -89,3 +89,5 @@ export default Api = {
 			return evr;
 		}),
 };
+
+export default Api;

@@ -2,7 +2,7 @@ import Regions from '/imports/api/regions/regions';
 import UrlTools from '/imports/utils/url-tools';
 import IpLocation from '/imports/utils/ip-location';
 
-export default RegionSelection = {};
+const RegionSelection = {};
 
 /** List of routes that show different results when the region changes.
   */
@@ -74,3 +74,5 @@ RegionSelection.init = function () {
 		});
 	});
 };
+
+export default RegionSelection;

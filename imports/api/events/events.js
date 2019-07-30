@@ -51,7 +51,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 // ===========================
 
 // Event is a built-in, so we use a different name for this class
-OEvent = function () {
+export const OEvent = function () {
 	this.editors = [];
 };
 
@@ -70,7 +70,7 @@ OEvent.prototype.sameTime = function (event) {
 	});
 };
 
-export default Events = new Mongo.Collection('Events', {
+const Events = new Mongo.Collection('Events', {
 	transform(event) {
 		return _.extend(new OEvent(), event);
 	},
@@ -273,3 +273,5 @@ Events.findFilter = function (filter, limit, skip, sort) {
 
 	return Events.find(find, options);
 };
+
+export default Events;
