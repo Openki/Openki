@@ -3,13 +3,16 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import IdTools from '/imports/utils/id-tools';
-import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
-import ScssVars from '/imports/ui/lib/scss-vars';
-import PleaseLogin from '/imports/ui/lib/please-login';
-import Editable from '/imports/ui/lib/editable';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';
+import Groups from '/imports/api/groups/groups';
+
+import Editable from '/imports/ui/lib/editable';
+import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
+import PleaseLogin from '/imports/ui/lib/please-login';
+import ScssVars from '/imports/ui/lib/scss-vars';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+
+import IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
