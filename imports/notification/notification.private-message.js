@@ -1,6 +1,7 @@
 import { Match } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 
+import Courses from '/imports/api/courses/courses';
 import Users from '/imports/api/users/users';
 import Log from '/imports/api/log/log';
 
