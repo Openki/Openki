@@ -141,6 +141,7 @@ const helpers = {
 	},
 };
 
+// eslint-disable-next-line guard-for-in
 for (const name in helpers) {
 	Template.registerHelper(name, helpers[name]);
 }

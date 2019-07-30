@@ -48,7 +48,7 @@ module.exports = {
       'prefer-destructuring': ['error', {'object': false, 'array': false}],
       'consistent-return': [0],
       'func-names': [0],
-      'guard-for-in': [0],
+      // 'guard-for-in': [0],
       'import/no-extraneous-dependencies': [0],
       'import/no-named-as-default': [0],
       'indent': ['error', 'tab'],

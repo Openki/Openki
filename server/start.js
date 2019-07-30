@@ -69,6 +69,7 @@ Meteor.startup(() => {
 	}
 
 	if (Meteor.settings.admins) {
+		// eslint-disable-next-line guard-for-in
 		for (const name in Meteor.settings.admins) {
 			const user = Meteor.users.findOne({ username: Meteor.settings.admins[name] });
 			if (user) {

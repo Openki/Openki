@@ -64,6 +64,7 @@ Template.find.onCreated(function () {
 
 		const lowQuery = query.toLowerCase();
 		const results = {};
+		// eslint-disable-next-line guard-for-in
 		for (const mainCategory in Categories) {
 			if (mf(`category.${mainCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
 				results[mainCategory] = [];
@@ -200,6 +201,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
+			// eslint-disable-next-line guard-for-in
 			for (const i in filters) instance.filter.disable(filters[i]);
 			instance.filter.done();
 			instance.updateUrl();

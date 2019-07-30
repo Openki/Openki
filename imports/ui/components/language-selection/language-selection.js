@@ -50,6 +50,7 @@ Template.languageSelection.helpers({
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
+		// eslint-disable-next-line guard-for-in
 		for (const key in visibleLanguages) {
 			const language = visibleLanguages[key];
 			let pushed = false;
