@@ -55,6 +55,7 @@ function sendIcal(events, response) {
 	response.end();
 }
 
+// eslint-disable-next-line array-callback-return
 Router.map(function () {
 	this.route('cal', {
 		path: 'cal/',

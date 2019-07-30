@@ -83,6 +83,7 @@ if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
+// eslint-disable-next-line array-callback-return
 Router.map(function () {
 	this.route('adminPanel', {
 		path: 'admin',

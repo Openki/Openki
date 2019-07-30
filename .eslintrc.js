@@ -46,7 +46,7 @@ module.exports = {
       //'no-underscore-dangle': ['error', { enforceInMethodNames: true, allow: ['_escape', '_id'] }],
       'object-shorthand': ['error', 'always'],
       'prefer-destructuring': ['error', {'object': false, 'array': false}],
-      'array-callback-return': [0],
+      //'array-callback-return': [0],
       'consistent-return': [0],
       'func-names': [0],
       'global-require': [0],
