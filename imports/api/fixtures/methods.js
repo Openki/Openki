@@ -88,6 +88,7 @@ if (Meteor.settings.testdata) {
 
 		for (const e of events) {
 			const event = Object.assign({}, e);
+			// eslint-disable-next-line no-continue
 			if (Events.findOne({ _id: event._id })) continue; // Don't create events that exist already
 			event.createdBy = ensure.user(event.createdby)._id;
 			event.groups = _.map(event.groups, ensure.group);

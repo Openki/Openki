@@ -57,7 +57,6 @@ module.exports = {
       'no-alert': [0],
       'no-console': [0],
       'no-constant-condition': [0],
-      'no-continue': [0],
       'no-mixed-operators': [0],
       'no-param-reassign': [0],
       'no-prototype-builtins': [0],
