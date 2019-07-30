@@ -1,7 +1,8 @@
-import Log from '/imports/api/log/log';
-import StringTools from '/imports/utils/string-tools';
 import Courses from '/imports/api/courses/courses';
+import Log from '/imports/api/log/log';
+
 import HtmlTools from '/imports/utils/html-tools';
+import StringTools from '/imports/utils/string-tools';
 
 const notificationJoin = {};
 
@@ -19,7 +20,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(message, Match.Optional(String));
 
 	const course = Courses.findOne(courseId);
-	if (!course) throw new Meteor.Error(`No course entry for ${commentId}`);
+	if (!course) throw new Meteor.Error(`No course entry for ${courseId}`);
 
 	const participant = Meteor.users.findOne(participantId);
 	if (!course) throw new Meteor.Error(`No user entry for ${participantId}`);

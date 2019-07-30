@@ -1,7 +1,8 @@
-import Log from '/imports/api/log/log';
-import StringTools from '/imports/utils/string-tools';
-import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import Courses from '/imports/api/courses/courses';
+import Log from '/imports/api/log/log';
+
+import StringTools from '/imports/utils/string-tools';
 
 const notificationComment = {};
 

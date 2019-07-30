@@ -1,11 +1,11 @@
 import { Match } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 
-import Users from '/imports/api/users/users';
 import Log from '/imports/api/log/log';
+import Users from '/imports/api/users/users';
 
-import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
+import StringTools from '/imports/utils/string-tools';
 
 const notificationPrivateMessage = {};
 

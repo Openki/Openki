@@ -1,4 +1,3 @@
-/* global Notification: true */
 import Log from '/imports/api/log/log';
 
 import { Email } from 'meteor/email';
@@ -9,7 +8,7 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-export default Notification = {};
+const Notification = {};
 
 Notification.Event = notificationEvent;
 Notification.Comment = notificationComment;
@@ -150,3 +149,5 @@ Notification.SendResult.record = function (note, unsubToken, sent, recipient, me
 
 	Log.record('Notification.SendResult', rel, entry);
 };
+
+export default Notification;

@@ -2,7 +2,7 @@ const Predicates = {
 	string(param) {
 		return {
 			merge(other) { return other; },
-			without(predicate) { return false; },
+			without() { return false; },
 			get() { return param; },
 			param() { return param; },
 			query() { return param; },
@@ -40,11 +40,11 @@ const Predicates = {
 		if (!param) return false;
 		return {
 			merge(other) { return other; },
-			without(predicate) { return false; },
+			without() { return false; },
 			get() { return true; },
 			param() { return '1'; },
 			query() { return true; },
-			equals(other) { return true; },
+			equals() { return true; },
 		};
 	},
 	flag(param) {
@@ -53,7 +53,7 @@ const Predicates = {
 
 		return {
 			merge(other) { return other; },
-			without(predicate) { return false; },
+			without() { return false; },
 			get() { return state; },
 			param() { return state ? 1 : 0; },
 			query() { return state; },
@@ -73,7 +73,7 @@ const Predicates = {
 
 		return {
 			merge(other) { return other; },
-			without(predicate) { return false; },
+			without() { return false; },
 			get() { return moment(date); },
 			param() { return date.toISOString(); },
 			query() { return date.toDate(); },

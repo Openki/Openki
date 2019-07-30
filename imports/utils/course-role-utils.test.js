@@ -1,5 +1,4 @@
-/* jshint -W024 */
-/* jshint expr:true */
+/* eslint no-unused-expressions: 0 */
 
 import { expect } from 'chai';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
