@@ -63,7 +63,6 @@ module.exports = {
       'no-restricted-syntax': [0],
       'no-shadow': [0],
       'no-underscore-dangle': [0],
-      'prefer-rest-params': [0],
   },
   settings: {
     'import/resolver': 'meteor',
