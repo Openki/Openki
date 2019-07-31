@@ -1,6 +1,3 @@
-/* jshint -W024 */
-/* jshint expr:true */
-
 import { assert } from 'chai';
 import '/imports/utils/sort-spec';
 

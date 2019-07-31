@@ -1,6 +1,3 @@
-/* jshint -W024 */
-/* jshint expr:true */
-
 import { assert } from 'chai';
 import FieldOrdering from '/imports/utils/field-ordering';
 import SortSpec from '/imports/utils/sort-spec';

@@ -1,6 +1,3 @@
-/* jshint -W024 */
-/* jshint expr:true */
-
 import { assert } from 'chai';
 import StringTools from '/imports/utils/string-tools';
 

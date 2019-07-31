@@ -1,6 +1,3 @@
-/* jshint -W024 */
-/* jshint expr:true */
-
 import { expect } from 'chai';
 import IsEmail from './email-tools';
 
