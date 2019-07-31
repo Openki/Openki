@@ -283,6 +283,7 @@ Meteor.methods({
 			const eventId = event._id;
 
 			AsyncTools.untilClean((resolve, reject) => {
+				// eslint-disable-next-line no-shadow
 				const event = Events.findOne(eventId);
 				if (!event) return resolve(true); // Nothing was successfully updated, we're done.
 

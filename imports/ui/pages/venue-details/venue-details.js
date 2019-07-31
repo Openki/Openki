@@ -81,6 +81,7 @@ Template.venueDetails.onCreated(function () {
 	};
 
 	this.unloadedEvents = function (past) {
+		// eslint-disable-next-line no-shadow
 		const instance = Template.instance();
 		let limit; let
 			count;

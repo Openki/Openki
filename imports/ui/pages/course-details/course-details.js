@@ -77,6 +77,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	this.autorun(() => {
 		const data = Template.currentData();
+		// eslint-disable-next-line no-shadow
 		const { course } = data;
 
 		instance.editableName.setText(course.name);

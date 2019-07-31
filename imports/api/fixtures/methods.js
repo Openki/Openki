@@ -202,6 +202,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('eventsGenerate');
 		let count = 0;
 
+		// eslint-disable-next-line no-shadow
 		const venues = [
 			'Haus am See',
 			'Kongresszentrum',

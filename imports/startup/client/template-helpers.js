@@ -203,6 +203,7 @@ const usernameFromId = (function () {
 					lookups = 0;
 				}
 
+				// eslint-disable-next-line no-shadow
 				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
 						// eslint-disable-next-line no-console

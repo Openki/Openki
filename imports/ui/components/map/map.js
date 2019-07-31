@@ -217,6 +217,7 @@ Template.map.onRendered(function () {
 			} else {
 				const marker = L.geoJson(mark.loc, {
 					pointToLayer(feature, latlng) {
+						// eslint-disable-next-line no-shadow
 						let marker;
 						if (mark.proposed) {
 							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -233,6 +234,7 @@ Template.map.onRendered(function () {
 							markers.update(mark._id, { $set: { selected: true } });
 						});
 						marker.on('dragend', (event) => {
+							// eslint-disable-next-line no-shadow
 							const marker = event.target;
 							const latLng = marker.getLatLng();
 							const loc = {

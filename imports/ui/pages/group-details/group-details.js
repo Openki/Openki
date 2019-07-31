@@ -81,6 +81,7 @@ Template.groupDetails.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
+		// eslint-disable-next-line no-shadow
 		const group = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
 		const mayEdit = data.isNew || userId && IsGroupMember(userId, groupId);

@@ -27,6 +27,7 @@ export const elementsReady = test => new Promise((resolve) => {
 		resolve(result);
 	} else {
 		const observer = new MutationObserver(((mutations) => {
+			// eslint-disable-next-line no-shadow
 			const result = test(mutations);
 			if (result !== undefined) {
 				observer.disconnect();

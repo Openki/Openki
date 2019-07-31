@@ -182,6 +182,7 @@ Meteor.methods({
 		}
 
 		if (changes.subs) {
+			// eslint-disable-next-line no-shadow
 			const course = Courses.findOne(courseId);
 			for (const role of changes.subs) {
 				const change = new Subscribe(course, user, role);
@@ -189,6 +190,7 @@ Meteor.methods({
 			}
 		}
 		if (changes.unsubs) {
+			// eslint-disable-next-line no-shadow
 			const course = Courses.findOne(courseId);
 			for (const role of changes.unsubs) {
 				const change = new Unsubscribe(course, user, role);

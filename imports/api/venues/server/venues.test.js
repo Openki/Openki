@@ -18,6 +18,7 @@ if (Meteor.isClient) {
 
 					// Try saving it again with a change
 					venue.name += '!';
+					// eslint-disable-next-line no-shadow
 					Meteor.call('venue.save', venueId, venue, (err) => {
 						done(err);
 					});

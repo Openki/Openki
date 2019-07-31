@@ -70,13 +70,11 @@ module.exports = {
       'func-names': [0],
 	  'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
       'indent': ['error', 'tab'],
-      // 'no-console': [0],
       'no-constant-condition': [0],
       'no-mixed-operators': [0],
       'no-param-reassign': [0],
       'no-prototype-builtins': [0],
       'no-restricted-syntax': [0],
-      'no-shadow': [0],
   },
   settings: {
     'import/resolver': 'meteor',

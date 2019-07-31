@@ -110,6 +110,7 @@ Analytics.installRouterActions = function (router) {
 
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
+			// eslint-disable-next-line no-shadow
 			Analytics.trytrack(tracker => tracker.deleteCustomVariables());
 			started = new Date();
 		}
@@ -120,6 +121,7 @@ Analytics.installRouterActions = function (router) {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {
+			// eslint-disable-next-line no-shadow
 			Analytics.trytrack((tracker) => {
 				if (started) {
 					tracker.setGenerationTimeMs(new Date() - started);

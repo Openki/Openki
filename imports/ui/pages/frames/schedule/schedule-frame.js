@@ -129,6 +129,7 @@ Template.frameSchedule.onCreated(function () {
 		const separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
+		// eslint-disable-next-line no-shadow
 		const intervals = _.reduce(separators, (intervals, separator) => {
 			intervals[separator] = separator;
 			return intervals;
@@ -193,6 +194,7 @@ Template.frameSchedule.onCreated(function () {
 		_.each(slots, (dayslots, min) => {
 			_.each(dayslots, (slot, day) => {
 				slots[min][day] = _.sortBy(slot, (event) => {
+					// eslint-disable-next-line no-shadow
 					const kindRank = (instance.kindMap(event.title) || 100) + 100;
 					const countRank = 10000 - repetitionCount[event.repKey];
 					// We add repetitionCount to the sort criteria so that the
