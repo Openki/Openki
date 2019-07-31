@@ -72,7 +72,6 @@ module.exports = {
       'import/no-extraneous-dependencies': [0],
       'import/no-named-as-default': [0],
       'indent': ['error', 'tab'],
-      'no-alert': [0],
       'no-console': [0],
       'no-constant-condition': [0],
       'no-mixed-operators': [0],

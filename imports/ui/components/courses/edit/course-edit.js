@@ -263,6 +263,7 @@ Template.courseEdit.events({
 		};
 
 		if (changes.name.length === 0) {
+			// eslint-disable-next-line no-alert
 			alert('Please provide a title');
 			return;
 		}
@@ -282,6 +283,7 @@ Template.courseEdit.events({
 				changes.region = instance.$('.region_select').val();
 			}
 			if (!changes.region) {
+				// eslint-disable-next-line no-alert
 				alert('Please select a region');
 				return;
 			}

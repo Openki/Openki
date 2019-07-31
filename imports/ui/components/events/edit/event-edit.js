@@ -275,6 +275,7 @@ Template.eventEdit.events({
 		const start = getEventStartMoment(instance);
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
+			// eslint-disable-next-line no-alert
 			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, 'Date format must be of the form {EXAMPLEDATE}'));
 			return;
 		}
@@ -290,6 +291,7 @@ Template.eventEdit.events({
 		};
 
 		if (editevent.title.length === 0) {
+			// eslint-disable-next-line no-alert
 			alert(mf('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
