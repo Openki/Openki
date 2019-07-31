@@ -42,6 +42,8 @@ module.exports = {
   },
   rules: {
       'import/no-absolute-path': [2, { esmodule: false}],
+      'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
+      'indent': ['error', 'tab'],
       'no-tabs': ['error', { allowIndentationTabs: true }],
       'no-underscore-dangle': [
           'error',
@@ -66,10 +68,9 @@ module.exports = {
       ],
       'object-shorthand': ['error', 'always'],
       'prefer-destructuring': ['error', {'object': false, 'array': false}],
+      //disabled rules
       'consistent-return': [0],
       'func-names': [0],
-	  'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
-      'indent': ['error', 'tab'],
       'no-prototype-builtins': [0],
   },
   settings: {
