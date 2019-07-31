@@ -19,6 +19,7 @@ const ensure = {
 		}
 		const email = (`${name.split(' ').join('')}@openki.example`).toLowerCase();
 
+		// eslint-disable-next-line no-constant-condition
 		while (true) {
 			let user = Meteor.users.findOne({ 'emails.address': email });
 			if (user) return user;
@@ -50,6 +51,7 @@ const ensure = {
 	},
 
 	region(name) {
+		// eslint-disable-next-line no-constant-condition
 		while (true) {
 			const region = Regions.findOne({ name });
 			if (region) return region._id;
@@ -64,6 +66,7 @@ const ensure = {
 	},
 
 	group(short) {
+		// eslint-disable-next-line no-constant-condition
 		while (true) {
 			const group = Groups.findOne({ short });
 			if (group) return group._id;
@@ -84,6 +87,7 @@ const ensure = {
 	venue(name, regionId) {
 		const prng = Prng('ensureVenue');
 
+		// eslint-disable-next-line no-constant-condition
 		while (true) {
 			let venue = Venues.findOne({ name, region: regionId });
 			if (venue) return venue;

@@ -70,7 +70,6 @@ module.exports = {
       'func-names': [0],
 	  'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
       'indent': ['error', 'tab'],
-      'no-constant-condition': [0],
       'no-param-reassign': [0],
       'no-prototype-builtins': [0],
       'no-restricted-syntax': [0],
