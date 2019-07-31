@@ -45,7 +45,9 @@ if (Meteor.isClient) {
 				return { event, eventId };
 			})
 				.then(({ event, eventId }) => {
+					// eslint-disable-next-line no-param-reassign
 					delete event.region;
+					// eslint-disable-next-line no-param-reassign
 					event.title += ' No really';
 					return promiseMeteorCall('event.save', { eventId, changes: event });
 				})

@@ -5,14 +5,20 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameDiscussionFields = function () {
 	const AllPosts = CourseDiscussions.find({});
 	AllPosts.fetch().forEach((post) => {
+		// eslint-disable-next-line no-param-reassign
 		post.courseId = post.course_ID;
+		// eslint-disable-next-line no-param-reassign
 		delete post.course_ID;
 
+		// eslint-disable-next-line no-param-reassign
 		post.userId = post.user_ID;
+		// eslint-disable-next-line no-param-reassign
 		delete post.user_ID;
 
 		if (post.parent_ID) {
+			// eslint-disable-next-line no-param-reassign
 			post.parentId = post.parent_ID;
+			// eslint-disable-next-line no-param-reassign
 			delete post.parent_ID;
 		}
 

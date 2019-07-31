@@ -5,6 +5,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameLocationName = function () {
 	Events.find({}).fetch().forEach((event) => {
 		if (typeof event.location === 'string') {
+			// eslint-disable-next-line no-param-reassign
 			event.location = { name: event.location };
 
 			Events.update(event._id, event);

@@ -9,11 +9,15 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameEventFields = function () {
 	Events.find({}).fetch().forEach((event) => {
 		if (event.startdate) {
+			// eslint-disable-next-line no-param-reassign
 			event.start = event.startdate;
+			// eslint-disable-next-line no-param-reassign
 			delete event.startdate;
 		}
 		if (event.enddate) {
+			// eslint-disable-next-line no-param-reassign
 			event.end = event.enddate;
+			// eslint-disable-next-line no-param-reassign
 			delete event.enddate;
 		}
 

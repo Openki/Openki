@@ -174,6 +174,7 @@ Meteor.methods({
 			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
+			// eslint-disable-next-line no-param-reassign
 			courseId = Courses.insert(set);
 
 			Meteor.call('course.updateNextEvent', courseId);

@@ -138,6 +138,7 @@ Template.additionalFilters.onCreated(function () {
 		},
 	].map((role) => {
 		// add icon from Roles collection to role object
+		// eslint-disable-next-line no-param-reassign
 		role.icon = _.findWhere(Roles, { type: role.name }).icon;
 
 		return role;

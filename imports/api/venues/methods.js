@@ -67,6 +67,7 @@ Meteor.methods({
 		if (changes.facilities !== undefined) {
 			set.facilities = _.reduce(changes.facilities, (fs, f) => {
 				if (Venues.facilityOptions.indexOf(f) >= 0) {
+					// eslint-disable-next-line no-param-reassign
 					fs[f] = true;
 				}
 				return fs;
@@ -88,6 +89,7 @@ Meteor.methods({
 
 			set.region = region._id;
 
+			// eslint-disable-next-line no-param-reassign
 			venueId = Venues.insert({
 				editor: user._id,
 				createdby: user._id,

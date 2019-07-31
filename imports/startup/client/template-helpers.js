@@ -47,6 +47,7 @@ const helpers = {
 	dateLong(date) {
 		if (date) {
 			Session.get('timeLocale');
+			// eslint-disable-next-line no-param-reassign
 			date = moment(moment(date).toDate());
 			return moment(date).format('LL');
 		}
@@ -55,6 +56,7 @@ const helpers = {
 	dateShort(date) {
 		if (date) {
 			Session.get('timeLocale');
+			// eslint-disable-next-line no-param-reassign
 			date = moment(moment(date).toDate());
 			return moment(date).format('l');
 		}

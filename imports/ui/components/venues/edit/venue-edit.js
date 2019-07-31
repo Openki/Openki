@@ -61,8 +61,11 @@ Template.venueEdit.onCreated(function () {
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
+				// eslint-disable-next-line no-param-reassign
 				mark.main = true;
+				// eslint-disable-next-line no-param-reassign
 				mark.draggable = true;
+				// eslint-disable-next-line no-param-reassign
 				delete mark.proposed;
 				instance.locationTracker.markers.insert(mark);
 			}

@@ -27,8 +27,11 @@ Template.accountTasks.helpers({
 
 Template.accountTasks.events({
 	'show.bs.modal #accountTasks'(event, instance) {
+		// eslint-disable-next-line no-param-reassign
 		instance.transferUsername = false;
+		// eslint-disable-next-line no-param-reassign
 		instance.transferPassword = false;
+		// eslint-disable-next-line no-param-reassign
 		instance.transferMail = false;
 	},
 
@@ -116,6 +119,7 @@ Template.loginFrame.events({
 
 		const username = instance.$('.js-username').val();
 		if (IsEmail(username)) {
+			// eslint-disable-next-line no-param-reassign
 			instance.parentInstance().transferMail = username;
 		}
 

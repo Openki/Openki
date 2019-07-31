@@ -63,14 +63,14 @@ Meteor.methods({
 			if (!changes.logoUrl.startsWith('https://')) {
 				throw new Meteor.Error('not https');
 			}
-			changes.logoUrl = changes.logoUrl.substring(0, 1000);
-			updates.logoUrl = changes.logoUrl;
+			updates.logoUrl = changes.logoUrl.substring(0, 1000);
 		}
 
 		// Don't update nothing
 		if (Object.getOwnPropertyNames(updates).length === 0) return;
 
 		if (isNew) {
+			// eslint-disable-next-line no-param-reassign
 			groupId = Groups.insert(_.extend(group, updates));
 			Meteor.call('user.updateBadges', userId);
 		} else {

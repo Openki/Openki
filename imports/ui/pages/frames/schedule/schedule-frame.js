@@ -37,6 +37,7 @@ Template.frameSchedule.onCreated(function () {
 			}
 
 			if (rawSep.length < 3) {
+				// eslint-disable-next-line no-param-reassign
 				rawSep += '00';
 			}
 
@@ -118,7 +119,9 @@ Template.frameSchedule.onCreated(function () {
 			} else {
 				repetitionCountDay[repKeyDay] = 1;
 
+				// eslint-disable-next-line no-param-reassign
 				event.repKey = repKey;
+				// eslint-disable-next-line no-param-reassign
 				event.repKeyDay = repKeyDay;
 				dedupedEvents.push(event);
 			}
@@ -131,6 +134,7 @@ Template.frameSchedule.onCreated(function () {
 		// List of intervals where events or separators are placed
 		// eslint-disable-next-line no-shadow
 		const intervals = _.reduce(separators, (intervals, separator) => {
+			// eslint-disable-next-line no-param-reassign
 			intervals[separator] = separator;
 			return intervals;
 		}, {});
@@ -149,6 +153,7 @@ Template.frameSchedule.onCreated(function () {
 		_.each(dedupedEvents, (event) => {
 			const eventStart = LocalTime.fromString(event.startLocal);
 
+			// eslint-disable-next-line no-param-reassign
 			event.repCount = repetitionCountDay[event.repKeyDay];
 			if (event.repCount < 2 && instance.repeatingOnly.get()) {
 				// Skip

@@ -18,11 +18,13 @@ const maybeUrl = function (route, context) {
 const Api = {
 	groups:
 		apiResponse(Groups, (group) => {
+			// eslint-disable-next-line no-param-reassign
 			group.link = Router.url('groupDetails', group);
 			return group;
 		}),
 	venues:
 		apiResponse(Venues, (venue) => {
+			// eslint-disable-next-line no-param-reassign
 			venue.link = Router.url('venueDetails', venue);
 			return venue;
 		}),

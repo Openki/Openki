@@ -541,7 +541,9 @@ Router.map(function () {
 			};
 
 			events.forEach((event) => {
+				// eslint-disable-next-line no-param-reassign
 				event.relStart = (event.start.getTime() - startAbs) / span;
+				// eslint-disable-next-line no-param-reassign
 				event.relEnd = (endAbs - event.end.getTime()) / span;
 				let placed = false;
 
@@ -588,6 +590,7 @@ Router.map(function () {
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (ps, p) => {
+				// eslint-disable-next-line no-param-reassign
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});

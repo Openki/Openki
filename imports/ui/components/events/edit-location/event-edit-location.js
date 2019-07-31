@@ -108,9 +108,13 @@ Template.eventEditVenue.onCreated(function () {
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(location) {
+				// eslint-disable-next-line no-param-reassign
 				location.proposed = true;
+				// eslint-disable-next-line no-param-reassign
 				location.presetName = location.name;
+				// eslint-disable-next-line no-param-reassign
 				location.presetAddress = location.address;
+				// eslint-disable-next-line no-param-reassign
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
 			},
