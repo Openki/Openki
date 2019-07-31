@@ -1,4 +1,4 @@
-import { Course, Courses } from './courses';
+import Courses, { Course } from './courses';
 
 import Alert from '/imports/api/alerts/alert';
 import { User } from '/imports/api/users/users';

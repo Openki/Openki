@@ -96,13 +96,11 @@ export class Course {
 }
 
 
-export const Courses = new Mongo.Collection('Courses', {
+const Courses = new Mongo.Collection('Courses', {
 	transform(course) {
 		return _.extend(new Course(), course);
 	},
 });
-
-export default Courses;
 
 Courses.Filtering = () => Filtering(
 	{
@@ -239,3 +237,5 @@ Courses.findFilter = function (filter, limit, sortParams) {
 	const options = { limit, sort: order };
 	return Courses.find(find, options);
 };
+
+export default Courses;
