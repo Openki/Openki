@@ -17,12 +17,15 @@ const updateEmail = function (email, user) {
 	// to enter a email when they change other profile settings.
 	if (newEmail === oldEmail) return;
 
+	// eslint-disable-next-line consistent-return
 	if (!newEmail) return ApiError('noEmail', 'Please enter a email.');
 
+	// eslint-disable-next-line consistent-return
 	if (!IsEmail(newEmail)) return ApiError('emailNotValid', 'email invalid');
 
 	// Don't allow using an address somebody else uses
 	const existingUser = Accounts.findUserByEmail(newEmail);
+	// eslint-disable-next-line consistent-return
 	if (existingUser) return ApiError('emailExists', 'Email already exists.');
 
 	Profile.Email.change(user._id, newEmail, 'profile change');
@@ -35,6 +38,7 @@ Meteor.methods({
 		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
 
+	// eslint-disable-next-line consistent-return
 	'user.updateData'(username, email, notifications) {
 		check(username, String);
 		check(email, String);
@@ -62,6 +66,7 @@ Meteor.methods({
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	'user.updateEmail'(email) {
 		check(email, String);
 		const user = Meteor.user();
@@ -108,6 +113,7 @@ Meteor.methods({
 		Meteor.users.find(selector).forEach((user) => {
 			const userId = user._id;
 
+			// eslint-disable-next-line consistent-return
 			AsyncTools.untilClean((resolve, reject) => {
 				// eslint-disable-next-line no-shadow
 				const user = Meteor.users.findOne(userId);

@@ -3,7 +3,7 @@
   * @param {Number} [levels] How many levels to go up. Default is 1
   * @returns {Blaze.TemplateInstance}
   */
-// eslint-disable-next-line func-names
+// eslint-disable-next-line consistent-return, func-names
 Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
 	let { view } = this;
 	if (typeof levels === 'undefined') {

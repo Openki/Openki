@@ -21,6 +21,7 @@ if (Meteor.isClient) {
 					user: { username: 'greg' },
 					password: gregsDigestedPassword,
 				},
+				// eslint-disable-next-line consistent-return
 				(err, response) => {
 					if (err) return done(err);
 					expect(response.token).to.be.a('string');

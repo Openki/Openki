@@ -256,6 +256,7 @@ Meteor.methods({
 			if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
 		}
 
+		// eslint-disable-next-line consistent-return
 		return eventId;
 	},
 
@@ -282,6 +283,7 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach((event) => {
 			const eventId = event._id;
 
+			// eslint-disable-next-line consistent-return
 			AsyncTools.untilClean((resolve, reject) => {
 				// eslint-disable-next-line no-shadow
 				const event = Events.findOne(eventId);

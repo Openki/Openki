@@ -47,10 +47,12 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
+	// eslint-disable-next-line consistent-return
 	notificationsChecked() {
 		if (this.user.notifications) return 'checked';
 	},
 
+	// eslint-disable-next-line consistent-return
 	privacyChecked() {
 		if (this.user.privacy) return 'checked';
 	},

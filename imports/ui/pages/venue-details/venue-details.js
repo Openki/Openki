@@ -81,6 +81,7 @@ Template.venueDetails.onCreated(function () {
 		count.set(events.length);
 		if (limit) events = events.slice(0, limit);
 
+		// eslint-disable-next-line consistent-return
 		return events;
 	};
 
@@ -138,6 +139,7 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
+	// eslint-disable-next-line consistent-return
 	coords() {
 		if (this.loc && this.loc.coordinates) {
 			const fmt = function (coord) {

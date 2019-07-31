@@ -75,6 +75,7 @@ Template.languageSelection.helpers({
 	},
 
 	translated() {
+		// eslint-disable-next-line consistent-return
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {

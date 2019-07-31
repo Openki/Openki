@@ -131,6 +131,7 @@ Template.courseEdit.helpers({
 		return '';
 	},
 
+	// eslint-disable-next-line consistent-return
 	checkCategory() {
 		const selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length) {
@@ -188,6 +189,7 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 
+	// eslint-disable-next-line consistent-return
 	newCourseGroupName() {
 		if (this.group) {
 			const groupId = this.group;
@@ -207,12 +209,14 @@ Template.courseEdit.helpers({
 		return false;
 	},
 
+	// eslint-disable-next-line consistent-return
 	showSavedMessage() {
 		if (this.isFrame) {
 			return Template.instance().showSavedMessage.get();
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	savedCourseLink() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();
@@ -220,6 +224,7 @@ Template.courseEdit.helpers({
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	savedCourseName() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();

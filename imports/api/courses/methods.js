@@ -201,6 +201,7 @@ Meteor.methods({
 			}
 		}
 
+		// eslint-disable-next-line consistent-return
 		return courseId;
 	},
 

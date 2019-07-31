@@ -101,6 +101,7 @@ Events.Filtering = () => Filtering(
   */
 // eslint-disable-next-line func-names
 Events.updateGroups = function (eventId) {
+	// eslint-disable-next-line consistent-return
 	AsyncTools.untilClean((resolve, reject) => {
 		const event = Events.findOne(eventId);
 		if (!event) return resolve(true); // Nothing was successfully updated, we're done.

@@ -11,6 +11,7 @@ if (Meteor.isClient) {
 					region: '9JyFCoKWkxnf8LWPh', // Testistan
 				};
 
+				// eslint-disable-next-line consistent-return
 				Meteor.call('venue.save', '', venue, (err, createdId) => {
 					if (err) return done(err);
 					const venueId = createdId;
@@ -32,6 +33,7 @@ if (Meteor.isClient) {
 			if (Meteor.userId()) {
 				testCreate();
 			} else {
+				// eslint-disable-next-line consistent-return
 				Meteor.loginWithPassword('FeeLing', 'greg', (err) => {
 					if (err) return done(err);
 					testCreate();

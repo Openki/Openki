@@ -35,12 +35,14 @@ RegionSelection.init = function () {
 			// Special case 'all'
 			if (regionId === 'all') {
 				Session.set('region', regionId);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
 				Session.set('region', regionId);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
@@ -48,10 +50,12 @@ RegionSelection.init = function () {
 			const region = Regions.findOne({ name: regionId });
 			if (region) {
 				Session.set('region', region._id);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Ignore invalid region ID
+			// eslint-disable-next-line consistent-return
 			return false;
 		};
 

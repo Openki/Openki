@@ -77,6 +77,7 @@ Template.event.onCreated(function () {
 });
 
 Template.event.helpers({
+	// eslint-disable-next-line consistent-return
 	course() {
 		if (this.courseId) return Courses.findOne(this.courseId);
 	},
@@ -91,6 +92,7 @@ Template.event.helpers({
 });
 
 Template.eventDisplay.helpers({
+	// eslint-disable-next-line consistent-return
 	weekday(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) return moment(date).format('dddd');
@@ -178,6 +180,7 @@ Template.eventDisplay.onRendered(function () {
 });
 
 Template.eventDisplay.helpers({
+	// eslint-disable-next-line consistent-return
 	weekday(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) return moment(date).format('dddd');

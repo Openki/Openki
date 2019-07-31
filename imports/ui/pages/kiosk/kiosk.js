@@ -31,6 +31,7 @@ Template.kioskEvent.helpers({
 		return Template.instance().parentInstance().data.timePeriod;
 	},
 
+	// eslint-disable-next-line consistent-return
 	timeFromNow(date) {
 		Session.get('fineTime');
 		Session.get('timeLocale'); // it depends

@@ -27,6 +27,7 @@ Template.introduction.helpers({
 		return Introduction.openedIntro();
 	},
 
+	// eslint-disable-next-line consistent-return
 	isInCalendar() {
 		const currentRoute = Router.current().route;
 		if (currentRoute) return currentRoute.getName() === 'calendar';

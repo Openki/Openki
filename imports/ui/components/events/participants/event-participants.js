@@ -45,6 +45,7 @@ Template.eventParticipants.events({
 });
 
 Template.eventParticipant.helpers({
+	// eslint-disable-next-line consistent-return
 	ownUserParticipantClass() {
 		if (this.participant === Meteor.userId()) return 'is-own-user';
 	},

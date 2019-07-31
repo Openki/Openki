@@ -51,9 +51,11 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
+	// eslint-disable-next-line consistent-return
 	dateFormat(date) {
 		if (date) return moment(date).format('l');
 	},
+	// eslint-disable-next-line consistent-return
 	dateToRelativeString(date) {
 		if (date) {
 			const relative = moment().to(date);

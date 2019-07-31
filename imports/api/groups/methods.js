@@ -77,6 +77,7 @@ Meteor.methods({
 			Groups.update(group._id, { $set: updates });
 		}
 
+		// eslint-disable-next-line consistent-return
 		return groupId;
 	},
 

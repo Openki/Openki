@@ -117,6 +117,7 @@ Courses.Filtering = () => Filtering(
 // Update list of editors
 // eslint-disable-next-line func-names
 Courses.updateGroups = function (courseId) {
+	// eslint-disable-next-line consistent-return
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
 		// If the course doesn't exist it doesn't need updating

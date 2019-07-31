@@ -391,6 +391,7 @@ Router.map(function () {
 			function getMember(members, user) {
 				if (!members) return false;
 				let member = false;
+				// eslint-disable-next-line consistent-return
 				members.forEach((memberCandidate) => {
 					if (memberCandidate.user === user) {
 						member = memberCandidate;
@@ -598,6 +599,7 @@ Router.map(function () {
 			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			const showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
+			// eslint-disable-next-line consistent-return
 			return {
 				user,
 				alterPrivileges,

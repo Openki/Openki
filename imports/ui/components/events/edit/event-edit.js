@@ -199,6 +199,7 @@ Template.eventEdit.helpers({
 		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
+	// eslint-disable-next-line consistent-return
 	disabledIfDayChanged() {
 		if (Template.instance().state.get('startDayChanged')) return 'disabled';
 	},
@@ -258,6 +259,7 @@ Template.eventEdit.helpers({
 		return Template.instance().uploaded.get();
 	},
 
+	// eslint-disable-next-line consistent-return
 	course() {
 		const { courseId } = this;
 		if (courseId) {

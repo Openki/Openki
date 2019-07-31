@@ -12,13 +12,17 @@ const GroupNameHelpers = {
 	short() {
 		if (!this) return;
 		const group = subbedGroup(this);
+		// eslint-disable-next-line consistent-return
 		if (!group) return '-';
+		// eslint-disable-next-line consistent-return
 		return group.short;
 	},
 	name() {
 		if (!this) return;
 		const group = subbedGroup(this);
+		// eslint-disable-next-line consistent-return
 		if (!group) return mf('group.missing', 'Group does not exist');
+		// eslint-disable-next-line consistent-return
 		return group.name;
 	},
 };

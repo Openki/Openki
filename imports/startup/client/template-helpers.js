@@ -39,11 +39,13 @@ const helpers = {
 		if (window.console) console.log(arguments.length > 0 ? context : this);
 	},
 
+	// eslint-disable-next-line consistent-return
 	dateformat(date) {
 		Session.get('timeLocale');
 		if (date) return moment(date).format('L');
 	},
 
+	// eslint-disable-next-line consistent-return
 	dateLong(date) {
 		if (date) {
 			Session.get('timeLocale');
@@ -53,6 +55,7 @@ const helpers = {
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	dateShort(date) {
 		if (date) {
 			Session.get('timeLocale');
@@ -62,6 +65,7 @@ const helpers = {
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	dateformat_mini_fullmonth(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) {
@@ -71,17 +75,20 @@ const helpers = {
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	timeformat(date) {
 		Session.get('timeLocale');
 		if (date) return moment(date).format('LT');
 	},
 
+	// eslint-disable-next-line consistent-return
 	fromNow(date) {
 		Session.get('fineTime');
 		Session.get('timeLocale'); // it depends
 		if (date) return moment(date).fromNow();
 	},
 
+	// eslint-disable-next-line consistent-return
 	weekdayShort(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) return moment(date).format('ddd');

@@ -66,6 +66,7 @@ Template.deleteEventsModal.helpers({
 		return Template.instance().state.get('selectedEvents').length;
 	},
 
+	// eslint-disable-next-line consistent-return
 	disabledIfNoEventsSelected() {
 		if (Template.instance().state.get('selectedEvents').length === 0) {
 			return 'disabled';

@@ -74,6 +74,7 @@ Template.discussion.helpers({
 		};
 	},
 
+	// eslint-disable-next-line consistent-return
 	limited() {
 		const instance = Template.instance();
 		const limit = instance.limit.get();
@@ -124,6 +125,7 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
+		// eslint-disable-next-line consistent-return
 		return limit ? replies.slice(-(limit)) : replies;
 	},
 
@@ -139,6 +141,7 @@ Template.post.helpers({
 			)
 			.count();
 
+		// eslint-disable-next-line consistent-return
 		return limit && count > limit;
 	},
 

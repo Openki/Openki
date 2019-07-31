@@ -118,6 +118,7 @@ Template.courseMember.onCreated(function () {
 
 
 Template.courseMember.helpers({
+	// eslint-disable-next-line consistent-return
 	ownUserMemberClass() {
 		if (this.member.user === Meteor.userId()) return 'is-own-user';
 	},
@@ -133,6 +134,7 @@ Template.courseMember.helpers({
 		return change && change.validFor(Meteor.user());
 	},
 
+	// eslint-disable-next-line consistent-return
 	rolelistIcon(roletype) {
 		if (roletype !== 'participant') {
 			return Roles.find(role => role.type === roletype).icon;

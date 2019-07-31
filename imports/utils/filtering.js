@@ -27,6 +27,7 @@ const Filtering = function (availablePredicates) {
 				predicates[name] = toAdd;
 			}
 			if (!predicates[name]) delete predicates[name];
+			// eslint-disable-next-line consistent-return
 			return self;
 		} catch (e) {
 			if (e instanceof FilteringReadError) {

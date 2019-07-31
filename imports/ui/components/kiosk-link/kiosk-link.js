@@ -19,6 +19,7 @@ Template.kioskLink.helpers({
 			options.query = queryString;
 		}
 
+		// eslint-disable-next-line consistent-return
 		return Router.url('kioskEvents', {}, options);
 	},
 });

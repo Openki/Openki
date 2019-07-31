@@ -69,8 +69,6 @@ module.exports = {
       ],
       'object-shorthand': ['error', 'always'],
       'prefer-destructuring': ['error', {'object': false, 'array': false}],
-      //disabled rules
-      'consistent-return': [0],
   },
   settings: {
     'import/resolver': 'meteor',

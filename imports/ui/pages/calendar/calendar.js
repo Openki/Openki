@@ -131,6 +131,7 @@ Template.calendarDay.helpers({
 
 
 Template.calendarNav.helpers({
+	// eslint-disable-next-line consistent-return
 	weekNr(date) {
 		if (date) {
 			Session.get('timeLocale');

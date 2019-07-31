@@ -128,6 +128,7 @@ const TemplateMixins = {
 	 */
 	FormfieldErrors(template, mapping) {
 		template.helpers({
+			// eslint-disable-next-line consistent-return
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {
 					return 'has-error';
@@ -138,6 +139,7 @@ const TemplateMixins = {
 				if (!message) return;
 
 				const text = mapping[message.key].text();
+				// eslint-disable-next-line consistent-return
 				return Spacebars.SafeString(
 					`<span class="help-block warning-block">${
 						Blaze._escape(text)
