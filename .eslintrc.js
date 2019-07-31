@@ -71,7 +71,6 @@ module.exports = {
 	  'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
       'indent': ['error', 'tab'],
       'no-prototype-builtins': [0],
-      'no-restricted-syntax': [0],
   },
   settings: {
     'import/resolver': 'meteor',

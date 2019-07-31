@@ -74,6 +74,7 @@ const Api = {
 
 			evr.groups = [];
 			const groups = ev.groups || [];
+			// eslint-disable-next-line no-restricted-syntax
 			for (const groupId of groups) {
 				const group = Groups.findOne(groupId);
 				if (group) {

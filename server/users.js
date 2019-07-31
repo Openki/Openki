@@ -38,7 +38,7 @@ Accounts.onCreateUser((options, user) => {
 	let verified = true; // Assume verified unless there is a flag that says it's not
 	const services = user.services;
 	if (services) {
-		// eslint-disable-next-line no-shadow
+		// eslint-disable-next-line no-shadow, no-restricted-syntax
 		for (const provider of ['facebook', 'google', 'github']) {
 			const provided = services[provider];
 			if (provided && provided.email) {

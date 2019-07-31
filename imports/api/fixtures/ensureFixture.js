@@ -7,6 +7,7 @@ import Venues from '/imports/api/venues/venues';
 const ensure = {
 	fixedId(strings) {
 		const md5 = crypto.createHash('md5');
+		// eslint-disable-next-line no-restricted-syntax
 		for (const str of strings) md5.update(str);
 		return md5.digest('hex').substring(0, 10);
 	},

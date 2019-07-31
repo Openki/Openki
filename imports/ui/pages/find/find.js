@@ -64,7 +64,7 @@ Template.find.onCreated(function () {
 
 		const lowQuery = query.toLowerCase();
 		const results = {};
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const mainCategory in Categories) {
 			if (mf(`category.${mainCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
 				results[mainCategory] = [];
@@ -113,6 +113,7 @@ Template.find.onCreated(function () {
 
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
+		// eslint-disable-next-line no-restricted-syntax
 		for (const name in filter.toParams()) {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
@@ -201,7 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			// eslint-disable-next-line guard-for-in
+			// eslint-disable-next-line guard-for-in, no-restricted-syntax
 			for (const i in filters) instance.filter.disable(filters[i]);
 			instance.filter.done();
 			instance.updateUrl();

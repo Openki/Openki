@@ -548,11 +548,11 @@ Router.map(function () {
 				let placed = false;
 
 				const venueRows = useVenue(event.venue);
-				// eslint-disable-next-line guard-for-in
+				// eslint-disable-next-line guard-for-in, no-restricted-syntax
 				for (const rowNr in venueRows) {
 					const row = venueRows[rowNr];
 					let last;
-					// eslint-disable-next-line guard-for-in
+					// eslint-disable-next-line guard-for-in, no-restricted-syntax
 					for (const eventNr in row) {
 						const placedEvent = row[eventNr];
 						if (!last || placedEvent.end > last) last = placedEvent.end;

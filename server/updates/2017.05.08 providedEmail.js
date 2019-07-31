@@ -8,6 +8,7 @@ UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 		let verified = true; // Assume verified unless there is a flag that says it's not
 		const services = user.services;
 		if (services) {
+			// eslint-disable-next-line no-restricted-syntax
 			for (const provider of ['facebook', 'google', 'github']) {
 				const provided = services[provider];
 				if (provided && provided.email) {

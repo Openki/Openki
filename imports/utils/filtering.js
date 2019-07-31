@@ -34,7 +34,7 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.read = function (list) {
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in list) {
 			try {
 				self.add(name, list[name]);
@@ -50,7 +50,7 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.readAndValidate = function (list) {
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in list) {
 			self.add(name, list[name]);
 		}
@@ -93,7 +93,7 @@ const Filtering = function (availablePredicates) {
 
 		if (same) {
 			// Look closer
-			// eslint-disable-next-line guard-for-in
+			// eslint-disable-next-line guard-for-in, no-restricted-syntax
 			for (const name in predicates) {
 				same = predicates[name].equals(settled[name]);
 				if (!same) break;
@@ -106,7 +106,7 @@ const Filtering = function (availablePredicates) {
 	self.toParams = function () {
 		if (Tracker.active) dep.depend();
 		const params = {};
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in settledPredicates) {
 			params[name] = settledPredicates[name].param();
 		}
@@ -116,7 +116,7 @@ const Filtering = function (availablePredicates) {
 	self.toQuery = function () {
 		if (Tracker.active) dep.depend();
 		const query = {};
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in settledPredicates) {
 			query[name] = settledPredicates[name].query();
 		}

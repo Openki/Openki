@@ -185,6 +185,7 @@ Meteor.methods({
 		if (changes.subs) {
 			// eslint-disable-next-line no-shadow
 			const course = Courses.findOne(courseId);
+			// eslint-disable-next-line no-restricted-syntax
 			for (const role of changes.subs) {
 				const change = new Subscribe(course, user, role);
 				if (change.validFor(user)) processChange(change);
@@ -193,6 +194,7 @@ Meteor.methods({
 		if (changes.unsubs) {
 			// eslint-disable-next-line no-shadow
 			const course = Courses.findOne(courseId);
+			// eslint-disable-next-line no-restricted-syntax
 			for (const role of changes.unsubs) {
 				const change = new Unsubscribe(course, user, role);
 				if (change.validFor(user)) processChange(change);

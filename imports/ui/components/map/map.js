@@ -179,7 +179,7 @@ Template.map.onRendered(function () {
 	const fitBounds = _.debounce(() => {
 		const bounds = L.latLngBounds([]);
 		let count = 0;
-		// eslint-disable-next-line guard-for-in
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const layerPos in layers) {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
@@ -189,7 +189,7 @@ Template.map.onRendered(function () {
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			// eslint-disable-next-line guard-for-in
+			// eslint-disable-next-line guard-for-in, no-restricted-syntax
 			for (const centerPos in centers) {
 				bounds.extend(centers[centerPos]);
 				count += 1;

@@ -61,6 +61,7 @@ Meteor.startup(() => {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
+	// eslint-disable-next-line no-restricted-syntax
 	for (const i in navigator.languages || []) {
 		if (useLocale(navigator.languages[i])) return;
 	}
