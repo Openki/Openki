@@ -176,6 +176,7 @@ Template.emailBox.events({
 		const receiveCopy = template.$('#receiveCopy').is(':checked');
 
 		if (message.length < '2') {
+			// eslint-disable-next-line no-alert
 			alert(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}

@@ -157,6 +157,7 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 			return;
 		}
@@ -165,6 +166,7 @@ Template.venueEdit.events({
 		if (newDescription) changes.description = newDescription;
 
 		if (changes.description.trim().length === 0) {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
 			return;
 		}
@@ -178,6 +180,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
+				// eslint-disable-next-line no-alert
 				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
@@ -187,6 +190,7 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
 		}

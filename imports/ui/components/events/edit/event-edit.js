@@ -300,6 +300,7 @@ Template.eventEdit.events({
 		if (newDescription) editevent.description = newDescription;
 
 		if (!editevent.description) {
+			// eslint-disable-next-line no-alert
 			alert(mf('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
@@ -314,6 +315,7 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
+					// eslint-disable-next-line no-alert
 					alert(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
 					return;
 				}

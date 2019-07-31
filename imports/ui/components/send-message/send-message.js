@@ -68,6 +68,7 @@ Template.sendMessage.events({
 		const message = instance.$('.js-email-message').val();
 
 		if (message.length < 2) {
+			// eslint-disable-next-line no-alert
 			alert(mf('profile.mail.longertext', 'longer text please'));
 			instance.busy(false);
 			return;
