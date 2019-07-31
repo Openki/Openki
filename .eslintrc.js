@@ -42,9 +42,9 @@ module.exports = {
 	},
 	rules: {
 		'func-names': ['error', 'as-needed'],
-		'import/no-absolute-path': ['error', { esmodule: false}],
-		'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
-		'indent': ['error', 'tab'],
+		'import/no-absolute-path': ['error', { esmodule: false }],
+		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+		indent: ['error', 'tab'],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		'no-underscore-dangle': [
 			'error',
@@ -64,11 +64,11 @@ module.exports = {
 					'_weekdays',
 					'_weekdaysMin',
 					'_weekdaysShort',
-				]
+				],
 			},
-	],
-	'object-shorthand': ['error', 'always'],
-	'prefer-destructuring': ['error', {'object': false, 'array': false}],
+		],
+		'object-shorthand': ['error', 'always'],
+		'prefer-destructuring': ['error', { object: false, array: false }],
 	},
 	settings: {
 		'import/resolver': 'meteor',
