@@ -281,7 +281,7 @@ if (Meteor.settings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user(randomMember && randomMember.user || 'Serverscript')._id;
+				event.createdby = ensure.user((randomMember && randomMember.user) || 'Serverscript')._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);

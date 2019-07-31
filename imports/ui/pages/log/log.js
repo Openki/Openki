@@ -70,7 +70,7 @@ Template.showLog.helpers({
 
 	date() {
 		const start = Template.instance().filter.get('start');
-		return start && start.toISOString() || '';
+		return (start && start.toISOString()) || '';
 	},
 
 	relFilter() {
@@ -199,7 +199,7 @@ Template.showLogEntry.helpers(
 	{
 		date() {
 			const { date } = Template.instance().filter.toParams();
-			return date && date.toISOString() || '';
+			return (date && date.toISOString()) || '';
 		},
 		shortId(id) {
 			return id.substr(0, 8);

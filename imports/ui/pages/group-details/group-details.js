@@ -84,7 +84,7 @@ Template.groupDetails.onCreated(function () {
 		// eslint-disable-next-line no-shadow
 		const group = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
-		const mayEdit = data.isNew || userId && IsGroupMember(userId, groupId);
+		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(group.name);

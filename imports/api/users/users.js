@@ -89,9 +89,9 @@ User.prototype.mayPromoteWith = function (group) {
   * @returns String with email address or Boolean false
   */
 User.prototype.emailAddress = function () {
-	return this.emails
+	return (this.emails
 		&& this.emails[0]
-		&& this.emails[0].address
+		&& this.emails[0].address)
 		|| false;
 };
 
@@ -101,9 +101,9 @@ User.prototype.emailAddress = function () {
   */
 User.prototype.verifiedEmailAddress = function () {
 	const emailRecord = this.emails && this.emails[0];
-	return emailRecord
+	return (emailRecord
 		&& emailRecord.verified
-		&& emailRecord.address
+		&& emailRecord.address)
 		|| false;
 };
 

@@ -94,8 +94,8 @@ const ensure = {
 			};
 
 			const region = Regions.findOne(regionId);
-			const lat = region.loc.coordinates[1] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
-			const lon = region.loc.coordinates[0] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
+			const lat = region.loc.coordinates[1] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
+			const lon = region.loc.coordinates[0] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
 			venue.loc = { type: 'Point', coordinates: [lon, lat] };
 
 			venue._id = ensure.fixedId([venue.name, venue.region]);

@@ -153,7 +153,7 @@ Template.courseGroupList.helpers({
 		const user = Meteor.user();
 		const groupId = String(this);
 		const course = Template.parentData();
-		if (user && user.mayPromoteWith(groupId) || course.editableBy(user)) {
+		if ((user && user.mayPromoteWith(groupId)) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
 				groupId,

@@ -234,7 +234,7 @@ Template.frameSchedule.helpers({
 			return {
 				intervalStart,
 				intervalLabel: intervalStart.format('LT'),
-				slots: _.map(instance.days.get(), day => slots[mins] && slots[mins][day] || []),
+				slots: _.map(instance.days.get(), day => (slots[mins] && slots[mins][day]) || []),
 			};
 		});
 	},

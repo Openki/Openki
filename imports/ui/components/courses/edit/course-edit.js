@@ -32,7 +32,7 @@ Template.courseEdit.onCreated(function () {
 	// Show category selection right away for new courses
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
-	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
 
 	instance.editableDescription = new Editable(
 		false,
