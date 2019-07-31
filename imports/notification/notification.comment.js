@@ -10,6 +10,7 @@ const notificationComment = {};
   *
   * @param      {ID} commentID - ID for the CourseDiscussions collection
   */
+// eslint-disable-next-line func-names
 notificationComment.record = function (commentId) {
 	check(commentId, String);
 	const comment = CourseDiscussions.findOne(commentId);
@@ -58,7 +59,7 @@ notificationComment.record = function (commentId) {
 	Log.record('Notification.Send', [course._id, comment._id], body);
 };
 
-
+// eslint-disable-next-line func-names
 notificationComment.Model = function (entry) {
 	const comment = CourseDiscussions.findOne(entry.body.commentId);
 	let course = false;

@@ -17,6 +17,7 @@ export default SortSpec = (spec) => {
 	return { spec: () => spec };
 };
 
+// eslint-disable-next-line func-names
 SortSpec.fromString = function (spec) {
 	check(spec, String);
 

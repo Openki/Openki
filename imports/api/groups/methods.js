@@ -46,20 +46,20 @@ Meteor.methods({
 			}
 			updates.short = short.substring(0, 7);
 		}
-		if (changes.hasOwnProperty('name')) {
+		if (Object.prototype.hasOwnProperty.call(changes, 'name')) {
 			updates.name = changes.name.substring(0, 50);
 		}
-		if (changes.hasOwnProperty('claim')) {
+		if (Object.prototype.hasOwnProperty.call(changes, 'claim')) {
 			updates.claim = changes.claim.substring(0, 1000);
 		}
-		if (changes.hasOwnProperty('description')) {
+		if (Object.prototype.hasOwnProperty.call(changes, 'description')) {
 			updates.description = changes.description.substring(0, 640 * 1024);
 			if (Meteor.isServer) {
 				updates.description = HtmlTools.saneHtml(updates.description);
 			}
 		}
 
-		if (changes.hasOwnProperty('logoUrl')) {
+		if (Object.prototype.hasOwnProperty.call(changes, 'logoUrl')) {
 			if (!changes.logoUrl.startsWith('https://')) {
 				throw new Meteor.Error('not https');
 			}

@@ -8,6 +8,7 @@ function extendPrototypeToJSON(o) {
 			value() {
 				const alt = {};
 
+				// eslint-disable-next-line func-names
 				Object.getOwnPropertyNames(this).forEach(function (key) {
 					alt[key] = this[key];
 				}, this);

@@ -50,7 +50,7 @@ Router.route('api.0.json', {
 	action() {
 		jSendResponder(this.response, () => {
 			const { handler } = this.params;
-			if (!Api.hasOwnProperty(handler)) {
+			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 				throw new NoActionError('Invalid action');
 			}
 

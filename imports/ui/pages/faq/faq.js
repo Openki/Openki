@@ -10,6 +10,7 @@ import './faq.en.md';
 import './faq.fr.md';
 import './faq.html';
 
+// eslint-disable-next-line func-names
 Template.FAQ.onCreated(function () {
 	this.headerTag = 'h3';
 	this.contentTags = 'p, ul';
@@ -26,9 +27,11 @@ Template.FAQ.onCreated(function () {
 	};
 });
 
+// eslint-disable-next-line func-names
 Template.FAQ.onRendered(function () {
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
+	// eslint-disable-next-line func-names
 	this.$(this.headerTag).each(function () {
 		const title = $(this);
 		const id = title

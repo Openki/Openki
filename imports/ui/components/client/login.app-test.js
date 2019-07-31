@@ -12,6 +12,7 @@ const invalidDigestedPassword = {
 };
 
 if (Meteor.isClient) {
+	// eslint-disable-next-line func-names
 	describe('Login', function () {
 		this.timeout(10000);
 		it('should work with good credentials', (done) => {

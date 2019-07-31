@@ -66,6 +66,7 @@ Template.layout.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.layout.rendered = function () {
 	$(window).resize(() => { UpdateViewport(); });
 	Session.set('isRetina', (window.devicePixelRatio === 2));

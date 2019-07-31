@@ -5,6 +5,7 @@ import Alert from '/imports/api/alerts/alert';
 
 import './verify-email.html';
 
+// eslint-disable-next-line func-names
 Template.verifyEmail.onCreated(function () {
 	this.sending = new ReactiveVar(false);
 });

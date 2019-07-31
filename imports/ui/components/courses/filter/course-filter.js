@@ -11,6 +11,7 @@ import '/imports/ui/components/courses/categories/course-categories';
 
 import './course-filter.html';
 
+// eslint-disable-next-line func-names
 Template.filter.onCreated(function () {
 	this.stateFilters = [
 		{
@@ -120,6 +121,7 @@ Template.filter.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.additionalFilters.onCreated(function () {
 	this.findInstance = this.parentInstance(2);
 
@@ -145,6 +147,7 @@ Template.additionalFilters.onCreated(function () {
 	});
 });
 
+// eslint-disable-next-line func-names
 Template.additionalFilters.onRendered(function () {
 	const instance = this;
 	const catSelect = instance.$('.filter-categories-select');

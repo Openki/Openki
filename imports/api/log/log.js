@@ -86,6 +86,7 @@ class ResultLogger {
   * @param  {String} rel     - related ID
   * @param  {Object} body    - log body depending on track
   */
+// eslint-disable-next-line func-names
 Log.record = function (track, rel, body) {
 	check(track, String);
 	check(rel, [String]);
@@ -109,6 +110,7 @@ Log.record = function (track, rel, body) {
 	return new ResultLogger(id, printToLog);
 };
 
+// eslint-disable-next-line func-names
 Log.findFilter = function (filter, limit) {
 	check(filter,
 		{

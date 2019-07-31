@@ -28,6 +28,7 @@ import moment from 'moment-timezone';
 
 const LocalTime = {};
 
+// eslint-disable-next-line func-names
 LocalTime.zone = function (regionId) {
 	const region = Regions.findOne(regionId);
 	if (!region) {
@@ -46,6 +47,7 @@ LocalTime.zone = function (regionId) {
 
 /** Turn a moment object into a local date string without time offset
   */
+// eslint-disable-next-line func-names
 LocalTime.toString = function (date) {
 	return moment(date).format('YYYY-MM-DD[T]HH:mm');
 };
@@ -54,15 +56,17 @@ LocalTime.toString = function (date) {
   *
   * Note that the returned date will be faux UTC.
   */
+// eslint-disable-next-line func-names
 LocalTime.fromString = function (dateStr) {
 	return moment.utc(dateStr);
 };
 
-
+// eslint-disable-next-line func-names
 LocalTime.now = function () {
 	return moment().add(moment().utcOffset(), 'minutes');
 };
 
+// eslint-disable-next-line func-names
 LocalTime.toGlobal = function (time, regionId) {
 	const region = Regions.findOne(regionId);
 	if (!region) {
@@ -73,6 +77,7 @@ LocalTime.toGlobal = function (time, regionId) {
 	return moment.tz(moment(time).format('YYYY-MM-DD[T]HH:mm'), tz);
 };
 
+// eslint-disable-next-line func-names
 LocalTime.fromDate = function (time, regionId) {
 	const region = Regions.findOne(regionId);
 	if (!region) {

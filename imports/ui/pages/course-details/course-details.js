@@ -32,6 +32,7 @@ import '/imports/ui/components/report/report';
 import './course-details.html';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
+// eslint-disable-next-line func-names
 Template.courseDetailsPage.onCreated(function () {
 	const instance = this;
 

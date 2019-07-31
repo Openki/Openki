@@ -10,6 +10,7 @@ import '../delete-events/delete-events';
 
 import './course-events.html';
 
+// eslint-disable-next-line func-names
 Template.courseEvents.onCreated(function () {
 	const instance = this;
 	const courseId = this.data.course._id;
@@ -20,20 +21,24 @@ Template.courseEvents.onCreated(function () {
 	instance.showAllEvents = new ReactiveVar(false);
 	this.showModal = new ReactiveVar(false);
 
+	// eslint-disable-next-line func-names
 	instance.haveEvents = function () {
 		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
 	};
 
+	// eslint-disable-next-line func-names
 	instance.haveMoreEvents = function () {
 		return Events.findFilter(
 			{ course: courseId, start: minuteTime.get() },
 		).count() > maxEventsShown;
 	};
 
+	// eslint-disable-next-line func-names
 	instance.ongoingEvents = function () {
 		return Events.findFilter({ course: courseId, ongoing: minuteTime.get() });
 	};
 
+	// eslint-disable-next-line func-names
 	instance.futureEvents = function () {
 		const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
 

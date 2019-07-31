@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Groups from '../groups';
 
+// eslint-disable-next-line func-names
 Meteor.publish('groupsFind', function (filter) {
 	// Filter function on the server doesn't have access to current user ID
 	if (filter.own) {

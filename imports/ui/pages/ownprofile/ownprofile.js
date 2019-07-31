@@ -19,6 +19,7 @@ import '/imports/ui/components/venues/link/venue-link';
 import './ownprofile.html';
 
 TemplateMixins.Expandible(Template.profile);
+// eslint-disable-next-line func-names
 Template.profile.onCreated(function () {
 	this.busy(false);
 	this.editing = new ReactiveVar(false);

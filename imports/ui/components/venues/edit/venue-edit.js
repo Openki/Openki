@@ -18,6 +18,7 @@ import '/imports/ui/components/map/map';
 
 import './venue-edit.html';
 
+// eslint-disable-next-line func-names
 Template.venueEdit.onCreated(function () {
 	const instance = this;
 
@@ -128,6 +129,7 @@ Template.venueEdit.helpers({
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it.
+		// eslint-disable-next-line func-names
 		return function () {
 			// We only allow placing if we don't have a selected location yet
 			return !locationTracker.markers.findOne({ main: true });
@@ -137,6 +139,7 @@ Template.venueEdit.helpers({
 	allowRemoving() {
 		const { locationTracker } = Template.instance();
 
+		// eslint-disable-next-line func-names
 		return function () {
 			return locationTracker.markers.findOne({ main: true });
 		};

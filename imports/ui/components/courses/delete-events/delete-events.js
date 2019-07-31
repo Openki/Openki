@@ -18,6 +18,7 @@ Template.deleteCourseEvents.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.deleteEventsModal.onCreated(function () {
 	this.busy(false);
 
@@ -47,6 +48,7 @@ Template.deleteEventsModal.onCreated(function () {
 	});
 });
 
+// eslint-disable-next-line func-names
 Template.deleteEventsModal.onRendered(function () {
 	this.$('.js-delete-events-modal').modal('show');
 });

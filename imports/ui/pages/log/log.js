@@ -12,6 +12,7 @@ import Log from '/imports/api/log/log';
 
 import './log.html';
 
+// eslint-disable-next-line func-names
 Template.showLog.onCreated(function () {
 	const instance = this;
 	const batchLoad = 100;

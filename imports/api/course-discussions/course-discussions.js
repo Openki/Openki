@@ -13,6 +13,7 @@ import { Mongo } from 'meteor/mongo';
 
 export default CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
+// eslint-disable-next-line func-names
 CourseDiscussions.validComment = function (text) {
 	return text.trim().length > 0;
 };

@@ -115,6 +115,7 @@ Courses.Filtering = () => Filtering(
 );
 
 // Update list of editors
+// eslint-disable-next-line func-names
 Courses.updateGroups = function (courseId) {
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
@@ -149,6 +150,7 @@ Courses.updateGroups = function (courseId) {
 	});
 };
 
+// eslint-disable-next-line func-names
 Courses.findFilter = function (filter, limit, sortParams) {
 	check(sortParams, Match.Optional([[Match.Any]]));
 

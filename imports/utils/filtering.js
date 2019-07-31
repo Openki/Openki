@@ -4,14 +4,17 @@ const Filtering = function (availablePredicates) {
 	let settledPredicates = {};
 	const dep = new Tracker.Dependency();
 
+	// eslint-disable-next-line func-names
 	self.clear = function () { predicates = {}; return this; };
 
+	// eslint-disable-next-line func-names
 	self.get = function (name) {
 		if (Tracker.active) dep.depend();
 		if (!settledPredicates[name]) return undefined;
 		return settledPredicates[name].get();
 	};
 
+	// eslint-disable-next-line func-names
 	self.add = function (name, param) {
 		try {
 			if (!availablePredicates[name]) throw new FilteringReadError(param, `No predicate ${name}`);
@@ -33,6 +36,7 @@ const Filtering = function (availablePredicates) {
 		}
 	};
 
+	// eslint-disable-next-line func-names
 	self.read = function (list) {
 		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in list) {
@@ -49,6 +53,7 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.readAndValidate = function (list) {
 		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const name in list) {
@@ -57,6 +62,7 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.remove = function (name, param) {
 		const toRemove = availablePredicates[name](param);
 		if (predicates[name]) {
@@ -66,6 +72,7 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.toggle = function (name, param) {
 		if (self.get(name) && self.get(name).indexOf(param) >= 0) {
 			self.remove(name, param);
@@ -75,11 +82,13 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.disable = function (name) {
 		delete predicates[name];
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.done = function () {
 		const settled = settledPredicates;
 		settledPredicates = _.clone(predicates);
@@ -103,6 +112,7 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	// eslint-disable-next-line func-names
 	self.toParams = function () {
 		if (Tracker.active) dep.depend();
 		const params = {};
@@ -113,6 +123,7 @@ const Filtering = function (availablePredicates) {
 		return params;
 	};
 
+	// eslint-disable-next-line func-names
 	self.toQuery = function () {
 		if (Tracker.active) dep.depend();
 		const query = {};

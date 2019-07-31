@@ -11,17 +11,20 @@ import './map.html';
  *
  * */
 
+// eslint-disable-next-line func-names
 Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
 const FaIcon = function (faClass) {
+	// eslint-disable-next-line func-names
 	return function () {
 		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
 const FaCompIcon = function (opClass, icClass) {
+	// eslint-disable-next-line func-names
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');
 		L.DomUtil.create('i', `fa fa-${opClass}`, cont);
@@ -55,6 +58,7 @@ const OpenkiControl = L.Control.extend({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.map.onRendered(function () {
 	const instance = this;
 
@@ -299,6 +303,7 @@ Template.map.onRendered(function () {
 		}, 0);
 	});
 
+	// eslint-disable-next-line func-names
 	instance.proposeMarker = function () {
 		const center = map.getCenter();
 		instance.data.markers.insert({
@@ -308,6 +313,7 @@ Template.map.onRendered(function () {
 		});
 	};
 
+	// eslint-disable-next-line func-names
 	instance.removeMarker = function () {
 		instance.data.markers.update(
 			{ main: true },

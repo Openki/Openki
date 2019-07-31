@@ -7,6 +7,7 @@ const updateName = '2018.02.12 richComments';
 
 const UpdatesAvailable = [];
 
+// eslint-disable-next-line func-names
 UpdatesAvailable[updateName] = function () {
 	let count = 0;
 

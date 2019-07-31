@@ -6,6 +6,7 @@ const UpdatesAvailable = [];
 // Also fix the end date so the date is not on some random future day
 // Somehow the enddate got corrupted and for the current data we can fix it by just resetting the
 // day
+// eslint-disable-next-line func-names
 UpdatesAvailable.renameEventFields = function () {
 	Events.find({}).fetch().forEach((event) => {
 		if (event.startdate) {

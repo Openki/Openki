@@ -11,10 +11,12 @@ function getSiteDefaultImage() {
 	return Meteor.settings.siteDefaultImage || 'https://openki.net/logo/openki_logo_with_byline.png';
 }
 
+// eslint-disable-next-line func-names
 Metatags.removeAll = function () {
 	DocHead.removeDocHeadAddedTags();
 };
 
+// eslint-disable-next-line func-names
 Metatags.setCommonTags = function (title, description = '') {
 	document.title = getSiteTitlePrefix() + title;
 

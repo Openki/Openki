@@ -11,6 +11,7 @@ import ScssVars from '/imports/ui/lib/scss-vars';
 
 import './account-tasks.html';
 
+// eslint-disable-next-line func-names
 Template.accountTasks.onCreated(function () {
 	this.accountTask = new ReactiveVar('login');
 	this.autorun(() => {
@@ -49,6 +50,7 @@ Template.accountTasks.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
@@ -71,6 +73,7 @@ Template.loginFrame.onCreated(function () {
 	];
 });
 
+// eslint-disable-next-line func-names
 Template.loginFrame.onRendered(function () {
 	const { transferMail } = this.parentInstance();
 	if (transferMail) this.$('.js-username').val(transferMail);
@@ -208,10 +211,12 @@ Template.loginFrame.helpers({
 	OAuthServices: () => Template.instance().OAuthServices,
 });
 
+// eslint-disable-next-line func-names
 Template.registerFrame.onCreated(function () {
 	this.busy(false);
 });
 
+// eslint-disable-next-line func-names
 Template.registerFrame.onRendered(function () {
 	const parentInstance = this.parentInstance();
 
@@ -318,11 +323,13 @@ Template.registerFrame.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.forgotPwdFrame.onCreated(function () {
 	this.busy(false);
 	this.emailIsValid = new ReactiveVar(false);
 });
 
+// eslint-disable-next-line func-names
 Template.forgotPwdFrame.onRendered(function () {
 	const { transferMail } = this.parentInstance();
 	if (transferMail) {

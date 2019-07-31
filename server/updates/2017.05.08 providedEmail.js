@@ -1,5 +1,6 @@
 const UpdatesAvailable = [];
 
+// eslint-disable-next-line func-names
 UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 	let count = 0;
 	Meteor.users.find({ 'emails.0': null }).forEach((user) => {

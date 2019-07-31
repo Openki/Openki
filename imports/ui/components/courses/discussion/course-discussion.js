@@ -13,6 +13,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './course-discussion.html';
 
+// eslint-disable-next-line func-names
 Template.discussion.onCreated(function () {
 	this.count = new ReactiveVar(0);
 
@@ -91,7 +92,7 @@ Template.discussion.events({
 	},
 });
 
-
+// eslint-disable-next-line func-names
 Template.post.onCreated(function () {
 	const post = this.data;
 
@@ -192,7 +193,7 @@ Template.postShow.helpers({
 	},
 });
 
-
+// eslint-disable-next-line func-names
 Template.postEdit.onCreated(function () {
 	this.anon = new ReactiveVar(!this.data.userId);
 	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));

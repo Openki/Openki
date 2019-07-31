@@ -5,6 +5,7 @@ import '/imports/ui/components/buttons/buttons';
 import './editable.html';
 
 [Template.editable, Template.editableTextarea].forEach((template) => {
+	// eslint-disable-next-line func-names
 	template.onCreated(function () {
 		// This reeks
 		const data = Template.currentData();
@@ -12,17 +13,20 @@ import './editable.html';
 		this.state = data.connect(this);
 	});
 
+	// eslint-disable-next-line func-names
 	template.onRendered(function () {
 		const instance = this;
 		const editable = this.$('.js-editable');
 		let initialized = false;
 		let changedByUser = false;
 
+		// eslint-disable-next-line func-names
 		instance.getEdited = function () {
 			if (!instance.state || !instance.state.changed.get()) return false;
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};
 
+		// eslint-disable-next-line func-names
 		instance.reset = function () {
 			const text = instance.state.text();
 
@@ -48,6 +52,7 @@ import './editable.html';
 			}
 		});
 
+		// eslint-disable-next-line func-names
 		instance.store = function () {
 			instance.state.store(instance.getEdited());
 			instance.state.changed.set(false);

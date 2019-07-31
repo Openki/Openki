@@ -4,6 +4,7 @@ import Users from '/imports/api/users/users';
 
 const Profile = {};
 
+// eslint-disable-next-line func-names
 Profile.updateAcceptsMessages = function (user) {
 	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
 
@@ -17,6 +18,7 @@ Profile.updateAcceptsMessages = function (user) {
 
 Profile.Username = {};
 
+// eslint-disable-next-line func-names
 Profile.Username.change = function (userId, newName) {
 	check(userId, String);
 	check(newName, String);
@@ -47,6 +49,7 @@ Profile.Username.change = function (userId, newName) {
 
 Profile.Email = {};
 
+// eslint-disable-next-line func-names
 Profile.Email.change = function (userId, email, reason) {
 	check(userId, String);
 	check(email, Match.Optional(String));
@@ -78,6 +81,7 @@ Profile.Notifications = {};
   * @param   {ID} rel    - related ID for the Log (optional)
   *
   */
+// eslint-disable-next-line func-names
 Profile.Notifications.change = function (userId, enable, relId, reason) {
 	check(userId, String);
 	check(enable, Boolean);
@@ -103,6 +107,7 @@ Profile.Notifications.change = function (userId, enable, relId, reason) {
   * @param {String} token - the unsubscribe token passed by the user
   * @return {Bool} whether the token was accepted
   */
+// eslint-disable-next-line func-names
 Profile.Notifications.unsubscribe = function (token) {
 	check(token, String);
 
@@ -133,6 +138,7 @@ Profile.Region = {};
   *
   * @return {Bool} whether the change was accepted
   */
+// eslint-disable-next-line func-names
 Profile.Region.change = function (userId, regionId, reason) {
 	check(userId, String);
 	check(regionId, String);

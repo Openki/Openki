@@ -7,6 +7,7 @@ const updateName = '2017.03.20 localFutureDates';
 
 const UpdatesAvailable = [];
 
+// eslint-disable-next-line func-names
 UpdatesAvailable[updateName] = function () {
 	let count = 0;
 

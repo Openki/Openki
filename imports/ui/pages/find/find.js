@@ -21,6 +21,7 @@ import './find.html';
 const hiddenFilters = ['needsRole', 'categories'];
 const filters = hiddenFilters.concat(['state']);
 
+// eslint-disable-next-line func-names
 Template.find.onCreated(function () {
 	const instance = this;
 
@@ -28,6 +29,7 @@ Template.find.onCreated(function () {
 	// This creates a browser history entry so it is not done on every filter
 	// change. For example, when the search-field receives keydowns, the filter
 	// is updated but the change is not reflected in the URI.
+	// eslint-disable-next-line func-names
 	instance.updateUrl = function () {
 		const urlParams = instance.filter.toParams();
 		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
@@ -53,7 +55,7 @@ Template.find.onCreated(function () {
 		return true;
 	};
 
-
+	// eslint-disable-next-line func-names
 	instance.updateCategorySearch = function (query) {
 		instance.categorySearch.set(query);
 

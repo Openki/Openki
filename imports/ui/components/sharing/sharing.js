@@ -6,6 +6,7 @@ import Shariff from '/imports/ui/lib/shariff';
 
 import './sharing.html';
 
+// eslint-disable-next-line func-names
 Template.sharing.onRendered(function () {
 	this.autorun(() => {
 		this.shariff = new Shariff(this.find('.shariff'), {

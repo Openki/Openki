@@ -111,6 +111,7 @@ Template.userprofile.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.emailBox.onCreated(function () {
 	this.verificationMailSent = new ReactiveVar(false);
 	this.busy(false);

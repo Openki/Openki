@@ -2,6 +2,7 @@ import Events from '/imports/api/events/events';
 
 const UpdatesAvailable = [];
 
+// eslint-disable-next-line func-names
 UpdatesAvailable.renameEventCourseId = function () {
 	let updated = 0;
 

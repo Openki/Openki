@@ -173,6 +173,7 @@ Template.courseCompact.events({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.courseCompact.onRendered(function () {
 	this.$('.course-compact-title').dotdotdot();
 });

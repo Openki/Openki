@@ -19,6 +19,7 @@ const notificationPrivateMessage = {};
   * @param    {Bool} sendCopyToSender - send a copy of the message to the author
   * @param    {Bool} context - dictionary with context ID (course, venue, &c.)
   */
+// eslint-disable-next-line func-names
 notificationPrivateMessage.record = function (
 	senderId,
 	recipientId,
@@ -69,7 +70,7 @@ notificationPrivateMessage.record = function (
 	Log.record('Notification.Send', rel, body);
 };
 
-
+// eslint-disable-next-line func-names
 notificationPrivateMessage.Model = function (entry) {
 	const { body } = entry;
 	const sender = Meteor.users.findOne(body.sender);

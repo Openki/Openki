@@ -18,6 +18,7 @@ import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
 
+// eslint-disable-next-line func-names
 Template.groupDetails.onCreated(function () {
 	const instance = this;
 

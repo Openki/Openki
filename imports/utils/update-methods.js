@@ -12,6 +12,7 @@ const UpdateMethods = {
 	  * @return {function} A function that can be used as meteor method
 	  */
 	Promote(collection) {
+		// eslint-disable-next-line func-names
 		return function (docId, groupId, enable) {
 			check(docId, String);
 			check(groupId, String);
@@ -53,6 +54,7 @@ const UpdateMethods = {
 	  * @return {function} A function that can be used as meteor method
 	  */
 	Editing(collection) {
+		// eslint-disable-next-line func-names
 		return function (docId, groupId, enable) {
 			check(docId, String);
 			check(groupId, String);

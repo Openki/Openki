@@ -10,6 +10,7 @@ import '/imports/ui/components/loading/loading';
 
 import './week-frame.html';
 
+// eslint-disable-next-line func-names
 Template.frameWeek.onCreated(function () {
 	const instance = this;
 	instance.startOfWeek = new ReactiveVar();
@@ -74,6 +75,7 @@ Template.frameWeek.helpers({
 	},
 });
 
+// eslint-disable-next-line func-names
 Template.frameWeek.onRendered(function () {
 	const instance = this;
 	this.autorun(() => {

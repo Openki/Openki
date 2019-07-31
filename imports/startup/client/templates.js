@@ -10,6 +10,7 @@ Router.configure({
 });
 Router.onBeforeAction('dataNotFound');
 
+// eslint-disable-next-line func-names
 Router.onBeforeAction(function () {
 	Metatags.removeAll();
 	this.next();

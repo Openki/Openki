@@ -11,6 +11,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './group-settings.html';
 
+// eslint-disable-next-line func-names
 Template.groupSettings.onCreated(function () {
 	const instance = this;
 

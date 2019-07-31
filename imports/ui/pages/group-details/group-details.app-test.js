@@ -6,6 +6,7 @@ import { jQuery } from 'meteor/jquery';
 import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
+	// eslint-disable-next-line func-names
 	describe('Create course in group', function () {
 		this.timeout(10000);
 		const randomTitle = `TEST${1000 + Math.floor(Math.random() * 9000)}`;

@@ -61,6 +61,7 @@ const discriminatoryReporting = function (args) {
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
+// eslint-disable-next-line func-names
 Meteor._debug = function (/* arguments */) {
 	// eslint-disable-next-line prefer-rest-params
 	meteorDebug.apply(this, arguments);

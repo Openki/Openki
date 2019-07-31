@@ -3,6 +3,7 @@
   * @param {Number} [levels] How many levels to go up. Default is 1
   * @returns {Blaze.TemplateInstance}
   */
+// eslint-disable-next-line func-names
 Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
 	let { view } = this;
 	if (typeof levels === 'undefined') {
@@ -28,6 +29,7 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
   *
   * @param {String} [activity] The new business
   */
+// eslint-disable-next-line func-names
 Blaze.TemplateInstance.prototype.busy = function (activity) {
 	if (!this.business) {
 		this.business = new ReactiveVar(activity);
@@ -39,6 +41,7 @@ Blaze.TemplateInstance.prototype.busy = function (activity) {
 
 /** Find business state var in this or parent template instance
   */
+// eslint-disable-next-line func-names
 Blaze.TemplateInstance.prototype.findBusiness = function () {
 	if (this.business) return this.business; // Short-circuit common case
 

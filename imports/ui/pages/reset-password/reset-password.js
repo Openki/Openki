@@ -8,6 +8,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './reset-password.html';
 
+// eslint-disable-next-line func-names
 Template.resetPassword.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
@@ -17,6 +18,7 @@ Template.resetPassword.onCreated(function () {
 	instance.passwordNotSame = new ReactiveVar(false);
 	instance.showPassword = new ReactiveVar(false);
 
+	// eslint-disable-next-line func-names
 	instance.updatePassword = function () {
 		const password = $('.js-pwd-reset').val();
 		instance.password.set(password);
