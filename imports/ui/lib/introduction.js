@@ -35,6 +35,7 @@ const Introduction = {
 		try {
 			localStorage.setItem('intro', 'done');
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 		}
 	},

@@ -16,6 +16,7 @@ Template.regionSplash.events({
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 		}
 

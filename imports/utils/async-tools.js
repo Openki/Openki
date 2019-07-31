@@ -8,6 +8,7 @@ AsyncTools.checkUpdateOne = function (err, aff) {
 // Simple async callback receiver that logs errors
 AsyncTools.logErrors = function (err, ret) {
 	if (err) {
+		// eslint-disable-next-line no-console
 		console.log(err.stack);
 	}
 	return ret;
@@ -40,6 +41,7 @@ if (Meteor.isServer) {
 				return tryClean(clean, tries - 1);
 			}
 		}, (reason) => {
+			// eslint-disable-next-line no-console
 			console.log(`Cleansing function failed: ${reason}`);
 		});
 	};

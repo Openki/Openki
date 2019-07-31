@@ -106,6 +106,7 @@ Template.languageSelection.events({
 		try {
 			localStorage.setItem('locale', lg);
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 		}
 

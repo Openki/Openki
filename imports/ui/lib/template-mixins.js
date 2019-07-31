@@ -153,6 +153,7 @@ const TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
+						// eslint-disable-next-line no-console
 						console.log('Unmapped error ', key);
 						return;
 					}

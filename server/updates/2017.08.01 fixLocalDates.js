@@ -27,6 +27,7 @@ UpdatesAvailable[updateName] = function () {
 				error: e,
 				update: updateName,
 			});
+			// eslint-disable-next-line no-console
 			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});

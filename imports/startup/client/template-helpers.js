@@ -35,6 +35,7 @@ const helpers = {
 	},
 
 	log(context) {
+		// eslint-disable-next-line no-console
 		if (window.console) console.log(arguments.length > 0 ? context : this);
 	},
 
@@ -204,6 +205,7 @@ const usernameFromId = (function () {
 
 				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
+						// eslint-disable-next-line no-console
 						console.warn(err);
 					}
 					cache[userId] = user || '?!';

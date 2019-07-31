@@ -175,6 +175,7 @@ Template.loginFrame.events({
 		const { service } = event.currentTarget.dataset;
 		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
+			// eslint-disable-next-line no-console
 			console.log(`don't have ${loginMethod}`);
 			return;
 		}

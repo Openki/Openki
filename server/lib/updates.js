@@ -14,11 +14,14 @@ const applyUpdates = function () {
 			};
 
 			if (skipInitial) {
+				// eslint-disable-next-line no-console
 				console.log(`Skipping update ${name}`);
 			} else {
+				// eslint-disable-next-line no-console
 				console.log(`Applying update ${name}`);
 				entry.affected = UpdatesAvailable[name]();
 				entry.applied = new Date();
+				// eslint-disable-next-line no-console
 				console.log(`${name}: ${entry.affected} affected documents`);
 			}
 			UpdatesApplied.insert(entry);

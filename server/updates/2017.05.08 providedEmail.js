@@ -26,6 +26,7 @@ UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 					{ $set: { emails: [{ address: providedEmail, verified }] } },
 				);
 			} catch (e) {
+				// eslint-disable-next-line no-console
 				console.log(e);
 			}
 		}

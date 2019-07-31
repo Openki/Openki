@@ -144,6 +144,7 @@ Courses.updateGroups = function (courseId) {
 		// At some point we'll have to figure out a proper caching hierarchy
 		Meteor.call('event.updateGroups', { courseId });
 	}, (reason) => {
+		// eslint-disable-next-line no-console
 		console.log(`Failed updateGroups: ${reason}`);
 	});
 };

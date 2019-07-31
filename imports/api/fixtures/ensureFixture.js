@@ -58,7 +58,7 @@ const ensure = {
 				name,
 				loc: { type: 'Point', coordinates: [8.3, 47.05] },
 			});
-
+			// eslint-disable-next-line no-console
 			console.log(`Added region: ${name} ${id}`);
 		}
 	},
@@ -76,7 +76,7 @@ const ensure = {
 				members: [ensure.user('EdDillinger')._id],
 				description: 'Fixture group',
 			});
-
+			// eslint-disable-next-line no-console
 			console.log(`Added fixture group '${short}' id: ${id}`);
 		}
 	},

@@ -326,6 +326,7 @@ Meteor.methods({
 						}
 					});
 			}).catch((reason) => {
+				// eslint-disable-next-line no-console
 				console.log('Failed event.updateVenue: ', reason);
 			});
 		});

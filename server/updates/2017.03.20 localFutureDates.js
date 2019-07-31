@@ -46,12 +46,16 @@ UpdatesAvailable[updateName] = function () {
 			count += 1;
 		} catch (e) {
 			const rel = [updateName, event._id];
-			Log.record('Update.Error', rel,
+			Log.record(
+				'Update.Error',
+				rel,
 				{
 					event: event._id,
 					error: e,
 					update: updateName,
-				});
+				},
+			);
+			// eslint-disable-next-line no-console
 			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});

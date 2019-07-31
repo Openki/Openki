@@ -63,6 +63,7 @@ RegionSelection.init = function () {
 		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
 		IpLocation.detect((region, reason) => {
+			// eslint-disable-next-line no-console
 			console.log(`Region autodetection: ${reason}`);
 			if (region) {
 				useAsRegion(region._id);

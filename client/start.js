@@ -92,7 +92,10 @@ Meteor.startup(() => {
 		// Also change timeLocale which will invalidate the parts that depend on it
 		const setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
-		if (desiredLocale !== setLocale) console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
+		if (desiredLocale !== setLocale) {
+			// eslint-disable-next-line no-console
+			console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
+		}
 
 		// HACK replace the datepicker locale settings
 		// I do not understand why setting language: moment.locale() does not

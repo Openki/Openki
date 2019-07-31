@@ -9,6 +9,7 @@ import Venues from '/imports/api/venues/venues';
 if (Meteor.settings.testdata) {
 	const logResult = function (error, result) {
 		if (error) throw error;
+		// eslint-disable-next-line no-console
 		console.log(result);
 	};
 

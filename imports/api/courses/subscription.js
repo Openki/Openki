@@ -10,6 +10,7 @@ import Notification from '/imports/notification/notification';
 export const processChange = function (change, done) {
 	Meteor.call(change.constructor.method, change.dict(), (err) => {
 		if (err) {
+			// eslint-disable-next-line no-console
 			console.log(err);
 			Alert.error(err, '');
 		}

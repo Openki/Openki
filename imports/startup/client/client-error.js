@@ -10,6 +10,7 @@ const reportToServer = function (error) {
 		userAgent: window.navigator.userAgent,
 	};
 	Meteor.call('log.clientError', report, (err) => {
+		// eslint-disable-next-line no-console
 		if (err) console.log(err);
 	});
 };

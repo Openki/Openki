@@ -34,6 +34,7 @@ Template.courseRole.onCreated(function () {
 					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
 				});
 			} else {
+				// eslint-disable-next-line no-console
 				console.log(`${change} not valid for ${user}`);
 			}
 		});
