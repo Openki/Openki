@@ -151,10 +151,7 @@ const helpers = {
 	},
 };
 
-// eslint-disable-next-line guard-for-in, no-restricted-syntax
-for (const name in helpers) {
-	Template.registerHelper(name, helpers[name]);
-}
+Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */
