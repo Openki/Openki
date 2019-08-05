@@ -203,7 +203,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach(filter => instance.filter.disable(filters[i]));
+			filters.forEach(filter => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
