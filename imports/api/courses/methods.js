@@ -50,6 +50,17 @@ const registerMethod = function (method) {
 	Meteor.methods({ [method.method]: apply });
 };
 
+const loadCourse = (courseId) => {
+	// new!
+	if (courseId.length === 0) {
+		return new Course();
+	}
+
+	const course = Courses.findOne({ _id: courseId });
+	if (!course) throw new Meteor.Error(404, 'Course not found');
+	return course;
+};
+
 registerMethod(Subscribe);
 registerMethod(Unsubscribe);
 registerMethod(Message);
@@ -78,14 +89,7 @@ Meteor.methods({
 			throw new Meteor.Error(401, 'please log in');
 		}
 
-		let course;
-		const isNew = courseId.length === 0;
-		if (isNew) {
-			course = new Course();
-		} else {
-			course = Courses.findOne({ _id: courseId });
-			if (!course) throw new Meteor.Error(404, 'Course not found');
-		}
+		const course = loadCourse(courseId);
 
 		if (!course.editableBy(user)) throw new Meteor.Error(401, 'edit not permitted');
 
@@ -114,7 +118,7 @@ Meteor.methods({
 					));
 				}
 				if (!have && shouldHave) {
-					if (isNew) {
+					if (course.isNew()) {
 						set.roles = set.roles || [];
 						set.roles.push(type);
 					} else {
@@ -146,7 +150,7 @@ Meteor.methods({
 		}
 
 		set.time_lastedit = new Date();
-		if (isNew) {
+		if (course.isNew()) {
 			// You can add newly created courses to any group
 			let testedGroups = [];
 			if (changes.groups) {

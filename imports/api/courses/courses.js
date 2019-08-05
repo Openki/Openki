@@ -67,6 +67,14 @@ export class Course {
 		this.groupOrganizers = [];
 	}
 
+	/** Check if the course is new (not yet saved).
+	  *
+	  * @return {Boolean}
+	  */
+	isNew() {
+		return !this._id;
+	}
+
 	/** Check whether a user may edit the course.
 	  *
 	  * @param {Object} user
