@@ -1,0 +1,28 @@
+stages:
+  - cleanup
+  - test
+  - deploy
+
+# TODO test
+
+deploy_staging:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: master
+    TARGET_HOST: staging
+  only:
+  - staging
+  - master
+  trigger: Openki/sysadmin/deploy-config
+
+## Not possible yet: https://gitlab.com/gitlab-org/gitlab-ce/issues/27818
+#deploy_prod:
+#  stage: deploy
+#  variables:
+#    SOURCE_BRANCH: master
+#    TARGET_HOST: live
+#  only:
+#  - master
+#  - tags
+#  trigger: Openki/sysadmin/deploy-config
+#
