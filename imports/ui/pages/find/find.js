@@ -64,21 +64,20 @@ Template.find.onCreated(function () {
 			return;
 		}
 
-		const lowQuery = query.toLowerCase();
+		const queryToLowerCase = query.toLowerCase();
 		const results = {};
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const mainCategory in Categories) {
-			if (mf(`category.${mainCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
+
+		Object.keys(Categories).forEach((mainCategory) => {
+			if (mf(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
 				results[mainCategory] = [];
 			}
-			for (let i = 0; i < Categories[mainCategory].length; i += 1) {
-				const subCategory = Categories[mainCategory][i];
-				if (mf(`category.${subCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
+			Categories[mainCategory].forEach((subCategory) => {
+				if (mf(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
 					if (results[mainCategory]) results[mainCategory].push(subCategory);
 					else results[subCategory] = [];
 				}
-			}
-		}
+			});
+		});
 		instance.categorySearchResults.set(results);
 	};
 
