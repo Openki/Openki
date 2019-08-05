@@ -192,11 +192,10 @@ Template.map.onRendered(function () {
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			// eslint-disable-next-line guard-for-in, no-restricted-syntax
-			for (const centerPos in centers) {
+			Object.keys(centers).forEach((centerPos) => {
 				bounds.extend(centers[centerPos]);
 				count += 1;
-			}
+			});
 			if (count === 1) maxZoom = 13;
 		}
 
