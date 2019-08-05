@@ -39,8 +39,7 @@ const Filtering = function (availablePredicates) {
 
 	// eslint-disable-next-line func-names
 	self.read = function (list) {
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const name in list) {
+		Object.keys(list).forEach((name) => {
 			try {
 				self.add(name, list[name]);
 			} catch (e) {
@@ -50,16 +49,13 @@ const Filtering = function (availablePredicates) {
 					throw e;
 				}
 			}
-		}
+		});
 		return self;
 	};
 
 	// eslint-disable-next-line func-names
 	self.readAndValidate = function (list) {
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const name in list) {
-			self.add(name, list[name]);
-		}
+		Object.keys(list).forEach(name => self.add(name, list[name]));
 		return self;
 	};
 
@@ -103,13 +99,14 @@ const Filtering = function (availablePredicates) {
 
 		if (same) {
 			// Look closer
-			// eslint-disable-next-line guard-for-in, no-restricted-syntax
-			for (const name in predicates) {
+			Object.keys(predicates).forEach((name) => {
 				same = predicates[name].equals(settled[name]);
-				if (!same) break;
-			}
+				if (!same) {
+					dep.changed();
+				}
+				return !same;
+			});
 		}
-		if (!same) dep.changed();
 		return self;
 	};
 
@@ -117,10 +114,9 @@ const Filtering = function (availablePredicates) {
 	self.toParams = function () {
 		if (Tracker.active) dep.depend();
 		const params = {};
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const name in settledPredicates) {
+		Object.keys(settledPredicates).forEach((name) => {
 			params[name] = settledPredicates[name].param();
-		}
+		});
 		return params;
 	};
 
@@ -128,10 +124,9 @@ const Filtering = function (availablePredicates) {
 	self.toQuery = function () {
 		if (Tracker.active) dep.depend();
 		const query = {};
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const name in settledPredicates) {
+		Object.keys(settledPredicates).forEach((name) => {
 			query[name] = settledPredicates[name].query();
-		}
+		});
 		return query;
 	};
 
