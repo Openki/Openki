@@ -48,23 +48,22 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
+		console.log(Languages);
 		const visibleLanguages = _.filter(Languages, lg => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const key in visibleLanguages) {
-			const language = visibleLanguages[key];
+		visibleLanguages.forEach((visibleLanguage) => {
 			let pushed = false;
-			[language.name, language.english].forEach((property) => {
-				if (pushed) return;
+			[visibleLanguage.name, visibleLanguage.english].forEach((property) => {
+				if (pushed) return true;
 				if (property.toLowerCase().indexOf(search) >= 0) {
-					results.push(language);
+					results.push(visibleLanguage);
 					pushed = true;
 				}
+				return false;
 			});
-		}
-
+		});
 		return results;
 	},
 
